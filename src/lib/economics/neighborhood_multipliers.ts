@@ -218,6 +218,18 @@ const ACTIVITY_TOURISM_BETA: Record<string, number> = {
   real_estate_agencies: -0.1,
   print_shops: 0.0,
   dry_cleaning_laundry: 0.1,
+  /* Explicit zero, not an omission. software_development is one of the twelve
+     activities NeighborhoodOverview shows on every neighbourhood page, and it
+     was the only one of them absent from this table, so its tourism multiplier
+     came out of `?? 0` instead of out of a decision.
+
+     The value is the same either way. What changes is that a reader of this
+     table can now tell "a contract software firm does not get walk-in
+     visitors" from "nobody has looked at this yet", which is a distinction the
+     lookup itself cannot make: an absent key and a deliberate 0.0 produce an
+     identical 1.000 multiplier. print_shops above is written out for the same
+     reason, so this follows the convention rather than inventing one. */
+  software_development: 0.0,
 };
 
 // ---------------------------------------------------------------------------
