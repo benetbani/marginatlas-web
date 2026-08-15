@@ -36,9 +36,22 @@ export default function CheckPage() {
 
       <CheckForm />
 
+      {/* "unless you choose to download the PDF report" stood at the end of
+          this sentence and there is no PDF report. Not disabled, not behind a
+          flag: no library, no route, no component, nothing in CheckForm or
+          CheckResult, nothing anywhere in the repo.
+
+          It survived because the sentence is about privacy and reads as
+          reassurance, so the clause looked like a caveat rather than a claim.
+          It is a claim, and it is the kind that costs most: a reader deciding
+          whether to type their real numbers in was told the payoff was a
+          downloadable report.
+
+          The first half is exact and stays. CheckForm makes no network call and
+          writes to no storage, so nothing typed here leaves the browser. */}
       <p className="mt-10 text-xs text-cocoa-700/60 leading-relaxed max-w-2xl">
-        Results are computed in your browser. Nothing is stored or sent
-        unless you choose to download the PDF report.
+        Results are computed in your browser. Nothing you type is stored or
+        sent anywhere.
       </p>
     </div>
   );
