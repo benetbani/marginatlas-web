@@ -22,6 +22,7 @@ import { COUNTRIES } from "../../src/lib/taxonomy";
 const ROOT = process.cwd();
 const SRC = resolve(ROOT, "src");
 const APP = resolve(SRC, "app");
+const CONTENT = resolve(ROOT, "content");
 const OUT_DIR = resolve(ROOT, "data", "audit");
 const STRICT = process.argv.includes("--strict");
 
@@ -49,7 +50,7 @@ function walkFiles(dir: string, acc: string[] = []): string[] {
     const p = join(dir, name);
     const s = statSync(p);
     if (s.isDirectory()) walkFiles(p, acc);
-    else if (p.endsWith(".tsx") || p.endsWith(".ts")) acc.push(p);
+    else if (p.endsWith(".tsx") || p.endsWith(".ts") || p.endsWith(".md")) acc.push(p);
   }
   return acc;
 }
@@ -197,8 +198,19 @@ function findDeadLinks(): Dead[] {
   const staticTop = buildStaticTopLevel();
   const appTopLevelDirs = buildAppTopLevelDirs();
   const dead: Dead[] = [];
-  const files = walkFiles(SRC).filter((f) => !f.includes(`${join("scripts", "audit")}`));
+  /* content/ IS SCANNED TOO. 70 blog posts live there as markdown and render as
+     pages, and this gate had only ever walked src/, so a link written in a post
+     was checked by nothing at all. One was dead:
+     /sectors/finance_real_estate, in global-finance-services.md, naming a
+     section this app has never had. */
+  const files = [...walkFiles(SRC), ...walkFiles(CONTENT)].filter(
+    (f) => !f.includes(`${join("scripts", "audit")}`),
+  );
   const re = /href=["'](\/[^"']*)["']/g;
+  /* Markdown link syntax, [label](/path). The href matchers below only know
+     HTML and JSX, which is the whole reason content/ went unchecked even on the
+     days somebody thought to look at it. */
+  const md = /\]\((\/[^)\s]*)\)/g;
   /* Template-literal hrefs, which the quoted matcher above never sees at all.
      Its character class excludes backticks, so href={`/a/${b}`} was invisible
      rather than deliberately skipped.
@@ -218,6 +230,29 @@ function findDeadLinks(): Dead[] {
     const lines = src.split("\n");
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
+      md.lastIndex = 0;
+      let mdm: RegExpExecArray | null;
+      while ((mdm = md.exec(line)) !== null) {
+        const href = mdm[1];
+        if (href.includes("${")) continue;
+        const bare = href.split(/[?#]/)[0];
+        if (!bare || bare === "/") continue;
+        const segs = bare.split("/").filter(Boolean);
+        const h = segs[0]?.toLowerCase() ?? "";
+        const known =
+          appTopLevelDirs.has(h) ||
+          COUNTRY_SEGMENTS.has(h) ||
+          KNOWN_DYNAMIC_LITERALS.has(`/${h}`);
+        if (!known) {
+          dead.push({
+            file: relative(ROOT, file).replace(/\\/g, "/"),
+            line: i + 1,
+            href,
+            reason: `markdown link: no /${h} section in src/app and "${h}" is not a country code`,
+          });
+        }
+      }
+
       tmpl.lastIndex = 0;
       let tm: RegExpExecArray | null;
       while ((tm = tmpl.exec(line)) !== null) {

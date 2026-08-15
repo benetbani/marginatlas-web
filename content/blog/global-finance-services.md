@@ -12,4 +12,4 @@ Finance and insurance (NACE K, NAICS 52) is concentrated:
 
 What's striking is the *sub-sector mix*. Switzerland is wealth management heavy. Singapore is banking-services heavy. London is trading-floor heavy. New York spans all three.
 
-Our cells separate banking, investment & securities, insurance, and real-estate agencies. See [Finance, insurance & real estate](/sectors/finance_real_estate).
+Our cells separate banking, investment & securities, insurance, and real-estate agencies. See [every activity, grouped by sector](/industries).
