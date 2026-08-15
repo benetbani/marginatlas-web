@@ -77,7 +77,7 @@
     },
     "employer_oncost_pct": 14,
     "vat_rate_pct": 20,
-    "notes": "VAT is customer-borne and excluded from total_pct. Components sum to total_pct by construction, so each one reads as a coherent share of the load. capital_gains_pct is an annualized exit-tax equivalent, NOT the 20% statutory CGT rate; business_rates_pct_equiv is a profit-equivalent estimate, refine with real rateable-value data."
+    "notes": "VAT is customer-borne and excluded from total_pct. Components sum to total_pct by construction, so each one reads as a coherent share of the load. capital_gains_pct is an annualized exit-tax equivalent, NOT the 20% statutory CGT rate; business_rates_pct_equiv is a profit-equivalent estimate."
   },
   "economic_profile": {
     "ease_of_business": 8,

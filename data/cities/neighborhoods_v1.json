@@ -1367,7 +1367,7 @@
           "slug": "central",
           "name": "Central Abidjan",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1398,7 +1398,7 @@
           "slug": "central",
           "name": "Central Abu Dhabi",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1429,7 +1429,7 @@
           "slug": "central",
           "name": "Central Abuja",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1460,7 +1460,7 @@
           "slug": "central",
           "name": "Central Accra",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1491,7 +1491,7 @@
           "slug": "central",
           "name": "Central Addis Ababa",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1522,7 +1522,7 @@
           "slug": "central",
           "name": "Central Adelaide",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1553,7 +1553,7 @@
           "slug": "central",
           "name": "Central Ahmedabad",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1584,7 +1584,7 @@
           "slug": "central",
           "name": "Central Alexandria",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1615,7 +1615,7 @@
           "slug": "central",
           "name": "Central Algiers",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1646,7 +1646,7 @@
           "slug": "central",
           "name": "Central Almaty",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1677,7 +1677,7 @@
           "slug": "central",
           "name": "Central Amman",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1708,7 +1708,7 @@
           "slug": "central",
           "name": "Central Amsterdam",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1739,7 +1739,7 @@
           "slug": "central",
           "name": "Central Ankara",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1770,7 +1770,7 @@
           "slug": "central",
           "name": "Central Antalya",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1801,7 +1801,7 @@
           "slug": "central",
           "name": "Central Athens",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1832,7 +1832,7 @@
           "slug": "central",
           "name": "Central Atlanta",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1863,7 +1863,7 @@
           "slug": "central",
           "name": "Central Auckland",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1894,7 +1894,7 @@
           "slug": "central",
           "name": "Central Austin",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1925,7 +1925,7 @@
           "slug": "central",
           "name": "Central Baghdad",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1956,7 +1956,7 @@
           "slug": "central",
           "name": "Central Baku",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -1987,7 +1987,7 @@
           "slug": "central",
           "name": "Central Bandung",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2018,7 +2018,7 @@
           "slug": "central",
           "name": "Central Bangalore",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2049,7 +2049,7 @@
           "slug": "central",
           "name": "Central Bangkok",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2080,7 +2080,7 @@
           "slug": "central",
           "name": "Central Basel",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2111,7 +2111,7 @@
           "slug": "central",
           "name": "Central Beirut",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2142,7 +2142,7 @@
           "slug": "central",
           "name": "Central Belgrade",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2173,7 +2173,7 @@
           "slug": "central",
           "name": "Central Belo Horizonte",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2204,7 +2204,7 @@
           "slug": "central",
           "name": "Central Bern",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2235,7 +2235,7 @@
           "slug": "central",
           "name": "Central Birmingham",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2266,7 +2266,7 @@
           "slug": "central",
           "name": "Central Bogotá",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2297,7 +2297,7 @@
           "slug": "central",
           "name": "Central Boston",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2328,7 +2328,7 @@
           "slug": "central",
           "name": "Central Brasília",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2359,7 +2359,7 @@
           "slug": "central",
           "name": "Central Bratislava",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2390,7 +2390,7 @@
           "slug": "central",
           "name": "Central Brisbane",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2421,7 +2421,7 @@
           "slug": "central",
           "name": "Central Bristol",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2452,7 +2452,7 @@
           "slug": "central",
           "name": "Central Brussels",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2483,7 +2483,7 @@
           "slug": "central",
           "name": "Central Bucharest",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2514,7 +2514,7 @@
           "slug": "central",
           "name": "Central Budapest",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2545,7 +2545,7 @@
           "slug": "central",
           "name": "Central Buenos Aires",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2576,7 +2576,7 @@
           "slug": "central",
           "name": "Central Busan",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2607,7 +2607,7 @@
           "slug": "central",
           "name": "Central Cairo",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2638,7 +2638,7 @@
           "slug": "central",
           "name": "Central Calgary",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2669,7 +2669,7 @@
           "slug": "central",
           "name": "Central Cali",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2700,7 +2700,7 @@
           "slug": "central",
           "name": "Central Canberra",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2731,7 +2731,7 @@
           "slug": "central",
           "name": "Central Cape Town",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2762,7 +2762,7 @@
           "slug": "central",
           "name": "Central Caracas",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2793,7 +2793,7 @@
           "slug": "central",
           "name": "Central Casablanca",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2824,7 +2824,7 @@
           "slug": "central",
           "name": "Central Cebu",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2855,7 +2855,7 @@
           "slug": "central",
           "name": "Central Chengdu",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2886,7 +2886,7 @@
           "slug": "central",
           "name": "Central Chennai",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2917,7 +2917,7 @@
           "slug": "central",
           "name": "Central Chiang Mai",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2948,7 +2948,7 @@
           "slug": "central",
           "name": "Central Chisinau",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -2979,7 +2979,7 @@
           "slug": "central",
           "name": "Central Chongqing",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3010,7 +3010,7 @@
           "slug": "central",
           "name": "Central Christchurch",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3041,7 +3041,7 @@
           "slug": "central",
           "name": "Central Cologne",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3072,7 +3072,7 @@
           "slug": "central",
           "name": "Central Colombo",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3103,7 +3103,7 @@
           "slug": "central",
           "name": "Central Copenhagen",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3134,7 +3134,7 @@
           "slug": "central",
           "name": "Central Córdoba",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3165,7 +3165,7 @@
           "slug": "central",
           "name": "Central Daegu",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3196,7 +3196,7 @@
           "slug": "central",
           "name": "Central Dakar",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3227,7 +3227,7 @@
           "slug": "central",
           "name": "Central Dallas",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3258,7 +3258,7 @@
           "slug": "central",
           "name": "Central Dar es Salaam",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3289,7 +3289,7 @@
           "slug": "central",
           "name": "Central Denver",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3320,7 +3320,7 @@
           "slug": "central",
           "name": "Central Detroit",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3351,7 +3351,7 @@
           "slug": "central",
           "name": "Central Dhaka",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3382,7 +3382,7 @@
           "slug": "central",
           "name": "Central Doha",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3413,7 +3413,7 @@
           "slug": "central",
           "name": "Central Dongguan",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3444,7 +3444,7 @@
           "slug": "central",
           "name": "Central Dublin",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3475,7 +3475,7 @@
           "slug": "central",
           "name": "Central Durban",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3506,7 +3506,7 @@
           "slug": "central",
           "name": "Central Düsseldorf",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3537,7 +3537,7 @@
           "slug": "central",
           "name": "Central Edinburgh",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3568,7 +3568,7 @@
           "slug": "central",
           "name": "Central Florence",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3599,7 +3599,7 @@
           "slug": "central",
           "name": "Central Fortaleza",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3630,7 +3630,7 @@
           "slug": "central",
           "name": "Central Frankfurt am Main",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3661,7 +3661,7 @@
           "slug": "central",
           "name": "Central Fukuoka",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3692,7 +3692,7 @@
           "slug": "central",
           "name": "Central Geneva",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3723,7 +3723,7 @@
           "slug": "central",
           "name": "Central Glasgow",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3754,7 +3754,7 @@
           "slug": "central",
           "name": "Central Guangzhou",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3785,7 +3785,7 @@
           "slug": "central",
           "name": "Central Haifa",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3816,7 +3816,7 @@
           "slug": "central",
           "name": "Central Hamburg",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3847,7 +3847,7 @@
           "slug": "central",
           "name": "Central Hangzhou",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3878,7 +3878,7 @@
           "slug": "central",
           "name": "Central Hanoi",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3909,7 +3909,7 @@
           "slug": "central",
           "name": "Central Helsinki",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3940,7 +3940,7 @@
           "slug": "central",
           "name": "Central Hiroshima",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -3971,7 +3971,7 @@
           "slug": "central",
           "name": "Central Ho Chi Minh City",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4002,7 +4002,7 @@
           "slug": "central",
           "name": "Central Honolulu",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4033,7 +4033,7 @@
           "slug": "central",
           "name": "Central Houston",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4064,7 +4064,7 @@
           "slug": "central",
           "name": "Central Hyderabad",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4095,7 +4095,7 @@
           "slug": "central",
           "name": "Central Incheon",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4126,7 +4126,7 @@
           "slug": "central",
           "name": "Central Istanbul",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4157,7 +4157,7 @@
           "slug": "central",
           "name": "Central İzmir",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4188,7 +4188,7 @@
           "slug": "central",
           "name": "Central Jaipur",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4219,7 +4219,7 @@
           "slug": "central",
           "name": "Central Jakarta",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4250,7 +4250,7 @@
           "slug": "central",
           "name": "Central Jeddah",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4281,7 +4281,7 @@
           "slug": "central",
           "name": "Central Johannesburg",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4312,7 +4312,7 @@
           "slug": "central",
           "name": "Central Kaohsiung",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4343,7 +4343,7 @@
           "slug": "central",
           "name": "Central Karachi",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4374,7 +4374,7 @@
           "slug": "central",
           "name": "Central Kathmandu",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4405,7 +4405,7 @@
           "slug": "central",
           "name": "Central Kobe",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4436,7 +4436,7 @@
           "slug": "central",
           "name": "Central Kolkata",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4467,7 +4467,7 @@
           "slug": "central",
           "name": "Central Kraków",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4498,7 +4498,7 @@
           "slug": "central",
           "name": "Central Kuala Lumpur",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4529,7 +4529,7 @@
           "slug": "central",
           "name": "Central Kuwait City",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4560,7 +4560,7 @@
           "slug": "central",
           "name": "Central Kyiv",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4591,7 +4591,7 @@
           "slug": "central",
           "name": "Central Kyoto",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4622,7 +4622,7 @@
           "slug": "central",
           "name": "Central Lagos",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4653,7 +4653,7 @@
           "slug": "central",
           "name": "Central Lahore",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4684,7 +4684,7 @@
           "slug": "central",
           "name": "Central Las Vegas",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4715,7 +4715,7 @@
           "slug": "central",
           "name": "Central Leeds",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4746,7 +4746,7 @@
           "slug": "central",
           "name": "Central Leipzig",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4777,7 +4777,7 @@
           "slug": "central",
           "name": "Central Lima",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4808,7 +4808,7 @@
           "slug": "central",
           "name": "Central Lisbon",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4839,7 +4839,7 @@
           "slug": "central",
           "name": "Central Ljubljana",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4870,7 +4870,7 @@
           "slug": "central",
           "name": "Central Luanda",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4901,7 +4901,7 @@
           "slug": "central",
           "name": "Central Lyon",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4932,7 +4932,7 @@
           "slug": "central",
           "name": "Central Manama",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4963,7 +4963,7 @@
           "slug": "central",
           "name": "Central Manchester",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -4994,7 +4994,7 @@
           "slug": "central",
           "name": "Central Manila",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5025,7 +5025,7 @@
           "slug": "central",
           "name": "Central Marseille",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5056,7 +5056,7 @@
           "slug": "central",
           "name": "Central Medellín",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5087,7 +5087,7 @@
           "slug": "central",
           "name": "Central Melbourne",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5118,7 +5118,7 @@
           "slug": "central",
           "name": "Central Miami",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5149,7 +5149,7 @@
           "slug": "central",
           "name": "Central Minneapolis",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5180,7 +5180,7 @@
           "slug": "central",
           "name": "Central Minsk",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5211,7 +5211,7 @@
           "slug": "central",
           "name": "Central Monaco",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5242,7 +5242,7 @@
           "slug": "central",
           "name": "Central Montevideo",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5273,7 +5273,7 @@
           "slug": "central",
           "name": "Central Montreal",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5304,7 +5304,7 @@
           "slug": "central",
           "name": "Central Moscow",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5335,7 +5335,7 @@
           "slug": "central",
           "name": "Central Munich",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5366,7 +5366,7 @@
           "slug": "central",
           "name": "Central Muscat",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5397,7 +5397,7 @@
           "slug": "central",
           "name": "Central Nagoya",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5428,7 +5428,7 @@
           "slug": "central",
           "name": "Central Nairobi",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5459,7 +5459,7 @@
           "slug": "central",
           "name": "Central Nanjing",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5490,7 +5490,7 @@
           "slug": "central",
           "name": "Central Nantes",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5521,7 +5521,7 @@
           "slug": "central",
           "name": "Central Naples",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5552,7 +5552,7 @@
           "slug": "central",
           "name": "Central Nice",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5583,7 +5583,7 @@
           "slug": "central",
           "name": "Central Nicosia",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5614,7 +5614,7 @@
           "slug": "central",
           "name": "Central Orlando",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5645,7 +5645,7 @@
           "slug": "central",
           "name": "Central Osaka",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5676,7 +5676,7 @@
           "slug": "central",
           "name": "Central Oslo",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5707,7 +5707,7 @@
           "slug": "central",
           "name": "Central Panama City",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5738,7 +5738,7 @@
           "slug": "central",
           "name": "Central Perth",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5769,7 +5769,7 @@
           "slug": "central",
           "name": "Central Philadelphia",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5800,7 +5800,7 @@
           "slug": "central",
           "name": "Central Phnom Penh",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5831,7 +5831,7 @@
           "slug": "central",
           "name": "Central Phoenix",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5862,7 +5862,7 @@
           "slug": "central",
           "name": "Central Podgorica",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5893,7 +5893,7 @@
           "slug": "central",
           "name": "Central Portland",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5924,7 +5924,7 @@
           "slug": "central",
           "name": "Central Porto",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5955,7 +5955,7 @@
           "slug": "central",
           "name": "Central Porto Alegre",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -5986,7 +5986,7 @@
           "slug": "central",
           "name": "Central Prague",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6017,7 +6017,7 @@
           "slug": "central",
           "name": "Central Pristina",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6048,7 +6048,7 @@
           "slug": "central",
           "name": "Central Pune",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6079,7 +6079,7 @@
           "slug": "central",
           "name": "Central Quito",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6110,7 +6110,7 @@
           "slug": "central",
           "name": "Central Recife",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6141,7 +6141,7 @@
           "slug": "central",
           "name": "Central Reykjavik",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6172,7 +6172,7 @@
           "slug": "central",
           "name": "Central Riga",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6203,7 +6203,7 @@
           "slug": "central",
           "name": "Central Rio de Janeiro",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6234,7 +6234,7 @@
           "slug": "central",
           "name": "Central Riyadh",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6265,7 +6265,7 @@
           "slug": "central",
           "name": "Central Rosario",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6296,7 +6296,7 @@
           "slug": "central",
           "name": "Central Rotterdam",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6327,7 +6327,7 @@
           "slug": "central",
           "name": "Central Saint Petersburg",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6358,7 +6358,7 @@
           "slug": "central",
           "name": "Central Salvador",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6389,7 +6389,7 @@
           "slug": "central",
           "name": "Central San Antonio",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6420,7 +6420,7 @@
           "slug": "central",
           "name": "Central San Diego",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6451,7 +6451,7 @@
           "slug": "central",
           "name": "Central San Jose",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6482,7 +6482,7 @@
           "slug": "central",
           "name": "Central San Jose",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6513,7 +6513,7 @@
           "slug": "central",
           "name": "Central Santiago",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6544,7 +6544,7 @@
           "slug": "central",
           "name": "Central Santo Domingo",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6575,7 +6575,7 @@
           "slug": "central",
           "name": "Central Sapporo",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6606,7 +6606,7 @@
           "slug": "central",
           "name": "Central Sarajevo",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6637,7 +6637,7 @@
           "slug": "central",
           "name": "Central Seattle",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6668,7 +6668,7 @@
           "slug": "central",
           "name": "Central Sendai",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6699,7 +6699,7 @@
           "slug": "central",
           "name": "Central Seville",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6730,7 +6730,7 @@
           "slug": "central",
           "name": "Central Shenzhen",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6761,7 +6761,7 @@
           "slug": "central",
           "name": "Central Skopje",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6792,7 +6792,7 @@
           "slug": "central",
           "name": "Central Sofia",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6823,7 +6823,7 @@
           "slug": "central",
           "name": "Central Stockholm",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6854,7 +6854,7 @@
           "slug": "central",
           "name": "Central Stuttgart",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6885,7 +6885,7 @@
           "slug": "central",
           "name": "Central Surabaya",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6916,7 +6916,7 @@
           "slug": "central",
           "name": "Central Surat",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6947,7 +6947,7 @@
           "slug": "central",
           "name": "Central Taipei",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -6978,7 +6978,7 @@
           "slug": "central",
           "name": "Central Tallinn",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7009,7 +7009,7 @@
           "slug": "central",
           "name": "Central Tampa",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7040,7 +7040,7 @@
           "slug": "central",
           "name": "Central Tbilisi",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7071,7 +7071,7 @@
           "slug": "central",
           "name": "Central Tehran",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7102,7 +7102,7 @@
           "slug": "central",
           "name": "Central Tel Aviv",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7133,7 +7133,7 @@
           "slug": "central",
           "name": "Central Tianjin",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7164,7 +7164,7 @@
           "slug": "central",
           "name": "Central Tirana",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7195,7 +7195,7 @@
           "slug": "central",
           "name": "Central Toronto",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7226,7 +7226,7 @@
           "slug": "central",
           "name": "Central Toulouse",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7257,7 +7257,7 @@
           "slug": "central",
           "name": "Central Tunis",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7288,7 +7288,7 @@
           "slug": "central",
           "name": "Central Turin",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7319,7 +7319,7 @@
           "slug": "central",
           "name": "Central Ulaanbaatar",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7350,7 +7350,7 @@
           "slug": "central",
           "name": "Central Valencia",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7381,7 +7381,7 @@
           "slug": "central",
           "name": "Central Valletta",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7412,7 +7412,7 @@
           "slug": "central",
           "name": "Central Valparaíso",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7443,7 +7443,7 @@
           "slug": "central",
           "name": "Central Vancouver",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7474,7 +7474,7 @@
           "slug": "central",
           "name": "Central Vienna",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7505,7 +7505,7 @@
           "slug": "central",
           "name": "Central Vientiane",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7536,7 +7536,7 @@
           "slug": "central",
           "name": "Central Vilnius",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7567,7 +7567,7 @@
           "slug": "central",
           "name": "Central Warsaw",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7598,7 +7598,7 @@
           "slug": "central",
           "name": "Central Washington, D.C.",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7629,7 +7629,7 @@
           "slug": "central",
           "name": "Central Wellington",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7660,7 +7660,7 @@
           "slug": "central",
           "name": "Central Wuhan",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7691,7 +7691,7 @@
           "slug": "central",
           "name": "Central Xi'an",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7722,7 +7722,7 @@
           "slug": "central",
           "name": "Central Yangon",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7753,7 +7753,7 @@
           "slug": "central",
           "name": "Central Yokohama",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7784,7 +7784,7 @@
           "slug": "central",
           "name": "Central Zagreb",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",
@@ -7815,7 +7815,7 @@
           "slug": "central",
           "name": "Central Zurich",
           "character": "central-business",
-          "description": "Central business district. Auto-generated; refine with local knowledge."
+          "description": "Central business district."
         },
         {
           "slug": "north",

@@ -48,6 +48,22 @@ const FORBIDDEN: Array<[string, RegExp]> = [
      The test is not tone, it is ADDRESSEE. A reader has no disk to check and no
      audit to run, so a sentence telling them to do either was written for
      somebody else and left in. */
+  /* A NOTE TO WHOEVER FILLS THE DATA IN LATER, published to readers instead.
+     209 of the 252 cities carried this as their central district's description:
+
+       "Central business district. Auto-generated; refine with local knowledge."
+
+     It rendered on all 209. Nothing else fills that slot for them, so the
+     second sentence WAS the description of the district.
+
+     Same shape as the coverage leak this gate was extended for earlier, and it
+     slipped through the same way: the patterns knew markers and operational
+     verbs, and "auto-generated, refine with local knowledge" is neither. It is
+     a handover note. The addressee is whoever comes back with real data, and it
+     is the reader who was handed it. */
+  ["ops-auto-generated", /\bauto-?generated\b/i],
+  ["ops-refine-later", /\brefine (with|later|this)\b/i],
+  ["ops-placeholder-note", /\b(placeholder|stub|dummy) (text|copy|data|value)\b/i],
   ["ops-run-the", /\brun the [a-z ]{3,20}(audit|script|job|pipeline|sync|import|export)\b/i],
   ["ops-on-disk", /\b(on|to) disk\b/i],
   ["ops-rerun", /\bre-?run (the|this)\b/i],
@@ -185,10 +201,21 @@ for (const dir of SCAN_DIRS) {
          lines and every one was in /admin, which would have made a real rule
          look like noise. The marker rules (TODO, FIXME, clone notes) still apply
          everywhere, because a leftover marker is a leftover marker. */
-      const isAdminSurface = file.replace(/\\/g, "/").includes("/admin/");
+      const norm = file.replace(/\\/g, "/");
+      const isAdminSurface = norm.includes("/admin/");
+      /* /dev is the same case as /admin: sealed from crawlers, built to be
+         worked in, and its two hits here are page TITLES that correctly say
+         "placeholder data". A route whose job is to show placeholder data
+         should be allowed to say so. */
+      const isDevSurface = norm.includes("/app/dev/");
+      /* A leading underscore on a JSON key is this repo's convention for a note
+         to a developer rather than a value: `_anchor`, `_note`, `_meta`. None
+         is read by any code. The convention is what makes them safe, so the
+         gate honours it rather than making every config file add an opt-out. */
+      const isUnderscoreKey = /^\s*"_[a-z_]+"\s*:/i.test(line);
 
       for (const [label, regex] of FORBIDDEN) {
-        if (isAdminSurface && label.startsWith("ops-")) continue;
+        if ((isAdminSurface || isDevSurface || isUnderscoreKey) && label.startsWith("ops-")) continue;
         if (regex.test(line)) {
           hits.push({
             file: file.replace(PROJECT_ROOT, "."),
