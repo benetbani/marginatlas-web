@@ -16,6 +16,7 @@ import {
   isDefaultVisible,
 } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
+import { getCoverageFor } from "@/lib/coverage/report";
 import { iso2ToName } from "@/lib/countries";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -66,6 +67,7 @@ async function CountryIndustriesPageBody({
   const iso2 = country.toUpperCase();
   if (!isKnownCountry(iso2)) notFound();
   const name = iso2ToName(iso2);
+  const held = getCoverageFor(iso2);
 
   // Group SMB-relevant industries by sector, preserving the curated
   // SECTORS_ORDERED sequence so the page reads top-to-bottom in the same
@@ -90,11 +92,30 @@ async function CountryIndustriesPageBody({
           Small business industries in {name}
         </h1>
       </div>
-      <p className="text-ink-800 max-w-2xl mb-8">
-        Benchmarks for the typical small business across {name}&apos;s
-        economy. Click an industry to see typical revenue, profit margins,
-        and cost structures.
-      </p>
+      {/* This paragraph was unconditional, and so was the page: the same list
+          of every visible trade, under the same promise of benchmarks, for all
+          195 countries. 101 of them hold no benchmark at all, so the sentence
+          was an assertion the page could not keep, made most confidently
+          exactly where there was least behind it.
+
+          The list itself stays whole either way. It is the navigation, not the
+          claim, and a country page carries tax rates, formation costs and its
+          cities whether or not a trade benchmark exists. What changes is what
+          the page says it has. */}
+      {held ? (
+        <p className="text-ink-800 max-w-2xl mb-8">
+          {held.cellCount.toLocaleString()} benchmarks for the typical small
+          business across {name}&apos;s economy. Click an industry to see
+          typical revenue, profit margins, and cost structures.
+        </p>
+      ) : (
+        <p className="text-ink-800 max-w-2xl mb-8">
+          Nothing has been measured in {name} yet. These are the trades the
+          atlas covers, and this is where {name}&apos;s numbers will sit once
+          they are. The country page carries what is already known about
+          operating here.
+        </p>
+      )}
 
       {SECTORS_ORDERED.filter((s) => bySector.has(s.id)).map((sector) => {
         const inds = bySector.get(sector.id) || [];
