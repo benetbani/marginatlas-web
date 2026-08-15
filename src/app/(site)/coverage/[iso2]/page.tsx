@@ -114,10 +114,30 @@ export default async function PerCountryCoverage({
       </h1>
 
       {!entry ? (
-        <p className="mt-6 text-ink-700">
-          No coverage data on disk for {meta.name} yet: run the coverage audit
-          to refresh.
-        </p>
+        /* THIS WAS AN INSTRUCTION TO A DEVELOPER, PUBLISHED TO READERS.
+           It read: "No coverage data on disk for {name} yet: run the coverage
+           audit to refresh." On 66 of 195 live coverage pages, 34% of them, all
+           declared in the sitemap. "On disk" and "run the audit" describe this
+           project's plumbing, and a reader who lands here has no audit to run.
+
+           verify_no_internal_notes did not catch it because it only knew four
+           patterns, Cloned from / Wave N split / TODO / FIXME, and none of them
+           is operational prose. The gate now knows this shape too.
+
+           The replacement says what is missing AND what the page will hold when
+           it is not, which is the ratified treatment for a gap: name it, do not
+           hide it, and never fill it with a number nobody measured. */
+        <div className="mt-6 max-w-2xl">
+          <p className="text-ink-700">
+            Nothing has been measured for {meta.name} yet.
+          </p>
+          <p className="mt-3 text-ink-700">
+            When it has been, this page will show how many benchmarks are held,
+            across how many trades and regions, and how much of that is measured
+            rather than modelled. The country page below carries whatever is
+            already known.
+          </p>
+        </div>
       ) : (
         <>
           <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
