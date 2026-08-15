@@ -89,8 +89,29 @@ Four rules. Not aspirations, and each one exists because breaking it cost real t
 
 ## Verification commands (ask permission before running)
 
-- `npm run prebuild` — 25 gates, parallel, ~28-30s wall-clock
-- `npm run prebuild:serial` — same gates, single-process, ~60s (use if parallel is flaky)
+- `npm run prebuild` — 95 gates, parallel, ~60s wall-clock
+- `npm run prebuild:serial` — same gates, single-process (use if parallel is flaky)
+
+**WHETHER THESE RUN ON A DEPLOY IS NOT VISIBLE FROM THIS REPO, and it is worth
+settling.** There is no `vercel.json`, so the build command is a dashboard
+setting. The gates hang off npm's `prebuild` lifecycle hook, which fires only
+when the build is invoked as `npm run build`. If Vercel is configured to run
+`next build` directly, the hook is bypassed and all 95 gates are skipped on
+every deploy while still passing locally, which is the worst of both: the cost
+of maintaining them and none of the protection.
+
+`prebuild_all` itself is correct, verified: it exits 1 when any gate fails,
+including under `--no-bail`, so the build does fail when it is reached.
+
+One line settles it permanently, and it belongs in the repo rather than a
+dashboard:
+
+```json
+{ "buildCommand": "npm run build" }
+```
+
+Left for the founder because changing how production builds is a deploy
+decision, not a code change.
 - `npx tsc --noEmit` — typecheck only, ~30-60s
 - `npm run build` — full Next.js build (after prebuild); minutes
 
