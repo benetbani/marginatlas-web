@@ -40,9 +40,24 @@ export function SavedClient() {
   if (list.length === 0) {
     return (
       <div className="card max-w-xl">
+        {/* IT TOLD READERS TO CLICK A BUTTON THAT DOES NOT EXIST. The copy was
+            "click the ★ Save button to add it here", and there is no Save
+            control anywhere on the site: the only ★ in the codebase is the
+            Australian primary-data badge and the confidence scale on
+            /about-data.
+
+            This is the whole page in practice. "atlas.saved", the key read
+            above, is written by nothing, so the list is always empty and this
+            paragraph is all that ever renders.
+
+            What does exist is WATCH, on a different key (atlas:watch:v1),
+            surfaced by the AddToWatch button and the floating tray. So the
+            instruction now names the control a reader can actually find. */}
         <p className="text-sm text-ink-800">
-          No saved snapshots yet. Open any benchmark page and click the{" "}
-          <span className="font-medium">★ Save</span> button to add it here.
+          Nothing saved here yet. On any benchmark page, the{" "}
+          <span className="font-medium">Watch</span> button keeps a place or a
+          trade on your shortlist, and the tray at the bottom of the screen
+          holds what you have picked.
         </p>
         <a
           href="/"
