@@ -745,9 +745,15 @@ export default async function CityPage({
                       .map((s) => s.name)
                       .slice(0, 2);
                     return (
+                      /* Was /{country}/{city}/{district}, which is the TRADE
+                         route with a district slug in the industry slot: 191 of
+                         194 district slugs 404 there, three open a trade page.
+                         It goes to the district's own entry on the
+                         neighbourhoods hub now, by anchor, which is the only
+                         page that actually holds it. */
                       <Link
                         key={n.slug}
-                        href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
+                        href={`/cities/${city.slug}/neighborhoods#${n.slug}`}
                         className="group block overflow-hidden rounded-xl border border-parchment bg-white transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift"
                       >
                         <NeighborhoodCover

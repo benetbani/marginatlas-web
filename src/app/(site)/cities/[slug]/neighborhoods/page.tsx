@@ -181,10 +181,26 @@ export default async function NeighborhoodHub({
                   ? colors.delta.caution
                   : colors.delta.negative;
           return (
-            <Link
+            /* NOT A LINK, and it never usefully was. This card wrapped
+               /{country}/{city}/{district}, and there is no district route:
+               three segments is the TRADE route, so 191 of the 194 district
+               slugs 404 and three open a trade page at 200 (garden-district ->
+               building & garden supply stores).
+
+               There is nothing to point it at either. The only page below a
+               district is /{country}/{city}/{district}/{trade}, which needs a
+               trade this card cannot honestly choose: the headline trade is
+               derived from a character that is template-assigned on 209 of the
+               252 cities.
+
+               So the card is what it always should have been. It IS the
+               district's detail, not a door to it: name, character,
+               multiplier breakdown, trades, streets. Nothing is lost but a
+               404. */
+            <div
               key={n.slug}
-              href={`/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`}
-              className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 md:p-6 transition-colors"
+              id={n.slug}
+              className="scroll-mt-24 group rounded-2xl border border-parchment bg-white p-5 md:p-6"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
@@ -270,7 +286,7 @@ export default async function NeighborhoodHub({
                   </div>
                 </div>
               )}
-            </Link>
+            </div>
           );
         })}
       </div>
