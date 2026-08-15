@@ -39,6 +39,38 @@ export default async function MarginIndexPage() {
   return (
     <SpineShell>
       <main className="mx-auto max-w-[1120px] px-4 py-8 md:px-6">
+        {/* THE PAGE HAD NO h1. Its only heading came from <Movement>, which
+            emits an h2, and Movement lives inside MarginIndexView, so the
+            heading existed only when the board resolved. On the fallback path
+            this route rendered no heading at all: controls, and one unstyled
+            sentence.
+
+            The h1 sits here rather than in the view because the page is the
+            Margin Index whether or not today's board resolved. The h2 below it
+            names the board actually on screen ("Where restaurants keep the
+            most"), which is a different and narrower statement, so the two do
+            not restate each other. No eyebrow above it, per the rulebook. */}
+        {/* text-2xl, not var(--t-h1): THERE IS NO --t-h1. The spine scale is
+            micro/body/lead/sub and stops at 20px, deliberately, and globals.css
+            spells out what happens if you reach past it: "a var that resolves
+            nowhere makes font-size an invalid declaration, which the browser
+            drops, silently falling back to the inherited size." The first
+            version of this line did exactly that and typechecked cleanly.
+
+            24px is one step above the 20px sub tier that Movement's h2 uses, so
+            the page title reads above the board title without breaking a scale
+            that is compressed on purpose. */}
+        <h1
+          data-typography="custom"
+          className="text-2xl font-semibold tracking-tight text-[var(--c-ink)]"
+        >
+          The Margin Index
+        </h1>
+        <p className="mt-2 max-w-2xl text-[length:var(--t-body)] text-[var(--c-muted)]">
+          Where a small business keeps the most of what it takes, ranked. Free,
+          in full, for every trade and place the atlas has measured.
+        </p>
+
         {/* SUSPENSE IS LOAD BEARING, same defect as /decide and the same cause.
             MarginIndexControls uses useUrlStateMap, which calls useSearchParams
             (src/lib/url_state.ts:64). Without a Suspense boundary that opts the
@@ -61,7 +93,33 @@ export default async function MarginIndexPage() {
         {result ? (
           <MarginIndexView board={toMarginIndexBoard(result)} />
         ) : (
-          <p>The Margin Index is filling in. Check back soon.</p>
+          /* "The Margin Index is filling in. Check back soon." stood here: a
+             bare unstyled paragraph, nine words, no onward link, and the
+             coming-soon stub this repo bans by name.
+
+             It is also the wrong diagnosis. The board is built from live cell
+             reads, so this branch is what a reader sees when those reads come
+             back empty or slow, not when the index is being populated. Telling
+             them to check back soon describes a schedule nobody set. Say what
+             is missing, and hand them a door. */
+          <div className="mt-8 max-w-2xl">
+            <p className="text-[length:var(--t-body)] text-[var(--c-ink)]">
+              Today&apos;s ranking did not load.
+            </p>
+            <p className="mt-3 text-[length:var(--t-body)] text-[var(--c-muted)]">
+              The board is built fresh from the benchmarks behind it, so this
+              page is only as good as that read. Nothing has been lost: every
+              number it ranks is on the trade and place pages themselves.
+            </p>
+            <p className="mt-5 text-[length:var(--t-body)]">
+              <a
+                href="/world"
+                className="font-semibold text-[var(--terra-text)] hover:underline"
+              >
+                Browse by place instead
+              </a>
+            </p>
+          </div>
         )}
       </main>
     </SpineShell>
