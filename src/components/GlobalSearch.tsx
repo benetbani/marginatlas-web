@@ -148,6 +148,11 @@ export function GlobalSearch() {
               <input
                 ref={inputRef}
                 type="text"
+                /* A placeholder is not a label: it disappears the moment
+                   anyone types, and it is not reliably announced. This is the
+                   site-wide search, so it is the one control every reader
+                   meets. */
+                aria-label="Search industries and countries"
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);

@@ -108,7 +108,7 @@ export function CompareToMeClient() {
             Your firm
           </div>
           <div>
-            <label className="text-xs text-ink-700/70 mb-1 block">Activity</label>
+            <label htmlFor="cm-industry" className="text-xs text-ink-700/70 mb-1 block">Activity</label>
             <ComboField
               id="cm-industry"
               label=""
@@ -118,8 +118,13 @@ export function CompareToMeClient() {
             />
           </div>
           <div>
-            <label className="text-xs text-ink-700/70 mb-1 block">Region (US)</label>
+            {/* htmlFor + id, not just proximity. These labels sat directly
+                above their controls and were associated with neither, so a
+                screen reader announced an unnamed combo box and an unnamed
+                text field. The visible text does not change. */}
+            <label htmlFor="cm-region" className="text-xs text-ink-700/70 mb-1 block">Region (US)</label>
             <select
+              id="cm-region"
               value={region}
               onChange={(e) => setRegion(e.target.value)}
               className="w-full bg-white border border-ink-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
@@ -132,10 +137,11 @@ export function CompareToMeClient() {
             </select>
           </div>
           <div>
-            <label className="text-xs text-ink-700/70 mb-1 block">
+            <label htmlFor="cm-revenue" className="text-xs text-ink-700/70 mb-1 block">
               Your yearly revenue (USD)
             </label>
             <input
+              id="cm-revenue"
               type="text"
               inputMode="decimal"
               placeholder="e.g. 750000"
