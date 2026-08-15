@@ -141,13 +141,23 @@ export function CellDataset({
     ];
   }
 
-  if (qualityScore != null) {
-    data.additionalProperty = {
-      "@type": "PropertyValue",
-      name: "Confidence score (1-10)",
-      value: Math.round((qualityScore / 10) * 10) / 10,
-    };
-  }
+  /* THE CONFIDENCE SCORE IS NO LONGER PUBLISHED, in any form.
+     This emitted additionalProperty "Confidence score (1-10)" on every trade
+     page. The same figure was deleted from the visible page, and the cell page
+     still records why: "Data Quality section removed. The 10/10 confidence
+     score and ★★★★★ rating exposed engineering provenance the founder
+     explicitly said never to display."
+
+     Removing it from the DOM and leaving it in the JSON-LD is the weaker half
+     of that decision. Structured data is what an answer engine quotes, so the
+     score kept being republished in the one place nobody looks at while
+     reading, stripped of every caveat the page would have given it.
+
+     `qualityScore` stays in the props to keep the call site honest about what
+     it holds, and is deliberately unused here. Publishing machine-readable
+     provenance is a separate question from displaying it, and it is the
+     founder's to answer. */
+  void qualityScore;
 
   return (
     <script
