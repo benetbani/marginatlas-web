@@ -3,56 +3,26 @@
  *
  * Renders coverage stats + tier breakdown for a single country.
  */
-import fs from "node:fs";
-import path from "node:path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { getCoverageFor, getCoverageRows } from "@/lib/coverage/report";
 import { ProgressBar } from "@/components/ui/progress-bar";
 
 export const revalidate = 21600;
 
-type CoverageReport = {
-  generated_at: string;
-  countries: Array<{
-    iso2: string;
-    regional_cells: number;
-    extrapolated_cells: number;
-    industries: number;
-    geographies: number;
-    tiers: Record<string, number>;
-    avg_quality: number;
-    avg_quality_10: number;
-    year_range: [number | null, number | null];
-  }>;
-};
-
-function loadReport(): CoverageReport | null {
-  /* In-repo paths only. The third candidate used to climb to
-     "../delivery/quality/", which is the parent repository and is never
-     present on a build server. It was harmless here because the first
-     candidate resolves and the chain is wrapped in try/catch, but a dead
-     path that reaches outside the repo is a template someone copies. The
-     same shape, unguarded, has cost 49 deploys. */
-  const candidates = [
-    path.resolve(process.cwd(), "data/quality/coverage_v2.json"),
-    path.resolve(process.cwd(), "delivery/quality/coverage_v2.json"),
-  ];
-  for (const p of candidates) {
-    try {
-      return JSON.parse(fs.readFileSync(p, "utf-8")) as CoverageReport;
-    } catch {
-      continue;
-    }
-  }
-  return null;
-}
-
 export async function generateStaticParams() {
-  // Pre-render top 30 GDP countries only; rest
-  // on-demand. Was 195 pages, contributing to build-worker OOM.
-  const TOP_30 = ["US","CN","JP","DE","IN","GB","FR","IT","CA","BR","RU","KR","AU","ES","MX","ID","NL","SA","TR","CH","PL","AR","BE","SE","TH","IE","NO","AT","IL","SG"];
-  return TOP_30.map((iso2) => ({ iso2: iso2.toLowerCase() }));
+  /* The 30 DEEPEST countries, not the 30 largest economies.
+     The hardcoded GDP list this replaced pre-rendered Singapore, which has no
+     row in the report at all, so one of the thirty was a statically built page
+     saying nothing was held. Ranking by what is actually measured cannot
+     produce that: every pre-rendered page has something on it, by construction.
+
+     Still capped at 30. All 195 contributed to build-worker OOM, and the rest
+     render on demand. */
+  return getCoverageRows()
+    .slice(0, 30)
+    .map((c) => ({ iso2: c.iso2.toLowerCase() }));
 }
 
 export async function generateMetadata({
@@ -93,10 +63,18 @@ export default async function PerCountryCoverage({
   const meta = COUNTRIES.find((c) => c.code === iso2);
   if (!meta) notFound();
 
-  const report = loadReport();
-  const entry = report?.countries.find((c) => c.iso2 === iso2);
+  /* Resolves through the shared reader, which is what recovered this page.
+     The old lookup compared the URL's ISO-2 against the report's raw key, and
+     117 countries are keyed there in ISO-3. Afghanistan's 264 cells were in the
+     file the whole time under "AFG" while /coverage/af rendered as empty. */
+  const entry = getCoverageFor(iso2);
 
-  const totalCells = entry ? entry.regional_cells + entry.extrapolated_cells : 0;
+  /* CLASSIFIED cells, not regional + extrapolated. The stored sum folds in a
+     264-cell block that carries no tier, no quality and no year, on 52 of the
+     94 countries, so this page was crediting Australia with 80,992 benchmarks
+     when 80,728 of them exist. It is also the denominator for the tier
+     percentages below, which were therefore quietly short of 100%. */
+  const totalCells = entry ? entry.cellCount : 0;
   const tierEntries = entry ? Object.entries(entry.tiers).sort((a, b) => b[1] - a[1]) : [];
 
   return (
@@ -151,29 +129,15 @@ export default async function PerCountryCoverage({
             />
           </div>
 
-          <section className="mt-8">
-            <h2 className="text-lg font-semibold text-ink-900 mb-3">
-              Coverage breakdown
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-3 text-sm">
-              <div className="p-4 rounded-xl bg-cream-100 border border-parchment">
-                <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium">
-                  Regional / sub-national
-                </div>
-                <div className="mt-1 text-2xl font-semibold text-ink-900 tabular-nums">
-                  {entry.regional_cells.toLocaleString()}
-                </div>
-              </div>
-              <div className="p-4 rounded-xl bg-cream-100 border border-parchment">
-                <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium">
-                  Country-level extrapolated
-                </div>
-                <div className="mt-1 text-2xl font-semibold text-ink-900 tabular-nums">
-                  {entry.extrapolated_cells.toLocaleString()}
-                </div>
-              </div>
-            </div>
-          </section>
+          {/* The "Coverage breakdown" pair of cards stood here and was removed
+              because neither card could tell a reader anything. Every
+              classified cell in this report is sub-national, on all 94
+              countries, so "Regional / sub-national" restated the headline
+              figure directly above it. And "Country-level extrapolated" reads 0
+              for all 94 once the unclassified block is excluded, which is the
+              only reason it ever showed a number: it was displaying the 264
+              phantom cells. A card that is either a duplicate or a zero is not
+              a breakdown. The tier distribution below is the real split. */}
 
           {tierEntries.length > 0 ? (
             <section className="mt-8">

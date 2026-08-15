@@ -33,6 +33,7 @@ import type { MetadataRoute } from "next";
 import { getTopCells, getTopRegionalCells, slugify, regionalCellUrl, withBudget } from "@/lib/cells";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
+import { getCoverageRows } from "@/lib/coverage/report";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { isPathSuppressed } from "@/lib/quality/thin_pages";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
@@ -168,8 +169,16 @@ async function regionalCellsSitemap(): Promise<MetadataRoute.Sitemap> {
 }
 
 async function coverageScorecardSitemap(): Promise<MetadataRoute.Sitemap> {
-  return COUNTRIES.map((c) => ({
-    url: `${BASE_URL}/coverage/${c.code.toLowerCase()}`,
+  /* Countries with something on the page, not all 195.
+     This mapped COUNTRIES unconditionally, so the sitemap asserted that 96
+     scorecards were worth indexing while the hub linked none of them and each
+     one said nothing was held. A sitemap entry is a claim that a page is worth
+     opening; making that claim about an empty page is just an untrue claim.
+
+     Same reader as the hub and the scorecard, so the three cannot drift apart
+     again: they disagreed by 195 / 264 / 30 before this. */
+  return getCoverageRows().map((c) => ({
+    url: `${BASE_URL}/coverage/${c.iso2.toLowerCase()}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.5,
