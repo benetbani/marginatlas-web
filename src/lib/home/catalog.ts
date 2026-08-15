@@ -33,6 +33,13 @@ export type CatalogCollection = {
   rule: string;
   members: string[];
   href: string;
+  /* The destination rows. The plate shows a count; /extremes shows the members
+     behind it, capped at 24 in the exporter because a destination is still a
+     page and not a database dump. */
+  detail: { id: string; name: string; a: number | null; b: number | null }[];
+  /* What the two figure columns mean, in reader words. Nulls where a
+     collection carries only one figure. */
+  columns: (string | null)[];
 };
 
 const COLLECTIONS = (catalogJson as { collections: CatalogCollection[] }).collections;

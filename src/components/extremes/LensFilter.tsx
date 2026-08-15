@@ -31,8 +31,10 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-/** The stable key of one lens, shared with the page that renders the blocks. */
-export type LensKey = "cost" | "take-home" | "break-in" | "crowding";
+/** The stable key of one lens, shared with the page that renders the blocks.
+ *  "catalog" added 2026-08-09: the four home page collections, which land here
+ *  because /extremes is already the interesting-subsets surface. */
+export type LensKey = "catalog" | "cost" | "take-home" | "break-in" | "crowding";
 
 /** "all" shows every resolved block; a LensKey narrows to that single block. */
 type Selection = "all" | LensKey;

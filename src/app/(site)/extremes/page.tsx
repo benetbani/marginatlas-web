@@ -27,6 +27,7 @@
 import type { Metadata } from "next";
 import { RankRow } from "@/components/board/RankRow";
 import { fmtUSD, fmtNum } from "@/components/board/format";
+import { CatalogCollections } from "@/components/extremes/CatalogCollections";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { LensFilter, type LensEntry } from "@/components/extremes/LensFilter";
 import { elevation } from "@/lib/design-tokens";
@@ -311,6 +312,33 @@ export default async function ExtremesPage() {
   // page degrades to every block visible when JavaScript does not run.
   const lenses: LensEntry[] = [];
   if (hasStartup) {
+  /* THE CATALOG LENS, added 2026-08-09, and it is the destination the home page
+     plates were missing. Those plates state "39 of 194 countries" and, until
+     this, linked to /countries: a list of all 194, which cannot show the claim.
+     A headline with no article under it.
+
+     It belongs here rather than on a new route because this page already IS the
+     interesting-subsets surface. Its other lenses are "the cheapest businesses
+     to start" and "where a restaurant barely clears"; a collection is the same
+     kind of object and splitting them across two pages would split one idea.
+
+     It leads the page deliberately. The existing lenses answer "which trade";
+     these four answer "which place, and is it worth being there at all", which
+     is the wider question and the one the home page just asked. */
+  lenses.push({
+    key: "catalog",
+    label: "Collections",
+    node: (
+      <LensBlock
+        eyebrow="What the atlas can see"
+        title="Four collections"
+        intro="Each of these is a claim about the world rather than a filter, and each states the rule that decides membership so you can disagree with it. Every figure is computed from the same measurements the rest of the atlas runs on."
+      >
+        <CatalogCollections />
+      </LensBlock>
+    ),
+  });
+
     // Startup-capital lens: the "cost to open" read, ranked (cheapest to start /
     // highest barrier). Leads now: the entry figure is the first thing a reader
     // weighs, ahead of the running economics.

@@ -16,7 +16,157 @@
         "IR",
         "KH"
       ],
-      "href": "/countries"
+      "href": "/extremes#cheap-and-light",
+      "detail": [
+        {
+          "id": "TL",
+          "name": "TL",
+          "a": 10.0,
+          "b": 3330
+        },
+        {
+          "id": "SD",
+          "name": "SD",
+          "a": 17.0,
+          "b": 2640
+        },
+        {
+          "id": "VU",
+          "name": "VU",
+          "a": 1.0,
+          "b": 8184
+        },
+        {
+          "id": "IR",
+          "name": "IR",
+          "a": 25.5,
+          "b": 661
+        },
+        {
+          "id": "KH",
+          "name": "KH",
+          "a": 20.5,
+          "b": 3500
+        },
+        {
+          "id": "MM",
+          "name": "MM",
+          "a": 22.3,
+          "b": 2961
+        },
+        {
+          "id": "LY",
+          "name": "LY",
+          "a": 22.0,
+          "b": 3724
+        },
+        {
+          "id": "MG",
+          "name": "MG",
+          "a": 29.5,
+          "b": 1700
+        },
+        {
+          "id": "LA",
+          "name": "LA",
+          "a": 28.3,
+          "b": 2300
+        },
+        {
+          "id": "XK",
+          "name": "XK",
+          "a": 10.5,
+          "b": 8831
+        },
+        {
+          "id": "TJ",
+          "name": "TJ",
+          "a": 24.4,
+          "b": 4218
+        },
+        {
+          "id": "VN",
+          "name": "VN",
+          "a": 24.5,
+          "b": 4810
+        },
+        {
+          "id": "LB",
+          "name": "LB",
+          "a": 26.3,
+          "b": 4200
+        },
+        {
+          "id": "UZ",
+          "name": "UZ",
+          "a": 21.2,
+          "b": 5980
+        },
+        {
+          "id": "KG",
+          "name": "KG",
+          "a": 20.0,
+          "b": 6400
+        },
+        {
+          "id": "NP",
+          "name": "NP",
+          "a": 29.8,
+          "b": 3100
+        },
+        {
+          "id": "EG",
+          "name": "EG",
+          "a": 31.2,
+          "b": 3365
+        },
+        {
+          "id": "YE",
+          "name": "YE",
+          "a": 28.5,
+          "b": 4600
+        },
+        {
+          "id": "PY",
+          "name": "PY",
+          "a": 17.7,
+          "b": 8500
+        },
+        {
+          "id": "IQ",
+          "name": "IQ",
+          "a": 15.5,
+          "b": 9627
+        },
+        {
+          "id": "GH",
+          "name": "GH",
+          "a": 32.0,
+          "b": 4193
+        },
+        {
+          "id": "GY",
+          "name": "GY",
+          "a": 27.0,
+          "b": 6100
+        },
+        {
+          "id": "SS",
+          "name": "SS",
+          "a": 24.0,
+          "b": 7200
+        },
+        {
+          "id": "ID",
+          "name": "ID",
+          "a": 31.3,
+          "b": 4799
+        }
+      ],
+      "columns": [
+        "tax %",
+        "labour cost, USD"
+      ]
     },
     {
       "id": "growing",
@@ -33,7 +183,157 @@
         "Hanoi",
         "Bangalore"
       ],
-      "href": "/cities"
+      "href": "/extremes#growing",
+      "detail": [
+        {
+          "id": "NG-abuja",
+          "name": "Abuja",
+          "a": 12.0,
+          "b": null
+        },
+        {
+          "id": "IN-ahmedabad",
+          "name": "Ahmedabad",
+          "a": 9.0,
+          "b": null
+        },
+        {
+          "id": "IN-surat",
+          "name": "Surat",
+          "a": 9.0,
+          "b": null
+        },
+        {
+          "id": "VN-hanoi",
+          "name": "Hanoi",
+          "a": 9.0,
+          "b": null
+        },
+        {
+          "id": "IN-bangalore",
+          "name": "Bangalore",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "IN-delhi",
+          "name": "Delhi",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "IN-hyderabad",
+          "name": "Hyderabad",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "IN-jaipur",
+          "name": "Jaipur",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "IN-mumbai",
+          "name": "Mumbai",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "IN-pune",
+          "name": "Pune",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "NG-lagos",
+          "name": "Lagos",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "SA-jeddah",
+          "name": "Jeddah",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "VN-ho-chi-minh-city",
+          "name": "Ho Chi Minh City",
+          "a": 8.5,
+          "b": null
+        },
+        {
+          "id": "GE-tbilisi",
+          "name": "Tbilisi",
+          "a": 7.5,
+          "b": null
+        },
+        {
+          "id": "IN-chennai",
+          "name": "Chennai",
+          "a": 7.5,
+          "b": null
+        },
+        {
+          "id": "TZ-dar-es-salaam",
+          "name": "Dar Es Salaam",
+          "a": 7.5,
+          "b": null
+        },
+        {
+          "id": "IN-kolkata",
+          "name": "Kolkata",
+          "a": 7.0,
+          "b": null
+        },
+        {
+          "id": "SA-riyadh",
+          "name": "Riyadh",
+          "a": 7.0,
+          "b": null
+        },
+        {
+          "id": "AE-dubai",
+          "name": "Dubai",
+          "a": 6.5,
+          "b": null
+        },
+        {
+          "id": "BD-dhaka",
+          "name": "Dhaka",
+          "a": 6.5,
+          "b": null
+        },
+        {
+          "id": "ET-addis-ababa",
+          "name": "Addis Ababa",
+          "a": 6.5,
+          "b": null
+        },
+        {
+          "id": "KE-nairobi",
+          "name": "Nairobi",
+          "a": 6.5,
+          "b": null
+        },
+        {
+          "id": "KH-phnom-penh",
+          "name": "Phnom Penh",
+          "a": 6.5,
+          "b": null
+        },
+        {
+          "id": "KZ-almaty",
+          "name": "Almaty",
+          "a": 6.5,
+          "b": null
+        }
+      ],
+      "columns": [
+        "growth % a year",
+        null
+      ]
     },
     {
       "id": "declining",
@@ -44,7 +344,12 @@
       "qualifying": 0,
       "rule": "no decline metric is held yet",
       "members": [],
-      "href": "/cities"
+      "href": "/extremes#declining",
+      "detail": [],
+      "columns": [
+        null,
+        null
+      ]
     },
     {
       "id": "high-margin",
@@ -61,7 +366,157 @@
         "Sole Law Firms",
         "Chiropractic"
       ],
-      "href": "/industries"
+      "href": "/extremes#high-margin",
+      "detail": [
+        {
+          "id": "mental_health_practice",
+          "name": "Mental Health Practice",
+          "a": 25.2,
+          "b": null
+        },
+        {
+          "id": "nutritionist",
+          "name": "Nutritionist",
+          "a": 25.2,
+          "b": null
+        },
+        {
+          "id": "sole_accounting",
+          "name": "Sole Accounting",
+          "a": 25.2,
+          "b": null
+        },
+        {
+          "id": "sole_law_firms",
+          "name": "Sole Law Firms",
+          "a": 25.2,
+          "b": null
+        },
+        {
+          "id": "chiropractic",
+          "name": "Chiropractic",
+          "a": 21.6,
+          "b": null
+        },
+        {
+          "id": "personal_training",
+          "name": "Personal Training",
+          "a": 21.6,
+          "b": null
+        },
+        {
+          "id": "insurance_brokers",
+          "name": "Insurance Brokers",
+          "a": 18.0,
+          "b": null
+        },
+        {
+          "id": "legal_services",
+          "name": "Legal Services",
+          "a": 18.0,
+          "b": null
+        },
+        {
+          "id": "equipment_rental",
+          "name": "Equipment Rental",
+          "a": 16.5,
+          "b": null
+        },
+        {
+          "id": "real_estate_leasing",
+          "name": "Real Estate Leasing",
+          "a": 16.5,
+          "b": null
+        },
+        {
+          "id": "bnbs",
+          "name": "Bnbs",
+          "a": 16.2,
+          "b": null
+        },
+        {
+          "id": "accounting_tax",
+          "name": "Accounting Tax",
+          "a": 15.8,
+          "b": null
+        },
+        {
+          "id": "brow_lash_studios",
+          "name": "Brow Lash Studios",
+          "a": 15.8,
+          "b": null
+        },
+        {
+          "id": "management_consulting",
+          "name": "Management Consulting",
+          "a": 15.8,
+          "b": null
+        },
+        {
+          "id": "massage_therapy",
+          "name": "Massage Therapy",
+          "a": 15.8,
+          "b": null
+        },
+        {
+          "id": "pet_walking_sitting",
+          "name": "Pet Walking Sitting",
+          "a": 15.8,
+          "b": null
+        },
+        {
+          "id": "watch_jewelry_repair",
+          "name": "Watch Jewelry Repair",
+          "a": 15.8,
+          "b": null
+        },
+        {
+          "id": "yoga_pilates",
+          "name": "Yoga Pilates",
+          "a": 15.8,
+          "b": null
+        },
+        {
+          "id": "barbershops",
+          "name": "Barbershops",
+          "a": 14.4,
+          "b": null
+        },
+        {
+          "id": "dance_studios",
+          "name": "Dance Studios",
+          "a": 14.4,
+          "b": null
+        },
+        {
+          "id": "locksmiths",
+          "name": "Locksmiths",
+          "a": 14.4,
+          "b": null
+        },
+        {
+          "id": "martial_arts",
+          "name": "Martial Arts",
+          "a": 14.4,
+          "b": null
+        },
+        {
+          "id": "optometry",
+          "name": "Optometry",
+          "a": 14.4,
+          "b": null
+        },
+        {
+          "id": "pet_training",
+          "name": "Pet Training",
+          "a": 14.4,
+          "b": null
+        }
+      ],
+      "columns": [
+        "net margin %",
+        null
+      ]
     }
   ]
 }
