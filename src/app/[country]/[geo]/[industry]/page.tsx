@@ -79,6 +79,7 @@ import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
 import { MakeItYoursPanel } from "@/components/cells/MakeItYoursPanel";
 import { CityHero } from "@/components/CityHero";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { LEARN_BY_SLUG } from "@/lib/learn/articles";
 import { ComparableCitiesRibbon } from "@/components/ComparableCitiesRibbon";
 import { LocalContextCard } from "@/components/LocalContextCard";
 // TrendSparkline import removed; synthesized 5-year trend was too speculative
@@ -143,6 +144,35 @@ const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
   default_fallback: IndustryMarginRow;
   industries: Record<string, IndustryMarginRow>;
 };
+
+/**
+ * The /learn explainer for a trade, or null when there is not one.
+ *
+ * THE SLUG WAS BUILT AND LINKED WITHOUT EVER BEING CHECKED. 194 of the 200
+ * visible trades produce a slug that is not in LEARN_ARTICLES, and /learn/[slug]
+ * calls notFound(), so the "Read the explainer" card on almost every cell page
+ * led to a 404. Six trades resolve.
+ *
+ * Some could never have resolved at all: the transform does not touch
+ * punctuation, so "Vegetable & Fruit Farming" built
+ * /learn/how-much-does-a-vegetable-&-fruit-farming-make.
+ *
+ * find_dead_links cannot see any of this. It skips hrefs containing an
+ * interpolation, which is every one of them.
+ *
+ * Resolves against the same map /learn/[slug] uses, so the card and the page it
+ * points at cannot disagree about whether an article exists.
+ */
+function learnHrefForTrade(name: string | null | undefined): string | null {
+  if (!name) return null;
+  const base = name
+    .toLowerCase()
+    .replace(/s$/, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+  const slug = `how-much-does-a-${base}-make`;
+  return LEARN_BY_SLUG.has(slug) ? `/learn/${slug}` : null;
+}
 
 function lookupIndustryMargin(industryId: string | null | undefined): IndustryMarginRow {
   if (!industryId) return INDUSTRY_MARGINS.default_fallback;
@@ -1311,8 +1341,9 @@ async function CellPageBody({
         <section className="mt-5 mb-8 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow size="md" className="mb-2">Read more</SectionEyebrow>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {learnHrefForTrade(cell.industry_name || cell.industry_id) ? (
             <a
-              href={`/learn/how-much-does-a-${(cell.industry_name || cell.industry_id).toLowerCase().replace(/s$/, "").replace(/\s+/g, "-").replace(/-+/g, "-")}-make`}
+              href={learnHrefForTrade(cell.industry_name || cell.industry_id) as string}
               className="block rounded-md border border-parchment bg-white hover:shadow-lift hover:-translate-y-px p-4 transition"
             >
               <div className="text-sm font-semibold text-ink-900">
@@ -1322,6 +1353,7 @@ async function CellPageBody({
                 Read the explainer →
               </div>
             </a>
+            ) : null}
             <a
               href="/about-data"
               className="block rounded-md border border-parchment bg-white hover:shadow-lift hover:-translate-y-px p-4 transition"
