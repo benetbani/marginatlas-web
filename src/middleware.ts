@@ -406,8 +406,29 @@ const CACHEABLE_PATTERNS: RegExp[] = [
   /^\/world$/,
   /^\/pricing$/,
   /^\/calculator$/,
-  /^\/status$/,
+  /* /status REMOVED. It is the uptime dashboard: it declares
+     `export const dynamic = "force-dynamic"` AND calls noStore(), because it
+     pings each dependency at request time and its only value is being current.
+     This list was handing it s-maxage=21600 with 24h stale, and the note above
+     says why that wins: Vercel honours s-maxage at the CDN even when the route
+     underneath is dynamic. So the page went to two separate lengths to never be
+     cached, and was served from edge for six hours anyway, reporting the health
+     of the site as it stood that morning. */
   /^\/methodology($|\/[a-z0-9-]+$)/,
+  /* Added: static server-rendered pages that were paying a function invocation
+     on every request. The file's own note calls edge hit-rate "the single
+     largest perf win", and each of these was a miss.
+     Checked individually first: none reads searchParams, none is force-dynamic
+     or noStore. /decide, /margin-index and /contact are deliberately still
+     absent because they DO read searchParams, and /you and /compare stay out
+     for the client-state reason recorded above. */
+  /^\/countries$/,
+  /^\/tools$/,
+  /^\/extremes$/,
+  /^\/faq$/,
+  /^\/privacy$/,
+  /^\/terms$/,
+  /^\/cookies$/,
   // /{country}
   /^\/[a-z]{2}$/,
   // /{country}/{geo}
