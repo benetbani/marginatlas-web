@@ -22,6 +22,7 @@
  * 2026-05-26 shipped alongside the city-page entry point.
  * 2026-06-04 reformed to the warm decision-first layout.
  */
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -344,13 +345,38 @@ export default function DecideLanding() {
           luxury district, gentrifying edge), and rent drag. Different
           activities peak in different neighborhoods of the same city.
         </p>
-        <DecideWizard
-          trades={WIZARD_TRADES}
-          featuredTrades={FEATURED_TRADES}
-          places={WIZARD_PLACES}
-          featuredPlaces={FEATURED_PLACES}
-          tradeNetMargin={TRADE_NET_MARGIN}
-        />
+        {/* SUSPENSE IS LOAD BEARING HERE AND ITS ABSENCE COST THE WHOLE PAGE.
+            DecideWizard uses useUrlStateMap, which calls useSearchParams
+            (src/lib/url_state.ts:64). A client component reading useSearchParams
+            WITHOUT a Suspense boundary opts the entire route into client-side
+            rendering: Next still reports it as prerendered, and the HTML it
+            prerenders contains only the chrome plus the React payload.
+
+            Measured on production before this fix: h1=0, h2=0, p=0, 20 divs,
+            and 9 visible words on a page that renders a hero, three paragraphs
+            and a wizard. The h1 existed only as an escaped string inside a
+            script tag. Every word of this page was invisible to a crawler and
+            to anyone without JavaScript, while looking perfect in a browser.
+
+            /compare in this same route group does the identical thing and
+            renders 831 words, because it wraps its client in Suspense. The fix
+            was already demonstrated in this codebase; this page just never got
+            it. */}
+        <Suspense
+          fallback={
+            <div className="py-10 text-sm text-cocoa-500" role="status" aria-live="polite">
+              Loading the picker
+            </div>
+          }
+        >
+          <DecideWizard
+            trades={WIZARD_TRADES}
+            featuredTrades={FEATURED_TRADES}
+            places={WIZARD_PLACES}
+            featuredPlaces={FEATURED_PLACES}
+            tradeNetMargin={TRADE_NET_MARGIN}
+          />
+        </Suspense>
       </section>
 
       {/* Worked examples: the method in action, not a leaderboard. Each card is

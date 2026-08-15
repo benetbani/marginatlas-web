@@ -156,6 +156,10 @@ const GATES: Gate[] = [
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },
   { name: "facts-confidence", script: "tests/facts/confidence.test.ts" },
+  /* Two live routes were invisible to crawlers: a client island read
+     useSearchParams with no Suspense boundary, which opts the WHOLE route into
+     client rendering while still reporting as prerendered. Negative-tested. */
+  { name: "search-params-suspense", script: "scripts/verify_search_params_suspense.mjs" },
   { name: "break-in-for-cell", script: "tests/scores/break_in_for_cell.test.ts" },
   { name: "composite", script: "tests/scores/composite.test.ts" },
   { name: "country-board", script: "tests/scores/country_board.test.ts" },

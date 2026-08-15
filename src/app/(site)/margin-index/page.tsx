@@ -10,6 +10,7 @@
  * this is a new route with no live version to protect, so it defaults to
  * rendering.
  */
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SpineShell } from "@/components/spine/shell";
@@ -38,7 +39,25 @@ export default async function MarginIndexPage() {
   return (
     <SpineShell>
       <main className="mx-auto max-w-[1120px] px-4 py-8 md:px-6">
-        <MarginIndexControls />
+        {/* SUSPENSE IS LOAD BEARING, same defect as /decide and the same cause.
+            MarginIndexControls uses useUrlStateMap, which calls useSearchParams
+            (src/lib/url_state.ts:64). Without a Suspense boundary that opts the
+            WHOLE route into client-side rendering: Next still reports it as
+            prerendered and the HTML it emits carries only the chrome plus the
+            React payload.
+
+            Measured on production before this fix: h1=0, h2=0, p=0, 20 divs,
+            9 visible words. /compare in the same route group renders 831 words
+            because it wraps its client in Suspense. */}
+        <Suspense
+          fallback={
+            <div className="py-6 text-sm text-cocoa-500" role="status" aria-live="polite">
+              Loading the controls
+            </div>
+          }
+        >
+          <MarginIndexControls />
+        </Suspense>
         {result ? (
           <MarginIndexView board={toMarginIndexBoard(result)} />
         ) : (
