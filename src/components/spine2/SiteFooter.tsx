@@ -125,7 +125,12 @@ const COLUMNS: ReadonlyArray<FooterColumn> = [
       { label: "All tools", href: "/tools" },
       { label: "Which business, and where", href: "/decide" },
       { label: "Break even and take home", href: "/calculator" },
-      { label: "Compare two places", href: "/compare" },
+      /* "Compare two places" undersold it on every page of the site. The tool
+         takes three: CompareClient's own comment says "Up to three cities, side
+         by side", the page's description says "up to three cities", and
+         /calculator links to it as "Compare three at once". The footer was the
+         only surface saying two. */
+      { label: "Compare three places", href: "/compare" },
       { label: "Margin Index", href: "/margin-index" },
       { label: "What the paid tier adds", href: "/pricing" },
     ],
@@ -137,6 +142,11 @@ const COLUMNS: ReadonlyArray<FooterColumn> = [
       { label: "How a figure is built", href: "/methodology" },
       { label: "About the data", href: "/about-data" },
       { label: "What is covered", href: "/coverage" },
+      /* THE KNOWLEDGE BASE HAD ONE INBOUND LINK IN THE WHOLE SITE, and it was
+         on the 404 page. 54 articles, declared in full in the sitemap, and the
+         only way a reader reached the hub was by asking for a page that does
+         not exist first. Crawlers knew about it; readers did not. */
+      { label: "Explainers", href: "/learn" },
       { label: "Common questions", href: "/faq" },
       { label: "Notes", href: "/blog" },
       { label: "Contact", href: "/contact" },
