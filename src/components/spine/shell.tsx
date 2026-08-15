@@ -12,7 +12,27 @@ import { Geist, Space_Grotesk } from "next/font/google";
 const geist = Geist({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-geist", display: "swap" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-grotesk", display: "swap" });
 
-const DEFAULT_BG = "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1920&q=60";
+/**
+ * The founder's own photograph, not a stock URL.
+ *
+ * This was an Unsplash hotlink, the same one src/app/dev/spine/layout.tsx
+ * carries, which is where these components were built. It came along with the
+ * promotion the way the /dev hand-off links did.
+ *
+ * Two reasons it changed. The founder asked for this picture behind the home
+ * page in as many words, and the home page takes this default (page.tsx renders
+ * <SpineShell> with no bg). And the file has been sitting in public/spine since
+ * 7 August, already used by the spine2 surface through
+ * .atlas-frame-gutters .atlas-placephoto, so the site was serving his image on
+ * one surface and a stock photo on the others.
+ *
+ * It also removes a third-party runtime dependency: this background is injected
+ * as a raw CSS url(), so it never passes through next/image and every reader
+ * fetched it from Unsplash directly, cache and all.
+ *
+ * Treatment is unchanged (opacity 0.32, saturate 0.85); only the source moved.
+ */
+const DEFAULT_BG = "/spine/_skyline.jpeg";
 
 export function SpineShell({ children, bg = DEFAULT_BG, bgPosition = "center 16%" }: { children: React.ReactNode; bg?: string; bgPosition?: string }) {
   return (
