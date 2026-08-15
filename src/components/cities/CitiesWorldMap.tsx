@@ -69,7 +69,18 @@ const TOOLTIP_BG = "#ffffff"; //  cream-50
 const TOOLTIP_BORDER = "#c3bfb7"; // cream-400
 const TOOLTIP_TEXT = "#211810"; // ink-900
 
-const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
+/* Served from public/, not unpkg.
+   This fetched https://unpkg.com/world-atlas@2/countries-110m.json at runtime,
+   from every reader's browser, while the identical file sat in node_modules:
+   world-atlas is already a dependency of this project ("^2.0.2"). So the map
+   downloaded from a third-party CDN data the build already had.
+
+   Two things wrong with that. The map stops drawing if unpkg is slow or down,
+   for no reason we control. And "@2" is a floating major, so the geometry could
+   change under the site without a commit.
+
+   Copied to public/geo/ from node_modules at the version in the lockfile. */
+const GEO_URL = "/geo/countries-110m.json";
 
 type GeoFeature = {
   rsmKey: string;

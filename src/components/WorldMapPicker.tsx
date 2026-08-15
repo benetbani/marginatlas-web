@@ -48,7 +48,8 @@ const NAME_FALLBACK_ISO2: Record<string, string> = {
   "Kosovo": "XK",
 };
 
-const GEO_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
+/* Served from public/, not unpkg. See the note in CitiesWorldMap. */
+const GEO_URL = "/geo/countries-110m.json";
 
 // Map borders pronounced per founder feedback
 // ("the borders between countries should be pronounced. Right now,
