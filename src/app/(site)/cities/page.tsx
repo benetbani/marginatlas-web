@@ -230,10 +230,20 @@ export default function CitiesHub() {
           >
             The covered cities, region by region
           </h2>
+          {/* "Each city carries three real figures" was true of 246 of the 252.
+              Six carry two: Abidjan, Algiers, Kaohsiung, Kuwait City, Taipei
+              and Tunis have no visitor count, and CityStatCard drops a figure
+              it does not hold rather than printing a dash.
+
+              A reader who opens Taipei and finds two is not misled by much, but
+              the sentence is the kind that gets checked in five seconds, and
+              this site's whole claim is that it says what it has. The card
+              already behaves correctly; only the promise above it did not. */}
           <p className="mt-3 max-w-2xl text-base text-graphite leading-relaxed">
-            Each city carries three real figures: visitors a year, the average
-            salary, and metro GDP. They frame the size of a market before you
-            open in it, and the largest metros lead each region.
+            Each city carries up to three figures: visitors a year, the average
+            salary, and metro GDP. A city shows the ones it holds. They frame
+            the size of a market before you open in it, and the largest metros
+            lead each region.
           </p>
 
           <div className="mt-8 md:mt-10 flex flex-col gap-10 md:gap-14">

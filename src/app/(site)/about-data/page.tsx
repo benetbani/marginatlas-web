@@ -84,8 +84,13 @@ export default function AboutDataPage() {
 
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Coverage tiers</h2>
+        {/* "Every page in Atlas shows a coverage chip" was true of one page.
+            CoverageBadge is mounted by src/app/[country]/[geo]/[industry] and
+            nowhere else, so the country, city, industry and neighborhood pages
+            never showed one. "Four tiers, one vocabulary" is still right, and
+            is the more useful half; it was the reach that was overstated. */}
         <p className="mt-3 text-ink-800">
-          Every page in Atlas shows a coverage chip next to the headline number.
+          A benchmark page shows a coverage chip next to its headline number.
           Four tiers, one vocabulary:
         </p>
 
