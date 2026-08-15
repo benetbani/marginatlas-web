@@ -280,7 +280,7 @@ export function AtlasIndex({
   sampleNote,
   searchPlaceholder = "Search the list" + ELLIPSIS,
   focalLabel = "Margin kept",
-  compareHref = "/dev/decide",
+  compareHref = "/decide",
 }: {
   title: string;
   rows: IndexRow[];

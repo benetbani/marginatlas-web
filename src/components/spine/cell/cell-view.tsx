@@ -421,7 +421,7 @@ function Close({ d }: { d: any }) {
   // page of its own yet (it lives in this page's money chapter , and only exists at
   // all when this cell actually has a format picker to point at).
   const links: Array<{ t: string; href?: string }> = [
-    { t: `Compare ${trade} across nearby markets`, href: "/dev/spine-industry" },
+    { t: `Compare ${trade} across nearby markets`, href: "/industries" },
     ...(rel[0]
       ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug ? `/gb/london/${rel[0].slug}` : undefined }]
       : []),

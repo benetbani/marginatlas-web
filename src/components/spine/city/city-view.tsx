@@ -310,7 +310,13 @@ function LowestBar({ d }: { d: any }) {
           <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">ease to enter</div>
         </div>
       </div>
-      <a href={lead.href ?? "/dev/spine-cell"} className="mt-4 inline-flex items-center gap-1.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a>
+      {/* href={lead.href}, previously lead.href ?? "/dev/spine-cell". The
+              fallback sent a reader into the sandbox these components were
+              built in, which renders one hardcoded trade regardless of what was
+              clicked, so a missing link became somebody else's data presented
+              as this city's. An <a> with an undefined href renders as text, so
+              a row with no destination is simply not a link. */}
+            <a href={lead.href} className="mt-4 inline-flex items-center gap-1.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a>
     </Box>
   );
   if (rest.length === 0) return featured;
@@ -324,7 +330,7 @@ function LowestBar({ d }: { d: any }) {
         </div>
         <div className="divide-y divide-[var(--c-border)]">
           {rest.map((t: any) => (
-            <a key={t.slug} href={t.href ?? "/dev/spine-cell"} className="hov -mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 rounded-md px-2 py-2">
+            <a key={t.slug} href={t.href} className="hov -mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 rounded-md px-2 py-2">
               <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink)]">{t.name}</span>
               <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.break_in_0_100}</Fig>
               <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{k(t.cost_to_open_usd)}</Fig>
@@ -511,13 +517,13 @@ function Close({ d }: { d: any }) {
               {lightest ? <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{lightest.rent_mult}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div> : null}
             </div>
           ) : null}
-          {pick ? <a href={pick.href ?? "/dev/spine-cell"} className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a> : null}
+          {pick ? <a href={pick.href} className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a> : null}
         </div>
         {/* the Pro / compare hand-off */}
         <div className="flex flex-col gap-4">
           <div>
             <div className="text-[length:var(--t-body)] text-[var(--c-ink)]">Set {d.meta?.city} beside up to three cities, side by side.</div>
-            <a href="/dev/compare" className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
+            <a href="/compare" className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
           </div>
           {/* the workbook preview , a tight SCHEMATIC bullet list, not floating prose
               lines force-spread with min-h/justify-evenly (rule 19 schematic content;

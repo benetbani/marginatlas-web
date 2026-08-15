@@ -36,6 +36,19 @@ export function WhereToTrade({ d }: { d: any }) {
   // D1 (founder, 2026-07-11): rank by rent load, lightest first. The seed rent
   // multiple is the ranked figure, plainly labelled , nothing derived.
   const rows: District[] = list.slice().sort((a, b) => a.rent_mult - b.rent_mult);
+
+  /* Both district links pointed at /dev/spine-hood, the sandbox these
+     components were built in before they were promoted to real data. The
+     sandbox renders one hardcoded London district for ANY row, so every
+     district in every city led to the same borrowed page.
+
+     There is no per-district public route, so the honest destination is the
+     city's own neighborhoods page. When the datum carries no city slug there is
+     nothing to link to, and the row renders as text rather than as a link to
+     somewhere else's data. */
+  const hoodHref: string | undefined = d.meta?.slug
+    ? `/cities/${d.meta.slug}/neighborhoods`
+    : undefined;
   const sample = w._meta?.confidence === "placeholder" || w._meta?.confidence === "modeled";
 
   // dot-plot geometry: one shared DATA-DERIVED domain , x1 is the drawn floor AND the
@@ -58,7 +71,7 @@ export function WhereToTrade({ d }: { d: any }) {
       name: x.name, slug: x.slug, lat: x.lat, lng: x.lng,
       signal: 50, signalLabel: `rent x${x.rent_mult} the city level`, sub: x.character,
       tone: i === 0 ? "terra" : "ink",
-      href: "/dev/spine-hood",
+      href: hoodHref,
     }));
 
   // The map self-omits when no district carries real coordinates (real-data promotion
@@ -92,7 +105,7 @@ export function WhereToTrade({ d }: { d: any }) {
               return (
                 <a
                   key={r.slug}
-                  href="/dev/spine-hood"
+                  href={hoodHref}
                   onMouseEnter={() => setHover(r.slug)}
                   onMouseLeave={() => setHover(null)}
                   className="hov -mx-2 block rounded-md px-2 py-1.5 transition-colors"

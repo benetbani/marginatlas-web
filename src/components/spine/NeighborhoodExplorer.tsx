@@ -519,7 +519,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
             <><Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{d.cell_count}</Fig> trades covered in {d.name}</>
           ) : null}
         </div>
-        <a href={d.cell_href ?? "/dev/spine-cell"} className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[length:var(--t-body)] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
+        <a href={d.cell_href} className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[length:var(--t-body)] font-semibold text-white transition-opacity hover:opacity-90" style={{ background: "var(--c-ink)" }}>
           Open a trade here <span aria-hidden>&#8594;</span>
         </a>
       </div>
