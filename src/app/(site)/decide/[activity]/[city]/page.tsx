@@ -387,7 +387,12 @@ export default async function DecideWizard({
                         ))}
                     </div>
                     <div className="text-[10px] text-cocoa-700/55 tabular-nums pt-1 border-t border-[rgba(76,39,18,0.06)]">
-                      revenue {revPct >= 0 ? "+" : ""}
+                      {/* "at least" when the multiplier is the model's 3.0
+                          ceiling rather than a reading, the same convention
+                          CityDistrictPicker, DivergingBars and the
+                          neighbourhoods hub already use. */}
+                      revenue {b.revenueClipped ? "at least " : ""}
+                      {revPct >= 0 ? "+" : ""}
                       {revPct}% &middot; rent {rentPct >= 0 ? "+" : ""}
                       {rentPct}% &middot; net margin {marginPct}%
                     </div>
@@ -470,6 +475,8 @@ export default async function DecideWizard({
                           </div>
                         </td>
                         <td className="px-4 py-3 text-right tabular-nums text-ink-800">
+                          {/* Same clip qualifier as the cards above. */}
+                          {b.revenueClipped ? "at least " : ""}
                           {revPct >= 0 ? "+" : ""}
                           {revPct}%
                         </td>

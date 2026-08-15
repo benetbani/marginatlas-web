@@ -675,6 +675,8 @@ export function rentMultiplier(tags: NeighborhoodTag[]): number {
 // ---------------------------------------------------------------------------
 
 export type NetMarginBreakdown = {
+  /** True when revenueMultiplier is the clip ceiling, not a reading. */
+  revenueClipped?: boolean;
   /** Revenue multiplier vs city baseline (from getNeighborhoodMultiplier). */
   revenueMultiplier: number;
   /** Rent multiplier vs city baseline. */
@@ -735,6 +737,13 @@ export function getNeighborhoodNetMargin(
 
   return {
     revenueMultiplier: mult.final,
+    /* Carried, not dropped. mult.clipped says the revenue multiplier is the
+       model's 3.0 ceiling rather than a reading, and this function used to
+       discard it, so every caller printed a bound as a measurement with no way
+       to know. 43 of the 1,266 districts sit there, and they are the ones
+       people look at: Manhattan FiDi, Midtown, SoHo/Tribeca, the City of
+       London, the West End. */
+    revenueClipped: mult.clipped,
     rentMultiplier: rentMult,
     baselineNetMargin,
     baselineRentShare,
