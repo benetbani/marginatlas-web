@@ -239,7 +239,7 @@ const REP_BY_TAG: Record<string, RepTarget> = {
   auto_repair: { industryId: "auto_repair_shops", city: "texas", iso2: "us", place: "Texas" },
   veterinary_clinics: { industryId: "veterinary_pet_care", city: "california", iso2: "us", place: "California" },
   pet_grooming: { industryId: "veterinary_pet_care", city: "california", iso2: "us", place: "California" },
-  tutoring_services: { industryId: "education_training", city: "new-york", iso2: "us", place: "New York" },
+  tutoring_services: { industryId: "tutoring_centers", city: "new-york", iso2: "us", place: "New York" },
   photography_services: { industryId: "marketing_design", city: "california", iso2: "us", place: "California" },
   videography_services: { industryId: "marketing_design", city: "california", iso2: "us", place: "California" },
 };
