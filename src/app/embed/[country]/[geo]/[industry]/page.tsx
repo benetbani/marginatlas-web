@@ -4,6 +4,38 @@
  * Designed to be dropped into Notion, a blog, or a Confluence page.
  * Hides the global header/footer (via parent layout opt-out) and shows
  * just the headline numbers + a tiny attribution footer.
+ *
+ * ---------------------------------------------------------------------------
+ * THIS ROUTE CANNOT CURRENTLY BE EMBEDDED, and the reason is two files away.
+ *
+ * next.config.js sends, on `source: "/:path*"`, so on this route too:
+ *
+ *   X-Frame-Options: DENY
+ *   Content-Security-Policy: frame-ancestors 'none'
+ *
+ * Both instruct every browser to refuse to render this page inside a frame.
+ * Anyone following the intent above gets a blank box in their Notion doc, with
+ * nothing in the page itself to explain it. The headers are right for the rest
+ * of the site; they were simply applied to every path, and this is the one path
+ * whose entire purpose they forbid.
+ *
+ * The feature is also gone from the product: the cell page records "CellActions
+ * import removed (save/copy/CSV/embed buttons stripped)", nothing links here,
+ * and the route is noindex and absent from the sitemap. So today this is a
+ * route with no way in and no way to work.
+ *
+ * Two honest exits, and both are the founder's call rather than a passing edit:
+ *
+ *   KEEP IT   scope the two frame headers so /embed/* is excluded (or sends
+ *             frame-ancestors *), and put an embed affordance back on the cell
+ *             page. Clickjacking risk here is low: the page carries figures and
+ *             an attribution line, no forms, no auth, no actions.
+ *   DROP IT   delete this route and the middleware pattern at
+ *             src/middleware.ts:424 that still matches it.
+ *
+ * Written down rather than fixed because loosening a security header is a
+ * posture decision and deleting a route is a product one.
+ * ---------------------------------------------------------------------------
  */
 
 import { notFound } from "next/navigation";
