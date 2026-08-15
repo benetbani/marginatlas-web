@@ -76,11 +76,14 @@ export default function KeyBenchmarksMethodologyPage() {
 
       <h2 className="font-display text-2xl mt-10 mb-3 text-ink-900">The cost stack</h2>
       <p className="text-base text-cocoa-700 leading-relaxed">
-        Every cell carries a nine-line breakdown of where revenue
-        goes: rent, payroll, cost of sales, utilities, marketing,
-        insurance, equipment, motor vehicle (for trades and transport),
-        regulatory. The lines sum to the operating cost; the gap from
-        revenue is the operating margin. Motor vehicle is broken out
+        The cost stack runs to nine lines: rent, payroll, cost of sales,
+        utilities, marketing, insurance, equipment, motor vehicle (for
+        trades and transport), regulatory. A cell shows the lines it
+        actually holds. Any line that comes out at zero is left off
+        rather than printed as a hollow row, and a cell with no cost
+        stack behind it shows the section not at all. The lines sum to
+        the operating cost; the gap from revenue is the operating
+        margin. Motor vehicle is broken out
         because for a plumber or electrician it is a real five-to-eight
         percent of revenue, not a footnote.
       </p>
@@ -92,7 +95,7 @@ export default function KeyBenchmarksMethodologyPage() {
         published academic and practitioner cost studies. They are
         country-adjusted at render time for rent, energy, wages, and
         trade flow using the country economic profile attached to
-        every page. Quality grades are visible per cell.
+        every page.
       </p>
 
       <h2 className="font-display text-2xl mt-10 mb-3 text-ink-900">Outside the range</h2>
