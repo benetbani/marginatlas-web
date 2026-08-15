@@ -278,7 +278,12 @@ export default async function CityPage({
         tagLabels: hasNeighborhoodIntensity(city.slug, n.slug)
           ? mult.appliedTags.filter((t) => t !== "residential_only").map(tagLabel)
           : [],
-        href: `/${city.iso2.toLowerCase()}/${city.slug}/${n.slug}`,
+        /* Fifth and last copy of the same broken URL. This one feeds
+           CityDistrictPicker's "Everything in {district}" link, which is the
+           most prominent of the lot. /{country}/{city}/{district} is the TRADE
+           route with a district in the industry slot; the district's entry on
+           the neighbourhoods hub is the page that actually holds it. */
+        href: `/cities/${city.slug}/neighborhoods#${n.slug}`,
       } satisfies DistrictSummary;
     });
   }
