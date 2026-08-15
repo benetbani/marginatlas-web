@@ -90,7 +90,14 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     // box, and it is the page carrying the site's FAQPage structured data.
     { url: `${BASE_URL}/faq`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },
-    { url: `${BASE_URL}/you`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    /* /you REMOVED 2026-08-09, and it was a CONTRADICTION rather than an
+       oversight. The page sets robots { index: false, follow: false } quite
+       deliberately, because everything on it lives in the reader's own browser:
+       the served HTML is three "Loading your shortlist" placeholders and nothing
+       else, and it never will be anything else. Declaring it here told a crawler
+       to fetch a page that then tells it to go away.
+       The noindex is right and stays. The declaration was the wrong half.
+       Checked across every non-country URL on this shard: it was the only one. */
     { url: `${BASE_URL}/status`, lastModified: new Date(), changeFrequency: "daily", priority: 0.4 },
   ];
 
