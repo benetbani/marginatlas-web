@@ -56,7 +56,17 @@ const TOOLS: Tool[] = [
   {
     href: "/calculator",
     eyebrow: "Calculator",
-    title: "Run your exact rent, payroll, and concept",
+    /* The title read "Run your exact rent, payroll, and concept" and promised
+       three inputs the tool does not have. Its five fields are country, region,
+       industry, size band and annual revenue. Rent and payroll are MODELLED
+       from the trade's cost structure, which is the opposite of exact and the
+       opposite of yours, and there is no concept field at all.
+
+       The description directly beneath it already said the true thing, "enter
+       your country, industry, and revenue", so the card contradicted itself and
+       the more prominent half was the wrong one. This title is now the same
+       promise the calculator's own h1 makes. */
+    title: "Find your break-even, and whether the owner gets paid",
     description:
       "Enter your country, industry, and revenue. See the sales it takes to break even, and whether the owner gets paid.",
   },

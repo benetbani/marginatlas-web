@@ -1,5 +1,5 @@
 /**
- * LeadMagnetForm — client island used by /download/2026-benchmarks.
+ * LeadMagnetForm — client island used by the home page and /download/2026-benchmarks.
  * Same form treatment and privacy line as NewsletterSignupVariants.
  */
 
@@ -10,8 +10,21 @@ import { ArrowRight, CircleNotch } from "@phosphor-icons/react/dist/ssr";
 
 const PRIVACY_LINE = "No spam, no shilling. Unsubscribe with one click.";
 
+/* THE DEFAULT ENDPOINT DID NOT EXIST. It was
+   /api/lead-magnet/2026-benchmarks, and there is no lead-magnet route in this
+   app: the only signup endpoint is /api/newsletter, which the three
+   NewsletterSignupVariants forms have been using all along.
+
+   So every submission from the home page and from /download/2026-benchmarks
+   threw on `!res.ok` and showed the error state. The one mercy is that check:
+   without it a 404 would have set success and told the reader their PDF was on
+   its way. Nothing was captured either, so the emails are gone.
+
+   Points at the real route now, which writes to Supabase newsletter_signups,
+   is rate limited, and reads only `email` from the body, so the `source` field
+   below is carried harmlessly. */
 export default function LeadMagnetForm({
-  endpoint = "/api/lead-magnet/2026-benchmarks",
+  endpoint = "/api/newsletter",
 }: { endpoint?: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [email, setEmail] = useState("");
@@ -39,11 +52,21 @@ export default function LeadMagnetForm({
   if (status === "success") {
     return (
       <div className="mt-7 rounded-lg p-5 bg-cream-100 border border-parchment">
+        {/* "We just sent the PDF to {email}. Check your inbox. If it's not
+            there in two minutes, the spam folder usually solves it." stood
+            here, and all three sentences were false. Nothing was sent, because
+            this site has no email provider at all: no resend, nodemailer,
+            sendgrid, postmark or SES anywhere in package.json. There is also no
+            PDF to send, and no PDF library to build one with.
+
+            Telling a reader to go hunting in their spam folder for a message
+            that was never sent is the part that decided this rewrite. */}
         <p className="font-display text-xl font-semibold text-ink-900">
-          We just sent the PDF to {email}.
+          {email} is on the list.
         </p>
         <p className="font-display italic mt-2 text-[15px] text-cocoa-700">
-          Check your inbox. If it's not there in two minutes, the spam folder usually solves it.
+          The benchmarks PDF is still being put together. You will get it when
+          it is done, and nothing else.
         </p>
       </div>
     );
@@ -77,7 +100,7 @@ export default function LeadMagnetForm({
             </>
           ) : (
             <>
-              Send me the PDF
+              Send it to me
               <ArrowRight size={12} aria-hidden="true" />
             </>
           )}

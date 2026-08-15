@@ -25,9 +25,19 @@ export function HomeNewsletter() {
             <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
               Get the 2026 small business benchmarks
             </h2>
+            {/* "A 38-page PDF of the numbers behind Atlas" was on the HOME
+                PAGE, and there is no PDF. No file, no PDF library in
+                package.json, nothing that could produce one. 38 is the kind of
+                detail that only reads as true, which is what made it worth
+                removing rather than rounding.
+
+                The form beneath it posted to /api/lead-magnet/2026-benchmarks,
+                a route that does not exist, so every signup from the home page
+                errored and nothing was captured. */}
             <p className="mt-3 text-base text-cocoa-700 leading-relaxed">
-              A 38-page PDF of the numbers behind Atlas. Free, in exchange for an
-              email.
+              The numbers behind Atlas, collected into one PDF. It is still
+              being put together. Leave an email and it comes to you when it is
+              done.
             </p>
             <Suspense>
               <LeadMagnetForm />

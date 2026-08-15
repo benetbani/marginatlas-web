@@ -1,5 +1,6 @@
 /**
- * /download/2026-benchmarks — free PDF in exchange for an email.
+ * /download/2026-benchmarks — the benchmarks PDF, when it exists, in exchange
+ * for an email. Nothing is delivered yet; the form captures the address.
  * Server component for the page shell; the form is a small client island.
  */
 
@@ -14,26 +15,39 @@ export const metadata = {
   alternates: { canonical: "/download/2026-benchmarks" },
 };
 
-const SAMPLE_TESTIMONIAL = {
-  quote:
-    "Atlas is the rare data product that respects the reader. The numbers are honest and the writing is calm.",
-  attribution: "María González, café operator, Lisbon",
-};
+/* A FABRICATED TESTIMONIAL FROM A PERSON WHO DOES NOT EXIST STOOD HERE, and it
+   rendered. "Maria Gonzalez, cafe operator, Lisbon" praising the product, under
+   a heading claiming it came from the team behind marginatlas.com. The variable
+   was called SAMPLE_TESTIMONIAL and was assigned unconditionally one line into
+   the component, so the word "sample" existed only in the source.
+
+   An invented endorsement attributed to a named individual is not a placeholder
+   that can wait for real copy. It is the one thing on this site that could not
+   be corrected later by filling a number in, so it is deleted rather than
+   tagged. When a real operator says something real, quote them. */
 
 export default function LeadMagnetPage() {
-  const testimonial = SAMPLE_TESTIMONIAL;
   return (
     <article>
       {/* Hero */}
       <section className="bg-cream-50 border-b border-parchment">
         <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7">
+            {/* "Free PDF - 38 pages", and there is no PDF. Page counts,
+                like the "Three of the 38 pages" below, are the sort of detail
+                that can only be read as a fact about a document somebody has
+                seen. Removed rather than adjusted, because no number is the
+                right number for a document that does not exist. */}
             <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
-              Free PDF · 38 pages
+              Free, in exchange for an email
             </p>
             <h1 className="font-display mt-3 text-balance text-4xl sm:text-5xl leading-[1.06] tracking-[-0.022em] font-semibold text-ink-900">
-              Get the 2026 small business benchmarks PDF.
+              The 2026 small business benchmarks, as a PDF.
             </h1>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-cocoa-700">
+              It is still being put together. Leave an email and it comes to you
+              when it is done.
+            </p>
 
             <ul className="mt-6 space-y-2.5">
               {[
@@ -97,10 +111,10 @@ export default function LeadMagnetPage() {
       <section className="bg-cream-100 border-b border-parchment">
         <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
           <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
-            What's in the PDF
+            What it will hold
           </p>
           <h2 className="font-display mt-3 text-2xl sm:text-3xl leading-[1.1] tracking-[-0.02em] font-semibold text-ink-900">
-            Three of the 38 pages.
+            The shape of it.
           </h2>
 
           <ul className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -117,14 +131,6 @@ export default function LeadMagnetPage() {
           <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
             From the team behind marginatlas.com
           </p>
-          {testimonial && (
-            <blockquote className="font-display italic mt-5 text-balance text-xl sm:text-2xl leading-[1.4] font-medium text-ink-900">
-              "{testimonial.quote}"
-              <footer className="not-italic mt-3 text-sm text-cocoa-700">
-                {testimonial.attribution}
-              </footer>
-            </blockquote>
-          )}
         </div>
       </section>
 
