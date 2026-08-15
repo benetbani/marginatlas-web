@@ -33,12 +33,23 @@ export const metadata = {
   alternates: { canonical: null },
 };
 
+/* No counts in here, deliberately. "245 cities across the atlas" was wrong by
+   seven, the list holds 252, and a hardcoded total on the 404 page is the least
+   likely number in the codebase to be revisited. The sibling entry below
+   already reads "Every activity with a page", which cannot go stale, so the
+   cities line now matches it.
+   
+   Not derived from city_list_v1.json either: this file's header records that a
+   previous version's imports triggered an ENOENT on .next/export/500.html and
+   killed every Vercel deploy of three commits. It stays plain HTML and
+   Tailwind, with no data imports, which is why the honest fix here is to drop
+   the number rather than compute it. */
 const HATCHES = [
-  { label: "Browse cities",           desc: "245 cities across the atlas",                 href: "/cities" },
+  { label: "Browse cities",           desc: "Every city with a page",                      href: "/cities" },
   { label: "Browse industries",       desc: "Every activity with a page",                  href: "/industries" },
   { label: "Pick a country",          desc: "Start from the world map on the homepage",    href: "/" },
   { label: "Read the knowledge base", desc: "Methodology, glossary, atlas guides",         href: "/learn" },
-  { label: "Compare two places",      desc: "Side-by-side country, city, or sector",       href: "/compare" },
+  { label: "Compare three places",    desc: "Side-by-side country, city, or sector",       href: "/compare" },
   { label: "Use the calculator",      desc: "Plug your numbers into the typical operator", href: "/calculator" },
 ];
 

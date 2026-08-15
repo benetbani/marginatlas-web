@@ -181,8 +181,15 @@ export function NavigatorForm() {
           </h2>
         </div>
         <div className="hidden sm:block text-right text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-cocoa-700/70 font-medium leading-tight">
-          <div>105 countries</div>
-          <div>200+ activities</div>
+          {/* Derived, not typed. This read "105 countries", which matches
+              nothing: the picker below offers all of COUNTRIES, and the atlas
+              holds 94 with benchmarks. Neither is 105, so it was a figure from
+              some earlier shape of the list left to rot on the home page, which
+              is the one surface where a wrong number is least affordable.
+              Counting the options the control actually offers means it cannot
+              drift from them again. */}
+          <div>{COUNTRIES.length} countries</div>
+          <div>{visibleIndustries().length} activities</div>
         </div>
       </div>
 
