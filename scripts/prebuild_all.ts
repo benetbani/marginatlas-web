@@ -150,6 +150,7 @@ const GATES: Gate[] = [
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },
   { name: "no-dev-links", script: "scripts/verify_no_dev_links.ts" },
   { name: "api-endpoints-exist", script: "scripts/verify_api_endpoints_exist.ts" },
+  { name: "industry-refs", script: "scripts/verify_industry_refs.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },

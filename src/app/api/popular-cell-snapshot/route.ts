@@ -27,7 +27,12 @@ const ROTATION: { country: string; geo: string; industry: string }[] = [
   { country: "us", geo: "texas",                industry: "auto-repair-shops" },
   { country: "us", geo: "california",           industry: "software-development" },
   { country: "us", geo: "district-of-columbia", industry: "management-consulting" },
-  { country: "de", geo: "germany",              industry: "metal-products-manufacturing" },
+  /* Was "metal-products-manufacturing", which is not a slug this taxonomy
+     produces. slugToIndustry does not reject it, it fuzzy-matches and returns
+     wood_products_mfg, so the German pick in a rotation of "cells with reliably
+     good data" was WOOD. The canonical slug is below, and it matches the
+     fabricated_metal_mfg example the cell route already prerenders for de21. */
+  { country: "de", geo: "germany",              industry: "fabricated-metal-manufacturing" },
   { country: "fr", geo: "france",               industry: "hotels-lodging" },
   { country: "it", geo: "italy",                industry: "restaurants" },
   { country: "jp", geo: "japan",                industry: "restaurants" },
