@@ -73,6 +73,15 @@ export default function IndustriesIndex() {
           </div>
         </header>
 
+        {/* THE MAIN LANDMARK, ADDED 2026-08-09. This page was promoted out of
+            <SiteChrome>, which is where <main> lives for every other route, and
+            nothing replaced it. Measured on production: /world, /industries and
+            the v2 cell page were the only three shipping pages emitting no main
+            landmark, so a screen reader had no content region to jump to and a
+            skip link had nothing to skip to. It closes before the footer, which
+            is chrome and belongs outside the main region. */}
+        <main>
+
         {/* 1 , THE OTHER DOOR. Stated as what it is for, not as what it
             contains. A reader arrives with a trade in mind, not with a wish to
             browse a taxonomy. */}
@@ -227,6 +236,8 @@ export default function IndustriesIndex() {
             ))}
           </div>
         </section>
+
+        </main>
 
         <SiteFooter />
       </div>

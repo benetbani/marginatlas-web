@@ -169,6 +169,15 @@ export default async function WorldPage() {
           </div>
         </header>
 
+        {/* THE MAIN LANDMARK, ADDED 2026-08-09. This page was promoted out of
+            <SiteChrome>, which is where <main> lives for every other route, and
+            nothing replaced it. Measured on production: /world, /industries and
+            the v2 cell page were the only three shipping pages emitting no main
+            landmark, so a screen reader had no content region to jump to and a
+            skip link had nothing to skip to. It closes before the footer, which
+            is chrome and belongs outside the main region. */}
+        <main>
+
         {/* 1 , THE OPENING. A title card is not a page opening. This states
             what the page is for, and carries the figure that makes the list
             below worth scrolling: most of the map is not filled, and the
@@ -348,6 +357,8 @@ export default async function WorldPage() {
             </p>
           </section>
         )}
+
+        </main>
 
         <SiteFooter />
       </div>

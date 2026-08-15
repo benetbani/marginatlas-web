@@ -164,6 +164,10 @@ const GATES: Gate[] = [
      permanentRedirect to /world whose own canonical named /world. A sitemap is
      a list of pages you want indexed. Negative-tested. */
   { name: "sitemap-no-redirects", script: "scripts/verify_sitemap_no_redirects.mjs" },
+  /* /world and /industries were promoted out of SiteChrome, which is where
+     <main> lives, and nothing replaced the landmark. Invisible in a browser;
+     a screen reader had no content region to jump to. Negative-tested. */
+  { name: "main-landmark", script: "scripts/verify_main_landmark.mjs" },
   { name: "break-in-for-cell", script: "tests/scores/break_in_for_cell.test.ts" },
   { name: "composite", script: "tests/scores/composite.test.ts" },
   { name: "country-board", script: "tests/scores/country_board.test.ts" },
