@@ -21,12 +21,39 @@ import { cn } from "@/lib/utils";
 
 export type Tier = "deep" | "good" | "starter" | "modeled";
 
-/** Default human word per tier. Override with the `label` prop. */
+/**
+ * Default human word per tier. Override with the `label` prop.
+ *
+ * `modeled` READ "Estimated", AND THOSE ARE TWO DIFFERENT THINGS HERE.
+ * /faq and /about-data both define the vocabulary independently and both agree:
+ *
+ *   Estimated  built from country indicators and activity averages
+ *   Modeled    no observation for that place and trade, so the figure is what
+ *              we would expect on average
+ *
+ * Modeled is the weaker of the two, and it was being shown to readers under the
+ * name of the stronger one. Three components render <TierDot showLabel /> with
+ * no label override, so this constant is the word on the page.
+ *
+ * STILL UNRESOLVED, and deliberately not invented here:
+ *
+ *   1. "Thin" is not defined on /faq or /about-data, which both describe a
+ *      FOUR word scale. A reader who meets it has nowhere to look it up.
+ *   2. This Tier is a COVERAGE DEPTH scale (deep / good / starter / modeled is
+ *      how much is measured for a PLACE, per the thresholds in the coverage
+ *      hub) while those four words describe the route a SINGLE FIGURE came
+ *      down. They are different axes, so labelling one with the other's
+ *      vocabulary is a category error that renaming a key cannot fix.
+ *
+ * Both need the founder, since they settle what the words mean rather than
+ * which word is used. This change only stops the weakest tier from wearing a
+ * stronger tier's name, which is wrong under either reading.
+ */
 export const TIER_LABEL: Record<Tier, string> = {
   deep: "Measured",
   good: "Regional",
   starter: "Thin",
-  modeled: "Estimated",
+  modeled: "Modeled",
 };
 
 const dotVariants = cva("inline-block rounded-full shrink-0", {
