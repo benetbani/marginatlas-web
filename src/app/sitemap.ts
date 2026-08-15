@@ -219,24 +219,39 @@ async function regionIndustryHubsSitemap(): Promise<MetadataRoute.Sitemap> {
  * ~2,300 URLs. Comfortably within the 50K-per-shard sitemap limit.
  */
 async function neighborhoodSitemap(): Promise<MetadataRoute.Sitemap> {
+  /* CANONICAL SLUGS ONLY, and one trade removed.
+
+     Six of these were alias forms: bars-pubs-clubs, bakeries-pastries,
+     clothing-stores, accounting-bookkeeping, marketing-design and
+     specialty-trades. The cell route resolves an alias happily, so the URLs
+     worked, but its metadata builds `canonical` by echoing back the segments it
+     was handed. So the alias page declared ITSELF canonical, the canonical page
+     declared itself canonical, and this file advertised the alias. Two URLs for
+     one cell, each insisting it was the original, with the sitemap voting for
+     the wrong one.
+
+     management-consulting is gone rather than corrected. Its slug was already
+     canonical; the trade is isDefaultVisible=false, so the site keeps it out of
+     its own navigation on the ratified line that consulting is a client rather
+     than a subject. Promoting it across every city with districts, from the
+     sitemap, contradicted that. */
   const TOP_INDUSTRIES = [
     "restaurants",
     "cafes-coffee-shops",
-    "bars-pubs-clubs",
-    "bakeries-pastries",
+    "bars-nightclubs",
+    "bakeries-retail",
     "hotels-lodging",
-    "clothing-stores",
+    "clothing-shoe-stores",
     "jewelry-stores",
     "grocery-stores",
     "hairdressers-beauty",
     "legal-services",
-    "management-consulting",
-    "accounting-bookkeeping",
+    "accounting-tax",
     "software-development",
-    "marketing-design",
+    "marketing-design-agencies",
     "real-estate-agencies",
     "residential-construction",
-    "specialty-trades",
+    "specialty-trades-mixed",
     "auto-repair-shops",
     "veterinary-pet-care",
     "fabricated-metal-mfg",
