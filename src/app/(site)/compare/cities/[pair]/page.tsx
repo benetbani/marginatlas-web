@@ -45,17 +45,50 @@ const PAIRS = (comparisonsJson as { pairs: Pair[] }).pairs;
 const FACTORS = countryFactorsJson as { default_fallback: CountryFactors; countries: Record<string, CountryFactors> };
 const BASELINES = countryBaselineJson as unknown as { default_fallback: CountryBaseline; countries: Record<string, CountryBaseline> };
 
-const HEADLINE_INDUSTRIES = [
-  { id: "restaurants", label: "Restaurants", base: 1.0 },
-  { id: "coffee-shops", label: "Coffee", base: 0.6 },
-  { id: "law-offices", label: "Law", base: 2.0 },
-  { id: "hair-salons", label: "Hair", base: 0.4 },
-  { id: "construction-residential", label: "Construction", base: 1.4 },
-  { id: "software-dev-services", label: "Software", base: 2.4 },
-  { id: "fitness-centers", label: "Fitness", base: 0.7 },
-  { id: "specialty-retail", label: "Retail", base: 0.8 },
-  { id: "auto-repair", label: "Auto repair", base: 0.5 },
-  { id: "real-estate-brokerage", label: "Real estate", base: 1.6 },
+/**
+ * The rows of the city-versus-city comparison, and where each one opens.
+ *
+ * NINE OF THE TEN IDS WERE NOT SLUGS THIS TAXONOMY PRODUCES, and `id` is
+ * interpolated straight into a cell URL further down. slugToIndustry never
+ * fails, so every link worked, and two of them opened a different business
+ * entirely:
+ *
+ *   "fitness-centers"  ->  garden-centres-nurseries
+ *   "specialty-retail" ->  specialty-food-production
+ *
+ * A reader clicking "Fitness" on a comparison of two cities landed on garden
+ * centres, under a heading naming garden centres. That is the failure this
+ * project treats as the worst one available, and it was two clicks from the
+ * home page.
+ *
+ * `slug` is now the canonical, default-visible trade, and it is NULL where
+ * there is no honest destination:
+ *
+ *   Law     the only law entry is sole-practitioner law firms, which is not
+ *           default-visible and so has no page of its own
+ *   Retail  a category, not a trade. The nearest entries are eyewear, bags and
+ *           bakeries, which are three different shops
+ *
+ * Those two rows keep their estimate, which is modelled from `base` and does
+ * not depend on the taxonomy at all, and simply do not link. The row set is the
+ * founder's and is unchanged; only the destinations are.
+ */
+const HEADLINE_INDUSTRIES: Array<{
+  id: string;
+  slug: string | null;
+  label: string;
+  base: number;
+}> = [
+  { id: "restaurants", slug: "restaurants", label: "Restaurants", base: 1.0 },
+  { id: "coffee-shops", slug: "cafes-coffee-shops", label: "Coffee", base: 0.6 },
+  { id: "law-offices", slug: null, label: "Law", base: 2.0 },
+  { id: "hair-salons", slug: "hairdressers-beauty", label: "Hair", base: 0.4 },
+  { id: "construction-residential", slug: "residential-construction", label: "Construction", base: 1.4 },
+  { id: "software-dev-services", slug: "software-development", label: "Software", base: 2.4 },
+  { id: "fitness-centers", slug: "sports-fitness", label: "Fitness", base: 0.7 },
+  { id: "specialty-retail", slug: null, label: "Retail", base: 0.8 },
+  { id: "auto-repair", slug: "auto-repair-shops", label: "Auto repair", base: 0.5 },
+  { id: "real-estate-brokerage", slug: "real-estate-agencies", label: "Real estate", base: 1.6 },
 ];
 
 function pairSlug(left: string, right: string): string {
@@ -271,10 +304,12 @@ export default async function ComparisonPage({
                 Go deeper on {label}
               </h3>
               <div className="grid grid-cols-2 gap-2">
-                {HEADLINE_INDUSTRIES.slice(0, 6).map((ind) => (
+                {HEADLINE_INDUSTRIES.slice(0, 6)
+                  .filter((ind) => ind.slug !== null)
+                  .map((ind) => (
                   <Link
                     key={ind.id}
-                    href={`/${city.iso2.toLowerCase()}/${city.slug}/${ind.id}`}
+                    href={`/${city.iso2.toLowerCase()}/${city.slug}/${ind.slug}`}
                     className="text-sm text-atlas-700 hover:text-atlas-900 underline decoration-atlas-200 hover:decoration-atlas-700 underline-offset-2"
                   >
                     {ind.label} →
