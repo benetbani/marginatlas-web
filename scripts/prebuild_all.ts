@@ -127,7 +127,20 @@ const GATES: Gate[] = [
      all 81 of its declarations. */
   { name: "token-contrast", script: "scripts/verify_token_contrast.mjs" },
   { name: "dead-links", script: "scripts/audit/find_dead_links.ts", args: ["--strict"] },
-  { name: "featured-tiles", script: "scripts/verify_featured_tiles.ts" },
+  /* featured-tiles REMOVED FROM THE CHAIN 2026-08-09. It guarded a grid that
+     no longer exists.
+
+     The featured-tiles grid was deleted from the home page (src/lib/home/beats.ts
+     still says "where the old featured-tiles grid was"), and the gate behind it
+     was left registered. It reads data/snapshots/featured-tiles.json, dated
+     22 May, and fails the Vercel build if any tile has a null revenue. So a
+     stale snapshot for a deleted feature could stop a deploy, and the failure
+     message told whoever hit it to fix "the FEATURED tuples in src/app/page.tsx",
+     which have not existed for months.
+
+     Deleted rather than left unregistered, per this repo's own corollary: a
+     check nothing runs is not coverage, wire it or delete it. If the grid comes
+     back, so does the gate, out of git. */
   { name: "render-guards", script: "scripts/verify_render_guards.ts" },
   { name: "deepening", script: "scripts/verify_deepening.ts" },
   { name: "monetization-coverage", script: "scripts/verify_monetization_coverage.ts" },
