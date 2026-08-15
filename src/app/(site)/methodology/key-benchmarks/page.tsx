@@ -76,14 +76,16 @@ export default function KeyBenchmarksMethodologyPage() {
 
       <h2 className="font-display text-2xl mt-10 mb-3 text-ink-900">The cost stack</h2>
       <p className="text-base text-cocoa-700 leading-relaxed">
-        The cost stack runs to nine lines: rent, payroll, cost of sales,
-        utilities, marketing, insurance, equipment, motor vehicle (for
-        trades and transport), regulatory. A cell shows the lines it
-        actually holds. Any line that comes out at zero is left off
-        rather than printed as a hollow row, and a cell with no cost
-        stack behind it shows the section not at all. The lines sum to
-        the operating cost; the gap from revenue is the operating
-        margin. Motor vehicle is broken out
+        A benchmark page splits every $100 of revenue four ways before
+        what is left: cost of goods, payroll, rent and premises, and
+        everything else. Utilities, marketing, insurance, equipment,
+        vehicle and regulatory costs sit inside that last line rather
+        than each getting a row of their own, because at cell level the
+        split between them is modelled rather than counted, and four
+        lines we can stand behind read better than nine we cannot. A
+        line under half a percent is dropped rather than printed, and a
+        cell whose cost shape does not resolve shows no breakdown at
+        all. What remains after the four is what the owner keeps. Motor vehicle is broken out
         because for a plumber or electrician it is a real five-to-eight
         percent of revenue, not a footnote.
       </p>
