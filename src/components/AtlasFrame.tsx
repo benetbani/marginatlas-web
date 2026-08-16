@@ -24,9 +24,35 @@
  *   2. the photograph, OPACITY ONLY at .32, warmed, no tint veil
  *   3. the passe-partout: .16 white over the gutters so the photograph reads
  *      through, .82 across the content column so text stays legible, with one
- *      hard step 1cm outside the content edge (9.61% / 90.39% of a 1480px band
- *      over a 1120px column). Below 768px there are no gutters to show, so it
- *      is a flat .82.
+ *      hard step 1cm outside the content edge. Below 768px there are no gutters
+ *      to show, so it is a flat .82.
+ *
+ * THE STEP IS KEYED IN PIXELS, NOT PERCENT, and that is the one thing that
+ * could not be ported unchanged. The original 9.61% was computed for a 1480px
+ * band over a **1120px** content column, which is what the spine page types
+ * use. SiteChrome wraps every page in `max-w-7xl`, which is **1280px**.
+ *
+ * Ported blind, the content would have overhung the readable zone by 58px a
+ * side at 1440 and 42px at 1600 and 1920, so the outer edge of anything
+ * full-width, the ledger's four columns, the card grids, the blog rail, would
+ * have sat on photograph muted to only .16.
+ *
+ * Re-keying to 4.20% fixed the wide viewports and still failed at 1280 and
+ * below, where the column fills the screen: a percentage cannot track a
+ * fixed-width column across viewports. So the stops are calc() instead, at
+ * 50% +/- 702px, which is half the 1280 column plus its 24px padding plus the
+ * ratified 1cm. The readable zone now covers the content at EVERY width by
+ * construction, the gutters appear only when there is room for them, and on a
+ * narrow screen the .82 simply spans the whole band, which is what the mobile
+ * rule below already did at 767px.
+ *
+ * WHAT THIS COSTS, worth knowing: a 1280 column leaves little room for
+ * atmosphere. At 1920 the picture reads at full strength for 220px a side
+ * outside the band plus a 38px muted strip; at 1440, an 18px strip; at 1280,
+ * nothing. If the founder wants more photograph visible, the lever is the
+ * content column, not this gradient: narrowing SiteChrome's main to the
+ * spine's 1120 would hand back 80px a side. That is a site-wide layout change
+ * and his call, not one to make inside a frame.
  *
  * All three are position:fixed, so the photograph stays put and the page scrolls
  * over it. pointer-events:none throughout: this is atmosphere, never a target.
@@ -96,7 +122,7 @@ export function AtlasFrame({ bgPosition = "center 16%" }: { bgPosition?: string 
         }}
       />
       <style>{`
-.atlas-frame-band{background:linear-gradient(to right,rgba(255,255,255,.16) 0%,rgba(255,255,255,.16) 9.61%,rgba(255,255,255,.82) 9.61%,rgba(255,255,255,.82) 90.39%,rgba(255,255,255,.16) 90.39%,rgba(255,255,255,.16) 100%)}
+.atlas-frame-band{background:linear-gradient(to right,rgba(255,255,255,.16) 0,rgba(255,255,255,.16) calc(50% - 702px),rgba(255,255,255,.82) calc(50% - 702px),rgba(255,255,255,.82) calc(50% + 702px),rgba(255,255,255,.16) calc(50% + 702px),rgba(255,255,255,.16) 100%)}
 @media (max-width:767px){.atlas-frame-band{background:rgba(255,255,255,.82)}}
 .spine-frame-layer{display:none !important}
 `}</style>
