@@ -124,7 +124,12 @@ export default function CityHeroV2({
   const density = parseDensity(smbDensity);
 
   return (
-    <section className="bg-white">
+    /* No ground of its own, so the site frame reads through. Same change as
+       CoverageHubV2: bg-white made sense when the page ground was the warm
+       cream body, and since AtlasFrame it paints flat white over the
+       photograph, leaving the picture in the gutters and a blank slab where the
+       page is. The cards inside keep their white. */
+    <section>
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14">
         <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 md:gap-12 items-start">
           {/* LEFT */}

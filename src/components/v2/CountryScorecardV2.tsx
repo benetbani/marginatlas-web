@@ -85,7 +85,12 @@ export default function CountryScorecardV2({
   const blurb = makeBlurb(name, tier, industriesCovered, citiesCovered, yearRange);
 
   return (
-    <section className="bg-white">
+    /* No ground of its own, so the site frame reads through. Same change as
+       CoverageHubV2: bg-white made sense when the page ground was the warm
+       cream body, and since AtlasFrame it paints flat white over the
+       photograph, leaving the picture in the gutters and a blank slab where the
+       page is. The cards inside keep their white. */
+    <section>
       <div className="max-w-[900px] mx-auto px-6 md:px-10 py-10 md:py-14">
         {/* Header */}
         <div className="flex items-start justify-between gap-6 flex-wrap">
