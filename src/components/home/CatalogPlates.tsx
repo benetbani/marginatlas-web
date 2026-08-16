@@ -131,10 +131,18 @@ export function CatalogPlates() {
         Every mark is a place or a trade we hold a figure for. The lit ones are
         where the figures say something worth acting on.
       </p>
-      <div className="mt-8 grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
-        {COLLECTIONS.map((c) => (
-          <Plate key={c.id} c={c} />
-        ))}
+      {/* THE PLATES SIT ON A CARD NOW. The site frame's centre dropped from
+          .82 to .35 so the photograph reads through the middle, per the
+          founder's correction that the centre "is also visible, but with some
+          level of opacity... like we use the style of those cards". These
+          plates are drawn in faint marks on no ground at all, so they were the
+          band most at risk of dissolving into the picture behind them. */}
+      <div className="mt-8 rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-8">
+        <div className="grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
+          {COLLECTIONS.map((c) => (
+            <Plate key={c.id} c={c} />
+          ))}
+        </div>
       </div>
     </section>
   );

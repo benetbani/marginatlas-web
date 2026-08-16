@@ -75,7 +75,18 @@ export function AtlasLedger() {
 
   return (
     <section className="py-10 md:py-14">
-      <div className="border-t border-parchment pt-5 md:pt-6">
+      {/* IN A CARD NOW, because the frame stopped covering for it.
+          The site frame used to paint .82 white across the content column, so a
+          bare band sat on what was effectively a white page. The founder's
+          correction: the centre "is also visible, but with some level of
+          opacity... like we use the style of those cards, we put everything in
+          those cards." The plate is down to .35 and the photograph reads
+          through the middle, so anything not in a card is now sitting on it.
+
+          Eight of the ten homepage bands already put their content in a card.
+          This was one of the two that did not. */}
+      <div className="rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-7">
+        <div className="border-t border-parchment pt-5 md:pt-6">
         {/* An h2, not a div, and it looks exactly the same.
             Every other band on this page contributes a heading to the document
             outline and this one did not, so the site's own coverage claim,
@@ -144,6 +155,7 @@ export function AtlasLedger() {
           {nameList(l.topFive)}. Everywhere else is thinner, and the page says
           which it is before you lean on a number rather than after.
         </p>
+        </div>
       </div>
     </section>
   );

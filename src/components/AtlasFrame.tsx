@@ -125,8 +125,8 @@ export function AtlasFrame({ bgPosition = "center 16%" }: { bgPosition?: string 
         }}
       />
       <style>{`
-.atlas-frame-band{background:linear-gradient(to right,rgba(255,255,255,.16) 0,rgba(255,255,255,.16) calc(50% - 622px),rgba(255,255,255,.82) calc(50% - 622px),rgba(255,255,255,.82) calc(50% + 622px),rgba(255,255,255,.16) calc(50% + 622px),rgba(255,255,255,.16) 100%)}
-@media (max-width:767px){.atlas-frame-band{background:rgba(255,255,255,.82)}}
+.atlas-frame-band{background:linear-gradient(to right,rgba(255,255,255,0) 0,rgba(255,255,255,0) calc(50% - 622px),rgba(255,255,255,.35) calc(50% - 622px),rgba(255,255,255,.35) calc(50% + 622px),rgba(255,255,255,0) calc(50% + 622px),rgba(255,255,255,0) 100%)}
+@media (max-width:767px){.atlas-frame-band{background:rgba(255,255,255,.35)}}
 .spine-frame-layer{display:none !important}
 `}</style>
     </>
