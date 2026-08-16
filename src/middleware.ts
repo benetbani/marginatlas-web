@@ -190,6 +190,33 @@ function isPlaceWeDoNotHold(path: string): boolean {
   const segments = path.split("/").filter(Boolean);
   if (segments.length === 0 || segments.length > 2) return false;
 
+  /* A FILE IS NOT A PLACE, and leaving that unsaid broke the world map.
+     /geo/countries-110m.json splits into exactly two segments, so it reached
+     the test below. "geo" is not a country slug and there is no src/app/geo
+     route folder, because the file lives in public/geo, so this returned true
+     and the request was rewritten with the status pinned to 404. The rewrite
+     still SERVES the file, which is why production answered 404 with a valid
+     107,761-byte TopoJSON body and the right content type.
+
+     WorldMapPicker probes the file and does `if (!r.ok) throw`, so a 404 with
+     a perfect body is indistinguishable from a missing one: it set errored and
+     rendered its fallback, a plain grid of country codes. That is what the
+     founder was looking at when he said of the home page, "Every country on one
+     map, and you have just slapped, like, a list of countries." The map has not
+     been drawing in production at all.
+
+     The verification note below says this was checked against "all 2,847 URLs
+     the site declares", and that is exactly the blind spot: files in public/ are
+     the URLs the site does NOT declare. They are in no sitemap and no route
+     manifest, so a check built from declared URLs could never have seen them.
+
+     The matcher in the config at the bottom already excludes png/jpg/svg/webp/
+     gif/ico/woff2/woff, which is why /spine/_skyline.jpeg answers 200 while
+     this answered 404. Extensions it does not list, .json here but equally
+     .txt, .csv, .xml, .pdf, all fall through to this function. Testing for a
+     dot in the last segment closes the class rather than the instance. */
+  if (segments[segments.length - 1].includes(".")) return false;
+
   const [countrySlug, geoSlug] = segments;
 
   /* THE GUESS THIS FUNCTION REFUSED TO MAKE, NOW MEASURED, 2026-08-09.
