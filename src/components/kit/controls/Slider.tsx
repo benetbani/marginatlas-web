@@ -135,8 +135,8 @@ export function Slider({
               // so the token track above shows through; only the thumb paints.
               "atlas-range relative z-10 h-11 w-full cursor-pointer appearance-none bg-transparent",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
-              "[&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-cream-50 [&::-webkit-slider-thumb]:bg-atlas-500 [&::-webkit-slider-thumb]:shadow-subtle [&::-webkit-slider-thumb]:transition-transform motion-reduce:[&::-webkit-slider-thumb]:transition-none [&:active::-webkit-slider-thumb]:scale-110",
-              "[&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-cream-50 [&::-moz-range-thumb]:bg-atlas-500 [&::-moz-range-thumb]:shadow-subtle [&::-moz-range-track]:bg-transparent",
+              "[&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-atlas-500 [&::-webkit-slider-thumb]:shadow-subtle [&::-webkit-slider-thumb]:transition-transform motion-reduce:[&::-webkit-slider-thumb]:transition-none [&:active::-webkit-slider-thumb]:scale-110",
+              "[&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-atlas-500 [&::-moz-range-thumb]:shadow-subtle [&::-moz-range-track]:bg-transparent",
             )}
           />
 

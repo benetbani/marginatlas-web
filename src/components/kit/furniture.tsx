@@ -78,7 +78,7 @@ export function FlagIt({
       <span>{label}</span>
       <a
         href={href}
-        className="rounded-sm font-medium text-atlas-700 underline decoration-atlas-200 underline-offset-2 transition-colors hover:decoration-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
+        className="rounded-sm font-medium text-atlas-700 underline decoration-atlas-200 underline-offset-2 transition-colors hover:decoration-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
         {cta}
       </a>

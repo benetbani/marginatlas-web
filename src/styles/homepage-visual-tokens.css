@@ -10,7 +10,9 @@
   /* Warm Atlas reformation 2026-06-04 — mirror of design-tokens.ts. */
   --cream-50:  #ffffff;
   --cream-100: #f7f6f4;
-  --parchment: #e4e2dd;
+  /* Cream purge 2026-08-17: kept in sync with colors.parchment, which stopped
+     being cream-300 in disguise. Drives .atlas-rule's 1px rule below. */
+  --parchment: #e3e3e3;
   --atlas-500: #e62200;
   --atlas-700: #991600;
   --cocoa-700: #534231;

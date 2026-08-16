@@ -110,7 +110,7 @@ export function SeverityGlyph({
             height={s.h}
             rx={0.75}
             fill="none"
-            className="stroke-cream-300"
+            className="stroke-parchment"
             strokeWidth={1}
           />
         );

@@ -375,11 +375,7 @@ Take them in ascending blast radius. Each is one tick, gated after.
 2. **Hover states (46, 35 files).** Safest of what is left: a hover tint is
    transient, never load-bearing, and a wrong value is visible only under the
    cursor. `hover:bg-cream-100` -> the neutral equivalent.
-3. **Hairlines (35, 21 files).** Note most of the site's borders already use the
-   separate `parchment` token (347 `border-parchment` uses), which is
-   `#e4e2dd`, warm, and is `cream-300` under another name. **Migrating
-   `border-cream-*` without `parchment` fixes 35 borders and leaves 347.** Do
-   both in one tick or the site ends up with two border colours.
+3. **Hairlines. DONE 2026-08-17.** See "Hairlines, done" below.
 4. **Muted fills (133, 71 files).** The largest and the one with the trap: this
    bucket is `<thead>` tints, chips, progress tracks and inset panels. A blind
    `bg-cream-100` -> `bg-white` here deletes table header shading entirely,
@@ -393,6 +389,78 @@ Take them in ascending blast radius. Each is one tick, gated after.
    `cream-500`, and delete `parchment`'s alias comment. A rename touches every
    call site and must never ride along with a colour change, which is why it is
    separate and why it is last.
+
+### Hairlines, done 2026-08-17. The alias was real, and it was worse than logged.
+
+**The trap, confirmed with numbers.** `parchment` was `#e4e2dd`, h=42.9 s=11.5%
+l=88.0%: not "like" cream-300, it was cream-300, the identical hex, and the
+token file said so in its own comment. So did three more names nobody had
+counted: `--border` and `--input` in `globals.css` (rgb `228 226 221`, the same
+colour written in decimal), `--parchment` in `homepage-visual-tokens.css`, and
+the `chart.grid` role. **Cream had five names, and 380 hairline uses were spelled with one
+that does not contain the word** (362 `border-parchment`, 11
+`divide-parchment`, 5 `border-border`/`border-input`, plus `.atlas-rule`). Rewriting
+`border-cream-300` onto `border-parchment` alone would have dropped the ratchet
+by ten and changed not one pixel.
+
+So the value moved first, in one edit per name, before any call site was
+touched: **`#e4e2dd` -> `#e3e3e3`**. Not invented; it is the rail value the v2
+spine kit already uses in eleven places, and a true neutral (s=0%), so the
+answer to "remove the creamy colour" is no hue rather than a cool tint
+substituted for a warm one. Weight is preserved because 380 borders changed at
+once and none of them asked to get heavier: luminance 0.7611 -> 0.7534, so
+contrast against a white card goes 1.29:1 -> 1.28:1 and against the page ground
+1.21:1 -> 1.20:1. Against the seven foregrounds that sit on it as a fill the
+largest change is +0.12 on a ratio of 13.49 and **zero AA verdicts flip**.
+
+**The call sites: 45 found, not 35, and classified before being touched.** The
+tick-1 classifier undercounted because it reads a role off one source line, and
+because its family list had no `stroke-`. Four jobs, four different answers:
+
+| what it actually is | n | replacement | colour change |
+|---|---|---|---|
+| white halo / white border (`cream-50` = `#ffffff`) | 12 | `border-white`, `ring-white` | none, a naming fix |
+| focus ring-offset, i.e. the ground behind a control | 11 | `ring-offset-white` x10, `ring-offset-background` x1 | none for 9; two in `CalculatorForm` were `cream-100` warm sand while the control sits on `.atlas-card`, which is `#ffffff`, so the offset was simply wrong and is now right |
+| structural hairline (`cream-300`) | 12 | `border/divide/stroke-parchment` | none, `parchment` moved underneath them |
+| **`cream-400` hairlines: DEFERRED** | 10 | none this tick | see below |
+
+**Why `cream-400` was left, measured rather than dodged.** Five
+`border-dashed border-cream-400` empty-state boxes and five
+`decoration-cream-400` underlines. `cream-400` is `#c3bfb7` and it is *shared
+with the chart-mass role*: `bg-cream-400` is the neutral bar in Waterfall,
+ComparisonBars, VsWorld, MoneyGoesBreakdown and VisitorSplit. So it cannot be
+retoned in a hairline tick the way `parchment` could. And no existing cool token
+sits at its weight: it reads 1.79:1 on white, `parchment` reads 1.28:1, so
+mapping it across would have made five dashed empty-state boxes and five
+underlines close to invisible. **Take it with the muted fills (step 4), where
+the bar fills get decided anyway.**
+
+**Verified against the compiled stylesheet, not the source.** 24 assertions on
+`globals.css` put through the project's own postcss + tailwind 3.4.19 with the
+real content glob: every `parchment` family emits `227 227 227`; no
+border-color, divide, ring, outline or stroke declaration carries `#e4e2dd`
+anywhere; and all nine retired utilities are absent from the emitted CSS, which
+is only possible if the source genuinely stopped using them. Two real defects
+came out of that instrument and would have survived a source grep:
+
+- `stroke-cream-300` on `SurvivalCurve` and `SeverityGlyph`, two 1px chart
+  baselines that are the hairline role and that the family list had missed.
+- **Tailwind's content scan does not strip comments.** Naming a retired utility
+  in prose re-emits it into the stylesheet: a comment written in this same
+  commit resurrected `.border-cream-300`. Worth knowing before the rename tick,
+  which will be almost entirely comment churn.
+
+**Blind spot of that instrument, stated:** the project's postcss has no
+`postcss-import` (Next inlines `@import` itself), so nothing reached through an
+`@import` is in the compile. `homepage-visual-tokens.css` was asserted from
+source instead. It proves what a border is *declared* as; it cannot prove a
+border is visible or sits on the element the designer meant.
+
+`verify_no_cream` **517 -> 479 across 167 files**, and the baseline was not
+regenerated on trust: the old file was kept, the counter re-run, and a separate
+script refused to write unless every entry shrank, held, or vanished. Ten
+entries reached zero and were deleted. 38 = 35 utility occurrences + 3 hex
+literals (`parchment`, `chart.grid`, `--parchment`).
 
 **What the instrument used here cannot do**, stated so the next tick does not
 over-trust it: the classifier reads source lines, so it sees the class a

@@ -65,7 +65,7 @@ export function SurvivalCurve({ yr1, yr3, yr5 }: Props) {
           x2={W - padX}
           y1={H - padY}
           y2={H - padY}
-          className="stroke-cream-300"
+          className="stroke-parchment"
           strokeWidth={1}
         />
         <LinePath<Pt>

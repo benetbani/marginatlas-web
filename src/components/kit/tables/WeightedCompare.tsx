@@ -432,7 +432,7 @@ function LockButton({
       title={locked ? "Locked" : "Lock this weight"}
       className={cn(
         "inline-flex h-11 w-9 shrink-0 items-center justify-center rounded-md",
-        "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50",
+        "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white",
         locked ? "text-atlas-700" : "text-cocoa-500 hover:text-atlas-700",
       )}
     >

@@ -144,7 +144,7 @@ export function OwnerKeepTable({
                     {hasText(t.href) ? (
                       <a
                         href={t.href}
-                        className="rounded-sm text-ink-900 transition-colors hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
+                        className="rounded-sm text-ink-900 transition-colors hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                       >
                         {t.trade}
                       </a>

@@ -53,7 +53,7 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-cream-75 font-sans text-ink-900 antialiased">
       {/* top bar */}
-      <header className="sticky top-0 z-20 border-b border-cream-300/70 bg-cream-75/85 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-parchment/70 bg-cream-75/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div className="font-display text-xl tracking-tight">
             Margin <span className="text-atlas-700">Atlas</span>
@@ -74,7 +74,7 @@ export default function Page() {
       </header>
 
       {/* hero */}
-      <section className="relative overflow-hidden border-b border-cream-300/70 bg-gradient-to-b from-atlas-50 to-cream-75">
+      <section className="relative overflow-hidden border-b border-parchment/70 bg-gradient-to-b from-atlas-50 to-cream-75">
         <div className="mx-auto max-w-6xl px-6 pb-20 pt-16 md:pb-28 md:pt-24">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700">
             Restaurants · London · United Kingdom
@@ -100,14 +100,14 @@ export default function Page() {
             </a>
             <a
               href="#"
-              className="rounded-full border border-cream-300 bg-cream-50 px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-300"
+              className="rounded-full border border-parchment bg-cream-50 px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-300"
             >
               Compare another city
             </a>
           </div>
 
           {/* anchored proof strip */}
-          <dl className="mt-14 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-xl border border-cream-300 bg-cream-300 shadow-card">
+          <dl className="mt-14 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-xl border border-parchment bg-cream-300 shadow-card">
             {[
               { k: "Typical revenue", v: usdFull(DATA.revenue) },
               { k: "Owner take-home", v: usdFull(DATA.takeHome) },
@@ -191,7 +191,7 @@ export default function Page() {
           </p>
           <ul className="mt-12 grid gap-x-12 gap-y-6 md:grid-cols-3">
             {DATA.points.map((p, i) => (
-              <li key={i} className="border-t border-cream-50/15 pt-4">
+              <li key={i} className="border-t border-white/15 pt-4">
                 <span className="font-display text-lg text-atlas-300 tabular-nums">
                   0{i + 1}
                 </span>
@@ -216,7 +216,7 @@ export default function Page() {
           </p>
         </div>
 
-        <div className="mt-12 divide-y divide-cream-300 border-y border-cream-300">
+        <div className="mt-12 divide-y divide-parchment border-y border-parchment">
           {DATA.wages.map((w) => {
             const lo = (w.low / WAGE_MAX) * 100;
             const hi = (w.high / WAGE_MAX) * 100;
@@ -233,7 +233,7 @@ export default function Page() {
                     style={{ left: `${lo}%`, width: `${hi - lo}%` }}
                   />
                   <div
-                    className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-cream-50 bg-atlas-600 shadow-subtle"
+                    className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-atlas-600 shadow-subtle"
                     style={{ left: `${med}%` }}
                     aria-hidden
                   />
@@ -251,7 +251,7 @@ export default function Page() {
       </section>
 
       {/* conversion band */}
-      <section className="border-t border-cream-300 bg-atlas-50">
+      <section className="border-t border-parchment bg-atlas-50">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-6 py-16 md:flex-row md:items-center">
           <div className="max-w-xl">
             <h2 className="font-display text-2xl tracking-tight text-ink-900 md:text-3xl">

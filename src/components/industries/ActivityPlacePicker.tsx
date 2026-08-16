@@ -170,7 +170,7 @@ export function ActivityPlacePicker({
             <>
               <span
                 aria-hidden="true"
-                className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-cream-50/40 border-t-cream-50"
+                className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/40 border-t-white"
               />
               Loading...
             </>

@@ -31,7 +31,7 @@ export function ShowMore({
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls={regionId}
-        className="rounded-sm text-[11px] font-semibold uppercase tracking-wide text-atlas-700 transition-colors hover:text-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50 motion-reduce:transition-none"
+        className="rounded-sm text-[11px] font-semibold uppercase tracking-wide text-atlas-700 transition-colors hover:text-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-reduce:transition-none"
       >
         {open ? "Show less" : "Show more"}
       </button>

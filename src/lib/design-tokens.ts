@@ -217,11 +217,40 @@ export const colors = {
     kept: "#4a6018", //     = moss-700, profit / kept / positive delta
     cost: "#87745d", //     = cocoa-500, structure and costs, the neutral breakdown mass
     baseline: "#7d6c58", // = ink-500, neutral data mass / axes / muted labels
-    grid: "#e4e2dd", //     = cream-300, rails / gridlines / hairlines / track backgrounds
+    grid: "#e3e3e3", //     = parchment, rails / gridlines / hairlines / track backgrounds
     caution: "#b06a08", //  = amber-600, caution / below par
     danger: "#5c1813", //   = clay-700, destructive / hard errors only
   },
-  parchment: "#e4e2dd", // warm taupe = cream-300
+  /**
+   * THE HAIRLINE. One value, one job: borders, divides and 1px rules.
+   *
+   * CREAM PURGE 2026-08-17, and this token WAS the purge's biggest blind spot.
+   * It read `#e4e2dd, warm taupe = cream-300` and the comment was exact: it was
+   * byte-for-byte cream-300, h=42.9 s=11.5% l=88.0%. So did `--border` and
+   * `--input` in globals.css (rgb 228 226 221), `--parchment` in
+   * homepage-visual-tokens.css, and the unused `chart.grid` role below. Cream
+   * had FOUR names, and 360 hairlines wore the one that did not contain the
+   * word. Migrating the cream-300 border utilities onto `border-parchment`
+   * would have moved cream behind an alias and made the ratchet look like it
+   * was working. (Written without the dead class spelled out: tailwind's
+   * content scan does not strip comments, so naming a retired utility in prose
+   * re-emits it into the stylesheet. Caught by asserting on the compiled CSS.)
+   *
+   * #e3e3e3 is not invented. It is the rail/track value the v2 spine system
+   * already uses in eleven places (spine/kit.tsx, NeighborhoodExplorer,
+   * money-chapter), and the chart role below calls rails and hairlines one job.
+   * It is a true neutral, s=0%, so the answer to "remove the creamy colour" is
+   * no hue at all rather than a cool tint swapped for a warm one.
+   *
+   * WEIGHT IS PRESERVED, measured rather than eyeballed, because 360 borders
+   * change at once and none of them was asked to get heavier: luminance moves
+   * 0.7611 -> 0.7534, so the hairline's contrast against a white card goes
+   * 1.29:1 -> 1.28:1 and against the page ground 1.21:1 -> 1.20:1. Against the
+   * seven foregrounds that sit on it as a fill (ink-900/800/700, ink-500,
+   * cocoa-700/900, atlas-700) the largest change is +0.12 on a ratio of 13.49
+   * and ZERO AA verdicts flip in either direction.
+   */
+  parchment: "#e3e3e3", // neutral hairline (was cream-300 under another name)
   graphite: "#463726", // warm brown-gray = ink-700
 } as const;
 

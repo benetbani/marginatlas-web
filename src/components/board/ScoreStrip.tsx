@@ -77,7 +77,7 @@ export function ScoreStrip({ overall, parts }: ScoreStripProps) {
 
       {parts.length > 0 ? (
         <details className="group">
-          <summary className="inline-flex w-fit cursor-pointer list-none items-center gap-1 rounded-sm text-[11px] font-semibold uppercase tracking-wide text-atlas-700 transition-colors hover:text-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50 [&::-webkit-details-marker]:hidden">
+          <summary className="inline-flex w-fit cursor-pointer list-none items-center gap-1 rounded-sm text-[11px] font-semibold uppercase tracking-wide text-atlas-700 transition-colors hover:text-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white [&::-webkit-details-marker]:hidden">
             <span>Score breakdown</span>
             <span
               aria-hidden="true"

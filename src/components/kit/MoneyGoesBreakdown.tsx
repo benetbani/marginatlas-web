@@ -122,7 +122,7 @@ export function MoneyGoesBreakdown({
             <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-atlas-700">
               Kept
             </span>
-            <span className="mt-0.5 block h-2.5 w-[3px] rounded-sm bg-atlas-500 ring-2 ring-cream-50" />
+            <span className="mt-0.5 block h-2.5 w-[3px] rounded-sm bg-atlas-500 ring-2 ring-white" />
           </div>
         ) : null}
         <div

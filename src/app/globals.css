@@ -65,8 +65,14 @@
     --accent-foreground: 33 24 16;   /* ink-900 */
     --destructive: 92 24 19;         /* clay-700 #5C1813, deep maroon */
     --destructive-foreground: 255 253 248; /* cream-50 */
-    --border: 228 226 221;           /* cream-300 #E2D2B9, warm taupe */
-    --input: 228 226 221;            /* cream-300 */
+    /* CREAM PURGE 2026-08-17, hairline role. Was 228 226 221, which is
+       #e4e2dd, which is cream-300, which is what `parchment` was too: one
+       colour under four names, 360 of its uses spelled `parchment` so the
+       word cream never appeared. Now the same neutral #e3e3e3 the token
+       carries, so border-border and border-parchment cannot drift apart.
+       Luminance 0.7611 -> 0.7534: the line keeps its weight, loses its hue. */
+    --border: 227 227 227;           /* parchment #e3e3e3, neutral hairline */
+    --input: 227 227 227;            /* parchment */
     --ring: 153 22 0;                /* atlas-700 #991600, used with /40 alpha in primitives */
     --radius: 1rem;
 

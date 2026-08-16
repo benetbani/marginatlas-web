@@ -144,7 +144,7 @@ export function SectionIndex({
       <div className="mb-2.5 text-[10.5px] font-bold uppercase tracking-[0.16em] text-cocoa-500">
         {heading}
       </div>
-      <ul className="space-y-1.5 border-l border-cream-300 pl-3.5">
+      <ul className="space-y-1.5 border-l border-parchment pl-3.5">
         {clean.map((it) => (
           <li key={it.id}>
             <a

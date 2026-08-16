@@ -106,7 +106,7 @@ export default function LeadMagnetPage() {
                   <br />
                   benchmarks.
                 </p>
-                <div className="mt-auto pt-4 border-t border-cream-50/20">
+                <div className="mt-auto pt-4 border-t border-white/20">
                   <p className="text-[10px] uppercase tracking-[0.18em] font-semibold text-cream-50/70">
                     Includes
                   </p>

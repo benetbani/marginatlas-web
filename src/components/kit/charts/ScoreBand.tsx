@@ -144,7 +144,7 @@ export function ScoreBand({
             aria-hidden="true"
             className={[
               // a 2px card-colour ring separates the marker from the band
-              "absolute -top-[13px] h-4 w-[3px] -translate-x-1/2 rounded-sm ring-2 ring-cream-50",
+              "absolute -top-[13px] h-4 w-[3px] -translate-x-1/2 rounded-sm ring-2 ring-white",
               markColor,
             ].join(" ")}
             style={{ left: `${pct * 100}%` }}

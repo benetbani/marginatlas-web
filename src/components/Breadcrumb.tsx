@@ -78,7 +78,7 @@ export function Breadcrumb({ items, maxVisible = 4 }: Props) {
             {crumb.href && !isLast ? (
               <Link
                 href={crumb.href}
-                className="text-atlas-700 hover:text-atlas-700 transition-colors inline-flex items-center gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
+                className="text-atlas-700 hover:text-atlas-700 transition-colors inline-flex items-center gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 {face}
               </Link>
