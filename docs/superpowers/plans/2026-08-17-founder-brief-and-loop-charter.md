@@ -249,5 +249,24 @@ $503K in, $57K kept, 11%); the comparison band leading with its spread; the
 tiles retitled; page grounds removed from `CoverageHubV2`, `CityHeroV2` and
 `CountryScorecardV2`; the H1 restored.
 
-Open and NOT done: §1 B3/B5/B6 (the centre plate and the header), §2 entirely,
-§4 entirely, §6 entirely, §7 entirely.
+**Added after the first loop tick, 2026-08-17:**
+
+- §1 B5/B6 are DONE (`b144d6b6`). The centre plate went from `.82` to `.35` and
+  the gutters from `.16` to `0`, so the edges are the picture at full strength
+  and the middle is the same picture softened. That was only safe because the
+  content is in cards: eight of the ten homepage bands already wrapped theirs,
+  and the two that did not, `AtlasLedger` and `CatalogPlates`, were carded in
+  the same commit. The plates were the worst case, drawn as faint marks on no
+  ground at all.
+  **The `.35` is a first honest value, not a measured one. It wants a
+  screenshot.** The constraint: the picture must read through the middle, and
+  dark text on the card edges must not fight it.
+- §1 B3 is DIAGNOSED, not fixed. `.atlas-glass-chrome` in `globals.css` is
+  `rgba(251, 250, 247, 0.72)` with a backdrop blur: the masthead is translucent
+  cream. Translucent breaks B3, because the photograph reads through the header;
+  cream breaks §2. It is the live path, since `isWarmFrameEnabled()` defaults to
+  true. One rule fixes both, and it is the highest-value cream usage on the site
+  because it renders on every page.
+- The H1 is restored (`d82427e3`) and is now a locked value. See §3.
+
+Open and NOT done: §1 B3, §2 entirely, §4 entirely, §6 entirely, §7 entirely.
