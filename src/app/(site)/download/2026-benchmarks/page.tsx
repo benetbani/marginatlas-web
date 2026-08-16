@@ -8,10 +8,23 @@ import { Suspense } from "react";
 import LeadMagnetForm from "@/components/newsletter/LeadMagnetForm";
 import { colors } from "@/lib/design-tokens";
 
+/* THE PAGE WAS HONEST AND ITS `<head>` WAS NOT. The body says "It is still
+   being put together", and the comment below records why "38 pages" was
+   deleted rather than adjusted: a page count can only be read as a fact about
+   a document somebody has seen. The metadata had never caught up. It said "Get
+   the ... PDF", which in a search result is an offer of a file, and stated the
+   contents flatly as though describing something finished.
+
+   A reader arriving from that snippet finds a form. The gap between the two is
+   small, but this site's entire position is that its numbers can be trusted,
+   and the cheapest place to lose that is a promise made before anyone has
+   clicked. Title names the document without offering it; the description leads
+   with the status. The specific counts are gone for the same reason the page
+   count went: nobody has seen this document, so no count is the right one. */
 export const metadata = {
-  title: "Get the 2026 small business benchmarks PDF · Margin Atlas",
+  title: "The 2026 small business benchmarks PDF · Margin Atlas",
   description:
-    "Median revenue, margin, and wages for 24 industries across 12 economies, with methodology and sourcing.",
+    "Still being put together. Leave an email and it comes to you when it is done: median revenue, margin and wages by industry and economy, with the methodology and sourcing trail.",
   alternates: { canonical: "/download/2026-benchmarks" },
 };
 
