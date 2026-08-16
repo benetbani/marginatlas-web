@@ -35,10 +35,43 @@
  *
  * A collection with nothing measured renders as a GAP, faded and labelled, never
  * as an empty plate pretending to be full. Districts have no decline metric yet.
+ *
+ * DENSITY PASS 2026-08-17. Rendered and counted: 116 words, of which 25 were a
+ * lede reading "Every mark is a place or a trade we hold a figure for. The lit
+ * ones are where the figures say something worth acting on." That is a legend
+ * written as a sentence, and a legend is the thing a plate should have. It is
+ * now two dots and two words beside the heading, which is how a chart labels
+ * its own marks, and the 25 words are gone.
+ *
+ * WHAT DID NOT GO, and why the cut here is 22% rather than half: the four
+ * one-line claims are the DEFINITIONS of the four collections, 44 words for
+ * four collections. Without them "Cheap to run, light to tax, 39 of 194" is a
+ * boast with no test attached, and this site's whole position is that a claim
+ * carries its test. They also live in src/lib/home/catalog.ts, not here.
+ *
+ * WHAT WENT IN: one AtlasIcon per collection, from the existing manifest, and
+ * the qualifying count set as a figure rather than as small grey text. The
+ * heading dropped from 2xl/3xl to lg/xl for the same reason as the other bands
+ * in this pass, small heading over large content.
  */
 import { getCatalogCollections, type CatalogCollection } from "@/lib/home/catalog";
+import { AtlasIcon } from "@/components/brand/icons";
+import type { AtlasIconId } from "@/components/brand/icons";
 
 const COLLECTIONS = getCatalogCollections();
+
+/**
+ * One mark per collection, from the existing icon manifest. Keyed by the
+ * collection id rather than by position, so reordering the collections cannot
+ * silently reassign the glyphs. An id with no entry falls back to the generic
+ * benchmark mark rather than rendering a hole.
+ */
+const COLLECTION_MARKS: Record<string, AtlasIconId> = {
+  "cheap-and-light": "taxes",
+  growing: "trend",
+  declining: "vacancy",
+  "high-margin": "margin",
+};
 
 /** Plate geometry. The viewBox is unitless; the container decides real size. */
 const W = 220;
@@ -106,11 +139,28 @@ function Plate({ c }: { c: CatalogCollection }) {
       </svg>
 
       <div className="mt-3 flex items-baseline justify-between gap-3">
-        <span className="text-[15px] font-semibold text-ink-900 group-hover:text-atlas-600 transition-colors">
-          {c.title}
+        <span className="flex items-baseline gap-2 min-w-0">
+          <AtlasIcon
+            id={COLLECTION_MARKS[c.id] ?? "benchmark"}
+            size={16}
+            className="shrink-0 translate-y-px text-atlas-700"
+          />
+          <span className="text-[15px] font-semibold text-ink-900 group-hover:text-atlas-600 transition-colors">
+            {c.title}
+          </span>
         </span>
-        <span className="tabular-nums text-[12.5px] text-cocoa-700 shrink-0">
-          {held ? `${c.qualifying} of ${c.measured}` : "not held yet"}
+        {/* The count set as a figure, not as grey mouse-type. The qualifying
+            half is the answer, so it carries the accent and the size; the
+            measured half is the denominator and stays quiet. */}
+        <span className="shrink-0 tabular-nums text-[12.5px] text-cocoa-700">
+          {held ? (
+            <>
+              <span className="font-display text-[17px] text-atlas-700">{c.qualifying}</span>
+              {` of ${c.measured}`}
+            </>
+          ) : (
+            "not held yet"
+          )}
         </span>
       </div>
       <p className="mt-1 text-[13px] leading-snug text-graphite">{c.claim}</p>
@@ -121,16 +171,31 @@ function Plate({ c }: { c: CatalogCollection }) {
   );
 }
 
+/** The plate's own key, in place of the sentence that used to explain it. */
+function Legend() {
+  return (
+    <span className="flex items-center gap-4 text-[11px] text-cocoa-700">
+      <span className="inline-flex items-center gap-1.5">
+        <span aria-hidden className="h-2 w-2 rounded-full bg-atlas-500" />
+        qualifying
+      </span>
+      <span className="inline-flex items-center gap-1.5">
+        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-cocoa-300" />
+        measured
+      </span>
+    </span>
+  );
+}
+
 export function CatalogPlates() {
   return (
     <section aria-labelledby="catalog-heading" className="py-10 md:py-14">
-      <h2 id="catalog-heading" className="text-2xl md:text-3xl font-display text-ink-900">
-        What the atlas can see
-      </h2>
-      <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-graphite">
-        Every mark is a place or a trade we hold a figure for. The lit ones are
-        where the figures say something worth acting on.
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+        <h2 id="catalog-heading" className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
+          What the atlas can see
+        </h2>
+        <Legend />
+      </div>
       {/* THE PLATES SIT ON A CARD NOW. The site frame's centre dropped from
           .82 to .35 so the photograph reads through the middle, per the
           founder's correction that the centre "is also visible, but with some
@@ -145,7 +210,7 @@ export function CatalogPlates() {
           is already above it, but that is a chain of two implicit facts. Saying
           it here means the card cannot be moved somewhere without one.
           The pages agent found the same thing washing out the /cities hero. */}
-      <div className="relative mt-8 rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-8">
+      <div className="relative mt-5 rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-8">
         <div className="grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
           {COLLECTIONS.map((c) => (
             <Plate key={c.id} c={c} />

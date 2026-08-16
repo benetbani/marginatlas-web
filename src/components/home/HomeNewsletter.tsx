@@ -8,21 +8,38 @@
 import { Suspense } from "react";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import LeadMagnetForm from "@/components/newsletter/LeadMagnetForm";
+import { AtlasIcon } from "@/components/brand/icons";
+import type { AtlasIconId } from "@/components/brand/icons";
 
-const BULLETS = [
-  "Median revenue, margin, and wages for 24 industries across 12 economies.",
-  "Cost structure for the typical operator in each cell.",
-  "Methodology and sourcing trail, so the numbers hold up.",
+/**
+ * WHAT IS IN THE REPORT, as four marked lines rather than three sentences.
+ *
+ * DENSITY PASS 2026-08-17. These were three full sentences under a square
+ * bullet, 29 words, and each one ended in a clause that only restated the
+ * clause before it: "so the numbers hold up", "in each cell". A reader
+ * deciding whether to give an email address is scanning a contents list, not
+ * reading prose, so they are a contents list now, each with its own mark from
+ * the existing icon manifest.
+ *
+ * THE TWO FIGURES SURVIVED THE CUT. 24 industries and 12 economies were the
+ * only checkable things in the old bullets and they are now a line of their
+ * own instead of the tail of a longer sentence.
+ */
+const CONTENTS: { icon: AtlasIconId; label: string }[] = [
+  { icon: "benchmark", label: "Median revenue, margin and wages" },
+  { icon: "global-spread", label: "24 industries, 12 economies" },
+  { icon: "cost-breakdown", label: "Cost structure for the typical operator" },
+  { icon: "methodology", label: "Method and sourcing trail" },
 ];
 
 export function HomeNewsletter() {
   return (
     <section className="py-12 md:py-16">
-      <div className="rounded-2xl bg-white border border-parchment px-6 py-10 md:px-10 md:py-12">
+      <div className="rounded-2xl bg-white border border-parchment px-6 py-8 md:px-10 md:py-10">
         <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
           <div>
             <SectionEyebrow size="md" className="mb-2">Free report</SectionEyebrow>
-            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
+            <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
               Get the 2026 small business benchmarks
             </h2>
             {/* "A 38-page PDF of the numbers behind Atlas" was on the HOME
@@ -34,26 +51,23 @@ export function HomeNewsletter() {
                 The form beneath it posted to /api/lead-magnet/2026-benchmarks,
                 a route that does not exist, so every signup from the home page
                 errored and nothing was captured. */}
-            <p className="mt-3 text-base text-cocoa-700 leading-relaxed">
-              The numbers behind Atlas, collected into one PDF. It is still
-              being put together. Leave an email and it comes to you when it is
+            {/* 26 words down to 14. What it said that the heading did not was
+                that the PDF is not finished, which is the honest half and
+                stays; the rest was "The numbers behind Atlas, collected into
+                one PDF", i.e. the heading again in longer form. */}
+            <p className="mt-2 text-sm text-cocoa-700 leading-relaxed">
+              Still being put together. Leave an email and it comes when it is
               done.
             </p>
             <Suspense>
               <LeadMagnetForm />
             </Suspense>
           </div>
-          <ul className="space-y-3">
-            {BULLETS.map((b) => (
-              <li
-                key={b}
-                className="flex items-start gap-2.5 text-sm md:text-base text-ink-900"
-              >
-                <span
-                  aria-hidden
-                  className="inline-block rounded-sm shrink-0 bg-atlas-500 mt-1.5 h-2 w-2"
-                />
-                <span>{b}</span>
+          <ul className="space-y-2.5">
+            {CONTENTS.map(({ icon, label }) => (
+              <li key={label} className="flex items-center gap-2.5 text-sm text-ink-900">
+                <AtlasIcon id={icon} size={20} className="shrink-0 text-atlas-700" />
+                <span>{label}</span>
               </li>
             ))}
           </ul>
