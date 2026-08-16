@@ -540,7 +540,12 @@ export default async function HomePage() {
         <section className="py-12 md:py-16">
           <SectionEyebrow size="md" className="mb-2">Writing</SectionEyebrow>
           <div className="flex items-baseline justify-between gap-4 flex-wrap mb-6 md:mb-8">
-            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
+            {/* Canonical section size. This was the last section heading on the
+                home page still at text-2xl/3xl after the density pass unified
+                the other nine, and it sits in this file rather than in
+                components/home, which is why that pass could not reach it. One
+                page cannot carry two section-heading scales. */}
+            <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
               From the Atlas notebook
             </h2>
             <a
