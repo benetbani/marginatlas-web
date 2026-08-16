@@ -1,4 +1,6 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
+import { RotatingWord } from "@/components/RotatingWord";
+import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { AtlasLedger } from "@/components/home/AtlasLedger";
 import { CatalogPlates } from "@/components/home/CatalogPlates";
@@ -315,13 +317,37 @@ export default async function HomePage() {
                 with actual figures, instead of a placeholder cycling through
                 names. Terracotta marks the half nobody else publishes, which is
                 the rulebook's rule for the accent: it goes on the answer. */}
-            <h1 className="font-display text-[1.9rem] sm:text-4xl md:text-5xl font-medium tracking-tight text-ink-900 leading-[1.06] text-balance">
-              What a small business earns, and{" "}
-              <span className="text-atlas-700">what its owner actually keeps</span>.
+            {/* RESTORED, 2026-08-16. The founder: "you changed the H1 of the
+                homepage, which is a big mistake, it was just perfect."
+
+                He is right and the reasoning that replaced it was wrong. I swapped
+                this for BRAND.md's declarative line on the grounds that motion
+                competes with the search. But this asks the visitor's own question
+                in their own words, and the line that replaced it described the
+                product to them instead. That is exactly the "institutional, not
+                very relevant to the person who might be visiting" problem he
+                names elsewhere in the same review. A question a reader is already
+                asking beats a sentence about what we publish. */}
+            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] text-balance">
+              How much does a{" "}
+              <span className="text-atlas-700">
+                <RotatingWord
+                  words={HERO_BUSINESSES as unknown as string[]}
+                  interval={2000}
+                />
+              </span>{" "}
+              make in{" "}
+              <span className="text-atlas-700">
+                <RotatingWord
+                  words={HERO_CITIES as unknown as string[]}
+                  interval={2000}
+                  offset={1000}
+                />
+              </span>
+              ?
             </h1>
-            <p className="mt-3 md:mt-4 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
-              Trade by trade, place by place. Know if one works before you risk
-              your money.
+            <p className="mt-2.5 md:mt-4 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
+              Know if a business works before you risk your money.
             </p>
           </div>
           {/* Navigator sits inside the same band immediately under the
