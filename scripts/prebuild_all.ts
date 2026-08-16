@@ -155,6 +155,7 @@ const GATES: Gate[] = [
   { name: "no-district-as-trade", script: "scripts/verify_no_district_as_trade.ts" },
   { name: "retired-claims", script: "scripts/verify_retired_claims.ts" },
   { name: "no-stock-imagery", script: "scripts/verify_no_stock_imagery.ts" },
+  { name: "no-cream", script: "scripts/verify_no_cream.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
