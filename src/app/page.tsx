@@ -1,5 +1,6 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
+import Image from "next/image";
 import { AtlasLedger } from "@/components/home/AtlasLedger";
 import { CatalogPlates } from "@/components/home/CatalogPlates";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
@@ -247,14 +248,58 @@ export default async function HomePage() {
         crawlers; the words rotate client-side.
       */}
       <ToneBand tone="home-hero">
+        {/* THE PHOTOGRAPH, at last on the page that renders.
+            The founder asked for this image behind the home page. It was set as
+            SpineShell's default, and SpineShell wraps only the FLAG-ON home, so
+            the live page has been a form on bare white while the gated one got
+            the atmosphere. Every reference this page is measured against opens
+            on a photograph.
+
+            The treatment is PORTED, not invented: opacity 0.32 and
+            saturate(0.85) are SpineShell's ratified values, and the warm paper
+            reads through rather than under a scrim, which is what keeps this an
+            editorial almanac rather than a travel site.
+
+            Through next/image with priority: it is the LCP element, and the
+            source is 838KB, which is a real cost to hand a reader unoptimised.
+            aria-hidden and pointer-events-none: it is atmosphere, not content. */}
+        <div className="relative">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 -top-6 bottom-0 overflow-hidden"
+          >
+            <Image
+              src="/spine/_skyline.jpeg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover opacity-[0.32] [filter:saturate(0.85)_contrast(1.02)]"
+            />
+            {/* Paper floods back in under the navigator so the form never sits
+                on texture and the figures inside it stay legible. */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-cream-50" />
+          </div>
         {/* White-reset 2026-06-06: hero rhythm tightened (pt / mb / mt cut by
             roughly a third) so the eyebrow, headline, and subtitle sit higher
             and the navigator lifts up into view on a clean white band. */}
-        <section className="pt-4 pb-3 md:pt-7 md:pb-4 lg:pt-8">
+        <section className="relative pt-4 pb-3 md:pt-7 md:pb-4 lg:pt-8">
           <div className="max-w-4xl mx-auto text-center">
-            <SectionEyebrow size="md" className="mb-2.5 md:mb-3 text-center">
-              The #1 atlas of local profit intelligence
-            </SectionEyebrow>
+            {/* THE "#1" EYEBROW IS GONE, on two grounds that agree.
+                It read "The #1 atlas of local profit intelligence". Nothing
+                supports the rank, and an unbacked claim is the one thing this
+                site sells against: it spends every other page saying where it
+                is thin.
+
+                It is also the exact string the rulebook names when it banned
+                eyebrows over an h1, as "a vaguer restatement of its heading, a
+                second label carrying no information". That ruling was applied
+                to the spine surface and never to this page.
+
+                No reference this page is measured against opens on a
+                self-awarded rank. They state a standard and let the reader
+                check it, which is what the ledger band below now does with a
+                figure instead of an adjective. */}
             <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] text-balance">
               How much does a{" "}
               <span className="text-atlas-700">
@@ -287,6 +332,7 @@ export default async function HomePage() {
             <NavigatorForm />
           </div>
         </section>
+        </div>
       </ToneBand>
 
       {/* Lead data hook: curated business-in-city example tiles with real
