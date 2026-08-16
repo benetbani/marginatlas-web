@@ -441,6 +441,7 @@ path for the founder's `context-mode` MCP server at
 | **curl's TLS broke mid-session** | Exit 35 on every URL including the homepage. Node's `fetch` worked fine. **Check the tool before believing an outage** |
 | **`generateSitemaps` output is prerendered at build** | An empty shard is baked into the deployment and cannot self-heal without a deploy |
 | **The `Write` tool is blocked on config files** | `.mcp.json` and anything under `~/.claude/` are refused by the permission classifier. `Edit` works on existing files |
+| **The homepage's data bands render EMPTY in local dev** | `ExampleTiles` and `StateComparison` resolve cells live and self-omit when nothing comes back. From a machine far from Supabase's eu-west-1, four of the six tile lookups exceed the 4000ms `withBudget` every render, the component receives `{"tiles":[]}` and returns null. **Production renders them fine**, verified by fetching marginatlas.com: "Owner keeps about", "Barcelona" and "Or open a real one" are all present. So do NOT raise the budget, cache the tiles, or soften the self-omit to "fix" this. The loader is already parallel (`Promise.all`), so there is nothing to speed up in the code. The band is missing on your screen and present on the site |
 
 ---
 
