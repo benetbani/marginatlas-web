@@ -85,7 +85,15 @@ export function AtlasLedger() {
 
           Eight of the ten homepage bands already put their content in a card.
           This was one of the two that did not. */}
-      <div className="rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-7">
+      {/* `relative` is load-bearing, not decoration. AtlasFrame paints the
+          photograph from position:fixed layers at z-index 0, and a
+          position:static card with a white background paints in an earlier
+          phase than positioned elements, so it lands UNDER the picture. On this
+          page ToneBand is relative and renders after the frame, so the subtree
+          is already above it, but that is a chain of two implicit facts. Saying
+          it here means the card cannot be moved somewhere without one.
+          The pages agent found the same thing washing out the /cities hero. */}
+      <div className="relative rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-7">
         <div className="border-t border-parchment pt-5 md:pt-6">
         {/* An h2, not a div, and it looks exactly the same.
             Every other band on this page contributes a heading to the document
