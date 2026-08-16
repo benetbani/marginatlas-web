@@ -30,23 +30,41 @@ function MiniCell({ v }: { v: boolean | string }) {
   return <span className="text-sm font-semibold text-ink-900 tabular-nums">{v}</span>;
 }
 
-export function UpgradeTeaser() {
+/**
+ * Two shapes, same table. "panel" drops the outer section padding and the
+ * max-w-3xl so it fills its column in the two-up row it now shares with
+ * AudienceBand. See the note in AudienceBand for why those two were paired.
+ */
+export function UpgradeTeaser({ variant = "band" }: { variant?: "band" | "panel" }) {
+  const panel = variant === "panel";
   const cols = [
     "Free",
     `${TIERS.basic.name} $${TIERS.basic.priceMonthly}`,
     `${TIERS.premium.name} $${TIERS.premium.priceMonthly}`,
   ];
   return (
-    <section className="py-12 md:py-16">
+    <section className={panel ? "" : "py-12 md:py-16"}>
       <SectionEyebrow size="md" className="mb-2">Free and paid</SectionEyebrow>
-      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-3">
+      <h2
+        className={`font-display font-medium tracking-tight text-ink-900 mb-3 ${
+          panel ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
+        }`}
+      >
         Every benchmark is free to read
       </h2>
-      <p className="max-w-2xl text-base text-cocoa-700 leading-relaxed mb-8">
+      <p
+        className={`text-cocoa-700 leading-relaxed ${
+          panel ? "text-sm mb-5" : "max-w-2xl text-base mb-8"
+        }`}
+      >
         Paid tiers add deeper quartiles, saved cells, comparison, and the data
         out of the page. Here is the short version.
       </p>
-      <div className="overflow-x-auto rounded-lg border border-parchment bg-white max-w-3xl">
+      <div
+        className={`overflow-x-auto rounded-lg border border-parchment bg-white ${
+          panel ? "" : "max-w-3xl"
+        }`}
+      >
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr>

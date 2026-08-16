@@ -420,15 +420,42 @@ export default async function HomePage() {
         <NeighborhoodCards cards={neighborhoodCards} />
       </ToneBand>
 
-      {/* Marketing band (homepage reform SP2): who-it-is-for, and the
-          free-vs-premium upgrade teaser. Pure presentational, tokens only;
-          the upgrade CTA points to /pricing (no checkout from the homepage). */}
-      <ToneBand tone="home-audience">
-        <AudienceBand />
-      </ToneBand>
+      {/* ONE ROW, TWO PANELS. Who it is for, beside what it costs.
+          Pure presentational, tokens only; the upgrade CTA points to /pricing
+          (no checkout from the homepage).
 
-      <ToneBand tone="home-upgrade">
-        <UpgradeTeaser />
+          These were two stacked full-width bands. The ratified rule is bento
+          two-up bands, never one section per row, and this page was eleven
+          stacked bands, with the four lowest-density ones closing it. Every
+          premium reference does the opposite: the tail of the page gets denser,
+          not thinner.
+
+          This pair went first because the layout was already asking for it. The
+          pricing table is max-w-3xl inside a max-w-7xl container, so as a band
+          it left roughly forty percent of the row empty, and the audience cards
+          were four-across purely because they had a full row to fill. They also
+          answer one question rather than two: a reader works out whether this
+          is for them and what it costs in the same breath.
+
+          Nothing is dropped. All four audiences and all six matrix rows render
+          with the same words; only the grid changed. Five-seven rather than
+          six-six because the table has four columns to fit and the audience
+          list has none.
+
+          AUDIENCE LEADS, which is both the original order of the two bands and
+          the one that survives the collapse to a single column. On a phone this
+          grid is one column, so whichever panel is first is simply what a
+          reader meets first, and meeting the price before being told who the
+          thing is for is the wrong way round. */}
+      <ToneBand tone="home-audience">
+        <div className="grid grid-cols-1 gap-10 py-12 md:py-16 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-5">
+            <AudienceBand variant="panel" />
+          </div>
+          <div className="lg:col-span-7">
+            <UpgradeTeaser variant="panel" />
+          </div>
+        </div>
       </ToneBand>
 
       {/*
