@@ -58,6 +58,11 @@ export function ComboField({
   const selected = options.find((o) => o.value === value);
   const displayValue = open ? query : selected?.label || "";
 
+  /* ARIA ids for the combobox pattern below. Derived from the field id, which
+     every call site already passes and which is unique per form. */
+  const listboxId = `${id}-listbox`;
+  const optionId = (i: number) => `${id}-option-${i}`;
+
   // Filter options by query
   const q = query.trim().toLowerCase();
   const filtered = !q
@@ -68,6 +73,24 @@ export function ComboField({
         if (o.keywords?.some((k) => k.toLowerCase().includes(q))) return true;
         return false;
       });
+
+  /* The popup is only "expanded" when there is something in it. An
+     aria-expanded of true over an empty list tells a screen reader to go
+     looking for options that are not there. */
+  const expanded = open && filtered.length > 0;
+
+  /* KEEP THE HIGHLIGHTED OPTION ON SCREEN.
+     listRef was declared and attached to the <ul> and then never read, so the
+     scrolling it was presumably added for was never written. It matters at the
+     sizes these lists actually reach: the country field holds 195 options and
+     the business field over 200, and arrowing down past the visible rows moved
+     a highlight nobody could see. block: "nearest" scrolls the minimum needed,
+     so it does nothing when the option is already visible. */
+  useEffect(() => {
+    if (focusIdx < 0) return;
+    const el = listRef.current?.children[focusIdx] as HTMLElement | undefined;
+    el?.scrollIntoView({ block: "nearest" });
+  }, [focusIdx]);
 
   // Close on outside click
   useEffect(() => {
@@ -138,9 +161,32 @@ export function ComboField({
         } bg-white ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-text"}`}
         onClick={() => !disabled && setOpen(true)}
       >
+        {/* THE COMBOBOX PATTERN, which this field implemented in behaviour and
+            not in semantics. It filters as you type, opens a list, moves a
+            highlight with the arrow keys and commits on Enter, and it announced
+            none of that: no role, no expanded state, no listbox, no options. To
+            a screen reader it was a plain text box, on the primary instrument
+            of the home page and on four other surfaces that share it.
+
+            Per the ARIA combobox pattern: the input owns the role and points at
+            the listbox it controls, aria-activedescendant names the highlighted
+            option WITHOUT moving real focus (focus stays in the input, which is
+            what lets you keep typing), and each row is an option that reports
+            whether it is the active one.
+
+            aria-controls is set only while open, because the <ul> is unmounted
+            when closed and an IDREF pointing at nothing is worse than no IDREF. */}
         <input
           id={id}
           type="text"
+          role="combobox"
+          aria-expanded={expanded}
+          aria-controls={expanded ? listboxId : undefined}
+          aria-activedescendant={
+            expanded && focusIdx >= 0 ? optionId(focusIdx) : undefined
+          }
+          aria-autocomplete="list"
+          autoComplete="off"
           value={displayValue}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -184,11 +230,17 @@ export function ComboField({
       {open && filtered.length > 0 && (
         <ul
           ref={listRef}
+          id={listboxId}
+          role="listbox"
+          aria-label={label}
           className="absolute z-20 mt-1.5 w-full max-h-[60vh] overflow-auto rounded-xl border border-parchment bg-white shadow-[0_10px_30px_rgba(120,53,15,0.12),inset_0_1px_0_rgba(255,255,255,0.5)]"
         >
           {filtered.map((o, i) => (
             <li
               key={o.value}
+              id={optionId(i)}
+              role="option"
+              aria-selected={focusIdx === i}
               onMouseDown={(e) => {
                 e.preventDefault();
                 onChange(o.value);
