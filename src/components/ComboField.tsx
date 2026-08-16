@@ -17,7 +17,6 @@ type Props = {
   options: ComboOption[];
   value: string;
   onChange: (value: string) => void;
-  onFocus?: () => void; // fired when the field gains focus (homepage uses it to freeze the prefill rotation)
   disabled?: boolean;
   required?: boolean;
 };
@@ -29,7 +28,22 @@ type Props = {
    The prop is deleted rather than merely unused at the call sites, because a
    loaded prop with no consumers is how this comes back in six weeks. A label
    that needs a "?" to be understood is a label that failed; fix the label, or
-   put the sentence in the field, and do not add a badge. */
+   put the sentence in the field, and do not add a badge.
+
+   THE SECOND HALF OF THAT RULING WAS NEVER CARRIED OUT, until 2026-08-16. The
+   badges went and the sentence never arrived: country and city kept the generic
+   "Pick or type…" default while the business field beside them, which never had
+   a badge, carried "Type a business: restaurants, barbers, plumbers" and was
+   the only one of the three that told a reader anything. Both now carry a real
+   placeholder, in the same shape as the one that already worked. That is what
+   "put the sentence in the field" asks for.
+
+   NO `onFocus` PROP EITHER, for the same stated reason. It existed so the home
+   page could freeze the rotating pre-fill on first interaction; that rotation
+   was removed on 2026-08-16 for changing the form's own answer while a reader
+   was deciding, and with it the last three call sites. Nothing passed it
+   afterwards, so it went in the same sweep rather than sitting here as a loaded
+   prop with no consumers. */
 
 /**
  * ComboField — a single field that's a dropdown AND a search-as-you-type filter.
@@ -44,7 +58,6 @@ export function ComboField({
   options,
   value,
   onChange,
-  onFocus,
   disabled = false,
   required = false,
 }: Props) {
@@ -195,7 +208,6 @@ export function ComboField({
           onFocus={() => {
             if (disabled) return;
             setOpen(true);
-            onFocus?.();
           }}
           onKeyDown={onKey}
           onBlur={() => {

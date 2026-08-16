@@ -198,6 +198,19 @@ export function NavigatorForm() {
       {/* Three-field cascade: Country, then City, then Business. */}
       <div className="px-5 md:px-8 py-6 md:py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+          {/* PLACEHOLDERS THAT SAY SOMETHING, which is the half of the founder's
+              2026-08-09 ruling that never got done. He removed the "?" badges
+              from these two fields ("two question marks at the country and at
+              the city, which is like a massive mistake") and the instruction
+              that came with it was to fix the label or put the sentence in the
+              field. The badges went; the sentence did not arrive. Country and
+              city kept ComboField's generic "Pick or type…" while Business,
+              which never carried a badge, told a reader exactly what to do.
+
+              City also has a thing worth saying that nothing said: it is the
+              only optional field of the three, and its first option is
+              "Anywhere in {country}". A reader had no way to know they could
+              skip it. */}
           <ComboField
             id="country"
             label="Country"
@@ -208,6 +221,7 @@ export function NavigatorForm() {
               setCountry(v);
               setCity("");
             }}
+            placeholder="Type a country: Spain, Japan, Mexico"
           />
           <ComboField
             id="city"
@@ -215,6 +229,7 @@ export function NavigatorForm() {
             options={cityOptions}
             value={city}
             onChange={setCity}
+            placeholder="Anywhere, or pick a city"
           />
           <ComboField
             id="business"
