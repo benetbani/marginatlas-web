@@ -8,7 +8,6 @@ import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 export type NeighborhoodCard = {
   name: string;        // display name
   city: string;        // display city
-  citySlug: string;    // for the city's editorial photograph
   href: string;        // /cities/{citySlug}/neighborhoods
   knownFor: string;    // signature businesses, joined
   dontMiss: string;    // the one specific deeper detail
@@ -27,13 +26,11 @@ export type NeighborhoodCard = {
 // itself one per city is what actually holds the rule, rather than a loader
 // check that has to be remembered.
 //
-// PHOTOGRAPHED CITIES LEAD. The card carries the city's editorial photograph,
-// and only four of the seven cities with flavor data have one: Paris, Tokyo,
-// Berlin and Shenzhen resolve to a photo, New York, London and Mexico City fall
-// back to the designed pattern. The old order caught two of the four, so half
-// the band rendered as gradients. Ordering photographed cities first is a
-// ranking preference, not a filter: every entry here has real data and any of
-// them may render, so a city losing its photo costs quality and never content.
+// NO PHOTOGRAPHS, DELIBERATELY. An earlier pass ordered this list by which
+// cities had an editorial hero in city_heroes. Those heroes are Pexels stock
+// photographs and "no stock imagery" is a hard constraint here, so the card
+// head is a designed field for every city and the ordering below owes nothing
+// to imagery. See the comment in NeighborhoodCards.tsx.
 //
 // THE SPREAD IS THE POSITION. Six slots now read Paris, Tokyo, Berlin, Shenzhen,
 // New York and Mexico City: two in Europe, two in Asia, two in the Americas. The
@@ -81,7 +78,6 @@ export function loadNeighborhoodCards(): NeighborhoodCard[] {
     out.push({
       name: c.name,
       city: c.city,
-      citySlug: c.citySlug,
       href: `/cities/${c.citySlug}/neighborhoods`,
       knownFor,
       dontMiss: f.dont_miss,
