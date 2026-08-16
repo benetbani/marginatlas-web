@@ -1,6 +1,5 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
-import Image from "next/image";
 import { AtlasLedger } from "@/components/home/AtlasLedger";
 import { CatalogPlates } from "@/components/home/CatalogPlates";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
@@ -253,38 +252,25 @@ export default async function HomePage() {
       <WebSite />
 
       <ToneBand tone="home-hero">
-        {/* THE PHOTOGRAPH, at last on the page that renders.
-            The founder asked for this image behind the home page. It was set as
-            SpineShell's default, and SpineShell wraps only the FLAG-ON home, so
-            the live page has been a form on bare white while the gated one got
-            the atmosphere. Every reference this page is measured against opens
-            on a photograph.
+        {/* THE HERO-ONLY PHOTOGRAPH IS GONE, and it should never have been the
+            answer. A copy of the skyline lived here, absolutely positioned,
+            covering the hero and fading to paper under the navigator, because
+            the live home page had no atmosphere and the flag-ON one did.
 
-            The treatment is PORTED, not invented: opacity 0.32 and
-            saturate(0.85) are SpineShell's ratified values, and the warm paper
-            reads through rather than under a scrim, which is what keeps this an
-            editorial almanac rather than a travel site.
+            The founder's verdict on seeing it: "you only put it at the hero
+            section", and the background "should be totally visible on the edges
+            of the whole site". He was describing a frame, and a frame is not
+            something a single band can carry. It is now AtlasFrame, mounted in
+            SiteChrome, fixed behind every page including this one.
 
-            Through next/image with priority: it is the LCP element, and the
-            source is 838KB, which is a real cost to hand a reader unoptimised.
-            aria-hidden and pointer-events-none: it is atmosphere, not content. */}
+            Leaving both would have been worse than either. Both drew the same
+            picture at .32, so the hero alone would have come out at .54 with a
+            hard seam where the block ended, and this one's gradient to cream-50
+            would have painted over the site frame across its lower half. The
+            exact artifact he objected to, doubled.
+
+            The hero keeps its own rhythm below; the atmosphere is the site's. */}
         <div className="relative">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 -top-6 bottom-0 overflow-hidden"
-          >
-            <Image
-              src="/spine/_skyline.jpeg"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover opacity-[0.32] [filter:saturate(0.85)_contrast(1.02)]"
-            />
-            {/* Paper floods back in under the navigator so the form never sits
-                on texture and the figures inside it stay legible. */}
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-cream-50" />
-          </div>
         {/* White-reset 2026-06-06: hero rhythm tightened (pt / mb / mt cut by
             roughly a third) so the eyebrow, headline, and subtitle sit higher
             and the navigator lifts up into view on a clean white band. */}
