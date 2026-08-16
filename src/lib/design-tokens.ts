@@ -68,10 +68,37 @@ export const colors = {
     // white-to-gray surfaces that the pre-reformation system used.
     50: "#ffffff", // warm white card / popover surface
     // SaaS reformation 2026-06-12 (founder): the app ground. White cards sit
-    // on this barely-warm field so surfaces read as layered product UI, not
-    // a flat sheet. Sits between the white card (50) and the warm sand (100);
-    // supersedes the 2026-06-06 white-reset page ground.
-    75: "#fbfaf7", // warm app ground (page surface behind cards)
+    // on this field so surfaces read as layered product UI, not a flat sheet.
+    // Sits between the white card (50) and 100; supersedes the 2026-06-06
+    // white-reset page ground.
+    //
+    // CREAM PURGE 2026-08-17. Was #fbfaf7, a warm cream. Founder, 2026-08-16:
+    // "to remove completely this creamy color from the page. That's totally
+    // not allowed."
+    //
+    // RETONED RATHER THAN DELETED, and the reason is the method: this step has
+    // exactly ONE role. Every use of it in the repository is a page ground,
+    // checked one by one rather than assumed: two `min-h-screen` <main>
+    // elements (/dev/gold-mine, /dev/london-commercial), three sticky
+    // header/nav grounds (london-commercial, OrientationHeader,
+    // StickySectionNav), one gradient end-stop, one focus ring-offset (which
+    // is by definition the ground behind the control) and two inset panels in
+    // CompareClient. No card fill, no chip, no table tint. So changing the
+    // value migrates the whole page-ground role in one edit, with zero
+    // component churn and no chance of the find-and-replace accident that
+    // nearly stripped a <thead> background on a previous sweep.
+    //
+    // #f7f7f8 is `--paper` from src/styles/atlas-spine.css, the v2 system whose
+    // first rule is "NEUTRAL PALETTE. No cream, no warm tint." The hue flips
+    // from warm (h 45) to cool (h 240) and the new value is a hair darker
+    // (l 97.1 vs 98.4). Contrast was computed against the eight foreground
+    // tokens that sit on this ground rather than assumed: largest change 0.42
+    // on a ratio of 16.7, and ZERO AA verdicts flip in either direction.
+    //
+    // The NAME is still wrong: this is no longer a cream. Renaming the ramp is
+    // the last step of the purge, deliberately separate, because a rename
+    // touches every call site and must not ride along with a colour change.
+    75: "#f7f7f8", // cool neutral app ground (page surface behind cards)
     100: "#f7f6f4", // warm sand muted surface
     200: "#efeeeb",
     300: "#e4e2dd", // warm taupe hairline / border step

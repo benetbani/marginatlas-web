@@ -38,11 +38,18 @@
        sand paper, warm-white cards, warm brown-black ink, terracotta
        accent. Token names unchanged; only the values warmed.
        White-reset 2026-06-06 (founder): page surface flipped to pure white.
-       SaaS reformation 2026-06-12 (founder): the page surface is the warm
-       app ground (cream-75 #fbfaf7) so white cards read as layered product
-       surfaces, not lines on a flat sheet. Supersedes the white-reset for
-       the GROUND only; cards stay white. */
-    --background: 251 250 247;       /* cream-75 warm app ground */
+       SaaS reformation 2026-06-12 (founder): the page surface is the app
+       ground so white cards read as layered product surfaces, not lines on a
+       flat sheet. Supersedes the white-reset for the GROUND only; cards stay
+       white.
+       CREAM PURGE 2026-08-17 (founder: "remove completely this creamy color"):
+       the ground was 251 250 247, cream-75 #fbfaf7. This is the SECOND page
+       ground, not a duplicate of --atlas-surface-paper below: `html` paints
+       rgb(var(--background)) and `body` paints var(--atlas-surface-paper), so
+       migrating only the body token would have left cream on the html element
+       underneath it, visible in the overscroll gutter and anywhere body does
+       not reach. Both now carry the same cool neutral #f7f7f8. */
+    --background: 247 247 248;       /* cool neutral app ground, = #f7f7f8 */
     --foreground: 33 24 16;          /* ink-900 #211810, warm near-black */
     --card: 255 255 255;             /* cream-50 #FFFDF8, warm white card */
     --card-foreground: 33 24 16;     /* ink-900 */
@@ -80,13 +87,41 @@
        — but as call sites migrate to .atlas-card the look unifies.
        ========================================================================== */
 
-    /* Card surfaces — SaaS reformation 2026-06-12 (founder): the body is
-       the warm app ground (cream-75); cards are WHITE surfaces laid on it,
-       seated by the layered elevation scale below. The ground/card delta
-       is deliberately small (barely-warm vs white) so the page stays calm
-       while surfaces still read as layered. Soft cards keep their stronger
-       hairline; bands may go full white for contrast stripes. */
-    --atlas-surface-paper: #fbfaf7;          /* body: warm app ground (cream-75) */
+    /* Card surfaces. Cards are WHITE surfaces laid on the app ground, seated by
+       the layered elevation scale below. The ground/card delta is deliberately
+       small so the page stays calm while surfaces still read as layered. Soft
+       cards keep their stronger hairline; bands may go full white for contrast
+       stripes.
+
+       THE GROUND IS NO LONGER CREAM, 2026-08-17. It was #fbfaf7, cream-75, the
+       warm app ground introduced by the SaaS reformation 2026-06-12. Founder,
+       2026-08-16: "to remove completely this creamy color from the page. That's
+       totally not allowed."
+
+       Replaced with #f7f7f8, which is NOT a new invention: it is `--paper` from
+       src/styles/atlas-spine.css, the v2 visual system whose first ratified rule
+       reads "NEUTRAL PALETTE. No cream, no warm tint." Converging on the value
+       the newer system already uses serves the cohesion brief (one visual
+       language across page types) instead of adding a fourteenth near-white.
+
+       Measured, so the swap is a known quantity rather than a vibe:
+         #fbfaf7  h 45  s 27%  l 98.4%  warm  (r+4 over b)
+         #f7f7f8  h 240 s  4%  l 97.1%  cool  (b+1 over r)
+       The new ground is a hair darker, so contrast ratios do move; they were
+       computed rather than assumed, across the eight foreground tokens that
+       sit on it. The largest change is 0.42 on a ratio of 16.7 (ink-900 body
+       text), and ZERO AA verdicts flip: everything passing at 4.5 still passes,
+       and the three that already failed (cocoa-500 faint, atlas-500, the
+       parchment hairline, none of them body copy) still fail by the same
+       margin. So the honest claim is "no AA relationship moves", not "no
+       ratio moves".
+       The ground/card delta widens slightly, 17 -> 23 summed across channels,
+       which makes white cards read very marginally more layered, not less.
+
+       This one token is the whole page-ground role: it feeds 12 call sites in
+       this file, including .atlas-frame-gutters, the centre veil, the four
+       .atlas-wash category grounds and --atlas-tone-paper. */
+    --atlas-surface-paper: #f7f7f8;          /* body: cool neutral app ground */
     --atlas-surface-card: #ffffff;           /* canonical card surface, white */
     --atlas-surface-card-soft: #ffffff;      /* secondary card within a card section */
     --atlas-surface-band: #ffffff;           /* white section band, no pattern */
@@ -601,22 +636,22 @@
 }
 .atlas-wash--business {
   background:
-    radial-gradient(120% 90% at 50% -18%, rgba(230, 34, 0, 0.16) 0%, rgba(214, 92, 48, 0.12) 32%, rgba(251, 250, 247, 0) 66%),
+    radial-gradient(120% 90% at 50% -18%, rgba(230, 34, 0, 0.16) 0%, rgba(214, 92, 48, 0.12) 32%, rgba(247, 247, 248, 0) 66%),
     var(--atlas-surface-paper);
 }
 .atlas-wash--city {
   background:
-    radial-gradient(120% 90% at 50% -18%, rgba(214, 134, 15, 0.18) 0%, rgba(245, 189, 92, 0.14) 34%, rgba(251, 250, 247, 0) 68%),
+    radial-gradient(120% 90% at 50% -18%, rgba(214, 134, 15, 0.18) 0%, rgba(245, 189, 92, 0.14) 34%, rgba(247, 247, 248, 0) 68%),
     var(--atlas-surface-paper);
 }
 .atlas-wash--country {
   background:
-    radial-gradient(120% 90% at 50% -18%, rgba(111, 143, 37, 0.16) 0%, rgba(150, 180, 72, 0.12) 34%, rgba(251, 250, 247, 0) 68%),
+    radial-gradient(120% 90% at 50% -18%, rgba(111, 143, 37, 0.16) 0%, rgba(150, 180, 72, 0.12) 34%, rgba(247, 247, 248, 0) 68%),
     var(--atlas-surface-paper);
 }
 .atlas-wash--learn {
   background:
-    radial-gradient(120% 90% at 50% -18%, rgba(83, 66, 49, 0.12) 0%, rgba(228, 226, 221, 0.5) 36%, rgba(251, 250, 247, 0) 70%),
+    radial-gradient(120% 90% at 50% -18%, rgba(83, 66, 49, 0.12) 0%, rgba(228, 226, 221, 0.5) 36%, rgba(247, 247, 248, 0) 70%),
     var(--atlas-surface-paper);
 }
 /* The faint compass-rosette the wash carries by default, very low contrast. */
@@ -637,21 +672,33 @@
   z-index: 1;
 }
 
-/* ---- Glass sticky chrome (the header / sticky nav) ------------------------ */
-/* Warm frost: a translucent near-cream surface with a backdrop blur and a
-   defined bottom hairline, so the bar reads as glass over the scrolling page
-   while text stays full-contrast ink (the frost is light, not dark). Falls back
-   to near-opaque cream where backdrop-filter is unsupported. */
+/* ---- Sticky chrome (the header / sticky nav) ------------------------------ */
+/* SOLID, AND NO LONGER CREAM, 2026-08-17. This was "warm frost":
+   rgba(251, 250, 247, .72) with a 14px backdrop blur, falling back to
+   rgba(251, 250, 247, .97) where backdrop-filter is unsupported.
+
+   Two defects in one rule, and it rendered on EVERY page: this class is the
+   live path, not a fallback. isWarmFrameEnabled() defaults to true, and both
+   src/app/layout.tsx and src/components/SiteChrome.tsx select this class when
+   it is on.
+
+   FIRST, rgb(251, 250, 247) IS #fbfaf7, the banned cream, at 72% alpha. The
+   single most-rendered cream on the site.
+
+   SECOND, and it is the reason this is opaque rather than merely re-tinted: it
+   was TRANSLUCENT over the site's fixed photograph. Founder, 2026-08-16, on the
+   background: it "covers the whole screen except the header". A see-through
+   masthead is the picture reading through the header, which is the one place he
+   said it must not go. The masthead now sits on its own solid ground and the
+   photograph starts below it.
+
+   The blur goes with it. A backdrop-filter behind an opaque background has
+   nothing to refract and costs a compositor layer on every page to do it. The
+   bottom hairline stays: it is what separates the bar from the content, and it
+   is now doing that work alone. */
 .atlas-glass-chrome {
-  background: rgba(251, 250, 247, 0.72);
+  background: var(--atlas-surface-card);
   border-bottom: 1px solid var(--atlas-hairline-strong);
-  -webkit-backdrop-filter: blur(14px) saturate(1.08);
-  backdrop-filter: blur(14px) saturate(1.08);
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .atlas-glass-chrome {
-    background: rgba(251, 250, 247, 0.97);
-  }
 }
 
 /* Reduced motion / safety: the frame is static (no animation), so there is
@@ -782,14 +829,19 @@
   height: 100%;
   display: block;
 }
+/* The three intermediate stops were rgba(251, 250, 247, ...), cream, fading to
+   a final stop of var(--surface-card), which is white. So the fade ran warm
+   through its whole visible middle and only arrived at white at 100%: a cream
+   cast across the bottom of every engraved hero. Now white throughout, which is
+   what the last stop always was. Alphas and positions are untouched. */
 .eng-hero__fade {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(251, 250, 247, 0) 0%,
-    rgba(251, 250, 247, 0.18) 42%,
-    rgba(251, 250, 247, 0.82) 78%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.18) 42%,
+    rgba(255, 255, 255, 0.82) 78%,
     var(--surface-card) 100%
   );
 }

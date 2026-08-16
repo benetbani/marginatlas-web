@@ -181,7 +181,18 @@ never type hex.
 
 | Family | Job | Key steps |
 |---|---|---|
-| `cream` | Paper. All surfaces. | 50 `#ffffff` warm white (cards), 75 `#fbfaf7` warm app ground (the page surface behind cards; SaaS reformation 2026-06-12), 100 `#f7f6f4` warm sand (muted surfaces), 300 `#e4e2dd` hairlines |
+| `cream` | Paper. All surfaces. **The ramp is being purged; see below.** | 50 `#ffffff` white (cards), 75 `#f7f7f8` cool neutral app ground (the page surface behind cards), 100 `#f7f6f4` warm sand (muted surfaces), 300 `#e4e2dd` warm taupe hairlines |
+
+> **CREAM IS BANNED, 2026-08-16.** Founder: "to remove completely this creamy
+> color from the page. That's totally not allowed." The ramp is mid-migration,
+> by role, not by token. Done: the page ground (`cream-75` retoned `#fbfaf7` ->
+> `#f7f7f8`, `--atlas-surface-paper`, `--background`, and the masthead, which
+> was translucent cream on every page). Still warm and still to migrate: `100`
+> `#f7f6f4`, `200` `#efeeeb`, `300` `#e4e2dd` and the `parchment` alias of it,
+> `400` `#c3bfb7`. `500` is unused and gets deleted. `50` is `#ffffff` already,
+> so it is a naming problem only. **Do not read a `#fbfaf7` out of this table's
+> history and put it back.** Plan and measurements:
+> `docs/superpowers/plans/2026-08-17-founder-brief-and-loop-charter.md` §11.
 | `ink` | Text. The warm brown-black ladder. | 900 `#211810` headlines, 800 body-dark, 700 `#463726` secondary, 500 `#7d6c58` muted |
 | `cocoa` | Muted copy + the "structure and costs" data color. | 500 `#87745d`, 700 `#534231` |
 | `atlas` | THE accent. Vermillion. Rare, meaningful. | 700 `#991600` deep vermillion-maroon (accent text, headlines, primary), 500 `#e62200` bright vermillion (marks, fills, surfaces), 50 `#fff1ee` tint |

@@ -261,12 +261,117 @@ tiles retitled; page grounds removed from `CoverageHubV2`, `CityHeroV2` and
   **The `.35` is a first honest value, not a measured one. It wants a
   screenshot.** The constraint: the picture must read through the middle, and
   dark text on the card edges must not fight it.
-- §1 B3 is DIAGNOSED, not fixed. `.atlas-glass-chrome` in `globals.css` is
-  `rgba(251, 250, 247, 0.72)` with a backdrop blur: the masthead is translucent
-  cream. Translucent breaks B3, because the photograph reads through the header;
-  cream breaks §2. It is the live path, since `isWarmFrameEnabled()` defaults to
-  true. One rule fixes both, and it is the highest-value cream usage on the site
-  because it renders on every page.
+- §1 B3 is DONE. `.atlas-glass-chrome` was `rgba(251, 250, 247, 0.72)` with a
+  14px backdrop blur: the masthead was translucent cream, on every page, since
+  `isWarmFrameEnabled()` defaults to true. Translucent broke B3 because the
+  photograph read through the header; cream broke §2. Both fixed in one rule:
+  the bar is now opaque `var(--atlas-surface-card)`, the blur is gone (it had
+  nothing to refract behind an opaque fill), the bottom hairline stays, and the
+  `@supports` fallback was deleted because both branches had become identical.
 - The H1 is restored (`d82427e3`) and is now a locked value. See §3.
 
-Open and NOT done: §1 B3, §2 entirely, §4 entirely, §6 entirely, §7 entirely.
+Open and NOT done: §2 partially (page-ground role done, four roles remain, see
+§11), §4 entirely, §6 entirely, §7 entirely.
+
+---
+
+## 11. The cream purge: measurement, and the plan for the remaining roles
+
+Measured 2026-08-17 by a role classifier that reads the surrounding source line
+rather than the token alone, because `bg-cream-100` is a `<thead>` tint in one
+place and a page ground in another. **455 cream utility occurrences across 157
+files**, plus the CSS-variable grounds in `globals.css`.
+
+By utility family: `bg-cream-*` 338, `text-cream-*` 56, `border-cream-*` 20,
+`fill-cream-*` 8, `ring/ring-offset-cream-*` 13, `decoration-cream-*` 5,
+`from/via/to-cream-*` 8, `stroke-cream-*` 3, `divide-cream-*` 1.
+
+By step: `cream-50` 226, `cream-100` 127, `cream-200` 34, `cream-300` 29,
+`cream-400` 14, `cream-75` 10. **`cream-500` is defined and completely unused**,
+so it can be deleted outright with no call-site work.
+
+**By ROLE, which is the axis the migration runs on:**
+
+| role | n | files | what it is | status |
+|---|---|---|---|---|
+| card surface | 130 | 66 | `bg-cream-50`, i.e. `#ffffff` | naming only, LAST |
+| muted fill | 133 | 71 | `<thead>` tints, chips, tracks, bars | open |
+| foreground | 64 | 41 | `text-cream-50` white type on dark, icon fills | open |
+| hover state | 46 | 35 | `hover:bg-cream-100` and friends | open |
+| hairline | 35 | 21 | borders, rings, divides, underlines | open |
+| **page ground** | **47** | **31** | body/html/`<main>`/sticky-nav grounds | **DONE** |
+
+**Done this tick (page ground only).** Four edits, all inside the two files the
+palette agent owns:
+
+1. `--atlas-surface-paper` `#fbfaf7` -> `#f7f7f8` in `globals.css`. One token,
+   12 call sites in that file including `.atlas-frame-gutters`, the centre veil,
+   the four `.atlas-wash` grounds and `--atlas-tone-paper`.
+2. `--background` `251 250 247` -> `247 247 248`. **This was a SECOND page ground,
+   not a duplicate:** `html` paints `rgb(var(--background))` and `body` paints
+   `var(--atlas-surface-paper)`, so migrating only the body token would have
+   left cream on the html element underneath, visible in the overscroll gutter.
+3. `colors.cream[75]` `#fbfaf7` -> `#f7f7f8` in `design-tokens.ts`. Retoned, not
+   deleted, because that step has exactly one role: all ten usages were checked
+   individually and every one is a ground. One edit migrated all ten with zero
+   component churn.
+4. `.eng-hero__fade` ran cream through its three visible stops to a final stop of
+   `var(--surface-card)`, which is white. Now white throughout.
+
+`#f7f7f8` is not invented: it is `--paper` from `src/styles/atlas-spine.css`,
+the v2 system whose first ratified rule reads "NEUTRAL PALETTE. No cream, no
+warm tint." The hue flips from h 45 warm to h 240 cool. Contrast was computed,
+not assumed, against the eight foreground tokens that sit on this ground: the
+new value is a hair darker (l 97.1 vs 98.4), the largest ratio change is 0.42
+on a ratio of 16.7, and **zero AA verdicts flip** in either direction.
+Converging on this value also serves §7.
+
+**THE PALETTE GATE CANNOT SEE CREAM, and nothing should be read into its 165.**
+`verify_palette_membership` returns legal for anything at lightness >= 93%, a
+deliberate rule so that paper tones are not judged as colours. `#fbfaf7` is 98%.
+So the gate passed on every cream on this site and always would have. The count
+sat at 165 before and after this change. **The cream ban is currently NOT
+machine-checkable**, which under the working method's rule 4 means it must
+either become a gate or be written down as unenforced with the reason. It is
+written down here, and the gate is the first item below.
+
+### The order for the remaining roles, and why this order
+
+Take them in ascending blast radius. Each is one tick, gated after.
+
+1. **Add the ratchet gate FIRST, before migrating anything else.** A
+   `verify_no_cream` that counts cream token references per file and refuses to
+   grow. Without it, every role migrated below can silently come back, and the
+   founder has already had rulings return a second time for exactly this reason.
+   Note this makes the chain 98 gates, so the expected prebuild line becomes
+   98/98, not 97/97.
+2. **Hover states (46, 35 files).** Safest of what is left: a hover tint is
+   transient, never load-bearing, and a wrong value is visible only under the
+   cursor. `hover:bg-cream-100` -> the neutral equivalent.
+3. **Hairlines (35, 21 files).** Note most of the site's borders already use the
+   separate `parchment` token (347 `border-parchment` uses), which is
+   `#e4e2dd`, warm, and is `cream-300` under another name. **Migrating
+   `border-cream-*` without `parchment` fixes 35 borders and leaves 347.** Do
+   both in one tick or the site ends up with two border colours.
+4. **Muted fills (133, 71 files).** The largest and the one with the trap: this
+   bucket is `<thead>` tints, chips, progress tracks and inset panels. A blind
+   `bg-cream-100` -> `bg-white` here deletes table header shading entirely,
+   because the tint IS the only thing distinguishing the header row. Replace
+   with a cool neutral of the same lightness, do not replace with white.
+5. **Foreground (64, 41 files).** Mostly `text-cream-50`, which is `#ffffff`:
+   white type on dark grounds. Naming only, no colour change. Fold into 6.
+6. **The rename, LAST, as its own tick.** `cream-50` is `#ffffff` and `cream-75`
+   is now `#f7f7f8`: after steps 2 to 5 the ramp holds no cream at all and the
+   word is the only thing left wrong. Rename the ramp, delete the unused
+   `cream-500`, and delete `parchment`'s alias comment. A rename touches every
+   call site and must never ride along with a colour change, which is why it is
+   separate and why it is last.
+
+**What the instrument used here cannot do**, stated so the next tick does not
+over-trust it: the classifier reads source lines, so it sees the class a
+component MENTIONS, not the pixel a reader SEES. It cannot tell a class behind
+an off flag from one that renders, and it cannot resolve which of two
+overlapping grounds wins. For "is cream still declared" it is exact. For "does
+the page still look warm" the instrument is a screenshot, and this tick did not
+take one: the change was verified by compiling `globals.css` through the
+project's own tailwind pipeline and asserting on the emitted CSS.
