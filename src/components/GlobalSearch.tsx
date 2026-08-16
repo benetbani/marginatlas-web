@@ -174,7 +174,23 @@ export function GlobalSearch() {
 
   function pickResult(r: SearchResult) {
     if (r.kind === "industry") {
-      router.push(`/us/california/${industryToSlug(r.id)}`);
+      /* THE INDUSTRY'S OWN PAGE, not a state nobody asked for.
+         This pushed /us/california/{slug}, so every trade searched from the
+         masthead of a world atlas landed in California, with no comment saying
+         why. A result row labelled "industry" carrying no place should not
+         answer with a place: the reader picked a trade, not a trade in
+         California.
+
+         It was also inconsistent with the line below, which sends a country
+         result to that country's own page. Countries resolved to the entity,
+         industries resolved to one arbitrary cell of it.
+
+         Same slug either way: /industries/[industry] is built from
+         industryToSlug over the same taxonomy, and dynamicParams is true so a
+         trade outside the prerendered smb_core cap still renders. Checked in
+         production across a spread of eight slugs, core and not, including
+         forestry-logging and lingerie-intimates: all 200. */
+      router.push(`/industries/${industryToSlug(r.id)}`);
     } else if (r.kind === "country") {
       router.push(`/${r.id.toLowerCase()}`);
     }
