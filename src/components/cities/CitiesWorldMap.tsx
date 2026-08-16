@@ -36,6 +36,7 @@ import {
   Marker,
   ZoomableGroup,
 } from "react-simple-maps";
+import { colors as tokenColors, elevation } from "@/lib/design-tokens";
 
 export type CitiesWorldMapCity = {
   slug: string;
@@ -55,19 +56,27 @@ type Props = {
   heightClassName?: string;
 };
 
-// Atlas palette. Founder direction 2026-05-26: continents render in
-// very light gray across all maps so the editorial markers (cities,
-// hover state) pop. Unified to ECECEC with both the homepage
-// WorldMapPicker for visual consistency.
-// Conformed to design-tokens 2026-06-12: warm cream continents, live
-// atlas marker values, warm ink tooltip text (the cool navy is banned).
-const GEO_FILL = "#efeeeb"; //   cream-200, very light warm
-const GEO_STROKE = "#c3bfb7"; // cream-400 border
-const MARKER_FILL = "#991600"; // atlas-700, vermillion
-const MARKER_STROKE = "#701000"; // atlas-800, deeper vermillion
-const TOOLTIP_BG = "#ffffff"; //  cream-50
-const TOOLTIP_BORDER = "#c3bfb7"; // cream-400
-const TOOLTIP_TEXT = "#211810"; // ink-900
+/* Atlas palette, read from the tokens rather than pasted as hex, so this map
+   cannot drift from the ramp the rest of the site draws with.
+   Founder direction 2026-05-26: continents render very light so the editorial
+   markers (cities, hover state) pop.
+
+   THE BORDERS ARE WHY THE MAP WAS NOT VISIBLE. This map filled the land with
+   cream-200 and outlined it with cream-400 at 0.5, which is a 1.1:1 step off
+   the white card underneath: 177 country paths covering 72% of the canvas, and
+   nothing to see but the dots. Its sibling WorldMapPicker had already been
+   corrected for exactly this, in the founder's own words, "the borders between
+   countries should be pronounced. Right now, they don't exist", and draws the
+   same land with an ink-700 outline at 0.9. Two maps, one problem, one answer
+   already ratified: this one now matches it. */
+const GEO_FILL = tokenColors.cream[200]; //     very light warm land
+const GEO_STROKE = tokenColors.ink[700]; //     pronounced country borders
+const GEO_STROKE_WIDTH = 0.9;
+const MARKER_FILL = tokenColors.atlas[700]; //  vermillion
+const MARKER_STROKE = tokenColors.atlas[800]; // deeper vermillion
+const TOOLTIP_BG = tokenColors.cream[50];
+const TOOLTIP_BORDER = tokenColors.cream[400];
+const TOOLTIP_TEXT = tokenColors.ink[900];
 
 /* Served from public/, not unpkg.
    This fetched https://unpkg.com/world-atlas@2/countries-110m.json at runtime,
@@ -205,7 +214,7 @@ export default function CitiesWorldMap({
                     default: {
                       fill: GEO_FILL,
                       stroke: GEO_STROKE,
-                      strokeWidth: 0.5,
+                      strokeWidth: GEO_STROKE_WIDTH,
                       outline: "none",
                       vectorEffect: "non-scaling-stroke",
                       pointerEvents: "none",
@@ -213,7 +222,7 @@ export default function CitiesWorldMap({
                     hover: {
                       fill: GEO_FILL,
                       stroke: GEO_STROKE,
-                      strokeWidth: 0.5,
+                      strokeWidth: GEO_STROKE_WIDTH,
                       outline: "none",
                       vectorEffect: "non-scaling-stroke",
                       pointerEvents: "none",
@@ -302,7 +311,7 @@ export default function CitiesWorldMap({
                       fontSize: 12,
                       fontWeight: 600,
                       textAlign: "center",
-                      boxShadow: "0 2px 6px rgba(10, 37, 64, 0.18)",
+                      boxShadow: elevation.subtle,
                       whiteSpace: "nowrap",
                       display: "inline-block",
                       transformOrigin: "top center",
