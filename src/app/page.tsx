@@ -10,8 +10,6 @@ import { loadStateComparisons } from "@/lib/home/state_comparison";
 import { AudienceBand } from "@/components/home/AudienceBand";
 import { UpgradeTeaser } from "@/components/home/UpgradeTeaser";
 import { HomeNewsletter } from "@/components/home/HomeNewsletter";
-import { RotatingWord } from "@/components/RotatingWord";
-import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -300,26 +298,34 @@ export default async function HomePage() {
                 self-awarded rank. They state a standard and let the reader
                 check it, which is what the ledger band below now does with a
                 figure instead of an adjective. */}
-            <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] text-balance">
-              How much does a{" "}
-              <span className="text-atlas-700">
-                <RotatingWord
-                  words={HERO_BUSINESSES as unknown as string[]}
-                  interval={2000}
-                />
-              </span>{" "}
-              make in{" "}
-              <span className="text-atlas-700">
-                <RotatingWord
-                  words={HERO_CITIES as unknown as string[]}
-                  interval={2000}
-                  offset={1000}
-                />
-              </span>
-              ?
+            {/* THE OPENING LINE IS THE ONE BRAND.md NAMES.
+                This h1 ran two independent rotating words, so the question
+                rewrote itself every two seconds: a barbershop in Lisbon, then a
+                dental practice in Osaka. Three problems at the bar this page is
+                being held to. Motion in the headline competes with the search
+                for the eye, and the search is the instrument. A sentence that
+                changes cannot be read as a claim. And none of the references
+                does it: Airbnb, an airline and a premium rental all open on
+                something stable and let the concrete work happen below.
+
+                It also contradicted the brand document. BRAND.md states the
+                sentence below and says in as many words: "That sentence is the
+                homepage's opening line." A note twenty lines above this one
+                repeats the instruction, to keep the metadata description and
+                the opening line in step. They were not in step.
+
+                The concreteness is not lost, it moved down one band, where it
+                is real: ExampleTiles carries actual businesses in actual cities
+                with actual figures, instead of a placeholder cycling through
+                names. Terracotta marks the half nobody else publishes, which is
+                the rulebook's rule for the accent: it goes on the answer. */}
+            <h1 className="font-display text-[1.9rem] sm:text-4xl md:text-5xl font-medium tracking-tight text-ink-900 leading-[1.06] text-balance">
+              What a small business earns, and{" "}
+              <span className="text-atlas-700">what its owner actually keeps</span>.
             </h1>
-            <p className="mt-2.5 md:mt-4 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
-              Know if a business works before you risk your money.
+            <p className="mt-3 md:mt-4 max-w-2xl mx-auto text-base md:text-lg text-graphite leading-relaxed">
+              Trade by trade, place by place. Know if one works before you risk
+              your money.
             </p>
           </div>
           {/* Navigator sits inside the same band immediately under the
