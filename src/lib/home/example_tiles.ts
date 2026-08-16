@@ -30,14 +30,35 @@ type Curated = {
 };
 
 /** Six curated, recognizable cells (the same set the old home questions used,
- * known to resolve). Familiar over maximally-varied, per the design. */
+ * known to resolve). Familiar over maximally-varied, per the design.
+ *
+ * THE SIXTH TILE USED TO BE RESTAURANTS AGAIN. Six tiles showed five trades,
+ * and the repeat was not the useful kind: measured directly, restaurants in
+ * California keep 57,001 and restaurants in Barcelona keep 58,179. The same
+ * trade twice, 1,178 apart, in the band whose whole job is to show a reader
+ * the breadth of what can be looked up. It demonstrated neither variety nor
+ * variation.
+ *
+ * That is separate from the familiar-over-varied rule above, which is about
+ * choosing recognisable places over exotic ones, and still holds: the
+ * replacement stays in California.
+ *
+ * Coffee shops, on measurement rather than taste. The candidates that resolve
+ * in California were probed through the same accessor this loader uses, and
+ * most fail the common-sense bar rather than the technical one: auto repair
+ * keeps 18,472 and dentists 43,685, and a dentist keeping 44K reads as broken
+ * to anyone who knows the trade, which is the one thing a proof tile cannot
+ * do. Hair salons resolve untrusted at a 1.5M revenue. Coffee shops come back
+ * trusted at 70,673, sit mid-range against the other five, and are the
+ * archetypal business a reader is actually weighing up.
+ */
 const CURATED: Curated[] = [
   { business: "Restaurants", city: "Barcelona", country: "es", geo: "es511", industry: "restaurants" },
   { business: "Software developers", city: "San Francisco", country: "us", geo: "california", industry: "software-development" },
   { business: "Law firms", city: "the UK", country: "gb", geo: "gb", industry: "legal-services" },
   { business: "Hotels", city: "Cancun", country: "mx", geo: "mx-roo", industry: "hotels-lodging" },
   { business: "Metal manufacturers", city: "Bavaria", country: "de", geo: "de21", industry: "fabricated-metal-mfg" },
-  { business: "Restaurants", city: "California", country: "us", geo: "california", industry: "restaurants" },
+  { business: "Coffee shops", city: "California", country: "us", geo: "california", industry: "coffee-shops" },
 ];
 
 function isNum(n: number | null | undefined): n is number {
