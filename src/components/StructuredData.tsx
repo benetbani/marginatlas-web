@@ -227,6 +227,51 @@ export function Article({
   );
 }
 
+/**
+ * WebSite schema. Home page only, and that placement is the whole point.
+ *
+ * WHAT IT IS FOR. The name a search engine prints above a result, the "site
+ * name", is not taken from <title>, from the Organization block below, or from
+ * the domain. Google reads it from WebSite structured data, and looks for that
+ * markup on the home page specifically. The site carried Organization on every
+ * page and WebSite nowhere, so the one signal that names the site was the one
+ * signal missing, on a strategy whose growth plan is search.
+ *
+ * WHY IT IS NOT IN THE ROOT LAYOUT. Organization is mounted there because it
+ * describes the publisher and is true of every page. WebSite marks the site's
+ * front door; repeating it on 615 pages says every one of them is the front
+ * door.
+ *
+ * NO potentialAction / SearchAction, deliberately. That property promises a URL
+ * template a crawler can fill in with a query string, and this site has no
+ * generic text search to point it at: the navigator resolves three fields into
+ * /{country}/{geo}/{industry}, and /api/go is a form target, not a search
+ * endpoint. Declaring a search URL that does not answer is a claim made
+ * directly to a machine, which is the one audience that cannot tell it is
+ * being told something untrue.
+ */
+export function WebSite() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Margin Atlas",
+    url: "https://www.marginatlas.com",
+    description:
+      "What a small business earns, and what its owner actually keeps, trade by trade and place by place.",
+    publisher: {
+      "@type": "Organization",
+      name: "Margin Atlas",
+      url: "https://www.marginatlas.com",
+    },
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 export function Organization() {
   const data = {
     "@context": "https://schema.org",

@@ -10,6 +10,7 @@ import { loadStateComparisons } from "@/lib/home/state_comparison";
 import { AudienceBand } from "@/components/home/AudienceBand";
 import { UpgradeTeaser } from "@/components/home/UpgradeTeaser";
 import { HomeNewsletter } from "@/components/home/HomeNewsletter";
+import { WebSite } from "@/components/StructuredData";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
@@ -245,6 +246,12 @@ export default async function HomePage() {
         preserved verbatim. The H1 server-renders a concrete question for
         crawlers; the words rotate client-side.
       */}
+      {/* WebSite schema, home page only. It is what a search engine reads to
+          learn the name to print above a result, and it looks for it here
+          rather than site-wide. Organization is on the root layout and stays
+          there: it describes the publisher, this marks the front door. */}
+      <WebSite />
+
       <ToneBand tone="home-hero">
         {/* THE PHOTOGRAPH, at last on the page that renders.
             The founder asked for this image behind the home page. It was set as
