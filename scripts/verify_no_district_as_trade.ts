@@ -65,6 +65,8 @@ function walk(dir: string, acc: string[] = []): string[] {
 }
 
 const hits: Hit[] = [];
+let scannedFiles = 0;
+let scannedPaths = 0;
 
 for (const file of walk(SRC)) {
   const rel = file.replace(PROJECT_ROOT, "").replace(/^[\\/]/, "").replace(/\\/g, "/");
@@ -74,10 +76,12 @@ for (const file of walk(SRC)) {
   } catch {
     continue;
   }
+  scannedFiles++;
   const state = newCommentState();
   const lines = src.split("\n");
   for (let i = 0; i < lines.length; i++) {
     const code = stripComments(lines[i], state);
+    if (/href[=:]\s*[{`]/.test(code)) scannedPaths++;
     if (lines[i].includes("allow-district-path")) continue;
     if (DISTRICT_AS_TRADE.test(code)) {
       hits.push({ file: rel, line: i + 1, text: lines[i].trim().slice(0, 120) });
@@ -87,7 +91,8 @@ for (const file of walk(SRC)) {
 
 if (hits.length === 0) {
   console.log(
-    "[verify_no_district_as_trade] PASS: no district slug sits in the industry position",
+    `[verify_no_district_as_trade] PASS: no district slug sits in the industry ` +
+      `position (${scannedFiles} files, ${scannedPaths} path expressions examined)`,
   );
   process.exit(0);
 }
