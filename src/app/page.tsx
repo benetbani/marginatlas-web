@@ -341,7 +341,14 @@ export default async function HomePage() {
              form (and its ComboField dropdown, which extends below the
              card) above the following world-map band so the open list
              stays fully visible and scrollable. */}
-          <div className="relative z-30 mt-4 md:mt-5 max-w-5xl mx-auto">
+          {/* The id is read by HeaderSearch. While this card is on screen the
+              header keeps its search hidden, because two search affordances on
+              one screen is what got the header one switched off here in the
+              first place; once it scrolls away the header takes over. */}
+          <div
+            id="home-search-anchor"
+            className="relative z-30 mt-4 md:mt-5 max-w-5xl mx-auto"
+          >
             <NavigatorForm />
           </div>
         </section>
