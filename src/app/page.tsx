@@ -1,5 +1,6 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { WorldMapSection } from "@/components/home/WorldMapSection";
+import { AtlasLedger } from "@/components/home/AtlasLedger";
 import { CatalogPlates } from "@/components/home/CatalogPlates";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
 import { loadExampleTiles } from "@/lib/home/example_tiles";
@@ -293,6 +294,25 @@ export default async function HomePage() {
           Replaces the old pointed-question list. Self-omits below three. */}
       <ToneBand tone="home-featured">
         <ExampleTiles tiles={exampleTiles} />
+      </ToneBand>
+
+      {/* THE FRONTISPIECE. What the atlas holds, and where it is thin.
+          The founder's standing note on this page is that it "doesn't show the
+          vision of the site, what it represents". Every premium reference
+          answers that with a STANDARD rather than a slogan, and states it as a
+          figure a reader can check.
+
+          It sits here, after one concrete example and before the collections,
+          because the question a data product has to answer second (the first
+          being "can it answer mine?") is "how much of this is real". The
+          closing line says two thirds of it sits in five countries, which is
+          the least flattering fact available and the most useful one.
+
+          Not a stats strip. That was removed from this page for being
+          marketing copy formatted as numerical cards; this carries only
+          derived figures, and every one links to the page that proves it. */}
+      <ToneBand tone="home-ledger">
+        <AtlasLedger />
       </ToneBand>
 
       {/* THE CATALOG, ratified 2026-08-09 (option A of /dev/options/catalog).
