@@ -47,7 +47,12 @@ export function Specimen({ specimen }: { specimen: SpecimenData | null }) {
         className="group block rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-8 transition-colors hover:border-atlas-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
       >
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-          <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
+          {/* Canonical section size, stepped down from text-2xl/3xl 2026-08-17.
+              The two figures below are 2rem/2.5rem and they are the argument;
+              a heading competing with them is the label shouting over the
+              answer. Content carries the weight, which is the structure every
+              reference page on this brief uses. */}
+          <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
             {trade} in {place}
           </h2>
           <span className="text-sm font-medium text-atlas-700">
@@ -96,13 +101,19 @@ export function Specimen({ specimen }: { specimen: SpecimenData | null }) {
           />
         </div>
 
-        <p className="mt-4 max-w-2xl text-sm md:text-base leading-relaxed text-graphite">
+        {/* 35 words to 22, 2026-08-17. The kept-share FIGURE stays and so does
+            the sentence that spends it, because that sentence is what the bar
+            above means. What went is "That second number is the one this atlas
+            exists to publish", which is the page describing its own mission
+            underneath a live example of it: the institutional register the
+            founder named, sitting directly on top of the one band that is
+            already doing the showing. */}
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-graphite">
           <span className="text-ink-900">
             {keptPct}% of what comes through the door reaches the person who owns
             the place.
           </span>{" "}
-          The rest is staff, rent, stock, tax and everything else. That second
-          number is the one this atlas exists to publish.
+          The rest is staff, rent, stock and tax.
         </p>
       </a>
     </section>

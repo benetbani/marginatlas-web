@@ -49,7 +49,7 @@ export function WorldMapSection() {
             No count, per this file's standing rule that the framing is "covers
             the whole world" and no number goes in the narrative. "Every
             country" carries the reach without spending a figure. */}
-        <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 leading-tight">
+        <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 leading-tight">
           Every country, on one map
         </h2>
         <a

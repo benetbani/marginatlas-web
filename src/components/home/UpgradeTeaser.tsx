@@ -45,11 +45,12 @@ export function UpgradeTeaser({ variant = "band" }: { variant?: "band" | "panel"
   return (
     <section className={panel ? "" : "py-12 md:py-16"}>
       <SectionEyebrow size="md" className="mb-2">Free and paid</SectionEyebrow>
-      <h2
-        className={`font-display font-medium tracking-tight text-ink-900 mb-3 ${
-          panel ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
-        }`}
-      >
+      {/* One size in both shapes, and it is the page's canonical section size.
+          The heading used to be two sizes chosen by variant, on top of the page
+          already carrying two different section-heading scales. A page cannot
+          have two section-heading sizes and this component cannot have two of
+          its own on top of that. */}
+      <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-3">
         Every benchmark is free to read
       </h2>
       <p

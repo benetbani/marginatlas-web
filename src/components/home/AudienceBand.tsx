@@ -1,30 +1,68 @@
 /**
- * AudienceBand -- "who it's for". Four audience CATEGORIES Atlas serves, framed
- * as who-it-is-for (not fabricated social proof: no logos, no quotes).
- * Server component, tokens only.
+ * AudienceBand -- "who it's for". Four audience CATEGORIES Atlas serves, each
+ * now carrying a real DOOR into the product rather than a sentence about what
+ * that audience might hypothetically do.
  *
- * TWO SHAPES, SAME CONTENT. As a "band" it is the original four-across row. As
- * a "panel" it is a single narrow column, for sitting beside the pricing table
- * in one two-up row on the homepage.
+ * WHAT WAS WRONG. Measured by rendering the band and counting words off the
+ * emitted markup: 67 words, every one of them description, and not a single
+ * figure, link or destination anywhere in it. It was the purest institutional
+ * band left on the homepage, and it is exactly the thing the founder named:
+ * "it's a little bit institutional and not very relevant to the person who
+ * might be visiting... It lacks flavor, it lacks elements. It just has a lot of
+ * text, when it should not."
  *
- * The ratified rule is bento two-up bands, never one section per row, and the
- * homepage was eleven full-width bands stacked. These two were the clearest
- * pair to fix first: the pricing table is max-w-3xl inside a max-w-7xl
- * container, so it already left forty percent of its band empty, and "who is
- * this for" and "what does it cost" are one question a reader asks once.
+ * A band that tells four kinds of reader what they could do, and then gives
+ * none of them anywhere to go, is an advertisement for the product printed
+ * inside the product. The reference pages this one is measured against
+ * (Airbnb, airlines, premium rentals) do not describe their audiences at all;
+ * they show inventory and let a reader recognize themselves in it.
  *
- * Nothing is dropped in panel form. All four audiences render, with the same
- * words. Only the grid changes.
+ * THE FIX, and why it is links rather than a cut. The four categories are
+ * agreed content and are not dropped. What is dropped is the explanatory
+ * sentence under each, replaced by the page that audience would actually open.
+ * Every href below is a real route, verified in src/app/(site):
+ *
+ *   Founders and operators        -> /decide        the recommender
+ *   Private equity and investors  -> /margin-index  ranked by what owners keep
+ *   Management consultants        -> /industries    every trade
+ *   Marketing and growth agencies -> /cities        every city
+ *
+ * FOUNDERS LEAD, and that reordering is the point rather than a tidy-up. The
+ * list used to open on private equity and close on the operator, which is the
+ * institutional ordering: the professional buyer first, the person actually
+ * deciding whether to open a business last. He is the visitor. He goes first.
+ *
+ * No figure was lost in the cut: none of the four deleted sentences carried
+ * one, and no statistic was invented to replace them.
+ *
+ * TWO SHAPES, SAME CONTENT. As a "band" it is the four-across row. As a
+ * "panel" it is a single narrow column, for sitting beside the pricing table
+ * in one two-up row on the homepage (the live homepage uses the panel). All
+ * four audiences render in both; only the grid changes.
+ *
+ * The heading dropped its eyebrow rather than keeping both. "Who it's for" was
+ * the eyebrow, and the h2 under it read "Built for the people who price a
+ * business for a living", which is the same label restated at length. That is
+ * the pattern CatalogPlates and NeighborhoodCards already use on this page: no
+ * eyebrow, one plain h2 at the canonical section size.
+ *
+ * Server component, tokens only. Cards are .atlas-card, which is already
+ * position:relative, so they sit above the AtlasFrame photograph rather than
+ * sinking behind its fixed z-index:0 layers.
  */
 import { ChartLineUp, Megaphone, Briefcase, Storefront } from "@phosphor-icons/react/dist/ssr";
-import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { AtlasSpot } from "@/components/brand/spots";
 
-const AUDIENCES: { who: string; use: string; Icon: typeof Briefcase }[] = [
-  { who: "Private equity and investors", use: "Size a market and sanity-check a target before the first call.", Icon: ChartLineUp },
-  { who: "Marketing and growth agencies", use: "Understand a client's real economics before pitching a budget.", Icon: Megaphone },
-  { who: "Management consultants", use: "Benchmark an industry in minutes instead of a research week.", Icon: Briefcase },
-  { who: "Founders and operators", use: "See what a business keeps before risking your own money.", Icon: Storefront },
+const AUDIENCES: {
+  who: string;
+  cta: string;
+  href: string;
+  Icon: typeof Briefcase;
+}[] = [
+  { who: "Founders and operators", cta: "Where to open", href: "/decide", Icon: Storefront },
+  { who: "Private equity and investors", cta: "The Margin Index", href: "/margin-index", Icon: ChartLineUp },
+  { who: "Management consultants", cta: "Every trade", href: "/industries", Icon: Briefcase },
+  { who: "Marketing and growth agencies", cta: "Every city", href: "/cities", Icon: Megaphone },
 ];
 
 export function AudienceBand({ variant = "band" }: { variant?: "band" | "panel" }) {
@@ -33,19 +71,16 @@ export function AudienceBand({ variant = "band" }: { variant?: "band" | "panel" 
     <section className={panel ? "" : "py-12 md:py-16"}>
       <div
         className={
-          panel ? "mb-5" : "mb-8 flex items-start justify-between gap-6 md:mb-10"
+          panel ? "mb-4" : "mb-6 flex items-start justify-between gap-6 md:mb-8"
         }
       >
-        <div>
-          <SectionEyebrow size="md" className="mb-2">Who it&apos;s for</SectionEyebrow>
-          <h2
-            className={`font-display font-medium tracking-tight text-ink-900 ${
-              panel ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
-            }`}
-          >
-            Built for the people who price a business for a living
-          </h2>
-        </div>
+        {/* Canonical section size (font-display text-lg md:text-xl), the same
+            token CatalogPlates, NeighborhoodCards and HomeNewsletter carry. One
+            page cannot have two section-heading sizes, and the content is meant
+            to carry the weight rather than the label. */}
+        <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
+          Who it&apos;s for
+        </h2>
         {/* One brand spot per band (design-system 9.3): the four audience roles.
             Not in panel form. At 132px beside a heading in a five-twelfths
             column it wins a fight with the heading it is meant to accompany,
@@ -62,42 +97,31 @@ export function AudienceBand({ variant = "band" }: { variant?: "band" | "panel" 
       <div
         className={
           panel
-            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3"
-            : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5"
+            : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
         }
       >
-        {AUDIENCES.map(({ who, use, Icon }) => (
-          <div
+        {AUDIENCES.map(({ who, cta, href, Icon }) => (
+          <a
             key={who}
-            className={
-              panel
-                ? "atlas-card flex items-start gap-3.5 px-4 py-3.5"
-                : "atlas-card px-5 py-6"
-            }
+            href={href}
+            className="atlas-card group flex items-start gap-3 px-4 py-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
           >
             <Icon
-              size={panel ? 20 : 24}
+              size={20}
               weight="regular"
-              className={`text-atlas-700 ${panel ? "mt-0.5 shrink-0" : ""}`}
+              className="mt-0.5 shrink-0 text-atlas-700"
               aria-hidden
             />
-            <div>
-              <h3
-                className={`font-display font-medium tracking-tight text-ink-900 ${
-                  panel ? "text-[15px]" : "mt-3 text-base"
-                }`}
-              >
+            <div className="min-w-0">
+              <h3 className="font-display text-base font-medium tracking-tight text-ink-900">
                 {who}
               </h3>
-              <p
-                className={`text-cocoa-700 leading-relaxed ${
-                  panel ? "mt-0.5 text-[13px]" : "mt-1.5 text-sm"
-                }`}
-              >
-                {use}
-              </p>
+              <div className="mt-0.5 text-[12.5px] font-medium text-atlas-700 group-hover:underline">
+                {cta} <span aria-hidden>&rarr;</span>
+              </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </section>

@@ -32,7 +32,7 @@ export function ExampleTiles({ tiles }: { tiles: ExampleTile[] }) {
           depth; these are the same question asked somewhere else, which is the
           only thing a second band of examples can add. */}
       <SectionEyebrow size="md" className="mb-2">Six more</SectionEyebrow>
-      <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 mb-5">
+      <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-5">
         The same question, asked in {countries} countries
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">

@@ -12,7 +12,7 @@ export function StateComparison({ comparisons }: { comparisons: TradeComparison[
   return (
     <section className="py-12 md:py-16">
       <SectionEyebrow size="md" className="mb-2">Same business, different place</SectionEyebrow>
-      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-3">
+      <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-3">
         What a typical business brings in, state by state
       </h2>
       {/* WHY IT SAYS "the one country". This band is four US states on the
@@ -35,10 +35,17 @@ export function StateComparison({ comparisons }: { comparisons: TradeComparison[
           benchmarks sit in five countries: a reader who learns the shape of the
           coverage from the homepage does not discover it from a thin page
           later. */}
-      <p className="max-w-2xl text-base text-cocoa-700 leading-relaxed mb-8">
-        The same trade earns very differently depending on where it sits. Typical
-        annual revenue for a single business, across four large US states: the
-        one country where the atlas resolves this below national level today.{" "}
+      {/* CUT 39 WORDS TO 21, 2026-08-17, and the honesty is what survived.
+          The opening sentence ("The same trade earns very differently
+          depending on where it sits") restated the heading directly above it
+          and then the cards below it proved the same point with figures, so it
+          was said three times on one screen. The clause that stayed is the one
+          nothing else on the page carries: that this is the only country the
+          atlas resolves below national level. That is the limit, and per the
+          note above it is stated rather than hidden. */}
+      <p className="max-w-2xl text-sm text-cocoa-700 leading-relaxed mb-6">
+        Typical annual revenue for one business, in the only country the atlas
+        resolves below national level today.{" "}
         <a href="/coverage" className="text-atlas-700 hover:text-atlas-900 font-medium">
           Where else it reaches
         </a>

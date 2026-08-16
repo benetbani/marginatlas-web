@@ -156,12 +156,18 @@ export function AtlasLedger() {
 
         {/* The honest half, given the same weight as the totals rather than
             tucked under them as fine print. */}
-        <p className="mt-5 md:mt-6 max-w-3xl text-sm md:text-base leading-relaxed text-graphite">
+        {/* The closing clause went from 20 words to 8, 2026-08-17. Both the
+            FIGURE and the five names stay: they are the least flattering fact
+            available and the most useful one, and this file's own note above
+            says printing them is the whole difference between a boast and a
+            map. What went was the explanation of the habit ("before you lean on
+            a number rather than after"), which describes the site's method to
+            the reader instead of showing it. The pages already do it. */}
+        <p className="mt-5 md:mt-6 max-w-3xl text-sm leading-relaxed text-graphite">
           <span className="text-ink-900">
             {l.topFiveShare}% of those benchmarks sit in five countries:
           </span>{" "}
-          {nameList(l.topFive)}. Everywhere else is thinner, and the page says
-          which it is before you lean on a number rather than after.
+          {nameList(l.topFive)}. Everywhere else is thinner, and each page says so.
         </p>
         </div>
       </div>
