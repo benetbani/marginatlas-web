@@ -193,6 +193,15 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "home-featured": "paper",
   "home-how-it-works": "paper",
   "home-audience": "paper",
+  /* MISSING ENTIRELY UNTIL 2026-08-17, and the default is not harmless.
+     getToneClass falls back to "white" for an unknown id, and ToneBand renders
+     w-screen, so the ledger band was painting an OPAQUE FULL-VIEWPORT white
+     plate over the site's fixed background photograph. The card added to that
+     band in the same tick was therefore sitting on a plate that blanked the
+     picture for the band's whole height, which is the exact thing the founder
+     objected to: "on the center, it's also visible". Found by the cohesion
+     audit, not by looking at the band. */
+  "home-ledger": "paper",
   "home-upgrade": "paper",
   "home-blog-rail": "paper",
 
@@ -207,7 +216,12 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "home-stats": "white",
   "home-what-youll-see": "white",
   "home-whats-hot": "white",
-  "home-newsletter": "white",
+  /* Was "white", for the same reason and with the same effect: an opaque
+     full-viewport plate over the photograph, on the band that closes the page.
+     White made sense when the app ground was cream and a closing band wanted to
+     be crisper than it. Since AtlasFrame there is a picture behind every page,
+     and any full-width opaque ground is a bug rather than a style choice. */
+  "home-newsletter": "paper",
   "home-primary-ctas": "white",
   "home-methodology": "white",
 };
