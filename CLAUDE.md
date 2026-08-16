@@ -130,5 +130,35 @@ decision, not a code change.
 
 ## Manual actions outstanding
 
+- **TWO TABLES DO NOT EXIST, AND BOTH FORMS SAY THEY WORKED (found 2026-08-16).**
+  Checked directly against the database with a zero-row select, not inferred:
+
+  | table | state |
+  |---|---|
+  | `contact_messages` | EXISTS (its 2026-08-01 migration was applied) |
+  | `newsletter_signups` | **MISSING** |
+  | `corrections` | **MISSING** |
+  | `saved_cells` | missing, but its feature is off (auth is "Coming soon"), so this is consistent |
+
+  Every newsletter signup and every reader correction submitted so far has been
+  discarded. Both endpoints treat a missing table as a soft failure and answer
+  `{ok:true}`, which is the right trade for a public form and is exactly why
+  this went unnoticed: `/api/correction` checks `if (!r.ok && r.status !== 404)`
+  before logging, so a missing table is the one failure it does not even print.
+  Four signup forms and the cell-page correction form all tell the reader it
+  worked.
+
+  Run these two in the Supabase SQL Editor. Both are idempotent:
+
+  - `db/migrations/2026-08-16-newsletter-source.sql` — creates
+    `newsletter_signups` **and** adds the `source` column the four forms have
+    always been sending. Written as create-plus-alter precisely because there
+    was never a create-table migration for it and it was unknowable from the
+    repo whether the table had been made by hand.
+  - `db/migrations/2026-08-16-corrections.sql` — creates `corrections`. Never
+    written; its sibling `contact_messages` got one and this was missed.
+
+  Neither is urgent for correctness of the pages, and both are urgent for
+  anything a reader has taken the trouble to send.
 - Supabase perf indexes (`db/migrations/2026-05-27-perf-indexes.sql`): APPLIED 2026-06-02. DB healthy. If high-CPU/Unhealthy recurs, verify the indexes still exist before anything else, then consider bumping compute off NANO.
 - Sentry: cancel the trial (free tier already configured in code; no card on file = auto-drops to free).
