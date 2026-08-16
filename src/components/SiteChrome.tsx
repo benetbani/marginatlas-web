@@ -68,7 +68,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
            the page is gone, carries a thin bottom hairline so the sticky bar
            stays defined as content scrolls beneath it. */}
         <header className={headerClass}>
-          <div className="max-w-7xl mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
+          <div className="max-w-content mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
               {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. */}
               <LogoWordmark size={40} labeled={false} />
@@ -108,7 +108,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             each terminal section already has its own py-12/py-16, and
             the extra 40px on main was creating a visible dead-zone before
             the FooterNewsletterBar that read as "unfinished." */}
-        <main className="max-w-7xl mx-auto px-6 pt-4">{children}</main>
+        <main className="max-w-content mx-auto px-6 pt-4">{children}</main>
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />
@@ -119,7 +119,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
            white with bumped muted contrast so every line stays legible on
            pure black. */}
         <footer className="bg-black text-white border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="max-w-content mx-auto px-6 py-12">
             <div className="mb-8">
               <LogoWordmark size={22} labeled tone="dark" />
             </div>

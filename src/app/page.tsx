@@ -63,7 +63,7 @@ export const metadata: Metadata = {
 function ToneBand({ tone, children }: { tone: string; children: React.ReactNode }) {
   return (
     <div className={`relative left-1/2 right-1/2 -mx-[50vw] w-screen ${getToneClass(tone)}`}>
-      <div className="max-w-7xl mx-auto px-6">{children}</div>
+      <div className="max-w-content mx-auto px-6">{children}</div>
     </div>
   );
 }

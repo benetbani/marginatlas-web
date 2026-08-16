@@ -10,6 +10,22 @@ const config: Config = {
   content: ["./src/**/*.{ts,tsx,js,jsx,mdx}"],
   theme: {
     extend: {
+      maxWidth: {
+        /**
+         * THE CONTENT COLUMN, one number for the whole site.
+         *
+         * The chrome used max-w-7xl (1280px) while the spine design, including
+         * the passe-partout in AtlasFrame, was drawn around 1120. With a 1280
+         * column there is almost no gutter left for the photograph to show in:
+         * at 1440 it came to an 18px strip, and at 1366 and 1280 to nothing,
+         * which is not what "visible on the edges of the whole site" means.
+         *
+         * Named rather than written as max-w-[1120px] at four call sites, so
+         * the column and the frame's calc() stops cannot drift apart, and so
+         * components keep their no-raw-pixels rule.
+         */
+        content: "1120px",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 0.25rem)",
