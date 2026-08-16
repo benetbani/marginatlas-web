@@ -81,6 +81,70 @@ const CREAM_LITERALS = [
 
 const RGB_LITERALS = [/rgba?\(\s*251\s*,\s*250\s*,\s*247/gi];
 
+/**
+ * CREAM WEARING ANOTHER NAME. A hard check, not part of the ratchet.
+ *
+ * The ratchet above counts the WORD "cream", and on 2026-08-17 that was proved
+ * insufficient in the worst way: `parchment` was `#e4e2dd`, which is not merely
+ * close to `cream-300`, it IS `cream-300`, and design-tokens said so in its own
+ * comment. So did `--border` and `--input` in globals.css (228 226 221 is the
+ * same colour in decimal), `--parchment` in homepage-visual-tokens.css, and
+ * chart.grid. Cream had FIVE names, and 419 call sites wore one of the four
+ * without the word in it, against 35 that had it.
+ *
+ * A name-based ratchet can never see that. So this checks VALUES: no token may
+ * hold a warm cream value unless its own name says cream.
+ *
+ * #ffffff and #f7f7f8 are deliberately NOT in this list. cream-50 is white, and
+ * white is legitimately the card surface everywhere; #f7f7f8 is the cool neutral
+ * the grounds were migrated ONTO, blue-leaning rather than warm. Flagging either
+ * would produce noise and teach people to silence the gate. What is listed here
+ * is the warm tints only, which are what "creamy" means.
+ */
+const WARM_CREAM = new Set([
+  "#fbfaf7",
+  "#f7f6f4",
+  "#efeeeb",
+  "#e4e2dd",
+  "#c3bfb7",
+  "#8d887e",
+]);
+
+const TOKEN_FILES = [
+  "src/lib/design-tokens.ts",
+  "src/app/globals.css",
+  "src/styles/homepage-visual-tokens.css",
+];
+
+/** Any token assignment: `name: "#hex"` in TS, `--name: #hex` in CSS. */
+function aliasedCream(): string[] {
+  const hits: string[] = [];
+  for (const rel of TOKEN_FILES) {
+    const abs = resolve(PROJECT_ROOT, rel);
+    if (!existsSync(abs)) continue;
+    const state = newCommentState();
+    const code = readFileSync(abs, "utf-8")
+      .split("\n")
+      .map((l) => stripComments(l, state))
+      .join("\n");
+
+    const patterns = [
+      /([A-Za-z_][\w-]*)\s*:\s*"(#[0-9a-fA-F]{6})"/g,
+      /(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{6})/g,
+    ];
+    for (const re of patterns) {
+      for (const m of code.matchAll(re)) {
+        const name = m[1];
+        const value = m[2].toLowerCase();
+        if (WARM_CREAM.has(value) && !/cream/i.test(name)) {
+          hits.push(`${rel}: ${name} = ${value}`);
+        }
+      }
+    }
+  }
+  return hits;
+}
+
 type Counts = Record<string, number>;
 
 function walk(dir: string, acc: string[] = []): string[] {
@@ -155,6 +219,8 @@ function main(): void {
   const base: Counts = JSON.parse(readFileSync(BASELINE, "utf-8")).files || {};
   const baseTotal = Object.values(base).reduce((a, b) => a + b, 0);
 
+  const aliases = aliasedCream();
+
   const grown: string[] = [];
   const added: string[] = [];
   const stale: string[] = [];
@@ -166,6 +232,21 @@ function main(): void {
   }
   for (const file of Object.keys(base)) {
     if (!counts[file]) stale.push(file);
+  }
+
+  if (aliases.length > 0) {
+    console.error(
+      "[verify_no_cream] FAIL: a token holds a warm cream value under a name" +
+        "\nthat does not say cream. This is how the ban is evaded without" +
+        "\nanything in this ratchet moving:\n",
+    );
+    for (const a of aliases) console.error(`  ${a}`);
+    console.error(
+      "\nOn 2026-08-17 `parchment` WAS cream-300, exactly, across 419 call" +
+        "\nsites, while only 35 usages had the word cream in them. Retone the" +
+        "\nvalue to a true neutral; do not rename the token.",
+    );
+    process.exit(1);
   }
 
   if (grown.length === 0 && added.length === 0 && stale.length === 0) {
