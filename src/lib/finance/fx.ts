@@ -12,7 +12,7 @@
  *
  *   1. One place to inspect and update FX rates.
  *   2. Source metadata (rate provider, reviewed-at date).
- *   3. Quarterly review discipline.
+ *   3. One place to state that these rates are pinned, not maintained.
  *
  * Convention:
  *   - All rates are expressed as <CCY>_PER_USD (units of CCY for 1 USD).
@@ -24,9 +24,36 @@
  *     (b) the rate drift across a quarter is smaller than the noise in
  *     the underlying benchmarks.
  *
- * Review cadence: quarterly. Update the rate + `last_reviewed_at` in
- * the same edit. The verify_fx_freshness gate (TODO) will flag rates
- * older than 6 months.
+ * DO NOT REFRESH THESE RATES. This file is the parse-time half of a
+ * deliberate split, and the other half is src/lib/currency.ts:
+ *
+ *   src/lib/currency.ts   DISPLAY. Converts a stored USD figure into
+ *                         whatever currency a reader just picked. The
+ *                         current rate is the only correct one, so age
+ *                         there is a defect: verify_fx_freshness warns
+ *                         at 92 days and fails at 183. That gate is
+ *                         built and running; it is no longer a TODO.
+ *
+ *   this file             PARSE-TIME. Pins AUD at the rate the
+ *                         Australian source data was READ at, so a
+ *                         published benchmark keeps the value it had
+ *                         when it was captured.
+ *
+ * So the 2024-12-31 stamp below being long past is correct rather than
+ * stale, and "updating" it would silently restate every Australian
+ * figure on the site. verify_fx_freshness deliberately does not check
+ * this file, and says so in its own header.
+ *
+ * This block used to say "review cadence: quarterly" and point at the
+ * gate as a TODO. Both were wrong, and both contradicted the line three
+ * above them saying the rates are locked at parse time. That
+ * contradiction has now sent two separate readings of this file hunting
+ * a nineteen-month staleness bug that does not exist, which is what it
+ * cost and why it is rewritten rather than left as a wording nit.
+ *
+ * The change that IS right here: a new currency arrives when a new
+ * country's primary data is parsed, stamped with the rate used at that
+ * parse. Add entries, never revise them.
  */
 
 export type FxRate = {
@@ -36,7 +63,10 @@ export type FxRate = {
   per_usd: number;
   /** Authoritative source for this rate. */
   source: string;
-  /** ISO date the rate was last reviewed. */
+  /**
+   * ISO date this rate was captured, which for a parse-time pin is the date
+   * the source data was read. Not a review that is due again: see the header.
+   */
   last_reviewed_at: string;
   /** Optional context (e.g., "RBA Q4 2024 mid-rate"). */
   notes?: string;
