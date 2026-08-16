@@ -311,6 +311,51 @@ See `design/loop5/research/2026-08-08-the-three-empty-chapters.md`.
 **7. Eleven subsections still unruled** — listed in RATIFIED-DRAWINGS.md under
 "Still to rule on". Each needs three drawn options per the founder's deal.
 
+**8. `isTrustedLocalCell` returns true for figures that vary by neither place
+nor trade (found 2026-08-16).** Measured by resolving cells directly through
+`getCellBySlug`, not inferred:
+
+```
+restaurants   London 433169  Paris 433169  Tokyo 433169  Berlin 433169
+              Madrid 433169  Milan 433169  Amsterdam 433169   all trusted=true
+              (New York 460065 is the only non-US city that differs)
+
+hair-salons   London 675000  Paris 650000  Berlin 700000  Amsterdam 725000
+coffee-shops  London 675000  Paris 650000  Berlin 700000  Amsterdam 725000
+              identical per city across two unrelated trades, all trusted=true
+```
+
+One figure is being served for seven cities in seven countries, and a second
+set is per-city but constant across trades. Both are badged as a trusted local
+measurement, which is the badge the whole site's promise rests on: what a
+business earns, trade by trade, place by place. Here the place dimension is
+flat in one case and the trade dimension is flat in the other.
+
+This is skeleton-phase data and the founder has said real data comes later, so
+the *numbers* are expected to be provisional. **The classifier is not.** A trust
+badge that survives contact with a constant is a mechanism defect, and it will
+mislabel real data exactly as readily once real data lands.
+
+**Why there is no gate for it.** It is only observable through Supabase, and the
+prebuild chain must never need the network or a secret (§9). The check belongs
+in an on-demand audit script, run when data lands, not in the 95: something that
+groups trusted cells by value and fails when one value spans unrelated
+geographies or unrelated trades. Not built, because the fix it implies (blanking
+those pages, or demoting them out of trusted) is a product call about what the
+site publishes, not a code cleanup.
+
+**What it does NOT affect.** The homepage. Its example tiles resolve regional
+slugs (`es511`, `mx-roo`, `de21`) and come back distinct and plausible; checked
+directly. The duplicate figures are on city pages.
+
+**Also blocked by this:** the homepage's like-for-like band cannot be made
+global. `StateComparison` compares four US states, which looks parochial on a
+world atlas, and the obvious upgrade is the same trade across four countries.
+It does not resolve: of eleven world cities probed, the non-US ones return the
+constant above, and the section's own distinctness gate would drop the trade.
+The US version works because US state data is genuinely trusted-local and
+genuinely distinct. Revisit when this item is fixed, not before.
+
 ### Optional / someday
 
 - 51 `/dev/*` routes ship to production. Noindexed but crawled; `Disallow: /dev/`
