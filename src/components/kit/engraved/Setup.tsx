@@ -205,9 +205,20 @@ export type HiringReadProps = {
   typical?: number | null;
   /** Optional bar scale ceiling; defaults to typical * 1.15. */
   max?: number | null;
-  /** Typical days to fill a role. */
+  /**
+   * Typical days to fill a role. OPTIONAL, and null for every country today:
+   * no country-level time-to-fill is held anywhere in this repo. When it is
+   * null the dial is dropped and the pay bars take the full width, rather than
+   * the whole read collapsing to a sample box because of the one input nobody
+   * has. The pay figures carry the read.
+   */
   daysToHire?: number | null;
-  /** Employer social charge added on top of gross pay, in percent. */
+  /**
+   * Employer social charge added on top of gross pay, in percent. OPTIONAL:
+   * it is one sentence under the bars, not a bar, and 65 of the 195 countries
+   * in the taxonomy hold the two wage figures but not this rate. Its absence
+   * drops the sentence; it does not withhold the pay read.
+   */
   staffCostPct?: number | null;
   /** Currency symbol. @default "$" */
   currency?: string;
@@ -229,58 +240,74 @@ export function HiringRead({
   sample,
   className,
 }: HiringReadProps) {
-  if (sample || floor == null || typical == null || daysToHire == null || staffCostPct == null) {
+  // The two pay figures ARE the read. Everything else on this card is optional
+  // furniture around them, so only their absence falls to the sample state.
+  if (sample || floor == null || typical == null) {
     return (
       <SampleState
         glyph="people"
         what="Hiring read not held yet"
-        reason="Wage floor, typical pay and time-to-hire are shown together so the picture stays honest."
+        reason="The wage floor and typical pay are shown together so the picture stays honest, so the read waits for both."
         minH={120}
       />
     );
   }
   const m = max || typical * 1.15;
-  return (
-    <div className={["eng-hiring", className].filter(Boolean).join(" ")}>
-      <div className="eng-hiring__bars">
-        <div className="eng-paybar">
-          <div className="eng-paybar__head">
-            <span className="eng-paybar__k">Wage floor</span>
-            <span className="eng-paybar__v">
-              {currency}
-              {floor.toLocaleString()}
-              {period}
-            </span>
-          </div>
-          <div className="eng-paybar__track">
-            <span
-              className="eng-paybar__fill eng-paybar__fill--floor"
-              style={{ width: `${(floor / m) * 100}%` }}
-            />
-          </div>
+  const hasDial = daysToHire != null && Number.isFinite(daysToHire);
+  const bars = (
+    <div className="eng-hiring__bars">
+      <div className="eng-paybar">
+        <div className="eng-paybar__head">
+          <span className="eng-paybar__k">Wage floor</span>
+          <span className="eng-paybar__v">
+            {currency}
+            {floor.toLocaleString()}
+            {period}
+          </span>
         </div>
-        <div className="eng-paybar">
-          <div className="eng-paybar__head">
-            <span className="eng-paybar__k">Typical pay</span>
-            <span className="eng-paybar__v" style={{ color: "var(--accent)" }}>
-              {currency}
-              {typical.toLocaleString()}
-              {period}
-            </span>
-          </div>
-          <div className="eng-paybar__track">
-            <span
-              className="eng-paybar__fill eng-paybar__fill--typical"
-              style={{ width: `${(typical / m) * 100}%` }}
-            />
-          </div>
+        <div className="eng-paybar__track">
+          <span
+            className="eng-paybar__fill eng-paybar__fill--floor"
+            style={{ width: `${(floor / m) * 100}%` }}
+          />
         </div>
+      </div>
+      <div className="eng-paybar">
+        <div className="eng-paybar__head">
+          <span className="eng-paybar__k">Typical pay</span>
+          <span className="eng-paybar__v" style={{ color: "var(--accent)" }}>
+            {currency}
+            {typical.toLocaleString()}
+            {period}
+          </span>
+        </div>
+        <div className="eng-paybar__track">
+          <span
+            className="eng-paybar__fill eng-paybar__fill--typical"
+            style={{ width: `${(typical / m) * 100}%` }}
+          />
+        </div>
+      </div>
+      {staffCostPct != null ? (
         <div className="eng-hiring__staffcost">
           On top of gross pay, employers add <b>+{staffCostPct}%</b> in social charges.
         </div>
-      </div>
+      ) : null}
+    </div>
+  );
+
+  // No dial: skip the two-column grid entirely so the bars run full width. The
+  // grid lives in the stylesheet as 1.5fr 1fr, so keeping it with one child
+  // would leave a third of the card empty.
+  if (!hasDial) {
+    return <div className={className}>{bars}</div>;
+  }
+
+  return (
+    <div className={["eng-hiring", className].filter(Boolean).join(" ")}>
+      {bars}
       <div className="eng-hiring__dial">
-        <DialGauge value={daysToHire} max={60} />
+        <DialGauge value={daysToHire as number} max={60} />
         <div className="eng-hiring__dialcap">days to hire, typical</div>
       </div>
     </div>

@@ -6,15 +6,18 @@
  * the quiet clay -> amber -> cocoa -> moss meaning scale, with the figure in the
  * display serif and a one-line read. This one is real, blended from net wealth,
  * salary, and the cost of living. Then the spend split: a few engraved
- * proportion bars showing what locals spend on vs skimp on. That mix stays a
- * tagged sample until consumer-spend data lands, so it never reads as confirmed.
+ * proportion bars showing what locals spend on vs skimp on. No country holds a
+ * spend split today, so in practice that half of the card does not render.
  *
  * Composes from the Wave-1 foundation (meaningStep, Glyph, SampleState,
  * Eyebrow) and reads color only through the engraved CSS vars, matching
- * kit/engraved/Compare.tsx. Every data prop is nullable: a missing gauge or an
- * empty mix renders the honest SampleState, never a fabricated number, and the
- * component always renders something. Partial fill is fine: a real gauge can sit
- * above a sample mix. Server-renderable, no client JS. SVG / track geometry is
+ * kit/engraved/Compare.tsx. Every data prop is nullable and never fabricated.
+ * The two reads behave DIFFERENTLY on absence, and deliberately: a missing
+ * spending-power gauge falls to the honest SampleState, because that gauge is
+ * the point of the section, while an empty spend mix drops its whole block
+ * including the rule above it, because no country holds a spend split and an
+ * empty box under a real read is worse than no box.
+ * Server-renderable, no client JS. SVG / track geometry is
  * inline. No em-dashes, no source-agency names.
  */
 import * as React from "react";
@@ -278,34 +281,40 @@ export function WhoHasMoney({ spendingPower, mix, sample, className }: WhoHasMon
         )}
       </div>
 
-      {/* hairline rule between the two reads */}
-      <span aria-hidden="true" style={{ height: 1, background: "var(--hairline-strong)", opacity: 0.7 }} />
-
-      {/* The split: what locals spend on vs skimp on. */}
-      <div>
-        <div className="flex items-center justify-between gap-3 flex-wrap" style={{ marginBottom: "0.625rem" }}>
-          <Eyebrow>What the wallet goes on</Eyebrow>
-          {hasMix ? (
-            <span
-              className="inline-flex items-center"
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.625rem",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "var(--text-faint)",
-                border: "1px solid var(--hairline-strong)",
-                borderRadius: 999,
-                padding: "0.0625rem 0.4375rem",
-              }}
+      {/* The split: what locals spend on vs skimp on. No country holds a spend
+          split, so the whole block including its rule self-omits rather than
+          printing an empty box under the real spending-power read. It returns
+          the moment a real mix is passed. */}
+      {hasMix ? (
+        <>
+          {/* hairline rule between the two reads */}
+          <span
+            aria-hidden="true"
+            style={{ height: 1, background: "var(--hairline-strong)", opacity: 0.7 }}
+          />
+          <div>
+            <div
+              className="flex items-center justify-between gap-3 flex-wrap"
+              style={{ marginBottom: "0.625rem" }}
             >
-              sample
-            </span>
-          ) : null}
-        </div>
-        {hasMix ? (
-          <>
+              <Eyebrow>What the wallet goes on</Eyebrow>
+              <span
+                className="inline-flex items-center"
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.625rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--text-faint)",
+                  border: "1px solid var(--hairline-strong)",
+                  borderRadius: 999,
+                  padding: "0.0625rem 0.4375rem",
+                }}
+              >
+                sample
+              </span>
+            </div>
             <div className="flex flex-col gap-2.5">
               {(mix as SpendCategory[]).map((cat, i) => (
                 <MixBar key={`${cat.label}-${i}`} cat={cat} glyph={MIX_GLYPHS[i % MIX_GLYPHS.length]} />
@@ -322,16 +331,9 @@ export function WhoHasMoney({ spendingPower, mix, sample, className }: WhoHasMon
             >
               Illustrative spend split. Real category shares land once consumer-spend data is confirmed.
             </p>
-          </>
-        ) : (
-          <SampleState
-            glyph="basket"
-            what="Spend split not held yet"
-            reason="What locals spend on vs skimp on, as proportion bars. Added once consumer-spend data lands."
-            minH={100}
-          />
-        )}
-      </div>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

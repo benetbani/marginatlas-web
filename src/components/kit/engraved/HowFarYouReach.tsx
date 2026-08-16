@@ -15,9 +15,10 @@
  * var(--...) references, and the gauge geometry is inline SVG.
  *
  * Honest by default: population renders only when held; when it is not held the
- * whole section falls to the SampleState. Reach indicators are sample until each
- * is confirmed, so a missing or empty reach array shows a clearly-tagged sample
- * gauge rather than a fabricated score. The component always renders something.
+ * whole section falls to the SampleState. The reach gauges behave differently:
+ * no country holds a delivery, online-reach or urban-density indicator, so an
+ * empty reach array drops the gauge strip entirely rather than printing a tagged
+ * empty box under a real figure. The strip returns when a real indicator lands.
  *
  * Server-renderable, no client JS. No raw hex / px / ms in the .tsx (SVG viewBox
  * and path geometry numbers are geometry, not style tokens). No em-dashes, no
@@ -181,7 +182,16 @@ export function HowFarYouReach({ population, reach, caveat, sample, className }:
   return (
     <div className={["bg-cream-50", className].filter(Boolean).join(" ")}>
       {/* ---- The population spine: the one real figure, set large ---- */}
-      <div className="relative overflow-hidden border border-b-0 border-[color:var(--hairline-strong)] px-5 py-6 sm:px-7">
+      {/* The bottom rule is dropped only when a gauge strip follows and supplies
+          its own top border; with no strip the block closes itself. */}
+      <div
+        className={[
+          "relative overflow-hidden border border-[color:var(--hairline-strong)] px-5 py-6 sm:px-7",
+          hasReach ? "border-b-0" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         {/* engraved compass motif, the cartographic furniture, never the data */}
         <div className="pointer-events-none absolute right-3 top-3 opacity-60 sm:right-5">
           <CompassRosette size={56} tone="var(--cocoa-300)" ring="var(--hairline-strong)" />
@@ -293,18 +303,11 @@ export function HowFarYouReach({ population, reach, caveat, sample, className }:
             );
           })}
         </div>
-      ) : (
-        // Population is held but the reach indicators are not yet: keep the honest
-        // sample for the gauges only, the real figure above stays in place.
-        <div className="border border-t-0 border-[color:var(--hairline-strong)] p-4">
-          <SampleState
-            glyph="basket"
-            what="Reach indicators not held yet"
-            reason="Urban density and delivery and e-commerce reach read here once each is confirmed."
-            minH={96}
-          />
-        </div>
-      )}
+      ) : null}
+      {/* No reach indicators are held for ANY country (delivery, online reach
+          and urban density are all unheld), so the strip self-omits rather than
+          printing an empty gauge box under a real figure. It returns the moment
+          a real indicator is passed. */}
 
       {caveat ? (
         <p

@@ -59,6 +59,7 @@ import {
   type SetupStep,
   HiringRead,
   TalentReality,
+  type TalentSignal,
   WhoHasMoney,
   HowFarYouReach,
   type ReachIndicator,
@@ -66,9 +67,13 @@ import {
   type NeighbourCountry,
   type NeighbourMetric,
   OpportunityGap,
+  type OpportunityTrade,
   SameBusinessAbroad,
+  type SameBusinessSide,
   SpecialZones,
+  type SpecialZone,
   LicenceCheck,
+  type LicenceItem,
   GroundUnderYou,
   type GroundFactor,
   CitiesGrid,
@@ -79,6 +84,7 @@ import {
   LocalsKnow,
   type LocalInsight,
   YourLifeHere,
+  type LifeDimension,
   VsWorld,
   HonestTake,
   GutCheck,
@@ -189,6 +195,20 @@ function popCompactDisplay(n: number): string {
 const isNum = (v: number | null | undefined): v is number =>
   v != null && Number.isFinite(v);
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+/**
+ * The marker for a section input this atlas does not hold for any country.
+ *
+ * It returns null, and it exists so the declared type survives: a plain
+ * `const x: T | null = null` is narrowed by the compiler to `null`, which turns
+ * the section body that consumes it into dead code the type checker refuses to
+ * read. Written this way, the section keeps its real prop types, self-omits
+ * today, and starts rendering the moment a real value is returned here instead.
+ * A section that self-omits is not a section that was deleted.
+ */
+function notHeld<T>(): T | null {
+  return null;
+}
 
 /**
  * The global median GDP per capita, computed once from the held brain GDP map.
@@ -653,25 +673,29 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
   const hasSetup = setupSteps.length > 0;
 
   /* --------------------------- the hire read --------------------------- */
-  // Wage floor + typical pay + employer on-cost, all from held figures. The
-  // engraved HiringRead needs all of floor, typical, daysToHire, and staffCostPct;
-  // days-to-hire is not held, so the read self-omits to its honest sample unless a
-  // full set lands. We pass the real floor / typical / on-cost; daysToHire stays
-  // null so the component shows its sample state rather than inventing a number.
+  // Wage floor + typical pay + employer on-cost, all from held figures.
+  //
+  // WHAT WAS WRONG, measured 2026-08-17. This read demanded four inputs and one
+  // of them, days-to-hire, is held for zero countries: no time-to-fill figure
+  // exists anywhere in this repo (the typed slot in the spine contract is null
+  // even in the hand-built exemplar). So the gauge could never render, for any
+  // country, and the section fell through to three lines of prose that restate
+  // the same wage numbers the gauge would have drawn.
+  //
+  // The two pay figures ARE held, by the same accessor this page already trusts
+  // for the scorecard's minimum-wage and average-salary rows, so no new figure
+  // enters the page: the read now DRAWS what the page was already printing as
+  // prose. The gauge runs on them, drops its days dial, and drops the on-cost
+  // sentence for the 65 countries that hold no employer rate.
+  //
+  // Coverage measured across all 195 taxonomy countries: 130 render the bars,
+  // 65 fall back to the view model's prose read, and all 65 miss the same
+  // input, the employer on-cost.
   const staffCostPct =
     isNum(countryRates.employerSocial) && countryRates.employerSocial > 0
       ? Math.round(countryRates.employerSocial * 100)
       : null;
-  // The engraved gauge needs all four inputs (floor, typical, days-to-hire, on-
-  // cost). Days-to-hire is not held, so we render the gauge only when the full
-  // set lands; otherwise the real wage figures (floor, typical, on-cost) lead via
-  // the held bullets below, and no "not held yet" sample box contradicts them.
-  const hireDaysToHire: number | null = null; // not held
-  const hireHasFull =
-    isNum(minWageAnnualUsd) &&
-    isNum(typicalPayAnnualUsd) &&
-    isNum(hireDaysToHire) &&
-    isNum(staffCostPct);
+  const hireHasBars = isNum(minWageAnnualUsd) && isNum(typicalPayAnnualUsd);
 
   /* --------------------------- who has money -------------------------- */
   // Spending power, blended from net wealth, salary, and cost of living (real).
@@ -696,7 +720,49 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
       : null;
 
   /* -------------------------- how far you reach ----------------------- */
-  const reachIndicators: ReachIndicator[] | null = null; // sample (not held)
+  // Delivery radius, online reach and urban density are held for no country.
+  // The population figure below IS held, so the section keeps its real spine and
+  // the gauge strip self-omits inside the component.
+  const reachIndicators: ReachIndicator[] | null = null;
+
+  /* ------------- THE SECTIONS THAT SELF-OMIT, AND WHY -----------------
+     Measured 2026-08-17, per input, against every accessor this repo has.
+     Each of these was rendering a tagged empty box on every country page, for
+     every country, because its input is a literal null and nothing anywhere can
+     fill it. An empty gauge that can never fill is worse than no gauge, so each
+     section is now conditional on its own input: nothing renders today, and the
+     whole section returns unchanged the moment a real set is assigned here.
+     Nothing is estimated, derived, or filled with sample rows.
+
+     talentSignals    Whether skilled people can be found and kept. The only
+                      country-wide labour rows in the repo are modeled at
+                      confidence 0.55 with zero held rows across 198 countries,
+                      so using them would be an estimate printed as a fact.
+                      Retention and turnover are not held even as estimates.
+     opportunityGap   Money present against how few firms compete. Per-trade firm
+                      density is a modeled archetype, not a measured count, and
+                      the break-in panel already ranks the same activities from
+                      the same inputs, so this would be a second opinion drawn
+                      from one source.
+     abroadPair       The same trade here versus the best comparable country.
+                      Needs one trade resolved on both sides; no country-pair
+                      take-home is held and none is loaded.
+     specialZones     No zone data exists. The hand-built exemplar is explicitly
+                      null with the reason that no zone moves the arithmetic for
+                      a high-street trade.
+     licenceItems     No country-wide permit set. One country carries five rows
+                      and they are tagged as placeholders.
+     lifeDimensions   Hours, safety, healthcare, schools, commute: none held.  */
+  const talentSignals = notHeld<TalentSignal[]>();
+  const opportunityTrades = notHeld<OpportunityTrade[]>();
+  const abroadPair = notHeld<{
+    trade: string;
+    here: SameBusinessSide;
+    abroad: SameBusinessSide;
+  }>();
+  const specialZones = notHeld<SpecialZone[]>();
+  const licenceItems = notHeld<LicenceItem[]>();
+  const lifeDimensions = notHeld<LifeDimension[]>();
 
   /* ------------------------ the ground under you ---------------------- */
   // Corruption perception + ease of business are real; stability and currency
@@ -851,7 +917,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
       }))
     : null;
 
-  const nav = countryViewNav(view, true, hasBreakIn, hasCities);
+  const nav = countryViewNav(view, true, hasBreakIn, hasCities, licenceItems != null);
 
   return (
     <div className="xl:flex xl:gap-16">
@@ -973,22 +1039,31 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             id="hire"
             eyebrow="Hiring here"
             heading={view.hire ? view.hire.heading : `How hard it is to hire in ${countryName}`}
-            sub={view.hire?.lede ?? "Staff are the largest controllable cost in most small businesses. What you pay, plus what the employer adds on top, sets the real cost of a hire."}
+            /* The lede must not promise the on-cost where no employer rate is
+               held, or it describes a line the card does not carry. */
+            sub={
+              view.hire?.lede ??
+              (staffCostPct != null
+                ? "Staff are the largest controllable cost in most small businesses. What you pay, plus what the employer adds on top, sets the real cost of a hire."
+                : "Staff are the largest controllable cost in most small businesses. The floor is what the law sets; the rate you actually pay is what it takes to keep someone good.")
+            }
             card
           >
-            {hireHasFull ? (
-              // Full set held: the engraved gauge leads.
+            {hireHasBars ? (
+              // The three held figures lead, drawn rather than described. The
+              // days dial is dropped by the component because nothing holds a
+              // time-to-fill; it returns on its own the day one lands.
               <HiringRead
                 floor={minWageAnnualUsd}
                 typical={typicalPayAnnualUsd}
-                daysToHire={hireDaysToHire}
+                daysToHire={null}
                 staffCostPct={staffCostPct}
                 currency="$"
                 period="/yr"
               />
             ) : view.hire && view.hire.points.length > 0 ? (
-              // Real wage figures held but not the full gauge set (days-to-hire is
-              // not held): lead with the real held facts, no contradictory sample.
+              // No held wage profile for this country: the view model's own real
+              // figures carry the read instead, with no contradictory sample.
               <ul className="space-y-2.5">
                 {view.hire.points.map((p, i) => (
                   <li
@@ -1009,13 +1084,15 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             )}
           </EngravedSection>
 
-          {/* 6. The talent reality: not held, so the engraved sample state. */}
-          <EngravedSection
-            eyebrow="The talent reality"
-            heading="Can you find and keep skilled people"
-          >
-            <TalentReality signals={null} culture={null} />
-          </EngravedSection>
+          {/* 6. The talent reality. Self-omits until a held labour read lands. */}
+          {talentSignals ? (
+            <EngravedSection
+              eyebrow="The talent reality"
+              heading="Can you find and keep skilled people"
+            >
+              <TalentReality signals={talentSignals} culture={null} />
+            </EngravedSection>
+          ) : null}
 
           <AtlasDivider variant="contour" label="Demand" />
 
@@ -1030,7 +1107,8 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             <WhoHasMoney spendingPower={spendingPower} mix={null} sample={spendingPower == null} />
           </EngravedSection>
 
-          {/* 8. How far you can reach: population real, reach indicators sample. */}
+          {/* 8. How far you can reach. The population figure is real; the gauge
+              strip self-omits inside the component until an indicator is held. */}
           <EngravedSection
             eyebrow="How far you reach"
             heading="The market you can reach from here"
@@ -1042,7 +1120,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
                   : null
               }
               reach={reachIndicators}
-              caveat="Population is the home market. Delivery and online reach are added as each is confirmed."
+              caveat="The whole country, not the customers you can actually serve. A shop reaches a street, so read this as the ceiling on the market, never the market."
             />
           </EngravedSection>
 
@@ -1067,40 +1145,52 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             />
           </EngravedSection>
 
-          {/* 10. The opportunity gap: trade-level density not held, so sample. */}
-          <EngravedSection
-            eyebrow="The opportunity gap"
-            heading="Where money is present and few firms compete"
-          >
-            <OpportunityGap trades={null} sample />
-          </EngravedSection>
+          {/* 10. The opportunity gap. Self-omits: no measured per-trade density. */}
+          {opportunityTrades ? (
+            <EngravedSection
+              eyebrow="The opportunity gap"
+              heading="Where money is present and few firms compete"
+            >
+              <OpportunityGap trades={opportunityTrades} />
+            </EngravedSection>
+          ) : null}
 
-          {/* 11. Same business, here vs abroad: like-for-like trade pair not
-              held, so the honest sample. */}
-          <EngravedSection
-            eyebrow="Here vs abroad"
-            heading="The same business, here versus the best comparable country"
-          >
-            <SameBusinessAbroad trade={null} here={null} abroad={null} sample />
-          </EngravedSection>
+          {/* 11. Same business, here vs abroad. Self-omits: no country-pair
+              take-home is held for one trade on both sides. */}
+          {abroadPair ? (
+            <EngravedSection
+              eyebrow="Here vs abroad"
+              heading="The same business, here versus the best comparable country"
+            >
+              <SameBusinessAbroad
+                trade={abroadPair.trade}
+                here={abroadPair.here}
+                abroad={abroadPair.abroad}
+              />
+            </EngravedSection>
+          ) : null}
 
-          {/* 12. Special zones: none curated for most, so it self-omits to the
-              honest sample. */}
-          <EngravedSection
-            eyebrow="Special zones"
-            heading="Zones and structures that change the math"
-          >
-            <SpecialZones zones={null} />
-          </EngravedSection>
+          {/* 12. Special zones. Self-omits: no zone data exists for any country. */}
+          {specialZones ? (
+            <EngravedSection
+              eyebrow="Special zones"
+              heading="Zones and structures that change the math"
+            >
+              <SpecialZones zones={specialZones} />
+            </EngravedSection>
+          ) : null}
 
-          {/* 13. Licences: no country-wide licence dataset held, so sample. */}
-          <EngravedSection
-            id="licences"
-            eyebrow="Licences"
-            heading={`What you need to open one in ${countryName}`}
-          >
-            <LicenceCheck items={null} />
-          </EngravedSection>
+          {/* 13. Licences. Self-omits: no country-wide permit set is held. The
+              nav entry is gated on the same flag, so no anchor is advertised. */}
+          {licenceItems ? (
+            <EngravedSection
+              id="licences"
+              eyebrow="Licences"
+              heading={`What you need to open one in ${countryName}`}
+            >
+              <LicenceCheck items={licenceItems} />
+            </EngravedSection>
+          ) : null}
 
           <AtlasDivider variant="contour" label="Risk" />
 
@@ -1218,13 +1308,16 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             <LocalsKnow items={localInsights} sample={localInsights == null} />
           </EngravedSection>
 
-          {/* 18. What your life looks like here: not held, so the sample. */}
-          <EngravedSection
-            eyebrow="Your life here"
-            heading="What the owner's day actually feels like"
-          >
-            <YourLifeHere dimensions={null} sample />
-          </EngravedSection>
+          {/* 18. What your life looks like here. Self-omits: no life dimension
+              (hours, safety, healthcare, schools, commute) is held. */}
+          {lifeDimensions ? (
+            <EngravedSection
+              eyebrow="Your life here"
+              heading="What the owner's day actually feels like"
+            >
+              <YourLifeHere dimensions={lifeDimensions} />
+            </EngravedSection>
+          ) : null}
 
           <AtlasDivider variant="rosette" label="The close" />
 

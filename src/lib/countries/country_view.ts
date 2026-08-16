@@ -411,6 +411,14 @@ export function countryViewNav(
   hasFormation: boolean,
   hasBreakIn: boolean,
   hasCities: boolean,
+  /**
+   * Whether the licence checklist has rows. It has none for any country today
+   * (no country-wide permit set is held), so that section self-omits and the
+   * nav must not advertise an anchor the page does not render. StickySectionNav
+   * also prunes missing anchors on mount, but only after hydration; gating here
+   * keeps the server HTML honest too.
+   */
+  hasLicences: boolean,
 ): Array<{ id: string; label: string }> {
   // The numbered content-map sections are ALWAYS present now (filled or a
   // placeholder), so the nav lists them unconditionally. The honest-take,
@@ -433,7 +441,7 @@ export function countryViewNav(
   nav.push({ id: "decisive", label: "The decisive read" });
   nav.push({ id: "hire", label: "Hiring here" });
   nav.push({ id: "neighbours", label: "Vs neighbours" });
-  nav.push({ id: "licences", label: "Licences" });
+  if (hasLicences) nav.push({ id: "licences", label: "Licences" });
   nav.push({ id: "cities", label: "Cities" });
   if (hasBreakIn) nav.push({ id: "break-in", label: "Easiest to start" });
   nav.push({ id: "character", label: "Character" });
