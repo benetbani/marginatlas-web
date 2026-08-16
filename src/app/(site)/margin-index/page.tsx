@@ -22,8 +22,26 @@ import { MarginIndexControls } from "./margin-index-controls";
 
 export const revalidate = 86400;
 
+/* NO DESCRIPTION STOOD HERE, on the one route whose own header calls it "the
+   fully-free, CRAWLABLE keep-ranked leaderboard". Next resolves metadata per
+   top-level key, so with none declared this page inherited the root layout's
+   description, which is the site's answer to "what is Margin Atlas" rather
+   than this page's answer to "what is this page". Every other public route
+   states its own; this was the only crawlable one that did not.
+
+   The text below is the page's own opening paragraph, tightened. Keeping the
+   two in step is deliberate: a description that promises something the first
+   paragraph does not say is the same defect as a title that promises a PDF
+   nobody has written.
+
+   `openGraph` stays absent on purpose, for the reason the home page records:
+   both og and twitter are declared on the root layout WITH an image, and
+   resolution is by replacement rather than deep merge, so restating either
+   here for a title alone would throw the social card image away. */
 export const metadata: Metadata = {
   title: "The Margin Index: where small businesses keep the most",
+  description:
+    "Where a small business keeps the most of what it takes in, ranked place by place for the trade you pick. Free to read in full.",
   alternates: { canonical: "/margin-index" },
 };
 
