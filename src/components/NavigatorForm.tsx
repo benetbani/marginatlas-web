@@ -251,24 +251,41 @@ export function NavigatorForm() {
           </p>
           <div className="flex items-center shrink-0">
             {/* Soft-terracotta submit, the ONE action the card leads to (rule 37). The
-                crimson filled pill (atlas-700) + bold white label were deleted
-                2026-07-12: off-palette accent on chrome + "cheap" heavy fill. This mirrors
-                the reform masthead's ratified soft CTA; because NavigatorForm also renders
-                outside SpineShell on the live legacy homepage (no --terra-* vars), the
-                terracotta comes from Tailwind orange-50/200/700, which map to the spine
-                --terra-soft/border/text values. The "Surprise me" I'm-feeling-lucky button
-                was removed (gimmick device). */}
+                crimson filled pill + bold white label were deleted 2026-07-12:
+                off-palette accent on chrome + "cheap" heavy fill. The soft shape is
+                the reform masthead's ratified CTA and is kept exactly.
+
+                THE COLOUR WAS STOCK TAILWIND ORANGE, AND IT WAS THIS BUTTON.
+                border-orange-200 / bg-orange-50 / text-orange-700, on the primary
+                call to action of the home page. orange-700 is #c2410c at hue 17.5
+                degrees; the brand accent is #991600 at hue 8.6. The founder's note
+                is quoted verbatim in verify_palette_membership's own header: "at the
+                bottom of the home page I see a shade of orange that is not accepted
+                as a brand color."
+
+                Its justification was mistaken. It read that NavigatorForm renders
+                outside SpineShell where the --terra-* vars do not exist, so the
+                terracotta had to come from Tailwind. But atlas-* is not a CSS
+                variable: design-tokens' tailwindColors are spread into the config as
+                plain hex, which is why the h1 twenty lines up this same legacy page
+                uses text-atlas-700 and renders correctly. Nothing ever required the
+                stock ramp.
+
+                Same ladder, on the brand: 50 wash, 200 border, 700 text. Contrast of
+                #991600 on #fff1ee is 7.7:1, past AA and past AAA for body text.
+                These five were the only orange-* classes in the repository, so the
+                palette gate now bans the token outright. */}
             <button
               type="submit"
               disabled={isLoading}
               aria-busy={isLoading}
-              className="px-5 py-2.5 rounded-full border border-orange-200 bg-orange-50 hover:bg-orange-100 text-orange-700 font-semibold text-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
+              className="px-5 py-2.5 rounded-full border border-atlas-200 bg-atlas-50 hover:bg-atlas-100 text-atlas-700 font-semibold text-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
             >
               {isLoading ? (
                 <>
                   <span
                     aria-hidden="true"
-                    className="inline-block w-3.5 h-3.5 border-2 border-orange-700/30 border-t-orange-700 rounded-full animate-spin"
+                    className="inline-block w-3.5 h-3.5 border-2 border-atlas-700/30 border-t-atlas-700 rounded-full animate-spin"
                   />
                   Loading...
                 </>

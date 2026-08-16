@@ -32,6 +32,8 @@
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 
+import { newCommentState, stripComments } from "./lib/strip_comments";
+
 const ROOTS = ["src/app", "src/components"];
 const HEX = /#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b/g;
 const BASELINE = "scripts/hardcoded_hex_baseline.json";
@@ -62,10 +64,35 @@ function tsxFiles(): string[] {
   return out;
 }
 
+/**
+ * COMMENTS ARE STRIPPED, added 2026-08-16 after this gate failed a file for
+ * documenting its own fix.
+ *
+ * The navigator's submit button was moved off stock Tailwind orange onto the
+ * brand ramp, and the comment recording it named the three colours involved,
+ * #c2410c, #991600 and #fff1ee, because "a different hue" is an assertion and
+ * the numbers are the evidence. This gate counted all four as new hardcoded
+ * hex in a component.
+ *
+ * A hex inside a comment paints nothing. verify_palette_membership already
+ * learned this exact lesson and says so in its own source: it flagged
+ * atlas-spots-data.ts for a green that appears there once, inside the comment
+ * recording that the green was removed. CLAUDE.md carries the general rule,
+ * that comment detection belongs in scripts/lib/strip_comments rather than in
+ * each gate's own guess.
+ *
+ * The effect on the ratchet is one-way and safe: stripping can only lower a
+ * count, never raise one, so no existing baseline entry can start failing.
+ */
 function scan(): Record<string, number> {
   const counts: Record<string, number> = {};
   for (const f of tsxFiles()) {
-    const m = readFileSync(f, "utf8").match(HEX);
+    const state = newCommentState();
+    const code = readFileSync(f, "utf8")
+      .split("\n")
+      .map((line) => stripComments(line, state))
+      .join("\n");
+    const m = code.match(HEX);
     if (m && m.length) counts[f] = m.length;
   }
   return counts;

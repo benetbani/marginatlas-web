@@ -129,8 +129,27 @@ export function isPaletteLegal(hex) {
   return ALLOWED.some((b) => h >= b.hMin && h < b.hMax && (b.sMax == null || s <= b.sMax));
 }
 
-/** Tailwind class families whose colour is decided by a banned token name. */
-const BANNED_TOKENS = /\b(?:bg|text|border|fill|stroke|from|via|to|ring|divide|outline|shadow|decoration|accent|caret)-(moss|amber)-\d+\b/g;
+/**
+ * Tailwind class families whose colour is decided by a banned token name.
+ *
+ * ORANGE JOINED THE LIST ON 2026-08-16, and the omission had teeth. The hue
+ * scanner below reads hex and rgb(), so a Tailwind CLASS name carries no colour
+ * it can see: `bg-orange-50` is just a string. moss and amber were named here
+ * for exactly that reason and orange was not, while the founder note quoted at
+ * the top of this file, "at the bottom of the home page I see a shade of orange
+ * that is not accepted as a brand color", sat directly above the gap.
+ *
+ * What it missed: the home page's primary call to action, the submit button on
+ * the navigator, painted border-orange-200 / bg-orange-50 / text-orange-700.
+ * orange-700 is #c2410c at hue 17.5 degrees against a brand accent of #991600
+ * at 8.6, which is why it reads as a different colour rather than a shade.
+ *
+ * Costs nothing to add: those five classes were the only orange-* in the whole
+ * repository, and they are now atlas-50/200/700. Terracotta comes from the
+ * atlas ramp, which is plain hex in the Tailwind config and needs no stylesheet
+ * to be in scope.
+ */
+const BANNED_TOKENS = /\b(?:bg|text|border|fill|stroke|from|via|to|ring|divide|outline|shadow|decoration|accent|caret)-(moss|amber|orange)-\d+\b/g;
 
 function walk(d, out = []) {
   if (!fs.existsSync(d)) return out;
