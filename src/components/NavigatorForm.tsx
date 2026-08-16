@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ComboField, type ComboOption } from "./ComboField";
 import {
   COUNTRIES,
@@ -52,37 +52,39 @@ function readClientGate(): Gate {
 export function NavigatorForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  // Deterministic initial example (the first curated prefill) so the server and
-  // first client render match (no hydration mismatch). The rotation below takes
-  // over after mount.
+  /* THE PRE-FILL NO LONGER ROTATES, and the reason is the same ruling that
+     took the rotating words out of the h1 one band above this card.
+
+     It cycled all three fields through CASCADE_PREFILLS every four seconds
+     until the reader touched something. The h1's two rotating words were
+     removed on the grounds that "motion in the headline competes with the
+     search for the eye, and the search is the instrument". This was motion
+     INSIDE the instrument, which is the same argument only worse.
+
+     And it was not only a matter of taste. Submit reads state, so the values
+     on screen were live: a reader who saw "restaurants in Barcelona", decided,
+     and reached for the button could land on legal services in the UK because
+     the interval fired on the way. A form that changes its own answer while
+     you are deciding is a defect, not a demonstration.
+
+     It also demonstrated very little. Six of the eight prefills are
+     restaurants, so the carousel mostly showed one trade in different cities,
+     while the "Try" line in this card's own footer already names three
+     genuinely different examples and holds still while it does it.
+
+     One real example, kept, because the design intent it served is right: the
+     form should never read blank. CASCADE_PREFILLS[0] is restaurants in Los
+     Angeles, which is also the first example in that footer line, so the card
+     shows the reader the same thing twice instead of two different things. */
   const [country, setCountry] = useState(CASCADE_PREFILLS[0].country);
   const [city, setCity] = useState(CASCADE_PREFILLS[0].city);
   const [business, setBusiness] = useState(CASCADE_PREFILLS[0].business);
   const [gate, setGate] = useState<Gate>({ revealMixed: false, revealCorp: false });
-  // True once the user touches any field; freezes the rotating pre-fill.
-  const [touched, setTouched] = useState(false);
-  const prefillIdx = useRef(0);
 
   // Client gate so ?pro=1 / cookies can widen the activity list.
   useEffect(() => {
     setGate(readClientGate());
   }, []);
-
-  // Rotating pre-fill: cycle the three fields through the curated examples every
-  // few seconds until the user interacts. ComboField is controlled, so setting
-  // the values updates the displayed selection. The effect re-runs when
-  // `touched` flips true and its cleanup clears the interval, freezing the form.
-  useEffect(() => {
-    if (touched) return;
-    const id = window.setInterval(() => {
-      prefillIdx.current = (prefillIdx.current + 1) % CASCADE_PREFILLS.length;
-      const ex = CASCADE_PREFILLS[prefillIdx.current];
-      setCountry(ex.country);
-      setCity(ex.city);
-      setBusiness(ex.business);
-    }, 4000);
-    return () => window.clearInterval(id);
-  }, [touched]);
 
   const countryOptions: ComboOption[] = useMemo(
     () =>
@@ -203,22 +205,16 @@ export function NavigatorForm() {
             options={countryOptions}
             value={country}
             onChange={(v) => {
-              setTouched(true);
               setCountry(v);
               setCity("");
             }}
-            onFocus={() => setTouched(true)}
           />
           <ComboField
             id="city"
             label="City"
             options={cityOptions}
             value={city}
-            onChange={(v) => {
-              setTouched(true);
-              setCity(v);
-            }}
-            onFocus={() => setTouched(true)}
+            onChange={setCity}
           />
           <ComboField
             id="business"
@@ -226,11 +222,7 @@ export function NavigatorForm() {
             required
             options={businessOptions}
             value={business}
-            onChange={(v) => {
-              setTouched(true);
-              setBusiness(v);
-            }}
-            onFocus={() => setTouched(true)}
+            onChange={setBusiness}
             placeholder="Type a business: restaurants, barbers, plumbers"
           />
         </div>
