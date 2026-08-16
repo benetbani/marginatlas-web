@@ -76,9 +76,25 @@ export function AtlasLedger() {
   return (
     <section className="py-10 md:py-14">
       <div className="border-t border-parchment pt-5 md:pt-6">
-        <div className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.2em] text-cocoa-700/60">
+        {/* An h2, not a div, and it looks exactly the same.
+            Every other band on this page contributes a heading to the document
+            outline and this one did not, so the site's own coverage claim,
+            which is the most checkable thing on the page, was structurally
+            invisible: absent from the outline a screen reader navigates by and
+            from the structure a crawler reads.
+
+            Nothing moves. Tailwind's preflight resets heading font-size,
+            weight and margin to inherit, and the classes here set all three
+            explicitly, so the rendered result is identical to the div. */}
+        {/* The typography gate caught this the moment the div became a
+            heading, which is the gate working rather than the gate in the way:
+            a display h2 at 10px would be real drift. This one is 10px because
+            it labels a ruled manifest line whose figures carry the size. */}
+        {/* typography-ok: band label promoted to h2 for the outline,
+            deliberately not display-sized */}
+        <h2 className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.2em] text-cocoa-700/60">
           What the atlas holds
-        </div>
+        </h2>
 
         {/* Two up on a phone, four across from md. The dividers are hairlines
             between columns rather than borders around them: a manifest line,

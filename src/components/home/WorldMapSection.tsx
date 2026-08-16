@@ -32,8 +32,25 @@ export function WorldMapSection() {
        rather than the map has one move instead of a scroll. */
     <section className="py-10 md:py-14">
       <div className="mb-5 md:mb-7 flex items-baseline justify-between gap-4 flex-wrap">
+        {/* "Pick a country" stood here, and the hero form's own heading four
+            bands above reads "Pick a country, a city, and a business." Two
+            sections telling a reader to do the same thing, one of them a
+            shorter version of the other, which is the restatement the rulebook
+            bans one level up: the eyebrow above this heading was deleted for
+            being a vaguer copy of the heading, and the heading turned out to be
+            a vaguer copy of the form.
+
+            They are not the same offer. The form is for a reader who knows what
+            they want and wants to arrive; the map is for one who wants to look
+            around first. So the heading names the artifact rather than
+            repeating the instruction, which is the split every reference makes
+            between a search box and an explore surface.
+
+            No count, per this file's standing rule that the framing is "covers
+            the whole world" and no number goes in the narrative. "Every
+            country" carries the reach without spending a figure. */}
         <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 leading-tight">
-          Pick a country
+          Every country, on one map
         </h2>
         <a
           href="/countries"
