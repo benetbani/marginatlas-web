@@ -99,11 +99,50 @@ export const colors = {
     // the last step of the purge, deliberately separate, because a rename
     // touches every call site and must not ride along with a colour change.
     75: "#f7f7f8", // cool neutral app ground (page surface behind cards)
-    100: "#f7f6f4", // warm sand muted surface
-    200: "#efeeeb",
-    300: "#e4e2dd", // warm taupe hairline / border step
-    400: "#c3bfb7",
-    500: "#8d887e",
+
+    // THE MUTED-FILL RETONE, 2026-08-17. These four steps were the last warm
+    // tints in the ramp: 100 #f7f6f4, 200 #efeeeb, 300 #e4e2dd, 400 #c3bfb7,
+    // all of them at h 40-45 and s 9-16%. They are now TRUE NEUTRALS, s=0%.
+    //
+    // WHY RETONE RATHER THAN REMAP THE CALL SITES. This is the same move that
+    // fixed `parchment`, and it is the only one that works here, because the
+    // 400 step is SHARED between two roles that a remap would have to split:
+    // it is the neutral bar mass in Waterfall, ComparisonBars, VsWorld,
+    // MoneyGoesBreakdown and VisitorSplit, AND the dashed rule on five
+    // empty-state boxes AND five underlines. The previous pass deferred it for
+    // exactly that reason, having found no cool token at its weight. There is
+    // still none, and Tailwind's own cool ramps skip the weight too: zinc-300
+    // is l 83.9% and zinc-400 is l 65.7%, against this step's 74.1%, so a remap
+    // either way visibly changes how heavy those rules read. Changing the value
+    // underneath all seventeen usages moves none of them.
+    //
+    // THE VALUES ARE LUMINANCE-MATCHED, not eyeballed and not lightness-matched.
+    // Relative luminance is the quantity every contrast ratio is computed from,
+    // so matching it is what guarantees a fill that must be seen stays seen:
+    //   100  L .9222 -> .9216   on white 1.080:1 -> 1.081:1
+    //   200  L .8550 -> .8550   on white 1.160:1 -> 1.160:1
+    //   300  L .7611 -> .7534   on white 1.295:1 -> 1.283:1
+    //   400  L .5228 -> .5210   on white 1.833:1 -> 1.839:1
+    // Across the seven foregrounds that sit on these as fills the largest ratio
+    // change is 0.03 and ZERO AA verdicts flip. The dashed empty-state box, the
+    // case the brief singled out as the one that must not go invisible, reads
+    // 1.697:1 against its own fill before and 1.702:1 after.
+    //
+    // 300 lands on #e3e3e3, which is `parchment` exactly: the hairline step and
+    // the hairline token were the same colour before and stay the same colour
+    // now, rather than drifting apart into two near-identical greys.
+    //
+    // The NAME is still wrong on all of these. The ramp holds no cream after
+    // this change; renaming it is the last step of the purge and is deliberately
+    // kept separate, because a rename touches every call site and must not ride
+    // along with a colour change.
+    100: "#f6f6f6", // muted surface (thead tints, chips, inset panels)
+    200: "#eeeeee",
+    300: "#e3e3e3", // hairline / border step, = parchment
+    400: "#bfbfbf", // chart bar mass, dashed rules, underlines
+    // 500 (#8d887e) DELETED 2026-08-17: defined since the warm reformation and
+    // referenced exactly zero times in src/. A token that exists gets used, and
+    // this one was the darkest cream on the ramp.
   },
   ink: {
     // Warm brown-black text ladder. Reads as warm ink on warm paper,

@@ -120,7 +120,7 @@ export default async function DataQualityDashboard({
         {inventory ? (
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
-              <thead className="bg-cream-100 text-left text-xs uppercase tracking-wide text-cocoa-700">
+              <thead className="bg-secondary text-left text-xs uppercase tracking-wide text-cocoa-700">
                 <tr>
                   <th className="p-3 font-semibold">Table</th>
                   <th className="p-3 font-semibold">Rows</th>
@@ -241,7 +241,7 @@ export default async function DataQualityDashboard({
             </p>
             <div className="overflow-x-auto">
               <table className="w-full text-xs border-collapse">
-                <thead className="bg-cream-100 text-left uppercase tracking-wide text-cocoa-700">
+                <thead className="bg-secondary text-left uppercase tracking-wide text-cocoa-700">
                   <tr>
                     <th className="p-2 font-semibold">Country</th>
                     <th className="p-2 font-semibold">Geo ID</th>
@@ -289,7 +289,7 @@ export default async function DataQualityDashboard({
             </p>
             <div className="overflow-x-auto">
               <table className="w-full text-xs border-collapse">
-                <thead className="bg-cream-100 text-left uppercase tracking-wide text-cocoa-700">
+                <thead className="bg-secondary text-left uppercase tracking-wide text-cocoa-700">
                   <tr>
                     <th className="p-2 font-semibold">Country</th>
                     <th className="p-2 font-semibold">Industry</th>

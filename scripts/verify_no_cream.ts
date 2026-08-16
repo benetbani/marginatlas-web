@@ -141,6 +141,32 @@ function aliasedCream(): string[] {
         }
       }
     }
+
+    /**
+     * THE SAME EVASION, ONE NOTATION LATER. Found 2026-08-17, and it was live:
+     * `--secondary: 247 246 244` and `--accent: 247 246 244` were cream-100,
+     * and `--muted: 228 226 221` was cream-300, all three in the bare-decimal
+     * form Tailwind's `rgb(var(--x) / <alpha-value>)` syntax requires. So
+     * `bg-secondary`, `bg-accent` and `bg-muted` painted warm sand while the
+     * ratchet above, which matches the word and a list of HEX literals, and the
+     * hex-only check above this, both reported clean.
+     *
+     * `parchment` taught that cream hides behind a name. This is the same
+     * colour hiding behind a NOTATION, which is worth stating separately: it is
+     * not enough to enumerate the names a value might wear, the spellings of
+     * the value have to be enumerated too.
+     */
+    for (const m of code.matchAll(/(--[\w-]+)\s*:\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*;/g)) {
+      const name = m[1];
+      const hex =
+        "#" +
+        [m[2], m[3], m[4]]
+          .map((v) => Number(v).toString(16).padStart(2, "0"))
+          .join("");
+      if (WARM_CREAM.has(hex) && !/cream/i.test(name)) {
+        hits.push(`${rel}: ${name} = ${m[2]} ${m[3]} ${m[4]} (= ${hex}, decimal form)`);
+      }
+    }
   }
   return hits;
 }

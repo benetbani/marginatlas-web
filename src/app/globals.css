@@ -57,11 +57,21 @@
     --popover-foreground: 33 24 16;  /* ink-900 */
     --primary: 153 22 0;             /* atlas-700 #991600 */
     --primary-foreground: 255 255 255; /* cream-50 */
-    --secondary: 247 246 244;        /* cream-100 */
+    /* CREAM WEARING THREE MORE NAMES, IN DECIMAL. Found 2026-08-17. These were
+       247 246 244 and 228 226 221, which are #f7f6f4 and #e4e2dd, the warm 100
+       and 300 steps written in the notation Tailwind's <alpha-value> syntax
+       needs. That notation is why they survived the previous sweep: the cream
+       ratchet matches the WORD cream and a short list of hex literals, and the
+       alias check that caught `parchment` reads `name: "#hex"` only. A decimal
+       triplet is invisible to both, so `bg-secondary` and `bg-accent` were
+       still painting warm sand with nothing anywhere reporting it. Same lesson
+       as `parchment`, one notation later. The alias check now reads decimal
+       triplets too, so this cannot recur in a third spelling. */
+    --secondary: 246 246 246;        /* neutral muted surface */
     --secondary-foreground: 33 24 16; /* ink-900 */
-    --muted: 228 226 221;            /* cream-300 #E2D2B9, warm taupe */
+    --muted: 227 227 227;            /* neutral, = parchment */
     --muted-foreground: 83 66 49;    /* cocoa-700 #534231, warm brown */
-    --accent: 247 246 244;           /* cream-100 */
+    --accent: 246 246 246;           /* neutral muted surface */
     --accent-foreground: 33 24 16;   /* ink-900 */
     --destructive: 92 24 19;         /* clay-700 #5C1813, deep maroon */
     --destructive-foreground: 255 253 248; /* cream-50 */
@@ -128,7 +138,29 @@
        this file, including .atlas-frame-gutters, the centre veil, the four
        .atlas-wash category grounds and --atlas-tone-paper. */
     --atlas-surface-paper: #f7f7f8;          /* body: cool neutral app ground */
-    --atlas-surface-card: #ffffff;           /* canonical card surface, white */
+
+    /* THE CARD CARRIES THE PICTURE. 2026-08-17, and the value is the founder's
+       own, not a judged one: src/styles/atlas-spine.css (generated from his
+       design/mockups/atlas.css) sets --card:rgba(255,255,255,.955) and states
+       the rule beside it, the TWO-SURFACE RULE: "every word on the site sits
+       on --card at .955 alpha, so legibility is a property of the card and not
+       of the backdrop. The backdrop only ever shows through [between cards]."
+
+       That is the half of the brief AtlasFrame could not implement alone. It
+       removed the centre plate, because his system has no plate: the backdrop
+       is uniform and the CARDS soften the middle. With an opaque white card
+       that mechanism does nothing, and the centre of every page reads as flat
+       white between live gutters. At .955 the photograph whispers through
+       every card, which is what he asked for three times over.
+
+       MEASURED, not assumed. The stack is a white base, then the photograph at
+       opacity .32 under saturate(.85) contrast(1.02), then this card. The
+       darkest pixel in /spine/_skyline.jpeg is rgb(1,2,0), which at .32 over
+       white composites to a backdrop of rgb(173), so the very worst card ground
+       anywhere on the site is rgb(251.3), not white. Against that ground the
+       seven foreground tokens move by at most 0.54 on a ratio of 17.46
+       (ink-800 body copy 15.85 -> 15.36) and ZERO AA verdicts flip. */
+    --atlas-surface-card: rgba(255, 255, 255, 0.955); /* canonical card surface */
     --atlas-surface-card-soft: #ffffff;      /* secondary card within a card section */
     --atlas-surface-band: #ffffff;           /* white section band, no pattern */
 
@@ -703,7 +735,22 @@
    bottom hairline stays: it is what separates the bar from the content, and it
    is now doing that work alone. */
 .atlas-glass-chrome {
-  background: var(--atlas-surface-card);
+  /* OPAQUE, AND PINNED RATHER THAN INHERITED. This read
+     var(--atlas-surface-card) until 2026-08-17, which was correct while that
+     token was #ffffff and became a silent regression the moment it went to
+     .955 alpha: the masthead would have turned translucent again and the
+     photograph would have read through it.
+
+     That is requirement B3 of the founder's background brief, and it was
+     already fixed once. The bar was rgba(251,250,247,.72) with a 14px backdrop
+     blur, translucent AND cream, breaking B3 and the cream ban together. It
+     must not come back by inheritance.
+
+     So the header states its own fill. The card token is for cards, which are
+     meant to let the picture whisper through; the masthead is chrome, which is
+     meant to sit on its own solid ground. Two different jobs, and pointing
+     both at one token is what coupled them. */
+  background: #ffffff;
   border-bottom: 1px solid var(--atlas-hairline-strong);
 }
 
@@ -755,8 +802,12 @@
   --clay-600: #73211a; /* clay-600, low-end fg */
 
   /* ---- cream surfaces — colors.cream ------------------------------------ */
-  --cream-100: #f7f6f4; /* cream-100, warm sand muted surface */
-  --cream-200: #efeeeb; /* cream-200, mid meaning bg */
+  /* Retoned to true neutrals 2026-08-17, luminance-matched, in step with the
+     ramp in design-tokens.ts. These are the CSS mirror of the same two steps
+     and would otherwise have kept serving warm sand to the engraved sections
+     after the ramp itself went neutral. */
+  --cream-100: #f6f6f6; /* muted surface */
+  --cream-200: #eeeeee; /* mid meaning bg */
 
   /* ---- semantic engraved aliases (what the components read) ------------- */
   --surface-card: var(--atlas-surface-card); /* white card, = cream-50 */
@@ -773,7 +824,7 @@
 
   /* ---- extra meaning-scale + surface steps the Wave-2 sections read ----- */
   --cocoa-300: #c3b39c; /* cocoa-300, the wage-floor / world-median bar tone */
-  --cream-300: #e4e2dd; /* cream-300, warm taupe, the empty climate dot */
+  --cream-300: #e3e3e3; /* neutral, the empty climate dot, = parchment */
   --amber-100: #fdecc8; /* amber-100, the gut-check "no" pill surface */
   --amber-600: #b06a08; /* amber-600, the gut-check "no" mark (= caution) */
 

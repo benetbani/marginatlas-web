@@ -2,8 +2,8 @@
   "files": {
     "src/app/(site)/about-data/page.tsx": 4,
     "src/app/(site)/account/AccountPreview.tsx": 13,
-    "src/app/(site)/admin/data-quality/page.tsx": 5,
-    "src/app/(site)/admin/review/page.tsx": 24,
+    "src/app/(site)/admin/data-quality/page.tsx": 2,
+    "src/app/(site)/admin/review/page.tsx": 13,
     "src/app/(site)/check/CheckForm.tsx": 8,
     "src/app/(site)/check/CheckResult.tsx": 2,
     "src/app/(site)/cities/[slug]/neighborhoods/page.tsx": 2,
@@ -39,7 +39,7 @@
     "src/app/dev/london-commercial/page.tsx": 15,
     "src/app/dev/spine/layout.tsx": 3,
     "src/app/error.tsx": 2,
-    "src/app/globals.css": 18,
+    "src/app/globals.css": 15,
     "src/app/icon.tsx": 1,
     "src/app/loading.tsx": 6,
     "src/app/not-found.tsx": 2,
@@ -160,12 +160,12 @@
     "src/components/v2/CountryScorecardV2.tsx": 2,
     "src/components/v2/CoverageHubV2.tsx": 1,
     "src/components/WorldMapPicker.tsx": 1,
-    "src/lib/design-tokens.ts": 7,
+    "src/lib/design-tokens.ts": 2,
     "src/lib/page-layout/section-order.ts": 2,
     "src/lib/sector_palette.ts": 1,
     "src/styles/atlas-pattern.css": 5,
     "src/styles/atlas-spine.css": 2,
-    "src/styles/homepage-visual-tokens.css": 6,
+    "src/styles/homepage-visual-tokens.css": 5,
     "src/styles/v0-tokens.css": 1
   }
 }

@@ -321,7 +321,7 @@ function VerificationsTab({
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
-                <thead className="bg-cream-100 text-ink-900 text-left">
+                <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
                     <th className="py-2 px-2">Country</th>
                     <th className="py-2 px-2 text-right">Stored CIT</th>
@@ -379,7 +379,7 @@ function VerificationsTab({
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
-                <thead className="bg-cream-100 text-ink-900 text-left">
+                <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
                     <th className="py-2 px-2">City</th>
                     <th className="py-2 px-2 text-right">Stored</th>
@@ -444,7 +444,7 @@ function VerificationsTab({
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
-                <thead className="bg-cream-100 text-ink-900 text-left">
+                <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
                     <th className="py-2 px-2">Industry</th>
                     <th className="py-2 px-2 text-right">Atlas op-margin</th>
@@ -500,7 +500,7 @@ function VerificationsTab({
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
-                <thead className="bg-cream-100 text-ink-900 text-left">
+                <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
                     <th className="py-2 px-2">Industry</th>
                     <th className="py-2 px-2 text-right">Sev</th>
@@ -663,7 +663,7 @@ function CurrencyTab({ data }: { data: CurrencyReport }) {
 
       <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
         <table className="w-full text-xs">
-          <thead className="bg-cream-100 text-ink-900">
+          <thead className="bg-secondary text-ink-900">
             <tr className="text-left">
               <th className="py-2 px-2">Cell</th>
               <th className="py-2 px-2 text-right">Stored</th>
@@ -710,7 +710,7 @@ function VarianceTab({ data }: { data: VarianceReport }) {
       </h2>
       <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
         <table className="w-full text-xs">
-          <thead className="bg-cream-100 text-ink-900">
+          <thead className="bg-secondary text-ink-900">
             <tr className="text-left">
               <th className="py-2 px-2">Industry / size</th>
               <th className="py-2 px-2 text-right">N countries</th>
@@ -754,7 +754,7 @@ function SmallNTab({ data }: { data: SmallNReport }) {
         <h3 className="text-sm font-semibold text-ink-900 mb-2">Countries with most thin cells</h3>
         <div className="overflow-x-auto rounded-xl border border-ink-200">
           <table className="w-full text-xs">
-            <thead className="bg-cream-100"><tr className="text-left"><th className="py-2 px-2">Country</th><th className="py-2 px-2 text-right">&lt; 5</th><th className="py-2 px-2 text-right">5-19</th><th className="py-2 px-2 text-right">20-49</th><th className="py-2 px-2 text-right">200+</th><th className="py-2 px-2 text-right">null</th></tr></thead>
+            <thead className="bg-secondary"><tr className="text-left"><th className="py-2 px-2">Country</th><th className="py-2 px-2 text-right">&lt; 5</th><th className="py-2 px-2 text-right">5-19</th><th className="py-2 px-2 text-right">20-49</th><th className="py-2 px-2 text-right">200+</th><th className="py-2 px-2 text-right">null</th></tr></thead>
             <tbody>
               {Object.entries(data.by_country_top_30_thin).map(([c, b]) => (
                 <tr key={c} className="border-t border-ink-200/40">
@@ -783,7 +783,7 @@ function YoYTab({ data }: { data: YoYReport }) {
       <p className="mt-1 text-sm text-ink-700/80">&gt;50% YoY change excluding 2020-2021 pandemic transitions.</p>
       <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
         <table className="w-full text-xs">
-          <thead className="bg-cream-100"><tr className="text-left"><th className="py-2 px-2">Cell</th><th className="py-2 px-2">Transition</th><th className="py-2 px-2 text-right">From</th><th className="py-2 px-2 text-right">To</th><th className="py-2 px-2 text-right">Ratio</th></tr></thead>
+          <thead className="bg-secondary"><tr className="text-left"><th className="py-2 px-2">Cell</th><th className="py-2 px-2">Transition</th><th className="py-2 px-2 text-right">From</th><th className="py-2 px-2 text-right">To</th><th className="py-2 px-2 text-right">Ratio</th></tr></thead>
           <tbody>
             {data.samples.slice(0, 100).map((s, i) => (
               <tr key={i} className="border-t border-ink-200/40">
@@ -882,7 +882,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
         <h3 className="text-sm font-semibold text-ink-900 mb-2">Top 50 normalizations applied</h3>
         <div className="overflow-x-auto rounded-xl border border-ink-200">
           <table className="w-full text-xs">
-            <thead className="bg-cream-100 text-ink-900">
+            <thead className="bg-secondary text-ink-900">
               <tr className="text-left">
                 <th className="py-2 px-2">Table</th>
                 <th className="py-2 px-2">Country</th>
@@ -925,7 +925,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
         </p>
         <div className="overflow-x-auto rounded-xl border border-ink-200">
           <table className="w-full text-xs">
-            <thead className="bg-cream-100 text-ink-900">
+            <thead className="bg-secondary text-ink-900">
               <tr className="text-left">
                 <th className="py-2 px-2">Table</th>
                 <th className="py-2 px-2">Country</th>
@@ -968,7 +968,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
           </p>
           <div className="overflow-x-auto rounded-xl border border-ink-200">
             <table className="w-full text-xs">
-              <thead className="bg-cream-100 text-ink-900">
+              <thead className="bg-secondary text-ink-900">
                 <tr className="text-left">
                   <th className="py-2 px-2">Table</th>
                   <th className="py-2 px-2">Country</th>
