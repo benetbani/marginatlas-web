@@ -270,8 +270,35 @@ tiles retitled; page grounds removed from `CoverageHubV2`, `CityHeroV2` and
   `@supports` fallback was deleted because both branches had become identical.
 - The H1 is restored (`d82427e3`) and is now a locked value. See §3.
 
+- **§6 DONE.** `/cities` went from 20,459px and 2.54MB to 5,152px and 1.06MB,
+  30 screens to 7, with all 252 city URLs kept and prose cut from five blocks to
+  two. The world map was drawing all along, invisibly: 177 country paths in
+  cream-200 on a cream-400 half-pixel outline against a white card. Now ink at
+  0.9px. A visitor figure was dropped from the cards, correctly:
+  `tourist_arrivals_m` is stored as country-arrivals-over-divisor, so 21 US
+  cities all read 13.4M while Orlando read 8.4M and Las Vegas 6M.
+
+- **THE CREAM BAN IS NOW ENFORCED, and it was not before.** `verify_no_cream` is
+  gate 98, a ratchet at **517 references across 177 files**
+  (`scripts/cream_baseline.json`). It counts down only: a file may shrink, never
+  grow, and an entry reaching zero must be deleted in the same commit.
+  This was necessary because **`verify_palette_membership` cannot see cream by
+  design.** It returns legal for anything above 93% lightness and its own
+  comment names cream as "the cream this site is printed on". `#fbfaf7` measures
+  97.6%. Its baseline of 165 was never evidence the purge was working; it could
+  not have moved in either direction. Do not try to widen that gate instead:
+  lowering the 93 re-catches every warm and cool white on the site.
+
+- **A STACKING RULE EVERY AGENT MUST KNOW.** `AtlasFrame` paints from
+  `position: fixed` layers at `z-index: 0`. A `position: static` element with a
+  background therefore paints UNDERNEATH the photograph. Any card, panel or
+  ground you add must be `relative`, or it silently sinks behind the picture.
+  This washed out the `/cities` hero at 1001x820 before it was caught, and the
+  two homepage cards added in the same tick were saved only by `ToneBand`
+  happening to be positioned.
+
 Open and NOT done: §2 partially (page-ground role done, four roles remain, see
-§11), §4 entirely, §6 entirely, §7 entirely.
+§11), §4 entirely, §5 (country and region page bodies), §7.
 
 ---
 
