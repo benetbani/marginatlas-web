@@ -47,7 +47,28 @@ export function StateComparison({ comparisons }: { comparisons: TradeComparison[
       <div className="space-y-5">
         {comparisons.map((c) => (
           <div key={c.trade} className="atlas-card px-5 py-4">
-            <div className="font-display text-base font-medium text-ink-900 mb-3">{c.trade}</div>
+            {/* THE SPREAD LEADS, THE LIST FOLLOWS.
+                This card was four numbers and a trade name, which left the
+                reader to do the subtraction that is the entire point of putting
+                them side by side. The founder's rule for a catalog concept is
+                that it must not be "slammed like a list of elements": the list
+                is the evidence, the sentence is the claim.
+
+                Deliberately NOT extended with what the owner keeps, which was
+                the first idea. Measured across all four states: restaurants
+                keep 11.3% of revenue in every one of them, and coffee shops the
+                same, because the margin comes from the industry model rather
+                than the place. A take-home column would be revenue multiplied
+                by a constant, presented as though the place had moved it. */}
+            <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <div className="font-display text-base font-medium text-ink-900">{c.trade}</div>
+              <div className="text-sm text-graphite">
+                <span className="font-semibold text-atlas-700 tabular-nums">
+                  {c.spreadPct}% more
+                </span>{" "}
+                in {c.topState} than {c.bottomState}
+              </div>
+            </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {c.rows.map((r) => (
                 <a key={r.href} href={r.href} className="group block">

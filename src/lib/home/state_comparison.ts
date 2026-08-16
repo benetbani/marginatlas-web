@@ -12,7 +12,21 @@ import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { fmtMoney } from "@/lib/format/money";
 
 export type StateRevenue = { state: string; href: string; revenue: string };
-export type TradeComparison = { trade: string; rows: StateRevenue[] };
+export type TradeComparison = {
+  trade: string;
+  rows: StateRevenue[];
+  /**
+   * How far apart the best and worst state are, as a percent above the
+   * lowest. The band led with four numbers and left the reader to do this
+   * subtraction; the founder's rule is that a catalog concept must not be
+   * "slammed like a list of elements", and the spread IS the point of the
+   * list. Computed from the raw figures before formatting rounds them.
+   */
+  spreadPct: number;
+  /** The strongest and weakest state, named, so the spread has ends. */
+  topState: string;
+  bottomState: string;
+};
 
 // Clean-resolving US industry slugs ONLY (the US misroute does not touch these).
 const TRADES: { slug: string; label: string }[] = [
@@ -43,10 +57,12 @@ export async function loadStateComparisons(): Promise<TradeComparison[]> {
   const out: TradeComparison[] = [];
   for (const t of TRADES) {
     const rows: StateRevenue[] = [];
+    const raw: { state: string; value: number }[] = [];
     for (const s of STATES) {
       const rev = await revenueFor(s.slug, t.slug);
       if (rev == null) continue;
       rows.push({ state: s.label, href: `/us/${s.slug}/${t.slug}`, revenue: fmtMoney(rev) });
+      raw.push({ state: s.label, value: rev });
     }
     // Common-sense gate: a real comparison needs spread, not the same number
     // repeated. Some trades (e.g. grocery stores) resolve to a single national
@@ -55,7 +71,16 @@ export async function loadStateComparisons(): Promise<TradeComparison[]> {
     // the trade.
     const distinct = new Set(rows.map((r) => r.revenue)).size;
     if (rows.length >= 3 && distinct >= Math.max(2, rows.length - 1)) {
-      out.push({ trade: t.label, rows });
+      const sorted = [...raw].sort((a, b) => b.value - a.value);
+      const top = sorted[0];
+      const bottom = sorted[sorted.length - 1];
+      out.push({
+        trade: t.label,
+        rows,
+        spreadPct: Math.round(((top.value - bottom.value) / bottom.value) * 100),
+        topState: top.state,
+        bottomState: bottom.state,
+      });
     }
   }
   return out;
