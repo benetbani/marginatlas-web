@@ -390,7 +390,7 @@ async function CellPageBody({
     const spineData = await buildSpineCellSeed(country, geo, industry);
     if (!spineData) notFound();
     return (
-      <SpineShell bg="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=60" bgPosition="center 45%">
+      <SpineShell>
         <SpineCell data={spineData} />
       </SpineShell>
     );

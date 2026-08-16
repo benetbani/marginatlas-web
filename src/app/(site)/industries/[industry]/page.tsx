@@ -188,7 +188,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     const spineData = await buildSpineIndustrySeed(industry);
     if (!spineData) notFound();
     return (
-      <SpineShell bg="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=60" bgPosition="center 50%">
+      <SpineShell>
         <SpineIndustryBody data={spineData} />
       </SpineShell>
     );

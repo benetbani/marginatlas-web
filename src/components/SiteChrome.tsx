@@ -37,6 +37,7 @@
 import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVariants";
 import { HeaderAuth } from "@/components/HeaderAuth";
 import { HeaderSearch } from "@/components/HeaderSearch";
+import { AtlasFrame } from "@/components/AtlasFrame";
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { MobileNav } from "@/components/MobileNav";
 import { WatchTray } from "@/components/kit";
@@ -52,6 +53,15 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     : "bg-white border-b border-parchment sticky top-0 z-raised";
   return (
     <>
+        {/* THE SITE-WIDE ATMOSPHERE, mounted here because this is the one
+            component every page reaches. Founder, 2026-08-16: the background
+            "should be totally visible on the edges of the whole site, and on
+            the center it should have that sort of opacity", and it was on the
+            hero of one page. The treatment already existed inside SpineShell;
+            what it lacked was reach, since SpineShell is per page type and
+            measuring production found the frame on one live page out of six.
+            Fixed layers, so the page scrolls over the photograph. */}
+        <AtlasFrame />
         {/* Plan v32 hotfix — header 50% taller, logo larger, nav items more
            spread out + larger font. White-reset 2026-06-06: the header is pure
            white and, now that the paper texture that used to separate it from

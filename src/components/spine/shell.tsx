@@ -1,4 +1,23 @@
 /**
+ * THE THREE FIXED LAYERS BELOW ARE NOW A FALLBACK, not the site's frame.
+ *
+ * They carry `spine-frame-layer`, and AtlasFrame, mounted once in SiteChrome,
+ * ships a rule that hides anything with that class. So on a real page the
+ * site-wide frame is the only one drawing, and on the /dev prototypes, which
+ * mount this shell with no site chrome at all, these still render and the
+ * prototypes keep their look.
+ *
+ * Why it is done with a class rather than a prop: both would otherwise draw on
+ * every real page, and two photographs at .32 stack to .54 while two
+ * passe-partouts compound to nearly opaque. A prop would mean remembering it at
+ * nine call sites forever; the rule cannot be forgotten.
+ *
+ * What still belongs to this component is the part that is genuinely per page:
+ * the typography scope, the fonts, the palette variables and the .fig/.hov/
+ * .focal rules the spine kit is built on.
+ */
+
+/**
  * SpineShell , the shared frame for every spine page type. Geist Sans (text) +
  * Space Grotesk (.fig figures). Two-zone atmosphere: a warmed opacity-only photo
  * fills the gutters while a centered feathered white READABLE BAND (.spine-band)
@@ -38,11 +57,11 @@ export function SpineShell({ children, bg = DEFAULT_BG, bgPosition = "center 16%
   return (
     <div className={`spine-scope ${geist.variable} ${grotesk.variable}`} style={{ fontFamily: "var(--font-geist), ui-sans-serif, system-ui, sans-serif" }}>
       {/* Layer 1: white base de-yellows the page (brand: warmed neutrals, no cream). */}
-      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 0, background: "#ffffff", pointerEvents: "none" }} />
+      <div aria-hidden className="spine-frame-layer" style={{ position: "fixed", inset: 0, zIndex: 0, background: "#ffffff", pointerEvents: "none" }} />
       {/* Layer 2: atmosphere photo, OPACITY ONLY (0.32), warmed, no tint veil (opacity-only law). */}
-      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: `url('${bg}')`, backgroundSize: "cover", backgroundPosition: bgPosition, opacity: 0.32, filter: "saturate(0.85) contrast(1.02)" }} />
+      <div aria-hidden className="spine-frame-layer" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: `url('${bg}')`, backgroundSize: "cover", backgroundPosition: bgPosition, opacity: 0.32, filter: "saturate(0.85) contrast(1.02)" }} />
       {/* Layer 4: READABLE BAND , centered, feathers to the untouched photo in the gutters. */}
-      <div aria-hidden className="spine-band" style={{ position: "fixed", insetBlock: 0, left: "50%", transform: "translateX(-50%)", width: "min(1480px, 100%)", zIndex: 0, pointerEvents: "none" }} />
+      <div aria-hidden className="spine-band spine-frame-layer" style={{ position: "fixed", insetBlock: 0, left: "50%", transform: "translateX(-50%)", width: "min(1480px, 100%)", zIndex: 0, pointerEvents: "none" }} />
       <style>{`:root{--c-card:#ffffff;--c-soft:#f6f4f2;--c-soft2:#efebe8;--c-border:#e7e2df;--c-line-strong:#d8d0cb;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#6f6f6d;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}
 .fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
 /* Two-level passe-partout: EXACTLY two flat opacity plateaus with ONE hard step ~1cm outside the content edge. Content zone .82, no-content margins .16. Keyed to the 1480px band over the 1120px content column (content edge = 50% +/- 37.84%; the step, 1cm outside, = 9.61% / 90.39%). */

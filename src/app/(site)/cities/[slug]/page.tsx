@@ -235,7 +235,7 @@ export default async function CityPage({
     const spineData = await buildSpineCitySeed(slug);
     if (!spineData) notFound();
     return (
-      <SpineShell bg="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60" bgPosition="center 30%">
+      <SpineShell>
         <SpineCityBody data={spineData} />
       </SpineShell>
     );

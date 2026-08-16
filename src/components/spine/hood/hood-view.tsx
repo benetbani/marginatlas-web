@@ -39,7 +39,6 @@ import { HoodMasthead } from "./masthead";
 import { AtlasMark } from "@/components/spine/marks";
 
 // A London street motif for the hood atmosphere (opacity-only 0.32, set in SpineShell).
-const HOOD_BG = "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60";
 
 // The illustrative-route provenance line (dev seed fallback). The real adapter supplies
 // its own honest meta.provenance_line, which then replaces this on the promoted page.
@@ -78,7 +77,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
     : [];
 
   return (
-    <SpineShell bg={HOOD_BG} bgPosition="center 40%">
+    <SpineShell>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         {/* MASTHEAD , answer-first two-figure honest headline (lightest rent vs heaviest). */}
         <HoodMasthead d={d} />

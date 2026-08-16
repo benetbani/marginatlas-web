@@ -137,7 +137,7 @@ async function RegionLandingPageBody({
   // never ships live because the flag stays OFF until real-data adapters land.
   if (isSpineReformEnabledFor("region")) {
     return (
-      <SpineShell bg="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1920&q=60" bgPosition="center 30%">
+      <SpineShell>
         <SpineCityBody />
       </SpineShell>
     );

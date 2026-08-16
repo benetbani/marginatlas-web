@@ -352,7 +352,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
   // never ships live because the flag stays OFF until real-data adapters land.
   if (isSpineReformEnabledFor("country")) {
     return (
-      <SpineShell bg="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1920&q=60">
+      <SpineShell>
         <SpineCountry />
       </SpineShell>
     );
