@@ -3,9 +3,13 @@
  *
  * One register for the three interactive surfaces the founder folded under a
  * single hub: Decide (which business, and where), Check (compare your own
- * numbers to typical), and Calculator (run your exact rent, payroll, and
- * concept). The hub only points to the live routes; it does not move, rename,
- * or wrap them, so each tool keeps its own URL and its SEO equity.
+ * numbers to typical), and Calculator (break-even, and whether the owner gets
+ * paid). The hub only points to the live routes; it does not move, rename, or
+ * wrap them, so each tool keeps its own URL and its SEO equity.
+ *
+ * NOT LISTED, ON PURPOSE: /compare. It is a real interactive route, but the
+ * three here are the three the founder folded under this hub, and adding a
+ * fourth is a decision about what the hub IS rather than a defect in it.
  *
  * Server component. Warm editorial layout on paper, matching the /decide and
  * /calculator headers. Cards reuse the established .atlas-card pattern (see the
@@ -22,8 +26,15 @@ export const revalidate = 86400;
 export function generateMetadata(): Metadata {
   return {
     title: "Tools | Margin Atlas",
+    /* "Run your exact rent, payroll, and concept" stood here too. The card
+       below carries a comment explaining why that claim was retired: the
+       calculator has five fields, country, region, industry, size band and
+       annual revenue, and it MODELS rent and payroll from the trade's cost
+       structure rather than taking yours. The correction was applied to the
+       card title and not to this description, so the retired promise survived
+       in the one place that reaches a search result. */
     description:
-      "Three ways to put the benchmarks to work: decide which business to start and where, check your own numbers against typical, and run your exact rent, payroll, and concept.",
+      "Three ways to put the benchmarks to work: decide which business to start and where, check your own numbers against typical, and find your break-even and whether the owner gets paid.",
     alternates: { canonical: "/tools" },
   };
 }
