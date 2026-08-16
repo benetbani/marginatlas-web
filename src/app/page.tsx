@@ -3,6 +3,8 @@ import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { AtlasLedger } from "@/components/home/AtlasLedger";
 import { CatalogPlates } from "@/components/home/CatalogPlates";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
+import { Specimen } from "@/components/home/Specimen";
+import { loadSpecimen } from "@/lib/home/specimen";
 import { loadExampleTiles } from "@/lib/home/example_tiles";
 import { StateComparison } from "@/components/home/StateComparison";
 import { loadStateComparisons } from "@/lib/home/state_comparison";
@@ -213,6 +215,7 @@ export default async function HomePage() {
   // nothing resolves, which drops the section rather than showing fabricated rows.
   const stateComparisons = await loadStateComparisons();
   const exampleTiles = await loadExampleTiles();
+  const specimen = await loadSpecimen();
   /* THE MASTHEAD, PUT BACK. The founder, 2026-08-09: "the page at this moment
      has no header. You have removed the header of the page, which is a massive
      mistake."
@@ -341,9 +344,21 @@ export default async function HomePage() {
         </div>
       </ToneBand>
 
+      {/* SHOW THE GOODS, before describing them. The founder: "conceptually it
+          is still a disaster." The page had five ways of talking about the
+          product and none of showing one, while every reference it is measured
+          against opens with real inventory at real prices. This answers the h1
+          once, in two real numbers, and the bar between them is the argument.
+          Self-omits if the cell does not resolve trusted-local. */}
+      <ToneBand tone="home-featured">
+        <Specimen specimen={specimen} />
+      </ToneBand>
+
       {/* Lead data hook: curated business-in-city example tiles with real
           headline numbers, the "open a real one" helper right under the search.
-          Replaces the old pointed-question list. Self-omits below three. */}
+          Replaces the old pointed-question list. Self-omits below three.
+          Follows the specimen deliberately: that one says "here is what an
+          answer is", these say "pick another". */}
       <ToneBand tone="home-featured">
         <ExampleTiles tiles={exampleTiles} />
       </ToneBand>
