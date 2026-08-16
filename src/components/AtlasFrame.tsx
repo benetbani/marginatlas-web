@@ -1,6 +1,36 @@
 /**
- * AtlasFrame , the site-wide atmosphere. The photograph behind everything, and
- * the passe-partout that keeps the middle readable.
+ * AtlasFrame , the site-wide atmosphere. The photograph behind everything.
+ *
+ * THE CENTRE PLATE IS GONE, 2026-08-17, and the reason is written in the
+ * founder's own design file rather than inferred. `src/styles/atlas-spine.css`,
+ * generated from his `design/mockups/atlas.css`, states the rule directly:
+ *
+ *     "The colour can carry this much because of the TWO-SURFACE RULE: every
+ *      word on the site sits on --card at .955 alpha, so legibility is a
+ *      property of the card and not of the backdrop. The backdrop only ever
+ *      shows through [between cards]."
+ *
+ * And `--card:rgba(255,255,255,.955)`. That is precisely what he has been
+ * saying in words three times over: "on the center, it's also visible, but with
+ * some level of opacity, okay? Like we use the style of those cards. We put
+ * everything in those cards."
+ *
+ * There is no plate in his system. The backdrop is uniform; the CARDS are what
+ * softens the middle, and they are translucent enough that the picture still
+ * whispers through them. I built a .82 plate, then a .35 plate, both of which
+ * were a band doing the job a card is supposed to do, and both of which made
+ * the middle of the page look dead while the gutters looked alive.
+ *
+ * So: uniform backdrop, no band, no gradient. The gutters show the photograph
+ * because nothing sits over them; the content column shows it softened because
+ * cards sit on it. That is the whole mechanism, and it needs the cards to
+ * actually be translucent to work.
+ *
+ * THE OTHER HALF IS NOT IN THIS FILE. `--atlas-surface-card` is `#ffffff`,
+ * fully opaque, so today's cards block the picture completely rather than
+ * carrying it at .955. Until that lands, the middle of the page will read as
+ * flat white between the cards rather than as softened photograph. Handed to
+ * the palette agent, which owns globals.css.
  *
  * WHY IT EXISTS SEPARATELY FROM SpineShell. This is the founder's brief,
  * 2026-08-16, on the live site: "the background should be totally visible on
@@ -111,22 +141,7 @@ export function AtlasFrame({ bgPosition = "center 16%" }: { bgPosition?: string 
           filter: "saturate(0.85) contrast(1.02)",
         }}
       />
-      <div
-        aria-hidden
-        className="atlas-frame-band"
-        style={{
-          position: "fixed",
-          insetBlock: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "min(1480px, 100%)",
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      />
       <style>{`
-.atlas-frame-band{background:linear-gradient(to right,rgba(255,255,255,0) 0,rgba(255,255,255,0) calc(50% - 622px),rgba(255,255,255,.35) calc(50% - 622px),rgba(255,255,255,.35) calc(50% + 622px),rgba(255,255,255,0) calc(50% + 622px),rgba(255,255,255,0) 100%)}
-@media (max-width:767px){.atlas-frame-band{background:rgba(255,255,255,.35)}}
 .spine-frame-layer{display:none !important}
 `}</style>
     </>
