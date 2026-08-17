@@ -53,17 +53,22 @@ export function UpgradeTeaser({ variant = "band" }: { variant?: "band" | "panel"
       <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-3">
         Every benchmark is free to read
       </h2>
-      <p
-        className={`text-cocoa-700 leading-relaxed ${
-          panel ? "text-sm mb-5" : "max-w-2xl text-base mb-8"
-        }`}
-      >
-        Paid tiers add deeper quartiles, saved cells, comparison, and the data
-        out of the page. Here is the short version.
-      </p>
+      {/* THE LEDE IS GONE, and it was a whole-paragraph restatement of the
+          table two lines under it. It read "Paid tiers add deeper quartiles,
+          saved cells, comparison, and the data out of the page. Here is the
+          short version." The four things it listed are four of the six ROWS:
+          "Lower and upper quartile (p25, p75)", "Saved cells", "Side-by-side
+          comparison", "CSV export". So the sentence announced the table's
+          contents in prose and then announced the table, which is the
+          "explains a graphic the reader can see" cut in its purest form.
+
+          Nothing checkable left with it. The prices are in the column heads,
+          from the shared TIERS constant; the stance that reading is free is in
+          the heading; the deeper detail is behind the link at the foot. 20
+          words, zero figures, and the table starts sooner. */}
       <div
         className={`overflow-x-auto rounded-lg border border-parchment bg-white ${
-          panel ? "" : "max-w-3xl"
+          panel ? "mt-5" : "mt-8 max-w-3xl"
         }`}
       >
         <table className="w-full text-sm border-collapse">
