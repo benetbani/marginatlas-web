@@ -73,7 +73,43 @@ export function MoneyGoesBreakdown({
   // Normalise widths to the actual total so the bar always spans full width
   // even if the inputs sum a little off 100 (rounding).
   const widthPct = (v: number) => `${(v / total) * 100}%`;
-  const fmt = (v: number) => `$${Math.round(v)}`;
+
+  /* THE PRINTED COLUMN DID NOT SUM TO THE HUNDRED THE HEADING PROMISES.
+
+     Photographed at 1280x900 on /industries/restaurants: under a heading
+     reading "Every $100 of a sale" and a caption reading "Read as dollars out
+     of every $100", the four rows printed $35, $55, $4 and $7. That is 101.
+     /gb/london/restaurants prints $30, $34, $15, $15 and $5, which is 99. Every
+     figure was right on its own and the column contradicted its own total, in a
+     sum a reader does in their head without meaning to.
+
+     The cause is that each row was rounded INDEPENDENTLY off the raw share
+     while the bar directly above them was already normalised to the actual
+     total and drawn full width. So the picture said "these are the parts of a
+     hundred" and the numbers said otherwise.
+
+     Largest remainder against the normalised share fixes it, and it is a
+     display change rather than a data one: the shares are untouched, the bar is
+     untouched, and the residue goes to the rows with the largest fractional
+     parts rather than to whichever row happened to be first. It is the standard
+     apportionment and it is strictly more honest than printing parts that do
+     not make their stated whole.
+
+     NORMALISING IS SAFE HERE ONLY BECAUSE THE COMPONENT ALREADY DOES IT. The
+     guard above admits any total from 80 to 120, so a naive push to 100 could
+     inflate a genuinely short decomposition. This does not push the DATA to
+     100: it prints the same normalised share the bar has always drawn, which
+     the heading and the caption both already assert. */
+  const scaled = clean.map((it) => (it.perHundred / total) * 100);
+  const dollars = scaled.map((v) => Math.floor(v));
+  let residue = 100 - dollars.reduce((s, v) => s + v, 0);
+  const byFraction = scaled
+    .map((v, i) => ({ i, frac: v - Math.floor(v) }))
+    .sort((a, b) => b.frac - a.frac);
+  for (let k = 0; k < byFraction.length && residue > 0; k += 1, residue -= 1) {
+    dollars[byFraction[k].i] += 1;
+  }
+  const fmtAt = (i: number) => `$${dollars[i]}`;
 
   // The kept slice is the answer the section is really about. Find its centre on
   // the bar so a single vermillion tick can mark it (the one focal-subject accent
@@ -144,7 +180,7 @@ export function MoneyGoesBreakdown({
                 key={i}
                 className={fill}
                 style={{ width: widthPct(it.perHundred) }}
-                title={`${it.label}: ${fmt(it.perHundred)}`}
+                title={`${it.label}: ${fmtAt(i)}`}
               />
             );
           })}
@@ -183,7 +219,7 @@ export function MoneyGoesBreakdown({
                   : "text-base text-ink-900",
               ].join(" ")}
             >
-              {fmt(it.perHundred)}
+              {fmtAt(i)}
             </dd>
           </div>
         ))}
