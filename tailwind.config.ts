@@ -9,6 +9,45 @@ import { tailwindColors, fontFamily, elevation, z } from "./src/lib/design-token
 const config: Config = {
   content: ["./src/**/*.{ts,tsx,js,jsx,mdx}"],
   theme: {
+    /**
+     * THE DEFAULT PALETTE IS REPLACED, NOT EXTENDED, 2026-08-17.
+     *
+     * `theme.extend.colors` leaves Tailwind's own twenty-two colour families
+     * sitting underneath the project's, which means DELETING A RAMP DOES NOT
+     * RETIRE ITS CLASS NAME. The moss, amber and teal ramps were deleted from
+     * design-tokens this session and `bg-teal-700` went on emitting a live
+     * rule at `rgb(15 118 110)`, hue 175, because Tailwind's teal was still
+     * there. That was found the hard way: merely NAMING the class in a comment
+     * put the rule back into the compiled stylesheet, since Tailwind's content
+     * scan does not strip comments.
+     *
+     * So every banned family was one guess away, permanently, and no ramp
+     * deletion could ever be complete. Replacing the palette closes it at the
+     * source: `bg-emerald-700` now emits NOTHING, which is a visibly broken
+     * class in review rather than a silent green on the page.
+     *
+     * MEASURED BEFORE SWITCHING, because dropping the defaults is destructive
+     * if anything still uses them. Across all of src with comments stripped,
+     * stock ramp references: **zero**. Every one (emerald 14, rose 3, stone 1,
+     * teal 1) was converted earlier in this session, which is what makes the
+     * switch safe today and would not have been true this morning.
+     *
+     * The five bare keywords are re-declared because `theme.colors` drops them
+     * with everything else, and they are load-bearing: `white` alone has 278
+     * references, plus transparent 21, black 5, current 3. `inherit` is
+     * carried for completeness rather than because anything reads it.
+     *
+     * Semantic CSS-variable aliases stay in `extend.colors` below, which now
+     * merges into this instead of into Tailwind's defaults.
+     */
+    colors: {
+      inherit: "inherit",
+      current: "currentColor",
+      transparent: "transparent",
+      white: "#ffffff",
+      black: "#000000",
+      ...tailwindColors,
+    },
     extend: {
       maxWidth: {
         /**
@@ -40,6 +79,34 @@ const config: Config = {
         lift: elevation.lift,
         modal: elevation.modal,
       },
+      /**
+       * TWO IMPLICIT DEFAULTS PINNED, because replacing theme.colors above
+       * would otherwise change them silently.
+       *
+       * Tailwind 3 derives `borderColor.DEFAULT` from `colors.gray.200` with a
+       * `currentColor` fallback. Dropping the stock palette takes gray with it,
+       * so every bare `border` (a width class with no colour class) would have
+       * flipped from a light grey to the element's TEXT colour. That is not
+       * hypothetical: chips like `rounded-full border text-[11px]` render that
+       * way in AccountPreview and the admin queue. `divideColor` inherits from
+       * `borderColor`, so the 23 bare `divide-y` uses are covered by the same
+       * line.
+       *
+       * Pinned to `parchment` rather than back to gray-200: #e3e3e3 against
+       * #e5e7eb is a difference of two points on each channel, both cool
+       * neutrals, and parchment is this site's hairline token with 380-odd
+       * call sites. Converging a default onto the token it should always have
+       * been is better than restoring a stock value the palette does not hold.
+       *
+       * `ringColor.DEFAULT` was `rgb(59 130 246 / 0.5)`, which is BLUE, and it
+       * survived the palette replacement because the ring plugin hardcodes it
+       * rather than reading the palette. It was emitted into the stylesheet on
+       * every build of a site whose palette bans blue. No call site relies on
+       * it (measured: zero bare `ring` uses, every one names its colour), so
+       * this is closing a hole rather than changing a look.
+       */
+      borderColor: { DEFAULT: tailwindColors.parchment },
+      ringColor: { DEFAULT: "rgb(var(--ring) / 0.4)" },
       colors: {
         // Semantic aliases driven by CSS variables on :root in globals.css.
         // Consumers of ui/* primitives use these (bg-primary, text-foreground,
