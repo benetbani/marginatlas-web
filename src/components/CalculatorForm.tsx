@@ -432,7 +432,16 @@ export function CalculatorForm({ countries, industries }: Props) {
                   if (ownerPreTax > 0) {
                     return (
                       <>
-                        <p className="mt-1 font-serif text-3xl leading-none text-moss-700 tabular-nums">
+                        {/* The owner's take when it is POSITIVE. It was
+                            moss-700, a green, against the negative case 14
+                            lines down which is already clay-700. Same broken
+                            pair as the three success panels, and the same fix:
+                            terracotta, which is what the converted
+                            NeighborhoodOverview.multColor and the decide
+                            page's marginLadder now use for above-par. The
+                            figure prints its own money value, so the sign was
+                            never carried by the colour. */}
+                        <p className="mt-1 font-serif text-3xl leading-none text-atlas-700 tabular-nums">
                           {fmtMoney(ownerPreTax)}
                         </p>
                         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-graphite">

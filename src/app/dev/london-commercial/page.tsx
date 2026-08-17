@@ -24,7 +24,16 @@ const DATA = {
     { label: "Payroll", value: 33, cls: "bg-cocoa-500" },
     { label: "Rent", value: 15, cls: "bg-ink-700" },
     { label: "Everything else", value: 12, cls: "bg-cream-400" },
-    { label: "Owner keeps", value: 10, cls: "bg-moss-600", kept: true },
+    /* "Owner keeps" was bg-moss-600, a green, and it is the SAME defect as the
+       kept row in the 2026-benchmarks waterfall: the one accented segment of a
+       100%-of-revenue bar. This is a noindex direction prototype, so nobody
+       reading the site sees it, and it is left in rather than converted only
+       where a prototype's whole point is the alternative. Here it is not: the
+       prototype is about density and spacing, not hue, and a green kept-bar in
+       an internal prototype is exactly how a banned colour gets promoted back
+       onto a live page later. atlas-500, the same value the waterfall now
+       carries. */
+    { label: "Owner keeps", value: 10, cls: "bg-atlas-500", kept: true },
   ],
   wages: [
     { role: "Head chef", low: 48000, median: 60000, high: 78000 },

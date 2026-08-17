@@ -77,7 +77,12 @@ export function SignInForm() {
         Enter your email and we will send you a sign-in link. No password.
       </p>
       {status === "sent" ? (
-        <div className="rounded-xl border border-moss-300 bg-moss-50 p-4 text-sm text-ink-900">
+        /* Terracotta since 2026-08-17, matching CorrectionForm and /contact.
+           This one only ever carried the hue on its border and fill, its type
+           was already ink-900, so the reading was never green to begin with.
+           The error line below is clay, so the red/green pair this would have
+           belonged to did not exist here either. */
+        <div className="rounded-xl border border-atlas-200 bg-atlas-50 p-4 text-sm text-ink-900">
           Check your email. We sent a sign-in link to {email}.
         </div>
       ) : (

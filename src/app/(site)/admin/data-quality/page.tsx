@@ -209,13 +209,24 @@ export default async function DataQualityDashboard({
                     <div className="font-medium text-ink-900 text-xs">
                       {field}
                     </div>
+                    {/* A three-step null-rate ladder that ran clay / amber /
+                        moss, i.e. maroon into amber into green. Same internal
+                        tool, same reason it was converted rather than left:
+                        the ramps are about to be deleted and a deleted ramp
+                        emits no rule at all, so this column would have gone
+                        colourless with nothing anywhere reporting it. Now the
+                        one ladder the rest of the site uses, running the other
+                        way so severity gets LOUDER: clay for a majority-null
+                        field, terracotta for a watch, and plain ink where
+                        there is nothing to flag. The percentage prints beside
+                        it either way. */}
                     <div
                       className={`tabular-nums ${
                         rate > 0.5
                           ? "text-clay-700 font-semibold"
                           : rate > 0.2
-                            ? "text-amber-700"
-                            : "text-moss-700"
+                            ? "text-atlas-700"
+                            : "text-ink-700"
                       }`}
                     >
                       {fmtPct(rate)}

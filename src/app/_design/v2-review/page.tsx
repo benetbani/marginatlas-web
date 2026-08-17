@@ -26,9 +26,17 @@ import LondonRoadmap from "@/components/v2/LondonRoadmap";
 type Verdict = "ship after fixes" | "skip" | "phase 2";
 
 function VerdictPill({ verdict }: { verdict: Verdict }) {
+  /* This page EXISTS to show colour, so it was checked whether converting it
+     would destroy the thing it displays. It would not: the v2 designs are
+     rendered live inside the cards below and are untouched here. This pill is
+     the review page's OWN chrome, a three-step verdict badge, and it was green
+     / cream / clay. Terracotta now carries the favourable step, which is the
+     CHIP projection in scores/band_tone.ts, so the one page whose job is to
+     judge the design system stops breaking the system's own palette rule while
+     doing it. */
   const tone =
     verdict === "ship after fixes"
-      ? "bg-moss-100 text-moss-700"
+      ? "bg-atlas-100 text-atlas-700"
       : verdict === "phase 2"
         ? "bg-cream-100 text-cocoa-700"
         : "bg-clay-100 text-clay-700";
@@ -184,10 +192,25 @@ export default async function V2Review({
         v2 components: the menu
       </h2>
       <div className="mt-4 space-y-8">
+        {/* BOTH "blue dot (#2563EB)" BLOCKERS BELOW WERE STALE, corrected
+            2026-08-17 rather than recoloured. Each named a hardcoded blue hex,
+            and both components were checked: neither CountryScorecardV2 nor
+            CoverageHubV2 holds a hex at all, their TIER_META reads
+            colors.tier.deep/good/starter/modeled, and the tier scale's own
+            comment in design-tokens records that it "retires" the v2 blue dot.
+            The page was telling the founder a ship-blocker existed that had
+            been fixed, which is a worse defect than the colour and is the only
+            reason to touch a review surface.
+
+            Note WHERE those hexes were: inside a STRING describing a defect,
+            not a style. The palette gate strips comments but not string
+            literals, so a note about a colour counts as a colour, and
+            converting one on sight rewrites the evidence instead of the bug.
+            The gate's own header records the same trap for comments. */}
         <ReviewCard
           name="CountryScorecardV2"
           replaces="CountryAtAGlance + CountrySignaturePanel on /[country]"
-          blockers="hardcoded hex tier dots, one blue dot (#2563EB) off the warm palette"
+          blockers="tier dots now read colors.tier; recheck density and type scale"
           verdict="ship after fixes"
         >
           <CountryScorecardV2 {...SCORECARD_MOCK} />
@@ -196,7 +219,7 @@ export default async function V2Review({
         <ReviewCard
           name="CoverageHubV2"
           replaces="nothing live (coverage currently redirects)"
-          blockers="hardcoded hex tier dots incl. one blue dot (#2563EB)"
+          blockers="tier dots now read colors.tier; recheck the empty-tier copy"
           verdict="ship after fixes"
         >
           <CoverageHubV2 {...COVERAGE_MOCK} />

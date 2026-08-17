@@ -314,10 +314,10 @@ function VerificationsTab({
         {tax ? (
           <>
             <div className="mt-3 flex gap-2 text-xs">
-              <Pill tone="moss">{tax.summary.matches ?? 0} matches</Pill>
-              <Pill tone="amber">{tax.summary.minor_deltas ?? 0} minor deltas</Pill>
-              <Pill tone="clay">{tax.summary.flags ?? 0} flags</Pill>
-              <Pill tone="ink">{tax.summary.pending ?? 0} pending</Pill>
+              <Pill tone="good">{tax.summary.matches ?? 0} matches</Pill>
+              <Pill tone="watch">{tax.summary.minor_deltas ?? 0} minor deltas</Pill>
+              <Pill tone="bad">{tax.summary.flags ?? 0} flags</Pill>
+              <Pill tone="plain">{tax.summary.pending ?? 0} pending</Pill>
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
@@ -372,10 +372,10 @@ function VerificationsTab({
         {rent ? (
           <>
             <div className="mt-3 flex gap-2 text-xs">
-              <Pill tone="moss">{rent.summary.matches ?? 0} matches</Pill>
-              <Pill tone="amber">{rent.summary.minor_deltas ?? 0} minor deltas</Pill>
-              <Pill tone="clay">{rent.summary.flags ?? 0} flags</Pill>
-              <Pill tone="ink">{rent.summary.pending_cities ?? 0} pending</Pill>
+              <Pill tone="good">{rent.summary.matches ?? 0} matches</Pill>
+              <Pill tone="watch">{rent.summary.minor_deltas ?? 0} minor deltas</Pill>
+              <Pill tone="bad">{rent.summary.flags ?? 0} flags</Pill>
+              <Pill tone="plain">{rent.summary.pending_cities ?? 0} pending</Pill>
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
@@ -430,17 +430,17 @@ function VerificationsTab({
           Stored operating margins cross-checked against Damodaran NYU 2024 dataset.
         </p>
         {margin?.important_caveat ? (
-          <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs text-ink-900">
-            <span className="font-semibold uppercase tracking-wide text-amber-900">Caveat:</span> {margin.important_caveat}
+          <div className="mt-3 rounded-xl border border-atlas-200 bg-atlas-50 p-3 text-xs text-ink-900">
+            <span className="font-semibold uppercase tracking-wide text-atlas-700">Caveat:</span> {margin.important_caveat}
           </div>
         ) : null}
         {margin ? (
           <>
             <div className="mt-3 flex gap-2 text-xs">
-              <Pill tone="moss">{margin.summary.matches ?? 0} matches</Pill>
-              <Pill tone="amber">{margin.summary.minor_deltas ?? 0} minor</Pill>
-              <Pill tone="clay">{margin.summary.flags ?? 0} flags</Pill>
-              <Pill tone="ink">{margin.summary.pending ?? 0} pending</Pill>
+              <Pill tone="good">{margin.summary.matches ?? 0} matches</Pill>
+              <Pill tone="watch">{margin.summary.minor_deltas ?? 0} minor</Pill>
+              <Pill tone="bad">{margin.summary.flags ?? 0} flags</Pill>
+              <Pill tone="plain">{margin.summary.pending ?? 0} pending</Pill>
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
@@ -494,9 +494,9 @@ function VerificationsTab({
         {taxonomy ? (
           <>
             <div className="mt-3 flex gap-2 text-xs">
-              <Pill tone="clay">{taxonomy.split_count} split candidates</Pill>
-              <Pill tone="amber">{taxonomy.rename_count} rename candidates</Pill>
-              <Pill tone="ink">{taxonomy.total_industries - taxonomy.flagged_count} clean</Pill>
+              <Pill tone="bad">{taxonomy.split_count} split candidates</Pill>
+              <Pill tone="watch">{taxonomy.rename_count} rename candidates</Pill>
+              <Pill tone="plain">{taxonomy.total_industries - taxonomy.flagged_count} clean</Pill>
             </div>
             <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
               <table className="w-full text-xs">
@@ -556,7 +556,7 @@ function VerificationsTab({
                           </a>
                           <a
                             href={`?decision=rename&id=${f.industry_id}`}
-                            className="text-[10px] px-2 py-0.5 rounded border border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100 text-center"
+                            className="text-[10px] px-2 py-0.5 rounded border border-atlas-200 bg-atlas-50 text-atlas-700 hover:bg-atlas-100 text-center"
                           >
                             Rename
                           </a>
@@ -582,12 +582,28 @@ function VerificationsTab({
   );
 }
 
-function Pill({ tone, children }: { tone: "moss" | "amber" | "clay" | "ink"; children: React.ReactNode }) {
+/**
+ * THIS TOOL IS INTERNAL, and it was still converted. Worth stating why, since
+ * the cheap answer was to leave it: the point of clearing these call sites is
+ * that the moss and amber RAMPS can then be deleted from design-tokens, and a
+ * deleted ramp fails SILENTLY. Tailwind emits no rule for a token that stopped
+ * existing, tsc says nothing, no gate fires, and this queue would simply lose
+ * its colour with the founder still using it to judge data quality. So "leave
+ * the internal tool alone" and "delete the ramps" cannot both happen.
+ *
+ * No design was invented for it either, which is the other half of spending
+ * the least effort here. The tones were named after COLOURS, which is how a
+ * banned hue survives a purge, so they are named after their JOB now and
+ * mapped onto the four-step ladder already central in scores/band_tone.ts.
+ * Two departures at two terracotta weights, the site's maroon for a real flag,
+ * a plain chip for nothing-yet.
+ */
+function Pill({ tone, children }: { tone: "good" | "watch" | "bad" | "plain"; children: React.ReactNode }) {
   const map = {
-    moss: "bg-moss-100 text-moss-900 border-moss-300",
-    amber: "bg-amber-100 text-amber-900 border-amber-300",
-    clay: "bg-clay-100 text-clay-900 border-clay-300",
-    ink: "bg-cream-100 text-ink-900 border-parchment",
+    good: "bg-atlas-100 text-atlas-700 border-atlas-300",
+    watch: "bg-atlas-50 text-atlas-700 border-atlas-200",
+    bad: "bg-clay-100 text-clay-900 border-clay-300",
+    plain: "bg-cream-100 text-ink-900 border-parchment",
   } as const;
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-medium ${map[tone]}`}>
@@ -597,10 +613,15 @@ function Pill({ tone, children }: { tone: "moss" | "amber" | "clay" | "ink"; chi
 }
 
 function VerdictPill({ v }: { v: "match" | "minor_delta" | "flag" }) {
+  /* THIS IS WHY THE TONE NAMES HAD TO CHANGE and not just the classes. The
+     colour names were flowing through a SECOND indirection here, so a grep for
+     `moss-` found the map in Pill and never found this. tsc caught it the
+     moment the union was renamed, which is the whole argument for naming a
+     tone after its job: "moss" carries no constraint, "good" does. */
   const map = {
-    match: { tone: "moss" as const, label: "match" },
-    minor_delta: { tone: "amber" as const, label: "minor" },
-    flag: { tone: "clay" as const, label: "flag" },
+    match: { tone: "good" as const, label: "match" },
+    minor_delta: { tone: "watch" as const, label: "minor" },
+    flag: { tone: "bad" as const, label: "flag" },
   };
   const m = map[v];
   return <Pill tone={m.tone}>{m.label}</Pill>;
@@ -686,7 +707,7 @@ function CurrencyTab({ data }: { data: CurrencyReport }) {
                 <td className="py-1.5 px-2 text-right tabular-nums text-clay-700">
                   {fmtMoney(s.stored_revenue)} ({s.stored_revenue_peer_ratio}×)
                 </td>
-                <td className="py-1.5 px-2 text-right tabular-nums text-moss-700">
+                <td className="py-1.5 px-2 text-right tabular-nums text-atlas-700">
                   {fmtMoney(s.converted_revenue_usd)} ({s.converted_peer_ratio}×)
                 </td>
                 <td className="py-1.5 px-2 text-right tabular-nums">
@@ -864,9 +885,13 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
           <div className="text-lg font-semibold tabular-nums text-clay-700">{(t.flagged_extreme_regional + t.flagged_extreme_extrap).toLocaleString()}</div>
           <div className="text-[10px] text-ink-700/70">{t.flagged_extreme_regional} regional + {t.flagged_extreme_extrap} extrap</div>
         </div>
-        <div className="p-3 rounded-lg bg-moss-50 border border-moss-300">
-          <div className="text-xs uppercase text-moss-700">Auto-normalized</div>
-          <div className="text-lg font-semibold tabular-nums text-moss-900">{t.normalized_count.toLocaleString()}</div>
+        {/* Terracotta at the HEAVIER step, not the same one as the
+            "Extrapolated inserted" card beside it, which already sat on
+            atlas-50/300. Two "we acted" cards among five plain ones, separated
+            by tint weight rather than by hue. */}
+        <div className="p-3 rounded-lg bg-atlas-100 border border-atlas-300">
+          <div className="text-xs uppercase text-atlas-700">Auto-normalized</div>
+          <div className="text-lg font-semibold tabular-nums text-atlas-900">{t.normalized_count.toLocaleString()}</div>
           {t.normalization_failures > 0 ? (
             <div className="text-[10px] text-clay-700">{t.normalization_failures} failed</div>
           ) : null}
@@ -906,7 +931,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
                     <td className="py-1.5 px-2">{String(n.industry_id)}</td>
                     <td className="py-1.5 px-2 text-xs">{String(n.size_band)}</td>
                     <td className="py-1.5 px-2 text-right tabular-nums text-clay-700">{fmtMoney(before)}</td>
-                    <td className="py-1.5 px-2 text-right tabular-nums text-moss-700">{fmtMoney(after)}</td>
+                    <td className="py-1.5 px-2 text-right tabular-nums text-atlas-700">{fmtMoney(after)}</td>
                     <td className="py-1.5 px-2 text-right tabular-nums">{fmtMoney(n.peer_median as number)}</td>
                     <td className="py-1.5 px-2 text-right tabular-nums">{Number(n.ratio).toFixed(1)}×</td>
                   </tr>

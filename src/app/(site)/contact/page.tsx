@@ -70,9 +70,18 @@ export default async function ContactPage({
         notice={null}
       >
         <LegalSection heading="Message received">
+          {/* Terracotta since 2026-08-17. Green was kept under review as the
+              one place a red/green convention carries real meaning, and the
+              pair had already broken: the error panel a hundred lines down is
+              clay, an oxblood deliberately chosen NOT to be the stock error
+              red. `role="status"` is what actually announces this to a screen
+              reader, and the sentence inside says the same thing again, so no
+              signal moves with the hue. Same treatment as CorrectionForm, so
+              the two confirmations a reader might see in one session finally
+              agree. */}
           <div
             role="status"
-            className="rounded-xl border border-moss-300 bg-moss-50 px-4 py-3 text-moss-900"
+            className="rounded-xl border border-atlas-200 bg-atlas-50 px-4 py-3 text-atlas-700"
           >
             It is in the queue and it will be read.
           </div>
