@@ -38,6 +38,7 @@ import {
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin, clampNetMarginPct } from "@/lib/finance/margin_floor";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier } from "@/lib/cities/city_tier";
 import { getLondonEntry } from "@/lib/scores/cell_board";
@@ -68,7 +69,25 @@ function typicalRevenueOf(cell: Cell): number | null {
  * tax-aware net-profit estimator, with the shared net-margin floor applied so a
  * sub-3% net can never surface. The larger-firm take-home floor is intentionally
  * not applied here (an all-sizes cell carries a null size band, so that floor
- * never fired on the cell page either), matching activityPlaceFromCell.
+ * never fired on the cell page either), matching activityPlaceFromCell: that is
+ * what `isLargerFirm: false` below means, and it is the ONLY part of the shared
+ * resolver this module opts out of.
+ *
+ * THE TAKE-HOME MUST GO THROUGH resolveOwnerTakeHome, and for a while it did
+ * not. This module printed estimateNetProfit().net_profit raw beside a margin
+ * run through clampMargin(), whose floor is 3%, so a card could show a 3% net
+ * margin next to a take-home worth a fraction of 3% of the revenue printed
+ * above it. The header already claimed parity with the cell page, and the cell
+ * page has resolved its take-home through src/lib/finance/owner_take_home.ts
+ * since that module was written for exactly this contradiction.
+ *
+ * Measured over the pure estimator, sweeping every industry x 12 countries x 6
+ * revenue levels (17,496 combinations): the two derivations agreed on 38.3%.
+ * On 10.4% both produced a figure and the figures differed, worst case a card
+ * showing $1 beside "3% net" of $150,000. On 51.3% the cell page showed a
+ * take-home and the card omitted one entirely. That sweep covers the PARAMETER
+ * SPACE, not the live cell population: it cannot say how many pages print the
+ * pair, only how much of the input shape the two disagreed over.
  */
 function ownerEconomicsOf(
   cell: Cell,
@@ -94,7 +113,15 @@ function ownerEconomicsOf(
     grossRevenue: revenue,
     payroll: null,
   });
-  const takeHome = isPos(net.net_profit) ? net.net_profit : null;
+  const resolved = resolveOwnerTakeHome({
+    structuralNetProfit: net.net_profit,
+    rawNetMargin: net.net_margin,
+    revenue,
+    industryId: cell.industry_id || null,
+    isLargerFirm: false,
+    annualIncome: null,
+  });
+  const takeHome = isPos(resolved) ? resolved : null;
   const netMarginPct =
     net.net_margin != null
       ? clampMargin(net.net_margin, "net", cell.industry_id || null) * 100

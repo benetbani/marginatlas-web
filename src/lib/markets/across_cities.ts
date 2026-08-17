@@ -43,6 +43,7 @@ import {
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin, clampNetMarginPct, boundSurvivalCurve, displayDensityPer10k } from "@/lib/finance/margin_floor";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
@@ -117,10 +118,17 @@ function typicalRevenueOf(cell: Cell): number | null {
  * After-tax owner take-home and net margin (fraction, 0..1) for a cell,
  * computed exactly as src/lib/home/beats.ts ownerEconomicsOf: prefer the
  * curated London economics when present, else the shared tax-aware net-profit
- * estimator, with the shared net-margin floor applied so a sub-3% net can never
- * surface. The larger-firm take-home floor is intentionally not applied (an
- * all-sizes cell carries a null size band, so that floor never fired on the
- * cell page either).
+ * estimator run through resolveOwnerTakeHome, with the shared net-margin floor
+ * applied so a sub-3% net can never surface. The larger-firm take-home floor is
+ * intentionally not applied (an all-sizes cell carries a null size band, so
+ * that floor never fired on the cell page either); that is what
+ * `isLargerFirm: false` means below, and it is the only part of the shared
+ * resolver this module opts out of.
+ *
+ * See the long note on beats.ts ownerEconomicsOf for what went wrong when the
+ * structural profit was printed raw beside a floored margin, and for the sweep
+ * that measured it. Both modules carried the same defect and are fixed together
+ * so they cannot drift apart again.
  */
 function ownerEconomicsOf(cell: Cell): {
   takeHome: number | null;
@@ -147,7 +155,15 @@ function ownerEconomicsOf(cell: Cell): {
     grossRevenue: revenue,
     payroll: null,
   });
-  const takeHome = isPos(net.net_profit) ? net.net_profit : null;
+  const resolved = resolveOwnerTakeHome({
+    structuralNetProfit: net.net_profit,
+    rawNetMargin: net.net_margin,
+    revenue,
+    industryId: cell.industry_id || null,
+    isLargerFirm: false,
+    annualIncome: null,
+  });
+  const takeHome = isPos(resolved) ? resolved : null;
   const netMarginFraction =
     net.net_margin != null
       ? clampMargin(net.net_margin, "net", cell.industry_id || null)
