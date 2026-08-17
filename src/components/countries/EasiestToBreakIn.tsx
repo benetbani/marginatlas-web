@@ -95,10 +95,21 @@ export function EasiestToBreakIn({
         Where it is easiest to get started in {placeName}
       </h2>
       {/* useless-tile-ok: describes the break-in ranking, not a count of things we cover */}
+      {/* CUT, 2026-08-17, 54 and 38 words down to 23 and 13. Both ledes opened
+          by saying the heading again: "ranked by ... how easy it is to break in
+          and win" and "ordered from easiest to hardest to break into and win"
+          under a heading reading "Where it is easiest to get started in X",
+          under an eyebrow reading "Easiest to break in". Both closed by
+          instructing the reader to open a card, which every card already says
+          on its own face ("See the full read", and "Cost to open" beside it).
+          What is kept is the only part a reader cannot see: which direction the
+          0 to 100 scale runs, that the badge is the same number the business
+          carries on its own page, and, when no row is grounded in a local read,
+          that the ranking rests on a modeled pattern. */}
       <p className="mt-1 max-w-2xl text-sm leading-relaxed text-graphite">
         {showScores
-          ? "The activities here ranked by the break-in rating, the single 0 to 100 read of how easy it is to break in and win, higher is easier. It is the same score each business shows on its own page. Open one for the full cost, tax, and what is left for an owner."
-          : "The activities here ordered from easiest to hardest to break into and win, based on the modeled pattern for each trade. Open one for the full cost, tax, and what is left for an owner in this place."}
+          ? "Ranked by the 0 to 100 break-in rating, higher is easier. Each score is the one that business carries on its own page."
+          : "Ordered on the modeled pattern for each trade, not on a local read."}
       </p>
 
       <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
