@@ -1921,13 +1921,31 @@
   height: 1px;
   background: var(--hairline-strong);
 }
+/* THE ONLY SUB-12PX TEXT ON THE COUNTRY PAGE THAT SITS ON THE PHOTOGRAPH.
+   Everything else small lives on a card. These four labels sit between the
+   cards, so what is behind them is the fixed backdrop, and at --text-faint
+   they were unreadable there. Measured 2026-08-18 on the rendered page, not
+   assumed: the content column's backdrop was photographed on its own and its
+   luminance read per pixel, which reproduces the charter's own figures
+   (min 0.4179, mean 0.7246). Against that, #87745d gives 2.08:1 at the
+   darkest point and 3.31:1 at the mean, where AA for text this size is 4.5.
+   --text-muted is the next step down the SAME ink ladder, not a new colour,
+   and gives 5.01:1 at the 5th percentile and 7.07:1 at the mean. It reads
+   4.45:1 across the darkest 1% of the picture, which is stated rather than
+   rounded up.
+
+   SIZE IS NOT THE LEVER HERE and it is worth writing down so nobody spends a
+   tick on it: the large-text exemption starts at 24px (18.66px bold), so no
+   size this family would tolerate rescues a 2:1 ratio. Colour is the only
+   thing that moves it. The 10.5px stays, and stays a question for the founder
+   along with the rest of the small ladder. */
 .eng-divlabel {
   font-family: var(--font-body);
   font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--text-faint);
+  color: var(--text-muted);
 }
 
 /* ---- Wave-2 responsive: every section legible at the 375px column ----- */

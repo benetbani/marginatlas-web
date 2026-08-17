@@ -232,22 +232,8 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
             />
           ))}
 
-          {/* the contour ring labels, stacked up the top spoke (never numbers) */}
-          {RINGS.map((ring) => (
-            <text
-              key={ring.label}
-              x={CX + 4}
-              y={CY - ring.r + 3}
-              textAnchor="start"
-              style={{
-                font: "500 8.5px var(--font-body)",
-                letterSpacing: "0.06em",
-                fill: "var(--text-faint)",
-              }}
-            >
-              {ring.label}
-            </text>
-          ))}
+          {/* The three ring labels used to be <text> in here. They moved out to
+              the HTML overlay below; see the note on .eng-shape__ring. */}
 
           {/* faint engraved spokes out to the strong ring */}
           {LENS_ORDER.map((_, i) => {
@@ -293,6 +279,58 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
             <CompassRosette size={34} tone="var(--cocoa-500)" ring="var(--hairline-strong)" ticks={16} filled={false} />
           </g>
         </svg>
+
+        {/* THE RING LABELS, MOVED OUT OF THE SVG 2026-08-18 BECAUSE SVG TEXT
+            HAS NO MINIMUM SIZE. They were <text> at 8.5px inside a 360-unit
+            viewBox on a width:100% svg, so "8.5px" was 8.5 USER UNITS and the
+            size a reader actually got was whatever the container happened to
+            be. Measured on the rendered page rather than reasoned about: 9.92px
+            at a 1440 viewport and 5.86px at 390. Nothing on this site defends
+            5.86px, and the previous tick had already ruled 9px too small for a
+            marker a reader has to find.
+
+            The fix is the technique THIS FILE ALREADY USES for its rim labels,
+            which is why it is convergence and not a new idea: absolutely
+            positioned HTML over the stage, placed by the same polar percentages,
+            at a real CSS size that the viewBox cannot scale. The size is 10.5px,
+            the rim-read value already in this component's own block, so no new
+            step enters the ladder; it is within 0.6px of what a desktop reader
+            saw before and it triples the size a phone reader gets.
+
+            aria-hidden preserves the old behaviour exactly. They previously sat
+            inside role="img", whose aria-label already describes the chart, so
+            they were never in the accessibility tree; the foot note carries
+            "the rings mark weak, fair and strong" in real prose. */}
+        {RINGS.map((ring) => {
+          /* THEY ALSO MOVED OFF THE TOP SPOKE, and that is a second defect the
+             first legible render exposed rather than caused. They used to stack
+             straight up from the hub at x = CX + 4, which is the SAME ray the
+             top lens sits on, so "strong" and the top rim label printed over
+             each other and read "Rewardng". The old size hid it: at 5.9px the
+             overlap was texture. Nothing about the geometry changed.
+
+             They now sit on the BISECTOR between two spokes, where no rim label
+             can ever be, at the radius where that ring's flat edge crosses the
+             bisector (r * cos(pi/n)), so each word sits on its own ring rather
+             than beyond it. Both come from the polar math this file already
+             uses, and both follow n, so the placement holds whether the country
+             passes six lenses or nine. */
+          const a = -Math.PI / 2 + (0.5 / n) * Math.PI * 2;
+          const rr = ring.r * Math.cos(Math.PI / n);
+          return (
+            <span
+              key={ring.label}
+              className="eng-shape__ring"
+              aria-hidden="true"
+              style={{
+                left: `${((CX + Math.cos(a) * rr) / VB) * 100}%`,
+                top: `${((CY + Math.sin(a) * rr) / VB) * 100}%`,
+              }}
+            >
+              {ring.label}
+            </span>
+          );
+        })}
 
         {/* rim labels: a glyph, the lens word, and its one-word read, placed by
             the same polar math so each label sits beside its spoke tip. */}
@@ -362,6 +400,17 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
           position: relative;
           max-width: 420px;
           margin: 0 auto;
+        }
+        .eng-shape__ring {
+          position: absolute;
+          transform: translate(3px, -50%);
+          pointer-events: none;
+          white-space: nowrap;
+          font-family: var(--font-body);
+          font-size: 10.5px;
+          font-weight: 500;
+          letter-spacing: 0.06em;
+          color: var(--text-faint);
         }
         .eng-shape__rim {
           position: absolute;
