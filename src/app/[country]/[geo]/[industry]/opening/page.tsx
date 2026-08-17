@@ -146,8 +146,14 @@ async function OpeningRoutePageBody({
   const page = await buildOpeningPage({ country, geo, industry });
   if (!page) notFound();
 
+  /* `relative`, 2026-08-17. AtlasFrame paints from position:fixed layers at
+     z-index 0, which by CSS painting order go above every in-flow
+     non-positioned descendant, so this whole route was covered by the frame's
+     opaque base. One positioned ancestor puts the column back in front. The
+     section components below still carry no surface of their own, which is a
+     separate defect in another agent's tree. */
   return (
-    <div className="mx-auto max-w-3xl pb-16">
+    <div className="relative mx-auto max-w-3xl pb-16">
       <OpeningHero page={page} />
       <OpeningPayback page={page} />
       <OpeningChecklist page={page} />
