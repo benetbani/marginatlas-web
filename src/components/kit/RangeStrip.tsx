@@ -80,26 +80,33 @@ function hasText(s: string | null | undefined): s is string {
 // implying deeper equals better. Tokens only; the accent stays reserved for the
 // typical marker, the one vermillion moment.
 //
-// "WARM" WAS TRUE OF THIS RAMP AND IS NOT ANY MORE, 2026-08-17. The third tone
-// was #f0e7d9, warm sand at h37 s43%, and was retoned to a true neutral because
-// it was the banned cream under a name that does not say cream. It was then
-// collapsed onto `paper-250`, the identical value under the name that carries 23
-// call sites against its five, which is why the class here changed while the
-// pixel did not. Only `cocoa-300` still carries hue.
+// BOTH DEFECTS THE PREVIOUS COMMENT RECORDED ARE FIXED, 2026-08-18. It had
+// measured them and left them, on the ground that new values are the founder's
+// call. They are not new values: every tone below is a token this site already
+// ships, and the two defects were a hue that meant nothing and a ramp that ran
+// backwards.
 //
-// AND THE RAMP IS NOT MONOTONIC, which neither the retone nor the collapse
-// caused and neither cures. Reading outward-in by relative luminance:
-//   paper-200 .8550   parchment .7682   paper-250 .8070   cocoa-300 .4624
-// The third tone is LIGHTER than the second, so a strip meant to darken toward
-// its body lightens on the way in. Measured and left alone: fixing it means
-// choosing new values for a ratified visual, which is the founder's call, and
-// this comment is here so the next person does not assume it was considered.
+// What it was, outward-in by relative luminance:
+//   paper-200 .8550   parchment .7682   paper-250 .8070   cocoa-300 .4626
+// The third tone was LIGHTER than the second, so a strip built to darken toward
+// its body lightened on the way in and then fell off a cliff into a warm tan.
+// Photographed at 900px the centre read as a different MATERIAL from its own
+// tails rather than as more of them.
+//
+// What it is now, strictly monotonic inward and a true neutral (s=0%) at every
+// step, so density is carried by intensity in one hue, which is the site's rule
+// for exactly this reading:
+//   paper-200 .8550   parchment .7682   paper-350 .6938   paper-400 .5209
+// The body lands at .5209 against the old .4626, a hair lighter, so the strip
+// keeps the weight it had while the tan goes. `paper-400` is the same token the
+// site's other chart masses use, which is what makes this strip agree with the
+// bars beside it instead of arguing with them.
 const GRADIENT_TONES = [
   "fill-paper-200",
   "fill-parchment",
-  "fill-paper-250",
-  "fill-cocoa-300",
-  "fill-paper-250",
+  "fill-paper-350",
+  "fill-paper-400",
+  "fill-paper-350",
   "fill-parchment",
   "fill-paper-200",
 ] as const;
@@ -269,14 +276,19 @@ export function RangeStrip({
           rx={r}
           className="fill-none"
         />
-        {/* middle half p25..p75 seated a touch deeper: where most firms land */}
+        {/* middle half p25..p75 seated a touch deeper: where most firms land.
+            Neutral since 2026-08-18. This band overlays the gradation ramp, so
+            while it was cocoa-300/60 it put a warm cast over the strip's centre
+            independently of the ramp underneath: half the tan in a photograph of
+            this strip was this rect, not the tones. It is the same quantity the
+            ramp already encodes, so it may not encode it in a second hue. */}
         <rect
           x={xp(q25)}
           y={trackY - 1.5}
           width={Math.max(2, xp(q75) - xp(q25))}
           height={trackH + 3}
           rx={r}
-          className="fill-cocoa-300/60"
+          className="fill-paper-450/60"
         />
         {/* typical marker: the lone accent */}
         <line

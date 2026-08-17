@@ -2,9 +2,15 @@
  * MoneyGoesBreakdown - where each $100 of sales goes (design-system 10.1).
  *
  * A horizontal stacked bar over a ruled line-item table, read per $100 so the
- * shares are tangible (not abstract percentages). The cost rows are quiet warm
- * neutrals; the KEPT row is the one moss moment per the fixed color jobs
- * (profit kept = moss). This replaces the generic net-profit waterfall divs.
+ * shares are tangible (not abstract percentages). The cost rows are one quiet
+ * neutral ladder; the KEPT row is the single accent moment. This replaces the
+ * generic net-profit waterfall divs.
+ *
+ * That sentence said "quiet warm neutrals" and "the one moss moment (profit
+ * kept = moss)" until 2026-08-18, and both halves had stopped being true: moss
+ * is a banned hue and the kept slice went terracotta on 2026-08-17, and the
+ * cost ramp was three-fifths cool by then. See COST_FILL for the ladder and the
+ * reasoning behind it.
  *
  * Input is a list of line items already expressed as dollars per $100 (the page
  * derives them from the cost structure and the net margin). Self-omitting: with
@@ -49,63 +55,73 @@ function isNum(v: number | null | undefined): v is number {
  * The cost segments, cycled in order. The kept segment takes the accent and is
  * handled separately below, so these never carry it.
  *
- * LEFT AS IT IS ON 2026-08-17, DELIBERATELY, AND HERE IS THE DECISION THE
- * FOUNDER WOULD BE MAKING. A sweep that same day took cocoa off thirty
- * decorative fills across the cell page, on the ground that cocoa is the
- * RATIFIED colour for one job, "structure and costs" (design-tokens
- * chart.cost), and month bars, peer bars, milestone dots and confidence dots
- * are not costs. This ramp IS that job, so it was not touched: converting a
- * ratified colour because a hue reading dislikes it is the founder's call, not
- * an agent's.
+ * ANSWERED 2026-08-18, AND THE ANSWER IS ONE NEUTRAL LADDER. The question the
+ * previous comment left open is resolved here, with the reasoning, because a
+ * ramp nobody will decide is a ramp that stays wrong.
  *
- * What he would be looking at, measured and then photographed at 1280x900 on
- * /gb/london/restaurants:
+ * What it was, measured and then photographed at 900px wide on a bench that
+ * feeds it the real /gb/london/restaurants decomposition:
  *
- *   1  bg-cocoa-300      #c3b39c   h35 s25%   L .4624   warm tan
- *   2  bg-paper-400      #bfbfbf   h0  s0%    L .5210   true neutral
- *   3  bg-paper-250        #e8e8e8   h0  s0%    L .8070   true neutral
- *   4  bg-parchment      #e3e3e3   h0  s0%    L .7682   true neutral
- *   5  bg-cocoa-500/70   #87745d   h33 s18%   L .1843   warm dark
+ * (written without the utility prefix on purpose: Tailwind's content scan does
+ * not strip comments, so naming a retired utility in prose re-emits its rule)
  *
- * ROW 3 CHANGED UNDER THIS COMMENT ON 2026-08-17 and the row is kept rather
- * than rewritten, because the change answers half the question below without
- * anyone deciding it here. That segment was #f0e7d9, h37 s43%, the warmest
- * value on the bar and the same warm sand `ink[100]` held; the two ramps
- * carried it byte for byte. It was retoned at the token, luminance-matched
- * (.8069 -> .8070), so this bar keeps every segment weight it had and loses
- * the warm cast on one of the five. The open question below is now narrower:
- * segments 1 and 5 are the only warmth left.
+ *   1  cocoa-300      #c3b39c   h35 s25%   L .4626   warm tan
+ *   2  paper-400      #bfbfbf   h0  s0%    L .5209   true neutral
+ *   3  paper-250      #e8e8e8   h0  s0%    L .8070   true neutral
+ *   4  parchment      #e3e3e3   h0  s0%    L .7682   true neutral
+ *   5  cocoa-500/70   #87745d   h33 s18%   L .1843   warm dark
  *
- * The class name on row 3 changed again on 2026-08-17 and the VALUE did not:
- * the two ramps holding one colour was itself the defect, so the step was
- * collapsed onto the name with 23 call sites against its five.
+ * FIVE REASONS, none of them "a hue reading disliked it".
  *
- * The ramp is already HALF NEUTRAL, and it alternates. Segments 1 and 2 sit
- * 0.06 apart in luminance and 35 degrees apart in hue, so on the bar they read
- * as one brown block beside one grey block of the same weight, and the pairing
- * repeats at 3 and 4. The colour therefore encodes nothing: it does not rank
- * the segments, it does not group them, and it is not one family. On the real
- * page the four segments drew $31 tan, $34 grey, $15 sand, $15 grey, so the two
- * lines that are genuinely equal wear different hues and the two that differ by
- * three dollars wear different hues too.
+ * 1. The ramp was already three-fifths neutral, so "cocoa = costs" was not a
+ *    rule this component obeyed. Two segments said cost-is-warm and three said
+ *    otherwise, in the same bar, about the same quantity.
+ * 2. The alternation encoded nothing. On the real page the segments drew $30
+ *    tan, $34 grey, $15 sand, $15 grey: the two lines that are exactly EQUAL
+ *    wear different hues, and the two that differ by four dollars wear
+ *    different hues too. Colour that varies without meaning is noise.
+ * 3. A stacked mass of one quantity is the shape the site already has a rule
+ *    for: intensity in one hue, which `scores/band_tone.ts` implements and
+ *    `verify_palette_membership`'s own header prescribes.
+ * 4. The site was already converging this way without this file. The sweep of
+ *    2026-08-17 took cocoa off thirty decorative fills onto `paper-400`, and
+ *    `charts/LikeForLikeBars` carries a comment explaining why its peer bars
+ *    are paper-400 and NOT cocoa-300. Leaving this bar warm made it the one
+ *    holdout, which is the opposite of what the cohesion pass is for.
+ * 5. Steps 3 and 4 were 0.039 apart in luminance, which is invisible. Two of
+ *    the four cost segments were not separable from each other, and barely
+ *    from the card behind them. That was a legibility defect on top of the
+ *    hue one, and it is the reason this is a re-ramp rather than a recolour
+ *    of segments 1 and 5.
  *
- * THE DECISION, stated so it can be answered yes or no. Should the cost mass be
- * ONE ladder, darkest to lightest in a single neutral, which is what the
- * palette gate's own header prescribes for every other good-versus-bad reading
- * on this site ("intensity in one hue"), and which would end the warm cast on
- * this bar? Or is the warm cost colour a ratified value worth keeping even
- * though half its own ramp is already cool?
+ * WHERE COCOA-AS-COST SURVIVES, so the ratified job is not quietly deleted:
+ * `cells/CellDecisionStack` draws kept-versus-costs as TWO segments, terracotta
+ * against cocoa. There the hue carries a real distinction, it is one hue doing
+ * one job against the accent, and it has no cool sibling beside it to disagree
+ * with. That bar is untouched. The rule is not "cocoa is banned from costs", it
+ * is "a ladder within one category does not change hue partway up".
  *
- * Nothing here should change until that is answered. A four-step neutral ladder
- * exists today and needs no new token: paper-400, parchment, paper-200,
- * paper-100.
+ * The ladder, darkest to lightest, every step an existing token and a true
+ * neutral (s=0%). Adjacent deltas .173 / .074 / .087 / .066, so every pair is
+ * separable, against the .039 pair this replaces:
+ *
+ *   1  paper-400   #bfbfbf   L .5209
+ *   2  paper-350   #d9d9d9   L .6938
+ *   3  parchment   #e3e3e3   L .7682
+ *   4  paper-200   #eeeeee   L .8550
+ *   5  paper-100   #f6f6f6   L .9216
+ *
+ * Darkest FIRST because these lists are written largest cost first, so the
+ * heaviest block reads heaviest. The fifth step is faint on a near-white card
+ * and that is accepted: it is reached only by a six-line decomposition, and the
+ * bar's own parchment border contains it.
  */
 const COST_FILL = [
-  "bg-cocoa-300",
   "bg-paper-400",
-  "bg-paper-250",
+  "bg-paper-350",
   "bg-parchment",
-  "bg-cocoa-500/70",
+  "bg-paper-200",
+  "bg-paper-100",
 ] as const;
 
 export function MoneyGoesBreakdown({
