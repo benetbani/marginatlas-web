@@ -79,7 +79,6 @@ const CREAM_LITERALS = [
   "#fbfaf7",
 ];
 
-const RGB_LITERALS = [/rgba?\(\s*251\s*,\s*250\s*,\s*247/gi];
 
 /**
  * CREAM WEARING ANOTHER NAME. A hard check, not part of the ratchet.
@@ -109,6 +108,43 @@ const WARM_CREAM = new Set([
   "#c3bfb7",
   "#8d887e",
 ]);
+
+/**
+ * The warm values again, in the rgb() notations CSS actually accepts.
+ *
+ * THIS LIST USED TO BE ONE PATTERN, HAND-WRITTEN, AND IT CAUGHT NOTHING.
+ * It matched `rgb(251, 250, 247)`, the old page ground, which the migration
+ * deleted. Measured across all of src on 2026-08-17: **zero hits**. The check
+ * had quietly become decoration while reading as coverage.
+ *
+ * Meanwhile `src/components/ui/empty-state.tsx` was painting THREE pre-purge
+ * warm values written by hand, one `rgb(247 246 244)` and two
+ * `rgba(228, 226, 221, 0.6)`, which are the old 100 step and the old
+ * `parchment`. Both tokens were retoned to true neutrals and neither retone
+ * reached that file, because it spelled the numbers instead of reading the
+ * token. So the one place on the site still literally painting cream was the
+ * one place both gates were blind to.
+ *
+ * Two failures, one cause: a second list, kept by hand, next to the real one.
+ * So it is DERIVED from WARM_CREAM now and cannot drift again.
+ *
+ * TWO DELIBERATE NARROWINGS, both measured before choosing:
+ *   - Only the WARM set, not every CREAM_LITERAL. `#f7f7f8` appears as rgb ten
+ *     times and is the CURRENT cool ground, so matching it would count the
+ *     correct colour as a violation.
+ *   - `#ffffff` is excluded for the same reason it is only questionably in the
+ *     hex list: it appears as rgb 63 times across 16 files and it is white.
+ *     The hex entry is kept because the ramp step that used to be white was
+ *     NAMED cream; a plain `rgb(255,255,255)` never was.
+ *
+ * Both separators are matched. CSS accepts `rgb(a, b, c)` and `rgb(a b c)`,
+ * and the literal that actually mattered here used the second form while the
+ * old pattern only understood the first.
+ */
+const RGB_LITERALS = [...WARM_CREAM].map((hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  return new RegExp(`rgba?\\(\\s*${r}\\s*[,\\s]\\s*${g}\\s*[,\\s]\\s*${b}\\b`, "gi");
+});
 
 const TOKEN_FILES = [
   "src/lib/design-tokens.ts",

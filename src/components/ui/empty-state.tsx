@@ -8,13 +8,19 @@
  *
  * Three semantic intents:
  *
- *   - default: data is upcoming or unavailable. Cream surface,
+ *   - default: data is upcoming or unavailable. White surface,
  *     vermillion left rule, optional suggestion chips below the body
  *   - hatched: this surface is intentionally not measured (e.g. a
- *     sector dominated by corporates). Cream-100 with diagonal hatch
- *     so users learn it's a category-level decision, not a data gap
+ *     sector dominated by corporates). Neutral muted fill with a
+ *     diagonal hatch, so users learn it's a category-level decision,
+ *     not a data gap
  *   - compact: small inline card for grid positions, no left rule,
  *     no centered hero treatment
+ *
+ * The two lines above described both surfaces as cream. Neither has been
+ * for some time: `default` renders bg-white and the hatch now reads the
+ * retoned neutral tokens. A stale sentence about colour is how a banned
+ * colour comes back, so it is corrected rather than left as history.
  *
  * Accessibility:
  *   - Title is a real heading at the level the consumer passes
@@ -36,6 +42,7 @@ import { CaretRight } from "@phosphor-icons/react/dist/ssr";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { colors } from "@/lib/design-tokens";
 
 const emptyStateVariants = cva(
   "relative border border-parchment rounded-lg mx-auto",
@@ -58,13 +65,35 @@ const emptyStateVariants = cva(
   }
 );
 
-// Diagonal hatch background for the "intentionally not measured" variant.
-// Warm cream surface + parchment hatch lines (conformed 2026-06-12; the
-// cool #F5F5F5 grey is banned by design-system.md 3.3).
+/**
+ * Diagonal hatch for the "intentionally not measured" variant.
+ *
+ * THESE WERE THE LAST THREE WARM VALUES ON THE SITE, and they survived the
+ * whole cream purge by being written out by hand. The ramp's 100 step was
+ * retoned from #f7f6f4 to a true neutral and `parchment` from #e4e2dd to
+ * #e3e3e3, but this file did not read either token: it spelled the old numbers
+ * as rgb() strings, so every retone passed straight over it and it went on
+ * painting warm sand under a hatch of warm taupe.
+ *
+ * Neither gate could see it either. `verify_no_cream` matches the word plus a
+ * list of HEX literals, and its rgb net carried exactly one pattern, for a page
+ * ground that no longer exists, so it caught nothing at all. Widened in the
+ * same commit as this fix, and derived from the warm set rather than hand-kept,
+ * so the two lists cannot drift apart again.
+ *
+ * The comment this replaces cited design-system.md 3.3 to argue that a cool
+ * grey was banned and cream was correct. That is now exactly inverted: the
+ * founder banned cream outright on 2026-08-16 and the ratified palette is
+ * terracotta plus COOL neutrals.
+ *
+ * Token reads, not literals, which is the point: the next retone reaches this.
+ * The `99` suffix is the 0.6 alpha the hatch lines already had, preserved
+ * rather than dropped, because full-strength parchment is a visibly heavier
+ * rule than a 60% one and this hatch is meant to whisper.
+ */
 const HATCH_STYLE: React.CSSProperties = {
-  backgroundColor: "rgb(247 246 244)", // cream-100
-  backgroundImage:
-    "repeating-linear-gradient(135deg, transparent 0px, transparent 14px, rgba(228, 226, 221, 0.6) 14px, rgba(228, 226, 221, 0.6) 15px)", // parchment lines
+  backgroundColor: colors.paper[100],
+  backgroundImage: `repeating-linear-gradient(135deg, transparent 0px, transparent 14px, ${colors.parchment}99 14px, ${colors.parchment}99 15px)`,
 };
 
 export type EmptyStateSuggestion = {
