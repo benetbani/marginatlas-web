@@ -134,9 +134,25 @@ export default async function LearnArticlePage({
     { id: sBenchmarks.id, label: sBenchmarks.label },
   ];
 
+  /* `xl:flex`, not `flex`. THE SAME DEFECT THE TRADE PAGES HAD, found by
+     checking every `StickySectionNav` call site after that one was fixed.
+     That nav is a fragment of two navs: an `xl:block` rail and an `xl:hidden`
+     chip row. With the wrapper a flex row at EVERY width, the chip row stayed
+     a flex ITEM below xl and took its share of a 327px line. Measured at
+     375x812 on /learn/how-much-does-a-restaurant-make:
+
+         article   min-w-0 flex-1   width   0px   height 9,443
+         chip nav  stretch          width 288px   height 9,419
+
+     Article width ZERO, and the chip row, which carries no `self-start`,
+     stretched to 9,419px of `bg-white/90` with `backdrop-blur` at z-20, above
+     the masthead's z-10. Every learn article, blank on a phone.
+     `justify-center` is dropped with the row: it only had meaning as a flex
+     property, and `mx-auto` on the wrapper plus `max-w-3xl` on the article
+     already centre the measure below xl. */
   return (
-    <div className="mx-auto flex max-w-5xl justify-center gap-6 px-4 md:px-6 py-12 md:py-16">
-      <article className="min-w-0 max-w-3xl flex-1">
+    <div className="mx-auto max-w-5xl px-4 py-12 md:px-6 md:py-16 xl:flex xl:justify-center xl:gap-6">
+      <article className="mx-auto min-w-0 max-w-3xl xl:mx-0 xl:flex-1">
       {/* FAQ schema */}
       <script
         type="application/ld+json"
