@@ -44,7 +44,7 @@ export function UpgradeTeaser({ variant = "band" }: { variant?: "band" | "panel"
   ];
   return (
     <section className={panel ? "" : "py-12 md:py-16"}>
-      <SectionEyebrow size="md" className="mb-2">Free and paid</SectionEyebrow>
+      <SectionEyebrow tone="backdrop" size="md" className="mb-2">Free and paid</SectionEyebrow>
       {/* One size in both shapes, and it is the page's canonical section size.
           The heading used to be two sizes chosen by variant, on top of the page
           already carrying two different section-heading scales. A page cannot

@@ -31,7 +31,7 @@ export function ExampleTiles({ tiles }: { tiles: ExampleTile[] }) {
           So the band says its own job instead. The specimen is one answer in
           depth; these are the same question asked somewhere else, which is the
           only thing a second band of examples can add. */}
-      <SectionEyebrow size="md" className="mb-2">Six more</SectionEyebrow>
+      <SectionEyebrow tone="backdrop" size="md" className="mb-2">Six more</SectionEyebrow>
       <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-5">
         The same question, asked in {countries} countries
       </h2>

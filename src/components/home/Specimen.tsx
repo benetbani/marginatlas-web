@@ -38,7 +38,7 @@ export function Specimen({ specimen }: { specimen: SpecimenData | null }) {
 
   return (
     <section className="py-10 md:py-14">
-      <SectionEyebrow size="md" className="mb-2">
+      <SectionEyebrow tone="backdrop" size="md" className="mb-2">
         What an answer looks like
       </SectionEyebrow>
 

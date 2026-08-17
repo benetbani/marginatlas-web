@@ -21,6 +21,26 @@ const eyebrowVariants = cva("uppercase font-semibold leading-none", {
       default: "text-atlas-700",
       muted: "text-cocoa-700",
       inverse: "text-atlas-300", // on dark bands (atlas-paper-dark)
+      /**
+       * ON THE PHOTOGRAPH RATHER THAN ON A CARD, and this is a contrast fix
+       * with a measurement behind it rather than a taste choice.
+       *
+       * AtlasFrame paints the founder's photograph at opacity 0.32 over an
+       * opaque white base. Composing that exactly and reading every pixel, the
+       * backdrop's DARKEST point is luminance 0.4179. Against it:
+       *
+       *     atlas-700  #991600   3.79:1   fails AA, which needs 4.5 at 12px
+       *     atlas-800  #701000   5.29:1   passes
+       *
+       * An eyebrow is 12px, so the large-text allowance of 3.0 does not apply.
+       * (The homepage H1's rotating words are also atlas-700 on the backdrop
+       * and DO pass, at 60px, on that allowance. Size is the whole difference.)
+       *
+       * `default` is unchanged and stays atlas-700, because most eyebrows on
+       * this site sit on a card where it reads 12.8:1 and is the brand accent.
+       * This tone is for the ones that do not.
+       */
+      backdrop: "text-atlas-800",
     },
     size: {
       // 12px is the floor: nothing smaller renders. The old 10px `sm` is gone.
