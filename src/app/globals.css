@@ -1376,6 +1376,36 @@
 
    12px kept over 11px: the two were a pixel apart, one had to go, and the
    even number is the one the spacing scale actually contains. */
+/* THE GROUND-UNDER-YOU ROW, and it needed a breakpoint rather than a better
+   track size. `minmax(0, 12rem) 1fr` hands the label track its full 192px and
+   gives the value whatever is left, which at 375 is 37.4px inside a section
+   that clips. Measured on all four country pages: the verdicts rendered sliced
+   mid-word as "Sol", "Fir" and "Workabl", the bars did not appear at all, and
+   the sentence set one word per line. clientWidth 283 against scrollWidth 295,
+   so it was not even scrollable to.
+
+   The 12rem is right and stays: its own comment records measuring a
+   sample-tagged row at 188px of content against a 152px column. The defect is
+   that a two-column row has no business being two columns at 375. Below 40rem
+   it stacks, which is what every other row on this site does at that width.
+
+   The rule moves out of the component's inline style so it can carry a media
+   query at all; inline styles cannot. */
+.eng-ground__row {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) 1fr;
+  gap: 0.5rem 0.85rem;
+  align-items: center;
+  padding: 0.6rem 1.25rem;
+  border-top: 1px solid var(--hairline);
+}
+@media (max-width: 40rem) {
+  .eng-ground__row {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
 .eng-cap {
   margin-top: 12px;
   font-family: var(--font-body);

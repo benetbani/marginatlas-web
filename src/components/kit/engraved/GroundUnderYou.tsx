@@ -177,24 +177,11 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
 
   return (
     <div
-      style={{
-        display: "grid",
-        /* 12rem, not 9.5rem, since 2026-08-18. Measured on the rendered /gb
-           page rather than guessed: a sample-tagged row needs label 94px +
-           glyph 15 + two 8px gaps + the tag, against a 152px column, so
-           "Political stability" broke onto two lines while its three siblings
-           sat on one. That was already true at the tag's old 9px (179px into
-           152) and raising the tag to a legible 11px took it to 188, so the
-           column is sized to the content instead. It is a minmax, so narrow
-           viewports still collapse it; the cost is 40px off a track that runs
-           the rest of the row. */
-        gridTemplateColumns: "minmax(0, 12rem) 1fr",
-        gap: "0.5rem 0.85rem",
-        alignItems: "center",
-        padding: "0.6rem 1.25rem",
-        borderTop: "1px solid var(--hairline)",
-        opacity: isSample ? 0.78 : 1,
-      }}
+      /* Grid, gap, padding and rule now live on .eng-ground__row in globals.css,
+         because this row must STACK below 40rem and an inline style cannot
+         carry a media query. Only opacity stays here: it depends on props. */
+      className="eng-ground__row"
+      style={{ opacity: isSample ? 0.78 : 1 }}
     >
       {/* Label cell: glyph + label, with the sample tag when illustrative. */}
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", minWidth: 0 }}>
