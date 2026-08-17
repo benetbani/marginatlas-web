@@ -136,6 +136,7 @@ export function NeighborhoodCover({
   name,
   seed,
   className = "h-20",
+  showLabel = true,
 }: {
   /** Display name; set as a small legible label, bottom-left. */
   name: string;
@@ -143,6 +144,17 @@ export function NeighborhoodCover({
   seed: string;
   /** Height utility (default h-20). The cover is always full width. */
   className?: string;
+  /**
+   * Draw the name inside the cover. TURN THIS OFF WHEN THE CALLER ALREADY
+   * PRINTS THE NAME. Seen at 1440 on /cities/london: the four neighbourhood
+   * tiles each read "City of London" white-on-dark inside the cover and then
+   * "City of London" again in the card body 12px below it, because this
+   * component labels itself and the tile labels it too. Four tiles, both
+   * labels, on every city page. The card body keeps its copy: the cover is
+   * `aria-hidden`, so it is the body text that gives the link its accessible
+   * name, and the body copy is the one that hovers with the link.
+   */
+  showLabel?: boolean;
 }) {
   const h = hash(seed);
   const [from, to] = GRADIENTS[h % GRADIENTS.length];
@@ -202,12 +214,14 @@ export function NeighborhoodCover({
       {/* The name as a small, composed label, not a watermark. Fraunces, warm
           white, bottom-left. Fluid size keeps it proportionate from tile to
           banner without horizontal overflow at 375px. */}
-      <span
-        className="pointer-events-none absolute bottom-1.5 left-2.5 right-2.5 select-none truncate font-display font-semibold leading-tight tracking-tight text-cream-50"
-        style={{ fontSize: "clamp(0.8125rem, 1.4vw + 0.55rem, 1.125rem)" }}
-      >
-        {name.trim()}
-      </span>
+      {showLabel ? (
+        <span
+          className="pointer-events-none absolute bottom-1.5 left-2.5 right-2.5 select-none truncate font-display font-semibold leading-tight tracking-tight text-white"
+          style={{ fontSize: "clamp(0.8125rem, 1.4vw + 0.55rem, 1.125rem)" }}
+        >
+          {name.trim()}
+        </span>
+      ) : null}
     </div>
   );
 }

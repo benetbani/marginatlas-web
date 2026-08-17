@@ -794,10 +794,15 @@ export default async function CityPage({
                         href={`/cities/${city.slug}/neighborhoods#${n.slug}`}
                         className="group block overflow-hidden rounded-xl border border-parchment bg-white transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift"
                       >
+                        {/* The cover carries no label here: the card body
+                            three lines down prints the same name, and both
+                            were drawing it. See NeighborhoodCover's
+                            `showLabel`. */}
                         <NeighborhoodCover
                           name={n.name}
                           seed={`${city.slug}-${n.slug}`}
                           className="h-20"
+                          showLabel={false}
                         />
                         <div className="p-4">
                           <div className="text-sm font-medium leading-tight text-ink-900 group-hover:text-atlas-700">
