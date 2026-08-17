@@ -130,11 +130,34 @@ export function ZoomControl({
   ];
 
   return (
-    <div className={cn("w-full", className)}>
+    /* THIS READ AS AN UNSTYLED SLAB BETWEEN TWO CARDS.
+
+       Photographed at 1280x900 on /gb/london/restaurants, third viewport-inch,
+       and measured there: two square-cornered bands at x 96..798, one
+       rgba(247,247,248,0.75) and the one below it rgba(255,255,255,0.8), both
+       border-radius 0px, sitting between a card at 96..908 and another card at
+       96..908, each of those radius 16px with the .955 surface and the
+       0.07-alpha hairline. So the eye reads two mismatched grey slabs with a
+       hard cut 110px short of everything around them, and the watch chip
+       floating in the gap beside them belonging to nothing.
+
+       The right edge is not the defect and is not changed: the row is
+       justify-between so the watch chip takes the remainder, which is the
+       intent. What was wrong is that this block alone had a visible ground with
+       no radius, no hairline and no agreement with itself about its own colour.
+
+       It is one card now. `overflow-hidden` is what makes that true rather than
+       nominal: without it the two child navs paint their square corners over
+       the parent's rounded ones. The zoom row's own `bg-white/80` goes, so the
+       card supplies the single surface and the orientation band above keeps its
+       faint tint as the one deliberate two-tone. Its trailing `border-b` goes
+       too: the card's own border is the bottom edge, and the two were drawing
+       on top of each other. */
+    <div className={cn("atlas-card w-full overflow-hidden", className)}>
       <OrientationHeader items={orientationItems} sticky={sticky} />
       <nav
         aria-label="Change the level of detail for this trade and place"
-        className="flex items-center gap-1 overflow-x-auto border-b border-parchment/60 bg-white/80 px-4 py-1.5"
+        className="flex items-center gap-1 overflow-x-auto px-4 py-1.5"
       >
         <span className="mr-1 shrink-0 text-[11px] font-medium uppercase tracking-[0.12em] text-cocoa-500">
           Zoom
