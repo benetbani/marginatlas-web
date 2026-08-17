@@ -6,8 +6,8 @@
  * to four short labelled meaning bars on the quiet clay -> amber -> cocoa ->
  * moss scale, then one plain summary line. Higher always reads as safer ground.
  *
- * Composed from the Wave-1 engraved foundation (meaningStep, Glyph, SampleState,
- * Eyebrow) and styled only through the engraved CSS vars + a little inline SVG
+ * Composed from the Wave-1 engraved foundation (meaningStep, Glyph, SampleState)
+ * and styled only through the engraved CSS vars + a little inline SVG
  * geometry, matching the look of kit/engraved/Compare.tsx without touching any
  * shared stylesheet. Two factors lean on figures carried in the country profile
  * (a perception read on corruption and an ease-of-operating read); the currency
@@ -19,7 +19,7 @@
  * via var(--...) only, no raw hex. No em-dashes, no source-agency names.
  */
 import * as React from "react";
-import { meaningStep, Glyph, SampleState, Eyebrow, type GlyphName } from "./primitives";
+import { meaningStep, Glyph, SampleState, type GlyphName } from "./primitives";
 
 /* ------------------------------------------------------------------ */
 /* Types.                                                              */
@@ -102,35 +102,30 @@ export function GroundUnderYou({ factors, summary, className }: GroundUnderYouPr
         overflow: "hidden",
       }}
     >
-      {/* Header: eyebrow + title, with a small footing legend on the calm edge. */}
+      {/* Header: the footing legend only.
+          THE EYEBROW AND TITLE WERE PRINTED TWICE and are gone from here,
+          2026-08-18. The only call site wraps this in a section that already
+          gives it an eyebrow reading "The ground under you", VERBATIM the same
+          words this block re-printed underneath, plus an h2 reading "How solid
+          the footing is for a small shop". So the reader met the same label
+          twice and two headings in a row before reaching a single bar.
+          The outer pair is the one that survives, on information rather than
+          position: its h2 names the subject (a small shop) and the measure (how
+          solid the footing is), where the h3 here said "An honest read of your
+          footing", which names neither and asserts the honesty the whole page
+          is already claiming. The legend stays because it is the one thing in
+          this row the section above cannot say: it decodes the bars. */}
       <header
         style={{
           display: "flex",
           flexWrap: "wrap",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
+          alignItems: "center",
+          justifyContent: "flex-end",
           gap: "0.75rem 1rem",
-          padding: "1rem 1.25rem 0.75rem",
+          padding: "0.75rem 1.25rem",
           borderBottom: "1px solid var(--hairline-strong)",
         }}
       >
-        <div style={{ minWidth: 0 }}>
-          <Eyebrow>The ground under you</Eyebrow>
-          {/* typography-ok: section heading sized inline against the engraved
-             display cut, matching the Compare/Scorecard sibling sections. */}
-          <h3
-            style={{
-              margin: "0.25rem 0 0",
-              fontFamily: "var(--font-display)",
-              fontSize: "1.05rem",
-              lineHeight: 1.2,
-              color: "var(--text-strong)",
-              letterSpacing: "0.01em",
-            }}
-          >
-            An honest read of your footing
-          </h3>
-        </div>
         <FootingLegend />
       </header>
 
@@ -184,7 +179,16 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "minmax(0, 9.5rem) 1fr",
+        /* 12rem, not 9.5rem, since 2026-08-18. Measured on the rendered /gb
+           page rather than guessed: a sample-tagged row needs label 94px +
+           glyph 15 + two 8px gaps + the tag, against a 152px column, so
+           "Political stability" broke onto two lines while its three siblings
+           sat on one. That was already true at the tag's old 9px (179px into
+           152) and raising the tag to a legible 11px took it to 188, so the
+           column is sized to the content instead. It is a minmax, so narrow
+           viewports still collapse it; the cost is 40px off a track that runs
+           the rest of the row. */
+        gridTemplateColumns: "minmax(0, 12rem) 1fr",
         gap: "0.5rem 0.85rem",
         alignItems: "center",
         padding: "0.6rem 1.25rem",
@@ -211,11 +215,19 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
           {factor.label}
         </span>
         {isSample ? (
+          /* typography-ok: 0.6875rem is 11px, the engraved family's micro label
+             size (eng-score__label, and the "Thin"/"Deep" ends in Compare).
+             IT WAS 0.5625rem, WHICH IS 9px, and measured off the rendered page
+             that was the smallest text on this site: two elements, nothing else
+             below 10. Worse, it is the SAMPLE marker, whose whole job is to
+             stop a reader taking an illustrative bar for a held figure, set
+             uppercase in --text-faint at nine pixels. An honesty marker that
+             has to be hunted for is not doing the job it exists for. */
           <span
             style={{
               flex: "none",
               fontFamily: "var(--font-body)",
-              fontSize: "0.5625rem",
+              fontSize: "0.6875rem",
               fontWeight: 600,
               letterSpacing: "0.08em",
               textTransform: "uppercase",

@@ -8,7 +8,7 @@
  * cocoa -> moss meaning scale: urban density, e-commerce and delivery reach.
  *
  * Composed from the engraved foundation (meaningStep, CompassRosette, Glyph,
- * SampleState, Eyebrow) and the engraved CSS-variable layer in globals.css,
+ * SampleState) and the engraved CSS-variable layer in globals.css,
  * matching kit/engraved/Compare.tsx and Scorecard.tsx. No new globals classes
  * are added: layout uses Tailwind token utilities (ink / cocoa / moss / amber /
  * cream) and structure, the meaning tints and tabular figures come through inline
@@ -25,7 +25,7 @@
  * source-agency names. AA contrast, legible at 375px with no horizontal scroll.
  */
 import * as React from "react";
-import { CompassRosette, Glyph, SampleState, Eyebrow, meaningStep, type GlyphName } from "./primitives";
+import { CompassRosette, Glyph, SampleState, meaningStep, type GlyphName } from "./primitives";
 
 /* ------------------------------------------------------------------ */
 /* Props.                                                              */
@@ -203,8 +203,15 @@ export function HowFarYouReach({ population, reach, caveat, sample, className }:
         <div className="pointer-events-none absolute right-3 top-3 opacity-60 sm:right-5">
           <CompassRosette size={56} tone="var(--cocoa-300)" ring="var(--hairline-strong)" />
         </div>
-        <Eyebrow style={{ color: "var(--text-muted)" }}>How far you can reach</Eyebrow>
-        <div className="mt-3 flex items-end gap-3">
+        {/* THE EYEBROW HERE WAS THE SECTION'S OWN, PRINTED AGAIN, and is gone
+            2026-08-18. It read "How far you can reach"; the only call site wraps
+            this in a section whose eyebrow reads "How far you reach" and whose
+            h2 reads "The market you can reach from here". Three labels for one
+            block, two of them the same four words.
+            Nothing is left unlabelled by the cut: the population figure below
+            keeps `population.label` as its own explanatory line, which says what
+            the number counts, where the eyebrow only repeated the heading. */}
+        <div className="flex items-end gap-3">
           <span
             className="leading-none text-ink-900"
             style={{
