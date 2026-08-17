@@ -135,9 +135,40 @@ export function AnswerFirstMasthead({
           </p>
         ) : null}
 
-        {/* the anchor number with its spread */}
+        {/* THE ANCHOR NUMBER, THEN THE SPREAD ON ITS OWN LINE.
+
+           THE SPREAD WAS BEING PRINTED AT SIX AND A HALF PIXELS. RangeStrip is
+           an SVG with a fixed `viewBox="0 0 760 96"` and `w-full`, so every unit
+           inside it, text included, scales by rendered-width over 760. Squeezed
+           into the second column of this grid it got nowhere near 760, and the
+           figures are the product:
+
+             /industries/restaurants   column 361px   scale 0.474
+               $351K / $397K / $524K   authored 14px  painted 6.6px
+               BOTTOM 10% / TOP 10%    authored 11.5  painted 5.5px
+             /gb/london/restaurants    column 494px   scale 0.649
+               $720K                   authored 17px  painted 11.0px
+               $360K / $1.3M           authored 14px  painted 9.1px
+
+           Measured in a browser at 1440x900, not inferred: rendered width over
+           viewBox width, times each <text> element's own font-size attribute.
+           Nothing in the source says 6.6px anywhere, which is why this survived
+           every gate and every read of the markup.
+
+           The two-up composition could not be rescued by rebalancing the
+           columns. The labels only reach a legible ~11px at scale 0.78, which
+           needs 594px of the 794 this card holds, and the anchor's own caption
+           ("Typical revenue a year, across the US markets we measure") is
+           already 409px wide. There is no split that leaves both readable.
+
+           So the anchor keeps the top line and the strip takes the full column
+           beneath it, which puts the scale at roughly 1.0 and paints every
+           figure at the size it was authored. Nothing is dropped and nothing is
+           added; the same two elements are stacked instead of columned. This is
+           the shared masthead, so the fix lands on the cell, neighbourhood-cell,
+           industry, city and trade pages at once. */}
         {anchor && isNum(anchor.value) ? (
-          <div className="mt-7 grid gap-6 md:grid-cols-[minmax(0,auto)_minmax(0,1fr)] md:items-end md:gap-10">
+          <div className="mt-7">
             <div>
               <div className="font-display text-4xl font-semibold tabular-nums tracking-tight text-ink-900 sm:text-5xl">
                 {anchor.countUp === false ? (
@@ -151,7 +182,7 @@ export function AnswerFirstMasthead({
               </div>
             </div>
             {hasSpread ? (
-              <div className="min-w-0">
+              <div className="mt-6 min-w-0">
                 <RangeStrip
                   p10={spread!.p10}
                   p25={spread!.p25 ?? null}

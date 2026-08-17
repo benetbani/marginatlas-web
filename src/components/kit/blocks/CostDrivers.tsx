@@ -107,11 +107,34 @@ export function CostDrivers({
 }: CostDriversProps) {
   const clean = (drivers ?? []).filter((d): d is CostDriver => hasText(d?.label));
 
+  /* THIS BLOCK HAD NO GROUND, AND IT IS THE ONE IN ITS STACK THAT DID NOT.
+
+     Photographed at 1440x900 on /gb/london/restaurants, scrolled to 2100:
+     the heading and all four driver rows painted straight onto the fixed
+     photograph. The top two rows read because the crop is pale sea there; the
+     bottom two sit over the cliff and the buildings, and the muted
+     "weighs on margin" gloss and the impact ticks are close to gone against
+     them. Exactly the failure the country page's section nav had: legible for
+     its first items and not its last, because the picture is sky at the top and
+     buildings lower down.
+
+     Measured rather than eyeballed: every ancestor from this section up to the
+     column reported `background-color: rgba(0, 0, 0, 0)`. Nothing was painting.
+
+     It is not a styling preference, it is the standing rule that content lives
+     in cards because the card is what sits over the picture. And every sibling
+     in both stacks that mount this block already obeyed it: PlainTerms,
+     MoneyGoesBreakdown, BreakEvenLine and WagesByRole each carry `atlas-card`,
+     and on the industry page the neighbours are BeatCards. This was the only
+     bare `w-full` section among them. The padding matches the siblings exactly
+     so the stack keeps one rhythm. */
   const wrapper = (children: React.ReactNode) => (
     <section
       id={id}
       aria-label={title}
-      className={["w-full", className].filter(Boolean).join(" ")}
+      className={["atlas-card w-full px-5 py-5 md:px-7 md:py-6", className]
+        .filter(Boolean)
+        .join(" ")}
     >
       <div className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-cocoa-700">
         {title}

@@ -73,8 +73,33 @@ export function DimensionSwitcher({
     });
   }
 
+  /* THE OFFSET IS THE HEADER'S OWN VARIABLE, NOT A NUMBER.
+
+       This bar parked at `top-[57px]` under a masthead that measures 89px, so
+       32px of it, its entire first row, sat underneath the header and was
+       sliced off. Photographed at 1440x900 on /gb/london/restaurants: the word
+       SHOWING and the industry field were cut through the middle at every
+       scroll position past the hero. The masthead is z-10 and this bar is z-5,
+       so the header wins and there is nothing to see.
+
+       57 was never a measurement of anything current. `--atlas-header-h` is
+       declared on <html> in the root layout as 80px, 88px from md up, and the
+       cell page's own CellPageNav already sticks to
+       `top-[var(--atlas-header-h)]`. Two sticky bars on one page disagreeing
+       about where the header ends is the cohesion defect underneath the visual
+       one, so this now reads the same variable.
+
+       The full-bleed `-mx-6` also goes, and the hand-rolled ground with it. It
+       pushed this bar 24px past the content column on both sides, so it was the
+       one block on the page with a different left edge (152 against every
+       card's 176 at 1440), and the opaque `bg-white` punched a hole through the
+       fixed photograph where every card beside it is the .955 card surface.
+       `.atlas-card` is the site's one card rule and carries all of it: the
+       translucent surface, the hairline, the radius and the elevation. The
+       `sticky` utility still wins over the class's own `position: relative`,
+       which is what keeps this bar pinned. */
   return (
-    <div className="sticky top-[57px] z-[5] -mx-6 px-6 py-3 bg-white border-y border-parchment mb-6">
+    <div className="atlas-card sticky top-[var(--atlas-header-h)] z-[5] px-4 py-3 mb-6">
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <span className="text-xs uppercase tracking-wide text-ink-700/60 font-medium">
           Showing
