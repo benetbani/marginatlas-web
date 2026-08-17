@@ -43,18 +43,53 @@
  * now two dots and two words beside the heading, which is how a chart labels
  * its own marks, and the 25 words are gone.
  *
- * WHAT DID NOT GO, and why the cut here is 22% rather than half: the four
- * one-line claims are the DEFINITIONS of the four collections, 44 words for
- * four collections. Without them "Cheap to run, light to tax, 39 of 194" is a
- * boast with no test attached, and this site's whole position is that a claim
- * carries its test. They also live in src/lib/home/catalog.ts, not here.
- *
  * WHAT WENT IN: one AtlasIcon per collection, from the existing manifest, and
  * the qualifying count set as a figure rather than as small grey text. The
  * heading dropped from 2xl/3xl to lg/xl for the same reason as the other bands
  * in this pass, small heading over large content.
+ *
+ * SECOND DENSITY PASS, same day, and it reversed a call made in the first.
+ * That pass kept the four `claim` sentences and wrote down why: "Without them
+ * 'Cheap to run, light to tax, 39 of 194' is a boast with no test attached, and
+ * this site's whole position is that a claim carries its test." The principle
+ * is right and the conclusion was wrong, because the claim is not the test.
+ * Read them beside their own titles:
+ *
+ *   "Cheap to run, light to tax"   / "Below the world median on what the state
+ *                                     takes and on what staff cost"
+ *   "Growing fastest"              / "Where customers are arriving quicker than
+ *                                     anywhere else"
+ *   "What the trade itself keeps"  / "Trades whose margin survives before a
+ *                                     single decision about place"
+ *
+ * Every one is its own title said again at length, which is the exact thing
+ * this pass exists to cut. The TEST is the other field the collection already
+ * carries, `rule`: "tax below 33.9% and labour cost below $11,500". It is
+ * shorter, it is falsifiable, and it puts two figures on the page where there
+ * were none. So the claims did not survive on the strength of the argument that
+ * defended them; the rules did, and the rules are what the argument was
+ * actually about. 43 prose words became 19, and the page gained two numbers.
+ *
+ * THE SENTENCES ARE NOT LOST FROM THE SITE. Every plate links to /extremes, and
+ * src/components/extremes/CatalogCollections.tsx already prints `c.claim` as
+ * the lede and `c.rule` beneath it. A reader who wants the collection defined
+ * in words is standing on the page that defines it. Same disposal as the
+ * `dont_miss` prose that left NeighborhoodCards in the first pass: the index
+ * carries the test, the destination carries the sentence.
+ *
+ * THE FIGURES INSIDE THE RULE ARE SET AS FIGURES, in ink against the graphite
+ * of the words around them, so "under 33.9%" reads as a threshold rather than
+ * as more prose. By colour and by the number face, never by weight.
+ *
+ * AND THE MEMBERS ARE NAMED. This band printed "TL, SD, VU" as the concrete
+ * examples of the countries that qualify. See displayMembers in
+ * src/lib/home/catalog.ts.
+ *
+ * WHAT WAS MEASURED AND LEFT ALONE: the three members per plate. They are 13
+ * words of pure inventory, which is the thing the founder's note asks for more
+ * of, not less.
  */
-import { getCatalogCollections, type CatalogCollection } from "@/lib/home/catalog";
+import { getCatalogCollections, displayMembers, type CatalogCollection } from "@/lib/home/catalog";
 import { AtlasIcon } from "@/components/brand/icons";
 import type { AtlasIconId } from "@/components/brand/icons";
 
@@ -94,8 +129,47 @@ function markAt(i: number, n: number): { x: number; y: number } {
   };
 }
 
+/**
+ * The membership rule, with its figures set as figures.
+ *
+ * Splits on a numeric token and returns alternating plain and numeric parts, so
+ * "tax below 33.9% and labour cost below $11,500" arrives as four pieces and the
+ * two thresholds can carry the number face and the ink colour while the words
+ * stay graphite. A rule with no digits ("top tenth of net margin") comes back as
+ * one plain piece and renders exactly as it reads today.
+ *
+ * NOT BOLD. The rulebook bans weight as an emphasis device here, and it would be
+ * the wrong tool anyway: the point is that a threshold is a number, which colour
+ * and a tabular face say better than heaviness does.
+ *
+ * The split is read by INDEX PARITY, not by re-testing each piece. String.split
+ * with one capture group interleaves the captures at the odd positions, so odd
+ * IS the figure, by construction. Re-testing would have meant calling .test on a
+ * /g regex, which carries lastIndex between calls and therefore answers a
+ * different question every other time it is asked.
+ */
+const FIGURE = /(\$?\d[\d,]*(?:\.\d+)?%?)/g;
+
+function Rule({ text }: { text: string }) {
+  const parts = text.split(FIGURE);
+  return (
+    <p className="mt-1 text-[13px] leading-snug text-graphite">
+      {parts.map((part, i) =>
+        i % 2 === 1 ? (
+          <span key={i} className="tabular-nums text-ink-900">
+            {part}
+          </span>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
+      )}
+    </p>
+  );
+}
+
 function Plate({ c }: { c: CatalogCollection }) {
   const held = c.measured > 0;
+  const members = displayMembers(c);
   const n = Math.min(c.measured, MAX_MARKS);
   /* Which marks are lit, spread evenly through the field rather than clustered,
      so the eye reads a proportion instead of a corner. */
@@ -105,7 +179,7 @@ function Plate({ c }: { c: CatalogCollection }) {
     <a
       href={c.href}
       className="group block no-underline"
-      aria-label={`${c.title}. ${c.claim}. ${held ? `${c.qualifying} of ${c.measured} ${c.unit}` : "not held yet"}.`}
+      aria-label={`${c.title}. ${held ? `${c.qualifying} of ${c.measured} ${c.unit}, ${c.rule}` : "not held yet"}.`}
     >
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -163,9 +237,13 @@ function Plate({ c }: { c: CatalogCollection }) {
           )}
         </span>
       </div>
-      <p className="mt-1 text-[13px] leading-snug text-graphite">{c.claim}</p>
-      {c.members.length > 0 ? (
-        <p className="mt-1 text-[12.5px] text-cocoa-700">{c.members.slice(0, 3).join(", ")}</p>
+      {/* The rule, only when there is a measured set for it to be a rule ABOUT.
+          An unheld collection's rule reads "no decline metric is held yet",
+          which the count beside the title has already said in the same three
+          words, so printing it would restate a restatement. */}
+      {held ? <Rule text={c.rule} /> : null}
+      {members.length > 0 ? (
+        <p className="mt-1 text-[12.5px] text-cocoa-700">{members.join(", ")}</p>
       ) : null}
     </a>
   );

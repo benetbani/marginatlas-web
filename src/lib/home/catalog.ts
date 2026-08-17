@@ -16,6 +16,7 @@
  *   cd E:/atlas/page-data && python tools/export/catalog_collections.py
  */
 import catalogJson from "../../../data/catalog/collections_v1.json";
+import { iso2ToName } from "@/lib/countries";
 
 export type CatalogCollection = {
   id: string;
@@ -55,4 +56,30 @@ const COLLECTIONS = (catalogJson as { collections: CatalogCollection[] }).collec
  */
 export function getCatalogCollections(): CatalogCollection[] {
   return COLLECTIONS;
+}
+
+/**
+ * The first few members of a collection, in the words a reader knows them by.
+ *
+ * WHY THIS IS NOT JUST `c.members.slice(0, 3)`. The warehouse keys countries by
+ * ISO-2, so the `cheap-and-light` collection ships its members as "TL, SD, VU"
+ * and the home page printed exactly that: three two-letter codes offered as the
+ * concrete examples on the most-read surface on the site. Nobody reads TL.
+ * They are Timor-Leste, Sudan and Vanuatu, and `iso2ToName` already holds every
+ * one of them.
+ *
+ * Only the `countries` unit is mapped. Cities and trades already ship display
+ * names ("Abuja", "Mental Health Practice"), and running those through a
+ * country lookup would be a no-op at best and a wrong hit at worst.
+ *
+ * `iso2ToName` returns the code itself when it does not know one, so an
+ * unmapped country degrades to what the page shows today rather than to a blank
+ * chip. The resolution happens HERE rather than in the component because it is
+ * a fact about the data, and because the plate and its destination page should
+ * never disagree about what a member is called.
+ */
+export function displayMembers(c: CatalogCollection, limit = 3): string[] {
+  const raw = c.members.slice(0, limit);
+  if (c.unit !== "countries") return raw;
+  return raw.map((m) => (m.length === 2 ? iso2ToName(m) : m));
 }
