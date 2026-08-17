@@ -69,6 +69,20 @@ const CREAM_TOKEN = /-cream-\d+\b/g;
  * #fbfaf7 (the old --atlas-surface-paper) and its rgb() form.
  */
 const CREAM_LITERALS = [
+  /* #e4d8c5 and #cbb79c ADDED 2026-08-17, the last two warm values on the
+     site. They were `ink-200` and `ink-300`, retoned to true neutrals in
+     `f71aa395` after measuring h 36.8 s 36.5% l 83.3% and h 33 s 22% l 70.4%:
+     warm sand on a palette that is terracotta plus COOL neutrals, and `ink-200`
+     was the form-control border, so it was the most-seen hairline on the site
+     after `parchment`.
+
+     They are listed here and in WARM_CREAM together, which is the point: the
+     retone moved the ramp, and nothing stopped anyone re-typing either hex by
+     hand tomorrow. That is not hypothetical. It is exactly how
+     empty-state.tsx kept painting `rgb(247 246 244)` through three passes of
+     this purge, by spelling a number instead of reading a token. */
+  "#e4d8c5",
+  "#cbb79c",
   "#ffffff", // cream-50, counted for its name, see header
   "#f7f7f8",
   "#f7f6f4",
@@ -109,6 +123,11 @@ const CREAM_LITERALS = [
  * is the warm tints only, which are what "creamy" means.
  */
 const WARM_CREAM = new Set([
+  /* The two retired ink steps, so no token may hold either value under any
+     name that does not say cream. RGB_LITERALS below is DERIVED from this set,
+     so both notations of both values are covered by these two lines. */
+  "#e4d8c5",
+  "#cbb79c",
   "#fbfaf7",
   "#f7f6f4",
   "#efeeeb",
