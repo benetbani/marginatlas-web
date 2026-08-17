@@ -25,6 +25,7 @@
  */
 import * as React from "react";
 import Link from "next/link";
+import { BeatCard } from "@/components/kit/editorial";
 
 export type DistrictSummary = {
   slug: string;
@@ -57,18 +58,37 @@ export function CityDistrictPicker({
   if (districts.length === 0) return null;
   const open = districts.find((d) => d.slug === openSlug) ?? districts[0];
 
+  /* ONE card, the site's canonical one, and the kit's own section grammar.
+     Was: a bare <h2> and lede sitting straight on the page, then a hand-rolled
+     `rounded-2xl border border-parchment bg-white` panel. Three faults in that,
+     all of them the founder's:
+       1. AtlasFrame paints a fixed photograph behind every page with no centre
+          plate, so the heading and the lede were dark text on a picture, and
+          the panel was an opaque hole punched through it. Legibility is a
+          property of the CARD ("we put everything in those cards"), which is
+          what BeatCard carries: .atlas-card, translucent at .955, and
+          position:relative so it sits above the fixed frame layers instead of
+          sinking behind them.
+       2. Every other section on the city page IS a BeatCard. This one rolled
+          its own surface, its own eyebrow-less header and its own type step
+          (text-2xl md:text-3xl), a full step LOUDER than the ten siblings it
+          sits between. Same component now, so the same card, the same eyebrow
+          and the same heading size.
+       3. The open district was a second opaque plate stacked on the first. It
+          is now a hairline division inside the one card, which is the idiom
+          this page already uses for the score band in the hero and the income
+          spread under the customer beat. */
   return (
-    <section className="mt-10">
-      <h2 className="font-display text-2xl font-medium tracking-tight text-ink-900 md:text-3xl">
-        {cityName} district by district
-      </h2>
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-700/90">
+    <BeatCard eyebrow="Districts" heading={`${cityName} district by district`}>
+      <p className="max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
         What the same trade earns in each part of the city, against the city
         baseline. Pick a district.
       </p>
 
       {/* The picker. A wrapping row of names rather than a dropdown: the whole
-          set is the interesting part, and a dropdown hides it behind a click. */}
+          set is the interesting part, and a dropdown hides it behind a click.
+          No fill on the resting chip: the card underneath is already the
+          surface, so a white pill on a white card only adds a third level. */}
       <div className="mt-5 flex flex-wrap gap-2" role="tablist" aria-label={`Districts of ${cityName}`}>
         {districts.map((d) => {
           const on = d.slug === open.slug;
@@ -81,8 +101,8 @@ export function CityDistrictPicker({
               onClick={() => setOpenSlug(d.slug)}
               className={
                 on
-                  ? "rounded-full border border-atlas-500 bg-atlas-500 px-3.5 py-1.5 text-sm font-medium text-cream-50"
-                  : "rounded-full border border-parchment bg-white px-3.5 py-1.5 text-sm text-cocoa-700 transition-colors hover:border-atlas-300 hover:text-ink-900"
+                  ? "rounded-full border border-atlas-500 bg-atlas-500 px-3.5 py-1.5 text-sm font-medium text-white"
+                  : "rounded-full border border-parchment px-3.5 py-1.5 text-sm text-cocoa-700 transition-colors hover:border-atlas-300 hover:text-ink-900"
               }
             >
               {d.name}
@@ -91,13 +111,13 @@ export function CityDistrictPicker({
         })}
       </div>
 
-      {/* The open district. */}
-      <div className="mt-5 rounded-2xl border border-parchment bg-white p-5 md:p-6">
+      {/* The open district, divided by a hairline rather than by a second plate. */}
+      <div className="mt-5 border-t border-parchment pt-5">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-          <h3 className="font-display text-xl font-medium tracking-tight text-ink-900 md:text-2xl">
+          <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900">
             {open.name}
           </h3>
-          <span className="rounded-full border border-parchment bg-cream-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-cocoa-700/60">
+          <span className="rounded-full border border-parchment px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-cocoa-700">
             {open.character.replace(/-/g, " ")}
           </span>
           {open.tagLabels.slice(0, 3).map((t) => (
@@ -151,6 +171,6 @@ export function CityDistrictPicker({
           Everything in {open.name}
         </Link>
       </div>
-    </section>
+    </BeatCard>
   );
 }
