@@ -96,10 +96,23 @@ export function DimensionSwitcher({
        fixed photograph where every card beside it is the .955 card surface.
        `.atlas-card` is the site's one card rule and carries all of it: the
        translucent surface, the hairline, the radius and the elevation. The
-       `sticky` utility still wins over the class's own `position: relative`,
-       which is what keeps this bar pinned. */
+       TWO THINGS THE 375 SHOT ADDED, both invisible at 1440.
+
+       It must be OPAQUE. `.atlas-card` is the .955 surface, which is right for
+       a card sitting still over the photograph and wrong for a bar that
+       content scrolls underneath: at 375 the masthead's own H1 and lede read
+       straight through it, "normal year" and "the dining room" legible through
+       the filter fields. 4.3% is nothing over a photograph and plenty over
+       high-contrast black type. So the class supplies the hairline, radius and
+       elevation and `bg-white` overrides the surface, which is the same call
+       the bar made before this commit and the only part of it that was right.
+
+       It must not be STICKY on a phone. The bar wraps to four rows at 375 and
+       measures 224px, so pinned it holds a quarter of an 812px viewport for the
+       whole page. It sticks from md up, where there is room for it, and simply
+       sits in the flow below that. */
   return (
-    <div className="atlas-card sticky top-[var(--atlas-header-h)] z-[5] px-4 py-3 mb-6">
+    <div className="atlas-card bg-white md:sticky md:top-[var(--atlas-header-h)] z-[5] px-4 py-3 mb-6">
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <span className="text-xs uppercase tracking-wide text-ink-700/60 font-medium">
           Showing

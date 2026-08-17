@@ -91,7 +91,18 @@ export function MakeItYoursPanel({
         format={fmtUsd}
         onYouChange={setYou}
       />
-      <div className="mt-4">
+      {/* THE STRIP NEEDED A GROUND. Photographed at 1440x900 on
+         /gb/london/restaurants at scroll 900: the eyebrow, the track, $26K /
+         $48K / $77K and the caption all painted straight onto the fixed
+         photograph, with no surface anywhere between them and it. The left of
+         the strip reads because the crop is pale sea there and the right end,
+         TOP 10% and $77K, runs onto the cliff and loses most of its contrast.
+
+         Same rule and same fix as CostDrivers in this commit's sibling: content
+         lives in cards, because the card is what sits over the picture. The
+         accordion directly above this is already carded, so the panel was half
+         on a surface and half not. */}
+      <div className="atlas-card mt-4 px-5 py-5 md:px-7 md:py-6">
         <RangeStrip
           label="Owner take-home spread"
           p10={lo10}
