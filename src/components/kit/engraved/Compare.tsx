@@ -129,7 +129,7 @@ export function Neighbours({ metrics, countries, homeKey, caveat, sample, classN
           ))}
         </tbody>
       </table>
-      {caveat ? <p className="eng-neigh__cap">{caveat}</p> : null}
+      {caveat ? <p className="eng-cap">{caveat}</p> : null}
     </div>
   );
 }
@@ -354,7 +354,7 @@ export function VsWorld({
         </span>
         <span className="eng-vs__v eng-vs__v--world">{format(world)}</span>
       </div>
-      {caveat ? <p className="eng-vs__cap">{caveat}</p> : null}
+      {caveat ? <p className="eng-cap">{caveat}</p> : null}
     </div>
   );
 }

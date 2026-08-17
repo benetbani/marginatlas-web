@@ -1364,8 +1364,20 @@
   height: 100%;
   object-fit: cover;
 }
-.eng-neigh__cap {
-  margin-top: 11px;
+/* ONE CAPTION, ONE NAME. `.eng-neigh__cap` and `.eng-vs__cap` were the same
+   rule under two names, differing only by 1px of margin-top, with exactly one
+   call site each and BOTH of those in Compare.tsx, both rendering `{caveat}` in
+   a <p>. The same line of code twice, spelled differently.
+
+   That is section 7 of the charter in its smallest form, and it has a cost
+   beyond tidiness: 11.5px and `--text-faint` are both live questions for the
+   founder (charter 13), and an answer applied to a role spelled twice gets
+   applied once and looks fixed.
+
+   12px kept over 11px: the two were a pixel apart, one had to go, and the
+   even number is the one the spacing scale actually contains. */
+.eng-cap {
+  margin-top: 12px;
   font-family: var(--font-body);
   font-size: 11.5px;
   line-height: 1.5;
@@ -1716,13 +1728,6 @@
 }
 .eng-vs__v--world {
   color: var(--text-strong);
-}
-.eng-vs__cap {
-  margin-top: 12px;
-  font-family: var(--font-body);
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: var(--text-faint);
 }
 
 /* ============================ 11 HONEST TAKE ========================== */
