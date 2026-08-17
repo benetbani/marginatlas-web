@@ -20,6 +20,7 @@ import signatureJson from "../../../data/cities/city_signature_v1.json";
 import countrySignatureJson from "../../../data/cities/country_signature_v1.json";
 import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { colors } from "@/lib/design-tokens";
+import { BeatCard } from "@/components/kit/editorial";
 
 type SignatureSector = {
   label: string;
@@ -324,153 +325,166 @@ export function CitySignaturePanel({
       ? "Demographics, the sectors that characterise the place, the cultural spectrum operators feel, and the government environment they navigate."
       : "What sets this place apart.";
 
+  /* ONE card, and the kit's own section grammar, for the same two reasons the
+     district picker was converted.
+
+     WHAT WAS WRONG. The eyebrow, the heading and the lede were bare text on the
+     page, and AtlasFrame now paints a fixed photograph behind every page with
+     no centre plate, so they were dark type sitting straight on a picture. The
+     founder's rule is that legibility belongs to the CARD.
+
+     AND THE LAYOUT WAS A CRATER, which is measured rather than felt. This is
+     the only call site of this component (the city page, showInstitutions
+     always false), and on the live page: `showStreets` is
+     `shownNeighborhoods.length === 0`, and every city that holds commercial
+     streets also holds neighbourhoods, so the streets block renders for ZERO
+     cities; `signature_sectors` is held by exactly two of the 252
+     (new-york, barcelona). So for 250 cities this section was a full-width
+     header over one md:col-span-4 card, with two thirds of the row empty. That
+     is the sparse-but-wide shape the founder rejects by name.
+
+     The blocks are regions inside one BeatCard now, divided by a hairline, so
+     the two demographic figures run the width of the card instead of huddling
+     in a third of it, and the header rides the same surface as its content.
+     Every branch still renders; none was dropped. The stat step is the one the
+     customer beat two sections above already uses, so the page reads as one
+     hand. */
+  const region = (first: boolean) =>
+    first ? "mt-5" : "mt-6 border-t border-parchment pt-5";
+  const subLabel =
+    "mb-3 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500";
+  let used = false;
+  const next = () => {
+    const cls = region(!used);
+    used = true;
+    return cls;
+  };
+
   return (
-    <section>
-      <div className="text-xs uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-1">
-        Signature
-      </div>
-      <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-balance text-ink-900">
-        {heading}
-      </h2>
-      <p className="mt-3 mb-6 text-sm md:text-base leading-relaxed text-cocoa-700 max-w-2xl">
+    <BeatCard eyebrow="Signature" heading={heading}>
+      <p className="max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
         {lead}
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6">
-        {/* Block 1: demographics. City-specific only (cityScoped); each stat shows
-            only when present, so a city without one shows neither a clone nor a blank. */}
-        {hasDemographics ? (
-          <div className="md:col-span-4 atlas-card p-5 md:p-6">
-            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-3">
-              People
+      {/* Block 1: demographics. City-specific only (cityScoped); each stat shows
+          only when present, so a city without one shows neither a clone nor a blank. */}
+      {hasDemographics ? (
+        <dl className={`${next()} grid gap-x-8 gap-y-4 sm:grid-cols-2`}>
+          {hasForeignBorn ? (
+            <div>
+              <dd className="font-display text-2xl font-semibold tabular-nums tracking-tight text-ink-900">
+                {sig.foreign_born_pct}%
+              </dd>
+              <dt className="mt-0.5 text-sm font-medium text-cocoa-700">
+                of residents were born outside the country
+              </dt>
             </div>
-            <div className="flex flex-col gap-4">
-              {hasForeignBorn ? (
-                <div>
-                  <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
-                    {sig.foreign_born_pct}%
-                  </div>
-                  <div className="text-sm text-cocoa-700 mt-1">
-                    of residents were born outside the country
-                  </div>
+          ) : null}
+          {hasForeignOwned ? (
+            <div>
+              <dd className="font-display text-2xl font-semibold tabular-nums tracking-tight text-ink-900">
+                {sig.foreign_owned_pct}%
+              </dd>
+              <dt className="mt-0.5 text-sm font-medium text-cocoa-700">
+                of local SMBs have at least one foreign owner
+              </dt>
+            </div>
+          ) : null}
+        </dl>
+      ) : null}
+
+      {/* Block 2: the city's distinctive trades. Renders only when the city has
+          its own curated sectors, never a country clone, and showSectors is
+          not explicitly set to false. */}
+      {hasSectors ? (
+        <div className={next()}>
+          <p className={subLabel}>What stands out here</p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {sig.signature_sectors.map((s) => (
+              <a
+                key={s.label}
+                href={industryHref(iso2, citySlug, s.industry_slug)}
+                className="group block"
+              >
+                <div className="font-display text-lg font-semibold leading-tight text-ink-900 transition-colors group-hover:text-atlas-700">
+                  {s.label}
                 </div>
-              ) : null}
-              {hasForeignOwned ? (
-                <div className={hasForeignBorn ? "border-t border-parchment pt-4" : undefined}>
-                  <div className="font-display text-3xl md:text-4xl font-semibold text-ink-900 tabular-nums leading-none">
-                    {sig.foreign_owned_pct}%
-                  </div>
-                  <div className="text-sm text-cocoa-700 mt-1">
-                    of local SMBs have at least one foreign owner
-                  </div>
+                <p className="mt-2 text-sm leading-relaxed text-cocoa-700">
+                  {s.blurb}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {/* Block 2.5: commercial streets and zones. Shown only when the city
+          has no neighborhood scheme (showStreets); where neighborhoods exist
+          they are the single areas model and streets fold under them. */}
+      {hasStreets && sig.commercial_streets ? (
+        <div className={next()}>
+          <p className={subLabel}>Where commerce happens</p>
+          <div className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {sig.commercial_streets.map((s) => (
+              <div key={s.name}>
+                <div className="font-display text-base font-semibold leading-tight text-ink-900">
+                  {s.name}
                 </div>
-              ) : null}
+                <div className="mt-0.5 text-[11px] uppercase tracking-wide text-cocoa-500">
+                  {s.area}
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-cocoa-700">
+                  {s.sells}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {/* Blocks 3 + 4: institution reads (culture spectrum + government
+          scores). Country-altitude per founder direction: gated behind
+          showInstitutions, which the one live call site passes as false. The
+          two columns share an identical row rhythm (text-[11px] label line +
+          h-3 bar + gap-5) and identical label size/weight/margin, so row N of
+          culture aligns with row N of government. */}
+      {showInstitutions && sig.culture && sig.government ? (
+        <div className={`${next()} grid grid-cols-1 gap-6 md:grid-cols-12`}>
+          {/* Block 3: culture spectrums.
+              Founder direction 2026-05-26: single column.
+              Left = loose / traditional / brand brick-red tint.
+              Right = strict / modern / warm dark tint.
+              The vertical handle marks where the place sits.
+              corruption_rejection reads left = tolerated, right = rejected. */}
+          <div className="md:col-span-7">
+            <p className={subLabel}>Culture, as locals feel it</p>
+            <div className="flex flex-col gap-5">
+              <SpectrumBar value={sig.culture.punctuality} leftLabel="Loose on time" rightLabel="Strict on time" />
+              <SpectrumBar value={sig.culture.openness_to_foreigners} leftLabel="Insular" rightLabel="Welcoming" />
+              <SpectrumBar value={sig.culture.innovation} leftLabel="Tradition-bound" rightLabel="Embraces new ideas" />
+              <SpectrumBar value={sig.culture.communication_directness} leftLabel="Indirect" rightLabel="Direct" />
+              <SpectrumBar value={sig.culture.corruption_rejection} leftLabel="Corruption tolerated" rightLabel="Rejects corruption" />
+              <SpectrumBar value={sig.culture.ambition_chest_beating} leftLabel="Humble" rightLabel="Self-promoting" />
             </div>
           </div>
-        ) : null}
 
-        {/* Block 2: the city's distinctive trades. Renders only when the city has
-            its own curated sectors, never a country clone, and showSectors is
-            not explicitly set to false (country page passes false to suppress). */}
-        {hasSectors ? (
-          <div className="md:col-span-8 atlas-card p-5 md:p-6">
-            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-3">
-              What stands out here
+          {/* Block 4: government */}
+          <div className="md:col-span-5">
+            <p className={subLabel}>Government, from a business desk</p>
+            <div className="flex flex-col gap-5">
+              <ScoreBar value={sig.government.tax_predictability} label="Tax predictability" />
+              <ScoreBar value={sig.government.low_bribery} label="Low bribery" />
+              <ScoreBar value={sig.government.task_efficiency} label="Task efficiency" />
+              <ScoreBar value={sig.government.time_efficiency} label="Time efficiency" />
+              <ScoreBar value={sig.government.judicial_impartiality} label="Judicial impartiality" />
+              <ScoreBar value={sig.government.innovation_capacity} label="Innovation and R&D capacity" />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {sig.signature_sectors.map((s) => (
-                <a
-                  key={s.label}
-                  href={industryHref(iso2, citySlug, s.industry_slug)}
-                  className="block group"
-                >
-                  <div className="font-display text-lg font-semibold text-ink-900 leading-tight group-hover:text-atlas-700 transition-colors">
-                    {s.label}
-                  </div>
-                  <p className="mt-2 text-sm text-cocoa-700 leading-relaxed">
-                    {s.blurb}
-                  </p>
-                </a>
-              ))}
-            </div>
+            <p className="mt-4 text-[11px] leading-relaxed text-cocoa-500">
+              Higher is better in all six. Modeled from business-environment indices, operator surveys, judicial-independence rankings, and the research and innovation-output record.
+            </p>
           </div>
-        ) : null}
-
-        {/* Block 2.5: commercial streets and zones. Shown only when the city
-            has no neighborhood scheme (showStreets); where neighborhoods exist
-            they are the single areas model and streets fold under them. */}
-        {hasStreets && sig.commercial_streets ? (
-          <div className="md:col-span-12 atlas-card p-5 md:p-6">
-            <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-4">
-              Where commerce happens
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-5 gap-y-5">
-              {sig.commercial_streets.map((s) => (
-                <div key={s.name}>
-                  <div className="font-display text-base font-semibold text-ink-900 leading-tight">
-                    {s.name}
-                  </div>
-                  <div className="text-[11px] text-cocoa-500 uppercase tracking-wide mt-0.5">
-                    {s.area}
-                  </div>
-                  <p className="mt-2 text-sm text-cocoa-700 leading-relaxed">
-                    {s.sells}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : null}
-
-        {/* Blocks 3 + 4: institution reads (culture spectrum + government
-            scores). Country-altitude per founder direction: gated behind
-            showInstitutions so the city page suppresses them and only the
-            country page shows them. The two columns share an identical row
-            rhythm (text-[11px] label line + h-3 bar + gap-5) and identical
-            eyebrow size/weight/margin, so row N of culture aligns with row N
-            of government. */}
-        {showInstitutions && sig.culture && sig.government ? (
-          <>
-            {/* Block 3: culture spectrums.
-                Founder direction 2026-05-26: single column.
-                Left = loose / traditional / brand brick-red tint.
-                Right = strict / modern / warm dark tint.
-                The vertical handle marks where the place sits.
-                corruption_rejection reads left = tolerated, right = rejected. */}
-            <div className="md:col-span-7 atlas-card p-5 md:p-7">
-              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-4">
-                Culture, as locals feel it
-              </div>
-              <div className="flex flex-col gap-5">
-                <SpectrumBar value={sig.culture.punctuality} leftLabel="Loose on time" rightLabel="Strict on time" />
-                <SpectrumBar value={sig.culture.openness_to_foreigners} leftLabel="Insular" rightLabel="Welcoming" />
-                <SpectrumBar value={sig.culture.innovation} leftLabel="Tradition-bound" rightLabel="Embraces new ideas" />
-                <SpectrumBar value={sig.culture.communication_directness} leftLabel="Indirect" rightLabel="Direct" />
-                <SpectrumBar value={sig.culture.corruption_rejection} leftLabel="Corruption tolerated" rightLabel="Rejects corruption" />
-                <SpectrumBar value={sig.culture.ambition_chest_beating} leftLabel="Humble" rightLabel="Self-promoting" />
-              </div>
-            </div>
-
-            {/* Block 4: government */}
-            <div className="md:col-span-5 atlas-card p-5 md:p-7">
-              <div className="text-[10px] uppercase tracking-[0.16em] font-semibold text-cocoa-700 mb-4">
-                Government, from a business desk
-              </div>
-              <div className="flex flex-col gap-5">
-                <ScoreBar value={sig.government.tax_predictability} label="Tax predictability" />
-                <ScoreBar value={sig.government.low_bribery} label="Low bribery" />
-                <ScoreBar value={sig.government.task_efficiency} label="Task efficiency" />
-                <ScoreBar value={sig.government.time_efficiency} label="Time efficiency" />
-                <ScoreBar value={sig.government.judicial_impartiality} label="Judicial impartiality" />
-                <ScoreBar value={sig.government.innovation_capacity} label="Innovation and R&D capacity" />
-              </div>
-              <p className="mt-4 text-[11px] text-cocoa-500 leading-relaxed">
-                Higher is better in all six. Modeled from business-environment indices, operator surveys, judicial-independence rankings, and the research and innovation-output record.
-              </p>
-            </div>
-          </>
-        ) : null}
-      </div>
-    </section>
+        </div>
+      ) : null}
+    </BeatCard>
   );
 }
