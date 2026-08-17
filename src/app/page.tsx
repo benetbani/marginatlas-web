@@ -97,8 +97,33 @@ function ToneBand({
   flush?: boolean;
   children: React.ReactNode;
 }) {
+  /* THE FULL-BLEED TRICK IS GONE, and it was costing 8px of horizontal scroll
+     on every viewport for no remaining benefit.
+
+     `left-1/2 right-1/2 -mx-[50vw] w-screen` exists for exactly one purpose: to
+     let a band's BACKGROUND span the whole viewport while its content stays in
+     the column. Measured on the rendered page: **all eleven bands compute to
+     `rgba(0, 0, 0, 0)` with no background image and no tone class.** There is
+     no background left to span. The founder's B5/B6 ruling took every band
+     ground away so the photograph reads through between the cards, and section
+     1 of the charter states it outright: "Any band or section that still paints
+     a full-width opaque ground is a bug, not a style choice."
+
+     What it still did was overflow. `w-screen` is `100vw`, which INCLUDES the
+     scrollbar, so at a 1280 window the bands measured 1280 against a 1265
+     content box. Measured: documentElement scrollWidth 1273 against clientWidth
+     1265, **8px of sideways scroll at every width**, mobile included.
+
+     Someone had already met this and fixed it on the wrong element: globals.css
+     sets `overflow-x: hidden` on BODY, while `html` stays `visible`, so the
+     overflow simply escapes to the document element. That comment is still
+     there and still describes a real symptom; this removes its cause.
+
+     `relative` STAYS and is load-bearing. Charter 9.2: AtlasFrame paints fixed
+     layers at z-index 0, so a `position: static` element is not drawn at all.
+     ToneBand being positioned is the only reason the homepage ever rendered. */
   return (
-    <div className={`relative left-1/2 right-1/2 -mx-[50vw] w-screen ${getToneClass(tone)}`}>
+    <div className={`relative ${getToneClass(tone)}`}>
       <div className={`max-w-content mx-auto px-6 ${flush ? "" : "py-8 md:py-10"}`}>{children}</div>
     </div>
   );
