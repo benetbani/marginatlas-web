@@ -179,8 +179,15 @@ export function HowFarYouReach({ population, reach, caveat, sample, className }:
   // Keep the strip to the asset's canonical two-or-three gauges.
   const indicators = hasReach ? reach!.slice(0, 3) : [];
 
+  /* NO FILL ON THE ROOT. It carried the cream-50 step, which is #ffffff, so the
+     name was the only thing wrong with the colour. The fill itself is now wrong
+     too: since 2026-08-17 this block renders inside .atlas-card, which is
+     translucent at .955 so the site photograph reads faintly through it, and an
+     opaque white child would punch a hole in exactly that. The block keeps its
+     own engraved hairline, which is the structure it was actually drawing with;
+     the surface belongs to the card. */
   return (
-    <div className={["bg-cream-50", className].filter(Boolean).join(" ")}>
+    <div className={className || undefined}>
       {/* ---- The population spine: the one real figure, set large ---- */}
       {/* The bottom rule is dropped only when a gauge strip follows and supplies
           its own top border; with no strip the block closes itself. */}

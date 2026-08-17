@@ -439,7 +439,10 @@ async function NeighborhoodCellPageBody({
 
   return (
     <div className="xl:flex xl:gap-16">
-      <div className="xl:flex-1 xl:min-w-0">
+      {/* `relative` lifts the furniture in this column that is not a card:
+          the breadcrumb, the zoom row and the closing stamp. AtlasFrame's fixed
+          layers sit at z-index 0 and paint above any static sibling. */}
+      <div className="relative xl:flex-1 xl:min-w-0">
         <Breadcrumb items={breadcrumbs} />
 
         {/* Neighborhood adjustment band: the one thing this page has that the
@@ -447,7 +450,7 @@ async function NeighborhoodCellPageBody({
             local lift first, then the absolute numbers it produced below. The
             three components (commuter / tourism / tags) show what moved it. */}
         {fwMult && fwPct !== 0 ? (
-          <section className="mb-6 rounded-lg border border-parchment bg-cream-100 px-5 py-5 md:px-7 md:py-6">
+          <section className="atlas-card mb-6 px-5 py-5 md:px-7 md:py-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="min-w-0 flex-1">
                 <SectionEyebrow className="mb-1.5">
@@ -479,7 +482,7 @@ async function NeighborhoodCellPageBody({
                     .map((t) => (
                       <span
                         key={t}
-                        className="rounded-full border border-parchment bg-cream-50 px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700"
+                        className="rounded-full border border-parchment bg-white px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700"
                       >
                         {tagLabel(t)}
                       </span>

@@ -902,7 +902,12 @@ async function CellPageBody({
     // Wider gap between content and right TOC.
     // Was xl:gap-6 (24px). Founder: "shift more to the right".
     <div className="xl:flex xl:gap-16">
-      <div className="xl:flex-1 xl:min-w-0">
+      {/* `relative` is the stacking lift for the furniture in this column that is
+          NOT a card: the breadcrumb, the zoom row, the closing freshness stamp
+          and the correction form. AtlasFrame's fixed layers sit at z-index 0
+          and paint above any static sibling. The decision stack's own sections
+          already carry .atlas-card and were never at risk. */}
+      <div className="relative xl:flex-1 xl:min-w-0">
       <CellDataset
         url={url}
         industryName={cell.industry_name || industry}
@@ -1346,7 +1351,7 @@ async function CellPageBody({
           industry to a relevant /learn/ article so visitors can dive
           deeper into the category context. */}
       {cell.industry_id ? (
-        <section className="mt-5 mb-8 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
+        <section className="atlas-card mt-5 mb-8 px-5 py-5 md:px-7 md:py-6">
           <SectionEyebrow size="md" className="mb-2">Read more</SectionEyebrow>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {learnHrefForTrade(cell.industry_name || cell.industry_id) ? (
