@@ -17,7 +17,7 @@
  * stated gap, and that decision belongs to the page, not to this file.
  *
  * TITLES CARRY THE COUNTRY'S NAME, AND THAT IS NOT A VARIATION IN SHAPE. Two of
- * the twenty-one titles name the place: "The UK versus its neighbours" and "The
+ * the twenty-one titles name the place: "The UK versus its peers" and "The
  * biggest myth about Britain". A generic rewrite would lose the mockup's voice,
  * and hard-coding the British ones would be worse. So the spine holds a template
  * and the file supplies the names. Twenty-one chapters, same order, same
@@ -94,7 +94,10 @@ export const COUNTRY_SPINE: Array<{ id: CountryChapterId; title: string; icon: s
   { id: "households", title: "Who has money to spend", icon: "wealth-household" },
   { id: "reach", title: "How many people you can reach", icon: "catchment" },
   { id: "tradeTakeHome", title: "Owner take-home, by trade", icon: "owner-keeps" },
-  { id: "neighbours", title: "{country} versus its neighbours", icon: "compare" },
+  // The id is the chapter key and stays; the TITLE says what the comparison
+  // actually is. Same correction as the live route took 2026-08-18: this set is
+  // chosen for comparable size and market, never for sharing a border.
+  { id: "neighbours", title: "{country} versus its peers", icon: "compare" },
   { id: "underServed", title: "Which trades are under-served", icon: "where-it-pays" },
   { id: "abroad", title: "The same business abroad", icon: "benchmark" },
   { id: "zones", title: "Zones and special structures", icon: "free-zone" },
@@ -130,7 +133,7 @@ export function numberCountryChapters(names: {
     /* SENTENCE-CASED AFTER SUBSTITUTION, not before. A short name is a name in
        a sentence, so it carries its own article: "the UK". Dropped straight
        into a title template that starts with it, that gives a chapter head
-       reading "the UK versus its neighbours", which the prose read caught on
+       reading "the UK versus its peers", which the prose read caught on
        the first pass. Capitalising the first letter afterwards is the only
        correct place to do it, because whether the title starts with the name at
        all depends on the template. */
@@ -985,7 +988,7 @@ function buildTradeTakeHome(file: CountryFile): CountryTradeTakeHomeModel | null
   };
 }
 
-/* ---------------------- 13 against neighbouring countries ---------------- */
+/* ------------------------ 13 against peer countries ---------------------- */
 
 export type CountryNeighboursModel = {
   axes: string[];

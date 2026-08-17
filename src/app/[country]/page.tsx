@@ -16,7 +16,7 @@
  * EngravedSection for the measurement.
  *
  * Data-first, opinion-low: the scorecard, the country shape, the setup read, the
- * hire read, who-has-money, how-far-you-reach, the neighbours, the ground under
+ * hire read, who-has-money, how-far-you-reach, the peers, the ground under
  * you, the cities, and the character all lead; the honest take and the gut check
  * sit low. Real data feeds every section an accessor holds; everywhere else the
  * engraved component shows its own honest SampleState (clearly tagged), never a
@@ -101,8 +101,8 @@ import { getCountrySignature } from "@/lib/countries/country_signature";
 import {
   buildCountryView,
   countryViewNav,
-  NEIGHBOUR_GROUPS,
-  type NeighbourFacts,
+  PEER_GROUPS,
+  type PeerFacts,
 } from "@/lib/countries/country_view";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
@@ -168,7 +168,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
 }
 
 /** A country's set-up facts, gathered from the accessors the page already uses. */
-function gatherFacts(iso2: string, name: string): NeighbourFacts {
+function gatherFacts(iso2: string, name: string): PeerFacts {
   const snap = getCountryEconomicsSnapshot(iso2);
   const regime = getSmbRegime(iso2);
   const rates = getCountryRates(iso2);
@@ -472,13 +472,13 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
       }
     : null;
 
-  // Neighbour facts (the page's biggest gap): resolve a few comparable
-  // neighbours' real set-up facts. Pure local-table reads, no Supabase.
-  const neighbourCodes = (NEIGHBOUR_GROUPS[iso2] ?? [])
+  // Peer facts (the page's biggest gap): resolve a few comparable
+  // economies' real set-up facts. Pure local-table reads, no Supabase.
+  const peerCodes = (PEER_GROUPS[iso2] ?? [])
     .map((code) => COUNTRIES.find((c) => c.code === code))
     .filter((c): c is (typeof COUNTRIES)[number] => c != null)
     .slice(0, 4);
-  const neighbourFacts: NeighbourFacts[] = neighbourCodes.map((c) =>
+  const peerFacts: PeerFacts[] = peerCodes.map((c) =>
     gatherFacts(c.code, c.name),
   );
   const selfFacts = gatherFacts(iso2, countryName);
@@ -499,7 +499,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
       typicalPayAnnualUsd,
       topActivity: taxTopActivity,
       selfFacts,
-      neighbours: neighbourFacts,
+      peers: peerFacts,
     },
     meta.quality ?? null,
   );
@@ -814,11 +814,11 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
   groundFactors.push({ label: "Currency", score: 0.5, note: null, sample: true });
   const hasGround = groundFactors.some((f) => f.sample !== true);
 
-  /* --------------------------- the neighbours ------------------------- */
-  // The like-for-like FACTS strip from the resolved neighbour facts. Home
+  /* ----------------------------- the peers ---------------------------- */
+  // The like-for-like FACTS strip from the resolved peer facts. Home
   // country tinted for orientation, never crowned. Pre-format every cell.
-  const allFacts = [selfFacts, ...neighbourFacts.filter((n) => n && n.iso2 && n.name)];
-  const neighbourColumns: NeighbourCountry[] = allFacts.map((f) => ({
+  const allFacts = [selfFacts, ...peerFacts.filter((n) => n && n.iso2 && n.name)];
+  const peerColumns: NeighbourCountry[] = allFacts.map((f) => ({
     key: f.iso2.toLowerCase(),
     label: f.iso2 === iso2 ? countryName : f.name,
     iso2: f.iso2,
@@ -832,13 +832,13 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
     return `${Math.round(n / 30)} mo`;
   };
   const factCell = (
-    pick: (f: NeighbourFacts) => string | null,
+    pick: (f: PeerFacts) => string | null,
   ): Record<string, string | null> => {
     const out: Record<string, string | null> = {};
     for (const f of allFacts) out[f.iso2.toLowerCase()] = pick(f);
     return out;
   };
-  const neighbourMetricsAll: NeighbourMetric[] = [
+  const peerMetricsAll: NeighbourMetric[] = [
     {
       label: "Business tax", glyph: "coin",
       values: factCell((f) => (isNum(f.smbRate) ? pctWord(f.smbRate) : null)),
@@ -862,11 +862,11 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
       values: factCell((f) => (isNum(f.daysToStart) ? daysWord(f.daysToStart) : null)),
     },
   ];
-  const neighbourMetrics: NeighbourMetric[] = neighbourMetricsAll.filter((m) =>
+  const peerMetrics: NeighbourMetric[] = peerMetricsAll.filter((m) =>
     Object.values(m.values).some((v) => v != null),
   );
-  const hasNeighbours =
-    neighbourColumns.length >= 2 && neighbourMetrics.length >= 2;
+  const hasPeers =
+    peerColumns.length >= 2 && peerMetrics.length >= 2;
 
   /* --------------------------- the character -------------------------- */
   // From country_signature: culture + government spectrums + the people stats.
@@ -1189,22 +1189,40 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
 
           {/* ================ COMPARISON + EDGE ================ */}
 
-          {/* 9. Versus the neighbours. Carries the required "neighbours" id. */}
+          {/* 9. Versus the peers. Carries the required "neighbours" id.
+
+             THE WORD WAS THE BUG, NOT THE LIST. Fixed 2026-08-18. This table
+             said "neighbours" over a set that PEER_GROUPS has always chosen for
+             comparable size and market, and its own comment said so: New
+             Zealand's columns are Australia, the United Kingdom, Canada and
+             Singapore, which any reader can see are not New Zealand's
+             neighbours. Measured before it was called wrong: land adjacency
+             computed from the shared arcs of the site's own world topology says
+             only 7 of the 51 groups are made entirely of bordering countries,
+             so this was systematic, not a New Zealand data error. The list is
+             right and the label is now what the list is.
+
+             The id stays "neighbours": verify_page_sections requires it
+             literally and it is a live URL fragment. An anchor is a slug. */}
           <EngravedSection
             id="neighbours"
-            eyebrow="Vs neighbours"
-            heading={view.neighbours ? view.neighbours.heading : `How ${countryName} compares to its neighbours`}
+            eyebrow="Vs peers"
+            heading={view.peers ? view.peers.heading : `How ${countryName} compares to its peers`}
             /* No lede. It said "the same set-up facts, side by side", which is
                what the table visibly is, and then made the not-a-ranking point
                that the caveat below makes again eight lines later, next to the
                figures it actually guards. One of the two had to go. */
           >
             <Neighbours
-              metrics={hasNeighbours ? neighbourMetrics : null}
-              countries={hasNeighbours ? neighbourColumns : null}
+              metrics={hasPeers ? peerMetrics : null}
+              countries={hasPeers ? peerColumns : null}
               homeKey={iso2.toLowerCase()}
-              caveat="Tax and pay figures are not adjusted for local prices. Read each column on its own terms, not as a league table."
-              sample={!hasNeighbours}
+              /* The first clause is load-bearing, not padding: it is the only
+                 thing on the page that explains why Canada sits beside New
+                 Zealand. Without it the table looks wrong at a glance and the
+                 reader has no way to find out it is not. */
+              caveat="Peers are picked for comparable size and market, not for sharing a border. Tax and pay figures are not adjusted for local prices, so read each column on its own terms."
+              sample={!hasPeers}
             />
           </EngravedSection>
 

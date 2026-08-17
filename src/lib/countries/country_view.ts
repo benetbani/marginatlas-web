@@ -3,7 +3,7 @@
  *
  * Maps a resolved country (its economics snapshot, small-business tax regime,
  * sales tax, employer payroll rate, registration cost, plus a small set of
- * already-resolved neighbour facts) into the Atlas Page Kit's section props, in
+ * already-resolved PEER facts) into the Atlas Page Kit's section props, in
  * the content-map reading order (page-content-map COUNTRY PAGE). Pure data, no
  * React, so the page stays a thin renderer.
  *
@@ -13,15 +13,15 @@
  *     carry (a wage floor, a typical payroll line, the hiring read, the
  *     character beats). This is explicitly sanctioned for the UK only.
  *   - Everywhere else: real data where it exists, honest self-omit otherwise.
- *     The masthead, the decisive read, the hire read, and the neighbour table
+ *     The masthead, the decisive read, the hire read, and the peer table
  *     fill from real figures; the invented beats stay off. Never a fake number,
  *     never a wall of dashes.
  *
- * The neighbour comparison is the page's biggest gap and reason to exist. It is
+ * The peer comparison is the page's biggest gap and reason to exist. It is
  * always like-for-like FACTS only (tax / pay / setup), never a money rank across
  * borders, so the kit table is handed noLeaderMark. The lib carries only a
- * curated neighbour-grouping (country codes), never neighbour data: the page
- * resolves each neighbour's real facts and hands them in.
+ * curated peer-grouping (country codes), never peer data: the page
+ * resolves each peer's real facts and hands them in.
  *
  * Every field is nullable and self-omitting; the kit renders nothing for a null.
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
@@ -78,7 +78,7 @@ export type CountryView = {
     payNote: string | null;
     /**
      * Like-for-like employer payroll on-cost across the home country and its
-     * neighbours, as percent values, for the kit ComparisonBars. The home
+     * peers, as percent values, for the kit ComparisonBars. The home
      * country is flagged `home`. Null when fewer than two real rates are held,
      * so the chart self-omits and the bullet read stands alone. These are the
      * same rates the table and the bullets already carry, never new numbers.
@@ -88,8 +88,8 @@ export type CountryView = {
       caveat: string;
     } | null;
   } | null;
-  /** The like-for-like neighbour FACTS table (kit ComparisonTable rows). */
-  neighbours: {
+  /** The like-for-like peer FACTS table (kit ComparisonTable rows). */
+  peers: {
     heading: string;
     lede: string;
     /** The home-country column key, so the page marks it as the subject. */
@@ -122,8 +122,8 @@ export type CountryView = {
 
 /* ------------------------------- inputs --------------------------------- */
 
-/** A neighbour country with its already-resolved, page-loaded facts. */
-export type NeighbourFacts = {
+/** A peer country with its already-resolved, page-loaded facts. */
+export type PeerFacts = {
   iso2: string;
   name: string;
   /** Effective small-business tax burden, decimal (0.2 = 20%), or null. */
@@ -160,19 +160,30 @@ export type CountryViewInput = {
   typicalPayAnnualUsd: number | null;
   /** The densest local activity + its cell-page href, for the down-link. */
   topActivity: { name: string; href: string } | null;
-  /** This country's own facts, packaged for the neighbour table's lead column. */
-  selfFacts: NeighbourFacts;
-  /** Neighbour countries with their resolved facts (the page resolves these). */
-  neighbours: NeighbourFacts[];
+  /** This country's own facts, packaged for the peer table's lead column. */
+  selfFacts: PeerFacts;
+  /** Peer countries with their resolved facts (the page resolves these). */
+  peers: PeerFacts[];
 };
 
-/* ----------------------- curated neighbour groups ----------------------- */
-// Country codes only (never data): a few genuinely comparable neighbours per
+/* -------------------------- curated peer groups -------------------------- */
+// Country codes only (never data): a few genuinely COMPARABLE economies per
 // country, so a side-by-side FACTS read is honest and like-for-like. Comparable
-// means same broad region and economic weight, not merely bordering. The page
-// resolves each neighbour's real figures; codes absent here get no table.
-
-export const NEIGHBOUR_GROUPS: Record<string, string[]> = {
+// means similar market size and business conditions, NOT bordering. The page
+// resolves each peer's real figures; codes absent here get no table.
+//
+// THIS TABLE IS NOT GEOGRAPHIC AND MUST NOT BE "CORRECTED" TOWARDS GEOGRAPHY.
+// Renamed from NEIGHBOUR_GROUPS 2026-08-18, because the old name and the old
+// user-facing word were the only reasons this read as broken. Measured, not
+// assumed: land adjacency was computed from the shared arcs in
+// public/geo/countries-110m.json (TopoJSON stores a shared boundary once, so
+// two countries touch iff one references arc i and the other ~i), and only
+// 7 of the 51 groups (FR, DE, BE, AT, CH, CZ, SK) are made entirely of
+// countries that share a land border. The other 44 always contained a
+// deliberate non-neighbour: New Zealand's set is Australia, the United
+// Kingdom, Canada and Singapore, which is right as a peer set and absurd as a
+// neighbour list. The data was never the bug; the word over it was.
+export const PEER_GROUPS: Record<string, string[]> = {
   GB: ["IE", "FR", "DE", "NL"],
   IE: ["GB", "FR", "NL", "DE"],
   FR: ["DE", "ES", "IT", "BE"],
@@ -280,7 +291,7 @@ export function buildCountryView(
     minWageAnnualUsd,
     typicalPayAnnualUsd,
     selfFacts,
-    neighbours,
+    peers,
   } = input;
 
   const isExemplar = iso2 === "GB";
@@ -383,8 +394,8 @@ export function buildCountryView(
   /* -- the wage floor beside typical pay ------------------------------ */
   const minWage = buildMinWage(minWageAnnualUsd, typicalPayAnnualUsd);
 
-  /* -- compare to neighbours (like-for-like facts) -------------------- */
-  const neighboursView = buildNeighbours(selfFacts, neighbours, countryName);
+  /* -- compare to peers (like-for-like facts) -------------------- */
+  const peersView = buildPeers(selfFacts, peers, countryName);
 
   /* -- character beats (exemplar-only invented detail) ---------------- */
   const whatLocals = isExemplar ? exemplarLocals() : null;
@@ -395,7 +406,7 @@ export function buildCountryView(
     decisive,
     honestTake,
     hire,
-    neighbours: neighboursView,
+    peers: peersView,
     minWage,
     whatLocals,
     contrarian,
@@ -428,7 +439,7 @@ export function countryViewNav(
   void hasFormation; // formation is folded into the decisive read, no own anchor
   // Country-page engraved rewire (2026-06-15): the nav follows the engraved
   // lens-grouped body order, data first and opinion lower. The hero leads into
-  // the scorecard, then the decisive setup read, hiring, the neighbour facts and
+  // the scorecard, then the decisive setup read, hiring, the peer facts and
   // licences, the uniform city cards, the break-in panel (when held), the
   // character panel, and the lower editorial beats (what-locals, vs-world, the
   // small low honest take, the gut check) closing on the compare CTA. Anchors
@@ -440,7 +451,10 @@ export function countryViewNav(
   nav.push({ id: "scorecard", label: "At a glance" });
   nav.push({ id: "decisive", label: "The decisive read" });
   nav.push({ id: "hire", label: "Hiring here" });
-  nav.push({ id: "neighbours", label: "Vs neighbours" });
+  // The anchor stays "neighbours" (the section-gate contract and the URL
+  // fragment both pin it); the LABEL says what the set actually is. See the
+  // note over PEER_GROUPS.
+  nav.push({ id: "neighbours", label: "Vs peers" });
   if (hasLicences) nav.push({ id: "licences", label: "Licences" });
   nav.push({ id: "cities", label: "Cities" });
   if (hasBreakIn) nav.push({ id: "break-in", label: "Easiest to start" });
@@ -598,14 +612,14 @@ function buildHire(
   input: CountryViewInput,
   isExemplar: boolean,
 ): CountryView["hire"] {
-  const { countryName, snapshot, payrollRate, selfFacts, neighbours } = input;
+  const { countryName, snapshot, payrollRate, selfFacts, peers } = input;
 
   // The like-for-like payroll on-cost chart: the home country beside its
-  // neighbours, on the SAME employer-social-rate axis already shown in the
-  // bullets and the neighbour table. A single held rate is not a comparison, so
+  // peers, on the SAME employer-social-rate axis already shown in the
+  // bullets and the peer table. A single held rate is not a comparison, so
   // it needs two or more. noLeaderMark territory: these are different regimes,
   // so the chart never crowns one, it just shows the shape side by side.
-  const payrollCompare = buildPayrollCompare(selfFacts, neighbours, countryName);
+  const payrollCompare = buildPayrollCompare(selfFacts, peers, countryName);
 
   if (isExemplar) {
     return {
@@ -662,20 +676,20 @@ function buildHire(
 }
 
 /**
- * The employer payroll on-cost across the home country and its neighbours, as a
+ * The employer payroll on-cost across the home country and its peers, as a
  * like-for-like ComparisonBars dataset. Reuses the same rates the page already
  * holds (no new figures). Returns null below two held rates, so a lone rate
  * stays in the bullet read rather than drawing a one-bar "comparison".
  */
 function buildPayrollCompare(
-  self: NeighbourFacts,
-  neighbours: NeighbourFacts[],
+  self: PeerFacts,
+  peers: PeerFacts[],
   countryName: string,
 ): NonNullable<CountryView["hire"]>["payrollCompare"] {
-  const rows = [self, ...neighbours.filter((n) => n && n.iso2 && n.name)];
+  const rows = [self, ...peers.filter((n) => n && n.iso2 && n.name)];
   const items = rows
     .filter((n) => isNum(n.payrollRate) && n.payrollRate! > 0)
-    // De-dup by country code: the neighbour group is curated, but guard anyway.
+    // De-dup by country code: the peer group is curated, but guard anyway.
     .filter((n, i, arr) => arr.findIndex((m) => m.iso2 === n.iso2) === i)
     .map((n) => ({
       label: n.iso2 === self.iso2 ? countryName : n.name,
@@ -715,12 +729,12 @@ function buildMinWage(
   };
 }
 
-function buildNeighbours(
-  self: NeighbourFacts,
-  neighbours: NeighbourFacts[],
+function buildPeers(
+  self: PeerFacts,
+  peers: PeerFacts[],
   countryName: string,
-): CountryView["neighbours"] {
-  const valid = neighbours.filter((n) => n && n.iso2 && n.name);
+): CountryView["peers"] {
+  const valid = peers.filter((n) => n && n.iso2 && n.name);
   if (valid.length < 1) return null;
 
   const all = [self, ...valid];
@@ -759,10 +773,10 @@ function buildNeighbours(
       isNum(n.daysToStart) ? daysWord(n.daysToStart) : null,
     ),
   };
-  // The "typical monthly pay" row was dropped from the neighbour FACTS table:
+  // The "typical monthly pay" row was dropped from the peer FACTS table:
   // it is the only money row here, it rests on a GDP-share salary heuristic that
   // mis-reads on some peer economies (it printed a 2.5x gap between high-wage
-  // neighbours that are in truth close), and unlike tax / payroll / setup it is
+  // peers that are in truth close), and unlike tax / payroll / setup it is
   // not a clean like-for-like fact. The genuinely comparable set-up facts stay.
   const rows = [taxRow, payrollRow, registerRow, daysRow].filter((row) =>
     Object.values(row.cells).some((v) => v != null),
@@ -770,19 +784,19 @@ function buildNeighbours(
   if (rows.length < 2) return null;
 
   return {
-    heading: `How ${countryName} compares to its neighbours`,
+    heading: `How ${countryName} compares to its peers`,
     lede: "The same set-up facts, side by side. These are different price regimes, so a money figure here is a fact about each country, never a ranking across them.",
     subjectKey: self.iso2.toLowerCase(),
     columns,
     rows,
     footnote:
-      "Tax and pay figures are not adjusted for local prices. Read each column on its own terms, not as a league table.",
+      "Peers are picked for comparable size and market, not for sharing a border. Tax and pay figures are not adjusted for local prices, so read each column on its own terms.",
   };
 }
 
 function cellMap(
-  rows: NeighbourFacts[],
-  pick: (n: NeighbourFacts) => string | null,
+  rows: PeerFacts[],
+  pick: (n: PeerFacts) => string | null,
 ): Record<string, string | null> {
   const out: Record<string, string | null> = {};
   for (const n of rows) out[n.iso2.toLowerCase()] = pick(n);
