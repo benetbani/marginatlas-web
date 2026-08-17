@@ -9,6 +9,14 @@
  * State persistence is owned by the caller — pass `initialDone` and
  * `onChange` from the auth layer if you want completions to survive
  * reload.
+ *
+ * PALETTE, 2026-08-17: six `emerald` classes, a STOCK Tailwind ramp no token
+ * file on this site defines, which is why verify_palette_membership had no
+ * word for it until 443a938e taught the gate the stock names. Terracotta now,
+ * the same favourable step the four success panels and the primary-data badge
+ * carry. Nothing is lost: a done step is a FILLED CheckCircle against an empty
+ * Circle for an undone one, so the shape already said it and the colour was
+ * repeating the icon.
  */
 
 "use client";
@@ -51,14 +59,14 @@ export default function OnboardingChecklist({
 
   if (allDone && collapsed) {
     return (
-      <div className="mb-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
-        <CheckCircle size={14} weight="fill" aria-hidden="true" className="text-emerald-500" />
+      <div className="mb-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold bg-atlas-50 text-atlas-700 border border-atlas-200">
+        <CheckCircle size={14} weight="fill" aria-hidden="true" className="text-atlas-500" />
         Setup complete · all {STEPS.length} steps done
         <button
           type="button"
           onClick={() => { setDismissed(true); onDismiss?.(); }}
           aria-label="Dismiss"
-          className="ml-1 text-emerald-700/70"
+          className="ml-1 text-atlas-700/70"
         >
           <X size={12} aria-hidden="true" />
         </button>
@@ -120,7 +128,7 @@ export default function OnboardingChecklist({
                 className="flex-shrink-0"
               >
                 {isDone ? (
-                  <CheckCircle size={22} weight="fill" aria-hidden="true" className="text-emerald-500" />
+                  <CheckCircle size={22} weight="fill" aria-hidden="true" className="text-atlas-500" />
                 ) : (
                   <Circle size={22} weight="regular" aria-hidden="true" className="text-cocoa-700/35" />
                 )}

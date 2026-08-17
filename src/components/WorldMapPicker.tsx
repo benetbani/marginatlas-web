@@ -64,8 +64,13 @@ const COLORS = {
   // Continents stay very light per founder 2026-05-26, now the warm
   // cream-200 step instead of the cool #ECECEC.
   parchment: tokenColors.cream[200],
-  amber: tokenColors.atlas[500], // vermillion on hover
-  amberActive: tokenColors.atlas[600], // pressed state
+  /* These two were called `amber` and `amberActive` and had held VERMILLION
+     for as long as the comment beside them said so. A key named after a banned
+     colour is how the word survives a purge and how the colour comes back: the
+     next reader wiring a hover reaches for COLORS.hover and gets what the name
+     promises, not what the value holds. Named for the state now. */
+  hover: tokenColors.atlas[500], // vermillion on hover
+  pressed: tokenColors.atlas[600], // pressed state
   atlas700: tokenColors.atlas[700], // selected country fill (deep vermillion)
   stroke: tokenColors.ink[700], // PRONOUNCED country borders (warm graphite)
   cocoa700: tokenColors.ink[700], // text (slot 4 in picker)
@@ -241,8 +246,8 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
     if (DISPUTED_ISO_NUMERIC.has(numId)) return COLORS.parchment;
     if (!iso2) return COLORS.parchment;
     if (selected === iso2) return COLORS.atlas700;
-    if (active === iso2) return COLORS.amberActive;
-    if (hovered?.iso2 === iso2) return COLORS.amber;
+    if (active === iso2) return COLORS.pressed;
+    if (hovered?.iso2 === iso2) return COLORS.hover;
     return COLORS.parchment;
   };
 

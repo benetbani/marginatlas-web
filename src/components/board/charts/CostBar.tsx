@@ -26,14 +26,23 @@ type Props = {
 /* amber-400 and moss-300 were two of the five until 2026-08-17; both hues are
    banned outright. These are COST SEGMENTS, a set of categories rather than a
    scale, so nothing here ranks and the replacements only need to separate: the
-   accent leads, then the warm neutral ladder, then the sanctioned teal. Each
-   segment carries its own direct label, so the fill is a second read. */
+   accent leads, then the warm neutral ladder. Each segment carries its own
+   direct label, so the fill is a second read.
+
+   THE FIFTH WAS teal-500 FOR ONE COMMIT, and it should not have been. That fix
+   read the palette gate's HUE bands, which permit 145 to 200 degrees, and
+   missed that this project's own teal ramp measures 149 and 150. Teal sits
+   near 180; 149 is green. The gate now says so in its own header and bans the
+   name outright, which is the right reading of "no green, no exceptions": a
+   banned hue under a permitted name is how the blog cover palette kept one for
+   months. atlas-300 takes the slot, a light terracotta that separates cleanly
+   from the deep atlas-500 four segments away. */
 const SEGMENT_FILLS = [
   "fill-atlas-500",
   "fill-cocoa-500",
   "fill-cocoa-300",
   "fill-parchment",
-  "fill-teal-500",
+  "fill-atlas-300",
 ];
 
 export function CostBar({ shares }: Props) {

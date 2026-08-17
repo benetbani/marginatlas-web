@@ -39,14 +39,35 @@ export interface LongformArticleProps {
   related?: LongformRelated[];
 }
 
+/**
+ * A PRIVATE PAPER THEME THAT BOTH GATES WERE BLIND TO, corrected 2026-08-17.
+ *
+ * These six values are injected as a raw <style> string on the live
+ * /blog/[slug] route, and they were a complete parallel palette: three creams
+ * (#FEF9F0, #FBF8F2, #F4EAD5), a brown (#5A3A1A), a warm near-black and the
+ * accent. verify_no_cream counts cream TOKEN references and these were raw
+ * hex, so it could not see them. verify_palette_membership judges by hue and
+ * returns legal above 93% lightness, so it passed the three creams and caught
+ * only the brown and the line. The one surface printing the site's long-form
+ * writing was therefore printing it on cream the founder banned outright,
+ * with two gates green.
+ *
+ * Pointed at the real tokens rather than retoned by hand, so this stops being
+ * a palette at all and starts being a reference. Each mapping is the nearest
+ * EXISTING role, not a new value: the article ground becomes the canonical card
+ * surface, the soft step the page ground, the ink and cocoa the ladder steps
+ * they were already imitating (#1A1410 is ink-900 within a hair, #5A3A1A is
+ * cocoa-700 within a hair), and the rule the neutral hairline every other
+ * border on the site uses. --lf-accent was already atlas-700 and is unchanged.
+ */
 const LF_CSS = `
 .lf {
-  --lf-paper: #FEF9F0;
-  --lf-soft: #FBF8F2;
-  --lf-ink: #1A1410;
-  --lf-cocoa: #5A3A1A;
-  --lf-accent: #991600;
-  --lf-line: #F4EAD5;
+  --lf-paper: var(--atlas-surface-card);
+  --lf-soft: var(--atlas-surface-paper);
+  --lf-ink: var(--ink-900);
+  --lf-cocoa: var(--cocoa-700);
+  --lf-accent: var(--accent-text);
+  --lf-line: rgb(var(--border));
   background: var(--lf-paper);
   color: var(--lf-ink);
   font-family: var(--font-sans), Inter, system-ui, sans-serif;

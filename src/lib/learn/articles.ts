@@ -672,7 +672,18 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     question: "What does the coverage tier on each page mean?",
     oneLineAnswer: "Coverage tier tells you what kind of source is behind the number: measured, regional, estimated, or modeled.",
     body: [
-      "Every page in Atlas displays a coverage chip near the headline number. The four tiers, in order of confidence: Measured (green) means the figures come from direct measurement of firms in that geography and industry. Regional (blue) means a broader benchmark from a higher level (state, country) is applied to this specific cell. Estimated (amber) means the figure is computed from country-level economic indicators (GDP per capita, governance, urbanization) combined with global industry averages. Modeled (gray) means there's no underlying observation; the number is a transparent model output.",
+      /* THE COLOUR NAMES IN THIS PARAGRAPH WERE ALL FOUR WRONG, corrected
+         2026-08-17. It told readers to look for a green chip, a blue chip and
+         an amber chip, and the tier scale in design-tokens has held none of
+         those since it was unified: colors.tier is atlas-700, atlas-500,
+         atlas-300 and cocoa-500, three depths of one accent draining to a warm
+         grey. The chip a reader is actually looking at has NO green and NO
+         blue anywhere on it, so the article was teaching a legend that does
+         not match the page. Reader-facing copy naming a colour ages the moment
+         the palette moves, which is the argument for describing the mechanism
+         instead: the chip now reads as strength, and strength is what the
+         sentence says. Depth is described, not hue. */
+      "Every page in Atlas displays a coverage chip near the headline number. The chip deepens as the evidence gets stronger, so the four tiers read as one scale rather than four labels. In order of confidence: Measured, the strongest, means the figures come from direct measurement of firms in that geography and industry. Regional means a broader benchmark from a higher level (state, country) is applied to this specific cell. Estimated means the figure is computed from country-level economic indicators (GDP per capita, governance, urbanization) combined with global industry averages. Modeled, the quietest, means there is no underlying observation; the number is a transparent model output.",
       "What you should do with each tier: Measured numbers can be cited and compared directly. Regional numbers are strong directional signals - fine for general planning, not for precise modeling. Estimated and Modeled numbers are orientation, useful to set a range, not a single point.",
       "Atlas covers the global SMB universe, so most pages outside the largest economies sit at Estimated or Modeled. The transparency about which tier you're reading is the point - the number is honest about what it can claim.",
     ],
