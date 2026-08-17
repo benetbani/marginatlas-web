@@ -57,7 +57,7 @@ import {
   clampNetMarginPct,
   boundSurvivalCurve,
 } from "@/lib/finance/margin_floor";
-import londonJson from "../../../data/london/london_market_v1.json";
+import { LONDON_MARKET } from "@/lib/london/market";
 
 /**
  * The structural margins for the activity. These are place-stable shares
@@ -118,7 +118,23 @@ export interface ActivitySurvival {
 
 type LondonSurvivalEntry = { survival?: { yr1: number; yr3: number; yr5: number } };
 type LondonSurvivalFile = { activities: Record<string, LondonSurvivalEntry> };
-const LONDON_SURVIVAL = londonJson as unknown as LondonSurvivalFile;
+
+/* THE FOURTH READER, and it read the file the other three had stopped reading.
+   This imported data/london/london_market_v1.json DIRECTLY while the other
+   three surfaces moved to src/lib/london/market.ts. That loader does two things
+   to the file: it closes the take-home identity, and it RE-KEYS four activities
+   whose keys are slugs that no longer exist (`cafes-coffee` is now
+   `cafes-coffee-shops`, and three siblings).
+
+   So this module looked up a LIVE slug in a file that still used the STALE
+   one, and the four never matched. Measured: of the twenty curated activities,
+   sixteen resolved a survival curve and four returned all-null, and the four
+   were exactly the four the loader re-keys. A fifth of the dataset dashed its
+   survival rows for a reason no reader could see from here.
+
+   The loader's own header claimed a fourth reader was impossible. It was not,
+   and that claim has been corrected there. This is the reader it missed. */
+const LONDON_SURVIVAL = LONDON_MARKET as unknown as LondonSurvivalFile;
 
 /**
  * The representative survival curve for an activity, keyed by the activity's
