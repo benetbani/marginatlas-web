@@ -664,19 +664,44 @@ function londonWages(slug: string): CellView["wages"] {
   ];
 }
 
+/**
+ * THE TWELVE-MONTH SHAPE IS GONE, AND IT WAS INVENTED. Removed 2026-08-17.
+ *
+ * This function used to hold a hardcoded array,
+ * [0.78, 0.74, 0.84, 0.88, 0.92, 0.96, 0.9, 0.88, 0.92, 0.94, 0.86, 1.0],
+ * nudged by three keyword tests against the curated sentence, and its own
+ * comment said the point was that "the bars and the sentence agree". They did
+ * not, and no source anywhere holds monthly demand for a cell: the London
+ * dataset stores `seasonality` as a STRING, one short phrase per trade. Sixteen
+ * distinct phrases, checked one by one against what the array would draw:
+ *
+ *   "January surge, summer dip"  -> /summer/ matched, so the chart drew summer
+ *                                   as the HIGHEST months and marked June the
+ *                                   peak. The graphic stated the exact opposite
+ *                                   of the sentence printed under it.
+ *   "Low" (four trades)          -> no keyword matched, so the untouched base
+ *                                   drew a rise to a December peak under a
+ *                                   caption reading "Low".
+ *   "Term-time driven",
+ *   "Pre-MOT and winter peaks"   -> same: a December peak nobody claimed.
+ *
+ * Photographed at 1280x900 on /gb/london/restaurants the bars read as twelve
+ * near-identical slabs with one marked, because the invented spread is 0.62 to
+ * 1.0 and lands as 35px against 56px across a 700px card. So it asserted a
+ * pattern it did not hold, in a card whose caption promised one it could not
+ * show, from numbers with no source.
+ *
+ * Self-omission is the ratified answer to that, and the section is NOT dropped:
+ * `Seasonality` renders heading, eyebrow and the curated sentence with no bars
+ * when `monthly` is null, which is the honest read. The sentence is real
+ * editorial content; the chart was decoration wearing a data costume.
+ *
+ * IF A MONTHLY SERIES EVER ARRIVES, it arrives as data. Parsing prose into
+ * numbers is fabrication however carefully the keywords are chosen, and a
+ * better parser is a better-disguised fabrication, not a fix.
+ */
 function londonSeasonality(note: string): CellView["seasonality"] {
-  // Derive a 12-month shape from keywords in the curated note, so the bars and
-  // the sentence agree.
-  const n = note.toLowerCase();
-  const base = [0.78, 0.74, 0.84, 0.88, 0.92, 0.96, 0.9, 0.88, 0.92, 0.94, 0.86, 1.0];
-  if (/quiet january|slow january/.test(n)) base[0] = 0.62;
-  if (/summer/.test(n)) {
-    base[5] = 1.0;
-    base[6] = 0.98;
-    base[7] = 0.96;
-  }
-  if (/december/.test(n)) base[11] = 1.0;
-  return { monthly: base, note };
+  return { monthly: null, note };
 }
 
 function londonLocals(slug: string, L: LondonEntry): string[] {
