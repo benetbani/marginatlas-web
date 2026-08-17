@@ -188,7 +188,7 @@ function Plate({ c }: { c: CatalogCollection }) {
         aria-hidden="true"
         style={{ opacity: held ? 1 : 0.4 }}
       >
-        <rect x="0" y="0" width={W} height={H} rx="3" className="fill-cream-300" />
+        <rect x="0" y="0" width={W} height={H} rx="3" className="fill-parchment" />
         {held
           ? Array.from({ length: n }, (_, i) => {
               const { x, y } = markAt(i, n);

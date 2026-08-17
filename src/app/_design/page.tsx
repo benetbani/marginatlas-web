@@ -151,7 +151,7 @@ function Header() {
           rendered in every state. Read this before building any new
           component. If something is not here, it is not a primitive yet.
         </p>
-        <div className="mt-5 flex flex-wrap gap-2 text-xs text-cream-300">
+        <div className="mt-5 flex flex-wrap gap-2 text-xs text-parchment">
           <code className="bg-ink-800 px-2 py-1 rounded">docs/design-system/PLAN.md</code>
           <code className="bg-ink-800 px-2 py-1 rounded">docs/design-system/INVENTORY.md</code>
           <code className="bg-ink-800 px-2 py-1 rounded">docs/design-system/TOKENS.md</code>

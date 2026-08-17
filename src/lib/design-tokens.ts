@@ -41,7 +41,7 @@
  *   - teal     — single muted-sage data accent (use <5% of surface)
  *
  * Plus two standalone tokens:
- *   - parchment — dedicated warm-taupe border token (= cream-300)
+ *   - parchment — the hairline. A true neutral, s=0%, and the ONLY name for it
  *   - graphite  — dedicated warm secondary text token (= ink-700)
  *
  * Banned: aquamarine / cyan (reserved for founder's other product).
@@ -128,9 +128,13 @@ export const colors = {
     // case the brief singled out as the one that must not go invisible, reads
     // 1.697:1 against its own fill before and 1.702:1 after.
     //
-    // 300 lands on #e3e3e3, which is `parchment` exactly: the hairline step and
-    // the hairline token were the same colour before and stay the same colour
-    // now, rather than drifting apart into two near-identical greys.
+    // THE HAIRLINE STEP IS GONE, 2026-08-17, and this is a collapse rather than
+    // a deletion. It landed on #e3e3e3, which is `parchment` exactly: one value
+    // wearing two names, which is the precise mechanism that let cream survive
+    // the first three passes of this purge. `parchment` wins because it carries
+    // 380-odd call sites against this step's twenty, and because a hairline
+    // deserves a name that says hairline rather than a rung on a surface ladder.
+    // Every reader moved across with no change of value.
     //
     // The NAME is still wrong on all of these. The ramp holds no cream after
     // this change; renaming it is the last step of the purge and is deliberately
@@ -138,7 +142,6 @@ export const colors = {
     // along with a colour change.
     100: "#f6f6f6", // muted surface (thead tints, chips, inset panels)
     200: "#eeeeee",
-    300: "#e3e3e3", // hairline / border step, = parchment
     400: "#bfbfbf", // chart bar mass, dashed rules, underlines
     // 500 (#8d887e) DELETED 2026-08-17: defined since the warm reformation and
     // referenced exactly zero times in src/. A token that exists gets used, and
@@ -295,7 +298,7 @@ export const semanticColors = {
   cardForeground: colors.ink[900],
   primary: colors.atlas[700],
   primaryForeground: colors.cream[50],
-  border: colors.cream[300], // warm taupe hairline
+  border: colors.parchment, // neutral hairline
   ring: colors.atlas[700],
   /* success/successSurface/warning/warningSurface deleted with their ramps.
      All four were call-site free: nothing in src read them. danger keeps clay,

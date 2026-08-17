@@ -51,7 +51,7 @@ const COST_FILL = [
   "bg-cocoa-300",
   "bg-cream-400",
   "bg-cocoa-100",
-  "bg-cream-300",
+  "bg-parchment",
   "bg-cocoa-500/70",
 ] as const;
 

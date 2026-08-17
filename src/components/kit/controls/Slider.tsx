@@ -113,7 +113,7 @@ export function Slider({
           {/* track (under the native input, which is transparent on top) */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-cream-300"
+            className="pointer-events-none absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-parchment"
           >
             <div
               className="h-full rounded-full bg-atlas-500"

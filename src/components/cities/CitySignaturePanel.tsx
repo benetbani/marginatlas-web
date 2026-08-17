@@ -194,7 +194,7 @@ function SpectrumBar({
       <div
         className="relative h-3 rounded-full overflow-visible"
         style={{
-          background: `linear-gradient(90deg, ${colors.atlas[600]} 0%, ${colors.atlas[200]} 30%, ${colors.cream[300]} 50%, ${colors.ink[300]} 70%, ${colors.graphite} 100%)`,
+          background: `linear-gradient(90deg, ${colors.atlas[600]} 0%, ${colors.atlas[200]} 30%, ${colors.parchment} 50%, ${colors.ink[300]} 70%, ${colors.graphite} 100%)`,
         }}
       >
         {/* Switch handle: bold vertical bar like a dropped toggle. */}

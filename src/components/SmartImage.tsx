@@ -64,7 +64,7 @@ export function SmartImage({
       aria-label={alt}
       className={cn(
         "w-full flex items-center justify-center relative overflow-hidden select-none",
-        "bg-gradient-to-br from-cream-100 via-cream-200 to-cream-300",
+        "bg-gradient-to-br from-cream-100 via-cream-200 to-parchment",
         rounded === "lg" && "rounded-lg",
         rounded === "xl" && "rounded-xl",
         rounded === "2xl" && "rounded-2xl",

@@ -829,7 +829,10 @@
 
   /* ---- extra meaning-scale + surface steps the Wave-2 sections read ----- */
   --cocoa-300: #c3b39c; /* cocoa-300, the wage-floor / world-median bar tone */
-  --cream-300: #e3e3e3; /* neutral, the empty climate dot, = parchment */
+  /* The empty-climate-dot neutral used to be declared here a second time, at
+     the same #e3e3e3 the hairline token already held. One value under two
+     names is how a colour survives a purge: it gets removed under one name and
+     kept under the other. Both readers now take var(--parchment). */
   /* --amber-100 and --amber-600 deleted with the ramps above. Their comments
      named their one job, "the gut-check no pill surface" and "the gut-check no
      mark", and that pill is now parchment on ink. */
@@ -1471,7 +1474,7 @@
   width: 6.5px;
   height: 6.5px;
   border-radius: 9999px;
-  background: var(--cream-300);
+  background: var(--parchment);
 }
 @media (prefers-reduced-motion: no-preference) {
   .eng-citycard:hover {

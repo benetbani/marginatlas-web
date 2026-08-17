@@ -53,7 +53,7 @@ export function Band({
           <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-atlas-700">
             {label}
           </span>
-          <span aria-hidden="true" className="h-px flex-1 bg-cream-300" />
+          <span aria-hidden="true" className="h-px flex-1 bg-parchment" />
         </div>
       ) : null}
       {children}

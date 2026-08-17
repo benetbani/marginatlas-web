@@ -285,7 +285,7 @@ export function WagesByRole({
                 </span>
               </div>
               {showRail ? (
-                <div className="relative mt-1.5 h-2 w-full rounded-full bg-cream-300">
+                <div className="relative mt-1.5 h-2 w-full rounded-full bg-parchment">
                   <div
                     className="absolute top-0 h-2 rounded-full bg-cocoa-300"
                     style={{ left: pct(left!), right: `calc(100% - ${pct(right!)})` }}

@@ -63,7 +63,7 @@ export function SpreadBar({ p10, median, p90 }: Props) {
           width={x(p90) - x(p10)}
           height={trackH}
           rx={r}
-          className="fill-cream-300"
+          className="fill-parchment"
         />
         {/* median marker */}
         {hasMedian ? (

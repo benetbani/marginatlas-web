@@ -260,7 +260,7 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
               width={Math.max(0, pct - 1.2)}
               height="6"
               rx="3"
-              fill={isSample ? "var(--cream-300)" : step.bg}
+              fill={isSample ? "var(--parchment)" : step.bg}
               stroke={isSample ? "var(--cocoa-300)" : step.dot}
               strokeWidth="0.8"
             />

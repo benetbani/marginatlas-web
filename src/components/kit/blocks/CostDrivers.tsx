@@ -90,7 +90,7 @@ function ImpactTicks({ level }: { level: number }) {
           className={[
             "w-1 rounded-[0.0625rem]",
             heights[i],
-            i < level ? "bg-cocoa-700" : "bg-cream-300",
+            i < level ? "bg-cocoa-700" : "bg-parchment",
           ].join(" ")}
         />
       ))}

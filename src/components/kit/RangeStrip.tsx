@@ -81,11 +81,11 @@ function hasText(s: string | null | undefined): s is string {
 // for the typical marker, the one vermillion moment.
 const GRADIENT_TONES = [
   "fill-cream-200",
-  "fill-cream-300",
+  "fill-parchment",
   "fill-cocoa-100",
   "fill-cocoa-300",
   "fill-cocoa-100",
-  "fill-cream-300",
+  "fill-parchment",
   "fill-cream-200",
 ] as const;
 

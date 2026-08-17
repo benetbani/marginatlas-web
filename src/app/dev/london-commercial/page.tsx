@@ -116,7 +116,7 @@ export default function Page() {
           </div>
 
           {/* anchored proof strip */}
-          <dl className="mt-14 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-xl border border-parchment bg-cream-300 shadow-card">
+          <dl className="mt-14 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-xl border border-parchment bg-parchment shadow-card">
             {[
               { k: "Typical revenue", v: usdFull(DATA.revenue) },
               { k: "Owner take-home", v: usdFull(DATA.takeHome) },

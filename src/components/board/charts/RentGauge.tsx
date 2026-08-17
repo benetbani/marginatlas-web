@@ -64,7 +64,7 @@ export function RentGauge({ value }: Props) {
             startAngle={start}
             endAngle={end}
             cornerRadius={2}
-            className="fill-cream-300"
+            className="fill-parchment"
           />
           <Arc
             innerRadius={inner}

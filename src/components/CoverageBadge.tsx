@@ -93,7 +93,7 @@ export function CoverageBadge({ cell, anchor, className }: CoverageBadgeProps) {
           <span
             key={i}
             aria-hidden="true"
-            className={`h-2 w-2 rounded-full ${i < dots ? fill : "bg-cream-300"}`}
+            className={`h-2 w-2 rounded-full ${i < dots ? fill : "bg-parchment"}`}
           />
         ))}
       </div>

@@ -85,7 +85,7 @@ export function VisitorSplit({
         <div
           className={[
             "flex items-center justify-end pr-3.5",
-            !resDominant ? "bg-chart-primary text-cream-50" : "bg-cream-300 text-ink-900",
+            !resDominant ? "bg-chart-primary text-cream-50" : "bg-parchment text-ink-900",
           ].join(" ")}
           style={{ width: `${vPct}%` }}
         >
@@ -111,7 +111,7 @@ export function VisitorSplit({
             {visitorLabel}
           </span>
           <span
-            className={["h-2.5 w-2.5 rounded-sm", !resDominant ? "bg-chart-primary" : "bg-cream-300"].join(" ")}
+            className={["h-2.5 w-2.5 rounded-sm", !resDominant ? "bg-chart-primary" : "bg-parchment"].join(" ")}
             aria-hidden="true"
           />
         </span>
