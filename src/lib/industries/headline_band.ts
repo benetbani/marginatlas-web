@@ -38,6 +38,7 @@ import {
 import { iso2ToName } from "@/lib/countries";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import {
   summarizeActivityPlaces,
   type ActivityPlaceInput,
@@ -63,11 +64,39 @@ export const US_STATE_SLATE_BUDGET_MS = 4_000;
  * (those are dropped rather than guessed).
  *
  * Owner take-home is the modeled after-tax net profit from the same tax-aware
- * estimator the cell page uses, so the worldwide table and the per-place cell
- * page agree on the method. The margin is floored defensively (clampMargin)
- * exactly as on the cell page, so no implausible figure leaks into the table.
- * The href points at that place's cell page for this activity via the shared
- * cellUrl shape, so every row resolves to a real benchmark.
+ * estimator the cell page uses, run through the ONE shared resolver
+ * (src/lib/finance/owner_take_home.ts), so the worldwide table and the per-place
+ * cell page agree on the FIGURE and not merely on the method. The margin is
+ * floored defensively (clampMargin) exactly as on the cell page, so no
+ * implausible figure leaks into the table. The href points at that place's cell
+ * page for this activity via the shared cellUrl shape, so every row resolves to
+ * a real benchmark.
+ *
+ * THE TAKE-HOME MUST GO THROUGH resolveOwnerTakeHome, and for a while it did
+ * not. The "where it works" table prints each place's take-home with its net
+ * margin immediately beside it, and the activity board prints an "Owner
+ * take-home range" three rows under a "Net margin" built from the same places.
+ * The margin ran through clampMargin, whose floor is 3%; the take-home was
+ * estimateNetProfit().net_profit raw. So a row could show a take-home worth a
+ * fraction of the margin printed next to it, and the band could sit below the
+ * margin the same section shows.
+ *
+ * Measured over the pure estimator, 243 activities x (12 US states + 12
+ * countries) x 6 revenue levels (34,992 combinations): the two derivations
+ * agreed on 24.9%. On 33.8% both produced a figure and the figures differed. On
+ * 41.3% the structural profit was zero or negative, so the row went to the
+ * bottom of the ranking with no figure at all while its own cell page still
+ * showed a take-home, and contributed nothing to the take-home band. Worst case
+ * $90 beside "3% net" of $2,500,000, which the cell page renders as $75,000.
+ * The sweep covers the PARAMETER SPACE, not the live cell population: it cannot
+ * say how many table rows print the pair, only how much of the input shape the
+ * two disagreed over.
+ *
+ * isLargerFirm is false because both cohorts here are all-sizes cells carrying
+ * no size band, so the founder 2x-income floor never fired on this table before
+ * and must not start now: passing false preserves the existing behaviour exactly
+ * in that dimension. Same call, same reason, as src/lib/home/beats.ts and
+ * src/lib/markets/across_cities.ts.
  */
 export function activityPlaceFromCell(
   cell: Cell,
@@ -89,7 +118,14 @@ export function activityPlaceFromCell(
     net.net_margin != null
       ? clampMargin(net.net_margin, "net", industryId) * 100
       : null;
-  const takeHome = net.net_profit ?? null;
+  const takeHome = resolveOwnerTakeHome({
+    structuralNetProfit: net.net_profit,
+    rawNetMargin: net.net_margin,
+    revenue: typicalRevenue,
+    industryId,
+    isLargerFirm: false,
+    annualIncome: null,
+  });
 
   const name =
     cell.geo_name || iso2ToName(cell.country) || cell.country.toUpperCase();

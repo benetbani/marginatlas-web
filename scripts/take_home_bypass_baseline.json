@@ -1,7 +1,6 @@
 {
   "files": [
     "src/app/dev/industry2/page.tsx",
-    "src/lib/industries/headline_band.ts",
     "src/lib/london/market.ts",
     "src/lib/scores/activity_board.ts",
     "src/lib/scores/cell_board.ts",
