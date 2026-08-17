@@ -73,8 +73,15 @@ export function CityCharacter({ geoId, countryIso2 }: Props) {
                 const href = geoId
                   ? `/${country}/${geoId.toLowerCase()}/${industryToSlug(id)}`
                   : null;
+                // A CHIP, not a card, so it is NOT converted to .atlas-card:
+                // rounded-full is a pill and forcing the 16px card radius onto
+                // it is a worse drawing. Its fill moves cream-50 to white,
+                // which is the identical paint under a different name
+                // (cream-50 IS #ffffff), and lands it on the exact chip the
+                // neighbourhood cell and the districts hub already spell,
+                // `rounded-full border border-parchment bg-white`.
                 const chip =
-                  "inline-flex items-center px-3 py-1.5 rounded-full bg-cream-50 border border-parchment text-sm text-ink-900 transition-colors";
+                  "inline-flex items-center px-3 py-1.5 rounded-full bg-white border border-parchment text-sm text-ink-900 transition-colors";
                 return (
                   <li key={id}>
                     {href ? (
@@ -113,7 +120,16 @@ export function CityCharacter({ geoId, countryIso2 }: Props) {
 
         {/* Surprise */}
         {char.surprise && (
-          <div className="mt-6 md:mt-7 border-l-4 border-atlas-500 pl-4 py-1 bg-cream-50 rounded-r-md">
+          /* THE FILL IS GONE, and this is the two-surface rule one level in.
+             It was `bg-cream-50 rounded-r-md`, and cream-50 IS #ffffff, so the
+             colour was already white. But this callout sits INSIDE .atlas-card,
+             which is translucent at .955 precisely so the founder's photograph
+             reads faintly through it, and an opaque white child punches a hole
+             in exactly that. What this block was actually drawing with is the
+             terracotta rule down its left edge, and that stays. The radius went
+             with the fill: a corner radius on no ground draws nothing. Same
+             call HowFarYouReach got on the cell page. */
+          <div className="mt-6 md:mt-7 border-l-4 border-atlas-500 pl-4 py-1">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700 mb-1">
               Unexpected
             </div>
