@@ -77,6 +77,14 @@ const CREAM_LITERALS = [
   "#c3bfb7",
   "#8d887e",
   "#fbfaf7",
+  /* THE ink AND cocoa RAMPS' TOP TWO STEPS, added 2026-08-17. They were never
+     part of the ramp this file was written about, which is exactly why they
+     outlived it: #faf4ec and #f0e7d9, held byte for byte by BOTH ramps, 36 call
+     sites, 20 of them painting on the cell page. Both are retoned now, so these
+     two entries count zero today and exist so that writing either value by hand
+     lands a new file in the ratchet instead of on the page. */
+  "#faf4ec",
+  "#f0e7d9",
 ];
 
 
@@ -107,6 +115,30 @@ const WARM_CREAM = new Set([
   "#e4e2dd",
   "#c3bfb7",
   "#8d887e",
+  /* ADDED 2026-08-17, AND THE REASON GENERALISES PAST THESE TWO VALUES.
+     #faf4ec and #f0e7d9 were `ink-50`/`ink-100` and, identically,
+     `cocoa-50`/`cocoa-100`. Measured h34 s58% l95.3% and h37 s43% l89.6%: warm
+     sand, and MORE saturated than any of the six values already listed above.
+
+     This list existed precisely to catch cream under a name that does not say
+     cream, and it did not catch these, because the list is written by value and
+     a value nobody thought of is a value nobody typed. The check is exact about
+     what it holds and silent about what it does not, which is the failure the
+     rgb net had a month ago and was fixed by DERIVING it. There is no
+     equivalent derivation available here: the set of warm tints on a palette is
+     not computable from the palette, it is a judgement about hue and
+     saturation. So the honest statement is that this list is complete as of the
+     values that have been MEASURED, and the instrument that finds the next one
+     is verify_palette_membership widened, not this list extended.
+
+     Why the palette gate did not find them either, since that is the obvious
+     next question: it returns legal above 93% lightness, so #faf4ec never
+     reached a hue test, and #f0e7d9 at 89.6% reached one and PASSED on the
+     `ink/cocoa ladder` band (h 25-45, s <= 45), a band written to permit the
+     type ladder and unable to tell a fill from type. Both gates were clean and
+     the page painted warm sand 36 times. */
+  "#faf4ec",
+  "#f0e7d9",
 ]);
 
 /**
@@ -177,6 +209,48 @@ function aliasedCream(): string[] {
         }
       }
     }
+
+    /**
+     * RAMP STEPS. THIS CHECK COULD NOT READ ONE UNTIL 2026-08-17, and that is
+     * most of what it was written to read.
+     *
+     * The name pattern above starts `[A-Za-z_]`, and every step of every ramp
+     * in design-tokens.ts is keyed by a NUMBER: `50: "#faf4ec"`. So the check
+     * matched top-level named tokens like `parchment` and `graphite` and was
+     * structurally blind to `ink[50]`, `paper[100]`, `cocoa[100]` and every
+     * other rung. It caught `parchment` and people concluded it worked.
+     *
+     * Proved rather than assumed: putting #faf4ec back on `ink[50]` and running
+     * this file failed on the RATCHET COUNT and not on this check, which is the
+     * wrong instrument answering. The ratchet is per-file and only fails when a
+     * count GROWS, so a warm value that merely moves between two ramp steps, or
+     * that arrives in a file already carrying a literal it can trade against,
+     * passes it. This check is the one that is supposed to be absolute.
+     *
+     * A step's identity is its ramp plus its number, so the ramp name is
+     * tracked down the file and the two are joined before the "does the name
+     * say cream" test. That keeps the original rule exactly as written: a token
+     * may hold a warm cream value only if its own name says cream.
+     */
+    let ramp: string | null = null;
+    code.split("\n").forEach((line, i) => {
+      const open = line.match(/^\s*([A-Za-z_][\w]*)\s*:\s*\{/);
+      if (open) {
+        ramp = open[1];
+        return;
+      }
+      if (/^\s*\},?\s*$/.test(line)) {
+        ramp = null;
+        return;
+      }
+      const step = line.match(/^\s*(\d+)\s*:\s*"(#[0-9a-fA-F]{6})"/);
+      if (!step) return;
+      const value = step[2].toLowerCase();
+      const name = `${ramp ?? "?"}-${step[1]}`;
+      if (WARM_CREAM.has(value) && !/cream/i.test(name)) {
+        hits.push(`${rel}:${i + 1}: ${name} = ${value}`);
+      }
+    });
 
     /**
      * THE SAME EVASION, ONE NOTATION LATER. Found 2026-08-17, and it was live:
