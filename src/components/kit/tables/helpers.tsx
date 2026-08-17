@@ -16,6 +16,7 @@
  */
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { stepChipTone } from "@/lib/scores/band_tone";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 /* ------------------------------------------------------------------ */
@@ -167,16 +168,27 @@ export function figureCellClass({
 
 /* ------------------------------------------------------------------ */
 /* MeaningChip - the small break-in-ease / severity badge.             */
-/*   meaning-only color: moss good, amber watch, clay hard.            */
+/*                                                                     */
+/*   THIS IS THE SAME SCALE AS THE BREAK-IN BADGE, not a second one:    */
+/*   the city page maps BreakInBand straight onto ChipTone, so a chip    */
+/*   here and a pill on the country page describe one number. Its       */
+/*   colour therefore comes from the family's one module rather than    */
+/*   from a local table. It read moss / amber / clay, three banned or   */
+/*   near-banned hues; it now runs terracotta draining to a true        */
+/*   neutral, which is what the palette ruling asks for and what the    */
+/*   pill on the other pages does.                                      */
 /* ------------------------------------------------------------------ */
 
 export type ChipTone = "easy" | "moderate" | "hard" | "neutral";
 
 const CHIP_TONE: Record<ChipTone, { wrap: string; dot: string }> = {
-  easy: { wrap: "bg-moss-100 text-moss-700", dot: "bg-moss-500" },
-  moderate: { wrap: "bg-amber-100 text-amber-700", dot: "bg-amber-500" },
-  hard: { wrap: "bg-clay-100 text-clay-700", dot: "bg-clay-500" },
-  neutral: { wrap: "bg-cream-200 text-cocoa-700", dot: "bg-cocoa-500" },
+  easy: stepChipTone(3),
+  moderate: stepChipTone(2),
+  hard: stepChipTone(0),
+  /* "neutral" is NOT the bottom of the ladder: it means no verdict was made,
+     which is a different statement from "this one is hard". It keeps its own
+     quiet grey and its lighter dot so the two never read as the same chip. */
+  neutral: { wrap: "bg-cream-200 text-cocoa-700", dot: "bg-cocoa-300" },
 };
 
 export function MeaningChip({

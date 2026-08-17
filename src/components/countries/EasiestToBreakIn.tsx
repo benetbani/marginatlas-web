@@ -11,10 +11,10 @@
  * Every score is the SAME number that business's own cell masthead shows: the
  * rows are computed in the place board builder (buildEasiestToBreakIn) for the
  * exact cell each row links to, through the same break-in path the masthead uses,
- * so the badge here and the badge on that cell page agree. The badge tone is the
- * EXACT moss / atlas / clay scale the break-in masthead, the across comparison,
- * and the cost-to-open rows use, so a reader who has learned the scale reads it
- * here for free.
+ * so the badge here and the badge on that cell page agree. The badge tone comes
+ * from src/lib/scores/band_tone, which is the ONE place the whole family's colour
+ * lives, so a reader who has learned the scale reads it here for free. This file
+ * used to carry its own copy of that switch, as four siblings did.
  *
  * Server component, no client JS. Tokens only, mobile-first, warm only in the one
  * short lead line. Renders nothing when the caller passes fewer than a few rows
@@ -29,24 +29,9 @@
 import * as React from "react";
 import Link from "next/link";
 import type { EasiestBreakInRow } from "@/lib/scores/country_board";
-import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { breakInWord } from "@/lib/scores/band_labels";
+import { bandPillTone } from "@/lib/scores/band_tone";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
-
-/** Band to the badge tone. Higher = easier = warmer, the EXACT moss / atlas /
- * clay scale the break-in masthead and the across comparison use, so the badge
- * reads identically here. */
-function bandBadge(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "border-moss-300 bg-moss-50 text-moss-700";
-    case "manageable":
-    case "demanding":
-      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
-    case "brutal":
-      return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
 
 export interface EasiestToBreakInProps {
   /** The ranked rows, easiest first (already sorted + filtered by the builder). */
@@ -128,7 +113,7 @@ export function EasiestToBreakIn({
                 </span>
               </span>
               <span
-                className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandBadge(
+                className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
                   r.band,
                 )}`}
               >

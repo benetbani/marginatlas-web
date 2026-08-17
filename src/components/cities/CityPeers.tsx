@@ -29,23 +29,8 @@ import Link from "next/link";
 import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { buildCityPeers } from "@/lib/scores/city_peers";
-import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { climateWord } from "@/lib/scores/band_labels";
-
-/** Band to the score-badge tone, the EXACT moss / atlas / clay scale the city
- * masthead and the country "easiest to break in" panel use, so a peer's badge
- * reads identically here. Higher = a better city = warmer. Tokens only, no hex. */
-function bandBadge(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "border-moss-300 bg-moss-50 text-moss-700";
-    case "manageable":
-    case "demanding":
-      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
-    case "brutal":
-      return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
+import { bandPillTone } from "@/lib/scores/band_tone";
 
 export interface CityPeersProps {
   /** The seed city's slug, used to select its peers. */
@@ -96,7 +81,7 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
               </div>
               {p.score != null && p.band != null ? (
                 <span
-                  className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${bandBadge(
+                  className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${bandPillTone(
                     p.band,
                   )}`}
                 >

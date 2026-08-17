@@ -39,6 +39,7 @@ import {
 import { buildAcrossCities, type CityColumn, type AcrossMetric } from "@/lib/markets/across_cities";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { breakInWord } from "@/lib/scores/band_labels";
+import { bandPillTone } from "@/lib/scores/band_tone";
 import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
@@ -118,23 +119,11 @@ function moneyWord(n: number): string {
   return `${sign}$${Math.round(abs).toLocaleString("en-US")}`;
 }
 
-/** Band to the badge tone. Higher = easier = warmer, the EXACT moss / atlas /
- * clay scale the break-in masthead and the cost-to-open comparison rows use, so
- * the badge reads identically here. */
-function bandBadge(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "border-moss-300 bg-moss-50 text-moss-700";
-    case "manageable":
-    case "demanding":
-      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
-    case "brutal":
-      return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
-
-// The one-word band label now lives in @/lib/scores/band_labels (imported as
-// breakInWord); these columns are business break-in scores.
+// The one-word band label lives in @/lib/scores/band_labels (imported as
+// breakInWord) and the badge tone in @/lib/scores/band_tone (bandPillTone);
+// these columns are business break-in scores. This file used to carry its own
+// copy of the tone switch, as four siblings did, which is how the same score
+// could have rendered two colours on two pages.
 
 /**
  * The cost-to-open page href for a city column. The column href is the cell page
@@ -314,7 +303,7 @@ export default async function AcrossCitiesPage({
                 Break-in rating
               </span>
               <span
-                className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandBadge(
+                className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
                   easiest.breakInBand,
                 )}`}
               >
@@ -463,7 +452,7 @@ export default async function AcrossCitiesPage({
                     <td key={c.href} className="px-3 py-2.5 align-top">
                       {scored ? (
                         <span
-                          className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandBadge(
+                          className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
                             c.breakInBand as BreakInBand,
                           )} ${isEasiest ? "ring-1 ring-moss-300" : ""}`}
                         >

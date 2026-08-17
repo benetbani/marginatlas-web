@@ -27,24 +27,12 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { fmtUSD } from "@/components/board/format";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { breakInWord } from "@/lib/scores/band_labels";
+import { bandPillTone } from "@/lib/scores/band_tone";
 import type {
   OpeningPage,
   PeerPlace,
   OtherBusinessHere,
 } from "@/lib/open/opening_page";
-
-/** Band to the badge tone. Higher = easier = warmer, mirroring the masthead. */
-function bandBadge(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "border-moss-300 bg-moss-50 text-moss-700";
-    case "manageable":
-    case "demanding":
-      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
-    case "brutal":
-      return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
 
 
 /** A small break-in band badge, or nothing when the place/business is unscored. */
@@ -58,7 +46,7 @@ function BandBadge({
   if (score == null || band == null) return null;
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandBadge(
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
         band,
       )}`}
     >

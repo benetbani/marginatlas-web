@@ -5,51 +5,24 @@
  * with a band-toned color, and the four component scores tucked into a
  * disclosure so they are one tap away without crowding the top of the page.
  *
- * Banding is NOT reinvented here. The number is mapped to a ScoreBand with
- * bandOf() from the scores domain (the same 80/60/40/20 thresholds the rest of
- * the site uses), and the band drives a token color class. Higher always reads
- * better, matching every other score surface. A null overall renders MISSING.
+ * Banding is NOT reinvented here, and since 2026-08-17 neither is its colour.
+ * The number is mapped to a ScoreBand with bandOf() from the scores domain (the
+ * same 80/60/40/20 thresholds the rest of the site uses), and the band drives a
+ * token color class out of src/lib/scores/band_tone, which is the ONE place the
+ * whole family's colour lives. Higher always reads better, matching every other
+ * score surface. A null overall renders MISSING.
  *
  * Server-rendered: the breakdown uses a native <details>/<summary>, so no
  * client JavaScript is needed for the expand/collapse. Tokens only.
  */
 import * as React from "react";
 import { bandOf, type ScoreBand } from "@/lib/scores";
+import { scoreFigureTone, scorePillTone } from "@/lib/scores/band_tone";
 import { MISSING } from "./format";
 
 export interface ScoreStripProps {
   overall: number | null;
   parts: { label: string; score: number | null }[];
-}
-
-/**
- * Band to text color. Higher = better, so strong reads moss (positive), the
- * middle bands read atlas (brand), and the low bands read clay (the maroon
- * danger token). Same direction and palette as ScorePanel / CellDashboard.
- */
-function bandText(band: ScoreBand): string {
-  switch (band) {
-    case "strong":
-      return "text-moss-700";
-    case "workable":
-    case "mixed":
-      return "text-atlas-700";
-    default:
-      return "text-clay-700";
-  }
-}
-
-/** Band to a chip treatment (border + tint + text) for the breakdown chips. */
-function chipTone(band: ScoreBand): string {
-  switch (band) {
-    case "strong":
-      return "border-moss-300 bg-moss-50 text-moss-700";
-    case "workable":
-    case "mixed":
-      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
-    default:
-      return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
 }
 
 export function ScoreStrip({ overall, parts }: ScoreStripProps) {
@@ -62,7 +35,7 @@ export function ScoreStrip({ overall, parts }: ScoreStripProps) {
         <span
           className={
             hasOverall
-              ? `font-display text-3xl font-semibold leading-none tabular-nums ${bandText(
+              ? `font-display text-3xl font-semibold leading-none tabular-nums ${scoreFigureTone(
                   band as ScoreBand,
                 )}`
               : "font-display text-3xl font-semibold leading-none tabular-nums text-cocoa-400"
@@ -96,7 +69,7 @@ export function ScoreStrip({ overall, parts }: ScoreStripProps) {
                   key={p.label}
                   className={
                     ok
-                      ? `inline-flex items-baseline gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${chipTone(
+                      ? `inline-flex items-baseline gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${scorePillTone(
                           pBand as ScoreBand,
                         )}`
                       : "inline-flex items-baseline gap-1.5 rounded-full border border-parchment bg-cream-100 px-2.5 py-1 text-[11px] font-semibold text-cocoa-400"

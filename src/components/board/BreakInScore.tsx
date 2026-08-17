@@ -18,9 +18,11 @@
  *     labelled bars, so the number is never a black box.
  *
  * Both take the already-computed BreakInRating object (the caller owns the
- * math), so this file is pure presentation. Banding drives a token color the
- * same way ScoreStrip's does: higher reads better (moss), the workable middle
- * reads brand (atlas), and the hard end reads the maroon danger token (clay).
+ * math), so this file is pure presentation. Banding drives a token color out of
+ * src/lib/scores/band_tone, the one place the whole family's colour lives:
+ * terracotta at the favourable end draining to a cool neutral at the hard end,
+ * with the band word carrying the ordinal. It used to carry its own copy of that
+ * switch, in the moss / atlas / clay scale the palette ruling retired.
  *
  * Server-rendered. Tokens only, mobile-first, no raw hex, no em-dashes, no
  * source-agency names.
@@ -28,32 +30,7 @@
 import * as React from "react";
 import type { BreakInRating, BreakInBand } from "@/lib/scores/break_in_rating";
 import { breakInWord, climateWord } from "@/lib/scores/band_labels";
-
-/** Band to the headline number's text color. Higher = easier = warmer. */
-function bandText(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "text-moss-700";
-    case "manageable":
-    case "demanding":
-      return "text-atlas-700";
-    case "brutal":
-      return "text-clay-700";
-  }
-}
-
-/** Band to a small dot/chip tone, used on the band word pill. */
-function bandPill(band: BreakInBand): string {
-  switch (band) {
-    case "forgiving":
-      return "border-moss-300 bg-moss-50 text-moss-700";
-    case "manageable":
-    case "demanding":
-      return "border-atlas-300 bg-atlas-100/60 text-atlas-700";
-    case "brutal":
-      return "border-clay-300 bg-clay-100/60 text-clay-700";
-  }
-}
+import { bandFigureTone, bandPillTone } from "@/lib/scores/band_tone";
 
 /**
  * The masthead score. A large band-toned figure, the band word as a quiet pill,
@@ -78,7 +55,7 @@ export function BreakInMasthead({
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
         <span
-          className={`font-display text-4xl font-semibold leading-none tabular-nums md:text-5xl ${bandText(
+          className={`font-display text-4xl font-semibold leading-none tabular-nums md:text-5xl ${bandFigureTone(
             rating.band,
           )}`}
         >
@@ -89,7 +66,7 @@ export function BreakInMasthead({
             Break-in rating
           </span>
           <span
-            className={`inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPill(
+            className={`inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
               rating.band,
             )}`}
           >
@@ -129,7 +106,7 @@ export function CityScoreMasthead({
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
       <span className="flex items-baseline gap-0.5">
         <span
-          className={`font-display text-4xl font-semibold leading-none tabular-nums md:text-5xl ${bandText(
+          className={`font-display text-4xl font-semibold leading-none tabular-nums md:text-5xl ${bandFigureTone(
             score.band,
           )}`}
         >
@@ -144,7 +121,7 @@ export function CityScoreMasthead({
           Business Climate Score
         </span>
         <span
-          className={`inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPill(
+          className={`inline-flex w-fit items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
             score.band,
           )}`}
         >
