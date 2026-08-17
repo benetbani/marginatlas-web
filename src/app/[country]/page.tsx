@@ -1425,9 +1425,29 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             <GutCheck prompts={gutCheckQuestions} />
           </EngravedSection>
 
-          {/* 22. One thing to remember: the page's last word + freshness. */}
+          {/* 22. One thing to remember: the page's last word + freshness.
+
+             IT WAS THE HONEST TAKE'S VERDICT, WORD FOR WORD, four sections
+             above it. Found by diffing the rendered markup for repeated strings
+             rather than by reading the source: on /gb the sentence "The United
+             Kingdom is an easy place to start and a hard place to keep staff
+             cheaply." was emitted twice, once as `.eng-take__verdict` and again
+             as `.eng-onething__sentence`, and the same held on /us, /de and /nz
+             with their own derived verdicts. A closing beat that restates the
+             section above it is not a last word, it is an echo.
+
+             `honestTake.body` is the fix and it was already being computed and
+             thrown away: nothing rendered it. For the exemplar it is the wage
+             read ("Most owners draw a wage closer to a senior employee than a
+             business owner in year one..."), for a thin country it is the
+             coverage admission. Both are the page's real last word.
+
+             RESIDUAL, stated rather than hidden: `body` is null for the derived
+             middle of the catalogue, so those countries still close on their
+             verdict. Fixing that needs a second derived line in
+             `country_view.ts`, which is a different file and a different call. */}
           <OneThing
-            sentence={view.honestTake?.verdict ?? null}
+            sentence={view.honestTake?.body ?? view.honestTake?.verdict ?? null}
             lastChecked="June 2026"
             sample={view.honestTake == null}
           />

@@ -597,9 +597,20 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                   <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-atlas-700">
                     How the money actually works
                   </div>
-                  <p className="mb-2 font-display text-base font-medium leading-snug text-ink-900">
-                    {character.hook}
-                  </p>
+                  {/* `character.hook` USED TO OPEN THIS PANEL AND IT IS THE H1's
+                     OWN LEDE. `industry_view.ts` builds the masthead answer as
+                     `textOrNull(character?.hook) ?? verdict.close ?? ...`, so
+                     whenever a hook is written the reader met this exact
+                     sentence at the top of the page, 18px under the headline,
+                     and met it again here 1,900px down set in the display face.
+                     Read on the rendered page for /industries/restaurants: "A
+                     restaurant is a cash-rich, margin-poor business that
+                     punishes every mistake in food and labor.", twice.
+                     Dropping it is safe in the other direction too: when no
+                     hook is written this element rendered an empty <p> with its
+                     own bottom margin, so the panel opened on a blank line.
+                     What is left is `economics`, which is the only part of this
+                     panel the page does not already say. */}
                   <p className="text-sm leading-relaxed text-graphite">
                     {character.economics}
                   </p>
