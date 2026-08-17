@@ -695,7 +695,7 @@ export default async function HomePage() {
                     Padding moved off the anchor and onto this inner div. The
                     cover has to run edge to edge, and `overflow-hidden` is
                     what keeps it inside the 16px corner. */}
-                <BlogCover image={post.image} />
+                <BlogCover image={post.image} slim />
                 <div className="flex flex-1 flex-col p-5 md:p-6">
                   <div className="text-xs text-ink-500 tabular-nums">
                     {formatPostDate(post.date)}
