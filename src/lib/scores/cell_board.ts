@@ -70,7 +70,7 @@ import {
   boundSurvivalCurve,
   displayDensityPer10k,
 } from "@/lib/finance/margin_floor";
-import londonJson from "../../../data/london/london_market_v1.json";
+import { LONDON_MARKET } from "@/lib/london/market";
 
 /**
  * One curated London activity entry. Modeled from national business
@@ -94,6 +94,11 @@ export type LondonEntry = {
    * Modeled London economics for this activity (USD). Present only on London
    * cells; when present the board PREFERS these over the country-fallback
    * figures for the money and market rows (see buildCellBoard).
+   *
+   * `owner_take_home` here is ALWAYS revenue x net_margin_pct: the raw file
+   * stores a fourth, independent figure that contradicted its own margin on all
+   * twenty activities, and src/lib/london/market.ts re-derives it at load. Read
+   * that module before trusting or changing either number.
    */
   economics?: {
     revenue: number;
@@ -109,7 +114,7 @@ type LondonFile = {
   london_population: number;
 };
 
-const LONDON = londonJson as LondonFile;
+const LONDON = LONDON_MARKET as LondonFile;
 
 /** London resident population for density math (firms per 10k residents). */
 const LONDON_POPULATION = LONDON.london_population;

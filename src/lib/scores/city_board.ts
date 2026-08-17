@@ -67,7 +67,7 @@ import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { breakInForCell } from "@/lib/scores/country_board";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
-import londonJson from "../../../data/london/london_market_v1.json";
+import { LONDON_MARKET } from "@/lib/london/market";
 
 /**
  * The city-level figures the board reads. This is the subset of the city
@@ -127,7 +127,7 @@ type LondonFile = {
   activities: Record<string, LondonActivity>;
   london_population: number;
 };
-const LONDON = londonJson as unknown as LondonFile;
+const LONDON = LONDON_MARKET as unknown as LondonFile;
 
 /** A finite, real number (not null, not NaN, not Infinity). */
 function isNum(n: number | null | undefined): n is number {
