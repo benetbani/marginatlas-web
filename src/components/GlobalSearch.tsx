@@ -309,7 +309,7 @@ export function GlobalSearch() {
                       focusIdx === i ? "bg-atlas-50" : "hover:bg-ink-100/40"
                     }`}
                   >
-                    <span className="pill bg-cream-200 text-cocoa-700">{r.kind}</span>
+                    <span className="pill bg-paper-200 text-cocoa-700">{r.kind}</span>
                     {r.iso2 && (
                       <CountryFlag iso2={r.iso2} label={r.label} className="w-5" />
                     )}

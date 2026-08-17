@@ -83,7 +83,7 @@ export type MeaningStep = {
 
 const MEANING: readonly MeaningStep[] = [
   { fg: "var(--clay-600)", dot: "var(--clay-500)", bg: "var(--clay-50)" },
-  { fg: "var(--ink-900)", dot: "var(--ink-700)", bg: "var(--cream-200)" },
+  { fg: "var(--ink-900)", dot: "var(--ink-700)", bg: "var(--paper-200)" },
   { fg: "var(--cocoa-700)", dot: "var(--cocoa-500)", bg: "var(--atlas-surface-paper)" },
   { fg: "var(--accent)", dot: "var(--accent-fill)", bg: "var(--surface-card)" },
   { fg: "var(--accent)", dot: "var(--accent-fill)", bg: "var(--atlas-hairline-vermillion)" },

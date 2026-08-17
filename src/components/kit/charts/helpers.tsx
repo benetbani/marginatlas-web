@@ -95,7 +95,7 @@ export function ChartEmpty({
           {eyebrow}
         </div>
       ) : null}
-      <div className="rounded-md border border-dashed border-cream-400 bg-cream-100 px-5 py-5 text-center text-[13px] leading-relaxed text-cocoa-700">
+      <div className="rounded-md border border-dashed border-paper-400 bg-paper-100 px-5 py-5 text-center text-[13px] leading-relaxed text-cocoa-700">
         {note}
       </div>
     </div>

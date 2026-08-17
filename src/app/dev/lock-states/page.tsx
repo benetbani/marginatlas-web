@@ -77,7 +77,7 @@ export default async function LockStatesPage({
           cta="See the full distribution with Basic"
           headline="The middle quartiles"
         >
-          <div className="h-40 bg-cream-100 rounded-lg p-4">
+          <div className="h-40 bg-paper-100 rounded-lg p-4">
             <div className="text-2xl font-display text-ink-900">
               $1,250,000
             </div>

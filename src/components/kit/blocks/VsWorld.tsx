@@ -91,13 +91,13 @@ function VsRow({
   const width = Math.max(4, Math.round(fraction * 100));
   const labelColor = accent ? "text-atlas-700" : "text-cocoa-700";
   const figColor = accent ? "text-atlas-700" : "text-ink-900";
-  const barColor = accent ? "bg-atlas-500/85" : "bg-cream-400";
+  const barColor = accent ? "bg-atlas-500/85" : "bg-paper-400";
   return (
     <div className="grid grid-cols-[minmax(5.5rem,auto)_1fr_minmax(3.25rem,auto)] items-center gap-3">
       <span className={["min-w-0 text-[13px] font-semibold", labelColor].join(" ")}>
         {label}
       </span>
-      <span className="relative h-3 overflow-hidden rounded-full border border-parchment bg-cream-200">
+      <span className="relative h-3 overflow-hidden rounded-full border border-parchment bg-paper-200">
         <span
           aria-hidden="true"
           className={["absolute inset-y-0 left-0 rounded-full", barColor].join(" ")}

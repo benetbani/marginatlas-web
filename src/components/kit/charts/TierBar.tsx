@@ -138,7 +138,7 @@ export function TierBar({
         {/* the track: a quiet hairline-bordered band, opaque fill to the value,
             no gridline. Slim enough to ride inside a directory tile. */}
         <span
-          className="relative h-1.5 min-w-0 flex-1 overflow-hidden rounded-full border border-parchment bg-cream-200"
+          className="relative h-1.5 min-w-0 flex-1 overflow-hidden rounded-full border border-parchment bg-paper-200"
           aria-hidden="true"
         >
           <span

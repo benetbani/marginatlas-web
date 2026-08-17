@@ -214,7 +214,7 @@ function MixBar({ cat, glyph }: { cat: SpendCategory; glyph: GlyphName }) {
         className="relative flex-1 overflow-hidden"
         style={{
           height: 12,
-          background: "var(--cream-100)",
+          background: "var(--paper-100)",
           border: "1px solid var(--hairline-strong)",
         }}
       >

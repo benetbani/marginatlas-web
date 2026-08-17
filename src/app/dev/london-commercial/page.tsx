@@ -23,7 +23,7 @@ const DATA = {
     { label: "Cost of goods", value: 30, cls: "bg-cocoa-300" },
     { label: "Payroll", value: 33, cls: "bg-cocoa-500" },
     { label: "Rent", value: 15, cls: "bg-ink-700" },
-    { label: "Everything else", value: 12, cls: "bg-cream-400" },
+    { label: "Everything else", value: 12, cls: "bg-paper-400" },
     /* "Owner keeps" was bg-moss-600, a green, and it is the SAME defect as the
        kept row in the 2026-benchmarks waterfall: the one accented segment of a
        100%-of-revenue bar. This is a noindex direction prototype, so nobody
@@ -60,9 +60,9 @@ const WAGE_MAX = 80000;
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-cream-75 font-sans text-ink-900 antialiased">
+    <main className="min-h-screen bg-paper-75 font-sans text-ink-900 antialiased">
       {/* top bar */}
-      <header className="sticky top-0 z-20 border-b border-parchment/70 bg-cream-75/85 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-parchment/70 bg-paper-75/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <div className="font-display text-xl tracking-tight">
             Margin <span className="text-atlas-700">Atlas</span>
@@ -83,7 +83,7 @@ export default function Page() {
       </header>
 
       {/* hero */}
-      <section className="relative overflow-hidden border-b border-parchment/70 bg-gradient-to-b from-atlas-50 to-cream-75">
+      <section className="relative overflow-hidden border-b border-parchment/70 bg-gradient-to-b from-atlas-50 to-paper-75">
         <div className="mx-auto max-w-6xl px-6 pb-20 pt-16 md:pb-28 md:pt-24">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700">
             Restaurants · London · United Kingdom
@@ -190,7 +190,7 @@ export default function Page() {
       </section>
 
       {/* the honest take , dark panel for rhythm */}
-      <section className="bg-ink-900 text-cream-100">
+      <section className="bg-ink-900 text-paper-100">
         <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-300">
             The honest take
@@ -204,7 +204,7 @@ export default function Page() {
                 <span className="font-display text-lg text-atlas-300 tabular-nums">
                   0{i + 1}
                 </span>
-                <p className="mt-2 text-base leading-relaxed text-cream-100/90">
+                <p className="mt-2 text-base leading-relaxed text-paper-100/90">
                   {p}
                 </p>
               </li>
@@ -236,7 +236,7 @@ export default function Page() {
                 className="grid grid-cols-1 items-center gap-4 py-6 md:grid-cols-[180px_1fr_120px]"
               >
                 <div className="font-medium text-ink-900">{w.role}</div>
-                <div className="relative h-2 w-full rounded-full bg-cream-200">
+                <div className="relative h-2 w-full rounded-full bg-paper-200">
                   <div
                     className="absolute h-2 rounded-full bg-cocoa-300"
                     style={{ left: `${lo}%`, width: `${hi - lo}%` }}

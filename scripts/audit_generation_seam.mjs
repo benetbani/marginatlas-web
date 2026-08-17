@@ -34,7 +34,10 @@ const APP = path.join(SRC, "app");
 const MARKERS = [
   ["v2", /\bav2\b|atlas-spine\.css|spine2\//],
   ["spineshell", /\bSpineShell\b|components\/spine\/shell/],
-  ["legacy", /\bparchment\b|\bcream-\d|\bcocoa-\d|\batlas-[67]00\b|\bink-900\b/],
+  /* The surface ramp was renamed cream -> paper on 2026-08-17, so the marker
+     follows it. Without this the detector quietly loses one of its five signals
+     for the legacy vocabulary and starts reporting pages as "plain". */
+  ["legacy", /\bparchment\b|\bpaper-\d|\bcocoa-\d|\batlas-[67]00\b|\bink-900\b/],
 ];
 
 /** Every page.tsx under src/app, as a URL-ish route. */

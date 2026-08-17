@@ -80,13 +80,13 @@ function hasText(s: string | null | undefined): s is string {
 // without implying deeper equals better. Tokens only; the accent stays reserved
 // for the typical marker, the one vermillion moment.
 const GRADIENT_TONES = [
-  "fill-cream-200",
+  "fill-paper-200",
   "fill-parchment",
   "fill-cocoa-100",
   "fill-cocoa-300",
   "fill-cocoa-100",
   "fill-parchment",
-  "fill-cream-200",
+  "fill-paper-200",
 ] as const;
 
 export function RangeStrip({
@@ -205,7 +205,7 @@ export function RangeStrip({
           </div>
           {/* The spread as a horizontal track: the seven-tone ramp in a gradient
               bar, the typical carrying the lone accent tick. Tokens only. */}
-          <div className="relative mt-2 h-2 w-full rounded-full bg-gradient-to-r from-cream-200 via-cocoa-300 to-cream-200">
+          <div className="relative mt-2 h-2 w-full rounded-full bg-gradient-to-r from-paper-200 via-cocoa-300 to-paper-200">
             <span
               className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-atlas-500"
               style={{ left: `${p50Pos}%` }}

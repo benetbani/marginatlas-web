@@ -135,7 +135,7 @@ export function LikeForLikeBars({
         </span>
         <span
           className={[
-            "relative order-last col-span-2 overflow-hidden rounded-full bg-cream-200 sm:order-none sm:col-span-1",
+            "relative order-last col-span-2 overflow-hidden rounded-full bg-paper-200 sm:order-none sm:col-span-1",
             compact ? "h-3" : "h-3.5",
           ].join(" ")}
         >
@@ -187,7 +187,7 @@ export function LikeForLikeBars({
               className={[
                 "group block rounded-sm outline-none",
                 "transition-colors motion-reduce:transition-none",
-                "hover:bg-cream-100 focus-visible:bg-cream-100",
+                "hover:bg-paper-100 focus-visible:bg-paper-100",
                 "-mx-1.5 px-1.5",
                 compact ? "py-0.5" : "py-1",
               ].join(" ")}

@@ -109,7 +109,7 @@ async function main() {
     console.log(`  visible words         ${words}`);
     console.log(`  atlas-card            ${count(/class="[^"]*\batlas-card\b/g)}`);
     console.log(`  hand-rolled bg-white  ${count(/class="[^"]*\bbg-white\b/g)}`);
-    console.log(`  bg-cream-*            ${count(/class="[^"]*\bbg-cream-\d/g)}`);
+    console.log(`  surface-ramp fills    ${count(/class="[^"]*\bbg-paper-\d/g)}`);
     console.log(`  <img>                 ${count(/<img\b/g)}`);
     console.log(`  rgba(255,247,230      ${count(/rgba\(255,247,230/g)}`);
     console.log(`  h1                    ${count(/<h1\b/g)}`);

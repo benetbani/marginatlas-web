@@ -38,7 +38,7 @@ function VerdictPill({ verdict }: { verdict: Verdict }) {
     verdict === "ship after fixes"
       ? "bg-atlas-100 text-atlas-700"
       : verdict === "phase 2"
-        ? "bg-cream-100 text-cocoa-700"
+        ? "bg-paper-100 text-cocoa-700"
         : "bg-clay-100 text-clay-700";
   return (
     <span className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] uppercase tracking-wide font-semibold ${tone}`}>
@@ -69,7 +69,7 @@ function ReviewCard({
         <span className="basis-full text-xs text-clay-700">blockers: {blockers}</span>
       </header>
       {children ? (
-        <div className="p-5 bg-cream-100">{children}</div>
+        <div className="p-5 bg-paper-100">{children}</div>
       ) : (
         <div className="p-5 text-xs text-cocoa-700 italic">
           Live preview omitted: this card needs a Phosphor icon function as a

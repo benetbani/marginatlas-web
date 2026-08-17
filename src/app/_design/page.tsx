@@ -146,7 +146,7 @@ function Header() {
         <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight">
           Design system catalog
         </h1>
-        <p className="mt-3 text-base text-cream-200 max-w-2xl leading-relaxed">
+        <p className="mt-3 text-base text-paper-200 max-w-2xl leading-relaxed">
           Every primitive shipped under the 2026-05-27 design-system plan,
           rendered in every state. Read this before building any new
           component. If something is not here, it is not a primitive yet.
@@ -283,7 +283,7 @@ function ColorsSection() {
           design-tokens this read would be a type error rather than a silent
           blank, which is the good failure mode, but a catalog that names a
           colour is also an invitation to use it. */}
-      {(["atlas", "cream", "ink", "cocoa", "clay", "teal"] as const).map((family) => {
+      {(["atlas", "paper", "ink", "cocoa", "clay", "teal"] as const).map((family) => {
         const palette = colors[family];
         return (
           <SubSection key={family} title={family} caption={`colors.${family}`}>
@@ -1024,7 +1024,7 @@ function MotionSection() {
         <Stagger className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {["First", "Second", "Third", "Fourth", "Fifth", "Sixth"].map((s) => (
             <FadeIn key={s}>
-              <div className="rounded-lg border border-parchment bg-cream-100 px-4 py-3 text-sm font-semibold text-ink-900">
+              <div className="rounded-lg border border-parchment bg-paper-100 px-4 py-3 text-sm font-semibold text-ink-900">
                 {s}
               </div>
             </FadeIn>
@@ -1032,7 +1032,7 @@ function MotionSection() {
         </Stagger>
         <div className="mt-6">
           <SlideUp>
-            <div className="rounded-lg border border-parchment bg-cream-100 px-4 py-3 text-sm text-ink-900">
+            <div className="rounded-lg border border-parchment bg-paper-100 px-4 py-3 text-sm text-ink-900">
               SlideUp on mount (8px translate + fade, 300ms ease-out).
             </div>
           </SlideUp>

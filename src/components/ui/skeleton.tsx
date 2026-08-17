@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
 const skeletonVariants = cva(
   // Atlas pulse animation (1.8s ease-in-out infinite, opacity 0.55-0.85);
   // see tailwind.config.ts keyframes.atlasPulse.
-  "animate-atlasPulse bg-cream-200",
+  "animate-atlasPulse bg-paper-200",
   {
     variants: {
       variant: {

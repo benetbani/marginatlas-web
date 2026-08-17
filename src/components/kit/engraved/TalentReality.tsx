@@ -151,7 +151,7 @@ export function TalentReality({ signals, culture, className }: TalentRealityProp
             border: "1px solid var(--hairline-strong)",
             borderRadius: 8,
             padding: 6,
-            background: "var(--cream-100)",
+            background: "var(--paper-100)",
           }}
         >
           <Glyph name="people" size={18} stroke={1.4} />

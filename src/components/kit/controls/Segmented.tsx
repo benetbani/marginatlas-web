@@ -99,7 +99,7 @@ export function Segmented<V extends string = string>({
       role="radiogroup"
       aria-label={ariaLabel}
       className={cn(
-        "inline-flex max-w-full flex-wrap items-stretch gap-1 rounded-full border border-parchment bg-cream-100 p-1",
+        "inline-flex max-w-full flex-wrap items-stretch gap-1 rounded-full border border-parchment bg-paper-100 p-1",
         className,
       )}
     >
@@ -135,7 +135,7 @@ export function Segmented<V extends string = string>({
               <span
                 className={cn(
                   "text-[11px] font-medium leading-tight",
-                  active ? "text-cream-100" : "text-cocoa-500",
+                  active ? "text-paper-100" : "text-cocoa-500",
                 )}
               >
                 {opt.sub}

@@ -104,7 +104,7 @@ export function Specimen({ specimen }: { specimen: SpecimenData | null }) {
             The figure is written into the sentence below instead, because a
             number a reader has to match to a colour is a number they skip. */}
         <div
-          className="mt-7 h-3 w-full overflow-hidden rounded-full bg-cream-200"
+          className="mt-7 h-3 w-full overflow-hidden rounded-full bg-paper-200"
           role="img"
           aria-label={`Of ${fmtMoney(revenue)} taken in, about ${fmtMoney(takeHome)} reaches the owner, ${keptPct} percent`}
         >

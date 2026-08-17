@@ -223,7 +223,7 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
               border: "1px solid var(--hairline-strong)",
               borderRadius: "999px",
               padding: "0.05rem 0.35rem",
-              background: "var(--cream-100)",
+              background: "var(--paper-100)",
             }}
           >
             sample
@@ -247,7 +247,7 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
               width="98.8"
               height="6"
               rx="3"
-              fill="var(--cream-200)"
+              fill="var(--paper-200)"
               stroke="var(--hairline-strong)"
               strokeWidth="0.6"
             />

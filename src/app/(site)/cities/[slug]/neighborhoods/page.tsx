@@ -235,7 +235,7 @@ export default async function NeighborhoodHub({
                     <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
                       {n.name}
                     </h2>
-                    <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
+                    <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-paper-100 border border-parchment rounded-full px-2 py-0.5">
                       {n.character.replace(/-/g, " ")}
                     </span>
                     {/* Anomaly tags from the new framework. */}
@@ -252,7 +252,7 @@ export default async function NeighborhoodHub({
                           </span>
                         ))}
                     {flavor && (
-                      <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-cream-100 border border-parchment rounded-full px-2 py-0.5">
+                      <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-paper-100 border border-parchment rounded-full px-2 py-0.5">
                         walks {flavor.walkability}
                       </span>
                     )}

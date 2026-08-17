@@ -562,7 +562,7 @@ function VerificationsTab({
                           </a>
                           <a
                             href={`?decision=keep&id=${f.industry_id}`}
-                            className="text-[10px] px-2 py-0.5 rounded border border-parchment bg-cream-100 text-ink-900 hover:bg-cream-200 text-center"
+                            className="text-[10px] px-2 py-0.5 rounded border border-parchment bg-paper-100 text-ink-900 hover:bg-paper-200 text-center"
                           >
                             Keep
                           </a>
@@ -603,7 +603,7 @@ function Pill({ tone, children }: { tone: "good" | "watch" | "bad" | "plain"; ch
     good: "bg-atlas-100 text-atlas-700 border-atlas-300",
     watch: "bg-atlas-50 text-atlas-700 border-atlas-200",
     bad: "bg-clay-100 text-clay-900 border-clay-300",
-    plain: "bg-cream-100 text-ink-900 border-parchment",
+    plain: "bg-paper-100 text-ink-900 border-parchment",
   } as const;
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border font-medium ${map[tone]}`}>
@@ -647,10 +647,10 @@ function Stat({
           ? "bg-ink-900 text-white border-ink-900"
           : accent
           ? "bg-atlas-50 text-atlas-900 border-atlas-300"
-          : "bg-cream-100 border-parchment text-ink-900"
+          : "bg-paper-100 border-parchment text-ink-900"
       } transition`}
     >
-      <div className={`text-xs uppercase tracking-wide font-medium ${active ? "text-cream-200" : "text-ink-700/70"}`}>
+      <div className={`text-xs uppercase tracking-wide font-medium ${active ? "text-paper-200" : "text-ink-700/70"}`}>
         {label}
       </div>
       <div className="mt-0.5 text-xl font-semibold tabular-nums">
@@ -765,7 +765,7 @@ function SmallNTab({ data }: { data: SmallNReport }) {
       <h2 className="text-xl font-semibold text-ink-900">Q12: Small sample</h2>
       <div className="mt-3 grid grid-cols-3 md:grid-cols-6 gap-2 text-sm">
         {Object.entries(data.buckets).map(([k, v]) => (
-          <div key={k} className="p-3 rounded-lg bg-cream-100 border border-parchment">
+          <div key={k} className="p-3 rounded-lg bg-paper-100 border border-parchment">
             <div className="text-xs uppercase text-ink-700/70">{k}</div>
             <div className="text-lg font-semibold text-ink-900 tabular-nums">{v.toLocaleString()}</div>
           </div>
@@ -830,7 +830,7 @@ function PlausibilityTab({ data }: { data: PlausibilityReport }) {
       </h2>
       <div className="mt-3 flex flex-wrap gap-2 text-xs">
         {Object.entries(data.totals.by_check).map(([k, n]) => (
-          <span key={k} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cream-100 border border-parchment text-ink-900">
+          <span key={k} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-paper-100 border border-parchment text-ink-900">
             {k} · {n.toLocaleString()}
           </span>
         ))}
@@ -867,20 +867,20 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
-        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+        <div className="p-3 rounded-lg bg-paper-100 border border-parchment">
           <div className="text-xs uppercase text-ink-700/70">Cells scanned</div>
           <div className="text-lg font-semibold tabular-nums">{t.total_cells_scanned.toLocaleString()}</div>
           <div className="text-[10px] text-ink-700/70">{t.regional_cells_scanned.toLocaleString()} regional + {t.cells_master_scanned.toLocaleString()} US + {t.extrapolated_cells_scanned.toLocaleString()} extrap</div>
         </div>
-        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+        <div className="p-3 rounded-lg bg-paper-100 border border-parchment">
           <div className="text-xs uppercase text-ink-700/70">Peer medians</div>
           <div className="text-lg font-semibold tabular-nums">{t.peer_medians_built.toLocaleString()}</div>
         </div>
-        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+        <div className="p-3 rounded-lg bg-paper-100 border border-parchment">
           <div className="text-xs uppercase text-ink-700/70">Numeric flags</div>
           <div className="text-lg font-semibold tabular-nums text-clay-700">{t.flagged_numeric.toLocaleString()}</div>
         </div>
-        <div className="p-3 rounded-lg bg-cream-100 border border-parchment">
+        <div className="p-3 rounded-lg bg-paper-100 border border-parchment">
           <div className="text-xs uppercase text-ink-700/70">Extreme outliers</div>
           <div className="text-lg font-semibold tabular-nums text-clay-700">{(t.flagged_extreme_regional + t.flagged_extreme_extrap).toLocaleString()}</div>
           <div className="text-[10px] text-ink-700/70">{t.flagged_extreme_regional} regional + {t.flagged_extreme_extrap} extrap</div>
@@ -1046,7 +1046,7 @@ function TierTab({ data }: { data: TierReport }) {
         {Object.entries(data.tier_counts).map(([t, c]) => {
           const v = data.tier_violations[t] || 0;
           return (
-            <div key={t} className="p-3 rounded-lg bg-cream-100 border border-parchment">
+            <div key={t} className="p-3 rounded-lg bg-paper-100 border border-parchment">
               <div className="text-xs uppercase text-ink-700/70">Tier {t}</div>
               <div className="text-lg font-semibold text-ink-900 tabular-nums">{c.toLocaleString()}</div>
               <div className="text-[10px] text-clay-700">{v.toLocaleString()} violations</div>

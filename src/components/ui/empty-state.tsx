@@ -44,7 +44,7 @@ const emptyStateVariants = cva(
       variant: {
         default: "bg-white",
         hatched: "", // bg applied inline due to repeating-linear-gradient
-        muted: "bg-cream-100",
+        muted: "bg-paper-100",
       },
       size: {
         default: "pl-8 pr-6 py-8 sm:pl-10 sm:pr-8 sm:py-10 text-center max-w-2xl",

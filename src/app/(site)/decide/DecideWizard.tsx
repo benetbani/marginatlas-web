@@ -74,7 +74,7 @@ function StepDot({
             ? "bg-atlas-500 text-white"
             : state === "active"
               ? "bg-atlas-100 text-atlas-700 ring-2 ring-atlas-500/40"
-              : "bg-cream-200 text-cocoa-500")
+              : "bg-paper-200 text-cocoa-500")
         }
       >
         {n}

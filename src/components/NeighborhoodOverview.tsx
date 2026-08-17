@@ -430,7 +430,7 @@ export function NeighborhoodOverview({
             {visibleTags.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-parchment bg-cream-100 px-3 py-1 text-xs font-medium text-cocoa-700"
+                className="rounded-full border border-parchment bg-paper-100 px-3 py-1 text-xs font-medium text-cocoa-700"
               >
                 {tagLabel(t)}
               </span>
@@ -522,7 +522,7 @@ export function NeighborhoodOverview({
                 <Link
                   key={r.id}
                   href={`/${cc}/${city.slug}/${nb.slug}/${r.cellSlug}`}
-                  className={`group ${rowClasses} bg-white transition-colors hover:bg-cream-100`}
+                  className={`group ${rowClasses} bg-white transition-colors hover:bg-paper-100`}
                 >
                   <span className="flex min-w-0 items-center gap-2">
                     {picto}

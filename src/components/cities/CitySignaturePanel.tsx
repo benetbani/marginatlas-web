@@ -239,7 +239,7 @@ function ScoreBar({ value, label }: { value: number; label: string }) {
           {v}/10
         </span>
       </div>
-      <div className="h-3 w-full rounded-full bg-cream-200 overflow-hidden">
+      <div className="h-3 w-full rounded-full bg-paper-200 overflow-hidden">
         <div className={"h-full " + tone} style={{ width: `${pct}%` }} />
       </div>
     </div>

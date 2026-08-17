@@ -264,7 +264,7 @@ export function ComboField({
               className={`px-3.5 py-2 cursor-pointer text-sm border-l-2 transition-colors ${
                 focusIdx === i
                   ? "bg-atlas-50 border-atlas-500"
-                  : "border-transparent hover:bg-cream-100"
+                  : "border-transparent hover:bg-paper-100"
               }`}
             >
               <span className="font-medium text-ink-900">{o.label}</span>

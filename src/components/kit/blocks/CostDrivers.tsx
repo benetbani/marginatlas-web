@@ -122,7 +122,7 @@ export function CostDrivers({
 
   if (clean.length === 0) {
     return wrapper(
-      <p className="m-0 rounded-md border border-dashed border-cream-400 bg-cream-100 px-5 py-5 text-[0.8125rem] leading-relaxed text-cocoa-700">
+      <p className="m-0 rounded-md border border-dashed border-paper-400 bg-paper-100 px-5 py-5 text-[0.8125rem] leading-relaxed text-cocoa-700">
         {emptyNote}
       </p>,
     );

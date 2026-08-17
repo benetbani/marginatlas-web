@@ -198,7 +198,7 @@ export function AccountPreview() {
 
 function TierChip({ tier }: { tier: Tier }) {
   const map = {
-    free: "bg-cream-100 border-parchment text-cocoa-700",
+    free: "bg-paper-100 border-parchment text-cocoa-700",
     pro:  "bg-atlas-50 border-atlas-200 text-atlas-700",
     team: "bg-ink-900 border-ink-900 text-white",
   } as const;
@@ -218,7 +218,7 @@ function SavedCells({ cells, cap }: { cells: Cell[]; cap: number }) {
     <>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-display text-xl font-semibold text-ink-900">Your saved cells</h2>
-        <span className="inline-flex items-center gap-2 rounded-full text-xs font-semibold px-2.5 py-1 bg-cream-100 border border-parchment text-cocoa-700">
+        <span className="inline-flex items-center gap-2 rounded-full text-xs font-semibold px-2.5 py-1 bg-paper-100 border border-parchment text-cocoa-700">
           <span className="tabular-nums text-ink-900">{cells.length} of {cap}</span> saved
         </span>
       </div>

@@ -269,7 +269,7 @@ function Ranges() {
             <span>{r.role}</span>
             <span className="tabular-nums text-cocoa-700">${r.m}K</span>
           </div>
-          <div className="relative h-1.5 mt-1 rounded-full bg-cream-100">
+          <div className="relative h-1.5 mt-1 rounded-full bg-paper-100">
             <span
               aria-hidden="true"
               className="absolute inset-y-0 rounded-full"

@@ -214,7 +214,7 @@ export function AddToWatch({ item, variant = "button", className }: AddToWatchPr
             type="button"
             onClick={onUndo}
             className={cn(
-              "inline-flex min-h-[44px] items-center rounded-full px-2 text-xs font-medium text-cocoa-700 underline decoration-cream-400 underline-offset-2 hover:text-ink-900",
+              "inline-flex min-h-[44px] items-center rounded-full px-2 text-xs font-medium text-cocoa-700 underline decoration-paper-400 underline-offset-2 hover:text-ink-900",
               RING,
             )}
           >
@@ -236,7 +236,7 @@ export function AddToWatch({ item, variant = "button", className }: AddToWatchPr
           RING,
           watching
             ? "border-atlas-300 bg-atlas-50 text-atlas-700 hover:bg-atlas-100"
-            : "border-parchment bg-white text-cocoa-700 hover:bg-cream-100 hover:text-ink-900",
+            : "border-parchment bg-white text-cocoa-700 hover:bg-paper-100 hover:text-ink-900",
         )}
       >
         {watching ? (
@@ -251,7 +251,7 @@ export function AddToWatch({ item, variant = "button", className }: AddToWatchPr
           type="button"
           onClick={onUndo}
           className={cn(
-            "inline-flex min-h-[44px] items-center rounded-full px-2 text-xs font-medium text-cocoa-700 underline decoration-cream-400 underline-offset-2 hover:text-ink-900",
+            "inline-flex min-h-[44px] items-center rounded-full px-2 text-xs font-medium text-cocoa-700 underline decoration-paper-400 underline-offset-2 hover:text-ink-900",
             RING,
           )}
         >
@@ -442,7 +442,7 @@ export function WatchTray({ align = "right", className }: WatchTrayProps) {
                   type="button"
                   onClick={onUndo}
                   className={cn(
-                    "inline-flex min-h-[44px] items-center rounded-full px-2 font-medium text-atlas-700 underline decoration-cream-400 underline-offset-2 hover:text-atlas-900",
+                    "inline-flex min-h-[44px] items-center rounded-full px-2 font-medium text-atlas-700 underline decoration-paper-400 underline-offset-2 hover:text-atlas-900",
                     RING,
                   )}
                 >
@@ -478,7 +478,7 @@ export function WatchTray({ align = "right", className }: WatchTrayProps) {
         aria-expanded={open}
         aria-label={`Watch list, ${count} ${count === 1 ? "item" : "items"}`}
         className={cn(
-          "inline-flex min-h-[44px] items-center gap-2 rounded-full border border-parchment bg-white pl-4 pr-3 text-sm font-semibold text-ink-900 shadow-card transition-colors hover:bg-cream-100",
+          "inline-flex min-h-[44px] items-center gap-2 rounded-full border border-parchment bg-white pl-4 pr-3 text-sm font-semibold text-ink-900 shadow-card transition-colors hover:bg-paper-100",
           RING,
         )}
       >

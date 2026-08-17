@@ -12,7 +12,7 @@
      Its two readers below now say white directly. */
   /* Retoned to a true neutral 2026-08-17 in step with the ramp, luminance
      matched (.9222 -> .9216, 1.080:1 -> 1.081:1 on white). */
-  --cream-100: #f6f6f6;
+  --paper-100: #f6f6f6;
   /* Cream purge 2026-08-17: kept in sync with colors.parchment, which stopped
      being cream-300 in disguise. Drives .atlas-rule's 1px rule below. */
   --parchment: #e3e3e3;

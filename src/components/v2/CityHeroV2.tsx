@@ -62,7 +62,7 @@ function parseDensity(s: string): { head: string; tail: string } {
 function StylizedPlaceholder({ cityName }: { cityName: string }) {
   const heights = [0.45, 0.7, 0.55, 0.85, 0.6, 1.0, 0.4, 0.75, 0.5, 0.9, 0.55, 0.7, 0.45];
   return (
-    <div className="absolute inset-0 bg-cream-100 overflow-hidden">
+    <div className="absolute inset-0 bg-paper-100 overflow-hidden">
       {/* sun accent */}
       <div
         className="absolute rounded-full bg-atlas-500"
@@ -189,7 +189,7 @@ export default function CityHeroV2({
 
           {/* RIGHT */}
           <div className="order-1 md:order-2">
-            <div className="relative w-full aspect-[16/9] md:aspect-[4/3] overflow-hidden rounded-2xl border border-parchment bg-cream-100">
+            <div className="relative w-full aspect-[16/9] md:aspect-[4/3] overflow-hidden rounded-2xl border border-parchment bg-paper-100">
               {photoUrl ? (
                 <>
                   <img
@@ -206,7 +206,7 @@ export default function CityHeroV2({
                   {/* lift highlights */}
                   <div
                     className="absolute inset-0 pointer-events-none"
-                    style={{ backgroundColor: colors.cream[100], opacity: 0.08, mixBlendMode: "screen" }}
+                    style={{ backgroundColor: colors.paper[100], opacity: 0.08, mixBlendMode: "screen" }}
                   />
                 </>
               ) : (

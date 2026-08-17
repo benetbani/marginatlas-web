@@ -130,7 +130,7 @@ function MiniToggle<V extends string>({
     <div
       role="group"
       aria-label={ariaLabel}
-      className="inline-flex w-full rounded-full border border-parchment bg-cream-100 p-1"
+      className="inline-flex w-full rounded-full border border-parchment bg-paper-100 p-1"
     >
       {options.map((opt) => {
         const active = opt.value === value;
@@ -225,7 +225,7 @@ export function ProfileChip({ align = "right", className }: ProfileChipProps) {
           "inline-flex min-h-[44px] max-w-[14rem] items-center gap-1.5 rounded-full border px-3 text-sm font-medium transition-colors",
           RING,
           showSet
-            ? "border-parchment bg-white text-ink-900 hover:bg-cream-100"
+            ? "border-parchment bg-white text-ink-900 hover:bg-paper-100"
             : "border-dashed border-cocoa-300 bg-transparent text-cocoa-700 hover:border-cocoa-500 hover:text-ink-900",
         )}
       >

@@ -181,7 +181,7 @@ export function AnswerFirstMasthead({
             any difficulty judgment. */}
         {breakIn ? (
           <div className="mt-5">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-parchment bg-cream-100 px-3 py-1 text-xs font-medium text-cocoa-700">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-parchment bg-paper-100 px-3 py-1 text-xs font-medium text-cocoa-700">
               {breakIn}
             </span>
           </div>

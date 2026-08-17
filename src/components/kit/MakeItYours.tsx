@@ -210,7 +210,7 @@ export function MakeItYours({
         aria-expanded={open}
         aria-controls={regionId}
         className={cn(
-          "flex min-h-[44px] w-full items-center justify-between gap-3 rounded-2xl px-4 py-3 text-left transition-colors hover:bg-cream-100 motion-reduce:transition-none",
+          "flex min-h-[44px] w-full items-center justify-between gap-3 rounded-2xl px-4 py-3 text-left transition-colors hover:bg-paper-100 motion-reduce:transition-none",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
         )}
       >
@@ -243,7 +243,7 @@ export function MakeItYours({
         {/* The live result: adjusted take-home with the canonical anchored beside
             it, and the adjusted margin read underneath. ResetAnchor collapses to
             the single value when the reader has not moved off typical. */}
-        <div className="rounded-xl bg-cream-100 px-4 py-3">
+        <div className="rounded-xl bg-paper-100 px-4 py-3">
           <ResetAnchor
             canonical={canonical.takeHome}
             adjusted={adjustedTakeHome}
@@ -263,7 +263,7 @@ export function MakeItYours({
                 <span className="text-[11px] font-medium uppercase tracking-wide text-cocoa-500">
                   Typical
                 </span>
-                <span className="line-through decoration-cream-400">
+                <span className="line-through decoration-paper-400">
                   {canonical.marginPct.toFixed(1)}%
                 </span>
               </span>

@@ -72,7 +72,7 @@ export default function NotFound() {
         <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {HATCHES.map((h) => (
             <li key={h.href}>
-              <Link href={h.href} className="block rounded-lg border border-parchment bg-white hover:bg-cream-100 hover:border-atlas-500 transition-colors p-5">
+              <Link href={h.href} className="block rounded-lg border border-parchment bg-white hover:bg-paper-100 hover:border-atlas-500 transition-colors p-5">
                 <div className="font-semibold text-ink-900">{h.label}</div>
                 <div className="text-sm text-cocoa-700 mt-1 leading-relaxed">{h.desc}</div>
               </Link>

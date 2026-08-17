@@ -76,7 +76,7 @@ export function OperatorVoices({
         className={[className].filter(Boolean).join(" ")}
       >
         <SectionEyebrow className="mb-3.5">{title}</SectionEyebrow>
-        <div className="max-w-prose rounded-md border border-dashed border-cream-400 bg-cream-100 px-5 py-6">
+        <div className="max-w-prose rounded-md border border-dashed border-paper-400 bg-paper-100 px-5 py-6">
           <p className="font-display text-lg italic leading-relaxed text-cocoa-700">
             {gathering != null && gathering !== false
               ? gathering

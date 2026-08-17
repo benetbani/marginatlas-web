@@ -160,7 +160,7 @@ export function CitySearchBox({ cities }: { cities: CitySearchItem[] }) {
                 className={`flex items-center gap-2.5 px-4 py-2.5 text-sm transition-colors ${
                   i === highlighted
                     ? "bg-atlas-100 text-atlas-900"
-                    : "text-ink-900 hover:bg-cream-100"
+                    : "text-ink-900 hover:bg-paper-100"
                 }`}
               >
                 <CountryFlag iso2={m.iso2} className="w-5" />

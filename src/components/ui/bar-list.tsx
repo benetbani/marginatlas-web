@@ -108,7 +108,7 @@ export function BarList({
         const pct = Math.max(2, (item.value / max) * 100);
         const rowClassName = cn(
           "grid gap-3 items-center transition-colors",
-          item.href ? "hover:bg-cream-100/70 rounded-md -mx-2 px-2 cursor-pointer" : "",
+          item.href ? "hover:bg-paper-100/70 rounded-md -mx-2 px-2 cursor-pointer" : "",
           rowPadding,
         );
         const rowStyle = {
@@ -138,7 +138,7 @@ export function BarList({
               </div>
               <div
                 className={cn(
-                  "w-full rounded-sm bg-cream-200 overflow-hidden",
+                  "w-full rounded-sm bg-paper-200 overflow-hidden",
                   barHeight,
                 )}
                 aria-hidden="true"

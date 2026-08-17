@@ -145,7 +145,7 @@ export default function CountryScorecardV2({
                 <li key={ind.name}>
                   <a
                     href={ind.href}
-                    className="flex items-center justify-between py-2.5 hover:bg-cream-100 -mx-2 px-2 transition-colors duration-150 no-underline"
+                    className="flex items-center justify-between py-2.5 hover:bg-paper-100 -mx-2 px-2 transition-colors duration-150 no-underline"
                   >
                     <span className="font-sans text-sm text-ink-900 truncate pr-2">
                       {ind.name}
@@ -167,7 +167,7 @@ export default function CountryScorecardV2({
                 <li key={city.name}>
                   <a
                     href={city.href}
-                    className="flex items-center justify-between py-2.5 hover:bg-cream-100 -mx-2 px-2 transition-colors duration-150 no-underline"
+                    className="flex items-center justify-between py-2.5 hover:bg-paper-100 -mx-2 px-2 transition-colors duration-150 no-underline"
                   >
                     <span className="font-sans text-sm text-ink-900 truncate pr-2">
                       {city.name}

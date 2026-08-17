@@ -197,7 +197,7 @@ export default async function PerCountryCoverage({
         </Link>
         <Link
           href="/coverage"
-          className="px-4 py-2 rounded-full bg-cream-100 border border-parchment text-ink-900 hover:bg-white transition font-medium"
+          className="px-4 py-2 rounded-full bg-paper-100 border border-parchment text-ink-900 hover:bg-white transition font-medium"
         >
           Back to coverage report
         </Link>
@@ -216,7 +216,7 @@ function Stat({
   accent?: boolean;
 }) {
   return (
-    <div className="p-4 rounded-xl bg-cream-100 border border-parchment">
+    <div className="p-4 rounded-xl bg-paper-100 border border-parchment">
       <div className="text-xs uppercase tracking-wide text-ink-700/70 font-medium">
         {label}
       </div>

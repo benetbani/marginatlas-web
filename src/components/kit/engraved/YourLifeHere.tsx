@@ -141,7 +141,7 @@ export function YourLifeHere({ dimensions, line, sample, className }: YourLifeHe
                   height: "34px",
                   borderRadius: "9999px",
                   border: "1px solid var(--hairline-strong)",
-                  background: "var(--cream-100)",
+                  background: "var(--paper-100)",
                   color: t.fg,
                   marginTop: "1px",
                 }}

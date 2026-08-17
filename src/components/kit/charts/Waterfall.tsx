@@ -62,7 +62,7 @@ const COST_FILL = [
   "bg-ink-500",
   "bg-cocoa-500",
   "bg-ink-300",
-  "bg-cream-400",
+  "bg-paper-400",
 ] as const;
 
 export function Waterfall({
@@ -193,7 +193,7 @@ function Row({
       </div>
       {/* The track sits second on desktop (the middle column) and last on mobile
           (full width across both columns). order utilities reorder it per breakpoint. */}
-      <div className="relative order-last col-span-2 h-4 rounded-[3px] bg-cream-200 sm:order-none sm:col-span-1">
+      <div className="relative order-last col-span-2 h-4 rounded-[3px] bg-paper-200 sm:order-none sm:col-span-1">
         {children}
       </div>
       <div

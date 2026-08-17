@@ -64,7 +64,7 @@ export function ResetAnchor({
             <span className="text-[11px] font-medium uppercase tracking-wide text-cocoa-500">
               Typical
             </span>
-            <span className="line-through decoration-cream-400">
+            <span className="line-through decoration-paper-400">
               {format(canonical)}
             </span>
           </span>
@@ -81,7 +81,7 @@ export function ResetAnchor({
           type="button"
           onClick={onReset}
           className={cn(
-            "mt-1 inline-flex h-11 w-fit items-center gap-1.5 rounded-full px-3 text-sm font-medium text-cocoa-700 transition-colors hover:bg-cream-100 hover:text-ink-900",
+            "mt-1 inline-flex h-11 w-fit items-center gap-1.5 rounded-full px-3 text-sm font-medium text-cocoa-700 transition-colors hover:bg-paper-100 hover:text-ink-900",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
           )}
         >

@@ -272,7 +272,7 @@ export function DistributionVisual({ p10, p50, p90, maxValue }: Props) {
         {/* The band, 24px tall. Background uses the atlas palette:
             band fill is atlas-700 at 70% opacity, typical marker is
             atlas-800. No amber, no aquamarine, no generic teal. */}
-        <div className="relative h-6 rounded-full border border-parchment bg-cream-100">
+        <div className="relative h-6 rounded-full border border-parchment bg-paper-100">
           <div
             className="absolute inset-y-0 rounded-full bg-atlas-700"
             style={{

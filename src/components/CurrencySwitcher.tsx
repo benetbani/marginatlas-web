@@ -48,7 +48,7 @@ export function CurrencySwitcher() {
   }
 
   return (
-    <div className="inline-flex items-center gap-1 rounded-full bg-cream-100 border border-parchment p-0.5 text-xs">
+    <div className="inline-flex items-center gap-1 rounded-full bg-paper-100 border border-parchment p-0.5 text-xs">
       {CURRENCIES.map((c) => (
         <button
           key={c.code}

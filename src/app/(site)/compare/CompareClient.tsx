@@ -1134,7 +1134,7 @@ export function CompareClient({
           <button
             type="button"
             onClick={copyShareLink}
-            className="rounded-full border border-parchment bg-cream-100 px-3.5 py-1.5 text-xs font-medium text-ink-900 transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/30"
+            className="rounded-full border border-parchment bg-paper-100 px-3.5 py-1.5 text-xs font-medium text-ink-900 transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/30"
           >
             Copy share link
           </button>
@@ -1160,7 +1160,7 @@ export function CompareClient({
             </p>
           </div>
         ) : spansCountries && anyData ? (
-          <div className="mt-6 rounded-lg border border-cocoa-200 bg-cream-100 p-4">
+          <div className="mt-6 rounded-lg border border-cocoa-200 bg-paper-100 p-4">
             <SectionEyebrow size="md" className="mb-1.5">
               Reading across countries
             </SectionEyebrow>
@@ -1467,7 +1467,7 @@ function WeightingPanel({
                 <div
                   key={m.key}
                   className={cn(
-                    "rounded-md border border-parchment/70 bg-cream-75 px-4 py-3",
+                    "rounded-md border border-parchment/70 bg-paper-75 px-4 py-3",
                     inert ? "opacity-60" : "",
                   )}
                 >
@@ -1529,7 +1529,7 @@ function WeightingPanel({
               <button
                 type="button"
                 onClick={onReset}
-                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-cocoa-700 transition-colors hover:bg-cream-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-cocoa-700 transition-colors hover:bg-paper-100 hover:text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
               >
                 <svg
                   viewBox="0 0 16 16"
@@ -1714,7 +1714,7 @@ function GroupBlockStacked({
           return (
             <div
               key={row.label}
-              className="rounded-md border border-parchment/70 bg-cream-75 px-4 py-3"
+              className="rounded-md border border-parchment/70 bg-paper-75 px-4 py-3"
             >
               <div className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
                 {row.label}

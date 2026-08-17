@@ -119,13 +119,13 @@ function Specimen({ c }: { c: Candidate }) {
       className="bg-white border border-parchment rounded-lg shadow-card overflow-hidden"
     >
       {/* candidate header bar */}
-      <header className="flex items-center justify-between gap-4 px-6 py-4 border-b border-parchment bg-cream-100">
+      <header className="flex items-center justify-between gap-4 px-6 py-4 border-b border-parchment bg-paper-100">
         <div className="flex items-baseline gap-3">
           <h2 data-typography="custom" className="text-2xl font-semibold text-ink-900" style={serif}>
             {c.name}
           </h2>
           {c.status === "current" ? (
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-700 bg-cream-200 rounded-full px-2.5 py-0.5">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-700 bg-paper-200 rounded-full px-2.5 py-0.5">
               current interim
             </span>
           ) : (
@@ -245,7 +245,7 @@ function Specimen({ c }: { c: Candidate }) {
         </p>
 
         {/* the read */}
-        <div className="mt-7 rounded-md bg-cream-100 px-5 py-4">
+        <div className="mt-7 rounded-md bg-paper-100 px-5 py-4">
           <p className="text-sm text-ink-800">{c.read}</p>
           <p className="mt-1.5 text-sm text-ink-500">{c.figures}</p>
         </div>
@@ -279,7 +279,7 @@ export default function FontShowcasePage() {
           either way. Scroll, compare the mastheads and the money, and trust
           the one that feels like a wise guide rather than a costume.
         </p>
-        <p className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-700 bg-cream-200 rounded-full px-3 py-1">
+        <p className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-700 bg-paper-200 rounded-full px-3 py-1">
           Type specimen &middot; sample values &middot; not a live page
         </p>
       </div>

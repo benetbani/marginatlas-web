@@ -811,8 +811,8 @@
      ramp in design-tokens.ts. These are the CSS mirror of the same two steps
      and would otherwise have kept serving warm sand to the engraved sections
      after the ramp itself went neutral. */
-  --cream-100: #f6f6f6; /* muted surface */
-  --cream-200: #eeeeee; /* mid meaning bg */
+  --paper-100: #f6f6f6; /* muted surface */
+  --paper-200: #eeeeee; /* mid meaning bg */
 
   /* ---- semantic engraved aliases (what the components read) ------------- */
   --surface-card: var(--atlas-surface-card); /* white card, = cream-50 */
@@ -995,7 +995,7 @@
   background: var(--surface-card);
 }
 .eng-score__cell--empty {
-  background: var(--cream-100);
+  background: var(--paper-100);
 }
 .eng-score__top {
   display: flex;
@@ -1057,7 +1057,7 @@
   padding: 16px 16px;
   border: 1px dashed var(--hairline-strong);
   border-radius: 12px;
-  background: var(--cream-100);
+  background: var(--paper-100);
 }
 .eng-sample__mark {
   flex: none;
@@ -1224,7 +1224,7 @@
 .eng-paybar__track {
   position: relative;
   height: 12px;
-  background: var(--cream-200);
+  background: var(--paper-200);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-full);
   overflow: hidden;
@@ -1604,7 +1604,7 @@
   height: 38px;
   border-radius: 9999px;
   border: 1px solid var(--hairline-strong);
-  background: var(--cream-100);
+  background: var(--paper-100);
   color: var(--accent);
 }
 .eng-local__text {
@@ -1663,7 +1663,7 @@
 .eng-vs__track {
   position: relative;
   height: 13px;
-  background: var(--cream-200);
+  background: var(--paper-200);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-full);
   overflow: hidden;
@@ -1825,7 +1825,7 @@
   gap: 26px;
   padding: 26px 28px;
   overflow: hidden;
-  background: var(--cream-100);
+  background: var(--paper-100);
   border: 1px solid var(--hairline-strong);
   border-radius: var(--radius-xl);
 }

@@ -135,15 +135,17 @@ export const PAGE_SECTION_ORDER: Record<string, readonly string[]> = {
    and the comment below said so. It survived the palette gate because that
    gate reads src/components, src/app and src/styles, and this file is in
    src/lib. A tone left defined is a tone that gets used again. */
-/* A second dead tone left with it, 2026-08-17. One member was named for the
-   ramp's lightest step and resolved to exactly the same class as "white", one
-   line below it in the same table: two tone names, one class, one of them
-   carrying a word the founder banned. Deleted rather than renamed, for the
-   reason the note above gives. */
+/* TWO MORE DEAD TONES LEFT WITH IT, 2026-08-17, both named after steps of the
+   ramp the founder banned. One resolved to exactly the same class as "white",
+   one line below it in the same table: two tone names, one class. The other was
+   the last member naming a tint, and no entry in the map below had selected
+   either since the 2026-06-06 white reset. Deleted rather than renamed to the
+   ramp's new name, for the reason the note above gives: a tone left defined is
+   a tone that gets used again, and a tint that comes back through a tone name
+   is how a banned colour returns without anybody choosing it. */
 export type SectionTone =
   | "ink-dark"
   | "white"
-  | "cream-100"
   // "Paper" is intentionally transparent. The section adds NO
   // background of its own so the body's atlas-paper pattern shows
   // through. Use for sections that should feel like part of the page
@@ -242,7 +244,6 @@ export const SECTION_TONES: Record<string, SectionTone> = {
 export const TONE_CLASSES: Record<SectionTone, string> = {
   "ink-dark": "atlas-paper-dark",
   "white": "bg-white",
-  "cream-100": "bg-cream-100",
   "paper": "",
 };
 

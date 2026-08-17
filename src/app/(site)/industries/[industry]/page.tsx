@@ -466,7 +466,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                cities resolve, so the link is always safe to show. */}
             <Link
               href={`/industries/${activitySlug}/across`}
-              className="group mt-3 inline-flex items-center gap-2 rounded-full border border-parchment bg-white px-4 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-300 hover:bg-cream-100"
+              className="group mt-3 inline-flex items-center gap-2 rounded-full border border-parchment bg-white px-4 py-2 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-300 hover:bg-paper-100"
             >
               <span>
                 Not sure where? See {tradeHeadingNoun} across the
@@ -588,7 +588,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                carry. Self-suppresses when no character is written. */}
             {character ? (
               <div className="mt-7 max-w-3xl space-y-4">
-                <div className="rounded-lg border border-parchment bg-cream-100 p-5">
+                <div className="rounded-lg border border-parchment bg-paper-100 p-5">
                   <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-atlas-700">
                     How the money actually works
                   </div>

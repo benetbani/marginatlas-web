@@ -73,9 +73,9 @@ const TAG_CHIP: Record<string, string> = {
   "high-footfall": "bg-atlas-50 text-atlas-700",
   "restaurant row": "bg-atlas-50 text-atlas-700",
   "up-and-coming": "bg-atlas-50 text-atlas-700",
-  "quiet residential": "bg-cream-200 text-cocoa-700",
+  "quiet residential": "bg-paper-200 text-cocoa-700",
 };
-const NEUTRAL_CHIP = "bg-cream-200 text-cocoa-700";
+const NEUTRAL_CHIP = "bg-paper-200 text-cocoa-700";
 
 /**
  * A tiny deterministic abstract street-line motif. A gentle warm-taupe polyline
@@ -103,7 +103,7 @@ function StreetLine({ seed }: { seed: number }) {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="stroke-cream-400"
+        className="stroke-paper-400"
       />
       <circle cx="46" cy={last[1]} r="2.4" className="fill-atlas-500" />
     </svg>
@@ -121,7 +121,7 @@ export function StreetCharacter({
     return (
       <section className={className} aria-label={title}>
         <SectionEyebrow className="mb-3">{title}</SectionEyebrow>
-        <div className="rounded-md border border-dashed border-cream-400 bg-cream-100 px-5 py-5 text-[13px] leading-relaxed text-cocoa-700">
+        <div className="rounded-md border border-dashed border-paper-400 bg-paper-100 px-5 py-5 text-[13px] leading-relaxed text-cocoa-700">
           We have not mapped the streets in this district yet. Street character
           appears here once the blocks are walked.
         </div>

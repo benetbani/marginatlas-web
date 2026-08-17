@@ -115,7 +115,7 @@ export default function PricingPage() {
           <div className="atlas-card-soft mt-10 overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="bg-cream-100">
+                <tr className="bg-paper-100">
                   <th className="text-left px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-semibold text-cocoa-700/85">Feature</th>
                   {["Free", "Basic", "Premium"].map((c) => (
                     <th key={c} scope="col" className="text-center px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-semibold text-cocoa-700/85" style={{ width: "16%" }}>
@@ -130,7 +130,7 @@ export default function PricingPage() {
                   return (
                     <Fragment key={row.label}>
                       {showGroup && (
-                        <tr className="bg-cream-100">
+                        <tr className="bg-paper-100">
                           <td colSpan={4} className="px-4 py-2 text-[10px] tracking-[0.2em] uppercase font-semibold text-atlas-700">
                             {row.group}
                           </td>
@@ -205,7 +205,7 @@ function FreeCard() {
         {FREE_DESCRIPTION}
       </p>
       <div className="mt-6">
-        <span className="inline-flex w-full justify-center items-center gap-1.5 rounded-full py-2.5 text-sm font-semibold bg-cream-100 border border-parchment text-cocoa-700">
+        <span className="inline-flex w-full justify-center items-center gap-1.5 rounded-full py-2.5 text-sm font-semibold bg-paper-100 border border-parchment text-cocoa-700">
           You're using this now
         </span>
       </div>

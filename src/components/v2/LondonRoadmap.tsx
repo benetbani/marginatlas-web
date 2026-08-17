@@ -11,7 +11,7 @@ import { colors } from "@/lib/design-tokens";
 // in vermillion. Conformed from the cool-grey export palette 2026-06-12.
 const MAP = {
   bg: colors.white,
-  block: colors.cream[100],
+  block: colors.paper[100],
   blockStroke: colors.parchment,
   road: colors.ink[700],
   water: colors.ink[900],

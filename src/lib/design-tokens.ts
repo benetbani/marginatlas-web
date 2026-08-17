@@ -32,7 +32,10 @@
  * delivering serious data value. This reverses the earlier warmth-drain.
  *
  *   - atlas    — terracotta / burnt-sienna brand accent (the only loud color)
- *   - cream    — warm-white-to-warm-sand paper surfaces
+ *   - paper    — the surface ladder, true neutrals. Was called cream until
+ *                2026-08-17 and was a warm-white-to-warm-sand ramp until the
+ *                purge that preceded the rename. Neither is true any more and
+ *                neither may become true again.
  *   - ink      — warm brown-black text ladder
  *   - cocoa    — text aliases, re-warmed to real browns
  *   - moss     — positive deltas (YoY up, "good" indicator)
@@ -62,7 +65,33 @@ export const colors = {
     800: "#701000",
     900: "#4a0a00",
   },
-  cream: {
+  /**
+   * THE SURFACE LADDER. Renamed from `cream` to `paper` on 2026-08-17, the last
+   * step of the purge the founder ordered on 2026-08-16: "to remove completely
+   * this creamy color from the page. That's totally not allowed."
+   *
+   * The COLOURS were migrated in the four ticks recorded below and measured
+   * each time. What was left was the WORD, on a ramp that by then held no cream
+   * at all, and a word is not cosmetic here: a token called cream is the
+   * invitation the next author accepts when they want a paper tone, and the ban
+   * comes back a fifth time. The ratchet in scripts/verify_no_cream.ts counts
+   * names for exactly that reason.
+   *
+   * `paper` is not invented. It is what this repo already calls this role at
+   * this exact value: `--paper:#f7f7f8` in src/styles/atlas-spine.css is the 75
+   * step byte for byte, and `--atlas-surface-paper` is the body ground. That
+   * file's first ratified rule reads "NEUTRAL PALETTE. No cream, no warm tint",
+   * so converging on the name inherits a rule that forbids warmth rather than a
+   * name that invites it. Tailwind ships no `paper` key, so nothing collides.
+   *
+   * Two steps did not come across, because both were one value under two names,
+   * which is the mechanism that hid cream for three passes: 50 was #ffffff and
+   * is now `white`, 300 was #e3e3e3 and is now `parchment`. The ladder has holes
+   * at those numbers on purpose. The remaining four are TRUE NEUTRALS, s=0%,
+   * except 75 which is the cool ground at h 240; nothing here is warm and
+   * nothing that gets added here may be.
+   */
+  paper: {
     // THE LIGHTEST STEP IS GONE, 2026-08-17, and this too is a collapse rather
     // than a deletion. It was #ffffff: white, under a name that said cream, for
     // 150 call sites. White already has a name, in this repo and in every other
@@ -98,9 +127,6 @@ export const colors = {
     // tokens that sit on this ground rather than assumed: largest change 0.42
     // on a ratio of 16.7, and ZERO AA verdicts flip in either direction.
     //
-    // The NAME is still wrong: this is no longer a cream. Renaming the ramp is
-    // the last step of the purge, deliberately separate, because a rename
-    // touches every call site and must not ride along with a colour change.
     75: "#f7f7f8", // cool neutral app ground (page surface behind cards)
 
     // THE MUTED-FILL RETONE, 2026-08-17. These four steps were the last warm
@@ -138,11 +164,6 @@ export const colors = {
     // 380-odd call sites against this step's twenty, and because a hairline
     // deserves a name that says hairline rather than a rung on a surface ladder.
     // Every reader moved across with no change of value.
-    //
-    // The NAME is still wrong on all of these. The ramp holds no cream after
-    // this change; renaming it is the last step of the purge and is deliberately
-    // kept separate, because a rename touches every call site and must not ride
-    // along with a colour change.
     100: "#f6f6f6", // muted surface (thead tints, chips, inset panels)
     200: "#eeeeee",
     400: "#bfbfbf", // chart bar mass, dashed rules, underlines
@@ -305,7 +326,7 @@ export const colors = {
  * classes for anything that might need theming later.
  */
 export const semanticColors = {
-  background: colors.cream[75], // warm app ground (SaaS reformation 2026-06-12)
+  background: colors.paper[75], // cool neutral app ground
   foreground: colors.ink[900],
   card: colors.white, // article card
   cardForeground: colors.ink[900],
@@ -319,7 +340,7 @@ export const semanticColors = {
   danger: colors.clay[700], // maroon (destructive), distinct from brand red
   dangerSurface: colors.clay[100],
   muted: colors.ink[500],
-  mutedSurface: colors.cream[100],
+  mutedSurface: colors.paper[100],
 } as const;
 
 // =============================================================
@@ -510,7 +531,7 @@ export const breakpoints = {
 export const tailwindColors = {
   ink: colors.ink,
   atlas: colors.atlas,
-  cream: colors.cream,
+  paper: colors.paper,
   parchment: colors.parchment,
   graphite: colors.graphite,
   clay: colors.clay,

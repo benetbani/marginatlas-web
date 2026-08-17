@@ -48,7 +48,7 @@ function VenueNoteShell({
     >
       <span
         aria-hidden="true"
-        className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-parchment bg-cream-100 text-cocoa-700"
+        className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-parchment bg-paper-100 text-cocoa-700"
       >
         {icon}
         <span className="sr-only">{iconLabel}</span>

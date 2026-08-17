@@ -49,7 +49,7 @@ function isNum(v: number | null | undefined): v is number {
 // is handled separately in moss, so these never carry the accent.
 const COST_FILL = [
   "bg-cocoa-300",
-  "bg-cream-400",
+  "bg-paper-400",
   "bg-cocoa-100",
   "bg-parchment",
   "bg-cocoa-500/70",

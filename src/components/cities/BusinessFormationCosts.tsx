@@ -105,7 +105,7 @@ export function BusinessFormationCosts({
         <div className="rounded-2xl border border-parchment bg-white overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-cream-100 border-b border-parchment">
+              <tr className="bg-paper-100 border-b border-parchment">
                 <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                   Tier
                 </th>

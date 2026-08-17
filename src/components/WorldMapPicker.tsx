@@ -63,7 +63,7 @@ const COLORS = {
   bg: tokenColors.white, // map card surface
   // Continents stay very light per founder 2026-05-26, now the warm
   // cream-200 step instead of the cool #ECECEC.
-  parchment: tokenColors.cream[200],
+  parchment: tokenColors.paper[200],
   /* These two were called `amber` and `amberActive` and had held VERMILLION
      for as long as the comment beside them said so. A key named after a banned
      colour is how the word survives a purge and how the colour comes back: the

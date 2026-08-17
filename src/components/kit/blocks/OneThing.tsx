@@ -91,7 +91,7 @@ export function OneThing({
             Last checked {lastChecked}
           </span>
         ) : null}
-        {haveStamp ? <span aria-hidden="true" className="text-cream-400">&middot;</span> : null}
+        {haveStamp ? <span aria-hidden="true" className="text-paper-400">&middot;</span> : null}
         <span>
           See a number that looks off?{" "}
           {haveFlag ? (

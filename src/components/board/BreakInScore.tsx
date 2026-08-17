@@ -153,7 +153,7 @@ function DriverBar({
           {pct}
         </span>
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-cream-100">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-paper-100">
         <div
           className="h-full rounded-full bg-atlas-500"
           style={{ width: `${pct}%` }}

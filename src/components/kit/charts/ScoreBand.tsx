@@ -132,7 +132,7 @@ export function ScoreBand({
       </div>
 
       {/* the band: a quiet atlas fill to the score, opaque, no gridline */}
-      <div className="relative h-2.5 overflow-hidden rounded-full border border-parchment bg-cream-200">
+      <div className="relative h-2.5 overflow-hidden rounded-full border border-parchment bg-paper-200">
         {have ? (
           <div
             className="absolute inset-y-0 left-0 rounded-full bg-chart-primary/85"

@@ -172,7 +172,7 @@ export default async function DataQualityDashboard({
               .map(([country, n]) => (
                 <div
                   key={country}
-                  className="px-3 py-2 rounded-lg bg-cream-100 border border-parchment"
+                  className="px-3 py-2 rounded-lg bg-paper-100 border border-parchment"
                 >
                   <div className="font-semibold text-ink-900">{country}</div>
                   <div className="tabular-nums text-cocoa-700/80">
@@ -204,7 +204,7 @@ export default async function DataQualityDashboard({
                 {Object.entries(t.null_rates).map(([field, rate]) => (
                   <div
                     key={field}
-                    className="px-3 py-2 rounded-lg bg-cream-100 border border-parchment"
+                    className="px-3 py-2 rounded-lg bg-paper-100 border border-parchment"
                   >
                     <div className="font-medium text-ink-900 text-xs">
                       {field}

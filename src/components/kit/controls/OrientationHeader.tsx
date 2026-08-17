@@ -73,7 +73,7 @@ export function OrientationHeader({
       aria-label="You are here"
       className={cn(
         sticky ? "sticky top-0 z-sticky" : "",
-        "flex items-center overflow-x-auto border-b border-parchment/60 bg-cream-75/90 px-4 py-2 text-sm backdrop-blur supports-[backdrop-filter]:bg-cream-75/75",
+        "flex items-center overflow-x-auto border-b border-parchment/60 bg-paper-75/90 px-4 py-2 text-sm backdrop-blur supports-[backdrop-filter]:bg-paper-75/75",
         className,
       )}
     >

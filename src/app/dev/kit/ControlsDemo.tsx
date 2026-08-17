@@ -132,7 +132,7 @@ export function ControlsDemo() {
         <button
           type="button"
           onClick={() => setPending((p) => !p)}
-          className="mb-4 inline-flex h-11 items-center rounded-full border border-parchment bg-white px-4 text-sm font-medium text-ink-900 transition-colors hover:bg-cream-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+          className="mb-4 inline-flex h-11 items-center rounded-full border border-parchment bg-white px-4 text-sm font-medium text-ink-900 transition-colors hover:bg-paper-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
         >
           {pending ? "Stop pending" : "Simulate server update"}
         </button>

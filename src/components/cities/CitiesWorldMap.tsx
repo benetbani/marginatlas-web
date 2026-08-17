@@ -110,7 +110,7 @@ const PROJECTION_CENTER: [number, number] = [0, 6.886];
 const MARKER_FILL = tokenColors.atlas[700]; //  vermillion
 const MARKER_STROKE = tokenColors.atlas[800]; // deeper vermillion
 const TOOLTIP_BG = tokenColors.white;
-const TOOLTIP_BORDER = tokenColors.cream[400];
+const TOOLTIP_BORDER = tokenColors.paper[400];
 const TOOLTIP_TEXT = tokenColors.ink[900];
 
 /* Served from public/, not unpkg.
@@ -414,7 +414,7 @@ export default function CitiesWorldMap({
           type="button"
           onClick={handleZoomIn}
           aria-label="Zoom in"
-          className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-white border border-parchment text-ink-900 hover:bg-cream-100 transition shadow-sm text-base font-semibold"
+          className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-white border border-parchment text-ink-900 hover:bg-paper-100 transition shadow-sm text-base font-semibold"
         >
           +
         </button>
@@ -422,7 +422,7 @@ export default function CitiesWorldMap({
           type="button"
           onClick={handleZoomOut}
           aria-label="Zoom out"
-          className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-white border border-parchment text-ink-900 hover:bg-cream-100 transition shadow-sm text-base font-semibold"
+          className="w-8 h-8 inline-flex items-center justify-center rounded-md bg-white border border-parchment text-ink-900 hover:bg-paper-100 transition shadow-sm text-base font-semibold"
         >
           &minus;
         </button>

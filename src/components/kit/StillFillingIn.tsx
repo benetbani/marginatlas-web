@@ -44,7 +44,7 @@ export function StillFillingIn({
         {sections.map((s) => (
           // The anchor lives on the chip, so a nav jump to this section lands here.
           <li key={s.id} id={s.id}>
-            <span className="inline-flex items-center rounded-full border border-parchment bg-cream-100 px-3 py-1 text-[12px] font-medium text-cocoa-700">
+            <span className="inline-flex items-center rounded-full border border-parchment bg-paper-100 px-3 py-1 text-[12px] font-medium text-cocoa-700">
               {s.label}
             </span>
           </li>

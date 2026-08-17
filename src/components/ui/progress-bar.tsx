@@ -99,7 +99,7 @@ export function ProgressBar({
       )}
       <div
         className={cn(
-          "w-full rounded-full bg-cream-200 overflow-hidden",
+          "w-full rounded-full bg-paper-200 overflow-hidden",
           trackHeight,
         )}
         role="progressbar"
