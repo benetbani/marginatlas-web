@@ -663,12 +663,18 @@ export default async function CityPage({
                 eyebrow="What owners keep"
                 heading={`What an owner keeps in ${city.name}`}
               >
+                {/* 47 words down to 22, and nothing a reader needed is gone.
+                    "The everyday businesses you find in almost any city, and
+                    what a typical owner keeps after tax here" restated the
+                    table's own caption two elements below it, and the sentence
+                    explaining the break-in chip restated the chip's column
+                    header. What survives is the read, the direction of the ease
+                    scale, and the provenance, which is the one part that is
+                    load-bearing rather than descriptive. */}
                 <p className="mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
-                  The everyday businesses you find in almost any city, and what a
-                  typical owner keeps after tax here. The break-in chip is the same
-                  0 to 100 read each business shows on its own page; higher means
-                  easier to get started. Modeled from local business demography.
-                  Directional.
+                  What a typical owner keeps here, trade by trade. A higher ease
+                  score means an easier start. Modeled from local business
+                  demography, directional.
                 </p>
                 <OwnerKeepTable
                   framed={false}
@@ -701,13 +707,24 @@ export default async function CityPage({
                business. The curated London exemplar; self-omits elsewhere until
                a city's own areas are curated. */}
             {bestAreas ? (
+              /* The one section on this page that is pure prose: four rows of
+                 area, trade and reason, with no figure, no chart and no cover
+                 art. It is where a mark earns its place rather than decorates,
+                 and `neighborhood-street` is the kit's own spot for exactly
+                 this read ("the few blocks that set the tone, where a trade
+                 lives or dies"). BeatCard hosts it top-right, and hides it
+                 below the sm breakpoint, so the phone layout is untouched.
+                 Restraint is the kit's documented rule: signature beats only,
+                 which is why this is the page's one spot and not eleven. */
               <BeatCard
                 id="best-areas"
                 eyebrow="Best areas"
                 heading="Where to set up, by what you are opening"
+                spot="neighborhood-street"
               >
+                {/* The second sentence restated the heading, so it is gone. */}
                 <p className="mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
-                  No single area suits every business. These are the parts of {city.name} that fit a given trade, and the reason they do.
+                  No single area suits every business. These are the parts of {city.name} that fit a given trade.
                 </p>
                 <ul className="divide-y divide-parchment border-y border-parchment">
                   {bestAreas.map((a) => (
