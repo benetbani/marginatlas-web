@@ -41,7 +41,6 @@
  *   - moss     — positive deltas (YoY up, "good" indicator)
  *   - clay     — destructive / strong-danger (deep maroon, kept distinct from brand red)
  *   - amber    — warnings / caution (soft-danger), distinct from clay and moss
- *   - teal     — single muted-sage data accent (use <5% of surface)
  *
  * Plus two standalone tokens:
  *   - parchment — the hairline. A true neutral, s=0%, and the ONLY name for it
@@ -228,14 +227,27 @@ export const colors = {
      Note what depended on it: the tier scale below says it "reuses the amber
      ramp so saturation reads as confidence". That sentence is now the design,
      not a borrowing, and tier carries its own values. */
-  teal: {
-    // Muted sage / eucalyptus — the single cool counterweight to the
-    // terracotta field. Cozy, never a loud cyan. Use under 5% of surface.
-    50: "#eef5f0",
-    500: "#4d7c64",
-    600: "#3d6650",
-    700: "#345a47",
-  },
+  /* THE teal RAMP IS DELETED, 2026-08-17, and it was never teal. Measured,
+     #345a47 is h 150 and #4d7c64 is h 149. That is GREEN. Teal sits near 180.
+     The name is the whole reason this ramp outlived moss and amber above: it
+     was the "single sanctioned cool counterweight" in four handoff documents
+     and a design-system table, and every one of them was describing a green
+     ramp under a permitted word.
+
+     verify_palette_membership settled it earlier today and settled it on the
+     measurement: `teal` is in BANNED_NAMES and the 145-200 hue band it used to
+     allow is gone, so the gate no longer gives two answers about one pixel
+     depending on whether an author spelled it as a class or as a token read.
+
+     Its ONE remaining reader was NeighborhoodCover, which drew it as one of
+     seven district covers, and that call site is converted in the same commit.
+
+     Deleting a ramp under a live reader FAILS SILENTLY: Tailwind emits no rule,
+     tsc says nothing, and the element just loses its colour with no error
+     anywhere. So all four spellings were swept to zero before this line was
+     written: the Tailwind class families, `colors.teal` / `teal[...]` object
+     reads, `var(--teal-*)` custom properties, and any semantic alias pointing
+     at one of the four values. Nothing in src/ carries them but prose. */
   /**
    * Data-confidence tier scale. Semantic, not a new hue: it reuses the
    * amber ramp so saturation reads as confidence (deeper amber = more
@@ -541,7 +553,25 @@ export const tailwindColors = {
   graphite: colors.graphite,
   clay: colors.clay,
   cocoa: colors.cocoa,
-  teal: colors.teal,
+  /* THE `teal` KEY LEFT THIS RE-EXPORT 2026-08-17 with the ramp itself, and
+     what happened next is worth more than the deletion.
+
+     Removing the key does NOT retire the class name. This config uses
+     `theme.extend.colors`, so Tailwind's OWN palette is still underneath: with
+     the project ramp gone, the same utility resolves to stock teal-700,
+     rgb(15 118 110), hue 175. That is not merely still green, it is the
+     aquamarine-cyan band reserved for the founder's other product, so deleting
+     the ramp swapped a house green for a sharper off-brand one at the same
+     class name, silently, with the gate none the wiser.
+
+     Proved rather than reasoned: naming that utility in THIS comment put a live
+     rule for it back into the compiled stylesheet, because Tailwind's content
+     scan does not strip comments, which is why the word is spelled around
+     rather than out here. The same trap resurrected a retired hairline utility
+     during the cream rename.
+
+     So the class name is a config question, not a token question, and it is
+     open: `theme.extend` leaves every banned stock family one guess away. */
   tier: colors.tier,
   delta: colors.delta,
   chart: colors.chart,

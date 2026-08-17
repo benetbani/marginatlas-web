@@ -32,35 +32,62 @@ import { colors } from "@/lib/design-tokens";
  * deterministically so the same place always reads the same. [from, to] runs
  * dark -> light along the diagonal; the bottom scrim re-darkens for the label.
  *
- * TWO OF THE SEVEN WERE BANNED HUES, and this is the purest form of the case
- * the founder ruled on: a green cover and an amber cover, carrying no meaning
- * whatever, chosen by a hash of the district name. Decoration is exactly where
- * "terracotta plus cool neutrals, no exceptions" bites hardest, because there
- * is not even a signal to trade away. Replaced 2026-08-17, in place rather
- * than deleted, so the count stays at SEVEN and no two districts that read
- * differently before read alike now: moss became a deeper terracotta pair and
- * amber a deeper neutral one.
+ * THREE OF THE SEVEN WERE BANNED HUES over two passes, and this is the purest
+ * form of the case the founder ruled on: a green cover, an amber cover and a
+ * second green under the name teal, carrying no meaning whatever, chosen by a
+ * hash of the district name. Decoration is exactly where "terracotta plus cool
+ * neutrals, no exceptions" bites hardest, because there is not even a signal to
+ * trade away.
  *
- * SEPARATION IS BY DEPTH, NOT BY HUE, because the ratified palette does not
- * hold seven hues and pretending otherwise is precisely how a green and an
- * amber got in. Five families carry it, two of them at two depths: terracotta
- * loud and terracotta deep, warm cocoa, neutral ink mid and ink deep, the one
- * sanctioned teal, and clay. The scrim below is unaffected, it is ink-900 at
- * 80% and every new pair is darker at its light end than the pairs it joins,
- * so the label's AA margin only widens.
+ * THE SEVENTH SLOT IS GONE, 2026-08-17, and the earlier pass's instinct to hold
+ * the count at seven is overturned here on evidence rather than taste. The teal
+ * pair measured h 150 and h 149, which is green; teal sits near 180. Four
+ * replacements were drawn at tile size and looked at rather than argued about:
  *
- * verify_palette_membership never counted either of the two. It reads hex
- * literals, rgb() literals and the class names moss/amber/orange; these were
- * property reads off the token object, which is none of the three.
+ *   paper 400/200   meanY 68.8   the only truly cool option, and among six
+ *                                saturated tiles it reads as an unloaded image
+ *   ink 800/300     meanY 25.3   indistinguishable from cocoa 700/300 below
+ *   cocoa 900/500   meanY  9.8   indistinguishable from ink 700/500 below
+ *   atlas 600/300   meanY 25.1   separable, but it makes four reds to two browns
+ *
+ * None earns a slot. The palette holds SIX separable covers and no more, and six
+ * that separate beat seven where one is a near-duplicate of its neighbour.
+ *
+ * SEPARATION IS BY DEPTH AND VALUE, NOT BY HUE, because the ratified palette
+ * does not hold six hues either and pretending otherwise is how a green and an
+ * amber got in. Measured, there are exactly two hue families here: terracotta
+ * and clay at h 4-10, and cocoa and ink at h 28-35. The earlier header called
+ * ink "neutral" and that was wrong: ink 700 is h 32 s 30%, cocoa 700 is h 30
+ * s 26%, the same warm brown.
+ *
+ * SO THE ORDER IS LOAD-BEARING. The array alternates family AND value on every
+ * step, because `spreadCoverIndexes` below hands adjacent tiles CONSECUTIVE
+ * indices, so index n and index n+1 are the pair most often seen side by side:
+ *
+ *   0  atlas 700/400   red    meanY 15.9
+ *   1  ink   900/600   brown  meanY  4.5
+ *   2  clay  700/400   red    meanY  8.6
+ *   3  cocoa 700/300   brown  meanY 26.1
+ *   4  atlas 900/600   red    meanY  6.9
+ *   5  ink   700/500   brown  meanY 10.0
+ *
+ * The old order put ink 700/500 at index 3 and ink 900/600 at index 4, the two
+ * closest pairs in the whole set, adjacent.
+ *
+ * The scrim below is unaffected, it is ink-900 at 80%, and the lightest end in
+ * the set is still cocoa 300 exactly as before, so no label's AA margin moves.
+ *
+ * verify_palette_membership never counted any of the three. It reads hex
+ * literals, rgb() literals and the class names moss/amber/orange/teal; these
+ * were property reads off the token object, which is none of the three.
  */
 const GRADIENTS: ReadonlyArray<readonly [string, string]> = [
   [colors.atlas[700], colors.atlas[400]],
+  [colors.ink[900], colors.ink[600]],
+  [colors.clay[700], colors.clay[400]],
   [colors.cocoa[700], colors.cocoa[300]],
   [colors.atlas[900], colors.atlas[600]],
   [colors.ink[700], colors.ink[500]],
-  [colors.ink[900], colors.ink[600]],
-  [colors.teal[700], colors.teal[500]],
-  [colors.clay[700], colors.clay[400]],
 ];
 
 /** Stable 31-base string hash, masked positive. */
@@ -68,6 +95,60 @@ function hash(seed: string): number {
   let h = 0;
   for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) & 0x7fffffff;
   return h;
+}
+
+/**
+ * SPREAD A ROW OF COVERS SO NO TWO OF THEM DRAW THE SAME RAMP.
+ *
+ * THIS IS THE DEFECT THAT ACTUALLY SHOWS, and it is not a palette defect. On
+ * /cities/london at 1440 the four featured tiles rendered, measured off the
+ * emitted markup rather than guessed:
+ *
+ *   City of London   #211810 -> #5d4d3b
+ *   West End         #211810 -> #5d4d3b     <- byte-identical to the one before
+ *   South Bank       #5c1813 -> #b3463a
+ *   East London      #463726 -> #7d6c58
+ *
+ * Two of four were the SAME PAIR. Nothing about the palette caused that: a hash
+ * over a small set collides, and with four draws from seven buckets a collision
+ * is likelier than not. Widening the palette would not have fixed it and the
+ * palette has nowhere to widen to.
+ *
+ * The precedent is `spreadCovers` in src/app/page.tsx, which hit exactly this on
+ * the homepage blog rail and fixed it by moving a repeat onto the next unused
+ * ramp rather than by adding colours. Same move here, with one difference: the
+ * seed also drives the cartographic motif, so this returns an INDEX rather than
+ * a rewritten seed. The lines a district gets stay its own; only which ramp it
+ * lands on moves. That keeps "the same place always reads the same" true of the
+ * drawing, and makes it true of the colour only within a given row, which is the
+ * same trade the blog rail makes.
+ *
+ * Deterministic: no randomness, no time, and it returns the natural index for
+ * every seed when nothing collides. Callers with a single cover do not need it
+ * (the neighbourhood page banner draws one, so it has no neighbour to clash
+ * with); callers rendering a ROW do.
+ *
+ * More seeds than ramps: the run past the sixth falls back to its natural index
+ * rather than inventing a seventh, which is the same choice `spreadCovers` makes
+ * when it runs out of pool.
+ */
+export function spreadCoverIndexes(seeds: readonly string[]): number[] {
+  const used = new Set<number>();
+  return seeds.map((seed) => {
+    const natural = hash(seed) % GRADIENTS.length;
+    if (!used.has(natural)) {
+      used.add(natural);
+      return natural;
+    }
+    for (let step = 1; step < GRADIENTS.length; step++) {
+      const next = (natural + step) % GRADIENTS.length;
+      if (!used.has(next)) {
+        used.add(next);
+        return next;
+      }
+    }
+    return natural;
+  });
 }
 
 /** Small deterministic PRNG (mulberry32) seeded from the hash, for the motif. */
@@ -137,6 +218,7 @@ export function NeighborhoodCover({
   seed,
   className = "h-20",
   showLabel = true,
+  coverIndex,
 }: {
   /** Display name; set as a small legible label, bottom-left. */
   name: string;
@@ -155,9 +237,22 @@ export function NeighborhoodCover({
    * name, and the body copy is the one that hovers with the link.
    */
   showLabel?: boolean;
+  /**
+   * Which gradient to draw, overriding the seed's own. Pass the matching entry
+   * from `spreadCoverIndexes` when rendering a ROW of covers, so two districts
+   * whose names happen to hash into the same bucket do not draw the same tile
+   * side by side. Omit it for a lone cover. Out-of-range values wrap rather than
+   * throw, because a cover that fails to paint is a blank rectangle with no
+   * error anywhere.
+   */
+  coverIndex?: number;
 }) {
   const h = hash(seed);
-  const [from, to] = GRADIENTS[h % GRADIENTS.length];
+  const pick =
+    coverIndex === undefined
+      ? h % GRADIENTS.length
+      : ((coverIndex % GRADIENTS.length) + GRADIENTS.length) % GRADIENTS.length;
+  const [from, to] = GRADIENTS[pick];
   const { contours, route, rosette } = buildMotif(h);
   const stroke = colors.white;
 

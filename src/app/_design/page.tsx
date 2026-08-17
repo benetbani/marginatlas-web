@@ -283,7 +283,11 @@ function ColorsSection() {
           design-tokens this read would be a type error rather than a silent
           blank, which is the good failure mode, but a catalog that names a
           colour is also an invitation to use it. */}
-      {(["atlas", "paper", "ink", "cocoa", "clay", "teal"] as const).map((family) => {
+      {/* "teal" followed "moss" out of this list 2026-08-17, with the ramp. It
+          measured h 149-150, which is green under a permitted name, and this is
+          the page that TEACHES the palette: a catalog that names a colour is an
+          invitation to use it. */}
+      {(["atlas", "paper", "ink", "cocoa", "clay"] as const).map((family) => {
         const palette = colors[family];
         return (
           <SubSection key={family} title={family} caption={`colors.${family}`}>

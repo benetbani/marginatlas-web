@@ -40,7 +40,10 @@ import {
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getNeighborhoodEconomics } from "@/lib/economics/neighborhood_economics";
-import { NeighborhoodCover } from "@/components/cities/NeighborhoodCover";
+import {
+  NeighborhoodCover,
+  spreadCoverIndexes,
+} from "@/components/cities/NeighborhoodCover";
 import { CityDistrictPicker, type DistrictSummary } from "@/components/cities/CityDistrictPicker";
 import {
   getNeighborhoodMultiplier,
@@ -250,12 +253,19 @@ export default async function CityPage({
   // Up to four featured neighborhoods (founder 2026-06-08): flagship cities curate
   // which four lead, any other city falls back to the first four in its scheme.
   let shownNeighborhoods: Neighborhood[] = [];
+  /* One cover ramp per featured district, spread so no two of the four draw the
+     same gradient. Computed once here rather than inside the map, which would
+     recompute the whole row per tile. */
+  let coverIndexes: number[] = [];
   if (scheme && scheme.neighborhoods.length > 0) {
     const bySlug = new Map(scheme.neighborhoods.map((n) => [n.slug, n]));
     const featured = (FEATURED_NEIGHBORHOODS[city.slug] ?? [])
       .map((s) => bySlug.get(s))
       .filter((n): n is Neighborhood => Boolean(n));
     shownNeighborhoods = (featured.length > 0 ? featured : scheme.neighborhoods).slice(0, 4);
+    coverIndexes = spreadCoverIndexes(
+      shownNeighborhoods.map((n) => `${city.slug}-${n.slug}`),
+    );
 
     /* EVERY district, for the picker section. The four above are a visual
        entry point with cover art; this is the complete set, and it is where
@@ -787,7 +797,7 @@ export default async function CityPage({
                   Open one for its street-level numbers.
                 </p>
                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-                  {shownNeighborhoods.map((n) => {
+                  {shownNeighborhoods.map((n, i) => {
                     const streets = (
                       getNeighborhoodEconomics(city.slug, n.slug)?.prime_streets ?? []
                     )
@@ -808,12 +818,20 @@ export default async function CityPage({
                         {/* The cover carries no label here: the card body
                             three lines down prints the same name, and both
                             were drawing it. See NeighborhoodCover's
-                            `showLabel`. */}
+                            `showLabel`.
+
+                            `coverIndex` comes from the row-wide spread computed
+                            above. Without it, London drew City of London and
+                            West End on the SAME gradient, byte for byte, two
+                            tiles apart: four names hashing into six buckets
+                            collide more often than not. See
+                            `spreadCoverIndexes`. */}
                         <NeighborhoodCover
                           name={n.name}
                           seed={`${city.slug}-${n.slug}`}
                           className="h-20"
                           showLabel={false}
+                          coverIndex={coverIndexes[i]}
                         />
                         <div className="p-4">
                           <div className="text-sm font-medium leading-tight text-ink-900 group-hover:text-atlas-700">
