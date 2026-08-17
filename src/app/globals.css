@@ -844,9 +844,27 @@
      named their one job, "the gut-check no pill surface" and "the gut-check no
      mark", and that pill is now parchment on ink. */
 
-  /* ---- delta read pair (above / below; warm, not brand-red) ------------- */
-  --pos: #4a6018; /* moss-700, above par */
-  --caution: #8a510a; /* amber-700, below par (warning, not brand-red) */
+  /* ---- delta read pair (above / below) ---------------------------------
+     THESE WERE THE LAST TWO BANNED HUES STILL RENDERING, and they survived
+     four passes of the purge by holding raw hex under names that do not say
+     moss or amber. --pos was #4a6018, moss-700, a GREEN, live on
+     .eng-vs__delta--above; a country page printed "+495% above" in olive.
+     --caution was #8a510a, amber-700.
+
+     That is the fourth time this exact evasion has been found in one session:
+     `parchment` WAS cream-300, `teal` measured hue 150, `delta.positive` in
+     design-tokens held this same #4a6018. A hue ban enforced by reading names
+     cannot catch a colour filed under the wrong one.
+
+     Now the same one-hue ladder the rest of the site uses, which
+     verify_palette_membership's own header prescribes: "Show good-versus-bad
+     with intensity and position instead of hue." Above par takes the accent,
+     below par takes plain ink. No signal is lost: each delta prints its own
+     SIGN and the word above or below, so colour was decoration on top of a
+     label. src/lib/scores/band_tone.ts resolves its standalone-figure
+     projection to exactly these two values. */
+  --pos: #991600; /* atlas-700, above par */
+  --caution: #211810; /* ink-900, below par */
 
   /* ---- radii, motion, elevation (alias the canonical Atlas scales) ------ */
   --radius-sm: 8px; /* small chips, tight controls */

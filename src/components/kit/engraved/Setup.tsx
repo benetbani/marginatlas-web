@@ -97,7 +97,12 @@ export function SetupStepper({ steps, currency = "$", sample, className }: Setup
       <div className="eng-stepper__total">
         <div style={{ textAlign: "right" }}>
           <div className="eng-total__k">Total time</div>
-          <div className="eng-total__v">{totalDays} days</div>
+          {/* The per-step line thirty lines up already pluralises; the TOTAL
+              did not, so a country whose formation route is a single one-day
+              step printed "Total time 1 days". Same rule, same place. */}
+          <div className="eng-total__v">
+            {totalDays} {totalDays === 1 ? "day" : "days"}
+          </div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div className="eng-total__k">Total cost</div>

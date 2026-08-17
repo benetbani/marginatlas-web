@@ -1,7 +1,6 @@
 {
   "files": {
     "src/app/dev/lock-states/page.tsx": 3,
-    "src/app/globals.css": 2,
     "src/app/og/_card.tsx": 1
   },
   "bannedNames": [
@@ -37,6 +36,12 @@
       "hMax": 45,
       "sMax": 45
     }
+  ],
+  "roots": [
+    "src/components",
+    "src/app",
+    "src/styles",
+    "src/lib"
   ],
   "recorded": "2026-08-09"
 }
