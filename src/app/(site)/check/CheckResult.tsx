@@ -17,14 +17,32 @@ function pct(v: number | null): string {
   return Math.round(v * 100) + "%";
 }
 
+/**
+ * Chip classes per ratio status.
+ *
+ * WHAT WAS HERE, and it broke three separate rules at once: six raw hex
+ * literals inline (tokens only), a stock `emerald` ramp no token file on this
+ * site defines, and a red/blue/green traffic-light on an axis that is NOT
+ * good-versus-bad. "Above typical" is bad for a cost ratio and good for a
+ * revenue one, so the colour was asserting a verdict the data does not carry.
+ *
+ * THE AXIS IS DIRECTION, so it is drawn with intensity and the word, which is
+ * the replacement the palette gate names in its own failure message. Both
+ * departures are terracotta and differ by WEIGHT, mapped onto the thing they
+ * actually mean: above reads heavier because it is more, below lighter because
+ * it is less. These are steps 3 and 2 of the ladder in scores/band_tone.ts, so
+ * this page stops carrying a private scale. In-range is the quiet state, which
+ * is correct on a page whose job is to show a reader which rows are off, and
+ * every chip prints its own label beside the colour.
+ */
 function statusColour(status: RatioStatus): string {
   switch (status) {
     case "above":
-      return "text-[#B23A2A] bg-[#FBE8E1] border-[#F5C9B8]";
+      return "text-atlas-700 bg-atlas-100 border-atlas-300";
     case "below":
-      return "text-[#2A5BA8] bg-[#E1ECFB] border-[#B8CCF0]";
+      return "text-atlas-700 bg-atlas-50 border-atlas-200";
     case "in_range":
-      return "text-emerald-700 bg-emerald-50 border-emerald-200";
+      return "text-ink-900 bg-parchment border-parchment";
     case "unknown":
       return "text-ink-500 bg-ink-50 border-ink-200";
   }

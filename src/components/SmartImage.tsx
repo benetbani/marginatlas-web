@@ -73,13 +73,18 @@ export function SmartImage({
       )}
       style={ratioStyle}
     >
-      {/* Subtle radial highlight in top-left to give the surface a sense of light */}
+      {/* Subtle radial highlight in top-left to give the surface a sense of
+          light. It was rgba(253,233,204), #fde9cc, a peach at s=92% and the
+          exact tone the palette gate's own header names as still caught at
+          l=90%. A highlight is LIGHT, not a colour, so the fix is no hue at
+          all rather than a warm one traded for a cool one: plain white at the
+          same .7, under the same .5 layer opacity. */}
       <div
         aria-hidden
         className="absolute inset-0 opacity-50"
         style={{
           background:
-            "radial-gradient(circle at 20% 20%, rgba(253,233,204,0.7) 0%, transparent 60%)",
+            "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.7) 0%, transparent 60%)",
         }}
       />
       <div className="relative z-10 flex flex-col items-center gap-2 text-cocoa-700">

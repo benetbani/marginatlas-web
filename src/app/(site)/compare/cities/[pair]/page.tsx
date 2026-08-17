@@ -22,6 +22,7 @@ import comparisonsJson from "../../../../../../data/cities/city_comparisons_v1.j
 import countryFactorsJson from "../../../../../../data/economic_indicators/country_factors_v1.json";
 import countryBaselineJson from "@/lib/cells/country_smb_baseline.json";
 import { getCityHero } from "@/lib/images/city_heroes";
+import { colors } from "@/lib/design-tokens";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
 
@@ -182,7 +183,13 @@ export default async function ComparisonPage({
   return (
     <article className="pb-16">
       {/* Side-by-side heroes */}
-      <section className="grid grid-cols-2 w-full aspect-[21/8] overflow-hidden bg-stone-100 mb-8 md:mb-12">
+      {/* `bg-stone-100` until 2026-08-17. stone is Tailwind's WARM neutral,
+          which is off-palette for the same reason cream is, and it is a stock
+          ramp no token file here defines, so the gate had no word for it. This
+          is a letterbox behind two photographs, i.e. the ground that shows
+          only where a hero is missing, so the honest replacement is the site's
+          own hairline neutral rather than another tinted grey. */}
+      <section className="grid grid-cols-2 w-full aspect-[21/8] overflow-hidden bg-parchment mb-8 md:mb-12">
         {[
           { city: a, hero: aHero, country: aCountry },
           { city: b, hero: bHero, country: bCountry },
@@ -197,7 +204,11 @@ export default async function ComparisonPage({
                   className="w-full h-full object-cover"
                   style={{ filter: "contrast(1.06) saturate(0.88)" }}
                 />
-                <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.1) 30%, rgba(212,119,6,0.22) 100%)", mixBlendMode: "multiply" }} />
+                {/* Terracotta since 2026-08-17. This was the same amber photo
+                    tint CityHero carried, rgba(212,119,6), pasted a second
+                    time, so the two surfaces were one defect in two places.
+                    atlas-700 at the same .22 and the same multiply blend. */}
+                <div className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(180deg, rgba(0,0,0,0.1) 30%, ${colors.atlas[700]}38 100%)`, mixBlendMode: "multiply" }} />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
               </>
             ) : (

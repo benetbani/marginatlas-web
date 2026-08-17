@@ -1,5 +1,17 @@
 "use client";
 
+/**
+ * SavedClient.
+ *
+ * PALETTE, 2026-08-17: the two destructive controls ("Clear all", "Remove")
+ * hovered to `rose-700`, a STOCK Tailwind ramp that no token file on this site
+ * defines, so verify_palette_membership had no word for it until 443a938e.
+ * They now hover to `clay-700`, which is not a nearest-match substitution:
+ * design-tokens names clay "the DESTRUCTIVE color" in those words and reserves
+ * red for the brand. The signal is unchanged and the token is now the right
+ * one, which it was not before.
+ */
+
 import { useEffect, useState } from "react";
 
 const SAVED_KEY = "atlas.saved";
@@ -76,7 +88,7 @@ export function SavedClient() {
         <button
           type="button"
           onClick={clearAll}
-          className="text-xs text-ink-700/60 hover:text-rose-700 transition"
+          className="text-xs text-ink-700/60 hover:text-clay-700 transition"
         >
           Clear all
         </button>
@@ -106,7 +118,7 @@ export function SavedClient() {
                 <button
                   type="button"
                   onClick={() => remove(key)}
-                  className="text-xs text-ink-700/60 hover:text-rose-700 transition"
+                  className="text-xs text-ink-700/60 hover:text-clay-700 transition"
                 >
                   Remove
                 </button>

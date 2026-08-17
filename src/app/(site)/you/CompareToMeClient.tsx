@@ -215,9 +215,18 @@ export function CompareToMeClient() {
                     <div className="text-[10px] uppercase tracking-wide text-ink-700/60">
                       Revenue vs typical
                     </div>
+                    {/* WAS emerald-700 / rose-700, two STOCK Tailwind ramps
+                        that no token file here defines, which is why the
+                        palette gate had no word for either until 443a938e.
+                        Now the same above/below-par pair the converted
+                        NeighborhoodOverview.multColor and the decide page's
+                        marginLadder use: terracotta for at-or-above, clay,
+                        which design-tokens names the destructive colour, for
+                        below. Nothing is lost with the hue, because the figure
+                        prints its own sign one line down. */}
                     <div
                       className={`text-2xl font-semibold ${
-                        revVsTypical >= 0 ? "text-emerald-700" : "text-rose-700"
+                        revVsTypical >= 0 ? "text-atlas-700" : "text-clay-700"
                       }`}
                     >
                       {revVsTypical >= 0 ? "+" : ""}

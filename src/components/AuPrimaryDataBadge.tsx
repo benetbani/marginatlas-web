@@ -24,14 +24,26 @@ export function AuPrimaryDataBadge({ cell }: Props) {
   const anchor = getAuPrimaryAnchor(cell.industry_id, revenue);
   if (!anchor) return null;
 
+  /* THIS BADGE WAS GREEN, and it is the site's strongest confidence marker, so
+     it is precisely the place a green convention feels most defensible and is
+     still wrong. `emerald` is a STOCK Tailwind ramp: no token file on this site
+     defines it, which is why verify_palette_membership could not see it until
+     443a938e taught the gate the stock names.
+
+     Terracotta is not a substitute chosen for lack of anything else. The
+     canonical confidence scale already lives in design-tokens as `colors.tier`,
+     and its most-measured step IS atlas-700; the classes below are the
+     bordered-pill shape CityDistrictPicker and the band_tone CHIP ladder
+     already use for a favourable reading. So this badge stops being the one
+     surface with its own private colour for "trustworthy". */
   return (
     <div
-      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] uppercase tracking-wide font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200"
+      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] uppercase tracking-wide font-semibold bg-atlas-50 text-atlas-700 border border-atlas-200"
       title={`Primary data: ATO Small Business Benchmarks, FY ${anchor.source_year}. Industry: ${anchor.ato_name}. Band: ${anchor.band_index === 0 ? "small" : anchor.band_index === 1 ? "medium" : "large"}.`}
     >
       <span aria-hidden>★</span>
       <span>Primary data</span>
-      <span className="font-normal text-emerald-800/70 normal-case tracking-normal">
+      <span className="font-normal text-atlas-700/70 normal-case tracking-normal">
         FY {anchor.source_year}, official benchmark
       </span>
     </div>
