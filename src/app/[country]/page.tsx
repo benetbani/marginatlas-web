@@ -1015,7 +1015,11 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
           <EngravedSection
             eyebrow="The country shape"
             heading="The nine lenses, at a glance"
-            sub="A profile of this country's shape across the nine questions an owner runs through. A character read, never a score; cities stay the only scored entity."
+            /* Was: "A profile of this country's shape across the nine questions
+               an owner runs through" plus what is left. The first sentence said
+               the eyebrow and the heading again in longer words. The honesty
+               half is the half that carries anything. */
+            sub="A character read, never a score. Cities stay the only scored entity."
           >
             <CountryShape lenses={lenses} sample={!hasShape} />
           </EngravedSection>
@@ -1084,12 +1088,15 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             eyebrow="Hiring here"
             heading={view.hire ? view.hire.heading : `How hard it is to hire in ${countryName}`}
             /* The lede must not promise the on-cost where no employer rate is
-               held, or it describes a line the card does not carry. */
+               held, or it describes a line the card does not carry. Both
+               branches opened on "Staff are the largest controllable cost in
+               most small businesses", which is true of every country on the
+               site and therefore says nothing about this one. */
             sub={
               view.hire?.lede ??
               (staffCostPct != null
-                ? "Staff are the largest controllable cost in most small businesses. What you pay, plus what the employer adds on top, sets the real cost of a hire."
-                : "Staff are the largest controllable cost in most small businesses. The floor is what the law sets; the rate you actually pay is what it takes to keep someone good.")
+                ? "What you pay, plus what the employer adds on top."
+                : "The law sets the floor. Keeping someone good costs more.")
             }
           >
             {hireHasBars ? (
@@ -1163,7 +1170,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
                   : null
               }
               reach={reachIndicators}
-              caveat="The whole country, not the customers you can actually serve. A shop reaches a street, so read this as the ceiling on the market, never the market."
+              caveat="The whole country, not the customers you can serve. A shop reaches a street, so this is the ceiling, never the market."
             />
           </EngravedSection>
 
@@ -1176,7 +1183,10 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             id="neighbours"
             eyebrow="Vs neighbours"
             heading={view.neighbours ? view.neighbours.heading : `How ${countryName} compares to its neighbours`}
-            sub="The same set-up facts, side by side. These are different price regimes, so a figure here is a fact about each country, never a ranking across them."
+            /* No lede. It said "the same set-up facts, side by side", which is
+               what the table visibly is, and then made the not-a-ranking point
+               that the caveat below makes again eight lines later, next to the
+               figures it actually guards. One of the two had to go. */
           >
             <Neighbours
               metrics={hasNeighbours ? neighbourMetrics : null}
@@ -1265,7 +1275,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             id="cities"
             eyebrow="Cities"
             heading={`The cities of ${countryName}`}
-            sub="Step into a city for the local read on rent, pay, and what an owner keeps. Every place is shown the same way, no ranking."
+            sub="Every place is shown the same way, no ranking."
           >
             <CitiesGrid cities={hasCities ? cityCards : null} sample={!hasCities} />
             {cityLinks.length > 0 ? (
@@ -1418,9 +1428,14 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             eyebrow="Next move"
             heading={`Put ${meta.name} against its peers`}
           >
+            {/* Was a sentence that restated the heading and the button between
+                which it sat: "pick any activity and set X side by side with up
+                to three other countries". The heading says put it against its
+                peers, the button says Open Compare. What survives is the only
+                part neither of them carries: what you get to compare. */}
             <p className="max-w-2xl text-sm leading-relaxed text-ink-800">
-              Pick any activity and set {meta.name} side by side with up to three
-              other countries: revenue, the cost stack, and what an owner keeps.
+              Revenue, the cost stack, and what an owner keeps, against up to
+              three other countries.
             </p>
             <a
               href="/compare"
