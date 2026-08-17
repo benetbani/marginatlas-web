@@ -2,23 +2,44 @@
  * src/lib/home/example_tiles.ts
  *
  * The homepage's curated example tiles: six recognizable business-in-city cells,
- * each resolved to a real headline number (owner take-home, revenue fallback) so
- * a first-time visitor can open a concrete one instead of typing. Budget-wrapped
+ * each resolved to a real figure (owner take-home, revenue fallback) so a
+ * first-time visitor can open a concrete one instead of typing. Budget-wrapped
  * and self-omitting on a miss, so the homepage never blocks or shows a blank
  * number. The take-home uses the same source of truth the city/country pages use
- * (ownerTakeHomeForCell), so the headline matches that cell's own page.
+ * (ownerTakeHomeForCell), so the figure matches that cell's own page.
+ *
+ * This module returns the figure and its KIND, never a formatted sentence. See
+ * the note on `amount` below for what that fixed.
  */
 import { getCellBySlug, withBudget } from "@/lib/cells";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { ownerTakeHomeForCell } from "@/lib/scores/country_board";
-import { fmtMoney } from "@/lib/format/money";
 
 export type ExampleTile = {
   business: string;
   city: string;
   href: string;
-  /** Pre-formatted headline, e.g. "Owner keeps about $48K a year". */
-  headline: string;
+  /** ISO-2 of the country the cell sits in, for the flag on the tile. */
+  iso2: string;
+  /**
+   * THE FIGURE, AND WHICH FIGURE IT IS, instead of a pre-formatted sentence.
+   *
+   * This used to be one field, `headline`, holding "Owner keeps about $58K a
+   * year". Measured off the rendered home page: the six tiles carried 36 words
+   * of sentence and not one number set as a number, in the band whose entire
+   * job is to show that the atlas answers a question with a figure. The
+   * founder's note on the page is that it "just has a lot of text" and "lacks
+   * elements", and a card that is a title plus a sentence is the exact shape
+   * that note describes.
+   *
+   * Splitting it also fixes a defect the sentence hid. Five tiles said "Owner
+   * keeps about X" and the sixth said "About X a year in revenue": two
+   * different quantities in the same visual slot, told apart only by reading
+   * the middle of a line. As a tagged pair the difference is structural, the
+   * component labels it, and no caller can print one as the other by accident.
+   */
+  amount: number;
+  metric: "kept" | "revenue";
 };
 
 type Curated = {
@@ -90,19 +111,18 @@ export async function loadExampleTiles(): Promise<ExampleTile[]> {
       const annualIncome = isNum(snap?.avgMonthlySalary) ? snap.avgMonthlySalary * 12 : null;
       const takeHome = ownerTakeHomeForCell(cell, annualIncome);
       const revenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
-      let headline: string | null = null;
       // Sanity floor: only surface an owner-keep headline when it clears a
       // low-but-nonzero floor. A sub-floor take-home (e.g. a hotel clearing
       // about $5K a year) reads as broken beside the six-figure tiles, so we
       // fall through to the revenue headline instead, and drop the tile only if
       // that is also missing. The next curated tile then fills the row.
       if (isNum(takeHome) && takeHome >= MIN_OWNER_TAKE_HOME_USD) {
-        headline = `Owner keeps about ${fmtMoney(takeHome)} a year`;
-      } else if (isNum(revenue) && revenue > 0) {
-        headline = `About ${fmtMoney(revenue)} a year in revenue`;
+        return { business: c.business, city: c.city, href, iso2: c.country.toUpperCase(), amount: takeHome, metric: "kept" };
       }
-      if (!headline) return null;
-      return { business: c.business, city: c.city, href, headline };
+      if (isNum(revenue) && revenue > 0) {
+        return { business: c.business, city: c.city, href, iso2: c.country.toUpperCase(), amount: revenue, metric: "revenue" };
+      }
+      return null;
     }),
   );
   return resolved.filter((t): t is ExampleTile => t !== null);
