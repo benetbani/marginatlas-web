@@ -34,7 +34,7 @@ export function CityCharacter({ geoId, countryIso2 }: Props) {
   return (
     <section
       aria-labelledby="city-character-heading"
-      className="my-10 md:my-12 rounded-2xl border border-ink-200 bg-white p-6 md:p-8 lg:p-10"
+      className="atlas-card my-10 md:my-12 p-6 md:p-8 lg:p-10"
     >
       <div className="max-w-4xl">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">

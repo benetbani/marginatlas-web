@@ -464,7 +464,7 @@ export function NeighborhoodOverview({
               NOT the whole ranking below, so a flat "Local tags 1.00x" no longer
               reads as a claim about every trade. The figures multiply together
               into that one trade's lift; a 1.00x part simply does not move it. */}
-          <div className="mb-5 max-w-md rounded-lg border border-parchment bg-cream-50 px-4 py-3.5">
+          <div className="atlas-card mb-5 max-w-md px-4 py-3.5">
             <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
               What lifts a typical {REP_ACTIVITY_NAME.toLowerCase()} here
             </div>
@@ -646,7 +646,7 @@ export function NeighborhoodOverview({
                 return (
                   <div
                     key={s.name}
-                    className="rounded-lg border border-parchment bg-cream-50 px-5 py-5"
+                    className="atlas-card px-5 py-5"
                   >
                     <div className="mb-1 font-display text-base md:text-lg font-medium leading-tight text-ink-900">
                       {s.name}
@@ -730,7 +730,7 @@ export function NeighborhoodOverview({
                      route with a district in the industry slot. The sibling
                      district's entry on the hub is the page that holds it. */
                   href={`/cities/${city.slug}/neighborhoods#${n.slug}`}
-                  className="group block rounded-lg border border-parchment bg-cream-100 p-3 transition-colors hover:border-atlas-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-300"
+                  className="atlas-card group block p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-300"
                 >
                   <div className="text-sm font-medium leading-tight text-ink-900 transition-colors group-hover:text-atlas-700">
                     {n.name}

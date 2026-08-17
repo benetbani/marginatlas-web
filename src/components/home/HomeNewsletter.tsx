@@ -35,7 +35,15 @@ const CONTENTS: { icon: AtlasIconId; label: string }[] = [
 export function HomeNewsletter() {
   return (
     <section className="py-12 md:py-16">
-      <div className="rounded-2xl bg-white border border-parchment px-6 py-8 md:px-10 md:py-10">
+      {/* .atlas-card, not `rounded-2xl bg-white border border-parchment`, which
+          is the class written out by hand and one token short. rounded-2xl is
+          already --radius, so the visible differences are the seating shadow it
+          never had and a surface that goes from opaque white to the card
+          token's rgba(255,255,255,.955): with no centre plate in the frame, an
+          opaque white is a hole punched in the photograph. It also brings
+          position: relative, which is what keeps a card above the frame's fixed
+          layers rather than behind them. */}
+      <div className="atlas-card px-6 py-8 md:px-10 md:py-10">
         <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
           <div>
             <SectionEyebrow size="md" className="mb-2">Free report</SectionEyebrow>

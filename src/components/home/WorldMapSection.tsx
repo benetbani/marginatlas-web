@@ -12,7 +12,6 @@
  * a soft elevation-token shadow rather than the old heavy dark-band shadow.
  */
 import { WorldMapClient } from "./WorldMapClient";
-import { elevation } from "@/lib/design-tokens";
 
 export function WorldMapSection() {
   return (
@@ -59,14 +58,20 @@ export function WorldMapSection() {
           All countries &rarr;
         </a>
       </div>
-      {/* Map sits on a white card with a soft elevation shadow so the
-          countries stay readable and the card lifts a touch off the white
-          page. Constrained to the map width and overflow-hidden with no
-          padding so the map fills the rounded card edge to edge. */}
-      <div
-        className="rounded-2xl bg-white border border-parchment overflow-hidden max-w-4xl mx-auto"
-        style={{ boxShadow: elevation.card }}
-      >
+      {/* Map sits on a card so the countries stay readable, constrained to the
+          map width and overflow-hidden with no padding so the map fills the
+          rounded edge to edge.
+
+          It is now .atlas-card rather than `rounded-2xl bg-white border
+          border-parchment` plus an inline elevation.card shadow, which was the
+          class assembled by hand out of three tokens and one style attribute.
+          Same radius and the same shadow, since --atlas-elev-1 mirrors
+          elevation.card, but the surface goes from opaque white to the card
+          token's rgba(255,255,255,.955): with no centre plate in the frame, an
+          opaque white is a hole in the photograph rather than a sheet on it.
+          .atlas-card also brings position: relative, which is what keeps a card
+          above the frame's fixed layers. */}
+      <div className="atlas-card overflow-hidden max-w-4xl mx-auto">
         <WorldMapClient />
       </div>
     </section>

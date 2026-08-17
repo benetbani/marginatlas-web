@@ -116,7 +116,7 @@ export function ActivityPlacePicker({
         e.preventDefault();
         go();
       }}
-      className="rounded-2xl border border-ink-200 bg-white p-5 shadow-[0_1px_2px_rgba(33,24,16,0.04)] md:p-6"
+      className="atlas-card p-5 md:p-6"
     >
       <div className="flex items-baseline justify-between gap-4">
         <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-atlas-700 md:text-[11px]">

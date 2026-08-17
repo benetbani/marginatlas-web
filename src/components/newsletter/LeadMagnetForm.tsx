@@ -60,7 +60,7 @@ export default function LeadMagnetForm({
 
   if (status === "success") {
     return (
-      <div className="mt-7 rounded-lg p-5 bg-cream-100 border border-parchment">
+      <div className="atlas-card mt-7 p-5">
         {/* "We just sent the PDF to {email}. Check your inbox. If it's not
             there in two minutes, the spam folder usually solves it." stood
             here, and all three sentences were false. Nothing was sent, because

@@ -63,7 +63,7 @@ export function OpeningPayback({ page }: { page: OpeningPage }) {
   }
 
   return (
-    <section className="mt-6 rounded-lg border border-parchment bg-cream-50 p-4 md:p-5">
+    <section className="atlas-card mt-6 p-4 md:p-5">
       <div className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
         Payback
       </div>

@@ -69,9 +69,15 @@ function startCashFlowPhrase(page: BuyVsStart): string {
 export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
   return (
     <section className="mt-8">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-0">
+      {/* ONE card, not two half-cards. This was a pair of hand-rolled opaque
+          panels stitched at a seam with sm:rounded-r-none / sm:border-r-0.
+          Under the canonical card that stitch stops working: .atlas-card
+          carries a seating shadow, and two shadowed halves butted together
+          crease down the join. So the comparison becomes a single surface with
+          an internal divider, which is also what it always was to a reader. */}
+      <div className="atlas-card grid grid-cols-1 sm:grid-cols-2">
         {/* START column. */}
-        <div className="rounded-lg border border-parchment bg-cream-50 p-5 sm:rounded-r-none sm:border-r-0">
+        <div className="border-b border-parchment p-5 sm:border-b-0 sm:border-r">
           <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-atlas-700">
             Start fresh
           </div>
@@ -98,7 +104,7 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
         </div>
 
         {/* BUY column. */}
-        <div className="rounded-lg border border-parchment bg-cream-50 p-5 sm:rounded-l-none">
+        <div className="p-5">
           <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-atlas-700">
             Buy existing
           </div>

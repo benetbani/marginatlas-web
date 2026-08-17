@@ -50,7 +50,7 @@ export function AnnualCostStack({ cell }: Props) {
   return (
     <section
       aria-labelledby="annual-cost-stack-heading"
-      className="my-8 rounded-2xl border border-ink-200 bg-white overflow-hidden"
+      className="atlas-card my-8 overflow-hidden"
     >
       <details className="md:open" open>
         <summary

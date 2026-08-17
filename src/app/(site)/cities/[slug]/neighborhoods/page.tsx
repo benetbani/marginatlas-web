@@ -17,7 +17,6 @@ import cityListJson from "../../../../../../data/cities/city_list_v1.json";
 import neighborhoodsJson from "../../../../../../data/cities/neighborhoods_v1.json";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COUNTRIES } from "@/lib/taxonomy";
-import { colors } from "@/lib/design-tokens";
 import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 import {
   getNeighborhoodMultiplier,
@@ -142,7 +141,11 @@ export default async function NeighborhoodHub({
   const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
 
   return (
-    <article className="pb-16 max-w-5xl mx-auto px-4 md:px-6 pt-8 md:pt-12">
+    /* No column cap and no gutter of its own: SiteChrome's <main> already gives
+       this route `max-w-content mx-auto px-6`. `max-w-5xl mx-auto px-4 md:px-6`
+       here made a 976px column inside the site's 1072, the third instance of the
+       same doubled-padding defect in this tree. */
+    <article className="pb-16 pt-8 md:pt-12">
       <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-3">
         <Link href={`/cities/${city.slug}`} className="hover:text-atlas-700">
           {city.name}
@@ -172,14 +175,17 @@ export default async function NeighborhoodHub({
           const mult = getNeighborhoodMultiplier(slug, n.slug, "restaurants");
           const hasIntensity = hasNeighborhoodIntensity(slug, n.slug);
           const multPct = Math.round((mult.final - 1) * 100);
-          const multColor =
-            mult.final > 1.15
-              ? colors.moss[700]
-              : mult.final > 1.0
-                ? colors.moss[500]
-                : mult.final > 0.85
-                  ? colors.delta.caution
-                  : colors.delta.negative;
+          /* THE FOUR-COLOUR SCALE IS GONE, and it was two banned hues.
+             `multColor` ran moss-700 / moss-500 / delta.caution / delta.negative,
+             i.e. two greens and two ambers, on the revenue multiplier of every
+             district on all 252 of these pages. The palette is terracotta plus
+             cool neutrals; green and amber are named bans.
+             It is deleted rather than recoloured, because the colour was
+             duplicating the sign. The figure already prints "+18%" or "-12%",
+             so the reader has the direction before any hue reaches them, and a
+             four-step ramp implied a precision the model does not hold (43 of
+             1,266 districts sit exactly on the 3.0 clip). The figure now sets
+             in ink like every other number in the atlas. */
           return (
             /* NOT A LINK, and it never usefully was. This card wrapped
                /{country}/{city}/{district}, and there is no district route:
@@ -200,7 +206,16 @@ export default async function NeighborhoodHub({
             <div
               key={n.slug}
               id={n.slug}
-              className="scroll-mt-24 group rounded-2xl border border-parchment bg-white p-5 md:p-6"
+              /* Canonical surface, and the fix is structural as well as visual.
+                 Was `rounded-2xl border border-parchment bg-white`, a STATIC
+                 element with a background: AtlasFrame paints its photograph from
+                 fixed layers at z-index 0, and CSS paints positioned elements
+                 after the backgrounds of static ones, so every district card on
+                 every one of these pages was drawn UNDERNEATH the picture and
+                 read as a washed patch of sky. `.atlas-card` is
+                 `position: relative`, so it sits on top, and its .955 fill lets
+                 the photograph read through instead of blocking it. */
+              className="atlas-card scroll-mt-24 group p-5 md:p-6"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
@@ -259,10 +274,7 @@ export default async function NeighborhoodHub({
                           the same flag, and the city page passes `clipped`
                           through for exactly this. This page computed the same
                           multiplier and dropped the qualifier. */}
-                      <div
-                        className="font-display text-xl font-semibold tabular-nums leading-none"
-                        style={{ color: multColor }}
-                      >
+                      <div className="font-display text-xl font-semibold tabular-nums leading-none text-ink-900">
                         {mult.clipped ? "at least " : ""}
                         {multPct >= 0 ? "+" : ""}
                         {multPct}%

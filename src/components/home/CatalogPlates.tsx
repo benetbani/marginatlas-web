@@ -280,15 +280,22 @@ export function CatalogPlates() {
           level of opacity... like we use the style of those cards". These
           plates are drawn in faint marks on no ground at all, so they were the
           band most at risk of dissolving into the picture behind them. */}
-      {/* `relative` is load-bearing, not decoration. AtlasFrame paints the
-          photograph from position:fixed layers at z-index 0, and a
-          position:static card with a white background paints in an earlier
-          phase than positioned elements, so it lands UNDER the picture. On this
-          page ToneBand is relative and renders after the frame, so the subtree
-          is already above it, but that is a chain of two implicit facts. Saying
-          it here means the card cannot be moved somewhere without one.
-          The pages agent found the same thing washing out the /cities hero. */}
-      <div className="relative mt-5 rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-8">
+      {/* AND IT IS NOW THE CANONICAL CARD. It was `relative rounded-xl border
+          border-parchment bg-white`, .atlas-card written out by hand: a flat
+          opaque white at a 12px radius with no seating shadow, where the token
+          surface is rgba(255,255,255,.955) at --radius with --atlas-elev-1.
+          The translucency is the whole point once the frame stops painting a
+          centre plate, since an opaque white is a hole punched in the
+          photograph rather than a sheet laid on it.
+
+          `position: relative` was carried by hand here for a good reason,
+          written out at length in the commit that added it: AtlasFrame paints
+          the photograph from position:fixed layers at z-index 0, so a
+          position:static card with a background paints in an earlier phase and
+          lands UNDER the picture. .atlas-card sets position: relative itself,
+          so that requirement now travels with the class instead of depending on
+          the next person reading a comment. */}
+      <div className="atlas-card mt-5 px-5 py-6 md:px-8 md:py-8">
         <div className="grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
           {COLLECTIONS.map((c) => (
             <Plate key={c.id} c={c} />

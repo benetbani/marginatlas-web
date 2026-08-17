@@ -127,7 +127,7 @@ export function IfYouOpenedToday({ cell }: Props) {
   return (
     <section
       aria-labelledby="if-today-heading"
-      className="my-8 md:my-12 rounded-2xl border border-ink-200 bg-white overflow-hidden"
+      className="atlas-card my-8 md:my-12 overflow-hidden"
     >
       <div className="px-6 py-5 md:px-8 md:py-6 border-b border-ink-100">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">

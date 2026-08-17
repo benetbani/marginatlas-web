@@ -114,7 +114,7 @@ export default function LoadingSkeleton({
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="rounded-lg border border-parchment bg-cream-50 p-5 space-y-3"
+                className="atlas-card p-5 space-y-3"
               >
                 <div className="flex items-baseline justify-between">
                   <Bar w="40%" h={10} />

@@ -32,7 +32,7 @@ export function SubIndustryPicker({ cell }: Props) {
   return (
     <section
       aria-label="Sub-industry variants"
-      className="border-y border-ink-100 bg-white py-4"
+      className="border-y border-ink-100 py-4"
     >
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">

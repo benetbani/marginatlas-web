@@ -130,7 +130,7 @@ export function InlineMidArticle({ endpoint = "/api/newsletter" }: Props) {
   return (
     <aside
       aria-label="Atlas newsletter signup"
-      className="my-8 rounded-lg p-5 sm:p-6 bg-cream-100 border border-parchment relative"
+      className="atlas-card my-8 p-5 sm:p-6"
       style={{ paddingLeft: 28 }}
     >
       <span aria-hidden="true" className="absolute top-4 bottom-4 left-3 w-[2px] rounded-full bg-atlas-500" />

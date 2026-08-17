@@ -370,7 +370,7 @@ export function CalculatorForm({ countries, industries }: Props) {
                 What it takes to break even
               </h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                <article className="rounded-lg border border-parchment/70 bg-cream-50 p-4">
+                <article className="atlas-card-soft p-4">
                   <h3
                     data-typography="custom"
                     className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500"
@@ -382,7 +382,7 @@ export function CalculatorForm({ countries, industries }: Props) {
                   </p>
                   <p className="mt-1 text-xs text-cocoa-500">a year</p>
                 </article>
-                <article className="rounded-lg border border-parchment/70 bg-cream-50 p-4">
+                <article className="atlas-card-soft p-4">
                   <h3
                     data-typography="custom"
                     className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500"
@@ -394,7 +394,7 @@ export function CalculatorForm({ countries, industries }: Props) {
                   </p>
                   <p className="mt-1 text-xs text-cocoa-500">in sales each month</p>
                 </article>
-                <article className="rounded-lg border border-parchment/70 bg-cream-50 p-4">
+                <article className="atlas-card-soft p-4">
                   <h3
                     data-typography="custom"
                     className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500"
@@ -418,7 +418,7 @@ export function CalculatorForm({ countries, industries }: Props) {
               </p>
 
               {/* Owner take-home: everything above break-even, before tax. */}
-              <div className="mt-5 rounded-lg border border-parchment/70 bg-cream-50 p-5">
+              <div className="atlas-card-soft mt-5 p-5">
                 <h3
                   data-typography="custom"
                   className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500"
@@ -476,7 +476,7 @@ export function CalculatorForm({ countries, industries }: Props) {
               ).map(({ k, label }) => (
                 <div
                   key={k}
-                  className="rounded-lg border border-parchment/70 bg-cream-50 p-2"
+                  className="atlas-card-soft p-2"
                 >
                   <div className="text-[10px] uppercase tracking-wide text-cocoa-500">
                     {label}

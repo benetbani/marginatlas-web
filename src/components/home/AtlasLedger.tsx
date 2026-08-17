@@ -93,7 +93,16 @@ export function AtlasLedger() {
           is already above it, but that is a chain of two implicit facts. Saying
           it here means the card cannot be moved somewhere without one.
           The pages agent found the same thing washing out the /cities hero. */}
-      <div className="relative rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-7">
+      {/* .atlas-card, not a hand-rolled one. This was `relative rounded-xl
+          border border-parchment bg-white`, which is the canonical card spelled
+          out by hand and spelled slightly wrong: a flat opaque white at a 12px
+          radius with no seating shadow, where the token surface is
+          rgba(255,255,255,.955) at --radius with --atlas-elev-1. The
+          translucency is the point now that the frame paints no centre plate:
+          an opaque white is a hole punched in the photograph rather than a
+          sheet laid on it. And `position: relative` comes with the class, so
+          the note above is enforced by the class rather than remembered. */}
+      <div className="atlas-card px-5 py-6 md:px-8 md:py-7">
         <div className="border-t border-parchment pt-5 md:pt-6">
         {/* An h2, not a div, and it looks exactly the same.
             Every other band on this page contributes a heading to the document

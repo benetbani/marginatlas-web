@@ -42,9 +42,22 @@ export function Specimen({ specimen }: { specimen: SpecimenData | null }) {
         What an answer looks like
       </SectionEyebrow>
 
+      {/* .atlas-card, which this card was already imitating: it read
+          `rounded-xl border border-parchment bg-white ...
+          hover:border-atlas-300`. Three of the home page's link cards
+          (ExampleTiles, NeighborhoodCards, the audience tiles) use the class;
+          this one hand-rolled a flatter, opaque, differently-rounded near-copy
+          with a hover of its own.
+
+          The hover goes with it, deliberately. a.atlas-card:hover is the site's
+          card gesture, a vermillion top edge with a 1px lift, and this is an
+          anchor so it applies. `transition-colors` also had to go: it sets
+          transition-property itself and would have replaced the class's own
+          transition of box-shadow, border-color and transform, leaving the lift
+          to snap. The focus ring is untouched. */}
       <a
         href={href}
-        className="group block rounded-xl border border-parchment bg-white px-5 py-6 md:px-8 md:py-8 transition-colors hover:border-atlas-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
+        className="group atlas-card block px-5 py-6 md:px-8 md:py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
       >
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
           {/* Canonical section size, stepped down from text-2xl/3xl 2026-08-17.

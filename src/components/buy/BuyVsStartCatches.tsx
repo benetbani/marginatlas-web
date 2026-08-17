@@ -31,7 +31,8 @@ function CatchBlock({
   // hand-editing the builder's lower-case fragments.
   const cap = (s: string) => (s.length > 0 ? s[0].toUpperCase() + s.slice(1) : s);
   return (
-    <div className="rounded-lg border border-parchment bg-cream-50 p-5">
+    // Canonical surface: was "rounded-lg border border-parchment bg-cream-50".
+    <div className="atlas-card p-5">
       <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-atlas-700">
         {heading}
       </div>

@@ -83,7 +83,7 @@ export function SetupCostBlock({ cell, id }: Props) {
     <section
       id={id}
       aria-labelledby="setup-cost-heading"
-      className="my-8 rounded-2xl border border-ink-200 bg-white overflow-hidden"
+      className="atlas-card my-8 overflow-hidden"
     >
       <details className="md:open" open>
         <summary

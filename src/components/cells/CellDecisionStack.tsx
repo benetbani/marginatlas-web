@@ -95,7 +95,7 @@ export function CellDecisionStack({
       </HonestTakeBox>
     ) : null,
     narrative: view.narrative ? (
-      <section id="narrative" className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
+      <section id="narrative" className="atlas-card px-5 py-5 md:px-7 md:py-6">
         <p className="max-w-2xl text-base leading-relaxed text-graphite md:text-lg">
           {view.narrative}
         </p>
@@ -153,7 +153,7 @@ export function CellDecisionStack({
         id="risks"
         title="What to watch"
         risks={view.risks}
-        className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
+        className="atlas-card px-5 py-5 md:px-7 md:py-6"
       />
     ) : null,
     related: related ? <div id="related">{related}</div> : null,
@@ -223,7 +223,7 @@ function OwnerKeeps({
     <section
       id={id}
       aria-label="What the owner takes home"
-      className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
+      className="atlas-card px-5 py-5 md:px-7 md:py-6"
     >
       <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
         What the owner keeps

@@ -66,11 +66,17 @@ export function UpgradeTeaser({ variant = "band" }: { variant?: "band" | "panel"
           from the shared TIERS constant; the stance that reading is free is in
           the heading; the deeper detail is behind the link at the foot. 20
           words, zero figures, and the table starts sooner. */}
-      <div
-        className={`overflow-x-auto rounded-lg border border-parchment bg-white ${
-          panel ? "mt-5" : "mt-8 max-w-3xl"
-        }`}
-      >
+      {/* .atlas-card, not `rounded-lg border border-parchment bg-white`, which
+          was the class by hand at the wrong radius (8px against --radius) with
+          no seating shadow and a flat opaque white where the token surface is
+          rgba(255,255,255,.955). With no centre plate in the frame, an opaque
+          white is a hole punched in the photograph rather than a sheet laid on
+          it. It also brings position: relative, which is what keeps a card
+          above the frame's fixed layers.
+
+          The hover lift does not apply here: that rule is scoped to
+          a.atlas-card, button.atlas-card and .is-hover, and this is a div. */}
+      <div className={`atlas-card overflow-x-auto ${panel ? "mt-5" : "mt-8 max-w-3xl"}`}>
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr>

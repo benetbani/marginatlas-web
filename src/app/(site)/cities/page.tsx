@@ -66,7 +66,6 @@ import {
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { StatCard } from "@/components/board/StatCard";
 import { fmtUSD, fmtUSDBillions } from "@/components/board/format";
-import { elevation } from "@/lib/design-tokens";
 import {
   buildDirectoryCity,
   type DirectoryCity,
@@ -241,7 +240,12 @@ function CityIndexLink({ city }: { city: DirectoryCity }) {
 
 export default function CitiesHub() {
   return (
-    <article className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8">
+    /* No column cap and no gutter of its own. SiteChrome's <main> already gives
+       this route `max-w-content mx-auto px-6`, so `max-w-6xl mx-auto px-4
+       md:px-6` here was a second cap inside the first and a second gutter on
+       top of the first: 1024px where the rest of the site reads at 1072. Same
+       defect the city page carried, same fix. */
+    <article className="py-6 md:py-8">
       <nav aria-label="Breadcrumb" className="relative text-sm text-cocoa-700/70">
         <Link href="/" className="hover:text-atlas-700">
           Home
@@ -256,8 +260,13 @@ export default function CitiesHub() {
           spatial way in and the by-name way in, both above the fold. */}
       <section
         aria-labelledby="cities-hero-heading"
-        className="relative mt-4 rounded-2xl border border-parchment bg-white p-5 md:p-7"
-        style={{ boxShadow: elevation.card }}
+        /* Canonical surface. Was `relative rounded-2xl border border-parchment
+           bg-white` plus an inline boxShadow from the elevation token, which is
+           `.atlas-card` rebuilt by hand and one shade wrong: opaque white where
+           the canonical card is rgba(255,255,255,.955) and lets the photograph
+           read through. `.atlas-card` is also `position: relative` itself, so
+           the explicit `relative` the frame requires comes with it. */
+        className="atlas-card mt-4 p-5 md:p-7"
       >
         <SectionEyebrow size="md" className="mb-2">
           The directory
@@ -335,8 +344,7 @@ export default function CitiesHub() {
             {REGION_GROUPS.map((group) => (
               <section
                 key={group.region}
-                className="relative rounded-xl border border-parchment bg-white px-4 py-4 md:px-6 md:py-5"
-                style={{ boxShadow: elevation.card }}
+                className="atlas-card px-4 py-4 md:px-6 md:py-5"
               >
                 <div className="flex items-baseline justify-between gap-3 border-b border-parchment pb-3">
                   <h3 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">

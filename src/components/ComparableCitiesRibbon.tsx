@@ -49,7 +49,7 @@ export function ComparableCitiesRibbon({
           <a
             key={`${p.iso2}-${p.slug}`}
             href={`/${p.iso2.toLowerCase()}/${p.slug}/${industrySlug}`}
-            className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 transition-colors"
+            className="atlas-card group block p-5"
           >
             <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-2">
               <CountryFlag iso2={p.iso2} className="w-4" />

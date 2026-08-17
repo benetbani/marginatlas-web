@@ -35,7 +35,7 @@ export function CellFallbackBanner({
   }
 
   return (
-    <section className="bg-white border-l-4 border-l-atlas-700 py-5 md:py-6">
+    <section className="atlas-card border-l-4 border-l-atlas-700 px-5 py-5 md:py-6">
       <div className="text-xs md:text-sm font-bold uppercase tracking-[0.14em] text-atlas-700 mb-2">
         Closest comparable category
       </div>

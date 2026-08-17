@@ -82,7 +82,7 @@ export function QuartileMarkers({ p10, p25, p50, p75, p90 }: Props) {
   return (
     <section
       data-v34-section="quartile-markers"
-      className="mt-4 mb-10 rounded-xl border border-ink-200 bg-white p-4"
+      className="atlas-card mt-4 mb-10 p-4"
     >
       <div className="text-[10px] uppercase tracking-wider text-cocoa-700/60 font-semibold mb-3">
         Every quartile, at a glance

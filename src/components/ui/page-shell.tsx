@@ -21,22 +21,19 @@ type PageShellProps = {
 };
 
 /**
- * Outer page wrapper. Owns the background + min-height. One background for the
- * whole page so cards read as elevated against a single calm surface (fixes the
- * busy-pattern-vs-card clash).
+ * Outer page wrapper. Owns the min-height only.
+ *
+ * IT USED TO OWN A BACKGROUND, and that is now a bug rather than a feature. It
+ * painted `bg-cream-100` (or `bg-cream-50` at tone="card") across a min-h-screen
+ * box, which is a full-viewport opaque plate directly over the fixed photograph
+ * AtlasFrame draws behind every page. The two-surface rule says legibility is a
+ * property of the card, not of the backdrop, so the ground goes and the cards
+ * inside carry the reading surface. `tone` is kept because call sites pass it
+ * and it may select a future non-ground treatment; it is deliberately inert.
  */
 export function PageShell({ children, tone = "paper", className }: PageShellProps) {
-  return (
-    <div
-      className={cn(
-        "min-h-screen w-full",
-        tone === "paper" ? "bg-cream-100" : "bg-cream-50",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  );
+  void tone;
+  return <div className={cn("min-h-screen w-full", className)}>{children}</div>;
 }
 
 type ContentColumnProps = {

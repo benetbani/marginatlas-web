@@ -71,7 +71,7 @@ export function CorrectionForm({ cellUrl }: Props) {
   return (
     <form
       onSubmit={submit}
-      className="my-6 rounded-2xl border border-parchment bg-cream-50 p-5 space-y-3"
+      className="atlas-card my-6 p-5 space-y-3"
     >
       <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
         Send a correction
