@@ -226,6 +226,69 @@ one of them is wrong; pick the better and converge.
    measured.
 5. **Never push.** The founder pushes.
 
+### 9.1 THE SCREENSHOT NOW EXISTS. Take one.
+
+Built 2026-08-17 (`b12794d4`). Until then this document said, every tick, that
+no screenshot existed and every background claim was verified as *declared*
+rather than *seen*. That is closed, and it found a defect on its first run that
+nothing else could have.
+
+The recipe, no dev server involved:
+
+1. Compile the real stylesheet:
+   `npx tailwindcss -i src/app/globals.css -o <scratch>/site.css --minify`
+   (the CLI does inline `@import`, unlike the project's own postcss config)
+2. Render the real route by awaiting its default export, and write
+   `<!doctype html>…<style>{that css}</style>…{markup}` to a file.
+3. Two shims are required and both are documented traps, not defects:
+   `next/font/google` is a build-time transform and is not a function at
+   runtime; `useRouter`'s invariant throws with no app router mounted, which
+   halts the render inside `GlobalSearch`. Stub the three router hooks ONLY and
+   leave `notFound` and `redirect` real, or the harness reports a page as
+   rendering when the route 404s. Also stub `.css` and image imports, which the
+   CJS loader tries to parse as JavaScript.
+4. `file:` is blocked in the browser tools. Serve the scratch dir AND
+   `public/` over one tiny static server, so `/spine/_skyline.jpeg` resolves at
+   the path the markup asks for.
+5. Navigate, `browser_evaluate` to scroll and to read computed values, then
+   screenshot as **jpeg** and Read it.
+
+Its blind spots, before it is trusted: SSR pass only, so anything appearing on
+hydration is absent; the data bands self-omit from this machine, so their
+absence is never a layout finding; and it proves what the browser PAINTS, never
+that the founder likes it.
+
+### 9.2 THE PAINT RULE. Read this before touching any background.
+
+`AtlasFrame` paints two `position: fixed` layers at `z-index: 0`, the first an
+**opaque white base**. CSS paints positioned z-index-0 descendants AFTER in-flow
+non-positioned ones, and that ordering covers **backgrounds and inline text
+alike**.
+
+**Therefore anything `position: static` on this site is not drawn at all.** Not
+dimmed. Not washed out. Absent.
+
+The site was getting away with it by accident: every homepage band is wrapped in
+`ToneBand`, which happens to be `relative`, and every `.atlas-card` is
+`relative` by rule. Everywhere neither applied, content vanished:
+
+- the country page's sections were static, which is the mechanical reason the
+  founder said that page "is not updated"
+- **the entire site footer** and the newsletter bar above it, on every page,
+  since the frame went site-wide: black ground, wordmark, all five link columns
+  and the copyright, none of it painted
+
+Closed structurally rather than per component: `<main>` in `SiteChrome` is now
+`relative`, which lifts every page's whole content subtree into the same paint
+step, plus `relative` on the two chrome elements that sit outside `<main>`. Safe
+by construction, no offsets so layout is untouched, and `z-index: auto` so no
+stacking context is formed and descendant z-indexes still compete in the root
+context.
+
+**Nothing in the source was wrong.** Every class correct, every token correct,
+98 of 98 gates green, and the page still blank where the footer should be. Only
+a rendered pixel can find this class of defect.
+
 Known local traps, already paid for:
 
 - Data bands (`ExampleTiles`, `StateComparison`, `Specimen`) self-omit on the
