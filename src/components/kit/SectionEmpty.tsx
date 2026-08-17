@@ -76,7 +76,8 @@ export function SectionEmpty({
         {note ? <p className="mt-1 text-sm leading-relaxed text-cocoa-700">{note}</p> : null}
       </div>
       <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-parchment bg-paper-100 px-2.5 py-1 text-[11px] font-medium text-cocoa-700">
-        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-cocoa-300" />
+        {/* paper-400: the "not held yet" dot marks an absence, not a cost. */}
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-paper-400" />
         Not held yet
       </span>
     </section>

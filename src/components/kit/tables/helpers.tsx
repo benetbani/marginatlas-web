@@ -194,7 +194,7 @@ const CHIP_TONE: Record<ChipTone, { wrap: string; dot: string }> = {
   /* "neutral" is NOT the bottom of the ladder: it means no verdict was made,
      which is a different statement from "this one is hard". It keeps its own
      quiet grey and its lighter dot so the two never read as the same chip. */
-  neutral: { wrap: "bg-paper-200 text-cocoa-700", dot: "bg-cocoa-300" },
+  neutral: { wrap: "bg-paper-200 text-cocoa-700", dot: "bg-paper-400" },
 };
 
 export function MeaningChip({

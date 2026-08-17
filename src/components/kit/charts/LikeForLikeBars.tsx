@@ -104,7 +104,13 @@ export function LikeForLikeBars({
   // markup is shared and only the wrapping element changes.
   const rowInner = (it: LikeForLikeItem & { value: number }) => {
     const hot = !!it.subject;
-    const fill = hot ? "bg-chart-primary" : "bg-cocoa-300";
+    /* The non-subject bars are paper-400, not cocoa-300. These are peer-city
+       REVENUE bars; cocoa is the ratified colour for "structure and costs"
+       (design-tokens chart.cost) and a comparison of turnover is neither. On
+       /gb/london/restaurants four of them painted 453-546px wide at 14px tall,
+       the second-largest mass of that tone on the page after the month bars.
+       paper-400's own comment names this exact role, "chart bar mass". */
+    const fill = hot ? "bg-chart-primary" : "bg-paper-400";
     const labelColor = hot ? "text-atlas-700" : "text-ink-700";
     const figColor = hot ? "text-atlas-700" : "text-ink-900";
     return (

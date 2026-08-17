@@ -205,7 +205,7 @@ export function RangeStrip({
           </div>
           {/* The spread as a horizontal track: the seven-tone ramp in a gradient
               bar, the typical carrying the lone accent tick. Tokens only. */}
-          <div className="relative mt-2 h-2 w-full rounded-full bg-gradient-to-r from-paper-200 via-cocoa-300 to-paper-200">
+          <div className="relative mt-2 h-2 w-full rounded-full bg-gradient-to-r from-paper-200 via-paper-400 to-paper-200">
             <span
               className="absolute top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-atlas-500"
               style={{ left: `${p50Pos}%` }}

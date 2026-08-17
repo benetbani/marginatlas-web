@@ -286,8 +286,11 @@ export function WagesByRole({
               </div>
               {showRail ? (
                 <div className="relative mt-1.5 h-2 w-full rounded-full bg-parchment">
+                  {/* paper-400, not cocoa-300: a pay range is not a cost
+                      breakdown, and cocoa is the ratified colour for costs.
+                      Full reasoning over the month bars below. */}
                   <div
-                    className="absolute top-0 h-2 rounded-full bg-cocoa-300"
+                    className="absolute top-0 h-2 rounded-full bg-paper-400"
                     style={{ left: pct(left!), right: `calc(100% - ${pct(right!)})` }}
                   />
                   {isNum(r.median) ? (
@@ -348,8 +351,25 @@ export function Seasonality({
             const peak = i === peakIdx;
             return (
               <div key={i} className="flex flex-1 flex-col items-center gap-1">
+                {/* THE BAR MASS IS paper-400, NOT cocoa-300, AND THE REASON IS
+                    NOT "cocoa is brown". It is: cocoa is the RATIFIED colour
+                    for one job, "structure and costs" (design-tokens
+                    chart.cost), and month demand is not a cost. Photographed at
+                    1280x900 on /gb/london/restaurants, twelve of these bars
+                    painted 57px wide at 35-56px tall, the largest single mass
+                    of that colour anywhere on the page, next to four peer-city
+                    bars in the same tone and a cost bar that had an actual
+                    claim on it. So the cost colour had become the default for
+                    any quiet mass, which empties the ratification rather than
+                    honouring it. paper-400 #bfbfbf is a true neutral whose own
+                    token comment already names this role: "chart bar mass,
+                    dashed rules, underlines". Weight measured, not eyeballed:
+                    luminance .4624 -> .5210, so contrast against the white card
+                    goes 2.05:1 -> 1.84:1 and against the paper-200 track
+                    1.77:1 -> 1.59:1. No text sits on these fills, so no AA
+                    verdict is in play. */}
                 <div
-                  className={["w-full rounded-sm", peak ? "bg-atlas-500" : "bg-cocoa-300"].join(" ")}
+                  className={["w-full rounded-sm", peak ? "bg-atlas-500" : "bg-paper-400"].join(" ")}
                   style={{ height: `${h}px` }}
                 />
                 <span

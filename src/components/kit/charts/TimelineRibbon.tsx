@@ -112,7 +112,9 @@ export function TimelineRibbon({
                 <span className="text-[11px] font-semibold uppercase tracking-[0.16em] tabular-nums text-cocoa-500">
                   {m.at}
                 </span>
-                {/* node dot, on the threaded hairline */}
+                {/* node dot, on the threaded hairline. paper-400 rather than
+                    cocoa-300: a milestone on a first-year path is not a cost,
+                    and cocoa is the ratified colour for costs. */}
                 <span className="my-2.5 flex h-4 items-center justify-center">
                   <span
                     aria-hidden="true"
@@ -120,7 +122,7 @@ export function TimelineRibbon({
                       "block rounded-full ring-2 ring-white",
                       hot
                         ? "h-3.5 w-3.5 bg-chart-primary"
-                        : "h-2.5 w-2.5 bg-cocoa-300",
+                        : "h-2.5 w-2.5 bg-paper-400",
                     ].join(" ")}
                   />
                 </span>
@@ -170,7 +172,7 @@ export function TimelineRibbon({
                   aria-hidden="true"
                   className={[
                     "block rounded-full ring-2 ring-white",
-                    hot ? "h-3.5 w-3.5 bg-chart-primary" : "h-2.5 w-2.5 bg-cocoa-300",
+                    hot ? "h-3.5 w-3.5 bg-chart-primary" : "h-2.5 w-2.5 bg-paper-400",
                   ].join(" ")}
                 />
               </span>

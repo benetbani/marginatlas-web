@@ -62,15 +62,21 @@ const COVERAGE_WORD: Record<CoverageTier, string | null> = {
 };
 
 // Filled-dot color by tier band, a monotonic drain rather than two hues:
-// confidence deepens into terracotta and low tiers stay a neutral cocoa, so
+// confidence deepens into terracotta and low tiers drain to a neutral, so
 // nothing reads as a red flag. `measured` was moss-500 until 2026-08-17, which
 // is banned; it is now the deep terracotta, one step above `regional` on the
 // same ramp, which is exactly the relationship the two tiers have.
+//
+// THE LOW END WAS cocoa-300 AND THE COMMENT ABOVE ALREADY CALLED IT NEUTRAL.
+// It was not: cocoa-300 measures h35 s25%, a warm tan, and it painted five 8px
+// dots in the cell page's own filter bar. paper-400 is s0%, so the drain now
+// actually ends where this comment always said it did. Luminance .4624 ->
+// .5210, no text on the fill, no AA verdict in play.
 const DOT_FILL: Record<CoverageTier, string> = {
   measured: "bg-atlas-700",
   regional: "bg-atlas-500",
-  estimated: "bg-cocoa-300",
-  modeled: "bg-cocoa-300",
+  estimated: "bg-paper-400",
+  modeled: "bg-paper-400",
 };
 
 export function CoverageBadge({ cell, anchor, className }: CoverageBadgeProps) {
