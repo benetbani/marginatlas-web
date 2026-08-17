@@ -776,3 +776,92 @@ is looking at.
 
 **Method for the next tick:** count with comments stripped, then CLASSIFY before
 converting. Chips and inputs are not cards and must not be forced into one.
+
+---
+
+## 13. THE SMALL TYPE. Two questions, both answerable in one pass.
+
+Measured 2026-08-18 on the real `/gb`, rendered per §9.1 and read in a browser:
+**114 text nodes compute to under 12px.** Not 108; the earlier figure predates
+two fixes and missed SVG text, which is measured in user units rather than
+pixels. The census is by COMPUTED size, so it sees inheritance a source grep
+cannot.
+
+| size | n |
+|---|---|
+| 11px | 51 |
+| 11.5px | 17 |
+| 10px | 31 |
+| 10.5px | 15 |
+
+**There is no site-wide 12px rule being broken.** `SectionEyebrow`'s "12px
+floor" comment governs `SectionEyebrow` only; both its variants emit `text-xs`
+and none of its 78 call sites overrides the size. Checked, so nobody re-derives
+it.
+
+### What the 114 actually are
+
+| role | n | the largest members |
+|---|---|---|
+| spectrum and scale end words | 29 | `.eng-spec__end` 24 at 10px, the country-shape ring words 3, GroundUnderYou's "Shaky / Firm" 2 |
+| the key half of a key/value pair | 32 | `.eng-score__label` 8, `.eng-citycard__ck` 4, `.eng-total__k` 2, three `dt` keys, plus unclassed spans |
+| chart rim labels and reads | 12 | `.eng-shape__rim-label` 11.5px, `.eng-shape__rim-read` 10.5px |
+| table column headers | 10 | five `th` at 11px, `.eng-neigh__col` at 11.5px |
+| captions and caveats under a figure | 8 | `.eng-neigh__cap`, `.eng-vs__cap`, HowFarYouReach's inline caveat, `.eng-citycard__meta` |
+| interactive control labels | 14 | `.eng-gutpill` Yes/No buttons at 11px, the trade chips |
+| structural and nav labels | 5 | `.eng-divlabel` 4, "On this page" 1 |
+| provenance and honesty marks | 4 | `.eng-onething__stamp`, "Updated / June 2026" |
+
+Two of the 114 were NOT scale questions and are already fixed (`def756bf`): the
+rosette divider labels failed contrast on the photograph at 2.08:1, and the
+country shape's ring words were SVG text that rendered 9.92px on a desktop and
+**5.86px on a phone**, because "8.5px" inside a viewBox is 8.5 user units and
+scales with the container. Both are recorded there in full.
+
+### QUESTION 1, the floor. What is the smallest size this atlas prints?
+
+Nothing in the repo answers this. The engraved family behaves as if the answer
+is 10px, the rest of the site as if it is 12px, and `CountryShape` carries a
+private `@media (max-width: 380px)` block that drops its rim read to 9.5px and
+its sample tag to 8px, lower than anywhere else on the site. That is the §7
+cohesion defect in one sentence: **one page type runs a type scale nobody else
+runs, in a `<style>` block inside a component.**
+
+The concrete decision is the 10px step, 31 nodes, 24 of them the character
+panel's spectrum end labels. Those words are the only thing saying which end of
+each bar is which, so they are load-bearing rather than decorative.
+
+- **A.** 10px stays. The engraved family keeps its own micro step.
+- **B.** 10px goes to 10.5px, the size already used by four other engraved
+  micro-labels. One value leaves the ladder, nothing new enters.
+- **C.** 11px is the floor for anything a reader must read, and 10px survives
+  only for marks a reader glances at. This is the largest change and the only
+  one that also settles `CountryShape`'s private 9.5px and 8px.
+
+### QUESTION 2, the colour, and it is bigger than the size
+
+**82 of the 114 are one token.** `--text-faint` is `#87745d`, and on this
+site's own card it measures **4.48:1 on pure white and 4.35:1 where the card
+sits over the darkest part of the photograph.** AA for text under 24px is 4.5.
+It misses, everywhere, by about 0.15.
+
+This one cannot be converged, only chosen, which is why it is here rather than
+done. The next step down the same ladder is `--text-muted` `#534231` at
+**9.58:1**: correct, and so much darker that the quiet tone the engraved system
+is built on would collapse into the body tone. Nothing exists between them. So
+the options are:
+
+- **A.** Hold the AA floor exactly and darken `--text-faint` by the smallest
+  amount that clears it, roughly `#857259`. A reader will not see the change;
+  the gate line will.
+- **B.** Accept 4.48 and write down that this token is a deliberate 0.15 under
+  the floor, with the reason, so it stops being rediscovered every few ticks.
+- **C.** Split the token: keep `#87745d` for text at 12px and above, add one
+  darker step for everything below. Most work, and the only option that makes
+  the distinction the WCAG rule actually draws.
+
+**Recommendation, stated so it can be rejected in one word: B for the colour
+and B for the size.** The colour miss is 0.4% and invisible; writing it down
+costs one comment and ends the rediscovery. The size answer B moves 31 nodes by
+half a pixel, which no reader will notice, and its real value is that the
+engraved family stops having a step nothing else has.
