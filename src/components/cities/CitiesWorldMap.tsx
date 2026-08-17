@@ -49,9 +49,17 @@ export type CitiesWorldMapCity = {
 type Props = {
   cities: CitiesWorldMapCity[];
   /**
-   * Tailwind height utilities for the map frame, letting the host page own its
-   * hero sizing. Defaults to a trimmed first-screen height so the controls and
-   * hero copy share one viewport. Mobile-first: must stay legible at 375px.
+   * Tailwind sizing utilities for the map frame, letting the host page own its
+   * hero sizing.
+   *
+   * DEFAULTS TO AN ASPECT RATIO, NOT A HEIGHT, and that is a fix rather than a
+   * preference. A fixed height cannot match the map's own 1100:480 ratio at
+   * more than one viewport width, and an SVG at `preserveAspectRatio` meet
+   * letterboxes the difference as dead white inside the card. At 1440 the old
+   * `h-[480px]` frame was 1022 wide, so it letterboxed 34px; at 375 it was 287
+   * wide inside an `h-[360px]` frame and letterboxed 235px, two thirds of the
+   * card being nothing at all. Matching the ratio makes that zero at every
+   * width.
    */
   heightClassName?: string;
 };
@@ -69,9 +77,36 @@ type Props = {
    countries should be pronounced. Right now, they don't exist", and draws the
    same land with an ink-700 outline at 0.9. Two maps, one problem, one answer
    already ratified: this one now matches it. */
-const GEO_FILL = tokenColors.cream[200]; //     very light warm land
+/* Land fill: `parchment`, a TRUE NEUTRAL at s=0%. Not `ink[100]`, which is
+   #f0e7d9 and reads as warm sand: tried, photographed, and the whole map came
+   out the colour the founder banned. Not `cream[200]` either, whose value is
+   fine (#eeeeee, also neutral now) but whose name is the one the purge is
+   removing. */
+const GEO_FILL = tokenColors.parchment; //      very light neutral land
 const GEO_STROKE = tokenColors.ink[700]; //     pronounced country borders
 const GEO_STROKE_WIDTH = 0.9;
+
+/* ANTARCTICA IS NOT DRAWN, and dropping it is the whole reason the rest of the
+   world got 20% bigger. Measured in a browser at 1440x900: the 176 inhabited
+   countries occupied y 114..439 of a 480px frame, and the only thing filling
+   the bottom was a 466x26 sliver of Antarctica clipped flat by the frame edge,
+   which reads as a rendering fault rather than a continent. It carries no city
+   in this atlas and never will. `id` is the ISO 3166-1 numeric code, which is
+   how world-atlas keys its features. */
+const ANTARCTICA_ID = "010";
+
+/* The projection is FITTED, not guessed. Previously scale 175 on a 1100x600
+   frame, which left the land occupying 72% of the width and 68% of the height:
+   141px of dead white down each side and 114px across the top, at 1440. These
+   two numbers come from d3's own fitExtent over the 176 inhabited countries
+   inset by 14 units, converted to the (scale, center) pair react-simple-maps
+   exposes, since it hard-wires translate to [width/2, height/2] and offers no
+   way to set it. Land now spans x 35..1065 and y 14..466 of the 1100x480 frame.
+   Recompute with scratch/fit_map.mjs if the frame ever changes. */
+const MAP_WIDTH = 1100;
+const MAP_HEIGHT = 480;
+const PROJECTION_SCALE = 193.81;
+const PROJECTION_CENTER: [number, number] = [0, 6.886];
 const MARKER_FILL = tokenColors.atlas[700]; //  vermillion
 const MARKER_STROKE = tokenColors.atlas[800]; // deeper vermillion
 const TOOLTIP_BG = tokenColors.cream[50];
@@ -107,7 +142,14 @@ type HoverState = {
 
 type ZoomPos = { coordinates: [number, number]; zoom: number };
 
-const INITIAL_POS: ZoomPos = { coordinates: [0, 20], zoom: 1 };
+/* THE ZOOM GROUP MUST START ON THE PROJECTION'S OWN CENTRE, or the fit above is
+   undone at runtime. useZoomPan translates the map by
+   `height/2 - projection(center).y`, so any centre other than the projected one
+   is a second, opposing offset applied on top of the first. It was [0, 20],
+   which was right while the projection sat at [0, 0]; against the fitted centre
+   it pushed the whole world 47px down and clipped the southern tip of South
+   America against the frame. Measured in a browser, not reasoned about. */
+const INITIAL_POS: ZoomPos = { coordinates: PROJECTION_CENTER, zoom: 1 };
 
 function iso2ToFlag(iso2: string): string {
   if (!iso2 || iso2.length !== 2) return "";
@@ -120,7 +162,7 @@ function iso2ToFlag(iso2: string): string {
 
 export default function CitiesWorldMap({
   cities,
-  heightClassName = "h-[360px] md:h-[480px]",
+  heightClassName = "aspect-[1100/480]",
 }: Props) {
   const [hovered, setHovered] = useState<HoverState>(null);
   const [pos, setPos] = useState<ZoomPos>(INITIAL_POS);
@@ -180,9 +222,12 @@ export default function CitiesWorldMap({
     >
       <ComposableMap
         projection="geoEqualEarth"
-        projectionConfig={{ scale: 175 }}
-        width={1100}
-        height={600}
+        projectionConfig={{
+          scale: PROJECTION_SCALE,
+          center: PROJECTION_CENTER,
+        }}
+        width={MAP_WIDTH}
+        height={MAP_HEIGHT}
         style={{ width: "100%", height: "100%", background: "transparent" }}
       >
         <ZoomableGroup
@@ -198,43 +243,45 @@ export default function CitiesWorldMap({
              zoom>1 the user pans within the visible globe only. */
           translateExtent={[
             [0, 0],
-            [1100, 600],
+            [MAP_WIDTH, MAP_HEIGHT],
           ]}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }: { geographies: GeoFeature[] }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  // Cities §1.8: countries not clickable. The map's
-                  // semantic affordance is the city dot, never the
-                  // country shape.
-                  style={{
-                    default: {
-                      fill: GEO_FILL,
-                      stroke: GEO_STROKE,
-                      strokeWidth: GEO_STROKE_WIDTH,
-                      outline: "none",
-                      vectorEffect: "non-scaling-stroke",
-                      pointerEvents: "none",
-                    },
-                    hover: {
-                      fill: GEO_FILL,
-                      stroke: GEO_STROKE,
-                      strokeWidth: GEO_STROKE_WIDTH,
-                      outline: "none",
-                      vectorEffect: "non-scaling-stroke",
-                      pointerEvents: "none",
-                    },
-                    pressed: {
-                      fill: GEO_FILL,
-                      outline: "none",
-                      pointerEvents: "none",
-                    },
-                  }}
-                />
-              ))
+              geographies
+                .filter((geo) => String(geo.id) !== ANTARCTICA_ID)
+                .map((geo) => (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    // Cities §1.8: countries not clickable. The map's
+                    // semantic affordance is the city dot, never the
+                    // country shape.
+                    style={{
+                      default: {
+                        fill: GEO_FILL,
+                        stroke: GEO_STROKE,
+                        strokeWidth: GEO_STROKE_WIDTH,
+                        outline: "none",
+                        vectorEffect: "non-scaling-stroke",
+                        pointerEvents: "none",
+                      },
+                      hover: {
+                        fill: GEO_FILL,
+                        stroke: GEO_STROKE,
+                        strokeWidth: GEO_STROKE_WIDTH,
+                        outline: "none",
+                        vectorEffect: "non-scaling-stroke",
+                        pointerEvents: "none",
+                      },
+                      pressed: {
+                        fill: GEO_FILL,
+                        outline: "none",
+                        pointerEvents: "none",
+                      },
+                    }}
+                  />
+                ))
             }
           </Geographies>
 
@@ -330,14 +377,22 @@ export default function CitiesWorldMap({
         </ZoomableGroup>
       </ComposableMap>
 
-      {/* Cities §1.7: faint "Click a city" instruction. Moved to the top-LEFT
-          on the hero revision so it never collides with the zoom controls that
-          now sit top-right. Disappears on first user interaction. */}
+      {/* Cities §1.7: the "Click a city" instruction, still top-left and still
+          gone on first interaction.
+
+          IT NOW SITS ON A CHIP, because the map underneath it changed. It was
+          set at 45% opacity directly on the frame, which worked only while the
+          top-left corner was empty ocean: the projection wasted 141px down each
+          side and 114px across the top, so the words had a white field to
+          themselves. Now that the world fills the frame those same words land
+          on Alaska and the Aleutians, faint grey type on grey land, which is
+          both unreadable and dirties the picture. A small card-surface chip
+          gives it its own ground, so it reads at full strength and the map
+          reads underneath it. */}
       {!interacted && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-3 left-4 font-display text-lg md:text-xl tracking-wide text-ink-700"
-          style={{ opacity: 0.45 }}
+          className="pointer-events-none absolute top-3 left-3 rounded-md bg-white/90 px-2.5 py-1 font-display text-base md:text-lg tracking-wide text-cocoa-500"
         >
           Click a city
         </div>
