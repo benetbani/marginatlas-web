@@ -484,3 +484,120 @@ permanently.
   returns legal at lightness ≥ 93%, so `#f7f7f8` and the cream ramp are invisible
   to it; the amber and moss wash gradients are below that threshold and were not
   checked against the gate. Worth a separate look.
+
+---
+
+## 5. THE CITY FORK, RESOLVED. The legacy body wins, and the flag stays dark.
+
+Section 3 left the city as two decisions that "must not be conflated": a design
+pass on the legacy body, or a go-live on `NEXT_PUBLIC_SPINE_REFORM_CITY`. This
+section closes it. **The legacy body wins on merit, the flag must stay off, and
+the spine body is not merely un-flipped: three of its seven chapters cannot
+render for any city, ever, on real data.**
+
+### The instrument
+
+Both bodies were rendered for real, for four cities, with `react-dom/server`
+against the real loaders (`.env.local` supplied, so `buildCityActivities` reached
+Supabase and returned real rows). The legacy body is the route's own default
+export awaited directly; the spine body is `SpineCityBody` fed
+`await buildSpineCitySeed(slug)`, exactly what the flag-ON branch mounts.
+
+**What this cannot distinguish:** a section that renders from a section that
+renders WELL. It counts headings, anchors and visible words in the emitted HTML.
+It says nothing about spacing, colour, or whether a rendered chapter is any good.
+It also cannot see the two bodies' different chrome: both sit inside
+`SiteChrome`, but the spine one adds its own `<main>` and its own font pair, and
+that difference is read from source, not from these numbers.
+
+### The measurement
+
+| city | LEGACY sections / headings / words | SPINE chapters / headings / words |
+|---|---|---|
+| london | 11 / 10 / **1442** | 4 / 5 / **266** |
+| tokyo | 11 / 11 / **967** | 3 / 4 / **141** |
+| mexico-city | 11 / 11 / **779** | 3 / 4 / **111** |
+| abuja (tier 3, thin) | 11 / 10 / **711** | 3 / 4 / **108** |
+
+The legacy body renders the identical eleven anchors on all four:
+`headline, honest-take, customer, space, visitors, owners-keep, best-areas,
+neighbourhoods, changing, peers, one-thing`. That is the agreed city section
+spine, complete, on a tier-3 African city with almost no held data, because every
+section either fills or falls to a calm `SectionEmpty` rather than vanishing.
+
+The spine body renders `What space costs`, `Who buys, and when` and `The next
+move` on all four, plus `Where to trade` on London alone.
+
+### Three chapters are STRUCTURALLY unreachable, not merely empty
+
+This is the finding that settles it, and it is a code fact, not a data fact:
+
+1. **`What to open, and what it costs`.** `city-view.tsx:577` gates the chapter on
+   `t.break_in_0_100 != null && t.cost_to_open_usd != null`. `adapt_city.ts:189`
+   says in its own comment: *"cost_to_open_usd / saturation_0_100 DELIBERATELY
+   absent (no honest source)."* The predicate can never be true.
+   The cost is not that the chapter is missing. It is that the adapter **computes
+   the whole real trade leaderboard and throws it away**: 8 real rows for London,
+   8 for Tokyo, each carrying a real take-home, net margin and break-in score,
+   and `LowestBar` filters every one of them out on the missing cost field. The
+   legacy body renders those same rows, in full, as `OwnerKeepTable`.
+2. **`What to watch`** (`:578`) needs `risks`, `character`, `locals_intel` or
+   `owner_runway`. `adapt_city.ts:424-426` lists all four as OMITTED.
+3. **`The city's conditions`** (`:601`) needs `lenses.scales`. Same list.
+
+So the spine city page is a four-chapter page at its London best and a
+three-chapter page everywhere else, and no amount of new city data changes that
+without adapter work. `where_to_trade` is London-only by construction
+(`adapt_city.ts:327`, `isLondon &&`), and `income` needs the London-only
+sanctioned spread, so 251 of the 252 cities lose the verdict, the district map
+and the income curve as well.
+
+### What the flag would also cost, beyond the sections
+
+- The spine body opens `<main className="mx-auto max-w-[1120px] px-4 md:px-6">`
+  (`city-view.tsx:582`) INSIDE `SiteChrome`'s `<main class="max-w-content px-6">`.
+  That is a nested `<main>`, an accessibility defect, and it re-creates the
+  doubled content padding that this same audit named at `cities/[slug]/page.tsx:430`
+  as the site's only instance. Flipping the flag would not fix that defect; it
+  would move it.
+- `SpineShell` supplies `--c-card:#ffffff`, fully opaque (`shell.tsx:65`). Every
+  spine `Box` is therefore an opaque hole in the fixed photograph, which is the
+  founder's most repeated complaint. `.atlas-card` is `rgba(255,255,255,.955)`.
+- It brings the second font pair, the 12px body scale and the third terracotta
+  (`#c2410c`) onto a page that currently carries the site's own, which is a
+  divergence this audit's item 5 exists to close, not to widen.
+
+### The verdict
+
+**Work the legacy body. Leave `NEXT_PUBLIC_SPINE_REFORM_CITY` unset.** It is not
+"the old version" in any sense the founder would endorse: it is the only body
+that renders the agreed sections, the only one that renders them for every city
+rather than for London, and the only one already on the site's own card, font and
+palette. The spine body is the newer *drawing*; on real data it is the thinner
+*page*.
+
+**What the spine body would need before this is worth revisiting**, stated so the
+decision is falsifiable rather than a preference: an honest source for
+cost-to-open (unblocks a chapter and 8 already-computed real rows per city), for
+the four risk/character/locals/runway blocks (unblocks a second chapter), and for
+the lens positions (a third); district coordinates and per-city district sets
+beyond London; then the nested `<main>`, the opaque `--c-card` and the second
+font pair resolved against the site's chrome. That is adapter and data work, not
+design work, and none of it is in this scope.
+
+### Already closed, verified in the same render
+
+Both defects section 3 lists against the legacy city body were fixed by
+`4acfb611` and are confirmed absent from the emitted HTML: `atlas-wash` appears
+**0** times for all four cities (the hero is one `.atlas-card` now,
+`cities/[slug]/page.tsx:455`), and the `max-w-6xl px-4 md:px-6` wrapper is gone,
+so the column is the site's 1072.
+
+`.atlas-wash--city` (`globals.css:642`) is now **dead code with no call site**:
+`HeroWash category="city"` appears nowhere in `src/`. It carries the banned amber
+`rgba(214,134,15,.18)`. Deleting it belongs to whoever owns `globals.css`; it is
+reported here rather than done.
+
+What the same render says is still wrong, and is the work below: **29 to 36
+`bg-cream-*` occurrences and 12 to 14 hand-rolled `bg-white` surfaces per city
+page**, against 10 to 15 `.atlas-card`.
