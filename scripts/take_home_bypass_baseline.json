@@ -4,7 +4,6 @@
     "src/lib/london/market.ts",
     "src/lib/scores/activity_board.ts",
     "src/lib/scores/cell_board.ts",
-    "src/lib/scores/index.ts",
     "src/lib/spine/adapt_city.ts",
     "src/lib/spine/adapt_industry.ts"
   ]

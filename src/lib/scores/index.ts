@@ -23,11 +23,26 @@
  * margin and net take-home it already computed) through the context, so the
  * scores agree with the rest of the page instead of inventing a second set.
  *
- * Pure module: it operates only on Cell fields plus the context numbers. No
- * Supabase, no other domain modules at runtime (Cell is a type-only import),
- * so it stays trivially testable and cannot trip the layering gate.
+ * THE TAKE-HOME FIGURE COMES FROM THE RESOLVER, NOT FROM HERE. The owner
+ * take-home score used to fall back to `netMargin * median` whenever neither
+ * the context nor the cell carried a profit figure. That is the same
+ * derive-it-locally shape as the two 2026-08-17 defects: it ignores the 3%
+ * net-margin floor the rest of the site displays, so a cell shown at "3% net"
+ * scored off a raw margin of minus 40%. Swept over 3,024 combinations of
+ * revenue, margin, structural profit and industry, the local derivation
+ * matched `resolveOwnerTakeHome` in 41.9% of them, and the worst gap was
+ * $1,720,000 (it fed minus $1.6M into a score where the resolver reads
+ * $120,000). Every input now goes through the resolver, which is a fixed point
+ * for a figure the caller has already resolved: `max(resolved, floor)` is
+ * `resolved` when `resolved` already clears the floor, so a page passing its
+ * own authoritative take-home gets exactly that number back.
+ *
+ * Pure module: it operates only on Cell fields plus the context numbers, and
+ * on the shared take-home resolver (itself pure). No Supabase and no I/O, so
+ * it stays trivially testable and cannot trip the layering gate.
  */
 import type { Cell } from "@/lib/cells";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 
 export type ScoreBand = "strong" | "workable" | "mixed" | "weak" | "avoid";
 
@@ -65,6 +80,16 @@ export interface ScoreContext {
   netProfit?: number | null;
   /** Local annual wage to normalise owner take-home against, USD. */
   localAnnualWage?: number | null;
+  /**
+   * Country average annual income (USD), for the resolver's larger-firm floor
+   * only. That floor lifts a thin take-home to twice this figure, and it
+   * applies to 10+ employee bands ALONE: a 1-4 or 5-9 cell is never floored,
+   * whatever is passed here. Omit it and the floor simply never applies, which
+   * is the conservative reading, not a different one. This is NOT
+   * `localAnnualWage`: that one is the per-employee wage the score divides by,
+   * a different quantity, and feeding one into the other would move scores.
+   */
+  annualIncome?: number | null;
   /**
    * Market-room favourability (0 to 100), computed by the caller from peer
    * density when it has the context. Omit to leave Market room out.
@@ -311,10 +336,24 @@ export function computeScores(cell: Cell, ctx: ScoreContext = {}): ScoreSet {
     pushScore(scores, "rent", rent, (b) => rentBlurb(rentPct, b));
   }
 
-  const netProfit =
-    ctx.netProfit ??
-    cell.net_profit ??
-    (netMargin != null && median != null ? netMargin * median : null);
+  // The one owner take-home figure, resolved by the single source of truth so
+  // this score can never sit below the net margin the page shows beside it.
+  // The structural input is the caller's authoritative figure when it has one,
+  // else the cell's own stored profit; the resolver then floors it to the
+  // dollars the SHOWN (clamped) margin implies. The 2x-income floor is the
+  // resolver's, and it is armed only for the 10+ employee bands, exactly the
+  // list the cell page uses. Below that band the flag is false and the floor
+  // cannot fire, whatever `ctx.annualIncome` holds.
+  const isLargerFirm =
+    !!cell.size_band && ["10-19", "20-49", "50-99", "100+"].includes(cell.size_band);
+  const netProfit = resolveOwnerTakeHome({
+    structuralNetProfit: ctx.netProfit ?? cell.net_profit ?? null,
+    rawNetMargin: netMargin,
+    revenue: median,
+    industryId: cell.industry_id ?? null,
+    isLargerFirm,
+    annualIncome: ctx.annualIncome ?? null,
+  });
   const wage =
     ctx.localAnnualWage ??
     (cell.payroll_per_employee && cell.payroll_per_employee > 0
