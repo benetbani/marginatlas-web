@@ -392,13 +392,13 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
             Stacked +/- buttons. Minus is disabled at globe view since the
             map can't zoom out further; founder rule: never show the
             unattractive over-cropped state. */}
-        <div className="absolute bottom-3 right-3 flex flex-col rounded-md overflow-hidden shadow-sm border border-ink-200 bg-white">
+        <div className="absolute bottom-3 right-3 flex flex-col rounded-md overflow-hidden shadow-sm border border-paper-350 bg-white">
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); zoomIn(); }}
             disabled={zoom >= MAX_ZOOM}
             aria-label="Zoom in"
-            className="w-8 h-8 flex items-center justify-center text-ink-900 hover:bg-ink-100 disabled:opacity-40 disabled:cursor-not-allowed text-base font-semibold border-b border-ink-200 transition-colors"
+            className="w-8 h-8 flex items-center justify-center text-ink-900 hover:bg-paper-250 disabled:opacity-40 disabled:cursor-not-allowed text-base font-semibold border-b border-paper-350 transition-colors"
           >
             +
           </button>
@@ -407,7 +407,7 @@ export default function WorldMapPicker({ onSelect, className }: WorldMapPickerPr
             onClick={(e) => { e.stopPropagation(); zoomOut(); }}
             disabled={zoom <= MIN_ZOOM}
             aria-label="Zoom out"
-            className="w-8 h-8 flex items-center justify-center text-ink-900 hover:bg-ink-100 disabled:opacity-40 disabled:cursor-not-allowed text-base font-semibold transition-colors"
+            className="w-8 h-8 flex items-center justify-center text-ink-900 hover:bg-paper-250 disabled:opacity-40 disabled:cursor-not-allowed text-base font-semibold transition-colors"
           >
             −
           </button>

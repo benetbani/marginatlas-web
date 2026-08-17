@@ -32,7 +32,7 @@ const B = "bg-atlas-50 border-atlas-200 text-atlas-900";   // warm amber
    same grey as the eleven carrying A. Whether those six should have a distinct
    tint at all is a design question for the founder; inventing one here would be
    inventing a colour to justify a variable. */
-const C = "bg-paper-100 border-ink-100 text-cocoa-900";   // neutral, s=0%
+const C = "bg-paper-100 border-paper-250 text-cocoa-900";   // neutral, s=0%
 
 export const SECTOR_TOKENS: Record<string, SectorTokens> = {
   food_drink:               { label: "FOOD & DRINK",            tint: B, accent: "text-atlas-700" },

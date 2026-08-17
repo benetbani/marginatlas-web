@@ -108,7 +108,7 @@ export function SavedClient() {
                 {c.label}
               </a>
               <div className="text-xs text-ink-700/60">/{key}</div>
-              <div className="mt-auto flex items-center justify-between pt-3 border-t border-ink-200/60">
+              <div className="mt-auto flex items-center justify-between pt-3 border-t border-paper-350/60">
                 <a
                   href={`/${key}`}
                   className="text-xs text-atlas-600 hover:underline"

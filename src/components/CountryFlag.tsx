@@ -23,7 +23,7 @@ export function CountryFlag({ iso2, className = "w-6", label }: Props) {
     <img
       src={`https://flagcdn.com/${code}.svg`}
       alt={alt}
-      className={`inline-block aspect-[3/2] object-cover border border-ink-200/40 align-middle ${className}`}
+      className={`inline-block aspect-[3/2] object-cover border border-paper-350/40 align-middle ${className}`}
       loading="lazy"
       width={24}
       height={16}

@@ -148,13 +148,13 @@ export function PaywallModalRoot() {
           "w-full sm:max-w-2xl",
           "bg-white sm:rounded-2xl rounded-t-2xl sm:rounded-b-2xl",
           "shadow-[0_-8px_40px_rgba(0,0,0,0.18)] sm:shadow-[0_24px_60px_rgba(0,0,0,0.18)]",
-          "border border-ink-200",
+          "border border-paper-350",
           "max-h-[85vh] overflow-y-auto",
         ].join(" ")}
       >
         {/* Mobile grabber bar (visual cue this is dismissable). */}
         <div className="sm:hidden flex justify-center pt-2">
-          <div className="w-10 h-1 bg-ink-300 rounded-full" />
+          <div className="w-10 h-1 bg-paper-450 rounded-full" />
         </div>
 
         {/* Close button — top right on desktop, integrated on mobile. */}
@@ -169,7 +169,7 @@ export function PaywallModalRoot() {
             type="button"
             onClick={close}
             aria-label="Close"
-            className="ml-3 -mr-2 -mt-1 inline-flex items-center justify-center w-9 h-9 rounded-full text-ink-700 hover:bg-ink-100 transition-colors"
+            className="ml-3 -mr-2 -mt-1 inline-flex items-center justify-center w-9 h-9 rounded-full text-ink-700 hover:bg-paper-250 transition-colors"
           >
             <span aria-hidden="true" className="text-xl leading-none">
               &times;
@@ -194,7 +194,7 @@ export function PaywallModalRoot() {
 
         {/* Trust signals — EXACTLY TWO. Methodology + cancel-anytime block.
            No third signal. (Conclusion 1A.8.) */}
-        <div className="px-6 mt-5 pt-4 border-t border-ink-200">
+        <div className="px-6 mt-5 pt-4 border-t border-paper-350">
           <p className="text-xs text-ink-700 leading-relaxed">
             {CANCEL_ANYTIME_BLOCK}
           </p>
@@ -235,7 +235,7 @@ function TierCard({
     "rounded-xl p-4 border transition-colors",
     highlighted
       ? "bg-atlas-50 border-atlas-300"
-      : "bg-white border-ink-200",
+      : "bg-white border-paper-350",
   ].join(" ");
   const buttonClasses =
     tier === "basic"

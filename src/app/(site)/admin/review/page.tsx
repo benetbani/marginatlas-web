@@ -319,7 +319,7 @@ function VerificationsTab({
               <Pill tone="bad">{tax.summary.flags ?? 0} flags</Pill>
               <Pill tone="plain">{tax.summary.pending ?? 0} pending</Pill>
             </div>
-            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+            <div className="mt-4 overflow-x-auto rounded-xl border border-paper-350">
               <table className="w-full text-xs">
                 <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
@@ -333,7 +333,7 @@ function VerificationsTab({
                 </thead>
                 <tbody>
                   {Object.entries(tax.results).map(([iso, r]) => (
-                    <tr key={iso} className="border-t border-ink-200/40 align-top">
+                    <tr key={iso} className="border-t border-paper-350/40 align-top">
                       <td className="py-1.5 px-2 font-medium">{iso}</td>
                       <td className="py-1.5 px-2 text-right tabular-nums">{(r.our_cit * 100).toFixed(1)}%</td>
                       <td className="py-1.5 px-2 text-right tabular-nums">
@@ -377,7 +377,7 @@ function VerificationsTab({
               <Pill tone="bad">{rent.summary.flags ?? 0} flags</Pill>
               <Pill tone="plain">{rent.summary.pending_cities ?? 0} pending</Pill>
             </div>
-            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+            <div className="mt-4 overflow-x-auto rounded-xl border border-paper-350">
               <table className="w-full text-xs">
                 <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
@@ -391,7 +391,7 @@ function VerificationsTab({
                 </thead>
                 <tbody>
                   {Object.entries(rent.results).map(([city, r]) => (
-                    <tr key={city} className="border-t border-ink-200/40 align-top">
+                    <tr key={city} className="border-t border-paper-350/40 align-top">
                       <td className="py-1.5 px-2 font-medium">{city}</td>
                       <td className="py-1.5 px-2 text-right tabular-nums">${r.our_value_usd_sqm_yr}</td>
                       <td className="py-1.5 px-2 text-right tabular-nums">${r.canonical_usd_sqm_yr}</td>
@@ -442,7 +442,7 @@ function VerificationsTab({
               <Pill tone="bad">{margin.summary.flags ?? 0} flags</Pill>
               <Pill tone="plain">{margin.summary.pending ?? 0} pending</Pill>
             </div>
-            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+            <div className="mt-4 overflow-x-auto rounded-xl border border-paper-350">
               <table className="w-full text-xs">
                 <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
@@ -456,7 +456,7 @@ function VerificationsTab({
                 </thead>
                 <tbody>
                   {Object.entries(margin.results).map(([id, r]) => (
-                    <tr key={id} className="border-t border-ink-200/40 align-top">
+                    <tr key={id} className="border-t border-paper-350/40 align-top">
                       <td className="py-1.5 px-2 font-medium">{id}</td>
                       <td className="py-1.5 px-2 text-right tabular-nums">{(r.our_op_margin * 100).toFixed(1)}%</td>
                       <td className="py-1.5 px-2 text-right tabular-nums">
@@ -498,7 +498,7 @@ function VerificationsTab({
               <Pill tone="watch">{taxonomy.rename_count} rename candidates</Pill>
               <Pill tone="plain">{taxonomy.total_industries - taxonomy.flagged_count} clean</Pill>
             </div>
-            <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+            <div className="mt-4 overflow-x-auto rounded-xl border border-paper-350">
               <table className="w-full text-xs">
                 <thead className="bg-secondary text-ink-900 text-left">
                   <tr>
@@ -511,7 +511,7 @@ function VerificationsTab({
                 </thead>
                 <tbody>
                   {taxonomy.flagged.map((f) => (
-                    <tr key={f.industry_id} className="border-t border-ink-200/40 align-top">
+                    <tr key={f.industry_id} className="border-t border-paper-350/40 align-top">
                       <td className="py-1.5 px-2 max-w-[200px]">
                         <div className="font-medium text-ink-900">{f.current_name}</div>
                         <div className="text-[10px] font-mono text-ink-700/70">{f.industry_id}</div>
@@ -682,7 +682,7 @@ function CurrencyTab({ data }: { data: CurrencyReport }) {
         ))}
       </div>
 
-      <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+      <div className="mt-4 overflow-x-auto rounded-xl border border-paper-350">
         <table className="w-full text-xs">
           <thead className="bg-secondary text-ink-900">
             <tr className="text-left">
@@ -695,7 +695,7 @@ function CurrencyTab({ data }: { data: CurrencyReport }) {
           </thead>
           <tbody>
             {data.samples.slice(0, 100).map((s, i) => (
-              <tr key={i} className="border-t border-ink-200/40">
+              <tr key={i} className="border-t border-paper-350/40">
                 <td className="py-1.5 px-2">
                   <a
                     href={`/${s.country.toLowerCase()}/${(s.geo_id || s.country).toLowerCase()}/${s.industry_id.replace(/_/g, "-")}`}
@@ -729,7 +729,7 @@ function VarianceTab({ data }: { data: VarianceReport }) {
       <h2 className="text-xl font-semibold text-ink-900">
         Q3: Cross-country variance ({data.totals.flagged_total.toLocaleString()} flagged groups)
       </h2>
-      <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+      <div className="mt-4 overflow-x-auto rounded-xl border border-paper-350">
         <table className="w-full text-xs">
           <thead className="bg-secondary text-ink-900">
             <tr className="text-left">
@@ -743,7 +743,7 @@ function VarianceTab({ data }: { data: VarianceReport }) {
           </thead>
           <tbody>
             {data.samples.slice(0, 100).map((s, i) => (
-              <tr key={i} className="border-t border-ink-200/40">
+              <tr key={i} className="border-t border-paper-350/40">
                 <td className="py-1.5 px-2">{s.industry_id} · {s.size_band}</td>
                 <td className="py-1.5 px-2 text-right tabular-nums">{s.n_countries}</td>
                 <td className="py-1.5 px-2 text-right tabular-nums font-medium text-clay-700">{s.max_min_ratio}×</td>
@@ -773,12 +773,12 @@ function SmallNTab({ data }: { data: SmallNReport }) {
       </div>
       <div className="mt-6">
         <h3 className="text-sm font-semibold text-ink-900 mb-2">Countries with most thin cells</h3>
-        <div className="overflow-x-auto rounded-xl border border-ink-200">
+        <div className="overflow-x-auto rounded-xl border border-paper-350">
           <table className="w-full text-xs">
             <thead className="bg-secondary"><tr className="text-left"><th className="py-2 px-2">Country</th><th className="py-2 px-2 text-right">&lt; 5</th><th className="py-2 px-2 text-right">5-19</th><th className="py-2 px-2 text-right">20-49</th><th className="py-2 px-2 text-right">200+</th><th className="py-2 px-2 text-right">null</th></tr></thead>
             <tbody>
               {Object.entries(data.by_country_top_30_thin).map(([c, b]) => (
-                <tr key={c} className="border-t border-ink-200/40">
+                <tr key={c} className="border-t border-paper-350/40">
                   <td className="py-1.5 px-2 font-mono">{c}</td>
                   <td className="py-1.5 px-2 text-right tabular-nums">{(b["<5"] ?? 0).toLocaleString()}</td>
                   <td className="py-1.5 px-2 text-right tabular-nums">{(b["5-19"] ?? 0).toLocaleString()}</td>
@@ -802,12 +802,12 @@ function YoYTab({ data }: { data: YoYReport }) {
         Q14: Year-over-year stability ({data.totals.flagged_transitions.toLocaleString()} flagged transitions)
       </h2>
       <p className="mt-1 text-sm text-ink-700/80">&gt;50% YoY change excluding 2020-2021 pandemic transitions.</p>
-      <div className="mt-4 overflow-x-auto rounded-xl border border-ink-200">
+      <div className="mt-4 overflow-x-auto rounded-xl border border-paper-350">
         <table className="w-full text-xs">
           <thead className="bg-secondary"><tr className="text-left"><th className="py-2 px-2">Cell</th><th className="py-2 px-2">Transition</th><th className="py-2 px-2 text-right">From</th><th className="py-2 px-2 text-right">To</th><th className="py-2 px-2 text-right">Ratio</th></tr></thead>
           <tbody>
             {data.samples.slice(0, 100).map((s, i) => (
-              <tr key={i} className="border-t border-ink-200/40">
+              <tr key={i} className="border-t border-paper-350/40">
                 <td className="py-1.5 px-2 text-xs">{s.country} · {s.geo_id} · {s.industry_id} · {s.size_band}</td>
                 <td className="py-1.5 px-2 tabular-nums">{s.year_from}→{s.year_to}</td>
                 <td className="py-1.5 px-2 text-right tabular-nums">{fmtMoney(s.revenue_from)}</td>
@@ -905,7 +905,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
 
       <div>
         <h3 className="text-sm font-semibold text-ink-900 mb-2">Top 50 normalizations applied</h3>
-        <div className="overflow-x-auto rounded-xl border border-ink-200">
+        <div className="overflow-x-auto rounded-xl border border-paper-350">
           <table className="w-full text-xs">
             <thead className="bg-secondary text-ink-900">
               <tr className="text-left">
@@ -925,7 +925,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
                 const after = (n.new_revenue_per_firm as number) ?? (n.new_predicted_rev_per_firm as number);
                 const country = (n.country as string) ?? (n.country_iso3 as string);
                 return (
-                  <tr key={i} className="border-t border-ink-200/40">
+                  <tr key={i} className="border-t border-paper-350/40">
                     <td className="py-1.5 px-2 text-xs font-mono">{String(n.table)}</td>
                     <td className="py-1.5 px-2 font-medium">{country}</td>
                     <td className="py-1.5 px-2">{String(n.industry_id)}</td>
@@ -948,7 +948,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
           Cells where revenue/firm falls outside the conservative physical bounds for that industry.
           These were flagged but NOT auto-normalized unless they were also extreme vs peer median.
         </p>
-        <div className="overflow-x-auto rounded-xl border border-ink-200">
+        <div className="overflow-x-auto rounded-xl border border-paper-350">
           <table className="w-full text-xs">
             <thead className="bg-secondary text-ink-900">
               <tr className="text-left">
@@ -967,7 +967,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
                 const country = (n.country as string) ?? (n.country_iso3 as string);
                 const bounds = n.bounds as [number, number] | undefined;
                 return (
-                  <tr key={i} className="border-t border-ink-200/40">
+                  <tr key={i} className="border-t border-paper-350/40">
                     <td className="py-1.5 px-2 text-xs font-mono">{String(n.table)}</td>
                     <td className="py-1.5 px-2 font-medium">{country}</td>
                     <td className="py-1.5 px-2">{String(n.industry_id)}</td>
@@ -991,7 +991,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
           <p className="text-xs text-ink-700/70 mb-2">
             Percentiles that violate p10 ≤ p25 ≤ p50 ≤ p75 ≤ p90 or whose spread (p90/p10) is implausibly tight or wide.
           </p>
-          <div className="overflow-x-auto rounded-xl border border-ink-200">
+          <div className="overflow-x-auto rounded-xl border border-paper-350">
             <table className="w-full text-xs">
               <thead className="bg-secondary text-ink-900">
                 <tr className="text-left">
@@ -1007,7 +1007,7 @@ function Wave5Tab({ data }: { data: Wave5Report | null }) {
               </thead>
               <tbody>
                 {data.samples.flagged_shape_top_50.map((n, i) => (
-                  <tr key={i} className="border-t border-ink-200/40">
+                  <tr key={i} className="border-t border-paper-350/40">
                     <td className="py-1.5 px-2 text-xs font-mono">{String(n.table)}</td>
                     <td className="py-1.5 px-2 font-medium">{String(n.country ?? n.country_iso3 ?? "-")}</td>
                     <td className="py-1.5 px-2">{String(n.industry_id)}</td>

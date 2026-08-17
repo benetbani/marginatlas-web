@@ -433,7 +433,7 @@ function Toggle({ defaultOn, ariaLabel }: { defaultOn?: boolean; ariaLabel?: str
       aria-checked={on}
       aria-label={ariaLabel}
       onClick={() => setOn((v) => !v)}
-      className={`inline-flex items-center ${on ? "bg-atlas-600" : "bg-ink-200"}`}
+      className={`inline-flex items-center ${on ? "bg-atlas-600" : "bg-paper-350"}`}
       style={{
         width: 40,
         height: 22,

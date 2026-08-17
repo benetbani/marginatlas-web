@@ -117,7 +117,7 @@ export function CheckForm() {
     <>
       <form
         onSubmit={handleSubmit}
-        /* Canonical surface: was "rounded-2xl bg-white border border-ink-200",
+        /* Canonical surface: was "rounded-2xl bg-white border border-paper-350",
            fully opaque over the fixed page photograph. The seven controls
            INSIDE this form keep their own fills: an input needs an opaque
            field to read as a field, and forcing a form control into a card
@@ -135,7 +135,7 @@ export function CheckForm() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search businesses, e.g. bakery, plumber, dentist"
-              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900"
+              className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm text-ink-900"
               aria-label="Filter the industry list"
             />
             <select
@@ -143,7 +143,7 @@ export function CheckForm() {
               aria-label="Industry"
               value={form.industryId}
               onChange={(e) => update("industryId", e.target.value)}
-              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900"
+              className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm text-ink-900"
             >
               <option value="">Pick one</option>
               {selectionHidden && selectedIndustry && (
@@ -176,7 +176,7 @@ export function CheckForm() {
               value={form.revenueUsd}
               onChange={(e) => update("revenueUsd", e.target.value)}
               placeholder="e.g. 750000"
-              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
+              className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
             />
           </label>
 
@@ -189,7 +189,7 @@ export function CheckForm() {
               value={form.cogsUsd}
               onChange={(e) => update("cogsUsd", e.target.value)}
               placeholder="e.g. 280000"
-              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
+              className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
             />
           </label>
 
@@ -202,7 +202,7 @@ export function CheckForm() {
               value={form.labourUsd}
               onChange={(e) => update("labourUsd", e.target.value)}
               placeholder="e.g. 215000"
-              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
+              className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
             />
           </label>
 
@@ -215,7 +215,7 @@ export function CheckForm() {
               value={form.rentUsd}
               onChange={(e) => update("rentUsd", e.target.value)}
               placeholder="e.g. 72000"
-              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
+              className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
             />
           </label>
 
@@ -228,7 +228,7 @@ export function CheckForm() {
               value={form.motorVehicleUsd}
               onChange={(e) => update("motorVehicleUsd", e.target.value)}
               placeholder="e.g. 9000"
-              className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
+              className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm tabular-nums text-ink-900"
             />
           </label>
         </div>

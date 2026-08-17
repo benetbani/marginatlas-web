@@ -63,7 +63,7 @@ function isNum(v: number | null | undefined): v is number {
  *
  *   1  bg-cocoa-300      #c3b39c   h35 s25%   L .4624   warm tan
  *   2  bg-paper-400      #bfbfbf   h0  s0%    L .5210   true neutral
- *   3  bg-ink-100        #e8e8e8   h0  s0%    L .8070   true neutral
+ *   3  bg-paper-250        #e8e8e8   h0  s0%    L .8070   true neutral
  *   4  bg-parchment      #e3e3e3   h0  s0%    L .7682   true neutral
  *   5  bg-cocoa-500/70   #87745d   h33 s18%   L .1843   warm dark
  *
@@ -103,7 +103,7 @@ function isNum(v: number | null | undefined): v is number {
 const COST_FILL = [
   "bg-cocoa-300",
   "bg-paper-400",
-  "bg-ink-100",
+  "bg-paper-250",
   "bg-parchment",
   "bg-cocoa-500/70",
 ] as const;

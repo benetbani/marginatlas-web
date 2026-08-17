@@ -95,7 +95,7 @@ export default async function DistributionStatesPage({
 
       {STATES.map((state) => (
         <section key={state.label} className="space-y-6">
-          <div className="border-b border-ink-200 pb-3">
+          <div className="border-b border-paper-350 pb-3">
             <h2 className="font-display text-2xl font-semibold text-ink-900">
               {state.label}
             </h2>
@@ -114,7 +114,7 @@ export default async function DistributionStatesPage({
                   {w}px wide
                 </div>
                 <div
-                  className="border border-dashed border-ink-200 bg-white overflow-hidden"
+                  className="border border-dashed border-paper-350 bg-white overflow-hidden"
                   style={{ width: `${w}px`, maxWidth: "100%" }}
                 >
                   <DistributionVisual
@@ -129,7 +129,7 @@ export default async function DistributionStatesPage({
         </section>
       ))}
 
-      <footer className="pt-8 border-t border-ink-200 text-sm text-ink-700">
+      <footer className="pt-8 border-t border-paper-350 text-sm text-ink-700">
         Founder review checklist: (1) no label collisions at any width,
         (2) band fill uses atlas-700 at 70% opacity, (3) typical marker
         uses atlas-800, (4) no amber/aquamarine/teal, (5) degenerate

@@ -49,7 +49,7 @@ const linkClass = "underline underline-offset-2 hover:text-atlas-600";
 const labelClass = "block text-sm font-medium text-ink-900";
 const hintClass = "mt-1 block text-sm text-ink-600";
 const fieldClass =
-  "mt-2 w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-base text-ink-900";
+  "mt-2 w-full rounded-lg border border-paper-350 bg-white px-3 py-2 text-base text-ink-900";
 
 export default async function ContactPage({
   searchParams,

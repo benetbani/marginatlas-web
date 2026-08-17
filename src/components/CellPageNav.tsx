@@ -77,7 +77,7 @@ export function CellPageNav() {
       <div className="text-[10px] uppercase tracking-wider text-ink-700/50 font-semibold pl-3 mb-2">
         On this page
       </div>
-      <ul className="space-y-0.5 border-l border-ink-200">
+      <ul className="space-y-0.5 border-l border-paper-350">
         {SECTIONS.map((s) => {
           const isActive = active === s.id;
           return (

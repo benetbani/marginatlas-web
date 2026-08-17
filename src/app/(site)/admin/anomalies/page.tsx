@@ -130,7 +130,7 @@ export default async function AnomaliesPage({
                   .map(([cat, count]) => (
                     <div
                       key={cat}
-                      className="px-3 py-2 rounded-lg border border-ink-200 bg-white"
+                      className="px-3 py-2 rounded-lg border border-paper-350 bg-white"
                     >
                       <div className="text-xs uppercase tracking-wide text-ink-700/70">
                         {cat}
@@ -151,7 +151,7 @@ export default async function AnomaliesPage({
                     <div className="mt-3 overflow-x-auto">
                       <table className="text-xs w-full border-collapse">
                         <thead>
-                          <tr className="text-left text-ink-700/70 border-b border-ink-200">
+                          <tr className="text-left text-ink-700/70 border-b border-paper-350">
                             <th className="py-1 pr-3">country</th>
                             <th className="py-1 pr-3">geo</th>
                             <th className="py-1 pr-3">industry</th>
@@ -162,7 +162,7 @@ export default async function AnomaliesPage({
                         </thead>
                         <tbody>
                           {samples.slice(0, 50).map((s, i) => (
-                            <tr key={i} className="border-b border-ink-200/40">
+                            <tr key={i} className="border-b border-paper-350/40">
                               <td className="py-1 pr-3">{s.country}</td>
                               <td className="py-1 pr-3 font-mono">
                                 {s.geo_id}

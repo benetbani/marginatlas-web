@@ -55,7 +55,7 @@ export function AnnualCostStack({ cell }: Props) {
       <details className="md:open" open>
         <summary
           id="annual-cost-stack-heading"
-          className="cursor-pointer list-none px-6 py-4 flex items-center justify-between gap-4 border-b border-ink-100 md:border-b md:cursor-default"
+          className="cursor-pointer list-none px-6 py-4 flex items-center justify-between gap-4 border-b border-paper-250 md:border-b md:cursor-default"
         >
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
@@ -101,7 +101,7 @@ export function AnnualCostStack({ cell }: Props) {
         </table>
 
         {(refreshed || stack.source_note) && (
-          <div className="px-6 py-3 bg-paper-100 text-xs text-ink-600 border-t border-ink-100">
+          <div className="px-6 py-3 bg-paper-100 text-xs text-ink-600 border-t border-paper-250">
             {refreshed && <span>Refreshed {refreshed}. </span>}
             {stack.source_note && <span>{stack.source_note}</span>}
           </div>

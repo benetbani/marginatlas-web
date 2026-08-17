@@ -108,7 +108,7 @@ function colorFor(result: Check["result"]): string {
     case "down":
       return "bg-clay-700";
     default:
-      return "bg-ink-300";
+      return "bg-paper-450";
   }
 }
 
@@ -156,7 +156,7 @@ export default async function StatusPage() {
       </p>
       </div>
 
-      <div className="atlas-card mt-8 divide-y divide-ink-200/70 overflow-hidden">
+      <div className="atlas-card mt-8 divide-y divide-paper-350/70 overflow-hidden">
         {checks.map((c) => (
           <div key={c.name} className="flex items-center justify-between px-5 py-4 gap-4">
             <div className="min-w-0">

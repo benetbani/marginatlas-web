@@ -81,7 +81,7 @@ export default async function AccountPage() {
         <form action="/auth/signout" method="post">
           <button
             type="submit"
-            className="rounded-full border border-ink-200 px-3 py-1.5 text-sm font-medium text-ink-800 transition-colors hover:border-atlas-500"
+            className="rounded-full border border-paper-350 px-3 py-1.5 text-sm font-medium text-ink-800 transition-colors hover:border-atlas-500"
           >
             Sign out
           </button>

@@ -212,7 +212,7 @@ export default async function ComparisonPage({
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
               </>
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-paper-100 via-parchment to-ink-100" />
+              <div className="w-full h-full bg-gradient-to-br from-paper-100 via-parchment to-paper-250" />
             )}
             <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white">
               <div className="flex items-center gap-2 text-xs uppercase tracking-wide font-semibold mb-1 opacity-90">

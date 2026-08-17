@@ -94,7 +94,7 @@ export function SignInForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             aria-label="Email address"
-            className="rounded-full border border-ink-200 px-4 py-2.5 text-sm focus:border-atlas-500 focus:outline-none"
+            className="rounded-full border border-paper-350 px-4 py-2.5 text-sm focus:border-atlas-500 focus:outline-none"
           />
           <button
             type="submit"

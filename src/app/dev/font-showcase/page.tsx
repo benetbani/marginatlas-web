@@ -136,7 +136,7 @@ function Specimen({ c }: { c: Candidate }) {
         </div>
         <span
           data-typography="custom"
-          className="hidden sm:block text-3xl text-ink-300 select-none"
+          className="hidden sm:block text-3xl text-paper-450 select-none"
           style={serif}
           aria-hidden="true"
         >

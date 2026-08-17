@@ -104,7 +104,7 @@ export function CorrectionForm({ cellUrl }: Props) {
           onChange={(e) => setMessage(e.target.value)}
           placeholder="e.g. 'The typical revenue for restaurants in Tirana is way too high: my own café does ~€60K, not the $1.2M shown.'"
           rows={3}
-          className="mt-1 w-full px-3 py-2 rounded-lg border border-ink-200 bg-white text-sm"
+          className="mt-1 w-full px-3 py-2 rounded-lg border border-paper-350 bg-white text-sm"
         />
       </label>
       <label className="block">
@@ -116,7 +116,7 @@ export function CorrectionForm({ cellUrl }: Props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
-          className="mt-1 w-full px-3 py-2 rounded-lg border border-ink-200 bg-white text-sm"
+          className="mt-1 w-full px-3 py-2 rounded-lg border border-paper-350 bg-white text-sm"
         />
       </label>
       {err ? <div className="text-xs text-clay-700">{err}</div> : null}

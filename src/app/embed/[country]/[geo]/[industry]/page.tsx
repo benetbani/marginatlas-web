@@ -126,7 +126,7 @@ export default async function EmbedCell({ params }: { params: Promise<Params> })
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border border-ink-200 rounded-lg p-2.5">
+    <div className="border border-paper-350 rounded-lg p-2.5">
       <div className="text-[10px] uppercase tracking-wide text-ink-700/60 font-medium">
         {label}
       </div>

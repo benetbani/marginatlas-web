@@ -162,7 +162,7 @@ export function NavigatorForm() {
         e.preventDefault();
         submit();
       }}
-      className="relative rounded-2xl atlas-paper-card border border-ink-200 hover:border-ink-300 transition-colors"
+      className="relative rounded-2xl atlas-paper-card border border-paper-350 hover:border-paper-450 transition-colors"
       style={{ boxShadow: elevation.card }}
     >
       {/* Hidden inputs mirror state for the no-JS native submit (action="/api/go"). */}
@@ -176,7 +176,7 @@ export function NavigatorForm() {
           hand-rolled caps eyebrow above the title (rule 11). The title now inherits the
           shell font (Geist on the spine page) instead of font-display (Newsreader serif),
           which is off the locked Geist + Space Grotesk system (rule 38). */}
-      <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-ink-200">
+      <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-paper-350">
         <div>
           <h2 data-typography="custom" className="font-semibold text-lg md:text-xl text-ink-900 leading-tight">
             Pick a country, a city, and a business.
@@ -244,7 +244,7 @@ export function NavigatorForm() {
       </div>
 
       {/* Footer bar: sample line + submit. */}
-      <div className="rounded-b-2xl border-t border-ink-200 bg-white px-5 md:px-8 py-4 md:py-5">
+      <div className="rounded-b-2xl border-t border-paper-350 bg-white px-5 md:px-8 py-4 md:py-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-[11px] md:text-xs text-cocoa-700/80 leading-relaxed">
             <span className="font-semibold uppercase tracking-[0.12em] text-ink-500 mr-1.5">

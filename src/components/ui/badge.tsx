@@ -1,6 +1,6 @@
 // shadcn Badge, atlas skin. Section 1 of master visual upgrade.
 // Variants: default = atlas-700 fill, secondary = cream-100 surface,
-// destructive = clay-700, outline = ink-200 border. All dark-mode
+// destructive = clay-700, outline = paper-350 border. All dark-mode
 // selectors stripped. No em-dashes in non-comment lines.
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";

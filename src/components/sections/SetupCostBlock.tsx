@@ -88,7 +88,7 @@ export function SetupCostBlock({ cell, id }: Props) {
       <details className="md:open" open>
         <summary
           id="setup-cost-heading"
-          className="cursor-pointer list-none px-6 py-4 flex items-center justify-between gap-4 border-b border-ink-100 md:border-b md:cursor-default"
+          className="cursor-pointer list-none px-6 py-4 flex items-center justify-between gap-4 border-b border-paper-250 md:border-b md:cursor-default"
         >
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
@@ -103,7 +103,7 @@ export function SetupCostBlock({ cell, id }: Props) {
           </span>
         </summary>
 
-        <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ink-100">
+        <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-paper-250">
           <SetupColumn
             heading="Legal & licensing"
             total={regTotal}
@@ -122,7 +122,7 @@ export function SetupCostBlock({ cell, id }: Props) {
             })) : []}
             sourceNote={cap?.source_note}
             footerExtras={cap?.working_capital_reserve_months ? (
-              <div className="text-xs text-ink-600 pt-2 border-t border-ink-100">
+              <div className="text-xs text-ink-600 pt-2 border-t border-paper-250">
                 Plus a recommended working-capital reserve of
                 {" "}<span className="font-medium text-ink-900">
                   {cap.working_capital_reserve_months} months
@@ -134,7 +134,7 @@ export function SetupCostBlock({ cell, id }: Props) {
         </div>
 
         {typeof payback === "number" && isFinite(payback) && payback > 0 && (
-          <div className="px-6 py-3 bg-paper-100 text-xs text-ink-700 border-t border-ink-100">
+          <div className="px-6 py-3 bg-paper-100 text-xs text-ink-700 border-t border-paper-250">
             Approximate break-even payback:
             {" "}<span className="font-semibold text-ink-900">{Math.round(payback)} months</span>
             {" "}from opening at typical revenue and margin.

@@ -223,7 +223,7 @@ export default function CitiesWorldMap({
   // radius. No bg-cream-100 (was visually different from the homepage).
   return (
     <div
-      className={`relative w-full ${heightClassName} rounded-md overflow-hidden border border-ink-200 atlas-paper`}
+      className={`relative w-full ${heightClassName} rounded-md overflow-hidden border border-paper-350 atlas-paper`}
       aria-label="World map showing covered cities"
       role="region"
     >

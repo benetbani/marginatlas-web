@@ -129,7 +129,7 @@ export function IfYouOpenedToday({ cell }: Props) {
       aria-labelledby="if-today-heading"
       className="atlas-card my-8 md:my-12 overflow-hidden"
     >
-      <div className="px-6 py-5 md:px-8 md:py-6 border-b border-ink-100">
+      <div className="px-6 py-5 md:px-8 md:py-6 border-b border-paper-250">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">
           If you signed the paperwork today
         </div>
@@ -146,7 +146,7 @@ export function IfYouOpenedToday({ cell }: Props) {
         </p>
       </div>
 
-      <ol className="divide-y divide-ink-100">
+      <ol className="divide-y divide-paper-250">
         <Milestone
           n={1}
           when={formatDate(today)}
@@ -189,7 +189,7 @@ export function IfYouOpenedToday({ cell }: Props) {
         />
       </ol>
 
-      <div className="px-6 py-3 md:px-8 bg-paper-100 text-xs text-ink-600 border-t border-ink-100">
+      <div className="px-6 py-3 md:px-8 bg-paper-100 text-xs text-ink-600 border-t border-paper-250">
         Assumes typical performance (~6% net margin) and a 3-month ramp.
         Bottom-decile operators take 50-100% longer to break even; top
         decile pay back in roughly half the time. The "if you opened

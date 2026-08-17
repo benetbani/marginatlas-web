@@ -32,7 +32,7 @@ export function SubIndustryPicker({ cell }: Props) {
   return (
     <section
       aria-label="Sub-industry variants"
-      className="border-y border-ink-100 py-4"
+      className="border-y border-paper-250 py-4"
     >
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">
@@ -75,7 +75,7 @@ function VariantChip({
         "group inline-flex flex-col items-start gap-0.5 px-3 py-2 rounded-md border text-left transition-colors",
         active
           ? "bg-ink-900 text-white border-ink-900"
-          : "bg-white text-ink-900 border-ink-200 hover:border-atlas-500",
+          : "bg-white text-ink-900 border-paper-350 hover:border-atlas-500",
       ].join(" ")}
     >
       <span className="text-sm font-medium leading-none">{label}</span>

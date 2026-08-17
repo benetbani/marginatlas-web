@@ -25,7 +25,7 @@ export default async function CitiesMockup() {
       <ContentColumn width="wide" className="py-10 md:py-16">
         <nav aria-label="Breadcrumb" className="text-[13px] text-ink-500 mb-12">
           <a href="/" className="hover:text-ink-800">Home</a>
-          <span className="mx-1.5 text-ink-300">/</span>
+          <span className="mx-1.5 text-paper-450">/</span>
           <span className="text-ink-700">Cities</span>
         </nav>
 
@@ -43,14 +43,14 @@ export default async function CitiesMockup() {
             const group = cities.filter((c) => c.tier === t).sort((a, b) => (b.population ?? 0) - (a.population ?? 0));
             if (group.length === 0) return null;
             return (
-              <section key={t} className="border-t border-ink-100 py-8 md:py-10">
+              <section key={t} className="border-t border-paper-250 py-8 md:py-10">
                 <h2 data-typography="custom" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500 mb-6">{label}</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-0.5">
                   {group.map((c) => (
                     <a
                       key={c.id}
                       href={`/cities/${c.slug}`}
-                      className="group flex items-baseline justify-between gap-4 border-b border-ink-100 py-3"
+                      className="group flex items-baseline justify-between gap-4 border-b border-paper-250 py-3"
                     >
                       <span className="text-[15px] text-ink-800 group-hover:text-atlas-700 transition-colors">{c.name}</span>
                       <span className="text-[13px] text-ink-500 shrink-0">{c.country_name}</span>

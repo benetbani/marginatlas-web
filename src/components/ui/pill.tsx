@@ -12,7 +12,7 @@
  *   - success : moss tone (positive YoY, "good" indicator)
  *   - warning : amber tone for caution chips
  *   - danger  : clay tone (negative YoY, error, suppression)
- *   - outline : transparent surface, ink-200 border (less weight)
+ *   - outline : transparent surface, paper-350 border (less weight)
  *
  * Sizes:
  *   - sm: very small inline chips (10px text)
@@ -44,7 +44,7 @@ const pillVariants = cva(
         success: "bg-atlas-100 text-atlas-700 border border-atlas-300/60",
         warning: "bg-paper-100 text-atlas-700 border border-atlas-200",
         danger: "bg-clay-100 text-clay-700 border border-clay-300/60",
-        outline: "bg-transparent text-cocoa-700 border border-ink-200",
+        outline: "bg-transparent text-cocoa-700 border border-paper-350",
       },
       size: {
         sm: "text-[10px] tracking-[0.06em] uppercase px-2 py-0.5",

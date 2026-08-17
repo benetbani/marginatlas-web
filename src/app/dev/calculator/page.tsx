@@ -26,7 +26,7 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </label>
   );
 }
-const fieldCls = "flex items-center gap-2 rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-[15px] text-ink-900";
+const fieldCls = "flex items-center gap-2 rounded-lg border border-paper-350 bg-white px-3.5 py-2.5 text-[15px] text-ink-900";
 
 export default async function CalculatorMockup() {
   const cell = await getCellBySlug("ke", "kenya", "restaurants");
@@ -47,7 +47,7 @@ export default async function CalculatorMockup() {
       <ContentColumn width="wide" className="py-10 md:py-16">
         <nav aria-label="Breadcrumb" className="text-[13px] text-ink-500 mb-12">
           <a href="/" className="hover:text-ink-800">Home</a>
-          <span className="mx-1.5 text-ink-300">/</span>
+          <span className="mx-1.5 text-paper-450">/</span>
           <span className="text-ink-700">Calculator</span>
         </nav>
 
@@ -83,7 +83,7 @@ export default async function CalculatorMockup() {
         </div>
 
         {/* result */}
-        <section className="mt-14 md:mt-20 border-t border-ink-100 pt-12">
+        <section className="mt-14 md:mt-20 border-t border-paper-250 pt-12">
           <p className="font-display text-2xl md:text-3xl leading-snug text-ink-900 max-w-3xl">
             A restaurant in Kenya at <span className="tabular-nums">{usd(you)}</span> sits in the top{" "}
             <span className="text-atlas-700 tabular-nums">{pct}%</span>, about{" "}

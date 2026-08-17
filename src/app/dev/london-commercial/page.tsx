@@ -109,7 +109,7 @@ export default function Page() {
             </a>
             <a
               href="#"
-              className="rounded-full border border-parchment bg-white px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-300"
+              className="rounded-full border border-parchment bg-white px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-paper-450"
             >
               Compare another city
             </a>

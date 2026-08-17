@@ -42,7 +42,7 @@ export default function DecideActivitySelector({
           setPending(true);
           router.push(`/decide/${next}/${citySlug}`);
         }}
-        className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900 font-medium focus:outline-none focus:border-atlas-700 focus:ring-2 focus:ring-atlas-700/20 disabled:opacity-60 disabled:cursor-wait min-w-[220px]"
+        className="rounded-lg border border-paper-350 bg-white px-3 py-2 text-sm text-ink-900 font-medium focus:outline-none focus:border-atlas-700 focus:ring-2 focus:ring-atlas-700/20 disabled:opacity-60 disabled:cursor-wait min-w-[220px]"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>

@@ -72,7 +72,7 @@ export function BlurredOverlay({
       />
       {/* CTA card — single paragraph + one button. */}
       <div className="absolute inset-0 flex items-center justify-center px-4">
-        <div className="max-w-[320px] w-full bg-white border border-ink-200 rounded-xl shadow-sm p-4 text-center">
+        <div className="max-w-[320px] w-full bg-white border border-paper-350 rounded-xl shadow-sm p-4 text-center">
           {headline ? (
             <div className="text-sm font-semibold text-ink-900 mb-2">
               {headline}

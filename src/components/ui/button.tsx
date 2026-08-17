@@ -1,7 +1,7 @@
 // shadcn Button, atlas skin. Section 1 of master visual upgrade.
 // Variants retuned: default = atlas-700 fill on cream-50 text;
 // secondary = cream-100 surface with ink-900 text; ghost = transparent
-// with cream-100 hover; outline = ink-200 border on cream-50; link uses
+// with cream-100 hover; outline = paper-350 border on cream-50; link uses
 // atlas-700 underline; destructive uses clay-700.
 // Dark-mode selectors stripped. No em-dashes in non-comment lines.
 import * as React from "react";

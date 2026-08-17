@@ -41,7 +41,7 @@ export function PercentileStrip({ p10, p25, p50, p75, p90, you, format }: Props)
         aria-label={`Revenue distribution: bottom tenth ${format(p10)}, typical ${format(p50)}, top tenth ${format(p90)}`}
       >
         {/* full range p10..p90 */}
-        <rect x={xp(p10)} y={trackY} width={xp(p90) - xp(p10)} height={trackH} rx={r} className="fill-ink-200" />
+        <rect x={xp(p10)} y={trackY} width={xp(p90) - xp(p10)} height={trackH} rx={r} className="fill-paper-350" />
         {/* middle half p25..p75 */}
         <rect x={xp(p25)} y={trackY} width={xp(p75) - xp(p25)} height={trackH} rx={r} className="fill-atlas-200" />
         {/* typical marker */}

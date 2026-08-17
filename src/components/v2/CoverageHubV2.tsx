@@ -66,7 +66,7 @@ function CountryChip({ country }: { country: Country }) {
       className="
         group inline-flex items-center gap-2
         bg-white hover:bg-paper-100
-        border border-ink-200 hover:border-ink-700
+        border border-paper-350 hover:border-ink-700
         px-3 py-1.5
         rounded-full
         transition-colors duration-150

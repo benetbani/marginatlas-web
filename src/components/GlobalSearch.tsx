@@ -205,7 +205,7 @@ export function GlobalSearch() {
           setOpen(true);
           setTimeout(() => inputRef.current?.focus(), 30);
         }}
-        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-ink-200 bg-white hover:border-atlas-500 text-sm text-ink-700 transition"
+        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-paper-350 bg-white hover:border-atlas-500 text-sm text-ink-700 transition"
         aria-label="Search Margin Atlas"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -234,7 +234,7 @@ export function GlobalSearch() {
             className="w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center px-4 py-3 border-b border-ink-200">
+            <div className="flex items-center px-4 py-3 border-b border-paper-350">
               <svg
                 width="16"
                 height="16"
@@ -287,7 +287,7 @@ export function GlobalSearch() {
                 placeholder="Search industries and countries…"
                 className="flex-1 outline-none text-sm text-ink-900 placeholder:text-ink-500"
               />
-              <kbd className="text-xs text-ink-500 px-1.5 py-0.5 rounded border border-ink-200">Esc</kbd>
+              <kbd className="text-xs text-ink-500 px-1.5 py-0.5 rounded border border-paper-350">Esc</kbd>
             </div>
             {results.length > 0 ? (
               <ul
@@ -306,7 +306,7 @@ export function GlobalSearch() {
                     onMouseEnter={() => setFocusIdx(i)}
                     onClick={() => pickResult(r)}
                     className={`px-4 py-2 cursor-pointer flex items-center gap-3 ${
-                      focusIdx === i ? "bg-atlas-50" : "hover:bg-ink-100/40"
+                      focusIdx === i ? "bg-atlas-50" : "hover:bg-paper-250/40"
                     }`}
                   >
                     <span className="pill bg-paper-200 text-cocoa-700">{r.kind}</span>
@@ -336,7 +336,7 @@ export function GlobalSearch() {
                     <button
                       key={t}
                       onClick={() => setQuery(t)}
-                      className="px-2.5 py-1 rounded-full bg-ink-100 hover:bg-atlas-100 text-xs text-ink-700"
+                      className="px-2.5 py-1 rounded-full bg-paper-250 hover:bg-atlas-100 text-xs text-ink-700"
                     >
                       {t}
                     </button>

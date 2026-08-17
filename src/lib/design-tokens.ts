@@ -86,9 +86,13 @@ export const colors = {
    * Two steps did not come across, because both were one value under two names,
    * which is the mechanism that hid cream for three passes: 50 was #ffffff and
    * is now `white`, 300 was #e3e3e3 and is now `parchment`. The ladder has holes
-   * at those numbers on purpose. The remaining four are TRUE NEUTRALS, s=0%,
-   * except 75 which is the cool ground at h 240; nothing here is warm and
-   * nothing that gets added here may be.
+   * at those numbers on purpose.
+   *
+   * IT IS THE WHOLE SURFACE FAMILY SINCE 2026-08-17. Three more steps arrived
+   * from `ink`, which is a TEXT ladder and was holding this site's most-used
+   * hairline; the block above 250 has the measurement and the arithmetic. All
+   * seven steps are TRUE NEUTRALS, s=0%, except 75 which is the cool ground at
+   * h 240; nothing here is warm and nothing that gets added here may be.
    */
   paper: {
     // THE LIGHTEST STEP IS GONE, 2026-08-17, and this too is a collapse rather
@@ -165,23 +169,100 @@ export const colors = {
     // Every reader moved across with no change of value.
     100: "#f6f6f6", // muted surface (thead tints, chips, inset panels)
     200: "#eeeeee",
+
+    // THREE STEPS ARRIVED FROM THE `ink` RAMP, 2026-08-17. 250, 350 and 450
+    // were ink-100, ink-200 and ink-300, and they are the residual debt the
+    // retone tick two commits back named in its own words: "100, 200 and 300
+    // are now true-neutral surface and hairline values sitting on a ramp this
+    // file documents as a text ladder... that is a convergence tick of its own
+    // and not a rider on this one." This is that tick.
+    //
+    // THE DEFECT WAS THE NAME, NOT THE VALUE, which is why not one pixel moved.
+    // `ink`'s own header promises "warm brown-black text ladder... warm ink on
+    // warm paper", and every one of its remaining steps delivers that at h 30
+    // to 35. These three were s=0% true neutrals doing surface and edge work,
+    // under a name that says warm type. That is the same shape of lie that let
+    // cream survive four passes: one value under a name describing something
+    // else. `parchment` was `cream-300` exactly, across 419 call sites, while
+    // only 35 usages had the word in them.
+    //
+    // MEASURED BY ROLE FIRST, comments stripped with scripts/lib/strip_comments
+    // so prose never counts as a call site. 133 occurrences in 60 files:
+    //   250 (was ink-100)  28 in 15 files: 19 hairline (16 border, 3 divide),
+    //       4 hover tints, 3 chart fills, 1 chip ground, 1 gradient stop.
+    //   350 (was ink-200)  96 in 33 files: 82 hairline (78 border, 3 divide,
+    //       1 underline decoration), 14 muted fill (12 skeleton bars on the
+    //       industry route, a toggle track, the PercentileStrip track).
+    //   450 (was ink-300)   9 in  9 files: 3 fills (status dot, a Waterfall
+    //       cost bar, a modal drag handle), 3 decorative glyphs set as text,
+    //       2 hover borders, 1 gradient stop.
+    // ZERO of the 133 is body copy, a heading, a label or a figure. The three
+    // "text" uses on 450 are two breadcrumb slashes and one 3xl ornament, and
+    // 450 reads 1.94:1 on white, so they cannot be readable type by
+    // construction: they are rules drawn with a glyph.
+    //
+    // NO COLLAPSE WAS AVAILABLE, and the arithmetic is here so the next reader
+    // does not re-derive it. A collapse onto an existing name beats a new step,
+    // but only when the values match; where they differ, moving the NAME
+    // without moving the value is the whole point.
+    //   250 -> `parchment` #e3e3e3: luminance .8070 -> .7682, 3.88pp, a 4.7%
+    //        heavier edge. Small enough to tempt, and DISQUALIFIED BY TWO CALL
+    //        SITES rather than by the arithmetic. MoneyGoesBreakdown's COST_FILL
+    //        cycles this step and then `parchment` as CONSECUTIVE cost bars,
+    //        and RangeStrip's gradient alternates them twice. They already sit
+    //        at 1.047:1, so a collapse makes two adjacent bars of the money-goes
+    //        chart literally one bar, and flattens two bands of the range strip.
+    //        Identical in shape to the Waterfall trap on 450 below.
+    //   350 -> `parchment`: luminance .6939 -> .7682, 7.43pp, a 9.1% LIGHTER
+    //        edge on 82 hairlines that did not ask to get lighter. This is the
+    //        site's form-control border, every field on /check, /contact, /you,
+    //        the correction form and the sign-in form. Rejected on arithmetic,
+    //        the same answer the retone tick reached. `paper-200` is 17.9pp away
+    //        and `paper-400` 17.3pp the other way.
+    //   450 -> `paper-400` #bfbfbf: luminance .4910 -> .5210, 3.00pp. Blocked by
+    //        the call site the last tick found: Waterfall's COST_FILL cycles
+    //        this step and then `paper-400` as consecutive cost bars, so the
+    //        collapse makes two adjacent rows of the money-goes chart the same
+    //        colour. `cocoa-300` is nearer in weight and is warm sand (h 35,
+    //        s 25%), which moves the problem rather than fixing it.
+    //
+    // WHY THESE STEP NUMBERS AND NOT A RENUMBER. Placed by luminance so the
+    // ladder stays monotonic outward from white: 75 .9307, 100 .9216, 200 .8550,
+    // 250 .8070, [300 = `parchment` .7682], 350 .6939, 400 .5210, 450 .4910.
+    // 50 and 300 stay holes because `white` and `parchment` hold those values
+    // under better names, and 500 stays deleted. NO EXISTING STEP WAS
+    // RENUMBERED, deliberately: reusing a number for a different value is how a
+    // future diff reads a rename as a retone, and this ramp cannot afford one
+    // more of those.
+    250: "#e8e8e8",
+    350: "#d9d9d9", // the site's form-control border and table hairline
     400: "#bfbfbf", // chart bar mass, dashed rules, underlines
+    // 450 AND 400 ARE 1.96pp OF LIGHTNESS APART AND THAT IS A REAL DEFECT, not
+    // an artifact of this move. Waterfall's COST_FILL draws them as consecutive
+    // bars at 1.055:1, which is not a distinction a reader can make; the pair
+    // was already that close before the rename and is exactly that close after.
+    // Left alone because fixing it means choosing new values for a ratified
+    // visual, which is the founder's call and a retone, not a rename. Recorded
+    // so the next reader does not find it and assume this tick caused it.
+    450: "#bababa",
     // 500 (#8d887e) DELETED 2026-08-17: defined since the warm reformation and
     // referenced exactly zero times in src/. A token that exists gets used, and
     // this one was the darkest cream on the ramp.
   },
   ink: {
-    // Warm brown-black text ladder. Reads as warm ink on warm paper,
-    // not clinical black on white. 900 is the headline near-black.
+    // Warm brown-black TEXT ladder, and as of 2026-08-17 that sentence is true
+    // of every step in it. Reads as warm ink on paper, not clinical black on
+    // white. 900 is the headline near-black.
     //
-    // THE TOP TWO STEPS ARE NOT TEXT, AND THAT IS HOW THEY SURVIVED THE PURGE.
-    // Retoned 2026-08-17. They were #faf4ec (h 34, s 58%, l 95.3%) and #f0e7d9
-    // (h 37, s 43%, l 89.6%): warm sand, MORE saturated than any of the four
-    // paper steps the purge fixed one ramp above (those were s 9-16%), painting
-    // 36 call sites, 20 of them on the cell page alone.
+    // IT IS FIVE STEPS NOW, NOT NINE, and the four that left were never text.
+    // 50 and 100 were warm sand, #faf4ec (h 34, s 58%) and #f0e7d9 (h 37,
+    // s 43%), MORE saturated than any surface step on the `paper` ramp; they
+    // were retoned to true neutrals, then 50 collapsed onto `paper-100` and
+    // 100/200/300 moved to `paper` as 250/350/450. Nothing here is a hairline,
+    // a fill or a track any more: every remaining step is type.
     //
-    // BOTH GATES SAID CLEAN, for two different reasons, and both are worth
-    // knowing because the next evasion will use one of them:
+    // HOW WARM SAND SURVIVED A CREAM PURGE UNDER THE NAME `ink`, worth keeping
+    // because the next evasion will use one of these two doors:
     //   - verify_palette_membership returns legal above 93% lightness ("PAPER
     //     TONES ARE NOT COLOURS"), so #faf4ec at 95.3% never reached a hue
     //     test. #f0e7d9 at 89.6% DID reach one and passed anyway, on the
@@ -189,104 +270,13 @@ export const colors = {
     //     the TYPE ladder, admitting a 90%-lightness FILL because the gate
     //     cannot tell type from fill and says so in its own header.
     //   - verify_no_cream matches the word plus a hand-kept value list, and
-    //     these are named ink. Same shape as `parchment`: cream under a name
+    //     these were named ink. Same shape as `parchment`: cream under a name
     //     that does not say cream. Both values are in that gate's warm list now.
     //
-    // WHY RETONE RATHER THAN REMAP, the same call the paper ramp made above.
-    // The 100 step carries THREE roles across its 23 usages, 18 structural
-    // hairlines, 4 hover tints and a chip fill, and no existing token sits at
-    // its weight: paper-200 is L .8550 and parchment is L .7682 against this
-    // step's .8069, so a remap either way visibly changes how heavy 18 borders
-    // read. Changing the value underneath moves none of them.
-    //
-    // LUMINANCE-MATCHED, not eyeballed and not lightness-matched, because
-    // relative luminance is the quantity every contrast ratio is computed from:
-    //   50   L .9108 -> .9131   on white 1.093:1 -> 1.090:1
-    //   100  L .8069 -> .8070   on white 1.225:1 -> 1.225:1
-    // Against the six foregrounds that sit on these as fills (ink 500-900 and
-    // graphite) the largest ratio change is 0.038 on a ratio of 16.0, and ZERO
-    // AA verdicts flip. Both land on true neutrals, s=0%, so the answer to
-    // "remove the creamy colour" is no hue rather than a cool tint swapped in
-    // for a warm one, which is the call `parchment` made.
-    //
-    // THE 50 STEP IS GONE, 2026-08-17, collapsed onto `paper-100` and NOT
-    // deleted: every one of its seven call sites moved in this same commit.
-    // The tick that retoned it recorded the debt and deferred the collapse,
-    // correctly, because a call-site change must not ride along with a retone.
-    //
-    // `paper-100` WON ON BOTH AXES THIS REPOSITORY JUDGES BY.
-    //   Call sites: 104 in 61 files, against this step's 7 in 4.
-    //   What the name says: `paper` is the SURFACE ladder and its 100 step is
-    //   already documented as "muted surface (thead tints, chips, inset
-    //   panels)". All seven movers are exactly that, five chip and card-footer
-    //   grounds plus two faint table row rules. `ink` is a TEXT ladder by its
-    //   own header, so a surface tint living on it is the same naming lie that
-    //   let `parchment` hold cream for three passes.
-    //
-    // The value moves ONE POINT, #f5f5f5 -> #f6f6f6, L .9131 -> .9216, +0.93%.
-    // 16 pairs checked and ZERO AA verdicts flip; largest ratio change 0.1411
-    // on a ratio of 16.0. Stated rather than buried: the two row rules sit on
-    // white and go 1.090:1 -> 1.081:1, 0.8% fainter. They were already below
-    // any threshold at 1.09 and are decorative; moving them to a hairline token
-    // instead would have been a visible weight change, which is a design call
-    // and not a collapse.
-    //
-    // RESIDUAL DEBT, named so the next tick does not have to rediscover it:
-    // 100, 200 and 300 are now true-neutral surface and hairline values sitting
-    // on a ramp this file documents as a text ladder. The honest end state is
-    // that they belong to the surface family, but 200 alone is 96 call sites,
-    // so that is a convergence tick of its own and not a rider on this one.
-    100: "#e8e8e8",
-    // THE LAST TWO WARM STEPS, retoned 2026-08-17. The tick above moved 50 and
-    // 100 and said outright that 200 and 300 were still warm sand and out of
-    // scope. They were: #e4d8c5 measured h 36.8 s 36.5% l 83.3% and #cbb79c
-    // h 34.5 s 31.1% l 70.4%. Both are now TRUE NEUTRALS, s=0%, which is the
-    // call every step on this ramp and the whole `paper` ramp has now made: the
-    // answer to "remove the creamy colour" is no hue, not a cool tint swapped
-    // in for a warm one.
-    //
-    // THE 200 STEP IS THE MOST-SEEN HAIRLINE ON THIS SITE AFTER `parchment`.
-    // 96 occurrences across 33 files, classified with comments stripped rather
-    // than grepped: 82 hairline (78 border, 3 divide, 1 underline decoration),
-    // of which the form-control borders are the visible half, every field on
-    // /check, /contact, /you, the correction form, the sign-in form, the
-    // homepage search card and the dev calculator; and 14 muted fill (13 bg,
-    // 1 svg fill), which is eleven skeleton bars on the industry route, a
-    // toggle track and the PercentileStrip track. The 300 step is 9
-    // occurrences across 9 files and is a general mid-gray rather than one
-    // role: two breadcrumb separators, a decorative glyph, a status dot, a
-    // Waterfall cost bar, a modal drag handle, two hover borders and one
-    // gradient stop.
-    //
-    // WHY RETONE RATHER THAN REMAP, checked with arithmetic rather than
-    // inherited from the last tick's answer:
-    //   200: the nearest existing token is `parchment` #e3e3e3 at L .7682,
-    //        7.18pp away. On white that is 1.407:1 -> 1.283:1, a 8.8% lighter
-    //        edge on 82 hairlines that did not ask to get lighter. ink-100 and
-    //        paper-200 are further still, and paper-400 is 17.5% heavier.
-    //   300: the nearest is `cocoa-300` #c3b39c at 2.72pp, and cocoa-300 is
-    //        ITSELF warm sand (h 35, s 25%), so mapping onto it moves the
-    //        problem rather than fixing it. Next is `paper-400` #bfbfbf at
-    //        3.14pp, and that one is disqualified by a CALL SITE rather than by
-    //        arithmetic: Waterfall's COST_FILL cycles `bg-ink-300` and then
-    //        `bg-paper-400` as consecutive cost bars, so collapsing the two
-    //        makes two adjacent rows of the money-goes chart the same colour.
-    //
-    // LUMINANCE-MATCHED, not lightness-matched, because relative luminance is
-    // the quantity every contrast ratio is computed from:
-    //   200  L .6964 -> .6939   on white 1.407:1 -> 1.412:1
-    //   300  L .4896 -> .4910   on white 1.946:1 -> 1.941:1
-    // 36 pairs were checked, the eleven foregrounds that sit on these as fills
-    // plus the six grounds they sit on as an edge, and ZERO AA verdicts flip.
-    // Largest ratio change 0.0415 on a ratio of 12.411 (ink-900 on ink-200).
-    //
-    // STATED RATHER THAN HIDDEN: neither step passes 3:1 against white as a
-    // non-text edge, before or after. That is a pre-existing property of a
-    // deliberately quiet hairline and is not what this tick changed; it is
-    // recorded so the next reader does not discover it and think a retone
-    // caused it.
-    200: "#d9d9d9", // the site's form-control border and table hairline
-    300: "#bababa",
+    // THE LESSON THIS RAMP PAID FOR TWICE, in one line: a ramp's NAME is a
+    // claim about what its members do, and a member that does something else
+    // will not be found by any gate that reads names. Both of this ramp's
+    // escapes had the same shape. Anything added here must be type.
     500: "#7d6c58",
     600: "#5d4d3b",
     700: "#463726",
@@ -314,13 +304,17 @@ export const colors = {
     //      `ink-50` above and for the same two reasons: 104 call sites against
     //      one, and its single use is a sector chip GROUND, which is the
     //      surface ladder's job.
-    //   100 (#e8e8e8, five call sites) -> `ink-100`, which holds 23. Neither
-    //      name honestly describes a hairline-and-fill value, so the count
-    //      decides, but there is a second reason it cannot be this one: this
-    //      ramp's own header calls it "the text-alias family for muted copy",
-    //      and the comment above already records that these five uses are two
-    //      chart fills, a chart bar, a decorative gradient stop and a chip
-    //      border. Not one of them is copy.
+    //   100 (#e8e8e8, five call sites) -> the ink step holding the same value,
+    //      which held 23. Neither name honestly described a hairline-and-fill
+    //      value, so the count decided, but there is a second reason it could
+    //      not be this one: this ramp's own header calls it "the text-alias
+    //      family for muted copy", and the comment above already records that
+    //      these five uses are two chart fills, a chart bar, a decorative
+    //      gradient stop and a chip border. Not one of them is copy.
+    //      THAT DESTINATION HAS SINCE MOVED AGAIN, in the convergence one tick
+    //      later: it is `paper-250` now, at the same #e8e8e8, because "neither
+    //      name honestly describes it" was the right observation and the wrong
+    //      conclusion. The honest name existed, on the surface ramp.
     //
     // Neither move changes a pixel: both destinations already hold the exact
     // value these steps held. That is the whole point, and it is also why this

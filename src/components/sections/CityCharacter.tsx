@@ -142,7 +142,7 @@ export function CityCharacter({ geoId, countryIso2 }: Props) {
 
       {/* Neighborhoods strip */}
       {char.neighborhoods && char.neighborhoods.length > 0 && (
-        <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-ink-100">
+        <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-paper-250">
           <div className="text-xs font-semibold uppercase tracking-wide text-ink-700 mb-3">
             The neighborhoods
           </div>
@@ -150,7 +150,7 @@ export function CityCharacter({ geoId, countryIso2 }: Props) {
             {char.neighborhoods.map((n) => (
               <li
                 key={n.name}
-                className="border border-ink-100 rounded-md p-4"
+                className="border border-paper-250 rounded-md p-4"
               >
                 <div className="font-display text-base md:text-lg font-semibold text-ink-900 leading-tight mb-1">
                   {n.name}

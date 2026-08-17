@@ -133,7 +133,7 @@ export default async function LockStatesPage({
           width={480}
           height={140}
           viewBox="0 0 480 140"
-          className="border border-ink-200 rounded bg-white"
+          className="border border-paper-350 rounded bg-white"
         >
           {/* Faux visible bars (p10, p50, p90) */}
           <rect x={20} y={80} width={60} height={40} fill="#16AEB5" />
@@ -161,7 +161,7 @@ export default async function LockStatesPage({
         </svg>
       </section>
 
-      <footer className="pt-8 border-t border-ink-200 text-sm text-ink-700">
+      <footer className="pt-8 border-t border-paper-350 text-sm text-ink-700">
         See <code>docs/strategy/2026-05-25-monetization-mega-plan-v34.md</code>
         Part 2 for geometry + colour rules. Click any primitive above to
         open the Phase B paywall modal (mounted at layout.tsx).

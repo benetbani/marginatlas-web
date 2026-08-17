@@ -105,7 +105,7 @@ export default function CountryScorecardV2({
               {name}
             </h1>
           </div>
-          <div className="inline-flex items-center gap-1.5 border border-ink-200 rounded-full px-3 py-1.5 bg-white">
+          <div className="inline-flex items-center gap-1.5 border border-paper-350 rounded-full px-3 py-1.5 bg-white">
             <span
               aria-hidden="true"
               className="inline-block w-1.5 h-1.5 rounded-full"
@@ -123,7 +123,7 @@ export default function CountryScorecardV2({
         </p>
 
         {/* 3-stat row */}
-        <div className="mt-8 grid grid-cols-3 gap-x-6 border-t border-ink-200 pt-5">
+        <div className="mt-8 grid grid-cols-3 gap-x-6 border-t border-paper-350 pt-5">
           {/* useless-tile-ok: dead v2 component, not mounted anywhere; pending deletion */}
           <Stat label="Industries covered" value={industriesCovered.toLocaleString()} />
           {/* useless-tile-ok: dead v2 component, not mounted anywhere; pending deletion */}
@@ -140,7 +140,7 @@ export default function CountryScorecardV2({
             <div className="font-sans text-xs uppercase tracking-wide text-cocoa-700">
               Top industries
             </div>
-            <ul className="mt-3 divide-y divide-ink-200 border-y border-ink-200">
+            <ul className="mt-3 divide-y divide-paper-350 border-y border-paper-350">
               {sampleIndustries.slice(0, 6).map((ind) => (
                 <li key={ind.name}>
                   <a
@@ -162,7 +162,7 @@ export default function CountryScorecardV2({
             <div className="font-sans text-xs uppercase tracking-wide text-cocoa-700">
               Top cities
             </div>
-            <ul className="mt-3 divide-y divide-ink-200 border-y border-ink-200">
+            <ul className="mt-3 divide-y divide-paper-350 border-y border-paper-350">
               {sampleCities.slice(0, 6).map((city) => (
                 <li key={city.name}>
                   <a
@@ -186,10 +186,10 @@ export default function CountryScorecardV2({
         </div>
 
         {/* Footer */}
-        <div className="mt-10 pt-5 border-t border-ink-200">
+        <div className="mt-10 pt-5 border-t border-paper-350">
           <a
             href="/methodology"
-            className="font-sans text-sm text-atlas-700 hover:text-atlas-500 underline underline-offset-4 decoration-ink-200 hover:decoration-atlas-500 transition-colors"
+            className="font-sans text-sm text-atlas-700 hover:text-atlas-500 underline underline-offset-4 decoration-paper-350 hover:decoration-atlas-500 transition-colors"
           >
             How Atlas measures and tiers coverage
           </a>

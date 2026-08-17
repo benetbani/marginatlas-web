@@ -127,7 +127,7 @@ export function CompareToMeClient() {
               id="cm-region"
               value={region}
               onChange={(e) => setRegion(e.target.value)}
-              className="w-full bg-white border border-ink-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
+              className="w-full bg-white border border-paper-350 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
             >
               {US_REGIONS.map((r) => (
                 <option key={r} value={r}>
@@ -147,7 +147,7 @@ export function CompareToMeClient() {
               placeholder="e.g. 750000"
               value={myRevenue}
               onChange={(e) => setMyRevenue(e.target.value)}
-              className="w-full bg-white border border-ink-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
+              className="w-full bg-white border border-paper-350 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
             />
           </div>
           <p className="text-xs text-ink-700/60">
@@ -211,7 +211,7 @@ export function CompareToMeClient() {
 
               {revVsTypical != null && (
                 <div className="mt-2">
-                  <div className="border border-ink-200 rounded-lg p-3">
+                  <div className="border border-paper-350 rounded-lg p-3">
                     <div className="text-[10px] uppercase tracking-wide text-ink-700/60">
                       Revenue vs typical
                     </div>

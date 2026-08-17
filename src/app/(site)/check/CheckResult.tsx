@@ -44,7 +44,7 @@ function statusColour(status: RatioStatus): string {
     case "in_range":
       return "text-ink-900 bg-parchment border-parchment";
     case "unknown":
-      return "text-ink-500 bg-paper-100 border-ink-200";
+      return "text-ink-500 bg-paper-100 border-paper-350";
   }
 }
 
@@ -67,7 +67,7 @@ export function CheckResult({ verdict }: Props) {
       aria-labelledby="check-result-heading"
       className="atlas-card overflow-hidden"
     >
-      <div className="px-5 py-5 md:px-8 md:py-7 bg-white border-b border-ink-100">
+      <div className="px-5 py-5 md:px-8 md:py-7 bg-white border-b border-paper-250">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">
           Your comparative verdict
         </div>
@@ -95,7 +95,7 @@ export function CheckResult({ verdict }: Props) {
         </p>
       </div>
 
-      <ul className="divide-y divide-ink-100">
+      <ul className="divide-y divide-paper-250">
         {verdict.ratios.map((r) => (
           <li key={r.ratio} className="px-5 py-4 md:px-8 md:py-5">
             <div className="flex items-baseline justify-between gap-3 mb-1.5 flex-wrap">
@@ -118,7 +118,7 @@ export function CheckResult({ verdict }: Props) {
               <span>
                 Typical: <span className="tabular-nums">{pct(r.range.low)} to {pct(r.range.high)}</span>
                 {r.estimated && (
-                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide font-semibold bg-paper-100 text-ink-500 border border-ink-200">
+                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide font-semibold bg-paper-100 text-ink-500 border border-paper-350">
                     Estimate
                   </span>
                 )}
@@ -132,7 +132,7 @@ export function CheckResult({ verdict }: Props) {
       </ul>
 
       {verdict.estimated && (
-        <div className="px-5 py-4 md:px-8 md:py-5 bg-white border-t border-ink-100">
+        <div className="px-5 py-4 md:px-8 md:py-5 bg-white border-t border-paper-250">
           <p className="text-xs text-cocoa-700/70 leading-relaxed">
             Typical ranges here are read at the sector level. Treat them
             as orientation, not a measured benchmark for this exact

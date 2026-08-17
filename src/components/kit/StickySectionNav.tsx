@@ -93,7 +93,7 @@ export function StickySectionNav({
         <div className="mb-2 pl-3 text-[10px] font-semibold uppercase tracking-wider text-cocoa-700">
           {title}
         </div>
-        <ul className="space-y-0.5 border-l border-ink-200">
+        <ul className="space-y-0.5 border-l border-paper-350">
           {present.map((s) => {
             const isActive = active === s.id;
             return (
