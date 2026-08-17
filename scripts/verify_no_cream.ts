@@ -229,7 +229,33 @@ function main(): void {
   const counts = scan();
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
 
+  /* --init REFUSES TO RAISE, added 2026-08-17.
+     It used to overwrite unconditionally, which made the ratchet only as strong
+     as whoever ran it last: one `--init` after an accidental increase and the
+     new, higher count becomes the guarantee. The palette gate has refused this
+     from the start and says why in its own source; this one did not, and the
+     coordinator noticed only when tightening 414 to 413 by hand.
+
+     A ratchet whose baseline can move either way is not a ratchet. */
   if (process.argv.includes("--init")) {
+    if (existsSync(BASELINE)) {
+      const prev: Counts = JSON.parse(readFileSync(BASELINE, "utf-8")).files || {};
+      const prevTotal = Object.values(prev).reduce((a, b) => a + b, 0);
+      const rising = Object.entries(counts).filter(([f, n]) => (prev[f] ?? 0) < n);
+      if (total > prevTotal || rising.length > 0) {
+        console.error(
+          `[verify_no_cream] refusing to raise the baseline: ${prevTotal} -> ${total}.`,
+        );
+        for (const [f, n] of rising) {
+          console.error(`  ${f}: ${prev[f] ?? 0} -> ${n}`);
+        }
+        console.error(
+          "\nThe founder banned cream outright. This ratchet counts DOWN only.\n" +
+            "Remove the cream instead of recording it.",
+        );
+        process.exit(1);
+      }
+    }
     writeFileSync(BASELINE, JSON.stringify({ files: counts }, null, 2) + "\n");
     console.log(
       `[verify_no_cream] baseline written: ${total} cream reference(s) in ${Object.keys(counts).length} file(s)`,

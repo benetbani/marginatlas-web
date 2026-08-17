@@ -11,8 +11,20 @@
  * of these no longer reads as a long TODO list on a thin page, while every
  * section stays present and its nav anchor still resolves. The tag (a dot plus
  * words) is a non-colour affordance, so the empty state never depends on the
- * dashed border alone. Solid muted tokens (cocoa-700) clear WCAG AA on the cream
- * grounds; no opacity-faded ink.
+ * dashed border alone.
+ *
+ * SURFACE, corrected 2026-08-17. This read `bg-cream-50/50`, white at half
+ * alpha, and the sentence here justified its contrast "on the cream grounds".
+ * Both went stale on the same day: the app ground is no longer cream, it is a
+ * fixed photograph (AtlasFrame) with no centre plate, and half-alpha white over
+ * a picture is not a ground a muted token was ever measured against. It now
+ * takes --atlas-surface-card, the same .955 surface every other card on the
+ * site uses, so it inherits contrast that WAS measured against the photograph's
+ * darkest region rather than against a colour that no longer exists.
+ *
+ * The dashed border stays: that, not the fill, is what says "not held yet".
+ * `relative` is required, because AtlasFrame paints from fixed layers at
+ * z-index 0 and a static background sinks behind the picture.
  *
  * Tokens only, no raw color, no em-dashes, no source-agency names. No fabricated
  * data ever appears here, it is an honest "not yet" placeholder.
@@ -47,7 +59,7 @@ export function SectionEmpty({
       id={id}
       aria-label={`${heading || eyebrow}${place ? `, for ${place}, not held yet` : ", not held yet"}`}
       className={[
-        "flex items-center justify-between gap-4 rounded-lg border border-dashed border-parchment bg-cream-50/50",
+        "relative flex items-center justify-between gap-4 rounded-lg border border-dashed border-parchment bg-[var(--atlas-surface-card)]",
         "px-5 py-3.5 md:px-7",
         className,
       ]
