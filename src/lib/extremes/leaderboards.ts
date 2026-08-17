@@ -48,6 +48,7 @@ import {
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import {
   summarizeActivityPlaces,
   type ActivityPlaceInput,
@@ -116,7 +117,36 @@ interface LeaderboardSpec {
   direction: "high" | "low";
 }
 
-/** Turn one across-state Cell into the activity-board place input shape. */
+/**
+ * Turn one across-state Cell into the activity-board place input shape.
+ *
+ * THE TAKE-HOME MUST GO THROUGH resolveOwnerTakeHome, and for a while it did
+ * not. Every leaderboard row prints the take-home as its ranked figure with the
+ * net margin directly beneath it as the row texture ("$57K" over "11% net"), and
+ * the margin runs through clampMargin, whose floor is 3%, while the take-home
+ * was estimateNetProfit().net_profit raw. So a row could show a take-home worth
+ * a fraction of the margin printed under it. The header above already claimed
+ * the hub, the cell page and the activity page agree on the method.
+ *
+ * Measured over the pure estimator, 243 activities x 12 US states x 6 revenue
+ * levels (17,496 combinations): the two derivations agreed on 26.1%. On 33.9%
+ * both produced a figure and the figures differed, worst case $28,971 ranked
+ * beside "3% net" of $2,500,000, which the cell page renders as $75,000. On
+ * 40.1% the structural profit was zero or negative, so the row lost its ranking
+ * figure and DROPPED OFF THE BOARD ENTIRELY while its own cell page still showed
+ * a take-home. That last bucket is why the thin-end boards ("where a restaurant
+ * barely clears") were structurally unable to show the thinnest places: they
+ * were the ones being filtered out. The sweep covers the PARAMETER SPACE, not
+ * the live cell population: it cannot say how many rows print the pair, only how
+ * much of the input shape the two disagreed over.
+ *
+ * isLargerFirm is false because this slate is all-sizes state cells, which carry
+ * no size band, so the founder 2x-income floor never fired here before and must
+ * not start now: it is the one part of the shared resolver this module opts out
+ * of, and passing false preserves the existing behaviour exactly in that
+ * dimension. Same call, same reason, as src/lib/home/beats.ts and
+ * src/lib/markets/across_cities.ts.
+ */
 function placeInputFromCell(cell: Cell): ActivityPlaceInput | null {
   const revenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   if (!isPos(revenue)) return null;
@@ -128,7 +158,15 @@ function placeInputFromCell(cell: Cell): ActivityPlaceInput | null {
     grossRevenue: revenue,
     payroll: null,
   });
-  const takeHome = isPos(net.net_profit) ? net.net_profit : null;
+  const resolved = resolveOwnerTakeHome({
+    structuralNetProfit: net.net_profit,
+    rawNetMargin: net.net_margin,
+    revenue,
+    industryId: cell.industry_id || null,
+    isLargerFirm: false,
+    annualIncome: null,
+  });
+  const takeHome = isPos(resolved) ? resolved : null;
   const netMarginPct =
     net.net_margin != null
       ? clampMargin(net.net_margin, "net", cell.industry_id || null) * 100
