@@ -181,6 +181,21 @@ const GATES: Gate[] = [
      ink-400, two of them the "BOTTOM 10%" and "TOP 10%" caps on
      PercentileStrip, which are meant to be QUIETER than the figures beneath
      them and were inheriting at full strength instead. */
+  /* A TAKE-HOME THAT CONTRADICTS ITS OWN SHOWN MARGIN. Added 2026-08-17 after
+     two independent defects of one shape landed in a single day: London's
+     curated file disagreed with its own margin on ALL TWENTY activities
+     (hotels printed 19% BELOW its shown margin), and the homepage beats printed
+     the raw structural profit beside a 3%-floored margin, agreeing with the
+     cell page on 38.3% of 17,496 combinations and printing $1 beside "3% net"
+     of $150,000 at worst.
+
+     Two halves. The contract half sweeps resolveOwnerTakeHome and asserts the
+     printed figure never sits BELOW the dollars its shown margin implies; that
+     is a floor, not an equality, because the resolver deliberately takes the
+     max of the structural profit and the margin floor. The bypass half is a
+     ratchet over modules that derive the figure without the resolver, which is
+     what both defects actually were. */
+  { name: "take-home-identity", script: "scripts/verify_take_home_identity.ts" },
   { name: "token-steps", script: "scripts/verify_token_steps_exist.ts" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
