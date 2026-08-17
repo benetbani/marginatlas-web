@@ -41,7 +41,6 @@
     "src/app/[country]/industries/page.tsx": 1,
     "src/app/[country]/loading.tsx": 8,
     "src/app/[country]/[geo]/industries/page.tsx": 1,
-    "src/app/[country]/[geo]/page.tsx": 1,
     "src/app/[country]/[geo]/[industry]/error.tsx": 3,
     "src/app/[country]/[geo]/[industry]/page.tsx": 1,
     "src/app/[country]/[geo]/[industry]/[sub]/page.tsx": 2,

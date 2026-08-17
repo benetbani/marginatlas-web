@@ -49,19 +49,27 @@ function renderAll(el: React.ReactElement): Promise<string> {
   });
 }
 
+/**
+ * Args are route params: "gb" renders the country page, "gb/london" renders the
+ * region page in the same tree. One instrument for both so the two page types
+ * are measured the same way rather than by two scripts that drift.
+ */
 async function main() {
   const slugs = process.argv.slice(2);
-  const mod = await import("../../src/app/[country]/page");
-  const Page = mod.default as unknown as (p: {
-    params: Promise<{ country: string }>;
-  }) => Promise<React.ReactElement>;
+  const countryMod = await import("../../src/app/[country]/page");
+  const geoMod = await import("../../src/app/[country]/[geo]/page");
+  type Renderer = (p: { params: Promise<Record<string, string>> }) => Promise<React.ReactElement>;
+  const CountryPage = countryMod.default as unknown as Renderer;
+  const GeoPage = geoMod.default as unknown as Renderer;
 
   for (const slug of slugs) {
     let html = "";
+    const parts = slug.split("/");
     try {
-      const el = await Page({
-        params: Promise.resolve({ country: slug }),
-      });
+      const el =
+        parts.length === 2
+          ? await GeoPage({ params: Promise.resolve({ country: parts[0], geo: parts[1] }) })
+          : await CountryPage({ params: Promise.resolve({ country: parts[0] }) });
       html = await renderAll(el as React.ReactElement);
     } catch (e) {
       console.log(`\n=== ${slug}: THREW ${(e as Error).message}`);

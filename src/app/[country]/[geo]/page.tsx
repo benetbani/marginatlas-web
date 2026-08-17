@@ -230,10 +230,30 @@ async function RegionLandingPageBody({
     geoVerdict.best.length > 0 || geoVerdict.hardest.length > 0;
 
   return (
-    <div>
-      {/* Hero. White-reset 2026-06-06: was bg-cream-100, now pure white like
-          every other hero band; no rule above it (first section). */}
-      <section id="hero" className="py-10 md:py-14 bg-white">
+    /* SURFACES, 2026-08-17. Every band on this page was a bare <section> with a
+       py-10 rhythm, two of them carrying a full-width opaque ground: white on
+       the hero and the cream-50 step on the neighbourhoods, the latter spelled
+       out no further because Tailwind's content scan does not strip comments and
+       naming a retired utility in prose re-emits it into the stylesheet. Both
+       defects at once:
+
+       - A full-width opaque ground blanks the site photograph across the whole
+         column, which the founder has ruled against three times. A band is not
+         a card.
+       - Worse, a static element is not painted at all. AtlasFrame's fixed
+         layers sit at z-index 0 and paint above every in-flow non-positioned
+         descendant, so the entire page was covered by the frame's opaque base.
+         Measured on a reproduction of the real layering, in a browser: a static
+         block with a solid fill sampled identical to the empty gutter.
+
+       So the bands become a stack of .atlas-card, which is `position: relative`
+       and translucent at .955, and the spacing moves from per-section padding to
+       one gap on the stack. The city and neighbourhood tiles keep their own
+       rounded-2xl bg-white: they sit INSIDE a card, so their fill is not what
+       carries the picture, and converging a surface is not the same as
+       flattening a mark. Same call /countries made for its 194 country tiles. */
+    <div className="relative space-y-6 md:space-y-8 py-6 md:py-8">
+      <section id="hero" className="atlas-card px-5 py-6 md:px-7 md:py-8">
         <nav className="text-sm text-cocoa-700/70 mb-4">
           <Link href="/" className="hover:text-atlas-700">Home</Link>
           <span className="mx-2">/</span>
@@ -245,13 +265,15 @@ async function RegionLandingPageBody({
           <CountryFlag iso2={iso2} className="w-5" />
           <span>{countryName}</span>
         </div>
-        <h1 className="mt-3 font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.05]">
+        <h1 className="mt-3 font-display text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-ink-900 leading-[1.05]">
           Best and hardest businesses in {regionLabel}
         </h1>
+        {/* The lede lost its third sentence, "pick a city or an activity below
+            to see the real numbers", which described the two grids of city
+            cards immediately underneath it. */}
         <p className="mt-4 text-base md:text-lg text-ink-800 max-w-2xl leading-relaxed">
           Which small businesses tend to leave the most for an owner in{" "}
-          {regionLabel}, and which ones quietly eat the margin. Pick a city or an
-          activity below to see the real numbers.
+          {regionLabel}, and which ones quietly eat the margin.
         </p>
       </section>
 
@@ -262,13 +284,18 @@ async function RegionLandingPageBody({
          margin structure. Mounts only when the synthesis produced a real
          contrast (see showGeoVerdict). It links each named activity straight to
          the cell page so the reader can check the numbers. */}
+      {/* Carded at the mount rather than inside the component: GeoViabilityLede
+          opens a bare `border-y parchment` section with no surface, and it lives
+          in another agent's tree. */}
       {showGeoVerdict ? (
+        <div className="atlas-card px-5 py-2 md:px-7">
         <GeoViabilityLede
           verdict={geoVerdict}
           hrefFor={(industryId) =>
             `/${country.toLowerCase()}/${geo.toLowerCase()}/${industryToSlug(industryId)}`
           }
         />
+        </div>
       ) : null}
 
       {/* Plan v32 Sprint G — city character panel. Renders only for
@@ -283,14 +310,15 @@ async function RegionLandingPageBody({
         const nbList = getNeighborhoodsForCity(geo);
         if (!nbList || nbList.length === 0) return null;
         return (
-          <section id="neighborhoods" className="py-10 md:py-14 bg-cream-50">
-            <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
+          <section id="neighborhoods" className="atlas-card px-5 py-5 md:px-7 md:py-6">
+            <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
               Neighborhoods of {regionLabel}
             </h2>
-            <p className="mt-2 text-sm md:text-base text-cocoa-700/80 max-w-2xl">
-              Each neighborhood has its own character: financial district,
-              affluent residential, tourist core, industrial. We adjust the
-              city-level numbers for the local economy below.
+            {/* The list of characters this dropped, "financial district,
+                affluent residential, tourist core, industrial", is printed on
+                every card below it as the card's own eyebrow. */}
+            <p className="mt-2 text-sm text-cocoa-700/80 max-w-2xl">
+              City-level numbers, adjusted for each local economy.
             </p>
             <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
               {nbList.map((nb) => (
@@ -323,14 +351,18 @@ async function RegionLandingPageBody({
          self-omits when a region has no curated cities (the page still renders
          with the lede and whatever else resolves). */}
       {curatedCities.length > 0 && (
-        <section id="top-cities" className="py-10 md:py-14">
-          <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900">
+        <section id="top-cities" className="atlas-card px-5 py-5 md:px-7 md:py-6">
+          <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
             Cities in {regionLabel}
           </h2>
-          <p className="mt-2 text-sm md:text-base text-cocoa-700/80 max-w-2xl">
-            The numbers for {regionLabel} live at the city level. Pick a city to
-            see its small-business benchmarks. Each card opens the city&apos;s
-            restaurants benchmark by default; switch industries on the next page.
+          {/* Three sentences became one. "Pick a city to see its small-business
+              benchmarks" described the grid of city cards directly beneath it,
+              and every card already says "Open city benchmarks" on its own
+              face. What survives is the only claim neither the grid nor the
+              cards make: which industry a card lands on. */}
+          <p className="mt-2 text-sm text-cocoa-700/80 max-w-2xl">
+            The numbers live at the city level. Each card opens that city&apos;s
+            restaurants benchmark; switch activity on the next page.
           </p>
           <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {curatedCities.map((citySlug) => (
@@ -364,7 +396,7 @@ async function RegionLandingPageBody({
          Deliberately no registered section id, so it stays out of the
          region-page canonical skeleton order. */}
       {easiestBreakIn.length > 0 ? (
-        <section className="py-10 md:py-14">
+        <section className="atlas-card px-5 py-5 md:px-7 md:py-6">
           <EasiestToBreakIn rows={easiestBreakIn} placeName={regionLabel} />
         </section>
       ) : null}
