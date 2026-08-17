@@ -146,7 +146,7 @@ export function PaywallModalRoot() {
           // centered with max-width.
           "bottom-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2",
           "w-full sm:max-w-2xl",
-          "bg-cream-50 sm:rounded-2xl rounded-t-2xl sm:rounded-b-2xl",
+          "bg-white sm:rounded-2xl rounded-t-2xl sm:rounded-b-2xl",
           "shadow-[0_-8px_40px_rgba(0,0,0,0.18)] sm:shadow-[0_24px_60px_rgba(0,0,0,0.18)]",
           "border border-ink-200",
           "max-h-[85vh] overflow-y-auto",
@@ -239,8 +239,8 @@ function TierCard({
   ].join(" ");
   const buttonClasses =
     tier === "basic"
-      ? "bg-atlas-700 text-cream-50 hover:bg-atlas-800"
-      : "bg-ink-900 text-cream-50 hover:bg-ink-800";
+      ? "bg-atlas-700 text-white hover:bg-atlas-800"
+      : "bg-ink-900 text-white hover:bg-ink-800";
 
   return (
     <div className={wrapperClasses} data-v34-tier-card={tier}>

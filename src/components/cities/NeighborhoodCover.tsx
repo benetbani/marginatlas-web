@@ -159,7 +159,7 @@ export function NeighborhoodCover({
   const h = hash(seed);
   const [from, to] = GRADIENTS[h % GRADIENTS.length];
   const { contours, route, rosette } = buildMotif(h);
-  const stroke = colors.cream[50];
+  const stroke = colors.white;
 
   return (
     <div

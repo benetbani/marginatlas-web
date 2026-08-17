@@ -45,7 +45,7 @@ function Entry({
   return (
     <Link
       href={href}
-      className="group block px-5 py-5 md:px-7 md:py-6 transition-colors hover:bg-cream-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
+      className="group block px-5 py-5 md:px-7 md:py-6 transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
     >
       <div
         className={`font-display text-[2rem] md:text-[2.75rem] leading-none tracking-tight tabular-nums ${

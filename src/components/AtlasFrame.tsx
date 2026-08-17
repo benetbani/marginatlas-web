@@ -112,7 +112,7 @@ const BG = "/spine/_skyline.jpeg";
  * literal on this file's first run, correctly: a new component has no baseline
  * and should not acquire one.
  */
-const BASE = colors.cream[50];
+const BASE = colors.white;
 
 export function AtlasFrame({ bgPosition = "center 16%" }: { bgPosition?: string }) {
   return (

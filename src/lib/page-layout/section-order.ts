@@ -135,9 +135,13 @@ export const PAGE_SECTION_ORDER: Record<string, readonly string[]> = {
    and the comment below said so. It survived the palette gate because that
    gate reads src/components, src/app and src/styles, and this file is in
    src/lib. A tone left defined is a tone that gets used again. */
+/* A second dead tone left with it, 2026-08-17. One member was named for the
+   ramp's lightest step and resolved to exactly the same class as "white", one
+   line below it in the same table: two tone names, one class, one of them
+   carrying a word the founder banned. Deleted rather than renamed, for the
+   reason the note above gives. */
 export type SectionTone =
   | "ink-dark"
-  | "cream-50"
   | "white"
   | "cream-100"
   // "Paper" is intentionally transparent. The section adds NO
@@ -237,7 +241,6 @@ export const SECTION_TONES: Record<string, SectionTone> = {
 // references them anymore.
 export const TONE_CLASSES: Record<SectionTone, string> = {
   "ink-dark": "atlas-paper-dark",
-  "cream-50": "bg-cream-50",
   "white": "bg-white",
   "cream-100": "bg-cream-100",
   "paper": "",

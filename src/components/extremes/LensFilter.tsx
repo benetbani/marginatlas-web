@@ -105,8 +105,8 @@ export function LensFilter({ lenses }: { lenses: LensEntry[] }) {
               className={cn(
                 "rounded-full border px-3.5 py-1.5 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-reduce:transition-none",
                 isActive
-                  ? "border-atlas-700 bg-atlas-700 text-cream-50"
-                  : "border-parchment bg-cream-50 text-cocoa-700 hover:border-atlas-300 hover:text-atlas-700",
+                  ? "border-atlas-700 bg-atlas-700 text-white"
+                  : "border-parchment bg-white text-cocoa-700 hover:border-atlas-300 hover:text-atlas-700",
               )}
             >
               {label}

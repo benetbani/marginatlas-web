@@ -106,7 +106,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
 }
 
 const SELECT_CLASS = cn(
-  "h-11 w-full rounded-md border border-parchment bg-cream-50 px-3 text-sm text-ink-900",
+  "h-11 w-full rounded-md border border-parchment bg-white px-3 text-sm text-ink-900",
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
 );
 
@@ -144,8 +144,8 @@ function MiniToggle<V extends string>({
               "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-full px-3 text-sm font-medium transition-colors",
               RING,
               active
-                ? "bg-atlas-500 text-cream-50 shadow-subtle"
-                : "text-cocoa-700 hover:bg-cream-50 hover:text-ink-900",
+                ? "bg-atlas-500 text-white shadow-subtle"
+                : "text-cocoa-700 hover:bg-white hover:text-ink-900",
             )}
           >
             {opt.label}
@@ -225,7 +225,7 @@ export function ProfileChip({ align = "right", className }: ProfileChipProps) {
           "inline-flex min-h-[44px] max-w-[14rem] items-center gap-1.5 rounded-full border px-3 text-sm font-medium transition-colors",
           RING,
           showSet
-            ? "border-parchment bg-cream-50 text-ink-900 hover:bg-cream-100"
+            ? "border-parchment bg-white text-ink-900 hover:bg-cream-100"
             : "border-dashed border-cocoa-300 bg-transparent text-cocoa-700 hover:border-cocoa-500 hover:text-ink-900",
         )}
       >
@@ -245,7 +245,7 @@ export function ProfileChip({ align = "right", className }: ProfileChipProps) {
           role="dialog"
           aria-label="Set your context"
           className={cn(
-            "absolute top-full z-dropdown mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-lg border border-parchment bg-cream-50 p-4 shadow-lift",
+            "absolute top-full z-dropdown mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-lg border border-parchment bg-white p-4 shadow-lift",
             "motion-safe:animate-ds-slide-up",
             align === "left" ? "left-0" : "right-0",
           )}
@@ -367,7 +367,7 @@ export function ProfileChip({ align = "right", className }: ProfileChipProps) {
                 chipRef.current?.focus();
               }}
               className={cn(
-                "inline-flex min-h-[44px] items-center rounded-full bg-atlas-500 px-4 text-sm font-semibold text-cream-50 transition-colors hover:bg-atlas-700",
+                "inline-flex min-h-[44px] items-center rounded-full bg-atlas-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-atlas-700",
                 RING,
               )}
             >

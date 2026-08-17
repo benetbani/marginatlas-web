@@ -26,7 +26,7 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </label>
   );
 }
-const fieldCls = "flex items-center gap-2 rounded-lg border border-ink-200 bg-cream-50 px-3.5 py-2.5 text-[15px] text-ink-900";
+const fieldCls = "flex items-center gap-2 rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-[15px] text-ink-900";
 
 export default async function CalculatorMockup() {
   const cell = await getCellBySlug("ke", "kenya", "restaurants");
@@ -77,7 +77,7 @@ export default async function CalculatorMockup() {
           <Control label="Your annual revenue">
             <span className={fieldCls + " min-w-[150px] tabular-nums"}>$ 40,000</span>
           </Control>
-          <button className="rounded-lg bg-atlas-500 px-5 py-2.5 text-[15px] font-medium text-cream-50 hover:bg-atlas-600 transition-colors">
+          <button className="rounded-lg bg-atlas-500 px-5 py-2.5 text-[15px] font-medium text-white hover:bg-atlas-600 transition-colors">
             Compare
           </button>
         </div>

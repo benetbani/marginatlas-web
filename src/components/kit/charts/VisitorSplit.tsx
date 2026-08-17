@@ -76,7 +76,7 @@ export function VisitorSplit({
         <div
           className={[
             "flex items-center pl-3.5",
-            resDominant ? "bg-chart-primary text-cream-50" : "bg-cream-400 text-ink-900",
+            resDominant ? "bg-chart-primary text-white" : "bg-cream-400 text-ink-900",
           ].join(" ")}
           style={{ width: `${rPct}%` }}
         >
@@ -85,7 +85,7 @@ export function VisitorSplit({
         <div
           className={[
             "flex items-center justify-end pr-3.5",
-            !resDominant ? "bg-chart-primary text-cream-50" : "bg-parchment text-ink-900",
+            !resDominant ? "bg-chart-primary text-white" : "bg-parchment text-ink-900",
           ].join(" ")}
           style={{ width: `${vPct}%` }}
         >

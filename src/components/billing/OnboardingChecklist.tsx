@@ -116,7 +116,7 @@ export default function OnboardingChecklist({
           return (
             <li
               key={s.id}
-              className={`flex items-center gap-3 px-4 py-3 bg-cream-50 ${
+              className={`flex items-center gap-3 px-4 py-3 bg-white ${
                 i > 0 ? "border-t border-parchment" : ""
               }`}
             >

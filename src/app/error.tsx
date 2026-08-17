@@ -38,7 +38,7 @@ export default function RootError({
       <div className="mt-6 flex flex-wrap gap-3 text-sm">
         <button
           onClick={() => reset()}
-          className="px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-ink-800 transition font-medium"
+          className="px-4 py-2 rounded-full bg-ink-900 text-white hover:bg-ink-800 transition font-medium"
         >
           Try again
         </button>

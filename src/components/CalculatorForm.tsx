@@ -49,7 +49,7 @@ const SIZE_BANDS = [
 ];
 
 const fieldCls =
-  "mt-1.5 w-full rounded-lg border border-parchment bg-cream-50 px-3 py-2.5 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
+  "mt-1.5 w-full rounded-lg border border-parchment bg-white px-3 py-2.5 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
 const labelCls =
   "block text-[11px] font-semibold uppercase tracking-[0.14em] text-cocoa-500";
 
@@ -305,7 +305,7 @@ export function CalculatorForm({ countries, industries }: Props) {
         <button
           type="submit"
           disabled={loading || !revenue || !region}
-          className="rounded-lg bg-atlas-500 px-5 py-2.5 text-sm font-medium text-cream-50 transition-colors hover:bg-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-50"
+          className="rounded-lg bg-atlas-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-50"
         >
           {loading ? "Running the numbers" : "Show me the numbers"}
         </button>

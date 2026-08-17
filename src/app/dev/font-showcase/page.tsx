@@ -116,7 +116,7 @@ function Specimen({ c }: { c: Candidate }) {
   return (
     <section
       aria-label={`Specimen: ${c.name}`}
-      className="bg-cream-50 border border-parchment rounded-lg shadow-card overflow-hidden"
+      className="bg-white border border-parchment rounded-lg shadow-card overflow-hidden"
     >
       {/* candidate header bar */}
       <header className="flex items-center justify-between gap-4 px-6 py-4 border-b border-parchment bg-cream-100">
@@ -286,7 +286,7 @@ export default function FontShowcasePage() {
 
       {/* quick-compare strip: the anchor number in all five faces */}
       <div className="max-w-3xl mx-auto px-4 sm:px-8 mt-10">
-        <div className="bg-cream-50 border border-parchment rounded-lg shadow-subtle px-6 py-5">
+        <div className="bg-white border border-parchment rounded-lg shadow-subtle px-6 py-5">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500">
             The same number, five voices
           </p>

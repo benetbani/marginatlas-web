@@ -61,7 +61,7 @@ function ReviewCard({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="rounded-xl border border-parchment bg-cream-50 overflow-hidden">
+    <section className="rounded-xl border border-parchment bg-white overflow-hidden">
       <header className="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-5 py-3 border-b border-parchment bg-white">
         <code className="text-sm font-semibold text-ink-900">{name}</code>
         <VerdictPill verdict={verdict} />
@@ -179,7 +179,7 @@ export default async function V2Review({
         {NEW_FILES.map((row, i) => (
           <div
             key={row.file}
-            className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-2.5 text-sm ${i % 2 ? "bg-cream-50" : "bg-white"}`}
+            className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 px-4 py-2.5 text-sm ${i % 2 ? "bg-white" : "bg-white"}`}
           >
             <code className="text-xs text-ink-900 w-64 shrink-0">{row.file}</code>
             <span className="w-28 shrink-0"><VerdictPill verdict={row.verdict} /></span>

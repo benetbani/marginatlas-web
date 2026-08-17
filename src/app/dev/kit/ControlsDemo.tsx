@@ -31,7 +31,7 @@ function DemoBlock({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-parchment bg-cream-50 p-5">
+    <div className="rounded-lg border border-parchment bg-white p-5">
       <h3
         data-typography="custom"
         className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500"
@@ -132,7 +132,7 @@ export function ControlsDemo() {
         <button
           type="button"
           onClick={() => setPending((p) => !p)}
-          className="mb-4 inline-flex h-11 items-center rounded-full border border-parchment bg-cream-50 px-4 text-sm font-medium text-ink-900 transition-colors hover:bg-cream-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+          className="mb-4 inline-flex h-11 items-center rounded-full border border-parchment bg-white px-4 text-sm font-medium text-ink-900 transition-colors hover:bg-cream-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
         >
           {pending ? "Stop pending" : "Simulate server update"}
         </button>
@@ -143,7 +143,7 @@ export function ControlsDemo() {
               { label: "Owner take-home", value: "$48K" },
               { label: "Net margin", value: "5%" },
             ].map((s) => (
-              <div key={s.label} className="rounded-md border border-parchment bg-cream-50 p-3">
+              <div key={s.label} className="rounded-md border border-parchment bg-white p-3">
                 <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
                   {s.label}
                 </div>

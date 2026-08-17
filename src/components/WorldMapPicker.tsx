@@ -60,7 +60,7 @@ const GEO_URL = "/geo/countries-110m.json";
 // cool greys map to the cream/ink ladder, the stale vermillion ramp to
 // the live atlas tokens. Values read from design-tokens.ts.
 const COLORS = {
-  bg: tokenColors.cream[50], // map card surface, white
+  bg: tokenColors.white, // map card surface
   // Continents stay very light per founder 2026-05-26, now the warm
   // cream-200 step instead of the cool #ECECEC.
   parchment: tokenColors.cream[200],

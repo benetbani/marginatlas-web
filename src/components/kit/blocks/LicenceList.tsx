@@ -50,7 +50,7 @@ function LicenceMark({ required }: { required: boolean }) {
     return (
       <span
         aria-hidden="true"
-        className="mt-px inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-ink-900 text-cream-50"
+        className="mt-px inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-ink-900 text-white"
       >
         <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
           <path

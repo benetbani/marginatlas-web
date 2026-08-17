@@ -37,7 +37,7 @@ function KeyCue() {
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-xl border border-parchment bg-cream-50 p-5">
+    <section className="rounded-xl border border-parchment bg-white p-5">
       <div className="text-[10px] uppercase tracking-[0.16em] text-atlas-700 font-semibold mb-3">
         {title}
       </div>
@@ -155,7 +155,7 @@ export default async function MonetizedPreview({
               {ids.map((id, i) => (
                 <div
                   key={id}
-                  className={`flex items-baseline gap-3 px-4 py-2.5 text-sm ${i % 2 ? "bg-cream-50" : "bg-white"}`}
+                  className={`flex items-baseline gap-3 px-4 py-2.5 text-sm ${i % 2 ? "bg-white" : "bg-white"}`}
                 >
                   <code className="text-xs text-ink-900 w-56 shrink-0">{id}</code>
                   <span className="text-[10px] uppercase tracking-wide text-cocoa-700/70 w-20 shrink-0">

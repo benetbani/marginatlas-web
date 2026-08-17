@@ -113,7 +113,7 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@work.com"
               aria-invalid={status === "error"}
-              className={`h-9 px-3 rounded-md text-sm flex-1 sm:flex-none sm:w-64 bg-cream-50 text-ink-900 border ${
+              className={`h-9 px-3 rounded-md text-sm flex-1 sm:flex-none sm:w-64 bg-white text-ink-900 border ${
                 status === "error" ? "border-atlas-700" : "border-cocoa-700/25"
               }`}
             />
@@ -167,7 +167,7 @@ export function InlineMidArticle({ endpoint = "/api/newsletter" }: Props) {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@work.com"
               aria-invalid={status === "error"}
-              className={`flex-1 h-10 px-3 rounded-md text-sm bg-cream-50 text-ink-900 border ${
+              className={`flex-1 h-10 px-3 rounded-md text-sm bg-white text-ink-900 border ${
                 status === "error" ? "border-atlas-700" : "border-cocoa-700/25"
               }`}
             />
@@ -246,7 +246,7 @@ export function ExitIntentModal({
            attribute promises assistive technology that the rest of the page is
            inert, and nothing here contains focus, so the promise was false. */
         aria-labelledby="atlas-exit-h"
-        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[92vw] max-w-md rounded-2xl p-6 sm:p-7 bg-cream-50 border border-parchment shadow-[0_1px_2px_rgba(26,26,26,0.05),_0_24px_60px_rgba(26,26,26,0.18)]"
+        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[92vw] max-w-md rounded-2xl p-6 sm:p-7 bg-white border border-parchment shadow-[0_1px_2px_rgba(26,26,26,0.05),_0_24px_60px_rgba(26,26,26,0.18)]"
       >
         <button
           type="button"
@@ -288,7 +288,7 @@ export function ExitIntentModal({
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@work.com"
                 aria-invalid={status === "error"}
-                className={`h-10 px-3 rounded-md text-sm bg-cream-50 text-ink-900 border ${
+                className={`h-10 px-3 rounded-md text-sm bg-white text-ink-900 border ${
                   status === "error" ? "border-atlas-700" : "border-cocoa-700/25"
                 }`}
               />

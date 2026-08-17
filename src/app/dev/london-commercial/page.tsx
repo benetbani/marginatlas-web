@@ -75,7 +75,7 @@ export default function Page() {
           </nav>
           <a
             href="#"
-            className="rounded-full bg-ink-900 px-5 py-2 text-sm font-medium text-cream-50 transition-colors hover:bg-ink-800"
+            className="rounded-full bg-ink-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-ink-800"
           >
             Get the data
           </a>
@@ -103,13 +103,13 @@ export default function Page() {
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#breakdown"
-              className="rounded-full bg-atlas-600 px-6 py-3 text-sm font-semibold text-cream-50 shadow-card transition-colors hover:bg-atlas-700"
+              className="rounded-full bg-atlas-600 px-6 py-3 text-sm font-semibold text-white shadow-card transition-colors hover:bg-atlas-700"
             >
               See the full breakdown
             </a>
             <a
               href="#"
-              className="rounded-full border border-parchment bg-cream-50 px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-300"
+              className="rounded-full border border-parchment bg-white px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-300"
             >
               Compare another city
             </a>
@@ -122,7 +122,7 @@ export default function Page() {
               { k: "Owner take-home", v: usdFull(DATA.takeHome) },
               { k: "Net margin", v: `${DATA.marginPct}%` },
             ].map((s) => (
-              <div key={s.k} className="bg-cream-50 px-5 py-5">
+              <div key={s.k} className="bg-white px-5 py-5">
                 <dt className="text-xs uppercase tracking-wide text-ink-500">
                   {s.k}
                 </dt>
@@ -157,7 +157,7 @@ export default function Page() {
                 style={{ width: `${seg.value}%` }}
               >
                 {seg.kept ? (
-                  <span className="px-1 text-sm font-semibold text-cream-50 tabular-nums">
+                  <span className="px-1 text-sm font-semibold text-white tabular-nums">
                     ${seg.value}
                   </span>
                 ) : null}
@@ -195,7 +195,7 @@ export default function Page() {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-300">
             The honest take
           </p>
-          <p className="mt-6 max-w-3xl font-display text-2xl leading-snug text-cream-50 md:text-4xl md:leading-[1.2]">
+          <p className="mt-6 max-w-3xl font-display text-2xl leading-snug text-white md:text-4xl md:leading-[1.2]">
             {DATA.verdict}
           </p>
           <ul className="mt-12 grid gap-x-12 gap-y-6 md:grid-cols-3">
@@ -273,7 +273,7 @@ export default function Page() {
           </div>
           <a
             href="#"
-            className="shrink-0 rounded-full bg-atlas-600 px-7 py-3.5 text-sm font-semibold text-cream-50 shadow-card transition-colors hover:bg-atlas-700"
+            className="shrink-0 rounded-full bg-atlas-600 px-7 py-3.5 text-sm font-semibold text-white shadow-card transition-colors hover:bg-atlas-700"
           >
             See pricing
           </a>

@@ -173,7 +173,7 @@ export default function MethodologyPage() {
             <div
               key={t.id}
               id={t.id}
-              className={`scroll-mt-24 rounded-r-lg border-l-4 bg-cream-50 px-5 py-4 ${t.rail}`}
+              className={`scroll-mt-24 rounded-r-lg border-l-4 bg-white px-5 py-4 ${t.rail}`}
             >
               <div className="mb-1 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700">
                 <span className={`h-2 w-2 rounded-full ${t.dot}`} />

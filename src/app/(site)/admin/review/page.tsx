@@ -644,7 +644,7 @@ function Stat({
     <div
       className={`p-3 rounded-xl border ${
         active
-          ? "bg-ink-900 text-cream-50 border-ink-900"
+          ? "bg-ink-900 text-white border-ink-900"
           : accent
           ? "bg-atlas-50 text-atlas-900 border-atlas-300"
           : "bg-cream-100 border-parchment text-ink-900"

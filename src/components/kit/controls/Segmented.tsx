@@ -126,8 +126,8 @@ export function Segmented<V extends string = string>({
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
               "disabled:pointer-events-none disabled:text-cocoa-300",
               active
-                ? "bg-atlas-500 text-cream-50 shadow-subtle"
-                : "text-cocoa-700 hover:bg-cream-50 hover:text-ink-900",
+                ? "bg-atlas-500 text-white shadow-subtle"
+                : "text-cocoa-700 hover:bg-white hover:text-ink-900",
             )}
           >
             <span className="leading-tight">{opt.label}</span>

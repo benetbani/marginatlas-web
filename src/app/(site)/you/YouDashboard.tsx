@@ -179,7 +179,7 @@ export function YouDashboard() {
             <a
               href="/countries"
               className={cn(
-                "inline-flex min-h-[44px] items-center rounded-full border border-parchment bg-cream-50 px-4 text-sm font-medium text-cocoa-700 transition-colors hover:bg-cream-100 hover:text-ink-900",
+                "inline-flex min-h-[44px] items-center rounded-full border border-parchment bg-white px-4 text-sm font-medium text-cocoa-700 transition-colors hover:bg-cream-100 hover:text-ink-900",
                 RING,
               )}
             >
@@ -221,7 +221,7 @@ export function YouDashboard() {
                 <a
                   href={compareHref}
                   className={cn(
-                    "inline-flex min-h-[44px] items-center gap-2 rounded-full bg-atlas-500 px-4 text-sm font-semibold text-cream-50 transition-colors hover:bg-atlas-700",
+                    "inline-flex min-h-[44px] items-center gap-2 rounded-full bg-atlas-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-atlas-700",
                     RING,
                   )}
                 >
@@ -284,7 +284,7 @@ export function YouDashboard() {
             <a
               href="/compare"
               className={cn(
-                "inline-flex min-h-[44px] items-center rounded-full border border-parchment bg-cream-50 px-4 text-sm font-medium text-cocoa-700 transition-colors hover:bg-cream-100 hover:text-ink-900",
+                "inline-flex min-h-[44px] items-center rounded-full border border-parchment bg-white px-4 text-sm font-medium text-cocoa-700 transition-colors hover:bg-cream-100 hover:text-ink-900",
                 RING,
               )}
             >

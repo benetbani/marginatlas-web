@@ -95,14 +95,14 @@ export default function LeadMagnetPage() {
           <div className="lg:col-span-5">
             <div className="relative mx-auto max-w-sm" style={{ transform: "rotate(-1.2deg)" }}>
               <div
-                className="rounded-md aspect-[3/4] flex flex-col p-6 sm:p-8 text-cream-50"
+                className="rounded-md aspect-[3/4] flex flex-col p-6 sm:p-8 text-white"
                 style={{
                   background: `linear-gradient(160deg, ${colors.atlas[700]} 0%, ${colors.ink[800]} 100%)`,
                   boxShadow: "0 1px 2px rgba(26,26,26,0.1), 0 30px 60px rgba(26,26,26,0.22)",
                   border: "1px solid rgba(254, 251, 246, 0.08)",
                 }}
               >
-                <p className="text-[10px] uppercase tracking-[0.28em] font-semibold text-cream-50/70">
+                <p className="text-[10px] uppercase tracking-[0.28em] font-semibold text-white/70">
                   Margin Atlas · 2026
                 </p>
                 <p
@@ -114,7 +114,7 @@ export default function LeadMagnetPage() {
                   benchmarks.
                 </p>
                 <div className="mt-auto pt-4 border-t border-white/20">
-                  <p className="text-[10px] uppercase tracking-[0.18em] font-semibold text-cream-50/70">
+                  <p className="text-[10px] uppercase tracking-[0.18em] font-semibold text-white/70">
                     Includes
                   </p>
                   <p className="font-display italic mt-1 text-sm">

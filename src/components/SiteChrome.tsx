@@ -90,7 +90,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                    it's visually distinct from the rest of the nav. */}
                 <a
                   href="/pricing"
-                  className="ml-1 inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink-900 text-cream-50 text-sm font-semibold hover:bg-atlas-700 transition-colors"
+                  className="ml-1 inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink-900 text-white text-sm font-semibold hover:bg-atlas-700 transition-colors"
                 >
                   Pricing
                 </a>

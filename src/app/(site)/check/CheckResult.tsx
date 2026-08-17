@@ -67,7 +67,7 @@ export function CheckResult({ verdict }: Props) {
       aria-labelledby="check-result-heading"
       className="atlas-card overflow-hidden"
     >
-      <div className="px-5 py-5 md:px-8 md:py-7 bg-cream-50 border-b border-ink-100">
+      <div className="px-5 py-5 md:px-8 md:py-7 bg-white border-b border-ink-100">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">
           Your comparative verdict
         </div>
@@ -132,7 +132,7 @@ export function CheckResult({ verdict }: Props) {
       </ul>
 
       {verdict.estimated && (
-        <div className="px-5 py-4 md:px-8 md:py-5 bg-cream-50 border-t border-ink-100">
+        <div className="px-5 py-4 md:px-8 md:py-5 bg-white border-t border-ink-100">
           <p className="text-xs text-cocoa-700/70 leading-relaxed">
             Typical ranges here are read at the sector level. Treat them
             as orientation, not a measured benchmark for this exact

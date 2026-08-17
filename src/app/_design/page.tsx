@@ -108,7 +108,7 @@ export default async function DesignCatalogPage({
   }
 
   return (
-    <div className="bg-cream-50 min-h-screen pb-24">
+    <div className="bg-white min-h-screen pb-24">
       <Header />
       <main className="max-w-6xl mx-auto px-6 pt-8 space-y-16">
         <TokensSection />
@@ -138,7 +138,7 @@ export default async function DesignCatalogPage({
 
 function Header() {
   return (
-    <header className="bg-ink-900 text-cream-50 py-12">
+    <header className="bg-ink-900 text-white py-12">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-xs uppercase tracking-[0.18em] text-atlas-200 font-semibold mb-3">
           Internal
@@ -205,7 +205,7 @@ function SubSection({
           <span className="text-[11px] text-cocoa-700/70 font-medium">{caption}</span>
         )}
       </div>
-      <div className="rounded-lg border border-parchment bg-cream-50 p-6">{children}</div>
+      <div className="rounded-lg border border-parchment bg-white p-6">{children}</div>
     </div>
   );
 }
@@ -231,7 +231,7 @@ function TokensSection() {
           {Object.entries(elevation).map(([name, val]) => (
             <div key={name} className="text-center">
               <div
-                className="h-20 bg-cream-50 rounded-lg border border-parchment"
+                className="h-20 bg-white rounded-lg border border-parchment"
                 style={{ boxShadow: val }}
               />
               <div className="text-xs font-semibold text-ink-900 mt-2">{name}</div>
@@ -254,7 +254,7 @@ function TokenCard({
   mono?: boolean;
 }) {
   return (
-    <div className="rounded-lg border border-parchment bg-cream-50 p-5">
+    <div className="rounded-lg border border-parchment bg-white p-5">
       <h3 className="text-sm font-semibold text-ink-900 tracking-tight mb-3">{label}</h3>
       <dl className="space-y-1.5 text-sm">
         {entries.map(([k, v]) => (
@@ -714,7 +714,7 @@ function FormFeedbackSection() {
       title="Badges"
       description="ui/badge.tsx, the older shadcn badge primitive. Pill replaces most use cases. Badge remains for cases that want shadcn's exact variant semantics."
     >
-      <div className="rounded-lg border border-parchment bg-cream-50 p-6">
+      <div className="rounded-lg border border-parchment bg-white p-6">
         <div className="flex flex-wrap gap-2">
           <Badge>Default</Badge>
           <Badge variant="secondary">Secondary</Badge>
@@ -919,7 +919,7 @@ function SkeletonsSection() {
         </div>
       </SubSection>
       <SubSection title="LoadingSkeleton (card-grid layout)">
-        <div className="bg-cream-50 -mx-6 px-0 py-2 rounded-md">
+        <div className="bg-white -mx-6 px-0 py-2 rounded-md">
           <LoadingSkeleton variant="card-grid" />
         </div>
       </SubSection>

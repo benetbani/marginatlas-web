@@ -150,7 +150,7 @@ export function BusinessFormationCosts({
           </table>
         </div>
       ) : (
-        <div className="rounded-xl border border-parchment bg-cream-50 p-5 text-sm text-cocoa-700">
+        <div className="rounded-xl border border-parchment bg-white p-5 text-sm text-cocoa-700">
           We are still gathering the legal-tier breakdown for {countryName}.
         </div>
       )}

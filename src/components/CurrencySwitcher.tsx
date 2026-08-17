@@ -56,7 +56,7 @@ export function CurrencySwitcher() {
           onClick={() => pick(c.code)}
           className={`px-2.5 py-1 rounded-full transition font-medium ${
             current === c.code
-              ? "bg-ink-900 text-cream-50"
+              ? "bg-ink-900 text-white"
               : "text-ink-700 hover:text-ink-900"
           }`}
           title={c.label}

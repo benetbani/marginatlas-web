@@ -181,7 +181,7 @@ export function Slider({
               }
             }}
             className={cn(
-              "h-11 w-16 rounded-md border border-parchment bg-cream-50 px-2 text-right text-sm font-semibold tabular-nums text-ink-900",
+              "h-11 w-16 rounded-md border border-parchment bg-white px-2 text-right text-sm font-semibold tabular-nums text-ink-900",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
               "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
             )}

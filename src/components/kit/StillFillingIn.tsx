@@ -33,7 +33,7 @@ export function StillFillingIn({
   return (
     <section
       aria-label={`Sections still filling in${place ? ` for ${place}` : ""}`}
-      className="rounded-lg border border-dashed border-parchment bg-cream-50/50 px-5 py-4 md:px-7 md:py-5"
+      className="rounded-lg border border-dashed border-parchment bg-white/50 px-5 py-4 md:px-7 md:py-5"
     >
       <SectionEyebrow>Still filling in</SectionEyebrow>
       <p className="mt-1 max-w-2xl text-sm leading-relaxed text-cocoa-700">

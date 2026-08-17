@@ -134,7 +134,7 @@ export function ZoomControl({
       <OrientationHeader items={orientationItems} sticky={sticky} />
       <nav
         aria-label="Change the level of detail for this trade and place"
-        className="flex items-center gap-1 overflow-x-auto border-b border-parchment/60 bg-cream-50/80 px-4 py-1.5"
+        className="flex items-center gap-1 overflow-x-auto border-b border-parchment/60 bg-white/80 px-4 py-1.5"
       >
         <span className="mr-1 shrink-0 text-[11px] font-medium uppercase tracking-[0.12em] text-cocoa-500">
           Zoom

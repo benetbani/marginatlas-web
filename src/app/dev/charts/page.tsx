@@ -32,7 +32,7 @@ function ShowCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-parchment bg-cream-50 px-6 py-6 md:px-8 md:py-7">
+    <section className="rounded-lg border border-parchment bg-white px-6 py-6 md:px-8 md:py-7">
       <div className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700">
         {eyebrow}
       </div>

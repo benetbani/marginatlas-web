@@ -99,7 +99,7 @@ export function AccountPreview() {
         </p>
         <a
           href="/check"
-          className="inline-block px-4 py-2 rounded-lg bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold transition"
+          className="inline-block px-4 py-2 rounded-lg bg-atlas-700 hover:bg-atlas-800 text-white text-sm font-semibold transition"
         >
           Open the comparator
         </a>
@@ -418,7 +418,7 @@ function Field({ label, defaultValue, type = "text", placeholder }: { label: str
         type={type}
         defaultValue={defaultValue}
         placeholder={placeholder}
-        className="mt-1.5 w-full px-3 h-10 rounded-md text-sm bg-cream-50 border border-parchment text-ink-900"
+        className="mt-1.5 w-full px-3 h-10 rounded-md text-sm bg-white border border-parchment text-ink-900"
       />
     </label>
   );

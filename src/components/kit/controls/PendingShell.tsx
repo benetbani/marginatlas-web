@@ -57,7 +57,7 @@ export function PendingShell({
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]"
         >
-          <div className="atlas-pending-sweep absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-cream-50/70 to-transparent motion-reduce:hidden" />
+          <div className="atlas-pending-sweep absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/70 to-transparent motion-reduce:hidden" />
         </div>
       ) : null}
 

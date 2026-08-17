@@ -46,8 +46,8 @@ export function BlurredOverlay({
   const tierLabel = tier === "basic" ? "Basic" : "Premium";
   const buttonClasses =
     tier === "basic"
-      ? "bg-atlas-700 text-cream-50 hover:bg-atlas-800"
-      : "bg-ink-900 text-cream-50 hover:bg-ink-800";
+      ? "bg-atlas-700 text-white hover:bg-atlas-800"
+      : "bg-ink-900 text-white hover:bg-ink-800";
 
   return (
     <div className="relative" data-v34-lock="overlay" data-v34-tier={tier}>
@@ -68,7 +68,7 @@ export function BlurredOverlay({
       {/* Calm overlay on top — cream wash, not a heavy scrim. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-cream-50/40"
+        className="absolute inset-0 bg-white/40"
       />
       {/* CTA card — single paragraph + one button. */}
       <div className="absolute inset-0 flex items-center justify-center px-4">

@@ -39,7 +39,7 @@ export function RankRow({ rank, label, href, value, texture }: RankRowProps) {
     <div className="flex items-baseline gap-3 border-t border-parchment py-3 first:border-t-0 first:pt-0">
       <span
         aria-hidden="true"
-        className="inline-flex h-6 w-6 shrink-0 translate-y-0.5 items-center justify-center rounded-full border border-parchment bg-cream-50 font-display text-[12px] font-semibold tabular-nums text-cocoa-700"
+        className="inline-flex h-6 w-6 shrink-0 translate-y-0.5 items-center justify-center rounded-full border border-parchment bg-white font-display text-[12px] font-semibold tabular-nums text-cocoa-700"
       >
         {rank}
       </span>

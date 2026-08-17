@@ -35,7 +35,7 @@ export default function BrandGlyphsPreview() {
           currentColor ink, at most one vermillion accent per glyph.
         </p>
 
-        <section className="mt-10 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <section className="mt-10 rounded-lg border border-parchment bg-white shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
             AtlasIcon (40)
           </h2>
@@ -63,7 +63,7 @@ export default function BrandGlyphsPreview() {
           </div>
         </section>
 
-        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <section className="mt-5 rounded-lg border border-parchment bg-white shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
             AtlasSpot (12 editorial illustrations)
           </h2>
@@ -81,7 +81,7 @@ export default function BrandGlyphsPreview() {
           </div>
         </section>
 
-        <section className="mt-5 rounded-lg border border-parchment bg-cream-50 shadow-subtle px-5 py-5 md:px-7 md:py-6">
+        <section className="mt-5 rounded-lg border border-parchment bg-white shadow-subtle px-5 py-5 md:px-7 md:py-6">
           <h2 className="font-display text-lg md:text-xl font-semibold tracking-tight text-ink-900">
             AtlasPictogram (64)
           </h2>

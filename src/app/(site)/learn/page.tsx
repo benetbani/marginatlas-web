@@ -184,7 +184,7 @@ function ArticleList({
         <li key={a.slug}>
           <Link
             href={`/learn/${a.slug}`}
-            className="group flex items-baseline justify-between gap-5 py-4 -mx-3 px-3 rounded-lg hover:bg-cream-50 transition-colors"
+            className="group flex items-baseline justify-between gap-5 py-4 -mx-3 px-3 rounded-lg hover:bg-white transition-colors"
           >
             <span className="min-w-0">
               <span className="block font-medium text-ink-900 group-hover:text-atlas-700 transition-colors">

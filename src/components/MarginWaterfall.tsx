@@ -49,10 +49,10 @@ export function MarginWaterfall({ grossMargin, operatingMargin, netMargin }: Pro
         <Segment label="Gross" pct={g} tone="bg-atlas-200 text-ink-900" widthPct={100} />
       </div>
       <div className="mt-2 flex w-full overflow-hidden rounded-lg border border-ink-200" style={{ height: "44px" }}>
-        <Segment label="Operating" pct={o} tone="bg-atlas-400 text-cream-50" widthPct={widthOf(o)} />
+        <Segment label="Operating" pct={o} tone="bg-atlas-400 text-white" widthPct={widthOf(o)} />
       </div>
       <div className="mt-2 flex w-full overflow-hidden rounded-lg border border-ink-200" style={{ height: "44px" }}>
-        <Segment label="Net" pct={n} tone="bg-atlas-600 text-cream-50" widthPct={widthOf(n)} />
+        <Segment label="Net" pct={n} tone="bg-atlas-600 text-white" widthPct={widthOf(n)} />
       </div>
     </section>
   );

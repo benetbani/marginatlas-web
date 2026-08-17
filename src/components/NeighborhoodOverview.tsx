@@ -522,7 +522,7 @@ export function NeighborhoodOverview({
                 <Link
                   key={r.id}
                   href={`/${cc}/${city.slug}/${nb.slug}/${r.cellSlug}`}
-                  className={`group ${rowClasses} bg-cream-50 transition-colors hover:bg-cream-100`}
+                  className={`group ${rowClasses} bg-white transition-colors hover:bg-cream-100`}
                 >
                   <span className="flex min-w-0 items-center gap-2">
                     {picto}
@@ -536,7 +536,7 @@ export function NeighborhoodOverview({
                   {figure}
                 </Link>
               ) : (
-                <div key={r.id} className={`${rowClasses} bg-cream-50`}>
+                <div key={r.id} className={`${rowClasses} bg-white`}>
                   <span className="flex min-w-0 items-center gap-2">
                     {picto}
                     <span className="text-sm md:text-base font-medium text-ink-900">

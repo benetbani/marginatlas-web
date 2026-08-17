@@ -432,7 +432,7 @@ export default async function DecideWizard({
                 banned in components; .atlas-card carries the hairline token. */}
             <div className="atlas-card overflow-hidden">
               <table className="w-full text-sm">
-                <thead className="bg-cream-50">
+                <thead className="bg-white">
                   <tr className="border-b border-[rgba(76,39,18,0.10)]">
                     <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Neighborhood

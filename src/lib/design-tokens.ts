@@ -63,10 +63,13 @@ export const colors = {
     900: "#4a0a00",
   },
   cream: {
-    // Warm paper ladder. 50 = warm white (cards/popovers, lightest),
-    // climbing into warm sand (page paper, borders). Replaces the cold
-    // white-to-gray surfaces that the pre-reformation system used.
-    50: "#ffffff", // warm white card / popover surface
+    // THE LIGHTEST STEP IS GONE, 2026-08-17, and this too is a collapse rather
+    // than a deletion. It was #ffffff: white, under a name that said cream, for
+    // 150 call sites. White already has a name, in this repo and in every other
+    // one, and the hairline pass had already resolved twelve of these by hand
+    // onto that name rather than onto the step. The rest followed. The standalone
+    // `white` token below carries the four reads that need a value in TS rather
+    // than a utility class.
     // SaaS reformation 2026-06-12 (founder): the app ground. White cards sit
     // on this field so surfaces read as layered product UI, not a flat sheet.
     // Sits between the white card (50) and 100; supersedes the 2026-06-06
@@ -283,6 +286,16 @@ export const colors = {
    */
   parchment: "#e3e3e3", // neutral hairline (was cream-300 under another name)
   graphite: "#463726", // warm brown-gray = ink-700
+  /**
+   * WHITE, under the name white. It was the ramp's lightest step for a year,
+   * which meant 150 call sites spelled plain white with a word the founder has
+   * since banned outright. Deliberately NOT re-exported to Tailwind below:
+   * Tailwind already ships `white`, so the utilities need nothing from here and
+   * re-declaring it would only rewrite every emitted rule from #fff to #ffffff
+   * for no gain. This constant exists for the handful of reads that need a
+   * value in TypeScript, where a component may not write a raw hex.
+   */
+  white: "#ffffff",
 } as const;
 
 /**
@@ -294,10 +307,10 @@ export const colors = {
 export const semanticColors = {
   background: colors.cream[75], // warm app ground (SaaS reformation 2026-06-12)
   foreground: colors.ink[900],
-  card: colors.cream[50], // warm white article card
+  card: colors.white, // article card
   cardForeground: colors.ink[900],
   primary: colors.atlas[700],
-  primaryForeground: colors.cream[50],
+  primaryForeground: colors.white,
   border: colors.parchment, // neutral hairline
   ring: colors.atlas[700],
   /* success/successSurface/warning/warningSurface deleted with their ramps.

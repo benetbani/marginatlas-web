@@ -236,7 +236,7 @@ export function AddToWatch({ item, variant = "button", className }: AddToWatchPr
           RING,
           watching
             ? "border-atlas-300 bg-atlas-50 text-atlas-700 hover:bg-atlas-100"
-            : "border-parchment bg-cream-50 text-cocoa-700 hover:bg-cream-100 hover:text-ink-900",
+            : "border-parchment bg-white text-cocoa-700 hover:bg-cream-100 hover:text-ink-900",
         )}
       >
         {watching ? (
@@ -355,7 +355,7 @@ export function WatchTray({ align = "right", className }: WatchTrayProps) {
           role="dialog"
           aria-label="Your watch list"
           className={cn(
-            "absolute bottom-full mb-3 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-parchment bg-cream-50 shadow-lift",
+            "absolute bottom-full mb-3 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-parchment bg-white shadow-lift",
             "motion-safe:animate-ds-slide-up",
             panelSide,
           )}
@@ -454,7 +454,7 @@ export function WatchTray({ align = "right", className }: WatchTrayProps) {
               <a
                 href={compareHref}
                 className={cn(
-                  "inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-atlas-500 px-4 text-sm font-semibold text-cream-50 transition-colors hover:bg-atlas-700",
+                  "inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-atlas-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-atlas-700",
                   RING,
                 )}
               >
@@ -478,13 +478,13 @@ export function WatchTray({ align = "right", className }: WatchTrayProps) {
         aria-expanded={open}
         aria-label={`Watch list, ${count} ${count === 1 ? "item" : "items"}`}
         className={cn(
-          "inline-flex min-h-[44px] items-center gap-2 rounded-full border border-parchment bg-cream-50 pl-4 pr-3 text-sm font-semibold text-ink-900 shadow-card transition-colors hover:bg-cream-100",
+          "inline-flex min-h-[44px] items-center gap-2 rounded-full border border-parchment bg-white pl-4 pr-3 text-sm font-semibold text-ink-900 shadow-card transition-colors hover:bg-cream-100",
           RING,
         )}
       >
         <BookmarkFilledIcon className="h-4 w-4 text-atlas-500" />
         <span>Watching</span>
-        <span className="grid min-h-[1.5rem] min-w-[1.5rem] place-items-center rounded-full bg-atlas-500 px-1.5 text-xs font-bold tabular-nums text-cream-50">
+        <span className="grid min-h-[1.5rem] min-w-[1.5rem] place-items-center rounded-full bg-atlas-500 px-1.5 text-xs font-bold tabular-nums text-white">
           {count}
         </span>
       </button>

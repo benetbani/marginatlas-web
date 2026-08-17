@@ -74,7 +74,7 @@ export function DimensionSwitcher({
   }
 
   return (
-    <div className="sticky top-[57px] z-[5] -mx-6 px-6 py-3 bg-cream-50 border-y border-parchment mb-6">
+    <div className="sticky top-[57px] z-[5] -mx-6 px-6 py-3 bg-white border-y border-parchment mb-6">
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <span className="text-xs uppercase tracking-wide text-ink-700/60 font-medium">
           Showing

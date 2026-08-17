@@ -145,7 +145,7 @@ export function StickySectionNav({
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     isActive
                       ? "border-atlas-300 bg-atlas-50 text-atlas-700"
-                      : "border-parchment bg-cream-50 text-cocoa-700 hover:text-ink-900",
+                      : "border-parchment bg-white text-cocoa-700 hover:text-ink-900",
                   ].join(" ")}
                 >
                   {s.label}

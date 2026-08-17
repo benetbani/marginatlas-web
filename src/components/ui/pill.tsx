@@ -36,7 +36,7 @@ const pillVariants = cva(
     variants: {
       variant: {
         neutral: "bg-cream-100 text-cocoa-700 border border-parchment",
-        accent: "bg-atlas-700 text-cream-50",
+        accent: "bg-atlas-700 text-white",
         subtle: "bg-atlas-50 text-atlas-700 border border-atlas-200",
         // Terracotta, not moss: green is banned outright (founder 2026-08-09).
         // It sits a step above `subtle` on the same ramp, which is what the two

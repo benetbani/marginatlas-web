@@ -232,8 +232,8 @@ function PaidCard({
     : "atlas-card";
   const buttonClasses =
     tier === "basic"
-      ? "bg-atlas-700 text-cream-50 hover:bg-atlas-800"
-      : "bg-ink-900 text-cream-50 hover:bg-ink-800";
+      ? "bg-atlas-700 text-white hover:bg-atlas-800"
+      : "bg-ink-900 text-white hover:bg-ink-800";
   // Billing is live only when auth is on AND Stripe is configured (server-only
   // env). Read at build time, so the pricing page keeps its newsletter CTA until
   // the founder activates Stripe, then auto-switches to real checkout.

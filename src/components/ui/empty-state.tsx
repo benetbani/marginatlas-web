@@ -42,7 +42,7 @@ const emptyStateVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-cream-50",
+        default: "bg-white",
         hatched: "", // bg applied inline due to repeating-linear-gradient
         muted: "bg-cream-100",
       },
@@ -188,7 +188,7 @@ function DefaultBody({
             <Link
               key={s.href}
               href={s.href}
-              className="inline-flex items-center gap-1.5 rounded-full bg-cream-50 border border-parchment text-cocoa-700 text-sm font-semibold px-3 py-1.5 transition-colors hover:bg-white hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-1.5 rounded-full bg-white border border-parchment text-cocoa-700 text-sm font-semibold px-3 py-1.5 transition-colors hover:bg-white hover:text-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2"
             >
               <span>{s.label}</span>
               <CaretRight size={12} aria-hidden="true" />

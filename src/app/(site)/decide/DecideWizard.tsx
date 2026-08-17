@@ -71,7 +71,7 @@ function StepDot({
         className={
           "inline-flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-semibold tabular-nums " +
           (state === "done"
-            ? "bg-atlas-500 text-cream-50"
+            ? "bg-atlas-500 text-white"
             : state === "active"
               ? "bg-atlas-100 text-atlas-700 ring-2 ring-atlas-500/40"
               : "bg-cream-200 text-cocoa-500")
@@ -179,7 +179,7 @@ export function DecideWizard({
           <select
             value={trade}
             onChange={(e) => set({ trade: e.target.value })}
-            className="w-full rounded-lg border border-parchment bg-cream-50 px-3 py-2.5 text-sm font-medium text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+            className="w-full rounded-lg border border-parchment bg-white px-3 py-2.5 text-sm font-medium text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
           >
             <option value="">Select a trade</option>
             {trades.map((t) => (
@@ -212,7 +212,7 @@ export function DecideWizard({
             <select
               value={place}
               onChange={(e) => set({ place: e.target.value })}
-              className="w-full rounded-lg border border-parchment bg-cream-50 px-3 py-2.5 text-sm font-medium text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+              className="w-full rounded-lg border border-parchment bg-white px-3 py-2.5 text-sm font-medium text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
             >
               <option value="">Select a city</option>
               {places.map((p) => (
@@ -255,7 +255,7 @@ export function DecideWizard({
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <a
               href={deepHref ?? "#"}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-atlas-700 px-5 text-sm font-semibold text-cream-50 shadow-subtle transition-colors hover:bg-atlas-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-atlas-700 px-5 text-sm font-semibold text-white shadow-subtle transition-colors hover:bg-atlas-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
             >
               Rank the neighbourhoods &rarr;
             </a>

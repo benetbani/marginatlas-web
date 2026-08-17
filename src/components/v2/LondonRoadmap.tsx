@@ -10,7 +10,7 @@ import { colors } from "@/lib/design-tokens";
 // stipple blocks, fine warm road lines, heavier ink water, district names
 // in vermillion. Conformed from the cool-grey export palette 2026-06-12.
 const MAP = {
-  bg: colors.cream[50],
+  bg: colors.white,
   block: colors.cream[100],
   blockStroke: colors.parchment,
   road: colors.ink[700],

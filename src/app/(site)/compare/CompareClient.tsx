@@ -1134,7 +1134,7 @@ export function CompareClient({
           <button
             type="button"
             onClick={copyShareLink}
-            className="rounded-full border border-parchment bg-cream-100 px-3.5 py-1.5 text-xs font-medium text-ink-900 transition-colors hover:bg-cream-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/30"
+            className="rounded-full border border-parchment bg-cream-100 px-3.5 py-1.5 text-xs font-medium text-ink-900 transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/30"
           >
             Copy share link
           </button>
@@ -1499,7 +1499,7 @@ function WeightingPanel({
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2",
                         locked
                           ? "border-atlas-300 bg-atlas-50 text-atlas-700"
-                          : "border-parchment bg-cream-50 text-cocoa-500 hover:text-ink-900",
+                          : "border-parchment bg-white text-cocoa-500 hover:text-ink-900",
                       )}
                     >
                       <LockGlyph locked={locked} />

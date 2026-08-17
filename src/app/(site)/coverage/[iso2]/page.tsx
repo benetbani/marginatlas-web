@@ -191,7 +191,7 @@ export default async function PerCountryCoverage({
       <div className="mt-10 flex gap-3 flex-wrap text-sm">
         <Link
           href={`/${iso2.toLowerCase()}`}
-          className="px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-ink-800 transition font-medium"
+          className="px-4 py-2 rounded-full bg-ink-900 text-white hover:bg-ink-800 transition font-medium"
         >
           Open {meta.name} country page →
         </Link>

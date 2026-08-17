@@ -61,7 +61,7 @@ function PeerRow({ peer }: { peer: PeerPlace }) {
   return (
     <Link
       href={peer.href}
-      className="flex items-baseline gap-3 border-t border-parchment py-3 transition-colors first:border-t-0 first:pt-0 hover:bg-cream-50"
+      className="flex items-baseline gap-3 border-t border-parchment py-3 transition-colors first:border-t-0 first:pt-0 hover:bg-white"
     >
       <span className="shrink-0 translate-y-0.5">
         <CountryFlag iso2={peer.country.toUpperCase()} className="w-5" />
@@ -82,7 +82,7 @@ function OtherRow({ other }: { other: OtherBusinessHere }) {
   return (
     <Link
       href={other.href}
-      className="flex items-baseline gap-3 border-t border-parchment py-3 transition-colors first:border-t-0 first:pt-0 hover:bg-cream-50"
+      className="flex items-baseline gap-3 border-t border-parchment py-3 transition-colors first:border-t-0 first:pt-0 hover:bg-white"
     >
       <span className="min-w-0 flex-1 font-display text-[15px] font-semibold text-ink-900 md:text-base">
         {other.business}

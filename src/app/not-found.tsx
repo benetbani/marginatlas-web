@@ -55,7 +55,7 @@ const HATCHES = [
 
 export default function NotFound() {
   return (
-    <main className="w-full bg-cream-50 min-h-[calc(100vh-3.5rem)]">
+    <main className="w-full bg-white min-h-[calc(100vh-3.5rem)]">
       <div className="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:pt-24">
         <div className="text-center">
           <p aria-hidden="true" className="font-display text-6xl sm:text-7xl font-semibold text-atlas-700 leading-none">

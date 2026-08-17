@@ -110,7 +110,7 @@ export default function AboutDataPage() {
           Four tiers, one vocabulary:
         </p>
 
-        <div id="measured" className="mt-6 border-l-4 border-l-tier-deep bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+        <div id="measured" className="mt-6 border-l-4 border-l-tier-deep bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
             <span className="w-2 h-2 rounded-full bg-tier-deep" />
             Measured
@@ -121,7 +121,7 @@ export default function AboutDataPage() {
           </p>
         </div>
 
-        <div id="regional" className="mt-3 border-l-4 border-l-tier-good bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+        <div id="regional" className="mt-3 border-l-4 border-l-tier-good bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
             <span className="w-2 h-2 rounded-full bg-tier-good" />
             Regional
@@ -132,7 +132,7 @@ export default function AboutDataPage() {
           </p>
         </div>
 
-        <div id="estimated" className="mt-3 border-l-4 border-l-tier-starter bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+        <div id="estimated" className="mt-3 border-l-4 border-l-tier-starter bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
             <span className="w-2 h-2 rounded-full bg-tier-starter" />
             Estimated
@@ -144,7 +144,7 @@ export default function AboutDataPage() {
           </p>
         </div>
 
-        <div id="modeled" className="mt-3 border-l-4 border-l-tier-modeled bg-cream-50 px-5 py-4 rounded-r-lg scroll-mt-24">
+        <div id="modeled" className="mt-3 border-l-4 border-l-tier-modeled bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-cocoa-700 mb-1">
             <span className="w-2 h-2 rounded-full bg-tier-modeled" />
             Modeled

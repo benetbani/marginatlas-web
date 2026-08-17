@@ -114,7 +114,7 @@ export default async function DistributionStatesPage({
                   {w}px wide
                 </div>
                 <div
-                  className="border border-dashed border-ink-200 bg-cream-50 overflow-hidden"
+                  className="border border-dashed border-ink-200 bg-white overflow-hidden"
                   style={{ width: `${w}px`, maxWidth: "100%" }}
                 >
                   <DistributionVisual

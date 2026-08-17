@@ -124,7 +124,7 @@ export function CorrectionForm({ cellUrl }: Props) {
         <button
           type="submit"
           disabled={state === "sending"}
-          className="px-4 py-2 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-ink-800 transition disabled:opacity-50"
+          className="px-4 py-2 rounded-full bg-ink-900 text-white text-sm font-medium hover:bg-ink-800 transition disabled:opacity-50"
         >
           {state === "sending" ? "Sending…" : "Send correction"}
         </button>

@@ -281,7 +281,7 @@ export default function KitCatalogPage() {
                 ]}
                 footnote="Figures are not adjusted for local prices."
               />
-              <div className="rounded-lg border border-parchment bg-cream-50 p-5">
+              <div className="rounded-lg border border-parchment bg-white p-5">
                 <h3
                   data-typography="custom"
                   className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500"

@@ -164,7 +164,7 @@ export function ActivityPlacePicker({
           type="submit"
           disabled={!ready || isLoading}
           aria-busy={isLoading}
-          className="inline-flex items-center gap-2 rounded-full bg-atlas-700 px-6 py-2.5 text-sm font-semibold text-cream-50 shadow-sm transition hover:bg-atlas-800 active:bg-atlas-900 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full bg-atlas-700 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-atlas-800 active:bg-atlas-900 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? (
             <>
