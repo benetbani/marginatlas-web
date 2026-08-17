@@ -1,10 +1,12 @@
 {
-  "files": [
-    "src/app/dev/industry2/page.tsx",
-    "src/lib/london/market.ts",
-    "src/lib/scores/activity_board.ts",
-    "src/lib/scores/cell_board.ts",
-    "src/lib/spine/adapt_city.ts",
-    "src/lib/spine/adapt_industry.ts"
-  ]
+  "_note": "Two buckets, not one list. `unreviewed` must be empty: a module that matches the bypass SHAPE and has not been checked is the only thing this gate treats as a failure. `reviewed` holds modules that match the shape and were measured clean, each with the evidence. See the gate header for why a flat count was wrong.",
+  "unreviewed": [],
+  "reviewed": {
+    "src/lib/london/market.ts": "Is the correction itself. Closes the take-home identity at load: 20 of 20 activities agree, and clampMargin moves none of the 20 margins.",
+    "src/lib/scores/cell_board.ts": "Receives the resolver's answer from all four callers. 800 cells swept, floor holds 244 of 244 unrounded. Seven read as breaches off the PRINTED strings and were the money format's abbreviation, e.g. \"$2.7M\" beside \"23%\" of \"$12.1M\".",
+    "src/lib/scores/activity_board.ts": "Carries 53 of 53 ranked take-homes byte for byte, zero drift. Its London import feeds only the survival archetype, not a money figure.",
+    "src/lib/spine/adapt_industry.ts": "Matched a separately recomputed buildAcrossCities on 8 rows, worst gap $0.",
+    "src/lib/spine/adapt_city.ts": "Matched buildCityActivities on 24 rows across London, New York and Berlin, worst gap $0.",
+    "src/app/dev/industry2/page.tsx": "Rendered through react-dom/server against the live builder: 8 of 8 city figures printed exactly as the seed carried them."
+  }
 }

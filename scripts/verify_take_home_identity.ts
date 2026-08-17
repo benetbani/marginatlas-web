@@ -46,11 +46,30 @@
  *
  * PART B, the bypasses. A module that DERIVES a take-home from profit or margin
  * without importing the resolver is the defect class, and both bugs were of it.
- * Ten such modules exist today, so this half is a RATCHET counting down, not a
- * wall: each entry must eventually route through the resolver or record why it
- * cannot. A file that merely receives a figure and formats it is NOT the defect
- * and is not counted; classification happens before counting, which is why the
+ * A file that merely RECEIVES a figure and formats it is not the defect and is
+ * not counted; classification happens before counting, which is why the
  * derive-signal list is explicit rather than a bare mention of the word.
+ *
+ * THIS WAS A FLAT COUNT, AND THE FLAT COUNT WAS WRONG. It began at ten and
+ * ratcheted to six, and there it stops forever, because those six were each
+ * measured and found CLEAN. `london/market.ts` IS the correction; `cell_board`
+ * receives the resolver's answer from all four callers, 244 of 244 unrounded;
+ * `adapt_city` and `adapt_industry` match their own recomputed builders at a
+ * worst gap of $0. They match the SHAPE, not the defect.
+ *
+ * A ratchet stuck at six reads as six outstanding defects when the true number
+ * is zero, and both ways out of that are bad: import the resolver into a
+ * formatter purely to quiet the gate, which is dishonest, or teach everyone to
+ * ignore the number. So the baseline has TWO BUCKETS. `unreviewed` must be
+ * EMPTY, and a module that matches the shape and has not been checked is the
+ * only thing treated as a failure. `reviewed` holds the measured-clean ones
+ * with their evidence, and an entry that stops matching the shape must still be
+ * deleted, so it only ever counts down.
+ *
+ * A THIRD BLIND SPOT that comes with the reviewed bucket: a verdict is recorded
+ * against a FILE, and nothing here can tell that the file has since changed
+ * underneath its verdict. It proves somebody looked, not that the finding still
+ * holds.
  *
  * BLIND SPOTS, stated so the pass is not over-read:
  *   - Part A proves the resolver's contract over a parameter GRID, not over the
@@ -155,30 +174,46 @@ function partB(): { bypasses: string[]; failures: string[] } {
 
   const failures: string[] = [];
   if (!existsSync(BASELINE)) {
-    writeFileSync(BASELINE, JSON.stringify({ files: bypasses }, null, 2) + "\n");
-    console.log(`[take-home] bypass baseline written: ${bypasses.length} file(s).`);
+    // A fresh baseline records everything as UNREVIEWED, which fails until
+    // somebody measures each one. The gate must never bootstrap itself clean.
+    writeFileSync(BASELINE, JSON.stringify({ unreviewed: bypasses, reviewed: {} }, null, 2) + "\n");
+    console.log(`[take-home] bypass baseline written: ${bypasses.length} unreviewed.`);
     return { bypasses, failures };
   }
 
-  const base: string[] = JSON.parse(readFileSync(BASELINE, "utf-8")).files ?? [];
-  const added = bypasses.filter((f) => !base.includes(f));
-  const cleared = base.filter((f) => !bypasses.includes(f));
+  const raw = JSON.parse(readFileSync(BASELINE, "utf-8"));
+  const reviewed: Record<string, string> = raw.reviewed ?? {};
+  const unreviewed: string[] = raw.unreviewed ?? [];
+  const known = new Set([...Object.keys(reviewed), ...unreviewed]);
+
+  const added = bypasses.filter((f) => !known.has(f));
+  const cleared = [...known].filter((f) => !bypasses.includes(f)).sort();
 
   if (added.length > 0) {
     failures.push(
-      `${added.length} new module(s) derive a take-home without resolveOwnerTakeHome:\n` +
+      `${added.length} module(s) derive a take-home without resolveOwnerTakeHome` +
+        ` and have not been reviewed:\n` +
         added.map((f) => `    ${f}`).join("\n"),
+    );
+  }
+  if (unreviewed.length > 0) {
+    failures.push(
+      `${unreviewed.length} entr(y/ies) sit in "unreviewed". Measure each, then either` +
+        ` route it through the resolver or move it to "reviewed" WITH the evidence:\n` +
+        unreviewed.map((f) => `    ${f}`).join("\n"),
     );
   }
   if (cleared.length > 0) {
     failures.push(
-      `${cleared.length} entr(y/ies) no longer bypass and must be deleted from\n` +
-        `  ${BASELINE} in this same commit, so the ratchet keeps counting down:\n` +
+      `${cleared.length} entr(y/ies) no longer match the bypass shape and must be` +
+        ` deleted from ${BASELINE} in this same commit, so this only counts down:\n` +
         cleared.map((f) => `    ${f}`).join("\n"),
     );
   }
   if (failures.length === 0) {
-    console.log(`[take-home] bypasses: ${bypasses.length}, baseline ${base.length}. Ratchet holding.`);
+    console.log(
+      `[take-home] bypasses: 0 unreviewed, ${Object.keys(reviewed).length} reviewed and measured clean.`,
+    );
   }
   return { bypasses, failures };
 }
