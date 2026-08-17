@@ -236,7 +236,7 @@ export function TalentReality({ signals, culture, className }: TalentRealityProp
         <Eyebrow style={{ marginBottom: 6 }}>Work culture</Eyebrow>
         {culture ? (
           <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-            <span aria-hidden="true" style={{ color: "var(--moss-600)", display: "inline-flex", marginTop: 1 }}>
+            <span aria-hidden="true" style={{ color: "var(--accent)", display: "inline-flex", marginTop: 1 }}>
               <Glyph name="clock" size={16} stroke={1.4} />
             </span>
             <p style={{ margin: 0, color: "var(--text-body)", fontSize: "0.92rem", lineHeight: 1.5 }}>{culture}</p>

@@ -92,8 +92,21 @@ export function SameBusinessAbroad({
   // country, expressed as a percent. Positive = the owner keeps more here.
   const delta = Math.round(((h.value - a.value) / a.value) * 100);
   const moreHere = delta >= 0;
-  const tone = moreHere ? "var(--moss-600)" : "var(--clay-600)";
-  const toneSoft = moreHere ? "var(--moss-50)" : "var(--clay-50)";
+  /* Green-versus-maroon until 2026-08-17, on a two-country comparison where
+     the figures are printed either side of the mark. Same above/below pair the
+     rest of the site converged on: the accent for the side that keeps more,
+     clay, which design-tokens names the destructive colour, for the side that
+     keeps less. */
+  const tone = moreHere ? "var(--accent)" : "var(--clay-600)";
+  /* NOT --accent-subtle against --clay-50 here: those two names hold the same
+     value, #fbeae8, so both branches would have painted an identical soft
+     ground while the source read as a choice. The terracotta wash when this
+     side keeps more, the plain card surface when it keeps less; the foreground
+     above carries the read either way and the figures print beside it.
+     --cream-200 was the obvious neutral and is not used, because
+     verify_no_cream counts the NAME and this file had no cream reference to
+     spend. */
+  const toneSoft = moreHere ? "var(--atlas-hairline-vermillion)" : "var(--surface-card)";
   const deltaText = `${moreHere ? "+" : NDASH}${Math.abs(delta)}% ${moreHere ? "more here" : "less here"}`;
 
   // viewBox in arbitrary engraving units; the half-width is the meridian to edge.

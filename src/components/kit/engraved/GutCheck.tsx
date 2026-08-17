@@ -46,8 +46,14 @@ export function GutCheck({ prompts, sample, className }: GutCheckProps) {
     <div className={["eng-gut", className].filter(Boolean).join(" ")}>
       {prompts.map((p, i) => {
         const v = ans[i] ?? null;
+        /* Yes was green and no was amber until 2026-08-17. A yes/no is not
+           good-versus-bad in the first place, and the GLYPHS already differ:
+           a tick and a cross, drawn below at 2.4 stroke. So the hue was pure
+           redundancy on top of a shape that already says it. Accent for the
+           answered-yes, the neutral muted tone for the answered-no, hairline
+           for unanswered. */
         const boxStroke =
-          v === "yes" ? "var(--moss-600)" : v === "no" ? "var(--amber-600)" : "var(--hairline-strong)";
+          v === "yes" ? "var(--accent)" : v === "no" ? "var(--text-muted)" : "var(--hairline-strong)";
         return (
           <div className="eng-gutcard" key={i}>
             <div className="eng-gutcard__box" aria-hidden="true">
@@ -57,7 +63,7 @@ export function GutCheck({ prompts, sample, className }: GutCheckProps) {
                   <path
                     d="M9 15.5l4 4 8-9"
                     fill="none"
-                    stroke="var(--moss-600)"
+                    stroke="var(--accent)"
                     strokeWidth="2.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -67,7 +73,7 @@ export function GutCheck({ prompts, sample, className }: GutCheckProps) {
                   <path
                     d="M10 10l10 10M20 10L10 20"
                     fill="none"
-                    stroke="var(--amber-600)"
+                    stroke="var(--text-muted)"
                     strokeWidth="2.4"
                     strokeLinecap="round"
                   />

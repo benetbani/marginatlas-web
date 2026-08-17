@@ -128,7 +128,7 @@ export function OpportunityGap({
             gap: "6px",
             fontSize: "11px",
             letterSpacing: "0.02em",
-            color: "var(--moss-700)",
+            color: "var(--accent)",
           }}
         >
           <span
@@ -137,8 +137,8 @@ export function OpportunityGap({
               width: "10px",
               height: "10px",
               borderRadius: "2px",
-              background: "var(--moss-100)",
-              border: "1px solid var(--moss-500)",
+              background: "var(--accent-subtle)",
+              border: "1px solid var(--accent-fill)",
             }}
           />
           Room to move
@@ -171,7 +171,7 @@ export function OpportunityGap({
             y={PLOT_T}
             width={PLOT_R - MID_X}
             height={MID_Y - PLOT_T}
-            fill="var(--moss-50)"
+            fill="var(--accent-subtle)"
           />
           {/* A second, fainter inner wash so the corner reads as the deepest room. */}
           <rect
@@ -179,7 +179,7 @@ export function OpportunityGap({
             y={PLOT_T}
             width={(PLOT_R - MID_X) * 0.66}
             height={(MID_Y - PLOT_T) * 0.66}
-            fill="var(--moss-100)"
+            fill="var(--accent-subtle)"
             opacity={0.55}
           />
 
@@ -219,7 +219,7 @@ export function OpportunityGap({
               font: "600 11px var(--font-body)",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
-              fill: "var(--moss-700)",
+              fill: "var(--accent)",
             }}
           >
             Room to move
@@ -275,12 +275,12 @@ export function OpportunityGap({
                   cx={cx}
                   cy={cy}
                   r={isLabelled ? 3.6 : 2.4}
-                  fill={room ? "var(--moss-500)" : "var(--surface-card)"}
-                  stroke={room ? "var(--moss-600)" : "var(--ink-700)"}
+                  fill={room ? "var(--accent-fill)" : "var(--surface-card)"}
+                  stroke={room ? "var(--accent)" : "var(--ink-700)"}
                   strokeWidth="1"
                 />
                 {isLabelled ? (
-                  <circle cx={cx} cy={cy} r="6.4" fill="none" stroke="var(--moss-500)" strokeWidth="0.7" opacity={0.7} />
+                  <circle cx={cx} cy={cy} r="6.4" fill="none" stroke="var(--accent-fill)" strokeWidth="0.7" opacity={0.7} />
                 ) : null}
               </g>
             );
@@ -301,7 +301,7 @@ export function OpportunityGap({
                 textAnchor={toLeft ? "end" : "start"}
                 style={{
                   font: "600 10px var(--font-body)",
-                  fill: "var(--moss-700)",
+                  fill: "var(--accent)",
                 }}
               >
                 {t.name}

@@ -115,6 +115,13 @@ function SkylineSVG({ profile, W = 900, H = 260, tone = "var(--ink-800)" }: Skyl
             const wy = b.y + 11 + ((b.h - 16) / rows) * (rr - 0.5);
             if (wy > ground - 6) continue;
             const lit = (b.seed * 7 + cc * 3 + rr) % 5 === 0;
+            /* The lit-window fill below was --amber-400, a warm gold: the
+               literal colour of a lamp, and a banned hue. Terracotta is the
+               site's one loud colour and is what this mark should have been
+               reaching for, an on-brand accent in an ink drawing rather than a
+               naturalistic glow. It carries no data, so nothing is traded
+               away, and it was invisible to the palette gate because a
+               var(--...) reference is not a hex, an rgb() or a class name. */
             wins.push(
               <rect
                 key={`${cc}-${rr}`}
@@ -122,7 +129,7 @@ function SkylineSVG({ profile, W = 900, H = 260, tone = "var(--ink-800)" }: Skyl
                 y={wy}
                 width={winW}
                 height={winW * 1.5}
-                fill={lit ? "var(--amber-400)" : "none"}
+                fill={lit ? "var(--accent-fill)" : "none"}
                 stroke={tone}
                 strokeWidth="0.5"
                 opacity={lit ? 0.55 : 0.7}

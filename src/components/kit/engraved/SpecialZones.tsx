@@ -114,10 +114,10 @@ function CheckGlyph({ size = 16 }: { size?: number }) {
       aria-hidden="true"
       style={{ display: "block" }}
     >
-      <circle cx="12" cy="12" r="9.5" stroke="var(--hairline-strong)" strokeWidth="1" fill="var(--moss-50)" />
+      <circle cx="12" cy="12" r="9.5" stroke="var(--hairline-strong)" strokeWidth="1" fill="var(--accent-subtle)" />
       <path
         d="M7.5 12.3 l3 3 l6 -6.6"
-        stroke="var(--moss-600)"
+        stroke="var(--accent)"
         strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"

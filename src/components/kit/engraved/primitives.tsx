@@ -21,7 +21,54 @@
 import * as React from "react";
 
 /* ------------------------------------------------------------------ */
-/* The quiet clay -> amber -> cocoa -> moss meaning scale.             */
+/* THE MEANING SCALE, terracotta by intensity since 2026-08-17.        */
+/*                                                                     */
+/* It ran clay -> amber -> cocoa -> moss -> moss: maroon, into amber,  */
+/* into brown, into two greens. A red-to-green good-versus-bad ramp,   */
+/* banned outright by the founder on 2026-08-09, and this is the       */
+/* SHARED scale every engraved section on the live /[country] page     */
+/* composes from, so one definition coloured the whole page.           */
+/*                                                                     */
+/* SEVEN MECHANISMS HID BANNED HUES IN THIS SWEEP AND THIS WAS THE     */
+/* LAST OF THEM: a var(--...) reference. verify_palette_membership     */
+/* reads hex literals, rgb() literals and Tailwind class names, and    */
+/* `var(--moss-600)` is none of the three. The definitions it points   */
+/* at live in globals.css, so a scan of components found the use and   */
+/* not the colour, and a scan of the stylesheet found the colour and   */
+/* not the use. Twenty-four references across eight files, every one   */
+/* of them rendering, none of them counted anywhere.                   */
+/*                                                                     */
+/* THE LADDER now climbs by weight, worst first, which is the          */
+/* replacement the gate names in its own failure message and the same  */
+/* shape as scores/band_tone.ts: the stern maroon at the bottom, two   */
+/* neutral steps draining through the middle, and the accent appearing */
+/* only in the favourable half, first as type on a neutral ground and  */
+/* then on a tinted one. The boundary a reader can actually see is     */
+/* where the accent arrives, which is where the meaning changes.       */
+/*                                                                     */
+/* bg IS A TRACK IN TWO CONSUMERS AND A MARK IN A THIRD, which is what */
+/* constrains the replacement. YourLifeHere and GroundUnderYou paint   */
+/* dot ON TOP of bg, so bg must stay light and dot must carry the      */
+/* weight; WhoHasMoney uses bg as the segment fill itself, so the five */
+/* grounds must also be distinguishable from each other. Both hold.    */
+/*                                                                     */
+/* TWO TRAPS, both caught by instruments rather than by reading.       */
+/* First: --accent-subtle and --clay-50 are the SAME VALUE, #fbeae8,   */
+/* one named for the accent family and one for clay, so a draft that   */
+/* gave step 4 the accent tint and step 0 the clay tint would have     */
+/* painted the best and worst step on a byte-identical ground while    */
+/* the source read as two deliberate choices. Second: --cream-100/200/ */
+/* 300 are true neutrals NOW, but verify_no_cream counts the NAME, and */
+/* a draft using three of them grew the cream ratchet. Only the ONE    */
+/* cream reference this file already had is kept. Step 4 instead takes */
+/* --atlas-hairline-vermillion, an existing terracotta wash at 30%,    */
+/* which is the light accent tint the token layer never exposed.       */
+/*                                                                     */
+/* Contrast computed per step against its own ground, not assumed:     */
+/* 9.2:1 at step 0, 8.9:1 at step 2, 8.6:1 at step 3, step 1 far       */
+/* higher, and 5.2:1 at step 4, which is the floor. That one clears AA */
+/* and does NOT clear AAA, stated rather than rounded up; it is the    */
+/* price of the only light accent tint the system holds.               */
 /* ------------------------------------------------------------------ */
 
 /** One step on the meaning scale: a foreground, a dot, and a soft surface. */
@@ -36,15 +83,15 @@ export type MeaningStep = {
 
 const MEANING: readonly MeaningStep[] = [
   { fg: "var(--clay-600)", dot: "var(--clay-500)", bg: "var(--clay-50)" },
-  { fg: "var(--amber-700)", dot: "var(--amber-500)", bg: "var(--amber-50)" },
-  { fg: "var(--cocoa-700)", dot: "var(--cocoa-500)", bg: "var(--cream-200)" },
-  { fg: "var(--moss-600)", dot: "var(--moss-500)", bg: "var(--moss-50)" },
-  { fg: "var(--moss-700)", dot: "var(--moss-600)", bg: "var(--moss-100)" },
+  { fg: "var(--ink-900)", dot: "var(--ink-700)", bg: "var(--cream-200)" },
+  { fg: "var(--cocoa-700)", dot: "var(--cocoa-500)", bg: "var(--atlas-surface-paper)" },
+  { fg: "var(--accent)", dot: "var(--accent-fill)", bg: "var(--surface-card)" },
+  { fg: "var(--accent)", dot: "var(--accent-fill)", bg: "var(--atlas-hairline-vermillion)" },
 ];
 
 /**
  * Resolve a 0..1 score to one of the five meaning steps. A score is mapped to
- * the nearest fifth and clamped; higher reads warmer-to-greener (better).
+ * the nearest fifth and clamped; higher climbs the ladder toward the accent.
  */
 export function meaningStep(s: number): MeaningStep {
   return MEANING[Math.max(0, Math.min(4, Math.round(s * 4)))];
