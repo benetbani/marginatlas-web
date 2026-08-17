@@ -64,8 +64,9 @@ export {
   type LicenceItem,
 } from "./Setup";
 
-// Comparison sections: the neighbours strip, the cities grid, the character
-// panel, and vs-the-world.
+// Comparison sections: the peer strip (exported as Neighbours, see the note in
+// Compare.tsx for why the identifier and the label differ), the cities grid,
+// the character panel, and vs-the-world.
 export {
   Neighbours,
   type NeighboursProps,

@@ -2,15 +2,15 @@
  * kit/engraved/Compare.tsx — the comparison engraved sections.
  *
  * Four assets that place the country in context without ever crowning a winner:
- * the neighbours strip (like-for-like against bordering countries, the home
- * country tinted for orientation only), the cities grid (uniform equal-weight
+ * the peer strip (like-for-like against economies of comparable size and market,
+ * the home country tinted for orientation only), the cities grid (uniform equal-weight
  * cards, no ranking), the character panel (culture / government / demographics
  * spectrum bars plus a compact two-stat read), and vs-the-world (one bar against
  * a global median). Ported faithfully from the design export
  * 2026-06-14-country-engraved (engraved/compare.jsx).
  *
  * Each composes from the Wave-1 foundation (meaningStep, Glyph, SampleState) and
- * reads color only through the engraved CSS vars. The neighbour flags use the
+ * reads color only through the engraved CSS vars. The column flags use the
  * repo CountryFlag component by ISO-2 (not a hardcoded flag map), matching the
  * EngravedHero precedent. Props are nullable; missing or empty input renders the
  * honest SampleState. Server-renderable; no client JS. SVG / table geometry is
@@ -24,10 +24,25 @@ import { meaningStep, Glyph, SampleState, type GlyphName } from "./primitives";
 const DASH = "–";
 
 /* ------------------------------------------------------------------ */
-/* Neighbours — like-for-like strip vs neighbour countries.            */
+/* Neighbours — like-for-like strip vs PEER countries.                 */
+/*                                                                     */
+/* THE SET IS PEERS, NOT NEIGHBOURS, AND THE DATA IS RIGHT. The only   */
+/* caller, the country page, fills these columns from PEER_GROUPS,     */
+/* which picks for comparable size and market rather than for a shared */
+/* border: land adjacency computed from the shared arcs of the site's  */
+/* own public/geo/countries-110m.json says only 7 of its 51 groups are */
+/* made entirely of bordering countries. New Zealand's columns are     */
+/* Australia, the United Kingdom, Canada and Singapore, deliberately.  */
+/* Every visible string here therefore says peers, and this comment is */
+/* the reason nobody should "fix" the list towards geography.          */
+/*                                                                     */
+/* The exported names still say Neighbour because the only consumer,   */
+/* src/app/[country]/page.tsx, imports them and is not this file's to  */
+/* rewrite. They are identifiers, not copy; renaming them is a         */
+/* two-file change for whoever owns both.                              */
 /* ------------------------------------------------------------------ */
 
-/** One country column in the neighbours strip. */
+/** One country column in the peer strip. */
 export type NeighbourCountry = {
   /** Stable key the metric values are keyed by. */
   key: string;
@@ -37,7 +52,7 @@ export type NeighbourCountry = {
   iso2?: string | null;
 };
 
-/** One metric row across the neighbour countries. */
+/** One metric row across the peer countries. */
 export type NeighbourMetric = {
   /** The metric label, e.g. "Business tax". */
   label: string;
@@ -66,8 +81,8 @@ export function Neighbours({ metrics, countries, homeKey, caveat, sample, classN
     return (
       <SampleState
         glyph="scale"
-        what="Neighbour comparison not held yet"
-        reason="Countries line up like-for-like once each neighbour's basics are confirmed."
+        what="Peer comparison not held yet"
+        reason="A peer set is chosen for comparable size and market, not for sharing a border, and this country does not have one yet."
         minH={120}
       />
     );
