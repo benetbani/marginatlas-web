@@ -173,8 +173,55 @@ export const colors = {
   ink: {
     // Warm brown-black text ladder. Reads as warm ink on warm paper,
     // not clinical black on white. 900 is the headline near-black.
-    50: "#faf4ec",
-    100: "#f0e7d9",
+    //
+    // THE TOP TWO STEPS ARE NOT TEXT, AND THAT IS HOW THEY SURVIVED THE PURGE.
+    // Retoned 2026-08-17. They were #faf4ec (h 34, s 58%, l 95.3%) and #f0e7d9
+    // (h 37, s 43%, l 89.6%): warm sand, MORE saturated than any of the four
+    // paper steps the purge fixed one ramp above (those were s 9-16%), painting
+    // 36 call sites, 20 of them on the cell page alone.
+    //
+    // BOTH GATES SAID CLEAN, for two different reasons, and both are worth
+    // knowing because the next evasion will use one of them:
+    //   - verify_palette_membership returns legal above 93% lightness ("PAPER
+    //     TONES ARE NOT COLOURS"), so #faf4ec at 95.3% never reached a hue
+    //     test. #f0e7d9 at 89.6% DID reach one and passed anyway, on the
+    //     `ink/cocoa ladder` band (h 25-45, s <= 45): a band written to permit
+    //     the TYPE ladder, admitting a 90%-lightness FILL because the gate
+    //     cannot tell type from fill and says so in its own header.
+    //   - verify_no_cream matches the word plus a hand-kept value list, and
+    //     these are named ink. Same shape as `parchment`: cream under a name
+    //     that does not say cream. Both values are in that gate's warm list now.
+    //
+    // WHY RETONE RATHER THAN REMAP, the same call the paper ramp made above.
+    // The 100 step carries THREE roles across its 23 usages, 18 structural
+    // hairlines, 4 hover tints and a chip fill, and no existing token sits at
+    // its weight: paper-200 is L .8550 and parchment is L .7682 against this
+    // step's .8069, so a remap either way visibly changes how heavy 18 borders
+    // read. Changing the value underneath moves none of them.
+    //
+    // LUMINANCE-MATCHED, not eyeballed and not lightness-matched, because
+    // relative luminance is the quantity every contrast ratio is computed from:
+    //   50   L .9108 -> .9131   on white 1.093:1 -> 1.090:1
+    //   100  L .8069 -> .8070   on white 1.225:1 -> 1.225:1
+    // Against the six foregrounds that sit on these as fills (ink 500-900 and
+    // graphite) the largest ratio change is 0.038 on a ratio of 16.0, and ZERO
+    // AA verdicts flip. Both land on true neutrals, s=0%, so the answer to
+    // "remove the creamy colour" is no hue rather than a cool tint swapped in
+    // for a warm one, which is the call `parchment` made.
+    //
+    // KNOWN DEBT, recorded rather than hidden: 50 is now one point from
+    // paper-100 (#f5f5f5 against #f6f6f6), and its eight call sites are the
+    // muted-surface role paper-100 already documents. The honest end state is a
+    // collapse, not a near-duplicate. It is deferred because theme.colors now
+    // REPLACES Tailwind's palette, so a deleted step emits no rule at all and a
+    // missed call site loses its ground silently; that deserves its own tick
+    // with the compiled-stylesheet assertion, not a rider on a retone.
+    50: "#f5f5f5",
+    100: "#e8e8e8",
+    // 200 and 300 ARE STILL WARM SAND and are deliberately out of scope here:
+    // #e4d8c5 is h 37 s 37% l 83%, #cbb79c is h 35 s 31% l 70%, and 200 alone
+    // has well over a hundred call sites as the site's form-control border.
+    // Measured, named, not touched: this tick moved two values, not four.
     200: "#e4d8c5", // warm border
     300: "#cbb79c",
     500: "#7d6c58",
@@ -186,8 +233,23 @@ export const colors = {
   cocoa: {
     // Re-warmed to real browns (the pre-reformation system had drained
     // these to neutral gray). The text-alias family for muted copy.
-    50: "#faf4ec",
-    100: "#f0e7d9",
+    //
+    // 50 AND 100 MOVE WITH ink-50 AND ink-100 BECAUSE THEY WERE THE SAME
+    // COLOUR, byte for byte: both ramps held #faf4ec and #f0e7d9. One value
+    // wearing two names is the mechanism this repo has already been bitten by
+    // twice, and it matters operationally here: the cream gate's aliasedCream
+    // check reads VALUES, so leaving these behind would have failed the gate
+    // the moment the two literals joined its warm list.
+    //
+    // They are also not "muted copy" at these steps. Their six usages are a
+    // chart bar in MoneyGoesBreakdown, two chart fills in RangeStrip, a
+    // decorative gradient stop on the city-compare cover and a sector chip:
+    // warm brown as decorative FILL, which is the exact thing the palette
+    // gate's header says it cannot catch and the founder rejected by hand.
+    // Collapsing these two onto the ink steps is a rename with a provably
+    // identical value and is left to its own tick.
+    50: "#f5f5f5",
+    100: "#e8e8e8",
     300: "#c3b39c",
     500: "#87745d",
     700: "#534231",

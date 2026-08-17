@@ -63,9 +63,18 @@ function isNum(v: number | null | undefined): v is number {
  *
  *   1  bg-cocoa-300      #c3b39c   h35 s25%   L .4624   warm tan
  *   2  bg-paper-400      #bfbfbf   h0  s0%    L .5210   true neutral
- *   3  bg-cocoa-100      #f0e7d9   h37 s43%   L .8069   warm sand
+ *   3  bg-cocoa-100      #e8e8e8   h0  s0%    L .8070   true neutral
  *   4  bg-parchment      #e3e3e3   h0  s0%    L .7682   true neutral
  *   5  bg-cocoa-500/70   #87745d   h33 s18%   L .1843   warm dark
+ *
+ * ROW 3 CHANGED UNDER THIS COMMENT ON 2026-08-17 and the row is kept rather
+ * than rewritten, because the change answers half the question below without
+ * anyone deciding it here. That segment was #f0e7d9, h37 s43%, the warmest
+ * value on the bar and the same warm sand `ink[100]` held; the two ramps
+ * carried it byte for byte. It was retoned at the token, luminance-matched
+ * (.8069 -> .8070), so this bar keeps every segment weight it had and loses
+ * the warm cast on one of the five. The open question below is now narrower:
+ * segments 1 and 5 are the only warmth left.
  *
  * The ramp is already HALF NEUTRAL, and it alternates. Segments 1 and 2 sit
  * 0.06 apart in luminance and 35 degrees apart in hue, so on the bar they read

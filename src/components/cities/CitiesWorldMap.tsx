@@ -77,11 +77,18 @@ type Props = {
    countries should be pronounced. Right now, they don't exist", and draws the
    same land with an ink-700 outline at 0.9. Two maps, one problem, one answer
    already ratified: this one now matches it. */
-/* Land fill: `parchment`, a TRUE NEUTRAL at s=0%. Not `ink[100]`, which is
-   #f0e7d9 and reads as warm sand: tried, photographed, and the whole map came
+/* Land fill: `parchment`, a TRUE NEUTRAL at s=0%. Not `ink[100]`, which WAS
+   #f0e7d9 and read as warm sand: tried, photographed, and the whole map came
    out the colour the founder banned. Not `cream[200]` either, whose value is
    fine (#eeeeee, also neutral now) but whose name is the one the purge is
-   removing. */
+   removing.
+
+   THAT SENTENCE IS NOW HISTORY RATHER THAN A REASON, 2026-08-17: `ink[100]` is
+   #e8e8e8, a true neutral, luminance-matched to the sand it replaced. This note
+   is kept because it is evidence: the warm value was seen on a real render here
+   and worked around locally instead of being fixed at the token, which is how
+   it survived in 36 other call sites for another day. `parchment` still wins on
+   its own merits, being the site's established very-light-neutral land tone. */
 const GEO_FILL = tokenColors.parchment; //      very light neutral land
 const GEO_STROKE = tokenColors.ink[700]; //     pronounced country borders
 const GEO_STROKE_WIDTH = 0.9;
