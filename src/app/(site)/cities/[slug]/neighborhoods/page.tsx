@@ -146,24 +146,36 @@ export default async function NeighborhoodHub({
        here made a 976px column inside the site's 1072, the third instance of the
        same doubled-padding defect in this tree. */
     <article className="pb-16 pt-8 md:pt-12">
-      <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-3">
-        <Link href={`/cities/${city.slug}`} className="hover:text-atlas-700">
-          {city.name}
-        </Link>
-        <span>·</span>
-        <CountryFlag iso2={city.iso2} className="w-4" />
-        <span>{countryName}</span>
+      {/* THE MASTHEAD, in ONE card, for the same reason the district cards below
+          already are. The breadcrumb, the h1 and the lede were bare text on the
+          page, and AtlasFrame paints a fixed photograph behind every route with
+          no centre plate, so they were dark type sitting straight on a picture:
+          the top of the page, at that. Legibility is a property of the CARD
+          ("we put everything in those cards"), and `.atlas-card` is the site's
+          one card, translucent at .955 so the photograph still reads at its
+          edges and `position: relative` so it sits above the frame's fixed
+          layers rather than sinking behind them. Same surface as the city
+          page's own hero, so the two read as one page type. */}
+      <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
+        <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-3">
+          <Link href={`/cities/${city.slug}`} className="hover:text-atlas-700">
+            {city.name}
+          </Link>
+          <span>·</span>
+          <CountryFlag iso2={city.iso2} className="w-4" />
+          <span>{countryName}</span>
+        </div>
+        <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900">
+          Every neighborhood in {city.name}
+        </h1>
+        <p className="mt-3 max-w-2xl text-base md:text-lg text-cocoa-700/80">
+          {scheme.neighborhoods.length} sub-areas, each with its own
+          character, anomaly tags, and revenue adjustment for a small
+          business opening here vs the city baseline.
+        </p>
       </div>
-      <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3">
-        Every neighborhood in {city.name}
-      </h1>
-      <p className="text-base md:text-lg text-cocoa-700/80 mb-10 max-w-2xl">
-        {scheme.neighborhoods.length} sub-areas, each with its own
-        character, anomaly tags, and revenue adjustment for a small
-        business opening here vs the city baseline.
-      </p>
 
-      <div className="space-y-4">
+      <div className="mt-8 space-y-4">
         {scheme.neighborhoods.map((n) => {
           const headline = CHARACTER_HEADLINE[n.character] || { industry: "restaurants", name: "Restaurants" };
           // Surface deep flavor data when populated.
