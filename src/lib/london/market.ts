@@ -59,9 +59,41 @@
  * margins, so the derived take-home agrees with the clamped margin the city
  * board prints as well as the raw one the cell page prints.
  *
+ * FOUR OF THE TWENTY ACTIVITIES WERE UNREACHABLE, and had been for as long as
+ * the slugs they are keyed on have been stale. The file keys activities by the
+ * activity's URL slug, and every reader looks them up with
+ * `industryToSlug(cell.industry_id)`. Four keys are not any industry's slug:
+ *
+ *   cafes-coffee       is now cafes-coffee-shops        (id cafes_coffee)
+ *   childcare-social   is now childcare-social-services (id childcare_social)
+ *   marketing-design   is now marketing-design-agencies (id marketing_design)
+ *   specialty-trades   is now specialty-trades-mixed    (id specialty_trades)
+ *
+ * Enumerated rather than eyeballed: all 243 industry ids were mapped through
+ * industryToSlug and compared against the 20 keys. The other 16 hit exactly one
+ * industry each; these four hit none, so their curated economics, survival
+ * curve and qualitative reads have never rendered anywhere.
+ *
+ * The re-key is a 1:1 identity, not a guess, and the code below asserts that
+ * shape rather than hard-coding the four names. A legacy key is moved ONLY when
+ * it is not already a live slug, AND the underscore form of the key is a real
+ * industry id, AND that industry's current slug begins with the legacy key. All
+ * four satisfy all three; anything that does not is left exactly where it is. So
+ * a future slug change either resolves the same way or does nothing, and can
+ * never point a curated London entry at a different trade.
+ *
+ * ONE READER STILL BYPASSES THIS MODULE, so the header's old claim that a
+ * fourth reader is impossible was not true. src/lib/scores/activity_board.ts
+ * imports data/london/london_market_v1.json directly for its survival
+ * archetype. Nothing is wrong today (the take-home correction touches only
+ * owner_take_home, and that reader wants only `survival`), but it reads the
+ * legacy keys, so the activity pages for those four trades still find no
+ * survival curve. That file is not this module's to change.
+ *
  * Pure, no network, no side effects.
  */
 import londonJson from "../../../data/london/london_market_v1.json";
+import { industryToSlug, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 
 type EconomicsShape = {
   revenue: number;
@@ -92,7 +124,36 @@ function closeTakeHomeIdentity(file: typeof londonJson): typeof londonJson {
 }
 
 /**
- * The curated London market dataset, with the take-home identity closed. Import
- * this, never the JSON.
+ * Move any activity keyed on a stale URL slug onto the slug its industry
+ * carries today, so a curated entry cannot be silently unreachable. See the
+ * module header for the three conditions; a key that fails any of them is left
+ * untouched, and an entry is never overwritten if the live slug is already
+ * present in the file.
  */
-export const LONDON_MARKET = closeTakeHomeIdentity(londonJson);
+function rekeyLegacySlugs(file: typeof londonJson): typeof londonJson {
+  const clone = file as unknown as { activities: Record<string, unknown> };
+
+  // Every slug an industry actually resolves to today.
+  const liveSlugs = new Set<string>();
+  for (const id of Object.keys(INDUSTRY_BY_ID)) liveSlugs.add(industryToSlug(id));
+
+  for (const key of Object.keys(clone.activities)) {
+    if (liveSlugs.has(key)) continue;
+    const industryId = key.replace(/-/g, "_");
+    if (!(industryId in INDUSTRY_BY_ID)) continue;
+    const current = industryToSlug(industryId);
+    if (current === key) continue;
+    if (!current.startsWith(key)) continue;
+    if (current in clone.activities) continue;
+    clone.activities[current] = clone.activities[key];
+    delete clone.activities[key];
+  }
+  return clone as unknown as typeof londonJson;
+}
+
+/**
+ * The curated London market dataset, with the stale activity keys moved onto
+ * their live slugs and the take-home identity closed. Import this, never the
+ * JSON.
+ */
+export const LONDON_MARKET = rekeyLegacySlugs(closeTakeHomeIdentity(londonJson));
