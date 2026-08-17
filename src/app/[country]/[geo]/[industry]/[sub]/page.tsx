@@ -442,10 +442,14 @@ async function NeighborhoodCellPageBody({
       {/* `relative` lifts the furniture in this column that is not a card:
           the breadcrumb, the zoom row and the closing stamp. AtlasFrame's fixed
           layers sit at z-index 0 and paint above any static sibling. */}
-      {/* `[&_[id]]:scroll-mt-24`: the sticky masthead is 89px and every anchor
-          here had scroll-margin-top: 0, so a jump-nav click buried the heading
-          it jumped to. Same one-class fix as the sibling trade page. */}
-      <div className="relative [&_[id]]:scroll-mt-24 xl:flex-1 xl:min-w-0">
+      {/* `[&_[id]]:scroll-mt-*`: every anchor here had scroll-margin-top: 0, so
+          a jump-nav click buried the heading it jumped to. Same one-class fix
+          as the sibling trade page, and the same corrected value: the masthead
+          is 89px only from 1024 up. It is 117px below 414 and 125px from 768 to
+          1023, both because the bar wraps to two rows, so the 24 (96px) this
+          shipped with was short in exactly the two bands a phone and a tablet
+          land in. 32 is 128px and clears all four heights. */}
+      <div className="relative [&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24 xl:flex-1 xl:min-w-0">
         <Breadcrumb items={breadcrumbs} />
 
         {/* Neighborhood adjustment band: the one thing this page has that the

@@ -907,12 +907,19 @@ async function CellPageBody({
           and the correction form. AtlasFrame's fixed layers sit at z-index 0
           and paint above any static sibling. The decision stack's own sections
           already carry .atlas-card and were never at risk. */}
-      {/* `[&_[id]]:scroll-mt-24`: the masthead is `sticky top-0` and 89px tall
-          and every anchor in this column had scroll-margin-top: 0, so the
-          right-rail TOC scrolled each target to y=0 and the bar then covered
-          its heading. One class on the column, since the anchors sit on
-          sections, divs and kit components alike. */}
-      <div className="relative [&_[id]]:scroll-mt-24 xl:flex-1 xl:min-w-0">
+      {/* `[&_[id]]:scroll-mt-*`: every anchor in this column had
+          scroll-margin-top: 0, so the right-rail TOC scrolled each target to
+          y=0 and the sticky bar then covered its heading. One class on the
+          column, since the anchors sit on sections, divs and kit components
+          alike.
+
+          32 below lg, not the 24 this originally shipped with: that value was
+          sized against a masthead measured at 89px, and the bar is 117px from
+          320 to 413 and 125px from 768 to 1023, where it wraps to two rows. So
+          96px was short by 21 and 29 in those two bands and the heading went
+          back under the bar. 128px clears the tallest; `lg:` returns to 24 at
+          1024, where 89 is the real height. Measured, per page type. */}
+      <div className="relative [&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24 xl:flex-1 xl:min-w-0">
       <CellDataset
         url={url}
         industryName={cell.industry_name || industry}

@@ -904,7 +904,27 @@ export function CompareClient({
 
   return (
     <div className="xl:flex xl:gap-12">
-      <div className="min-w-0 flex-1 space-y-12 md:space-y-16">
+      {/* `[&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24`. THE SIXTH PAGE TYPE
+          WITH A JUMP NAV, and the only one the anchor pass missed: `cde67eb2`
+          fixed country, city, industry, trade and cell and never reached this
+          file, so all four targets here computed `scroll-margin-top: 0px`.
+
+          The value is not the 24 those five got, because the masthead is not
+          89px. Measured on this page at seven widths, the bar's own height is:
+
+              320 to 413     117px   (the wordmark wraps to two lines)
+              414 to 767      85px
+              768 to 1023    125px   (the desktop nav appears and wraps)
+              1024 and up     89px
+
+          89 is only the LAST of four. `scroll-mt-24` is 96px, so it clears the
+          bar at 414 and above 1024 and is short by 21px and 29px in the other
+          two bands. 32 is 128px, which clears the tallest of them with air;
+          `lg:` returns to 24 at 1024 where the bar is genuinely 89.
+
+          The descendant form, not one class per anchor, for the reason the
+          original commit gives: the targets sit on section and on div alike. */}
+      <div className="min-w-0 flex-1 space-y-12 [&_[id]]:scroll-mt-32 md:space-y-16 lg:[&_[id]]:scroll-mt-24">
       {/* ----- Pick the matchup ----- */}
       {/* <HeroWash category="business"> REMOVED. .atlas-wash paints
           var(--atlas-surface-paper) as its BASE layer, fully opaque, under the
