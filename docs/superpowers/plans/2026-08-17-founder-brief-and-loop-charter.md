@@ -360,8 +360,14 @@ tiles retitled; page grounds removed from `CoverageHubV2`, `CityHeroV2` and
   two homepage cards added in the same tick were saved only by `ToneBand`
   happening to be positioned.
 
-Open and NOT done: §2 partially (page-ground role done, four roles remain, see
-§11), §5 (country and region page bodies), §7.
+**§2 IS DONE, 2026-08-17.** All six roles migrated and the ramp renamed; nothing
+on this site is called cream and the ratchet stands at 33, all of them hex
+literals counted by value rather than by name. The full record, including the
+name chosen and why, the two collapses, the four verification instruments and
+the two colour defects deliberately left, is the last block of §11. What is
+still open under the ban is narrow and written down there rather than here.
+
+Open and NOT done: §5 (country and region page bodies), §7.
 
 **§4 is NOT "open entirely", and that line was stale by several ticks.**
 Corrected 2026-08-17. Read the band you are about to cut before cutting it:
@@ -477,12 +483,88 @@ Take them in ascending blast radius. Each is one tick, gated after.
    with a cool neutral of the same lightness, do not replace with white.
 5. **Foreground (64, 41 files).** Mostly `text-cream-50`, which is `#ffffff`:
    white type on dark grounds. Naming only, no colour change. Fold into 6.
-6. **The rename, LAST, as its own tick.** `cream-50` is `#ffffff` and `cream-75`
-   is now `#f7f7f8`: after steps 2 to 5 the ramp holds no cream at all and the
-   word is the only thing left wrong. Rename the ramp, delete the unused
-   `cream-500`, and delete `parchment`'s alias comment. A rename touches every
-   call site and must never ride along with a colour change, which is why it is
-   separate and why it is last.
+6. **The rename. DONE 2026-08-17.** See "The rename, done" below.
+
+### The rename, done 2026-08-17. Nothing on this site is called cream.
+
+**The name is `paper`, and it was converged on rather than invented.**
+`--paper:#f7f7f8` in `src/styles/atlas-spine.css` is the 75 step byte for byte,
+and `--atlas-surface-paper` is the body ground: this repo already called this
+role paper at this exact value. That file's first ratified rule reads "NEUTRAL
+PALETTE. No cream, no warm tint", so the name inherits a rule forbidding warmth
+instead of one inviting it, which also serves §7. Tailwind ships no `paper` key.
+
+**Two steps did not come across, because trap 3 was live in both.** `cream-50`
+was `#ffffff`, which is `white`; `cream-300` was `#e3e3e3`, which is
+`parchment`. Both collapsed onto the existing name rather than renamed, which is
+the same call the hairline tick made by hand for twelve sites. A standalone
+`white` token carries the four TypeScript reads that cannot write a raw hex from
+a component; it is deliberately NOT re-exported to Tailwind, because Tailwind
+already has white and re-declaring it rewrites every emitted rule from `#fff` to
+`#ffffff` for nothing. `cream-500` was already gone before this tick.
+
+Also deleted: three dead `SectionTone` members, all named after ramp steps and
+none selected by any entry since the 2026-06-06 white reset. A tint that returns
+through a tone name is a banned colour coming back without anybody choosing it.
+
+**`verify_no_cream` 346 -> 33 across 134 -> 16 files**, in four commits
+(`94264a3c`, `c6d8ec79`, `35b73884`, `637e95e2`), 118 baseline entries deleted as
+they reached zero. **Zero cream-named utilities remain anywhere in `src`.** The
+33 are hex literals the gate counts by VALUE, 28 of them plain `#ffffff`, which
+it counts only because `cream-50` used to be white. That reason is now spent, so
+a future tick may drop `#ffffff` from `CREAM_LITERALS`; it was left alone here
+because loosening a gate is not a rename.
+
+**Verified three ways, because a rename that compiles is not a rename that
+renders.**
+
+1. 23 assertions on `globals.css` compiled through the project's own tailwind:
+   no selector or property anywhere contains the word, none of the six warm
+   values survives in hex or decimal, every renamed utility emits its exact
+   prior rgb, and the two collapsed steps do not reappear under the new name.
+2. The emitted utility set was captured before and after the comment sweep and
+   is identical, which is the only check that catches trap 1.
+3. Six routes rendered with `react-dom/server` (`home`, `gb`, `de`,
+   `site:pricing`, `site:methodology`, `site:cities`): zero occurrences in any
+   `class`, `style`, `fill`, `stroke` or colour attribute. The instrument is
+   `scripts/spikes/render_palette_check.tsx`, kept.
+4. Every old name's value compared against its new name's value read from the
+   base commit: 15 of 15 identical. No colour moved under cover of the rename.
+
+**THE CHECK MUST BE SCOPED TO ATTRIBUTES, NOT THE DOCUMENT.** One of the
+businesses this atlas covers is an ICE CREAM shop, and it is visible copy in the
+homepage trade chips. A grep of rendered markup for the word fails on the
+product's own subject matter, and both ways out of that (weaken the check, or
+rename a business) are worse than looking in the right place.
+
+**A BLIND SPOT IN `scripts/lib/strip_comments`, which every source-scanning gate
+in the chain depends on.** It is not a lexer, and a `/*` inside a STRING literal
+opens a block comment it never closes. `src/app/_design/page.tsx:640` carries
+`caption="board/charts/* (visx, compact, null-safe)"`, and from there to the end
+of the file, 77 lines, all real code reads as prose. Its header documents the
+`//`-in-a-string case and calls the failure direction a missed hit, which is
+right; what is new is that the miss runs to end-of-file rather than end-of-line.
+A live card was skipped there and caught only by grepping for leftovers.
+
+**TWO COLOUR DEFECTS FOUND AND DELIBERATELY LEFT**, because this tick was a
+rename and a rename must not carry a colour change:
+
+- `src/components/ui/empty-state.tsx:65` sets `backgroundColor` to
+  `"rgb(247 246 244)"` by hand. That is `#f7f6f4`, the pre-purge warm value of
+  the 100 step, still painting. The retone could not reach it because it is an
+  rgb() literal in a component rather than a token read, and **the ratchet
+  cannot see it either**: its rgb list carries only the old page ground.
+- `--destructive-foreground` in `globals.css` is `255 253 248`, which is
+  `#fffdf8`, a warm off-white at h 44, while its comment claimed it was white.
+  The comment now says what the value is so the defect is visible; the value is
+  untouched.
+
+Left alone and worth knowing: `--paper-100` is declared in BOTH `globals.css`
+and `homepage-visual-tokens.css` at the same value, a mirror rather than an
+alias, and only the globals declaration has readers. `"ink-dark"` is a fourth
+dead `SectionTone`, not cream's business. `scripts/tokens/oklch-audit.mjs` holds
+a hardcoded copy of the ramp's pre-purge values; it is not in the prebuild chain
+and its own header already says its figures are historical.
 
 ### Hairlines, done 2026-08-17. The alias was real, and it was worse than logged.
 
