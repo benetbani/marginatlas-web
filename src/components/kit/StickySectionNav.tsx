@@ -67,10 +67,28 @@ export function StickySectionNav({
 
   return (
     <>
-      {/* Desktop: the left-border rail. */}
+      {/* Desktop: the left-border rail, now ON A CARD.
+          FOUND BY LOOKING, at 1440x900 on /gb. This nav carried no surface of
+          any kind and sits in the RIGHT GUTTER, which is the one part of the
+          page where AtlasFrame deliberately shows the photograph at full
+          strength. So the lower half of the list, "What locals know", "Vs the
+          world", "The honest take", "Gut check", "Compare", was small cocoa
+          type over hillside buildings and foliage. The top half looked fine
+          only because the picture happens to be sky up there, which is not a
+          design, it is the crop.
+
+          It rendered at all, unlike the footer, because `sticky` is a
+          positioned value: it was already in the paint step above the frame's
+          fixed layers. Legible is a separate question from painted, and this
+          was painted and not legible.
+
+          .atlas-card is the founder's own answer, stated three times: "we put
+          everything in those cards." It brings --atlas-surface-card at .955,
+          so the picture still whispers through the nav rather than being
+          blocked by it. The inner left-border rail is unchanged. */}
       <nav
         aria-label={title}
-        className="hidden xl:block sticky top-[120px] ml-4 w-[180px] shrink-0 self-start text-xs"
+        className="atlas-card hidden xl:block sticky top-[120px] ml-4 w-[180px] shrink-0 self-start px-3 py-3.5 text-xs"
       >
         <div className="mb-2 pl-3 text-[10px] font-semibold uppercase tracking-wider text-cocoa-700">
           {title}
@@ -106,7 +124,14 @@ export function StickySectionNav({
           so it can never hide under the header. */}
       <nav
         aria-label={title}
-        className="sticky top-[var(--atlas-header-h)] z-sticky -mx-4 mb-6 overflow-x-auto border-b border-parchment/70 bg-cream-75/90 px-4 py-2 backdrop-blur xl:hidden"
+        /* bg-cream-75/90 -> bg-white/90. The founder banned cream outright:
+           "remove completely this creamy color from the page. That's totally
+           not allowed." cream-75 is #f7f7f8 today, already retoned to a cool
+           neutral by the page-ground migration, so this is a naming fix rather
+           than a visible colour change, and it takes the last cream reference
+           out of this file. The translucency and the blur stay: this bar sits
+           over scrolling content, which is what they are for. */
+        className="sticky top-[var(--atlas-header-h)] z-sticky -mx-4 mb-6 overflow-x-auto border-b border-parchment/70 bg-white/90 px-4 py-2 backdrop-blur xl:hidden"
       >
         <ul className="flex w-max gap-2">
           {present.map((s) => {
