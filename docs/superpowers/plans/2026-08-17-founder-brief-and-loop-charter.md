@@ -298,7 +298,38 @@ tiles retitled; page grounds removed from `CoverageHubV2`, `CityHeroV2` and
   happening to be positioned.
 
 Open and NOT done: §2 partially (page-ground role done, four roles remain, see
-§11), §4 entirely, §5 (country and region page bodies), §7.
+§11), §5 (country and region page bodies), §7.
+
+**§4 is NOT "open entirely", and that line was stale by several ticks.**
+Corrected 2026-08-17. Read the band you are about to cut before cutting it:
+`AudienceBand`, `UpgradeTeaser` and `HomeNewsletter` each carry a header comment
+recording a density pass already done on them, with the before-and-after word
+count measured off rendered markup. `AudienceBand` went from 67 words of pure
+description to four real doors; `HomeNewsletter`'s three sentences became four
+marked contents lines; `UpgradeTeaser` lost a lede that restated the table two
+lines under it. Nine of the ten section headings were unified to
+`font-display text-lg md:text-xl` in the same sweep.
+
+What remains under §4 is therefore specific rather than wholesale, and the way
+to find it is to measure, not to assume. Two examples closed in `91774cee`: the
+blog rail's card titles were set at the section-heading token, so the heading
+and its own six cards were typographically identical; and its eyebrow said
+"Writing" over a heading reading "From the Atlas notebook". **All six homepage
+eyebrows were tested before that one was cut, and the other five survive**, each
+carrying something its heading does not: a count, a price, the axis of a table,
+the whole comparison. Cutting on the pattern rather than the test would have
+taken all six.
+
+The band harness for this is
+`scratchpad/measure_home_prose.tsx` (per-band word counts by ROLE, so a figure
+and a sentence are never added together) and, new in `91774cee`, a harness that
+renders the REAL `src/app/page.tsx` by awaiting `HomePage()` directly. That one
+needs two shims, both documented traps: `next/font/google` is a build-time
+transform and is not a function at runtime, and `useRouter`'s invariant throws
+with no app router mounted, which halts the render inside `GlobalSearch` before
+it reaches the page body. Stub only the three router hooks; leave `notFound`
+and `redirect` real, or the harness will report a page as rendering when the
+route 404s.
 
 ---
 
@@ -491,10 +522,27 @@ from an input. Classified:
 
 | what it actually is | n |
 |---|---|
-| **homepage cards still hand-rolled** | **0** |
+| ~~**homepage cards still hand-rolled**~~ ~~**0**~~ **WRONG, see below** | **1, x6** |
 | genuine cards on other pages | 69 |
 | chips (`rounded-full`), never cards | 20 |
 | form inputs inside Form/Field files | 14 |
+
+**THE ZERO WAS WRONG, and the reason generalises.** Corrected 2026-08-17 in
+`91774cee`. The classifier above matched `rounded-* ... border-* ... bg-white`
+**in that written order**, and the blog rail's card spells
+`rounded-md bg-white border border-parchment`, which puts the background before
+the border. One class string in a different order and the regex reports zero
+with a straight face. It rendered **six times**, and it was the only opaque
+white surface left on the page the founder is actually looking at.
+
+Re-measured with a test that asks only whether each family is PRESENT in the
+class attribute, in any order, the homepage tree read **10 `atlas-card` against
+1 hand-rolled**. Now 11 against 0.
+
+So the §12 method gets a third clause: **count with comments stripped, classify
+before converting, and never let the test depend on the ORDER classes are
+written in.** Tailwind class strings have no canonical order, so any regex that
+assumes one is measuring authorship habits rather than markup.
 
 **So the homepage is done** and 69 real cards remain elsewhere. That matters
 because of the two-surface rule: with `--atlas-surface-card` at `.955` and no
