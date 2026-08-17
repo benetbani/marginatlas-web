@@ -82,7 +82,12 @@ export default async function ComparePage() {
 
   return (
     <div>
-      <header className="border-b border-parchment/60 py-8 sm:py-10">
+      {/* ON A CARD, converged with /pricing, /tools, /cities and every city
+          page, which is where the rest of this page already is: the matchup
+          band four lines below is an atlas-card and the section nav beside it
+          is one too. The hairline was doing nothing over a photograph, and
+          the lede's third line ran out to x=819 on the cliffside. */}
+      <header className="atlas-card mt-6 px-5 py-6 md:px-7 md:py-7">
         <SectionEyebrow size="md" className="mb-3">
           Compare
         </SectionEyebrow>

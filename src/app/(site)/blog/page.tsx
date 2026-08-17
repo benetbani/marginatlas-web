@@ -123,14 +123,20 @@ export default function BlogIndex() {
         <span className="text-ink-900">Blog</span>
       </nav>
 
-      <header className="max-w-3xl">
+      {/* ON A CARD, like every other hero on the site. The five-line lede was
+          painting straight onto the photograph and its longest line ran to
+          x=940, over the cliffside town: "bet a lease on" was the least
+          readable phrase on the page and it is the sentence about honesty.
+          max-w-3xl moves onto the type inside, where the reading measure
+          belongs. */}
+      <header className="atlas-card px-5 py-6 md:px-7 md:py-7">
         <SectionEyebrow size="md" className="mb-3">
           Notes from the workshop
         </SectionEyebrow>
-        <h1 className="font-display text-4xl md:text-5xl lg:text-[3.3rem] font-semibold tracking-tight text-ink-900 leading-[1.04]">
+        <h1 className="max-w-3xl font-display text-4xl md:text-5xl lg:text-[3.3rem] font-semibold tracking-tight text-ink-900 leading-[1.04]">
           Where the money is, and where the data lies
         </h1>
-        <p className="mt-5 text-lg md:text-xl text-graphite leading-relaxed">
+        <p className="mt-5 max-w-3xl text-lg md:text-xl text-graphite leading-relaxed">
           The working notes behind the atlas.{" "}
           <span className="text-ink-900">
             What a typical small business in a place actually keeps after rent,
