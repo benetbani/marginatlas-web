@@ -242,7 +242,15 @@ function CityIndexLink({ city }: { city: DirectoryCity }) {
       <CountryFlag iso2={city.iso2} className="w-5 shrink-0 rounded-[2px]" />
       <span className="min-w-0 truncate text-sm text-ink-900 group-hover:text-atlas-700">
         {city.name}
-        <span className="ml-1.5 text-xs text-cocoa-500">
+        {/* `hidden sm:inline`. The index runs two columns from the base width
+            so the page is not 15 screens on a phone, which gives each entry
+            139px at 375. The country NAME does not fit in that: printed, it
+            truncated 113 of the 252 entries. It is also the one thing here
+            that is already said twice, since the flag to its left says it
+            without spending a character. Dropped below sm, kept from sm up
+            where the column is wide enough to carry both. Measured after: 2 of
+            252 truncate at 375, 0 from 414 up. */}
+        <span className="ml-1.5 hidden text-xs text-cocoa-500 sm:inline">
           {countryName(city.iso2)}
         </span>
       </span>
@@ -373,7 +381,23 @@ export default function CitiesHub() {
                     anybody scans an index. Multi-column boxes flow DOWN each
                     column and then across, so the first column is A to E and
                     a reader can jump straight to the letter they want. */}
-                <div className="mt-2 columns-1 gap-x-4 sm:columns-2 lg:columns-4">
+                {/* `columns-2` AT THE BASE, not `columns-1`. The §6 fix took
+                    this page from 20,459px to 5,148px and was measured at
+                    desktop only; at 375x812 it was still 12,679px, roughly 15
+                    screens, which is the "big list of cities which doesn't end"
+                    the fix existed to answer, surviving at the width most
+                    readers hold. 8,064 of those pixels were this index running
+                    one city per line down a 293px column.
+
+                    Two columns halves it to 4,096 and the page to 8,711. The
+                    cost is measured, not assumed: at two columns each entry
+                    gets 139px, and with the country NAME still printed 113 of
+                    the 252 entries truncated, worst case 95px off "Santo
+                    Domingo Dominican Republic". So the name goes below sm and
+                    the FLAG carries the country instead, which it was already
+                    doing. That takes truncation to 2 of 252 at 375 and 0 at
+                    414 and up. See CityIndexLink for the other half. */}
+                <div className="mt-2 columns-2 gap-x-4 lg:columns-4">
                   {group.cities.map((city) => (
                     <CityIndexLink key={city.slug} city={city} />
                   ))}
