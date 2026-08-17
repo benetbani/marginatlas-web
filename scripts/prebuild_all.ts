@@ -156,6 +156,20 @@ const GATES: Gate[] = [
   { name: "retired-claims", script: "scripts/verify_retired_claims.ts" },
   { name: "no-stock-imagery", script: "scripts/verify_no_stock_imagery.ts" },
   { name: "no-cream", script: "scripts/verify_no_cream.ts" },
+  /* THE SHARED COMMENT STRIPPER, TESTED, because every source-scanning gate in
+     this list depends on it and it has now been wrong three times.
+
+     Its header records the first two: a naive startsWith("//") that understood
+     only the first line of a block comment, hit by two gates in one sitting.
+     The third, found 2026-08-17, was worse in kind rather than degree: a `/*`
+     inside a STRING literal opened a block comment that never belonged, and the
+     state machine carried it forward, so every gate below went blind from there
+     to the next real close. On src/app/_design/page.tsx that hid 195 of 451
+     lines, including 45 className lines, and every gate reported PASS.
+
+     A library that silently switches off the whole chain is the one place in
+     this repo where an untested helper is indefensible. */
+  { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
