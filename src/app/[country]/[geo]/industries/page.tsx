@@ -95,8 +95,15 @@ async function RegionIndustriesPageBody({
     inds.sort((a, b) => a.name.localeCompare(b.name));
   }
 
+  /* SURFACES, 2026-08-17, same removal as the country-level twin. This page had
+     no surface at all: breadcrumb, h1, lede and every sector heading sat on the
+     site photograph, and the trade tiles were hairline outlines with no fill.
+     AtlasFrame paints from fixed layers at z-index 0, above every in-flow
+     non-positioned descendant, so a static block is not drawn. One card for the
+     masthead, one per sector. */
   return (
-    <div className="py-12">
+    <div className="relative space-y-6 md:space-y-8 py-6 md:py-8">
+      <div className="atlas-card px-5 py-6 md:px-7 md:py-8">
       <nav className="text-sm text-ink-700/70 mb-4">
         <Link href="/" className="hover:text-atlas-600">Home</Link>
         <span className="mx-2">/</span>
@@ -118,20 +125,23 @@ async function RegionIndustriesPageBody({
         <span>Activities</span>
       </nav>
 
-      <h1 className="text-3xl md:text-4xl font-semibold text-ink-900 mb-3">
+      <h1 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-3">
         Small business activities in {regionName}
       </h1>
-      <p className="text-ink-800 max-w-2xl mb-8">
+      {/* Lost its second sentence, "click an industry to see typical revenue,
+          profit margins, and cost structures for the region", which described
+          the grid of clickable industries directly beneath it. */}
+      <p className="text-ink-800 max-w-2xl">
         Benchmarks for the typical small business across {regionName},{" "}
-        {countryName}. Click an industry to see typical revenue, profit
-        margins, and cost structures for the region.
+        {countryName}.
       </p>
+      </div>
 
       {SECTORS_ORDERED.filter((s) => bySector.has(s.id)).map((sector) => {
         const inds = bySector.get(sector.id) || [];
         return (
-          <section key={sector.id} className="mb-10">
-            <h2 className="text-xl font-semibold text-ink-900 mb-4">
+          <section key={sector.id} className="atlas-card px-5 py-5 md:px-7 md:py-6">
+            <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-4">
               {sector.name}
             </h2>
             <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -139,7 +149,11 @@ async function RegionIndustriesPageBody({
                 <li key={ind.id}>
                   <Link
                     href={`/${country.toLowerCase()}/${geo.toLowerCase()}/${industryToSlug(ind.id)}`}
-                    className="block px-3 py-2 rounded-lg border border-parchment hover:border-atlas-400 hover:bg-cream-100 text-sm text-ink-900"
+                    /* Hover fill moved off the cream-100 warm sand onto
+                       parchment, the site hairline and a true neutral, at 50%.
+                       These tiles now sit on .atlas-card, which is near-white,
+                       so the press wants to be darker and not warmer. */
+                    className="block px-3 py-2 rounded-lg border border-parchment hover:border-atlas-400 hover:bg-parchment/50 text-sm text-ink-900 transition-colors"
                   >
                     {ind.name}
                   </Link>

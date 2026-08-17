@@ -84,11 +84,19 @@ async function CountryIndustriesPageBody({
     inds.sort((a, b) => a.name.localeCompare(b.name));
   }
 
+  /* SURFACES, 2026-08-17. This page had none. The flag, the h1, the lede and
+     every sector heading sat directly on the site photograph, and the trade
+     tiles were hairline outlines with no fill. Under AtlasFrame that is worse
+     than unreadable: the frame's fixed layers sit at z-index 0 and paint above
+     every in-flow non-positioned descendant, so a static block is not drawn at
+     all. Measured in a browser on a reproduction of the real layering.
+     One card for the masthead, one per sector. */
   return (
-    <div className="py-12">
-      <div className="flex items-center gap-3 mb-6">
+    <div className="relative space-y-6 md:space-y-8 py-6 md:py-8">
+      <div className="atlas-card px-5 py-6 md:px-7 md:py-8">
+      <div className="flex items-center gap-3 mb-4">
         <CountryFlag iso2={iso2} className="w-10" />
-        <h1 className="text-3xl md:text-4xl font-semibold text-ink-900">
+        <h1 className="font-display text-3xl md:text-4xl font-semibold text-ink-900">
           Small business industries in {name}
         </h1>
       </div>
@@ -102,26 +110,30 @@ async function CountryIndustriesPageBody({
           claim, and a country page carries tax rates, formation costs and its
           cities whether or not a trade benchmark exists. What changes is what
           the page says it has. */}
+      {/* The held branch lost its second sentence, "click an industry to see
+          typical revenue, profit margins, and cost structures", which described
+          the grid of clickable industries directly beneath it. The figure it
+          leads with is the part that says something. */}
       {held ? (
-        <p className="text-ink-800 max-w-2xl mb-8">
+        <p className="text-ink-800 max-w-2xl">
           {held.cellCount.toLocaleString()} benchmarks for the typical small
-          business across {name}&apos;s economy. Click an industry to see
-          typical revenue, profit margins, and cost structures.
+          business across {name}&apos;s economy.
         </p>
       ) : (
-        <p className="text-ink-800 max-w-2xl mb-8">
+        <p className="text-ink-800 max-w-2xl">
           Nothing has been measured in {name} yet. These are the trades the
           atlas covers, and this is where {name}&apos;s numbers will sit once
           they are. The country page carries what is already known about
           operating here.
         </p>
       )}
+      </div>
 
       {SECTORS_ORDERED.filter((s) => bySector.has(s.id)).map((sector) => {
         const inds = bySector.get(sector.id) || [];
         return (
-          <section key={sector.id} className="mb-10">
-            <h2 className="text-xl font-semibold text-ink-900 mb-4">
+          <section key={sector.id} className="atlas-card px-5 py-5 md:px-7 md:py-6">
+            <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-4">
               {sector.name}
             </h2>
             <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -129,7 +141,13 @@ async function CountryIndustriesPageBody({
                 <li key={ind.id}>
                   <Link
                     href={`/${country.toLowerCase()}/${country.toLowerCase()}/${industryToSlug(ind.id)}`}
-                    className="block px-3 py-2 rounded-lg border border-parchment hover:border-atlas-400 hover:bg-cream-100 text-sm text-ink-900"
+                    /* The hover fill was the cream-100 step, a warm sand. These
+                       tiles now sit on .atlas-card, which is near-white, so the
+                       hover wants a neutral a hair darker than the card and not
+                       a warmer one. parchment is the site hairline, a true
+                       neutral at s=0, and at 50% it reads as a press rather
+                       than a colour. */
+                    className="block px-3 py-2 rounded-lg border border-parchment hover:border-atlas-400 hover:bg-parchment/50 text-sm text-ink-900 transition-colors"
                   >
                     {ind.name}
                   </Link>

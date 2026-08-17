@@ -3,10 +3,15 @@
  *
  * Mirrors the rough section heights of the real page so the layout
  * doesn't jump when content arrives.
+ *
+ * `relative` on the root, 2026-08-17: AtlasFrame paints from fixed layers at
+ * z-index 0, which go above every in-flow non-positioned descendant, so this
+ * whole skeleton was covered by the frame's opaque base and the page flashed as
+ * a bare photograph. One positioned ancestor puts the column back in front.
  */
 export default function CellLoading() {
   return (
-    <div className="animate-pulse">
+    <div className="relative animate-pulse">
       {/* Breadcrumb */}
       <div className="h-4 w-64 bg-ink-200/60 rounded mb-4" />
 

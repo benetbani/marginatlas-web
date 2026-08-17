@@ -22,8 +22,13 @@ export default function CellError({
     console.error("Cell page error:", error);
   }, [error]);
 
+  /* The error state had no surface, so under AtlasFrame it was not painted at
+     all: the reader whose page failed got a photograph and nothing else, which
+     is the single worst place on the site for that. One card, and the two
+     secondary buttons move off the cream-100 warm sand, which they carried while
+     sitting on a near-white card. */
   return (
-    <div className="py-12 max-w-2xl">
+    <div className="relative atlas-card max-w-2xl px-5 py-6 md:px-7 md:py-8 my-8">
       <div className="text-xs uppercase tracking-wide text-clay-700 font-medium">
         Something tripped
       </div>
@@ -37,19 +42,19 @@ export default function CellError({
       <div className="mt-6 flex flex-wrap gap-3 text-sm">
         <button
           onClick={() => reset()}
-          className="px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-ink-800 transition font-medium"
+          className="px-4 py-2 rounded-full bg-ink-900 text-white hover:bg-ink-800 transition font-medium"
         >
           Try again
         </button>
         <Link
           href="/browse"
-          className="px-4 py-2 rounded-full bg-cream-100 border border-parchment text-ink-900 hover:bg-white transition font-medium"
+          className="px-4 py-2 rounded-full border border-parchment text-ink-900 hover:bg-parchment/50 transition font-medium"
         >
           Browse other benchmarks
         </Link>
         <Link
           href="/"
-          className="px-4 py-2 rounded-full bg-cream-100 border border-parchment text-ink-900 hover:bg-white transition font-medium"
+          className="px-4 py-2 rounded-full border border-parchment text-ink-900 hover:bg-parchment/50 transition font-medium"
         >
           Home
         </Link>
