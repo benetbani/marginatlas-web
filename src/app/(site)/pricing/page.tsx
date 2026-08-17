@@ -60,8 +60,26 @@ export const metadata = {
 export default function PricingPage() {
   return (
     <article>
-      <section className="bg-cream-50 border-b border-parchment">
-        <div className="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:pt-20 sm:pb-16">
+      {/* THE FOUR SECTION GROUNDS ARE GONE, and this is not a colour tweak.
+          AtlasFrame paints a fixed photograph behind every route with no centre
+          plate, so a `bg-cream-50` or `bg-cream-100` on a <section> is an opaque
+          plate over the picture for the section's whole height. Four of them ran
+          end to end here, which made /pricing a solid sheet from masthead to
+          footer. A band is not a card: the bands go transparent and the cards
+          below carry the surface. Same call as PricingFAQ's own wrapper in
+          56cd786a, and PricingFAQ sits between two of these.
+
+          The `mx-auto max-w-6xl px-6` wrappers went with them. SiteChrome
+          already gives every route in this group `max-w-content mx-auto px-6`,
+          so those made a 1024px column inside the site's 1072 and doubled the
+          gutter: the same defect the cohesion audit named on the city page and
+          on /tools. The reading-measure cap at the foot of the page is kept,
+          because a paragraph does want one. */}
+      <section className="pt-16 pb-12 sm:pt-20 sm:pb-16">
+        {/* The masthead in ONE card, for the reason the tier cards below are
+            cards: bare dark type on a photograph is the thing the two-surface
+            rule exists to prevent, and this is the top of the page. */}
+        <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
           <SectionEyebrow size="md">Pricing</SectionEyebrow>
           <h1 className="font-display mt-3 text-balance text-4xl sm:text-5xl leading-[1.08] tracking-[-0.022em] font-semibold text-ink-900 max-w-3xl">
             Three ways to use Atlas.
@@ -75,25 +93,26 @@ export default function PricingPage() {
       </section>
 
       {/* Tier cards: Free | Basic (highlighted) | Premium, left to right. */}
-      <section className="bg-cream-50">
-        <div className="mx-auto max-w-6xl px-6 pb-14 sm:pb-16">
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <li><FreeCard /></li>
-            <li><PaidCard tier="basic" highlighted /></li>
-            <li><PaidCard tier="premium" /></li>
-          </ul>
-        </div>
+      <section className="pb-14 sm:pb-16">
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <li><FreeCard /></li>
+          <li><PaidCard tier="basic" highlighted /></li>
+          <li><PaidCard tier="premium" /></li>
+        </ul>
       </section>
 
       {/* Full feature matrix. */}
-      <section className="bg-cream-100 border-t border-b border-parchment">
-        <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
+      <section className="py-14 sm:py-20">
+        <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
           <SectionEyebrow size="md">Side by side</SectionEyebrow>
           <h2 className="font-display mt-3 text-2xl sm:text-3xl leading-[1.1] tracking-[-0.02em] font-semibold text-ink-900 max-w-3xl">
             What sits inside each tier.
           </h2>
 
-          <div className="mt-10 overflow-x-auto rounded-lg bg-cream-50 border border-parchment">
+          {/* The table sits INSIDE the heading card, so it takes the soft
+              variant: a second translucent fill stacked on a translucent one
+              would only muddy the picture underneath both. */}
+          <div className="atlas-card-soft mt-10 overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="bg-cream-100">
@@ -138,8 +157,8 @@ export default function PricingPage() {
 
       {/* v34 Part 3.7 anti-Trading-Economics callout +
           Part 3.6 cancel-anytime block. Both verbatim. */}
-      <section className="bg-cream-50 border-t border-parchment">
-        <div className="mx-auto max-w-3xl px-6 py-12 sm:py-16">
+      <section className="py-12 sm:py-16">
+        <div className="atlas-card mx-auto max-w-3xl px-5 py-6 md:px-7 md:py-7">
           <SectionEyebrow size="md">How we think about your card</SectionEyebrow>
           <p className="font-display mt-3 text-balance text-base sm:text-lg text-ink-900 leading-relaxed">
             {ANTI_TE_CALLOUT}
@@ -162,8 +181,12 @@ export default function PricingPage() {
 }
 
 function FreeCard() {
+  /* Canonical surface: was "rounded-2xl bg-cream-50 border border-parchment",
+     a fully opaque hand-roll. .atlas-card is translucent at .955 so the
+     photograph reads through it, and carries position:relative so it sits
+     above AtlasFrame's fixed layers instead of sinking behind them. */
   return (
-    <div className="rounded-2xl p-6 h-full flex flex-col bg-cream-50 border border-parchment">
+    <div className="atlas-card p-6 h-full flex flex-col">
       <div className="flex items-center justify-between">
         <span className="font-display text-xl font-semibold tracking-[-0.01em] text-ink-900">Free</span>
       </div>
@@ -192,9 +215,15 @@ function PaidCard({
   highlighted?: boolean;
 }) {
   const spec = TIERS[tier];
+  /* Both tiers are the canonical card now. Basic keeps its recommendation
+     signal, and keeps it in tokens: .atlas-card sets the border WIDTH so a
+     later border-color utility still wins, and shadow-lift is the elevation
+     token that the hand-rolled shadow-[0_1px_3px...] was approximating by
+     hand. Raw box-shadow values in components are banned; this one predated
+     the rule. */
   const wrapperClasses = highlighted
-    ? "bg-white border border-atlas-300 shadow-[0_1px_3px_rgb(0_0_0/0.05),_0_8px_28px_rgb(0_0_0/0.06)]"
-    : "bg-cream-50 border border-parchment";
+    ? "atlas-card border-atlas-300 shadow-lift"
+    : "atlas-card";
   const buttonClasses =
     tier === "basic"
       ? "bg-atlas-700 text-cream-50 hover:bg-atlas-800"
@@ -204,7 +233,7 @@ function PaidCard({
   // the founder activates Stripe, then auto-switches to real checkout.
   const billingLive = isAuthEnabled() && !!process.env.STRIPE_SECRET_KEY;
   return (
-    <div className={`rounded-2xl p-6 h-full flex flex-col ${wrapperClasses}`}>
+    <div className={`p-6 h-full flex flex-col ${wrapperClasses}`}>
       <div className="flex items-center justify-between">
         <span className="font-display text-xl font-semibold tracking-[-0.01em] text-ink-900">
           {spec.name}

@@ -22,7 +22,7 @@
     "src/app/(site)/learn/[slug]/page.tsx": 2,
     "src/app/(site)/methodology/key-benchmarks/page.tsx": 2,
     "src/app/(site)/methodology/page.tsx": 2,
-    "src/app/(site)/pricing/page.tsx": 12,
+    "src/app/(site)/pricing/page.tsx": 5,
     "src/app/(site)/status/page.tsx": 1,
     "src/app/(site)/you/CompareToMeClient.tsx": 1,
     "src/app/(site)/you/YouDashboard.tsx": 6,
