@@ -169,6 +169,19 @@ const GATES: Gate[] = [
 
      A library that silently switches off the whole chain is the one place in
      this repo where an untested helper is indefensible. */
+  /* A COLOUR CLASS THAT RESOLVES TO NOTHING. Added 2026-08-17, the same day
+     tailwind.config.ts stopped extending the default palette and started
+     replacing it. That was the right fix and it sharpens this failure mode:
+     with no stock ramp underneath, a class naming a step the ramp does not
+     publish emits NO rule, and the element silently inherits.
+
+     It found 26 on its first run. Nineteen were cocoa-400/200 and sixteen of
+     those sat on MISSING-DATA markers, so the one thing whose job is to look
+     absent was rendering in ordinary body colour. The other seven were
+     ink-400, two of them the "BOTTOM 10%" and "TOP 10%" caps on
+     PercentileStrip, which are meant to be QUIETER than the figures beneath
+     them and were inheriting at full strength instead. */
+  { name: "token-steps", script: "scripts/verify_token_steps_exist.ts" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },

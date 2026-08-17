@@ -589,9 +589,9 @@ function DataBoardSection() {
           <div className="text-cocoa-700">fmtMillions(12.4)</div>
           <div className="tabular-nums text-ink-900">{fmtMillions(12.4)}</div>
           <div className="text-cocoa-700">fmtUSD(null)</div>
-          <div className="tabular-nums text-cocoa-400">{fmtUSD(null)}</div>
+          <div className="tabular-nums text-cocoa-500">{fmtUSD(null)}</div>
           <div className="text-cocoa-700">fmtPct(NaN)</div>
-          <div className="tabular-nums text-cocoa-400">{fmtPct(NaN)}</div>
+          <div className="tabular-nums text-cocoa-500">{fmtPct(NaN)}</div>
         </div>
       </SubSection>
 

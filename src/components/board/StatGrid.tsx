@@ -73,7 +73,7 @@ export function StatGrid({
               <dd
                 className={
                   blank
-                    ? "font-display text-[15px] font-semibold tabular-nums text-cocoa-400"
+                    ? "font-display text-[15px] font-semibold tabular-nums text-cocoa-500"
                     : "font-display text-[15px] font-semibold tabular-nums text-ink-900"
                 }
               >
@@ -104,7 +104,7 @@ export function StatGrid({
             <dd
               className={
                 blank
-                  ? "mt-1 font-display text-xl font-semibold tabular-nums tracking-tight text-cocoa-400 md:text-2xl"
+                  ? "mt-1 font-display text-xl font-semibold tabular-nums tracking-tight text-cocoa-500 md:text-2xl"
                   : "mt-1 font-display text-xl font-semibold tabular-nums tracking-tight text-ink-900 md:text-2xl"
               }
             >

@@ -83,7 +83,7 @@ export function SpreadBar({ p10, median, p90 }: Props) {
           x2={x(p10)}
           y1={trackY - 3}
           y2={trackY + trackH + 3}
-          className="stroke-cocoa-400"
+          className="stroke-cocoa-500"
           strokeWidth={1.5}
           strokeLinecap="round"
         />
@@ -92,7 +92,7 @@ export function SpreadBar({ p10, median, p90 }: Props) {
           x2={x(p90)}
           y1={trackY - 3}
           y2={trackY + trackH + 3}
-          className="stroke-cocoa-400"
+          className="stroke-cocoa-500"
           strokeWidth={1.5}
           strokeLinecap="round"
         />

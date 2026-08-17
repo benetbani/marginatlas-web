@@ -112,7 +112,7 @@ export function CityScoreMasthead({
         >
           {score.score}
         </span>
-        <span className="font-display text-xl font-semibold leading-none tabular-nums text-cocoa-400 md:text-2xl">
+        <span className="font-display text-xl font-semibold leading-none tabular-nums text-cocoa-500 md:text-2xl">
           /100
         </span>
       </span>

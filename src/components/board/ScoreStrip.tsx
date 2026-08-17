@@ -38,7 +38,7 @@ export function ScoreStrip({ overall, parts }: ScoreStripProps) {
               ? `font-display text-3xl font-semibold leading-none tabular-nums ${scoreFigureTone(
                   band as ScoreBand,
                 )}`
-              : "font-display text-3xl font-semibold leading-none tabular-nums text-cocoa-400"
+              : "font-display text-3xl font-semibold leading-none tabular-nums text-cocoa-500"
           }
         >
           {hasOverall ? Math.round(overall as number) : MISSING}
@@ -72,7 +72,7 @@ export function ScoreStrip({ overall, parts }: ScoreStripProps) {
                       ? `inline-flex items-baseline gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${scorePillTone(
                           pBand as ScoreBand,
                         )}`
-                      : "inline-flex items-baseline gap-1.5 rounded-full border border-parchment bg-paper-100 px-2.5 py-1 text-[11px] font-semibold text-cocoa-400"
+                      : "inline-flex items-baseline gap-1.5 rounded-full border border-parchment bg-paper-100 px-2.5 py-1 text-[11px] font-semibold text-cocoa-500"
                   }
                 >
                   <span className="uppercase tracking-wide">{p.label}</span>

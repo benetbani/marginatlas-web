@@ -115,7 +115,7 @@ export function StatCard({
               <dd
                 className={
                   blank
-                    ? "font-display text-base font-semibold tabular-nums text-cocoa-400"
+                    ? "font-display text-base font-semibold tabular-nums text-cocoa-500"
                     : "font-display text-base font-semibold tabular-nums text-ink-900"
                 }
               >

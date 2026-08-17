@@ -399,7 +399,7 @@ export default async function AcrossCitiesPage({
                     <td className="sticky left-0 z-10 bg-white py-2.5 pr-4 align-top text-cocoa-500">
                       {metric.label}
                       {metric.hint ? (
-                        <span className="mt-0.5 block text-[11px] text-cocoa-400">
+                        <span className="mt-0.5 block text-[11px] text-cocoa-500">
                           {metric.hint}
                         </span>
                       ) : null}
@@ -411,7 +411,7 @@ export default async function AcrossCitiesPage({
                       // Weight is the primary cue for the best place (it reads
                       // without relying on colour); the terracotta is the second.
                       const tone = blank
-                        ? "text-cocoa-400"
+                        ? "text-cocoa-500"
                         : isBest
                           ? "font-semibold text-atlas-700"
                           : "text-ink-900";
@@ -437,7 +437,7 @@ export default async function AcrossCitiesPage({
               <tr className="border-b border-parchment/50">
                 <td className="sticky left-0 z-10 bg-white py-2.5 pr-4 align-top text-cocoa-500">
                   Break-in rating
-                  <span className="mt-0.5 block text-[11px] text-cocoa-400">
+                  <span className="mt-0.5 block text-[11px] text-cocoa-500">
                     higher is easier
                   </span>
                 </td>
@@ -460,7 +460,7 @@ export default async function AcrossCitiesPage({
                           <span>{breakInWord(c.breakInBand as BreakInBand)}</span>
                         </span>
                       ) : (
-                        <span className="text-cocoa-400">{MISSING}</span>
+                        <span className="text-cocoa-500">{MISSING}</span>
                       )}
                     </td>
                   );
@@ -499,7 +499,7 @@ export default async function AcrossCitiesPage({
                           </div>
                         </>
                       ) : (
-                        <span className="text-cocoa-400">{MISSING}</span>
+                        <span className="text-cocoa-500">{MISSING}</span>
                       )}
                     </td>
                   );

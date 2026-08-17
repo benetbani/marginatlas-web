@@ -44,7 +44,7 @@ export default async function CitiesMockup() {
             if (group.length === 0) return null;
             return (
               <section key={t} className="border-t border-ink-100 py-8 md:py-10">
-                <h2 data-typography="custom" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-400 mb-6">{label}</h2>
+                <h2 data-typography="custom" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-500 mb-6">{label}</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-0.5">
                   {group.map((c) => (
                     <a
@@ -53,7 +53,7 @@ export default async function CitiesMockup() {
                       className="group flex items-baseline justify-between gap-4 border-b border-ink-100 py-3"
                     >
                       <span className="text-[15px] text-ink-800 group-hover:text-atlas-700 transition-colors">{c.name}</span>
-                      <span className="text-[13px] text-ink-400 shrink-0">{c.country_name}</span>
+                      <span className="text-[13px] text-ink-500 shrink-0">{c.country_name}</span>
                     </a>
                   ))}
                 </div>

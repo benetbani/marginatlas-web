@@ -21,7 +21,7 @@ function usd(n: number | null | undefined): string {
 function Control({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-400 mb-2">{label}</span>
+      <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-500 mb-2">{label}</span>
       {children}
     </label>
   );
@@ -65,13 +65,13 @@ export default async function CalculatorMockup() {
           <Control label="Activity">
             <span className={fieldCls + " min-w-[180px] justify-between"}>
               Restaurants
-              <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden className="text-ink-400"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.6" fill="none" /></svg>
+              <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden className="text-ink-500"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.6" fill="none" /></svg>
             </span>
           </Control>
           <Control label="Country">
             <span className={fieldCls + " min-w-[150px] justify-between"}>
               Kenya
-              <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden className="text-ink-400"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.6" fill="none" /></svg>
+              <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden className="text-ink-500"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.6" fill="none" /></svg>
             </span>
           </Control>
           <Control label="Your annual revenue">

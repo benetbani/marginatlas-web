@@ -1160,7 +1160,7 @@ export function CompareClient({
             </p>
           </div>
         ) : spansCountries && anyData ? (
-          <div className="mt-6 rounded-lg border border-cocoa-200 bg-paper-100 p-4">
+          <div className="mt-6 rounded-lg border border-parchment bg-paper-100 p-4">
             <SectionEyebrow size="md" className="mb-1.5">
               Reading across countries
             </SectionEyebrow>
@@ -1628,7 +1628,7 @@ function GroupBlock({
             <td className="py-2.5 pr-4 align-top text-cocoa-500">
               {row.label}
               {row.hint ? (
-                <span className="mt-0.5 block text-[11px] text-cocoa-400">
+                <span className="mt-0.5 block text-[11px] text-cocoa-500">
                   {row.hint}
                 </span>
               ) : null}
@@ -1647,7 +1647,7 @@ function GroupBlock({
                 isNum(raw) &&
                 raw === (row.higherIsStronger === false ? worst : best);
               const tone = blank
-                ? "text-cocoa-400"
+                ? "text-cocoa-500"
                 : isBest
                   ? "font-semibold text-atlas-700"
                   : "text-ink-900";
@@ -1735,7 +1735,7 @@ function GroupBlockStacked({
                     isNum(raw) &&
                     raw === (row.higherIsStronger === false ? worst : best);
                   const tone = blank
-                    ? "text-cocoa-400"
+                    ? "text-cocoa-500"
                     : isBest
                       ? "font-semibold text-atlas-700"
                       : "text-ink-900";

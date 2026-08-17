@@ -56,10 +56,10 @@ export function PercentileStrip({ p10, p25, p50, p75, p90, you, format }: Props)
         )}
 
         {/* endpoint labels */}
-        <text x={xp(p10)} y={trackY - 16} textAnchor="middle" className="fill-ink-400" fontSize="11.5" letterSpacing="0.04em">BOTTOM 10%</text>
+        <text x={xp(p10)} y={trackY - 16} textAnchor="middle" className="fill-ink-500" fontSize="11.5" letterSpacing="0.04em">BOTTOM 10%</text>
         <text x={xp(p10)} y={trackY + trackH + 26} textAnchor="middle" className="fill-ink-700 tabular-nums" fontSize="14" fontWeight={600}>{format(p10)}</text>
 
-        <text x={xp(p90)} y={trackY - 16} textAnchor="middle" className="fill-ink-400" fontSize="11.5" letterSpacing="0.04em">TOP 10%</text>
+        <text x={xp(p90)} y={trackY - 16} textAnchor="middle" className="fill-ink-500" fontSize="11.5" letterSpacing="0.04em">TOP 10%</text>
         <text x={xp(p90)} y={trackY + trackH + 26} textAnchor="middle" className="fill-ink-700 tabular-nums" fontSize="14" fontWeight={600}>{format(p90)}</text>
 
         {/* typical label */}
