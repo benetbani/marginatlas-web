@@ -17,6 +17,7 @@ import { WebSite } from "@/components/StructuredData";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
+import { BlogCover } from "@/components/blog/BlogCover";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 // Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
 // Mirrors src/components/home/home2-view.tsx, which holds the rebuilt body.
@@ -601,11 +602,27 @@ export default async function HomePage() {
               <a
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="atlas-card group p-5 md:p-6 flex flex-col"
+                className="atlas-card group flex flex-col overflow-hidden"
               >
-                <div className="text-xs text-ink-500 tabular-nums">
-                  {formatPostDate(post.date)}
-                </div>
+                {/* THE COVER, which this rail was building and then throwing
+                    away. placeholderImage() a hundred lines up derives a
+                    gradient and an initial for every fallback post, and
+                    src/lib/blog.ts states the rule on the type itself: "Cover
+                    image. Required by site convention." Every card here had
+                    one and none of them rendered it, so six posts arrived as a
+                    date, a title and a paragraph.
+
+                    It is the same BlogCover /blog uses, now shared rather than
+                    copied, so a post looks like itself in both places.
+
+                    Padding moved off the anchor and onto this inner div. The
+                    cover has to run edge to edge, and `overflow-hidden` is
+                    what keeps it inside the 16px corner. */}
+                <BlogCover image={post.image} />
+                <div className="flex flex-1 flex-col p-5 md:p-6">
+                  <div className="text-xs text-ink-500 tabular-nums">
+                    {formatPostDate(post.date)}
+                  </div>
                 {/* A CARD TITLE, NOT A SECOND SECTION HEADING. This was
                     `text-lg md:text-xl`, the exact token the <h2> above it
                     carries, so the section heading and the six card titles
@@ -617,14 +634,35 @@ export default async function HomePage() {
                     page's own convention rather than a size chosen here.
                     leading-snug stays: blog titles are the one card title on
                     this page that regularly wraps to three lines. */}
-                <h3 className="mt-2 font-display text-base font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors leading-snug">
-                  {post.title}
-                </h3>
-                {post.excerpt && (
-                  <p className="mt-2 text-sm text-ink-700 leading-relaxed line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                )}
+                  <h3 className="mt-2 font-display text-base font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors leading-snug">
+                    {post.title}
+                  </h3>
+                  {/* THE EXCERPT IS GONE FROM THIS RAIL, and only from this
+                      rail. Measured off the rendered page rather than guessed:
+                      this band carried 164 words of copy against a homepage
+                      total of 397, so ONE band of eleven held 41 percent of all
+                      the text on the page, and the next largest held 54. 118 of
+                      those 164 were these six excerpts.
+
+                      That is the founder's complaint stated as a number: "It
+                      lacks flavor, it lacks elements. It just has a lot of
+                      text, when it should not." The reference pages he named
+                      show inventory rather than descriptions of inventory, and
+                      the trade here is exactly that: six paragraphs out, six
+                      covers in.
+
+                      /blog KEEPS its excerpts, deliberately. That page is a
+                      reading index where the excerpt is how a reader chooses
+                      between posts; this is a teaser rail where the title and
+                      the cover already do that job. Same card, same cover, same
+                      tokens; different density, because the two are answering
+                      different questions.
+
+                      Nothing was dropped that carries a fact. All six posts,
+                      all six titles, all six dates and all six links remain,
+                      and `excerpt` is untouched on the type, on /blog, and in
+                      the fallback list. */}
+                </div>
               </a>
             ))}
           </div>

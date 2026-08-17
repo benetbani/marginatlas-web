@@ -17,8 +17,9 @@
  * URL, metadata, and revalidate are preserved. Every /blog/{slug} link is
  * unchanged.
  */
-import { getAllPosts, type BlogPost, type BlogImage } from "@/lib/blog";
+import { getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { BlogCover } from "@/components/blog/BlogCover";
 
 export const revalidate = 86400;
 
@@ -37,40 +38,10 @@ function formatDate(date: string): string {
   });
 }
 
-/**
- * The post cover. Real image when the post carries one, otherwise the
- * deterministic gradient placeholder the library derives from the slug. The
- * `tall` flag gives the featured story a larger frame than the river rows.
- */
-function BlogCover({ image, tall }: { image: BlogImage; tall?: boolean }) {
-  const ratio = tall ? "aspect-[16/9] md:aspect-[2/1]" : "aspect-[16/9]";
-  if (image.kind === "url") {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={image.src}
-        alt={image.alt}
-        className={`w-full ${ratio} object-cover`}
-        loading="lazy"
-      />
-    );
-  }
-  return (
-    <div
-      className={`w-full ${ratio} flex items-center justify-center`}
-      style={{ background: image.gradient }}
-      aria-hidden="true"
-    >
-      <span
-        className={`font-display font-semibold text-white/85 ${
-          tall ? "text-6xl md:text-7xl" : "text-5xl"
-        }`}
-      >
-        {image.initial}
-      </span>
-    </div>
-  );
-}
+/* BlogCover MOVED to src/components/blog/BlogCover.tsx, unchanged. It was
+   private to this file, which is why the homepage rail rendered six post cards
+   with no cover at all while building one for each of them and discarding it.
+   Same component, same output here; the homepage now shares it. */
 
 /**
  * The featured story: the newest post, given the most room. A real <h2> so the
