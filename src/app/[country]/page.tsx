@@ -1454,34 +1454,51 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
              with their own derived verdicts. A closing beat that restates the
              section above it is not a last word, it is an echo.
 
-             `honestTake.body` is the fix and it was already being computed and
-             thrown away: nothing rendered it. For the exemplar it is the wage
-             read ("Most owners draw a wage closer to a senior employee than a
-             business owner in year one..."), for a thin country it is the
-             coverage admission. Both are the page's real last word.
+             The first pass rendered `body ?? verdict`, which fixed /gb and left
+             the echo standing everywhere else. THE RESIDUAL WAS BIGGER THAN THE
+             NOTE SAID: measured by running the real accessors over all 195
+             countries, `honestTake.body` is null for 194 of them. Only the
+             exemplar has a written close. So 194 country pages, not a handful,
+             closed on a verbatim repeat of the sentence two sections up.
 
-             RESIDUAL, stated rather than hidden: `body` is null for the derived
-             middle of the catalogue, so those countries still close on their
-             verdict. Fixing that needs a second derived line in
-             `country_view.ts`, which is a different file and a different call. */}
-          <OneThing
-            sentence={view.honestTake?.body ?? view.honestTake?.verdict ?? null}
-            lastChecked="June 2026"
-            sample={view.honestTake == null}
-          />
+             SO THIS SECTION NOW SELF-OMITS, and that is a deliberate drop of an
+             agreed section on 194 pages, said out loud rather than hidden. The
+             alternative was to derive a second sentence per country from a
+             template, and three templated closing lines across 194 countries is
+             a fabricated editorial voice however real the numbers inside it
+             are. A missing close is recoverable; an invented one is not. It
+             returns for any country the moment `country_view.ts` holds real
+             prose for it, with no change here.
+
+             Nothing measurable is lost. `OneThing` with a null sentence does
+             NOT vanish, it renders a SampleState reading "Closing line not
+             written yet", so the section had to be dropped at the call site
+             rather than by passing null. Its "Last checked" stamp was already
+             duplicated by the FreshnessStamp eleven lines below. */}
+          {view.honestTake?.body ? (
+            <OneThing sentence={view.honestTake.body} lastChecked="June 2026" />
+          ) : null}
 
           {/* 23. Related: the Compare CTA, the closing beat. Carries the
-              required "related" id. */}
+              required "related" id.
+
+              THE HEADING SAID "against its peers", WHICH SECTION 9 NOW ALSO
+              SAYS. That collision is this tick's own doing: section 9's word
+              moved from "neighbours" to "peers" and landed on top of this one.
+              The word that actually separates the two is WHO CHOOSES. Section 9
+              is a fixed set of four the atlas picked; this is the tool where the
+              reader picks. So this heading now names that, and the duplicate
+              goes. */}
           <EngravedSection
             id="related"
             eyebrow="Next move"
-            heading={`Put ${meta.name} against its peers`}
+            heading={`Put ${meta.name} against countries you pick`}
           >
             {/* Was a sentence that restated the heading and the button between
                 which it sat: "pick any activity and set X side by side with up
-                to three other countries". The heading says put it against its
-                peers, the button says Open Compare. What survives is the only
-                part neither of them carries: what you get to compare. */}
+                to three other countries". The heading says who chooses, the
+                button says Open Compare. What survives is the only part neither
+                of them carries: what you get to compare. */}
             <p className="max-w-2xl text-sm leading-relaxed text-ink-800">
               Revenue, the cost stack, and what an owner keeps, against up to
               three other countries.

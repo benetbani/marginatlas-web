@@ -577,8 +577,27 @@ function buildHonestTake(
     };
   }
 
-  // Everywhere else: an honest, derived line. The 185 thin-coverage countries get
-  // a plain admission instead of the old shared anchor paragraph.
+  /* Everywhere else: an honest, derived VERDICT and no body.
+   *
+   * `body` IS WRITTEN PROSE AND IT EXISTS FOR ONE COUNTRY. Counted 2026-08-18
+   * by running the real accessors over all 195 entries of COUNTRIES: the
+   * exemplar above is the only country with a body, so `body` is null for 194.
+   * The country page's closing beat therefore self-omits on 194 pages rather
+   * than falling back to the verdict, which is an echo of the section two above
+   * it. Write a real close here and that page's close returns by itself.
+   *
+   * AND THE ADMISSION BRANCH BELOW IS DEAD. Same count: `hasFacts` is TRUE for
+   * all 194, because `avgMonthlySalary` is held for 193 of them and
+   * `daysToStart` for 151, so `!hasFacts` never fires and the coverage
+   * admission has never rendered for any country. The comment here used to say
+   * it served "the 185 thin-coverage countries"; it serves none.
+   *
+   * It is left in place rather than deleted, and the condition is left alone
+   * rather than tightened, because tightening it moves 194 countries between
+   * verdicts. That is a data-coverage judgment, not a rendering fix, and it
+   * wants its own tick and its own measurement of what "thin" should mean. The
+   * distinction this counter cannot make: it knows a figure is HELD, never
+   * whether the figure is good enough to call the country covered. */
   const hasFacts =
     regime != null ||
     isNum(snapshot.daysToStart) ||
