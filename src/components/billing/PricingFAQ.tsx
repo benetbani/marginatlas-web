@@ -44,7 +44,11 @@ const ITEMS: Array<{ q: string; a: string }> = [
 export default function PricingFAQ() {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section className="bg-cream-50">
+    // Section ground REMOVED. This painted an opaque full-width band over the
+    // fixed page photograph for its whole height. Legibility is a property of
+    // the card, not of the backdrop, so the band goes transparent and the FAQ
+    // list below carries the surface.
+    <section>
       <div className="mx-auto max-w-3xl px-6 py-14 sm:py-20">
         <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
           Honest answers
@@ -52,7 +56,8 @@ export default function PricingFAQ() {
         <h2 className="font-display mt-3 text-2xl sm:text-3xl leading-[1.1] tracking-[-0.02em] font-semibold text-ink-900">
           Frequently asked, plainly answered.
         </h2>
-        <ul className="mt-8 rounded-lg bg-cream-50 border border-parchment">
+        {/* Canonical surface: was "rounded-lg bg-cream-50 border border-parchment". */}
+        <ul className="atlas-card mt-8">
           {ITEMS.map((it, i) => {
             const isOpen = open === i;
             return (

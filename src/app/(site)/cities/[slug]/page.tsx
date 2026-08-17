@@ -61,7 +61,6 @@ import {
   VisitorSplit,
   ComparisonBars,
   OwnerKeepTable,
-  HeroWash,
   OneThing,
   VsWorld,
   ZoomControl,
@@ -427,13 +426,33 @@ export default async function CityPage({
         altitude="city"
         hrefs={zoomHrefs}
       />
-      <div className="mx-auto max-w-6xl px-4 md:px-6 xl:flex xl:gap-16">
+      {/* No max-width and no padding of its own. SiteChrome's <main> already
+         gives this route `max-w-content mx-auto px-6`, so the former
+         `mx-auto max-w-6xl px-4 md:px-6` here was a second column cap INSIDE the
+         first and a second gutter on top of the first: 1024px of content where
+         every sibling page type reads at 1072, and the only doubled padding on
+         the site. This is now a bare flex row. */}
+      <div className="xl:flex xl:gap-16">
         <div className="min-w-0 xl:flex-1">
-          {/* Answer-first masthead, carrying the city's single Business Climate
-             Score. The flag + country sit in the eyebrow; the score anchors the
-             band on a flagship city and softens to a quiet stat on a thinner
-             one. */}
-          <HeroWash category="city">
+          {/* THE HERO, in ONE card.
+             Was `<HeroWash category="city">`, which paints `.atlas-wash--city`:
+             an OPAQUE `var(--atlas-surface-paper)` ground with an amber radial
+             over it. Two separate faults in one wrapper. The opaque ground sat
+             across the full width of the reading column at the very top of every
+             city page, painting out the fixed photograph exactly where the
+             founder says the picture must still read; and amber is not in the
+             palette (terracotta plus cool neutrals only).
+             The replacement is the mechanism the founder named: legibility is a
+             property of the CARD, not of a band behind it. The masthead, the
+             keep-this-city action and the climate band are one `.atlas-card`,
+             which is translucent at .955 so the photograph still reads at its
+             edges, is `position: relative` so it sits ABOVE the fixed frame
+             layers rather than under them, and carries the site's one card
+             treatment instead of a fourth hand-rolled surface.
+             Folding the score band into the same card also retires a flat
+             `border-parchment bg-cream-50` hand-roll and makes the hero read as
+             one answer rather than two stacked slabs. */}
+          <div className="atlas-card px-5 pb-6 md:px-7 md:pb-7">
             <AnswerFirstMasthead
               id="headline"
               eyebrow={
@@ -449,35 +468,32 @@ export default async function CityPage({
               stats={view.masthead.stats}
               breakIn={view.masthead.climateChip}
             />
-          </HeroWash>
 
-          {/* Masthead action area: keep this whole city on the watch list, the
-             one durable affordance the masthead carries. A city has no single
-             take-home, so there is no make-it-yours here; the reader flags the
-             place and moves on, the floating tray holds the shortlist. */}
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <CityWatchAction item={cityWatchItem} />
-          </div>
-
-          {/* The Business Climate Score as a calm 0-100 band, set just under the
-             masthead: the plain climate word, the four threshold words quietly
-             under the track, and the peer cities below shown as context ticks.
-             This is the score the masthead anchors on a flagship city and chips
-             on a thinner one, drawn here as a band so the reader sees where it
-             sits in the field rather than reading a lone number. Self-omits on an
-             unscored city (the masthead already softens that case). */}
-          {view.scoreBand ? (
-            <div className="mt-6 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7">
-              <ScoreBand
-                score={view.scoreBand.score}
-                label={view.scoreBand.label}
-                tone={view.scoreBand.tone}
-                bands={view.scoreBand.bands}
-                peers={view.scoreBand.peers.length > 0 ? view.scoreBand.peers : null}
-                hint={view.scoreBand.hint}
-              />
+            {/* Keep this whole city on the watch list, the one durable
+               affordance the masthead carries. A city has no single take-home,
+               so there is no make-it-yours here; the reader flags the place and
+               moves on, the floating tray holds the shortlist. */}
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <CityWatchAction item={cityWatchItem} />
             </div>
-          ) : null}
+
+            {/* The Business Climate Score as a calm 0-100 band: the plain climate
+               word, the four threshold words quietly under the track, and the
+               peer cities below shown as context ticks. Self-omits on an unscored
+               city (the masthead already softens that case). */}
+            {view.scoreBand ? (
+              <div className="mt-6 border-t border-parchment pt-6">
+                <ScoreBand
+                  score={view.scoreBand.score}
+                  label={view.scoreBand.label}
+                  tone={view.scoreBand.tone}
+                  bands={view.scoreBand.bands}
+                  peers={view.scoreBand.peers.length > 0 ? view.scoreBand.peers : null}
+                  hint={view.scoreBand.hint}
+                />
+              </div>
+            ) : null}
+          </div>
 
           <div className="mt-8 space-y-6 md:space-y-8">
             {/* The honest take, right after the headline numbers. The brand
@@ -563,7 +579,7 @@ export default async function CityPage({
                   body={view.space.body}
                 />
                 {view.space.stats.length > 0 ? (
-                  <dl className="mt-3 grid gap-x-8 gap-y-3 rounded-lg border border-parchment bg-cream-50 px-5 py-4 sm:grid-cols-2 md:px-7">
+                  <dl className="atlas-card mt-3 grid gap-x-8 gap-y-3 px-5 py-4 sm:grid-cols-2 md:px-7">
                     {view.space.stats.map((s, i) => (
                       <div key={i} className="flex items-baseline justify-between gap-4">
                         <dt className="min-w-0 text-sm text-cocoa-700">
@@ -817,7 +833,7 @@ export default async function CityPage({
                   body={view.changing.body}
                 />
                 {view.changing.points.length > 0 ? (
-                  <ul className="mt-3 space-y-2.5 rounded-lg border border-parchment bg-cream-50 px-5 py-4 md:px-7">
+                  <ul className="atlas-card mt-3 space-y-2.5 px-5 py-4 md:px-7">
                     {view.changing.points.map((p, i) => (
                       <li
                         key={i}
@@ -859,7 +875,7 @@ export default async function CityPage({
                         ...scoredPeers.map((p) => ({ label: p.name, value: p.score })),
                       ];
                       return (
-                        <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7">
+                        <div className="atlas-card px-5 py-5 md:px-7">
                           <ComparisonBars
                             items={items}
                             label="Business Climate Score, this city and its peers"
@@ -891,7 +907,7 @@ export default async function CityPage({
             {(() => {
               const haveBoth = cityScore != null && peerMedianScore != null;
               return (
-                <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7">
+                <div className="atlas-card px-5 py-5 md:px-7">
                   <VsWorld
                     eyebrow="Versus its peers"
                     here={haveBoth ? cityScore.score : null}

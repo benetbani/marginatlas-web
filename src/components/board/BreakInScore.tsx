@@ -218,7 +218,8 @@ export function BreakInWhy({ rating }: { rating: BreakInRating | null }) {
   if (!rating) return null;
   const { paybackScore, speedScore, roomScore } = rating.components;
   return (
-    <div className="mt-5 rounded-lg border border-parchment bg-cream-50 p-4 md:p-5">
+    // Canonical surface: was "rounded-lg border border-parchment bg-cream-50".
+    <div className="atlas-card mt-5 p-4 md:p-5">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <span className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
           Why this rating

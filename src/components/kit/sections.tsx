@@ -112,7 +112,12 @@ export function PlainTerms({
         {rows.map((it, i) => (
           <div
             key={i}
-            className="rounded-lg border border-parchment bg-cream-50/70 px-4 py-3.5"
+            // A tile INSIDE a BeatCard, so it is a card-on-card and takes the
+            // soft variant, not the canonical one: the outer card is already the
+            // surface carrying the photograph, and stacking a second translucent
+            // fill on it would only muddy the picture. Was "rounded-lg border
+            // border-parchment bg-cream-50/70".
+            className="atlas-card-soft px-4 py-3.5"
           >
             <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-atlas-50 text-atlas-700">
               <PlainTermIcon label={it.label} />

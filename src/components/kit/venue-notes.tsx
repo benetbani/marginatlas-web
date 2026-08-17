@@ -41,7 +41,8 @@ function VenueNoteShell({
   return (
     <aside
       className={cn(
-        "flex gap-3 rounded-lg border border-parchment bg-cream-50/60 px-5 py-4",
+        // Canonical surface: was "rounded-lg border border-parchment bg-cream-50/60".
+        "atlas-card flex gap-3 px-5 py-4",
         className,
       )}
     >

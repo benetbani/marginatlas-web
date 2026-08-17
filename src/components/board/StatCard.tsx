@@ -19,13 +19,12 @@
  * entry. An optional eyebrow sits above the title, and an optional leading
  * slot (e.g. a flag) sits beside it.
  *
- * Server component. Tokens only, mobile-first. The card surface is the warm
- * white card token (bg-cream-50) with the warm-taupe hairline border and the
- * card elevation token, matching every other board card.
+ * Server component. Tokens only, mobile-first. The card surface is the site's
+ * canonical `.atlas-card`, which carries the fill, the hairline and the seating
+ * shadow in one class, matching every other board card.
  */
 import * as React from "react";
 import Link from "next/link";
-import { elevation } from "@/lib/design-tokens";
 import { MISSING } from "./format";
 
 /**
@@ -67,10 +66,12 @@ export function StatCard({
 }: StatCardProps) {
   return (
     <article
-      className={`rounded-lg border border-parchment bg-cream-50 p-4 md:p-5${
-        className ? ` ${className}` : ""
-      }`}
-      style={{ boxShadow: elevation.card }}
+      // Canonical surface: was "rounded-lg border border-parchment bg-cream-50"
+      // plus an inline boxShadow from the elevation token. .atlas-card carries
+      // the fill, the hairline AND the seating shadow, so the inline style went
+      // with it: an inline shadow beats the class and would have pinned this
+      // card to a second elevation nobody else uses.
+      className={`atlas-card p-4 md:p-5${className ? ` ${className}` : ""}`}
     >
       <div className="flex items-center gap-2.5">
         {leading ? <span className="shrink-0">{leading}</span> : null}

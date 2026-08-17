@@ -31,8 +31,11 @@ export function AudienceCaveat({ industry, usingParentData }: Props) {
 
   // 2. Mixed bimodal — warn that average can mislead.
   if (audience === "mixed_caution") {
+    // Canonical surface: was "rounded-xl border border-parchment bg-white",
+    // which is opaque and blocked the page photograph. The clay variant below
+    // keeps its own fill: that tint IS the warning.
     return (
-      <div className="rounded-xl border border-parchment bg-white px-4 py-2.5 text-sm text-ink-900 flex items-start gap-2">
+      <div className="atlas-card px-4 py-2.5 text-sm text-ink-900 flex items-start gap-2">
         <span aria-hidden className="text-base">⚠️</span>
         <div>
           <span className="font-medium">Read with caution.</span>{" "}

@@ -56,12 +56,17 @@ export function BeatCard({
       id={id}
       aria-label={heading || eyebrow}
       className={[
-        // Engraved-card reskin (R7 A.5): flat hairline cards, no soft shadow, to
-        // match the engraved scorecard surface. The feature/lead card keeps its
-        // emphasis via a slightly stronger ink hairline (close to --hairline-strong)
-        // instead of elevation, so the working pages read engraved, not SaaS.
-        "rounded-lg border bg-cream-50",
-        feature ? "border-ink-900/15" : "border-parchment",
+        // Canonical surface (2026-08-17). This was a hand-rolled flat card,
+        // "rounded-lg border bg-cream-50", from the R7 A.5 engraved reskin. That
+        // reskin is REVERSED here, and the reason is the background, not taste:
+        // AtlasFrame now paints a fixed photograph behind every page with no
+        // centre plate, so an opaque fill blocks the picture dead where the
+        // canonical card carries it at .955. BeatCard is the kit's most-used
+        // surface, so it is the single highest-leverage conversion on the site.
+        // The feature/lead card keeps its stronger ink hairline: .atlas-card
+        // sets the border WIDTH, so a later border-color utility still wins.
+        "atlas-card",
+        feature ? "border-ink-900/15" : "",
         "px-5 py-5 md:px-7 md:py-6",
         className,
       ]

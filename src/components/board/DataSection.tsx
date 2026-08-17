@@ -87,7 +87,8 @@ export function DataSection({
     // flat sheet. The section title is a real serif heading (a scanning
     // anchor), with the old eyebrow treatment kept above it as the quiet
     // category voice. One surface per section; the ground breathes between.
-    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
+    // Canonical surface: was "rounded-lg border border-parchment bg-cream-50".
+    <section className="atlas-card mt-5 px-5 py-5 md:px-7 md:py-6">
       <h3 className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
         {SECTION_ICON[section.key] ? (
           <AtlasIcon

@@ -67,7 +67,9 @@ export function HonestTakeBox({
       id={id}
       aria-label={eyebrow}
       className={[
-        "rounded-lg border border-parchment bg-cream-100",
+        // Canonical surface: was "rounded-lg border border-parchment
+        // bg-cream-100", an opaque hand-roll that blocked the page photograph.
+        "atlas-card",
         "px-5 py-5 md:px-7 md:py-6",
         className,
       ]

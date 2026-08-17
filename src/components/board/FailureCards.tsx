@@ -22,7 +22,8 @@ export function FailureCards({ cards }: FailureCardsProps) {
   return (
     // SaaS reformation 2026-06-12: seated card section; the warning cards
     // inside go white-on-card with the amber caution accent on the title.
-    <section className="mt-5 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
+    // Canonical surface: was "rounded-lg border border-parchment bg-cream-50".
+    <section className="atlas-card mt-5 px-5 py-5 md:px-7 md:py-6">
       <div className="flex items-start justify-between gap-6">
         <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900 md:text-xl">
           What kills weak operators
@@ -38,7 +39,10 @@ export function FailureCards({ cards }: FailureCardsProps) {
         {cards.map((card, i) => (
           <article
             key={`${card.title}-${i}`}
-            className="rounded-md border border-parchment bg-white p-4"
+            // Card inside a card, so the soft variant: the outer section is
+            // already the surface carrying the photograph. Was "rounded-md
+            // border border-parchment bg-white".
+            className="atlas-card-soft p-4"
           >
             <h4 data-typography="custom" className="font-semibold text-ink-900">{card.title}</h4>
             <p className="mt-1 text-sm leading-relaxed text-cocoa-700">{card.body}</p>

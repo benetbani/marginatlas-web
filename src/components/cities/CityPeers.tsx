@@ -66,7 +66,13 @@ export function CityPeers({ citySlug, cityName }: CityPeersProps) {
   if (peers.length < 2) return null;
 
   return (
-    <section className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
+    /* Canonical surface. Was `rounded-lg border border-parchment bg-cream-50`,
+       a flat opaque hand-roll: no elevation, and an opaque fill where the
+       canonical card carries the page photograph through at .955. The peer
+       CARDS inside stay `bg-white`, because they sit on this card rather than
+       on the picture, and nesting a second .atlas-card would double the
+       shadow. */
+    <section className="atlas-card px-5 py-5 md:px-7 md:py-6">
       <SectionEyebrow className="mb-1">Cities like {cityName}</SectionEyebrow>
       <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl max-w-3xl">
         How {cityName} compares to similar cities

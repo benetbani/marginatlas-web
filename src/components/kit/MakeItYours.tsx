@@ -196,7 +196,9 @@ export function MakeItYours({
   return (
     <section
       className={cn(
-        "rounded-2xl border border-parchment bg-cream-50",
+        // Canonical surface: was "rounded-2xl border border-parchment bg-cream-50".
+        // The radius is unchanged: --radius is 16px, which is what rounded-2xl was.
+        "atlas-card",
         className,
       )}
     >

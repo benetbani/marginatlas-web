@@ -79,7 +79,8 @@ export default function OnboardingChecklist({
   return (
     <section
       aria-label="Onboarding checklist"
-      className="rounded-2xl p-5 sm:p-6 mb-8 bg-white border border-parchment"
+      // Canonical surface: was "rounded-2xl bg-white border border-parchment".
+      className="atlas-card p-5 sm:p-6 mb-8"
     >
       <div className="flex items-start justify-between gap-3">
         <div>

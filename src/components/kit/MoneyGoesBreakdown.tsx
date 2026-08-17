@@ -94,7 +94,8 @@ export function MoneyGoesBreakdown({
       id={id}
       aria-label={heading}
       className={[
-        "rounded-lg border border-parchment bg-cream-50",
+        // Canonical surface: was "rounded-lg border border-parchment bg-cream-50".
+        "atlas-card",
         "px-5 py-5 md:px-7 md:py-6",
         className,
       ]
