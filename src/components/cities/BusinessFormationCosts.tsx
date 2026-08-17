@@ -12,6 +12,8 @@
  * Server component, no client JS.
  */
 
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+
 import formationJson from "../../../data/legal/business_formation_costs_v1.json";
 
 type TierRow = {
@@ -88,13 +90,27 @@ export function BusinessFormationCosts({
   const rows = FILE.countries[countryIso2.toUpperCase()];
 
   return (
-    <section className="mb-12 md:mb-16">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-2">
-        Cost to start
-      </div>
-      <h2 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-ink-900 mb-2">
+    /* THIS IS A SUB-BLOCK, NOT A PAGE SECTION, and it was dressed as the
+       latter. It mounts in exactly one place, inside the country page's
+       "decisive read" card (`[country]/page.tsx`), under that card's own
+       eyebrow and h2. Three things followed from the mismatch and all three
+       were visible in a render:
+
+       - Its h2 was `text-2xl md:text-3xl`, TWO steps above the h2 of the
+         section containing it (`text-lg md:text-xl`), so the sub-block's
+         heading was the largest type in the card and read as the section
+         title. It is an h3 at the sub-heading step now.
+       - Its eyebrow was hand-rolled at `text-atlas-600` with `tracking-wide`,
+         while every other eyebrow on that page is `SectionEyebrow`
+         (atlas-700, tracking .16em). Two eyebrow treatments, one card.
+       - `mb-12 md:mb-16` hung 48 to 64px of dead space under the table, inside
+         a parent that already owns the spacing. The gap was visible under the
+         "See what restaurants typically keep after tax" link at 1440. */
+    <section className="mb-0">
+      <SectionEyebrow className="mb-2">Cost to start</SectionEyebrow>
+      <h3 className="font-display text-base md:text-lg font-medium tracking-tight text-ink-900 mb-2">
         Setting up a business in {countryName}
-      </h2>
+      </h3>
       <p className="text-sm md:text-base text-cocoa-700/80 mb-6 max-w-2xl">
         Government fees + typical online-filing turnaround for each legal
         tier. Professional fees (lawyer, notary, accountant) on top vary
@@ -102,7 +118,14 @@ export function BusinessFormationCosts({
       </p>
 
       {rows ? (
-        <div className="rounded-2xl border border-parchment bg-white overflow-hidden">
+        /* `overflow-x-auto`, NOT `overflow-hidden`. Measured at 375x812 on
+           /gb: the table lays out at 389px inside a 269px box, and
+           `overflow-hidden` gives no scrollbar and no drag, so the entire
+           COMPLEXITY column and the difficulty dots were cut off the right
+           edge of the card and were unreachable by any means. The header row
+           ended at TIME. Auto keeps the same rounded clip and lets the last
+           120px be reached. */
+        <div className="rounded-2xl border border-parchment bg-white overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-paper-100 border-b border-parchment">
