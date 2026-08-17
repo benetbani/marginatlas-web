@@ -392,11 +392,17 @@ function buildCostDrivers(
     .sort((a, b) => b.perHundred - a.perHundred)
     .slice(0, 4);
   if (costLines.length === 0) return null;
-  return costLines.map((m, i) => ({
+  /* THE TICK IS A SHARE, NOT A RANK, mirroring the cell page's builder and for
+     the reason written out in full there: `i === 0 ? 3 : i === 1 ? 2 : 1` is
+     sort position drawn as a magnitude, so a three-dollar difference took a
+     whole step of the scale while a ten-dollar one took none. Proportional to
+     the heaviest line, no threshold chosen by anybody, no new figure. */
+  const heaviest = Math.max(...costLines.map((m) => m.perHundred));
+  return costLines.map((m) => ({
     label: m.label,
     note: m.hint,
     direction: "down" as const,
-    impact: (i === 0 ? 3 : i === 1 ? 2 : 1) as 1 | 2 | 3,
+    impact: Math.min(3, Math.max(1, Math.ceil((m.perHundred / heaviest) * 3))) as 1 | 2 | 3,
   }));
 }
 

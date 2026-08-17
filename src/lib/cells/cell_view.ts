@@ -397,11 +397,23 @@ function buildCostDrivers(
     .sort((a, b) => b.perHundred - a.perHundred)
     .slice(0, 4);
   if (costLines.length === 0) return null;
-  return costLines.map((m, i) => ({
+  /* THE TICK IS A SHARE, NOT A RANK. Changed 2026-08-17.
+     It used to read `i === 0 ? 3 : i === 1 ? 2 : 1`, which is sort position
+     wearing the costume of a magnitude. On /gb/london/restaurants that printed
+     Payroll $34 at three ticks against Cost of goods $31 at two, a full step of
+     the scale for a three-dollar difference, while Rent $15 and Everything else
+     $5 tied at one tick across a ten-dollar gap. The graphic told the reader the
+     opposite of the ranking it was drawn from.
+     Now proportional to the largest cost line, which is the same normalisation
+     LikeForLikeBars uses and introduces no threshold anybody had to choose:
+     the four above become 3, 3, 2, 1. No new figure, the held share does all
+     the work. */
+  const heaviest = Math.max(...costLines.map((m) => m.perHundred));
+  return costLines.map((m) => ({
     label: m.label,
     note: m.hint,
     direction: "down" as const,
-    impact: (i === 0 ? 3 : i === 1 ? 2 : 1) as 1 | 2 | 3,
+    impact: Math.min(3, Math.max(1, Math.ceil((m.perHundred / heaviest) * 3))) as 1 | 2 | 3,
   }));
 }
 
