@@ -470,3 +470,37 @@ overlapping grounds wins. For "is cream still declared" it is exact. For "does
 the page still look warm" the instrument is a screenshot, and this tick did not
 take one: the change was verified by compiling `globals.css` through the
 project's own tailwind pipeline and asserting on the emitted CSS.
+
+## 12. Card convergence: the real numbers, and a correction
+
+A commit on 2026-08-17 reported "112 atlas-card uses against 41 hand-rolled".
+**Both figures were wrong**, and wrong in the way this repository has a shared
+tool to prevent: they came from a naive `grep`, which counted the sweep's own
+explanatory COMMENTS as both conversions and defects. Two gates in this chain
+carry headers about exactly this mistake and the coordinator made it anyway.
+
+Counted properly, with `scripts/lib/strip_comments` applied so only code counts:
+
+| | raw grep | code only |
+|---|---|---|
+| `atlas-card` uses | 112 | **83** |
+| hand-rolled `rounded-* border-* bg-white/cream-50` | 41 | **103** |
+
+And the 103 is itself the wrong question, because a regex cannot tell a card
+from an input. Classified:
+
+| what it actually is | n |
+|---|---|
+| **homepage cards still hand-rolled** | **0** |
+| genuine cards on other pages | 69 |
+| chips (`rounded-full`), never cards | 20 |
+| form inputs inside Form/Field files | 14 |
+
+**So the homepage is done** and 69 real cards remain elsewhere. That matters
+because of the two-surface rule: with `--atlas-surface-card` at `.955` and no
+centre plate, a hand-rolled `bg-white` card is fully opaque and punches a hole
+through the photograph. 69 holes remain, none of them on the page the founder
+is looking at.
+
+**Method for the next tick:** count with comments stripped, then CLASSIFY before
+converting. Chips and inputs are not cards and must not be forced into one.
