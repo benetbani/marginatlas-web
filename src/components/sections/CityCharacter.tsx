@@ -40,9 +40,15 @@ export function CityCharacter({ geoId, countryIso2 }: Props) {
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">
           The city, read economically
         </div>
+        {/* The site's section-heading step. This was
+            text-2xl md:text-3xl lg:text-4xl, which on the region page put a
+            SECTION heading within one step of the page h1 above it, and set
+            the place name twice at nearly the same size: the h1 already reads
+            "Best and hardest businesses in New York" and the breadcrumb reads
+            it a third time. */}
         <h2
           id="city-character-heading"
-          className="font-display text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-ink-900 leading-tight"
+          className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900"
         >
           {char.display_name}
         </h2>

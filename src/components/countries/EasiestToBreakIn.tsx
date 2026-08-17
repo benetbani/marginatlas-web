@@ -87,7 +87,11 @@ export function EasiestToBreakIn({
   return (
     <div>
       <SectionEyebrow className="mb-2">Easiest to break in</SectionEyebrow>
-      <h2 className="text-xl md:text-2xl font-semibold text-ink-900">
+      {/* The site's section-heading step. This was text-xl md:text-2xl with no
+          font-display and font-semibold, so it was the one heading on the
+          country and region pages set in the body sans and a weight heavier
+          than every heading around it. */}
+      <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
         Where it is easiest to get started in {placeName}
       </h2>
       {/* useless-tile-ok: describes the break-in ranking, not a count of things we cover */}

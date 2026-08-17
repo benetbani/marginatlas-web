@@ -77,7 +77,17 @@ export function BeatCard({
         <div className="min-w-0 flex-1">
           <SectionEyebrow className="mb-1">{eyebrow}</SectionEyebrow>
           {hasText(heading) ? (
-            <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
+            /* THE SITE'S SECTION-HEADING STEP, 2026-08-17. This was
+               text-xl md:text-2xl, one step above the home, country and region
+               pages, which all set a section heading at text-lg md:text-xl.
+               BeatCard is the kit's most-used heading: the city page alone runs
+               seven or eight h2 through it, so the city and the country
+               disagreed about what a section heading IS, which is the cohesion
+               defect in section 7 rather than a preference. Converging down
+               rather than up, because the smaller step is the one three page
+               types already carry and the founder's note is that headings
+               should be small and the content should carry the weight. */
+            <h2 className="font-display text-lg font-medium tracking-tight text-balance text-ink-900 md:text-xl">
               {heading}
             </h2>
           ) : null}
