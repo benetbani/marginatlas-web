@@ -677,19 +677,19 @@
     radial-gradient(120% 90% at 50% -18%, rgba(230, 34, 0, 0.16) 0%, rgba(214, 92, 48, 0.12) 32%, rgba(247, 247, 248, 0) 66%),
     var(--atlas-surface-paper);
 }
-.atlas-wash--city {
-  background:
-    radial-gradient(120% 90% at 50% -18%, rgba(214, 134, 15, 0.18) 0%, rgba(245, 189, 92, 0.14) 34%, rgba(247, 247, 248, 0) 68%),
-    var(--atlas-surface-paper);
-}
-.atlas-wash--country {
-  background:
-    radial-gradient(120% 90% at 50% -18%, rgba(111, 143, 37, 0.16) 0%, rgba(150, 180, 72, 0.12) 34%, rgba(247, 247, 248, 0) 68%),
-    var(--atlas-surface-paper);
-}
+/* .atlas-wash--city and .atlas-wash--country were DELETED 2026-08-17. Both had
+   zero call sites anywhere in src, and both painted a banned hue: city was amber
+   at rgba(214,134,15,.18), country was rgba(111,143,37,.16), which is #6f8f25,
+   the exact moss green verify_palette_membership's own comment names as banned.
+
+   Dead code is not harmless when it holds a forbidden colour. The next page
+   wanting a wash reaches for the category matching its name, and reintroduces
+   the hue without ever writing it down. HeroWashCategory keeps "city" and
+   "country" as valid values and they now fall through to the base .atlas-wash,
+   which is the honest result: a neutral wash rather than a banned one. */
 .atlas-wash--learn {
   background:
-    radial-gradient(120% 90% at 50% -18%, rgba(83, 66, 49, 0.12) 0%, rgba(228, 226, 221, 0.5) 36%, rgba(247, 247, 248, 0) 70%),
+    radial-gradient(120% 90% at 50% -18%, rgba(83, 66, 49, 0.12) 0%, rgba(227, 227, 227, 0.5) 36%, rgba(247, 247, 248, 0) 70%),
     var(--atlas-surface-paper);
 }
 /* The faint compass-rosette the wash carries by default, very low contrast. */

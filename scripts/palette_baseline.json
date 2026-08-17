@@ -51,7 +51,7 @@
     "src/app/(site)/status/page.tsx": 1,
     "src/app/(site)/you/YouDashboard.tsx": 1,
     "src/app/dev/london-commercial/page.tsx": 1,
-    "src/app/globals.css": 15,
+    "src/app/globals.css": 11,
     "src/app/og/_card.tsx": 1,
     "src/app/[country]/[geo]/[industry]/[sub]/page.tsx": 1,
     "src/app/_design/v2-review/page.tsx": 4
