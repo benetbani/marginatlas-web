@@ -413,11 +413,18 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
          order the section-order gate enforces: hero, how-it-works,
          margin-waterfall. Every other nav anchor is a <div id=> wrapper, so the
          kit's own <section> elements never inject an unregistered id. */}
-      {/* `[&_[id]]:scroll-mt-24`: the masthead is `sticky top-0` and 89px tall
-          and every anchor here had scroll-margin-top: 0, so a jump-nav click
-          landed the section heading behind the opaque bar. One class on the
-          column, not one per anchor: they sit on section, div, BeatCard,
-          CostDrivers and OneThing alike. 24 is the step already used here. */}
+      {/* `[&_[id]]:scroll-mt-*`: every anchor here had scroll-margin-top: 0, so
+          a jump-nav click landed the section heading behind the opaque bar. One
+          class on the column, not one per anchor: they sit on section, div,
+          BeatCard, CostDrivers and OneThing alike.
+
+          32 below lg, not 24. The 24 was sized against a masthead measured at
+          89px, which is its height at 1024 and up and at none of the three
+          bands below. Measured on the rendered page: 117px from 320 to 413 and
+          125px from 768 to 1023, both because the bar wraps to two rows. At 768
+          that put EIGHT of this page's nine anchors back under the bar with
+          their headings hidden, after the anchor pass had supposedly closed it.
+          128px clears the tallest of the four heights. */}
       {/* `xl:flex xl:gap-16`, NOT `flex gap-6`. THIS PAGE WAS UNREADABLE ON A
           PHONE, on all 200 trade routes, and the measurement is not subtle.
 
@@ -443,7 +450,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
           that made the row unconditional. The gap converges on the `xl:gap-16`
           those three use, rather than keeping a fourth value. */}
       <div className="xl:flex xl:gap-16">
-        <div className="min-w-0 space-y-6 [&_[id]]:scroll-mt-24 md:space-y-8 xl:flex-1">
+        <div className="min-w-0 space-y-6 [&_[id]]:scroll-mt-32 md:space-y-8 lg:[&_[id]]:scroll-mt-24 xl:flex-1">
           {/* 1. Hero + headline numbers, answer-first. The trade pictogram
              carries the identity (design-system 9.2); the answer-first masthead
              carries the verdict thesis as the page H1, the one-line answer, the
