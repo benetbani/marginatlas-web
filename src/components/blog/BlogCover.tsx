@@ -35,19 +35,33 @@ export function BlogCover({ image, tall }: { image: BlogImage; tall?: boolean })
       />
     );
   }
+  /* THE GIANT INITIAL IS GONE, and this codebase had already learned why.
+     NeighborhoodCover's header records the identical failure, in its own words:
+     "The earlier version drew a single giant faint initial bottom-right; a row
+     of those read as spaced giant letters and looked like a broken
+     placeholder." That lesson was applied to neighbourhood covers in June and
+     never reached here, which is the charter's section 7 in miniature: two
+     surfaces solving one problem, one of them already solved it.
+
+     Seen on the rendered page, it was worse than merely plain. The letter is
+     the first character of the SLUG, so it carries no meaning a reader could
+     use, and it collides: "us-small-business-overview" and "uk-overview" both
+     print a giant U, side by side on the homepage rail. Two identical letters
+     on adjacent cards is the tell that it is an artifact and not a monogram.
+     On the featured card it renders at text-7xl, where a single letter on a
+     dark panel reads as a missing image rather than a design.
+
+     What remains is the deterministic gradient, which is doing real work: six
+     distinct on-brand covers, stable per post, terracotta-led since the palette
+     fix earlier today. No texture or mark is layered back on. The site's
+     rosette is dark ink at 5% opacity, built for light grounds, and would be
+     invisible on these; inventing a second decorative language for one panel is
+     how the icon vocabulary sprawled last time. */
   return (
     <div
-      className={`w-full ${ratio} flex items-center justify-center`}
+      className={`w-full ${ratio}`}
       style={{ background: image.gradient }}
       aria-hidden="true"
-    >
-      <span
-        className={`font-display font-semibold text-white/85 ${
-          tall ? "text-6xl md:text-7xl" : "text-5xl"
-        }`}
-      >
-        {image.initial}
-      </span>
-    </div>
+    />
   );
 }

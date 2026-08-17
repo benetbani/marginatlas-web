@@ -22,7 +22,15 @@ export type BlogPost = {
 
 export type BlogImage =
   | { kind: "url"; src: string; alt: string }
-  | { kind: "gradient"; gradient: string; initial: string };
+  /* `initial` REMOVED 2026-08-17. It held the first letter of the slug and was
+     rendered as a giant character across the cover. NeighborhoodCover's header
+     had already diagnosed that exact treatment as reading like a broken
+     placeholder, and on the rendered page it also collided:
+     "us-small-business-overview" and "uk-overview" both produced U, side by
+     side. With the last render gone the field was computed by two producers and
+     read by none, which is the same defect as the covers this rail was building
+     and discarding. */
+  | { kind: "gradient"; gradient: string };
 
 // Cover gradients anchored to the live token ramps (conformed 2026-06-12;
 // the old navy pair was off-palette blue, replaced by the sanctioned teal).
@@ -74,8 +82,7 @@ function gradientFor(slug: string): BlogImage {
     h = (h * 31 + slug.charCodeAt(i)) & 0xfffffff;
   }
   const gradient = GRADIENT_PALETTE[h % GRADIENT_PALETTE.length];
-  const initial = (slug.replace(/[^a-z]/gi, "")[0] || "A").toUpperCase();
-  return { kind: "gradient", gradient, initial };
+  return { kind: "gradient", gradient };
 }
 
 function imageFromFrontmatter(slug: string, data: Record<string, unknown>): BlogImage {

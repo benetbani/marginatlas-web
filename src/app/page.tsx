@@ -88,11 +88,9 @@ export const revalidate = 86400; // 1 day
 function placeholderImage(slug: string): BlogPost["image"] {
   let h = 0;
   for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) & 0xfffffff;
-  const initial = (slug.replace(/[^a-z]/gi, "")[0] || "A").toUpperCase();
   return {
     kind: "gradient" as const,
     gradient: GRADIENT_PALETTE[h % GRADIENT_PALETTE.length],
-    initial,
   };
 }
 

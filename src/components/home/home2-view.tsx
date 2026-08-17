@@ -54,7 +54,8 @@ import { AtlasMark, type AtlasMarkId } from "@/components/spine/marks";
 import { WorldMapClient } from "@/components/home/WorldMapClient";
 import { NavigatorForm } from "@/components/NavigatorForm";
 import type { MarginIndexBoard, MarginIndexRow } from "@/lib/scores/margin_index";
-import type { BlogPost, BlogImage } from "@/lib/blog";
+import type { BlogPost } from "@/lib/blog";
+import { BlogCover } from "@/components/blog/BlogCover";
 
 /* ---- dynamic chapter numbering , ported verbatim from city-view.tsx ------ */
 function makeChapterCounter() {
@@ -223,19 +224,11 @@ function formatPostDate(iso: string): string {
  * initial derived from the slug. `BlogPost.image` is never optional (see lib/blog.ts),
  * so this never renders blank , the rulebook v2 fix for a card that used to render as
  * bare text and throw away a guaranteed cover. */
-function BlogCover({ image }: { image: BlogImage }) {
-  if (image.kind === "url") {
-    return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={image.src} alt={image.alt} className="aspect-[16/9] w-full object-cover" loading="lazy" />
-    );
-  }
-  return (
-    <div className="flex aspect-[16/9] w-full items-center justify-center" style={{ background: image.gradient }} aria-hidden="true">
-      <span className="text-3xl font-semibold text-white/85">{image.initial}</span>
-    </div>
-  );
-}
+/* This file's own local BlogCover is DELETED, 2026-08-17. It was the third of
+   four copies of one component, and it carried the giant initial that
+   NeighborhoodCover had already identified as reading like a broken
+   placeholder. The url branch was byte-identical to the shared one. Imported
+   from @/components/blog/BlogCover instead. */
 function BlogStrip({ posts }: { posts: BlogPost[] }) {
   return (
     <>

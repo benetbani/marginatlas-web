@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getAllPosts, getPost } from "@/lib/blog";
 import LongformArticle from "@/components/editorial/LongformArticle";
+import { BlogCover } from "@/components/blog/BlogCover";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -45,23 +46,13 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
     .slice(0, 4)
     .map((p) => ({ slug: p.slug, title: p.title, subtitle: p.excerpt }));
 
-  // Cover: keep the site convention (real image when present, deterministic
-  // gradient placeholder otherwise). Rendered inside the longform frame.
-  const cover =
-    post.image.kind === "url" ? (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={post.image.src} alt={post.image.alt} className="w-full object-cover" />
-    ) : (
-      <div
-        className="w-full aspect-[16/9] flex items-center justify-center"
-        style={{ background: post.image.gradient }}
-        aria-hidden="true"
-      >
-        <span className="font-display text-6xl md:text-7xl font-semibold text-white/85">
-          {post.image.initial}
-        </span>
-      </div>
-    );
+  /* THE SHARED COVER, not a fourth copy of it. This file carried its own
+     inline version, url branch and gradient branch, including the giant initial
+     that NeighborhoodCover had already identified as reading like a broken
+     placeholder. There were four copies of this logic in the repo: the blog
+     index, this page, home2-view's own local BlogCover, and the homepage rail,
+     which had none at all and rendered no cover. One component now. */
+  const cover = <BlogCover image={post.image} />;
 
   return (
     <div className="max-w-2xl mx-auto">
