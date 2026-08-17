@@ -3,10 +3,17 @@
  *
  * Rewired to the engraved Section Constitution spine (docs/brand/section-
  * constitution.md, the COUNTRY page, organized by the nine judgment lenses).
- * The accepted hero block is kept exactly (the faded CountryMastheadImage + flag
- * + H1 = country name with id="headline" + the fixed subtitle + AddToWatch); the
- * BODY below the hero is rerendered in the engraved style, composed entirely from
- * the engraved component family in @/components/kit/engraved.
+ * The hero block is the flag + H1 = country name with id="headline" + the fixed
+ * subtitle + AddToWatch; the BODY below it is the engraved style, composed
+ * entirely from the engraved component family in @/components/kit/engraved.
+ *
+ * SURFACES, 2026-08-17. Every section on this page is one .atlas-card and
+ * nothing else: the hero, the twenty-two engraved sections, the break-in board.
+ * That is the founder's rule read literally, "we put everything in those cards",
+ * and it is also the only thing that makes this page visible. AtlasFrame paints
+ * from fixed layers at z-index 0, so a static element is painted OVER by the
+ * frame's opaque base; every section here was static. See the note on
+ * EngravedSection for the measurement.
  *
  * Data-first, opinion-low: the scorecard, the country shape, the setup read, the
  * hire read, who-has-money, how-far-you-reach, the neighbours, the ground under
@@ -46,7 +53,6 @@ import { getCountryProfile } from "@/lib/economic_profile";
 import { getBrainGdpPerCapitaByIso2, getBrainPopulationByIso2 } from "@/lib/external/brain_data";
 import { getSmbRegime, getVatRow, type SmbRegime } from "@/lib/tax/smb_effective_rates";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
-import { CountryMastheadImage } from "@/components/countries/CountryMastheadImage";
 import { buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
 import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
 import { StickySectionNav, FreshnessStamp, FlagIt, AddToWatch } from "@/components/kit";
@@ -321,47 +327,69 @@ function buildCountryGutCheck(
 }
 
 /**
- * A reusable engraved section wrapper: an eyebrow + heading, then the content.
- * `card` seats the content on the shared engraved card surface (for components
- * that render bare content); leave it false for components that already carry
- * their own card chrome, so the page never double-frames them. `id` attaches the
- * canonical anchor as a real <section id="...">, which the section gates scan.
+ * A reusable engraved section wrapper: an eyebrow + heading, then the content,
+ * on ONE .atlas-card. `id` attaches the canonical anchor as a real
+ * <section id="...">, which the section gates scan.
+ *
+ * IT WAS TWO SHAPES AND THE HEADING NEVER HAD A SURFACE. This took a `card`
+ * flag: true wrapped the children in the flat cream hand-roll (a rounded-lg
+ * parchment hairline over the cream-50 step, spelled out nowhere in this
+ * comment because Tailwind's content scan does not strip comments and naming a
+ * retired utility in prose re-emits it into the stylesheet, a trap this project
+ * has already paid for once), false rendered them bare. Either way the eyebrow,
+ * the h2 and the lede sat
+ * OUTSIDE the plate, on whatever the page ground happened to be. That was fine
+ * when the ground was paper. Since AtlasFrame paints a fixed photograph with no
+ * centre plate it means dark type straight on a picture, above an opaque cream
+ * rectangle that blocks the picture dead. The founder's rule is the literal
+ * opposite: "we put everything in those cards."
+ *
+ * So: one card, always, holding the heading trio and the content. The flag is
+ * gone rather than defaulted, because a section that opted out was opting out of
+ * legibility. Components that draw their own inner chrome (the engraved score
+ * grid, the city cards) are marks on this surface, not competing plates: their
+ * fill is `--surface-card`, the same paint .atlas-card carries, so what reads is
+ * their hairline structure and not a second ground.
+ *
+ * .atlas-card is also `position: relative`, which is load-bearing here and not
+ * decoration. AtlasFrame paints from `position: fixed` layers at `z-index: 0`,
+ * so a static element and everything inside it is painted OVER by the frame's
+ * opaque base. Measured on a reproduction of the real layering: a static block
+ * with a solid fill sampled identical to the empty gutter, i.e. gone, while the
+ * same block set `relative` sampled its own colour. Every section on this page
+ * was static.
  */
 function EngravedSection({
   id,
   eyebrow,
   heading,
   sub,
-  card = false,
   children,
 }: {
   id?: string;
   eyebrow: string;
   heading: string;
   sub?: string | null;
-  card?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} aria-label={heading}>
-      <div className="mb-3">
+    <section
+      id={id}
+      aria-label={heading}
+      className="atlas-card px-5 py-5 md:px-7 md:py-6"
+    >
+      <div className="mb-4">
         <SectionEyebrow className="mb-1">{eyebrow}</SectionEyebrow>
-        <h2 className="font-display text-xl font-medium tracking-tight text-balance text-ink-900 md:text-2xl">
+        <h2 className="font-display text-lg font-medium tracking-tight text-balance text-ink-900 md:text-xl">
           {heading}
         </h2>
         {sub ? (
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-graphite">
             {sub}
           </p>
         ) : null}
       </div>
-      {card ? (
-        <div className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
-          {children}
-        </div>
-      ) : (
-        children
-      )}
+      {children}
     </section>
   );
 }
@@ -921,7 +949,12 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
 
   return (
     <div className="xl:flex xl:gap-16">
-      <div className="xl:min-w-0 xl:flex-1">
+      {/* `relative` is the stacking lift for everything in this column that is
+          NOT a card: the breadcrumb, the six dividers, the one-thing block and
+          the closing freshness stamp. AtlasFrame's fixed layers sit at z-index
+          0, which paints them over any static sibling; one positioned ancestor
+          puts the whole column back in front of the photograph. */}
+      <div className="relative xl:min-w-0 xl:flex-1">
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm text-ink-700/70">
           <a href="/" className="hover:text-atlas-600">Home</a>
@@ -932,29 +965,41 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
           </span>
         </nav>
 
-        {/* 1. Hero (KEPT EXACTLY): the country photo as a faded background, the
-            flag, the H1 = JUST the country name (id="headline"), one fixed
-            subtitle, and AddToWatch. Only the body below is rerendered. */}
-        <section id="hero" className="relative mb-6 overflow-hidden rounded-2xl border border-parchment">
-          <CountryMastheadImage iso2={iso2} countryName={meta.name} />
-          <div className="relative px-5 pt-7 pb-6 md:px-8 md:pt-9 md:pb-7">
-            <div className="mb-4 flex items-center gap-3">
-              <CountryFlag iso2={iso2} className="w-9 md:w-11" />
-              <SectionEyebrow size="md">Small-business economics</SectionEyebrow>
-            </div>
-            <h1
-              id="headline"
-              className="font-display text-3xl font-semibold tracking-tight text-balance text-ink-900 sm:text-4xl md:text-5xl"
-            >
-              {meta.name}
-            </h1>
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-700 md:text-lg">
-              What it costs, what you keep, and how hard it is to run a small
-              business here.
-            </p>
-            <div className="mt-5 flex items-center gap-3">
-              <AddToWatch item={watchItem} />
-            </div>
+        {/* 1. Hero: the flag, the H1 = JUST the country name (id="headline"),
+            one fixed subtitle, and AddToWatch, on the site card.
+
+            THE SECOND PHOTOGRAPH IS GONE. This block mounted
+            <CountryMastheadImage>, a per-country hero photo, inside a bare
+            rounded-2xl hairline frame with no fill. That was written when the
+            page ground was paper and the photo was the deliberate exception to
+            it. AtlasFrame now paints the founder's own skyline, fixed, behind
+            every page on the site, so this was one picture laid over another,
+            and the country page was the ONLY page type still doing it: the city
+            and cell mastheads had already dropped theirs. Worse, the treatment
+            it shares (board/MastheadImage) fades the photo out through
+            rgba(255,247,230,...) at .55 to .97, which is cream, banned outright,
+            and near-opaque by the bottom of the block.
+
+            What replaces it is the surface every other masthead on the site now
+            uses: one .atlas-card. Same paint as the city hero. The picture the
+            founder wanted behind the page is the one that shows through. */}
+        <section id="hero" className="atlas-card mb-6 px-5 pt-7 pb-6 md:px-8 md:pt-9 md:pb-7">
+          <div className="mb-4 flex items-center gap-3">
+            <CountryFlag iso2={iso2} className="w-9 md:w-11" />
+            <SectionEyebrow size="md">Small-business economics</SectionEyebrow>
+          </div>
+          <h1
+            id="headline"
+            className="font-display text-3xl font-semibold tracking-tight text-balance text-ink-900 sm:text-4xl md:text-5xl"
+          >
+            {meta.name}
+          </h1>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-700 md:text-lg">
+            What it costs, what you keep, and how hard it is to run a small
+            business here.
+          </p>
+          <div className="mt-5 flex items-center gap-3">
+            <AddToWatch item={watchItem} />
           </div>
         </section>
 
@@ -988,7 +1033,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             eyebrow="The decisive read"
             heading={view.decisive ? view.decisive.heading : `What it costs to run a business in ${countryName}`}
             sub={view.decisive?.lede ?? null}
-            card
           >
             <SetupStepper steps={setupSteps} sample={!hasSetup} />
             {view.decisive && view.decisive.steps.length > 0 ? (
@@ -1047,7 +1091,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
                 ? "Staff are the largest controllable cost in most small businesses. What you pay, plus what the employer adds on top, sets the real cost of a hire."
                 : "Staff are the largest controllable cost in most small businesses. The floor is what the law sets; the rate you actually pay is what it takes to keep someone good.")
             }
-            card
           >
             {hireHasBars ? (
               // The three held figures lead, drawn rather than described. The
@@ -1134,7 +1177,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             eyebrow="Vs neighbours"
             heading={view.neighbours ? view.neighbours.heading : `How ${countryName} compares to its neighbours`}
             sub="The same set-up facts, side by side. These are different price regimes, so a figure here is a fact about each country, never a ranking across them."
-            card
           >
             <Neighbours
               metrics={hasNeighbours ? neighbourMetrics : null}
@@ -1224,7 +1266,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             eyebrow="Cities"
             heading={`The cities of ${countryName}`}
             sub="Step into a city for the local read on rent, pay, and what an owner keeps. Every place is shown the same way, no ranking."
-            card
           >
             <CitiesGrid cities={hasCities ? cityCards : null} sample={!hasCities} />
             {cityLinks.length > 0 ? (
@@ -1242,12 +1283,14 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             ) : null}
           </EngravedSection>
 
-          {/* The easiest businesses to break into here (ranks ACTIVITIES). Rides
-              a bare seated section, the component owns its own header. */}
+          {/* The easiest businesses to break into here (ranks ACTIVITIES). The
+              component owns its own header, so this is the site card and
+              nothing else. Was the same flat cream hand-roll EngravedSection
+              carried; converged for the same reason. */}
           {hasBreakIn ? (
             <section
               id="break-in"
-              className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
+              className="atlas-card px-5 py-5 md:px-7 md:py-6"
             >
               <EasiestToBreakIn
                 rows={easiestBreakIn}
@@ -1263,7 +1306,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             id="character"
             eyebrow="Character"
             heading={`What makes ${countryName} distinct`}
-            card
           >
             {/* TWO BLOCKS, ADJACENT, RESTORED 2026-08-09. His words: "there
                 were two sections that should be close to each other, one
@@ -1328,7 +1370,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             id="vs-world"
             eyebrow="Vs the world"
             heading="This country against a global median"
-            card
           >
             <VsWorld
               metric="GDP per capita"
@@ -1376,7 +1417,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             id="related"
             eyebrow="Next move"
             heading={`Put ${meta.name} against its peers`}
-            card
           >
             <p className="max-w-2xl text-sm leading-relaxed text-ink-800">
               Pick any activity and set {meta.name} side by side with up to three
@@ -1384,7 +1424,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             </p>
             <a
               href="/compare"
-              className="mt-4 inline-flex min-h-11 items-center rounded-lg bg-atlas-600 px-4 py-2 text-sm font-medium text-cream-50 transition hover:bg-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
+              className="mt-4 inline-flex min-h-11 items-center rounded-lg bg-atlas-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-atlas-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500 focus-visible:ring-offset-2"
             >
               Open Compare
             </a>

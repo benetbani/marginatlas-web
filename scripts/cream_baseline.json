@@ -40,7 +40,6 @@
     "src/app/og/_card.tsx": 2,
     "src/app/[country]/industries/page.tsx": 1,
     "src/app/[country]/loading.tsx": 8,
-    "src/app/[country]/page.tsx": 3,
     "src/app/[country]/[geo]/industries/page.tsx": 1,
     "src/app/[country]/[geo]/page.tsx": 1,
     "src/app/[country]/[geo]/[industry]/error.tsx": 3,
