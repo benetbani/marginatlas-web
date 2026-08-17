@@ -108,7 +108,29 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             each terminal section already has its own py-12/py-16, and
             the extra 40px on main was creating a visible dead-zone before
             the FooterNewsletterBar that read as "unfinished." */}
-        <main className="max-w-content mx-auto px-6 pt-4">{children}</main>
+        {/* `relative` IS LOAD-BEARING, and its absence was a site-wide paint
+            bug rather than a style preference.
+
+            AtlasFrame, four elements above, paints two `position: fixed`
+            layers at `z-index: 0`, the first an OPAQUE white base. CSS paints
+            positioned z-index-0 descendants AFTER in-flow non-positioned ones,
+            backgrounds and inline text alike, so anything static inside a
+            static <main> is painted over by the frame and is simply not drawn.
+
+            The site got away with it by accident. Every homepage band is
+            wrapped in ToneBand, which happens to be `relative`, and every
+            .atlas-card is `relative` by rule. Wherever neither applied, the
+            content vanished: the country page's sections were static and
+            invisible, which is the mechanical reason the founder said that
+            page "is not updated". Fixing it card by card treats the symptom
+            once per component and leaves the next author to rediscover it.
+
+            One `relative` here lifts the whole content subtree into the same
+            paint step as the frame, permanently. It is safe by construction:
+            no offsets, so layout is untouched, and `z-index` stays `auto`, so
+            <main> forms no stacking context and every descendant z-index goes
+            on competing in the root context exactly as before. */}
+        <main className="relative max-w-content mx-auto px-6 pt-4">{children}</main>
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />
@@ -118,7 +140,19 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
            straight into pure black for a crisp, intentional close. Text is
            white with bumped muted contrast so every line stays legible on
            pure black. */}
-        <footer className="bg-black text-white border-t border-white/10">
+        {/* `relative` for the same reason as <main> above, and here it was
+            costing the most visible thing on the site. Measured in a browser
+            at 1440x900 scrolled to the end: the footer reported
+            `position: static` and `background: rgb(0, 0, 0)`, occupied the
+            bottom 400px of the viewport, and the screenshot of that region was
+            photograph. Not dimmed, not tinted. The black never painted, and
+            neither did any of the four link columns on it.
+
+            This is the single dark anchor at the end of the page and it has
+            not been drawn on any page since AtlasFrame was mounted site-wide.
+            It took a screenshot to find, which is exactly what the charter
+            said was missing. */}
+        <footer className="relative bg-black text-white border-t border-white/10">
           <div className="max-w-content mx-auto px-6 py-12">
             <div className="mb-8">
               <LogoWordmark size={22} labeled tone="dark" />

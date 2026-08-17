@@ -80,7 +80,16 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
   // white, separated from the content above by a hairline and from the
   // true-black footer directly below by the colour break.
   return (
-    <div id="newsletter" className="w-full bg-white border-t border-parchment scroll-mt-20">
+    /* `relative` added 2026-08-17. This bar sits between <main> and the
+       footer, painted a solid white ground, and was `position: static`, so
+       AtlasFrame's fixed z-index:0 layers painted straight over it: measured
+       in a browser, the strip between the last band and the footer was
+       photograph, with neither the white ground nor the form on it. A static
+       background is not drawn on this site. */
+    <div
+      id="newsletter"
+      className="relative w-full bg-white border-t border-parchment scroll-mt-20"
+    >
       <form
         onSubmit={submit}
         className="mx-auto max-w-6xl px-6 h-14 flex items-center gap-3 sm:gap-5 flex-wrap sm:flex-nowrap"
