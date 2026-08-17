@@ -149,7 +149,57 @@ export function isPaletteLegal(hex) {
  * atlas ramp, which is plain hex in the Tailwind config and needs no stylesheet
  * to be in scope.
  */
-const BANNED_TOKENS = /\b(?:bg|text|border|fill|stroke|from|via|to|ring|divide|outline|shadow|decoration|accent|caret)-(moss|amber|orange)-\d+\b/g;
+/**
+ * THE LIST WENT FROM THREE NAMES TO NINETEEN ON 2026-08-17, and the gap it left
+ * is the same one this comment block was already written about, one level up.
+ *
+ * The note above records that `orange` was missing while `moss` and `amber`
+ * were present, and that the omission cost the home page's primary call to
+ * action. What nobody then asked was the next question: those three are the
+ * ramps THIS PROJECT defined. Tailwind ships seventeen more, and every one of
+ * them is a hue this palette does not contain. A component writing
+ * `bg-emerald-700` was not evading the gate; the gate simply had no idea the
+ * word existed.
+ *
+ * Measured before widening, comments stripped, across all of src:
+ *
+ *     moss     23 in 9 files    caught
+ *     emerald  14 in 4 files    INVISIBLE
+ *     amber    11 in 2 files    caught
+ *     rose      3 in 2 files    INVISIBLE
+ *     stone     1               INVISIBLE
+ *     teal      1               INVISIBLE
+ *
+ * So the gate saw 34 of 53. Nineteen off-palette uses, more than a third, sat
+ * outside its vocabulary, and one of them was a fourteen-use green.
+ *
+ * TWO NAMES ON THIS LIST NEED THEIR REASONS WRITTEN DOWN, because neither is
+ * obvious from the word alone:
+ *
+ *   teal   is a ramp THIS project defines, overriding Tailwind's, and
+ *          design-tokens calls it "the single cool counterweight". Its own
+ *          values are #345a47 and #4d7c64, which measure hue 149 and 150. That
+ *          is green. Teal sits near 180. The founder banned green outright, and
+ *          a banned hue under a permitted name is exactly how the blog cover
+ *          palette kept one for months.
+ *   stone  is Tailwind's WARM neutral. The ratified palette is terracotta plus
+ *          COOL neutrals, so warm greys are off-palette for the same reason
+ *          cream is.
+ *
+ * NOT banned, deliberately: slate, gray, zinc and neutral are cool greys and
+ * are on-palette. Banning them would be a different decision, and a much larger
+ * one, than closing a blind spot.
+ */
+const BANNED_NAMES = [
+  "moss", "amber", "orange",
+  "red", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky",
+  "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose", "stone",
+];
+const FAMILIES =
+  "bg|text|border|fill|stroke|from|via|to|ring|divide|outline|shadow|decoration|accent|caret";
+const bannedTokenRe = (names) =>
+  new RegExp(`\\b(?:${FAMILIES})-(?:${names.join("|")})-\\d+\\b`, "g");
+const BANNED_TOKENS = bannedTokenRe(BANNED_NAMES);
 
 function walk(d, out = []) {
   if (!fs.existsSync(d)) return out;
@@ -159,6 +209,27 @@ function walk(d, out = []) {
     else if (/\.(tsx?|css)$/.test(e.name)) out.push(p);
   }
   return out;
+}
+
+/**
+ * A file's source with comments removed.
+ *
+ * Extracted so the scan and the widening guard below read a file the SAME way.
+ * They used to strip inline, in one place only, and the moment a second reader
+ * appeared that would have been two strippers drifting apart, which is the
+ * defect this repo has already paid for twice in one session.
+ *
+ * The first run of this gate is why comments are stripped at all: it flagged
+ * atlas-spots-data.ts for carrying #6f8f25, which appears there exactly once,
+ * inside the comment recording that the moss green was REMOVED. A gate that
+ * cannot tell a colour from a note about a colour reports a file for
+ * documenting its own fix.
+ */
+function sourceOf(f) {
+  return fs
+    .readFileSync(f, "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/(^|[^:'"\\])\/\/.*$/gm, "$1");
 }
 
 /** rgb()/rgba() written as numbers, which no hex scan can see. */
@@ -184,15 +255,8 @@ function main() {
 const found = {};
 for (const root of ROOTS) {
   for (const f of walk(root)) {
-    /* COMMENTS ARE STRIPPED FIRST, and the first run of this gate is why. It
-       flagged atlas-spots-data.ts for carrying #6f8f25, which appears there
-       exactly once: inside the comment recording that the moss green was
-       REMOVED. A gate that cannot tell a colour from a note about a colour
-       reports a file for documenting its own fix. */
-    const src = fs
-      .readFileSync(f, "utf8")
-      .replace(/\/\*[\s\S]*?\*\//g, "")
-      .replace(/(^|[^:'"\\])\/\/.*$/gm, "$1");
+    /* Comments stripped first; see sourceOf, which the widening guard shares. */
+    const src = sourceOf(f);
     let n = (src.match(BANNED_TOKENS) || []).length;
     // Raw hex, judged by hue rather than by name.
     for (const m of src.match(/#[0-9a-fA-F]{6}\b/g) || []) if (!isPaletteLegal(m)) n++;
@@ -205,16 +269,80 @@ for (const root of ROOTS) {
 
 const base = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, "utf8")) : { files: {} };
 
+/**
+ * WIDENING THE DETECTOR IS NOT THE SAME OPERATION AS RAISING THE BASELINE, and
+ * until 2026-08-17 this gate could not tell the two apart, so it forbade both.
+ *
+ * That was the right default and it had a cost: the ban list could never grow.
+ * Adding `emerald` to it makes four files "rise" without a single line of
+ * component code changing, the refusal fires, and the only way past is to
+ * delete the guard. A ratchet that punishes improving its own instrument
+ * eventually gets its instrument left alone.
+ *
+ * So the baseline now records the ban list it was measured with, and a rise is
+ * permitted ONLY when it is fully EXPLAINED by names added in the same commit.
+ * The check is arithmetic, not a promise: for each file that grew, count the
+ * tokens matching only the NEWLY added names. If the rise is larger than that
+ * count, something else grew too, and it refuses exactly as before.
+ *
+ * That keeps the bright line intact. A regression cannot be laundered through a
+ * widening, because the widening can only ever account for its own discoveries.
+ */
 if (process.argv.includes("--update-baseline")) {
+  /* A baseline written before 2026-08-17 carries no `bannedNames`, and it was
+     measured with exactly these three. Without that fallback the very first
+     widening can never be recorded: `added` comes out empty, nothing is
+     explainable, and the guard refuses its own bootstrap. Knowing the prior
+     list is not a guess here, it is the list this file held until today. */
+  const LEGACY_BANNED_NAMES = ["moss", "amber", "orange"];
+  const prevNames = Array.isArray(base.bannedNames) ? base.bannedNames : LEGACY_BANNED_NAMES;
+  const added = BANNED_NAMES.filter((n) => !prevNames.includes(n));
+  const addedRe = added.length ? bannedTokenRe(added) : null;
+
+  /* A MISSING ENTRY MEANS ZERO, NOT "SKIP", and reading it as "skip" was a hole
+     this guard inherited and that its own first test caught.
+
+     The old line was `const was = base.files[f]; if (was != null && n > was)`,
+     so a file with NO baseline entry, i.e. a file that was previously clean,
+     was never examined at all. A brand new violation in a clean file went
+     straight into the baseline. Proved by injecting `bg-emerald-500` into a
+     component with no entry: the main gate correctly exited 1, and
+     --update-baseline wrote it in and exited 0.
+
+     The main gate below has always read `base.files[f] ?? 0`. The two readers
+     disagreed, and the more permissive one was the one that could write. */
   for (const [f, n] of Object.entries(found)) {
-    const was = base.files[f];
-    if (was != null && n > was) {
+    const was = base.files[f] ?? 0;
+    if (n <= was) continue;
+
+    const rise = n - was;
+    const explained = addedRe ? (sourceOf(f).match(addedRe) || []).length : 0;
+    if (rise > explained) {
       console.error(`x refusing to raise the baseline: ${f} went ${was} -> ${n}.`);
+      if (added.length) {
+        console.error(
+          `  Newly banned names explain only ${explained} of the ${rise} added.` +
+            `\n  The remaining ${rise - explained} is a regression, not a discovery.`,
+        );
+      }
       console.error(`  A ratchet that can be raised is a suggestion. Remove the colour instead.`);
       process.exit(1);
     }
+    console.error(`  widened: ${f} ${was} -> ${n}, all ${rise} explained by ${added.join(", ")}`);
   }
-  fs.writeFileSync(BASELINE, JSON.stringify({ files: found, recorded: process.argv[3] ?? base.recorded ?? "unset" }, null, 2) + "\n");
+
+  fs.writeFileSync(
+    BASELINE,
+    JSON.stringify(
+      {
+        files: found,
+        bannedNames: BANNED_NAMES,
+        recorded: process.argv[3] ?? base.recorded ?? "unset",
+      },
+      null,
+      2,
+    ) + "\n",
+  );
   console.log(`palette: baseline written, ${Object.keys(found).length} file(s).`);
   process.exit(0);
 }
@@ -236,7 +364,11 @@ if (grown.length > 0) {
     `\n  The ratified palette is terracotta plus cool neutrals: no green, no amber,\n` +
       `  no brown. Founder, 2026-08-09, asked directly and answered "no exceptions".\n` +
       `  Show good-versus-bad with intensity and position instead of hue.\n` +
-      `  Do NOT run --update-baseline to clear this. It refuses to raise anyway.`,
+      `  src/lib/scores/band_tone.ts is the one place that already does it.\n` +
+      `\n  Do NOT run --update-baseline to clear this. It refuses to raise, EXCEPT\n` +
+      `  for a rise fully explained by names added to BANNED_NAMES in the same\n` +
+      `  commit, which is a wider detector rather than a new colour. If you did\n` +
+      `  not widen that list, this path is closed to you: remove the colour.`,
   );
   process.exit(1);
 }
