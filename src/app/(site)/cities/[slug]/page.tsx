@@ -442,8 +442,15 @@ export default async function CityPage({
          first and a second gutter on top of the first: 1024px of content where
          every sibling page type reads at 1072, and the only doubled padding on
          the site. This is now a bare flex row. */}
+      {/* `[&_[id]]:scroll-mt-24`: the masthead is `sticky top-0` and 89px tall
+          and every anchor here had scroll-margin-top: 0. Measured in a browser,
+          not inferred: jumping to `#owners-keep` from the right-rail nav put the
+          eyebrow and the h2 behind the opaque bar and dropped the reader onto
+          the lede. One class on the column rather than eleven `className` props,
+          because the anchors sit on BeatCard, on bare divs and on OneThing
+          alike. 24 is the `scroll-mt-24` step this repo already uses. */}
       <div className="xl:flex xl:gap-16">
-        <div className="min-w-0 xl:flex-1">
+        <div className="min-w-0 [&_[id]]:scroll-mt-24 xl:flex-1">
           {/* THE HERO, in ONE card.
              Was `<HeroWash category="city">`, which paints `.atlas-wash--city`:
              an OPAQUE `var(--atlas-surface-paper)` ground with an amber radial
