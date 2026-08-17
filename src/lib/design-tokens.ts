@@ -262,17 +262,29 @@ export const colors = {
     starter: "#fb8469", // = atlas-300, thin
     modeled: "#87745d", // = cocoa-500, estimated
   },
-  /**
-   * Delta / multiplier indicators (above, at par, caution, below). Semantic,
-   * reusing the warm palette so we stop hardcoding green/yellow/red hex like
-   * #16a34a / #ca8a04 / #7f1d1d in neighborhood and decide pages.
-   */
-  delta: {
-    positive: "#4a6018", // = moss-700, above par
-    atpar: "#463726", //    = ink-700 graphite neutral, at par (not brand-red)
-    caution: "#b06a08", //  = amber-600, watch
-    negative: "#8a510a", // = amber-700, below par (warning, not brand-red)
-  },
+  /* THE delta ROLES ARE DELETED, 2026-08-17, and they were the last banned
+     hues defined anywhere on this site.
+
+     `positive` was #4a6018, which is moss-700, a green. `caution` and
+     `negative` were #b06a08 and #8a510a, both amber. The moss and amber RAMPS
+     were deleted earlier today; these five literals were the same colours
+     written out longhand and they survived because nothing pointed at the
+     ramps any more.
+
+     They were also invisible. verify_palette_membership scans src/components,
+     src/app and src/styles, so it has never once read the file that DEFINES
+     the palette. Fixed in the same commit by adding src/lib to its roots.
+
+     No call site is lost: all four were already unread, which is why deleting
+     rather than retoning is right. Their job, an above/at/below par scale, is
+     now src/lib/scores/band_tone.ts, which shows good-versus-bad with
+     INTENSITY IN ONE HUE, exactly as this gate's own header asks. `atpar` goes
+     with them; a par marker with nothing to be at par against is not a role.
+
+     Note what the deleted comment claimed: that these existed so the codebase
+     would "stop hardcoding green/yellow/red hex". They were a traffic light
+     with better manners, and the founder banned the whole idea, not the
+     spelling. */
   /**
    * Chart color roles (Brand Design Constitution 2026-06-16, section 4.2). The
    * fixed color jobs the visx chart kit consumes; chart components read these
@@ -281,11 +293,14 @@ export const colors = {
    */
   chart: {
     primary: "#e62200", //  = atlas-500, the typical value / you-are-here / spotlight
-    kept: "#4a6018", //     = moss-700, profit / kept / positive delta
+    /* `kept` deleted with the delta roles above: #4a6018 is moss-700, a green,
+       and nothing read it. Profit and kept now take the terracotta end of
+       band_tone's one-hue ladder like every other favourable reading. */
     cost: "#87745d", //     = cocoa-500, structure and costs, the neutral breakdown mass
     baseline: "#7d6c58", // = ink-500, neutral data mass / axes / muted labels
     grid: "#e3e3e3", //     = parchment, rails / gridlines / hairlines / track backgrounds
-    caution: "#b06a08", //  = amber-600, caution / below par
+    /* `caution` deleted with it: #b06a08 is amber-600. Also unread. A chart
+       that needs to mark a caution uses depth, not a second hue. */
     danger: "#5c1813", //   = clay-700, destructive / hard errors only
   },
   /**
@@ -573,6 +588,7 @@ export const tailwindColors = {
      So the class name is a config question, not a token question, and it is
      open: `theme.extend` leaves every banned stock family one guess away. */
   tier: colors.tier,
-  delta: colors.delta,
+  /* delta removed with its roles above: all four held banned hues and none
+     was read. */
   chart: colors.chart,
 } as const;

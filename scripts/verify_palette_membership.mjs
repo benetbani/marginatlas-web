@@ -81,7 +81,24 @@ const BASELINE = "scripts/palette_baseline.json";
    bottom of the home page I see a shade of orange that is not accepted as a
    brand color." A palette gate that only reads components cannot enforce a
    palette. */
-const ROOTS = ["src/components", "src/app", "src/styles"];
+/* `src/lib` ADDED 2026-08-17, and its absence meant THIS GATE HAD NEVER READ
+   THE FILE THAT DEFINES THE PALETTE.
+
+   The comment above explains why stylesheets were added: a palette gate that
+   only reads components cannot enforce a palette. The same sentence applies one
+   directory over and nobody said it. `src/lib/design-tokens.ts` is the single
+   source of truth for every colour on this site, and it sat outside the scan
+   from the day this file was written.
+
+   What was hiding there, measured before the root was added: FIVE banned hues,
+   defined and unseen. `delta.positive` and `chart.kept` were #4a6018, which is
+   moss-700, a green; `delta.caution`, `delta.negative` and `chart.caution` were
+   amber. The moss and amber RAMPS were deleted earlier the same day, and these
+   five literals were those colours written out longhand, which is exactly the
+   evasion the aliasedCream check in the cream gate exists to catch. All five
+   are deleted in the same commit, so this widening adds nothing to the
+   baseline: it is here so the next one cannot hide the same way. */
+const ROOTS = ["src/components", "src/app", "src/styles", "src/lib"];
 
 /** Hue bands the ratified palette allows, in HSL degrees. */
 const ALLOWED = [
@@ -110,12 +127,17 @@ const ALLOWED = [
      split the ramp. That reasoning was sound about the ramp and never asked
      whether the ramp belonged.
 
-     WHAT REMAINS, deliberately, and it is the honest half of this: the `teal`
-     ramp is still defined in design-tokens.ts and still read once, by
-     NeighborhoodCover. Its four hex values are now counted as debt in the
-     baseline and can be ratcheted down like anything else. Deleting the ramp
-     needs its call site converted first, or it fails silently, and that file is
-     being edited by another agent as this lands. */
+     THE TEAL RAMP IS NOW DELETED TOO (`f0803bcd`), its one call site in
+     NeighborhoodCover having been converted first.
+
+     **A CORRECTION TO WHAT THIS COMMENT USED TO SAY.** It claimed teal's four
+     hex values were "counted as debt in the baseline". They were not, and could
+     not have been: `ROOTS` did not include `src/lib`, so this gate had never
+     read design-tokens.ts at all. The baseline holds three files and none of
+     them is a token file. A gate comment asserting a number it cannot produce
+     is the same defect as a gate reporting PASS about a file it never opened,
+     and it was written here by the same hand that widened the name list. Root
+     added above; the claim is now true rather than merely intended. */
 ];
 /** Anything at or below this saturation is a neutral and always allowed. */
 const NEUTRAL_S_MAX = 12;
@@ -344,6 +366,27 @@ if (process.argv.includes("--update-baseline")) {
     { name: "teal", hMin: 145, hMax: 200 },
   ];
   const prevBands = Array.isArray(base.allowedBands) ? base.allowedBands : LEGACY_ALLOWED;
+
+  /* A DETECTOR HAS EXACTLY THREE INPUTS, and this guard has now learned all
+     three the hard way, one per widening:
+
+       the NAME list      -> a class that was invisible becomes visible
+       the HUE bands      -> a literal that was legal becomes illegal
+       the SCAN ROOTS     -> a FILE that was never opened becomes readable
+
+     Each one makes counts rise with no component change, and each arrived as a
+     surprise because the guard only knew the previous ones. Three special cases
+     is a smell, so this is the last: the three are named together here, and a
+     fourth input to this scan would have to be added to this list to be
+     explainable at all, which is the correct default.
+
+     For a new root every file beneath it is new, so the whole count is
+     explained. That is deliberately generous and still safe, because a file
+     under a brand-new root has no prior baseline entry to regress against. */
+  const LEGACY_ROOTS = ["src/components", "src/app", "src/styles"];
+  const prevRoots = Array.isArray(base.roots) ? base.roots : LEGACY_ROOTS;
+  const addedRoots = ROOTS.filter((r) => !prevRoots.includes(r));
+  const underNewRoot = (f) => addedRoots.some((r) => f.startsWith(r + "/"));
   const legalUnder = (bands, hex) => {
     const { h, s, l } = hexToHsl(hex);
     if (s <= NEUTRAL_S_MAX) return true;
@@ -374,8 +417,9 @@ if (process.argv.includes("--update-baseline")) {
 
     const rise = n - was;
     const src = sourceOf(f);
-    const explained =
-      (addedRe ? (src.match(addedRe) || []).length : 0) + newlyCondemned(src);
+    const explained = underNewRoot(f)
+      ? n
+      : (addedRe ? (src.match(addedRe) || []).length : 0) + newlyCondemned(src);
     if (rise > explained) {
       console.error(`x refusing to raise the baseline: ${f} went ${was} -> ${n}.`);
       if (added.length) {
@@ -390,6 +434,7 @@ if (process.argv.includes("--update-baseline")) {
     const why = [
       added.length ? `names +${added.join(",")}` : null,
       prevBands && prevBands.length !== ALLOWED.length ? "hue band removed" : null,
+      underNewRoot(f) ? `new scan root ${addedRoots.join(",")}` : null,
     ].filter(Boolean).join(" and ");
     console.error(`  widened: ${f} ${was} -> ${n}, all ${rise} explained by ${why || "detector change"}`);
   }
@@ -401,6 +446,7 @@ if (process.argv.includes("--update-baseline")) {
         files: found,
         bannedNames: BANNED_NAMES,
         allowedBands: ALLOWED,
+        roots: ROOTS,
         recorded: process.argv[3] ?? base.recorded ?? "unset",
       },
       null,
