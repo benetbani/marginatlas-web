@@ -79,7 +79,6 @@ import {
   StickySectionNav,
   SectionEmpty,
   formatWithSpec,
-  HeroWash,
   OneThing,
   CostDrivers,
 } from "@/components/kit";
@@ -427,8 +426,16 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
              sector. No tier chip at this altitude: an activity carries no single
              confidence read. The place picker and the across-cities link are the
              hero actions below. id="hero" is the canonical first beat. */}
-          <HeroWash category="business">
-          <section id="hero">
+          {/* THE HERO, in ONE card. Was <HeroWash category="business">, which
+             paints .atlas-wash: an OPAQUE var(--atlas-surface-paper) base with
+             a radial tint over it. That ground ran the full width of the
+             reading column at the very top of every trade page, painting out
+             the fixed photograph exactly where the founder says the picture
+             must still read. Same removal and same replacement as the city
+             page in 4acfb611: legibility is a property of the CARD, and
+             .atlas-card is translucent at .955 and position:relative, so it
+             sits above the frame's fixed layers instead of under them. */}
+          <section id="hero" className="atlas-card px-5 py-6 md:px-7 md:py-7">
             <AnswerFirstMasthead
               eyebrow={
                 <span className="inline-flex items-center gap-2">
@@ -473,7 +480,6 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
               </span>
             </Link>
           </section>
-          </HeroWash>
 
           {/* 2. The honest take, right after the headline numbers (the
              through-line). The verdict close is the one-line read, the lead
@@ -531,7 +537,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 {verdict.signals.map((s) => (
                   <div
                     key={s.label}
-                    className="rounded-lg border border-parchment bg-cream-50 p-4"
+                    className="atlas-card-soft p-4"
                   >
                     <dt className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
                       {s.label}
@@ -770,7 +776,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                   <a
                     key={sib.id}
                     href={`/industries/${industryToSlug(sib.id)}`}
-                    className="group rounded-lg border border-parchment bg-white p-4 transition-colors hover:bg-cream-50"
+                    className="atlas-card group p-4"
                   >
                     <div className="flex items-start gap-3">
                       <span

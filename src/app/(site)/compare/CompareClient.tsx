@@ -24,7 +24,6 @@ import { isGatingEnabled } from "@/lib/feature_flags";
 import { GatedTakeHome } from "@/components/monetization/GatedTakeHome";
 import { RedactedNumber } from "@/components/monetization/RedactedNumber";
 import {
-  HeroWash,
   HonestTakeBox,
   RangeStrip,
   SectionEmpty,
@@ -907,8 +906,15 @@ export function CompareClient({
     <div className="xl:flex xl:gap-12">
       <div className="min-w-0 flex-1 space-y-12 md:space-y-16">
       {/* ----- Pick the matchup ----- */}
-      <HeroWash category="business">
-      <section id="compare-pickers" aria-label="Set the matchup">
+      {/* <HeroWash category="business"> REMOVED. .atlas-wash paints
+          var(--atlas-surface-paper) as its BASE layer, fully opaque, under the
+          radial tint, so it covered the fixed page photograph across the whole
+          column for the height of this block: an opaque plate at the top of the
+          page, which is where the founder is most explicit that the picture
+          must still read. Same removal, same reason, as the city page in
+          4acfb611 and /learn in 1bdb96bb. The section is a card instead, which
+          is where legibility is supposed to come from. */}
+      <section id="compare-pickers" aria-label="Set the matchup" className="atlas-card px-5 py-6 md:px-7 md:py-7">
         {/* The masthead H1 owns the headline; the pickers carry only their quiet
             eyebrow + instruction, not a second near-duplicate H2. */}
         <SectionEyebrow className="mb-1">Set the matchup</SectionEyebrow>
@@ -921,7 +927,10 @@ export function CompareClient({
           {slots.map((slot, idx) => (
             <div
               key={idx}
-              className="space-y-3 rounded-lg border border-parchment/70 bg-cream-50 p-4"
+              /* Nested one level inside the picker card above, so the soft
+                 variant: two translucent fills stacked only muddy the picture
+                 under both. */
+              className="atlas-card-soft space-y-3 p-4"
             >
               <SectionEyebrow size="md">City {idx + 1}</SectionEyebrow>
               <ComboField
@@ -985,7 +994,6 @@ export function CompareClient({
           ))}
         </div>
       </section>
-      </HeroWash>
 
       {/* ----- Where each one wins (the balanced verdict) -----
           Always present (the founder's section contract): the balanced verdict
@@ -1009,7 +1017,7 @@ export function CompareClient({
                 {verdict.wins.map((w) => (
                   <div
                     key={w.metric}
-                    className="rounded-lg border border-parchment bg-cream-50 px-4 py-4"
+                    className="atlas-card-soft px-4 py-4"
                   >
                     <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
                       {w.metric}
@@ -1075,7 +1083,7 @@ export function CompareClient({
               return (
                 <div
                   key={i}
-                  className="rounded-lg border border-parchment bg-cream-50 px-5 py-5"
+                  className="atlas-card px-5 py-5"
                 >
                   <div className="mb-3">
                     <span className="block font-display text-base font-semibold text-ink-900">
@@ -1358,7 +1366,7 @@ function WeightingPanel({
       : null;
 
   return (
-    <div className="mt-5 rounded-lg border border-parchment bg-cream-50">
+    <div className="atlas-card mt-5">
       {/* The quiet disclosure: house read leads, the reader's controls open on
           intent (P5). The button is the full-width header so the touch target
           is generous on a phone. */}

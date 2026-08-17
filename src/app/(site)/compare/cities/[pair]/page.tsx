@@ -304,7 +304,7 @@ export default async function ComparisonPage({
             { city: a, label: a.name },
             { city: b, label: b.name },
           ].map(({ city, label }) => (
-            <div key={city.slug} className="rounded-2xl border border-parchment bg-white p-5 md:p-6">
+            <div key={city.slug} className="atlas-card p-5 md:p-6">
               <h3 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-3">
                 Go deeper on {label}
               </h3>

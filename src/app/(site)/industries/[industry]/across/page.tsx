@@ -530,8 +530,11 @@ export default async function AcrossCitiesPage({
 
       {/* Back to the activity page: the model anatomy that holds everywhere,
           for the reader who wants the why behind the numbers. */}
-      <section className="mt-12 border-t border-parchment pt-8">
-        <div className="rounded-2xl border border-parchment bg-cream-50 p-6">
+      {/* The border-t rule goes with the hand-roll: the card below is its own
+          divider, and a full-width hairline drawn straight on the photograph
+          reads as a scratch rather than a separator. */}
+      <section className="mt-12 pt-8">
+        <div className="atlas-card p-6">
           <h2 className={T_H3}>How {lower} businesses make money</h2>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-700/85">
             The comparison above shows where the dollars land. The activity page
