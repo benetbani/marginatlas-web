@@ -209,14 +209,33 @@ export const colors = {
     // "remove the creamy colour" is no hue rather than a cool tint swapped in
     // for a warm one, which is the call `parchment` made.
     //
-    // KNOWN DEBT, recorded rather than hidden: 50 is now one point from
-    // paper-100 (#f5f5f5 against #f6f6f6), and its eight call sites are the
-    // muted-surface role paper-100 already documents. The honest end state is a
-    // collapse, not a near-duplicate. It is deferred because theme.colors now
-    // REPLACES Tailwind's palette, so a deleted step emits no rule at all and a
-    // missed call site loses its ground silently; that deserves its own tick
-    // with the compiled-stylesheet assertion, not a rider on a retone.
-    50: "#f5f5f5",
+    // THE 50 STEP IS GONE, 2026-08-17, collapsed onto `paper-100` and NOT
+    // deleted: every one of its seven call sites moved in this same commit.
+    // The tick that retoned it recorded the debt and deferred the collapse,
+    // correctly, because a call-site change must not ride along with a retone.
+    //
+    // `paper-100` WON ON BOTH AXES THIS REPOSITORY JUDGES BY.
+    //   Call sites: 104 in 61 files, against this step's 7 in 4.
+    //   What the name says: `paper` is the SURFACE ladder and its 100 step is
+    //   already documented as "muted surface (thead tints, chips, inset
+    //   panels)". All seven movers are exactly that, five chip and card-footer
+    //   grounds plus two faint table row rules. `ink` is a TEXT ladder by its
+    //   own header, so a surface tint living on it is the same naming lie that
+    //   let `parchment` hold cream for three passes.
+    //
+    // The value moves ONE POINT, #f5f5f5 -> #f6f6f6, L .9131 -> .9216, +0.93%.
+    // 16 pairs checked and ZERO AA verdicts flip; largest ratio change 0.1411
+    // on a ratio of 16.0. Stated rather than buried: the two row rules sit on
+    // white and go 1.090:1 -> 1.081:1, 0.8% fainter. They were already below
+    // any threshold at 1.09 and are decorative; moving them to a hairline token
+    // instead would have been a visible weight change, which is a design call
+    // and not a collapse.
+    //
+    // RESIDUAL DEBT, named so the next tick does not have to rediscover it:
+    // 100, 200 and 300 are now true-neutral surface and hairline values sitting
+    // on a ramp this file documents as a text ladder. The honest end state is
+    // that they belong to the surface family, but 200 alone is 96 call sites,
+    // so that is a convergence tick of its own and not a rider on this one.
     100: "#e8e8e8",
     // THE LAST TWO WARM STEPS, retoned 2026-08-17. The tick above moved 50 and
     // 100 and said outright that 200 and 300 were still warm sand and out of
@@ -285,15 +304,29 @@ export const colors = {
     // check reads VALUES, so leaving these behind would have failed the gate
     // the moment the two literals joined its warm list.
     //
-    // They are also not "muted copy" at these steps. Their six usages are a
-    // chart bar in MoneyGoesBreakdown, two chart fills in RangeStrip, a
-    // decorative gradient stop on the city-compare cover and a sector chip:
-    // warm brown as decorative FILL, which is the exact thing the palette
-    // gate's header says it cannot catch and the founder rejected by hand.
-    // Collapsing these two onto the ink steps is a rename with a provably
-    // identical value and is left to its own tick.
-    50: "#f5f5f5",
-    100: "#e8e8e8",
+    // BOTH STEPS ARE GONE, 2026-08-17. The tick above retoned them, saw that
+    // they had become byte-for-byte twins of the ink steps, and wrote the
+    // collapse down as owed rather than doing it under cover of a retone. This
+    // is that tick, and all six call sites move in this same commit.
+    //
+    // WHERE EACH WENT, and the evidence for each choice:
+    //   50 (#f5f5f5, ONE call site) -> `paper-100`. Same destination as
+    //      `ink-50` above and for the same two reasons: 104 call sites against
+    //      one, and its single use is a sector chip GROUND, which is the
+    //      surface ladder's job.
+    //   100 (#e8e8e8, five call sites) -> `ink-100`, which holds 23. Neither
+    //      name honestly describes a hairline-and-fill value, so the count
+    //      decides, but there is a second reason it cannot be this one: this
+    //      ramp's own header calls it "the text-alias family for muted copy",
+    //      and the comment above already records that these five uses are two
+    //      chart fills, a chart bar, a decorative gradient stop and a chip
+    //      border. Not one of them is copy.
+    //
+    // Neither move changes a pixel: both destinations already hold the exact
+    // value these steps held. That is the whole point, and it is also why this
+    // could not be checked by looking. It was checked by deleting the steps,
+    // which under a REPLACED Tailwind palette makes any missed call site emit
+    // no rule at all, and running verify_token_steps_exist.
     300: "#c3b39c",
     500: "#87745d",
     700: "#534231",

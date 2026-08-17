@@ -80,14 +80,16 @@ function hasText(s: string | null | undefined): s is string {
 // implying deeper equals better. Tokens only; the accent stays reserved for the
 // typical marker, the one vermillion moment.
 //
-// "WARM" WAS TRUE OF THIS RAMP AND IS NOT ANY MORE, 2026-08-17. `cocoa-100` was
-// #f0e7d9, warm sand at h37 s43%, and was retoned to a true neutral because it
-// was the banned cream under a name that does not say cream. Only `cocoa-300`
-// still carries hue here.
+// "WARM" WAS TRUE OF THIS RAMP AND IS NOT ANY MORE, 2026-08-17. The third tone
+// was #f0e7d9, warm sand at h37 s43%, and was retoned to a true neutral because
+// it was the banned cream under a name that does not say cream. It was then
+// collapsed onto `ink-100`, the identical value under the name that carries 23
+// call sites against its five, which is why the class here changed while the
+// pixel did not. Only `cocoa-300` still carries hue.
 //
-// AND THE RAMP IS NOT MONOTONIC, which the retone did not cause and does not
-// cure. Reading outward-in by relative luminance:
-//   paper-200 .8550   parchment .7682   cocoa-100 .8070   cocoa-300 .4624
+// AND THE RAMP IS NOT MONOTONIC, which neither the retone nor the collapse
+// caused and neither cures. Reading outward-in by relative luminance:
+//   paper-200 .8550   parchment .7682   ink-100 .8070   cocoa-300 .4624
 // The third tone is LIGHTER than the second, so a strip meant to darken toward
 // its body lightens on the way in. Measured and left alone: fixing it means
 // choosing new values for a ratified visual, which is the founder's call, and
@@ -95,9 +97,9 @@ function hasText(s: string | null | undefined): s is string {
 const GRADIENT_TONES = [
   "fill-paper-200",
   "fill-parchment",
-  "fill-cocoa-100",
+  "fill-ink-100",
   "fill-cocoa-300",
-  "fill-cocoa-100",
+  "fill-ink-100",
   "fill-parchment",
   "fill-paper-200",
 ] as const;

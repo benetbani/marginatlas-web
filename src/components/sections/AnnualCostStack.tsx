@@ -83,7 +83,7 @@ export function AnnualCostStack({ cell }: Props) {
               }
               const share = total > 0 ? Math.round((v / total) * 100) : 0;
               return (
-                <tr key={line.field} className="border-b border-ink-50 last:border-b-0">
+                <tr key={line.field} className="border-b border-paper-100 last:border-b-0">
                   <td className="px-6 py-2.5 text-ink-900">
                     <div>{line.label}</div>
                     {line.hint && (
@@ -101,7 +101,7 @@ export function AnnualCostStack({ cell }: Props) {
         </table>
 
         {(refreshed || stack.source_note) && (
-          <div className="px-6 py-3 bg-ink-50 text-xs text-ink-600 border-t border-ink-100">
+          <div className="px-6 py-3 bg-paper-100 text-xs text-ink-600 border-t border-ink-100">
             {refreshed && <span>Refreshed {refreshed}. </span>}
             {stack.source_note && <span>{stack.source_note}</span>}
           </div>

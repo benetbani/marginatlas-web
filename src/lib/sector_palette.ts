@@ -21,14 +21,18 @@ export type SectorTokens = {
 const A = "bg-paper-100 border-parchment text-cocoa-900"; // true neutral, s=0%
 const B = "bg-atlas-50 border-atlas-200 text-atlas-900";   // warm amber
 /* NO LONGER COCOA-LEANING, 2026-08-17, and the label is corrected rather than
-   the classes. `cocoa-50` and `cocoa-100` were #faf4ec and #f0e7d9, warm sand
-   at s58% and s43%, and they were retoned to true neutrals because both were
-   the banned cream under a name that does not say cream. So this tint is now
-   the same neutral chip as A, differing only in its border weight, and the six
-   sectors carrying it read grey rather than brown. Whether those six should get
-   a distinct tint at all is a design question for the founder; inventing one
-   here would be inventing a colour to justify a variable. */
-const C = "bg-cocoa-50 border-cocoa-100 text-cocoa-900";   // neutral, s=0%
+   the classes. The two steps this chip used to name were #faf4ec and #f0e7d9,
+   warm sand at s58% and s43%, and they were retoned to true neutrals because
+   both were the banned cream under a name that does not say cream. They were
+   then collapsed away entirely, being byte-identical twins of the ink steps, so
+   this chip now spells the surviving names for the values it already had.
+
+   WHICH MAKES THE REAL FINDING IMPOSSIBLE TO KEEP HIDING: C is now A with a
+   heavier border, letter for letter, and the six sectors carrying it read the
+   same grey as the eleven carrying A. Whether those six should have a distinct
+   tint at all is a design question for the founder; inventing one here would be
+   inventing a colour to justify a variable. */
+const C = "bg-paper-100 border-ink-100 text-cocoa-900";   // neutral, s=0%
 
 export const SECTOR_TOKENS: Record<string, SectorTokens> = {
   food_drink:               { label: "FOOD & DRINK",            tint: B, accent: "text-atlas-700" },

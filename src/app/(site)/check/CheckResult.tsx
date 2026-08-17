@@ -44,7 +44,7 @@ function statusColour(status: RatioStatus): string {
     case "in_range":
       return "text-ink-900 bg-parchment border-parchment";
     case "unknown":
-      return "text-ink-500 bg-ink-50 border-ink-200";
+      return "text-ink-500 bg-paper-100 border-ink-200";
   }
 }
 
@@ -118,7 +118,7 @@ export function CheckResult({ verdict }: Props) {
               <span>
                 Typical: <span className="tabular-nums">{pct(r.range.low)} to {pct(r.range.high)}</span>
                 {r.estimated && (
-                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide font-semibold bg-ink-50 text-ink-500 border border-ink-200">
+                  <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wide font-semibold bg-paper-100 text-ink-500 border border-ink-200">
                     Estimate
                   </span>
                 )}

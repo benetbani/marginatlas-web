@@ -134,7 +134,7 @@ export function SetupCostBlock({ cell, id }: Props) {
         </div>
 
         {typeof payback === "number" && isFinite(payback) && payback > 0 && (
-          <div className="px-6 py-3 bg-ink-50 text-xs text-ink-700 border-t border-ink-100">
+          <div className="px-6 py-3 bg-paper-100 text-xs text-ink-700 border-t border-ink-100">
             Approximate break-even payback:
             {" "}<span className="font-semibold text-ink-900">{Math.round(payback)} months</span>
             {" "}from opening at typical revenue and margin.
@@ -173,7 +173,7 @@ function SetupColumn({
       ) : (
         <ul className="text-sm">
           {populated.map((line) => (
-            <li key={line.label} className="flex justify-between gap-3 py-1.5 border-b border-ink-50 last:border-b-0">
+            <li key={line.label} className="flex justify-between gap-3 py-1.5 border-b border-paper-100 last:border-b-0">
               <span className="text-ink-700">{line.label}</span>
               <span className="text-ink-900 tabular-nums">{fmtMoney(line.value!)}</span>
             </li>

@@ -189,7 +189,7 @@ export function IfYouOpenedToday({ cell }: Props) {
         />
       </ol>
 
-      <div className="px-6 py-3 md:px-8 bg-ink-50 text-xs text-ink-600 border-t border-ink-100">
+      <div className="px-6 py-3 md:px-8 bg-paper-100 text-xs text-ink-600 border-t border-ink-100">
         Assumes typical performance (~6% net margin) and a 3-month ramp.
         Bottom-decile operators take 50-100% longer to break even; top
         decile pay back in roughly half the time. The "if you opened
