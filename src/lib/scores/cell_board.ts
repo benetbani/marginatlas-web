@@ -36,6 +36,35 @@
  * this stays trivially testable and cannot trip the layering gate (which only
  * walks src/app + src/components). Charts are built with React.createElement so
  * the module is plain TypeScript (no JSX), keeping it a .ts file.
+ *
+ * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
+ * Classified 2026-08-18. verify_take_home_identity flags a module that reaches
+ * for a margin or a profit without importing the resolver. This one does reach
+ * (clampMargin, clampNetMarginPct, net_margin_pct) and does not import it, but
+ * it is not the defect class: it is the SURFACE the resolver's answer is
+ * printed on, and it RECEIVES that answer rather than deriving one.
+ *
+ * All four callers (the cell page, both opening-page builders, adapt_cell) pass
+ * `ownerTakeHome` straight out of resolveOwnerTakeHome, computed against the
+ * same revenue they pass as `typicalRevenue` and the same clamped margin they
+ * pass as `netMarginPct`. The clamp applied here on top of an already clamped
+ * margin is idempotent, so the displayed pair closes by construction.
+ *
+ * MEASURED, not asserted. 800 cells swept through the real builder, 244 of them
+ * carrying all three of the revenue, margin and take-home rows: the floor holds
+ * in 244 of 244 on the unrounded figures. Seven of those read as breaches when
+ * the PRINTED strings are parsed back, worst $83,000, and every one is the
+ * abbreviation the money format applies, not a disagreement: the worst prints
+ * "$2.7M" beside "23%" of "$12.1M", where the two abbreviations alone account
+ * for more than the gap. The London branch was swept separately because the
+ * cell pool holds no curated London cell: all 20 curated activities close, and
+ * the display clamp moves none of the 20 margins, so the take-home the loader
+ * derives from the raw margin agrees with the clamped margin printed beside it.
+ *
+ * Worth knowing before trusting any of that: `sections` has NO consumer. All
+ * four callers destructure `breakInRating` alone, so these rows are computed
+ * and dropped. The contract above is real and the rows are correct; they simply
+ * do not reach a reader from here today.
  */
 import * as React from "react";
 import type { Cell } from "@/lib/cells";

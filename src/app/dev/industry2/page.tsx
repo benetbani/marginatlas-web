@@ -39,6 +39,29 @@
  * "worst margins" list badmouths everything at the bottom of it. The benchmark
  * block compares this trade to its own sector neighbours and to the atlas
  * median, which is a position, not a verdict.
+ *
+ * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
+ * Classified 2026-08-18. verify_take_home_identity flags it because the inline
+ * TYPE for the where-it-pays rows names `net_margin_pct`, and the file does not
+ * import the resolver. It computes nothing: it reads `take_home_usd` off the
+ * adapter's seed and formats it. The chain behind that field is
+ * buildAcrossCities, which resolves through `resolveOwnerTakeHome`, then
+ * adapt_industry, which rounds.
+ *
+ * Verified by RENDERING, not by reading. The page was rendered through
+ * react-dom/server against the live builder and the printed strings read back:
+ * 8 of 8 city figures appear in the markup exactly as the seed carried them,
+ * and the seed's 8 rows match a separately recomputed buildAcrossCities with a
+ * worst dollar gap of $0.
+ *
+ * ONE BLOCK IS ALWAYS EMPTY AND IT IS NOT A DATA GAP. The same render shows
+ * "Formats inside this trade" falling to its ChapterGap on a trade that has six
+ * real siblings. The adapter deliberately emits subtypes as DELTAS
+ * (`margin_delta_pp`, `capital_delta_pct`) for the live body's `deriveSubtypes`
+ * to resolve against the base, and this page reads `keep_pct` / `capital_usd`,
+ * which the seed never carries. Left alone here because it is a different
+ * defect from the one this pass is about, and because the fix is to reuse
+ * `deriveSubtypes` rather than to re-derive the keeps a second way.
  */
 import { notFound } from "next/navigation";
 

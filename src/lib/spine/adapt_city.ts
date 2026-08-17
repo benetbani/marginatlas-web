@@ -35,6 +35,18 @@
  *   - locals_intel; the WhereToTrade map (no district lat/lng held)
  *   - trades cost_to_open + saturation columns; peers spend_index
  *
+ * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
+ * Classified 2026-08-18. verify_take_home_identity flags it because the seed
+ * shape it fills has a field literally called `net_margin_pct` and it does not
+ * import the resolver. It derives nothing: `take_home_usd` and
+ * `net_margin_pct` are `buildCityActivities`'s own figures, rounded, and that
+ * module resolves both through `resolveOwnerTakeHome`.
+ *
+ * Verified by recomputing the upstream leaderboard independently and comparing
+ * every carried row: London 8 rows, New York 9, Berlin 7, 24 in all, zero
+ * mismatches and a worst dollar gap of $0. Nothing to convert; importing the
+ * resolver here would only re-run it on its own output.
+ *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";

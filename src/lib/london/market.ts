@@ -90,6 +90,19 @@
  * legacy keys, so the activity pages for those four trades still find no
  * survival curve. That file is not this module's to change.
  *
+ * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
+ * Classified 2026-08-18. verify_take_home_identity flags a module that reaches
+ * for `net_margin_pct` without importing the resolver. This one is the
+ * correction ITSELF: it closes the identity at load, from the file's own two
+ * independent figures, so importing the resolver here would be circular. The
+ * resolver reconciles a structural profit against a shown margin; this file has
+ * no structural profit to reconcile, only a curated margin and a revenue.
+ *
+ * Re-measured 2026-08-18: all 20 curated activities satisfy
+ * take-home >= clamped margin x revenue, and the shared clamp moves NONE of the
+ * 20 margins, so the derived figure agrees with the clamped margin the boards
+ * print as well as with the raw one. Nothing here needs converting.
+ *
  * Pure, no network, no side effects.
  */
 import londonJson from "../../../data/london/london_market_v1.json";

@@ -27,6 +27,19 @@
  *   - subtypes[].rent_sensitivity (drops the WherePays re-rank chips) + per-subtype note
  *   - where_pays[].rent_load_pct , benchmark[].why
  *
+ * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
+ * Classified 2026-08-18. verify_take_home_identity flags it for its
+ * `clampMargin` calls, made without importing the resolver. Those calls bound a
+ * MARGIN at trade altitude (the hero keep, the sibling keeps, the benchmark
+ * axis), where there is no revenue and therefore no take-home to reconcile: the
+ * whole point of the provenance line is that the dollars land only once a city
+ * is picked. The one take-home on this page, `where_pays[].take_home_usd`, is
+ * `buildAcrossCities`'s figure rounded, and that module resolves it through
+ * `resolveOwnerTakeHome`.
+ *
+ * Verified by recomputing `buildAcrossCities` independently for restaurants and
+ * comparing every carried row: 8 places, zero mismatches, worst dollar gap $0.
+ *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
 import industryMarginsJson from "@/lib/finance/industry_margins.json";

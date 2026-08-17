@@ -45,6 +45,23 @@
  * built with React.createElement so the module is plain TypeScript (no JSX),
  * keeping it a .ts file and matching cell_board.ts.
  *
+ * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
+ * Classified 2026-08-18. verify_take_home_identity flags it for one call,
+ * `clampMargin` on the displayed net margin, made without importing the
+ * resolver. It is not the defect class. Every take-home figure in this module
+ * arrives from the caller and leaves unchanged: `summarizeActivityPlaces`
+ * ranks, fences and takes percentiles, and never computes a take-home from a
+ * margin. Measured across five activities and 53 ranked rows built from the
+ * real per-place inputs the industry page hands in: 53 of 53 carried the
+ * caller's figure byte for byte, zero drift. Those inputs come from
+ * `activityPlaceFromCell`, which routes through the resolver.
+ *
+ * The `LONDON_MARKET` import feeds `getActivitySurvivalArchetype` and nothing
+ * else, so the loader's take-home correction is irrelevant to what is read
+ * here. Its re-key IS relevant, and it works: the two activities checked whose
+ * keys the loader moves (`specialty-trades-mixed`, `cafes-coffee-shops`) both
+ * resolve a survival curve now.
+ *
  * Constraint-safe by construction: no em-dashes, no source-agency names.
  */
 import * as React from "react";
