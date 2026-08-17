@@ -57,7 +57,6 @@ import {
   HonestTakeBox,
   RangeStrip,
   StickySectionNav,
-  RealityCheck,
   ContrarianInsight,
   SectionEmpty,
   ScoreBand,
@@ -596,18 +595,40 @@ export default async function CityPage({
               />
             )}
 
-            {/* What shop and office space costs: the commercial-rent character.
-               A RealityCheck beat so it reads as an honest read, not a data
-               card pretending to a quoted rent. */}
+            {/* What shop and office space costs: the commercial-rent character,
+               read as an honest take rather than a data card pretending to a
+               quoted rent.
+
+               ONE CARD, NOT TWO. This was `<RealityCheck>` followed by a second
+               `.atlas-card` holding the section's own two figures, separated by
+               `mt-3`. Seen at 1280 on /cities/london: the beat ended, a card
+               seam and 12px of photograph cut across, and then a 72px-tall
+               orphan strip carried "Cost of living index 75" and "Prime vs
+               fringe rent 3 to 5x" as if it belonged to nothing. Every sibling
+               beat on this page, `visitors` immediately below it included, puts
+               its prose AND its graphic inside one BeatCard, so this was the
+               one section that disagreed with the page about what a beat is.
+
+               `RealityCheck` takes no children, which is why it was two cards in
+               the first place; it is a two-paragraph wrapper around BeatCard.
+               Composing the same two paragraphs directly here converges on the
+               idiom the rest of this file already uses, keeps the
+               `reality-check` spot, and lets the figures sit under a hairline
+               inside the beat they describe. */}
             {view.space ? (
-              <div id="space">
-                <RealityCheck
-                  eyebrow="What space costs"
-                  truth={view.space.verdict}
-                  body={view.space.body}
-                />
+              <BeatCard id="space" eyebrow="What space costs" spot="reality-check">
+                {view.space.verdict ? (
+                  <p className="font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
+                    {view.space.verdict}
+                  </p>
+                ) : null}
+                {view.space.body ? (
+                  <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-graphite md:text-base">
+                    {view.space.body}
+                  </p>
+                ) : null}
                 {view.space.stats.length > 0 ? (
-                  <dl className="atlas-card mt-3 grid gap-x-8 gap-y-3 px-5 py-4 sm:grid-cols-2 md:px-7">
+                  <dl className="mt-5 grid gap-x-8 gap-y-3 border-t border-parchment pt-4 sm:grid-cols-2">
                     {view.space.stats.map((s, i) => (
                       <div key={i} className="flex items-baseline justify-between gap-4">
                         <dt className="min-w-0 text-sm text-cocoa-700">
@@ -623,7 +644,7 @@ export default async function CityPage({
                     ))}
                   </dl>
                 ) : null}
-              </div>
+              </BeatCard>
             ) : (
               <SectionEmpty
                 id="space"
