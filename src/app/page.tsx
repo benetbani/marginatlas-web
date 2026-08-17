@@ -16,7 +16,6 @@ import { HomeNewsletter } from "@/components/home/HomeNewsletter";
 import { WebSite } from "@/components/StructuredData";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, type BlogPost } from "@/lib/blog";
-import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 // Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
@@ -538,7 +537,18 @@ export default async function HomePage() {
       {/* Plan v15 Block 3 - blog rail. */}
       <ToneBand tone="home-blog-rail">
         <section className="py-12 md:py-16">
-          <SectionEyebrow size="md" className="mb-2">Writing</SectionEyebrow>
+          {/* THE EYEBROW SAID "Writing" OVER A HEADING THAT SAYS "From the
+              Atlas notebook", which is the same label twice, and the charter's
+              §4 test is exactly that: a line under a heading that repeats the
+              heading goes entirely. This is not a new judgement either. Five
+              other eyebrows on this page were checked against the same test
+              and all five survive it, because each one carries something its
+              heading does not: "Six more" is a count, "Free report" is a
+              price, "Free and paid" is the axis of the table under it, "Same
+              business, different place" is the whole comparison. "Writing"
+              was the only one that carried nothing. AudienceBand records the
+              precedent in its own header, and CatalogPlates and
+              NeighborhoodCards already run one plain h2 with no eyebrow. */}
           <div className="flex items-baseline justify-between gap-4 flex-wrap mb-6 md:mb-8">
             {/* Canonical section size. This was the last section heading on the
                 home page still at text-2xl/3xl after the density pass unified
@@ -555,17 +565,59 @@ export default async function HomePage() {
               All posts →
             </a>
           </div>
+          {/* THE CARDS BELOW ARE .atlas-card, and this was the LAST hand-rolled
+              surface on the homepage. The class string was `rounded-md bg-white
+              border border-parchment hover:border-atlas-500 transition-colors`,
+              and it renders six times, so it was six of them.
+
+              It survived the card sweep for a reason worth writing down,
+              because the same blind spot will hide the next one: the classifier
+              matched `rounded-* ... border-* ... bg-white` in that written
+              ORDER, and this string spells bg before border. Re-counted with an
+              order-independent test, the homepage tree reads 10 atlas-card
+              against this 1. The charter's §12 line "homepage cards still
+              hand-rolled: 0" was wrong, and this is the correction.
+
+              Four things change, none of them chosen here:
+                background  #ffffff opaque -> --atlas-surface-card at .955.
+                            With no centre plate in AtlasFrame, an opaque white
+                            is a hole punched through the photograph, which is
+                            the founder's B5/B6 ruling directly.
+                radius      rounded-md 6px -> --radius 16px. This was the only
+                            6px card on a page of ten 16px cards.
+                hairline    border-parchment #e3e3e3 opaque -> --atlas-hairline
+                            rgba(38,33,28,.07), which over the card resolves
+                            near #f0efef, a hair lighter, and is what the other
+                            ten already carry.
+                hover       the manual border-colour swap -> the canonical
+                            a.atlas-card:hover, which this element gets for free
+                            by being an <a>: hairline-strong, elev-2, a 1px lift
+                            and the vermillion top edge.
+
+              `group` stays, the h3 hover hangs off it. `transition-colors` goes
+              from the anchor only: the h3 carries its own. */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {blogPosts.map((post) => (
               <a
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group rounded-md bg-white border border-parchment hover:border-atlas-500 transition-colors p-5 md:p-6 flex flex-col"
+                className="atlas-card group p-5 md:p-6 flex flex-col"
               >
                 <div className="text-xs text-ink-500 tabular-nums">
                   {formatPostDate(post.date)}
                 </div>
-                <h3 className="mt-2 font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors leading-snug">
+                {/* A CARD TITLE, NOT A SECOND SECTION HEADING. This was
+                    `text-lg md:text-xl`, the exact token the <h2> above it
+                    carries, so the section heading and the six card titles
+                    under it were typographically identical and the band had no
+                    hierarchy to read. The other two card titles in this tree
+                    (AudienceBand, NeighborhoodCards) are both
+                    `font-display text-base font-medium tracking-tight`; this
+                    was the only one that was not, so this is convergence on the
+                    page's own convention rather than a size chosen here.
+                    leading-snug stays: blog titles are the one card title on
+                    this page that regularly wraps to three lines. */}
+                <h3 className="mt-2 font-display text-base font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors leading-snug">
                   {post.title}
                 </h3>
                 {post.excerpt && (
