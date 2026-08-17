@@ -19,10 +19,10 @@
  * self-omits below five clean rows, and the page itself renders nothing if too
  * few resolve, so the hub never shows a broken or short board.
  *
- * Server component, revalidated daily. White, hairline-separated, mobile-first;
- * same board language (cream-50 card surface, warm-taupe hairlines, card
- * elevation token, font-display figures) as StatCard / RankRow, which it builds
- * on. Tokens only, no em-dashes, no source-agency names.
+ * Server component, revalidated daily. Mobile-first, and every block sits on
+ * the canonical .atlas-card surface, the same one StatCard and RankRow moved
+ * to: translucent at .955 so the fixed page photograph reads through it.
+ * Tokens only, no em-dashes, no source-agency names.
  */
 import type { Metadata } from "next";
 import { RankRow } from "@/components/board/RankRow";
@@ -30,7 +30,6 @@ import { fmtUSD, fmtNum } from "@/components/board/format";
 import { CatalogCollections } from "@/components/extremes/CatalogCollections";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { LensFilter, type LensEntry } from "@/components/extremes/LensFilter";
-import { elevation } from "@/lib/design-tokens";
 import {
   loadExtremes,
   type ExtremeLeaderboard,
@@ -59,21 +58,30 @@ const MIN_BOARDS = 3;
  */
 function LeaderboardSection({ board }: { board: ExtremeLeaderboard }) {
   return (
-    <section className="border-t border-parchment pt-10 first:border-t-0 first:pt-0">
+    /* ONE CARD PER BOARD. The heading trio, the ranked rows and the note
+       were three loose objects on the page separated by a border-t rule,
+       and only the middle one had a surface. AtlasFrame paints a fixed
+       photograph behind every route with no centre plate, so the eyebrow,
+       the h2 and the note were dark type straight on a picture while the
+       rows sat on an opaque hand-rolled plate. The board is one card now,
+       which is both the legibility fix and the divider: cards separate
+       themselves, so the rule goes. */
+    <section className="atlas-card p-5 md:p-6">
       <SectionEyebrow size="md" className="mb-2">
         {board.eyebrow}
       </SectionEyebrow>
       <h2 className="font-display text-2xl font-semibold tracking-tight text-balance text-ink-900 md:text-3xl">
         {board.title}
       </h2>
-      <p className="mt-2 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
         {board.intro}
       </p>
 
-      <div
-        className="rounded-lg border border-parchment bg-cream-50 p-4 md:p-5"
-        style={{ boxShadow: elevation.card }}
-      >
+      {/* The inner hand-rolled plate is gone: the section above IS the
+          card now, and an inline boxShadow beats the class anyway, so a
+          second elevation here would have pinned this surface to a level
+          nothing else on the site uses. */}
+      <div className="mt-5">
         <div className="mb-2 flex items-baseline justify-end">
           <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-cocoa-500">
             {board.valueCaption}
@@ -112,21 +120,30 @@ function LeaderboardSection({ board }: { board: ExtremeLeaderboard }) {
  */
 function DensityLeaderboardSection({ board }: { board: DensityLeaderboard }) {
   return (
-    <section className="border-t border-parchment pt-10 first:border-t-0 first:pt-0">
+    /* ONE CARD PER BOARD. The heading trio, the ranked rows and the note
+       were three loose objects on the page separated by a border-t rule,
+       and only the middle one had a surface. AtlasFrame paints a fixed
+       photograph behind every route with no centre plate, so the eyebrow,
+       the h2 and the note were dark type straight on a picture while the
+       rows sat on an opaque hand-rolled plate. The board is one card now,
+       which is both the legibility fix and the divider: cards separate
+       themselves, so the rule goes. */
+    <section className="atlas-card p-5 md:p-6">
       <SectionEyebrow size="md" className="mb-2">
         {board.eyebrow}
       </SectionEyebrow>
       <h2 className="font-display text-2xl font-semibold tracking-tight text-balance text-ink-900 md:text-3xl">
         {board.title}
       </h2>
-      <p className="mt-2 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
         {board.intro}
       </p>
 
-      <div
-        className="rounded-lg border border-parchment bg-cream-50 p-4 md:p-5"
-        style={{ boxShadow: elevation.card }}
-      >
+      {/* The inner hand-rolled plate is gone: the section above IS the
+          card now, and an inline boxShadow beats the class anyway, so a
+          second elevation here would have pinned this surface to a level
+          nothing else on the site uses. */}
+      <div className="mt-5">
         <div className="mb-2 flex items-baseline justify-end">
           <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-cocoa-500">
             {board.valueCaption}
@@ -160,21 +177,30 @@ function DensityLeaderboardSection({ board }: { board: DensityLeaderboard }) {
  */
 function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
   return (
-    <section className="border-t border-parchment pt-10 first:border-t-0 first:pt-0">
+    /* ONE CARD PER BOARD. The heading trio, the ranked rows and the note
+       were three loose objects on the page separated by a border-t rule,
+       and only the middle one had a surface. AtlasFrame paints a fixed
+       photograph behind every route with no centre plate, so the eyebrow,
+       the h2 and the note were dark type straight on a picture while the
+       rows sat on an opaque hand-rolled plate. The board is one card now,
+       which is both the legibility fix and the divider: cards separate
+       themselves, so the rule goes. */
+    <section className="atlas-card p-5 md:p-6">
       <SectionEyebrow size="md" className="mb-2">
         {board.eyebrow}
       </SectionEyebrow>
       <h2 className="font-display text-2xl font-semibold tracking-tight text-balance text-ink-900 md:text-3xl">
         {board.title}
       </h2>
-      <p className="mt-2 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
         {board.intro}
       </p>
 
-      <div
-        className="rounded-lg border border-parchment bg-cream-50 p-4 md:p-5"
-        style={{ boxShadow: elevation.card }}
-      >
+      {/* The inner hand-rolled plate is gone: the section above IS the
+          card now, and an inline boxShadow beats the class anyway, so a
+          second elevation here would have pinned this surface to a level
+          nothing else on the site uses. */}
+      <div className="mt-5">
         <div className="mb-2 flex items-baseline justify-end">
           <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-cocoa-500">
             {board.valueCaption}
@@ -209,21 +235,30 @@ function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
  */
 function BreakInLeaderboardSection({ board }: { board: BreakInLeaderboard }) {
   return (
-    <section className="border-t border-parchment pt-10 first:border-t-0 first:pt-0">
+    /* ONE CARD PER BOARD. The heading trio, the ranked rows and the note
+       were three loose objects on the page separated by a border-t rule,
+       and only the middle one had a surface. AtlasFrame paints a fixed
+       photograph behind every route with no centre plate, so the eyebrow,
+       the h2 and the note were dark type straight on a picture while the
+       rows sat on an opaque hand-rolled plate. The board is one card now,
+       which is both the legibility fix and the divider: cards separate
+       themselves, so the rule goes. */
+    <section className="atlas-card p-5 md:p-6">
       <SectionEyebrow size="md" className="mb-2">
         {board.eyebrow}
       </SectionEyebrow>
       <h2 className="font-display text-2xl font-semibold tracking-tight text-balance text-ink-900 md:text-3xl">
         {board.title}
       </h2>
-      <p className="mt-2 mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
         {board.intro}
       </p>
 
-      <div
-        className="rounded-lg border border-parchment bg-cream-50 p-4 md:p-5"
-        style={{ boxShadow: elevation.card }}
-      >
+      {/* The inner hand-rolled plate is gone: the section above IS the
+          card now, and an inline boxShadow beats the class anyway, so a
+          second elevation here would have pinned this surface to a level
+          nothing else on the site uses. */}
+      <div className="mt-5">
         <div className="mb-2 flex items-baseline justify-end">
           <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-cocoa-500">
             {board.valueCaption}
@@ -269,17 +304,22 @@ function LensBlock({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-t border-parchment pt-10 first:border-t-0 first:pt-0">
-      <SectionEyebrow size="md" className="mb-3">
-        {eyebrow}
-      </SectionEyebrow>
-      <h2 className="max-w-3xl text-balance font-display text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
-        {title}
-      </h2>
-      <p className="mt-3 mb-8 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
-        {intro}
-      </p>
-      <div className="space-y-10">{children}</div>
+    <div className="pt-10 first:pt-0">
+      {/* The lens heading gets its own card for the same reason the boards
+          below do: it was bare type on the photograph. The border-t rule
+          goes with it, since a stack of cards already separates itself. */}
+      <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
+        <SectionEyebrow size="md" className="mb-3">
+          {eyebrow}
+        </SectionEyebrow>
+        <h2 className="max-w-3xl text-balance font-display text-3xl font-semibold tracking-tight text-ink-900 md:text-4xl">
+          {title}
+        </h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
+          {intro}
+        </p>
+      </div>
+      <div className="mt-5 space-y-5">{children}</div>
     </div>
   );
 }
@@ -422,6 +462,7 @@ export default async function ExtremesPage() {
          paragraph establish the hub's warmer register: a curious tour of the
          data's edges, not a benchmark readout. The figures below stay exact. */}
       <header className="pt-8 pb-10 md:pt-10 md:pb-12">
+        <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
         <SectionEyebrow size="md" className="mb-3">
           A field guide to the edges
         </SectionEyebrow>
@@ -436,6 +477,7 @@ export default async function ExtremesPage() {
           the staff, and the tax are paid. Browse them. Each line is a real
           number, and every name opens the full read for that place.
         </p>
+        </div>
       </header>
 
       {/* The lens blocks, led by cost-to-open, behind a client-side filter. The
@@ -445,7 +487,7 @@ export default async function ExtremesPage() {
       {lenses.length > 0 ? (
         <LensFilter lenses={lenses} />
       ) : (
-        <p className="max-w-2xl text-sm leading-relaxed text-cocoa-700">
+        <p className="atlas-card px-5 py-6 md:px-7 md:py-7 max-w-2xl text-sm leading-relaxed text-cocoa-700">
           The leaderboards are refreshing right now. Check back in a moment, or
           browse the activities and cities in the meantime.
         </p>
@@ -454,7 +496,7 @@ export default async function ExtremesPage() {
       {/* Closing note: the one editorial line that ties the hub together and
          re-states the discipline, in the warmer voice. */}
       {hasEnough ? (
-        <p className="mt-12 border-t border-parchment pt-6 max-w-2xl text-sm leading-relaxed text-cocoa-700">
+        <p className="atlas-card mt-12 px-5 py-6 md:px-7 md:py-7 max-w-2xl text-sm leading-relaxed text-cocoa-700">
           The lesson the edges keep teaching: revenue is the easy half of the
           story. What an owner actually keeps depends on where the business runs,
           and the same trade can be a comfortable living in one state and a

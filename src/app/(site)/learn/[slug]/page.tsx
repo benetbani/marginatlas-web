@@ -25,7 +25,6 @@ import type { Metadata } from "next";
 import { LEARN_ARTICLES, LEARN_BY_SLUG } from "@/lib/learn/articles";
 import { buildLearnView } from "@/lib/learn/learn_view";
 import {
-  HeroWash,
   MoneyGoesBreakdown,
   RangeStrip,
   HonestTakeBox,
@@ -159,36 +158,47 @@ export default async function LearnArticlePage({
         }}
       />
 
-      <HeroWash category="learn">
-      <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-3">
-        <Link href="/learn" className="hover:text-atlas-700">
-          Knowledge base
-        </Link>
-        <span>·</span>
-        <span>{FAMILY_LABEL[article.family]}</span>
+      {/* THE MASTHEAD IS ONE CARD, and <HeroWash category="learn"> is gone.
+          .atlas-wash paints `var(--atlas-surface-paper)` as its BASE layer,
+          fully opaque, under the radial tint. So the wash covered the fixed
+          page photograph across the whole column for the height of the
+          masthead: an opaque plate at the top of the page, which is exactly
+          where the founder says the picture must still read. Same call and
+          same remedy as the city page in 4acfb611, which left .atlas-wash--city
+          with no call site at all.
+
+          The headline number keeps a surface of its own, one level in, so it
+          still reads as the answer rather than as another paragraph. */}
+      <div className="atlas-card px-5 py-6 md:px-7 md:py-7 mb-10 md:mb-12">
+        <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold mb-3">
+          <Link href="/learn" className="hover:text-atlas-700">
+            Knowledge base
+          </Link>
+          <span>·</span>
+          <span>{FAMILY_LABEL[article.family]}</span>
+        </div>
+
+        <h1 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 mb-6 leading-tight">
+          {article.title}
+        </h1>
+
+        {/* 2. Headline answer (the top "Overview" beat for the sticky nav). */}
+        <section id="overview">
+          {article.headlineNumber && (
+            <div className="atlas-card-soft mb-4 px-5 py-5 md:px-7 md:py-6">
+              <div className="font-display text-4xl md:text-5xl font-medium text-ink-900 tabular-nums leading-none">
+                {article.headlineNumber.value}
+              </div>
+              <div className="text-sm text-cocoa-700/70 mt-2">
+                {article.headlineNumber.label}
+              </div>
+            </div>
+          )}
+          <p className="text-lg md:text-xl text-ink-900 leading-relaxed font-medium">
+            {article.oneLineAnswer}
+          </p>
+        </section>
       </div>
-
-      <h1 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 mb-6 leading-tight">
-        {article.title}
-      </h1>
-
-      {/* 2. Headline answer (the top "Overview" beat for the sticky nav). */}
-      <section id="overview" className="mb-10 md:mb-12">
-        {article.headlineNumber && (
-          <div className="mb-4 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
-            <div className="font-display text-4xl md:text-5xl font-medium text-ink-900 tabular-nums leading-none">
-              {article.headlineNumber.value}
-            </div>
-            <div className="text-sm text-cocoa-700/70 mt-2">
-              {article.headlineNumber.label}
-            </div>
-          </div>
-        )}
-        <p className="text-lg md:text-xl text-ink-900 leading-relaxed font-medium">
-          {article.oneLineAnswer}
-        </p>
-      </section>
-      </HeroWash>
 
       {/* 3. The worked example: a real sample P&L, between the answer and the
           prose. Built only from the cost shares the article itself states, so it
@@ -221,7 +231,7 @@ export default async function LearnArticlePage({
       {/* 4. The spread: the typical figure is a half-truth, the range is the
           story. Seven gradations, the signature strip. */}
       {view.spread ? (
-        <section className="mb-10 rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6">
+        <section className="atlas-card mb-10 px-5 py-5 md:px-7 md:py-6">
           <div className="text-[11px] font-semibold uppercase tracking-wider text-cocoa-500 mb-3">
             The revenue spread
           </div>
@@ -296,7 +306,7 @@ export default async function LearnArticlePage({
       {view.benchmarks ? (
         <section
           id="benchmarks"
-          className="mb-10 rounded-lg border border-parchment bg-white px-5 py-5 md:px-7 md:py-6"
+          className="atlas-card mb-10 px-5 py-5 md:px-7 md:py-6"
         >
           <div className="text-xs uppercase tracking-wide text-atlas-600 font-semibold mb-3">
             Show me the data

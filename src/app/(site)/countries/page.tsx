@@ -139,10 +139,22 @@ export default function CountriesHub() {
   ).length;
 
   return (
-    <article className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14">
+    /* max-w-7xl mx-auto px-4 md:px-6 removed. SiteChrome already gives this
+       route max-w-content mx-auto px-6, so the 1280 cap never applied and the
+       second padding just doubled the gutter into a 1024 column inside the
+       site's 1072: the cohesion audit's item 7. */
+    <article className="py-10 md:py-14">
       {/* Header: an editorial masthead on a seated card, a faint survey-grid
          motif behind it, and the coverage in three figures. */}
-      <header className="relative overflow-hidden rounded-2xl border border-parchment bg-cream-50 px-6 py-8 md:px-10 md:py-12 mb-7">
+      {/* Canonical surface: was "rounded-2xl border border-parchment
+          bg-cream-50", a fully opaque hand-roll, and bg-cream-50 is #ffffff.
+          AtlasFrame paints a fixed photograph behind every route with no
+          centre plate, so an opaque fill blocks the picture dead where
+          .atlas-card carries it at .955. .atlas-card already sets
+          position:relative, which is what the survey-grid motif below needs
+          to position against, and what keeps the card above the frame's own
+          fixed layers. */}
+      <header className="atlas-card overflow-hidden px-6 py-8 md:px-10 md:py-12 mb-7">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -180,7 +192,14 @@ export default function CountriesHub() {
           return (
             <section
               key={continent}
-              className="rounded-lg border border-parchment bg-cream-50 px-5 py-5 md:px-7 md:py-6"
+              /* Same conversion as the header above. The 195 country tiles
+                 INSIDE this card are deliberately left on their own
+                 rounded-lg: they sit on a card, not on the photograph, so
+                 their fill is not what carries the picture, and .atlas-card's
+                 16px radius on a 56px tile is a worse drawing than the 8px
+                 they have. Converging a surface is not the same as converging
+                 a mark. */
+              className="atlas-card px-5 py-5 md:px-7 md:py-6"
             >
               <div className="mb-4 flex items-baseline justify-between gap-3">
                 <h2 className="font-display text-xl md:text-2xl font-semibold tracking-tight text-ink-900">
