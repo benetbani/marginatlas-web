@@ -10,7 +10,23 @@ export const metadata = {
 
 export default function AboutDataPage() {
   return (
-    <article className="max-w-2xl">
+    /* ON A CARD, converged onto the shell /privacy, /terms and /cookies
+       already use (`LegalPage`, whose own comment says it matched THIS page's
+       reading measure and then added the surface this page never got).
+
+       WHAT I SAW at 1440: the whole of this page, the site's trust reference,
+       painted straight onto the fixed photograph with no ground under any of
+       it. It reads down the left where the picture is sky and sea, and the
+       long lines run out over the cliffside town: "so a Restaurant in
+       California compares directly to a Restaurant in Paris" ends at x=845,
+       on the buildings. The quiet grey line about the "How we know this" link
+       is the weakest type on the page and sits on open water. The country
+       page's section nav failed in exactly this way and for exactly this
+       reason.
+
+       max-w-2xl stays: that is the reading measure, and it is not the card's
+       business. mb-16 to match the legal shell's closing space. */
+    <article className="atlas-card max-w-2xl px-6 py-8 md:px-9 md:py-10 mb-16">
       {/* Plan v32 (audit Sprint A5) — decorative placeholder image at the
          top removed (founder rule: no decorative images on overview
          pages). Stale "40+ countries" copy updated to reflect the real

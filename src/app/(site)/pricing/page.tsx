@@ -158,12 +158,18 @@ export default function PricingPage() {
       {/* v34 Part 3.7 anti-Trading-Economics callout +
           Part 3.6 cancel-anytime block. Both verbatim. */}
       <section className="py-12 sm:py-16">
-        <div className="atlas-card mx-auto max-w-3xl px-5 py-6 md:px-7 md:py-7">
+        {/* `mx-auto max-w-3xl` REMOVED, for the same reason it went from the
+            FAQ band: it centred this card at 768 inside a 1072 column, giving
+            the page a third left edge at x=353 against the x=205 of the hero,
+            the tier cards and the table. The reading measure is kept where it
+            belongs, on the prose inside, which is the pattern the hero on this
+            same page already uses. */}
+        <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
           <SectionEyebrow size="md">How we think about your card</SectionEyebrow>
-          <p className="font-display mt-3 text-balance text-base sm:text-lg text-ink-900 leading-relaxed">
+          <p className="font-display mt-3 max-w-3xl text-balance text-base sm:text-lg text-ink-900 leading-relaxed">
             {ANTI_TE_CALLOUT}
           </p>
-          <p className="mt-5 text-sm text-ink-700 leading-relaxed">
+          <p className="mt-5 max-w-3xl text-sm text-ink-700 leading-relaxed">
             {CANCEL_ANYTIME_BLOCK}
           </p>
           <p className="mt-5 text-sm">

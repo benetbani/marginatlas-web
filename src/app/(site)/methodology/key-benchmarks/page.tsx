@@ -17,7 +17,23 @@ export const metadata = {
 
 export default function KeyBenchmarksMethodologyPage() {
   return (
-    <article className="max-w-3xl mx-auto px-4 py-10 md:py-14 prose prose-ink">
+    /* ON A CARD, and left-aligned, converged onto the shell /privacy, /terms,
+       /cookies and now /about-data share.
+
+       WHAT I SAW at 1440: every word of this page was painted straight onto
+       the fixed photograph. The bullet list under "How the headline is chosen"
+       runs its lines out to x=1070, across the cliffside town, and
+       "hotels, trades with mixed materials and labour, repair shops,
+       galleries, agencies in commission economies" is genuinely hard to read
+       over the roofs. This page is linked from the footer of every page on
+       the site as "How a figure is built" and "Where the numbers come from",
+       so it is where a reader who does not believe a number goes, and it was
+       the least legible page on the site.
+
+       `mx-auto px-4` also went: a centred 768 column plus a second gutter
+       inside SiteChrome's own `max-w-content mx-auto px-6`, which put this
+       page's left edge at x=336 against the x=176 of every page around it. */
+    <article className="atlas-card max-w-2xl px-6 py-8 md:px-9 md:py-10 mb-16 prose prose-ink">
       <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-3">
         Methodology
       </div>
@@ -110,7 +126,10 @@ export default function KeyBenchmarksMethodologyPage() {
         any single line.
       </p>
 
-      <div className="mt-12 p-5 rounded-2xl bg-cream-100 border border-parchment">
+      {/* Canonical nested surface. Was `rounded-2xl bg-cream-100 border
+          border-parchment`, a hand-rolled card in the banned colour; now the
+          same soft inset the pricing table and the pricing FAQ list use. */}
+      <div className="atlas-card-soft mt-12 p-5">
         <div className="text-xs font-semibold uppercase tracking-wide text-atlas-700 mb-2">
           Try the comparator
         </div>
@@ -123,7 +142,7 @@ export default function KeyBenchmarksMethodologyPage() {
         </p>
         <a
           href="/check"
-          className="inline-block px-4 py-2 rounded-lg bg-atlas-700 hover:bg-atlas-800 text-cream-50 text-sm font-semibold transition"
+          className="inline-block px-4 py-2 rounded-lg bg-atlas-700 hover:bg-atlas-800 text-white text-sm font-semibold transition"
         >
           Open the comparator
         </a>

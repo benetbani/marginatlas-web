@@ -48,16 +48,27 @@ export default function PricingFAQ() {
     // fixed page photograph for its whole height. Legibility is a property of
     // the card, not of the backdrop, so the band goes transparent and the FAQ
     // list below carries the surface.
-    <section>
-      <div className="mx-auto max-w-3xl px-6 py-14 sm:py-20">
+    /* ONE LEFT EDGE, AND THE HEADING ON A CARD. Seen at 1440: this band was
+       `mx-auto max-w-3xl px-6`, a second column cap and a second gutter inside
+       the ones SiteChrome already gives the route. It put the heading at x=353
+       while every other heading on /pricing starts at x=205, so the page had
+       two left edges; and it pushed "Frequently asked, plainly answered." off
+       the calm left of the photograph and onto the busiest part of it, sea
+       glare and rooftops, with no ground under the type at all. Every other
+       section heading on this page sits inside an atlas-card. This one now
+       does too, at full width, which fixes the alignment, the legibility and
+       the cohesion in the same move. */
+    <section className="py-12 sm:py-16">
+      <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
         <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
           Honest answers
         </p>
         <h2 className="font-display mt-3 text-2xl sm:text-3xl leading-[1.1] tracking-[-0.02em] font-semibold text-ink-900">
           Frequently asked, plainly answered.
         </h2>
-        {/* Canonical surface: was "rounded-lg bg-cream-50 border border-parchment". */}
-        <ul className="atlas-card mt-8">
+        {/* The list is a nested surface inside the band card, matching the
+            tier table two sections up. */}
+        <ul className="atlas-card-soft mt-8">
           {ITEMS.map((it, i) => {
             const isOpen = open === i;
             return (
