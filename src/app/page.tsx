@@ -15,7 +15,7 @@ import { UpgradeTeaser } from "@/components/home/UpgradeTeaser";
 import { HomeNewsletter } from "@/components/home/HomeNewsletter";
 import { WebSite } from "@/components/StructuredData";
 import { getToneClass } from "@/lib/page-layout/section-order";
-import { getAllPosts, type BlogPost } from "@/lib/blog";
+import { getAllPosts, GRADIENT_PALETTE, type BlogPost } from "@/lib/blog";
 import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
 import { BlogCover } from "@/components/blog/BlogCover";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
@@ -80,23 +80,20 @@ export const revalidate = 86400; // 1 day
  */
 // Fallback gradient cover for placeholder blog posts (per the
 // founder rule: every blog card must have an image).
+/* THE HAND-MAINTAINED TWIN IS GONE. This function used to carry its own copy
+   of the six ramps under a comment reading "these two lists must stay
+   identical", which is a rule that survives only as long as everyone editing
+   remembers it. They had already drifted once. GRADIENT_PALETTE is exported
+   from src/lib/blog.ts now and there is one list. */
 function placeholderImage(slug: string): BlogPost["image"] {
-  // Token-anchored ramps, mirroring GRADIENT_PALETTE in src/lib/blog.ts
-  // (conformed 2026-06-12; the navy pair retired for the sanctioned teal).
-  // 2026-08-09: the moss and amber ramps replaced in place. See the note on
-  // GRADIENT_PALETTE in src/lib/blog.ts , these two lists must stay identical.
-  const palette = [
-    "linear-gradient(135deg, #991600 0%, #f24e2f 100%)",
-    "linear-gradient(135deg, #211810 0%, #534231 100%)",
-    "linear-gradient(135deg, #463726 0%, #7d6c58 100%)",
-    "linear-gradient(135deg, #534231 0%, #c3b39c 100%)",
-    "linear-gradient(135deg, #e62200 0%, #f24e2f 100%)",
-    "linear-gradient(135deg, #345a47 0%, #4d7c64 100%)",
-  ];
   let h = 0;
   for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) & 0xfffffff;
   const initial = (slug.replace(/[^a-z]/gi, "")[0] || "A").toUpperCase();
-  return { kind: "gradient" as const, gradient: palette[h % palette.length], initial };
+  return {
+    kind: "gradient" as const,
+    gradient: GRADIENT_PALETTE[h % GRADIENT_PALETTE.length],
+    initial,
+  };
 }
 
 const BLOG_FALLBACK: BlogPost[] = [
@@ -144,14 +141,58 @@ const BLOG_FALLBACK: BlogPost[] = [
   },
 ];
 
+/**
+ * Spread the derived covers across the rail, so six cards do not show three
+ * colours.
+ *
+ * MEASURED OFF THE RENDERED PAGE, not guessed. With the covers finally drawing,
+ * the six live posts painted only THREE distinct gradients: three cards were
+ * byte-identical cocoa-700 to cocoa-300, two more were identical ink-700 to
+ * ink-500, and NEITHER terracotta ramp appeared at all. The brand's own colour
+ * was absent from the brand's own homepage while three tan plates sat in a row.
+ *
+ * The cause is not a bad palette, it is `h % 6` over six slugs. A hash spreads
+ * evenly only in the large; on a rail of exactly six, collisions are the normal
+ * case rather than bad luck. That is invisible on /blog, where seventy posts
+ * average it out, and unmissable here.
+ *
+ * So the hash still chooses first, and only a REPEAT is moved: a post whose
+ * cover is already used in this rail takes the next unused ramp instead. Most
+ * posts therefore keep the colour they carry everywhere else, which is what
+ * BlogCover's contract promises, and the rail is guaranteed six distinct covers
+ * whenever the palette holds at least six.
+ *
+ * Deliberately local to this rail. /blog keeps pure per-slug hashing, because
+ * across seventy cards a repeat is invisible and stability is worth more there.
+ */
+function spreadCovers(posts: BlogPost[]): BlogPost[] {
+  const used = new Set<string>();
+  const pool = posts
+    .map((p) => (p.image.kind === "gradient" ? p.image.gradient : null))
+    .filter((g): g is string => g !== null);
+  const palette = Array.from(new Set([...pool, ...GRADIENT_PALETTE]));
+
+  return posts.map((post) => {
+    if (post.image.kind !== "gradient") return post; // a real cover is never moved
+    if (!used.has(post.image.gradient)) {
+      used.add(post.image.gradient);
+      return post;
+    }
+    const free = palette.find((g) => !used.has(g));
+    if (!free) return post; // more cards than ramps: leave it rather than invent one
+    used.add(free);
+    return { ...post, image: { ...post.image, gradient: free } };
+  });
+}
+
 function loadBlogRail(): { posts: BlogPost[]; sourced: boolean } {
   try {
     const live = getAllPosts();
-    if (live.length >= 6) return { posts: live.slice(0, 6), sourced: true };
+    if (live.length >= 6) return { posts: spreadCovers(live.slice(0, 6)), sourced: true };
   } catch {
     // fall through to placeholder
   }
-  return { posts: BLOG_FALLBACK, sourced: false };
+  return { posts: spreadCovers(BLOG_FALLBACK), sourced: false };
 }
 
 function formatPostDate(iso: string): string {

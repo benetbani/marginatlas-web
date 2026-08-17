@@ -33,13 +33,39 @@ export type BlogImage =
    a blog cover, and the ratified palette bans amber and green by name.
    Replaced IN PLACE rather than reordered: gradientFor() hashes the slug to an
    index, so moving a slot silently reassigns covers on every existing post. */
-const GRADIENT_PALETTE = [
+/* EXPORTED 2026-08-17, because it had a hand-maintained twin. src/app/page.tsx
+   carried a byte-identical copy for its fallback posts, under a comment reading
+   "these two lists must stay identical", which is a rule a person has to
+   remember on every edit. It is now one list, imported. The green slot found
+   this session had in fact drifted between them once already. */
+export const GRADIENT_PALETTE = [
   "linear-gradient(135deg, #991600 0%, #f24e2f 100%)",  // atlas-700 → atlas-400
   "linear-gradient(135deg, #211810 0%, #534231 100%)",  // ink-900 → cocoa-700
   "linear-gradient(135deg, #463726 0%, #7d6c58 100%)",  // ink-700 → ink-500
   "linear-gradient(135deg, #534231 0%, #c3b39c 100%)",  // cocoa-700 → cocoa-300
   "linear-gradient(135deg, #e62200 0%, #f24e2f 100%)",  // atlas-500 → atlas-400
-  "linear-gradient(135deg, #345a47 0%, #4d7c64 100%)",  // teal-700 → teal-500
+  /* THE SAGE RAMP IS GONE, and it took a screenshot to catch, which is the
+     point. It was labelled "teal-700 → teal-500" and the label is why it
+     survived: #345a47 and #4d7c64 both measure hue 149 to 150, which is green,
+     not teal. Teal sits near 180. A banned hue had a permitted name.
+
+     Its own token says so too. design-tokens describes the sage ramp as "the
+     single cool counterweight to the terracotta field. Use under 5% of
+     surface." A cover plate is roughly 340 by 190 and one of six on the
+     homepage rail, which is not five percent of anything. The token stays
+     defined for the small data-accent job it was written for; it just cannot
+     be a full-bleed field.
+
+     None of this was visible while the homepage rail was discarding its
+     covers. Rendering them turned a dormant palette entry into the most
+     saturated object on the page, which is why the replacement lands in the
+     same session as the covers.
+
+     Replaced with ink-900 to atlas-700: a dark ramp that resolves into
+     terracotta, distinct from all five above and inside the sanctioned
+     palette. Both this list and its twin in src/app/page.tsx changed
+     together, per the note there. */
+  "linear-gradient(135deg, #211810 0%, #991600 100%)",  // ink-900 → atlas-700
 ];
 
 function gradientFor(slug: string): BlogImage {
