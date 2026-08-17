@@ -59,7 +59,7 @@ import {
 } from "@/lib/extrapolations/fill_missing";
 import { getLondonEntry } from "@/lib/scores/cell_board";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
-import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash, ZoomControl, AddToWatch } from "@/components/kit";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, ZoomControl, AddToWatch } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
 import { MakeItYoursPanel } from "@/components/cells/MakeItYoursPanel";
@@ -554,7 +554,13 @@ async function NeighborhoodCellPageBody({
             its 7-gradation spread, the quiet stat row. The eyebrow carries the
             neighborhood coordinate so the reader knows the scope is the area,
             not the whole city. */}
-        <HeroWash category="business">
+        {/* THE WASH IS GONE, same removal as the parent cell page. .atlas-wash
+            paints var(--atlas-surface-paper) opaque as its base layer under the
+            radial tint, so it covered the site photograph across the whole
+            column for the height of the masthead. .atlas-card is the surface the
+            city and cell mastheads already use, and it is position:relative, so
+            it is painted rather than covered by the frame's fixed layers. */}
+        <div className="atlas-card px-5 py-5 md:px-7 md:py-6">
           <AnswerFirstMasthead
             id="headline"
             eyebrow={`${tradeName} · ${nb.name} · ${cityName}`}
@@ -570,7 +576,7 @@ async function NeighborhoodCellPageBody({
             stats={cellView.masthead.stats}
             breakIn={cellView.masthead.breakIn}
           />
-        </HeroWash>
+        </div>
 
         {/* Make it yours: the marquee what-if calculator, mounted just below the
             masthead and ONLY when a real take-home + revenue are held (so a

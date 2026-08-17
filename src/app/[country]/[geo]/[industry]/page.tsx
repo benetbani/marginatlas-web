@@ -73,7 +73,7 @@ import {
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
 import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
-import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, HeroWash, ZoomControl, AddToWatch } from "@/components/kit";
+import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, ZoomControl, AddToWatch } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
 import { MakeItYoursPanel } from "@/components/cells/MakeItYoursPanel";
@@ -1130,7 +1130,15 @@ async function CellPageBody({
         />
       </div>
 
-      <HeroWash category="business">
+      {/* THE WASH IS GONE. .atlas-wash paints var(--atlas-surface-paper) as its
+          BASE layer, fully opaque, underneath the radial tint, so it covered the
+          site photograph across the whole column for the height of the masthead:
+          an opaque plate at the very top of the flagship trade page. Removed the
+          same way and for the same reason 4acfb611 removed it from the city page
+          and 1bdb96bb from /learn. What carries the masthead now is the site's
+          own surface, .atlas-card at .955, which is also position:relative and
+          so is painted rather than covered by the frame's fixed layers. */}
+      <div className="atlas-card px-5 py-5 md:px-7 md:py-6">
         <AnswerFirstMasthead
           id="headline"
           eyebrow={`${tradeName} · ${placeName} · ${
@@ -1148,7 +1156,7 @@ async function CellPageBody({
           stats={cellView.masthead.stats}
           breakIn={cellView.masthead.breakIn}
         />
-      </HeroWash>
+      </div>
 
       {/* Make it yours: the marquee what-if calculator, mounted just below the
           masthead and ONLY when a real take-home + revenue are held. It is an

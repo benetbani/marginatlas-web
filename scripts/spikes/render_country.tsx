@@ -58,18 +58,28 @@ async function main() {
   const slugs = process.argv.slice(2);
   const countryMod = await import("../../src/app/[country]/page");
   const geoMod = await import("../../src/app/[country]/[geo]/page");
+  const cellMod = await import("../../src/app/[country]/[geo]/[industry]/page");
   type Renderer = (p: { params: Promise<Record<string, string>> }) => Promise<React.ReactElement>;
   const CountryPage = countryMod.default as unknown as Renderer;
   const GeoPage = geoMod.default as unknown as Renderer;
+  const CellPage = cellMod.default as unknown as Renderer;
 
   for (const slug of slugs) {
     let html = "";
     const parts = slug.split("/");
     try {
       const el =
-        parts.length === 2
-          ? await GeoPage({ params: Promise.resolve({ country: parts[0], geo: parts[1] }) })
-          : await CountryPage({ params: Promise.resolve({ country: parts[0] }) });
+        parts.length === 3
+          ? await CellPage({
+              params: Promise.resolve({
+                country: parts[0],
+                geo: parts[1],
+                industry: parts[2],
+              }),
+            })
+          : parts.length === 2
+            ? await GeoPage({ params: Promise.resolve({ country: parts[0], geo: parts[1] }) })
+            : await CountryPage({ params: Promise.resolve({ country: parts[0] }) });
       html = await renderAll(el as React.ReactElement);
     } catch (e) {
       console.log(`\n=== ${slug}: THREW ${(e as Error).message}`);
