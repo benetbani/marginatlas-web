@@ -48,10 +48,12 @@ export type CostDriversProps = {
 };
 
 /**
- * The direction arrow. Up sits on a moss surface (pushes margin up), down on an
- * amber surface (pushes margin down). The glyph is drawn so a reader sees the
- * direction without relying on color alone, and the row reads the meaning in
- * words via the visually-hidden label.
+ * The direction arrow. Up sits on a faint terracotta surface (pushes margin up),
+ * down on a true neutral (pushes margin down): the site's diverging grammar,
+ * one hue for the side that favours the operator and none for the other. It was
+ * moss and amber until 2026-08-17, both banned outright. The glyph is drawn so a
+ * reader sees the direction without relying on color alone, and the row reads the
+ * meaning in words via the visually-hidden label.
  */
 function DirectionArrow({ dir }: { dir: CostDriverDirection }) {
   const up = dir === "up";
@@ -60,7 +62,7 @@ function DirectionArrow({ dir }: { dir: CostDriverDirection }) {
       aria-hidden="true"
       className={[
         "inline-flex h-[1.375rem] w-[1.375rem] shrink-0 items-center justify-center rounded-full",
-        up ? "bg-moss-100 text-moss-700" : "bg-amber-100 text-amber-700",
+        up ? "bg-atlas-100 text-atlas-700" : "bg-parchment text-cocoa-900",
       ].join(" ")}
     >
       <svg width="12" height="12" viewBox="0 0 12 12" role="presentation">

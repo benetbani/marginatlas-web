@@ -167,7 +167,11 @@ export function VsWorld({
   const pctDiff = world !== 0 ? Math.round(((here - world) / world) * 100) : null;
   const above = isNum(pctDiff) && pctDiff > 0;
   const below = isNum(pctDiff) && pctDiff < 0;
-  const deltaColor = above ? "text-moss-700" : below ? "text-amber-700" : "text-cocoa-700";
+  /* The diverging grammar, one hue and its absence: terracotta above the global
+     median, a deepening cocoa below it, plain cocoa when level. It was moss and
+     amber until 2026-08-17, both banned outright. The signed figure and the word
+     ("above" / "below" / "level with") carry the direction regardless of tone. */
+  const deltaColor = above ? "text-atlas-700" : below ? "text-cocoa-900" : "text-cocoa-700";
   const deltaWord = above ? "above" : below ? "below" : "at";
   const sign = above ? "+" : "";
 

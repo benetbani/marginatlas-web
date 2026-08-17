@@ -132,8 +132,12 @@ export function MoneyGoesBreakdown({
           aria-label="Stacked share of every hundred dollars of sales; the owner's kept slice is marked."
         >
           {clean.map((it, i) => {
+            /* The kept slice takes the accent the "Kept" marker above it
+               already uses, so the tick and the slice it points at are one
+               colour. It was moss-500 until 2026-08-17, which is banned, and it
+               disagreed with its own marker the whole time. */
             const fill = it.kept
-              ? "bg-moss-500"
+              ? "bg-atlas-500"
               : COST_FILL_at(costIdx++);
             return (
               <div
@@ -159,7 +163,7 @@ export function MoneyGoesBreakdown({
                 className={[
                   "text-sm",
                   it.kept
-                    ? "font-semibold text-moss-700"
+                    ? "font-semibold text-atlas-700"
                     : "text-cocoa-700",
                 ].join(" ")}
               >
@@ -175,7 +179,7 @@ export function MoneyGoesBreakdown({
               className={[
                 "shrink-0 font-display tabular-nums",
                 it.kept
-                  ? "text-lg font-semibold text-moss-700"
+                  ? "text-lg font-semibold text-atlas-700"
                   : "text-base text-ink-900",
               ].join(" ")}
             >

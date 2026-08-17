@@ -87,7 +87,7 @@ export function OneThing({
       <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] leading-relaxed text-cocoa-700">
         {haveStamp ? (
           <span className="inline-flex items-center gap-2">
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-moss-500" />
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-atlas-500" />
             Last checked {lastChecked}
           </span>
         ) : null}

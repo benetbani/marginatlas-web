@@ -56,18 +56,32 @@ export type ScoreBandProps = {
   className?: string;
 };
 
+/* THESE FIVE TONES ARE THE SCORE-BAND FAMILY IN ANOTHER VOCABULARY, which is
+   why they moved together with it on 2026-08-17. buildScoreBand in
+   src/lib/cities/city_view.ts maps the four break-in bands onto them directly
+   (brutal -> caution, demanding -> neutral, manageable -> accent, forgiving ->
+   positive), so the mark under a city's climate score and the pill on its
+   masthead are the same reading.
+
+   positive was moss-700 and both caution and negative were amber; green and
+   amber are banned outright. The replacement is intensity in one hue, per the
+   palette gate's own instruction: terracotta at the favourable end, draining
+   through the neutral default to a deepening cocoa at the unfavourable end.
+   positive takes atlas-700 rather than the vermillion accent so it stays
+   distinct from `accent`, which means "this is the subject" rather than "this
+   is good", and keeps the visual weight moss-700 had. */
 const MARK_TONE: Record<ScoreTone, string> = {
   neutral: "bg-ink-900",
-  positive: "bg-moss-700",
-  caution: "bg-amber-600",
-  negative: "bg-amber-700",
+  positive: "bg-atlas-700",
+  caution: "bg-cocoa-500",
+  negative: "bg-cocoa-700",
   accent: "bg-chart-primary",
 };
 const FIG_TONE: Record<ScoreTone, string> = {
   neutral: "text-ink-900",
-  positive: "text-moss-700",
-  caution: "text-amber-700",
-  negative: "text-amber-700",
+  positive: "text-atlas-700",
+  caution: "text-cocoa-700",
+  negative: "text-cocoa-900",
   accent: "text-atlas-700",
 };
 

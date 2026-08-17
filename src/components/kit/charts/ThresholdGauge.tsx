@@ -4,14 +4,14 @@
  *
  * Some numbers are not a spread, they are a LINE: the point at which a firm
  * starts covering its costs. This gauge replaces prose like "covers its costs
- * at about 85 sales a day" with a single readable track: a quiet caution zone
- * below the line (not yet covering), a quiet positive zone above it (covered),
+ * at about 85 sales a day" with a single readable track: a drained zone below
+ * the line (not yet covering), a terracotta-tinted zone above it (covered),
  * and one marked tick at the threshold. It answers "how far do I have to get
  * before the lights stay on" at a glance, without a legend.
  *
- * Color jobs (the fixed grammar): the threshold tick is the lone atlas moment,
- * the one spotlight per view. The two zones never compete with it: the below
- * zone is a quiet amber caution tint, the above zone a quiet moss positive tint.
+ * Color jobs (the fixed grammar): the threshold tick is the lone vermillion
+ * moment, the one spotlight per view. The two zones never compete with it: the
+ * below zone is a true-neutral tint, the above zone the faintest terracotta.
  * Meaning never rides on color alone, so each zone also carries a plain word
  * (its label) and the marker carries a sign-bearing label. The split sits at the
  * threshold's position, (value - min) / (max - min).
@@ -109,19 +109,23 @@ export function ThresholdGauge({
     >
       {hasText(eyebrow) ? <ChartEyebrow className="mb-3">{eyebrow}</ChartEyebrow> : null}
 
-      {/* the track: two opaque zone fills meeting at the threshold. amber caution
-          below (not yet covering), moss positive above (covered). A hairline
-          rule frames it; the zones carry their own plain words below, so meaning
-          never rides on color alone. */}
+      {/* the track: two opaque zone fills meeting at the threshold. The zones
+          were amber below (not yet covering) and moss above (covered) until
+          2026-08-17; both hues are banned. They are now a true neutral below and
+          a faint terracotta above, which is the site's diverging grammar and
+          says the same thing: the side that favours the operator carries the
+          brand hue and the other side carries none. A hairline rule frames it;
+          the zones carry their own plain words below, so meaning never rides on
+          color alone. */}
       <div
         className="relative flex h-6 w-full overflow-hidden rounded-full border border-parchment"
         aria-hidden="true"
       >
         <span
-          className="h-full bg-amber-100"
+          className="h-full bg-parchment"
           style={{ width: `${belowPct}%` }}
         />
-        <span className="h-full flex-1 bg-moss-100" />
+        <span className="h-full flex-1 bg-atlas-50" />
       </div>
 
       {/* the threshold tick: the lone atlas moment. A 3px bar ringed in the card
@@ -165,11 +169,11 @@ export function ThresholdGauge({
           hasText(markerLabel) ? "mt-1" : "mt-2",
         ].join(" ")}
       >
-        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-amber-700">
+        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-cocoa-700">
           <span aria-hidden="true">↓</span>
           {below}
         </span>
-        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-moss-700">
+        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-atlas-700">
           {above}
           <span aria-hidden="true">↑</span>
         </span>

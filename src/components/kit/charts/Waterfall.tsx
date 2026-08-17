@@ -52,9 +52,11 @@ export type WaterfallProps = {
   className?: string;
 };
 
-// Quiet warm neutrals for the cost bars, cycled in order. The accent and the
-// moss-kept fill are handled separately, so these never carry meaning of their
-// own beyond "a cost".
+// Quiet warm neutrals for the cost bars, cycled in order. The terracotta kept
+// fill is handled separately, so these never carry meaning of their own beyond
+// "a cost". That pairing IS the diverging grammar: one hue for what the operator
+// keeps, no hue at all for what leaves. The kept bar was moss-500 until
+// 2026-08-17, which is banned outright.
 const COST_FILL = [
   "bg-ink-700",
   "bg-ink-500",
@@ -138,7 +140,7 @@ export function Waterfall({
           );
         })}
 
-        {/* kept: the one moss moment, what the owner keeps */}
+        {/* kept: the one terracotta moment, what the owner keeps */}
         <Row
           name={endLabel}
           amount={format(kept)}
@@ -147,7 +149,7 @@ export function Waterfall({
           strong
         >
           <span
-            className="absolute inset-y-0 left-0 min-w-[3px] rounded-[3px] bg-moss-500"
+            className="absolute inset-y-0 left-0 min-w-[3px] rounded-[3px] bg-atlas-500"
             style={{ width: `${Math.max(0, (kept / start) * 100)}%` }}
           />
         </Row>
@@ -172,7 +174,7 @@ function Row({
   amountTone?: "strong" | "muted" | "pos";
 }) {
   const amountColor =
-    amountTone === "pos" ? "text-moss-700" : amountTone === "muted" ? "text-cocoa-700" : "text-ink-900";
+    amountTone === "pos" ? "text-atlas-700" : amountTone === "muted" ? "text-cocoa-700" : "text-ink-900";
   return (
     // Desktop: label / track / figure on one grid row. Mobile (below sm): the
     // track drops under the label+figure so labels never shrink and the bar still

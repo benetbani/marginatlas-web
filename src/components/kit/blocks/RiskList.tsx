@@ -61,12 +61,19 @@ function hasNode(n: React.ReactNode): boolean {
 /**
  * The calm severity vocabulary: the plain word and its AA-solid label tone. The
  * graphical cue (the rising 3-step ladder) is the shared SeverityGlyph primitive,
- * so the meter reads the same here as everywhere it appears. Tones match the glyph
- * (rare cocoa, watch amber, serious clay); none is the loud brand red.
+ * so the meter reads the same here as everywhere it appears. Tones match the
+ * glyph and none is the loud brand red.
+ *
+ * The middle step was amber-700 until 2026-08-17, which is banned. It is now
+ * clay-500, so the ladder runs quiet cocoa into the destructive maroon and
+ * darkens all the way: one thing deepening rather than three colours. Every tone
+ * here clears AA on the card surface (cocoa-700 9.0:1, clay-500 7.9:1, clay-700
+ * 13.5:1), which cocoa-500 at 4.3:1 would not have, so `rare` keeps cocoa-700
+ * and the separation is carried by the glyph's filled-step count.
  */
 const SEVERITY: Record<RiskSeverity, { label: string; text: string }> = {
   rare: { label: "Rare", text: "text-cocoa-700" },
-  watch: { label: "Watch", text: "text-amber-700" },
+  watch: { label: "Watch", text: "text-clay-500" },
   serious: { label: "Serious", text: "text-clay-700" },
 };
 

@@ -59,12 +59,21 @@ export type StreetCharacterProps = {
   className?: string;
 };
 
-/** Chip styling per known tag: a quiet surface plus a solid, AA-legible label. */
+/**
+ * Chip styling per known tag: a quiet surface plus a solid, AA-legible label.
+ *
+ * THESE ARE CATEGORIES, NOT A SCALE, and that is why the colour was never doing
+ * the work. "restaurant row" was amber and "up-and-coming" was moss, which told
+ * a reader nothing: there is no sense in which green ranks above orange here,
+ * and both hues are banned outright as of the 2026-08-09 palette ruling. The
+ * distinction a reader actually needs is BUSY versus QUIET, which the two
+ * treatments below carry, and the tag word itself names the category exactly.
+ */
 const TAG_CHIP: Record<string, string> = {
   "high-footfall": "bg-atlas-50 text-atlas-700",
-  "restaurant row": "bg-amber-100 text-amber-700",
+  "restaurant row": "bg-atlas-50 text-atlas-700",
+  "up-and-coming": "bg-atlas-50 text-atlas-700",
   "quiet residential": "bg-cream-200 text-cocoa-700",
-  "up-and-coming": "bg-moss-100 text-moss-700",
 };
 const NEUTRAL_CHIP = "bg-cream-200 text-cocoa-700";
 

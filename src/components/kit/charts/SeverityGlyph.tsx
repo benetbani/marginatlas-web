@@ -51,11 +51,16 @@ const LEVELS: Record<
   { filled: 1 | 2 | 3; tone: string; word: string }
 > = {
   // The fill color rides on `currentColor`, set here as a token text class on
-  // the wrapping <svg>. cocoa for the quiet rare step, amber for watch, clay
-  // (the destructive maroon) for serious. No atlas/vermillion: severity is not
-  // the subject of the view.
+  // the wrapping <svg>. No atlas/vermillion: severity is not the subject of the
+  // view, and terracotta is reserved for the ease/quality scale so one hue never
+  // means two things on one page.
+  //
+  // The middle step was amber-600 until 2026-08-17, which is banned. The ladder
+  // now runs quiet cocoa into the destructive maroon and darkens monotonically,
+  // so severity reads as one thing deepening rather than as three colours. The
+  // NUMBER OF FILLED STEPS carries the level regardless: one, two or three.
   rare: { filled: 1, tone: "text-cocoa-500", word: "rare" },
-  watch: { filled: 2, tone: "text-amber-600", word: "watch" },
+  watch: { filled: 2, tone: "text-clay-500", word: "watch" },
   serious: { filled: 3, tone: "text-clay-700", word: "serious" },
 };
 

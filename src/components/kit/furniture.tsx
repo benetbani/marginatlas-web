@@ -41,7 +41,7 @@ export function FreshnessStamp({
         <span className="inline-flex items-center gap-1.5">
           <span
             aria-hidden="true"
-            className="h-1.5 w-1.5 rounded-full bg-moss-500"
+            className="h-1.5 w-1.5 rounded-full bg-atlas-500"
           />
           Updated {updated}
         </span>

@@ -61,21 +61,27 @@ export type TierBarProps = {
   className?: string;
 };
 
-// Fill color per tone. Quiet cocoa for a plain position; moss for a kept /
-// positive reading; amber for caution. The vermillion accent is intentionally
-// absent so a grid of these never crowds the one subject per view.
+// Fill color per tone. Quiet cocoa for a plain position; terracotta for a kept /
+// positive reading; a deeper cocoa for caution. The VERMILLION accent stays
+// intentionally absent so a grid of these never crowds the one subject per view:
+// `good` takes atlas-700, the deep terracotta, not atlas-500.
+//
+// It was moss for good and amber for caution until 2026-08-17. Both hues are
+// banned outright, and the direction now reads as one hue draining rather than
+// as a traffic light: terracotta means the reading favours the operator, cocoa
+// means it does not, and cocoa darkens as it gets worse.
 const FILL_TONE: Record<TierBarTone, string> = {
   neutral: "bg-cocoa-300",
-  good: "bg-moss-500",
-  caution: "bg-amber-600",
+  good: "bg-atlas-700",
+  caution: "bg-cocoa-500",
 };
 
 // The value figure takes a hair of the tone so a meaningful reading is legible
 // without a legend; neutral stays plain ink.
 const FIG_TONE: Record<TierBarTone, string> = {
   neutral: "text-ink-900",
-  good: "text-moss-700",
-  caution: "text-amber-700",
+  good: "text-atlas-700",
+  caution: "text-cocoa-900",
 };
 
 /** Plain words for where the fill lands, so the aria-label is not bare numbers. */

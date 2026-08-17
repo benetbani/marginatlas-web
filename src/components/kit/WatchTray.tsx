@@ -106,15 +106,17 @@ function CompareIcon({ className }: { className?: string }) {
 const RING =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2";
 
-/** A tiny token-colored dot keyed to the item kind, so a glance separates a
- *  cell from a city from an industry without reading. */
+/** A tiny token-colored dot keyed to the item kind, a quiet second read on the
+ *  kind label printed beside it. City was moss-500 until 2026-08-17, which is
+ *  banned; the three kinds now separate on the terracotta-to-ink ladder rather
+ *  than on three hues, and the LABEL is what actually names the kind. */
 function KindDot({ kind }: { kind: WatchKind }) {
   const tone =
     kind === "cell"
       ? "bg-atlas-500"
       : kind === "city"
-        ? "bg-moss-500"
-        : "bg-cocoa-500";
+        ? "bg-cocoa-500"
+        : "bg-ink-900";
   return <span aria-hidden="true" className={cn("h-1.5 w-1.5 shrink-0 rounded-full", tone)} />;
 }
 
