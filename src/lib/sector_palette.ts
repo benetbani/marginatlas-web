@@ -20,7 +20,15 @@ export type SectorTokens = {
 
 const A = "bg-paper-100 border-parchment text-cocoa-900"; // true neutral, s=0%
 const B = "bg-atlas-50 border-atlas-200 text-atlas-900";   // warm amber
-const C = "bg-cocoa-50 border-cocoa-100 text-cocoa-900";   // cocoa-leaning
+/* NO LONGER COCOA-LEANING, 2026-08-17, and the label is corrected rather than
+   the classes. `cocoa-50` and `cocoa-100` were #faf4ec and #f0e7d9, warm sand
+   at s58% and s43%, and they were retoned to true neutrals because both were
+   the banned cream under a name that does not say cream. So this tint is now
+   the same neutral chip as A, differing only in its border weight, and the six
+   sectors carrying it read grey rather than brown. Whether those six should get
+   a distinct tint at all is a design question for the founder; inventing one
+   here would be inventing a colour to justify a variable. */
+const C = "bg-cocoa-50 border-cocoa-100 text-cocoa-900";   // neutral, s=0%
 
 export const SECTOR_TOKENS: Record<string, SectorTokens> = {
   food_drink:               { label: "FOOD & DRINK",            tint: B, accent: "text-atlas-700" },
