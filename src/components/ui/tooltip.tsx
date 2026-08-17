@@ -1,5 +1,5 @@
 // shadcn Tooltip, atlas skin. Section 1 of master visual upgrade.
-// Tooltip uses ink-900 surface with cream-50 text for high-contrast
+// Tooltip uses an ink-900 surface with white text for high-contrast
 // readability over any page background. No dark variants. No em-dashes
 // in non-comment lines.
 "use client";

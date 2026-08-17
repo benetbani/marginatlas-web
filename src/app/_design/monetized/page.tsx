@@ -8,7 +8,7 @@
  * live cell-page wiring is a separate, tested step (an earlier attempt broke the
  * page, see free_paid_map.ts).
  *
- * No em-dashes. On-brand cream / parchment / ink / atlas.
+ * No em-dashes. On-brand paper / parchment / ink / atlas.
  */
 import { notFound } from "next/navigation";
 import { Key } from "@phosphor-icons/react/dist/ssr";

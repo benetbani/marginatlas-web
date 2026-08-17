@@ -413,7 +413,7 @@ export function NeighborhoodOverview({
 
         {/* DIFFERENTIATED ROLE CHIPS: the price tier (how pricey) reads as a
             tinted, captioned pill so it cannot be mistaken for the economic
-            tags; the tags (economic character) stay quiet cream pills. The
+            tags; the tags (economic character) stay quiet neutral pills. The
             "what kind of place" role lives in the masthead break-in chip above,
             so the three roles are visually distinct. */}
         {(flavor?.price_tier || visibleTags.length > 0) && (

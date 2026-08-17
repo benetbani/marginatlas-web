@@ -3,7 +3,7 @@
  * ============================================
  *
  * Full-bleed geographic map for /cities. Renders every covered city as
- * a small terracotta marker at its real lat/lon, on a cream base.
+ * a small terracotta marker at its real lat/lon, on a neutral base.
  *
  * Cities §1 hard targets (master prompt 2026-05-25):
  *   1.1 marker r = 2.5 at zoom 1 (way smaller than the prior r=4)

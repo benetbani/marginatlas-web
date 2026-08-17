@@ -12,7 +12,7 @@
  *    shows perceptually harsh blur produces null/inconsistent
  *    results. (Psych conclusion #3: structural concealment,
  *    not perceptual torment.)
- *  - background overlay = cream-50/40 — preserves underlying SHAPE,
+ *  - background overlay = white at 40% — preserves underlying SHAPE,
  *    removes legibility.
  *  - Centered CTA card max 320px width, single paragraph + one
  *    button.
@@ -65,7 +65,7 @@ export function BlurredOverlay({
       >
         {children}
       </div>
-      {/* Calm overlay on top — cream wash, not a heavy scrim. */}
+      {/* Calm overlay on top — a white wash, not a heavy scrim. */}
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-white/40"

@@ -11,7 +11,7 @@
  * "in some cases at the bottom of the home page I see a shade of orange that is
  * not accepted as a brand color." The spots were carrying moss #6f8f25 (green,
  * 6 uses), cocoa #87745d (brown, 6 uses) and a warm tan #E2D2BC (2 uses), all
- * washed to 12-22% over cream, where a brown at 16% reads as exactly the
+ * washed to 12-22% over the page ground, where a brown at 16% reads as exactly the
  * off-orange he is describing. Green and brown are banned outright by the
  * ratified palette rule: terracotta plus cool neutrals, no green, no brown, no
  * amber. All 14 are now ink-700; the two tans dropped from 0.5 to 0.12 opacity

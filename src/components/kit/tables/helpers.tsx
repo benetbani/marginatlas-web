@@ -5,7 +5,7 @@
  * one hairline under the header, whitespace row grouping (no per-row gridline,
  * no zebra), tabular right-aligned figures, the quiet terracotta leader tint,
  * the honest dash, the faint warm hover wash, the caption-with-diamond. Every
- * value is a token (atlas / cocoa / cream / ink / clay), never a raw hex / px /
+ * value is a token (atlas / cocoa / paper / ink / clay), never a raw hex / px /
  * ms. moss and amber left this file on 2026-08-17; both hues are banned.
  *
  * The atoms here are the load-bearing pieces every variant composes from so the

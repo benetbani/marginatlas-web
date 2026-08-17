@@ -53,7 +53,7 @@ export function MastheadImage({
         className="absolute inset-0 h-full w-full object-cover opacity-20"
         style={filter ? { filter: "grayscale(0.55) contrast(1.02) saturate(0.7)" } : undefined}
       />
-      {/* Warm-white duotone wash: pulls the photo toward the site's cream and
+      {/* Duotone wash: pulls the photo toward the site's own ground and
          lifts the lower portion to near-solid white so the masthead text and
          the data board immediately below stay fully legible. */}
       <div

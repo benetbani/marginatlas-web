@@ -305,7 +305,12 @@ export const colors = {
    * cocoa-700/900, atlas-700) the largest change is +0.12 on a ratio of 13.49
    * and ZERO AA verdicts flip in either direction.
    */
-  parchment: "#e3e3e3", // neutral hairline (was cream-300 under another name)
+  /* AND THE ALIAS IS NOW THE ONLY NAME, 2026-08-17. The step this token used to
+     shadow was deleted in the rename, so there is no longer a second token at
+     this value for a future author to reach for by accident. The comment that
+     used to sit on this line named that step as its equal, which is precisely
+     the sentence that let one colour live under two names for a year. */
+  parchment: "#e3e3e3", // the hairline. True neutral, s=0%.
   graphite: "#463726", // warm brown-gray = ink-700
   /**
    * WHITE, under the name white. It was the ramp's lightest step for a year,

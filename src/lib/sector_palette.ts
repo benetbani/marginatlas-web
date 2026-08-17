@@ -18,7 +18,7 @@ export type SectorTokens = {
   accent: string;
 };
 
-const A = "bg-paper-100 border-parchment text-cocoa-900"; // warm neutral
+const A = "bg-paper-100 border-parchment text-cocoa-900"; // true neutral, s=0%
 const B = "bg-atlas-50 border-atlas-200 text-atlas-900";   // warm amber
 const C = "bg-cocoa-50 border-cocoa-100 text-cocoa-900";   // cocoa-leaning
 

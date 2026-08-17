@@ -121,8 +121,8 @@ export default function RootLayout({
       lang="en"
       className={`${newsreader.variable} ${inter.variable} [--atlas-header-h:80px] md:[--atlas-header-h:88px]`}
     >
-      {/* SaaS reformation 2026-06-12 — the body is the warm app ground
-          (cream-75 via the `body` rule in globals.css). The .atlas-paper
+      {/* SaaS reformation 2026-06-12 — the body is the app ground, a cool
+          neutral (via the `body` rule in globals.css). The .atlas-paper
           class stays on map containers and white panels only; white cards
           sit on this ground, seated by the elevation scale. */}
       <body className="min-h-screen text-ink-900 font-sans">

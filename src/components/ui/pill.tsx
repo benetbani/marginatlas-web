@@ -6,8 +6,8 @@
  * TurnoverBandChip, AuPrimaryDataBadge, CellWarningChips, etc.).
  *
  * Variants cover the semantic intents we actually use:
- *   - neutral : default, cream-100 surface
- *   - accent  : vermillion fill (atlas-700 surface, cream text)
+ *   - neutral : default, the muted surface step
+ *   - accent  : vermillion fill (atlas-700 surface, white text)
  *   - subtle  : ghost — atlas-50 surface with atlas-700 text
  *   - success : moss tone (positive YoY, "good" indicator)
  *   - warning : amber tone for caution chips

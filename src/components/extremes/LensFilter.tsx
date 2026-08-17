@@ -25,7 +25,7 @@
  * Accessibility: each chip is a real <button> with aria-pressed reflecting
  * whether its lens is the active view, wired as a tablist-style group with
  * arrow-key roving focus. Reuses the board's chip language (parchment hairline,
- * cream surface, atlas active state) rather than a bespoke control.
+ * neutral surface, atlas active state) rather than a bespoke control.
  */
 import * as React from "react";
 

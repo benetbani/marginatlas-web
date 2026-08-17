@@ -8,11 +8,11 @@
  * Why a primitive: we had 4 hand-rolled bar patterns scattered across
  * coverage, decide, and city pages with subtly different tracks and
  * radii. This consolidates them and gives every bar the same atlas
- * treatment (cream-200 track, vermillion fill, 6px height by default,
+ * treatment (one neutral track, vermillion fill, 6px height by default,
  * tabular-nums numbers).
  *
  * Atlas treatment:
- *   - Track: cream-200 (warm parchment, not gray)
+ *   - Track: the 200 step of the surface ramp, a true neutral
  *   - Fill: atlas-700 vermillion by default
  *   - tone="success" -> deep green for "exceeded target" semantics
  *   - tone="warning" -> amber for "approaching limit"

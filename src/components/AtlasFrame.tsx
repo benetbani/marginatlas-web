@@ -50,7 +50,7 @@
  *
  * THE LAYERS, unchanged from the ratified original:
  *
- *   1. a white base, so the page is warmed neutral rather than cream
+ *   1. a white base, so the page ground is a neutral rather than a tint
  *   2. the photograph, OPACITY ONLY at .32, warmed, no tint veil
  *   3. the passe-partout: .16 white over the gutters so the photograph reads
  *      through, .82 across the content column so text stays legible, with one

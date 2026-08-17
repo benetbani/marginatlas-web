@@ -126,7 +126,7 @@ export const PAGE_SECTION_ORDER: Record<string, readonly string[]> = {
 
 /**
  * Section background tone map.
- * Replaces the "every section a cream card" monotony with alternating
+ * Replaces the "every section one tinted card" monotony with alternating
  * backgrounds + light section-type accents.
  */
 /* "moss-tinted" was removed from this union 2026-08-17. It resolved to a green
@@ -154,7 +154,7 @@ export type SectionTone =
   | "paper";
 
 // White-reset 2026-06-06 (founder): every section is a pure white band.
-// The cream/ink-dark/paper alternation is retired. Tint no longer carries
+// The tint/ink-dark/transparent alternation is retired. Tint no longer carries
 // section separation; hairlines, spacing, and card shadows do (see
 // getToneClass below + ToneBand / section wrappers). Section IDs and order
 // are unchanged so the verify_section_order gate still passes. Every entry
@@ -191,8 +191,8 @@ export const SECTION_TONES: Record<string, SectionTone> = {
   "neighborhood-industries": "white",
 
   // Homepage. SaaS reformation 2026-06-12 (founder): every home band is
-  // "paper" (transparent), so the warm app ground (cream-75, set on the
-  // body) runs the whole page and the modules inside each section carry
+  // "paper" (transparent), so the app ground, a cool neutral set on the
+  // body, runs the whole page and the modules inside each section carry
   // the separation as seated white cards. The white-band-plus-hairline
   // rhythm read as flat newsprint; the ground-plus-cards rhythm reads as
   // a layered product surface.

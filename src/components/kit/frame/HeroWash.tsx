@@ -1,6 +1,6 @@
 /**
  * HeroWash - the short per-category top wash that sits behind a page's
- * masthead, cueing the category and fading cleanly to the cream ground within
+ * masthead, cueing the category and fading cleanly to the page ground within
  * the first viewport (R6 Phase B, ported from the Claude-design frame).
  *
  *   business  terracotta-leaning

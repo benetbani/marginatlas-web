@@ -27,7 +27,7 @@
   /* Section 1 of master visual-upgrade: shadcn CSS variables retokenized
      to atlas. These power any shadcn primitive that reads bg-background,
      text-foreground, border-border, bg-card, bg-primary, etc.
-     Atlas Tailwind tokens (atlas-700, cream-50, ink-900, parchment, etc.)
+     Atlas Tailwind tokens (atlas-700, paper-100, ink-900, parchment, etc.)
      are unchanged in tailwind.config.ts and resolve independently of
      these variables. Atlas is light-only; there is no .dark override. */
   :root {
@@ -51,12 +51,15 @@
        not reach. Both now carry the same cool neutral #f7f7f8. */
     --background: 247 247 248;       /* cool neutral app ground, = #f7f7f8 */
     --foreground: 33 24 16;          /* ink-900 #211810, warm near-black */
-    --card: 255 255 255;             /* cream-50 #FFFDF8, warm white card */
+    --card: 255 255 255;             /* white card. The comment here read
+                                        "#FFFDF8, warm white" while the value
+                                        beside it was already plain white: the
+                                        note, not the colour, was the warm one */
     --card-foreground: 33 24 16;     /* ink-900 */
-    --popover: 255 255 255;          /* cream-50 */
+    --popover: 255 255 255;          /* white */
     --popover-foreground: 33 24 16;  /* ink-900 */
     --primary: 153 22 0;             /* atlas-700 #991600 */
-    --primary-foreground: 255 255 255; /* cream-50 */
+    --primary-foreground: 255 255 255; /* white */
     /* CREAM WEARING THREE MORE NAMES, IN DECIMAL. Found 2026-08-17. These were
        247 246 244 and 228 226 221, which are #f7f6f4 and #e4e2dd, the warm 100
        and 300 steps written in the notation Tailwind's <alpha-value> syntax
@@ -74,7 +77,11 @@
     --accent: 246 246 246;           /* neutral muted surface */
     --accent-foreground: 33 24 16;   /* ink-900 */
     --destructive: 92 24 19;         /* clay-700 #5C1813, deep maroon */
-    --destructive-foreground: 255 253 248; /* cream-50 */
+    --destructive-foreground: 255 253 248; /* NOT white: #fffdf8, a warm
+                                              off-white at h 44, left as found.
+                                              A value, not a name, so changing
+                                              it is a colour decision and this
+                                              pass was a rename. Reported. */
     /* CREAM PURGE 2026-08-17, hairline role. Was 228 226 221, which is
        #e4e2dd, which is cream-300, which is what `parchment` was too: one
        colour under four names, 360 of its uses spelled `parchment` so the
@@ -806,16 +813,16 @@
   --clay-500: #8c2b22; /* clay-500 */
   --clay-600: #73211a; /* clay-600, low-end fg */
 
-  /* ---- cream surfaces — colors.cream ------------------------------------ */
+  /* ---- surface ramp — colors.paper -------------------------------------- */
   /* Retoned to true neutrals 2026-08-17, luminance-matched, in step with the
-     ramp in design-tokens.ts. These are the CSS mirror of the same two steps
-     and would otherwise have kept serving warm sand to the engraved sections
-     after the ramp itself went neutral. */
+     ramp in design-tokens.ts, then renamed with it. These are the CSS mirror
+     of the same two steps and would otherwise have kept serving a warm tint to
+     the engraved sections after the ramp itself went neutral. */
   --paper-100: #f6f6f6; /* muted surface */
   --paper-200: #eeeeee; /* mid meaning bg */
 
   /* ---- semantic engraved aliases (what the components read) ------------- */
-  --surface-card: var(--atlas-surface-card); /* white card, = cream-50 */
+  --surface-card: var(--atlas-surface-card); /* the card surface */
   --accent-fill: #e62200; /* atlas-500, the one loud accent (surfaces) */
   --accent-text: #991600; /* atlas-700, accent for text + headlines (AA) */
   --accent: #991600; /* atlas-700, accent for text (AA on cream); = accent-text */

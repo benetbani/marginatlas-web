@@ -85,7 +85,7 @@ function makeRng(seed: number): () => number {
 /**
  * Build the cartographic motif as inline SVG paths on a 0..100 x 0..56 board
  * (the slice viewBox). Seeded so each neighbourhood gets its own contour set,
- * route, and rosette placement. All strokes are warm-white (cream) and faint;
+ * route, and rosette placement. All strokes are white and faint;
  * the warm-frame-clean-data law does not apply here (this is decoration, never
  * sits behind a number).
  */

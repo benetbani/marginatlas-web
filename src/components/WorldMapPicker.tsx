@@ -57,12 +57,12 @@ const GEO_URL = "/geo/countries-110m.json";
 // on a white bg) to #3A3A3A (graphite — clearly readable). Stroke
 // width also bumped (see Geography style below from 0.5 to 0.8).
 // Conformed to the warm token palette (2026-06-12 stale-palette sweep):
-// cool greys map to the cream/ink ladder, the stale vermillion ramp to
+// cool greys map to the paper/ink ladder, the stale vermillion ramp to
 // the live atlas tokens. Values read from design-tokens.ts.
 const COLORS = {
   bg: tokenColors.white, // map card surface
-  // Continents stay very light per founder 2026-05-26, now the warm
-  // cream-200 step instead of the cool #ECECEC.
+  // Continents stay very light per founder 2026-05-26, now the ramp's
+  // 200 step instead of a raw #ECECEC. Both are cool; the step is a token.
   parchment: tokenColors.paper[200],
   /* These two were called `amber` and `amberActive` and had held VERMILLION
      for as long as the comment beside them said so. A key named after a banned

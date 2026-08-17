@@ -13,7 +13,7 @@
  * repo (src/components/v2) but sit unused. This page is the decision surface for
  * them. See docs/superpowers/specs/2026-06-02-graphics-rethink.md.
  *
- * No em-dashes. On-brand cream / parchment / ink / atlas for this page's own UI.
+ * No em-dashes. On-brand paper / parchment / ink / atlas for this page's own UI.
  */
 import { notFound } from "next/navigation";
 import { timingSafeEqualString } from "@/lib/rate_limit";

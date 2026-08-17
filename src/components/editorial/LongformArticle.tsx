@@ -3,7 +3,7 @@
  * ===============
  *
  * On-brand long-form editorial template, re-skinned from the design export's
- * "Decade article" layout into Atlas tokens (cream / ink / amber / parchment,
+ * "Decade article" layout into Atlas tokens (paper / ink / amber / parchment,
  * Newsreader display + Inter sans). Gives blog posts real editorial typography:
  * a deck, hairline byline, drop cap, CSS-numbered section headings, blockquote
  * rule, figure captions, and a related-reading footer.
