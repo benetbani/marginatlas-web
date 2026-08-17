@@ -27,15 +27,38 @@
  */
 import { colors } from "@/lib/design-tokens";
 
-// Warm gradient pairs, all from the token ramps. The seed picks one
-// deterministically so the same place always reads the same. [from, to] runs
-// dark -> light along the diagonal; the bottom scrim re-darkens for the label.
+/**
+ * Gradient pairs, all from the token ramps. The seed picks one
+ * deterministically so the same place always reads the same. [from, to] runs
+ * dark -> light along the diagonal; the bottom scrim re-darkens for the label.
+ *
+ * TWO OF THE SEVEN WERE BANNED HUES, and this is the purest form of the case
+ * the founder ruled on: a green cover and an amber cover, carrying no meaning
+ * whatever, chosen by a hash of the district name. Decoration is exactly where
+ * "terracotta plus cool neutrals, no exceptions" bites hardest, because there
+ * is not even a signal to trade away. Replaced 2026-08-17, in place rather
+ * than deleted, so the count stays at SEVEN and no two districts that read
+ * differently before read alike now: moss became a deeper terracotta pair and
+ * amber a deeper neutral one.
+ *
+ * SEPARATION IS BY DEPTH, NOT BY HUE, because the ratified palette does not
+ * hold seven hues and pretending otherwise is precisely how a green and an
+ * amber got in. Five families carry it, two of them at two depths: terracotta
+ * loud and terracotta deep, warm cocoa, neutral ink mid and ink deep, the one
+ * sanctioned teal, and clay. The scrim below is unaffected, it is ink-900 at
+ * 80% and every new pair is darker at its light end than the pairs it joins,
+ * so the label's AA margin only widens.
+ *
+ * verify_palette_membership never counted either of the two. It reads hex
+ * literals, rgb() literals and the class names moss/amber/orange; these were
+ * property reads off the token object, which is none of the three.
+ */
 const GRADIENTS: ReadonlyArray<readonly [string, string]> = [
   [colors.atlas[700], colors.atlas[400]],
   [colors.cocoa[700], colors.cocoa[300]],
-  [colors.moss[700], colors.moss[400]],
+  [colors.atlas[900], colors.atlas[600]],
   [colors.ink[700], colors.ink[500]],
-  [colors.amber[700], colors.amber[400]],
+  [colors.ink[900], colors.ink[600]],
   [colors.teal[700], colors.teal[500]],
   [colors.clay[700], colors.clay[400]],
 ];

@@ -86,6 +86,40 @@ function baselineRentShareFor(activityId: string): number {
   return 0.08;
 }
 
+type MarginTone = "success" | "warning" | "danger";
+
+/**
+ * ONE net-margin ladder for this page, replacing two copies that disagreed.
+ *
+ * WHAT WAS WRONG, and it was invisible to the palette gate twice over. The
+ * cards and the table below them each carried their own four-branch ternary
+ * running `colors.moss[900]` -> `colors.delta.positive` -> `.caution` ->
+ * `.negative`. Read through design-tokens those resolve to a dark green, a
+ * moss green, and two ambers: the red-to-green good-versus-bad ramp the
+ * founder ruled out on 2026-08-09, "no exceptions". verify_palette_membership
+ * could not count a single one of them, because it reads hex literals, rgb()
+ * literals and the class names moss/amber/orange, and a token-object property
+ * read like `colors.delta.positive` is none of those. That is the same class
+ * of miss as the stock `emerald`/`red` ramps found in this sweep, and it is
+ * why the token OBJECT had to be enumerated separately from the source text.
+ *
+ * The replacement is intensity in one hue, per the gate's own instruction and
+ * the ladder already central in scores/band_tone.ts: terracotta loud, then
+ * terracotta faint, then a neutral warm, then the site's maroon for a real
+ * loss. The FOUR colour steps and the THREE bar tones also used to be written
+ * as separate ternaries over the same thresholds, so the bar and the figure
+ * above it could drift apart; they now come off one step.
+ *
+ * The signal is not weakened: every one of these figures prints the margin
+ * percent itself, to one decimal, right where the colour is.
+ */
+function marginLadder(netMargin: number): { color: string; tone: MarginTone } {
+  if (netMargin >= 0.15) return { color: colors.atlas[700], tone: "success" };
+  if (netMargin >= 0.08) return { color: colors.atlas[500], tone: "success" };
+  if (netMargin >= 0) return { color: colors.cocoa[500], tone: "warning" };
+  return { color: colors.clay[700], tone: "danger" };
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -327,22 +361,7 @@ export default async function DecideWizard({
                 const marginPct = (b.neighborhoodNetMargin * 100).toFixed(1);
                 const revPct = Math.round((b.revenueMultiplier - 1) * 100);
                 const rentPct = Math.round((b.rentMultiplier - 1) * 100);
-                const color =
-                  b.neighborhoodNetMargin >= 0.15
-                    ? colors.moss[900]
-                    : b.neighborhoodNetMargin >= 0.08
-                      ? colors.delta.positive
-                      : b.neighborhoodNetMargin >= 0
-                        ? colors.delta.caution
-                        : colors.delta.negative;
-                const tone =
-                  b.neighborhoodNetMargin >= 0.15
-                    ? "success"
-                    : b.neighborhoodNetMargin >= 0.08
-                      ? "success"
-                      : b.neighborhoodNetMargin >= 0
-                        ? "warning"
-                        : "danger";
+                const { color, tone } = marginLadder(b.neighborhoodNetMargin);
                 const rationale = rationaleFor(ind.id, b.appliedTags);
                 return (
                   <Link
@@ -438,14 +457,7 @@ export default async function DecideWizard({
                     const marginPct = (b.neighborhoodNetMargin * 100).toFixed(1);
                     const revPct = Math.round((b.revenueMultiplier - 1) * 100);
                     const rentPct = Math.round((b.rentMultiplier - 1) * 100);
-                    const color =
-                      b.neighborhoodNetMargin >= 0.15
-                        ? colors.moss[900]
-                        : b.neighborhoodNetMargin >= 0.08
-                          ? colors.delta.positive
-                          : b.neighborhoodNetMargin >= 0
-                            ? colors.delta.caution
-                            : colors.delta.negative;
+                    const { color } = marginLadder(b.neighborhoodNetMargin);
                     return (
                       <tr
                         key={r.neighborhood.slug}

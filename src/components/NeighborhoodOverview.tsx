@@ -233,12 +233,19 @@ function pctLabel(final: number): string {
 }
 
 /**
- * Brand-token color for a multiplier figure: moss for a clear premium (>1.1),
- * a neutral warm cocoa near par, clay for a clear suppression (<0.9). Token
- * references only (no raw hex), mirroring the neighborhoods hub treatment.
+ * Brand-token colour for a multiplier figure: terracotta for a clear premium
+ * (>1.1), a neutral warm cocoa near par, clay for a clear suppression (<0.9).
+ *
+ * THE PREMIUM STEP WAS GREEN UNTIL 2026-08-17 (`colors.moss[700]`, #4a6018).
+ * Banned by the founder on 2026-08-09 and uncountable by
+ * verify_palette_membership, which reads hex literals, rgb() literals and the
+ * class names moss/amber/orange, and therefore cannot see a token-object read.
+ * Now the brand accent, so premium and suppression differ by hue-intensity
+ * within the warm field rather than by green-versus-red. The multiplier figure
+ * is printed beside it in every case, so nothing is carried by colour alone.
  */
 function multColor(final: number): string {
-  if (final > 1.1) return colors.moss[700];
+  if (final > 1.1) return colors.atlas[700];
   if (final < 0.9) return colors.clay[600];
   return colors.cocoa[700];
 }

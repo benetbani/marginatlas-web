@@ -217,15 +217,21 @@ function Distribution() {
 }
 
 function Waterfall() {
-  // Color jobs per design-system.md 3.2: cocoa = structure and costs,
-  // moss = what is kept. The profit row is the page's one moss moment.
+  /* Colour jobs: cocoa = structure and costs, and the KEPT row is the one
+     accented moment. That row read `colors.moss[600]`, a green, until
+     2026-08-17. The founder banned green outright on 2026-08-09 and the
+     palette gate could not count this one, because it reads hex literals,
+     rgb() literals and the class names moss/amber/orange, and this was a
+     property read off the token object. Terracotta now carries it, which is
+     also what the profit LABEL two elements down already used
+     (text-atlas-700), so the bar and its label finally agree. */
   const lines = [
     { label: "Revenue", w: "100%", c: colors.cocoa[700] },
     { label: "Food",    w: "32%",  c: colors.cocoa[500] },
     { label: "Labor",   w: "30%",  c: colors.cocoa[500] },
     { label: "Rent",    w: "9%",   c: colors.cocoa[300] },
     { label: "Other",   w: "17%",  c: colors.cocoa[300] },
-    { label: "Profit",  w: "12%",  c: colors.moss[600], profit: true },
+    { label: "Profit",  w: "12%",  c: colors.atlas[500], profit: true },
   ];
   return (
     <ul className="space-y-1.5">

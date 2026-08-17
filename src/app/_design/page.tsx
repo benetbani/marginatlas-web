@@ -276,7 +276,14 @@ function ColorsSection() {
       title="Colors"
       description="The Atlas palette. Vermillion is the only loud color; everything else stays in the warm-neutral / cool-neutral family."
     >
-      {(["atlas", "cream", "ink", "cocoa", "moss", "clay", "teal"] as const).map((family) => {
+      {/* "moss" left this list 2026-08-17, and note what it was doing here:
+          this catalog is the page that TEACHES the palette, and it was
+          advertising a banned green ramp as a member of it. `amber` was never
+          listed, so the omission was already half made. Once the ramps go from
+          design-tokens this read would be a type error rather than a silent
+          blank, which is the good failure mode, but a catalog that names a
+          colour is also an invitation to use it. */}
+      {(["atlas", "cream", "ink", "cocoa", "clay", "teal"] as const).map((family) => {
         const palette = colors[family];
         return (
           <SubSection key={family} title={family} caption={`colors.${family}`}>

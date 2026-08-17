@@ -1,21 +1,34 @@
 /**
- * guiding_word - per-metric break tables that map a value to a
- * one-word descriptor + a continuous dark-red-to-dark-green color.
+ * guiding_word - per-metric break tables that map a value to a one-word
+ * descriptor.
  *
- * Per founder spec (CitiesFix2 sec 7): every city stat card on the
- * hero shows the number AND a short word (e.g. "HDI 0.735, medium")
- * with the word's color picked from a 5-stop gradient based on how
- * good the value is for that metric.
+ * Per founder spec (CitiesFix2 sec 7): a city stat shows the number AND a
+ * short word (e.g. "HDI 0.735, medium") picked from a break table describing
+ * how good the value is for that metric.
  *
- * INVERTED metrics (Gini, unemployment): high values are bad. The
- * gradient direction flips so low values are dark green.
+ * INVERTED metrics (Gini, unemployment): high values are bad, so the goodness
+ * scale runs the other way and "low" is the favourable word.
  *
- * NEUTRAL metrics (population, GDP, tourism): there is no good/bad,
- * just size. We use a size-descriptor gradient (small/mid/large/mega)
- * with a neutral atlas tone, NOT the red-to-green palette.
+ * NEUTRAL metrics (population, GDP, tourism): there is no good/bad, just size,
+ * so the words are size descriptors (small/mid/large/mega) and no goodness is
+ * claimed.
+ *
+ * THE COLOUR HALF WAS DELETED 2026-08-17, and it was dead before it was
+ * banned. This module used to return a `color` alongside the word: a five-stop
+ * gradient interpolated from clay through amber into moss, i.e. a
+ * red-to-green good-versus-bad ramp of exactly the kind the founder ruled out
+ * on 2026-08-09 ("terracotta plus cool neutrals, no exceptions"). It was
+ * invisible to verify_palette_membership twice over: the gate scans
+ * src/components, src/app and src/styles and never src/lib, and the values
+ * were `colors.moss[600]` rather than a hex or a class name, so even inside
+ * the scan set there was no literal for it to read.
+ *
+ * It was also unreachable. `getGuidingWord` has exactly one caller,
+ * scores/country_verdict.ts, and both of its call sites destructure `{ word }`
+ * and throw the colour away. Nothing rendered it. Deleting it therefore
+ * removes a banned ramp AND ~35 lines of interpolation nothing ever ran; the
+ * words, which are the part the page actually prints, are untouched.
  */
-
-import { colors } from "@/lib/design-tokens";
 
 export type Metric =
   | "metro_pop_m"
@@ -40,21 +53,9 @@ export type Metric =
   | "country_population"
   | "country_cost_of_living_index";
 
-// Gradient stops for interpolation, 0.0 = "very bad" to 1.0 = "very good".
-// Conformed to the warm token palette (2026-06-12 stale-palette sweep):
-// clay carries the bad end (deep maroon, never brand red), amber the middle,
-// moss the good end. Values mirror colors.clay/amber/moss in design-tokens.ts.
-const GRADIENT_STOPS: Array<[number, string]> = [
-  [0.0, colors.clay[700]], // very bad (deep maroon)
-  [0.25, colors.clay[500]], // bad
-  [0.5, colors.amber[600]], // middling
-  [0.75, colors.moss[600]], // good
-  [1.0, colors.moss[700]], // very good
-];
-
 // Break tables. Each is ordered low-to-high VALUE; the descriptor and the
-// 0-to-1 gradient position are picked based on which break the value
-// crosses. inverted = true means high values are bad (red end).
+// 0-to-1 goodness position are picked based on which break the value
+// crosses. inverted = true means high values are bad.
 type Break = { upTo: number; word: string; goodness: number };
 type Spec = { breaks: Break[]; inverted?: boolean; neutral?: boolean };
 
@@ -279,52 +280,13 @@ const SPECS: Record<Metric, Spec> = {
   },
 };
 
-function lerpHex(a: string, b: string, t: number): string {
-  const pa = parseInt(a.slice(1), 16);
-  const pb = parseInt(b.slice(1), 16);
-  const ar = (pa >> 16) & 0xff;
-  const ag = (pa >> 8) & 0xff;
-  const ab = pa & 0xff;
-  const br = (pb >> 16) & 0xff;
-  const bg = (pb >> 8) & 0xff;
-  const bb = pb & 0xff;
-  const r = Math.round(ar + (br - ar) * t);
-  const g = Math.round(ag + (bg - ag) * t);
-  const bl = Math.round(ab + (bb - ab) * t);
-  return `#${((r << 16) | (g << 8) | bl).toString(16).padStart(6, "0")}`;
-}
-
-function colorAt(goodness: number): string {
-  const clamped = Math.max(0, Math.min(1, goodness));
-  for (let i = 0; i < GRADIENT_STOPS.length - 1; i++) {
-    const [g0, c0] = GRADIENT_STOPS[i];
-    const [g1, c1] = GRADIENT_STOPS[i + 1];
-    if (clamped >= g0 && clamped <= g1) {
-      const t = (clamped - g0) / (g1 - g0);
-      return lerpHex(c0, c1, t);
-    }
-  }
-  return GRADIENT_STOPS[GRADIENT_STOPS.length - 1][1];
-}
-
-const NEUTRAL_COLOR = "#6F4E1F"; // muted atlas brown for neutral descriptors
-
-export type GuidingWord = { word: string; color: string };
+export type GuidingWord = { word: string };
 
 export function getGuidingWord(metric: Metric, value: number): GuidingWord {
   const spec = SPECS[metric];
-  if (!spec) return { word: "", color: NEUTRAL_COLOR };
+  if (!spec) return { word: "" };
   for (const b of spec.breaks) {
-    if (value <= b.upTo) {
-      return {
-        word: b.word,
-        color: spec.neutral ? NEUTRAL_COLOR : colorAt(b.goodness),
-      };
-    }
+    if (value <= b.upTo) return { word: b.word };
   }
-  const last = spec.breaks[spec.breaks.length - 1];
-  return {
-    word: last.word,
-    color: spec.neutral ? NEUTRAL_COLOR : colorAt(last.goodness),
-  };
+  return { word: spec.breaks[spec.breaks.length - 1].word };
 }

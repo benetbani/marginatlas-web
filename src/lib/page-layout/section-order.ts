@@ -129,12 +129,17 @@ export const PAGE_SECTION_ORDER: Record<string, readonly string[]> = {
  * Replaces the "every section a cream card" monotony with alternating
  * backgrounds + light section-type accents.
  */
+/* "moss-tinted" was removed from this union 2026-08-17. It resolved to a green
+   fill, which the founder banned outright on 2026-08-09, and it had already
+   been dead since the 2026-06-06 white reset: no SECTION_TONES entry named it
+   and the comment below said so. It survived the palette gate because that
+   gate reads src/components, src/app and src/styles, and this file is in
+   src/lib. A tone left defined is a tone that gets used again. */
 export type SectionTone =
   | "ink-dark"
   | "cream-50"
   | "white"
   | "cream-100"
-  | "moss-tinted"
   // "Paper" is intentionally transparent. The section adds NO
   // background of its own so the body's atlas-paper pattern shows
   // through. Use for sections that should feel like part of the page
@@ -235,7 +240,6 @@ export const TONE_CLASSES: Record<SectionTone, string> = {
   "cream-50": "bg-cream-50",
   "white": "bg-white",
   "cream-100": "bg-cream-100",
-  "moss-tinted": "bg-moss-50",
   "paper": "",
 };
 
