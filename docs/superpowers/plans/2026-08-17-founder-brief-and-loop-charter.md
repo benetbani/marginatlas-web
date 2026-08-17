@@ -261,6 +261,48 @@ hydration is absent; the data bands self-omit from this machine, so their
 absence is never a layout finding; and it proves what the browser PAINTS, never
 that the founder likes it.
 
+### 9.1.1 WHAT MAY SIT ON THE BACKDROP. Measured, so stop guessing.
+
+Taken 2026-08-17 by composing the backdrop exactly as `AtlasFrame` does, an
+opaque white base under `/spine/_skyline.jpeg` at `opacity: 0.32`, then reading
+every pixel's relative luminance off a canvas.
+
+| | |
+|---|---|
+| backdrop luminance, darkest point | **0.4179** |
+| backdrop luminance, mean | 0.7207 |
+| backdrop luminance, lightest | 0.9962 |
+
+Because the photograph sits at 0.32 over white, even its darkest region is a
+light grey. Contrast against that worst case:
+
+| foreground | ratio on the backdrop | verdict |
+|---|---|---|
+| `ink-900` body and headings | **7.78:1** | passes AA and AAA |
+| `atlas-700` at 60px (the H1's rotating words) | 3.79:1 | passes: large-text AA is 3.0 |
+| `atlas-700` at 12 to 14px | **3.79:1** | **FAILS**, AA needs 4.5 |
+| `atlas-800` at 12 to 14px | 5.29:1 | passes |
+| `ink-900` on a card, for scale | 17.46:1 | |
+
+**This settles the question in BOTH directions, which is why it is worth a
+table.** A visual pass of the homepage found every section heading sitting bare
+on the photograph and nearly restructured eight bands to card them. The
+measurement says do not: headings clear AAA where they are, and carding them
+would have cost the "backdrop reads between the cards" look §1 exists to
+protect, for nothing.
+
+What it does condemn is small terracotta. Nine `atlas-700` elements render on
+the backdrop; four are the H1's 60px rotating words and pass on the large-text
+rule, which matters because the H1 is locked (§3). The rest fail: two "All ... ->"
+links, fixed to `atlas-800`, and the "Free and paid" eyebrow at 12px, **still
+open**, because `SectionEyebrow` is shared and most of its uses sit on cards
+where `atlas-700` is correct. That one wants a per-call-site override or a
+backdrop variant, not a global colour change.
+
+**The rule to carry forward:** ink on the backdrop is fine at any size.
+Terracotta on the backdrop is fine only above roughly 24px. Below that it needs
+`atlas-800` or a card.
+
 ### 9.2 THE PAINT RULE. Read this before touching any background.
 
 `AtlasFrame` paints two `position: fixed` layers at `z-index: 0`, the first an

@@ -600,7 +600,13 @@ export default async function HomePage() {
             </h2>
             <a
               href="/blog"
-              className="text-sm text-atlas-700 hover:text-atlas-900 font-medium"
+              /* atlas-800, not atlas-700, because this link sits on the
+                 PHOTOGRAPH rather than on a card. Measured: composing the
+                 backdrop as AtlasFrame does, white base under the picture at
+                 0.32, its darkest point is luminance 0.4179. atlas-700 reads
+                 3.79:1 there, under the 4.5 AA needs for 14px text; atlas-800
+                 reads 5.29:1. Nothing on a card changes. */
+              className="text-sm text-atlas-800 hover:text-atlas-900 font-medium"
             >
               All posts →
             </a>

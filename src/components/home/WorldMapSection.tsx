@@ -53,7 +53,12 @@ export function WorldMapSection() {
         </h2>
         <a
           href="/countries"
-          className="text-sm text-atlas-700 hover:text-atlas-900 font-medium"
+          /* atlas-800: this link sits on the photograph, not on a card.
+             The backdrop's darkest point is luminance 0.4179, where
+             atlas-700 reads 3.79:1 against the 4.5 AA needs at 14px.
+             atlas-800 reads 5.29:1. See the note on the sibling link in
+             src/app/page.tsx. */
+          className="text-sm text-atlas-800 hover:text-atlas-900 font-medium"
         >
           All countries &rarr;
         </a>
