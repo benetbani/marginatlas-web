@@ -228,7 +228,9 @@ export function DecideWizard({
       {/* Step 3: the headline answer. Disclosed only once both are chosen (P5),
           answer-first, with the real link onward to the live ranking + cell. */}
       {ready ? (
-        <div className="rounded-xl border border-parchment bg-cream-50 p-5">
+        /* Nested inside the wizard's own .atlas-card, so the soft variant:
+           two translucent fills stacked only muddy the picture under both. */
+        <div className="atlas-card-soft p-5">
           <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-atlas-700">
             Step 3 &middot; The headline
           </div>

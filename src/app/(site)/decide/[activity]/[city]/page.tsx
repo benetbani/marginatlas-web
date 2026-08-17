@@ -409,7 +409,9 @@ export default async function DecideWizard({
             <h2 className="font-display text-xl md:text-2xl font-semibold text-ink-900 mb-5">
               All neighborhoods ranked
             </h2>
-            <div className="rounded-2xl bg-white border border-[rgba(76,39,18,0.10)] overflow-hidden">
+            {/* Canonical surface. The border was a raw rgba literal, which is
+                banned in components; .atlas-card carries the hairline token. */}
+            <div className="atlas-card overflow-hidden">
               <table className="w-full text-sm">
                 <thead className="bg-cream-50">
                   <tr className="border-b border-[rgba(76,39,18,0.10)]">

@@ -98,7 +98,12 @@ export default async function AnomaliesPage({
       </p>
 
       {Object.entries(report.tables).map(([table, data]) => (
-        <section key={table} className="mt-12">
+        /* The section is the card, not the count tiles inside it: the h2 and
+           the scanned-rows line were bare type on the fixed page photograph,
+           and .atlas-card's 16px radius on a 40px count tile is a worse
+           drawing than the 8px it has. Converging a surface is not the same
+           as converging a mark. */
+        <section key={table} className="atlas-card mt-12 px-5 py-6 md:px-7 md:py-7">
           <h2 className="text-xl font-semibold text-ink-900">{table}</h2>
           {data.error ? (
             <p className="mt-2 text-sm text-clay-700">Error: {data.error}</p>

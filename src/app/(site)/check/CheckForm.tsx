@@ -117,7 +117,12 @@ export function CheckForm() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="rounded-2xl bg-white border border-ink-200 p-5 md:p-8"
+        /* Canonical surface: was "rounded-2xl bg-white border border-ink-200",
+           fully opaque over the fixed page photograph. The seven controls
+           INSIDE this form keep their own fills: an input needs an opaque
+           field to read as a field, and forcing a form control into a card
+           idiom is damage, not convergence. */
+        className="atlas-card p-5 md:p-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div className="md:col-span-2 flex flex-col gap-1.5">

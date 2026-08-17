@@ -246,7 +246,11 @@ export default function MethodologyPage() {
       </section>
 
       {/* The honest framing: benchmarks, not your books, not advice. */}
-      <section className="mt-14 rounded-lg border border-parchment bg-cream-100 px-6 py-7">
+      {/* Canonical surface: was a "bg-cream-100" panel, an opaque plate over
+          the fixed page photograph. The tint was doing the work of marking
+          this closing note as a callout; the card does that now, with
+          elevation instead of a fill. */}
+      <section className="atlas-card mt-14 px-6 py-7">
         <h2 className="font-serif text-2xl text-ink-900 sm:text-3xl">
           What this is, and what it is not
         </h2>

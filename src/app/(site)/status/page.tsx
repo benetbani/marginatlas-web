@@ -138,6 +138,9 @@ export default async function StatusPage() {
 
   return (
     <div className="py-12 max-w-3xl">
+      {/* The masthead was bare type on the fixed page photograph. One card,
+          the same shape every other route in this group now uses. */}
+      <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
       <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
         System status
       </div>
@@ -151,8 +154,9 @@ export default async function StatusPage() {
       <p className="mt-2 text-sm text-ink-700/70">
         Checked just now from the request edge. Reload to re-run.
       </p>
+      </div>
 
-      <div className="mt-8 divide-y divide-ink-200/70 rounded-2xl border border-ink-200 bg-cream-50 overflow-hidden">
+      <div className="atlas-card mt-8 divide-y divide-ink-200/70 overflow-hidden">
         {checks.map((c) => (
           <div key={c.name} className="flex items-center justify-between px-5 py-4 gap-4">
             <div className="min-w-0">

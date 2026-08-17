@@ -178,7 +178,12 @@ export default async function ContactPage({
         <form
           action="/api/contact"
           method="post"
-          className="rounded-2xl border border-parchment bg-cream-50 p-5 space-y-5"
+          /* Canonical surface. LegalPage, which wraps this route, carries no
+             surface of its own, so the form is the only carded thing on the
+             page; that is worth fixing at LegalPage, in another agent's file,
+             rather than here. The `fieldClass` bg-white above is a form input
+             and stays one. */
+          className="atlas-card p-5 space-y-5"
         >
           <fieldset className="space-y-2">
             <legend className={labelClass}>What is this about?</legend>

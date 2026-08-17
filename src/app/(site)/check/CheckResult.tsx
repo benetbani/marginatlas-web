@@ -47,7 +47,7 @@ export function CheckResult({ verdict }: Props) {
   return (
     <section
       aria-labelledby="check-result-heading"
-      className="rounded-2xl bg-white border border-ink-200 overflow-hidden"
+      className="atlas-card overflow-hidden"
     >
       <div className="px-5 py-5 md:px-8 md:py-7 bg-cream-50 border-b border-ink-100">
         <div className="text-xs font-semibold uppercase tracking-[0.16em] text-atlas-700 mb-2">
