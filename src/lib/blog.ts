@@ -48,9 +48,27 @@ export type BlogImage =
    this session had in fact drifted between them once already. */
 export const GRADIENT_PALETTE = [
   "linear-gradient(135deg, #991600 0%, #f24e2f 100%)",  // atlas-700 → atlas-400
-  "linear-gradient(135deg, #211810 0%, #534231 100%)",  // ink-900 → cocoa-700
-  "linear-gradient(135deg, #463726 0%, #7d6c58 100%)",  // ink-700 → ink-500
-  "linear-gradient(135deg, #534231 0%, #c3b39c 100%)",  // cocoa-700 → cocoa-300
+  /* THREE BROWN COVERS REPLACED 2026-08-17, measured rather than judged. These
+     three painted hue 28 to 35 with real saturation, which is brown, and the
+     worst of them was also the LIGHTEST plate in the set (mean luminance .261),
+     so it was the most visible brown on the page. An agent photographing the
+     homepage reported the rail reading brown and khaki at full size; the hues
+     confirm it.
+
+     WHY BOTH GATES PASSED THEM. verify_palette_membership allows h 25-45 at
+     s<=45 as the "ink/cocoa ladder" band, and its own header says that band
+     exists for the TYPE ladder and that a hue check "cannot see the difference
+     between type and fill". A 340x190 cover plate is a fill, which is the case
+     the founder actually banned.
+
+     SEPARATION IS BY DEPTH AND FAMILY, NOT BY HUE, which is the same answer
+     NeighborhoodCover reached for the same problem: the ratified palette does
+     not hold six hues, and pretending otherwise is exactly how a green and an
+     amber got into this list in the first place. Two deeper terracottas, one
+     oxblood from the clay ramp, and one true-neutral ramp for contrast. */
+  "linear-gradient(135deg, #4a0a00 0%, #c11c00 100%)",  // atlas-900 -> atlas-600
+  "linear-gradient(135deg, #5c1813 0%, #b3463a 100%)",  // clay-700 -> clay-400
+  "linear-gradient(135deg, #211810 0%, #bababa 100%)",  // ink-900 -> paper-450, the one neutral
   "linear-gradient(135deg, #e62200 0%, #f24e2f 100%)",  // atlas-500 → atlas-400
   /* THE SAGE RAMP IS GONE, and it took a screenshot to catch, which is the
      point. It was labelled "teal-700 → teal-500" and the label is why it
