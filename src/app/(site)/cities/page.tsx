@@ -141,6 +141,16 @@ function byMarketSize(a: DirectoryCity, b: DirectoryCity): number {
   return (b.gdp_b ?? 0) - (a.gdp_b ?? 0) || a.name.localeCompare(b.name);
 }
 
+/** By name. THE INDEX IS ALPHABETICAL, and the ranked view is the twelve cards
+ *  above it. Seen at 1440: Europe's 73 entries ran London, Munich, Stuttgart,
+ *  Zurich, Cologne, Bucharest, Warsaw, which is metro-economy order and is
+ *  indistinguishable from no order at all to a reader looking for Rome. A
+ *  section headed "the full index" that cannot be scanned for one name is the
+ *  founder's "big list which doesn't end" wearing a card. */
+function byName(a: DirectoryCity, b: DirectoryCity): number {
+  return a.name.localeCompare(b.name);
+}
+
 /** How many cities lead the page as cards. Twelve fills a three-column grid
  *  four rows deep, which is a showcase; the tail is the index below. */
 const LEAD_COUNT = 12;
@@ -152,9 +162,9 @@ const LEAD_CITIES: DirectoryCity[] = CITIES.map(buildDirectoryCity)
 
 // The index, grouped by world region. Every city is placed in exactly one of
 // the five buckets (Europe, Asia, Americas, Middle East and Africa, Oceania);
-// within a bucket the largest metro economies lead, matching the order of the
-// cards above. A region with zero cities is dropped so it never renders an
-// empty heading.
+// within a bucket the cities are ALPHABETICAL, because this is an index and an
+// index is scanned for one name. A region with zero cities is dropped so it
+// never renders an empty heading.
 type RegionGroup = { region: WorldRegion; cities: DirectoryCity[] };
 
 const REGION_GROUPS: RegionGroup[] = (() => {
@@ -167,7 +177,7 @@ const REGION_GROUPS: RegionGroup[] = (() => {
   }
   return WORLD_REGIONS.map((region) => ({
     region,
-    cities: (byRegion.get(region) ?? []).sort(byMarketSize),
+    cities: (byRegion.get(region) ?? []).sort(byName),
   })).filter((g) => g.cities.length > 0);
 })();
 
@@ -225,7 +235,9 @@ function CityIndexLink({ city }: { city: DirectoryCity }) {
   return (
     <Link
       href={`/cities/${city.slug}`}
-      className="group flex items-center gap-2 rounded-md py-1.5 pl-1 pr-2 transition-colors hover:bg-atlas-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
+      /* `break-inside-avoid` so a multi-column box never splits a flag from
+         its city across a column boundary. */
+      className="group flex break-inside-avoid items-center gap-2 rounded-md py-1.5 pl-1 pr-2 transition-colors hover:bg-atlas-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
     >
       <CountryFlag iso2={city.iso2} className="w-5 shrink-0 rounded-[2px]" />
       <span className="min-w-0 truncate text-sm text-ink-900 group-hover:text-atlas-700">
@@ -354,7 +366,14 @@ export default function CitiesHub() {
                     {group.cities.length} cities
                   </span>
                 </div>
-                <div className="mt-2 grid grid-cols-1 gap-x-4 sm:grid-cols-2 lg:grid-cols-4">
+                {/* CSS COLUMNS, NOT A GRID, and the difference is the whole
+                    point of sorting alphabetically. A four-column grid flows
+                    ACROSS its rows, so an A-to-Z list reads A B C D on the
+                    first line and E F G H on the second, which is not how
+                    anybody scans an index. Multi-column boxes flow DOWN each
+                    column and then across, so the first column is A to E and
+                    a reader can jump straight to the letter they want. */}
+                <div className="mt-2 columns-1 gap-x-4 sm:columns-2 lg:columns-4">
                   {group.cities.map((city) => (
                     <CityIndexLink key={city.slug} city={city} />
                   ))}
@@ -363,11 +382,21 @@ export default function CitiesHub() {
             ))}
           </div>
 
-          <p className="mt-6 max-w-2xl text-xs leading-relaxed text-cocoa-700/70">
-            Metro economy and salary figures are modeled to stay consistent
-            across cities, so they read as comparisons rather than audited
-            accounts. Open a city for the fuller picture.
-          </p>
+          {/* SEATED, because it was the one piece of copy on this page sitting
+              straight on the photograph. Seen at 1440 and again at 1280: the
+              smallest and lightest type on the page, `text-xs` at 70% of a
+              muted brown, over sky and sea. It read, barely, at the crop this
+              picture happens to give; the country page's section nav is the
+              same class of defect and it went illegible over the buildings
+              lower down the same photograph. Provenance is the last thing that
+              should be hard to read, so it gets a ground of its own. */}
+          <div className="atlas-card mt-6 px-4 py-3">
+            <p className="max-w-2xl text-xs leading-relaxed text-cocoa-700">
+              Metro economy and salary figures are modeled to stay consistent
+              across cities, so they read as comparisons rather than audited
+              accounts. Open a city for the fuller picture.
+            </p>
+          </div>
         </section>
       ) : null}
     </article>

@@ -392,7 +392,15 @@ export default function CitiesWorldMap({
       {!interacted && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-3 left-3 rounded-md bg-white/90 px-2.5 py-1 font-display text-base md:text-lg tracking-wide text-cocoa-500"
+          /* HIDDEN BELOW md, and that is honesty rather than tidiness.
+             Photographed at 375: the frame is 285x124, which puts 252 markers
+             at 0.63px across and makes "click a city" an instruction no
+             thumb can follow. The chip also covered North America, a quarter
+             of the picture, to say so. Above md the frame is 1022 wide, the
+             markers are 4.6px, and the instruction is true. On a phone the
+             map is a coverage picture and the search box directly beneath it
+             is the way in. */
+          className="pointer-events-none absolute top-3 left-3 hidden rounded-md bg-white/90 px-2.5 py-1 font-display text-base tracking-wide text-cocoa-500 md:block md:text-lg"
         >
           Click a city
         </div>
