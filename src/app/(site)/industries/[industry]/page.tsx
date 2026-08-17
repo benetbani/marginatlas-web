@@ -418,8 +418,32 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
           landed the section heading behind the opaque bar. One class on the
           column, not one per anchor: they sit on section, div, BeatCard,
           CostDrivers and OneThing alike. 24 is the step already used here. */}
-      <div className="flex gap-6">
-        <div className="min-w-0 flex-1 space-y-6 [&_[id]]:scroll-mt-24 md:space-y-8">
+      {/* `xl:flex xl:gap-16`, NOT `flex gap-6`. THIS PAGE WAS UNREADABLE ON A
+          PHONE, on all 200 trade routes, and the measurement is not subtle.
+
+          `StickySectionNav` renders two navs in a fragment: an `xl:block` rail
+          and a `xl:hidden` chip row. The wrapper was a flex ROW at EVERY width,
+          with no breakpoint gate, so below xl the chip row was still a flex
+          ITEM sitting beside the content. Measured at 375x812 on
+          /industries/restaurants:
+
+              content column   flex-1 min-w-0    width   0px    height 23,166
+              chip-row nav     align-self auto   width 320px    height 23,142
+
+          The column was squeezed to ZERO width, and the chip row, which has no
+          `self-start`, stretched to the full row height. That nav is
+          `bg-white/90` with `backdrop-blur` at `z-sticky` (20), which is above
+          the masthead's z-10. So a 23,142px translucent white sheet covered the
+          entire page, blurring even the wordmark. The screenshot is a blank
+          plate from the header down. The document also ran to 24,334px against
+          5,938px at 1440, which is what a zero-width column does to text.
+
+          The city, country, trade and cell pages all already write this as
+          `xl:flex`, which is why none of them has it; this page was the only one
+          that made the row unconditional. The gap converges on the `xl:gap-16`
+          those three use, rather than keeping a fourth value. */}
+      <div className="xl:flex xl:gap-16">
+        <div className="min-w-0 space-y-6 [&_[id]]:scroll-mt-24 md:space-y-8 xl:flex-1">
           {/* 1. Hero + headline numbers, answer-first. The trade pictogram
              carries the identity (design-system 9.2); the answer-first masthead
              carries the verdict thesis as the page H1, the one-line answer, the
