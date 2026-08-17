@@ -45,8 +45,48 @@ function isNum(v: number | null | undefined): v is number {
   return v != null && Number.isFinite(v) && v >= 0;
 }
 
-// Quiet warm neutrals for the cost segments, cycled in order. The kept segment
-// is handled separately in moss, so these never carry the accent.
+/**
+ * The cost segments, cycled in order. The kept segment takes the accent and is
+ * handled separately below, so these never carry it.
+ *
+ * LEFT AS IT IS ON 2026-08-17, DELIBERATELY, AND HERE IS THE DECISION THE
+ * FOUNDER WOULD BE MAKING. A sweep that same day took cocoa off thirty
+ * decorative fills across the cell page, on the ground that cocoa is the
+ * RATIFIED colour for one job, "structure and costs" (design-tokens
+ * chart.cost), and month bars, peer bars, milestone dots and confidence dots
+ * are not costs. This ramp IS that job, so it was not touched: converting a
+ * ratified colour because a hue reading dislikes it is the founder's call, not
+ * an agent's.
+ *
+ * What he would be looking at, measured and then photographed at 1280x900 on
+ * /gb/london/restaurants:
+ *
+ *   1  bg-cocoa-300      #c3b39c   h35 s25%   L .4624   warm tan
+ *   2  bg-paper-400      #bfbfbf   h0  s0%    L .5210   true neutral
+ *   3  bg-cocoa-100      #f0e7d9   h37 s43%   L .8069   warm sand
+ *   4  bg-parchment      #e3e3e3   h0  s0%    L .7682   true neutral
+ *   5  bg-cocoa-500/70   #87745d   h33 s18%   L .1843   warm dark
+ *
+ * The ramp is already HALF NEUTRAL, and it alternates. Segments 1 and 2 sit
+ * 0.06 apart in luminance and 35 degrees apart in hue, so on the bar they read
+ * as one brown block beside one grey block of the same weight, and the pairing
+ * repeats at 3 and 4. The colour therefore encodes nothing: it does not rank
+ * the segments, it does not group them, and it is not one family. On the real
+ * page the four segments drew $31 tan, $34 grey, $15 sand, $15 grey, so the two
+ * lines that are genuinely equal wear different hues and the two that differ by
+ * three dollars wear different hues too.
+ *
+ * THE DECISION, stated so it can be answered yes or no. Should the cost mass be
+ * ONE ladder, darkest to lightest in a single neutral, which is what the
+ * palette gate's own header prescribes for every other good-versus-bad reading
+ * on this site ("intensity in one hue"), and which would end the warm cast on
+ * this bar? Or is the warm cost colour a ratified value worth keeping even
+ * though half its own ramp is already cool?
+ *
+ * Nothing here should change until that is answered. A four-step neutral ladder
+ * exists today and needs no new token: paper-400, parchment, paper-200,
+ * paper-100.
+ */
 const COST_FILL = [
   "bg-cocoa-300",
   "bg-paper-400",
