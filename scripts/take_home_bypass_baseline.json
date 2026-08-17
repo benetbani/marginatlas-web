@@ -1,6 +1,5 @@
 {
   "files": [
-    "src/app/api/cell-lookup/route.ts",
     "src/app/dev/industry2/page.tsx",
     "src/lib/extremes/leaderboards.ts",
     "src/lib/industries/headline_band.ts",

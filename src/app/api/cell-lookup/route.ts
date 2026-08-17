@@ -22,6 +22,7 @@ import { getCellBySlug, getTopCells, slugify } from "@/lib/cells";
 import { industryToSlug, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
+import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCityPopulation } from "@/lib/cities/city_tier";
 import {
@@ -193,23 +194,55 @@ export async function GET(req: NextRequest) {
         ? clampMargin(netProfitResult.net_margin, "net", cell.industry_id || null)
         : null;
 
-  // Owner take-home: London modeled figure when present, else the waterfall
-  // take-home with the founder-rule floor (2x local average income) applied to
-  // 10+ employee bands, exactly as the cell page does.
+  // Owner take-home: London modeled figure when present, else the ONE shared
+  // resolver (src/lib/finance/owner_take_home.ts), exactly as the cell page
+  // does.
+  //
+  // WHAT WAS WRONG. This route printed estimateNetProfit().net_profit RAW,
+  // floored only by the larger-firm 2x-income rule, into the same grid column
+  // set as a net margin the line above runs through clampMargin, whose floor is
+  // 3%. So the compare grid could show a revenue, "3% net" beside it, and a
+  // take-home worth a fraction of 3% of that revenue, or a NEGATIVE one. The
+  // header of this file already claimed parity with the cell page, and the cell
+  // page has resolved its take-home through the shared module since that module
+  // was written for exactly this contradiction.
+  //
+  // Measured over the pure estimator, sweeping 243 activities x 12 countries x
+  // 6 revenue levels x 3 size bands (52,488 combinations): the two derivations
+  // agreed on 44.8% and differed on 55.2%. Worst case printed minus $124,500
+  // beside "3% net" of $2,500,000, which the cell page renders as $75,000, a
+  // $199,500 gap on one row. Neither derivation ever omitted where the other
+  // printed. That sweep covers the PARAMETER SPACE, not the live cell
+  // population: it cannot say how many compared cities print the pair, only how
+  // much of the input shape the two disagreed over.
+  //
+  // isLargerFirm is genuinely resolved here (unlike the homepage beats and the
+  // across-cities columns, which pass false because their all-sizes slates
+  // carry no size band): a compare cell can be a 10+ employee band, and the 2x
+  // floor is the founder rule for exactly those. It is never applied to 1-4 or
+  // 5-9, which is what the explicit band list below guarantees.
+  //
+  // The curated London branch is deliberately NOT routed through the resolver.
+  // Its take-home is already revenue x net_margin_pct by construction:
+  // src/lib/london/market.ts closes that identity at load, so LE.owner_take_home
+  // and the LE.net_margin_pct printed beside it cannot contradict each other.
   const econSnap = getCountryEconomicsSnapshot(country);
   const annualIncome =
     econSnap.avgMonthlySalary != null ? econSnap.avgMonthlySalary * 12 : null;
   const isLargerFirm =
     !!cell.size_band &&
     ["10-19", "20-49", "50-99", "100+"].includes(cell.size_band);
-  const takeHomeFloor = isLargerFirm && annualIncome ? annualIncome * 2 : null;
-  const rawTakeHome = netProfitResult?.net_profit ?? null;
   const ownerTakeHome =
     LE && isNum(LE.owner_take_home)
       ? LE.owner_take_home
-      : takeHomeFloor != null && rawTakeHome != null && rawTakeHome < takeHomeFloor
-        ? takeHomeFloor
-        : rawTakeHome;
+      : resolveOwnerTakeHome({
+          structuralNetProfit: netProfitResult?.net_profit ?? null,
+          rawNetMargin: netProfitResult?.net_margin ?? null,
+          revenue: grossRevenueForMargin,
+          industryId: cell.industry_id || null,
+          isLargerFirm,
+          annualIncome,
+        });
 
   // -- B. Competitors + density. A country-level fallback cell carries a
   // national firm count, not a local one, so suppress it under a city title.
