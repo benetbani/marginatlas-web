@@ -69,8 +69,23 @@ export function LegalPage({
   notice,
   children,
 }: LegalPageProps) {
+  /* A SURFACE, added 2026-08-17. This carried none at all: no background, no
+     border, nothing. That was invisible while the app ground was a flat colour,
+     and became a defect the moment AtlasFrame put a fixed photograph behind
+     every route with no centre plate. FIVE routes render through this
+     component, /privacy /terms /cookies /contact /faq, so all five were
+     long-form prose set directly on a picture.
+
+     .atlas-card is the site's measured surface: --atlas-surface-card at .955,
+     whose contrast was computed against the photograph's darkest region rather
+     than against white. It is also position:relative, which a static background
+     needs here or it sinks behind the fixed layers.
+
+     max-w-2xl stays: that is the reading measure and not the card's business.
+     pb-16 became mb-16 so the space sits below the card rather than inside it
+     as a long empty tail. */
   return (
-    <article className="max-w-2xl pb-16">
+    <article className="atlas-card max-w-2xl px-6 py-8 md:px-9 md:py-10 mb-16">
       <SectionEyebrow size="md" className="mb-3">
         {eyebrow}
       </SectionEyebrow>
