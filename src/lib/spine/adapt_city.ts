@@ -274,7 +274,11 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
           // the p90 tail only when the spread exists. The curve needs a top-1 x-tick;
           // use the p90 scaled by the same skew the spread already encodes (p90/p50),
           // so it stays inside the sanctioned distribution rather than a new invention.
-          top1_income_usd: Math.round(spread.p90 * (spread.p90 / spread.p50)),
+          // Rounded to the nearest thousand like the spread it is derived from.
+          // The spread stopped carrying dollar precision (it is multipliers on a
+          // mean, not a measurement), so a figure derived from it twice over must
+          // not read as exact either: this was printing $358,754.
+          top1_income_usd: Math.round((spread.p90 * (spread.p90 / spread.p50)) / 1000) * 1000,
           read: view.customer?.note ?? undefined,
           // tiers OMITTED (authored spend shares).
         }
@@ -368,6 +372,17 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   // 100), median_income_usd <- avg_gross_salary_usd_year (real), visitors_m <-
   // tourist_arrivals_m (real). spend_index has NO source and is OMITTED (the CityPeers
   // table drops that row). The home city leads the list.
+  //
+  // CAREFUL, THE FIELD NAME LIES AND THE SEED SHAPE FORCES IT. This slot is
+  // called median_income_usd, and what goes in it is avg_gross_salary_usd_year,
+  // which is a MEAN. The other median_income_usd on this seed, the one on the
+  // income curve above, really is a median (spread.p50), so the same name
+  // carries two different statistics in one payload. It is safe TODAY only
+  // because the table renders it as "Customer income" and as a percentage of
+  // the home city, so a mean is compared against a mean on both sides and no
+  // reader ever sees the word median. Do NOT print this slot as a median, and
+  // do not reconcile it against the income curve's figure: for London they are
+  // 64,800 and 57,000, and the gap between them is real.
   const homeRow = {
     name: city.name,
     home: true,
