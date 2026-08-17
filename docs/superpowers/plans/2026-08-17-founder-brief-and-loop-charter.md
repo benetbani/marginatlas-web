@@ -217,7 +217,10 @@ one of them is wrong; pick the better and converge.
 ## 9. Verification cadence, every tick, no exceptions
 
 1. `npx tsc --noEmit` must be clean.
-2. `npm run prebuild` must be 97/97.
+2. `npm run prebuild` must be **99/99**. It was 97 when this was written, 98
+   when `verify_no_cream` was added, and 99 since `strip-comments` was wired in.
+   The loop's own standing prompt still says 97/97; the chain is the authority,
+   not the prompt, and a gate count that reads low is how a missing gate hides.
 3. Render what you changed and read it back. The local dev server is slow and
    dies often; when it does, render the component directly with
    `react-dom/server` and assert on the output. Both techniques are proven in
@@ -538,22 +541,56 @@ product's own subject matter, and both ways out of that (weaken the check, or
 rename a business) are worse than looking in the right place.
 
 **A BLIND SPOT IN `scripts/lib/strip_comments`, which every source-scanning gate
-in the chain depends on.** It is not a lexer, and a `/*` inside a STRING literal
-opens a block comment it never closes. `src/app/_design/page.tsx:640` carries
-`caption="board/charts/* (visx, compact, null-safe)"`, and from there to the end
-of the file, 77 lines, all real code reads as prose. Its header documents the
-`//`-in-a-string case and calls the failure direction a missed hit, which is
-right; what is new is that the miss runs to end-of-file rather than end-of-line.
-A live card was skipped there and caught only by grepping for leftovers.
+in the chain depends on. FIXED 2026-08-17 in `23689a14`; kept here because the
+lesson outlives the bug.** It was not a lexer, and a `/*` inside a STRING literal
+opened a block comment. `src/app/_design/page.tsx:640` carries
+`caption="board/charts/* (visx, compact, null-safe)"`, and from there real code
+read as prose to every gate in the chain.
+
+**Two details of the original report were wrong and are corrected here**, because
+the next person to meet this needs the right shape of it:
+
+- It is **195 lines, not 77.** Of the 451 non-blank lines after that caption, 195
+  were invisible: 45 of the file's 104 `className` lines and 34 of its 65
+  `text-` lines.
+- It does **not** run to end of file. `inBlock` is false at EOF, because an
+  unrelated real `*/` closed it 195 lines later. That is worse rather than
+  better: the damage window is sized by something with no relationship to the
+  bug, and could as easily have been the whole file or three lines.
+
+Why it was a defect and not the documented trade: the header already accepts
+`//`-in-a-string, reasoning that the failure direction is "a missed hit rather
+than a false accusation". That reasoning is about losing ONE line and it is
+sound. A false block OPEN loses an unbounded run and turns a gate's PASS into a
+statement about a file it stopped reading. `//` behaviour was deliberately left
+untouched so both results stay falsifiable.
+
+Now tested and wired: `tests/lib/strip_comments.test.ts`, nine cases including
+the apostrophe false-accusation the fix could have introduced (`const s = "it's";
+/* n */` defeats a naive quote count, so the check is a prefix scan that tracks
+which quote opened). It is gate 99.
 
 **TWO COLOUR DEFECTS FOUND AND DELIBERATELY LEFT**, because this tick was a
 rename and a rename must not carry a colour change:
 
-- `src/components/ui/empty-state.tsx:65` sets `backgroundColor` to
-  `"rgb(247 246 244)"` by hand. That is `#f7f6f4`, the pre-purge warm value of
-  the 100 step, still painting. The retone could not reach it because it is an
-  rgb() literal in a component rather than a token read, and **the ratchet
-  cannot see it either**: its rgb list carries only the old page ground.
+- `src/components/ui/empty-state.tsx`. **FIXED 2026-08-17 in `d2d057ea`, and it
+  was THREE literals, not one:** `rgb(247 246 244)` for the hatch surface, the
+  pre-purge 100 step, plus TWO `rgba(228, 226, 221, 0.6)` hatch lines, which are
+  the pre-purge `parchment`. Both tokens were retoned during the purge and
+  neither retone reached this file, because it spelled the numbers instead of
+  reading the token. It now reads `colors.paper[100]` and `colors.parchment`,
+  with the 0.6 alpha preserved rather than dropped.
+
+  **And the ratchet's rgb net caught NOTHING AT ALL.** It held one hand-written
+  pattern, for a page ground the migration had already deleted: measured across
+  all of src, zero hits. So the check contributed a passing line while testing
+  for a colour that no longer existed, and the one file still literally painting
+  cream was the one file it could not see. It also understood only
+  `rgb(a, b, c)`, while the literal that mattered used the `rgb(a b c)` form CSS
+  equally accepts. The list is now DERIVED from `WARM_CREAM` and matches both
+  separators, so the two lists cannot drift apart again. `#f7f7f8` and `#ffffff`
+  are deliberately excluded from the rgb net, measured first: ten and 63 rgb
+  appearances respectively, and both are colours the site is supposed to have.
 - `--destructive-foreground` in `globals.css` is `255 253 248`, which is
   `#fffdf8`, a warm off-white at h 44, while its comment claimed it was white.
   The comment now says what the value is so the defect is visible; the value is
