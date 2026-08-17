@@ -466,9 +466,31 @@ async function NeighborhoodCellPageBody({
                 <p className="font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
                   A {tradeNoun} in {nb.name} runs{" "}
                   {fwMult.clipped ? "at least" : "about"}{" "}
+                  {/* THE GREEN IS GONE, 2026-08-17. This read
+                      `fwPct > 0 ? "text-moss-700" : "text-atlas-700"`, so every
+                      district above its city baseline printed its delta in
+                      moss, a green, which section 8 of the charter bans
+                      outright and verify_palette_membership names as the banned
+                      hue.
+
+                      The SIGNAL is kept, not deleted. What the colour carries
+                      is which side of the city baseline this district sits on,
+                      and that stays a two-state distinction: above reads in
+                      terracotta, below in the muted step this band already uses
+                      for its own labels. The direction of the pair is the
+                      founder's ratified grammar rather than a fresh choice: the
+                      diverging bars he ruled on 2026-08-09 fill every
+                      above-average row in terracotta, and the same ruling took
+                      the traffic light off CitySignaturePanel's score bars.
+                      Terracotta on the premium is also what this band is FOR,
+                      since it sits above the masthead precisely so the reader
+                      sees the local lift first.
+
+                      Nothing about the direction rests on the hue in any case:
+                      the figure prints its own sign one character to the left. */}
                   <span
                     className={
-                      fwPct > 0 ? "text-moss-700" : "text-atlas-700"
+                      fwPct > 0 ? "text-atlas-700" : "text-cocoa-700"
                     }
                   >
                     {fwPct > 0 ? "+" : ""}
