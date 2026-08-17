@@ -69,7 +69,7 @@ export function ExampleTiles({ tiles }: { tiles: ExampleTile[] }) {
   ).size;
 
   return (
-    <section className="py-8 md:py-10">
+    <section>
       {/* THE HEADING MOVED OFF THE SPECIMEN'S GROUND.
           This read "Or open a real one" over "See what a business actually
           keeps", which was right when the band sat directly under the search

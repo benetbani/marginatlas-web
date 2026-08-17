@@ -267,7 +267,7 @@ function Legend() {
 
 export function CatalogPlates() {
   return (
-    <section aria-labelledby="catalog-heading" className="py-10 md:py-14">
+    <section aria-labelledby="catalog-heading">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
         <h2 id="catalog-heading" className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
           What the atlas can see

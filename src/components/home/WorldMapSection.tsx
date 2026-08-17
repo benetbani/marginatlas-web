@@ -29,7 +29,7 @@ export function WorldMapSection() {
        Header now matches the blog rail twenty lines down the same page,
        heading left and an escape hatch right, so a reader who wants the list
        rather than the map has one move instead of a scroll. */
-    <section className="py-10 md:py-14">
+    <section>
       <div className="mb-5 md:mb-7 flex items-baseline justify-between gap-4 flex-wrap">
         {/* "Pick a country" stood here, and the hero form's own heading four
             bands above reads "Pick a country, a city, and a business." Two

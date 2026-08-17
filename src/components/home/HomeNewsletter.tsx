@@ -34,7 +34,7 @@ const CONTENTS: { icon: AtlasIconId; label: string }[] = [
 
 export function HomeNewsletter() {
   return (
-    <section className="py-12 md:py-16">
+    <section>
       {/* .atlas-card, not `rounded-2xl bg-white border border-parchment`, which
           is the class written out by hand and one token short. rounded-2xl is
           already --radius, so the visible differences are the seating shadow it

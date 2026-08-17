@@ -121,7 +121,7 @@ function trades(knownFor: string): string[] {
 export function NeighborhoodCards({ cards }: { cards: NeighborhoodCard[] }) {
   if (cards.length < 4) return null;
   return (
-    <section className="py-10 md:py-12">
+    <section>
       <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-5">
         The same benchmarks, block by block
       </h2>

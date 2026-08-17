@@ -10,7 +10,7 @@ import type { TradeComparison } from "@/lib/home/state_comparison";
 export function StateComparison({ comparisons }: { comparisons: TradeComparison[] }) {
   if (comparisons.length < 1) return null;
   return (
-    <section className="py-12 md:py-16">
+    <section>
       <SectionEyebrow tone="backdrop" size="md" className="mb-2">Same business, different place</SectionEyebrow>
       <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 mb-3">
         What a typical business brings in, state by state

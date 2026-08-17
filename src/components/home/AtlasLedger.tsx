@@ -74,7 +74,7 @@ export function AtlasLedger() {
   const l = getAtlasLedger();
 
   return (
-    <section className="py-10 md:py-14">
+    <section>
       {/* IN A CARD NOW, because the frame stopped covering for it.
           The site frame used to paint .82 white across the content column, so a
           bare band sat on what was effectively a white page. The founder's
@@ -102,8 +102,21 @@ export function AtlasLedger() {
           an opaque white is a hole punched in the photograph rather than a
           sheet laid on it. And `position: relative` comes with the class, so
           the note above is enforced by the class rather than remembered. */}
+      {/* A SECOND TOP EDGE, 28px INSIDE THE FIRST ONE, IS GONE. This card's
+          contents were wrapped in `border-t border-parchment pt-5 md:pt-6`.
+          That rule is left over from when this band was NOT in a card and drew
+          its own top edge as the opening line of a ruled manifest. Since the
+          card arrived, the card's border does that job, and the two lines ran
+          parallel with nothing but padding between them, the inner one DARKER
+          than the outer: parchment #e3e3e3 against --atlas-hairline at .07
+          alpha. A reader could see the second line and there was nothing on the
+          far side of it to see.
+
+          The column dividers below stay. Those separate four figures from each
+          other, which is a job the card border cannot do, and they are what
+          makes this a manifest line rather than a row of tiles. */}
       <div className="atlas-card px-5 py-6 md:px-8 md:py-7">
-        <div className="border-t border-parchment pt-5 md:pt-6">
+        <div>
         {/* An h2, not a div, and it looks exactly the same.
             Every other band on this page contributes a heading to the document
             outline and this one did not, so the site's own coverage claim,

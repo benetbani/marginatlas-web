@@ -37,7 +37,7 @@ export function Specimen({ specimen }: { specimen: SpecimenData | null }) {
   const { trade, place, href, revenue, takeHome, keptPct, } = specimen;
 
   return (
-    <section className="py-10 md:py-14">
+    <section>
       <SectionEyebrow tone="backdrop" size="md" className="mb-2">
         What an answer looks like
       </SectionEyebrow>

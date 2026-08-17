@@ -63,11 +63,43 @@ export const metadata: Metadata = {
  * content lives inside the layout's `max-w-7xl mx-auto px-6` constraint,
  * but the background color spans the full viewport via the same trick
  * the hero already uses (`left-1/2 right-1/2 -mx-[50vw] w-screen`).
+ *
+ * AND IT NOW OWNS THE PAGE'S VERTICAL RHYTHM, which nine components used to own
+ * a ninth of each.
+ *
+ * MEASURED, at 1440, off the rendered page: ten bands carrying FOUR different
+ * rhythms (py-8/10, py-10/12, py-10/14, py-12/16), producing gaps between one
+ * band's last card and the next band's heading of 96, 112, 112, 112, 128, 128,
+ * 128, 128 and 176px. 1,216px of the page, 18 percent of its height, was band
+ * padding, and no two neighbours agreed on how much. That is the "sparse and
+ * tall" failure the founder has already rejected once, and it is also a
+ * cohesion defect: a page cannot have one rhythm if ten sections each choose
+ * their own.
+ *
+ * THE VALUE IS NOT INVENTED. `py-8 md:py-10` is 32 and 40px, the top two steps
+ * of the spacing scale in scripts/verify_spacing_scale.ts, which was derived
+ * from the founder's own mockup and STOPS AT 40. Every band except one was
+ * above the scale's ceiling; the exception, ExampleTiles, was already at exactly
+ * this value, so this converges on a rhythm the page already contained rather
+ * than imposing a new one.
+ *
+ * `flush` is the hero and only the hero. It sits directly under the masthead and
+ * carries a deliberately tighter rhythm of its own, tuned so the headline and
+ * the search lift into view; adding a band's padding on top of that would undo
+ * the one piece of spacing on this page that was set by looking at it.
  */
-function ToneBand({ tone, children }: { tone: string; children: React.ReactNode }) {
+function ToneBand({
+  tone,
+  flush = false,
+  children,
+}: {
+  tone: string;
+  flush?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <div className={`relative left-1/2 right-1/2 -mx-[50vw] w-screen ${getToneClass(tone)}`}>
-      <div className="max-w-content mx-auto px-6">{children}</div>
+      <div className={`max-w-content mx-auto px-6 ${flush ? "" : "py-8 md:py-10"}`}>{children}</div>
     </div>
   );
 }
@@ -295,7 +327,7 @@ export default async function HomePage() {
           there: it describes the publisher, this marks the front door. */}
       <WebSite />
 
-      <ToneBand tone="home-hero">
+      <ToneBand tone="home-hero" flush>
         {/* THE HERO-ONLY PHOTOGRAPH IS GONE, and it should never have been the
             answer. A copy of the skyline lived here, absolutely positioned,
             covering the hero and fading to paper under the navigator, because
@@ -528,7 +560,7 @@ export default async function HomePage() {
           reader meets first, and meeting the price before being told who the
           thing is for is the wrong way round. */}
       <ToneBand tone="home-audience">
-        <div className="grid grid-cols-1 gap-10 py-12 md:py-16 lg:grid-cols-12 lg:gap-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
             <AudienceBand variant="panel" />
           </div>
@@ -576,7 +608,7 @@ export default async function HomePage() {
 
       {/* Plan v15 Block 3 - blog rail. */}
       <ToneBand tone="home-blog-rail">
-        <section className="py-12 md:py-16">
+        <section>
           {/* THE EYEBROW SAID "Writing" OVER A HEADING THAT SAYS "From the
               Atlas notebook", which is the same label twice, and the charter's
               §4 test is exactly that: a line under a heading that repeats the
