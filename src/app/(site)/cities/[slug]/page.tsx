@@ -543,10 +543,20 @@ export default async function CityPage({
                     </div>
                   ))}
                 </dl>
+                {/* The spread, and the heading is doing real work now. It read
+                    "What residents earn a year" directly under a stat reading
+                    "Average pay each month", so one card carried one quantity
+                    in two units and the reader had to reconcile "$5K" against
+                    a TYPICAL tick of "$57,024" with nothing on the page
+                    connecting them. The stat above is now the same year, and
+                    this heading says the strip is that average spread out
+                    rather than a second answer to the same question. The
+                    caption comes from the view beside the numbers themselves,
+                    so the words and the figures cannot drift. */}
                 {view.customer.incomeSpread ? (
                   <div className="mt-6 border-t border-parchment pt-5">
                     <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
-                      What residents earn a year
+                      How that pay spreads, a year
                     </p>
                     <RangeStrip
                       p10={view.customer.incomeSpread.p10}
@@ -555,6 +565,7 @@ export default async function CityPage({
                       p75={view.customer.incomeSpread.p75}
                       p90={view.customer.incomeSpread.p90}
                       format={cityFmtUsdFull}
+                      caption={view.customer.spreadCaption}
                     />
                   </div>
                 ) : null}

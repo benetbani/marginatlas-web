@@ -96,6 +96,9 @@ export type CityView = {
       p75: number | null;
       p90: number;
     } | null;
+    /** Reads the spread against the average above it (mean vs midpoint). Set
+     *  only where a spread is set, so the two can never drift apart. */
+    spreadCaption: string | null;
     note: string | null;
   } | null;
   /** What space costs: the commercial-rent character read. */
@@ -157,6 +160,34 @@ function usd(n: number): string {
 function usdFull(n: number): string {
   return `$${Math.round(n).toLocaleString("en-US")}`;
 }
+/**
+ * Average pay, formatted the way the /cities card formats the SAME field.
+ * Deliberately mirrors the board's fmtUSD rule (compact above 100k, exact
+ * grouping below it) rather than reusing usdFull, so the two pages cannot
+ * print one number two ways. Without this, Basel at 102,000 reads "$102K" on
+ * the directory card and "$102,000" on its own page: today that costs nothing
+ * because the directory only prints the twelve largest metro economies and
+ * every one of them is under 100k, but it is one LEAD_COUNT change away from
+ * being visible, and it is the same class of defect this whole pass is about.
+ * A lib may not import the board's formatter (that is components, this is
+ * domain), so the rule is restated here and named for why.
+ */
+function usdPay(n: number): string {
+  const sign = n < 0 ? "-" : "";
+  const abs = Math.abs(n);
+  // One decimal kept, then trimmed when it is a whole number, which is the
+  // board's grain. usd() above rounds to a whole K instead, so it is NOT
+  // reused here: it would print "$103K" where the directory prints "$102.5K".
+  const compact = (x: number) => {
+    const r = Math.round(x * 10) / 10;
+    return Number.isInteger(r)
+      ? r.toLocaleString("en-US")
+      : r.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  };
+  if (abs >= 1_000_000) return `${sign}$${compact(abs / 1_000_000)}M`;
+  if (abs >= 100_000) return `${sign}$${compact(abs / 1_000)}K`;
+  return `${sign}$${Math.round(abs).toLocaleString("en-US")}`;
+}
 function climateWordLocal(band: BreakInBand): string {
   switch (band) {
     case "forgiving":
@@ -195,10 +226,28 @@ export function buildCityView(input: CityViewInput): CityView {
 
   // Income: the city's own annual gross salary, falling back to the country's
   // annualised monthly figure (the same precedence the board and score use).
+  //
+  // THE YEAR IS THE UNIT, EVERYWHERE ON THIS PAGE, and it was not before.
+  // avg_gross_salary_usd_year is a metro MEAN gross wage per year, and it is
+  // exact: London's 64,800 is the 5,400-a-month city wage measurement times
+  // twelve. This page used to divide it back to a month and print it through
+  // usd(), which rounds to the nearest thousand, so London read "$5K/mo" while
+  // the /cities card for the same city read "$64,800 a year". A reader doing
+  // the one multiplication the label invites lands on $60,000, and is 7.4%
+  // wrong. Measured across the whole list: 165 of 252 cities print a monthly
+  // whose x12 disagrees with their own stored annual by more than 0.5%, worst
+  // at Kuala Lumpur (printed "$2K/mo", stored $18,000, 33.3% out) and nine
+  // Chinese metros (printed "$1K/mo", stored $17,100, 29.8% out). Nothing was
+  // wrong with the arithmetic; the display was throwing the precision away and
+  // then switching units so the loss could not be seen.
+  //
+  // So the monthly derivation is gone. The year is what /cities publishes, what
+  // the resident-pay spread below is denominated in, and what the cell pages
+  // annualise to, so it is also the one unit that lets those surfaces be read
+  // against each other.
   const cityYearly = isNum(avgGrossSalaryUsdYear) ? avgGrossSalaryUsdYear : null;
   const countryYearly = isNum(avgMonthlySalary) ? avgMonthlySalary * 12 : null;
   const incomeYearly = cityYearly ?? countryYearly;
-  const incomeMonthly = isNum(incomeYearly) ? incomeYearly / 12 : null;
 
   // Net wealth per citizen, scaled by the city's income premium over its country
   // (the same estimate the board prints), so the two never disagree. Clamped.
@@ -232,8 +281,12 @@ export function buildCityView(input: CityViewInput): CityView {
         : null,
     },
     {
-      label: "Average salary",
-      value: isNum(incomeMonthly) ? `${usd(incomeMonthly)}/mo` : null,
+      // Label, value and unit all match the /cities card for the same city
+      // exactly: "Average salary", "a year", and the grouped figure. That
+      // agreement is the point, because /cities is the page most readers
+      // arrive from.
+      label: "Average salary, a year",
+      value: isNum(incomeYearly) ? usdPay(incomeYearly) : null,
     },
     {
       label: "Annual visitors",
@@ -274,7 +327,6 @@ export function buildCityView(input: CityViewInput): CityView {
 
   /* -- who the local customer is -------------------------------------- */
   const customer = buildCustomer(input, isLondon, {
-    incomeMonthly,
     incomeYearly,
     cityNetWealth,
   });
@@ -423,18 +475,24 @@ function buildCustomer(
   input: CityViewInput,
   isLondon: boolean,
   derived: {
-    incomeMonthly: number | null;
     incomeYearly: number | null;
     cityNetWealth: number | null;
   },
 ): CityView["customer"] {
-  const { incomeMonthly, incomeYearly, cityNetWealth } = derived;
+  const { incomeYearly, cityNetWealth } = derived;
   const stats: CityStat[] = [];
-  if (isNum(incomeMonthly))
+  if (isNum(incomeYearly))
     stats.push({
-      label: "Average pay each month",
-      value: usd(incomeMonthly),
-      hint: "Gross, before tax. The everyday spending base.",
+      // WAS "Average pay each month", printed as a thousand-rounded monthly
+      // directly above a spread denominated in years. One card, one quantity,
+      // two units, and the two did not reconcile on sight: London read "$5K"
+      // a month over a strip whose middle read "$57,024" a year. Now the stat
+      // and the strip share the year, so the only difference left between them
+      // is the one that is real, a mean against a midpoint, and the strip's
+      // caption says so.
+      label: "Average pay, a year",
+      value: usdPay(incomeYearly),
+      hint: "The mean gross wage across the metro, before tax.",
     });
   if (isNum(cityNetWealth))
     stats.push({
@@ -447,23 +505,39 @@ function buildCustomer(
   // A real income distribution across the metro. We only hold a defensible
   // spread for the London exemplar (sanctioned invented-but-plausible); every
   // other city shows the figures it has without a fabricated band.
+  //
+  // ROUNDED TO THE NEAREST THOUSAND, because these are multipliers on a mean,
+  // not measurements. The old code rounded to the dollar and the strip printed
+  // "$57,024" under the word TYPICAL, which is the look of an audited figure
+  // and reads as a rival to the average printed two lines above it. Same
+  // shape, same story, honest grain: a multiplier can carry three significant
+  // figures, and it cannot carry five.
+  const grand = (n: number) => Math.round(n / 1000) * 1000;
   let incomeSpread: NonNullable<CityView["customer"]>["incomeSpread"] = null;
+  let spreadCaption: string | null = null;
   if (isLondon && isNum(incomeYearly)) {
     const m = incomeYearly;
     incomeSpread = {
-      p10: Math.round(m * 0.42),
-      p25: Math.round(m * 0.64),
-      p50: Math.round(m * 0.88),
-      p75: Math.round(m * 1.35),
-      p90: Math.round(m * 2.2),
+      p10: grand(m * 0.42),
+      p25: grand(m * 0.64),
+      p50: grand(m * 0.88),
+      p75: grand(m * 1.35),
+      p90: grand(m * 2.2),
     };
+    // THE LINE THAT STOPS THE TWO FIGURES LOOKING LIKE A CONTRADICTION. The
+    // typical sits below the average because the top of the distribution pulls
+    // the mean up. That is a property of pay everywhere, it is the single most
+    // useful thing this strip has to say to someone sizing a customer base,
+    // and the page had it on screen and never said it.
+    spreadCaption =
+      "The typical resident earns less than the average, because a thick band of very high earners pulls the average up. Model the mid figure, not the mean.";
   }
 
   const note = isLondon
     ? "Pay is high, but it spreads wide: a large lower-paid service workforce sits under a thick band of high earners in finance, tech, and the professions. A neighbourhood can swing the spending base more than the city average suggests."
     : "These are the broad spending figures we hold for the metro. A neighbourhood can sit well above or below them.";
 
-  return { stats, incomeSpread, note };
+  return { stats, incomeSpread, spreadCaption, note };
 }
 
 function buildSpace(
