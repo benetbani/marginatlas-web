@@ -78,7 +78,13 @@ export function AccountPreview() {
 
   if (!SHOW_DESIGN_PREVIEW) {
     return (
-      <article className="max-w-3xl mx-auto px-4 py-16 md:py-24 text-center">
+      /* THE DEFAULT BRANCH, and the only one a reader has ever seen: the flag
+         above is off in production. It was bare centred text on the page, and
+         AtlasFrame paints a fixed photograph behind every route with no centre
+         plate, so this whole placeholder was dark type sitting on a picture.
+         One .atlas-card, translucent at .955, position:relative so it sits
+         above the frame's fixed layers rather than sinking behind them. */
+      <article className="atlas-card max-w-3xl mx-auto px-6 py-16 md:py-24 text-center">
         <div className="text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700 mb-3">
           Account
         </div>
@@ -117,8 +123,14 @@ export function AccountPreview() {
 
   return (
     <article>
-      <section className="bg-cream-50 border-b border-parchment">
-        <div className="mx-auto max-w-6xl px-6 pt-10 pb-6">
+      {/* Both section grounds are gone and the masthead is a card instead.
+          bg-cream-50 is #ffffff and fully opaque, so these two bands covered
+          the photograph for the height of the page. A band is not a card.
+          The mx-auto max-w-6xl px-6 goes with them: SiteChrome already gives
+          this route max-w-content mx-auto px-6, so it was a 1024 column inside
+          the site's 1072 with a doubled gutter. */}
+      <section className="pt-10 pb-6">
+        <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">Account</p>
@@ -160,8 +172,14 @@ export function AccountPreview() {
         </div>
       </section>
 
-      <section className="bg-cream-50">
-        <div className="mx-auto max-w-6xl px-6 py-8">
+      {/* THE TAB PANEL IS ONE CARD. Each tab opens with an h2 and a line of
+          copy that were bare on the page once the band came off, and the
+          panels' own surfaces are cards inside it, so the panel is the natural
+          place for the one translucent fill. Everything nested below therefore
+          takes .atlas-card-soft: two translucent fills stacked only muddy the
+          picture under both. */}
+      <section className="py-8">
+        <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
           {account.showOnboarding && tab === "saved" && (
             <OnboardingChecklist />
           )}
@@ -210,7 +228,7 @@ function SavedCells({ cells, cap }: { cells: Cell[]; cap: number }) {
         <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {cells.map((c) => (
             <li key={c.id}>
-              <article className="rounded-lg p-5 h-full bg-cream-50 border border-parchment">
+              <article className="atlas-card-soft p-5 h-full">
                 <div className="flex items-center justify-between">
                   <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wide font-semibold text-atlas-700">
                     <span aria-hidden="true" className="text-base">{c.flag}</span>
@@ -241,7 +259,7 @@ function Watchlist({ rows }: { rows: WatchRow[] }) {
       <p className="text-sm mt-1 text-cocoa-700">
         You'll get an email when these cells refresh or when a threshold you set is crossed.
       </p>
-      <ul className="mt-5 rounded-lg bg-cream-50 border border-parchment">
+      <ul className="atlas-card-soft mt-5">
         {rows.map((r, i) => (
           <li key={r.id} className={`flex items-center justify-between gap-3 px-4 py-3 ${i > 0 ? "border-t border-parchment" : ""}`}>
             <div className="flex items-center gap-3 min-w-0">
@@ -263,7 +281,7 @@ function Recent({ rows }: { rows: RecentRow[] }) {
   return (
     <>
       <h2 className="font-display text-xl font-semibold text-ink-900">Recently visited</h2>
-      <ul className="mt-5 rounded-lg bg-cream-50 border border-parchment">
+      <ul className="atlas-card-soft mt-5">
         {rows.map((r, i) => (
           <li key={r.id} className={`flex items-center justify-between gap-3 px-4 py-3 ${i > 0 ? "border-t border-parchment" : ""}`}>
             <div className="flex items-center gap-3 min-w-0">
@@ -288,7 +306,7 @@ function Alerts() {
       <p className="text-sm mt-1 text-cocoa-700">
         Pick the cadence and the kinds of changes worth interrupting you for.
       </p>
-      <div className="mt-5 rounded-lg p-5 space-y-4 bg-cream-50 border border-parchment">
+      <div className="atlas-card-soft mt-5 p-5 space-y-4">
         {[
           { label: "Weekly digest email",         desc: "Monday morning, summary of moves in your watchlist." },
           { label: "Cell refresh emails",         desc: "Send when any saved cell is refreshed." },
@@ -313,7 +331,7 @@ function Billing({ account }: { account: Account }) {
     <>
       <h2 className="font-display text-xl font-semibold text-ink-900">Billing</h2>
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="rounded-lg p-5 bg-cream-50 border border-parchment">
+        <div className="atlas-card-soft p-5">
           <p className="text-[11px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/70">Current plan</p>
           <p className="font-display mt-1 text-xl font-semibold text-ink-900">Pro · $19/mo</p>
           <p className="text-sm mt-1 text-cocoa-700">
@@ -321,7 +339,7 @@ function Billing({ account }: { account: Account }) {
           </p>
           <Link href="/pricing" className="inline-block mt-3 text-sm font-semibold text-atlas-700">Change plan</Link>
         </div>
-        <div className="rounded-lg p-5 bg-cream-50 border border-parchment">
+        <div className="atlas-card-soft p-5">
           <p className="text-[11px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/70">Payment method</p>
           <p className="font-mono mt-1 tabular-nums text-ink-900">•••• 4242</p>
           <p className="text-sm mt-1 text-cocoa-700">Visa ending 4242 · expires 09/27</p>
@@ -342,7 +360,7 @@ function Billing({ account }: { account: Account }) {
           This whole component only renders when NEXT_PUBLIC_ACCOUNT_PREVIEW is
           set, which it is not by default, so none of it has been public. It is
           cleared because the flag exists to be flipped. */}
-      <div className="mt-5 rounded-lg bg-cream-50 border border-parchment">
+      <div className="atlas-card-soft mt-5">
         <div className="px-5 py-3 flex items-center justify-between border-b border-parchment">
           <p className="font-semibold text-ink-900">Invoices</p>
           <span className="text-sm font-semibold text-cocoa-700/50">Download all</span>

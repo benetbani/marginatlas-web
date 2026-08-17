@@ -43,9 +43,16 @@ export default function LeadMagnetPage() {
   return (
     <article>
       {/* Hero */}
-      <section className="bg-cream-50 border-b border-parchment">
-        <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7">
+      {/* FOUR SECTION GROUNDS REMOVED. bg-cream-50 is #ffffff and bg-cream-100
+          is a solid neutral; both are fully opaque, and AtlasFrame paints a
+          fixed photograph behind every route with no centre plate. Four bands
+          running end to end made this page a solid sheet. A band is not a
+          card. The mx-auto max-w-6xl px-6 wrappers go too: SiteChrome already
+          gives this route max-w-content mx-auto px-6, so they were a 1024
+          column inside the site's 1072 with a doubled gutter. */}
+      <section className="py-14 sm:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="atlas-card lg:col-span-7 px-5 py-6 md:px-7 md:py-7">
             {/* "Free PDF - 38 pages", and there is no PDF. Page counts,
                 like the "Three of the 38 pages" below, are the sort of detail
                 that can only be read as a fact about a document somebody has
@@ -121,8 +128,8 @@ export default function LeadMagnetPage() {
       </section>
 
       {/* Sample charts */}
-      <section className="bg-cream-100 border-b border-parchment">
-        <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
+      <section className="py-14 sm:py-20">
+        <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
           <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
             What it will hold
           </p>
@@ -139,8 +146,8 @@ export default function LeadMagnetPage() {
       </section>
 
       {/* Trust + testimonial */}
-      <section className="bg-cream-50 border-b border-parchment">
-        <div className="mx-auto max-w-3xl px-6 py-14 text-center">
+      <section className="py-14">
+        <div className="atlas-card mx-auto max-w-3xl px-6 py-10 text-center">
           <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-atlas-700">
             From the team behind marginatlas.com
           </p>
@@ -148,8 +155,8 @@ export default function LeadMagnetPage() {
       </section>
 
       {/* Footer links */}
-      <section className="bg-cream-50">
-        <div className="mx-auto max-w-6xl px-6 py-10 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm">
+      <section className="py-10">
+        <div className="atlas-card px-6 py-5 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm">
           <a href="/pricing"     className="font-semibold text-atlas-700 hover:underline">Pricing</a>
           {/* This pointed at the bare /about path, which is not a route. It
               fell through to the [country] wildcard and rendered "Country not
@@ -177,7 +184,7 @@ function SampleChart({
   subtitle: string;
 }) {
   return (
-    <article className="rounded-lg p-5 h-full bg-cream-50 border border-parchment">
+    <article className="atlas-card-soft p-5 h-full">
       <p className="font-display text-base font-semibold tracking-[-0.012em] text-ink-900">{title}</p>
       <p className="text-xs mt-1 text-cocoa-700">{subtitle}</p>
       <div className="mt-4">
