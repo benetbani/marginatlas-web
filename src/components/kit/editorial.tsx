@@ -194,15 +194,24 @@ export function RightForWrongFor({
   return (
     <BeatCard eyebrow={eyebrow} heading={heading} id={id}>
       <div className="grid gap-5 sm:grid-cols-2">
+        {/* THE GREEN IS GONE, 2026-08-17. The affirmative column was moss, a
+            banned hue, against a terracotta caution column. The opposition is
+            KEPT, and moved onto the pair the site already uses for it: the
+            affirmative side reads terracotta, the caution side reads the muted
+            cocoa step the list copy is already set in. Same grammar as the
+            neighbourhood cell's revenue delta and the founder's diverging-bar
+            ruling, where terracotta marks the side worth reading first. Not
+            clay for the caution column: clay-600 and atlas-700 are both dark
+            reds and the two columns would have stopped reading as two. */}
         {right.length > 0 ? (
           <div>
-            <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-moss-700">
+            <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-atlas-700">
               A good fit if
             </div>
             <ul className="space-y-2">
               {right.map((r, i) => (
                 <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700">
-                  <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-moss-500" />
+                  <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-atlas-500" />
                   <span>{r}</span>
                 </li>
               ))}
@@ -211,13 +220,13 @@ export function RightForWrongFor({
         ) : null}
         {wrong.length > 0 ? (
           <div>
-            <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-atlas-700">
+            <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-700">
               Think twice if
             </div>
             <ul className="space-y-2">
               {wrong.map((w, i) => (
                 <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-cocoa-700">
-                  <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-atlas-500" />
+                  <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cocoa-500" />
                   <span>{w}</span>
                 </li>
               ))}
@@ -324,8 +333,11 @@ export function MythVsReality({
               </span>
               {p.myth}
             </p>
+            {/* Terracotta, not moss. Same reason and same pair as the columns
+                above: the muted cocoa marks the myth, the accent marks the
+                correction, and no green reaches the page. */}
             <p className="text-sm leading-relaxed text-ink-900">
-              <span className="mr-1.5 text-[11px] font-semibold uppercase tracking-wider text-moss-700">
+              <span className="mr-1.5 text-[11px] font-semibold uppercase tracking-wider text-atlas-700">
                 Really
               </span>
               {p.reality}
