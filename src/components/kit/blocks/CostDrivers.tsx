@@ -52,8 +52,15 @@ export type CostDriversProps = {
  * down on a true neutral (pushes margin down): the site's diverging grammar,
  * one hue for the side that favours the operator and none for the other. It was
  * moss and amber until 2026-08-17, both banned outright. The glyph is drawn so a
- * reader sees the direction without relying on color alone, and the row reads the
- * meaning in words via the visually-hidden label.
+ * reader sees the direction without relying on color alone.
+ *
+ * A CLAIM REMOVED HERE ON 2026-08-17 BECAUSE IT WAS NOT TRUE. This comment said
+ * "the row reads the meaning in words via the visually-hidden label". There is
+ * no visually-hidden label in this file and there never was: the words were the
+ * small gloss beside the label, which is visible type, and the arrow and the
+ * ticks are both aria-hidden. A comment asserting an accessibility affordance
+ * the file does not implement is worse than no comment, because it is what the
+ * next reader checks instead of the markup.
  */
 function DirectionArrow({ dir }: { dir: CostDriverDirection }) {
   const up = dir === "up";
@@ -151,6 +158,24 @@ export function CostDrivers({
     );
   }
 
+  /* THE DIRECTION GLOSS PRINTS ONLY WHEN IT DISTINGUISHES A ROW FROM ITS
+     NEIGHBOURS, added 2026-08-17.
+
+     It used to print on every row unconditionally, and both call sites on this
+     site build their levers from the money breakdown's cost lines with
+     `direction: "down"` hardcoded, so it never varied. Photographed at 1280x900
+     on /gb/london/restaurants: four rows reading Payroll, Cost of goods, Rent
+     and premises, Everything else, each followed by the identical words
+     "weighs on margin", under a heading that already says "What moves the
+     COST". Four rows of no information, in the smallest type on the card.
+
+     Not deleted, because the component's diverging grammar is real and a caller
+     that mixes an "up" lever with "down" ones needs the words: colour and a
+     glyph alone do not carry that, and the row must read its meaning in text.
+     So the test is whether the block actually holds both, which is the only
+     condition under which the gloss says anything. */
+  const mixedDirection = new Set(clean.map((d) => (d.direction === "up" ? "up" : "down"))).size > 1;
+
   return wrapper(
     <ul className="m-0 list-none p-0">
       {clean.map((d, i) => {
@@ -168,9 +193,11 @@ export function CostDrivers({
             <div className="min-w-0">
               <div className="flex items-baseline gap-1.5">
                 <span className="text-sm font-semibold text-ink-900">{d.label}</span>
-                <span className="text-[0.6875rem] font-medium text-cocoa-700">
-                  {dir === "up" ? "lifts margin" : "weighs on margin"}
-                </span>
+                {mixedDirection ? (
+                  <span className="text-[0.6875rem] font-medium text-cocoa-700">
+                    {dir === "up" ? "lifts margin" : "weighs on margin"}
+                  </span>
+                ) : null}
               </div>
               {d.note ? (
                 <div className="mt-0.5 text-[0.8125rem] leading-snug text-cocoa-700">
