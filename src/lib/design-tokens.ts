@@ -167,21 +167,18 @@ export const colors = {
     700: "#534231",
     900: "#221910",
   },
-  moss: {
-    // Positive-delta ramp. The even steps 200/400/600 were filled 2026-06-08
-    // so the profit waterfall and 1-to-10 score scales resolve the gradation
-    // they reference. Each is the midpoint blend of its two neighbors, so the
-    // lightness ladder stays monotonic.
-    50: "#f6fbe8",
-    100: "#e9f6c8",
-    200: "#d2e899",
-    300: "#bcd96a",
-    400: "#96b448",
-    500: "#6f8f25",
-    600: "#5c781e",
-    700: "#4a6018",
-    900: "#222e09",
-  },
+  /* THE moss RAMP IS DELETED, 2026-08-17. It was the "positive-delta" half of a
+     two-hue good-versus-bad scale, and that scale no longer exists: the whole
+     axis moved to intensity in ONE hue, which is what
+     verify_palette_membership's own header prescribes and what
+     src/lib/scores/band_tone.ts implements.
+
+     Deleted rather than kept unused. Charter section 2 says a token that still
+     exists will be used again, and this ramp proved it twice in one session.
+
+     Every call site was verified gone first, because deleting a ramp under a
+     live one fails SILENTLY: Tailwind emits no rule, tsc says nothing, and the
+     element just loses its colour. */
   clay: {
     // Deep maroon / oxblood — the DESTRUCTIVE color. Retoned 2026-06-04 off
     // the prior bright red so strong-danger reads clearly distinct from the
@@ -197,21 +194,13 @@ export const colors = {
     800: "#421009",
     900: "#2b0a05",
   },
-  amber: {
-    // Warnings (caution, watch, soft-danger). Added 2026-06-04 so warnings
-    // read as amber rather than borrowing the red brand accent. Distinct
-    // from moss (positive) and clay (destructive maroon).
-    50: "#fff8eb",
-    100: "#fdecc8",
-    200: "#fad79a",
-    300: "#f5bd5c",
-    400: "#eda12f",
-    500: "#d4860f",
-    600: "#b06a08",
-    700: "#8a510a",
-    800: "#653a0c",
-    900: "#3f2408",
-  },
+  /* THE amber RAMP IS DELETED, 2026-08-17, with moss above and for the same
+     reason. Its own comment described it as "distinct from moss (positive)",
+     which is the two-hue scale stated outright.
+
+     Note what depended on it: the tier scale below says it "reuses the amber
+     ramp so saturation reads as confidence". That sentence is now the design,
+     not a borrowing, and tier carries its own values. */
   teal: {
     // Muted sage / eucalyptus — the single cool counterweight to the
     // terracotta field. Cozy, never a loud cyan. Use under 5% of surface.
@@ -308,12 +297,11 @@ export const semanticColors = {
   primaryForeground: colors.cream[50],
   border: colors.cream[300], // warm taupe hairline
   ring: colors.atlas[700],
-  success: colors.moss[700],
-  successSurface: colors.moss[100],
+  /* success/successSurface/warning/warningSurface deleted with their ramps.
+     All four were call-site free: nothing in src read them. danger keeps clay,
+     which is a maroon in the terracotta family rather than a second hue. */
   danger: colors.clay[700], // maroon (destructive), distinct from brand red
   dangerSurface: colors.clay[100],
-  warning: colors.amber[700],
-  warningSurface: colors.amber[100],
   muted: colors.ink[500],
   mutedSurface: colors.cream[100],
 } as const;
@@ -509,9 +497,7 @@ export const tailwindColors = {
   cream: colors.cream,
   parchment: colors.parchment,
   graphite: colors.graphite,
-  moss: colors.moss,
   clay: colors.clay,
-  amber: colors.amber,
   cocoa: colors.cocoa,
   teal: colors.teal,
   tier: colors.tier,

@@ -783,18 +783,23 @@
   --cocoa-500: #87745d; /* cocoa-500, faint muted */
   --cocoa-700: #534231; /* cocoa-700, muted copy + mid meaning fg */
 
-  /* ---- moss (positive end of the meaning scale) — colors.moss ----------- */
-  --moss-50: #f6fbe8; /* moss-50 */
-  --moss-100: #e9f6c8; /* moss-100 */
-  --moss-500: #6f8f25; /* moss-500 */
-  --moss-600: #5c781e; /* moss-600 */
-  --moss-700: #4a6018; /* moss-700 */
+  /* THE MOSS AND AMBER LADDERS ARE DELETED, 2026-08-17.
 
-  /* ---- amber (caution mid of the meaning scale) — colors.amber ---------- */
-  --amber-50: #fff8eb; /* amber-50 */
-  --amber-400: #eda12f; /* amber-400, lit-window glow */
-  --amber-500: #d4860f; /* amber-500 */
-  --amber-700: #8a510a; /* amber-700, caution fg */
+     They were the "positive end" and "caution mid" of a meaning scale that no
+     longer exists in two hues: the whole good-versus-bad axis moved to
+     intensity in one hue, which is what verify_palette_membership's own header
+     asks for and what src/lib/scores/band_tone.ts implements.
+
+     Deleted rather than left defined and unused, because charter §2 is explicit
+     that "a token that still exists will be used again", and this ramp proved
+     it twice in one session: a green survived in the blog cover palette under
+     the label "teal", and the gut-check pills below were still painting the
+     traffic light months after the founder banned both hues by name.
+
+     Every call site was checked before removal, not assumed: no Tailwind
+     class, no colors.moss/colors.amber read, no var(--moss-*)/var(--amber-*)
+     rule and no semantic alias survives. The only matches left in the
+     repository are comments describing these removals. */
 
   /* ---- clay (low end of the meaning scale) — colors.clay ---------------- */
   --clay-50: #fbeae8; /* clay-50 */
@@ -825,8 +830,9 @@
   /* ---- extra meaning-scale + surface steps the Wave-2 sections read ----- */
   --cocoa-300: #c3b39c; /* cocoa-300, the wage-floor / world-median bar tone */
   --cream-300: #e3e3e3; /* neutral, the empty climate dot, = parchment */
-  --amber-100: #fdecc8; /* amber-100, the gut-check "no" pill surface */
-  --amber-600: #b06a08; /* amber-600, the gut-check "no" mark (= caution) */
+  /* --amber-100 and --amber-600 deleted with the ramps above. Their comments
+     named their one job, "the gut-check no pill surface" and "the gut-check no
+     mark", and that pill is now parchment on ink. */
 
   /* ---- delta read pair (above / below; warm, not brand-red) ------------- */
   --pos: #4a6018; /* moss-700, above par */
@@ -1724,7 +1730,10 @@
 .eng-take__tick svg {
   flex: none;
   margin-top: 1px;
-  color: var(--moss-600);
+  /* Was var(--moss-600), a green, on the tick that marks a favourable line in
+     "The honest take". Terracotta is the site's one accent and this is the
+     accent's job. */
+  color: var(--accent-text);
 }
 
 /* ============================ 12 GUT CHECK ============================ */
@@ -1774,14 +1783,32 @@
     color var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out);
 }
+/* THE GUT CHECK WAS A TRAFFIC LIGHT: green for yes, amber for no, the two
+   banned hues in one pair of pills, rendering on every country page.
+
+   It is the same good-versus-bad axis the rest of the site converted this
+   session, and the replacement is the same one, prescribed by
+   verify_palette_membership's own header: "Show good-versus-bad with intensity
+   and position instead of hue." src/lib/scores/band_tone.ts is where that
+   ladder lives for the React side, and it resolves the favourable end to
+   atlas tint on atlas text and the unfavourable end to parchment on ink. These
+   are the CSS mirrors of exactly those two steps.
+
+   The signal is NOT weakened by dropping the hue: each pill still prints the
+   word yes or no, and only one of the pair is ever `.is-on`, so position and
+   state carry the reading. Colour was decoration on top of a label. */
 .eng-gutpill.is-on.yes {
-  background: var(--moss-100);
-  color: var(--moss-700);
+  background: var(--accent-subtle);
+  color: var(--accent-text);
   border-color: transparent;
 }
 .eng-gutpill.is-on.no {
-  background: var(--amber-100);
-  color: var(--amber-700);
+  /* var(--parchment), not var(--cream-300). Both are #e3e3e3, byte for byte,
+     and the cream gate counts NAMES on purpose: a token still called cream is
+     how the ramp repopulates after a purge. Writing the neutral under its
+     neutral name is the difference between removing cream and moving it. */
+  background: var(--parchment);
+  color: var(--text-strong);
   border-color: transparent;
 }
 

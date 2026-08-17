@@ -87,11 +87,35 @@ const ROOTS = ["src/components", "src/app", "src/styles"];
 const ALLOWED = [
   { name: "terracotta", hMin: 0, hMax: 25 },
   { name: "ink/cocoa ladder", hMin: 25, hMax: 45, sMax: 45 },
-  /* 145, not 150. The sanctioned pair is teal-700 #345a47 at h=150 and teal-500
-     #4d7c64 at h=149, so a band starting at 150 splits a two-token ramp and
-     rejected the lighter half. Nothing is smuggled in by the extra five
-     degrees: the banned greens sit at h=77 and h=78, seventy degrees away. */
-  { name: "teal", hMin: 145, hMax: 200 },
+  /* THE TEAL BAND IS REMOVED, 2026-08-17, because this gate was giving two
+     different answers about one colour.
+
+     `teal` joined BANNED_NAMES earlier today, so `bg-teal-700` fails. This band
+     simultaneously declared the identical value legal as a hex, so
+     `colors.teal[700]` passed. Same pixel, opposite verdicts, decided purely by
+     how an author happened to spell it. A gate that contradicts itself is worse
+     than a narrow one, because both answers can be cited.
+
+     Resolved toward BANNED, on evidence rather than preference:
+       - #345a47 and #4d7c64 measure h=150 and h=149. That is green. Teal is
+         near 180. The name on the token is wrong, which is precisely how the
+         blog cover palette kept a banned green for months under the label
+         "teal" until a screenshot caught it today.
+       - The founder's rule is "no green", stated without qualification.
+       - The site has already been acting on this: the sage ramp came out of the
+         blog covers and out of CostBar this session, both times on the measured
+         hue rather than the name.
+
+     The old comment defended widening this band from 150 to 145 so it would not
+     split the ramp. That reasoning was sound about the ramp and never asked
+     whether the ramp belonged.
+
+     WHAT REMAINS, deliberately, and it is the honest half of this: the `teal`
+     ramp is still defined in design-tokens.ts and still read once, by
+     NeighborhoodCover. Its four hex values are now counted as debt in the
+     baseline and can be ratcheted down like anything else. Deleting the ramp
+     needs its call site converted first, or it fails silently, and that file is
+     being edited by another agent as this lands. */
 ];
 /** Anything at or below this saturation is a neutral and always allowed. */
 const NEUTRAL_S_MAX = 12;
@@ -299,6 +323,39 @@ if (process.argv.includes("--update-baseline")) {
   const added = BANNED_NAMES.filter((n) => !prevNames.includes(n));
   const addedRe = added.length ? bannedTokenRe(added) : null;
 
+  /* A DETECTOR WIDENS IN TWO WAYS, and the first version of this guard knew
+     only one of them. Adding a NAME is one. REMOVING AN ALLOWED HUE BAND is the
+     other, and it makes hex values that were legal yesterday illegal today
+     without a line of component code changing, which is the same situation for
+     the same reason. Removing the teal band is what exposed the gap.
+
+     So a rise may also be explained by a hex or rgb() literal in that file
+     which the OLD bands allowed and the new ones do not. The arithmetic
+     property is unchanged: a regression still cannot hide inside a widening,
+     because only colours the removal newly condemns are ever counted. */
+  /* Same bootstrap as LEGACY_BANNED_NAMES above: a baseline written before the
+     bands were recorded carries none, and without a fallback the first band
+     removal can never be recorded. These are the three this file held until
+     today, the third being the teal band whose removal is documented in
+     ALLOWED. Not a guess: it is the list this commit edits. */
+  const LEGACY_ALLOWED = [
+    { name: "terracotta", hMin: 0, hMax: 25 },
+    { name: "ink/cocoa ladder", hMin: 25, hMax: 45, sMax: 45 },
+    { name: "teal", hMin: 145, hMax: 200 },
+  ];
+  const prevBands = Array.isArray(base.allowedBands) ? base.allowedBands : LEGACY_ALLOWED;
+  const legalUnder = (bands, hex) => {
+    const { h, s, l } = hexToHsl(hex);
+    if (s <= NEUTRAL_S_MAX) return true;
+    if (l >= 93 || l <= 4) return true;
+    return bands.some((b) => h >= b.hMin && h < b.hMax && (b.sMax == null || s <= b.sMax));
+  };
+  const newlyCondemned = (src) => {
+    if (!prevBands) return 0;
+    const hexes = [...(src.match(/#[0-9a-fA-F]{6}\b/g) || []), ...rgbLiteralsToHex(src)];
+    return hexes.filter((x) => legalUnder(prevBands, x) && !isPaletteLegal(x)).length;
+  };
+
   /* A MISSING ENTRY MEANS ZERO, NOT "SKIP", and reading it as "skip" was a hole
      this guard inherited and that its own first test caught.
 
@@ -316,7 +373,9 @@ if (process.argv.includes("--update-baseline")) {
     if (n <= was) continue;
 
     const rise = n - was;
-    const explained = addedRe ? (sourceOf(f).match(addedRe) || []).length : 0;
+    const src = sourceOf(f);
+    const explained =
+      (addedRe ? (src.match(addedRe) || []).length : 0) + newlyCondemned(src);
     if (rise > explained) {
       console.error(`x refusing to raise the baseline: ${f} went ${was} -> ${n}.`);
       if (added.length) {
@@ -328,7 +387,11 @@ if (process.argv.includes("--update-baseline")) {
       console.error(`  A ratchet that can be raised is a suggestion. Remove the colour instead.`);
       process.exit(1);
     }
-    console.error(`  widened: ${f} ${was} -> ${n}, all ${rise} explained by ${added.join(", ")}`);
+    const why = [
+      added.length ? `names +${added.join(",")}` : null,
+      prevBands && prevBands.length !== ALLOWED.length ? "hue band removed" : null,
+    ].filter(Boolean).join(" and ");
+    console.error(`  widened: ${f} ${was} -> ${n}, all ${rise} explained by ${why || "detector change"}`);
   }
 
   fs.writeFileSync(
@@ -337,6 +400,7 @@ if (process.argv.includes("--update-baseline")) {
       {
         files: found,
         bannedNames: BANNED_NAMES,
+        allowedBands: ALLOWED,
         recorded: process.argv[3] ?? base.recorded ?? "unset",
       },
       null,

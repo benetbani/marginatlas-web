@@ -1,6 +1,7 @@
 {
   "files": {
-    "src/app/globals.css": 11,
+    "src/app/dev/lock-states/page.tsx": 3,
+    "src/app/globals.css": 2,
     "src/app/og/_card.tsx": 1
   },
   "bannedNames": [
@@ -23,6 +24,19 @@
     "pink",
     "rose",
     "stone"
+  ],
+  "allowedBands": [
+    {
+      "name": "terracotta",
+      "hMin": 0,
+      "hMax": 25
+    },
+    {
+      "name": "ink/cocoa ladder",
+      "hMin": 25,
+      "hMax": 45,
+      "sMax": 45
+    }
   ],
   "recorded": "2026-08-09"
 }
