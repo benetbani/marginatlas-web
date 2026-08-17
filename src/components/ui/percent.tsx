@@ -42,7 +42,7 @@ const Percent = React.forwardRef<HTMLSpanElement, PercentProps>(
       asWhole = false,
       mode = "plain",
       fractionDigits = 0,
-      positiveClass = "text-moss-700",
+      positiveClass = "text-atlas-700",
       negativeClass = "text-clay-700",
       ...props
     },

@@ -5,8 +5,8 @@
  * one hairline under the header, whitespace row grouping (no per-row gridline,
  * no zebra), tabular right-aligned figures, the quiet terracotta leader tint,
  * the honest dash, the faint warm hover wash, the caption-with-diamond. Every
- * value is a token (atlas / cocoa / cream / ink / moss / amber / clay), never a
- * raw hex / px / ms.
+ * value is a token (atlas / cocoa / cream / ink / clay), never a raw hex / px /
+ * ms. moss and amber left this file on 2026-08-17; both hues are banned.
  *
  * The atoms here are the load-bearing pieces every variant composes from so the
  * whole family reads as one system: TableShell (card + eyebrow + heading + lede
@@ -134,10 +134,16 @@ export function TableShell({
 
 export type FigureTone = "default" | "pos" | "neg" | "accent" | "muted";
 
+/* pos/neg is the signed-delta form of the same good-versus-bad axis, so it
+   takes the same answer: terracotta for the side that favours the reader, a
+   deepening cocoa for the side that does not. It was moss and amber until
+   2026-08-17, both banned outright. `pos` and `accent` land on the same value
+   because a figure that is both the leader and positive should not fight
+   itself; the leader cell is separated by its own bg-atlas-50 tint. */
 const FIGURE_TONE: Record<FigureTone, string> = {
   default: "text-ink-900",
-  pos: "text-moss-700",
-  neg: "text-amber-700",
+  pos: "text-atlas-700",
+  neg: "text-cocoa-900",
   accent: "text-atlas-700",
   muted: "text-cocoa-700",
 };

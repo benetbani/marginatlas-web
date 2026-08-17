@@ -23,11 +23,16 @@ type Props = {
  * segments than tones. All are design-token classes, so the cost bar never
  * inlines color.
  */
+/* amber-400 and moss-300 were two of the five until 2026-08-17; both hues are
+   banned outright. These are COST SEGMENTS, a set of categories rather than a
+   scale, so nothing here ranks and the replacements only need to separate: the
+   accent leads, then the warm neutral ladder, then the sanctioned teal. Each
+   segment carries its own direct label, so the fill is a second read. */
 const SEGMENT_FILLS = [
   "fill-atlas-500",
-  "fill-amber-400",
+  "fill-cocoa-500",
   "fill-cocoa-300",
-  "fill-moss-300",
+  "fill-parchment",
   "fill-teal-500",
 ];
 

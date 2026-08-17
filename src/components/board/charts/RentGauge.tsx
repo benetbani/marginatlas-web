@@ -23,9 +23,15 @@ type Props = {
 
 /** Fill class by pressure level. Higher value = more rent pressure = worse. */
 function pressureFill(v: number): string {
+  /* A MONOTONIC DARKENING, not a traffic light. It was moss / amber / clay
+     until 2026-08-17 and the first two hues are banned outright. Terracotta
+     is deliberately NOT used at the low-pressure end: on this page it means
+     "favourable" on the score scale, and one hue must not mean two things.
+     So the arc simply deepens as pressure rises, into the site's own maroon.
+     The arc LENGTH and the printed figure carry the reading regardless. */
   if (v >= 66) return "fill-clay-500";
-  if (v >= 33) return "fill-amber-400";
-  return "fill-moss-500";
+  if (v >= 33) return "fill-cocoa-500";
+  return "fill-cocoa-300";
 }
 
 export function RentGauge({ value }: Props) {

@@ -243,12 +243,16 @@ function OwnerKeeps({
             role="img"
             aria-label={`Of every sales dollar the owner keeps about ${kept} cents; the rest covers costs.`}
           >
-            <div className="bg-moss-500" style={{ width: `${keptPct}%` }} />
+            <div className="bg-atlas-500" style={{ width: `${keptPct}%` }} />
             <div className="flex-1 bg-cocoa-300" />
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-3 text-[11.5px] font-medium">
-            <span className="inline-flex items-center gap-1.5 text-moss-700">
-              <span aria-hidden="true" className="h-2 w-2 rounded-sm bg-moss-500" />
+            {/* Terracotta for what the owner keeps, neutral cocoa for what leaves:
+                the same pairing Waterfall and MoneyGoesBreakdown use, so the
+                three charts of one quantity agree. It was moss until
+                2026-08-17, which is banned outright. */}
+            <span className="inline-flex items-center gap-1.5 text-atlas-700">
+              <span aria-hidden="true" className="h-2 w-2 rounded-sm bg-atlas-500" />
               Owner keeps {kept}%
             </span>
             <span className="inline-flex items-center gap-1.5 text-cocoa-700">

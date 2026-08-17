@@ -30,11 +30,17 @@ import { cn } from "@/lib/utils";
 
 type Tone = "default" | "success" | "warning" | "danger" | "muted";
 
+/* THREE OF THESE FIVE WERE OFF-PALETTE, and two of them were not even Atlas
+   tokens: `emerald` and `red` are stock Tailwind ramps, so no token file on
+   this site defines them and the palette gate, which knows the banned NAMES
+   moss / amber / orange, could not see either. Fixed 2026-08-17 with the rest
+   of the good-versus-bad sweep: terracotta for the favourable readings,
+   deepening cocoa for caution, and the site's own maroon for danger. */
 const TONE_FILL: Record<Tone, string> = {
   default: "bg-atlas-700",
-  success: "bg-emerald-700",
-  warning: "bg-amber-600",
-  danger: "bg-red-700",
+  success: "bg-atlas-500",
+  warning: "bg-cocoa-500",
+  danger: "bg-clay-700",
   muted: "bg-cocoa-700/40",
 };
 

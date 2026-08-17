@@ -38,7 +38,10 @@ const pillVariants = cva(
         neutral: "bg-cream-100 text-cocoa-700 border border-parchment",
         accent: "bg-atlas-700 text-cream-50",
         subtle: "bg-atlas-50 text-atlas-700 border border-atlas-200",
-        success: "bg-moss-100 text-moss-700 border border-moss-300/60",
+        // Terracotta, not moss: green is banned outright (founder 2026-08-09).
+        // It sits a step above `subtle` on the same ramp, which is what the two
+        // variants always meant relative to each other.
+        success: "bg-atlas-100 text-atlas-700 border border-atlas-300/60",
         warning: "bg-cream-100 text-atlas-700 border border-atlas-200",
         danger: "bg-clay-100 text-clay-700 border border-clay-300/60",
         outline: "bg-transparent text-cocoa-700 border border-ink-200",
