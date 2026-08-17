@@ -102,7 +102,7 @@ async function runChecks(): Promise<Check[]> {
 function colorFor(result: Check["result"]): string {
   switch (result) {
     case "up":
-      return "bg-moss-500";
+      return "bg-atlas-500";
     case "degraded":
       return "bg-clay-400";
     case "down":

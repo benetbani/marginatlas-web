@@ -558,8 +558,8 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
             ) : null}
 
             {character?.edge?.trim() ? (
-              <div className="mt-6 border-l-2 border-moss-300 pl-4">
-                <div className="text-[11px] font-semibold uppercase tracking-wider text-moss-700">
+              <div className="mt-6 border-l-2 border-atlas-300 pl-4">
+                <div className="text-[11px] font-semibold uppercase tracking-wider text-atlas-700">
                   What the best operators do
                 </div>
                 <p className="mt-1 text-sm leading-relaxed text-ink-900">
@@ -823,12 +823,14 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
 
 /**
  * Token color class for a model-anatomy signal tone: a low-cost-pressure stage
- * leans moss, a heavy one clay, the middle the atlas accent. Tokens only.
+ * takes the terracotta accent, a heavy one the maroon, the middle plain ink.
+ * "good" was moss until 2026-08-17, which is banned; the middle moved off atlas
+ * in the same edit so the good stage stays distinguishable from it. Tokens only.
  */
 function signalToneClass(tone: "good" | "flat" | "bad"): string {
-  if (tone === "good") return "text-moss-700";
+  if (tone === "good") return "text-atlas-700";
   if (tone === "bad") return "text-clay-700";
-  return "text-atlas-700";
+  return "text-ink-900";
 }
 
 // activityPlaceFromCell lived here. It now lives in

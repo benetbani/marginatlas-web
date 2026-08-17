@@ -61,12 +61,13 @@ const COVERAGE_WORD: Record<CoverageTier, string | null> = {
   modeled: null,
 };
 
-// Filled-dot color by tier band. Positive tiers read confident (moss /
-// atlas); low tiers use a neutral cocoa so nothing reads as a red flag.
-// Shades verified against src/lib/design-tokens.ts (the palette source of
-// truth): cocoa/moss expose 50,100,300,500,700,900; atlas exposes 100-900.
+// Filled-dot color by tier band, a monotonic drain rather than two hues:
+// confidence deepens into terracotta and low tiers stay a neutral cocoa, so
+// nothing reads as a red flag. `measured` was moss-500 until 2026-08-17, which
+// is banned; it is now the deep terracotta, one step above `regional` on the
+// same ramp, which is exactly the relationship the two tiers have.
 const DOT_FILL: Record<CoverageTier, string> = {
-  measured: "bg-moss-500",
+  measured: "bg-atlas-700",
   regional: "bg-atlas-500",
   estimated: "bg-cocoa-300",
   modeled: "bg-cocoa-300",

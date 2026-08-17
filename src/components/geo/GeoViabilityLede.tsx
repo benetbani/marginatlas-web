@@ -36,11 +36,11 @@ function cap(s: string): string {
 function entryToneText(tone: GeoActivityRead["tone"]): string {
   switch (tone) {
     case "good":
-      return "text-moss-700";
+      return "text-atlas-700";
     case "bad":
       return "text-clay-700";
     default:
-      return "text-atlas-700";
+      return "text-ink-900";
   }
 }
 
@@ -107,7 +107,7 @@ export function GeoViabilityLede({ verdict, hrefFor }: GeoViabilityLedeProps) {
           <ContrastColumn
             eyebrow="Leaves the most for an owner"
             entries={verdict.best}
-            accentBorder="border-moss-300"
+            accentBorder="border-atlas-300"
             hrefFor={hrefFor}
           />
           <ContrastColumn

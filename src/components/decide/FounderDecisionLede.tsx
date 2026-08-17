@@ -41,7 +41,7 @@ function cap(s: string): string {
 function entryToneText(tone: FounderActivityRead["tone"]): string {
   switch (tone) {
     case "good":
-      return "text-moss-700";
+      return "text-atlas-700";
     case "bad":
       return "text-clay-700";
     default:
@@ -117,7 +117,7 @@ export function FounderDecisionLede({ decision }: FounderDecisionLedeProps) {
           <ContrastColumn
             eyebrow="Leaves the most for an owner"
             entries={decision.best}
-            accentBorder="border-moss-300"
+            accentBorder="border-atlas-300"
           />
           <ContrastColumn
             eyebrow="The harder way to make a living"

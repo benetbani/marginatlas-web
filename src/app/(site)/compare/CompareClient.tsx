@@ -1437,7 +1437,7 @@ function WeightingPanel({
                           className={cn(
                             "truncate",
                             isLeader
-                              ? "font-semibold text-moss-700"
+                              ? "font-semibold text-atlas-700"
                               : "text-ink-900",
                           )}
                         >
@@ -1649,7 +1649,7 @@ function GroupBlock({
               const tone = blank
                 ? "text-cocoa-400"
                 : isBest
-                  ? "font-semibold text-moss-700"
+                  ? "font-semibold text-atlas-700"
                   : "text-ink-900";
               return (
                 <td
@@ -1737,7 +1737,7 @@ function GroupBlockStacked({
                   const tone = blank
                     ? "text-cocoa-400"
                     : isBest
-                      ? "font-semibold text-moss-700"
+                      ? "font-semibold text-atlas-700"
                       : "text-ink-900";
                   return (
                     <div

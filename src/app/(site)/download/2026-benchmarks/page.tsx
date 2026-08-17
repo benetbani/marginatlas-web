@@ -232,7 +232,7 @@ function Waterfall() {
       {lines.map((l) => (
         <li key={l.label} className="grid grid-cols-12 items-center gap-2 text-[11px]">
           <span
-            className={`col-span-4 ${l.profit ? "text-moss-700 font-semibold" : "text-ink-900 font-medium"}`}
+            className={`col-span-4 ${l.profit ? "text-atlas-700 font-semibold" : "text-ink-900 font-medium"}`}
           >
             {l.label}
           </span>

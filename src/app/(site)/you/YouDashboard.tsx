@@ -98,8 +98,8 @@ function KindDot({ kind }: { kind: WatchKind }) {
     kind === "cell"
       ? "bg-atlas-500"
       : kind === "city"
-        ? "bg-moss-500"
-        : "bg-cocoa-500";
+        ? "bg-cocoa-500"
+        : "bg-ink-900";
   return <span aria-hidden="true" className={cn("h-1.5 w-1.5 shrink-0 rounded-full", tone)} />;
 }
 

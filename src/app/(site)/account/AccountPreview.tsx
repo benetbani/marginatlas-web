@@ -199,7 +199,7 @@ export function AccountPreview() {
 function TierChip({ tier }: { tier: Tier }) {
   const map = {
     free: "bg-cream-100 border-parchment text-cocoa-700",
-    pro:  "bg-amber-50 border-amber-200 text-atlas-700",
+    pro:  "bg-atlas-50 border-atlas-200 text-atlas-700",
     team: "bg-ink-900 border-ink-900 text-white",
   } as const;
   const label = tier === "free" ? "Free" : tier === "pro" ? "Pro" : "Team";

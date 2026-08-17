@@ -37,7 +37,7 @@ function CatchBlock({
         {heading}
       </div>
       <p className="mt-2 text-sm leading-relaxed text-ink-900">
-        <span className="font-semibold text-moss-700">The upside.</span>{" "}
+        <span className="font-semibold text-atlas-700">The upside.</span>{" "}
         {cap(upside)}.
       </p>
       <p className="mt-2 text-sm leading-relaxed text-cocoa-700">

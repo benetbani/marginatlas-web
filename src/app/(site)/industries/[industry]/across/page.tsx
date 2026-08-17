@@ -287,13 +287,13 @@ export default async function AcrossCitiesPage({
           cell page and a quiet line links to its cost-to-open read. Self-omits
           when no city is scored. */}
       {easiest ? (
-        <section className="mt-8 rounded-lg border border-moss-300/60 bg-moss-50/60 p-5 md:p-6">
+        <section className="mt-8 rounded-lg border border-atlas-300/60 bg-atlas-50/60 p-5 md:p-6">
           <SectionEyebrow size="md" className="mb-2">
             Where to break in
           </SectionEyebrow>
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
             <h2 className={T_H3}>
-              <Link href={easiest.href} className="text-moss-700 hover:text-moss-900">
+              <Link href={easiest.href} className="text-atlas-700 hover:text-atlas-900">
                 {easiest.name}
               </Link>{" "}
               is the easiest place to break into
@@ -409,11 +409,11 @@ export default async function AcrossCitiesPage({
                       const blank = display === MISSING;
                       const isBest = bestIdx === i && !blank;
                       // Weight is the primary cue for the best place (it reads
-                      // without relying on colour); the moss tone is the second.
+                      // without relying on colour); the terracotta is the second.
                       const tone = blank
                         ? "text-cocoa-400"
                         : isBest
-                          ? "font-semibold text-moss-700"
+                          ? "font-semibold text-atlas-700"
                           : "text-ink-900";
                       return (
                         <td
@@ -454,7 +454,7 @@ export default async function AcrossCitiesPage({
                         <span
                           className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
                             c.breakInBand as BreakInBand,
-                          )} ${isEasiest ? "ring-1 ring-moss-300" : ""}`}
+                          )} ${isEasiest ? "ring-1 ring-atlas-300" : ""}`}
                         >
                           <span className="tabular-nums">{c.breakInScore}</span>
                           <span>{breakInWord(c.breakInBand as BreakInBand)}</span>
