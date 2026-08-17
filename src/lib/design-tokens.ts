@@ -218,12 +218,56 @@ export const colors = {
     // with the compiled-stylesheet assertion, not a rider on a retone.
     50: "#f5f5f5",
     100: "#e8e8e8",
-    // 200 and 300 ARE STILL WARM SAND and are deliberately out of scope here:
-    // #e4d8c5 is h 37 s 37% l 83%, #cbb79c is h 35 s 31% l 70%, and 200 alone
-    // has well over a hundred call sites as the site's form-control border.
-    // Measured, named, not touched: this tick moved two values, not four.
-    200: "#e4d8c5", // warm border
-    300: "#cbb79c",
+    // THE LAST TWO WARM STEPS, retoned 2026-08-17. The tick above moved 50 and
+    // 100 and said outright that 200 and 300 were still warm sand and out of
+    // scope. They were: #e4d8c5 measured h 36.8 s 36.5% l 83.3% and #cbb79c
+    // h 34.5 s 31.1% l 70.4%. Both are now TRUE NEUTRALS, s=0%, which is the
+    // call every step on this ramp and the whole `paper` ramp has now made: the
+    // answer to "remove the creamy colour" is no hue, not a cool tint swapped
+    // in for a warm one.
+    //
+    // THE 200 STEP IS THE MOST-SEEN HAIRLINE ON THIS SITE AFTER `parchment`.
+    // 96 occurrences across 33 files, classified with comments stripped rather
+    // than grepped: 82 hairline (78 border, 3 divide, 1 underline decoration),
+    // of which the form-control borders are the visible half, every field on
+    // /check, /contact, /you, the correction form, the sign-in form, the
+    // homepage search card and the dev calculator; and 14 muted fill (13 bg,
+    // 1 svg fill), which is eleven skeleton bars on the industry route, a
+    // toggle track and the PercentileStrip track. The 300 step is 9
+    // occurrences across 9 files and is a general mid-gray rather than one
+    // role: two breadcrumb separators, a decorative glyph, a status dot, a
+    // Waterfall cost bar, a modal drag handle, two hover borders and one
+    // gradient stop.
+    //
+    // WHY RETONE RATHER THAN REMAP, checked with arithmetic rather than
+    // inherited from the last tick's answer:
+    //   200: the nearest existing token is `parchment` #e3e3e3 at L .7682,
+    //        7.18pp away. On white that is 1.407:1 -> 1.283:1, a 8.8% lighter
+    //        edge on 82 hairlines that did not ask to get lighter. ink-100 and
+    //        paper-200 are further still, and paper-400 is 17.5% heavier.
+    //   300: the nearest is `cocoa-300` #c3b39c at 2.72pp, and cocoa-300 is
+    //        ITSELF warm sand (h 35, s 25%), so mapping onto it moves the
+    //        problem rather than fixing it. Next is `paper-400` #bfbfbf at
+    //        3.14pp, and that one is disqualified by a CALL SITE rather than by
+    //        arithmetic: Waterfall's COST_FILL cycles `bg-ink-300` and then
+    //        `bg-paper-400` as consecutive cost bars, so collapsing the two
+    //        makes two adjacent rows of the money-goes chart the same colour.
+    //
+    // LUMINANCE-MATCHED, not lightness-matched, because relative luminance is
+    // the quantity every contrast ratio is computed from:
+    //   200  L .6964 -> .6939   on white 1.407:1 -> 1.412:1
+    //   300  L .4896 -> .4910   on white 1.946:1 -> 1.941:1
+    // 36 pairs were checked, the eleven foregrounds that sit on these as fills
+    // plus the six grounds they sit on as an edge, and ZERO AA verdicts flip.
+    // Largest ratio change 0.0415 on a ratio of 12.411 (ink-900 on ink-200).
+    //
+    // STATED RATHER THAN HIDDEN: neither step passes 3:1 against white as a
+    // non-text edge, before or after. That is a pre-existing property of a
+    // deliberately quiet hairline and is not what this tick changed; it is
+    // recorded so the next reader does not discover it and think a retone
+    // caused it.
+    200: "#d9d9d9", // the site's form-control border and table hairline
+    300: "#bababa",
     500: "#7d6c58",
     600: "#5d4d3b",
     700: "#463726",
