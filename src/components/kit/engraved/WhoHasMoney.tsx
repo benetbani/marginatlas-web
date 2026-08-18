@@ -117,6 +117,7 @@ function PowerGauge({ power }: { power: SpendingPower }) {
       </div>
 
       {/* The engraved meaning-scale track. */}
+      <div className="eng-power__stage mt-3">
       <svg
         viewBox={`0 0 ${VBW} 56`}
         width="100%"
@@ -124,7 +125,7 @@ function PowerGauge({ power }: { power: SpendingPower }) {
         preserveAspectRatio="none"
         role="img"
         aria-label={`Spending power: ${rung}`}
-        className="mt-3 block"
+        className="block"
         style={{ overflow: "visible" }}
       >
         {/* the five meaning rungs as soft tint bands under the baseline */}
@@ -153,11 +154,87 @@ function PowerGauge({ power }: { power: SpendingPower }) {
           const tx = pad + seg * i;
           return <line key={i} x1={tx} y1={36} x2={tx} y2={41} stroke="var(--hairline-strong)" strokeWidth="0.7" />;
         })}
-        {/* the surveyor station node at the score */}
-        <line x1={x} y1={8} x2={x} y2={30} stroke={t.fg} strokeWidth="1.3" />
-        <circle cx={x} cy={20} r="8.5" fill="var(--surface-card)" stroke={t.fg} strokeWidth="1.4" />
-        <circle cx={x} cy={20} r="3.2" fill={t.dot} />
+        {/* THE STATION NODE MOVED OUT OF HERE 2026-08-18. The bands, the
+            baseline and the ticks stay: a scale legitimately spans whatever
+            width it is given, and this svg is `preserveAspectRatio="none"` for
+            that reason. What cannot survive it is a ROUND mark. Measured on the
+            real /gb, rendered and read in a browser:
+
+              375    box 285x44   sx 0.475  sy 0.786   disc 8.1 x 13.4 px
+              768    box 662x44   sx 1.103  sy 0.786   disc 18.8 x 13.4 px
+              1280   box 754x44   sx 1.257  sy 0.786   disc 21.4 x 13.4 px
+
+            The node is the read: it is the one mark saying where this country
+            sits on the scale, and it was an ellipse standing on end at 375 and
+            lying on its side at 1280, never a circle at any width. It is now an
+            HTML overlay placed by the same percentage the viewBox used, which
+            is the technique CountryShape's ring labels already use in this same
+            kit. Nothing else about the graphic changes. */}
       </svg>
+
+        {/* The station, placed by the same fraction the viewBox used. Its parts
+            keep the authored PROPORTIONS: the disc was 17 user units across and
+            the inner dot 6.4, a ratio of 2.66, and the svg's height is pinned
+            at 44 so the vertical axis has always rendered the disc at 13.4px at
+            every width. 14px and 5px hold both the ratio and what a reader has
+            actually been seeing, on the one axis that was never in doubt. */}
+        <span
+          className="eng-power__station"
+          style={{ left: `${(x / VBW) * 100}%`, color: t.fg }}
+          aria-hidden="true"
+        >
+          <span className="eng-power__stem" />
+          <span className="eng-power__disc" style={{ borderColor: t.fg }}>
+            <span className="eng-power__dot" style={{ background: t.dot }} />
+          </span>
+        </span>
+      </div>
+
+      {/* Scoped styles, new names only, so globals is neither edited nor
+          overridden and no rule depends on stylesheet order. The percentages
+          are the viewBox's own y coordinates over its 56-unit height: the stem
+          ran 8 to 30, the disc centred on 20. */}
+      <style>{`
+        .eng-power__stage {
+          position: relative;
+        }
+        .eng-power__station {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 0;
+          pointer-events: none;
+        }
+        .eng-power__stem {
+          position: absolute;
+          left: 0;
+          top: 14.29%;
+          height: 39.29%;
+          width: 1px;
+          transform: translateX(-50%);
+          background: currentColor;
+        }
+        .eng-power__disc {
+          position: absolute;
+          left: 0;
+          top: 35.71%;
+          width: 14px;
+          height: 14px;
+          transform: translate(-50%, -50%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--surface-card);
+          border: 1px solid;
+          border-radius: 50%;
+        }
+        .eng-power__dot {
+          display: block;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+        }
+      `}</style>
 
       {/* rung end-labels */}
       <div className="mt-1 flex justify-between" style={{ paddingLeft: 2, paddingRight: 2 }}>

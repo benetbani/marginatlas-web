@@ -156,6 +156,63 @@ export function GroundUnderYou({ factors, summary, className }: GroundUnderYouPr
           {summary}
         </p>
       ) : null}
+
+      {/* Scoped styles for the meaning track, kept inside this one file: no
+          globals.css edit and no shared-file edit. All names are new, so
+          nothing in globals is overridden and no rule depends on which
+          stylesheet the browser reads first. Every value here is the one the
+          svg authored, read straight off the old 0..100 by 0..12 geometry:
+          a 6px rail inside a 12px box, ticks 7.2px tall at each fifth, and a
+          marker whose 6px is the diameter the vertical axis always gave it. */}
+      <style>{`
+        .eng-ground__track {
+          position: relative;
+          flex: 1;
+          min-width: 0;
+          height: 0.75rem;
+          display: block;
+        }
+        .eng-ground__rail {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          height: 6px;
+          transform: translateY(-50%);
+          background: var(--paper-200);
+          border: 1px solid var(--hairline-strong);
+          border-radius: var(--radius-full);
+        }
+        .eng-ground__tick {
+          position: absolute;
+          top: 50%;
+          width: 1px;
+          height: 7.2px;
+          transform: translate(-50%, -50%);
+          background: var(--hairline-strong);
+          opacity: 0.7;
+        }
+        .eng-ground__fill {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          height: 6px;
+          max-width: 100%;
+          transform: translateY(-50%);
+          border: 1px solid;
+          border-radius: var(--radius-full);
+        }
+        .eng-ground__marker {
+          position: absolute;
+          top: 50%;
+          width: 6px;
+          height: 6px;
+          transform: translate(-50%, -50%);
+          background: var(--surface-card);
+          border: 1px solid;
+          border-radius: 50%;
+        }
+      `}</style>
     </section>
   );
 }
@@ -233,46 +290,54 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
       {/* Track + read cell. */}
       <div style={{ minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-          {/* The hairline meaning track with an engraved tick at each fifth. */}
-          <svg
-            viewBox="0 0 100 12"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-            style={{ flex: 1, height: "0.75rem", display: "block", minWidth: 0 }}
-          >
-            <rect
-              x="0.6"
-              y="3"
-              width="98.8"
-              height="6"
-              rx="3"
-              fill="var(--paper-200)"
-              stroke="var(--hairline-strong)"
-              strokeWidth="0.6"
-            />
+          {/* THE TRACK LEFT THE SVG 2026-08-18, same root cause as the setup
+              stepper. It was `viewBox="0 0 100 12"` at
+              `preserveAspectRatio="none"` with the height pinned at 0.75rem, so
+              sy was always 1 and sx was whatever the column happened to be.
+              Measured on the real /gb, rendered and read in a browser:
+
+                375    box 173.4x12   sx 1.734   marker 7.6 x 4.4 px, 1.73:1
+                768    box 344.8x12   sx 3.448   marker 15.2 x 4.4 px, 3.45:1
+                1280   box 436.8x12   sx 4.368   marker 19.2 x 4.4 px, 4.37:1
+
+              The worst distortion of the class anywhere in the kit. Three
+              separate things were wrong and only one of them was the marker:
+              the `rx="3"` pill ends became a 13px horizontal radius on a 6px
+              bar, so the rounded ends were long tapers rather than
+              semicircles; and the 0.6 hairline came out 2.6px on the two
+              VERTICAL edges against 0.6px on the horizontal ones, a border
+              four times heavier on two sides than the other two.
+
+              A horizontal bar with a marker on it is a thing HTML lays out
+              natively, so this needs no svg at all: percentage widths stretch
+              the way a bar should, while a border-radius, a border weight and a
+              round marker are all in CSS pixels and cannot be scaled by a
+              viewBox. Every colour, position and proportion is the authored
+              one; the marker keeps the 6px it always had VERTICALLY, which is
+              the axis that was never distorted and therefore the authored
+              intent. */}
+          <span className="eng-ground__track" aria-hidden="true">
+            <span className="eng-ground__rail" />
             {[20, 40, 60, 80].map((x) => (
-              <line key={x} x1={x} y1="2.4" x2={x} y2="9.6" stroke="var(--hairline-strong)" strokeWidth="0.5" opacity="0.7" />
+              <span key={x} className="eng-ground__tick" style={{ left: `${x}%` }} />
             ))}
-            <rect
-              x="0.6"
-              y="3"
-              width={Math.max(0, pct - 1.2)}
-              height="6"
-              rx="3"
-              fill={isSample ? "var(--parchment)" : step.bg}
-              stroke={isSample ? "var(--cocoa-300)" : step.dot}
-              strokeWidth="0.8"
+            <span
+              className="eng-ground__fill"
+              style={{
+                width: `${pct}%`,
+                background: isSample ? "var(--parchment)" : step.bg,
+                borderColor: isSample ? "var(--cocoa-300)" : step.dot,
+              }}
             />
             {/* the surveyor's marker at the read position */}
-            <circle
-              cx={Math.max(3, Math.min(97, pct))}
-              cy="6"
-              r="2.2"
-              fill="var(--surface-card)"
-              stroke={isSample ? "var(--cocoa-300)" : step.dot}
-              strokeWidth="1.1"
+            <span
+              className="eng-ground__marker"
+              style={{
+                left: `${Math.max(3, Math.min(97, pct))}%`,
+                borderColor: isSample ? "var(--cocoa-300)" : step.dot,
+              }}
             />
-          </svg>
+          </span>
 
           {/* The one-word footing read, tinted by the meaning step. */}
           <span
