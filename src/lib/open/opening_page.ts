@@ -63,15 +63,9 @@ import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import {
-  getCityTier,
   getCityCostOfLivingIndex,
   getCityPopulation,
 } from "@/lib/cities/city_tier";
-import { computeBreakeven } from "@/lib/economics/breakeven";
-import {
-  estimateWagePerEmployee,
-  estimateEmployeesFromFirms,
-} from "@/lib/extrapolations/fill_missing";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import {
   buildCellBoard,
@@ -403,10 +397,8 @@ async function resolveSameBusinessElsewhere(
 function scoreCellLikeBoard(peer: Cell): { score: number | null; band: BreakInBand | null } {
   // Mirror the cell page's own resolution for this peer so the score equals the
   // peer's masthead score: build that peer's board and read its rating.
-  const marginRow = lookupIndustryMargin(peer.industry_id);
   const country = peer.country;
   const geo = peer.geo_id || "";
-  const typicalRevenue = peer.revenue_per_firm ?? peer.rev_p50 ?? null;
 
   const th = pageTakeHome(peer, country, geo);
   const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
@@ -414,32 +406,12 @@ function scoreCellLikeBoard(peer: Cell): { score: number | null; band: BreakInBa
   const cityCostOfLivingIndex = getCityCostOfLivingIndex(peerGeoSlug);
   const cityPopulation = getCityPopulation(peerGeoSlug);
 
-  const be = peer.industry_id
-    ? computeBreakeven(peer.industry_id, typicalRevenue, getCityTier(peerGeoSlug))
-    : null;
-  const employeesEstimate =
-    peer.n_employees ?? estimateEmployeesFromFirms(peer.industry_id, peer.n_enterprises);
-  const wageEstimate =
-    peer.payroll_per_employee ?? estimateWagePerEmployee(country, peer.industry_id, geo);
-
   const { breakInRating } = buildCellBoard({
     cell: peer,
-    typicalRevenue,
-    revP10: peer.rev_p10 ?? null,
-    revP90: peer.rev_p90 ?? null,
-    grossMarginPct: marginRow.gross_margin ?? null,
-    operatingMarginPct: marginRow.operating_margin ?? null,
-    netMarginPct: th.netMarginPct,
     ownerTakeHome: th.ownerTakeHomeForBoard,
-    breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
-    typicalOrdersDaily: be?.currentOrdersDaily ?? null,
-    peopleWorking: employeesEstimate ?? null,
-    wagePerEmployee: wageEstimate ?? null,
     cityPopulation,
     cityCostOfLivingIndex,
     econ: econSnap,
-    corporateTaxRate: th.corporateTaxRate,
-    costStructure: peer.cost_structure ?? null,
     londonEntry: getLondonEntry(peer),
   });
   return { score: breakInRating?.score ?? null, band: breakInRating?.band ?? null };
@@ -592,36 +564,20 @@ export async function buildOpeningPage(
   const totalToOpenUsd = Math.round(capitalUsd + permitsUsd);
 
   // 6. The break-in rating: straight off buildCellBoard, so the headline score,
-  //    band, payback, and headline are byte-for-byte the cell page's. We hand the
-  //    board the SAME inputs page.tsx hands it (margins, the pre-London
-  //    take-home, the breakeven + people figures, the place signals, the cost
-  //    structure, the London entry), and read breakInRating from the result.
-  const marginRow = lookupIndustryMargin(industryId);
-  const typicalRevenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
-  const be = computeBreakeven(industryId, typicalRevenue, getCityTier(geo));
-  const employeesEstimate =
-    cell.n_employees ?? estimateEmployeesFromFirms(industryId, cell.n_enterprises);
-  const wageEstimate =
-    cell.payroll_per_employee ?? estimateWagePerEmployee(country, industryId, geo);
-
+  //    band, payback, and headline are byte-for-byte the cell page's. We hand it
+  //    the SAME inputs page.tsx hands it (the pre-London take-home, the place
+  //    signals, the real entry cost where held, the London entry), and read
+  //    breakInRating from the result.
+  //
+  //    The margins, the breakeven and the people figures were computed here
+  //    purely to fill arguments the rating never read, and went with the
+  //    section board on 2026-08-18.
   const { breakInRating } = buildCellBoard({
     cell,
-    typicalRevenue,
-    revP10: cell.rev_p10 ?? null,
-    revP90: cell.rev_p90 ?? null,
-    grossMarginPct: marginRow.gross_margin ?? null,
-    operatingMarginPct: marginRow.operating_margin ?? null,
-    netMarginPct: th.netMarginPct,
     ownerTakeHome: th.ownerTakeHomeForBoard,
-    breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
-    typicalOrdersDaily: be?.currentOrdersDaily ?? null,
-    peopleWorking: employeesEstimate ?? null,
-    wagePerEmployee: wageEstimate ?? null,
     cityPopulation,
     cityCostOfLivingIndex,
     econ: econSnap,
-    corporateTaxRate: th.corporateTaxRate,
-    costStructure: cell.cost_structure ?? null,
     realStartupCostUsd,
     londonEntry: getLondonEntry(cell),
   });

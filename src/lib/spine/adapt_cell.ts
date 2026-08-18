@@ -39,7 +39,6 @@ import { getCityTier } from "@/lib/cities/city_tier";
 import { iso2ToName } from "@/lib/countries";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
-import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import {
@@ -50,16 +49,6 @@ import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
 import { buildCellView } from "@/lib/cells/cell_view";
 import type { CellView } from "@/lib/cells/cell_view";
 import { slugToIndustry, tradeNounFor } from "@/lib/taxonomy";
-
-type IndustryMarginRow = { gross_margin: number; operating_margin: number; asset_intensity?: number };
-const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
-  default_fallback: IndustryMarginRow;
-  industries: Record<string, IndustryMarginRow>;
-};
-function lookupIndustryMargin(industryId: string | null | undefined): IndustryMarginRow {
-  if (!industryId) return INDUSTRY_MARGINS.default_fallback;
-  return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
-}
 
 /* ------------------------------------------------------------------------- */
 /* Shared cell-view loader , the ONE call chain the live cell page also runs. */
@@ -158,29 +147,15 @@ export async function loadCellView(
   const wageEstimate =
     cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id, geo);
 
-  const marginRow = lookupIndustryMargin(cell.industry_id);
   const londonEntry = getLondonEntry(cell);
 
   const { breakInRating } = buildCellBoard({
     cell,
-    typicalRevenue: cell.revenue_per_firm ?? cell.rev_p50 ?? null,
-    revP10: cell.rev_p10 ?? null,
-    revP90: cell.rev_p90 ?? null,
-    grossMarginPct: marginRow.gross_margin ?? null,
-    operatingMarginPct: marginRow.operating_margin ?? null,
-    netMarginPct: computedNetMargin,
     ownerTakeHome: adjustedNetTakeHome,
-    breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
-    typicalOrdersDaily: be?.currentOrdersDaily ?? null,
-    peopleWorking: employeesEstimate ?? null,
-    wagePerEmployee: wageEstimate ?? null,
     cityPopulation: null,
     cityCostOfLivingIndex: null,
     econ: econSnap,
-    corporateTaxRate: netProfitResult?.effective_cit_rate ?? null,
-    costStructure: cell.cost_structure ?? null,
     londonEntry,
-    cellRef: { country, geo, industry },
   });
 
   const Le = londonEntry?.economics ?? null;

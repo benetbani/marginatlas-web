@@ -648,37 +648,25 @@ async function CellPageBody({
   // AnswerFirstMasthead carries the faint survey-grid motif instead, and the
   // cinematic CityHero photo still renders above it for cities that have one.
 
-  // Full A-J data board. Built from the values already computed above so no
-  // figure is recomputed: the money rows reuse the tax-aware net numbers and
-  // the floored take-home; the market/density rows reuse the city population;
-  // the modeled qualitative reads come from the curated London dataset (GB
-  // cells only, blanks elsewhere). Every section and every row is always
-  // present; missing data renders as the board's dash. econSnap is the
-  // country-economics snapshot already computed above for the take-home floor;
-  // corporateTaxRate is the effective rate from the net-profit waterfall.
-  // Only the break-in rating is still consumed (the masthead chip). The board's
-  // dense reference rows were retired into the content-map sections (WS3), so
-  // the section list itself is no longer rendered.
+  // The break-in rating, the masthead's single headline score. Built from the
+  // values already computed above so no figure is recomputed: the floored
+  // after-tax take-home, the city population and cost-of-living index, and the
+  // curated London entry (GB cells only). econSnap is the country-economics
+  // snapshot already computed above for the take-home floor.
+  //
+  // This call used to also return `sections`, the dense A-J reference board.
+  // Those rows were retired into the content-map sections (WS3) and nothing has
+  // read them since, so on 2026-08-18 they were deleted at the source along with
+  // the thirteen arguments that fed only them. Nothing here changes on the page:
+  // the rating was snapshotted over 4,000 input combinations before and after
+  // and is byte-identical.
   const { breakInRating } = buildCellBoard({
     cell,
-    typicalRevenue: cell.revenue_per_firm ?? cell.rev_p50 ?? null,
-    revP10: cell.rev_p10 ?? null,
-    revP90: cell.rev_p90 ?? null,
-    grossMarginPct: marginRow.gross_margin ?? null,
-    operatingMarginPct: marginRow.operating_margin ?? null,
-    netMarginPct: computedNetMargin,
     ownerTakeHome: adjustedNetTakeHome,
-    breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
-    typicalOrdersDaily: be?.currentOrdersDaily ?? null,
-    peopleWorking: employeesEstimate ?? null,
-    wagePerEmployee: wageEstimate ?? null,
     cityPopulation,
     cityCostOfLivingIndex,
     econ: econSnap,
-    corporateTaxRate: netProfitResult?.effective_cit_rate ?? null,
-    costStructure: cell.cost_structure ?? null,
     londonEntry: getLondonEntry(cell),
-    cellRef: { country, geo, industry },
   });
 
   // FailureCards ("why these fail") removed: the founder's content map rejects

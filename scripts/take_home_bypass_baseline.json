@@ -3,7 +3,7 @@
   "unreviewed": [],
   "reviewed": {
     "src/lib/london/market.ts": "Is the correction itself. Closes the take-home identity at load: 20 of 20 activities agree, and clampMargin moves none of the 20 margins.",
-    "src/lib/scores/cell_board.ts": "Receives the resolver's answer from all four callers. 800 cells swept, floor holds 244 of 244 unrounded. Seven read as breaches off the PRINTED strings and were the money format's abbreviation, e.g. \"$2.7M\" beside \"23%\" of \"$12.1M\".",
+    "src/lib/scores/cell_board.ts": "Reclassified 2026-08-18. It no longer PRINTS anything: the section rows it used to build had no consumer at any of the four call sites and were deleted, taking clampMargin, clampNetMarginPct and every formatted margin with them. It now matches the shape only through net_margin_pct as a FIELD OF THE LondonEntry TYPE, unread here. It receives ownerTakeHome straight from resolveOwnerTakeHome at all four callers and passes it to the rating untouched; on London it prefers the curated owner_take_home, which london/market.ts re-derives from the margin at load. Rating snapshotted over 4,000 input combinations before and after the deletion, byte-identical.",
     "src/lib/scores/activity_board.ts": "Carries 53 of 53 ranked take-homes byte for byte, zero drift. Its London import feeds only the survival archetype, not a money figure.",
     "src/lib/spine/adapt_industry.ts": "Matched a separately recomputed buildAcrossCities on 8 rows, worst gap $0.",
     "src/lib/spine/adapt_city.ts": "Matched buildCityActivities on 24 rows across London, New York and Berlin, worst gap $0.",
