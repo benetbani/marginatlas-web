@@ -81,10 +81,31 @@ function isNum(v: number | null | undefined): v is number {
 }
 
 /**
- * The median net margin (as a whole percent) across every measured trade in the
- * margin table. This is the honest "all-trades average" the industry hero reads
- * against, and it drives the benchmark's stated field average. Computed once from
- * the real table, never a hardcoded seed number.
+ * The MEDIAN net margin (as a whole percent) across every measured trade in the
+ * margin table. Computed once from the real table, never a hardcoded seed
+ * number. It is the reference the industry benchmark sits this trade against.
+ *
+ * IT IS A MEDIAN AND IT SHIPS IN A FIELD CALLED `all_trades_avg`. Measured
+ * 2026-08-18 over the 204 trades that carry a net margin: the median is 7.920
+ * and ships as $8, the mean is 9.126 and would ship as $9. So the two differ by
+ * a whole dollar per hundred, on a scale where the trades themselves sit
+ * between about $5 and $12, which is the reference tick's entire job to
+ * measure. The visible label on the tick reads "All trades / incl. non-food"
+ * and never says average, and `avg_note` below says "typical", which is right
+ * for a median; but Benchmark's aria-label reads "All trades average" to a
+ * screen reader. That string is in a component, and is REPORTED rather than
+ * changed from here. The field name cannot be corrected without breaking that
+ * component's read, and the VALUE must not be swapped to a mean to fit the
+ * name: the median is the better centre for a skewed margin table, which is why
+ * it was chosen. The name is the defect, not the number.
+ *
+ * NOT A DEFECT, MEASURED, so it stops being re-accused: this median is taken on
+ * the RAW table while every dot beside it on the same axis is clampMargin'd.
+ * The clamp moves 2 of the 204 (both down to a ceiling, worst `bnbs` 16.25% to
+ * 14.00%) and neither sits near the centre, so median raw and median clamped
+ * are both 7.920 to three decimals. The tick and the dots are on the same scale
+ * today. That is a property of the current ceiling table, not of the code, so
+ * if the ceilings move this wants re-measuring.
  */
 function medianNetPctAcrossTrades(): number {
   const nets = Object.values(INDUSTRY_MARGINS.industries)
