@@ -1,0 +1,40 @@
+# WAKE-UP. One screen. Read this first.
+
+Maintained by every tick. Newest first. Numbers, not adjectives. If it takes more
+than one screen, it is written wrong.
+
+---
+
+## Before the loop started, 2026-08-18
+
+**Three things you did not know, all verified against the code:**
+
+1. **Your 162 commits are pushed.** `origin/main` is at `6fc88e3e`, the same
+   commit as local `HEAD`, ref written 05:42. The handoff written six minutes
+   earlier says they are unpushed. Nothing else needs doing there.
+2. **A likely cause for "the font was foreign".** `globals.css:882` declares
+   `--font-display` as a reference to itself, while the two properties next to it
+   reference `--font-sans`. If that is what it looks like, every engraved display
+   heading has been falling back to body type. It is a hypothesis with an exact
+   test and the loop tests it in its first site slot rather than assuming it.
+3. **Three documents state a wrong gate count.** `CLAUDE.md` says 95, the
+   verification protocol says 31, the chain is 101. A stale number is read with
+   trust, which is why the loop now repairs them.
+
+**Verified tonight:** `npx tsc --noEmit` clean. `npm run prebuild` 101 gates,
+100 passed in the parallel run and the one red was esbuild dying under Windows
+load, which passed instantly when re-run alone. Three checks in `cell-lattice`
+are deferred by design and are not passes.
+
+**What the loop will do while you sleep**, in rotation, one thing per 30 minutes:
+the homepage three times per cycle, the site and the claims reform twice each,
+and five slots on why this slowed down. It never pushes, never deploys, never
+touches the H1, and never asks you a question. Anything that needs you is in
+`DECISIONS-NEEDED.md`, answerable in one word each.
+
+---
+
+## Tonight's log
+
+_(newest first; each tick appends three lines: what was wrong, what was measured,
+what changed)_

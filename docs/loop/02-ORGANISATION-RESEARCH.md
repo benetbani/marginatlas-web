@@ -1,0 +1,92 @@
+# 02. Organisation research. What shape should this working directory be?
+
+**Founder:** "research on how the working directory can be organized better".
+
+This step **researches and proposes**. It does not move files. Execution is
+`06-REFORMATION.md`, one approved move per tick, so that a bad idea costs one
+tick rather than a day.
+
+---
+
+## The problem, stated with numbers rather than feelings
+
+Two repositories, one project. `E:\atlas\` is the data pipeline and also the
+place Playwright dumps screenshots; `E:\atlas\website\` is the product. Inside
+the website repo: 352 documents, 121 of them plans and specs, 254 scripts of
+which 101 are gates, 37 dev routes, 2,764 tracked files.
+
+The cost is measurable and it is paid on every single tick: a session cannot act
+until it has re-derived which document is current. Three concrete instances found
+on 2026-08-18 alone:
+
+- `CLAUDE.md` says the chain is 95 gates. It is 101.
+- `docs/verification-protocol.md` says "prebuild 31/31". It is 101.
+- `CLAUDE.md` names the 2026-08-01 handoff as "THE CURRENT HANDOFF, READ IT
+  FIRST". Three handoffs have landed since.
+
+**A document that lies about a number is worse than no document**, because it is
+read with trust. That is the defect class this step is trying to make structurally
+impossible.
+
+---
+
+## Procedure
+
+1. **Map what exists.** One table: directory, file count, what it is for, who
+   writes it, who reads it, and the last time anything in it was modified. Write
+   it to `docs/loop/artifacts/org-map-<date>.md`. Use git mtimes, not file
+   mtimes, so a checkout does not look like activity.
+2. **Find the contradictions.** Every document that states a gate count, a file
+   count, a "current" pointer, or a status. Check each against the code. Every
+   contradiction found is either fixed in this tick (if it is one line) or listed
+   for `06-REFORMATION.md`.
+3. **Research, genuinely, outside this repo.** Use `WebSearch` and `WebFetch`.
+   What do serious codebases do about exactly this problem: architecture decision
+   records, a `docs/` layout with a single authority per topic, RFC folders,
+   "living document" versus dated record conventions, monorepo documentation
+   standards, how large open-source projects keep a `CONTRIBUTING` from rotting.
+   Capture every source read to `docs/loop/artifacts/research/` with URL and date.
+   Three sources minimum, and say what each one actually recommends rather than
+   summarising the genre.
+4. **Propose ONE target tree**, not three. It must answer four questions
+   explicitly:
+   - Where does a **rule** live, such that a rule exists exactly once?
+   - Where does a **record** live, such that history is legible and never
+     mistaken for a rule?
+   - Where does **state** live, such that "what is true right now" has one file?
+   - What makes a document **stale on its own**, without a human noticing?
+5. **Price every move.** Per move: files touched, references to repoint, gates
+   affected, and whether a redirect or pointer must be left behind. A move
+   without a blast-radius number does not get executed.
+6. Write the proposal to `docs/loop/artifacts/org-proposal.md` as a numbered list
+   of independently executable moves, ordered by value divided by blast radius.
+   `06-REFORMATION.md` executes from that list, top first.
+
+---
+
+## The rule this step is looking for
+
+The strongest candidate, to be tested rather than assumed: **a number that lives
+in two places will disagree.** Gate counts, file counts, status pointers and
+"current handoff" markers should be generated, not typed. If the proposal can
+turn three of those into generated lines, it has paid for itself.
+
+## Instruments
+
+- `scripts/lib/strip_comments` for any reference count. A naive grep counts a
+  document's own explanatory prose as a reference; this repo has made that exact
+  mistake twice and has a shared tool to prevent it.
+- `git log --diff-filter=A` for when a document arrived, `git log -1` per file for
+  when it last moved.
+
+## Blind spot to state when quoting this step
+
+A file map cannot distinguish a document nobody reads from a document everybody
+relies on. Reference counts see imports and links, not the reading a person does
+before a decision. Where that distinction matters, say so and archive rather than
+delete.
+
+## Done test
+
+**"There is one proposal, every move in it carries a blast-radius number, and
+every contradiction I found is either fixed or on the list."**
