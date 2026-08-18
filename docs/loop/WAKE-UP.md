@@ -36,5 +36,10 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
-_(newest first; each tick appends three lines: what was wrong, what was measured,
-what changed)_
+**Tick 1, cleanup.** Wrong: my own step file called 100 images at `E:\atlas\`
+stray screenshots. Measured: 91 of them are TRACKED in the parent repo, 16.5 MB,
+committed 2026-07-27; only 9 were untracked leftovers, 1.26 MB, and all 9 were
+proved unreferenced. Changed: the 9 are gone, the step file's figure is
+corrected, and the real bloat baseline is written down: 153 scripts that no gate
+runs, 352 documents, 37 dev routes. Those 91 tracked images are Q6 and they are
+yours, because the loop does not delete tracked files in a repo it does not own.

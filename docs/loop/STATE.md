@@ -9,12 +9,12 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **0** (not started) |
-| Next slot | **1**, `01-CLEANUP.md` |
+| Tick | **1** done (slot 1, cleanup) |
+| Next slot | **2**, `10-HOMEPAGE.md` |
 | In-flight | none |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
-| Gates | `tsc` clean; `prebuild` 101/101 as of 2026-08-18, one Windows esbuild flake on `no-slot-counting` which passed alone |
-| HEAD | `6fc88e3e`, and `origin/main` is at the same commit |
+| Gates | `tsc` clean; `prebuild` 101/101 |
+| HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
 
 ---
 
@@ -64,8 +64,23 @@ this file alone. If it cannot, this file is wrong.
 
 ---
 
+## Queued by tick 1, for the next cleanup and organisation slots
+
+| # | Item | Size | Owner step |
+|---|---|---|---|
+| 7 | **153 scripts that no gate runs.** 254 in `scripts/`, 101 registered. Triage into gate, instrument, spent one-shot, with an index at `scripts/README.md`. Not a deletion sweep. | 153 files | 01, then 06 |
+| 8 | `docs/` archive pass. 352 files, zero deletions, `docs/ARCHIVE/` plus a pointer index. Start with the four handoffs preceding 2026-08-18. | 352 files | 01, then 06 |
+| 9 | `src/app/dev/`, 37 routes, classify and retire one per tick. | 37 routes | 01, then 06 |
+| 10 | 91 tracked screenshots at the parent root, 16.5 MB. Blocked on Q6; the loop does not delete tracked files in a repo it does not own. | 16.5 MB | founder |
+
+---
+
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
 
-_(empty; the first tick writes here)_
+- **Tick 1, slot 1, cleanup.** Deleted 9 unreferenced render leftovers at the
+  parent root (1.26 MB); found that 91 of the 100 were TRACKED and out of scope,
+  correcting the step file's own figure by a factor of ten. Wrote
+  `artifacts/bloat-census-2026-08-18.md` as the baseline. Added a guardrail after
+  an untargeted grep from `E:\atlas` burned ten minutes and timed out.

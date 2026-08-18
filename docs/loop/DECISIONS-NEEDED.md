@@ -65,6 +65,21 @@ eleven declared can paint as eight.
 - **B.** Exactly ten declared, and fix the self-omission instead.
 - **C.** Ten declared and accept that some days show fewer.
 
+**Q6. The 91 screenshots committed to the parent repo.** `E:\atlas\` holds 91
+tracked `.jpeg` files at its root, 16.5 MB, added 2026-07-27 in `d843425`. By
+name they are agent verification shots (`_pass-cell-hero`, `_idx-cities`,
+`_final-hood-mobile`), not design sources, but they were classified by naming
+family and nobody has opened them.
+
+- **A.** The loop samples a dozen visually, confirms they are verification
+  output, then deletes all 91 in one parent-repo commit. **Recommended:** they
+  are regenerable and they are 16.5 MB of the parent repo's working tree.
+- **B.** Move them to `E:\atlas\_attic\` instead, so nothing leaves history.
+- **C.** Leave them. They are somebody's record.
+
+The loop has NOT acted on this: the parent repo is not the loop's working tree
+and deleting tracked files there is a decision about that project.
+
 ---
 
 ## Answered

@@ -11,7 +11,7 @@ runs should take ten minutes and find little, which is the point.
 
 | Where | Count | Note |
 |---|---|---|
-| `E:\atlas\` root, stray `.jpeg/.png` | **100** | Playwright writes screenshots to the PARENT repo, not the website repo. Two months of them. |
+| `E:\atlas\` root, stray `.jpeg/.png` | **100**, of which only **9 were disposable** | Corrected by measurement, tick 1. 91 are TRACKED in the parent repo (16.5 MB, added 2026-07-27 in `d843425`) and are out of this loop's scope; 9 were untracked render leftovers and were deleted. **Check tracked status before calling anything stray.** |
 | `website/` tracked files | 2,764 | |
 | `website/docs/` | **352 files** | of which `docs/superpowers/` is **121** plans and specs |
 | `website/scripts/` | **254 files** | of which **101** are the gate chain. The rest are one-shots and instruments, unlabelled. |
@@ -40,10 +40,16 @@ E:\atlas\_attic\<YYYY-MM-DD>\<original-relative-path>
   as directories; they are shared and hold real repo code. Clean by name.
 - Every attic move is listed in the commit message, by count and by kind.
 
-The only disposable list, deletable outright:
-`E:\atlas\*.jpeg|*.jpg|*.png` at the repo root that are Playwright output,
+The only disposable list, deletable outright, and every entry must ALSO be
+untracked and proved unreferenced first:
+`E:\atlas\*.jpeg|*.jpg|*.png` at the repo root that are render output,
 `*.log`, `.next/cache`, `node_modules/.cache`, and files the loop itself wrote to
 `docs/loop/artifacts/` more than three days ago.
+
+**Tracked is never disposable, in either repository.** Tick 1 found 91 of the 100
+root images committed on 2026-07-27. A tracked file has a history and a reason,
+and removing one from the parent repo is a decision about the parent project, not
+housekeeping. Record it, raise it, leave it.
 
 ---
 

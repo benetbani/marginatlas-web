@@ -61,6 +61,11 @@ cd /e/atlas/website && npm run prebuild
 - **The Bash CWD resets to `E:\atlas`, the parent repo.** Prefix every command
   with `cd /e/atlas/website`. A gate run without it fails with
   `ERR_MODULE_NOT_FOUND` and looks like a defect.
+- **Never run an untargeted `grep -r` from `E:\atlas`.** That is the data
+  pipeline: `page-data/` alone is over a thousand files, `macro/` several hundred
+  more. One such search burned ten minutes of a thirty-minute tick and then timed
+  out, on 2026-08-18. Use the Grep tool, which is ripgrep, or scope the path to
+  the website repo.
 
 ## 4. Measure before you change. The four rules that predate this loop.
 
