@@ -203,13 +203,26 @@ type SubjectGroup = {
  * Partition the corpus into the subject cards. Every post lands in exactly one
  * group and no post is dropped: an unnamed slug goes to "more".
  *
- * WITHIN A GROUP THE ORDER IS ALPHABETICAL BY TITLE, not by date, and /cities
- * settled this exact question when its own index was sorted by metro economy:
- * "indistinguishable from no order at all to a reader looking for Rome". The
- * whole corpus spans 27 days, so date order inside a subject is close to
- * arbitrary; a reader scanning "One country at a time" for Japan wants the
- * letter J. Chronology is not lost, it is where it means something: the newest
- * post leads the page, and every row prints its own date.
+ * WITHIN A GROUP THE ORDER IS THE LIBRARY'S OWN, newest first, and this reverses
+ * an alphabetical sort written earlier in the same tick. The argument for
+ * alphabetical was /cities, whose index was sorted by metro economy and read as
+ * "indistinguishable from no order at all to a reader looking for Rome". That
+ * precedent does not transfer, and the rendered page is what showed it: a city
+ * entry is a NAME, so A-to-Z puts Rome under R, while a post entry is a
+ * HEADLINE, so A-to-Z sorts on whatever word the headline opens with.
+ *
+ * Counted rather than eyeballed: 52 of the 70 titles begin with a generic word,
+ * and the commonest openers are "Why" 8, "The" 7, "How" 6, "What" 4. Seen at
+ * 1280, alphabetical filed Germany under T, for "The German Mittelstand", and
+ * put three unrelated posts together under S because each opens "Small business
+ * in". A reader looking for Germany was no better served than by no order, and
+ * the date column beside it read 11, 12, 13, 14, 5, 13, 13, 11, 6 down the page.
+ *
+ * Newest first is the order getAllPosts already returns, so nothing is sorted
+ * here at all and the page cannot disagree with the library. It also makes the
+ * date column monotonic, which is the one scannable structure this corpus can
+ * actually support: the subject card did the work of finding the right 21 posts,
+ * and inside it the reader is looking at what is new.
  */
 function groupPosts(posts: BlogPost[]): SubjectGroup[] {
   const byId = new Map<SubjectId, BlogPost[]>();
@@ -222,7 +235,7 @@ function groupPosts(posts: BlogPost[]): SubjectGroup[] {
   return SUBJECTS.map((s) => ({
     id: s.id,
     title: s.title,
-    posts: (byId.get(s.id) ?? []).sort((a, b) => a.title.localeCompare(b.title)),
+    posts: byId.get(s.id) ?? [],
   })).filter((g) => g.posts.length > 0);
 }
 
@@ -390,13 +403,14 @@ export default function BlogIndex() {
                     {group.posts.length} notes
                   </span>
                 </div>
-                {/* CSS COLUMNS, NOT A GRID, and the difference is the whole
-                    point of sorting alphabetically. A two-column grid flows
-                    ACROSS its rows, so an A-to-Z list reads A B on the first
-                    line and C D on the second, which is not how anybody scans
-                    an index. Multi-column boxes flow DOWN each column and then
-                    across, so the first column is the first half of the
-                    alphabet and a reader can jump to the letter they want.
+                {/* CSS COLUMNS, NOT A GRID, and the difference is what keeps
+                    the ordering legible. A two-column grid flows ACROSS its
+                    rows, so a newest-first list reads 1st 2nd on the first line
+                    and 3rd 4th on the second, and the date column beside it
+                    zigzags. Multi-column boxes flow DOWN each column and then
+                    across, so the dates fall monotonically down column one and
+                    then down column two, which is the structure the order is
+                    for. Same reasoning /cities gives for its A-to-Z index.
 
                     ONE COLUMN UNTIL lg, unlike /cities, and the reason is the
                     payload rather than the width. A city entry is one short
@@ -404,7 +418,8 @@ export default function BlogIndex() {
                     two-column split gives each 139px, where "Lawyers,
                     accountants, consultants: professional services worldwide"
                     is nine lines. Two columns arrive at 1024, where each is
-                    about 500px and a title is one or two lines. */}
+                    about 500px and a title is one or two lines. Measured: 0 of
+                    70 titles clip at 375, 768 or 1280. */}
                 <div className="mt-2 lg:columns-2 lg:gap-x-8">
                   {group.posts.map((p) => (
                     <PostRow key={p.slug} post={p} />
