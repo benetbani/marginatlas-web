@@ -227,9 +227,28 @@ function SubtypeDrill({ d }: { d: any }) {
   return (
     <Full>
       <Box>
-        <Rail icon="subtype" kicker="Keep and cost, by format" sample />
+        {/* "Trades next door", NOT "by format". These rows are the exact array
+            `benchmark.trades` carries minus the self row: measured 2026-08-18,
+            identical in 23 of the 23 seeds that hold either, and confirmed here
+            on the real restaurants seed. One array, shipped twice, and its two
+            consumers labelled it incompatibly. `benchmark` said "a neighbour in
+            the same sector", which is true; this said "by format", which
+            asserts a containment the taxonomy does not have.
+
+            `Industry` has no parent-child relation, and the siblings come from
+            eight hardcoded food-service ids, so grocery-stores,
+            specialty-grocers-delis and wine-liquor-stores each received the
+            SAME six rows. Those three pages were telling a reader that
+            restaurants, bars and food trucks are formats inside a grocery
+            store. Restaurants is the one trade where "format" happens to read
+            true, which is why this survived.
+
+            The FIELD stays `subtypes`: renaming it from here empties this
+            block, which is a section drop. The labels are what a reader sees
+            and they are what was false. */}
+        <Rail icon="subtype" kicker="Keep and cost, trades next door" sample />
         <div className={`grid ${cols} items-end gap-3 border-b border-[var(--c-border)] px-2 pb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
-          <span>Format, best keep first</span>
+          <span>Trade, best keep first</span>
           <span className="text-right">Keep<InfoTip gloss="Registered operators only; street and informal traders run on different economics and are not counted here." /></span>
           <span className="text-right">To open</span>
         </div>
