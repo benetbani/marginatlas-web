@@ -1,59 +1,57 @@
 /**
  * src/lib/scores/activity_board.ts
  *
- * Pure synthesis for the data board that leads the global ACTIVITY page
- * (/industries/restaurants, /industries/legal-services, ...). It is the
- * activity-altitude sibling of country_board.ts, city_board.ts, and
- * cell_board.ts and follows the exact same contract, so a reader who has
- * learned any of those reads this one for free:
+ * Pure synthesis for the global ACTIVITY page (/industries/restaurants,
+ * /industries/legal-services, ...). What survives here is the "where it works"
+ * places table and the curated survival archetype: the two things the industry
+ * page actually reads.
  *
- *   - Every section and every row is ALWAYS present, in a fixed order. A datum
- *     we do not hold is emitted as a null value, which the board's StatGrid
- *     renders as the MISSING dash. The board is a scaffold, not a data-shaped
- *     silhouette: its shape never depends on which figures exist, so a blank
- *     reads as "we do not have this field" rather than "this page is broken".
- *   - Honest dashes beat invented numbers. The activity page holds the curated
- *     cost-structure margins (gross / operating / net), which are place-stable
- *     and the same in Berlin or Brazil, plus a representative survival curve for
- *     the activity. Everything else at this altitude is null, never a fabricated
- *     stand-in.
- *   - Sections that lean on modeled / directional inputs carry `modeled: true`,
- *     which renders one quiet footnote per section, not a badge per row.
+ * THE BOARD THIS FILE IS NAMED AFTER IS GONE. Deleted 2026-08-18.
+ * `buildActivityBoard` returned five BoardSections for the DataSection kit. The
+ * industry page stopped calling it on 2026-06-13 in `4e0ab1bf`, the rebuild that
+ * moved country, city, neighbourhood and industry onto a new kit and dropped all
+ * three sibling board builders in one commit. It then sat unreferenced for two
+ * months. Verified before deletion: zero references from any page, component,
+ * lib, API route or script, and no barrel re-export can hide one because
+ * `src/lib/scores/index.ts` does not re-export this module and there is not a
+ * single `export *` anywhere in src.
  *
- * THE ONE RULE THE FOUNDER NAMED: never a single worldwide revenue average.
- * Cross-place aggregation has garbage tails (one country at $11.6M sitting next
- * to another at $118K), so the revenue figure here is a RANGE, computed from a
- * SANE central band (the 10th-to-90th percentile of per-place typical revenue,
- * after the caller has already dropped rows outside the per-industry SMB
- * envelope). When the sample is too thin to defend a band, the range dashes
- * rather than guess. The "typical" anchor is the median of that same trimmed
- * band, not a mean (a mean is what the tails poison).
+ * Deleted with it, because nothing else read them: `ActivityBoardInput`,
+ * `ActivityBoardMargins`, the `textOrNull` helper (whose only remaining purpose
+ * was to be `void`-ed so it would not trip the unused-helper lint), and the
+ * imports the board alone needed. Removing the SpreadBar chart took the last
+ * React reference out of this module, so it is now genuinely plain TypeScript
+ * rather than plain TypeScript that imports React.
  *
- * Sections, in fixed order, ALWAYS emitted:
- *   numbers    The economics (structural): margins, revenue range, take-home range
- *   market     Market structure (modeled): typology / concentration / chain
- *   pricing    Pricing power (modeled)
- *   labor      Labor and skills (modeled)
- *   survival   Survival baseline (modeled): representative 1yr / 3yr / 5yr
+ * KEPT deliberately, because they are live: `ActivityRevenueBand` and
+ * `ActivityTakeHomeBand` (read by src/lib/industries/industry_view.ts),
+ * `ActivitySurvival` and `getActivitySurvivalArchetype` (read by the industry
+ * page, city_board, adapt_industry, across_cities, leaderboards, home/beats and
+ * a test), and `summarizeActivityPlaces` with its row and summary types.
  *
- * Pure module: no Supabase, no fs, no runtime side effects. The board consumes
- * numbers the activity page has already computed (the curated margins and the
- * already-trimmed per-place revenue band) and shapes them into rows; it does not
- * fetch. Kit types are type-only imports, exactly like the sibling boards, so
- * this stays trivially testable and cannot trip the layering gate (which only
- * walks src/app + src/components). The one chart (the revenue SpreadBar) is
- * built with React.createElement so the module is plain TypeScript (no JSX),
- * keeping it a .ts file and matching cell_board.ts.
+ * THE ONE RULE THE FOUNDER NAMED, and it still governs what is left: never a
+ * single worldwide revenue average. Cross-place aggregation has garbage tails
+ * (one country at $11.6M sitting next to another at $118K), so a revenue figure
+ * here is a RANGE, computed from a SANE central band (the 10th-to-90th
+ * percentile of per-place typical revenue, after the caller has already dropped
+ * rows outside the per-industry SMB envelope). When the sample is too thin to
+ * defend a band, the range dashes rather than guess. The "typical" anchor is the
+ * median of that same trimmed band, not a mean (a mean is what the tails poison).
  *
- * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
- * Classified 2026-08-18. verify_take_home_identity flags it for one call,
- * `clampMargin` on the displayed net margin, made without importing the
- * resolver. It is not the defect class. Every take-home figure in this module
- * arrives from the caller and leaves unchanged: `summarizeActivityPlaces`
+ * Pure module: no Supabase, no fs, no runtime side effects, and it cannot trip
+ * the layering gate (which only walks src/app + src/components).
+ *
+ * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE.
+ * Classified 2026-08-18. verify_take_home_identity flagged it for one call,
+ * `clampMargin` on the board's displayed net margin, made without importing the
+ * resolver. That call lived inside `buildActivityBoard` and went with it, so the
+ * originally-flagged line no longer exists. The classification still holds for
+ * what remains, and the reasoning is unchanged: every take-home figure in this
+ * module arrives from the caller and leaves unchanged. `summarizeActivityPlaces`
  * ranks, fences and takes percentiles, and never computes a take-home from a
- * margin. Measured across five activities and 53 ranked rows built from the
- * real per-place inputs the industry page hands in: 53 of 53 carried the
- * caller's figure byte for byte, zero drift. Those inputs come from
+ * margin. Measured across five activities and 53 ranked rows built from the real
+ * per-place inputs the industry page hands in: 53 of 53 carried the caller's
+ * figure byte for byte, zero drift. Those inputs come from
  * `activityPlaceFromCell`, which routes through the resolver.
  *
  * The `LONDON_MARKET` import feeds `getActivitySurvivalArchetype` and nothing
@@ -64,33 +62,8 @@
  *
  * Constraint-safe by construction: no em-dashes, no source-agency names.
  */
-import * as React from "react";
-import type { BoardSection } from "@/components/board/DataSection";
-import type { StatRow } from "@/components/board/StatGrid";
-import { fmtUSD, fmtPct } from "@/components/board/format";
-import { SpreadBar } from "@/components/board/charts/SpreadBar";
-import {
-  clampMargin,
-  clampNetMarginPct,
-  boundSurvivalCurve,
-} from "@/lib/finance/margin_floor";
+import { clampNetMarginPct } from "@/lib/finance/margin_floor";
 import { LONDON_MARKET } from "@/lib/london/market";
-
-/**
- * The structural margins for the activity. These are place-stable shares
- * (0..1): a restaurant's payroll-as-share-of-revenue is similar across
- * countries, so the cost shape belongs on the worldwide activity page while the
- * absolute dollars belong on the per-place cell page. Every field is nullable;
- * a null becomes a dash.
- */
-export interface ActivityBoardMargins {
-  /** Gross margin as a share (0..1). */
-  grossMargin: number | null;
-  /** Operating margin as a share (0..1). */
-  operatingMargin: number | null;
-  /** Net margin as a share (0..1). */
-  netMargin: number | null;
-}
 
 /**
  * A defensible per-place revenue band for the activity, already trimmed by the
@@ -180,175 +153,9 @@ export function getActivitySurvivalArchetype(
   };
 }
 
-export interface ActivityBoardInput {
-  /** Structural cost-shape margins for the activity. */
-  margins: ActivityBoardMargins;
-  /** Already-trimmed central revenue band across covered places, or all-null. */
-  revenue: ActivityRevenueBand;
-  /** Already-trimmed owner take-home band across covered places, or all-null. */
-  takeHome: ActivityTakeHomeBand;
-  /** Representative survival curve, or all-null when none is held. */
-  survival: ActivitySurvival;
-}
-
 /** A finite, real number (not null, not NaN, not Infinity). */
 function isNum(n: number | null | undefined): n is number {
   return n != null && Number.isFinite(n);
-}
-
-/** A present, non-empty qualitative string, else null (so the row blanks). */
-function textOrNull(s: string | null | undefined): string | null {
-  return typeof s === "string" && s.trim().length > 0 ? s : null;
-}
-
-/**
- * Build the full activity board. Deterministic and side-effect free: the same
- * inputs always yield the same five sections, every section and every row
- * present, in the fixed order documented at the top of the file.
- */
-export function buildActivityBoard(input: ActivityBoardInput): BoardSection[] {
-  const { margins, revenue, takeHome, survival } = input;
-
-  // Keep textOrNull available for the modeled qualitative rows that are null at
-  // this altitude today and will carry words once a worldwide archetype set is
-  // curated, without tripping the unused-helper lint.
-  void textOrNull;
-
-  // -- numbers. The economics (structural). --------------------------------
-  // The three margins are the curated, place-stable cost shape for the
-  // activity. The revenue figure is a RANGE (never a single worldwide
-  // average): the trimmed p10..p90 band the caller computed across covered
-  // places, with the median as the typical anchor. Owner take-home is the same
-  // trimmed-band treatment. Any figure we cannot defend dashes.
-  // Suppression coupling (founder data-quality rule), matching cell_board.ts:
-  // never show a revenue range or a spread around a median we are dashing. When
-  // the median is absent (the trimmed band was too thin to defend, or every
-  // per-place revenue was suppressed upstream as implausible), the range row
-  // and the SpreadBar both omit. A null median forces the range + chart to
-  // null; the dash is honest, never a capped/invented number.
-  const hasMedian = isNum(revenue.median);
-  const hasRevenueRange =
-    hasMedian && isNum(revenue.p10) && isNum(revenue.p90) && revenue.p90 > revenue.p10;
-  const hasTakeHomeRange =
-    isNum(takeHome.p10) && isNum(takeHome.p90) && takeHome.p90 > takeHome.p10;
-
-  const numbersRows: StatRow[] = [
-    {
-      label: "Gross margin",
-      value: isNum(margins.grossMargin)
-        ? fmtPct(margins.grossMargin, { fromFraction: true })
-        : null,
-      hint: "structural, stable across places",
-    },
-    {
-      label: "Operating margin",
-      value: isNum(margins.operatingMargin)
-        ? fmtPct(margins.operatingMargin, { fromFraction: true })
-        : null,
-    },
-    {
-      label: "Net margin",
-      // Net margin (fraction) passes through the shared clamp (floor 3%, global
-      // net ceiling: this altitude carries no single industry id) so it can
-      // never render an implausible value.
-      value: isNum(margins.netMargin)
-        ? fmtPct(clampMargin(margins.netMargin, "net"), { fromFraction: true })
-        : null,
-    },
-    {
-      label: "Revenue range",
-      value: hasRevenueRange
-        ? `${fmtUSD(revenue.p10)} to ${fmtUSD(revenue.p90)}`
-        : null,
-      hint: "typical firm, low to high across places",
-    },
-    {
-      label: "Typical revenue",
-      value: isNum(revenue.median) ? fmtUSD(revenue.median) : null,
-      hint: "median place",
-    },
-    {
-      label: "Owner take-home range",
-      value: hasTakeHomeRange
-        ? `${fmtUSD(takeHome.p10)} to ${fmtUSD(takeHome.p90)}`
-        : null,
-      hint: "after tax, low to high across places",
-    },
-  ];
-
-  // Revenue spread chart: the same trimmed band as the rows above (p10..p90
-  // track, median marked). SpreadBar self-omits when the range is absent, so
-  // attaching it unconditionally is safe.
-  // Same coupling as the rows: a suppressed (null) median omits the spread
-  // rather than drawing a band around a number we are dashing.
-  const numbersChart = React.createElement(SpreadBar, {
-    p10: hasMedian ? revenue.p10 : null,
-    median: revenue.median,
-    p90: hasMedian ? revenue.p90 : null,
-  });
-
-  // -- market. Market structure (modeled). ---------------------------------
-  // Typology, concentration, and chain archetype are activity-and-place
-  // specific; we hold no honest worldwide archetype for them at this altitude,
-  // so the rows are present (the fields are named) and blank (nothing is
-  // invented). They return when a curated worldwide read exists.
-  const marketRows: StatRow[] = [
-    { label: "Typology", value: null },
-    { label: "Concentration", value: null },
-    { label: "Chain share", value: null },
-    { label: "Annual churn", value: null },
-  ];
-
-  // -- pricing. Pricing power (modeled). -----------------------------------
-  const pricingRows: StatRow[] = [
-    { label: "Pricing power", value: null },
-    { label: "Premium room", value: null },
-    { label: "Price dispersion", value: null },
-    { label: "Willingness to pay", value: null },
-  ];
-
-  // -- labor. Labor and skills (modeled). ----------------------------------
-  const laborRows: StatRow[] = [
-    { label: "Payroll share of revenue", value: null },
-    { label: "Skill intensity", value: null },
-    { label: "Hiring difficulty", value: null },
-    { label: "Owner-operator dependence", value: null },
-  ];
-
-  // -- survival. Survival baseline (modeled). ------------------------------
-  // A single representative survival curve for the activity (the curated
-  // directional read the cell and city boards also use), labeled
-  // representative. Blank when no curve is held. Closure rate is not held.
-  // Bound the curve (0 <= yr5 <= yr3 <= yr1 <= 100; non-finite dashes) so it
-  // can never print a rising or out-of-range survival series; the
-  // "representative" hint keys off the original input so it shows iff a curve
-  // was supplied, matching the prior behaviour.
-  const hasSurvival = isNum(survival.yr1) || isNum(survival.yr3) || isNum(survival.yr5);
-  const boundedSurvival = boundSurvivalCurve(survival);
-  const survivalRows: StatRow[] = [
-    {
-      label: "1-year survival",
-      value: isNum(boundedSurvival.yr1) ? `${Math.round(boundedSurvival.yr1)}%` : null,
-      hint: hasSurvival ? "representative for the activity" : undefined,
-    },
-    {
-      label: "3-year",
-      value: isNum(boundedSurvival.yr3) ? `${Math.round(boundedSurvival.yr3)}%` : null,
-    },
-    {
-      label: "5-year",
-      value: isNum(boundedSurvival.yr5) ? `${Math.round(boundedSurvival.yr5)}%` : null,
-    },
-    { label: "Closure rate", value: null },
-  ];
-
-  return [
-    { key: "numbers", title: "The economics", rows: numbersRows, chart: numbersChart },
-    { key: "market", title: "Market structure", rows: marketRows, modeled: true },
-    { key: "pricing", title: "Pricing power", rows: pricingRows, modeled: true },
-    { key: "labor", title: "Labor and skills", rows: laborRows, modeled: true },
-    { key: "survival", title: "Survival baseline", rows: survivalRows, modeled: true },
-  ];
 }
 
 // --- "where it works" places table (the page's content, not a board section) -
