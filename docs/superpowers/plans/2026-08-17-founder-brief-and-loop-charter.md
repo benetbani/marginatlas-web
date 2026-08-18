@@ -334,6 +334,36 @@ context.
 98 of 98 gates green, and the page still blank where the footer should be. Only
 a rendered pixel can find this class of defect.
 
+### 9.3 PARALLEL AGENTS SHARE ONE WORKING TREE. Three rules follow.
+
+This loop runs three or four specialist agents at once in the SAME checkout,
+with non-overlapping FILE ownership. That works for editing and fails for
+anything that acts on the tree as a whole. Learned on 2026-08-18, all three
+of these actually happened in one tick:
+
+1. **NEVER run `git stash` (or `checkout .`, or `reset --hard`).** Stash is
+   tree-wide, not file-wide: one agent stashed to isolate a typecheck and swept
+   up two other agents' uncommitted work with it. The blog agent recovered its
+   own from `stash@{0}` and checkpoint-committed immediately, which is the only
+   reason nothing was lost. To isolate a typecheck, use a separate worktree.
+
+   The residue is its own hazard. A stash holding a PRE-DELETION state is a
+   loaded footgun: popping it later silently restores 462 lines that a commit
+   had deliberately removed. Before dropping one, prove it is superseded rather
+   than assuming: diff each stashed file against the commit that landed it. In
+   this case `blog/page.tsx` was byte-identical to its committed checkpoint and
+   `cell_board.ts` differed only by the sections `e36784b8` deleted on purpose.
+
+2. **`npx tsc --noEmit` and `npm run prebuild` are also tree-wide.** A failure
+   may belong to another agent mid-write, and has: the take-home gate failed
+   twice on a baseline another agent was writing at that instant, and passed on
+   re-run. Before reporting a red gate, check whether the failing file is yours.
+   Verifying in an isolated worktree at HEAD plus your own file is the honest
+   way to claim a clean run while the shared tree is dirty.
+
+3. **Commit incrementally, and mean it.** Every agent that batched its work has
+   lost some; every agent that checkpoint-committed has kept all of it.
+
 Known local traps, already paid for:
 
 - Data bands (`ExampleTiles`, `StateComparison`, `Specimen`) self-omit on the
@@ -344,6 +374,15 @@ Known local traps, already paid for:
   IntersectionObserver never fires, and layout measurements are all zero.
   Anything interactive must be verified in jsdom instead.
 - Bash heredocs eat backslashes. Use the Write tool for anything with a regex.
+- **RESIZING THE VIEWPORT WITHOUT RELOADING LIES ABOUT HEIGHT.** Measuring
+  `/blog` after a resize reported 12,282px where a fresh load of the identical
+  file gave **32,114**. Reload after every resize, or the number is fiction.
+- **COMPILE THE STYLESHEET AFTER WRITING THE FILE, NOT BEFORE.** Tailwind emits
+  only the classes it can see, so a class written after the compile emits NO
+  RULE and the element silently renders unstyled. This has now cost twice: a
+  `lg:columns-2` index measured TALLER at 1280 than at 768, and an
+  `--atlas-header-h` token read as empty because the arbitrary-property class
+  post-dated the compile. If a measurement is impossible, suspect this first.
 
 ---
 
