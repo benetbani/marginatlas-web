@@ -44,7 +44,11 @@ export function MobileNav() {
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    /* lg:hidden, not md:hidden. Its sibling desktop nav in SiteChrome does not
+       fit at md and wrapped the masthead to two rows across 768 to 1023, so
+       this carries navigation up to lg now. The two breakpoints must always
+       match: a gap leaves no nav at all, an overlap shows two. */
+    <div className="lg:hidden">
       <button
         type="button"
         aria-label={open ? "Close menu" : "Open menu"}

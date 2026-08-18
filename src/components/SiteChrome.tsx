@@ -74,7 +74,24 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <LogoWordmark size={40} labeled={false} />
             </a>
             <div className="flex items-center gap-5 md:gap-6">
-              <nav className="text-base text-ink-800 hidden md:flex items-center gap-5">
+              {/* lg, NOT md, and this was a measured defect rather than a
+                  preference. The full nav is seven links plus a search and a
+                  pricing button; it switched on at md (768) and there is not
+                  room for it there, so the masthead WRAPPED TO TWO ROWS across
+                  768 to 1023.
+
+                  Measured on the rendered page: header height 84.8px at 360,
+                  **124.8px at 753**, 88.8px at 1265, against a
+                  --atlas-header-h token declaring 80/88. So the token was
+                  36.8px wrong exactly where the bar was tallest, and every
+                  `top-[var(--atlas-header-h)]` sticky on the site was pinned
+                  to a number the bar does not have.
+
+                  Raising both this and MobileNav's own breakpoint to lg gives
+                  the masthead TWO heights instead of four, which is what the
+                  token was always describing. The hamburger covers 768 to 1023
+                  now, which is what it is for. */}
+              <nav className="text-base text-ink-800 hidden lg:flex items-center gap-5">
                 <a href="/countries" className="hover:text-atlas-600 transition-colors">Countries</a>
                 <a href="/industries" className="hover:text-atlas-600 transition-colors">Activities</a>
                 <a href="/cities" className="hover:text-atlas-600 transition-colors">Cities</a>

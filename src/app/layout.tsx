@@ -104,6 +104,27 @@ export const metadata: Metadata = {
   },
 };
 
+/* --atlas-header-h HAS THREE VALUES BECAUSE THE MASTHEAD HAS THREE HEIGHTS.
+   It declared two, 80 and 88, and matched the bar at neither.
+
+   Measured on the rendered page, header.getBoundingClientRect().height against
+   the token at the same width:
+
+       360     84.8   token 80    -4.8
+       753    124.8   token 88   -36.8     <- the bar wrapped to two rows
+      1265     88.8   token 88    -0.8
+
+   Every `top-[var(--atlas-header-h)]` sticky on this site was pinned to a
+   number the bar does not have, and the 768-to-1023 band was out by nearly
+   37px. The wrap is fixed at its cause in SiteChrome, where the seven-link nav
+   switched on at md with no room for it; both it and MobileNav now change at
+   lg, so 753 measures 92.8 rather than 124.8.
+
+   What remains is three genuine heights, and they land on Tailwind's own
+   breakpoints: the hamburger is a 44px control and makes 768-1023 the tallest
+   band, while 1024+ is shorter because the inline nav is not as tall as the
+   button it replaces. Each value is rounded UP to the next whole pixel, so a
+   sticky may sit a fraction low but never underneath the bar. */
 export default function RootLayout({
   children,
 }: {
@@ -119,7 +140,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${inter.variable} [--atlas-header-h:80px] md:[--atlas-header-h:88px]`}
+      className={`${newsreader.variable} ${inter.variable} [--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]`}
     >
       {/* SaaS reformation 2026-06-12 — the body is the app ground, a cool
           neutral (via the `body` rule in globals.css). The .atlas-paper
