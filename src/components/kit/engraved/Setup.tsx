@@ -14,7 +14,7 @@
  * are inline. No em-dashes, no source-agency names.
  */
 import * as React from "react";
-import { RouteLine, StampSeal, SampleState } from "./primitives";
+import { StampSeal, SampleState } from "./primitives";
 
 /* ------------------------------------------------------------------ */
 /* SetupStepper — the register-a-business route as a surveyor traverse. */
@@ -40,9 +40,6 @@ export type SetupStepperProps = {
   className?: string;
 };
 
-// The internal viewBox width the route line spans.
-const STEPPER_W = 640;
-
 export function SetupStepper({ steps, currency = "$", sample, className }: SetupStepperProps) {
   if (sample || !steps || steps.length === 0) {
     return (
@@ -56,43 +53,73 @@ export function SetupStepper({ steps, currency = "$", sample, className }: Setup
   }
   const totalDays = steps.reduce((a, s) => a + s.days, 0);
   const totalFee = steps.reduce((a, s) => a + (s.fee || 0), 0);
-  const pad = 16;
-  const step = steps.length > 1 ? (STEPPER_W - pad * 2) / (steps.length - 1) : 0;
+  const last = steps.length - 1;
   return (
     <div className={className}>
-      <svg
-        className="eng-stepper__route"
-        viewBox={`0 0 ${STEPPER_W} 40`}
-        preserveAspectRatio="none"
-        height="40"
-        aria-hidden="true"
-      >
-        <RouteLine nodes={steps.length} w={STEPPER_W} />
-        {steps.map((_, i) => (
-          <text
-            key={i}
-            x={pad + step * i}
-            y="38"
-            textAnchor="middle"
-            fill="var(--text-faint)"
-            style={{ font: "700 11px var(--font-num)" }}
-          >
-            {i + 1}
-          </text>
-        ))}
-      </svg>
-      <div className="eng-stepper__cards">
-        {steps.map((s, i) => (
-          <div className="eng-step" key={i}>
-            <div className="eng-step__name">{s.label}</div>
-            <div className="eng-step__meta">
-              <span className="eng-step__days">
-                {s.days} {s.days === 1 ? "day" : "days"}
+      {/* THE STATION MARKS LEFT THE SVG 2026-08-18. They were an
+          `preserveAspectRatio="none"` route line in a `viewBox="0 0 640 40"`
+          with the height pinned at 40, so x and y scaled INDEPENDENTLY and
+          nothing in it was ever the shape it was drawn as. Measured on the real
+          /gb, rendered and read in a browser rather than reasoned about:
+
+            375    box 285x40   x scale 0.445   node circle 8 x 18 px, 2.25:1
+                                                digit 11px tall, 4.9px wide
+            768    box 662x40   x scale 1.034   node circle 7 x 6.8, near round
+            1280   box 754x40   x scale 1.178   node circle 21.2 x 18, 1.18:1
+
+          So the mark was a lozenge lying on its side at desktop, a lozenge
+          standing on end on a phone, and a circle only at the one width where
+          the box happened to be 640. The digits were squashed on one axis only,
+          which no type is designed to survive.
+
+          THERE WAS A SECOND DEFECT UNDER IT, and it is the reason this is a
+          re-layout rather than an aspect-ratio switch. The nodes sat at
+          `16 + i * (608 / (n - 1))` across a 640 viewBox, i.e. 2.5% to 97.5%,
+          while the cards they number are equal grid columns whose centres are
+          at (i + 0.5) / n. For three steps that is 2.5 / 50 / 97.5 against
+          16.7 / 50 / 83.3: THE NUMBERS DID NOT SIT OVER THE CARDS THEY NUMBER,
+          at any width, at any aspect ratio. And below 540px `.eng-stepper__cards`
+          switches to row flow and the cards stack, while the strip stayed
+          horizontal, so the numbers labelled nothing at all on a phone.
+
+          Keeping `none` and counter-scaling would have needed the container
+          width at render time, so client JS on a server-rendered page, and
+          would have fixed the squash while leaving the geometry wrong.
+          Switching to `meet` letterboxes the whole strip: at 375 the box
+          becomes 285x17.8 and the digit renders 4.9px on BOTH axes, smaller
+          than it is now.
+
+          So the marks are HTML in the card grid, which is the technique
+          CountryShape's ring labels moved to for the same root cause. One mark
+          per card means alignment is true by construction at every width and
+          every step count; a border-radius on a square box cannot become an
+          ellipse; and the digit is real CSS type the viewBox cannot touch. The
+          engraved language is unchanged: surface-card disc, ink ring, the last
+          station tinted accent, the dashed traverse between them. */}
+      <div className="eng-stepper__rail" style={{ ["--eng-steps"]: steps.length } as React.CSSProperties}>
+        {steps.length > 1 ? <span className="eng-stepper__traverse" aria-hidden="true" /> : null}
+        <div className="eng-stepper__cards">
+          {steps.map((s, i) => (
+            <div className="eng-step" key={i}>
+              {/* aria-hidden preserves the old behaviour exactly: the route svg
+                  was aria-hidden too, and the cards already read in order. */}
+              <span
+                className="eng-stepper__node"
+                data-last={i === last ? "" : undefined}
+                aria-hidden="true"
+              >
+                {i + 1}
               </span>
-              <span className="eng-step__fee">{s.fee ? `${currency}${s.fee}` : "no fee"}</span>
+              <div className="eng-step__name">{s.label}</div>
+              <div className="eng-step__meta">
+                <span className="eng-step__days">
+                  {s.days} {s.days === 1 ? "day" : "days"}
+                </span>
+                <span className="eng-step__fee">{s.fee ? `${currency}${s.fee}` : "no fee"}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <div className="eng-stepper__total">
         <div style={{ textAlign: "right" }}>
@@ -114,6 +141,67 @@ export function SetupStepper({ steps, currency = "$", sample, className }: Setup
           </div>
         </div>
       </div>
+
+      {/* Scoped styles, composed from the engraved CSS vars, kept inside this
+          one file: no globals.css edit and no shared-file edit, which is the
+          same containment CountryShape uses for its own overlay. Every name
+          here is new, so nothing in globals is overridden and the rules cannot
+          depend on which stylesheet the browser reads first. */}
+      <style>{`
+        .eng-stepper__rail {
+          position: relative;
+        }
+        /* The dashed traverse, spanning node centre to node centre. Equal grid
+           columns put centre i at (i + 0.5) / n, so the insets are exactly half
+           a column at each end. It is drawn only for a route with more than one
+           station: a country page holds the total days and the total fee, not a
+           confirmed per-step split, so one station is the common case and a
+           connector between one thing is a line to nowhere. */
+        .eng-stepper__traverse {
+          position: absolute;
+          /* the cards' own 4px top margin, plus half the 18px node */
+          top: calc(4px + 9px);
+          left: calc(50% / var(--eng-steps));
+          right: calc(50% / var(--eng-steps));
+          border-top: 1px dashed var(--hairline-strong);
+          pointer-events: none;
+        }
+        .eng-stepper__node {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 18px;
+          height: 18px;
+          margin-bottom: 7px;
+          border: 1px solid var(--ink-700);
+          border-radius: 50%;
+          background: var(--surface-card);
+          font-family: var(--font-num);
+          font-size: 11px;
+          font-weight: 700;
+          line-height: 1;
+          font-variant-numeric: tabular-nums;
+          color: var(--text-faint);
+        }
+        /* The last station carried the accent tint on the route line; it still
+           does. Nothing else about the mark changes. */
+        .eng-stepper__node[data-last] {
+          border-color: var(--accent-fill);
+          color: var(--accent);
+        }
+        /* Below 540px globals switches .eng-stepper__cards to row flow and the
+           cards stack, so a horizontal traverse would run across a column of
+           rows and connect nothing. Same breakpoint, deliberately, so the two
+           rules can never disagree about which layout is in force. The marks
+           stay: they left-align with the stacked cards and read as a numbered
+           list, which is what the layout has become. */
+        @media (max-width: 540px) {
+          .eng-stepper__traverse {
+            display: none;
+          }
+        }
+      `}</style>
     </div>
   );
 }
