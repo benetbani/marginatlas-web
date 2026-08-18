@@ -54,14 +54,26 @@
  * and the seed's 8 rows match a separately recomputed buildAcrossCities with a
  * worst dollar gap of $0.
  *
- * ONE BLOCK IS ALWAYS EMPTY AND IT IS NOT A DATA GAP. The same render shows
- * "Formats inside this trade" falling to its ChapterGap on a trade that has six
- * real siblings. The adapter deliberately emits subtypes as DELTAS
- * (`margin_delta_pp`, `capital_delta_pct`) for the live body's `deriveSubtypes`
- * to resolve against the base, and this page reads `keep_pct` / `capital_usd`,
- * which the seed never carries. Left alone here because it is a different
- * defect from the one this pass is about, and because the fix is to reuse
- * `deriveSubtypes` rather than to re-derive the keeps a second way.
+ * "FORMATS INSIDE THIS TRADE" USED TO PRINT A GAP ON EVERY RENDER. Fixed
+ * 2026-08-18, and the cause was a field-name mismatch, not missing data. The
+ * adapter emits subtypes as DELTAS (`margin_delta_pp`, `capital_delta_pct`) off
+ * `base_net_pct` / `base_capital_usd`, for `deriveSubtypes` to resolve against
+ * the base; this page read `keep_pct` / `capital_usd`, which the seed never
+ * carries. Every row's value came back null, `Block` filters null-valued rows,
+ * so the block fell to `ChapterGap` and told the reader "no formats have been
+ * separated out for this trade yet" while the seed held six real siblings.
+ *
+ * The fix is `deriveSubtypes`, the same resolver the live body uses, NOT a
+ * second derivation here: two modules resolving one quantity two ways is how
+ * the keeps drift apart. Measured on restaurants: six formats, keeps 5.2% to
+ * 11.5% around a 7% base, capital $90K to $351K, and the strings now read back
+ * off the render. One decimal, sorted best-keep-first, matching the live body's
+ * SubtypeDrill exactly so the same block does not spell one quantity two ways.
+ *
+ * The base is GUARDED rather than assumed. `deriveSubtypes` falls back to 0 for
+ * a missing base, which would silently print the raw delta as if it were a
+ * keep; when `base_net_pct` is absent the keep here goes null and the block
+ * states its gap honestly instead.
  */
 import { notFound } from "next/navigation";
 
@@ -71,6 +83,7 @@ import { Place } from "@/components/spine2/Place";
 import { SiteFooter } from "@/components/spine2/SiteFooter";
 import { Statblock, type StatRow } from "@/components/spine2/Statblock";
 import { ChapterGap } from "@/components/spine2/page/ChapterGap";
+import { deriveSubtypes } from "@/components/spine/industry/subtypes";
 import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
 
 import "@/styles/atlas-spine.css";
@@ -231,15 +244,25 @@ export default async function IndustryV2Proposal() {
   });
 
   /* ---- formats inside the trade ---- */
-  const subList: Array<{ name: string; keep_pct?: number; capital_usd?: number }> =
-    d.subtypes?.list ?? [];
-  const subRows: StatRow[] = subList.map((s) => ({
-    icon: "subtype" as GlyphId,
-    label: s.name,
-    sub: isNum(s.capital_usd) ? `${money(s.capital_usd)} to open` : "capital not filled",
-    value: isNum(s.keep_pct) ? String(Math.round(s.keep_pct)) : null,
-    unit: "%",
-  }));
+  // Resolved through deriveSubtypes, the same module the live body reads, so the
+  // two surfaces of this block can never carry different keeps. The seed holds
+  // deltas; the base it resolves them against must be real, so a missing
+  // base_net_pct nulls the keep rather than printing the bare delta as one.
+  const subBaseNet: unknown = d.subtypes?.base_net_pct;
+  const hasSubBase = isNum(subBaseNet);
+  const subRows: StatRow[] = deriveSubtypes(d)
+    .slice()
+    .sort((a, b) => b.keeps_pct - a.keeps_pct)
+    .map((s) => ({
+      icon: "subtype" as GlyphId,
+      label: s.name,
+      sub:
+        isNum(s.capital_usd) && s.capital_usd > 0
+          ? `${money(s.capital_usd)} to open`
+          : "capital not filled",
+      value: hasSubBase && isNum(s.keeps_pct) ? s.keeps_pct.toFixed(1) : null,
+      unit: "%",
+    }));
 
   const suits: string[] = d.who_suits?.suits ?? [];
   const thinkTwice: string[] = d.who_suits?.think_twice ?? [];
