@@ -28,13 +28,22 @@ get rejected together.
 | 10 | blog rail | cards | density pass already done |
 | 11 | `HomeNewsletter` | form | density pass already done |
 
-**Declared is not rendered.** Three of the eleven self-omit whenever their data
-does not resolve, which is why he counts fewer than eleven and calls it
-deficient. So the first job of the first homepage tick is to **count what
-actually paints**, at 1280 and at 375, and write that number down.
+**MEASURED, tick 2, and it corrects the assumption this file was written on.**
+All eleven bands EMIT with real data, absent none:
+`docs/loop/artifacts/home-band-census-2026-08-18.md`. The self-omission that
+affects the cell page's data bands does not affect these. Every band now carries
+`data-band` so presence, order and height are measurable at all.
 
-**The target follows from that arithmetic: twelve or thirteen declared bands, so
-that ten still render on a bad data day.** Not eleven declared and eight painted.
+**So the deficiency is not a missing-band problem, and the next measurement is
+paint, not count**: per-band computed height at 1280 and 375, reloaded after the
+resize. An emitted band can still compute to zero height.
+
+**The first real design finding is the flat distribution.** 764 visible words
+across eleven bands, nine of them between 59 and 76 words. Every band is the same
+weight, which is the mechanical shape of bland: a page wants a few loud bands and
+several quiet ones. `world-map` at 14 words is the only band that is inventory
+rather than description, and it is the shape the others should move toward.
+`newsletter` at 133 words is the largest band on the page.
 
 ---
 

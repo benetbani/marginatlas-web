@@ -89,10 +89,23 @@ export const metadata: Metadata = {
  * the one piece of spacing on this page that was set by looking at it.
  */
 function ToneBand({
+  band,
   tone,
   flush = false,
   children,
 }: {
+  /* THE BAND'S NAME IN THE DOM, and it exists because nothing could count them.
+     The founder's standing complaint is that the homepage is "very deficitary",
+     and the honest answer to "how many sections does a visitor actually see"
+     could not be measured: ToneBand emitted an anonymous <div>, three separate
+     bands share tone "home-featured", and three more self-omit when their data
+     does not resolve. So "eleven declared" was the only number anybody had, and
+     it is not the number he is looking at.
+
+     `data-band` paints nothing and changes no layout. It makes band presence,
+     order and rendered height measurable from markup and from a browser, which
+     is what every later homepage tick needs before it can claim anything. */
+  band: string;
   tone: string;
   flush?: boolean;
   children: React.ReactNode;
@@ -123,7 +136,7 @@ function ToneBand({
      layers at z-index 0, so a `position: static` element is not drawn at all.
      ToneBand being positioned is the only reason the homepage ever rendered. */
   return (
-    <div className={`relative ${getToneClass(tone)}`}>
+    <div data-band={band} className={`relative ${getToneClass(tone)}`}>
       <div className={`max-w-content mx-auto px-6 ${flush ? "" : "py-8 md:py-10"}`}>{children}</div>
     </div>
   );
@@ -352,7 +365,7 @@ export default async function HomePage() {
           there: it describes the publisher, this marks the front door. */}
       <WebSite />
 
-      <ToneBand tone="home-hero" flush>
+      <ToneBand band="hero" tone="home-hero" flush>
         {/* THE HERO-ONLY PHOTOGRAPH IS GONE, and it should never have been the
             answer. A copy of the skyline lived here, absolutely positioned,
             covering the hero and fading to paper under the navigator, because
@@ -472,7 +485,7 @@ export default async function HomePage() {
           against opens with real inventory at real prices. This answers the h1
           once, in two real numbers, and the bar between them is the argument.
           Self-omits if the cell does not resolve trusted-local. */}
-      <ToneBand tone="home-featured">
+      <ToneBand band="specimen" tone="home-featured">
         <Specimen specimen={specimen} />
       </ToneBand>
 
@@ -481,7 +494,7 @@ export default async function HomePage() {
           Replaces the old pointed-question list. Self-omits below three.
           Follows the specimen deliberately: that one says "here is what an
           answer is", these say "pick another". */}
-      <ToneBand tone="home-featured">
+      <ToneBand band="example-tiles" tone="home-featured">
         <ExampleTiles tiles={exampleTiles} />
       </ToneBand>
 
@@ -500,7 +513,7 @@ export default async function HomePage() {
           Not a stats strip. That was removed from this page for being
           marketing copy formatted as numerical cards; this carries only
           derived figures, and every one links to the page that proves it. */}
-      <ToneBand tone="home-ledger">
+      <ToneBand band="ledger" tone="home-ledger">
         <AtlasLedger />
       </ToneBand>
 
@@ -515,14 +528,14 @@ export default async function HomePage() {
           as oversized is that it was the only thing on the page carrying visual
           weight. Giving the weight to something that states what the site is
           for is the first half of that fix; the map's own size is the second. */}
-      <ToneBand tone="home-featured">
+      <ToneBand band="catalog-plates" tone="home-featured">
         <CatalogPlates />
       </ToneBand>
 
       {/* Plan v30 hotfix v3 - world map moved to the absolute top of
           the page, directly under the hero + navigator form. Founder
           wants it "just below the actual table at the start". */}
-      <ToneBand tone="home-city-picker">
+      <ToneBand band="world-map" tone="home-city-picker">
         <div id="pick-a-country" className="scroll-mt-20">
           <WorldMapSection />
         </div>
@@ -533,7 +546,7 @@ export default async function HomePage() {
           only. Uses only the clean-resolving US slugs; a trade with fewer than
           three resolving states is dropped and the section self-omits when nothing
           resolves, so every number is real or the row is absent. */}
-      <ToneBand tone="home-featured">
+      <ToneBand band="state-comparison" tone="home-featured">
         <StateComparison comparisons={stateComparisons} />
       </ToneBand>
 
@@ -553,7 +566,7 @@ export default async function HomePage() {
           detail, a price tier), each linking to that city's neighborhoods hub. A
           candidate with no flavor entry is dropped and the section self-omits below
           four cards, so nothing here is invented and the homepage always renders. */}
-      <ToneBand tone="home-cities-placeholder">
+      <ToneBand band="neighborhoods" tone="home-cities-placeholder">
         <NeighborhoodCards cards={neighborhoodCards} />
       </ToneBand>
 
@@ -584,7 +597,7 @@ export default async function HomePage() {
           grid is one column, so whichever panel is first is simply what a
           reader meets first, and meeting the price before being told who the
           thing is for is the wrong way round. */}
-      <ToneBand tone="home-audience">
+      <ToneBand band="audience" tone="home-audience">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
             <AudienceBand variant="panel" />
@@ -632,7 +645,7 @@ export default async function HomePage() {
          duplicated it. /about-data remains the canonical long version. */}
 
       {/* Plan v15 Block 3 - blog rail. */}
-      <ToneBand tone="home-blog-rail">
+      <ToneBand band="blog-rail" tone="home-blog-rail">
         <section>
           {/* THE EYEBROW SAID "Writing" OVER A HEADING THAT SAYS "From the
               Atlas notebook", which is the same label twice, and the charter's
@@ -774,7 +787,7 @@ export default async function HomePage() {
       {/* Prominent free-report lead magnet (homepage reform SP2), above the
           global FooterNewsletterBar. No id="newsletter" here: the footer bar
           owns that anchor. */}
-      <ToneBand tone="home-newsletter">
+      <ToneBand band="newsletter" tone="home-newsletter">
         <HomeNewsletter />
       </ToneBand>
 

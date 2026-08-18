@@ -36,6 +36,17 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 2, homepage.** Wrong: nothing could count your homepage sections. The band
+wrapper emitted an anonymous div, three bands share one tone name, and the only
+number anybody had was "eleven declared". Measured, with real data: **eleven
+declared, eleven emitted, none absent**, 764 visible words, and nine of the
+eleven bands sit between 59 and 76 words. Changed: every band now carries a name
+in the DOM, so height and presence are measurable, and the count assumption in my
+own step file is corrected. **The finding: your homepage is not short of
+sections, it is flat.** Eleven bands of the same weight read as one even column,
+which is the mechanical shape of "bland". The quietest band, the world map at 14
+words, is the only one that shows inventory instead of describing it.
+
 **Tick 1, cleanup.** Wrong: my own step file called 100 images at `E:\atlas\`
 stray screenshots. Measured: 91 of them are TRACKED in the parent repo, 16.5 MB,
 committed 2026-07-27; only 9 were untracked leftovers, 1.26 MB, and all 9 were

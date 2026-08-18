@@ -9,8 +9,8 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **1** done (slot 1, cleanup) |
-| Next slot | **2**, `10-HOMEPAGE.md` |
+| Tick | **2** done (slot 2, homepage) |
+| Next slot | **3**, `08-CLAIMS-AND-INDICES.md` |
 | In-flight | none |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` 101/101 |
@@ -79,6 +79,13 @@ this file alone. If it cannot, this file is wrong.
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
 
+- **Tick 2, slot 2, homepage.** Gave all eleven bands a `data-band` identity,
+  because ToneBand emitted an anonymous div and three bands share one tone, so
+  nothing could count them. Built `scripts/spikes/measure_home_bands.tsx` and
+  measured: 11 declared, **11 emitted, 0 absent** with real data, 764 visible
+  words, nine bands between 59 and 76 words. Corrected `10-HOMEPAGE.md`, which
+  had assumed three self-omitted. Next: paint height at 1280 and 375, now
+  trivial.
 - **Tick 1, slot 1, cleanup.** Deleted 9 unreferenced render leftovers at the
   parent root (1.26 MB); found that 91 of the 100 were TRACKED and out of scope,
   correcting the step file's own figure by a factor of ten. Wrote
