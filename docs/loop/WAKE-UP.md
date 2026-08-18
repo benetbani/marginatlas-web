@@ -36,6 +36,23 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 3, claims. Your example, measured.** The break-in word (forgiving,
+manageable, demanding, brutal) is built from three sub-scores with weights we
+chose, and two things came out of reading it properly. **A 10% error in one input
+changes the printed word 14.1% of the time**, across 1,764 combinations. And on
+three of the four surfaces, time-to-open has no place argument at all: it is a
+per-trade constant, so **24% of that score is identical in every city**. Your
+sentence about a trade in a bad city was right, in numbers.
+
+The machinery to be honest about that already exists: the rating carries a
+"rests on modeled inputs" flag, **four of the five callers set it true, and
+exactly one component on the site actually shows the reader**. That is Q7, and
+the loop did not act on it, because these are the function's numbers across a
+plausible grid, not a count of your live pages. That count is queued next. One
+correction from this tick: my first reading said a missing input invents a
+neutral 50 in production. It does not; callers pass a modeled value. The typecheck
+caught it.
+
 **Tick 2, homepage.** Wrong: nothing could count your homepage sections. The band
 wrapper emitted an anonymous div, three bands share one tone name, and the only
 number anybody had was "eleven declared". Measured, with real data: **eleven

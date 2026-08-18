@@ -9,8 +9,8 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **2** done (slot 2, homepage) |
-| Next slot | **3**, `08-CLAIMS-AND-INDICES.md` |
+| Tick | **3** done (slot 3, claims) |
+| Next slot | **4**, `09-SITE-CONTINUATION.md` (the foreign-font hypothesis) |
 | In-flight | none |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` 101/101 |
@@ -79,6 +79,17 @@ this file alone. If it cannot, this file is wrong.
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
 
+- **Tick 3, slot 3, claims.** Classified the founder's own example,
+  `break_in_rating`, as JUDGED and measured it over 1,764 combinations: a 10%
+  move in one input changes the printed word **14.1%** of the time, and on 3 of 4
+  call sites time-to-open has **no place argument**, so 24% of the score is a
+  per-trade constant. **Corrected mid-tick** after `tsc` caught a field I had not
+  read: the neutral-50 fallback (24.8% to 32.3% word changes) is defensive, not
+  live, because callers pass modeled values rather than null. The real finding is
+  `restsOnModeled`: **4 of 5 production callers hard-code it true and exactly one
+  component displays it**. Instrument: `scripts/spikes/sensitivity_break_in.tsx`.
+  Raised as **Q7**, not acted on. Queued: how many published cells sit within 3
+  points of a band cut-point.
 - **Tick 2, slot 2, homepage.** Gave all eleven bands a `data-band` identity,
   because ToneBand emitted an anonymous div and three bands share one tone, so
   nothing could count them. Built `scripts/spikes/measure_home_bands.tsx` and

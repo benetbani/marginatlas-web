@@ -80,6 +80,30 @@ family and nobody has opened them.
 The loop has NOT acted on this: the parent repo is not the loop's working tree
 and deleting tracked files there is a decision about that project.
 
+**Q7. The break-in word, and where the caveat travels.** Your example, measured,
+and corrected once during the tick. The rating blends three sub-scores with
+weights we chose, and it carries a `restsOnModeled` flag the callers set: **four
+of the five production callers hard-code it to true**. Only ONE component reads
+it, `BreakInScore.tsx`, which prints "read it as directional" and draws the three
+driver bars. Every other surface printing the word shows neither.
+
+Two supporting numbers over 1,764 plausible input combinations: a 10 percent move
+in one real input changes the printed word **14.1 percent** of the time, and on
+three of the four call sites time-to-open has no place argument at all, so **24
+percent of the score is a per-trade constant, identical in every city**.
+
+- **A.** Carry the modeled caveat and the three driver bars to every surface that
+  prints the word. **Recommended:** the mechanism already exists, one component
+  already does it, and it shows the ingredients instead of hiding them.
+- **B.** Omit the word entirely wherever the rating rests on modeled inputs, and
+  print the payback figure alone.
+- **C.** Leave it and write down that the word is directional by design.
+
+**The loop has NOT acted.** The percentages are the function's behaviour across a
+plausible grid, not a count of live pages. The queued measurement is how many
+published cells sit within three points of a band cut-point, which turns each
+percentage into a page count.
+
 ---
 
 ## Answered
