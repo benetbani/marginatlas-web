@@ -115,8 +115,25 @@ function resolveIndustry(industrySlug: string): Industry | null {
  * The food-and-drink cuisine/format siblings the benchmark and subtype drill read.
  * These are the real sector siblings that make an honest "vs the trades next door"
  * comparison (the same kitchen-and-room economics), each carrying its own measured
- * net margin. Curated from the sector membership so a non-restaurant trade still
- * gets its own siblings, capped so the lists stay scannable.
+ * net margin. Capped so the lists stay scannable.
+ *
+ * THEY ARE PEERS, NOT CHILDREN, and this matters because two consumers label
+ * them otherwise. The taxonomy has no parent-child relation: `Industry` carries
+ * id, name, audience, examples, keywords, sector_id and the three classification
+ * arrays, and nothing else. All 23 Food & drink trades are flat members of one
+ * sector, each with its own page and its own margin row. So "Bars & nightclubs"
+ * is the trade next door to "Restaurants", never a format inside it.
+ *
+ * THE DOCSTRING USED TO CLAIM "so a non-restaurant trade still gets its own
+ * siblings". Measured 2026-08-18 across the whole taxonomy: false. The
+ * preferred list below is eight hardcoded food-service ids, so a trade outside
+ * that set matches nothing. 23 of 243 trades get any siblings at all, every one
+ * of them in Food & drink, and all 23 get the SAME six food-service rows. The
+ * other 220 get none, which empties both consumers of this list. Three of the
+ * 23 are grocery-stores, specialty-grocers-delis and wine-liquor-stores, which
+ * therefore sit beside restaurants, cafés, food trucks, pizzerias, bars and
+ * sit-down restaurants. As sector neighbours that is defensible; as anything
+ * closer it is not.
  */
 function foodDrinkSiblings(ind: Industry): Industry[] {
   const sector = INDUSTRIES_BY_SECTOR[ind.sector_id] || [];
@@ -249,6 +266,22 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
   // the real sibling net margins and the real startup-capital archetypes makes the
   // derived rows land exactly on the measured numbers. rent_sensitivity + per-row
   // note are OMITTED, which drops the WherePays re-rank chips (no honest source).
+  //
+  // THE FIELD IS CALLED `subtypes` AND THE ROWS ARE NOT SUBTYPES. It carries the
+  // exact array `benchmark.trades` carries below, minus the self row: measured
+  // 2026-08-18, identical in 23 of the 23 seeds that hold either. So one seed
+  // ships one set of six sector PEERS twice, and its two consumers label them
+  // incompatibly. `benchmark` says "a neighbour in the same sector", which is
+  // true. This one is drawn by SubtypeDrill under "Keep and cost, by format",
+  // which asserts a containment the taxonomy does not have (see
+  // foodDrinkSiblings). The field name cannot be corrected from here without
+  // emptying that component's block, which is a section drop; the block-level
+  // `note` below is the one string this module owns, and it now says plainly
+  // what the rows are. REPORTED for the component owner, not silently reshaped.
+  //
+  // The capital is a MODELED archetype, never a measurement: the archetype
+  // module's own header says the figure is directional and that the surface
+  // must say so on the row.
   const siblings = foodDrinkSiblings(ind);
   const baseCapital = startupCapitalArchetypeForSlug(slug);
   let subtypes: any = undefined;
@@ -276,7 +309,7 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
         base_net_pct: netPct,
         base_capital_usd: baseCapital,
         list,
-        note: "Format, not cuisine, moves the keep: the leaner builds and faster turns keep the most of each dollar.",
+        note: "Each of these is its own trade in the same sector, not a format inside this one. The keep is that trade's own measured net margin; the cost to open is a modeled figure for a baseline economy, not a quote for any one place.",
       };
     }
   }

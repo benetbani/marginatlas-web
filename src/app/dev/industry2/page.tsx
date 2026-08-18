@@ -20,6 +20,15 @@
  * unlike `/dev/city2` and `/dev/country2` this page is not blocked from ever
  * being promoted.
  *
+ * NOT INVENTED IS NOT THE SAME AS MEASURED, and the page read as if it were.
+ * Two figures on it are MODELED archetypes, not measurements: the operator
+ * block's "Cash before the doors open" and the cost column of the trades block
+ * are both `startupCapitalArchetypeForSlug`, a directional baseline-economy
+ * figure whose own module header says the surface must say so on the row. They
+ * sat beside measured margins with nothing to tell them apart. Both now carry
+ * the same quiet "modeled" marker the cell board uses. A `SampleTag` would
+ * still be wrong: these are estimates of a real quantity, not stand-in numbers.
+ *
  * THE SECTION ORDER IS PORTED, NOT DESIGNED. It follows the previous
  * generation's spine, whose section comments run BREAK-EVEN, OPERATOR, CAPITAL
  * PAYBACK, SURVIVAL, WHO IT SUITS, CAVEATS, CLOSE. Four of those the adapter
@@ -195,7 +204,10 @@ export default async function IndustryV2Proposal() {
       ? {
           icon: "startup-cost" as GlyphId,
           label: "Cash before the doors open",
-          sub: "the typical build for this trade",
+          // Modeled, and it has to say so: operator.capital_to_open_usd is
+          // startupCapitalArchetypeForSlug, a directional baseline-economy
+          // archetype, sitting one row under two measured margins.
+          sub: "the typical build for this trade, modeled",
           value: money(op.capital_to_open_usd),
         }
       : null,
@@ -256,9 +268,12 @@ export default async function IndustryV2Proposal() {
     .map((s) => ({
       icon: "subtype" as GlyphId,
       label: s.name,
+      // "modeled" rides on the row because the cost to open is an archetype for
+      // a baseline economy, not a measurement of anything. The keep beside it
+      // IS measured, which is exactly why the two must not read alike.
       sub:
         isNum(s.capital_usd) && s.capital_usd > 0
-          ? `${money(s.capital_usd)} to open`
+          ? `${money(s.capital_usd)} to open, modeled`
           : "capital not filled",
       value: hasSubBase && isNum(s.keeps_pct) ? s.keeps_pct.toFixed(1) : null,
       unit: "%",
@@ -407,14 +422,18 @@ export default async function IndustryV2Proposal() {
           gap="No sector neighbours carry a measured keep, so there is nothing honest to sit this trade beside."
         />
 
-        {/* 7 , FORMATS. The variance inside one trade name, which is the thing
-            a single national average hides. */}
+        {/* 7 , THE TRADES NEXT DOOR, and what each door costs. This block used
+            to be titled "Formats inside this trade", which was false: the rows
+            are the same six sector PEERS block 6 sits this trade against, not
+            formats inside it. See the header for the measurement. What it adds
+            over block 6 is the cost of entry; the duplication is real and is
+            left visible rather than hidden behind a second name. */}
         <Block
-          label="Formats inside this trade"
+          label="The trades next door"
           icon={"subtype" as GlyphId}
           rows={subRows}
           note={d.subtypes?.note}
-          gap="No formats have been separated out for this trade yet, so the page cannot show the spread inside the name."
+          gap="No sector neighbours carry both a measured keep and a cost to open, so there is nothing honest to sit this trade beside."
           valCol={96}
         />
 
