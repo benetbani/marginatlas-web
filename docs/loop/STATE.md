@@ -9,9 +9,9 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **9** done (slot 9, claims), after the machine stopped forking mid-tick and recovered |
-| Next slot | **10**, `06-REFORMATION.md` |
-| In-flight | none. The Q8 repair is a founder decision, not unfinished work. |
+| Tick | **10** done (slot 10, reformation, move M1) |
+| Next slot | **11**, `10-HOMEPAGE.md` |
+| In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
 | HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
@@ -46,7 +46,14 @@ this file alone. If it cannot, this file is wrong.
   origin/main...HEAD` instead. Superseded ref
   written 2026-08-18 05:42. The 2026-08-18 dossier says they are unpushed; it was
   written six minutes earlier. The loop still never pushes.
-- The chain is **103 gates** since tick 7. `CLAUDE.md` says 95 and
+- **Do not type the gate count here or anywhere.** Since tick 10 it is generated
+  into a marked block in `CLAUDE.md`, `docs/verification-protocol.md` and
+  `docs/loop/02-ORGANISATION-RESEARCH.md` by `scripts/counts.ts`, and gate
+  `counts-fresh` fails the chain when one goes stale. Read it from any carrier or
+  run `npx tsx scripts/counts.ts`. This file and `PROMPT.md` still say it in
+  prose and are the two known remaining carriers, deliberately left: STATE is
+  rewritten every tick by two workers, PROMPT is pasted into chat.
+- The chain was **103 gates** at tick 7 and 104 from tick 10. `CLAUDE.md` says 95 and
   `docs/verification-protocol.md` says 31. Both are stale and both are on the
   contradiction list below.
 - `cell-lattice` defers 3 checks by design. Deferred is not passed.
@@ -107,6 +114,20 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 10, slot 10, reformation. Move M1 executed: no document states a repo
+  count any more, it carries one.** `scripts/counts.ts` measures gates (parsed
+  with `strip_comments`, because 35 comment blocks sit inside the GATES array and
+  a naive grep agrees only by luck), tracked files, docs, scripts and routes.
+  Three carriers converted: `CLAUDE.md`, `docs/verification-protocol.md` (which
+  had said "prebuild 31/31" since the chain was 31) and this loop's own
+  `02-ORGANISATION-RESEARCH.md`, which theorised this defect and then committed
+  it twice in two days. Gate 104 `counts-fresh` fails the chain on a stale block
+  and names the fix command, copying cog's `--check-fail-msg`. Negative-tested.
+  **It proved itself in the same tick:** registering the gate moved the count
+  103 to 104 and one `--write` corrected all three.
+  Left uncarried on purpose: `STATE.md` (rewritten every tick, by two workers)
+  and `PROMPT.md` (pasted into chat). Both named in the proposal.
 
 - **Tick 9, slot 9, claims. The dossier's precision defect is CONFIRMED, exactly,
   and my own first reading of it was wrong.** Measured on the real

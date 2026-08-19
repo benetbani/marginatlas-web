@@ -57,7 +57,23 @@ structurally impossible, and only for values that can be generated.
 
 ## 3. The moves, ordered by value / blast radius
 
-### M1 — Generate every stated count. **Rank 1.**
+### M1 — Generate every stated count. **Rank 1. EXECUTED 2026-08-19, tick 10.**
+
+> **Landed.** `scripts/counts.ts` produces the numbers, three carriers hold a
+> marked block instead of stating them (`CLAUDE.md`,
+> `docs/verification-protocol.md`, this step's own `02-ORGANISATION-RESEARCH.md`),
+> and gate 104 `verify_counts_fresh` fails the chain when a block goes stale,
+> naming the fix command the way cog's `--check-fail-msg` does. Negative-tested
+> by editing 103 to 99 in `CLAUDE.md`.
+> **Two carriers from the original blast radius were NOT converted:**
+> `docs/loop/STATE.md` and `docs/loop/PROMPT.md`. STATE is rewritten by every
+> tick and by a concurrent worker, so a generated block there is a collision
+> waiting to happen; PROMPT is pasted into chat by the founder, where a marker
+> comment would be noise. Both state the gate count in prose today and both are
+> covered by the prose rule in `05-GUARDRAILS.md` rather than by the gate.
+> The proof it works: registering the new gate changed the count from 103 to 104,
+> and one `--write` updated all three carriers.
+
 
 **Why first:** four documents state the gate count at four different values (95,
 31, 101, 102). It is the defect class the whole step exists to attack, and it is

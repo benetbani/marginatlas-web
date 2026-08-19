@@ -217,6 +217,14 @@ const GATES: Gate[] = [
      only passes. The duplicate was deleted rather than policed; this stops a
      second one growing back. Negative-tested by re-inducing a three-gate chain. */
   { name: "single-gate-chain", script: "scripts/verify_single_gate_chain.ts" },
+  /* THE CARRIERS HOLD CURRENT NUMBERS. Added 2026-08-19, executing move M1 of
+     docs/loop/artifacts/org-proposal.md. The gate count alone was stated at ~78
+     line locations across 32 files at TEN values (25, 26, 31, 53, 58, 95, 98,
+     99, 101, 102), every one typed by somebody who had just measured it. So
+     documents stopped stating counts and started carrying a generated block,
+     and this fails the chain when a block goes stale, naming the command that
+     fixes it. Negative-tested by editing 103 to 99 in CLAUDE.md. */
+  { name: "counts-fresh", script: "scripts/verify_counts_fresh.ts" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },

@@ -36,6 +36,25 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 10. No document in this repo states a count any more. It carries one.**
+The gate count had been written down at about 78 places across 32 files, at ten
+different values, every one typed by somebody who had just measured it correctly.
+That is the single defect class behind every tick of this loop.
+
+So `scripts/counts.ts` now measures the repo, three files hold a generated block
+instead of a number, and a new gate turns the build red the moment a block goes
+stale, telling you the one command that fixes it. The files converted are the
+three that matter most: `CLAUDE.md`, which every session reads first and said 95;
+the verification protocol, which said 31 and has said 31 since the chain actually
+was 31; and the loop's own research file, which described this exact defect and
+then committed it twice in two days.
+
+**It proved itself inside the same half hour.** Registering the new gate moved
+the count from 103 to 104, and one command corrected all three files at once.
+Two files were deliberately left out and are named in the proposal, because a
+generated block in a file two workers rewrite every half hour is a collision, not
+a fix.
+
 **Tick 9. Your industry page says a trade keeps $9 and 8.6%, in two places, on
 one screen.** Measured on restaurants: the benchmark rail and the subtype table
 name the same six trades and disagree on every one of them. Fast-casual $9
