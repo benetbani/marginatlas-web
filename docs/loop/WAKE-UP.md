@@ -36,6 +36,38 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 8. Two things we believed about the homepage were wrong, and both in the
+same direction: the job was already done.**
+
+**It is 617 words, not 764.** The plan said cut it to 615 and treated that as the
+main homepage job. Measured in a browser, what a reader can actually see is 617 on
+a desktop and 613 on a phone. The 764 came from counting the server output with
+the tags stripped, which includes markup that never appears at any one width. The
+target was already met, and a tick that had started cutting would have sailed
+straight past it while thinking it was getting closer.
+
+**And "too tall" is three bands, not spacing.** On a phone the page is 9,848px,
+and `neighborhoods` (1,568), `catalog-plates` (1,142) and `audience` (1,127) are
+**39% of it between them, for 208 words**. Components stacking tall on a narrow
+screen, which is a different fix from anything on the list. For scale: the blog
+was rejected at 32,114px and cities at 20,459px, so the homepage is not in that
+category.
+
+**Good news on the font.** I ran the census that has been pending since you said
+the font looked foreign. Exactly two families on the page, Inter and Newsreader,
+nothing leaking in, and the display headings resolve to Newsreader rather than
+falling back to body type. That confirms the fix by looking at the painted page
+rather than at the code.
+
+**All eleven bands paint at both widths and none is invisible**, worth checking
+because an unpainted element is how the footer vanished from every page for weeks.
+
+**Two gaps, stated.** No screenshots: the browser pane would not display, so the
+page never composited and every attempt timed out. And two agents ran tick 8 at
+once because the cron fired mid-tick; nothing was lost, but they both write the
+same two ledger files.
+
+
 **Tick 8. Four of your design rules were being enforced against a 14-line file.**
 The gates for eyebrows, bold display type, subsection icons and the
 horizontal-bar budget all read `dev/spine-cell`, `dev/spine-city`,

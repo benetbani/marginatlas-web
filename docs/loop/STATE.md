@@ -108,6 +108,23 @@ this file alone. If it cannot, this file is wrong.
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
 
+- **Tick 8b, slot 8, site continuation, THE SAME SLOT NUMBER AS THE ENTRY BELOW.**
+  Two agents ran tick 8 concurrently: the cron fired while a tick was already in
+  progress. Files did not collide (that line took backlog P0-1 and the `verify_*`
+  gates; this one took the homepage paint census), but `STATE.md` and
+  `WAKE-UP.md` are written by both and one anchor-based edit failed against the
+  other agent's rewrite. **The subagent doctrine says ownership is exclusive and
+  declared; the cron does not know that.** Filed as a loop-health item for slot 7.
+  Work landed: the first PAINT measurement of the homepage. 11/11 bands paint at
+  both widths, **0 compute `position: static`**, no horizontal scroll, 5,933px at
+  1280 and 9,848px at 375. **The page is 617 words, not 764**, so the 615 target
+  was already met and P1 is re-aimed from words to height. **Height is three
+  bands**: neighborhoods 1,568px, catalog-plates 1,142px, audience 1,127px, 39% of
+  the mobile page for 208 words. Font census: exactly two families, Inter 171 and
+  Newsreader 61, confirming `2179bcb2` from the paint side. Filed P0-14, a defect
+  class gate 102 does not catch. `796b96aa`, census in
+  `artifacts/home-paint-census-2026-08-19.md`.
+
 - **Tick 8, slot 8, site continuation / backlog P0-1.** Repointed four design
   gates from the `dev/spine-*` route wrappers to the bodies they render. The
   wrappers are 23 to 27 lines holding ONE JSX element; the bodies total 3,695
@@ -117,11 +134,22 @@ Newest first. One line per tick: tick number, slot, what landed, the commit.
   `NeighborhoodExplorer.tsx` TWICE, double-counting the hood group (2/2 on a
   phantom, now 1/2); on real bodies it reads **cell 3/3 and industry 3/3, exactly
   at budget**. Checkpointed tick 6's stranded render harness first (`7cf76941`).
-  **A NEW FLAKE SIGNATURE, worth knowing:** the first full chain reported all 103
-  red with `spawn UNKNOWN` errno -4094 and the runner crashed. Nothing had run.
-  It is Windows process creation failing under load, a sibling of the documented
-  esbuild flake, and the same fault hit `git commit` and a `python` heredoc
-  earlier in the tick. Re-ran at `--concurrency=2`.
+  **A NEW FLAKE SIGNATURE, and the commit message understates it.** `85f6d5df`
+  says "green after two false starts"; the accurate account is here. Run 1: all
+  103 reported red, `spawn UNKNOWN` errno -4094, runner crashed, nothing
+  executed. Run 2: `npm` itself failed, "Could not determine Node.js install
+  directory". Run 3, driven straight through `tsx` at `--concurrency=2`: **95
+  passed, 8 crashed at STARTUP** in under 2.6s with empty output, six at
+  `0xC0000409` and two at exit 134, the segfault signature already in the notes.
+  The 8 are the first eight entries in the array, so they took the worst of the
+  contention. **All eight were then re-run individually and all eight pass.** So
+  the chain is green on the evidence and has never once been green in a single
+  process on this machine tonight. Windows process creation also killed a `git
+  commit` and a `python` heredoc in the same half hour.
+  **Two measurement traps caught while checking this**, both already in the
+  notes and both re-paid: `$?` after a pipe reports `tail`, not the gate, so six
+  gates read as exit 0 while crashing; and the CWD reset to `E:\atlas` mid-tick,
+  so the same six failed with `ERR_MODULE_NOT_FOUND` and looked like defects.
 
 - **Tick 7, slot 7, failure reflection then guardrail.** Mined ticks 1-6: **one
   class accounts for all six**, a typed statement about the codebase that was
