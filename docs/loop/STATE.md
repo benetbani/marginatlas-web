@@ -9,8 +9,8 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **7** done (slot 7, failure reflection then guardrail) |
-| Next slot | **8**, `09-SITE-CONTINUATION.md` |
+| Tick | **8** done (slot 8, site continuation, backlog P0-1) |
+| Next slot | **9**, `08-CLAIMS-AND-INDICES.md` |
 | In-flight | none. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
@@ -107,6 +107,21 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 8, slot 8, site continuation / backlog P0-1.** Repointed four design
+  gates from the `dev/spine-*` route wrappers to the bodies they render. The
+  wrappers are 23 to 27 lines holding ONE JSX element; the bodies total 3,695
+  lines and were read by nothing. Dry-run before landing: zero new failures, and
+  the gates' vocabulary is present in the bodies (Rail 3-13, Movement 5-8, Head
+  0-10), so the coverage is real rather than vacuous. `bar_budget` also listed
+  `NeighborhoodExplorer.tsx` TWICE, double-counting the hood group (2/2 on a
+  phantom, now 1/2); on real bodies it reads **cell 3/3 and industry 3/3, exactly
+  at budget**. Checkpointed tick 6's stranded render harness first (`7cf76941`).
+  **A NEW FLAKE SIGNATURE, worth knowing:** the first full chain reported all 103
+  red with `spawn UNKNOWN` errno -4094 and the runner crashed. Nothing had run.
+  It is Windows process creation failing under load, a sibling of the documented
+  esbuild flake, and the same fault hit `git commit` and a `python` heredoc
+  earlier in the tick. Re-ran at `--concurrency=2`.
 
 - **Tick 7, slot 7, failure reflection then guardrail.** Mined ticks 1-6: **one
   class accounts for all six**, a typed statement about the codebase that was

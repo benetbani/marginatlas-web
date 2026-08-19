@@ -55,13 +55,13 @@ function tsxIn(dir: string): string[] {
 
 const GROUPS: Group[] = [
   { name: "country", budget: 8, files: ["src/app/dev/spine/page.tsx"] },
-  { name: "city", budget: 3, files: tsxIn("src/app/dev/spine-city") },
-  { name: "cell", budget: 3, files: tsxIn("src/app/dev/spine-cell") },
-  { name: "industry", budget: 3, files: tsxIn("src/app/dev/spine-industry") },
+  { name: "city", budget: 3, files: ["src/components/spine/city/city-view.tsx"] },
+  { name: "cell", budget: 3, files: ["src/components/spine/cell/cell-view.tsx"] },
+  { name: "industry", budget: 3, files: ["src/components/spine/industry/industry-view.tsx"] },
   {
     name: "hood",
     budget: 2,
-    files: [...tsxIn("src/app/dev/spine-hood"), "src/components/spine/NeighborhoodExplorer.tsx"],
+    files: ["src/components/spine/NeighborhoodExplorer.tsx"],
   },
   { name: "home", budget: 2, files: ["src/components/home/home2-view.tsx"] },
 ];

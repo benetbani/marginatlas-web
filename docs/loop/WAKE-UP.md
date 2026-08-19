@@ -36,6 +36,30 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 8. Four of your design rules were being enforced against a 14-line file.**
+The gates for eyebrows, bold display type, subsection icons and the
+horizontal-bar budget all read `dev/spine-cell`, `dev/spine-city`,
+`dev/spine-industry` and `dev/spine-hood`. Those route files are 23 to 27 lines
+and hold **one JSX element** each: `<SpineCellBody />`. The body it renders, the
+one your live route imports, is 1,486 lines and nothing checked it. Across the
+four: 100 lines of wrapper guarded, 3,695 lines of real page unguarded.
+
+Repointed after a dry run proved it would not turn the chain red: zero new
+failures, and the bodies do contain what those gates look for, so this is real
+coverage and not a vacuous pass. Two things fell out. The bar-budget gate listed
+one file **twice**, counting that page's bars double: it read 2 of 2, one phantom
+bar from failing your build, and now reads 1 of 2. And on the real bodies it
+reads **cell 3/3 and industry 3/3, exactly at your budget**, so one more
+horizontal bar on either page fails. Six more gates still point at workshop
+files; they are named in the backlog.
+
+**One thing to know about this machine.** The full chain reported all 103 gates
+red without running any of them: Windows refused to create processes
+(`spawn UNKNOWN`), which also killed a `git commit` and an `npm` invocation
+during the same half hour. Every gate I re-ran individually passed. It is a
+sibling of the esbuild flake already in the notes, and it is written down so no
+future tick reads it as 103 real failures.
+
 **Tick 7. Your fallback gate command was running 43 of 102 checks.** `npm run
 prebuild:serial` is documented as "same gates, single-process, use if parallel is
 flaky", and the parallel runner is exactly the one that dies intermittently on

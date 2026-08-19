@@ -61,12 +61,23 @@ function tsxIn(dir: string): string[] {
 /** The spine + home surface files (same scope as verify_bar_budget / verify_no_bold_display),
  * plus the home NavigatorForm if it exists at its current real path (grepped, not the
  * originally-assumed src/components/home/NavigatorForm.tsx). */
+/* REPOINTED 2026-08-19 FROM THE DEV WRAPPERS TO THE BODIES THEY RENDER.
+   This list used to name src/app/dev/spine-cell|city|industry|hood. Those route
+   files are 23 to 27 lines and carry ONE JSX element each: `<SpineCellBody />`
+   and its siblings. So the rule was being enforced against a wrapper while the
+   1,486-line body it renders, which the live route imports directly, was read by
+   nothing. Measured: the four wrappers total 100 lines against 3,695 lines of
+   body, and the bodies contain the vocabulary this gate checks (Rail 3 to 13,
+   Movement 5 to 8, Head 0 to 10 per file), so the new coverage is real rather
+   than vacuous. Dry-run before landing: zero new failures across all four
+   sibling gates, which is why this could be a straight repoint and not a ratchet.
+   `src/app/dev/spine/page.tsx` stays: it is the authored design reference. */
 const SURFACE_FILES: string[] = [
   "src/app/dev/spine/page.tsx",
-  ...tsxIn("src/app/dev/spine-city"),
-  ...tsxIn("src/app/dev/spine-cell"),
-  ...tsxIn("src/app/dev/spine-industry"),
-  ...tsxIn("src/app/dev/spine-hood"),
+  "src/components/spine/city/city-view.tsx",
+  "src/components/spine/cell/cell-view.tsx",
+  "src/components/spine/industry/industry-view.tsx",
+  "src/components/spine/NeighborhoodExplorer.tsx",
   "src/components/spine/NeighborhoodExplorer.tsx",
   "src/components/home/home2-view.tsx",
   "src/components/NavigatorForm.tsx",
