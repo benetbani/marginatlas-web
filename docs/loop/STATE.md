@@ -9,11 +9,11 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **3** done (slot 3, claims) |
-| Next slot | **4**, `09-SITE-CONTINUATION.md` (the foreign-font hypothesis) |
+| Tick | **4** done (slot 4, site continuation) |
+| Next slot | **5**, `02-ORGANISATION-RESEARCH.md` |
 | In-flight | none |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
-| Gates | `tsc` clean; `prebuild` 101/101 |
+| Gates | `tsc` clean; `prebuild` **102/102** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
 | HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
 
 ---
@@ -23,7 +23,7 @@ this file alone. If it cannot, this file is wrong.
 - **The 162 commits are already pushed.** `origin/main` equals `HEAD`, ref
   written 2026-08-18 05:42. The 2026-08-18 dossier says they are unpushed; it was
   written six minutes earlier. The loop still never pushes.
-- The chain is **101 gates**. `CLAUDE.md` says 95 and
+- The chain is **102 gates** since tick 4. `CLAUDE.md` says 95 and
   `docs/verification-protocol.md` says 31. Both are stale and both are on the
   contradiction list below.
 - `cell-lattice` defers 3 checks by design. Deferred is not passed.
@@ -55,12 +55,18 @@ this file alone. If it cannot, this file is wrong.
    `--atlas-surface-card` is opaque `#ffffff`; it is now
    `rgba(255,255,255,0.955)`.
 
-## Leads, not yet confirmed
+## Leads, resolved
 
-- **The foreign font.** `src/app/globals.css:882` declares
-  `--font-display: var(--font-display), ...`, a self-reference, while its two
-  neighbours reference `--font-sans`. Would make every engraved display heading
-  fall back to body type. **Measure before believing it.** Owner step 09.
+- **The foreign font: CONFIRMED and FIXED, tick 4.** `--font-display` referenced
+  itself on the same element next/font's class lands on. Measured in a browser
+  on a two-order fixture: when `:root` won the tie the property computed to the
+  EMPTY STRING and consumers inherited the body sans; when the font class won,
+  the `:root` fallback chain never applied. Fixed by giving next/font the slot
+  name `--font-serif` and having `--font-display` read it, which is exactly how
+  `--font-body` reads `--font-sans`. Re-measured in both orders after the fix:
+  identical, correct. Gated by `verify_no_self_referential_css_vars`.
+  **Still unknown: which order production actually serves**, so how much of the
+  site a reader currently sees in the wrong face is not established.
 
 ---
 
@@ -79,6 +85,10 @@ this file alone. If it cannot, this file is wrong.
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
 
+- **Tick 4, slot 4, site continuation.** Confirmed the foreign-font hypothesis
+  in a browser and fixed it in two lines, plus a false comment in `LogoWordmark`
+  claiming an invalid variable falls through to Georgia. Added gate 102,
+  `verify_no_self_referential_css_vars`, negative-tested. Chain is now 102/102.
 - **Tick 3, slot 3, claims.** Classified the founder's own example,
   `break_in_rating`, as JUDGED and measured it over 1,764 combinations: a 10%
   move in one input changes the printed word **14.1%** of the time, and on 3 of 4

@@ -31,7 +31,22 @@ import { isWarmFrameEnabled } from "@/lib/feature_flags";
 const newsreader = Newsreader({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-display",
+  /* THE SLOT IS `--font-serif`, NOT `--font-display`, and the rename is a bug
+     fix rather than a preference. globals.css declares
+     `--font-display: var(--font-display), Newsreader, ...` on :root, which is
+     the SAME element this class lands on, so the property referenced itself.
+     Measured in a browser on a two-order fixture: when the :root declaration
+     wins the tie, `--font-display` computes to the EMPTY STRING and every
+     `font-family: var(--font-display)` element silently inherits the body sans.
+     Not Newsreader, and not the Georgia written beside it, because a
+     self-referential custom property is invalid at computed-value time and it
+     takes the whole declaration with it. When the class wins instead, the
+     :root declaration is simply discarded, so its fallback chain never applies
+     either. Harmful in one order, useless in the other, and which one you get
+     depends on stylesheet ordering.
+     `--font-sans` next to it never had this problem because the slot and the
+     consumer have different names. This makes the serif follow its neighbour. */
+  variable: "--font-serif",
   style: ["normal", "italic"],
 });
 const inter = Inter({

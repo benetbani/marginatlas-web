@@ -47,7 +47,9 @@ cd /e/atlas/website && npx tsc --noEmit
 cd /e/atlas/website && npm run prebuild
 ```
 
-- `tsc` must be clean. `prebuild` must be **101/101**. The chain is the
+- `tsc` must be clean. `prebuild` must be **102/102** since tick 4 added
+  `verify_no_self_referential_css_vars`. Any pasted prompt still saying 101 is
+  stale by exactly that gate. The chain is the
   authority on the gate count, not any document that quotes it. A count reading
   low is how a missing gate hides.
 - `cell-lattice` reports **3 deferred** checks. That is its own honest output and

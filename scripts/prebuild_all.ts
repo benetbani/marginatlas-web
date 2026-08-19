@@ -197,6 +197,17 @@ const GATES: Gate[] = [
      what both defects actually were. */
   { name: "take-home-identity", script: "scripts/verify_take_home_identity.ts" },
   { name: "token-steps", script: "scripts/verify_token_steps_exist.ts" },
+  /* A CUSTOM PROPERTY THAT REFERENCES ITSELF. Added 2026-08-18 after
+     globals.css was found declaring `--font-display: var(--font-display), ...`
+     on :root, the same element next/font's class lands on. Measured in a
+     browser on a two-order fixture: when :root wins the tie the property
+     computes to the EMPTY STRING and every consumer INHERITS THE BODY SANS,
+     because invalid-at-computed-value-time discards the whole declaration
+     rather than stepping to the next family. When the font class wins instead,
+     the :root declaration is discarded and its fallback chain never applies.
+     No ordering does what the author meant, which is why this is a hard gate.
+     Negative-tested by re-inducing the exact line. */
+  { name: "no-self-referential-css-vars", script: "scripts/verify_no_self_referential_css_vars.ts" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },

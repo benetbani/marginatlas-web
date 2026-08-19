@@ -36,6 +36,20 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 4. The foreign font: found, proved, fixed.** You said the font on the last
+work was foreign. It was. `--font-display` was defined as a reference to itself,
+on the same element the font loader writes to. Measured in a browser rather than
+argued: in the order where our stylesheet wins, that property computes to
+**nothing at all**, and every heading using it silently renders in the body sans.
+The Georgia fallback written right beside it never runs, because an invalid
+variable throws away the whole line instead of stepping to the next name. Fixed
+by giving the font loader its own slot, `--font-serif`, which is precisely how
+the body font has always worked. Re-measured in both stylesheet orders after the
+fix: correct in both, so it can no longer depend on luck. Added as gate 102 so it
+cannot come back. **What I still cannot tell you:** which order production
+serves, so I cannot say how many of your live pages a reader sees in the wrong
+face.
+
 **Tick 3, claims. Your example, measured.** The break-in word (forgiving,
 manageable, demanding, brutal) is built from three sub-scores with weights we
 chose, and two things came out of reading it properly. **A 10% error in one input

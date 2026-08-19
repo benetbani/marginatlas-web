@@ -879,7 +879,12 @@
 
   /* ---- fonts (reuse the layout.tsx font slots) ------------------------- */
   --font-body: var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display), Newsreader, Georgia, ui-serif, serif;
+  /* Reads the SLOT (--font-serif, set by next/font in layout.tsx), never
+     itself. It used to read --font-display, its own name, on the same element:
+     a cycle, invalid at computed-value time, which made every consumer inherit
+     the body sans instead of the serif. --font-body below has always had this
+     right; this is the same shape. */
+  --font-display: var(--font-serif), Newsreader, Georgia, ui-serif, serif;
   /* the tabular figure font: the body sans carries tabular-nums; no separate
      numeric cut is shipped, so --font-num aliases the body font. */
   --font-num: var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;

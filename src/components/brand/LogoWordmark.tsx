@@ -3,8 +3,15 @@
  * (vermillion). For headers, footers, OG cards, marketing surfaces.
  *
  * The text uses the loaded display serif (Newsreader) via the
- * --font-display CSS variable. Falls through to Georgia when the
- * variable is unset (offline / first render).
+ * --font-display CSS variable, which resolves through the --font-serif slot
+ * next/font sets in layout.tsx.
+ *
+ * IT DOES NOT "fall through to Georgia when the variable is unset", which this
+ * comment claimed until 2026-08-18. Measured in a browser: an INVALID variable
+ * makes the whole font-family declaration invalid at computed-value time, so
+ * the element inherits rather than taking the next name in the list. An UNSET
+ * variable does fall through; an invalid one does not, and the difference is
+ * the entire defect this token used to have.
  */
 import * as React from "react";
 import { LogoMark } from "./LogoMark";
