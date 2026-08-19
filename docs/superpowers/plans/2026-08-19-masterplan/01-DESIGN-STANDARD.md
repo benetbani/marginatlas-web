@@ -20,11 +20,22 @@ already ratified. Three consequences, each measured:
 1. **The proof is the data.** Observable's hero band is six live charts and
    **zero words**; Our World in Data leads with "14,082 charts"; Nomad List's
    hero *is* the grid. That is the model. Stripe's gradient is not.
-2. **Editorial vertical rhythm, not SaaS.** Measured section padding: The Verge
-   32–64px, Wired 48px; against Linear/Raycast/Framer/Resend 96px and Vercel
-   192px. **Adopt 56px desktop / 40px mobile.** This removes roughly a third of
-   page height without deleting a single word, and it is the single dial behind
-   the founder's repeated "too tall".
+2. **Editorial vertical rhythm, not SaaS.** Measured section padding elsewhere:
+   The Verge 32-64px, Wired 48px; against Linear/Raycast/Framer/Resend 96px and
+   Vercel 192px.
+   **CORRECTED, tick 6: this site is ALREADY at the editorial end, and tighter
+   than the range.** `ToneBand` renders `py-8 md:py-10` = **32px mobile / 40px
+   desktop**. An earlier draft of this file said "adopt 56px desktop" and that
+   was **backwards** - it would have added roughly 320px at desktop and failed
+   `verify_spacing_scale`, whose scale is derived from the founder's mockup and
+   **stops at 40**.
+   **So vertical rhythm is NOT the dial behind "too tall" here.** It was already
+   pulled, in `4ff9d677`, which removed 1,216px (18% of page height) by
+   collapsing four competing rhythms into one. Look for height elsewhere: word
+   count, band count, and per-band computed height.
+   **General finding, local measurement.** The research about other sites was
+   correct and the instruction derived from it for THIS site was wrong, because
+   nobody measured this site first.
 3. **Numbers must look measured, not written.** Tabular lining figures on every
    figure. Stripe mandates this on every money cell.
 

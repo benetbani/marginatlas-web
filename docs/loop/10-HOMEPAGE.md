@@ -123,7 +123,10 @@ gates defend it, and so nobody can silently drop it later.
    `docs/loop/artifacts/shots/home-<date>-<width>.jpeg`.
 3. Report: bands declared, bands painted, page height before and after, words
    added or cut.
-4. `tsc` clean, `prebuild` 101/101.
+4. `tsc` clean, `prebuild` all-green at the count the chain itself reports.
+   Do not hardcode it here: this line said 101, the chain is 102, and the same
+   number is stated at ~78 locations across 32 files at ten different values.
+   See backlog P0-8.
 
 ## Done test
 

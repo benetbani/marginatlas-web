@@ -99,11 +99,26 @@ change.
 Target: **11 bands / 764 words → 10 bands / 615 words**, per `01-DESIGN-STANDARD`
 §5. One band per tick. **Never touch the H1.**
 
-- [ ] **P1-0 · home/rhythm · Section padding is SaaS-scale, and it is the single
-      dial behind "too tall".** Editorial runs 32–64px; ours runs SaaS-scale.
-      *Do:* 56px desktop / 40px mobile. *Expect:* roughly a third of page height
-      removed without deleting a word. **Do this first — it is one change and it
-      re-frames every band below it.**
+- [x] **P1-0 · home/rhythm · WITHDRAWN, tick 6. The premise was false and the
+      change would have done the opposite of its own goal.**
+      It claimed our section padding is SaaS-scale and proposed 56px desktop.
+      **Measured instead of assumed:** `ToneBand` in `src/app/page.tsx:140`
+      renders `py-8 md:py-10` = **32px mobile / 40px desktop**, which is already
+      at the tight end of the editorial 32-64px range the research names, not the
+      SaaS 96-192 end.
+      **It would also have failed a gate.** `scripts/verify_spacing_scale.ts:32`
+      defines `SCALE = {2,4,6,8,10,12,14,16,18,20,22,26,32,40}`. **There is no
+      56.** The scale was derived from the founder's own mockup and stops at 40,
+      so 40 is a ratified ceiling rather than a current value to raise.
+      **And the work was already done.** Commit `4ff9d677`, "ten bands, four
+      rhythms, and 18 percent of the page was padding", consolidated four
+      competing rhythms into this one and removed **1,216px, 18% of page height**.
+      Raising 40 to 56 across 10 non-flush bands would have added roughly 320px
+      back at desktop.
+      **The lesson, and it is why this entry is kept rather than deleted:** a
+      general research finding ("editorial rhythm is 32-64px") was applied to this
+      page without measuring this page. The finding was true and the instruction
+      derived from it was backwards.
 - [ ] **P1-1 · home/band-7 · "How a number is made" does not exist**, and it is
       the moat: held vs modelled vs extrapolated, plus the 48,114 estimates
       deliberately not ingested. 90 words.
