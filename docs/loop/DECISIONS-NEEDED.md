@@ -104,6 +104,23 @@ plausible grid, not a count of live pages. The queued measurement is how many
 published cells sit within three points of a band cut-point, which turns each
 percentage into a page count.
 
+**Q8. The industry page prints one quantity twice, at two precisions.** Measured
+on `restaurants`: the benchmark rail says Fast-casual keeps **$9** and the
+subtype table says **8.6%**, for the same trade, on the same page. Six rows, six
+disagreements, worst 0.5pp. Both descend from the same net margin; the rail
+rounds at the adapter, the table keeps a decimal.
+
+- **A.** Round the subtype table to whole numbers, so both read $9 / 9%.
+  **Recommended:** it keeps the `$ per $100` idiom your design prints at 64px,
+  the rank order is unchanged, and the three-way tie at 8.6 stays a tie.
+- **B.** Give the rail the decimal instead: `$8.6 per $100`. More precise, and a
+  decimal in a 64px figure.
+- **C.** Leave both and label them differently, so the reader knows one is
+  rounded.
+
+Reversible either way and it touches no locked value, but it changes a printed
+number on a live page, so the loop measured it and stopped.
+
 ---
 
 ## Answered

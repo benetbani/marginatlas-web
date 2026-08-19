@@ -36,6 +36,30 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 9. Your industry page says a trade keeps $9 and 8.6%, in two places, on
+one screen.** Measured on restaurants: the benchmark rail and the subtype table
+name the same six trades and disagree on every one of them. Fast-casual $9
+against 8.6%, Food trucks $12 against 11.5%, Bars $7 against 6.5%. Worst gap half
+a point. They descend from the same number: the rail rounds it, the table keeps a
+decimal, and nothing reconciles them.
+
+I did not change it, because which one wins is your call rather than a bug with
+one right answer, and it changes a printed figure on a live page. It is **Q8**,
+and my recommendation is to round the table so both read 9: your design prints
+that figure at 64px where a decimal reads badly, the ranking does not move, and
+the three-way tie stays a tie.
+
+**Also worth one line:** the same page reads "All trades average" to a screen
+reader over a figure that is a **median**. Median 7.920 ships as $8, the mean is
+9.126 and would ship as $9, and the trades span about $5 to $12. So the wrong
+word is a whole dollar out on a scale one dollar wide. One line to fix, next
+claims tick.
+
+**And a correction of my own**, kept because it is the same mistake the loop
+keeps finding: my first reading said the 8.6% had no source and the two blocks
+described different things. I had read a neighbouring seed file instead of the
+module that produces the number. The probe proved me wrong before it reached you.
+
 **Tick 8. Two things we believed about the homepage were wrong, and both in the
 same direction: the job was already done.**
 

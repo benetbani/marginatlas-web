@@ -9,9 +9,9 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **8** done (slot 8, site continuation, backlog P0-1) |
-| Next slot | **9**, `08-CLAIMS-AND-INDICES.md` |
-| In-flight | none. |
+| Tick | **9** done (slot 9, claims), after the machine stopped forking mid-tick and recovered |
+| Next slot | **10**, `06-REFORMATION.md` |
+| In-flight | none. The Q8 repair is a founder decision, not unfinished work. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
 | HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
@@ -107,6 +107,36 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 9, slot 9, claims. The dossier's precision defect is CONFIRMED, exactly,
+  and my own first reading of it was wrong.** Measured on the real
+  `restaurants` seed: the benchmark rail prints Fast-casual at **$9** while the
+  subtype table prints the same trade at **8.6%**. Six rows, six disagreements,
+  worst 0.5pp (Food trucks $12 vs 11.5%, Bars $7 vs 6.5%). Mechanism:
+  `adapt_industry.ts:205` and `:397` round every rail figure with `Math.round`,
+  the subtype table renders `toFixed(1)`, both descend from one net margin.
+  **The correction that matters:** I first read the London seed file, saw whole
+  numbers, and concluded the 8.6% had no source and that the blocks described
+  different entities anyway. Both halves were wrong, and reading a neighbouring
+  file instead of the module that produces the number is rule 1 of the working
+  method. The probe corrected it.
+  Repair NOT made: which precision wins is a judgement about what the page
+  shows, so it is **Q8** with a recommendation (round the table; rank order and
+  the three-way tie survive). Artifact:
+  `artifacts/industry-precision-2026-08-19.md`. Instrument:
+  `scripts/spikes/measure_industry_precision.tsx`.
+  Also read and worth carrying: the adapter's own header already measured the
+  OTHER open claim item, the aria-label at `industry-view.tsx:137` that says
+  "All trades average" over a median. Median 7.920 ships as $8; the mean is
+  9.126 and would ship as $9; trades span about $5 to $12, so the name is a
+  whole dollar out on a scale one dollar wide. **The adapter says the name is
+  the defect, not the number, and the string lives in the component.** That is a
+  one-line fix waiting for a machine that can run a typecheck.
+  **The environment, measured across the tick:** `spawn UNKNOWN` (-4094), then
+  npm "Could not determine Node.js install directory", then `0xC000012D` on
+  every fork including `bash` itself. Likely orphaned node processes from the
+  night's killed runs. **A tick that cannot verify must not commit**, so nothing
+  was committed rather than landing an unverified change.
 
 - **Tick 8b, slot 8, site continuation, THE SAME SLOT NUMBER AS THE ENTRY BELOW.**
   Two agents ran tick 8 concurrently: the cron fired while a tick was already in
