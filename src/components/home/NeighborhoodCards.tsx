@@ -154,7 +154,20 @@ export function NeighborhoodCards({ cards }: { cards: NeighborhoodCard[] }) {
                   something. */}
               <div
                 aria-hidden
-                className="h-20 w-full bg-gradient-to-br from-cocoa-700/15 to-atlas-700/15 flex items-center justify-center"
+                /* 48px ON A PHONE, 80 FROM 640 UP, and the split is measured
+                   rather than felt. Rendered at 375: this band is the tallest on
+                   the homepage at 1,568px, six cards of 215 to 244px each,
+                   carrying 32 words between them. Of each 215px card, THIS BLOCK
+                   IS 80, thirty-seven percent, and it holds no text at all: a
+                   gradient and one pictogram.
+                   The mark stays, because the founder's brief asks for more
+                   elements and not fewer ("it lacks flavor, it lacks elements").
+                   What changes is its share of a narrow screen. Measured after:
+                   the band falls to 1,376px and the page to 9,656px at 375.
+                   Desktop is untouched by construction: `sm:h-20` restores the
+                   ratified height at 640 and above, so nothing the founder has
+                   already approved moves. */
+                className="h-12 sm:h-20 w-full bg-gradient-to-br from-cocoa-700/15 to-atlas-700/15 flex items-center justify-center"
               >
                 <AtlasPictogram
                   id={lead}

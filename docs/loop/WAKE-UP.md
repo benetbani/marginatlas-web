@@ -36,6 +36,28 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 11. The tallest thing on your phone homepage was decoration.** The
+neighbourhood band is 1,568px on a 375-wide screen, six cards carrying **32 words
+between them**. In each 215px card, **80px is a gradient strip with a pictogram
+and no text** at all: 37% of the card, six times over.
+
+I did not delete it, because you asked for more elements and not fewer. I made it
+proportionate to a phone: 48px below 640, unchanged at 80 above. The band drops to
+1,376px and the page to 9,656px, and **the desktop page is still exactly 5,933px**,
+so nothing you have already approved has moved.
+
+**The backlog had aimed me at the wrong band, and measuring first is what caught
+it.** It said cut the audience band from 1,127px to under 700. Measured: 533px of
+that is your seven-row pricing matrix, which is content, and the obvious fix
+(two columns for its four cards) saves **six pixels**, because the cards double in
+height when the titles wrap. That target is not reachable without deleting
+something real, and now that is written down rather than assumed.
+
+**One thing waiting on eyes.** Putting the neighbourhood cards in two columns on
+a phone measures at **940px, a 40% cut of the tallest band**. I did not land it:
+it changes how six cards look, the pane still refuses to render a screenshot, and
+I will not ship a look I cannot see.
+
 **Tick 10. No document in this repo states a count any more. It carries one.**
 The gate count had been written down at about 78 places across 32 files, at ten
 different values, every one typed by somebody who had just measured it correctly.

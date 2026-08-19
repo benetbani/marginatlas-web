@@ -190,7 +190,30 @@ per tick. **Never touch the H1.**
       place and trade in the first two screenfuls. 74% of viewing time is there.
 - [ ] **P1-4 · home/band-5 · The world map is too large** (founder ruling).
       Contained, not full-bleed.
-- [ ] **P1-5 · home/bands-8-9 · RE-AIMED tick 8: the problem is height, not
+- [x] **P1-5a · home/band-8 · DONE tick 11, and it was the WRONG BAND.**
+      P1-5 named `audience`. Rendered and measured at 375 first: `audience` is
+      1,127px = 64 band padding + 371 audience panel + 40 gap + 652 pricing
+      panel, and **533 of that pricing panel is the seven-row matrix**, which is
+      agreed content. **Two columns for its four cards was simulated and saves
+      6px**: cards go 74px to 165px because the titles wrap, so the row count
+      halves and the row height doubles. The 700px target in P1-5 is not
+      reachable without dropping content, and that is now measured rather than
+      assumed.
+      The real offender is `neighborhoods`, 1,568px, six cards of 215-244px
+      carrying **32 words between them**. Of each 215px card, **80px is a
+      decorative gradient header with no text**, 37 percent, six times over.
+      *Landed:* `h-12 sm:h-20` on that header. Band **1,568 to 1,376**, page
+      **9,848 to 9,656** at 375, header unchanged at 80px from 640 up, desktop
+      total still exactly 5,933px, no horizontal scroll, 11/11 bands paint.
+- [ ] **P1-5b · home/band-7 · Two columns for the neighborhood cards at 375:
+      MEASURED AT MINUS 628px, NOT LANDED, because nobody could see it.**
+      Simulated in the DOM with the shorter header: the band goes 1,568 to
+      **940px**, a 40 percent cut, with cards at 244-263px in two columns of
+      ~135px. That is a proportion change on six cards carrying five words each,
+      which is a taste question, and the Browser pane still refuses to composite
+      so no screenshot exists. **Do not land it blind.** First tick that can
+      screenshot: apply, shoot at 375, look, then decide.
+- [ ] **P1-5 · home/bands-8-9 · SUPERSEDED by P1-5a above. Original text: the problem is height, not
       words.** `audience` is **72 words and 1,127px tall at 375**; `blog-rail` is
       67 words and 868px. Cutting 17 words off `audience` would remove perhaps
       40px of its 1,127. *Do:* make the four-panel stack shorter on a phone.

@@ -9,8 +9,8 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **10** done (slot 10, reformation, move M1) |
-| Next slot | **11**, `10-HOMEPAGE.md` |
+| Tick | **11** done (slot 11, homepage) |
+| Next slot | **12**, `03-LONGEVITY.md` then `07-SUBAGENT-DOCTRINE.md` |
 | In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
@@ -114,6 +114,27 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 11, slot 11, homepage. The backlog named the wrong band, and measuring
+  first is what caught it.** P1-5 said cut `audience` from 1,127px to under 700.
+  Rendered at 375: that band is 64 padding + 371 audience panel + 40 gap + 652
+  pricing panel, **533 of which is the seven-row matrix, agreed content**. The
+  obvious fix, two columns for its four cards, was simulated and **saves 6px**:
+  the cards go 74px to 165px because titles wrap in a 135px column. The target
+  is unreachable without dropping content.
+  The real offender was `neighborhoods` at **1,568px, six cards carrying 32
+  words**, where **80px of each 215px card is a decorative gradient with no
+  text**. Landed `h-12 sm:h-20`: band **1,568 to 1,376**, page **9,848 to
+  9,656** at 375, desktop total **still exactly 5,933px** so nothing approved
+  moved, no horizontal scroll, 11/11 bands paint.
+  **Filed and NOT landed: P1-5b.** Two columns for those cards, with the shorter
+  header, measures **940px, a 40% cut**, but it is a taste question and the
+  Browser pane still will not composite, so there is no screenshot. Do not land
+  it blind.
+  Two of my own measurements were wrong before they were right this tick: a
+  `grep` for the emitted `sm:h-20` rule and then a python regex for the same
+  thing both reported it missing. It was there. Check the instrument before
+  believing an absence.
 
 - **Tick 10, slot 10, reformation. Move M1 executed: no document states a repo
   count any more, it carries one.** `scripts/counts.ts` measures gates (parsed
