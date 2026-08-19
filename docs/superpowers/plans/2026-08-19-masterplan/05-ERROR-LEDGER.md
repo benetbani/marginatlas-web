@@ -159,6 +159,26 @@ failing before reporting it.
 **F4. Checkpoint-commit.** Every agent that batched has lost work; every agent
 that checkpointed has kept all of it.
 
+**F5. NEVER `git commit --amend` on this branch.** Added 2026-08-19. An agent
+committed, another agent committed in the gap before it went back to fix its own
+message, and the `--amend` **retargeted the other agent's commit and overwrote
+its message**. `--amend` rewrites whatever `HEAD` points at *now*, not the
+commit you made. It is the same class of error as `git stash`: an operation that
+looks file-scoped and is actually branch-scoped.
+
+Nothing was lost, and the recovery is worth recording because it is the right
+one. The agent detected it immediately, restored the message byte-for-byte, and
+did **not** rebase afterwards to tidy a cosmetic stray character on its own
+commit, on the grounds that rewriting history again while another agent is
+mid-edit is the exact hazard it had just caused. **Verified independently rather
+than taken on report:** `f62d645c` (pre-amend) and `9ead9988` (restored) have the
+identical tree hash `77286760` and byte-identical messages, and the pre-amend
+commit survives dangling.
+
+If you must fix a message, make a new empty commit that says so, or leave it.
+A cosmetic defect in a commit subject costs nothing. A rewritten shared history
+costs somebody else's work.
+
 **F5. Prebuild concurrency ≤ 4 on Windows.** 6 segfaults intermittently. Two
 agents crashed on Windows OOM under parallel concurrency during a `spine2`
 typecheck.
