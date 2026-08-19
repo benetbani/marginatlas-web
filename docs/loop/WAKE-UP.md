@@ -36,6 +36,35 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 5. The file you read first is sending every session to the wrong two
+folders.** `CLAUDE.md` tells each new session to read
+`docs/design-system/GUIDELINES.md` as "authority for any UI work" and
+`docs/architecture/README.md` as the map. GUIDELINES was last committed
+**2026-05-28**, architecture is one file untouched since **2026-05-27**. And it
+is worse than old: `TOKENS.md` in that folder carries **25 references to moss,
+amber, teal and cream** — the ramps we deleted on 17 August and now have gates
+against. So the reading order we hand every session teaches a palette the chain
+rejects.
+
+Also measured: `plans/` is 91 files and **78 of them are from June**, so a
+folder whose name reads forward-looking is 86% archive. And this step's own file
+claimed the chain was 101 gates. It is **102**. Four documents state that one
+number at four different values, and the document describing that exact defect
+was one of the four. Fixed.
+
+**The proposal says do not reorganise, and that refusal is the finding.** Of the
+78 June plans, 55 are linked to from elsewhere and 21 are not, so a tidy-up
+repoints 55 files to save you some scrolling while the 21 cost nothing. The
+research agreed from the other side: Google and Diataxis disagree about where
+documents should live, but lychee, Vale, cog and tfplugindocs all agree on
+making a document unable to be wrong. And Kubernetes settles it — they put
+status in a machine-readable file, and their own README still lists checking it
+as something they *want*. A status field lies exactly as easily as a sentence.
+
+So: generate the counts, make `CLAUDE.md` name things instead of restating
+them, and give old records a status line. Nothing moves.
+
+
 **Morning of the 19th, outside the rotation. A master plan, researched.** You
 asked for the whole project pushed forward on design, so four agents ran at
 once: three on external research, one auditing what this repo actually is.

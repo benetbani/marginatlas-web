@@ -46,8 +46,23 @@ change.
       catches a defect the chain is structurally blind to.
 - [ ] **P0-7 · gates/a11y · `scripts/audit/a11y_static_audit.ts` is written and
       NOT wired into prebuild.** The cheapest accessibility win available.
-- [ ] **P0-8 · docs · Three documents state a wrong gate count** (`CLAUDE.md` 95,
-      verification protocol 31, chain 102). A stale number is read with trust.
+- [ ] **P0-8 · docs · FOUR documents state the gate count at four values**
+      (`CLAUDE.md` 95, verification protocol 31, `02-ORGANISATION-RESEARCH.md` 101
+      until tick 5 fixed it, chain **102**). A stale number is read with trust.
+      **Do not just correct them.** `docs/loop/artifacts/org-proposal.md` move M1
+      is the fix: one script prints the counts, every document that states one
+      carries a generated block instead, and a `--check` gate fails the chain when
+      a block is stale. Blast radius: 1 script + 1 gate + 5 documents, 0
+      references to repoint. After it, no document states a number, it only
+      carries one. Copy cog's `--check-fail-msg` exactly so the failure names the
+      command that fixes it.
+- [ ] **P0-9 · docs · `docs/design-system/TOKENS.md` carries 25 references to
+      moss, amber, teal and cream** — ramps deleted 2026-08-17 and enforced
+      against by `verify_palette_membership` and `verify_no_cream`. `CLAUDE.md`
+      calls this file "authority for any UI work". It is not stale, it is a
+      document the chain actively contradicts, reached through the prescribed
+      reading order. **Do not delete: 17 files reference it, including live code
+      at `src/app/_design/page.tsx`.** Supersede with a banner (proposal M3).
 
 ---
 

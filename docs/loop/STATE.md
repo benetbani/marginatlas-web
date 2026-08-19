@@ -9,9 +9,9 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **4** done (slot 4, site continuation) |
-| Next slot | **5**, `02-ORGANISATION-RESEARCH.md` |
-| In-flight | none |
+| Tick | **5** done (slot 5, organisation research) |
+| Next slot | **6**, `10-HOMEPAGE.md` |
+| In-flight | the contradiction census, `artifacts/contradictions-2026-08-19.md`, dispatched tick 5 and not yet returned. If it is absent, re-run it; the org proposal's done test has one unchecked box until it lands. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **102/102** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
 | HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
@@ -103,6 +103,16 @@ this file alone. If it cannot, this file is wrong.
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
 
+- **Tick 5, slot 5, organisation research.** Found that `CLAUDE.md` routes every
+  session to the two most abandoned directories: `docs/design-system/GUIDELINES.md`
+  last committed 2026-05-28 and `docs/architecture/README.md` 2026-05-27. Worse
+  than stale, `TOKENS.md` carries 25 references to moss, amber, teal and cream,
+  ramps deleted 2026-08-17 and now gated against, so the prescribed reading order
+  teaches a palette the chain rejects. Fixed this step file's own gate count in
+  passing (said 101, is 102; four documents state four values). Proposal refuses a
+  tree restructure and proposes three properties instead: generated counts, an
+  entry point that names rather than restates, status lines on records. Commits
+  `edfab3ab`, `21e3c86d` (research, 20 pages, 17 projects), `54e0a7ef`.
 - **Tick 4, slot 4, site continuation.** Confirmed the foreign-font hypothesis
   in a browser and fixed it in two lines, plus a false comment in `LogoWordmark`
   claiming an invalid variable falls through to Georgia. Added gate 102,
