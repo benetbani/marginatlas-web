@@ -12,15 +12,25 @@ tick rather than a day.
 
 Two repositories, one project. `E:\atlas\` is the data pipeline and also the
 place Playwright dumps screenshots; `E:\atlas\website\` is the product. Inside
-the website repo: 352 documents, 121 of them plans and specs, 254 scripts of
-which 101 are gates, 37 dev routes, 2,764 tracked files.
+the website repo, measured 2026-08-19 by `git ls-files`: **2,799 tracked files,
+503 markdown files, 358 of them under `docs/`, 128 plans and specs, 257 scripts
+of which 102 are gates.**
+
+> These numbers are TYPED, which is the defect this step exists to attack, so
+> they carry the date they were measured and they will be wrong again. The
+> figures above replaced 352 / 121 / 254 / 101 / 2,764 on 2026-08-19; the gate
+> count alone had been wrong in four documents at four different values. Until
+> `org-proposal.md` move 1 generates them, treat every count here as a claim with
+> an expiry, not a fact.
 
 The cost is measurable and it is paid on every single tick: a session cannot act
 until it has re-derived which document is current. Three concrete instances found
 on 2026-08-18 alone:
 
-- `CLAUDE.md` says the chain is 95 gates. It is 101.
-- `docs/verification-protocol.md` says "prebuild 31/31". It is 101.
+- `CLAUDE.md` says the chain is 95 gates. It is **102**.
+- `docs/verification-protocol.md` says "prebuild 31/31". It is **102**.
+- This very file said 101 until 2026-08-19. Four documents, four values, one
+  quantity.
 - `CLAUDE.md` names the 2026-08-01 handoff as "THE CURRENT HANDOFF, READ IT
   FIRST". Three handoffs have landed since.
 
