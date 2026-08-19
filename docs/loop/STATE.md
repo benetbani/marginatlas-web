@@ -38,7 +38,12 @@ this file alone. If it cannot, this file is wrong.
   7 cell sections and the cell page renders 34. This already produced one wrong
   conclusion in the plan and was corrected.
 
-- **The 162 commits are already pushed.** `origin/main` equals `HEAD`, ref
+- **The 162 commits were pushed on 2026-08-19.** `origin/main` is at
+  `6fc88e3e`; local `HEAD` has moved past it and the loop's later commits are
+  unpushed by rule. **Do not restate the gap as a number here** - it is stale the
+  moment the next tick commits, which is exactly the defect this file's own
+  proposal (move M1) exists to retire. Run `git rev-list --left-right --count
+  origin/main...HEAD` instead. Superseded ref
   written 2026-08-18 05:42. The 2026-08-18 dossier says they are unpushed; it was
   written six minutes earlier. The loop still never pushes.
 - The chain is **102 gates** since tick 4. `CLAUDE.md` says 95 and
@@ -63,9 +68,9 @@ this file alone. If it cannot, this file is wrong.
 
 ## Contradictions found 2026-08-18, to be repaired by 02 and 06
 
-1. `CLAUDE.md:92` and `:99` say 95 gates. The chain is 101.
+1. `CLAUDE.md:92` and `:99` say 95 gates. The chain is **102**.
 2. `docs/verification-protocol.md:31` and `:79` say "prebuild 31/31". The chain is
-   101.
+   **102**.
 3. `CLAUDE.md` names the 2026-08-01 handoff as current. Three have landed since.
 4. `src/components/AtlasFrame.tsx` header still documents a third passe-partout
    layer, with its `.16`/`.82` values and `calc(50% +/- 622px)` stops, which the
@@ -92,7 +97,7 @@ this file alone. If it cannot, this file is wrong.
 
 | # | Item | Size | Owner step |
 |---|---|---|---|
-| 7 | **153 scripts that no gate runs.** 254 in `scripts/`, 101 registered. Triage into gate, instrument, spent one-shot, with an index at `scripts/README.md`. Not a deletion sweep. | 153 files | 01, then 06 |
+| 7 | **155 scripts that no gate runs.** 257 in `scripts/`, 102 registered. Triage into gate, instrument, spent one-shot, with an index at `scripts/README.md`. Not a deletion sweep. | 153 files | 01, then 06 |
 | 8 | `docs/` archive pass. 352 files, zero deletions, `docs/ARCHIVE/` plus a pointer index. Start with the four handoffs preceding 2026-08-18. | 352 files | 01, then 06 |
 | 9 | `src/app/dev/`, 37 routes, classify and retire one per tick. | 37 routes | 01, then 06 |
 | 10 | 91 tracked screenshots at the parent root, 16.5 MB. Blocked on Q6; the loop does not delete tracked files in a repo it does not own. | 16.5 MB | founder |
@@ -109,7 +114,8 @@ Newest first. One line per tick: tick number, slot, what landed, the commit.
   than stale, `TOKENS.md` carries 25 references to moss, amber, teal and cream,
   ramps deleted 2026-08-17 and now gated against, so the prescribed reading order
   teaches a palette the chain rejects. Fixed this step file's own gate count in
-  passing (said 101, is 102; four documents state four values). Proposal refuses a
+  passing (said 101, is 102). The census then found it is worse: the count is
+  stated at ~78 locations across 32 files at TEN values. Proposal refuses a
   tree restructure and proposes three properties instead: generated counts, an
   entry point that names rather than restates, status lines on records. Commits
   `edfab3ab`, `21e3c86d` (research, 20 pages, 17 projects), `54e0a7ef`.

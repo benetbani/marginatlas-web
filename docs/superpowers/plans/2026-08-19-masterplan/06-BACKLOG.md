@@ -46,9 +46,14 @@ change.
       catches a defect the chain is structurally blind to.
 - [ ] **P0-7 · gates/a11y · `scripts/audit/a11y_static_audit.ts` is written and
       NOT wired into prebuild.** The cheapest accessibility win available.
-- [ ] **P0-8 · docs · FOUR documents state the gate count at four values**
-      (`CLAUDE.md` 95, verification protocol 31, `02-ORGANISATION-RESEARCH.md` 101
-      until tick 5 fixed it, chain **102**). A stale number is read with trust.
+- [ ] **P0-8 · docs · The gate count is stated at ~78 line locations across 32
+      files at TEN different values** (25, 26, 31, 53, 58, 95, 98, 99, 101, 102).
+      The true count is **102**, counted over the `GATES` array in
+      `scripts/prebuild_all.ts` with `strip_comments` applied first: 102 entries,
+      102 unique names. *A naive `grep -c '{ name: "'` also returns 102 today but
+      agrees by luck - 35 comment blocks open inside that array.*
+      `docs/loop/STATE.md` contradicted itself (102 at `:16`, 101 at `:66`/`:68`)
+      until tick 5 fixed it. A stale number is read with trust.
       **Do not just correct them.** `docs/loop/artifacts/org-proposal.md` move M1
       is the fix: one script prints the counts, every document that states one
       carries a generated block instead, and a `--check` gate fails the chain when
@@ -56,6 +61,29 @@ change.
       references to repoint. After it, no document states a number, it only
       carries one. Copy cog's `--check-fail-msg` exactly so the failure names the
       command that fixes it.
+- [ ] **P0-10 · `npm run prebuild:serial` RUNS 43 GATES, NOT 102.** It is a
+      hand-maintained `&&` string in `package.json` (43 segments, counted).
+      `CLAUDE.md` documents it as *"same gates, single-process (use if parallel is
+      flaky)"*. **It is not the same gates - it is a second, divergent chain**, and
+      the Windows flake that makes an operator reach for it is exactly when they
+      would get 43/102 coverage and a green result. This is not staleness; it is a
+      second instrument that reports like the first.
+      *Do:* generate the serial chain from the same `GATES` array, or delete it and
+      document `--concurrency 1` instead. *Verify:* both chains report the same
+      count.
+- [ ] **P0-11 · `DESIGN.md` §0.1 is INVERTED, not stale.** It says "0 shipping
+      routes are v2" and "not live anywhere". Its own named instrument,
+      `node scripts/audit_generation_seam.mjs`, re-run 2026-08-19, reports 102
+      routes with **1 v2-only and 7 carrying v2**. Naming your instrument is
+      necessary and not sufficient - nobody re-ran it.
+- [ ] **P0-12 · the cream ratchet reads 517 across 177 files in two documents**
+      (charter `:429`, cohesion audit `:144`). It is **33 across 16**. The stale
+      number makes finished work look undone, which is the costly direction of
+      this error: it invites a tick to redo a completed purge.
+- [ ] **P0-13 · `CLAUDE.md:33`'s `<latest>-session-handoff.md` glob CANNOT resolve
+      to the newest handoff.** The four newest are named
+      `HANDOFF-marginatlas-<date>.md`, which the pattern does not match. Three
+      documents each name a different "current" handoff. Proposal move M4.
 - [ ] **P0-9 · docs · `docs/design-system/TOKENS.md` carries 25 references to
       moss, amber, teal and cream** — ramps deleted 2026-08-17 and enforced
       against by `verify_palette_membership` and `verify_no_cream`. `CLAUDE.md`
