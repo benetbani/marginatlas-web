@@ -184,19 +184,56 @@ Three consequences worth carrying into the review:
 
 ### 2.2 Sticky headers on long tables
 
-There are none.
+**Vertically: none.** No `<thead>`, `<tr>` or `<th>` anywhere in the repo carries
+`position: sticky` on the top axis. Every table long enough to scroll past its
+own header loses the header, and the reader is left with bare numbers in unnamed
+columns.
 
 ```bash
 cd /e/atlas/website && grep -rn "sticky top-" src/app src/components --include=*.tsx | grep -iE "thead|<th|table"
 # (no output)
 ```
 
-No `<thead>`, `<tr>` or `<th>` anywhere in the repo carries `position: sticky`.
-Every table long enough to scroll past its own header loses the header.
 `src/components/kit/StickySectionNav.tsx` is a page-level section rail, not a
 table header, and does not change this.
 
-### 2.3 Sorting
+**Horizontally: exactly one table.** `/industries/[industry]/across` pins its
+metric column so the row labels survive a sideways scroll:
+
+```bash
+cd /e/atlas/website && grep -rn "sticky left-0" src/app src/components --include=*.tsx | grep -v "/dev/"
+# 5 hits, all in src/app/(site)/industries/[industry]/across/page.tsx
+```
+
+That is the only table on the site where a reader scrolling a wide comparison can
+still see what the row is. Every other wide table loses its row label on the same
+gesture.
+
+### 2.3 Header semantics (`<th scope>`)
+
+```bash
+cd /e/atlas/website && grep -rn 'scope="col"\|scope="row"' src/app src/components --include=*.tsx | grep -v "/dev/" | awk -F: '{print $1}' | sort | uniq -c | sort -rn
+cd /e/atlas/website && for f in $(grep -rl "<table" src/app src/components --include=*.tsx | grep -v "/dev/"); do grep -q 'scope=' "$f" || echo "$f"; done
+```
+
+`scope` appears in six files. Four are the `kit/tables` family
+(`OwnerKeepTable` 6, `AtlasTable` 3, and the two that render nowhere,
+`WeightedCompare` 5 and `RangeTable` 4); the other two are single uses in
+`home/UpgradeTeaser.tsx` and `(site)/pricing/page.tsx`.
+
+**Thirteen files contain a `<table>` and no `scope` at all**, including every
+hand-rolled page table: `/compare`, `/decide/[activity]/[city]`,
+`/industries/[industry]/across`, `cities/BusinessFormationCosts.tsx`,
+`kit/engraved/Compare.tsx`, `sections/AnnualCostStack.tsx`, the three spine2
+tables, and all three admin pages. In the `across` table the metric column is a
+`<td>` rather than a `<th scope="row">`, so the one table with a pinned row-label
+column does not announce that column as a header.
+
+The split is clean and worth noting for the review: the **kit primitives get
+table semantics right and are barely used**; the **tables people actually built
+into pages get them wrong**.
+
+### 2.4 Sorting
 
 Interactive column sorting exists in exactly three components, and `aria-sort`
 appears three times repo-wide:
@@ -214,7 +251,7 @@ cd /e/atlas/website && grep -rn "aria-sort" src --include=*.tsx | wc -l    # 3
 Everywhere else, row order is fixed server-side (`.sort()` in the page or
 adapter) and the reader cannot change it.
 
-### 2.4 Focus visibility
+### 2.5 Focus visibility
 
 ```bash
 cd /e/atlas/website && grep -rn "focus-visible:" src/components src/app --include=*.tsx | grep -v "/dev/" | wc -l   # 50
@@ -346,4 +383,48 @@ _(filled below)_
 
 ## 6. What this inventory cannot distinguish
 
-_(filled below)_
+This file is written from source. Six classes of question it cannot answer, and
+what would answer them.
+
+1. **Whether a well-formed table actually receives rows at runtime.** A table can
+   have correct `<th scope>`, right-aligned tabular figures, units in the header
+   and a stacked mobile reflow, and still render as a wall of dashes, or not
+   render at all, because the accessor returned nothing for that country. Several
+   components in §3 self-omit (`return null`) below a held-data threshold —
+   `ComparisonTable` drops out under 50% held cells, `OwnerKeepTable` when nothing
+   is held, `Calc` when its config cannot reproduce the page's own figure. Static
+   reading tells you the guard exists; it cannot tell you how often it fires. The
+   companion `2026-08-19-graphics-rendered-observations.md` is the file written
+   from rendered pages.
+2. **Which branch of a gate production actually serves.** §1 lists eight runtime
+   gates. Their values live in Vercel project settings, not in this repository:
+   `.env.local` carries none, `.env.example` has them commented out, and there is
+   no `vercel.json`. Every `GATED` row below may be the live surface or may be
+   invisible. One `curl` of a live URL settles it; nothing in `src/` does.
+3. **States that only exist on interaction.** Hover washes, focus rings, the
+   open state of every combobox listbox, validation messages that appear after a
+   bad submit, the "sending"/"sent" copy on the four newsletter forms, the
+   paywall modal — all are in the source, none were observed. Where a control is
+   marked as having an error state, that means the code path exists, not that it
+   was seen to fire.
+4. **Whether a placeholder-only control is genuinely unlabelled to a screen
+   reader.** `ControlRail`'s search input (§4.4 #18) has a wrapping `<label>` with
+   no text; whether the browser then falls back to the placeholder for the
+   accessible name is a rendering-engine behaviour, not a source fact. Marked as a
+   defect pattern on the strength of the missing text, not on an axe run.
+5. **Real overflow behaviour at 375px.** `overflow-x-auto` vs `overflow-hidden`
+   vs a stacked reflow is read from class names and CSS. Whether a given table's
+   content actually exceeds 375px depends on the data in its cells — a long city
+   name or a nine-digit figure changes the answer. The one hard case found here
+   (`/decide/[activity]/[city]`, a five-column table inside `overflow-hidden`)
+   is a clipping *risk* established from source; a phone confirms it.
+6. **Anything reached only through a dynamic import.** The render graph parses
+   static `import` statements. There is exactly one `next/dynamic` call site in
+   live code and it is patched by hand (§0), but a future one would be invisible
+   to the same method.
+
+One further limit worth stating plainly: **this file passes no judgement.** A
+table recorded here as "real `<table>`, `<th scope>`, right-aligned,
+`tabular-nums`, units in the header, stacked below `sm`" is *well-formed*, which
+is not the same as *the right way to present that figure*. That question is the
+review this inventory exists to feed.
