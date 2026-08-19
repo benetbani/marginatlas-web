@@ -36,6 +36,45 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Morning of the 19th, outside the rotation. A master plan, researched.** You
+asked for the whole project pushed forward on design, so four agents ran at
+once: three on external research, one auditing what this repo actually is.
+
+**The numbers that matter.** Your homepage is **764 words across 11 bands**. The
+homepages that read as confident are Arc 180, Vercel 400, Notion 575, Clerk 720,
+so the target is **615 across 10**. Height has one dial and it is not content:
+editorial section padding runs 32 to 64px, ours runs SaaS scale at up to 192, and
+56/40 removes about a third of the page **without deleting a word**. Replacing
+prose hedges with numeric ranges is nearly free in reader trust (d=-0.03) while
+vague hedging costs seven times that (d=-0.21, N=5,780, includes a live BBC
+field test).
+
+**Why design first on a numbers product:** design look drives **46.1%** of
+credibility judgements against **14.3%** for accuracy of the information (Fogg,
+N=2,684). For most readers the presentation is the proof.
+
+**The order of work changed because of one audit finding.** Ten design gates scan
+`dev/` bodies no reader can reach; the chrome gate passes two routes because
+their files mention the word in a comment; the contrast gate measures an opaque
+card when the real one is 95.5% white over a photo with a multiply noise layer on
+top. The rulebook has been enforced against the workshop. Repairing the
+instruments is now P0, ahead of the homepage, because otherwise the homepage work
+is unprotected.
+
+**Tick 4's work was stranded and is now safe.** It sat uncommitted for 13.5
+hours. Verified and landed as `2179bcb2`.
+
+**Two things I got wrong and corrected before they reached you**, both kept in
+writing so they are not rediscovered a third time: page depth is NOT inverted
+(the registry says 7 cell sections, the page renders **34**, so render and
+count), and `/extremes` is NOT a duplicate of `/margin-index` (disjoint design
+systems, different algorithms, different resolvers). The real near-duplicate is
+`/margin-index` against `/dev/decide-v2`, and it may be your intended paid
+tier, so it is a question rather than a merge.
+
+Plan: `docs/superpowers/plans/2026-08-19-masterplan/`. Queue: `06-BACKLOG.md`.
+
+
 **Tick 4. The foreign font: found, proved, fixed.** You said the font on the last
 work was foreign. It was. `--font-display` was defined as a reference to itself,
 on the same element the font loader writes to. Measured in a browser rather than

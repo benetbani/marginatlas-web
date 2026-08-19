@@ -20,6 +20,24 @@ this file alone. If it cannot, this file is wrong.
 
 ## Standing facts a resuming agent needs
 
+- **Work now comes from a queue.** Build slots take the top unblocked item in
+  `docs/superpowers/plans/2026-08-19-masterplan/06-BACKLOG.md` and update it at
+  step S11. The standard to build to is `01-DESIGN-STANDARD.md`; the eleven
+  steps and the 13-check review gate are `03-PROCEDURE.md`. Added 2026-08-19,
+  outside the rotation.
+- **The external research is DONE. Do not re-run it.** Three annexes in
+  `docs/superpowers/research/` dated 2026-08-19: 18 homepages plus design
+  psychology, 262 UI/UX rules across 113 sources, and a full internal audit. A
+  fourth, on how reference pages sequence answer/evidence/context, was still
+  running when they landed; `02-PAGE-DOSSIERS.md` marks its section orders as
+  pending rather than guessing them.
+- **P0 is instrument repair, not the homepage.** Ten design gates scan `dev/`
+  bodies no reader reaches. A green gate here is evidence the gate ran, not
+  evidence the site is correct.
+- **Render and count; never census from a registry.** `PAGE_SECTION_ORDER` lists
+  7 cell sections and the cell page renders 34. This already produced one wrong
+  conclusion in the plan and was corrected.
+
 - **The 162 commits are already pushed.** `origin/main` equals `HEAD`, ref
   written 2026-08-18 05:42. The 2026-08-18 dossier says they are unpushed; it was
   written six minutes earlier. The loop still never pushes.
