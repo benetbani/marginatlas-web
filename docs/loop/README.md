@@ -18,9 +18,11 @@ tick takes the smallest reversible step consistent with that recommendation.
 2. `docs/superpowers/plans/2026-08-17-founder-brief-and-loop-charter.md`. His own
    quoted words. Overrides any agent's judgement.
 3. `docs/loop/00-OPERATING-RULES.md`. This loop's invariants.
-4. The step file for the current slot.
-5. `CLAUDE.md`, `docs/verification-protocol.md`.
-6. Everything else in `docs/`, newest first.
+4. `docs/superpowers/plans/2026-08-19-masterplan/`. What to work on and to what
+   standard. `00-MASTERPLAN.md` is the entry point; `06-BACKLOG.md` is the queue.
+5. The step file for the current slot.
+6. `CLAUDE.md`, `docs/verification-protocol.md`.
+7. Everything else in `docs/`, newest first.
 
 A newer founder ruling beats an older document, always. When a tick finds an
 older document contradicting a newer ruling, it writes a one-line correction into
@@ -91,6 +93,12 @@ left dirty at the end of a tick.
 | `WAKE-UP.md` | One screen for the founder. Newest first. Always current. |
 | `DECISIONS-NEEDED.md` | Questions the loop refused to answer for him. |
 | `artifacts/` | Censuses, screenshots, cached research. Evidence, not prose. |
+
+**The build slots (2, 4, 6, 8, 10, 11) take their work from
+`docs/superpowers/plans/2026-08-19-masterplan/06-BACKLOG.md`** and update it at the
+end of the tick. That queue is ordered: P0 repairs the measuring instruments, P1
+is the homepage, P2 converges duplicate surfaces, P3 correctness, P4 cohesion,
+P5 responsive and accessibility.
 
 ---
 

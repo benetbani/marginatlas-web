@@ -169,3 +169,44 @@ reaches a commit message.
   `docs/loop/artifacts/research/` with its URL and the date it was read.
 - **Never put a source-agency name into user-facing copy.** Internal documents
   may name sources freely; components may not. Gate: `verify_no_source_agencies`.
+
+## 11. The 2026-08-19 rulings, and where the work now comes from
+
+Newer than the charter, so they win where they touch it. Both quoted.
+
+> *"we only go vertically, so never create 2 similar sister pages, we are
+> clearing design and sections now"*
+
+> *"The design, the visual hierarchy, the functionality of the elements is the
+> main priority. Like, the site is not being visited by anyone, so you have to
+> give this in mind."*
+
+**What they bind a tick to:**
+
+- **No new surfaces.** Deepen what exists. Where two surfaces overlap, converge
+  on the better one. Redirect, never delete: `/browse` to `/world` is the
+  first-party precedent, already in this repo.
+- **Say DUPLICATE SURFACE, never "sister page."** This repo already uses "sister
+  page" to mean two instances of the SAME template that are required to match.
+  Reusing the phrase would invert existing comments and gates.
+- **Cut words, not sections.** Section membership and order are gated contracts
+  and the charter forbids dropping an agreed section. "Not bloated with text"
+  means fewer words inside a section, and prose replaced by elements.
+- **No traffic means no regression risk.** The risk is a mediocre-looking
+  product, not a broken one. Be bold.
+
+**The work now comes from a queue.** Build slots take the top unblocked item in
+`docs/superpowers/plans/2026-08-19-masterplan/06-BACKLOG.md` and update it at the
+end of the tick. The standard to build to is `01-DESIGN-STANDARD.md` in the same
+directory; the step-by-step and the 13-check review gate are `03-PROCEDURE.md`.
+
+**Two traps that already cost this plan once:**
+
+1. **Render and count; never census from a registry.** `PAGE_SECTION_ORDER`
+   lists 7 cell sections. The cell page renders 34. An earlier pass concluded
+   from the registry that page depth was inverted against the ratified page
+   ranking. It is not.
+2. **A green gate is evidence the gate ran, not that the site is correct.** Ten
+   design gates currently scan `dev/` bodies no reader can reach; the
+   route-chrome gate passes two routes because their files mention the word in a
+   comment. Repairing instruments is P0 for exactly this reason.
