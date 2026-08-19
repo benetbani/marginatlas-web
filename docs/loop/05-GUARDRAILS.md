@@ -76,6 +76,24 @@ Not: "be careful about responsive design".
 5. Commit the guardrail on its own, with the defect it prevents named in the
    message.
 
+## The prose rules, for claims no gate can read
+
+A gate reads behaviour. These are claims ABOUT the system, and they are where the
+top defect class lives: six of the first six ticks found a typed statement that
+measurement contradicted.
+
+- **A document may not assert that two things are the same. It may only name the
+  one thing.** `CLAUDE.md` said `prebuild:serial` runs the "same gates" as
+  `prebuild`; it ran 43 of 102. "Runs the same list at concurrency 1" is
+  checkable by reading one line; "same gates" is a claim about 102 files that
+  nobody can check and everybody believes.
+- **A stated number carries the date it was measured, or it is not stated.** The
+  gate count reached ten different values across 78 locations by being typed
+  confidently and often.
+- **A prescription must name the measurement it came from, on the page it
+  prescribes.** Tick 6's padding instruction was true research and backwards
+  advice, because the page it applied to had never been measured.
+
 ## Forbidden
 
 - Adding a gate that fails today. A gate lands green or as a ratchet at today's

@@ -9,11 +9,11 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **6** done (slot 6, homepage) |
-| Next slot | **7**, `04-FAILURE-REFLECTION.md` then `05-GUARDRAILS.md` |
-| In-flight | none. Tick 5's census and the fourth research annex both landed and are committed (`388728af`, `fe5730bd`). |
+| Tick | **7** done (slot 7, failure reflection then guardrail) |
+| Next slot | **8**, `09-SITE-CONTINUATION.md` |
+| In-flight | none. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
-| Gates | `tsc` clean; `prebuild` **102/102** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
+| Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
 | HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
 
 ---
@@ -46,7 +46,7 @@ this file alone. If it cannot, this file is wrong.
   origin/main...HEAD` instead. Superseded ref
   written 2026-08-18 05:42. The 2026-08-18 dossier says they are unpushed; it was
   written six minutes earlier. The loop still never pushes.
-- The chain is **102 gates** since tick 4. `CLAUDE.md` says 95 and
+- The chain is **103 gates** since tick 7. `CLAUDE.md` says 95 and
   `docs/verification-protocol.md` says 31. Both are stale and both are on the
   contradiction list below.
 - `cell-lattice` defers 3 checks by design. Deferred is not passed.
@@ -107,6 +107,18 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 7, slot 7, failure reflection then guardrail.** Mined ticks 1-6: **one
+  class accounts for all six**, a typed statement about the codebase that was
+  never checked against it, and four of the instances are in this loop's own
+  documents. Found a live example while looking: **`prebuild:serial` ran 43 of
+  the 102 gates**, missing cream, palette, take-home identity, canonical URLs and
+  every wired test, while `CLAUDE.md` called it "same gates" and the parallel
+  runner it stands in for is the flaky one. Deleted the duplicate list (it now
+  invokes `prebuild_all.ts --concurrency=1`), added gate 103
+  `verify_single_gate_chain`, negative-tested, and corrected the `CLAUDE.md`
+  claim. Wrote `artifacts/failure-log.md` and three prose rules into
+  `05-GUARDRAILS.md`.
 
 - **Tick 6, slot 6, homepage.** Withdrew the top backlog item rather than
   building it. P1-0 proposed raising section padding to 56px desktop to cut a

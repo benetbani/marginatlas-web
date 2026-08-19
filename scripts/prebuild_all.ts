@@ -208,6 +208,15 @@ const GATES: Gate[] = [
      No ordering does what the author meant, which is why this is a hard gate.
      Negative-tested by re-inducing the exact line. */
   { name: "no-self-referential-css-vars", script: "scripts/verify_no_self_referential_css_vars.ts" },
+  /* THE GATE LIST EXISTS ONCE. Added 2026-08-19 after prebuild:serial was found
+     holding a hand-written chain of 43 script paths against this array's 102, a
+     drift of 59 gates including cream, palette, take-home identity, canonical
+     URLs and every wired test. CLAUDE.md calls that script "same gates,
+     single-process (use if parallel is flaky)", and the parallel runner IS
+     flaky on Windows, so the documented remedy ran 42% of the chain and printed
+     only passes. The duplicate was deleted rather than policed; this stops a
+     second one growing back. Negative-tested by re-inducing a three-gate chain. */
+  { name: "single-gate-chain", script: "scripts/verify_single_gate_chain.ts" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },

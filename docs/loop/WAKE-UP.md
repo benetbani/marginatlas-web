@@ -36,6 +36,22 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 7. Your fallback gate command was running 43 of 102 checks.** `npm run
+prebuild:serial` is documented as "same gates, single-process, use if parallel is
+flaky", and the parallel runner is exactly the one that dies intermittently on
+this machine. It was a hand-typed chain of 43 script paths that had drifted 59
+gates behind the real list: **cream, palette, take-home identity, canonical URLs
+and every wired test never ran there**, and it printed only passes. Fixed by
+deleting the second list, so it now runs the one list at concurrency 1, plus a
+new gate that stops another copy growing back. Chain is 103 and green.
+
+That came out of the night's stock-take, which found **one defect class behind
+all six ticks so far: a written statement nobody checked against the code**. Four
+of those were in my own loop documents. The lesson is written down as three rules:
+never claim two things are the same, only name the one thing; a stated number
+carries the date it was measured; a prescription names the measurement it came
+from.
+
 **Tick 6. I threw away my own top priority instead of building it.** The list
 said the homepage's biggest win was section padding: ours is SaaS-sized, go to
 56px, lose a third of the page height. All three parts of that were wrong, and

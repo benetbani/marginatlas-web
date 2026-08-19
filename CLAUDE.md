@@ -90,7 +90,14 @@ Four rules. Not aspirations, and each one exists because breaking it cost real t
 ## Verification commands (ask permission before running)
 
 - `npm run prebuild` — 95 gates, parallel, ~60s wall-clock
-- `npm run prebuild:serial` — same gates, single-process (use if parallel is flaky)
+- `npm run prebuild:serial` — runs the SAME LIST at concurrency 1 (use if parallel is flaky)
+
+  It did not, until 2026-08-19. It was a hand-written chain of 43 script paths
+  against the array's 102, so the documented remedy for a flaky parallel run
+  silently skipped 59 gates, including cream, palette, take-home identity,
+  canonical URLs and every wired test, and printed only passes. It now invokes
+  `prebuild_all.ts --concurrency=1`, and `verify_single_gate_chain` stops a
+  second list growing back.
 
 **WHETHER THESE RUN ON A DEPLOY IS NOT VISIBLE FROM THIS REPO, and it is worth
 settling.** There is no `vercel.json`, so the build command is a dashboard
