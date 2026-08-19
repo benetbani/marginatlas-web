@@ -109,3 +109,34 @@ percentage into a page count.
 ## Answered
 
 _(nothing yet)_
+
+---
+
+## Raised 2026-08-19 by the reference-page research. Genuinely in tension with a ratified rule.
+
+**Q3. Typed absence, or self-omission?** Our doctrine is that a missing figure
+renders NOTHING: no placeholder, no row. The external research says the opposite,
+and says it from twenty pages: *"absence is a typed token in the value slot with
+one legend per page, never a deleted row."* World Bank and census-style legends
+keep the label and type the absence. **Levels.fyi hides thin rows and is the only
+site in the set where a reader cannot see the coverage gap** - and it is the most
+admired page of the twenty, which is exactly why the habit spreads.
+
+The two are not obviously reconcilable, and the loop will not settle a ratified
+rule on its own.
+
+- **A.** Keep self-omission everywhere. Simplest, and it is what the gates
+  already assume.
+- **B.** **Split by scope: a SECTION still self-omits, a ROW inside a table keeps
+  its label and types the absence, with one legend per page. Recommended.** It
+  takes the research where it is strongest (a reader cannot see a gap you
+  deleted) without touching the band-level behaviour the charter ratified, and it
+  is reversible.
+- **C.** Typed absence everywhere, including sections. Most faithful to the
+  research, largest change, and it would contradict the charter directly.
+
+**Related and cheaper, needs no ruling:** Data USA's substitution pattern. When a
+figure does not exist at the requested resolution, show the coarser one and
+**name the substitute geography in the same sentence.** That is additive rather
+than contradictory, and it is the most transferable fix for the sample-tag
+problem.

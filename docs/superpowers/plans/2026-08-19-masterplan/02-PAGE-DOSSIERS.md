@@ -75,7 +75,7 @@ whether its content belongs on the city page — that is the vertical move.
 | Surface | Sections | Note |
 |---|---|---|
 | `/world` · `/countries` | 4 · 2 | **One job, three incompatible region taxonomies sharing no bucket name.** Fix the taxonomy before the pages. |
-| `/extremes` · `/margin-index` | 6 · 3 | Two leaderboard codebases, one question |
+| `/extremes` · `/margin-index` | 6 · 3 | **NOT duplicates** - disjoint design systems (zero `atlas-card` in one, zero `spine-scope` in the other), different ranking algorithms, different resolvers. The real near-duplicate is `/margin-index` and `/dev/decide-v2`. See backlog P2-4 / P2-4b. |
 | `/decide` · `/calculator` | 5 · 5 | **The recommender the ratified strategy names for `/decide` is imported by zero decide files.** The headline tool is not wired to its own page. |
 | `/blog` · `/learn` | 4 · 4 | Two content systems; blog is index-heavy and article-thin, learn is the reverse |
 | `/industries` · `/[country]/industries` | 2 · 2 | One template twice |
@@ -103,10 +103,81 @@ Applied in this order, from `01-DESIGN-STANDARD.md`:
 
 ---
 
-## Pending
+## The target section order
 
-Target section ORDERS per page type — informed by how the best data and reference
-pages sequence answer, evidence and context — land in
-`../../research/2026-08-19-reference-page-architecture.md`. Fold them into this
-file when that annex is read, and record any conflict with the gated section
-contract rather than silently preferring one.
+From `../../research/2026-08-19-reference-page-architecture.md` (20 pages fetched,
+13 section orders recorded verbatim). One skeleton recurs on **every page that
+works**:
+
+> **Identity line → THE ANSWER → Decomposition → Recency proof → Peer position →
+> Method → Lateral navigation.**
+
+**The answer lands at position 3.** Nothing renders above it except the identity
+line.
+
+### Shared rules, all four page types
+
+1. **A number alone is never the answer.** The complete unit is *number + band +
+   one provenance sentence + one comparison anchor.* Independently confirmed by
+   the UI/UX annex, whose #1 ranked rule is the same statement.
+2. **Provenance is ONE sentence directly under the number**, in Indeed's form:
+   **count, window, basis, updated** ("39.1k salaries, last 36 months, from job
+   postings rather than self-reports, updated <date>"). Everyone else scatters
+   these across a footer, a tooltip and a methodology page. Indeed fits all four
+   in two lines.
+3. Every number carries a unit, a reference date and a basis. No exceptions.
+4. **Running prose in the top two screens: under 120 words** for cell, city and
+   industry; under 180 for country.
+5. **Every section must change a decision on THAT page, or it is cut.**
+6. **Absence is a typed token in the value slot with one legend per page, never a
+   deleted row.** See the open question below - this one is in tension with a
+   ratified local doctrine and is NOT settled.
+
+### CELL PAGE, the flagship. *What does the owner here actually keep?*
+
+| # | Section | Role |
+|---|---|---|
+| 1 | Identity line plus data month | Frame |
+| 2 | **THE ANSWER** - take-home, one number, largest type on the page. Beneath it: the low-to-high band, one provenance sentence, one anchor (this cell against the country's all-trade take-home) | **ANSWERS** |
+| 3 | The funnel that produces it: revenue, costs, tax, take-home, with a value column AND a share-of-revenue column | EVIDENCE |
+| 4 | Distribution: 25th / 50th / 75th, plus at most 20 words naming what separates the top quartile | EVIDENCE |
+| 5 | Position row, Trading Economics form: this cell, the national figure for this trade, the best and worst covered geography in country | EVIDENCE |
+| 6 | What moves the number here: at most three factors, one sentence each, **every sentence containing its own figure** | CONTEXT |
+| 7 | Method and coverage: measured / estimated / absent, as a typed legend | CONTEXT |
+| 8 | Lateral: same sub-industry nearby, other sub-industries here | NAVIGATION |
+
+**CUT:** any explainer of the trade beyond one clause in the identity line; a
+second hero chart restating the funnel; national market-size totals; demographic
+or lifestyle tiles; **anything at all above the answer.**
+
+Country, city and industry orders are in the annex at the same depth, each with
+its own CUT list, plus 22 checkable ban statements a reviewer answers yes/no
+against a rendered page.
+
+### The comparison device worth stealing
+
+**Trading Economics' four-column row: Last, Previous, Highest, Lowest**, every
+value unit- and date-stamped. **One row replaces a chart**, and it was the
+fastest-reading comparison device found anywhere in the set. Second best: a fixed
+national anchor quoted inline, which becomes *learned* across pages.
+
+### Two warnings from the admired pages
+
+- **Levels.fyi shows no sample size next to its headline median. Do not copy
+  that.** It is the most admired page in the set and it hides its coverage gap;
+  it is also the only site where a reader cannot see thin data.
+- **Confidence chips that encode sample VOLUME only are dishonest.** Glassdoor's
+  say "we have a lot of rows" and read as a guarantee of accuracy.
+
+### Looks modern is not reads fast
+
+Nomad List looks 2026 and reads slow: 13 sections, 800 to 1,200 words, no single
+answer. Trading Economics looks 2009 and reads fastest. Prose is inversely
+proportional to lookup value: Levels.fyi 40-50 words in two screens, Trading
+Economics 50-100 for the whole page, Payscale 400-500, Wikipedia 2,000+. **Fast
+pages sit under 250.**
+
+Recommended synthesis: **TE's architecture, Levels.fyi's type hierarchy, Indeed's
+provenance line, Data USA's inline honesty, OWID's chart chrome.**
+
+---
