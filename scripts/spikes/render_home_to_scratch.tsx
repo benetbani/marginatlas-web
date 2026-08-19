@@ -97,14 +97,20 @@ function renderAll(el: React.ReactElement): Promise<string> {
 async function main() {
   const outDir = process.argv[2];
   if (!outDir) {
-    console.error("usage: render_home_to_scratch.tsx <scratch-dir>");
+    console.error("usage: render_home_to_scratch.tsx <scratch-dir> [route-module, default \"page\"]");
     process.exit(1);
   }
   mkdirSync(outDir, { recursive: true });
 
-  const mod = await import("../../src/app/page");
-  const Home = mod.default as unknown as () => Promise<React.ReactElement>;
-  const body = await renderAll(await Home());
+  /* argv[3] is an optional route module path relative to src/app, so this
+     renders any route rather than only the homepage. Added 2026-08-19 for the
+     graphics review, and deliberately as a PARAMETER rather than a sixth
+     spike: the backlog already carries P3-8, "five render spikes each
+     re-derive the same harness". */
+  const routeArg = process.argv[3] || "page";
+  const mod = await import("../../src/app/" + routeArg);
+  const Route = mod.default as unknown as (p?: unknown) => Promise<React.ReactElement>;
+  const body = await renderAll(await Route({}));
 
   /* The wrapper mirrors what the real layout puts around the page: the content
      column token and the header-height token the masthead offset reads. It does
@@ -125,9 +131,10 @@ ${body}
 </html>
 `;
 
-  writeFileSync(join(outDir, "home.html"), doc, "utf8");
+  const outName = (routeArg === "page" ? "home" : routeArg.replace(/\/page$/, "").replace(/[^a-z0-9]+/gi, "-")) + ".html";
+  writeFileSync(join(outDir, outName), doc, "utf8");
   const bands = [...body.matchAll(/data-band="([a-z-]+)"/g)].map((m) => m[1]);
-  console.log(`wrote ${join(outDir, "home.html")}`);
+  console.log(`wrote ${join(outDir, outName)}`);
   console.log(`bands emitted: ${bands.length}`);
   console.log(bands.join(" "));
   console.log(
