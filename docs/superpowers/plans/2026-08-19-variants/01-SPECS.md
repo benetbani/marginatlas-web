@@ -13,11 +13,37 @@ Six charts show a p10/p50/p90 spread and disagree: **two logarithmic, three
 linear, one zero-based, one with a tick axis.** Read `RangeStrip`,
 `PercentileStrip` and the four others in the graphics inventory before building.
 
+> **CORRECTED 2026-08-19, before any build, by reading the module.** An earlier
+> draft of this file described `RangeStrip` as a **linear** track and proposed a
+> logarithmic variant as C. **`RangeStrip` is already logarithmic** - domain
+> `[max(1, p10*0.85), p90*1.18]`, not zero-based, and the log-ness is **never
+> declared to the reader**. C as drafted would have been an alternative to the
+> thing that already ships. The three versions below are re-cut around the
+> decision that is actually open.
+
+**The six, from the inventory table, so the decision is visible:**
+
+| Implementation | Axis | Zero-based | Scale shared | Tick axis |
+|---|---|---|---|---|
+| `RangeStrip` | **log** `[p10*0.85, p90*1.18]` | no | per-instance | **no** |
+| `PercentileStrip` | **log**, same domain | no | per-instance | no |
+| `SpreadBar` | linear `[p10, p90]` | no | **per-row** | no |
+| `SpreadStrip` | linear `[p10, p90]` | no | per-instance | no |
+| `spine2/Range` | linear **or** log | no | **shared across rows** | **yes** |
+| `DistributionVisual` | linear `[0, p90*1.1]` | **yes** | per-instance | no |
+
 | | Version | Specification |
 |---|---|---|
-| **A** | **Current `RangeStrip`, untouched** | Linear track, p50 the only accent, p25/p75 interpolated when absent, "you" marker when it diverges from typical. |
-| **B** | **Linear plus a real axis** | A's geometry, plus a tick axis with min and max labelled, and p25/p75 printed rather than implied. Tests whether the missing axis was the actual problem. |
-| **C** | **Logarithmic** | Same data, log scale, axis labelled as such **in words a reader understands**, not "log". Tests the two charts that already do this. |
+| **A** | **Current `RangeStrip`, untouched** | **Log** domain `[max(1, p10*0.85), p90*1.18]`, p50 the only accent, missing quartiles interpolated as midpoints, seven-segment neutral density ramp, separate HTML view below `sm`. **No axis, and the log scale is not declared anywhere.** |
+| **B** | **Zero-based linear with a labelled axis** | `DistributionVisual`'s scale convention, `[0, p90*1.1]`, on `RangeStrip`'s geometry, plus `spine2/Range`'s tick axis with min and max labelled. Magnitude becomes readable and the low end collapses on a wide spread. |
+| **C** | **Log, but declared, with a labelled axis** | A's log domain, plus a tick axis, plus the compression stated **in words a reader understands** rather than the word "log". Tests whether the defect was the log scale or the silence about it. |
+
+**Two facts for the harness, both from the inventory, neither a preference:**
+`RangeStrip` and `PercentileStrip` are near-identical - same log domain, same
+padding factors, same `W = 760` geometry - differing only in the "you are here"
+marker versus the density ramp and mobile fallback. And **`spine2/Range` is the
+only one of the six with a labelled tick axis**, and the only one that shares a
+scale across rows.
 
 **The EXTREME state decides this family.** Pick a real trade whose p10 and p90
 differ by more than an order of magnitude. On a linear track the low end collapses
