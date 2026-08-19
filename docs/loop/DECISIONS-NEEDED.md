@@ -121,6 +121,24 @@ rounds at the adapter, the table keeps a decimal.
 Reversible either way and it touches no locked value, but it changes a printed
 number on a live page, so the loop measured it and stopped.
 
+**Q9. Five files named `verify_*` that no chain runs.** `verify_aov_city_tier`,
+`verify_enrichment`, `verify_formation_expansion`, `verify_manual_aliases`,
+`verify_manual_aliases_db`. They sit beside 84 files with the same prefix that do
+run, so the name asserts an enforcement that does not exist. All five were last
+touched between 2026-05-22 and 2026-06-07; one needs the database, so it can
+never join the chain (the chain must not depend on a secret).
+
+- **A.** Run all five once. Register the four that are green and secret-free;
+  attic the database one with a note saying how to run it by hand.
+  **Recommended:** it is the repo's own rule, wire it or delete it, and running
+  them first means nothing is thrown away unmeasured.
+- **B.** Attic all five now. They have not been edited in over two months.
+- **C.** Rename them to `check_*` so the name stops claiming enforcement, and
+  leave them where they are.
+
+The loop has not acted: registering a gate that fails would turn the chain red
+for a future tick, which `05-GUARDRAILS.md` forbids.
+
 ---
 
 ## Answered

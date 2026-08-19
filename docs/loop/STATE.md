@@ -9,8 +9,8 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **12** done (slot 12, longevity then subagent doctrine). **One full cycle complete.** |
-| Next slot | **1**, `01-CLEANUP.md`, cycle 2 |
+| Tick | **13** done (slot 1, cleanup, cycle 2) |
+| Next slot | **2**, `10-HOMEPAGE.md` |
 | In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
@@ -114,6 +114,25 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 13, slot 1, cleanup. The scripts triage (queued item 7) is done, and it
+  found five fake gates.** Census in one process, `scripts/spikes/script_census.tsx`:
+  **259 script files, 84 gates, 13 npm, 92 referenced, 70 ORPHANS** named by
+  nothing tracked. The 70 break down as 23 spent one-shot SQL imports (history,
+  they stay), 17 `dryrun_*`/`diag_*` investigations, and the rest seeds and
+  screenshot helpers.
+  **The finding: five files named `verify_*` that no chain runs**
+  (`aov_city_tier`, `enrichment`, `formation_expansion`, `manual_aliases`,
+  `manual_aliases_db`), sitting beside 84 with the same prefix that do. The name
+  asserts enforcement that does not exist, which is worse than an unnamed
+  one-off. All five last touched 2026-05-22 to 2026-06-07; exactly ONE touches
+  Supabase, so only that one is barred from the chain. Raised as **Q9**, not
+  acted on, because registering a failing gate is forbidden.
+  Deliverable: `scripts/README.md`, the index item 7 asked for, with where a new
+  script belongs. **Nothing deleted or moved**, per the step file: this was a
+  triage, not a sweep.
+  One correction inside the tick: the README first said two of the five need the
+  database, inferred from the names `_db` and `enrichment`. A grep says one.
 
 - **Tick 12, slot 12, longevity then subagent doctrine. The slowdown was real,
   it was July, and it is over.** Measured from git in one pass each: commits per

@@ -36,6 +36,23 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 13. Five files in your repo are named like build gates and nothing runs
+them.** `verify_aov_city_tier`, `verify_enrichment`, `verify_formation_expansion`,
+`verify_manual_aliases`, `verify_manual_aliases_db`. They sit in the same folder
+as 84 files with the same prefix that do run on every build, so nobody reading
+that folder can tell which is which. A name that claims enforcement it does not
+have is worse than no file. None has been edited since early June; only one of
+them needs the database, so only one is barred from joining the chain. That is
+**Q9**, and I did not act on it, because wiring a gate that turns out to fail
+would leave the build red for the next tick.
+
+Around that: **259 scripts, 84 gates, 13 wired to npm, 92 findable from some
+other file, and 70 that nothing names at all.** Of the 70, 23 are one-shot data
+imports that are supposed to be spent, so they stay as history. The rest are
+old dry-runs and diagnostics. Nothing was deleted or moved: this was the triage
+your cleanup step asked for, and it now lives in `scripts/README.md` along with
+where a new script belongs so the pile stops growing.
+
 **Tick 12. You said we had slowed up considerably. Measured: true, and it was
 July.** Commits per active day ran **29.3 in May, 19.5 in June, 7.9 in July, and
 28.6 in August**. July was a 73% collapse; August is back within four percent of
