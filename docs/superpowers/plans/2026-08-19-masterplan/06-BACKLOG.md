@@ -18,8 +18,25 @@ while the gates measure dev routes buys no protection at all. These are cheap an
 they make everything after them trustworthy. Charter §0.3: measure before you
 change.
 
-- [ ] **P0-1 · gates/scan-roots · Ten design gates scan bodies no reader can
-      reach** — the `dev/spine-*` two-file wrappers and the flag-OFF `home2-view`.
+- [~] **P0-1 · gates/scan-roots · Ten design gates scan bodies no reader can
+      reach** — **FIVE OF THEM REPOINTED 2026-08-19, tick 8.** `verify_no_eyebrow`,
+      `verify_no_bold_display`, `verify_subsection_icons` and `verify_bar_budget`
+      now read `spine/cell|city|industry/*-view.tsx` and `NeighborhoodExplorer`
+      instead of the `dev/spine-*` route wrappers, which are 23 to 27 lines
+      holding ONE JSX element each (100 lines of wrapper against 3,695 lines of
+      body). Dry-run first: zero new failures, and the vocabulary is present in
+      the bodies (Rail 3-13, Movement 5-8, Head 0-10 per file), so the pass is
+      real rather than vacuous. `bar_budget` also listed
+      `NeighborhoodExplorer.tsx` TWICE in the hood group, double-counting its
+      bars: hood read 2/2, at budget, on a phantom. It now reads 1/2. With real
+      bodies the same gate reads **cell 3/3 and industry 3/3, exactly at
+      budget**, so one more horizontal bar on either page fails the build.
+      STILL OPEN: `verify_sample_tags` (dev/spine + NeighborhoodExplorer),
+      `verify_v2_scales`, `verify_spacing_scale` and `verify_paragraph_budget`
+      (dev/cell2, dev/home3, dev/hood2, dev/industry2, spine2, city2, country2),
+      and the flag-off `home2-view.tsx`, which every one of the four repointed
+      gates still names.
+      *Original:* — the `dev/spine-*` two-file wrappers and the flag-OFF `home2-view`.
       The 2026-07-11 rulebook is enforced against the workshop.
       *Verify:* point them at reader-facing routes; expect NEW failures, and treat
       each as a real finding rather than raising a baseline.
@@ -84,6 +101,21 @@ change.
       to the newest handoff.** The four newest are named
       `HANDOFF-marginatlas-<date>.md`, which the pattern does not match. Three
       documents each name a different "current" handoff. Proposal move M4.
+- [ ] **P0-14 · gate 102 does not catch `var()` naming an UNSET sibling.**
+      Found tick 8 while building the paint instrument. `globals.css` declares
+      `--font-body: var(--font-sans), Inter, ui-sans-serif, ...` on `:root`. The
+      names after the `var()` are **font-family fallbacks, not var() fallbacks**,
+      so if `--font-sans` is unset the whole declaration is invalid at
+      computed-value time and does NOT step to `Inter`. **Measured: `--font-body`
+      computed to the empty string and every element fell to the browser
+      default**, costing 69px of page height. `verify_no_self_referential_css_vars`
+      catches a property naming *itself*, not one naming an unset sibling. Same
+      silent symptom, one step away.
+      **Latent, not live:** next/font always injects the slot in production. It
+      becomes live the moment the loader does not run.
+      *Do:* extend the gate to COUNT declarations of this shape and report them
+      first. **Do not edit a live font declaration on a hunch** - measure how many
+      exist before changing any.
 - [ ] **P0-9 · docs · `docs/design-system/TOKENS.md` carries 25 references to
       moss, amber, teal and cream** — ramps deleted 2026-08-17 and enforced
       against by `verify_palette_membership` and `verify_no_cream`. `CLAUDE.md`
@@ -96,8 +128,16 @@ change.
 
 ## P1 — THE HOMEPAGE (the founder's stated priority)
 
-Target: **11 bands / 764 words → 10 bands / 615 words**, per `01-DESIGN-STANDARD`
-§5. One band per tick. **Never touch the H1.**
+**The word target is already met and this track has been re-aimed, tick 8.**
+Measured in a browser: **617 words at 1280, 613 at 375**, against a 615 target.
+The 764 figure everything was planned against was an SSR tag-strip count that
+includes markup no reader sees at any one width.
+
+**The open problem is HEIGHT, and it is three bands.** At 375 the page is
+**9,848px**, and `neighborhoods` (1,568px), `catalog-plates` (1,142px) and
+`audience` (1,127px) carry **3,837px of it, 39%, for 208 words between them**.
+That is a component-stacking problem, not a spacing or a word problem. One band
+per tick. **Never touch the H1.**
 
 - [x] **P1-0 · home/rhythm · WITHDRAWN, tick 6. The premise was false and the
       change would have done the opposite of its own goal.**
@@ -119,7 +159,13 @@ Target: **11 bands / 764 words → 10 bands / 615 words**, per `01-DESIGN-STANDA
       general research finding ("editorial rhythm is 32-64px") was applied to this
       page without measuring this page. The finding was true and the instruction
       derived from it was backwards.
-- [ ] **P1-0b · home/all · NOBODY HAS MEASURED PER-BAND COMPUTED HEIGHT.**
+- [x] **P1-0b · DONE tick 8.** `artifacts/home-paint-census-2026-08-19.md`.
+      11/11 bands paint at both widths, **0 compute `position: static`**, no
+      horizontal scroll, page 5,933px at 1280 and 9,848px at 375. It also
+      corrected the word count (617, not 764) and found the height concentration
+      in three bands. Instrument: `scripts/spikes/render_home_to_scratch.tsx`.
+      **Gap:** no screenshots, the Browser pane would not composite.
+- [~] **P1-0b(orig) · superseded, kept for the reasoning ·**
       `docs/loop/10-HOMEPAGE.md` says this is the next homepage measurement and
       it has not been taken: *"the next measurement is paint, not count. An
       emitted band can still compute to zero height."* Every band now carries
@@ -144,8 +190,11 @@ Target: **11 bands / 764 words → 10 bands / 615 words**, per `01-DESIGN-STANDA
       place and trade in the first two screenfuls. 74% of viewing time is there.
 - [ ] **P1-4 · home/band-5 · The world map is too large** (founder ruling).
       Contained, not full-bleed.
-- [ ] **P1-5 · home/bands-8-9 · Compress `audience` and `blog-rail`** to 55 and 60
-      words.
+- [ ] **P1-5 · home/bands-8-9 · RE-AIMED tick 8: the problem is height, not
+      words.** `audience` is **72 words and 1,127px tall at 375**; `blog-rail` is
+      67 words and 868px. Cutting 17 words off `audience` would remove perhaps
+      40px of its 1,127. *Do:* make the four-panel stack shorter on a phone.
+      *Verify:* re-run the paint census; target under 700px for `audience`.
 - [ ] **P1-6 · home/band-3 · "The holdings"**, one line, absorbing `ledger`.
 - [ ] **P1-7 · home/all · tabular figures on every number** on the page.
 

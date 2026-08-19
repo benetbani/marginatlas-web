@@ -25,12 +25,28 @@
  *      two fixed z-index-0 layers are absent. Band heights do not depend on them,
  *      but anything that reads as "is it painted at all" does, and that question
  *      cannot be answered here. See charter section 9.2.
- *   2. NO REAL FONTS. The next/font stub returns `--font-stub`, so `--font-sans`
- *      and `--font-serif` are never set and every family resolves down its
- *      fallback chain. A font census run on this document measures the FALLBACK,
- *      not what a reader sees. It can still prove the absence of the
- *      self-reference defect fixed in 2179bcb2, because an unset variable falls
- *      through while an invalid one does not.
+ *   2. NO REAL FONTS, AND THE FIXTURE COMPENSATES DELIBERATELY. The next/font
+ *      stub returns `--font-stub`, so the two slots are never set. Measured
+ *      2026-08-19: with them unset, EVERY element on the page resolved to
+ *      "Times New Roman", the browser default, because nothing in this fixture
+ *      applies a family at all. Heights measured in the wrong font are wrong
+ *      heights, so the wrapper now sets `--font-sans` and `--font-serif` to the
+ *      same fallback stacks next/font would supply and puts `--font-body` on the
+ *      body. THE SLOTS MUST GO ON <html>, NOT <body>, and that is not a style
+ *      preference. `--font-body` is declared on `:root` as
+ *      `var(--font-sans), Inter, ...`, and a `var()` naming an UNSET property
+ *      with no fallback is invalid at computed-value time, which voids the whole
+ *      declaration. Measured: with the slots on <body>, `--font-body` computed
+ *      to the EMPTY STRING on :root and every element fell to the browser
+ *      default. Same defect class as 2179bcb2, one element up. Setting them on
+ *      <html> resolved 171 elements to Inter and 61 to Newsreader, two families,
+ *      and moved the page height 5,864 to 5,933px at 1280. That 69px is the
+ *      difference between measuring in the right font and the wrong one. It is still NOT what a reader sees: the
+ *      webfonts are not loaded here, so this resolves to whatever sans and serif
+ *      the machine has. A font census run on this document measures the FALLBACK.
+ *      It can still prove the absence of the self-reference defect fixed in
+ *      2179bcb2, because an unset variable falls through while an invalid one
+ *      does not.
  *   3. SSR ONLY. Anything that appears on hydration is invisible.
  *   4. Data bands self-omit from this machine because cell lookups exceed their
  *      budget to eu-west-1. A short band here is NOT evidence of a short band in
@@ -94,14 +110,14 @@ async function main() {
      column token and the header-height token the masthead offset reads. It does
      NOT include AtlasFrame; see blind spot 1. */
   const doc = `<!doctype html>
-<html lang="en">
+<html lang="en" style="--font-sans: Inter, ui-sans-serif, system-ui, sans-serif; --font-serif: Newsreader, Georgia, ui-serif, serif;">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>home measurement fixture</title>
 <link rel="stylesheet" href="./site.css">
 </head>
-<body class="[--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]">
+<body class="[--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]" style="font-family: var(--font-body);">
 <main class="relative">
 ${body}
 </main>

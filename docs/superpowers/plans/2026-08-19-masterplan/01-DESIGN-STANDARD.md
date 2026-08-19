@@ -50,8 +50,16 @@ one band per page exceeds 200, and it is almost always a testimonial wall.
 are far shorter: **Arc 180, Vercel ~400, Notion 575, Clerk 720.** Stripe's 2,485
 is the outlier, not the target.
 
-**Our homepage today: 11 bands, 764 words** (measured, 2026-08-19).
-**Target: 10 bands, 615 words.** That sits between Notion and Clerk.
+**Our homepage today: 11 bands, 617 words** (measured IN A BROWSER at 1280,
+tick 8; 613 at 375). **The 615 target is already met.**
+
+**CORRECTED, tick 8.** This line said 764 and the target said 615, which framed
+the whole P1 track as a word-cutting job. 764 came from the SSR instrument, which
+strips tags and counts what remains, including markup that never paints at a given
+width. `innerText` counts what a reader can see. **A tick that had started cutting
+toward 615 would have been cutting below the target while believing it was
+approaching it.** Height, not words, is the open problem: see
+`docs/loop/artifacts/home-paint-census-2026-08-19.md` section 3.
 
 | Rule | Value |
 |---|---|

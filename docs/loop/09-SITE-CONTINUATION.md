@@ -10,7 +10,17 @@ can be found by reading source, and both were invisible to 101 green gates.
 
 ## A. THE FOREIGN FONT. A hypothesis with an exact test, not a diagnosis.
 
-Found while reading, 2026-08-18, and **not yet confirmed by rendering**:
+> **RESOLVED, ticks 4 and 8. Do not spend another tick on section A.**
+> Tick 4 confirmed the self-reference in a browser on a two-order fixture and
+> fixed it by giving the loader its own slot, `--font-serif` (`2179bcb2`), with
+> gate 102 `verify_no_self_referential_css_vars` so it cannot return.
+> **Tick 8 confirmed it from the paint side and ran the font census this file
+> asks for: exactly two families, Inter on 171 elements and Newsreader on 61.**
+> Display elements resolve to Newsreader rather than inheriting body sans.
+> Census: `artifacts/home-paint-census-2026-08-19.md`.
+> The original hypothesis is kept below as the record of how it was found.
+
+Found while reading, 2026-08-18, and at that time not yet confirmed by rendering:
 
 `src/app/layout.tsx` loads Newsreader onto the CSS variable `--font-display` and
 Inter onto `--font-sans`, both applied by className to `<html>`.
