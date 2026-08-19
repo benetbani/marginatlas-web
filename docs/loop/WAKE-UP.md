@@ -36,6 +36,31 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 12. You said we had slowed up considerably. Measured: true, and it was
+July.** Commits per active day ran **29.3 in May, 19.5 in June, 7.9 in July, and
+28.6 in August**. July was a 73% collapse; August is back within four percent of
+the May peak. The work also got smaller: mean insertions per commit fell from 701
+in June to **279 in August**, which is the checkpointing habit showing up in the
+data rather than in a promise.
+
+**The tempting explanation is wrong.** Meta work, docs and gates and tests, is
+not eating the project: its share of everything touched fell 19% to 15% to 14%
+across those months. The real tax now is verification: 104 gates, a minute and a
+half to two and a half minutes per run, and three ticks tonight ran it two or
+three times because the machine faulted, not because anything was broken.
+
+**And the machine faults are partly my fault.** I measured commit sizes with a
+loop that ran one git command per commit, a thousand times. It timed out after
+ten minutes and left the shell unable to start processes at all, which is exactly
+the failure that stopped two earlier ticks dead. The same numbers came back from
+a single command in under two seconds. That is now a rule in the loop's operating
+file: measure in one process, never once per row.
+
+**One tidy-up:** two invisible control characters I wrote into a loop document in
+tick 10 are gone. Three attempts to remove them appeared to fail and I nearly
+blamed the other agent for locking the file; the file was fine and my quoting was
+wrong.
+
 **Tick 11. The tallest thing on your phone homepage was decoration.** The
 neighbourhood band is 1,568px on a 375-wide screen, six cards carrying **32 words
 between them**. In each 215px card, **80px is a gradient strip with a pictogram

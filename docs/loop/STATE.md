@@ -9,8 +9,8 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **11** done (slot 11, homepage) |
-| Next slot | **12**, `03-LONGEVITY.md` then `07-SUBAGENT-DOCTRINE.md` |
+| Tick | **12** done (slot 12, longevity then subagent doctrine). **One full cycle complete.** |
+| Next slot | **1**, `01-CLEANUP.md`, cycle 2 |
 | In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work. |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
@@ -114,6 +114,32 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 12, slot 12, longevity then subagent doctrine. The slowdown was real,
+  it was July, and it is over.** Measured from git in one pass each: commits per
+  active day **May 29.3, June 19.5, July 7.9, August 28.6**, and mean insertions
+  per commit **701 (Jun) to 569 (Jul) to 279 (Aug)**, so the work got smaller and
+  more frequent, which is the checkpoint discipline in the data. May's size
+  figure is partial and not quotable: git segfaulted at 299 of 528.
+  **Hypothesis 2, meta creep, is KILLED**: meta share of file touches fell 19% to
+  15% to 14%. Hypothesis 4, verification cost, is now the largest tax: 104 gates
+  at 95-160s, run two or three times in each of ticks 8, 9 and 11 because of
+  environment faults rather than defects.
+  **Subagent audit: zero dispatched in twelve ticks**, which is the doctrine
+  working rather than failing; two ticks (5 and 9) could honestly have used one
+  each, and neither was a taste task.
+  **The rule this produced, and I earned it by breaking it:** measure in ONE
+  process. A per-commit loop over 1,000 commits spawned thousands of processes,
+  timed out at ten minutes and left the shell unable to fork, which is the same
+  signature that stopped ticks 8 and 9. **Tonight's machine-wide failures are at
+  least partly self-inflicted.** The same numbers came back from one
+  `git log --shortstat | awk` in under two seconds. Written into
+  `00-OPERATING-RULES` section 3.
+  Also repaired: two BEL control characters I wrote into
+  `02-ORGANISATION-RESEARCH.md` in tick 10, where a python `\a` in a non-raw
+  string became 0x07. Three repair attempts appeared to fail and I nearly blamed
+  the concurrent worker for holding the file; the file was fine and my shell
+  quoting was wrong.
 
 - **Tick 11, slot 11, homepage. The backlog named the wrong band, and measuring
   first is what caught it.** P1-5 said cut `audience` from 1,127px to under 700.

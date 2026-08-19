@@ -63,6 +63,17 @@ cd /e/atlas/website && npm run prebuild
 - **The Bash CWD resets to `E:\atlas`, the parent repo.** Prefix every command
   with `cd /e/atlas/website`. A gate run without it fails with
   `ERR_MODULE_NOT_FOUND` and looks like a defect.
+- **MEASURE IN ONE PROCESS. Never loop a command per commit, per file, or per
+  row.** Added tick 12, from evidence produced by breaking it: a
+  `git log | while read h; do git show ...; done` over 1,000 commits spawned
+  thousands of processes, timed out at ten minutes, and left the shell reporting
+  `MEM_COMMIT failed, Win32 error 1455` and `fork: Resource temporarily
+  unavailable`. **That is the same fault family that stopped ticks 8 and 9 dead**
+  (`spawn UNKNOWN`, `0xC000012D`), so the machine-wide failures this loop has
+  been treating as weather are at least partly self-inflicted.
+  The same figures came back in **one** `git log --shortstat` piped to `awk`, in
+  under two seconds. One git process, one awk. If a measurement needs N
+  subprocesses where N is a row count, it is written wrong.
 - **Never run an untargeted `grep -r` from `E:\atlas`.** That is the data
   pipeline: `page-data/` alone is over a thousand files, `macro/` several hundred
   more. One such search burned ten minutes of a thirty-minute tick and then timed
