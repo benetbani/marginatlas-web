@@ -9,9 +9,9 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **5** done (slot 5, organisation research) |
-| Next slot | **6**, `10-HOMEPAGE.md` |
-| In-flight | the contradiction census, `artifacts/contradictions-2026-08-19.md`, dispatched tick 5 and not yet returned. If it is absent, re-run it; the org proposal's done test has one unchecked box until it lands. |
+| Tick | **6** done (slot 6, homepage) |
+| Next slot | **7**, `04-FAILURE-REFLECTION.md` then `05-GUARDRAILS.md` |
+| In-flight | none. Tick 5's census and the fourth research annex both landed and are committed (`388728af`, `fe5730bd`). |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
 | Gates | `tsc` clean; `prebuild` **102/102** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
 | HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
@@ -108,6 +108,18 @@ this file alone. If it cannot, this file is wrong.
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
 
+- **Tick 6, slot 6, homepage.** Withdrew the top backlog item rather than
+  building it. P1-0 proposed raising section padding to 56px desktop to cut a
+  third of the page height. Three measurements killed it: `ToneBand` already
+  renders `py-8 md:py-10` = 32/40px, at the TIGHT end of the editorial range;
+  `verify_spacing_scale` defines a scale that STOPS AT 40, derived from the
+  founder's mockup, so 56 would have gone red; and `4ff9d677` had already removed
+  1,216px (18% of height) by collapsing four rhythms into this one. The change
+  would have added ~320px back. **The research finding was true and the local
+  instruction derived from it was backwards, because nobody measured this page.**
+  Correction written into `01-DESIGN-STANDARD` §0 rule 2 so it is not re-derived.
+  Filed P1-0b: per-band computed height is still unmeasured, and until it exists
+  every "too tall" claim here is a guess. Commit `658edc3e`.
 - **Tick 5, slot 5, organisation research.** Found that `CLAUDE.md` routes every
   session to the two most abandoned directories: `docs/design-system/GUIDELINES.md`
   last committed 2026-05-28 and `docs/architecture/README.md` 2026-05-27. Worse

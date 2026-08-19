@@ -36,6 +36,29 @@ touches the H1, and never asks you a question. Anything that needs you is in
 
 ## Tonight's log
 
+**Tick 6. I threw away my own top priority instead of building it.** The list
+said the homepage's biggest win was section padding: ours is SaaS-sized, go to
+56px, lose a third of the page height. All three parts of that were wrong, and
+reading two files was enough to show it. The page already sits at 32px on a phone
+and 40px on a desktop, which is *tighter* than the editorial sites the research
+admired. The spacing scale we derived from your own mockup **stops at 40**, so 56
+would have turned a gate red. And we already did this job in `4ff9d677`, which
+removed 1,216px, 18% of the page's height, by collapsing four competing rhythms
+into one. Building it would have put about 320px back on.
+
+**Worth knowing why I got it wrong**, because it is a shape that will recur. The
+research was right that editorial sites run 32 to 64px and SaaS sites run 96 to
+192. I applied it without measuring *our* page. A true general finding, a
+backwards local instruction. That correction is now written into the standard
+rather than quietly fixed, so the next tick reading "editorial rhythm" cannot
+derive it again.
+
+**What is actually still unmeasured:** per-band height. Every band emits, but an
+emitted band can still compute to zero height, and nobody has looked at 1280 and
+375 with a reload in between. Until that exists, every "too tall" claim on the
+list is a guess, including the ones I wrote.
+
+
 **Tick 5. The file you read first is sending every session to the wrong two
 folders.** `CLAUDE.md` tells each new session to read
 `docs/design-system/GUIDELINES.md` as "authority for any UI work" and

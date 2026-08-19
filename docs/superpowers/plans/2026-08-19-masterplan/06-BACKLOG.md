@@ -119,6 +119,20 @@ Target: **11 bands / 764 words → 10 bands / 615 words**, per `01-DESIGN-STANDA
       general research finding ("editorial rhythm is 32-64px") was applied to this
       page without measuring this page. The finding was true and the instruction
       derived from it was backwards.
+- [ ] **P1-0b · home/all · NOBODY HAS MEASURED PER-BAND COMPUTED HEIGHT.**
+      `docs/loop/10-HOMEPAGE.md` says this is the next homepage measurement and
+      it has not been taken: *"the next measurement is paint, not count. An
+      emitted band can still compute to zero height."* Every band now carries
+      `data-band`, so this is one query per width.
+      *Do:* render `/` at 1280 and 375, **reloading after the resize**, and record
+      per-band `offsetHeight` plus total `scrollHeight`. Save shots to
+      `docs/loop/artifacts/shots/`.
+      *Why it now leads P1:* P1-0 was withdrawn because height was attributed to
+      rhythm without measuring, and rhythm turned out to be already tight. **Until
+      this exists, every "too tall" claim is a guess**, including the ones in this
+      backlog.
+      *Blind spot to state when quoting it:* a height measured on this machine
+      cannot distinguish a short band from one whose data self-omitted locally.
 - [ ] **P1-1 · home/band-7 · "How a number is made" does not exist**, and it is
       the moat: held vs modelled vs extrapolated, plus the 48,114 estimates
       deliberately not ingested. 90 words.
