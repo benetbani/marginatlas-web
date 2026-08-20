@@ -37,8 +37,12 @@ appears:
 3. If the action is not reversible, or it touches a locked value, do nothing on
    that thread and take the next item in the step file instead.
 
-Do not pre-empt the two questions already open in charter section 13. They are
-his.
+Do not pre-empt a question already open. **Ten are open in `DECISIONS-NEEDED.md`
+today, and two of them are both numbered Q3** (the loop's "do the gates run on a
+deploy" and the architecture review's "typed absence, or self-omission").
+Renumber before adding an eleventh. This line used to say "the two questions in
+charter section 13"; those are now Q1 and Q2 in the decisions file, and the count
+moved five times while the sentence did not.
 
 ## 3. Verification cadence. Every tick, no exceptions.
 
@@ -47,11 +51,13 @@ cd /e/atlas/website && npx tsc --noEmit
 cd /e/atlas/website && npm run prebuild
 ```
 
-- `tsc` must be clean. `prebuild` must be **102/102** since tick 4 added
-  `verify_no_self_referential_css_vars`. Any pasted prompt still saying 101 is
-  stale by exactly that gate. The chain is the
-  authority on the gate count, not any document that quotes it. A count reading
-  low is how a missing gate hides.
+- `tsc` must be clean. `prebuild` must pass **at the count the chain itself
+  reports**. This line used to quote 102 and was stale within four ticks, which
+  is the whole argument: **the chain is the authority on the gate count, never a
+  document that quotes one, and a count reading low is how a missing gate hides.**
+  The current number is carried in the generated block in `CLAUDE.md`, kept honest
+  by `verify_counts_fresh` and printed by `node scripts/loop_status.mjs`. Do not
+  type it here again.
 - `cell-lattice` reports **3 deferred** checks. That is its own honest output and
   it is not a failure. Deferred is not passed.
 - **The Windows flake is real and it is not a red gate.** A gate that fails with
@@ -170,16 +176,30 @@ at most three concurrent, exclusive file ownership per agent, taste is never
 delegated, and every agent's returned number is a claim to be verified before it
 reaches a commit message.
 
-## 10. Research budget
+## 10. Scope. Four lanes, and research is no longer one of them.
 
-- **Semrush**: aggressive on new questions, never repetitive. Every response is
-  cached to `docs/loop/artifacts/semrush/`. Check the cache before every call. A
-  repeated query is a wasted credit, and breadth is what the founder is paying
-  for.
-- **Web research**: any source that will be cited gets captured to
-  `docs/loop/artifacts/research/` with its URL and the date it was read.
-- **Never put a source-agency name into user-facing copy.** Internal documents
-  may name sources freely; components may not. Gate: `verify_no_source_agencies`.
+**Superseded 2026-08-20 by the founder**, who narrowed the loop to four lanes and
+struck the research budget by name:
+
+> *"we should focus only on design, site functionality, hierarchy, usability"*
+> *"do not lose time on thinking where to find statistics and so on"*
+
+**In scope:** design, site functionality, hierarchy, usability.
+
+**Out of scope, and not to be worked around:** where to find statistics, data
+coverage, new sources, ingest, research into what numbers exist, SEO keyword work,
+marketing. **The Semrush budget in the previous version of this section is
+withdrawn**, not paused: a tick that spends credits on search demand is spending
+them outside the founder's stated scope. If a queue item cannot proceed without
+new data, it is not a design item; mark it `[?]` and take the next one.
+
+Web research remains permitted **when it serves one of the four lanes** — a CSS
+mechanism, a WCAG technique, how a comparable product solves a layout — and any
+source that will be cited is still captured to `docs/loop/artifacts/research/`
+with its URL and the date it was read.
+
+**Never put a source-agency name into user-facing copy.** Internal documents may
+name sources freely; components may not. Gate: `verify_no_source_agencies`.
 
 ## 11. The 2026-08-19 rulings, and where the work now comes from
 
@@ -221,3 +241,43 @@ directory; the step-by-step and the 13-check review gate are `03-PROCEDURE.md`.
    design gates currently scan `dev/` bodies no reader can reach; the
    route-chrome gate passes two routes because their files mention the word in a
    comment. Repairing instruments is P0 for exactly this reason.
+
+---
+
+## 12. Circuit breakers. New, because this loop ticks sixty times faster.
+
+The 30-minute loop ran 12 ticks in six hours and a human saw the output between
+runs. A continuous loop can run 300 ticks in the same window with nobody looking.
+**Everything below exists to stop it doing 300 ticks of the wrong thing**, and
+the first three are checked mechanically by `node scripts/loop_status.mjs`, which
+exits 2 on any of them.
+
+1. **Dirty tree.** A tick that finds unexpected uncommitted files checkpoint
+   commits them before taking new work, whatever the queue says. The known-dirty
+   set is `.mcp.json`, `scratchpad/`, `.agents/` and `skills-lock.json`; anything
+   else means a tick crashed mid-write.
+2. **Red chain.** The tick becomes a repair tick. **Never build on a red chain.**
+   If one repair attempt does not clear it, stop taking new work entirely, write
+   the state into `STATE.md`, and keep repairing until it is green. A loop that
+   keeps building on a red chain manufactures commits nobody can bisect.
+3. **More than one item in flight.** Converge before opening a third. A half-done
+   change is worth less than nothing, and two of them are worth less than that.
+4. **Grinding.** Either of these means stop and change lane:
+   - the same section touched twice within ten ticks with no new measurement
+     between them;
+   - three consecutive ticks that move no criterion in
+     `11-PRODUCTION-READINESS.md`.
+
+   Write what was learned into `05-ERROR-LEDGER.md` first. **This is the specific
+   failure that got a previous run of this project called "mediocre":** an
+   adversarial pass always finds one more nit, so a loop optimising against it
+   never terminates. Converge, do not grind.
+5. **Twenty ticks with no founder message.** Keep going, but make the next
+   `WAKE-UP.md` entry a summary of the whole run rather than of the last tick. He
+   reads one screen, and twenty tick-entries is not one screen.
+
+**Two breakers that are deliberately NOT here.** A commit-count ceiling, because
+nothing is ever pushed and 52 unpushed commits have cost nothing; and a
+wall-clock limit, because a tick is budgeted to a unit of work and a long tick is
+usually a thorough one, not a stuck one. If a tick is genuinely stuck, breaker 1
+catches it on the next fire.

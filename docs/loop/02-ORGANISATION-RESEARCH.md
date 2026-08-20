@@ -1,5 +1,12 @@
 # 02. Organisation research. What shape should this working directory be?
 
+> **RETIRED 2026-08-20, NOT DELETED.** The founder narrowed the loop to four
+> lanes: *"we should focus only on design, site functionality, hierarchy,
+> usability"*. It is research into how the working directory should be shaped, which is meta-work, not one of the four lanes.
+> **This file is no longer scheduled.** It is kept for its reasoning and its
+> measured numbers, which stay true. Nothing here may be revived without a
+> founder ruling that widens the scope. See `docs/loop/README.md`.
+
 **Founder:** "research on how the working directory can be organized better".
 
 This step **researches and proposes**. It does not move files. Execution is

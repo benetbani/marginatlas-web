@@ -1,5 +1,12 @@
 # 03. Longevity. Why this slowed down, and what survives the next six months.
 
+> **RETIRED 2026-08-20, NOT DELETED.** The founder narrowed the loop to four
+> lanes: *"we should focus only on design, site functionality, hierarchy,
+> usability"*. It asks why the project slowed down. Valuable, and not design, functionality, hierarchy or usability.
+> **This file is no longer scheduled.** It is kept for its reasoning and its
+> measured numbers, which stay true. Nothing here may be revived without a
+> founder ruling that widens the scope. See `docs/loop/README.md`.
+
 **Founder:** "brainstorming on the best practices of how this whole procedure can
 be applied in the long term because we have slowed up considerably".
 

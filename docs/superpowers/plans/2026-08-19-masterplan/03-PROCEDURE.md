@@ -90,6 +90,45 @@ vocabulary.
   invent a new visual language on a tick; the charter forbids a new icon language
   and the same logic covers new type steps, new card treatments, new motion.
 
+### S3.5 — BRAINSTORM. Three options, then pick, then say why the others lost.
+
+**Added 2026-08-20**, because the founder named brainstorming as one of the five
+things a tick does and this procedure jumped from "find the rule" straight to
+"write the spec". A tick that goes from diagnosis to implementation has chosen
+the first thing it thought of, and the first thing is usually the most obvious
+thing, which on a site whose problem is *"a little bit schematic and very bland"*
+is exactly the wrong bias.
+
+Write, in the tick notes, **three options minimum**:
+
+```
+OPTION A: <what it is>
+  COSTS:  <effort, and what else has to change>
+  RISKS:  <what it could break, what it forecloses>
+  MOVES:  <which criterion in 11-PRODUCTION-READINESS.md, or "none">
+OPTION B: ...
+OPTION C: ...
+CHOSE:    <which, and the reason the other two lost>
+```
+
+Three rules on the options themselves:
+
+1. **"Keep the current version" is always a legitimate option and must be one of
+   the three when the thing already renders.** The graphics review found the
+   founder's instinct that *"maybe the current version is the best one"* was right
+   more often than not, across ten families.
+2. **At least one option must be smaller than the others.** The cheapest change
+   that moves the criterion is frequently the right one, and it is the one an
+   agent mid-flow never proposes.
+3. **The options are yours; a preference between founder-facing VARIANTS is not.**
+   Where the output is A/B/C pages for him to judge, an agent builds all three and
+   states measured facts beside each. It never says which is better. That rule
+   exists because this project already ran a variants-and-pick machine and he
+   called the result mediocre.
+
+Invoke `superpowers:brainstorming` for anything creative. It never overrides the
+charter, the standard, or the operating rules.
+
 ### S4 — SPEC IT BEFORE YOU EDIT.
 
 Write, in the tick notes, before touching a file:
@@ -142,7 +181,7 @@ Produce the before/after table. Every row that moved is evidence; every row that
 did not move when you expected it to is a defect in either the change or the
 instrument, and you must say which.
 
-### S8 — THE REVIEW GATE. Run all twelve. (§2 below.)
+### S8 — THE REVIEW GATE. Run all nineteen. (§2 below.)
 
 ### S9 — VERIFY THE TREE.
 
@@ -176,10 +215,16 @@ measurement could not distinguish**. Never push.
 
 ---
 
-## 2. THE REVIEW GATE — twelve checks, after every unit
+## 2. THE REVIEW GATE — nineteen checks, after every unit
 
 Run these against the rendered output, not the source. Each is pass/fail with a
 number. A unit that fails any check is not done.
+
+**R1–R12 are the design checks. R14–R19 were added 2026-08-20** when the founder
+put *site functionality* and *usability* in scope alongside design. The absence of
+that half is not theoretical: with no functionality check in this gate, two forms
+shipped that report `{ok:true}` to the reader and discard every submission,
+because the tables they write to do not exist.
 
 | # | Check | Failure condition | How |
 |---|---|---|---|
@@ -195,6 +240,17 @@ number. A unit that fails any check is not done.
 | **R10** | **Overflow** | `scrollWidth > clientWidth` at 375 | the page body must never scroll horizontally |
 | **R11** | **Verticality** | this created a second way to solve a problem an existing surface already solves | see `04-CONSOLIDATION.md`. The founder's rule: *"we only go vertically, never create 2 similar sister pages."* |
 | **R12** | **Compile order** | the stylesheet was compiled before the file was written | if any measurement was impossible or read empty, assume this happened |
+
+### R14–R19 — FUNCTIONALITY, HIERARCHY AND USABILITY
+
+| # | Check | Failure condition | How |
+|---|---|---|---|
+| **R14** | **Keyboard** | an interactive element is unreachable by Tab, or reachable with no visible focus ring | walk the tab order. A focus ring removed by `outline: none` with nothing put back is the most common form of this |
+| **R15** | **It works** | the control does not do the thing it says | **Verify in jsdom.** The browser preview pane has a 0x0 hidden viewport: `.focus()` does nothing, IntersectionObserver never fires, and every layout measurement reads zero. A control tested there reports working when it is not |
+| **R16** | **Hierarchy** | the section has no single dominant element | measure the computed size ratio between the primary figure and the next-largest. The country `Scorecard` renders eight cells at equal weight and is the only page type with no hierarchy signal; do not add a second |
+| **R17** | **Target size** | an interactive target is under 24x24 CSS px | WCAG 2.2 SC 2.5.8, measured on the rendered box, not the icon inside it |
+| **R18** | **Dead ends** | an `href` resolves to a 404, or to nothing | enumerate hrefs from the rendered markup and resolve against the route table. **A crude path grep matches namesakes**: `scores/country_verdict` against `countries/country_verdict` produced a wrong count once already. Resolve by exact specifier |
+| **R19** | **States** | empty, single-item, long-list and error were not rendered | render each deliberately. Sample content is the untested half of every primitive. **Do not count a self-omission as an empty state**: locally the data bands self-omit because cell lookups exceed a 4s budget to eu-west-1, and that absence is never a finding |
 
 ### R13 — THE ADVERSARIAL PASS. Not optional on design work.
 
@@ -213,8 +269,8 @@ survived because the person who made them was the person who checked them.
 
 **Converge, do not grind.** An adversarial panel always finds one more nit —
 that is its nature, and it is the reason a previous run of this project was
-called "mediocre" after endless polishing. Ship when R1–R12 pass and the
-adversary finds nothing with a NUMBER attached. A nit without a measurement is
+called "mediocre" after endless polishing. Ship when R1–R12 and R14–R19 pass and
+the adversary finds nothing with a NUMBER attached. A nit without a measurement is
 an opinion, and the founder is the judge of opinions, not the panel.
 
 ---
@@ -268,7 +324,8 @@ WAS:      <the S2 sentence, with its number>
 DID:      <the change, one line>
 NOW:      <the S7 number>
 BLIND:    <what the measurement could not distinguish>
-GATES:    tsc clean · prebuild N/N · review gate 12/12 · adversary: <verdict>
+CHECKS:   R1-R19 <n>/19 · tsc clean · prebuild N/N · adversary: <verdict>
+GOAL:     <which criterion in 11-PRODUCTION-READINESS.md moved, or "none">
 COMMIT:   <hash>
 NEXT:     <the next backlog item>
 ```

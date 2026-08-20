@@ -9,12 +9,16 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **13** done (slot 1, cleanup, cycle 2) |
-| Next slot | **2**, `10-HOMEPAGE.md` |
-| In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work. |
-| Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/` |
-| Gates | `tsc` clean; `prebuild` **103/103** (a gate was added in tick 4; the chain is the authority, the pasted loop prompt's 101 is superseded) |
-| HEAD | see the tick log below; `origin/main` is at `6fc88e3e` and the loop's commits sit above it, unpushed by rule |
+| Tick | **13** done. The 30-minute loop is retired; ticks resume at 14 under the continuous loop |
+| Cadence | **CONTINUOUS**, `* * * * *`. 30 seconds is not expressible by any scheduler here; cron is minute-granular and jobs fire only while idle, so this means "next tick within a minute of the last one finishing". A tick is budgeted to a unit of work, never to a minute |
+| Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
+| Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
+| Destination | `11-PRODUCTION-READINESS.md`, **1 / 30 criteria MET** at the time of writing |
+| Orient | `node scripts/loop_status.mjs`, one process, under a second. **Exit 2 means a halt condition** |
+| In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work |
+| Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/`, `.agents/`, `skills-lock.json` |
+| Gates | `tsc` clean; `prebuild` green **at the count the chain reports**. This row said 103/103 while the chain was 104 and line 56 of this same file already said 104: **a number typed into a document is stale the moment it is typed.** `loop_status.mjs` carries it now |
+| HEAD | `origin/main` is at `6fc88e3e`; the loop's commits sit above it, unpushed by rule |
 
 ---
 

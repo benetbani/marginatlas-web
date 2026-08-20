@@ -1,5 +1,12 @@
 # 06. Reformation. Execute one approved move, prove it, leave a pointer.
 
+> **RETIRED 2026-08-20, NOT DELETED.** The founder narrowed the loop to four
+> lanes: *"we should focus only on design, site functionality, hierarchy,
+> usability"*. It executes moves that 02 proposes, and 02 is retired, so it has no input.
+> **This file is no longer scheduled.** It is kept for its reasoning and its
+> measured numbers, which stay true. Nothing here may be revived without a
+> founder ruling that widens the scope. See `docs/loop/README.md`.
+
 **Founder:** "reformation, improvement, optimization of the working directory and
 related parts".
 

@@ -1,5 +1,12 @@
 # 08. Claims and indices. Stop printing judgements as if they were measurements.
 
+> **RETIRED 2026-08-20, NOT DELETED.** The founder narrowed the loop to four
+> lanes: *"we should focus only on design, site functionality, hierarchy,
+> usability"*. It is about what the site claims and where those numbers come from. The founder struck data sourcing from scope by name.
+> **This file is no longer scheduled.** It is kept for its reasoning and its
+> measured numbers, which stay true. Nothing here may be revived without a
+> founder ruling that widens the scope. See `docs/loop/README.md`.
+
 **Founder:** "we claim a lot and these claims are hard to measure: ex. how hard is
 restaurant industry in a shithole city; we need objective data not some slaps like
 that, that should be reformed, and oversimplification of metrics should be studied
