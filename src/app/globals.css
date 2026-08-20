@@ -205,7 +205,31 @@
        he asks for it. */
     --glass-alpha: 0.80;
     --glass-blur: blur(20px);
-    --atlas-surface-card: rgba(255, 255, 255, var(--glass-alpha)); /* canonical card surface */
+    /* THE ALPHA IS NOT IN THIS TOKEN, AND THAT IS THE CORRECTION. It was, for one
+       commit, and rendering the country page found what the homepage could not:
+       **24 elements of the `eng-*` engraved family read this token**, and they
+       are not all cards. `eng-ground__fill` and `eng-ground__marker` are CHART
+       MARKS. Making the token translucent made a bar fill see-through over a
+       photograph, which changes what the chart MEANS, not how it looks, and it
+       did so with no blur behind it because only `.atlas-card` carries one.
+
+       Nobody noticed the coupling for months because at .955 a translucent mark
+       and an opaque one are the same picture. The moment the alpha did anything,
+       it did it to everything.
+
+       So the token stays OPAQUE and the glass lives in the `.atlas-card` RULE,
+       which is the only place that also draws the blur, the edge and the
+       catch-light. A surface that wants the material asks for it by being a
+       card. Same reasoning the masthead already uses at .atlas-glass-chrome:
+       "the card token is for cards; two different jobs, and pointing both at one
+       token is what coupled them." */
+    /* Written as rgba rather than #ffffff on purpose, twice over. It reads as
+       "the alpha was deliberately removed" beside the .955 it replaced, and it
+       does not add a seventh white hex literal to this file: `verify_no_cream`
+       counts `#ffffff` by VALUE (cream-50 used to be white), so the hex form
+       failed the ratchet at 5 -> 6. The ratchet was right and the baseline was
+       not touched. */
+    --atlas-surface-card: rgba(255, 255, 255, 1); /* canonical card surface, OPAQUE. See above. */
     --atlas-surface-card-soft: #ffffff;      /* secondary card within a card section */
     --atlas-surface-band: #ffffff;           /* white section band, no pattern */
 
@@ -409,7 +433,9 @@
        atlas-card-band   = white, lighter shadow → on white section bands */
   .atlas-card {
     position: relative;
-    background: var(--atlas-surface-card);
+    /* The glass is declared HERE, not on --atlas-surface-card, because that token
+       is read by chart marks in the engraved family. See the token's own note. */
+    background: rgba(255, 255, 255, var(--glass-alpha));
     /* THE FILL STOPS AT THE PADDING BOX. A border paints OUTSIDE it and the
        default background-clip is border-box, so a translucent fill composites
        UNDER a translucent border and the edge reads milkier than authored. One

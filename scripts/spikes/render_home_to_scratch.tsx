@@ -118,9 +118,37 @@ async function main() {
      spike: the backlog already carries P3-8, "five render spikes each
      re-derive the same harness". */
   const routeArg = process.argv[3] || "page";
+
+  /* argv[4] is JSON params for a DYNAMIC route, added 2026-08-20 so the four
+     page types other than the homepage can be rendered at all. Next 15 hands a
+     route `params` as a PROMISE, not an object, and a page that awaits it will
+     hang forever on a bare object, so it is wrapped here rather than at each
+     call site. `searchParams` is supplied empty for the same reason: a route
+     that destructures it throws on undefined. */
+  const paramsArg = process.argv[4];
+  const props = paramsArg
+    ? { params: Promise.resolve(JSON.parse(paramsArg)), searchParams: Promise.resolve({}) }
+    : {};
+
   const mod = await import("../../src/app/" + routeArg);
   const Route = mod.default as unknown as (p?: unknown) => Promise<React.ReactElement>;
-  const body = await renderAll(await Route({}));
+
+  /* A route that calls notFound() throws NEXT_NOT_FOUND. Catching it and saying
+     so matters: `notFound` and `redirect` are deliberately left REAL by the
+     stubs, precisely so a 404 cannot be reported as a successful render. */
+  let body: string;
+  try {
+    body = await renderAll(await Route(props));
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (/NEXT_NOT_FOUND|NEXT_HTTP_ERROR_FALLBACK/.test(msg)) {
+      console.error(`\n  ROUTE 404s with these params: ${routeArg} ${paramsArg ?? "{}"}`);
+      console.error("  That is the route working correctly, not the harness failing.");
+      console.error("  Pick a slug that exists.\n");
+      process.exit(3);
+    }
+    throw err;
+  }
 
   /* The wrapper mirrors what the real layout puts around the page: the content
      column token and the header-height token the masthead offset reads. It does
