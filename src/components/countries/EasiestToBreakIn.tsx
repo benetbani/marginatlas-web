@@ -69,6 +69,27 @@ export function EasiestToBreakIn({
   if (!rows || rows.length < 3) return null;
   const shown = rows.slice(0, Math.max(3, limit));
 
+  /* THE BADGE WAS A TAUTOLOGY AND IT LOOKED LIKE DATA. Founder, 2026-08-21:
+     "you are just slapping an Easy on all of them, which makes the whole thing
+     disgusting. Those cards have no character whatsoever."
+
+     He is describing a structural defect, not a style one. This section selects
+     the EASIEST businesses and then prints each one's difficulty band. The top
+     of an easiest-first ranking is all in the top band by construction, so the
+     badge could only ever read "Easy", eight times, on a page whose heading
+     already says these are the easy ones. It carried no information at all.
+
+     Worse, the number that DOES vary was hidden. `showScores` was passed as
+     "does this row have a working link", so a real score was withheld because a
+     LINK was broken, which is a category error: the score is a score whether or
+     not the page it points at resolves.
+
+     So the score always shows, and the word only appears when the rows on screen
+     actually span more than one band, which is the only time it distinguishes
+     anything. */
+  const bandsShown = new Set(shown.map((r) => r.band));
+  const wordCarriesInformation = bandsShown.size > 1;
+
   return (
     <div>
       <SectionEyebrow className="mb-2">Easiest to break in</SectionEyebrow>
@@ -91,10 +112,21 @@ export function EasiestToBreakIn({
           0 to 100 scale runs, that the badge is the same number the business
           carries on its own page, and, when no row is grounded in a local read,
           that the ranking rests on a modeled pattern. */}
-      <p className="mt-1 max-w-2xl text-sm leading-relaxed text-graphite">
+      {/* THE SCALE IS ALWAYS STATED NOW, and it was not before. This sentence
+          branched on `showScores`, so on any page where the scores were hidden
+          the reader was never told what scale the ranking ran on. Now that every
+          card carries its number, "97" without "out of 100, higher is easier" is
+          the same defect one level down: a bare figure a reader cannot size.
+
+          Stated ONCE here rather than as "/100" on all eight badges, because
+          eight repetitions of the same three characters is the text bloat the
+          founder is objecting to, not a fix for it. The modeled caveat is kept
+          and appended when no row rests on a local read, since that is a
+          different fact and still true. */}
+      <p className="mt-1 max-w-[68ch] text-sm leading-relaxed text-graphite">
         {showScores
-          ? "Ranked by the 0 to 100 break-in rating, higher is easier. Each score is the one that business carries on its own page."
-          : "Ordered on the modeled pattern for each trade, not on a local read."}
+          ? "Scored 0 to 100, higher is easier to start. Each score is the one that business carries on its own page."
+          : "Scored 0 to 100, higher is easier to start. Ordered on the modeled pattern for each trade, not on a local read."}
       </p>
 
       {/* TWO UP ON A PHONE, NOT ONE. Founder, 2026-08-21: "in mobile the look is
@@ -135,8 +167,8 @@ export function EasiestToBreakIn({
                   r.band,
                 )}`}
               >
-                {showScores && <span className="tabular-nums">{r.score}</span>}
-                <span>{breakInWord(r.band)}</span>
+                <span className="tabular-nums">{r.score}</span>
+                {wordCarriesInformation ? <span>{breakInWord(r.band)}</span> : null}
               </span>
             </Link>
             {r.openingHref && (
