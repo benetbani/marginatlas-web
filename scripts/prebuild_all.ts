@@ -208,6 +208,12 @@ const GATES: Gate[] = [
      No ordering does what the author meant, which is why this is a hard gate.
      Negative-tested by re-inducing the exact line. */
   { name: "no-self-referential-css-vars", script: "scripts/verify_no_self_referential_css_vars.ts" },
+  /* Registered 2026-08-20. Written months earlier and never wired, which is why
+     the site has had no accessibility check of any kind in the chain. It was NOT
+     wired as-is: it held no `process.exit`, so registering it unchanged would have
+     added a sixth check that cannot go red. Now a hard gate at zero, negative
+     tested against a fixture. */
+  { name: "a11y-static", script: "scripts/audit/a11y_static_audit.ts" },
   /* THE GATE LIST EXISTS ONCE. Added 2026-08-19 after prebuild:serial was found
      holding a hand-written chain of 43 script paths against this array's 102, a
      drift of 59 gates including cream, palette, take-home identity, canonical

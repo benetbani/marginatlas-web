@@ -31,6 +31,7 @@ import {
   statSync,
 } from "node:fs";
 import { resolve, join } from "node:path";
+import { stripCommentLines } from "../lib/strip_comments";
 
 const ROOT = process.cwd();
 const SRC = resolve(ROOT, "src");
@@ -60,20 +61,18 @@ function walk(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
-function classifyLine(file: string, lineNo: number, line: string): Finding[] {
+function classifyLine(
+  file: string,
+  lineNo: number,
+  line: string,
+  insideLabel: boolean,
+): Finding[] {
   const rel = file.replace(ROOT, ".").replace(/\\/g, "/");
   const out: Finding[] = [];
 
-  // Skip pure comment lines — `<img>` in a doc comment is not a render.
-  const trimmed = line.trim();
-  if (
-    trimmed.startsWith("//") ||
-    trimmed.startsWith("*") ||
-    trimmed.startsWith("/*") ||
-    trimmed.startsWith("{/*")
-  ) {
-    return out;
-  }
+  /* The private comment check that used to sit here is gone. It was a ninth copy
+     of the `isCommentLine` shape catalogued in backlog P0-4, and it is dead now
+     that the caller hands this function stripped lines. */
 
   // 1. <img> without alt= and not inside next/image which has alt prop
   // For Next's <Image> we expect `alt="..."` in props.
@@ -117,7 +116,11 @@ function classifyLine(file: string, lineNo: number, line: string): Finding[] {
     // Hidden inputs and submit/checkbox often labelled by other UI.
     const isHidden = /\btype\s*=\s*["']hidden["']/.test(attrs);
     const isHelper = /\btype\s*=\s*["'](?:submit|reset|button)["']/.test(attrs);
-    if (!hasAriaLabel && !hasId && !isHidden && !isHelper) {
+    /* `insideLabel` is the implicit association: `<label><input/>text</label>`
+       needs no `id`, no `htmlFor` and no `aria-label`, and it is valid HTML that
+       screen readers honour. Without this the audit reported three findings and
+       all three were correct code. */
+    if (!hasAriaLabel && !hasId && !isHidden && !isHelper && !insideLabel) {
       out.push({
         type: "input-no-label",
         severity: "info",
@@ -181,9 +184,29 @@ function main() {
 
   const findings: Finding[] = [];
   for (const f of files) {
-    const lines = readFileSync(f, "utf-8").split(/\r?\n/);
+    const raw = readFileSync(f, "utf-8").split(/\r?\n/);
+    /* COMMENTS ARE NOT MARKUP. This audit had no comment handling at all, so a
+       `<input>` written inside an explanatory comment counted as a finding. The
+       whole file is stripped once, in order, and the code half is what gets
+       classified. */
+    const lines = stripCommentLines(raw);
+    /* IS THIS INPUT INSIDE A `<label>`? `classifyLine` reads ONE line, so it
+       structurally could not see a wrapping label on an earlier line, and every
+       one of the three findings this audit reported was exactly that: a valid
+       implicit association it had no way to observe. Depth is carried across the
+       file, and the same-line case is handled by asking whether a `<label` opens
+       before the `<input` on that line. */
+    let labelDepth = 0;
     for (let i = 0; i < lines.length; i++) {
-      findings.push(...classifyLine(f, i + 1, lines[i]));
+      const line = lines[i];
+      const opensHere = line.indexOf("<label");
+      const inputAt = line.search(/<input\b/);
+      const insideLabel =
+        labelDepth > 0 || (opensHere !== -1 && inputAt !== -1 && opensHere < inputAt);
+      findings.push(...classifyLine(f, i + 1, line, insideLabel));
+      labelDepth += (line.match(/<label\b/g) ?? []).length;
+      labelDepth -= (line.match(/<\/label>/g) ?? []).length;
+      if (labelDepth < 0) labelDepth = 0;
     }
   }
 
@@ -247,6 +270,39 @@ function main() {
 
   console.log(`\n→ ${join(AUDIT_DIR, "a11y_static_v1.json")}`);
   console.log(`→ ${join(AUDIT_DIR, "a11y_static_REPORT.md")}`);
+
+  /* THIS IS A GATE NOW, AND UNTIL 2026-08-20 IT COULD NOT FAIL. The file held no
+     `process.exit` at all, so the backlog's instruction to "wire it into
+     prebuild" would have added a 105th entry to a chain that already carries five
+     checks which cannot go red. A gate that cannot fail is worse than no gate: it
+     costs a slot, prints a tick, and buys nothing.
+
+     A HARD FAIL RATHER THAN A RATCHET, and that is only honest because the count
+     is genuinely zero. It read three before this commit and all three were
+     `<label><input/></label>`, correct code the line-by-line detector could not
+     see. With that fixed and comments stripped, every one of the four checks
+     reports zero across 696 files, so there is no debt to ratchet down and any
+     finding from here is a regression introduced after this line was written.
+
+     NEGATIVE-TESTED, because a check reporting zero because it stopped looking is
+     the exact failure this repo keeps meeting. A fixture carrying one real
+     violation of each kind plus eight valid patterns was scanned: all four fired,
+     none of the eight was reported, and an `<img>` inside a comment was ignored. */
+  if (findings.length > 0) {
+    console.error(`\nx a11y_static: ${findings.length} finding(s).`);
+    for (const f of findings.slice(0, 30)) {
+      console.error(`   [${f.type}] ${f.file}:${f.line}\n     ${f.snippet}`);
+    }
+    if (findings.length > 30) console.error(`   ... and ${findings.length - 30} more`);
+    console.error(
+      `\n  Fix the markup. An <input> inside its own <label> needs no id or\n` +
+        `  aria-label and is not a finding; if this gate says otherwise, the\n` +
+        `  detector is wrong and the detector is what to change.\n`,
+    );
+    process.exit(1);
+  }
+
+  console.log(`\n  GATE: PASS  4 checks, 0 findings across ${files.length} files.`);
 }
 
 main();
