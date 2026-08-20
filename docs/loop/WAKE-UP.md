@@ -5,6 +5,24 @@ than one screen, it is written wrong.
 
 ---
 
+## Tick 20, 2026-08-20. The industry page showed one trade as two numbers.
+
+**What was wrong:** on the same page, in the same render, a trade appeared as
+**8.6% in one block and $9 in another**. Both came from one figure, rounded two
+different ways, and a delta between them carried the error.
+
+**What was measured: 163 of the 204 trades, 80%,** print a keep that hides a
+rounding. Worst is a trade whose real number is 5.50 and which prints as $6, so
+every comparison against it was out by half a point.
+
+**What changed:** one rounding, so both blocks describe a trade the same way.
+Checked afterwards across 41,412 trade pairs: zero disagreements. **This was
+computed, not seen** , no screenshot exists, and the one homepage item I wanted
+first is still blocked on exactly that. This is the first tick in seven to touch
+the site rather than the tooling.
+
+---
+
 ## Tick 19, 2026-08-20. The country page had no design budget at all.
 
 **What was wrong:** the rule limiting how many bar charts a country page may carry

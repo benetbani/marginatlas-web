@@ -9,7 +9,7 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **19** done |
+| Tick | **20** done |
 | Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
@@ -116,6 +116,28 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 20, P3-5, LANE CHANGE TO THE SITE. The industry page printed one trade
+  at two precisions.**
+  Six consecutive instrument ticks (14-19) and the site had not changed. The P0
+  rationale , "improving the homepage while the gates measure dev routes buys no
+  protection" , is substantially discharged: G1, G6, G7 MET, G3 down 21 to 17.
+  The remaining P0 items are refinements, so I took a reader-visible defect.
+  **P1-5b was the first candidate and is still blocked**: it says in its own text
+  "do not land it blind, first tick that can screenshot", and no screenshot exists.
+  Took P3-5 instead, which needs no browser.
+  `margin_delta_pp` subtracted a ROUNDED base from an UNROUNDED sibling.
+  `spine/industry/subtypes.ts:26` resolves `keeps_pct = base + delta`, so that
+  addition RECONSTRUCTED the sibling's unrounded value: **8.6% in the subtypes
+  block and $9 in the benchmark block, same page, same adapter, same render.**
+  Measured: **163 of 204 trades (80%) print a keep that hides a rounding**, worst
+  0.50pp on `fishing_aquaculture` (exact 5.50, shown $6), which reproduces the
+  0.5pp the backlog recorded and calibrates the arithmetic.
+  One `Math.round`, matching the benchmark block's own expression. After: 41,412
+  pairs through the consumer's resolution, **0 disagreements**.
+  **No readiness criterion moved** , there is no criterion for figure coherence,
+  and G9 in the ledger is about self-omission rather than double-precision. Chain
+  105/105 serial, tsc clean. **Nothing was seen; it was computed.**
 
 - **Tick 19, P0-1 (in flight, override rule 3). The country budget policed a
   prototype and the real country page had none.**

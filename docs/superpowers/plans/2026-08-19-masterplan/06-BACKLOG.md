@@ -396,8 +396,16 @@ first-party precedent: redirect, do not delete.** Any URL change goes to
       `scripts/spikes/deadcode_boards_probe.tsx`. Delete module and gate together.
 - [ ] **P3-4 · aria · an aria-label says "All trades average" over a MEDIAN** —
       `src/components/spine/industry/industry-view.tsx:137`.
-- [ ] **P3-5 · industry · the same trade reads `$9` in one block and `8.6%` in
-      another; 6 of 6 rows disagree, worst 0.5pp** — `src/lib/spine/adapt_industry.ts`.
+- [x] **P3-5 · industry · the same trade read `$9` in one block and `8.6%` in another**
+      DONE 2026-08-20, tick 20 (`271e3f15`). `margin_delta_pp` subtracted a ROUNDED
+      base from an UNROUNDED sibling, and the consumer
+      (`spine/industry/subtypes.ts:26`) resolves `keeps_pct = base + delta`, which
+      reconstructed the sibling's unrounded value exactly. Measured over the margin
+      table: **163 of 204 trades, 80%, print a keep that hides a rounding**, worst
+      0.50pp (`fishing_aquaculture`, exact 5.50, shown $6). Fixed with one
+      `Math.round`, matching the expression the benchmark block already used.
+      After: 41,412 trade pairs checked through the consumer's own resolution,
+      **0 disagreements**. Not seen, only computed; no screenshot exists.
 - [ ] **P3-6 · svg · six `preserveAspectRatio="none"`** — circles draw as
       ellipses. `spine/cell-view.tsx:223`, `spine/city/chapters.tsx:62`,
       `spine/industry/forms.tsx:204`, `spine/kit.tsx:574`, `spine2/Quad.tsx:149`.
