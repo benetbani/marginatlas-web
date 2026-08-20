@@ -13,6 +13,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition, useState } from "react";
+import { Segmented } from "@/components/kit/controls/Segmented";
 
 type Region = { name: string; slug: string };
 type IndustryOpt = { id: string; name: string; slug: string };
@@ -142,7 +143,43 @@ export function DimensionSwitcher({
         {/* Type: the sub-niches of this trade (e.g. restaurants -> pizzeria,
             food truck). Each option is a real cell slug; only shown when the
             trade has a sub-type group. */}
-        {subTypes.length > 1 && (
+        {/* A SEGMENTED CONTROL WHEN THE GROUP IS SMALL, THE SELECT WHEN IT IS NOT.
+            Founder, 2026-08-20, pointing at a Today/Week/Month switch: "for the
+            business category, for example restaurants, we can have switches based
+            on different restaurant categories. Only the switch part."
+
+            THE THRESHOLD IS MEASURED, NOT COPIED FROM THE REFERENCE. Counted over
+            the real taxonomy: 35 trade groups have sub-types, and the option count
+            (parent plus children) runs from 2 to 13. **25 groups fit in five
+            options or fewer; 10 do not**, and a thirteen-option segmented control
+            is a worse select. So the switch appears where it reads as a switch and
+            the list stays a list everywhere else.
+
+            NOT `SubTypeSwitcher`, though it exists, wraps `Segmented`, and was
+            built for exactly this job. It writes the choice to a QUERY PARAM and
+            expects the page to re-derive around it. This site gives every sub-type
+            its OWN URL, and "no URL slug renames, SEO equity rides on existing
+            URLs" is a hard constraint. Mounting it as designed would collapse N
+            indexed cell pages into one param-driven page, which is a regression
+            wearing the right control. `Segmented` is the part worth having, so it
+            is used directly and navigation is left alone. */}
+        {subTypes.length > 1 && subTypes.length <= 5 && (
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-ink-700/60">Type</span>
+            <Segmented
+              ariaLabel="Type"
+              size="sm"
+              value={currentTypeSlug ?? industrySlug}
+              onChange={(next) => navigate(geoSlug, next)}
+              options={subTypes.map((t, i) => ({
+                value: t.slug,
+                label: i === 0 ? `${t.name} (all)` : t.name,
+                disabled: pending,
+              }))}
+            />
+          </div>
+        )}
+        {subTypes.length > 5 && (
           <label className="flex items-center gap-2">
             <span className="text-xs text-ink-700/60">Type</span>
             <select
