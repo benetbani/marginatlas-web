@@ -311,14 +311,35 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
       .map((sib) => {
         const sm = INDUSTRY_MARGINS.industries[sib.id];
         if (!sm || !isNum(sm.net_margin)) return null;
-        const sibNetPct = clampMargin(sm.net_margin, "net", sib.id) * 100;
+        /* ROUNDED, and it was not until 2026-08-20. This is the same
+           `Math.round(clamp(net) * 100)` the benchmark block below uses for
+           `keeps_per_100`, so the two blocks now describe a sibling identically.
+
+           THE DEFECT IT FIXES. `netPct` is already rounded, so subtracting an
+           UNROUNDED sibling from it produced a delta carrying the base's rounding
+           error. The consumer, `spine/industry/subtypes.ts:26`, resolves
+           `keeps_pct = base_net_pct + margin_delta_pp`, which reconstructed the
+           sibling's unrounded value exactly: **the same trade printed `8.6%` in
+           the subtypes block and `$9` in the benchmark block on the same page.**
+
+           Measured over the margin table: 163 of the 204 trades carrying a net
+           margin, 80%, have a printed keep that hides a rounding, worst 0.50pp
+           on `fishing_aquaculture` (exact 5.50, shown $6). Each of those is a
+           base whose delta arithmetic was off by that much against every sibling.
+
+           Whole percents are the right precision rather than merely the
+           convenient one: `base_net_pct` is whole, `keeps_per_100` is whole, and
+           the figure is spoken as dollars of every hundred. A delta in "pp"
+           against a whole-percent base should be whole too. */
+        const sibNetPct = Math.round(clampMargin(sm.net_margin, "net", sib.id) * 100);
         const sibSlug = industryToSlug(sib.id);
         const sibCapital = startupCapitalArchetypeForSlug(sibSlug);
         return {
           name: sib.name,
           slug: sibSlug,
           // Deltas off the base so deriveSubtypes reproduces the real values.
-          margin_delta_pp: +(sibNetPct - netPct).toFixed(1),
+          // Both sides are whole now, so this is exact and needs no toFixed.
+          margin_delta_pp: sibNetPct - netPct,
           capital_delta_pct:
             baseCapital > 0 ? Math.round(((sibCapital - baseCapital) / baseCapital) * 100) : 0,
           // rent_sensitivity + note OMITTED.
