@@ -63,7 +63,11 @@ const parse = (v) => {
   const p = v.replace(/rgba?\(|\)/g, "").split(/[,\s/]+/).filter(Boolean).map(Number);
   return { rgb: p.slice(0, 3), a: p.length > 3 ? p[3] : 1 };
 };
-const over = (s, d, a) => s.map((c, i) => Math.round(a * c + (1 - a) * d[i]));
+/* NO ROUNDING. This composites in continuous space and only the caller may
+   round, because rounding here is how this gate spent its life measuring pure
+   white: 255*0.955 + 247*0.045 = 254.64, and Math.round makes that 255. The
+   luminance function below takes fractional channels without complaint. */
+const over = (s, d, a) => s.map((c, i) => a * c + (1 - a) * d[i]);
 const lum = (rgb) =>
   0.2126 * ch(rgb[0]) + 0.7152 * ch(rgb[1]) + 0.0722 * ch(rgb[2]);
 function ch(c) {
@@ -75,9 +79,38 @@ const ratio = (a, b) => {
   return (l1 + 0.05) / (l2 + 0.05);
 };
 
-const paper = parse(tokens.get("--paper") ?? "#f7f7f8").rgb;
+/* ---- THE GROUND A CARD ACTUALLY SITS ON ----------------------------------
+   This gate used to composite the card over `--paper`, a near-white token, and
+   then round. Both together meant it measured every text token against PURE
+   WHITE, which is a surface that never renders anywhere on this site.
+
+   The real stack, and `globals.css` lines 160-169 already computed it by hand
+   without ever turning it into a check: a white base, then the photograph at
+   opacity .32 under saturate(.85) contrast(1.02), then the card. The darkest
+   pixel in /spine/_skyline.jpeg is rgb(1,2,0). At .32 over white that composites
+   to a backdrop of rgb(173), so the worst card ground on the site is the card
+   alpha applied over rgb(173).
+
+   WHY A WORST-CASE BOUND IS SOUND, AND WHY THE BLUR RADIUS DOES NOT APPEAR HERE.
+   A Gaussian blur is a convex combination of its input pixels: every output
+   pixel is a weighted average with non-negative weights summing to one, so it
+   can never fall below the darkest input pixel nor rise above the brightest.
+   Bounding the photograph once therefore bounds it for EVERY blur radius,
+   forever, and this gate needs no knowledge of backdrop-filter at all.
+
+   THIS MATTERS MORE THE MORE TRANSPARENT THE CARD GETS. At the current .955 the
+   difference between the old assumption and the truth is about half a point on
+   a ratio of seventeen and no AA verdict flips, which is why nobody noticed. At
+   .80 the true ground is rgb(238) against the assumed 255; at .62 it is rgb(224).
+   A translucency ladder built while this gate still reported white would pass
+   the whole way down and be wrong the whole way down. ---------------------- */
+const PHOTO_DARKEST = [1, 2, 0];      // measured off /spine/_skyline.jpeg
+const PHOTO_OPACITY = 0.32;           // AtlasFrame photo layer
+const BASE = [255, 255, 255];         // the white base beneath the photograph
+const BACKDROP = over(PHOTO_DARKEST, BASE, PHOTO_OPACITY);
+
 const cardTok = parse(tokens.get("--card") ?? "rgba(255,255,255,.955)");
-const CARD = over(cardTok.rgb, paper, cardTok.a);
+const CARD = over(cardTok.rgb, BACKDROP, cardTok.a);
 
 /* ---- every token used as TEXT.
    The boundary matters: `border-color:` and `text-decoration-color:` both
