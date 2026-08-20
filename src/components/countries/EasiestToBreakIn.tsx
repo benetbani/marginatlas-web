@@ -97,8 +97,32 @@ export function EasiestToBreakIn({
           font-display and font-semibold, so it was the one heading on the
           country and region pages set in the body sans and a weight heavier
           than every heading around it. */}
+      {/* THE HEADING PROMISED A PLACE THE SCORE DOES NOT KNOW ABOUT, and it
+          contradicted its own lede fifteen words below.
+
+          MEASURED 2026-08-21 by rendering two controls. The United Kingdom and
+          Germany, economies with very different costs and wages, return the SAME
+          score on four of eight trades: software development 97 and 97, legal
+          services 94 and 94, real estate agencies 92 and 92, IT services 90 and
+          90. The mechanism is upstream: the country page passes the COUNTRY NAME
+          where a city slug is expected ("united-kingdom", "germany"), so the
+          cost-of-living lookup and the population lookup both resolve to nothing
+          and the rating falls back to per-trade archetypes. Only the national
+          salary still moves it, which is why the rest drift by a few points
+          rather than standing still.
+
+          So the ORDER is real information, these trades genuinely are easier to
+          start than those, and the PLACE is not. The lede has said exactly that
+          since 2026-08-17: "Ordered on the modeled pattern for each trade, not on
+          a local read." The heading was the half that lied.
+
+          Design standard rule 4: "precise where measured, ranged where modelled,
+          labelled which." When nothing local resolved, the heading stops naming
+          the place. It still names it when a local read grounds the rows. */}
       <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
-        Where it is easiest to get started in {placeName}
+        {showScores
+          ? `Where it is easiest to get started in ${placeName}`
+          : "Which trades are easiest to start"}
       </h2>
       {/* useless-tile-ok: describes the break-in ranking, not a count of things we cover */}
       {/* CUT, 2026-08-17, 54 and 38 words down to 23 and 13. Both ledes opened
