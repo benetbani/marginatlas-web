@@ -96,7 +96,30 @@ const ratio = (a, b) => {
    pixel is a weighted average with non-negative weights summing to one, so it
    can never fall below the darkest input pixel nor rise above the brightest.
    Bounding the photograph once therefore bounds it for EVERY blur radius,
-   forever, and this gate needs no knowledge of backdrop-filter at all.
+   forever, and this gate needs no knowledge of the blur at all.
+
+   THE SATURATE HALF IS NOT COVERED BY THAT ARGUMENT, AND HERE IS WHY IT STILL
+   HOLDS. The real filter is `blur(26px) saturate(1.15)`. A saturation filter is
+   a colour matrix, not a convex combination: it preserves LINEAR luma by
+   construction but not WCAG relative luminance, which applies the sRGB transfer
+   first. Measured on real pixels, saturate(1.15) moves relative luminance in
+   both directions, e.g. rgb(10,200,40) rises from .4153 to .4508 after clamping.
+   So convexity alone does not bound it.
+
+   It is bounded here for a different and narrower reason: THE FLOOR PIXEL IS
+   ALREADY BLACK. The darkest pixel is rgb(1,2,0), relative luminance .0005, and
+   no colour matrix can push a pixel below zero. Saturation can only move the
+   ground UP from that floor, which makes the card ground lighter, which makes
+   dark text on it read BETTER, never worse. The AtlasFrame layer also applies
+   saturate(.85) before the card applies 1.15, so the photograph reaching a card
+   is desaturated first, which widens the margin further.
+
+   THE CONDITION TO RE-CHECK IF THE PHOTOGRAPH EVER CHANGES: this argument needs
+   the darkest pixel to be at or near black. Swap in an image whose darkest pixel
+   is a SATURATED MID-TONE and saturate() could push its luminance below the
+   measured floor, and this bound would need recomputing rather than inheriting.
+   That is the one input here that is a property of the picture rather than of
+   the maths.
 
    THIS MATTERS MORE THE MORE TRANSPARENT THE CARD GETS. At the current .955 the
    difference between the old assumption and the truth is about half a point on
