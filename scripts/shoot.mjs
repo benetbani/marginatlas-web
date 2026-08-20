@@ -53,7 +53,7 @@
 import { spawnSync } from "node:child_process";
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
-import { mkdirSync, existsSync } from "node:fs";
+import { mkdirSync, existsSync, appendFileSync, readFileSync } from "node:fs";
 import { join, extname, normalize, resolve } from "node:path";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
@@ -113,6 +113,34 @@ run("compile stylesheet", "npx", [
   sh(join(OUT, "site.css")),
   "--minify",
 ]);
+
+/* 2b. APPEND THE SPINE STYLESHEET. `globals.css` does NOT `@import` it, so the
+       tailwind CLI never sees it, and the fixture came out with ZERO `.av2`
+       rules. That is not cosmetic: `/industries`, `/world`, the cell page and
+       `city2`/`country2` all `import "@/styles/atlas-spine.css"`, and the whole
+       v2 type system (`--sans`, `--fig`), the `.av2 .glass` surfaces and the
+       `.lab`/`.note`/`.fig` scale live only there.
+
+       FOUND BY MEASURING SOMETHING ELSE. A font check on `/industries` read
+       `--sans` and `--fig` as the EMPTY STRING and concluded the page had no
+       fonts. It has fonts; the fixture had no stylesheet. **Every spine-page
+       measurement taken with this harness before 2026-08-20 was missing these
+       rules**, including the glass sweep, which therefore could not have seen
+       any `.av2 .glass` surface at all.
+
+       Appended raw rather than compiled: it is hand-written CSS, not Tailwind
+       source, so it needs no build step. Order matters, it comes after the
+       compiled globals so its `.av2` cascade wins where both declare. */
+const spineCss = join(ROOT, "src/styles/atlas-spine.css");
+if (existsSync(spineCss)) {
+  process.stdout.write("  " + "append spine stylesheet".padEnd(28));
+  appendFileSync(
+    join(OUT, "site.css"),
+    "\n/* ---- src/styles/atlas-spine.css, appended by shoot.mjs ---- */\n" +
+      readFileSync(spineCss, "utf8"),
+  );
+  console.log("ok");
+}
 
 /* 3. ONE ORIGIN, TWO ROOTS. The markup asks for `/spine/_skyline.jpeg` at an
       absolute path and `file:` is blocked in the browser tools, so the scratch
