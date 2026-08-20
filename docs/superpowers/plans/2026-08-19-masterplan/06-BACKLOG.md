@@ -49,7 +49,7 @@ change.
       on the country page against a 22-item list.** The industry page is written
       to that limitation on purpose, in its own comments.
       *Verify:* count ids the gate actually resolves per page type; publish the number.
-- [ ] **P0-4 · gates/strip-comments · 21 gates roll their own, not 12**
+- [ ] **P0-4 · gates/strip-comments · 20 gates roll their own, 1 of 21 converted**
       Recounted 2026-08-20 (tick 14) over all 104 chain entries: 15
       import the shared module (14 in chain), 24 roll their own (21 in chain), and
       `verify_retired_claims.ts` does both. Four distinct re-derivations, not one:
@@ -61,8 +61,17 @@ change.
       `sitemap-no-redirects` and `find_dead_links` , which work today precisely
       BECAUSE they roll their own. That is fixed; the lesson is that this item
       cannot be executed as a find-and-replace.
-      *Do:* convert in pattern groups, not all 21 at once, and run the chain
-      between groups so a flipped verdict is attributable to one group.
+      **THE `isCommentLine` GROUP IS 8 FILES AND 1 IS DONE** (`da0b65d1`,
+      `verify_no_bold_display`). Remaining 7: `verify_banned_patterns`,
+      `verify_bar_budget`, `verify_no_em_dashes`, `verify_no_eyebrow`,
+      `verify_no_source_agencies`, `verify_subsection_icons`,
+      `verify_v34_research_rules`. The conversion is mechanical and the recipe is
+      in `da0b65d1`, but it has ONE trap: the stateful stripper must be fed every
+      line IN ORDER, so it runs before the cheap `continue` guard, never after.
+      Measured for the group across `src/`: **42 lines of real code invisible**
+      (any line starting `/*` or ending `*/}`) and **9,033 lines of prose scanned**
+      as code. Convert in pattern groups, not all at once, and run the chain
+      between groups so a flipped verdict is attributable.
       *Verify:* one shared implementation; re-run the full chain per group.
 - [ ] **P0-15 · gates/hex-detector · the hex gate cannot see a percent-encoded colour**
       Its pattern is `/#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}/g`,
@@ -74,6 +83,15 @@ change.
       *Do:* decode percent-encoding before matching, or match `%23` as an alternate
       opener. **Expect new findings and do not raise the baseline to absorb them.**
       *Verify:* the gate reports globals.css:707; then count what else appears.
+- [ ] **P0-16 · gates/scan-sets · duplicate entries double-count violations**
+      `verify_bar_budget` listed `NeighborhoodExplorer.tsx` twice (found tick 8) and
+      so did `verify_no_bold_display` (found tick 15, fixed in `da0b65d1`). Both
+      lists are copies of each other, so the other copies are suspect and nobody has
+      looked. A duplicate cannot flip a verdict; it doubles that file's printed
+      COUNT, which is what a ratchet baseline is set from.
+      *Do:* one pass over every hand-written scan list in the chain, asserting each
+      is a set. Consider making the gates share one list rather than eight copies.
+      *Verify:* count entries against unique entries per gate; publish both numbers.
 - [ ] **P0-5 · gates/ratchets · Four of seven ratchets can be silently raised.**
       *Verify:* add the refuse-to-raise guard that `verify_no_cream` already has.
 - [ ] **P0-6 · gates/contrast · `verify_token_contrast.mjs` measures an assumed

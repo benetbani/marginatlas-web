@@ -9,7 +9,7 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **14** done. First tick under the rebuilt loop |
+| Tick | **15** done |
 | Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
@@ -116,6 +116,27 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 15, P0-4 continued, instruments lane. First `isCommentLine` conversion.**
+  Eight gates carry a byte-similar `isCommentLine`, and a boolean cannot fix its
+  defect: it asks whether a line LOOKS like a comment, so any line starting `/*` or
+  ending `*/}` is skipped whole, real code included.
+  **Measured over 696 files and 141,052 non-blank lines: 42 lines of real code are
+  invisible to all eight, and 9,033 lines of block-comment prose are scanned as
+  code by them.** The instrument was wrong twice before those numbers held: blank
+  lines put the second figure at 13,849, and JSX brace residue put the first at
+  1,970. Both corrections are in `da0b65d1`.
+  Converted `verify_no_bold_display` only, so a flipped verdict stays attributable.
+  **The trap for the other seven:** the stateful stripper must be fed every line in
+  order, so it runs BEFORE the cheap `continue` guard. Leave the guard first and an
+  unclosed block stays open past its `*/` and the gate stops reading the file.
+  **Second defect, found reading the scan set:** `NeighborhoodExplorer.tsx` was
+  listed TWICE in `SURFACE_FILES`. `verify_bar_budget` had the identical duplicate
+  at tick 8 and the siblings were never checked. Filed as P0-16.
+  **Green proves little here and the commit says so:** 9,033 of the changes are in
+  the quieter direction, so the chain would have stayed green either way. What green
+  rules out is the risky direction, that none of the 42 carries a violation.
+  **G3 moved 21 -> 20.**
 
 - **Tick 14, P0-4, instruments lane. The shared comment-stripper was eating every URL.**
   `stripComments` locates `//` with `indexOf` and returns everything to its left. It

@@ -5,6 +5,23 @@ than one screen, it is written wrong.
 
 ---
 
+## Tick 15, 2026-08-20. Eight gates skip real code, and scan prose instead.
+
+**What was wrong:** eight gates decide what is a comment by how a line LOOKS, so a
+line starting `/*` or ending `*/}` is skipped whole even when it holds real code.
+
+**What was measured:** across 696 files, **42 lines of real code invisible** to all
+eight, and **9,033 lines of comment prose scanned as code** by them. My own
+measuring script was wrong twice before those numbers held, and both fixes are
+written down.
+
+**What changed:** one gate converted, not eight, so any flip is attributable. Seven
+to go, with the recipe and its one trap recorded. Also found a scan-list entry
+listed twice, which doubled that file's violation count; the same duplicate was
+found in a sibling gate at tick 8 and nobody checked the rest. Chain 104/104.
+
+---
+
 ## Tick 14, 2026-08-20. The gates could not see URLs.
 
 **What was wrong:** the shared comment-stripper every source gate depends on
