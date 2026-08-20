@@ -54,7 +54,36 @@ function tsxIn(dir: string): string[] {
 }
 
 const GROUPS: Group[] = [
-  { name: "country", budget: 8, files: ["src/app/dev/spine/page.tsx"] },
+  /* COUNTRY IS THE ONE GROUP TICK 8 DID NOT REPOINT, and it is not the same shape
+     as the others. City, cell, industry and hood each had a thin `dev/spine-*`
+     wrapper around a real body in `src/components/spine/*`, so repointing was a
+     path swap. Country's reformed body lives INSIDE the 1,667-line dev route, and
+     `src/app/[country]/page.tsx` is a separate, un-reformed 1,548-line
+     implementation. So this group listed only the workshop, which meant the
+     budget policed a prototype and **the country page a reader actually gets had
+     no bar budget at all**.
+
+     The reader-facing page is ADDED rather than substituted, because the dev
+     route is where the reformed country design exists and dropping it would
+     retire live enforcement. Measured: the reader page contributes **0 by BOTH
+     detectors**, named primitives and hand-rolled alike, so the group reads 3/8
+     with it and 3/8 without. This widens coverage to the site and cannot newly
+     fail.
+
+     WHAT THE COUNT CANNOT SEE, corrected. A first draft of this note said a
+     hand-rolled bar is invisible here; that is FALSE, and the gate caught the
+     error itself by reporting 3 where a named-primitives-only count said 2.
+     Detector 2 below finds a `width` percentage inside a `style={{...}}` that
+     also carries a `background`. The real blind spot is narrower and worth
+     naming: that detector requires an INLINE STYLE OBJECT, so a fill bar sized
+     by a utility class instead, a `w-[62%]` beside a `bg-*`, is counted by
+     neither detector. Nothing on these pages does that today, and nothing checks
+     that it stays true. */
+  {
+    name: "country",
+    budget: 8,
+    files: ["src/app/dev/spine/page.tsx", "src/app/[country]/page.tsx"],
+  },
   { name: "city", budget: 3, files: ["src/components/spine/city/city-view.tsx"] },
   { name: "cell", budget: 3, files: ["src/components/spine/cell/cell-view.tsx"] },
   { name: "industry", budget: 3, files: ["src/components/spine/industry/industry-view.tsx"] },
