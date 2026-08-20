@@ -92,19 +92,28 @@ export function OneThing({
           </span>
         ) : null}
         {haveStamp ? <span aria-hidden="true" className="text-paper-400">&middot;</span> : null}
-        <span>
-          See a number that looks off?{" "}
-          {haveFlag ? (
+        {/* THE INVITATION ONLY APPEARS WHEN IT CAN BE ACCEPTED. Until 2026-08-21
+            the else-branch here printed "See a number that looks off? Flag it."
+            with "Flag it." in the link colour at semibold, as a plain span. **No
+            call site anywhere passes `flagHref`**, so on every page carrying this
+            block it was a correction affordance a reader could not click: styled
+            like a link, behaving like text.
+
+            That is the founder's complaint in its purest form, and it is the
+            widest instance on the site: roughly 700 fixed routes plus every cell
+            and neighbourhood page. Asking a reader to report a wrong number and
+            then giving them nothing to press is worse than not asking. */}
+        {haveFlag ? (
+          <span>
+            See a number that looks off?{" "}
             <a
               href={flagHref as string}
               className="font-semibold text-atlas-700 underline decoration-atlas-300 underline-offset-2 hover:decoration-atlas-700"
             >
               Flag it.
             </a>
-          ) : (
-            <span className="font-semibold text-atlas-700">Flag it.</span>
-          )}
-        </span>
+          </span>
+        ) : null}
       </div>
     </section>
   );

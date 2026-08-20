@@ -1,8 +1,11 @@
 /**
  * kit/engraved/CountryShape.tsx — the lens "shape" radar (accepted #21).
  *
- * A nine-spoke radar that plots a country across the nine judgment lenses
- * (reward, cost, entry, people, demand, edge, risk, momentum, path). The plotted
+ * A SIX-spoke radar that plots a country across the six judgment lenses.
+ * (Said nine until 2026-08-21. `LENS_ORDER` below has six keys and the page has
+ *  six push sites; nine was unreachable and three of the named lenses, edge,
+ *  momentum and path, no longer exist anywhere.)
+ * (reward, cost, entry, people, demand, risk). The plotted
  * polygon is the lone atlas accent filled soft with a crisp accent edge; the
  * spokes are faint engraved hairlines; a faint concentric contour grid carries
  * three rings labelled "weak / fair / strong" (never numbers, since cities stay
@@ -27,7 +30,7 @@ import * as React from "react";
 import { meaningStep, CompassRosette, Glyph, SampleState, type GlyphName } from "./primitives";
 
 /* ------------------------------------------------------------------ */
-/* The nine judgment lenses, in fixed clockwise order from the top.    */
+/* The six judgment lenses, in fixed clockwise order from the top.     */
 /* ------------------------------------------------------------------ */
 
 /** The stable key of a judgment lens. */
@@ -190,7 +193,7 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
         <SampleState
           glyph="bulb"
           what="Profile still forming"
-          reason="The nine-lens shape draws once enough of this country's basics are confirmed. It reads a country's character, never a score."
+          reason="The shape draws once enough of this country's basics are confirmed. It reads a country's character, never a score."
           minH={120}
         />
       </div>
@@ -216,7 +219,7 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
           viewBox={`0 0 ${VB} ${VB}`}
           width="100%"
           role="img"
-          aria-label="Nine-lens country shape: a qualitative profile across reward, cost, entry, people, demand, edge, risk, momentum and path."
+          aria-label="Six-lens country shape: a qualitative profile across reward, cost, entry, people, demand and risk."
           style={{ display: "block" }}
         >
           {/* faint concentric contour grid: weak / fair / strong rings */}
@@ -382,7 +385,7 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
       <div className="eng-shape__foot">
         <span className="eng-shape__foot-note" style={{ color: tone.fg }}>
           <span className="eng-shape__rim-dot" style={{ background: tone.dot }} />
-          A profile of this country's shape, read across nine lenses. The rings mark
+          A profile of this country's shape, read across six lenses. The rings mark
           weak, fair and strong; cities stay the only scored entity.
         </span>
       </div>

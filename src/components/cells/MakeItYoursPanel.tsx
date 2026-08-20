@@ -111,6 +111,13 @@ export function MakeItYoursPanel({
           p75={hi75}
           p90={hi90}
           format={fmtUsd}
+          /* THE COMMENT ABOVE ALREADY SAID THIS AND THE RENDER IGNORED IT. It
+             reads "a spread shown around it, NOT invented percentiles", and then
+             these four multiples of the take-home were fed to a strip whose end
+             labels are hardcoded "Bottom 10%" and "Top 10%". The intent was
+             honest; the component overrode it. `basis` makes the strip say what
+             this block always meant. */
+          basis="modelled"
           you={isNum(you) ? you : null}
           caption="Where your scenario lands on the spread of what owners keep. Drag a lever above and the dark marker moves with you."
         />

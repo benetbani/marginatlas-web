@@ -38,6 +38,8 @@ export type MastheadSpread = {
   p50: number | null;
   p75?: number | null;
   p90: number | null;
+  /** Where the band came from; "modelled" drops the percentile wording. See `docs/adr/0001`. */
+  basis?: "measured" | "modelled";
   format: (n: number) => string;
 };
 
@@ -190,6 +192,7 @@ export function AnswerFirstMasthead({
                   p75={spread!.p75 ?? null}
                   p90={spread!.p90}
                   format={spread!.format}
+                  basis={spread!.basis}
                 />
               </div>
             ) : null}

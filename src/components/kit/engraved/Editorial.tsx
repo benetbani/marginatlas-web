@@ -134,7 +134,13 @@ export type OneThingProps = {
   className?: string;
 };
 
-export function OneThing({ sentence, lastChecked = "June 2026", flagHref, sample, className }: OneThingProps) {
+/* NO DEFAULT DATE. `lastChecked = "June 2026"` here meant a caller who omitted
+   the prop still printed a freshness stamp, so the stamp appeared on pages
+   nobody had dated. It is a claim about provenance and it was a string literal,
+   two months stale by 2026-08-21. The prop stays for the day a real date exists;
+   until then the stamp self-omits, which is this site's sanctioned answer to a
+   figure it does not hold. */
+export function OneThing({ sentence, lastChecked, flagHref, sample, className }: OneThingProps) {
   if (sample || !sentence) {
     return (
       <SampleState

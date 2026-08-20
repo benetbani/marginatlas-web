@@ -552,9 +552,12 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
   const cityCards: CityCard[] = allCities.slice(0, 8).map((c) => ({
     name: c.name,
     meta: c.region_name?.trim() || countryName,
-    // Uniform equal weight: every card reads the same dot level, never a
-    // good-vs-bad city ranking (a country never scores its own cities).
-    climate: 3,
+    /* NO DOT RATING. This passed a literal `3`, so every city card drew a
+       five-position scale filled to the middle: the same ...oo on London,
+       Birmingham, Manchester and Edinburgh, and the same again on Germany and
+       Japan. The intent was right, a country never scores its own cities, but
+       the execution drew a rating and pinned it, which claims a judgement and
+       then shows a constant. The dot row is omitted entirely now. */
   }));
   const cityLinks = allCities.slice(0, 8);
   const hasCities = cityCards.length > 0;
@@ -1049,7 +1052,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
           {/* 3. The country shape: the nine-lens profile, a qualitative read. */}
           <EngravedSection
             eyebrow="The country shape"
-            heading="The nine lenses, at a glance"
+            heading="The six lenses, at a glance"
             /* Was: "A profile of this country's shape across the nine questions
                an owner runs through" plus what is left. The first sentence said
                the eyebrow and the heading again in longer words. The honesty
@@ -1505,7 +1508,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
              rather than by passing null. Its "Last checked" stamp was already
              duplicated by the FreshnessStamp eleven lines below. */}
           {view.honestTake?.body ? (
-            <OneThing sentence={view.honestTake.body} lastChecked="June 2026" />
+            <OneThing sentence={view.honestTake.body} />
           ) : null}
 
           {/* 23. Related: the Compare CTA, the closing beat. Carries the

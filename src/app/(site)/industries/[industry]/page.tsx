@@ -857,7 +857,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
           )}
 
           {/* The one thing to remember: the verdict's bottom line as the close. */}
-          <OneThing id="one-thing" lastChecked="June 2026">
+          <OneThing id="one-thing">
             {verdict.close}
           </OneThing>
         </div>

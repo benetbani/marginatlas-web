@@ -58,10 +58,12 @@ export function ComparableCitiesRibbon({
             <div className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
               {p.name}
             </div>
-            <div className="mt-3 text-xs text-cocoa-700/70 flex items-center gap-1.5 font-medium border-b border-atlas-200 group-hover:border-atlas-500 pb-0.5 transition-colors w-fit">
-              See {industryName ? industryName.toLowerCase() : "the benchmark"}
-              <span aria-hidden>→</span>
-            </div>
+            {/* THE CARD IS THE LINK. This line described the affordance the card
+                already has, the third instance of that defect on the site: it was
+                deleted from the country page's break-in cards on 2026-08-20 and
+                still shipped from here and from the cell page's city ribbon.
+                Founder, 2026-08-21: "too much text, too little graphics, and they
+                don't help each other at all." */}
           </a>
         ))}
       </div>

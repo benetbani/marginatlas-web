@@ -144,8 +144,16 @@ export type CityCard = {
   name: string;
   /** A short meta line, e.g. "Capital, 545K". */
   meta: string;
-  /** Climate on a 0..5 dot scale. */
-  climate: number;
+  /**
+   * Climate on a 0..5 dot scale. OPTIONAL, and the dot row is not drawn without
+   * it. The country page passed a literal `3` for every card, so a five-position
+   * rating rendered ...oo on London, Birmingham, Manchester and Edinburgh alike,
+   * and identically on Germany and Japan. The intent was honest, a country does
+   * not rank its own cities, but the execution drew a rating scale and pinned it
+   * to the middle, which tells a reader "we scored this" and shows a score that
+   * is a constant. Drawing nothing is the honest version of having nothing.
+   */
+  climate?: number | null;
 };
 
 export type CitiesGridProps = {
@@ -170,7 +178,8 @@ export function CitiesGrid({ cities, sample, className }: CitiesGridProps) {
   return (
     <div className={["eng-cities", className].filter(Boolean).join(" ")}>
       {cities.map((c) => {
-        const t = meaningStep(c.climate / 5);
+        const rating = typeof c.climate === "number" && Number.isFinite(c.climate) ? c.climate : null;
+        const t = rating != null ? meaningStep(rating / 5) : null;
         return (
           <div className="eng-citycard" key={c.name}>
             <div className="eng-citycard__top">
@@ -178,14 +187,16 @@ export function CitiesGrid({ cities, sample, className }: CitiesGridProps) {
               <span className="eng-citycard__name">{c.name}</span>
             </div>
             <div className="eng-citycard__meta">{c.meta}</div>
-            <div className="eng-citycard__climate">
-              <span className="eng-citycard__ck">Climate</span>
-              <span className="eng-dots">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span key={i} className="d" style={i < c.climate ? { background: t.dot } : undefined} />
-                ))}
-              </span>
-            </div>
+            {rating != null ? (
+              <div className="eng-citycard__climate">
+                <span className="eng-citycard__ck">Climate</span>
+                <span className="eng-dots">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span key={i} className="d" style={i < rating ? { background: t!.dot } : undefined} />
+                  ))}
+                </span>
+              </div>
+            ) : null}
           </div>
         );
       })}

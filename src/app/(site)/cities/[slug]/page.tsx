@@ -1009,7 +1009,7 @@ export default async function CityPage({
             })()}
 
             {/* The one thing to remember: the city's read reused as the close. */}
-            <OneThing id="one-thing" lastChecked="June 2026">
+            <OneThing id="one-thing">
               {view.masthead.answer}
             </OneThing>
           </div>

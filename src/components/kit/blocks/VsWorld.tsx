@@ -181,11 +181,11 @@ export function VsWorld({
         {sign}
         {pctDiff}%
       </span>{" "}
-      {deltaWord} the global median {metric}
+      {deltaWord} the {worldLabel.toLowerCase()} {metric}
     </span>
   ) : (
     <span className="text-right text-[12.5px] font-semibold text-cocoa-700">
-      level with the global median {metric}
+      level with the {worldLabel.toLowerCase()} {metric}
     </span>
   );
 

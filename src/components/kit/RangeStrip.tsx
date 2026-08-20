@@ -62,6 +62,29 @@ export type RangeStripProps = {
   caption?: string | null;
   /** Accessible label override; a sensible one is generated otherwise. */
   ariaLabel?: string;
+  /**
+   * Where the band came from. "measured" plots real percentiles and may say so;
+   * "modelled" plots a shape derived from the typical figure and MUST NOT.
+   *
+   * WHY THIS EXISTS. `docs/adr/0001` records the founder's ruling: a Figure is
+   * published as correct and wears no mark, but **a Band whose shape is invented
+   * SHOULD be marked**, because "an unmarked band is a claim about spread that
+   * the figures behind it do not support". That ruling was made and never
+   * implemented.
+   *
+   * MEASURED, 2026-08-21, and it is worse than one invented band. TWO code paths
+   * synthesise a spread from the typical revenue, using DIFFERENT constants:
+   * London multiplies by 0.5 / 0.72 / 1.35 / 1.8, and the fill-defaults path by
+   * 0.25 / 0.55 / 1.85 / 3.4. **Both were labelled "Bottom 10%" and "Top 10%".**
+   * So two cells could show bands twice as wide as each other purely from which
+   * code path filled them, and a reader had no way to tell either from a third
+   * cell carrying real measured percentiles from the database.
+   *
+   * CONTEXT.md already names this: a Regime is "which rule produced a Band. Nine
+   * code paths currently produce one and they disagree by about fifteen times in
+   * typical width, so a band without its regime cannot be read."
+   */
+  basis?: "measured" | "modelled";
   className?: string;
 };
 
@@ -124,6 +147,7 @@ export function RangeStrip({
   label,
   caption,
   ariaLabel,
+  basis = "measured",
   className,
 }: RangeStripProps) {
   // Nullable in, silence out: the core three points must be real and ordered.
@@ -146,6 +170,14 @@ export function RangeStrip({
   const trackH = 8;
   const r = trackH / 2;
 
+  /* THE END WORDS FOLLOW THE BASIS. "Bottom 10%" is a percentile claim, and a
+     band built by multiplying the typical figure by a constant has no
+     percentiles in it to claim. When the shape is modelled the ends say which
+     direction they point and nothing more. */
+  const isModelled = basis === "modelled";
+  const lowWord = isModelled ? "Lower" : "Bottom 10%";
+  const highWord = isModelled ? "Higher" : "Top 10%";
+
   // Seven equal gradation segments spanning the plotted bottom-tenth to
   // top-tenth, each a step of the quiet ramp. Drawn first, under the band and
   // markers.
@@ -155,9 +187,9 @@ export function RangeStrip({
 
   const ariaText: string =
     ariaLabel ??
-    `Spread from ${format(p10)} at the bottom tenth to ${format(
-      p90,
-    )} at the top tenth, typical ${format(p50)}.`;
+    isModelled
+      ? `Modelled range from ${format(p10)} to ${format(p90)}, typical ${format(p50)}.`
+      : `Spread from ${format(p10)} at the bottom tenth to ${format(p90)} at the top tenth, typical ${format(p50)}.`;
 
   // Where a value sits along the plotted track, as a percent of the band, so the
   // mobile HTML markers land at the same spot the SVG accents do. Clamped a touch
@@ -202,7 +234,7 @@ export function RangeStrip({
           <div className="flex items-end justify-between gap-2">
             <div className="min-w-0 text-left">
               <div className="text-[11px] font-medium uppercase tracking-wide text-cocoa-700">
-                Bottom 10%
+                {lowWord}
               </div>
               <div className="text-base font-semibold tabular-nums text-ink-700">
                 {format(p10)}
@@ -218,7 +250,7 @@ export function RangeStrip({
             </div>
             <div className="min-w-0 text-right">
               <div className="text-[11px] font-medium uppercase tracking-wide text-cocoa-700">
-                Top 10%
+                {highWord}
               </div>
               <div className="text-base font-semibold tabular-nums text-ink-700">
                 {format(p90)}

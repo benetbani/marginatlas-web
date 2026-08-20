@@ -36,6 +36,8 @@ export type CellViewMasthead = {
     p50: number | null;
     p75: number | null;
     p90: number | null;
+    /** Where the band came from. Absent means measured. See `docs/adr/0001`. */
+    basis?: "measured" | "modelled";
   } | null;
   stats: Array<{ label: string; value: string | null }>;
   breakIn: string | null;
@@ -196,10 +198,21 @@ export function buildCellView(input: CellViewInput): CellView {
 
   // Spread: London derives its band from the modeled revenue the way the board
   // does; elsewhere use the cell's measured percentiles, only when money shows.
+  /* THE LONDON BAND IS INVENTED AND NOW SAYS SO. Every number below is the
+     typical revenue times a constant, so the band has the SAME SHAPE for a
+     restaurant, a barbershop and a dental practice: p90/p10 is 3.6 on all of
+     them. It was rendered under "Bottom 10%" and "Top 10%", which is a
+     percentile claim about data that does not exist.
+
+     `docs/adr/0001` already ruled on this: a Band whose shape is invented should
+     be marked, because "an unmarked band is a claim about spread that the figures
+     behind it do not support". `basis` carries that mark to the strip, which
+     drops the percentile wording when it is set. The numbers are unchanged; what
+     changes is that they stop pretending to be measurements. */
   let spread: CellViewMasthead["spread"] = null;
   if (isLondon && isNum(typicalRevenue)) {
     const r = typicalRevenue;
-    spread = { p10: r * 0.5, p25: r * 0.72, p50: r, p75: r * 1.35, p90: r * 1.8 };
+    spread = { p10: r * 0.5, p25: r * 0.72, p50: r, p75: r * 1.35, p90: r * 1.8, basis: "modelled" };
   } else if (moneyShown && isNum(cell.rev_p10) && isNum(cell.rev_p90)) {
     spread = {
       p10: cell.rev_p10 ?? null,

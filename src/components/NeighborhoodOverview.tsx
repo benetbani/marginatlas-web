@@ -763,7 +763,7 @@ export function NeighborhoodOverview({
             country and city pages reuse their own verdict here. Passes null when
             no read is held, so the closer prints its honest line rather than a
             fabricated one. */}
-        <OneThing id="one-thing" lastChecked="June 2026">
+        <OneThing id="one-thing">
           {view.honestTake ? view.honestTake.verdict : null}
         </OneThing>
       </article>
