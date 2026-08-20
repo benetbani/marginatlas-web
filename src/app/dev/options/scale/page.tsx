@@ -10,10 +10,19 @@
  *     /industries/restaurants   green 22, amber 12
  *     /decide                   green  8
  *
- * They encode good-versus-bad. CrowdingGauge is literal about it:
- *     if (v >= 66) return "fill-clay-500";   // red
- *     if (v >= 33) return "fill-amber-400";  // amber
- *     return "fill-moss-500";                // green
+ * They encode good-versus-bad. `CrowdingGauge` was the literal case, and both it
+ * and its byte-near twin `RentGauge` were RETIRED to `E:\atlas\_attic\2026-08-20\`
+ * on 2026-08-20: identical thresholds, identical fills, different labels, and
+ * neither reachable from any URL. The traffic-light quoted below was already
+ * corrected in place before they went, to a monotonic darkening:
+ *
+ *     if (v >= 66) return "fill-clay-500";
+ *     if (v >= 33) return "fill-cocoa-500";
+ *     return "fill-cocoa-300";
+ *
+ * Which is a single hue at three intensities, and still cocoa, which is brown,
+ * which charter section 8 bans. That is the open palette question the design
+ * standard says to route to DECISIONS-NEEDED rather than settle in passing.
  *
  * So the palette rule cannot simply be applied. Deleting the hue without
  * replacing the signal takes meaning off the page rather than tidying it, and

@@ -67,8 +67,6 @@ import { RankRow } from "@/components/board/RankRow";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
 import { CostBar } from "@/components/board/charts/CostBar";
 import { SurvivalCurve } from "@/components/board/charts/SurvivalCurve";
-import { CrowdingGauge } from "@/components/board/charts/CrowdingGauge";
-import { RentGauge } from "@/components/board/charts/RentGauge";
 import {
   MISSING,
   fmtUSD,
@@ -664,14 +662,6 @@ function DataBoardSection() {
             <SurvivalCurve yr1={82} yr3={58} yr5={44} />
           </div>
           <div className="flex gap-8">
-            <div className="w-32">
-              <div className="mb-2 text-[11px] uppercase tracking-wide text-cocoa-500">CrowdingGauge</div>
-              <CrowdingGauge value={71} />
-            </div>
-            <div className="w-32">
-              <div className="mb-2 text-[11px] uppercase tracking-wide text-cocoa-500">RentGauge</div>
-              <RentGauge value={38} />
-            </div>
           </div>
         </div>
       </SubSection>
