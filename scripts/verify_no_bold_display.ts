@@ -14,6 +14,7 @@
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { stripComments, newCommentState } from "./lib/strip_comments";
 
 const ROOT = process.cwd();
 
@@ -47,7 +48,11 @@ const SURFACE_FILES: string[] = [
   "src/components/spine/city/city-view.tsx",
   "src/components/spine/cell/cell-view.tsx",
   "src/components/spine/industry/industry-view.tsx",
-  "src/components/spine/NeighborhoodExplorer.tsx",
+  /* Listed TWICE until 2026-08-20. Scanning a file twice cannot change a
+     verdict, but it doubles that file's violation COUNT, so the number this gate
+     prints was never trustworthy for it. `verify_bar_budget` carried the exact
+     same duplicate and it was found there at tick 8; nobody checked the
+     siblings. Both are copies of one list. */
   "src/components/spine/NeighborhoodExplorer.tsx",
   "src/components/home/home2-view.tsx",
   "src/components/NavigatorForm.tsx",
@@ -58,16 +63,28 @@ const SURFACE_FILES: string[] = [
 const BOLD_CLASS = /\bfont-bold\b/;
 const BOLD_STYLE = /fontWeight:\s*['"]?700\b/;
 
-function isCommentLine(line: string): boolean {
-  const trimmed = line.trim();
-  if (trimmed.startsWith("//")) return true;
-  if (trimmed.startsWith("*")) return true; // inside /** ... */ block
-  if (trimmed.startsWith("/*")) return true;
-  if (trimmed.startsWith("{/*")) return true; // JSX comment open
-  if (trimmed.startsWith("*/}") || trimmed.endsWith("*/}")) return true; // JSX comment close
-  return false;
-}
+/* THE HAND-ROLLED `isCommentLine` IS GONE. It was one of eight byte-similar
+   copies and it was wrong in a way a boolean can never fix: it answered "does
+   this line LOOK like a comment", so any line STARTING with `/*` or ENDING with
+   `*\/}` was skipped whole, real code included. Two shapes this repo writes
+   constantly:
 
+       /** 01 *\/ hero: CityHero;                    <- skipped, code and all
+       width={segW + 0.5 /* hairline overlap *\/}    <- skipped, ends with *\/}
+
+   Measured across `src/`: 42 lines of real code were invisible to all eight
+   gates carrying that function, and 9,033 lines of block-comment PROSE were
+   being scanned as code by them, which is the false-positive direction the
+   shared module was written to end.
+
+   The clearest specimen is `src/components/spine/cell/masthead.tsx:34`, a
+   `className` carrying a weight token that ends `{/* allow-eyebrow *\/}` and was
+   therefore skipped whole. **It is NOT in this gate's SURFACE_FILES**, so it is
+   an illustration of the shape rather than a violation this gate was missing;
+   said plainly because an earlier draft of this comment claimed the opposite.
+
+   `stripComments` returns the code half instead of a verdict, so a line that
+   mixes code and comment is judged on its code. */
 function isAllowed(line: string): boolean {
   return line.includes("allow-bold");
 }
@@ -78,12 +95,22 @@ for (const file of SURFACE_FILES) {
   const abs = resolve(ROOT, file);
   if (!existsSync(abs)) continue;
   const lines = readFileSync(abs, "utf-8").split("\n");
+  /* One state machine per FILE, and it must be fed every line in order. */
+  const state = newCommentState();
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    if (!BOLD_CLASS.test(line) && !BOLD_STYLE.test(line)) continue;
-    if (isCommentLine(line)) continue;
+    /* THE STRIP RUNS FIRST, BEFORE ANY `continue`, AND THAT IS THE WHOLE TRAP.
+       The cheap `BOLD_CLASS.test` guard below used to be the first statement in
+       this loop. Leave it there with a stateful stripper and every line it skips
+       is a line the machine never sees, so an unclosed block comment stays
+       "open" long after its `*\/` went past and the gate silently stops reading
+       the file. Feed the machine, then filter. */
+    const code = stripComments(line, state);
+    if (!BOLD_CLASS.test(code) && !BOLD_STYLE.test(code)) continue;
+    /* `isAllowed` deliberately reads the RAW line: `// allow-bold` is itself a
+       comment, so it is not in `code`. */
     if (isAllowed(line)) continue;
-    const what = BOLD_CLASS.test(line) ? "font-bold className" : "fontWeight: 700";
+    const what = BOLD_CLASS.test(code) ? "font-bold className" : "fontWeight: 700";
     console.error(`${file}:${i + 1}: ${what}\n  ${line.trim()}`);
     violations++;
   }
