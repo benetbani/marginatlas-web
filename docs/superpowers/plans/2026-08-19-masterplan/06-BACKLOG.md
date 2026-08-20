@@ -18,8 +18,28 @@ while the gates measure dev routes buys no protection at all. These are cheap an
 they make everything after them trustworthy. Charter §0.3: measure before you
 change.
 
-- [~] **P0-1 · gates/scan-roots · Ten design gates scan bodies no reader can
-      reach** — **FIVE OF THEM REPOINTED 2026-08-19, tick 8.** `verify_no_eyebrow`,
+- [~] **P0-1 · gates/scan-roots · 11 gates name a workshop path, 0 scan only the workshop**
+      **RECOUNTED 2026-08-20, tick 19, across all 105 chain gates, and the
+      headline above is retired.** 11 gates name a `dev/` or `_design/` path and
+      **every one of them also names reader-facing files**. "The rulebook is
+      enforced against the workshop rather than the site" was true before tick 8
+      and has not been true since. What remained was one line, now fixed
+      (`c470d017`): `verify_bar_budget`'s country group listed ONLY
+      `src/app/dev/spine/page.tsx`, so **the country page a reader gets had no bar
+      budget at all**. The reader page is added alongside, not substituted; it
+      contributes 0 by both detectors, group reads 3/8 either way.
+      **`home2-view.tsx` IS DELIBERATELY LEFT COVERED BY ALL SIX GATES.** The
+      backlog called it "the flag-off home2-view" and that is a local default, not
+      a fact: `isHomeReformEnabled()` reads a Vercel env var this repo cannot see.
+      If it is on in production that file is the live homepage, so dropping
+      coverage would strip enforcement from the page the founder is looking at.
+      **STILL OPEN:** `verify_sample_tags`, `verify_v2_scales`,
+      `verify_spacing_scale`, `verify_paragraph_budget` each name workshop paths
+      ALONGSIDE real ones. That inflates their counts with prototype files and can
+      red a build over a page no reader visits, which is a different and smaller
+      defect than the one this item was opened for. Decide per gate whether the
+      workshop belongs in the same verdict as the site.
+      *Original headline, kept:* — the `dev/spine-*` two-file wrappers and the flag-OFF `home2-view`. — **FIVE OF THEM REPOINTED 2026-08-19, tick 8.** `verify_no_eyebrow`,
       `verify_no_bold_display`, `verify_subsection_icons` and `verify_bar_budget`
       now read `spine/cell|city|industry/*-view.tsx` and `NeighborhoodExplorer`
       instead of the `dev/spine-*` route wrappers, which are 23 to 27 lines

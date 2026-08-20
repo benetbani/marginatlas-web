@@ -9,14 +9,14 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **18** done |
+| Tick | **19** done |
 | Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
 | Destination | `11-PRODUCTION-READINESS.md`, **1 / 30 criteria MET** at the time of writing |
 | Cron job | **`a4691466`**, armed 2026-08-20. Session-only: it dies when the session ends and must be re-armed. Auto-expires after 7 days. Stop it with CronDelete on that id, or say "stop the loop" |
 | Orient | `node scripts/loop_status.mjs`, one process, under a second. **Exit 2 means a halt condition** |
-| In-flight | **P0-1** (`[~]` since tick 8). It was invisible to `loop_status` until tick 18 and is the next tick's work by override rule 3. Formerly read "none", which was the tool's error, not the file's. **The permanent `[~]` on P1-0b(orig) was a mis-marker and is corrected**: `loop_status` reported an in-flight item on every run, and override rule 3 would have sent every tick to a superseded entry. Q8 remains a founder decision, not unfinished work |
+| In-flight | **P0-1**, still `[~]` but restated and much narrower after tick 19: its headline was retired on measurement and its last real hole is closed. What remains is four gates mixing workshop paths into a reader verdict. It was invisible to `loop_status` until tick 18 and is the next tick's work by override rule 3. Formerly read "none", which was the tool's error, not the file's. **The permanent `[~]` on P1-0b(orig) was a mis-marker and is corrected**: `loop_status` reported an in-flight item on every run, and override rule 3 would have sent every tick to a superseded entry. Q8 remains a founder decision, not unfinished work |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/`, `.agents/`, `skills-lock.json` |
 | Gates | `tsc` clean; `prebuild` green **at the count the chain reports**. This row said 103/103 while the chain was 104 and line 56 of this same file already said 104: **a number typed into a document is stale the moment it is typed.** `loop_status.mjs` carries it now |
 | HEAD | `origin/main` is at `6fc88e3e`; the loop's commits sit above it, unpushed by rule |
@@ -116,6 +116,28 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 19, P0-1 (in flight, override rule 3). The country budget policed a
+  prototype and the real country page had none.**
+  Measured all 105 gates rather than trusting the item: **11 name a workshop path,
+  ZERO scan only the workshop.** The item's headline, "ten design gates scan bodies
+  no reader can reach", was true before tick 8 and has not been true since.
+  The one real hole left was a single line: `verify_bar_budget`'s country group
+  listed only `src/app/dev/spine/page.tsx`. Country is not the shape of the other
+  four , its reformed body is INSIDE the 1,667-line dev route while
+  `src/app/[country]/page.tsx` is a separate un-reformed 1,548-line file , which is
+  why tick 8 skipped it. Reader page ADDED alongside, 0 by both detectors, 3/8
+  either way (`c470d017`).
+  **A number the gate corrected for me:** I counted 2 bars, it said 3. I had
+  counted only named primitives; it has a second detector for hand-rolled
+  `width%`-plus-`background` inline styles. The comment I had written claiming
+  hand-rolled bars were invisible was false and is fixed in place.
+  **`home2-view` left covered on purpose.** The backlog calls it flag-off; that is
+  a LOCAL DEFAULT, and `isHomeReformEnabled()` reads a Vercel env var this repo
+  cannot see. If it is on, that file is the live homepage.
+  **G1 -> MET.** New ledger entry C10: three parallel chain runs failed 9, then 1,
+  then 10 gates, a different set each time, every one passing alone, all
+  `TransformError`. The variance is the tell. Serial run: 105/105.
 
 - **Tick 18. The orientation tool could not see a quarter of the queue.**
   `loop_status` required a backlog item's bolded title to sit on ONE line.

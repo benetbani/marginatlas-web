@@ -5,6 +5,23 @@ than one screen, it is written wrong.
 
 ---
 
+## Tick 19, 2026-08-20. The country page had no design budget at all.
+
+**What was wrong:** the rule limiting how many bar charts a country page may carry
+was being enforced against a prototype in the workshop. The country page a visitor
+actually gets was covered by nothing.
+
+**What was measured:** across all 105 checks, 11 mention a workshop file and **none
+of them looks ONLY at the workshop**. The alarming version of this problem was
+fixed two weeks ago; what was left was one line, and it is now closed.
+
+**What changed:** the real country page is now inside the budget, and it fits with
+room to spare. One decision left to you rather than guessed: six checks cover a
+homepage file that only renders when a Vercel switch is on. This repo cannot read
+that switch, so the coverage stays. Nothing on the site itself changed.
+
+---
+
 ## Tick 18, 2026-08-20. The loop was reading a quarter of its own to-do list.
 
 **What was wrong:** the tool that tells each tick what to work on required every

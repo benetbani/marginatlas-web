@@ -43,7 +43,7 @@ gates measure the workshop buys nothing. Charter §0.3.
 
 | ID | Criterion | Measured by | Status |
 |---|---|---|---|
-| G1 | Zero gates scan a route no reader can reach | count gates whose scan set resolves only to `dev/` or `_design/` | OPEN — 5 repointed at tick 8, `verify_sample_tags`, `verify_v2_scales`, `verify_spacing_scale`, `verify_paragraph_budget` still on workshop paths (P0-1) |
+| G1 | Zero gates scan a route no reader can reach | count gates whose scan set resolves only to `dev/` or `_design/` | **MET** — recounted tick 19 across all 105 gates: 11 name a workshop path, **0 resolve only to one**. The last real hole, `bar_budget`'s country group, closed in `c470d017`. A NARROWER item remains open in P0-1: four gates still mix workshop paths into the same verdict as reader paths, which inflates counts |
 | G2 | Zero gates pass on a comment rather than a rendered tree | `verify_route_chrome_contract` asserts the tree, not the word | OPEN — `/world` and `/industries` pass today by mentioning the word (P0-2) |
 | G3 | One comment-stripping implementation, not twelve | count gates rolling their own | OPEN — **17**, from 21 at tick 14 (12 was wrong). 4 of the 8-file `isCommentLine` sub-group converted; 1 sequential and 3 random-access remain, plus 13 gates on other patterns |
 | G4 | Every ratchet refuses to be raised | count ratchets lacking the `verify_no_cream` guard | OPEN — 4 of 7 can be silently raised (P0-5) |

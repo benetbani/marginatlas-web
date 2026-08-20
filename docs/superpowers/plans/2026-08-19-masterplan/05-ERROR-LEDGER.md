@@ -116,6 +116,29 @@ applies to every tool that reads a file to decide what to do.
 
 ---
 
+## C10. A RED CHAIN THAT NAMES A DIFFERENT SET EVERY RUN IS THE MACHINE.
+
+Measured 2026-08-20, tick 19, after many back-to-back node and tsx invocations
+in one session. Three consecutive `npm run prebuild` runs on an unchanged tree:
+
+| run | failed | which |
+|---|---|---|
+| 1 | 9 | not captured |
+| 2 | 1 | `no-internal-notes` |
+| 3 | 10 | `cell-lattice`, `taxonomy`, `no-source-agencies`, `derived-accents`, `no-em-dashes`, `glyphs-fresh`, `spine-css-fresh`, `dead-anchors`, `cell-data`, `banned-vocabulary` |
+
+**No two sets overlap meaningfully, every gate passed when run alone, and every
+failure carried `TransformError: The service was stopped`.** That is esbuild
+dying under Windows memory pressure, which the operating rules already document
+as a single-gate event; this is the same thing at chain scale.
+
+**The tell is the VARIANCE, not the count.** A real regression fails the same
+gates every time. A set that reshuffles is the machine. `npm run prebuild:serial`
+(concurrency 1) completed 105/105 on the same tree and is the honest verdict when
+this happens. Do not start repairing gates before running serially once.
+
+---
+
 ## D. Before you trust or change a GATE
 
 **D1. Gates lie, and fixing the instrument beats fixing the symptom.**
