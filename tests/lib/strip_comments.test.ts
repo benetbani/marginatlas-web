@@ -38,10 +38,41 @@ check(
   ["", "", " const real = 1;"],
 );
 check("a line comment is stripped", ["const a = 1; // trailing"], ["const a = 1; "]);
+/* THIS CASE USED TO ASSERT THE OPPOSITE, and it was wrong in an instructive way.
+   It was named "the documented // in-string trade is UNCHANGED" and it
+   demonstrated that trade with `"https://example.com"`, which is the one kind of
+   `//` the trade was never about. The trade is about a `//` a human typed inside
+   a string; `://` is a URL scheme and is not a comment in any language this repo
+   scans. Keeping a URL as the worked example meant the test passed for years
+   while a live hex colour sat hidden behind one. */
+check(
+  "a URL scheme is NOT a comment",
+  ['const u = "https://example.com";'],
+  ['const u = "https://example.com";'],
+);
+check(
+  "a scheme inside a CSS data URI keeps everything to its right",
+  ["  background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23241b11'%3E\");"],
+  ["  background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23241b11'%3E\");"],
+);
+check(
+  "a real comment AFTER a URL is still stripped",
+  ['const u = "https://example.com"; // why'],
+  ['const u = "https://example.com"; '],
+);
+/* The trade itself, demonstrated with an actual example of it this time. */
 check(
   "the documented // in-string trade is UNCHANGED",
-  ['const u = "https://example.com";'],
-  ['const u = "https:'],
+  ['const s = "a // b";'],
+  ['const s = "a '],
+);
+/* Stated as a test so the gap is visible rather than assumed closed. A
+   protocol-relative URL has no scheme to key on, and `foo(// x` is legal
+   JavaScript, so this is deliberately not fixed. */
+check(
+  "a protocol-relative URL is still eaten, deliberately",
+  ["  src: url(//cdn.example.com/f.woff2);"],
+  ["  src: url("],
 );
 check("an escaped quote does not open a string", ['const s = "a\\"b"; /* c */ d'], ['const s = "a\\"b";  d']);
 check(

@@ -108,7 +108,30 @@ export function stripComments(line: string, state: CommentState): string {
       i = end + 2;
       continue;
     }
-    const lineComment = line.indexOf("//", i);
+    let lineComment = line.indexOf("//", i);
+    /* A `//` immediately preceded by `:` is a URL SCHEME, never a comment.
+       This is a narrower fact than "is it inside a string", and deliberately so:
+       the header above leaves the `//`-in-a-string trade alone on purpose, and
+       relitigating it here would make neither result falsifiable. `://` is not a
+       comment in JavaScript, TypeScript, JSX or CSS, in a string or out of one.
+
+       MEASURED, which is why this is a defect rather than the documented trade.
+       Across `src/`, 64 lines in 34 files carry a scheme, and everything to the
+       right of it was invisible to every gate importing this module: 4,179
+       characters. The worst is `src/app/globals.css:707`, an inline SVG data URI
+       opening `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'`,
+       which hid 513 characters INCLUDING `fill='%23241b11'`. `%23` is an encoded
+       `#`, so that is a hardcoded hex colour on a live stylesheet that
+       `verify_hardcoded_hex` imports this module to find and could not see.
+
+       NOT COVERED, stated so nobody assumes it is: a protocol-relative `//cdn...`
+       has no scheme to key on, and `foo(// comment` is legal JavaScript, so
+       guarding on the opening bracket would introduce the false-accusation
+       direction this module is careful to avoid. Protocol-relative URLs measured
+       zero times in `src/` at the time of writing. */
+    while (lineComment > 0 && line[lineComment - 1] === ":") {
+      lineComment = line.indexOf("//", lineComment + 2);
+    }
     let blockOpen = line.indexOf("/*", i);
     // Step over any `/*` that is quoted rather than opening a comment.
     while (blockOpen !== -1 && insideString(line, blockOpen)) {
