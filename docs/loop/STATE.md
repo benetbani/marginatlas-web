@@ -9,8 +9,8 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **13** done. The 30-minute loop is retired; ticks resume at 14 under the continuous loop |
-| Cadence | **CONTINUOUS**, `* * * * *`. 30 seconds is not expressible by any scheduler here; cron is minute-granular and jobs fire only while idle, so this means "next tick within a minute of the last one finishing". A tick is budgeted to a unit of work, never to a minute |
+| Tick | **13** done. Ticks resume at 14 under the rebuilt loop |
+| Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
 | Destination | `11-PRODUCTION-READINESS.md`, **1 / 30 criteria MET** at the time of writing |
@@ -57,9 +57,7 @@ this file alone. If it cannot, this file is wrong.
   run `npx tsx scripts/counts.ts`. This file and `PROMPT.md` still say it in
   prose and are the two known remaining carriers, deliberately left: STATE is
   rewritten every tick by two workers, PROMPT is pasted into chat.
-- The chain was **103 gates** at tick 7 and 104 from tick 10. `CLAUDE.md` says 95 and
-  `docs/verification-protocol.md` says 31. Both are stale and both are on the
-  contradiction list below.
+- The chain grew 103 at tick 7, 104 at tick 10. **Both numbers above are history, not the current count**, and this line is kept only to show how fast a typed count rots: the Now table said 103 while line 60 of this same file said 104. Read the count from `node scripts/loop_status.mjs`.
 - `cell-lattice` defers 3 checks by design. Deferred is not passed.
 - The Bash CWD resets to `E:\atlas`. Prefix every command with
   `cd /e/atlas/website`.
@@ -79,9 +77,8 @@ this file alone. If it cannot, this file is wrong.
 
 ## Contradictions found 2026-08-18, to be repaired by 02 and 06
 
-1. `CLAUDE.md:92` and `:99` say 95 gates. The chain is **102**.
-2. `docs/verification-protocol.md:31` and `:79` say "prebuild 31/31". The chain is
-   **102**.
+1. ~~`CLAUDE.md:92` and `:99` say 95 gates.~~ **CLOSED.** `CLAUDE.md` now carries the generated counts block instead of typing a number.
+2. `docs/verification-protocol.md:31` and `:79` say "prebuild 31/31". **Still open.** Do not write the true count in its place; give it the generated block, per move M1.
 3. `CLAUDE.md` names the 2026-08-01 handoff as current. Three have landed since.
 4. `src/components/AtlasFrame.tsx` header still documents a third passe-partout
    layer, with its `.16`/`.82` values and `calc(50% +/- 622px)` stops, which the

@@ -2,10 +2,11 @@
 /**
  * loop_status , the whole orientation of one tick, in ONE process.
  *
- * WHY THIS EXISTS. The 30-minute loop could afford to orient by reading five
- * documents. A continuous loop cannot: at one tick per minute, orientation that
- * costs two minutes is the whole tick. This prints everything a tick needs to
- * decide what to do, in a single node process and under a second.
+ * WHY THIS EXISTS. Orientation used to mean reading five documents, roughly 800
+ * lines, every tick. On a 30-minute tick that is the orient budget spent before
+ * any work starts, and it is spent again every 30 minutes for as long as the loop
+ * runs. This prints everything a tick needs to decide what to do, in a single
+ * node process and under a second.
  *
  * IT ALSO ENFORCES THE ONE-PROCESS RULE the operating rules §3 added after a
  * `git log | while read` over 1,000 commits spawned thousands of processes,
@@ -116,7 +117,7 @@ console.log("\n  TOP OF QUEUE:");
 for (const i of open.slice(0, 3)) console.log("     " + i.title.slice(0, 110));
 
 /* ---- THE THREE HALT CONDITIONS ---------------------------------------- */
-/* Printed last so they are the final thing on screen. A continuous loop needs
+/* Printed last so they are the final thing on screen. An unattended loop needs
    to be told to stop by something other than a human noticing. */
 const halts = [];
 if (dirty.length) halts.push("TREE DIRTY , checkpoint-commit before taking new work (operating rules §12.1)");

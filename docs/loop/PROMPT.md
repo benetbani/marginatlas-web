@@ -1,22 +1,35 @@
-# PROMPT. The paste-in. This is the argument given to the continuous loop.
+# PROMPT. The paste-in. This is the argument given to the loop.
 
 Everything between the rules below is the prompt. The depth lives in the files it
 names; a prompt that repeats them will drift from them.
 
-**Cadence, stated honestly before anything else.** The founder asked for 30
-seconds. **Thirty seconds is not expressible by any scheduler available here:**
-cron is five-field and minute-granular, and the dynamic scheduler clamps to 60
-seconds. The floor is **one minute**, and it behaves better than it sounds,
-because jobs fire only while the session is idle. So `* * * * *` does not mean
-"start a tick every minute". It means **"start the next tick within a minute of
-the last one finishing"**, which is continuous operation with no stampede and no
-overlap. **Do not budget a tick to a minute. Budget it to one unit of work.**
+**Cadence: 30 minutes, `7,37 * * * *`.** Chosen by the founder on 2026-08-20 after
+he was told that the 30 seconds he first asked for is not expressible by any
+scheduler here: cron is five-field and minute-granular, and the dynamic scheduler
+clamps to 60 seconds. He picked 30 minutes rather than the 1-minute floor.
+
+**Two properties of the scheduler that change how a tick is budgeted.** Jobs fire
+only while the session is idle, so a tick running long is never interrupted and no
+second tick starts on top of it; and the fire is off the :00 and :30 marks on
+purpose, because every schedule in the world lands there.
+
+```
+orient   2 min   node scripts/loop_status.mjs, take the item, check the ledger
+work    18 min   study, understand, brainstorm, improve, execute
+verify   6 min   R1-R19, tsc, prebuild, render what changed
+land     4 min   commit, backlog, readiness, STATE, WAKE-UP, report
+```
+
+**At 18 minutes, checkpoint-commit whatever compiles and hand the rest to
+`STATE.md` as in-flight.** Never end a tick with a dirty tree. A tick that runs
+past 30 minutes is not a crisis, it just means the next fire is skipped and the
+one after it picks up; a tick that leaves a half-change is worth less than nothing.
 
 ---
 
-You are running one tick of the marginatlas.com continuous loop. Nobody is
-watching. He wakes to what you leave behind, so leave one finished thing, not
-three started ones.
+You are running one tick of the marginatlas.com loop. Nobody is watching. He
+wakes to what you leave behind, so leave one finished thing, not three started
+ones.
 
 **Working directory: `E:\atlas\website`. Prefix every shell command with
 `cd /e/atlas/website`.** The CWD resets to the parent repo between calls and a
@@ -60,7 +73,7 @@ A tick that takes an **UNMEASURED** criterion and turns it into a measured
 **OPEN** has succeeded. The site did not get worse; the loop got honest. That is a
 legitimate and valuable tick, and early on it is the most valuable kind.
 
-## ORIENT , tiered, because you cannot read the canon every minute
+## ORIENT , tiered, because the canon is 800 lines and the tick is 30
 
 **Every tick, one command:**
 
@@ -248,7 +261,7 @@ Numbers over adjectives. State failures and skipped steps plainly.
 
 ## The short version, if the prompt must fit in one paragraph
 
-> Run one tick of the marginatlas continuous loop. `cd /e/atlas/website`. Orient
+> Run one tick of the marginatlas loop. `cd /e/atlas/website`. Orient
 > with `node scripts/loop_status.mjs`; exit 2 means fix the halt condition first.
 > Take the top unblocked item from `06-BACKLOG.md`, scope limited to design,
 > functionality, hierarchy and usability — never data or statistics sourcing.

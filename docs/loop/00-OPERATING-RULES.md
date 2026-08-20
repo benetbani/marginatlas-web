@@ -247,7 +247,8 @@ directory; the step-by-step and the 13-check review gate are `03-PROCEDURE.md`.
 ## 12. Circuit breakers. New, because this loop ticks sixty times faster.
 
 The 30-minute loop ran 12 ticks in six hours and a human saw the output between
-runs. A continuous loop can run 300 ticks in the same window with nobody looking.
+runs. This loop keeps running for as long as the session lives, unattended, with
+nobody reading the output between ticks.
 **Everything below exists to stop it doing 300 ticks of the wrong thing**, and
 the first three are checked mechanically by `node scripts/loop_status.mjs`, which
 exits 2 on any of them.

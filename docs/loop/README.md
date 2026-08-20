@@ -1,7 +1,7 @@
-# The continuous loop
+# The loop
 
-A loop that runs unattended and does not stop between ticks. One queue item per
-tick, one finished change per tick, four lanes and nothing else: **design, site
+An unattended loop, one tick every 30 minutes. One queue item per tick, one
+finished change per tick, four lanes and nothing else: **design, site
 functionality, hierarchy, usability.**
 
 This directory is the whole procedure: the rules a tick may never break, the
@@ -15,24 +15,28 @@ that recommendation.
 
 ---
 
-## Cadence, and the honest version of "every 30 seconds"
+## Cadence: 30 minutes, `7,37 * * * *`
 
-The founder asked for a 30-second repeat. **No scheduler here can express it.**
-Cron is five-field and minute-granular; the dynamic scheduler clamps to 60
-seconds. The floor is one minute.
+**Settled 2026-08-20.** The founder first asked for a 30-second repeat. **No
+scheduler here can express it:** cron is five-field and minute-granular, and the
+dynamic scheduler clamps to 60 seconds, so the floor is one minute. Told that, he
+chose **30 minutes**.
 
-**That floor costs almost nothing, because jobs fire only while the session is
-idle.** A tick that takes eleven minutes is not interrupted at minute one, and no
-second tick starts on top of it. So:
+The fire is at :07 and :37 rather than :00 and :30 on purpose. Every schedule
+anyone writes lands on the hour and the half hour.
 
 ```
-* * * * *   ==   "start the next tick within a minute of the last one finishing"
+orient   2 min   node scripts/loop_status.mjs, take the item, check the ledger
+work    18 min   study, understand, brainstorm, improve, execute
+verify   6 min   R1-R19, tsc, prebuild, render what changed
+land     4 min   commit, backlog, readiness, STATE, WAKE-UP, report
 ```
 
-That is continuous operation with no overlap and no stampede, which is what a
-30-second request actually wants. **A tick is therefore budgeted to one unit of
-work, never to a minute.** Anything else produces half-changes, and a half-done
-change is worth less than nothing.
+**Jobs fire only while the session is idle**, so a tick running long is never
+interrupted and no second tick starts on top of it. A tick that overruns simply
+skips the next fire. **At 18 minutes, checkpoint-commit whatever compiles and hand
+the rest to `STATE.md` as in-flight**; a half-done change is worth less than
+nothing.
 
 Two properties of the scheduler the founder should know:
 
@@ -65,8 +69,8 @@ settled question comes back a third time.
 
 ## The work is queue-driven, not rotation-driven
 
-The 30-minute loop rotated twelve slots because a slow tick needed variety. A
-continuous loop does not: it takes **the top unblocked item in
+The previous loop rotated twelve slots because it had no queue and a slow tick
+needed variety. This one does not rotate: it takes **the top unblocked item in
 `06-BACKLOG.md`**, every tick, and the ordering of that queue is the plan.
 
 **Lanes, in priority order.** They are the queue's own P-bands, mapped to the
@@ -77,7 +81,7 @@ founder's four words:
 | **0. Instruments** | P0 | Every other measurement is taken by these. The audit found design gates enforcing the rulebook against `/dev` routes no reader can reach, so improving a page while they do that buys nothing |
 | **1. Design** | P1, P4 | The homepage first, then cohesion across page types |
 | **2. Hierarchy** | P1, P2 | One dominant figure per type; converge duplicate surfaces |
-| **3. Functionality** | P3, P5 | Forms, links, keyboard, states. **The 30-minute loop had no functionality lane, which is how two forms came to report success while discarding every submission** |
+| **3. Functionality** | P3, P5 | Forms, links, keyboard, states. **The previous loop had no functionality lane, which is how two forms came to report success while discarding every submission** |
 | **4. Usability** | P5 | Responsive, accessibility, target sizes |
 
 **Periodic, not a lane.** Roughly every twentieth tick, and only when the queue's
@@ -120,8 +124,9 @@ IMPROVE      spec it, including RISK: what breaks that is not in the diff
 EXECUTE      build, run R1-R19, tsc, prebuild, land it
 ```
 
-**Orientation is tiered and that is deliberate.** At one tick per minute, reading
-the full canon every tick is the whole tick. The canon is read once per session;
+**Orientation is tiered and that is deliberate.** The canon is roughly 800 lines
+and the tick is 30 minutes, so reading it every tick spends the tick. It is read
+once per session;
 the charter is re-read in full whenever the work touches the background, the
 palette, the homepage or a page type.
 
