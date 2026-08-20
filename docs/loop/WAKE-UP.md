@@ -5,6 +5,23 @@ than one screen, it is written wrong.
 
 ---
 
+## Tick 16, 2026-08-20. Half the gate copies are gone.
+
+**What was wrong:** seven gates still carried their own private comment parser,
+and the recipe for converting them had a trap that only shows up at the call site.
+
+**What was measured:** reading all seven first, **three of them do not read lines
+in order at all**, so the recipe would have broken them while looking correct. One
+of the private copies already held a fix the shared module was missing until this
+morning: it knew a URL is not a comment, and the module every gate depends on did
+not.
+
+**What changed:** a helper that strips a whole file once and hands back an array,
+so the trap stops existing for everyone. Three more gates converted, four of eight
+now done, 17 private copies left across the chain. Chain 104/104, tests 17/17.
+
+---
+
 ## Tick 15, 2026-08-20. Eight gates skip real code, and scan prose instead.
 
 **What was wrong:** eight gates decide what is a comment by how a line LOOKS, so a

@@ -9,7 +9,7 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **15** done |
+| Tick | **16** done |
 | Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
@@ -116,6 +116,33 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 16, P0-4 continued. A helper, three more conversions, and the discovery
+  that the remaining gates are not one recipe.**
+  Reading all seven loops before editing any of them split the group in two.
+  Four iterate lines in order. **Three do not iterate lines at all**: `bar_budget`,
+  `no_eyebrow` and `subsection_icons` scan raw source for a tag, compute the line
+  the match landed on, and ask whether THAT line is a comment. A stateful stripper
+  has no answer, because there is no current line, and the tick-15 recipe would
+  have produced nonsense state applied confidently.
+  So the change was a HELPER, not six more copies of one edit: `stripCommentLines`
+  strips a file once, in order, and returns an array to index by line number. The
+  ordering requirement now lives in the module instead of at every call site, where
+  it was invisible and had already been broken twice.
+  Converted `no_em_dashes`, `no_source_agencies`, `banned_patterns` (`b9d3326f`).
+  `banned_patterns` also lost `trailingCommentStart` and its right-of-the-comment
+  arithmetic, both subsumed.
+  **THE FIND WORTH KEEPING: `trailingCommentStart` already carried the `://` guard**
+  that the shared module lacked until `8bd4aa1b` hours earlier. One gate knew, in a
+  private copy, what the module every other gate depends on did not. That is the
+  cost of eight copies in one sentence.
+  **I broke a file writing the note about it**, and left the record in the source:
+  the first draft quoted the JSX comment closer literally inside a block comment,
+  which ends the comment there, and the file stopped parsing.
+  Shipped the helper untested, said so in the commit, then tested it in the same
+  tick (`d6ca02fd`, 17/17). The fourth case is the random-access property the three
+  remaining gates will depend on, and it was the only one genuinely unproven.
+  Chain 104/104, tsc clean. **G3 moved 20 -> 17.**
 
 - **Tick 15, P0-4 continued, instruments lane. First `isCommentLine` conversion.**
   Eight gates carry a byte-similar `isCommentLine`, and a boolean cannot fix its

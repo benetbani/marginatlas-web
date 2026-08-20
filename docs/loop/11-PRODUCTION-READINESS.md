@@ -45,7 +45,7 @@ gates measure the workshop buys nothing. Charter §0.3.
 |---|---|---|---|
 | G1 | Zero gates scan a route no reader can reach | count gates whose scan set resolves only to `dev/` or `_design/` | OPEN — 5 repointed at tick 8, `verify_sample_tags`, `verify_v2_scales`, `verify_spacing_scale`, `verify_paragraph_budget` still on workshop paths (P0-1) |
 | G2 | Zero gates pass on a comment rather than a rendered tree | `verify_route_chrome_contract` asserts the tree, not the word | OPEN — `/world` and `/industries` pass today by mentioning the word (P0-2) |
-| G3 | One comment-stripping implementation, not twelve | count gates rolling their own | OPEN — **20**, down from 21 at tick 15 (`da0b65d1`). 12 was wrong; the shared module was unsafe to adopt until `8bd4aa1b`. The largest sub-group is the 8 byte-similar `isCommentLine` copies, 1 converted and 7 to go |
+| G3 | One comment-stripping implementation, not twelve | count gates rolling their own | OPEN — **17**, from 21 at tick 14 (12 was wrong). 4 of the 8-file `isCommentLine` sub-group converted; 1 sequential and 3 random-access remain, plus 13 gates on other patterns |
 | G4 | Every ratchet refuses to be raised | count ratchets lacking the `verify_no_cream` guard | OPEN — 4 of 7 can be silently raised (P0-5) |
 | G5 | One gate chain, not two | `prebuild:serial` and `prebuild` report the same count | OPEN — serial ran 43 of the chain (P0-10) |
 | G6 | The a11y audit runs in the chain | `a11y_static_audit.ts` present in `GATES` | OPEN — written, never wired (P0-7). **The cheapest win on this page** |

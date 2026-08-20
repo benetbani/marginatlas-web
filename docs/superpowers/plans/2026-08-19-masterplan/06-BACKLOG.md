@@ -49,33 +49,48 @@ change.
       on the country page against a 22-item list.** The industry page is written
       to that limitation on purpose, in its own comments.
       *Verify:* count ids the gate actually resolves per page type; publish the number.
-- [ ] **P0-4 · gates/strip-comments · 20 gates roll their own, 1 of 21 converted**
+- [ ] **P0-4 · gates/strip-comments · 17 gates roll their own, 4 of 21 converted**
       Recounted 2026-08-20 (tick 14) over all 104 chain entries: 15
       import the shared module (14 in chain), 24 roll their own (21 in chain), and
       `verify_retired_claims.ts` does both. Four distinct re-derivations, not one:
-      `startsWith("//")`, `/^s*///`, a naive `//*[sS]*?*//g` block
-      strip, and hand-rolled `inBlock` state.
+      `startsWith("//")`, a line-start regex, a naive non-greedy block-comment
+      strip, and hand-rolled `inBlock` state. **The four patterns were written out
+      as literal regexes here until 2026-08-20 and all of them had been silently
+      corrupted**: a `node -e` edit ate the backslashes, so the file instructed
+      future work with `/^s*///` and `//*[sS]*?*//g`, neither of which is the
+      pattern it claimed to name. Described in prose now, deliberately. Use the
+      Write or Edit tool for anything containing a regex; the shell-quoted
+      one-liner has now cost this three times in three ticks.
       **THE BLOCKER IS GONE BUT READ THIS BEFORE CONVERTING ANYTHING.** The shared
       module used to eat every URL (`8bd4aa1b`), so a blanket conversion would have
       blinded the three gates whose whole subject is URLs , `canonical-urls`,
       `sitemap-no-redirects` and `find_dead_links` , which work today precisely
       BECAUSE they roll their own. That is fixed; the lesson is that this item
       cannot be executed as a find-and-replace.
-      **THE `isCommentLine` GROUP IS 8 FILES AND 1 IS DONE** (`da0b65d1`,
-      `verify_no_bold_display`). Remaining 7: `verify_banned_patterns`,
-      `verify_bar_budget`, `verify_no_em_dashes`, `verify_no_eyebrow`,
-      `verify_no_source_agencies`, `verify_subsection_icons`,
-      `verify_v34_research_rules`. The conversion is mechanical and the recipe is
-      in `da0b65d1`, but it has ONE trap: the stateful stripper must be fed every
-      line IN ORDER, so it runs before the cheap `continue` guard, never after.
+      **THE `isCommentLine` GROUP IS 8 FILES AND 4 ARE DONE.** `no_bold_display`
+      (`da0b65d1`), then `no_em_dashes`, `no_source_agencies`, `banned_patterns`
+      (`b9d3326f`). **The trap is now gone**: `stripCommentLines(lines)` strips a
+      whole file once, in order, and returns an array to index by line number, so
+      the ordering requirement lives in the module rather than at every call site.
+      Tested, 17/17 (`d6ca02fd`).
+      **THE REMAINING 4 SPLIT INTO TWO SHAPES AND ONLY ONE IS MECHANICAL.**
+      `verify_v34_research_rules` iterates lines and converts like the four done.
+      `verify_bar_budget`, `verify_no_eyebrow` and `verify_subsection_icons` DO NOT
+      ITERATE LINES AT ALL: they scan raw source for a tag, compute which line the
+      match landed on, and ask whether THAT line is a comment. There is no current
+      line, so the per-line stripper cannot answer them; hand them the array and
+      index it. That property is the fourth test in `d6ca02fd`.
+      Each converted gate must DETECT on the code half and REPORT plus opt out on
+      the RAW line: every one of these carries an `// allow-*` marker that is
+      itself a comment and does not survive stripping.
       Measured for the group across `src/`: **42 lines of real code invisible**
       (any line starting `/*` or ending `*/}`) and **9,033 lines of prose scanned**
       as code. Convert in pattern groups, not all at once, and run the chain
       between groups so a flipped verdict is attributable.
       *Verify:* one shared implementation; re-run the full chain per group.
 - [ ] **P0-15 · gates/hex-detector · the hex gate cannot see a percent-encoded colour**
-      Its pattern is `/#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}/g`,
-      which needs a literal `#`. `src/app/globals.css:707` carries
+      Its pattern matches a literal `#` followed by six or three hex digits at a
+      word boundary, so it needs the `#` character itself. `src/app/globals.css:707` carries
       `fill='%23241b11'` inside an SVG data URI, where `%23` IS `#`. Found at tick
       14 while fixing the visibility hole that had also been hiding it: two
       independent reasons the same live colour was invisible, and closing one left
