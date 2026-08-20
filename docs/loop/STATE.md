@@ -14,6 +14,7 @@ this file alone. If it cannot, this file is wrong.
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
 | Destination | `11-PRODUCTION-READINESS.md`, **1 / 30 criteria MET** at the time of writing |
+| Cron job | **`a4691466`**, armed 2026-08-20. Session-only: it dies when the session ends and must be re-armed. Auto-expires after 7 days. Stop it with CronDelete on that id, or say "stop the loop" |
 | Orient | `node scripts/loop_status.mjs`, one process, under a second. **Exit 2 means a halt condition** |
 | In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/`, `.agents/`, `skills-lock.json` |
