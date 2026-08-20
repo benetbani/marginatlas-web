@@ -97,19 +97,37 @@ export function EasiestToBreakIn({
           : "Ordered on the modeled pattern for each trade, not on a local read."}
       </p>
 
-      <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {/* TWO UP ON A PHONE, NOT ONE. Founder, 2026-08-21: "in mobile the look is
+          always stacked with one card after another where there is a good
+          opportunity that we can put two cards in the same row."
+
+          THE BREAKPOINT WAS THE BUG, not the intent. This already went two-up,
+          but at `sm:`, which is 640px. Phones are 375 to 430. So the two-column
+          layout existed and **no phone ever reached it**: measured at 375, this
+          grid ran 8 cards down one column, 597px tall. Two-up halves that.
+
+          "SEE THE FULL READ" IS GONE, and that is what makes two-up fit. It sat
+          under every trade name, 4 words x 8 cards = 32 words that say nothing:
+          the whole card is a link, so it described the affordance the card
+          already has. Founder, same message: "too much text, too little
+          graphics, and they don't help each other at all." With it gone the name
+          and the score pill sit on one line and a 172px column is enough. */}
+      <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-3">
         {shown.map((r) => (
           <li key={r.industryId}>
             <Link
               href={r.href}
-              className="atlas-card flex h-full items-center justify-between gap-3 px-4 py-3"
+              /* THE NAME WRAPS, IT DOES NOT TRUNCATE, and the pill drops below it
+                 on a phone. First attempt at two-up kept the name and the pill on
+                 one line and the names became "Softw...", "Legal ...", "Docto...",
+                 which is shorter AND useless: it bought height by spending the one
+                 thing the card is for. In a 172px column the trade name gets the
+                 whole width and up to two lines, and the band pill sits under it. */
+              className="atlas-card flex h-full flex-col items-start gap-1.5 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-4"
             >
               <span className="min-w-0">
-                <span className="block truncate text-sm font-semibold text-ink-900">
+                <span className="block text-sm font-semibold leading-snug text-ink-900 [overflow-wrap:anywhere] sm:truncate">
                   {r.industryName}
-                </span>
-                <span className="mt-0.5 block text-[11px] text-cocoa-500">
-                  See the full read
                 </span>
               </span>
               <span

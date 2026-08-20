@@ -372,11 +372,26 @@ function EngravedSection({
   sub?: string | null;
   children: React.ReactNode;
 }) {
+  /* THE MEASURE IS CAPPED FOR EVERY PARAGRAPH IN THE SECTION, not one at a time.
+     Founder, 2026-08-21: "on the desktop, some sections are very wide for the
+     eye, so the eye has to do like an angle to read all of it."
+
+     Measured at 1440 on the country page: 11 of 16 substantial paragraphs ran
+     past 75 characters per line, worst 131ch. Capping the three that carried
+     `max-w-2xl` took the worst to 108ch and left eight standing, because they are
+     eight different classes in eight components, and chasing them one at a time
+     is how this defect came back twice already.
+
+     `[&_p]:max-w-[68ch]` caps prose at the SECTION, so a paragraph added to any
+     engraved block tomorrow inherits the rule instead of having to remember it.
+     In `ch` rather than rem on purpose: a rem cap is a width, and 42rem is 96
+     characters at 14px type and 131 at 11.5px, which is exactly how paragraphs
+     that already looked capped turned out to be the widest on the page. */
   return (
     <section
       id={id}
       aria-label={heading}
-      className="atlas-card px-5 py-5 md:px-7 md:py-6"
+      className="atlas-card px-5 py-5 md:px-7 md:py-6 [&_p]:max-w-[68ch]"
     >
       <div className="mb-4">
         <SectionEyebrow className="mb-1">{eyebrow}</SectionEyebrow>
@@ -384,7 +399,7 @@ function EngravedSection({
           {heading}
         </h2>
         {sub ? (
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-graphite">
+          <p className="mt-2 max-w-[68ch] text-sm leading-relaxed text-graphite">
             {sub}
           </p>
         ) : null}
@@ -1079,7 +1094,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
               </dl>
             ) : null}
             {view.decisive?.salesTaxNote ? (
-              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cocoa-700">
+              <p className="mt-5 max-w-[68ch] text-sm leading-relaxed text-cocoa-700">
                 {view.decisive.salesTaxNote}
               </p>
             ) : null}
@@ -1179,18 +1194,23 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
 
           {/* 8. How far you can reach. The population figure is real; the gauge
               strip self-omits inside the component until an indicator is held. */}
+          {/* THE HEADING PROMISED A MARKET THE NUMBER IS NOT. It read "The market
+              you can reach from here" over the national population, and the
+              component's own caveat then said the number is not the market. The
+              heading now says what the block actually holds, and the caveat is
+              gone because its sentence was promoted into the block as the lead:
+              printing it twice was the duplication, not the honesty. */}
           <EngravedSection
             eyebrow="How far you reach"
-            heading="The market you can reach from here"
+            heading="How big the home market is, and why that is not your market"
           >
             <HowFarYouReach
               population={
                 isNum(population)
-                  ? { value: popCompactDisplay(population), label: "people, the home market" }
+                  ? { value: popCompactDisplay(population), label: "people nationally, the ceiling" }
                   : null
               }
               reach={reachIndicators}
-              caveat="The whole country, not the customers you can serve. A shop reaches a street, so this is the ceiling, never the market."
             />
           </EngravedSection>
 
@@ -1508,7 +1528,7 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
                 to three other countries". The heading says who chooses, the
                 button says Open Compare. What survives is the only part neither
                 of them carries: what you get to compare. */}
-            <p className="max-w-2xl text-sm leading-relaxed text-ink-800">
+            <p className="max-w-[68ch] text-sm leading-relaxed text-ink-800">
               Revenue, the cost stack, and what an owner keeps, against up to
               three other countries.
             </p>

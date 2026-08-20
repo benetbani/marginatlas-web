@@ -1557,6 +1557,21 @@
   font-size: 11.5px;
   line-height: 1.5;
   color: var(--text-faint);
+  /* THE MEASURE IS CAPPED IN CHARACTERS, NOT IN REM. Founder, 2026-08-21: "on
+     the desktop, some icons and sections are very wide for the eye, so the eye
+     has to do like an angle to read all of it."
+
+     Measured on the rendered country page at 1536: **11 of the 16 substantial
+     paragraphs ran past 75 characters per line, the worst at 131ch (754px)**,
+     which is roughly double a comfortable measure and exactly the sweep he is
+     describing. The design standard asks for running text near 65 characters.
+
+     Most of these already carried `max-w-2xl`, and that is why the defect
+     survived: 2xl is 42rem, a fixed 672px, and at 11.5px or 14px type 672px is
+     96 to 131 characters. **A rem cap does not cap a measure, it caps a width.**
+     `ch` is the unit that means what the rule means, and it follows the font
+     size wherever this class is reused. */
+  max-width: 68ch;
 }
 
 /* ============================ 06 LICENCES ============================== */

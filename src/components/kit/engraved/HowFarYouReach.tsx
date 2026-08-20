@@ -211,36 +211,68 @@ export function HowFarYouReach({ population, reach, caveat, sample, className }:
             Nothing is left unlabelled by the cut: the population figure below
             keeps `population.label` as its own explanatory line, which says what
             the number counts, where the eyebrow only repeated the heading. */}
-        <div className="flex items-end gap-3">
+        {/* THE MEANING LEADS, THE NUMBER SUPPORTS. Founder, 2026-08-21, and he is
+            right: "saying that coffee in London has, this is in a market of 69.7
+            million people, completely out of touch. The section should have a
+            brain behind them. You are just slapping numbers with no regard."
+
+            This block set the national population at clamp(2.6rem, 11vw, 4rem)
+            under a heading reading "The market you can reach from here", and then
+            printed a caveat saying it is NOT the market. A reader met a huge
+            number, was told it was the market, and was told one line later that it
+            was not. Nothing actionable survived that exchange.
+
+            The number is real and it is not deleted; what changes is which half
+            is the answer. The sentence a shop owner can act on is the lead, set at
+            reading size, and the population sits under it as the ceiling it always
+            was. Rule 1 of the design standard: a figure with no anchor is not a
+            benchmark, it is trivia. The anchor here is the sentence.
+
+            The display size also went, and that is the second half of the fix: a
+            figure set at 4rem IS a claim of importance regardless of the words
+            beside it, so leaving it huge while relabelling it would have kept the
+            same lie in a quieter font. */}
+        <p
+          className="max-w-[46ch] text-ink-900"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(1.05rem, 2.2vw, 1.35rem)",
+            lineHeight: 1.35,
+            letterSpacing: "-0.012em",
+          }}
+        >
+          A shop reaches a street, not a country.
+        </p>
+        <div className="mt-3 flex items-center gap-2.5">
+          <span className="inline-flex items-center" style={{ color: "var(--cocoa-500)" }}>
+            <Glyph name="people" size={16} stroke={1.4} color="var(--cocoa-500)" />
+          </span>
           <span
-            className="leading-none text-ink-900"
+            className="text-ink-900"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: "clamp(2.6rem, 11vw, 4rem)",
-              letterSpacing: "-0.02em",
+              fontSize: "1.05rem",
               fontVariantNumeric: "tabular-nums",
+              letterSpacing: "-0.01em",
             }}
           >
             {population.value}
           </span>
-          <span className="mb-1.5 inline-flex items-center text-cocoa-500" style={{ color: "var(--cocoa-500)" }}>
-            <Glyph name="people" size={22} stroke={1.4} color="var(--cocoa-500)" />
-          </span>
+          {population.label ? (
+            <span
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "13.5px",
+                lineHeight: 1.5,
+                color: "var(--text-muted)",
+              }}
+            >
+              {population.label}
+            </span>
+          ) : null}
         </div>
-        {population.label ? (
-          <p
-            className="mt-1.5 max-w-prose"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "13.5px",
-              lineHeight: 1.5,
-              color: "var(--text-muted)",
-            }}
-          >
-            {population.label}
-          </p>
-        ) : null}
       </div>
 
       {/* ---- The reach gauges: meaning, not raw numbers ---- */}
