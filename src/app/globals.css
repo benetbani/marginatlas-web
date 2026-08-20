@@ -167,7 +167,45 @@
        anywhere on the site is rgb(251.3), not white. Against that ground the
        seven foreground tokens move by at most 0.54 on a ratio of 17.46
        (ink-800 body copy 15.85 -> 15.36) and ZERO AA verdicts flip. */
-    --atlas-surface-card: rgba(255, 255, 255, 0.955); /* canonical card surface */
+    /* THE CARD IS GLASS, 2026-08-20. Founder picked variant B after seeing three
+       shots of his own homepage: cards at .80 with a real blur, background left
+       alone. Shots kept at docs/loop/artifacts/{A-today-955,B-glass-080}.jpeg.
+
+       IT WAS .955 AND THAT IS NOT GLASS. Measured in a browser on the live page:
+       0 of 1,581 elements carried a backdrop-filter, and at .955 the photograph
+       contributes 1.44% of its own signal, moving the card's ground 3.7 levels
+       out of 255 across the picture's entire black-to-white range. Below
+       perception. The blur was absent and the transparency was decorative.
+
+       THE PAIRING RULE, and it is the whole safety argument: a surface may go
+       only as translucent as the LIGHTEST TEXT TOKEN allowed to sit on it.
+       Measured against the worst ground this card can ever have (the
+       photograph's darkest pixel rgb(1,2,0) at opacity .32 over white, giving
+       rgb(173.7), then this card over that):
+
+         alpha  ground   text-strong  text-body  text-muted  text-faint
+         .955   251.3       16.92       15.37       9.29        4.34
+         .800   238.7       15.15       13.76       8.32        5.49*
+         .620   224.1       13.25       12.03       7.27        4.80*
+                                                        (* after the retone below)
+
+       The ink was never the constraint: strong, body and muted clear AA down to
+       alpha .20. The only blocker was --text-faint, which failed at EVERY alpha
+       INCLUDING opaque white, and it is retired below rather than accommodated.
+
+       WHY THE BLUR RADIUS DOES NOT APPEAR IN THAT TABLE. A gaussian blur is a
+       convex combination of its inputs, so it can never fall outside their min
+       and max. Bounding the photograph once bounds it for every radius, forever.
+       scripts/verify_token_contrast.mjs carries the argument in full.
+
+       ONE STEP, NOT A LADDER, DELIBERATELY. The research proposes four levels and
+       the founder has judged one. Shipping steps he has not seen would be
+       inventing design, which is the failure this project has already paid for
+       twice. The token shape below makes a second step a one-line addition when
+       he asks for it. */
+    --glass-alpha: 0.80;
+    --glass-blur: blur(20px);
+    --atlas-surface-card: rgba(255, 255, 255, var(--glass-alpha)); /* canonical card surface */
     --atlas-surface-card-soft: #ffffff;      /* secondary card within a card section */
     --atlas-surface-band: #ffffff;           /* white section band, no pattern */
 
@@ -372,13 +410,68 @@
   .atlas-card {
     position: relative;
     background: var(--atlas-surface-card);
+    /* THE FILL STOPS AT THE PADDING BOX. A border paints OUTSIDE it and the
+       default background-clip is border-box, so a translucent fill composites
+       UNDER a translucent border and the edge reads milkier than authored. One
+       line, and it is the difference between a drawn edge and a smudge. */
+    background-clip: padding-box;
     border-radius: var(--radius);
-    border: 1px solid var(--atlas-hairline);
-    box-shadow: var(--atlas-elev-1);
+    /* A GLASS FILL CANNOT CARRY ITS OWN BOUNDARY, so the boundary is drawn. At
+       .80 over this photograph the card measures barely above 1:1 against the
+       ground it sits on, which is why the border is structural here rather than
+       decorative. */
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    /* ONE CATCH-LIGHT, ON THE TOP EDGE ONLY. A pane picks up the light above it;
+       lighting four sides states two light sources and reads as a glowing
+       rectangle rather than an object. The v2 `.glass` in atlas-spine.css lights
+       four sides with five inset layers, which is the soft-blob look, and it was
+       unfalsifiable there because at .955 none of it was visible.
+       Then contact, then a soft area light. Four layers is the ceiling before
+       this turns to mud. */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.68),
+      0 1px 2px rgba(20, 16, 12, 0.06),
+      0 12px 32px -8px rgba(20, 16, 12, 0.14);
     transition:
       box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
       border-color 220ms ease-out,
       transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* NO BACKDROP-FILTER SUPPORT: the alpha has to carry the whole job alone, so
+     it goes back up. Global support is 95.7%, which leaves a real population,
+     and a translucent fill with nothing blurring behind it is a washed-out card
+     over a busy photograph rather than a material.
+
+     THIS IS THE SAFETY NET, AND `prefers-reduced-transparency` IS NOT. Safari
+     does not support that query in ANY version through 27, and Firefox has it
+     off by default, so a Mac or iPhone reader who switched Reduce Transparency
+     ON in the operating system, for accessibility reasons, never reaches the
+     branch below. Any design whose legibility depends on that query is broken
+     for exactly the people it exists to serve. The default above is safe on its
+     own; these two are improvements for whoever can receive them. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :root {
+      --glass-alpha: 0.94;
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    :root {
+      --glass-alpha: 1;
+      --glass-blur: none;
+    }
+  }
+
+  /* A reader who asked for more contrast is asking for the variable ground to
+     go, not merely to be lightened. */
+  @media (prefers-contrast: more) {
+    :root {
+      --glass-alpha: 1;
+      --glass-blur: none;
+    }
   }
 
   /* Vermillion top edge that appears on hover — like dog-earing a page.
@@ -832,7 +925,24 @@
   --text-strong: #211810; /* ink-900, headline near-black */
   --text-body: #2c2015; /* ink-800, body copy */
   --text-muted: #534231; /* cocoa-700, muted copy (AA on cream) */
-  --text-faint: #87745d; /* cocoa-500, faint labels (AA on cream) */
+  /* RETIRED THE COCOA, 2026-08-20. Was #87745d, and its own comment claimed
+     "AA on cream" while the site stopped being cream in 2026-08-17. Measured
+     against the real card ground it was 4.34:1, and against PURE WHITE 4.48:1,
+     so it never cleared AA 4.5 anywhere on this site at any card alpha. It also
+     carried 82 of the 114 text nodes under 12px, and it is cocoa, which is
+     brown, which charter section 8 bans.
+
+     #5f5f67 is not invented: it is `--muted` from src/styles/atlas-spine.css,
+     the v2 system whose first ratified rule reads "NEUTRAL PALETTE. No cream, no
+     warm tint." Converging on a value this repo already ships is the same call
+     made for `paper` (#f7f7f8) and `parchment` (#e3e3e3).
+
+     It reads 5.49:1 on the .80 card and clears AA down to alpha .537, so it
+     survives every step of a future ladder rather than pinning it. And it stays
+     a real step lighter than --text-muted at 8.32:1, which is what the quiet
+     tone needs: charter section 13 rejected jumping straight to --text-muted
+     precisely because that collapse kills the hierarchy. */
+  --text-faint: #5f5f67; /* cool neutral, faint labels. 5.49:1 on the .80 card */
 
   /* ---- extra meaning-scale + surface steps the Wave-2 sections read ----- */
   --cocoa-300: #c3b39c; /* cocoa-300, the wage-floor / world-median bar tone */

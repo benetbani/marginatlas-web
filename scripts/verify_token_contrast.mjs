@@ -176,6 +176,80 @@ if (low.length) {
   console.log(`  These are the founder's to change, and one of them draws a ratified drawing.`);
 }
 
+/* ---- THE READER-FACING LADDER, AND THE PAIRING RULE -----------------------
+   ADDED 2026-08-20, and the gap it closes is the point. Everything above reads
+   `src/styles/atlas-spine.css`, the v2 system, which is imported only by /dev
+   routes. **The tokens a reader actually meets live in `src/app/globals.css` and
+   were checked by nothing**, so this gate passed while the live `--text-faint`
+   sat at 4.34:1 against its real card ground and 4.48:1 against pure white,
+   never having cleared AA anywhere at any alpha.
+
+   THE PAIRING RULE, stated as a check rather than a comment: a surface may go
+   only as translucent as the LIGHTEST TEXT TOKEN permitted on it. So the card's
+   alpha is read from `--glass-alpha` rather than assumed, and every text token
+   is measured against the ground THAT alpha produces over the photograph's
+   darkest pixel. Lower the alpha and this fails the moment a token stops
+   clearing AA, which is exactly the failure a ladder would otherwise ship
+   silently. */
+const GLOBALS = resolve(ROOT, "src/app/globals.css");
+const gsrc = readFileSync(GLOBALS, "utf8");
+const gtokens = new Map();
+for (const m of gsrc.matchAll(/(--[a-z0-9-]+)\s*:\s*(#[0-9a-f]{3,8}|rgba?\([^)]+\)|[0-9.]+)\s*;/gi)) {
+  if (!gtokens.has(m[1])) gtokens.set(m[1], m[2].trim());
+}
+
+const glassAlpha = Number(gtokens.get("--glass-alpha") ?? "0.955");
+if (!Number.isFinite(glassAlpha) || glassAlpha <= 0 || glassAlpha > 1) {
+  console.error(`\nx verify_token_contrast: --glass-alpha in globals.css is "${gtokens.get("--glass-alpha")}", not a usable alpha.`);
+  process.exit(1);
+}
+const LIVE_CARD = over([255, 255, 255], BACKDROP, glassAlpha);
+
+/* The ladder a reader meets. `--text-faint` is the lightest and therefore the
+   one that sets how far the alpha may fall. */
+const LIVE_TEXT = ["--text-strong", "--text-body", "--text-muted", "--text-faint"];
+const liveFails = [];
+console.log(`\n=== globals.css, the reader-facing ladder on a ${glassAlpha} card ===`);
+for (const tok of LIVE_TEXT) {
+  const raw = gtokens.get(tok);
+  if (!raw) {
+    console.error(`  ${tok.padEnd(16)} MISSING from globals.css`);
+    liveFails.push({ tok, r: 0 });
+    continue;
+  }
+  const { rgb, a } = parse(raw);
+  const r = ratio(over(rgb, LIVE_CARD, a), LIVE_CARD);
+  const tag = r >= 7 ? "AAA" : r >= AA_BODY ? "AA" : "FAIL";
+  console.log(`  ${tok.padEnd(16)}${r.toFixed(2).padStart(6)}:1   ${tag}`);
+  if (r < AA_BODY) liveFails.push({ tok, r });
+}
+
+/* How much further the alpha could fall before the lightest token breaks. Not a
+   failure, a headroom report, so a future step is chosen from a number. */
+let floor = null;
+const faint = gtokens.get("--text-faint");
+if (faint) {
+  const f = parse(faint);
+  for (let a = 1.0; a >= 0.2; a -= 0.005) {
+    if (ratio(over(f.rgb, over([255, 255, 255], BACKDROP, a), f.a), over([255, 255, 255], BACKDROP, a)) >= AA_BODY) floor = a;
+    else break;
+  }
+  console.log(`\n  --text-faint is the lightest, so it sets the floor: the card may go to`);
+  console.log(`  alpha ${floor === null ? "nowhere, it fails even opaque" : floor.toFixed(3)} before it drops under AA. Currently at ${glassAlpha}.`);
+}
+
+if (liveFails.length) {
+  console.error(`\nx verify_token_contrast: ${liveFails.length} reader-facing token(s) under ${AA_BODY}:1 on a ${glassAlpha} card.\n`);
+  for (const f of liveFails) console.error(`   ${f.tok}  ${f.r.toFixed(2)}:1`);
+  console.error(
+    `\n  THE PAIRING RULE: a surface may go only as translucent as the lightest\n` +
+      `  text token on it. Either darken the token or raise --glass-alpha. Do NOT\n` +
+      `  allowlist this: the whole reason the card could move to glass is that the\n` +
+      `  ink had headroom, and this is the check that proves it still does.\n`,
+  );
+  process.exit(1);
+}
+
 if (fails.length) {
   console.error(`\nx verify_token_contrast: ${fails.length} token(s) carry text below ${AA_BODY}:1.\n`);
   for (const f of fails) console.error(`   ${f.tok}  ${f.r.toFixed(2)}:1  across ${f.count} declaration(s)`);
