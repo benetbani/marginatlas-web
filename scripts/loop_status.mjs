@@ -71,10 +71,28 @@ const routeCount = (claude.match(/- \*\*(\d+)\*\* App Router page routes/) ?? []
 /* ---- 3. THE QUEUE ------------------------------------------------------ */
 const BACKLOG = "docs/superpowers/plans/2026-08-19-masterplan/06-BACKLOG.md";
 const backlog = read(BACKLOG);
-const items = [...backlog.matchAll(/^- \[([ x~?])\]\s+\*\*([^\n]+?)\*\*/gm)].map((m) => ({
+/* `[\s\S]*?`, NOT `[^\n]+?`. A backlog title is prose and prose wraps, and until
+   2026-08-20 this pattern required the whole bolded title to sit on ONE line.
+   Measured on the file it reads: 65 item markers, 48 parsed, **17 invisible**,
+   26% of the queue. Among them P0-1, the only `[~]` item and the entire rationale
+   for the P0 band, so this tool printed "0 in flight" for four consecutive ticks
+   while override rule 3 (finish in flight before starting new) had nothing to
+   act on. It also printed "38 open" against a real 52, and four ticks of work
+   were chosen off the truncated list believing it was the queue.
+
+   Third time in five ticks that a document written for a human was invisible to
+   a tool that wanted it plain. The tool is what gets fixed. */
+const items = [...backlog.matchAll(/^- \[([ x~?])\]\s+\*\*([\s\S]*?)\*\*/gm)].map((m) => ({
   state: m[1],
   title: m[2].replace(/\s+/g, " ").trim(),
 }));
+/* THE PARSE IS CHECKED AGAINST AN INDEPENDENT COUNT, because the failure above
+   was silent for four ticks and nothing would have caught the next one.
+   CLAUDE.md's own corollary: when a scan set is knowable independently, check it.
+   A marker line cannot hide from this pattern, so a divergence means the title
+   pattern has drifted from how the file is written, again. */
+const markers = (backlog.match(/^- \[[ x~?]\]/gm) ?? []).length;
+const unparsed = markers - items.length;
 const open = items.filter((i) => i.state === " ");
 const inFlight = items.filter((i) => i.state === "~");
 const blocked = items.filter((i) => i.state === "?");
@@ -110,7 +128,12 @@ L("HEAD", head);
 L("tree", dirty.length === 0 ? "clean apart from the knowns" : dirty.length + " UNEXPECTED dirty: " + dirty.join(" "));
 L("chain (carried)", gateCount + " gates, " + routeCount + " routes   [gated by counts-fresh, NOT run here]");
 L("tick", tick);
-L("queue", open.length + " open, " + inFlight.length + " in flight, " + blocked.length + " blocked, " + done.length + " done");
+L(
+  "queue",
+  open.length + " open, " + inFlight.length + " in flight, " + blocked.length + " blocked, " +
+    done.length + " done" +
+    (unparsed === 0 ? "   [" + markers + "/" + markers + " parsed]" : "   !! " + unparsed + " ITEM(S) NOT PARSED"),
+);
 L("open questions", openQuestions + "   (docs/loop/DECISIONS-NEEDED.md)");
 L("readiness", crit.length ? met + " / " + crit.length + " criteria MET" : "ledger not found");
 
@@ -128,6 +151,11 @@ const halts = [];
 if (dirty.length) halts.push("TREE DIRTY , checkpoint-commit before taking new work (operating rules §12.1)");
 if (branch !== "main") halts.push("WRONG BRANCH , the loop works on main only");
 if (inFlight.length > 1) halts.push("MORE THAN ONE ITEM IN FLIGHT , converge before opening a third");
+if (unparsed !== 0)
+  halts.push(
+    "QUEUE PARSE MISMATCH , " + unparsed + " item marker(s) this tool cannot read. " +
+      "It is reporting a queue smaller than the file. Fix the parser, not the file.",
+  );
 if (halts.length) {
   console.log("\n  !! HALT CONDITIONS:");
   for (const h of halts) console.log("     " + h);
