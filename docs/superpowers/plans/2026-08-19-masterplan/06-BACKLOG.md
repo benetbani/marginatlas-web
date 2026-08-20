@@ -49,10 +49,31 @@ change.
       on the country page against a 22-item list.** The industry page is written
       to that limitation on purpose, in its own comments.
       *Verify:* count ids the gate actually resolves per page type; publish the number.
-- [ ] **P0-4 · gates/strip-comments · 12 gates roll their own comment detection**
-      instead of the tested `strip_comments`, which had a live defect that blinded
-      the chain for 195 lines of one file.
-      *Verify:* one shared implementation; re-run the full chain.
+- [ ] **P0-4 · gates/strip-comments · 21 gates roll their own, not 12**
+      Recounted 2026-08-20 (tick 14) over all 104 chain entries: 15
+      import the shared module (14 in chain), 24 roll their own (21 in chain), and
+      `verify_retired_claims.ts` does both. Four distinct re-derivations, not one:
+      `startsWith("//")`, `/^s*///`, a naive `//*[sS]*?*//g` block
+      strip, and hand-rolled `inBlock` state.
+      **THE BLOCKER IS GONE BUT READ THIS BEFORE CONVERTING ANYTHING.** The shared
+      module used to eat every URL (`8bd4aa1b`), so a blanket conversion would have
+      blinded the three gates whose whole subject is URLs , `canonical-urls`,
+      `sitemap-no-redirects` and `find_dead_links` , which work today precisely
+      BECAUSE they roll their own. That is fixed; the lesson is that this item
+      cannot be executed as a find-and-replace.
+      *Do:* convert in pattern groups, not all 21 at once, and run the chain
+      between groups so a flipped verdict is attributable to one group.
+      *Verify:* one shared implementation; re-run the full chain per group.
+- [ ] **P0-15 · gates/hex-detector · the hex gate cannot see a percent-encoded colour**
+      Its pattern is `/#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}/g`,
+      which needs a literal `#`. `src/app/globals.css:707` carries
+      `fill='%23241b11'` inside an SVG data URI, where `%23` IS `#`. Found at tick
+      14 while fixing the visibility hole that had also been hiding it: two
+      independent reasons the same live colour was invisible, and closing one left
+      the other standing.
+      *Do:* decode percent-encoding before matching, or match `%23` as an alternate
+      opener. **Expect new findings and do not raise the baseline to absorb them.**
+      *Verify:* the gate reports globals.css:707; then count what else appears.
 - [ ] **P0-5 · gates/ratchets · Four of seven ratchets can be silently raised.**
       *Verify:* add the refuse-to-raise guard that `verify_no_cream` already has.
 - [ ] **P0-6 · gates/contrast · `verify_token_contrast.mjs` measures an assumed
@@ -165,7 +186,9 @@ per tick. **Never touch the H1.**
       corrected the word count (617, not 764) and found the height concentration
       in three bands. Instrument: `scripts/spikes/render_home_to_scratch.tsx`.
       **Gap:** no screenshots, the Browser pane would not composite.
-- [~] **P1-0b(orig) · superseded, kept for the reasoning ·**
+- [x] **P1-0b(orig) · superseded, kept for the reasoning ·** *(marker corrected
+      tick 14: it was `[~]`, so `loop_status` reported a permanent in-flight item and
+      override rule 3 would have sent every tick to a superseded entry.)*
       `docs/loop/10-HOMEPAGE.md` says this is the next homepage measurement and
       it has not been taken: *"the next measurement is paint, not count. An
       emitted band can still compute to zero height."* Every band now carries

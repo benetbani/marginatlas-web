@@ -5,6 +5,24 @@ than one screen, it is written wrong.
 
 ---
 
+## Tick 14, 2026-08-20. The gates could not see URLs.
+
+**What was wrong:** the shared comment-stripper every source gate depends on
+treated the `//` in `https://` as the start of a comment and threw away the rest
+of the line.
+
+**What was measured:** 64 lines across 34 files, **4,179 characters**, invisible
+to all 14 gates that use it. The worst hid 513 characters of `globals.css:707`,
+**including a hex colour**, on a line the hardcoded-hex gate exists to read. The
+backlog also said 12 gates roll their own detection; recounted, it is **21**.
+
+**What changed:** one guard, a `//` after `:` is a URL scheme and not a comment.
+Five tests added, and one existing test that asserted the opposite was corrected.
+Chain still 104/104. **The colour is still invisible for a second reason** , it is
+written `%23241b11` and the detector needs a literal `#` , filed as P0-15.
+
+---
+
 ## Before the loop started, 2026-08-18
 
 **Three things you did not know, all verified against the code:**

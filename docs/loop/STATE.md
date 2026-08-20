@@ -9,14 +9,14 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **13** done. Ticks resume at 14 under the rebuilt loop |
+| Tick | **14** done. First tick under the rebuilt loop |
 | Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
 | Destination | `11-PRODUCTION-READINESS.md`, **1 / 30 criteria MET** at the time of writing |
 | Cron job | **`a4691466`**, armed 2026-08-20. Session-only: it dies when the session ends and must be re-armed. Auto-expires after 7 days. Stop it with CronDelete on that id, or say "stop the loop" |
 | Orient | `node scripts/loop_status.mjs`, one process, under a second. **Exit 2 means a halt condition** |
-| In-flight | none. Q8 (industry precision) is a founder decision, not unfinished work |
+| In-flight | none. **The permanent `[~]` on P1-0b(orig) was a mis-marker and is corrected**: `loop_status` reported an in-flight item on every run, and override rule 3 would have sent every tick to a superseded entry. Q8 remains a founder decision, not unfinished work |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/`, `.agents/`, `skills-lock.json` |
 | Gates | `tsc` clean; `prebuild` green **at the count the chain reports**. This row said 103/103 while the chain was 104 and line 56 of this same file already said 104: **a number typed into a document is stale the moment it is typed.** `loop_status.mjs` carries it now |
 | HEAD | `origin/main` is at `6fc88e3e`; the loop's commits sit above it, unpushed by rule |
@@ -116,6 +116,34 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 14, P0-4, instruments lane. The shared comment-stripper was eating every URL.**
+  `stripComments` locates `//` with `indexOf` and returns everything to its left. It
+  guards `/*` with `insideString` and deliberately does not guard `//`, a trade its
+  own header documents and defends. That trade was reasoned about a `//` a human
+  typed inside a string. It was never about `://`, which is a URL scheme and is not
+  a comment in any language this repo scans.
+  **Measured across `src/`: 64 lines in 34 files, 4,179 characters** invisible to all
+  14 gates importing the module. Worst is 513 characters of `globals.css:707`, an
+  inline SVG data URI, and the hidden window contains a hex colour.
+  Fixed with one guard in `8bd4aa1b`. Five tests added; **one existing test asserted
+  the opposite** and was corrected: it was named "the // in-string trade is
+  UNCHANGED" and demonstrated that trade using a URL, the one kind of `//` the trade
+  was never about. Chain 104/104 after, tsc clean.
+  **Two corrections to the plan.** P0-4 said twelve gates roll their own; recounted
+  over all 104 chain entries it is **21** (15 import, 24 roll, `verify_retired_claims`
+  does both), in four distinct patterns rather than one. And the item's stated fix,
+  "one shared implementation", was UNSAFE until this commit: converting the 21 would
+  have blinded `canonical-urls`, `sitemap-no-redirects` and `find_dead_links`, three
+  gates whose whole subject is URLs and which work today precisely BECAUSE they roll
+  their own. P0-4 now says convert in pattern groups, never as a find-and-replace.
+  **New item P0-15.** The colour on `globals.css:707` is written `%23241b11` and
+  `verify_hardcoded_hex` matches `/#[0-9a-fA-F]{6}\b/`, so it was invisible for TWO
+  independent reasons and this tick closed one. The chain going green afterwards
+  cannot distinguish "nothing banned was hidden" from "the detectors cannot match
+  encoded forms"; for this line it is provably the second.
+  **No readiness criterion reached MET.** G3 moved from a wrong 12 to a measured 21
+  and lost its blocker, which is a correction rather than progress toward the target.
 
 - **Tick 13, slot 1, cleanup. The scripts triage (queued item 7) is done, and it
   found five fake gates.** Census in one process, `scripts/spikes/script_census.tsx`:
