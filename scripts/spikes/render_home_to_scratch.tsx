@@ -49,6 +49,14 @@
  *      declaration. Measured: with the slots on <body>, `--font-body` computed
  *      to the EMPTY STRING on :root and every element fell to the browser
  *      default. Same defect class as 2179bcb2, one element up. Setting them on
+ *      **THE TWO FAMILIES CHANGED 2026-08-20** to Geist + Space Grotesk, the
+ *      standing ratified pair, and this wrapper was updated with them. It had to
+ *      be: the wrapper hardcodes the faces that `next/font` would otherwise
+ *      supply, so leaving Inter and Newsreader here would have rendered the OLD
+ *      typography no matter what `layout.tsx` says, and the screenshot taken to
+ *      verify the swap would have shown the thing being replaced.
+ *      The measurement below is from before that swap and is kept as the record
+ *      of why the slots sit on <html> at all:
  *      <html> resolved 171 elements to Inter and 61 to Newsreader, two families,
  *      and moved the page height 5,864 to 5,933px at 1280. That 69px is the
  *      difference between measuring in the right font and the wrong one. It is still NOT what a reader sees: the
@@ -154,11 +162,14 @@ async function main() {
      column token and the header-height token the masthead offset reads. It does
      NOT include AtlasFrame; see blind spot 1. */
   const doc = `<!doctype html>
-<html lang="en" style="--font-sans: Inter, ui-sans-serif, system-ui, sans-serif; --font-serif: Newsreader, Georgia, ui-serif, serif;">
+<html lang="en" style="--font-sans: Geist, ui-sans-serif, system-ui, sans-serif; --font-serif: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>home measurement fixture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="./site.css">
 </head>
 <body class="[--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]" style="font-family: var(--font-body);">

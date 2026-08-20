@@ -527,8 +527,10 @@ export const fontFamily = {
     "Roboto",
     "sans-serif",
   ],
-  serif: ["var(--font-display)", "Georgia", "ui-serif", "serif"],
-  display: ["var(--font-display)", "Georgia", "ui-serif", "serif"],
+  /* Grotesque fallbacks, 2026-08-20: the display slot carries Space Grotesk
+     now, so a Georgia fallback would silently serve a serif. */
+  serif: ["var(--font-display)", "Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+  display: ["var(--font-display)", "Space Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
 } as const;
 
 /**

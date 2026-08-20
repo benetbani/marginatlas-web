@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export const preferredRegion = "fra1";
 
 import Script from "next/script";
-import { Newsreader, Inter } from "next/font/google";
+import { Geist, Space_Grotesk } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 import { PaywallModalRoot } from "@/components/monetization";
@@ -20,16 +20,31 @@ import { AtlasGutters } from "@/components/kit";
 import { isWarmFrameEnabled } from "@/lib/feature_flags";
 
 // Typography.
-// Display face decision 2026-06-15 (founder, from the serif showcase at R7 A.2.5):
-// Newsreader on the --font-display slot, chosen by feel on real Atlas content over
-// Fraunces, Spectral, and Playfair Display. This reverses the 2026-06-13 move to
-// Fraunces; on the live masthead the founder preferred Newsreader's warm, classic
-// newspaper-editorial read. Loaded as the variable font (opsz optical sizing) so
-// headings and the masthead figure get the display cut.
-// Inter: clean, neutral sans for body text + ALL numbers in tables, stats, and
-// waterfall lines (with tabular-nums enabled).
-const newsreader = Newsreader({
+//
+// GEIST + SPACE GROTESK, SITE-WIDE, 2026-08-20. This replaces Newsreader + Inter
+// and it is a PORT of a standing ruling rather than a new choice.
+//
+//   rules/FOUNDER-VERDICTS.md: "Standing: Geist + Space Grotesk, Geist Mono
+//   numbers weight 500. [rule 38]"
+//   rules/FORM-CATALOG.md (2026-07-11): "The locked skin is Geist + Space
+//   Grotesk, terracotta on answers only, hairline cards, tokens only."
+//
+// Both faces were already installed and already loaded by src/lib/fonts-spine.ts
+// for the v2 spine surfaces. Measured 2026-08-20: the ratified pair reached
+// exactly ONE reader-facing component while the whole site chrome ran a serif
+// plus Inter. So this is not a redesign, it is the rest of the site catching up
+// with its own rulebook, and it closes the cohesion gap of two faces on one site.
+//
+// WHAT THIS SUPERSEDES, said plainly rather than deleted. The 2026-06-15 display
+// decision picked Newsreader from a serif showcase, over Fraunces, Spectral and
+// Playfair. That was a choice among SERIFS for the display slot. The 2026-07-11
+// locked skin is newer, and the founder ruled again on 2026-08-20 while looking
+// at neo-grotesque reference cards: "that's the kind of font that we should use
+// on the site." A newer founder ruling beats an older one; the older one is
+// recorded here so nobody re-derives it as a regression.
+const displayFace = Space_Grotesk({
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
   display: "swap",
   /* THE SLOT IS `--font-serif`, NOT `--font-display`, and the rename is a bug
      fix rather than a preference. globals.css declares
@@ -47,10 +62,15 @@ const newsreader = Newsreader({
      `--font-sans` next to it never had this problem because the slot and the
      consumer have different names. This makes the serif follow its neighbour. */
   variable: "--font-serif",
-  style: ["normal", "italic"],
 });
-const inter = Inter({
+const bodyFace = Geist({
   subsets: ["latin"],
+  /* 700 stays loaded even though rulebook v1 caps DISPLAY weight at semibold.
+     That ban is enforced by `verify_no_bold_display` over six named surface
+     files, not by starving the site of the weight: `font-bold` is still used in
+     tables and chrome outside those files, and dropping 700 here would not
+     remove it, it would make the browser SYNTHESISE a bold, which is worse
+     looking and invisible to every gate. */
   weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-sans",
@@ -155,7 +175,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${inter.variable} [--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]`}
+      className={`${displayFace.variable} ${bodyFace.variable} [--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]`}
     >
       {/* SaaS reformation 2026-06-12 — the body is the app ground, a cool
           neutral (via the `body` rule in globals.css). The .atlas-paper

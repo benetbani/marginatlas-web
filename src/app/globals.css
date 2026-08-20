@@ -1014,16 +1014,20 @@
   --elev-2: var(--atlas-elev-2); /* hover / feature frames */
 
   /* ---- fonts (reuse the layout.tsx font slots) ------------------------- */
-  --font-body: var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-sans), Geist, ui-sans-serif, system-ui, sans-serif;
   /* Reads the SLOT (--font-serif, set by next/font in layout.tsx), never
      itself. It used to read --font-display, its own name, on the same element:
      a cycle, invalid at computed-value time, which made every consumer inherit
      the body sans instead of the serif. --font-body below has always had this
      right; this is the same shape. */
-  --font-display: var(--font-serif), Newsreader, Georgia, ui-serif, serif;
+  /* GROTESQUE FALLBACKS, 2026-08-20. The chain read `Newsreader, Georgia,
+     ui-serif, serif` while the slot now carries Space Grotesk. A failed webfont
+     would have dropped every heading on the site to a SERIF, silently, which is
+     the one outcome the face change exists to end. */
+  --font-display: var(--font-serif), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   /* the tabular figure font: the body sans carries tabular-nums; no separate
      numeric cut is shipped, so --font-num aliases the body font. */
-  --font-num: var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-num: var(--font-sans), Geist, ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ---- atlas-eyebrow — the small tracked uppercase label ------------------- */
