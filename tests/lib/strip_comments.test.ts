@@ -1,4 +1,4 @@
-import { newCommentState, stripComments } from "../../scripts/lib/strip_comments";
+import { newCommentState, stripComments, stripCommentLines } from "../../scripts/lib/strip_comments";
 
 let failed = 0;
 function check(name: string, lines: string[], expect: string[]) {
@@ -81,6 +81,47 @@ check(
   ["const t = `a/*b`;", 'const x = "bg-atlas-500";'],
 );
 check("a block opened in code still closes on a later line", ["x /* open", "hidden", "close */ y"], ["x ", "", " y"]);
+
+/* ---- stripCommentLines, the file-level wrapper --------------------------
+   Three gates index its result by line number instead of iterating, so the two
+   properties that matter are: one entry out per line in, and block state carried
+   across the whole array. Both asserted rather than argued, because the commit
+   that added the helper shipped with neither. */
+function checkLines(name: string, lines: string[], expect: string[]) {
+  const got = stripCommentLines(lines);
+  const ok = JSON.stringify(got) === JSON.stringify(expect);
+  if (!ok) {
+    failed++;
+    console.log(`  FAIL  ${name}`);
+    console.log(`        got    ${JSON.stringify(got)}`);
+    console.log(`        expect ${JSON.stringify(expect)}`);
+  } else {
+    console.log(`  ok    ${name}`);
+  }
+}
+
+checkLines(
+  "stripCommentLines returns one entry per input line",
+  ["const a = 1;", "", "const b = 2; // x"],
+  ["const a = 1;", "", "const b = 2; "],
+);
+checkLines(
+  "stripCommentLines carries block state across the array",
+  ["x /* open", "const hidden = 1;", "close */ const real = 2;"],
+  ["x ", "", " const real = 2;"],
+);
+checkLines(
+  "stripCommentLines keeps a URL, so an indexed lookup is not truncated",
+  ['const u = "https://example.com/a";'],
+  ['const u = "https://example.com/a";'],
+);
+/* The random-access case the three remaining gates need: a line in the middle of
+   a block must be judgeable from the array alone, with no "current line". */
+checkLines(
+  "an indexed line inside a block reads as empty",
+  ["/* a", "   b", "   c */", "const after = 1;"],
+  ["", "", "", "const after = 1;"],
+);
 
 console.log(failed === 0 ? "\n  all pass" : `\n  ${failed} FAILED`);
 process.exit(failed === 0 ? 0 : 1);
