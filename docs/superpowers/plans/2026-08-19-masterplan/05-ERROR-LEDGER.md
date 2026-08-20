@@ -87,6 +87,35 @@ one correct implementation is `src/lib/scores/band_tone.ts`.
 
 ---
 
+## C9. A DOCUMENT WRITTEN FOR A HUMAN, PARSED BY A TOOL THAT WANTED IT PLAIN.
+
+Three times in five ticks, 2026-08-20, at increasing scale:
+
+1. **Tick 14.** A backlog title was wrapped across two lines while editing. Both
+   edited items dropped out of `loop_status` and the open count FELL when it
+   should have risen.
+2. **Tick 17.** The first readiness criterion ever to reach MET was written
+   `**MET**`, matching the ledger's own legend. The counter matched `/^MET/` and
+   the score stayed at 1/30 on the tick that moved it.
+3. **Tick 18.** The same parser was measured against the file: **65 item markers,
+   48 parsed, 17 invisible, 26% of the queue** , including the only `[~]` item
+   in the file, so the tool reported "0 in flight" for four consecutive ticks
+   and override rule 3 had nothing to act on.
+
+**The rule: fix the tool, never discipline the document.** Markdown written by a
+person will wrap, bold, and be reordered; a parser that assumes otherwise is
+wrong and will be wrong again. Every fix above addressed its instance and the
+class came back within three ticks.
+
+**And the fix that actually holds is an independent count.** `loop_status` now
+counts item markers with a pattern that cannot miss, compares it to the parse,
+and HALTS on a divergence. This is the same corollary `CLAUDE.md` already
+carries for gates: when a scan set is knowable independently, check it. It was
+written about `verify_no_internal_notes` skipping real source for months. It
+applies to every tool that reads a file to decide what to do.
+
+---
+
 ## D. Before you trust or change a GATE
 
 **D1. Gates lie, and fixing the instrument beats fixing the symptom.**

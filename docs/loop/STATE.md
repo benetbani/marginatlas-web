@@ -9,14 +9,14 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **17** done |
+| Tick | **18** done |
 | Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
 | Destination | `11-PRODUCTION-READINESS.md`, **1 / 30 criteria MET** at the time of writing |
 | Cron job | **`a4691466`**, armed 2026-08-20. Session-only: it dies when the session ends and must be re-armed. Auto-expires after 7 days. Stop it with CronDelete on that id, or say "stop the loop" |
 | Orient | `node scripts/loop_status.mjs`, one process, under a second. **Exit 2 means a halt condition** |
-| In-flight | none. **The permanent `[~]` on P1-0b(orig) was a mis-marker and is corrected**: `loop_status` reported an in-flight item on every run, and override rule 3 would have sent every tick to a superseded entry. Q8 remains a founder decision, not unfinished work |
+| In-flight | **P0-1** (`[~]` since tick 8). It was invisible to `loop_status` until tick 18 and is the next tick's work by override rule 3. Formerly read "none", which was the tool's error, not the file's. **The permanent `[~]` on P1-0b(orig) was a mis-marker and is corrected**: `loop_status` reported an in-flight item on every run, and override rule 3 would have sent every tick to a superseded entry. Q8 remains a founder decision, not unfinished work |
 | Tree | clean apart from `.mcp.json` (never commit) and untracked `scratchpad/`, `.agents/`, `skills-lock.json` |
 | Gates | `tsc` clean; `prebuild` green **at the count the chain reports**. This row said 103/103 while the chain was 104 and line 56 of this same file already said 104: **a number typed into a document is stale the moment it is typed.** `loop_status.mjs` carries it now |
 | HEAD | `origin/main` is at `6fc88e3e`; the loop's commits sit above it, unpushed by rule |
@@ -116,6 +116,26 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 18. The orientation tool could not see a quarter of the queue.**
+  `loop_status` required a backlog item's bolded title to sit on ONE line.
+  Measured against the file it exists to read: **65 markers, 48 parsed, 17
+  invisible, 26%.** Among them **P0-1, the only `[~]` item and the whole
+  rationale for the P0 band**, six more P0 items, and real site work (P1-5b at
+  minus 628px, P3-5's `$9` against `8.6%` on 6 of 6 rows, P3-7's anchor offset).
+  **Two silent consequences over four ticks:** the tool printed "0 in flight"
+  while P0-1 was `[~]`, so override rule 3 had nothing to act on; and it printed
+  "38 open" against 52 with the wrong item at the top. Ticks 14 to 17 chose work
+  off a truncated list believing it was the queue. The tick that wrote the parser
+  is the tick that introduced this.
+  Fixed: titles may wrap, verified against a runaway (longest parsed title 173
+  chars, zero parsed titles contain an item marker). **And the parse is now
+  checked against an independent marker count, printing `[65/65 parsed]` and
+  HALTING on divergence** , the first fix in this class that addresses the class
+  rather than the instance. Ledger entry C9.
+  Chain 105/105, tsc clean on a re-run alone (chained after prebuild it aborted
+  with a V8 trace, the documented Windows memory pressure, not a type error).
+  **No readiness criterion moved.** The true queue is 52 open, 1 in flight.
 
 - **Tick 17, P0-7, LANE CHANGE. The site's first accessibility gate.**
   Ticks 14, 15 and 16 were all comment parsing and the site had not changed in

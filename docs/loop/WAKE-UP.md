@@ -5,6 +5,24 @@ than one screen, it is written wrong.
 
 ---
 
+## Tick 18, 2026-08-20. The loop was reading a quarter of its own to-do list.
+
+**What was wrong:** the tool that tells each tick what to work on required every
+item's title to fit on one line. Titles are sentences, so they wrap.
+
+**What was measured: 65 items in the file, 48 read, 17 invisible.** Including the
+one item marked in-progress, so for four ticks the tool said nothing was in
+progress and the rule that says finish it first had nothing to point at. The last
+four ticks picked work off a shortened list without knowing it was shortened.
+
+**What changed:** the tool reads wrapped titles now, and it counts the items a
+second way and stops the tick if the two counts disagree. That second count is
+the part that matters: this is the third time in five ticks something written for
+a person was invisible to something reading it, and the first fix that catches
+the next one. Nothing on the site changed this tick.
+
+---
+
 ## Tick 17, 2026-08-20. The site now has an accessibility gate. It had none.
 
 **What was wrong:** an accessibility audit had been sitting in the repo, written
