@@ -139,6 +139,43 @@ this happens. Do not start repairing gates before running serially once.
 
 ---
 
+**CORRECTED 2026-08-20, same day.** The rule above says the serial run is the
+honest verdict. That is FALSIFIED: three consecutive SERIAL runs on an unchanged
+tree failed 2, then 3, then 0 gates, a different set each time, every failing gate
+passing alone. **The real variable is memory, not concurrency.** Measured at the
+time: **1,247 MB free physical memory with 9 node processes alive.** After killing
+the strays, the serial chain ran 105/105 clean.
+
+So the tell is still the VARIANCE, and the fix is `pkill` the leftover node,
+tailwind and preview processes and re-run. Choosing a concurrency does not help a
+machine that has no memory to give.
+
+---
+
+## C11. THE BROWSER PANE CANNOT SCREENSHOT HERE. THE PLAYWRIGHT MCP CAN.
+
+Settled 2026-08-20 after twenty ticks produced no picture of this site.
+
+The pane fails **deterministically**, not intermittently, and says so:
+*"Screenshot timed out after 5s: the Browser pane is not displayed, so the page is
+not compositing frames."* A hidden pane composites no frames. `tabs_select` fronts
+a TAB inside the pane and not the pane itself; the error afterwards is
+byte-identical. **Displaying the pane is a host-app UI action only the founder can
+take, so no agent effort reaches it. Do not spend another tick on it.**
+
+`mcp__playwright__*` drives its own browser and has no such dependency. It worked
+first try. `docs/verification-protocol.md` had named it as the sanctioned
+instrument all along; what was missing was the knowledge that the pane was the
+broken half, so the working tool sat unused beside the broken one for weeks.
+
+**The lesson generalises past browsers:** when an instrument fails the same way
+every time, that is a diagnosis waiting to be read, not weather to be endured. The
+error message named the cause in plain words on the first attempt.
+
+Run `node scripts/shoot.mjs` and follow its header.
+
+---
+
 ## D. Before you trust or change a GATE
 
 **D1. Gates lie, and fixing the instrument beats fixing the symptom.**

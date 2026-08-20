@@ -302,8 +302,20 @@ per tick. **Never touch the H1.**
       *Landed:* `h-12 sm:h-20` on that header. Band **1,568 to 1,376**, page
       **9,848 to 9,656** at 375, header unchanged at 80px from 640 up, desktop
       total still exactly 5,933px, no horizontal scroll, 11/11 bands paint.
-- [ ] **P1-5b · home/band-7 · Two columns for the neighborhood cards at 375:
-      MEASURED AT MINUS 628px, NOT LANDED, because nobody could see it.**
+- [ ] **P1-5b · home/band-7 · Two columns for the neighborhood cards at 375 , NOW SEEABLE**
+      **UNBLOCKED 2026-08-20 (`2941845a`).** Its own condition was "first tick that
+      can screenshot: apply, shoot at 375, look, then decide", and that tick can now
+      happen: `node scripts/shoot.mjs`, then the Playwright MCP.
+      **Shot and measured at 375 before any change**, kept at
+      `docs/loop/artifacts/home-375-neighborhoods.jpeg`: the band is **1,406px**
+      (not the 1,568 recorded earlier), six cards at **264px wide, 183-212px tall,
+      carrying 10-11 words each**, and roughly 80px of every card is a decorative
+      icon plate. So about 40% of each card's height carries no content.
+      **THE ICON PLATE IS THE BIGGER LEVER THAN THE COLUMN COUNT, and that is now
+      visible rather than argued.** Two columns at 375 would put those titles into
+      ~135px, and the tag chips are already near-full-width at 264px, so they would
+      wrap. Still a taste call, still the founder's: build it, shoot it, show him.
+      *Original:* MEASURED AT MINUS 628px, NOT LANDED, because nobody could see it.
       Simulated in the DOM with the shorter header: the band goes 1,568 to
       **940px**, a 40 percent cut, with cards at 244-263px in two columns of
       ~135px. That is a proportion change on six cards carrying five words each,
@@ -411,9 +423,16 @@ first-party precedent: redirect, do not delete.** Any URL change goes to
       `spine/industry/forms.tsx:204`, `spine/kit.tsx:574`, `spine2/Quad.tsx:149`.
 - [ ] **P3-7 · anchor · `#newsletter` carries `scroll-mt-20` (80px); the masthead
       is 85px there.** The anchor lands under the bar at 375 and 414.
-- [ ] **P3-8 · spikes · five render spikes each re-derive the same harness.**
-      Consolidate into ONE reusable instrument. The whole procedure depends on
-      rendering; it should not be re-invented per tick.
+- [x] **P3-8 · spikes · five render spikes each re-derived the same harness**
+      DONE 2026-08-20 (`2941845a`). `scripts/shoot.mjs` renders, compiles the
+      stylesheet AFTER, and serves the render plus `public/` on ONE origin, then
+      stops and prints the Playwright steps. It does not screenshot on purpose:
+      driving a browser is an MCP call, not a shell command.
+      **Its header is now the single record of how to get a picture**, including
+      that the Browser pane CANNOT (a hidden pane composites nothing, and
+      `tabs_select` fronts a tab inside the pane, not the pane), that the
+      Playwright MCP can, that files land in `E:\atlas`, and that a bare resize
+      lies about height.
 
 ---
 

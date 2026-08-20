@@ -62,8 +62,8 @@ gates measure the workshop buys nothing. Charter §0.3.
 | G11 | A ratified type floor exists and zero nodes sit below it | `getComputedStyle().fontSize` census per page type | BLOCKED — floor unratified, `DECISIONS-NEEDED` Q1. Measured: 114 nodes under 12px on `/gb` (51 at 11px, 31 at 10px, 17 at 11.5px, 15 at 10.5px) |
 | G12 | Zero raw hex, px or ms in components | `verify_hardcoded_hex` plus a diff grep | UNMEASURED across the whole tree |
 | G13 | Zero banned hues rendered, not merely zero banned token names | sample rendered pixels, not source | OPEN — cocoa `#87745D` and `#C3B39C` act as **bar tones** in charts, not only as text. Charter §8 bans brown |
-| G14 | Zero horizontal overflow at 375 on every reader-facing page type | `scrollWidth > clientWidth` per type | UNMEASURED |
-| G15 | Every page type renders at 375, 768 and 1280 | render, reload between widths, read back | UNMEASURED. Three defects in this project existed at exactly one breakpoint |
+| G14 | Zero horizontal overflow at 375 on every reader-facing page type | `scrollWidth > clientWidth` per type | OPEN — **now measurable**, tick 21. Measured on the homepage at 375: `scrollWidth` 360 against `clientWidth` 375, **no horizontal overflow**. Every other page type still UNMEASURED |
+| G15 | Every page type renders at 375, 768 and 1280 | render, reload between widths, read back | OPEN — **now measurable**, tick 21 (`node scripts/shoot.mjs` + Playwright MCP). Homepage shot at 1280 and 375 and kept in `docs/loop/artifacts/`. The other page types have no renderer in the harness yet |
 | G16 | One transparency ladder, applied, with each step paired to the lightest token it may carry | `verify_token_contrast.mjs` passes at every declared step and fails a bad pairing | OPEN — the ladder is researched and measured, not written. `--n2` floor is alpha 0.851; `--ink` is 14.74:1 even at 0.62 |
 | G17 | The `meaningStep` ladder is monotonic, or retired | hue, luminance and saturation across the five steps | OPEN — non-monotonic on all three channels, steps 3 and 4 byte-identical, and `FootingLegend` **prints it to the reader as the key explaining itself** |
 
