@@ -94,7 +94,12 @@ const ledger = read("docs/loop/11-PRODUCTION-READINESS.md");
    `03-PROCEDURE.md` §2, and two id spaces sharing a prefix is how a check gets
    cited as a goal. */
 const crit = [...ledger.matchAll(/^\|\s*(G\d+)\s*\|[^|]*\|\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|/gm)];
-const met = crit.filter((c) => /^MET\b/i.test(c[3])).length;
+/* Leading `*` stripped before matching. The ledger's own legend prints the
+   states in bold, so the first criterion to reach MET was written `**MET**` and
+   this counter read straight past it: the score stayed at 1/30 on the tick that
+   moved it. Same class as the wrapped-title defect at tick 14 , a document
+   formatted for a human, parsed by a tool that wanted it plain. */
+const met = crit.filter((c) => /^MET\b/i.test(c[3].replace(/^\*+/, ""))).length;
 
 /* ---- PRINT ------------------------------------------------------------- */
 const L = (k, v) => console.log("  " + k.padEnd(22) + v);

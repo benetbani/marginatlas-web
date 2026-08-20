@@ -107,6 +107,17 @@ change.
       *Do:* one pass over every hand-written scan list in the chain, asserting each
       is a set. Consider making the gates share one list rather than eight copies.
       *Verify:* count entries against unique entries per gate; publish both numbers.
+- [ ] **P0-17 · gates/a11y-depth · the a11y gate covers four patterns, not accessibility**
+      `a11y-static` went green at tick 17 across 696 files, and that green says only
+      "no violation of four one-line patterns". Nothing in the chain sees colour
+      contrast, keyboard reachability, focus order, focus traps, target size, or
+      dynamic ARIA. Readiness G22 and G23 are UNMEASURED and this gate does not
+      touch them.
+      *Do:* decide whether axe-core in a headless browser is worth the chain cost,
+      or whether these belong in the render harness instead. **A gate that needs a
+      browser can fail on a blip, and the corollary in CLAUDE.md says a gate that
+      fails on a blip gets switched off.** That argues for the harness.
+      *Verify:* whichever path, negative-test it before trusting a green.
 - [ ] **P0-5 · gates/ratchets · Four of seven ratchets can be silently raised.**
       *Verify:* add the refuse-to-raise guard that `verify_no_cream` already has.
 - [ ] **P0-6 · gates/contrast · `verify_token_contrast.mjs` measures an assumed
@@ -115,8 +126,18 @@ change.
       surface that never renders.**
       *Verify:* sample real composited pixels. Expensive; the only proposal that
       catches a defect the chain is structurally blind to.
-- [ ] **P0-7 · gates/a11y · `scripts/audit/a11y_static_audit.ts` is written and
-      NOT wired into prebuild.** The cheapest accessibility win available.
+- [x] **P0-7 · gates/a11y · the a11y audit is wired, and it was not a gate** ,
+      DONE 2026-08-20, tick 17 (`e6e082a2`). The item said "wire it in" and that
+      instruction was wrong twice. The file held **no `process.exit` at all**, so
+      registering it as written would have added a sixth check that cannot go red.
+      And its only non-zero check was **100% false positives**: three
+      `input-no-label` findings, all `<label><input/></label>`, the implicit
+      association, invisible to a line-by-line detector. Fixed the detector, added
+      `stripCommentLines`, deleted a ninth private copy of the `isCommentLine`
+      shape, made it a hard gate at zero, registered it. Chain 104 -> 105.
+      Negative-tested against a fixture: all four checks fire, eight valid patterns
+      stay silent. **It is a SOURCE scan.** It cannot see contrast, focus order,
+      focus traps, dynamic ARIA, or a label associated across a component boundary.
 - [ ] **P0-8 · docs · The gate count is stated at ~78 line locations across 32
       files at TEN different values** (25, 26, 31, 53, 58, 95, 98, 99, 101, 102).
       The true count is **102**, counted over the `GATES` array in

@@ -9,7 +9,7 @@ this file alone. If it cannot, this file is wrong.
 
 | | |
 |---|---|
-| Tick | **16** done |
+| Tick | **17** done |
 | Cadence | **30 minutes**, `7,37 * * * *`, armed 2026-08-20. The founder first asked for 30 seconds; no scheduler here can express it (cron is minute-granular, the dynamic scheduler clamps to 60s) and he chose 30 minutes when told. Off the :00 and :30 marks on purpose. Budget 2 orient / 18 work / 6 verify / 4 land; checkpoint-commit at 18 |
 | Scope | **design, site functionality, hierarchy, usability. Nothing else.** Founder, 2026-08-20. Data sourcing, statistics research and SEO are struck |
 | Next | top unblocked item in `06-BACKLOG.md`. The rotation is retired; work is queue-driven |
@@ -116,6 +116,30 @@ this file alone. If it cannot, this file is wrong.
 ## Tick log
 
 Newest first. One line per tick: tick number, slot, what landed, the commit.
+
+- **Tick 17, P0-7, LANE CHANGE. The site's first accessibility gate.**
+  Ticks 14, 15 and 16 were all comment parsing and the site had not changed in
+  three ticks. Breaker 4's letter was not tripped, each tick measured something
+  new, but its spirit was: the loop was deepening its own tooling. P0-4's
+  remainder is documented well enough for any tick to resume, so I took P0-7,
+  still in the instruments band and in the usability lane the founder named.
+  **The item's instruction was wrong twice.** The audit held NO `process.exit`,
+  so "wire it in" would have added a sixth check that cannot go red to a chain
+  the tick-13 census already found five fake gates in. And its only non-zero
+  check was **100% false positives**: three `input-no-label` findings, every one
+  a `<label><input/></label>` implicit association that a line-by-line detector
+  cannot see.
+  Fixed the detector (label depth across the file plus the same-line case), added
+  `stripCommentLines` where there had been no comment handling at all, deleted a
+  ninth private copy of the `isCommentLine` shape, made it a HARD gate at zero
+  rather than a ratchet because the count is genuinely zero, and registered it.
+  **Negative-tested against a fixture** carrying one real violation of each of the
+  four kinds plus eight valid patterns: all four fired, none of the eight was
+  reported, a commented-out `<img>` was ignored. Fixture deleted same tick.
+  Chain **104 -> 105**, all green, tsc clean. **G6 -> MET, the first criterion to
+  reach it under the rebuilt loop.** New item P0-17: this gate is four one-line
+  patterns and sees no contrast, focus order, target size or dynamic ARIA, so G22
+  and G23 stay UNMEASURED and a green here must not be read as "accessible".
 
 - **Tick 16, P0-4 continued. A helper, three more conversions, and the discovery
   that the remaining gates are not one recipe.**

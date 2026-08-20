@@ -48,8 +48,8 @@ gates measure the workshop buys nothing. Charter §0.3.
 | G3 | One comment-stripping implementation, not twelve | count gates rolling their own | OPEN — **17**, from 21 at tick 14 (12 was wrong). 4 of the 8-file `isCommentLine` sub-group converted; 1 sequential and 3 random-access remain, plus 13 gates on other patterns |
 | G4 | Every ratchet refuses to be raised | count ratchets lacking the `verify_no_cream` guard | OPEN — 4 of 7 can be silently raised (P0-5) |
 | G5 | One gate chain, not two | `prebuild:serial` and `prebuild` report the same count | OPEN — serial ran 43 of the chain (P0-10) |
-| G6 | The a11y audit runs in the chain | `a11y_static_audit.ts` present in `GATES` | OPEN — written, never wired (P0-7). **The cheapest win on this page** |
-| G7 | The chain is green and its count matches the chain, not a document | `npx tsc --noEmit` clean, `npm run prebuild` at the carried count | MET — 104/104, 3 cell-lattice checks deferred and deferred is not passed |
+| G6 | The a11y audit runs in the chain | `a11y_static_audit.ts` present in `GATES` | **MET** — registered as `a11y-static` at tick 17 (`e6e082a2`), a hard gate at zero across 696 files, negative-tested. **Read G22 and G23 before reading this as "accessible"**: it is a four-pattern source scan and sees no contrast, focus or ARIA |
+| G7 | The chain is green and its count matches the chain, not a document | `npx tsc --noEmit` clean, `npm run prebuild` at the carried count | MET — 105/105, 3 cell-lattice checks deferred and deferred is not passed |
 | G8 | Whether the gates run on a deploy is known | a `buildCommand` in `vercel.json`, or a written answer | BLOCKED — founder, `DECISIONS-NEEDED` Q3. If Vercel runs `next build` directly, all 104 gates are skipped in CI while green locally |
 
 ---

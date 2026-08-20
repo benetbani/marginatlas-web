@@ -5,6 +5,23 @@ than one screen, it is written wrong.
 
 ---
 
+## Tick 17, 2026-08-20. The site now has an accessibility gate. It had none.
+
+**What was wrong:** an accessibility audit had been sitting in the repo, written
+and never connected to anything. The plan said to wire it in. Wiring it as written
+would have added a check that **cannot fail**, and its only complaint was wrong.
+
+**What was measured:** it reported three problems and **all three were correct
+code** , inputs wrapped in their own label, which is valid and needs nothing else.
+The audit read one line at a time so it could not see the wrapper.
+
+**What changed:** detector fixed, comment handling added, made able to fail, and
+registered. Chain 104 -> 105, all green. Proved it still catches real problems by
+feeding it a file full of them. **It checks four patterns in the source; it does
+not see colour contrast, keyboard order or focus. Do not read green as accessible.**
+
+---
+
 ## Tick 16, 2026-08-20. Half the gate copies are gone.
 
 **What was wrong:** seven gates still carried their own private comment parser,
