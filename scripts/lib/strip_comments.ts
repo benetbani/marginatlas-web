@@ -148,3 +148,31 @@ export function stripComments(line: string, state: CommentState): string {
   }
   return out;
 }
+
+/**
+ * Strip a whole file at once: same order in, code-half out, one line per line.
+ *
+ * WHY THIS EXISTS RATHER THAN EVERY GATE CARRYING THE LOOP. `stripComments` is a
+ * state machine and it must be fed EVERY line IN ORDER. That requirement is
+ * invisible at the call site and it is easy to break in two different ways, both
+ * of which were found in the chain on 2026-08-20:
+ *
+ *   1. A cheap `continue` guard placed BEFORE the strip. Every line the guard
+ *      skips is a line the machine never sees, so a block comment stays "open"
+ *      long after its close went past and the gate silently stops reading.
+ *
+ *   2. RANDOM ACCESS. Three gates (`bar_budget`, `no_eyebrow`,
+ *      `subsection_icons`) do not iterate lines at all: they scan the raw source
+ *      for a tag, compute which line the match landed on, and ask whether THAT
+ *      line is a comment. A stateful stripper cannot answer that question,
+ *      because there is no "current" line. Handing them this array is the only
+ *      correct conversion, and it is why the seven remaining gates are not one
+ *      recipe.
+ *
+ * Index the result by line number and both problems disappear: the ordering
+ * happens once, here, where it can be seen.
+ */
+export function stripCommentLines(lines: string[]): string[] {
+  const state = newCommentState();
+  return lines.map((line) => stripComments(line, state));
+}

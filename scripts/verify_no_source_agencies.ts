@@ -11,6 +11,7 @@
  */
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { stripCommentLines } from "./lib/strip_comments";
 
 const ROOT = resolve(process.cwd(), "src");
 
@@ -46,15 +47,17 @@ function walk(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
-function isCommentLine(line: string): boolean {
-  const trimmed = line.trim();
-  if (trimmed.startsWith("//")) return true;
-  if (trimmed.startsWith("*")) return true;
-  if (trimmed.startsWith("/*")) return true;
-  if (trimmed.startsWith("{/*")) return true;
-  if (trimmed.endsWith("*/}")) return true;
-  return false;
-}
+/* `isCommentLine` deleted 2026-08-20. It was one of eight byte-similar copies and
+   it asked whether a line LOOKS like a comment, so any line opening a block
+   comment, or closing a JSX one, was skipped whole with its real code. Measured
+   across `src/`: 42 lines of real code invisible to the eight, 9,033 lines of
+   block-comment prose scanned as code by them. `stripCommentLines` strips the file
+   once, in order, and returns the code half of every line; index it by line number.
+
+   The two sequences are spelled out in prose above rather than quoted, because
+   writing the JSX closer literally inside a block comment ENDS THE COMMENT at that
+   point. That is what happened on the first draft of this note and it broke the
+   file, which is a fair illustration of why no gate should hand-roll this. */
 
 let violations = 0;
 for (const file of walk(ROOT)) {
@@ -62,12 +65,17 @@ for (const file of walk(ROOT)) {
   if (ALLOWLIST.has(rel)) continue;
   const src = readFileSync(file, "utf-8");
   const lines = src.split("\n");
+  const code = stripCommentLines(lines);
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    if (isCommentLine(line)) continue;
+    /* DETECT on the code half, REPORT and opt out on the raw line. The three are
+       deliberately different: `allow-source-agency` is written as a comment, so
+       it does not survive stripping, and an error quoting the stripped text would
+       show the reader a line that is not in their file. */
+    const codeLine = code[i];
     if (line.includes("allow-source-agency")) continue;
     for (const token of AGENCY_TOKENS) {
-      if (line.includes(token)) {
+      if (codeLine.includes(token)) {
         console.error(
           `${rel}:${i + 1}: source-agency leak "${token}"\n  ${line.trim()}`,
         );

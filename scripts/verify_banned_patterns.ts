@@ -22,6 +22,7 @@
  */
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { stripCommentLines } from "./lib/strip_comments";
 
 const ROOT = process.cwd();
 
@@ -57,33 +58,20 @@ const SURFACE_FILES: string[] = [
 
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");
 
-function isCommentLine(line: string): boolean {
-  const trimmed = line.trim();
-  if (trimmed.startsWith("//")) return true;
-  if (trimmed.startsWith("*")) return true; // inside /** ... */ block
-  if (trimmed.startsWith("/*")) return true;
-  if (trimmed.startsWith("{/*")) return true; // JSX comment open
-  if (trimmed.startsWith("*/}") || trimmed.endsWith("*/}")) return true; // JSX comment close
-  return false;
-}
+/* `isCommentLine` and `trailingCommentStart` both deleted 2026-08-20, replaced by
+   the shared `stripCommentLines`.
+
+   WORTH RECORDING BEFORE IT IS LOST: `trailingCommentStart` ALREADY carried the
+   guard `if (i > 0 && line[i - 1] === ":") continue; // https:// etc.` That is
+   exactly the defect found in the shared module on the same day, where a `//` in
+   a URL opened a comment and hid 4,179 characters across `src/`. This gate knew,
+   in a private copy, what the module every other gate depends on did not. That is
+   the cost of eight copies stated in one sentence. */
 
 function isAllowed(line: string): boolean {
   return line.includes("allow-banned-pattern");
 }
 
-/**
- * Index of the first trailing `//` comment marker on the line, or -1.
- * `://` (URLs in strings) does not count as a comment start.
- */
-function trailingCommentStart(line: string): number {
-  for (let i = 0; i < line.length - 1; i++) {
-    if (line[i] === "/" && line[i + 1] === "/") {
-      if (i > 0 && line[i - 1] === ":") continue; // https:// etc.
-      return i;
-    }
-  }
-  return -1;
-}
 
 let violations = 0;
 
@@ -92,16 +80,17 @@ for (const file of SURFACE_FILES) {
   const abs = resolve(ROOT, file);
   if (!existsSync(abs)) continue;
   const lines = readFileSync(abs, "utf-8").split("\n");
+  const code = stripCommentLines(lines);
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    if (isCommentLine(line)) continue;
     if (isAllowed(line)) continue;
-    const lower = line.toLowerCase();
-    const commentAt = trailingCommentStart(line);
+    /* The code half already excludes both a whole-line comment and a trailing
+       one, so the hand-rolled `isCommentLine` and `trailingCommentStart`, plus
+       the "is this hit to the right of the comment" arithmetic, all collapse into
+       this one lookup. Report on the raw line; a reader needs to see their file. */
+    const lower = code[i].toLowerCase();
     for (const pattern of BANNED) {
-      const at = lower.indexOf(pattern);
-      if (at === -1) continue;
-      if (commentAt !== -1 && at > commentAt) continue; // inside a trailing comment
+      if (!lower.includes(pattern)) continue;
       console.error(`${file}:${i + 1}: banned pattern "${pattern}"\n  ${line.trim()}`);
       violations++;
     }
