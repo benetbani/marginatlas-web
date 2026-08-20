@@ -21,10 +21,20 @@
  * source. That has cost this project twice.
  *
  * BLIND SPOTS, stated because the numbers this enables will be quoted.
- *   1. NO LAYOUT, NO FRAME. `src/app/layout.tsx` is not rendered, so AtlasFrame's
- *      two fixed z-index-0 layers are absent. Band heights do not depend on them,
- *      but anything that reads as "is it painted at all" does, and that question
- *      cannot be answered here. See charter section 9.2.
+ *   1. ~~NO LAYOUT, NO FRAME.~~ **CORRECTED 2026-08-20. THE FRAME IS PRESENT.**
+ *      This said AtlasFrame's two fixed z-index-0 layers were absent and that
+ *      "is it painted at all" could not be answered here. Measured in a real
+ *      browser against this fixture: `position: fixed` resolves on exactly TWO
+ *      elements, both at `z-index: 0`, the second at `opacity: 0.32`, which is
+ *      the white base and the photograph. `--atlas-surface-card` computes to
+ *      `hsla(0,0%,100%,.955)`. The paint question IS answerable here.
+ *      **A stale blind spot is worse than no blind spot**: it tells a reader to
+ *      distrust a measurement that is sound, and this one stood while twenty
+ *      ticks avoided asking the browser anything.
+ *      What remains true from the original note: `src/app/layout.tsx` is still
+ *      not rendered, so anything the LAYOUT contributes beyond the frame , the
+ *      masthead chrome, the footer , is absent, and a "the footer is unpainted"
+ *      class of defect cannot be found here. See charter section 9.2.
  *   2. NO REAL FONTS, AND THE FIXTURE COMPENSATES DELIBERATELY. The next/font
  *      stub returns `--font-stub`, so the two slots are never set. Measured
  *      2026-08-19: with them unset, EVERY element on the page resolved to
