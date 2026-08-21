@@ -266,56 +266,240 @@ export const RETIRED: Record<string, RetiredEntry> = {
     reason: "out of scope: fails street, owner, capital, local-customer",
     redirectTo: "/industries",
   },
+  "plumbing-services": {
+    reason: "merged into plumbers: the same business under another name",
+    redirectTo: "/industries/plumbers",
+  },
+  "landscaping-services": {
+    reason: "merged into landscaping_lawn: the same business under another name",
+    redirectTo: "/industries/landscaping-lawn-care",
+  },
+  "roofing-services": {
+    reason: "merged into roofers: the same business under another name",
+    redirectTo: "/industries/roofers",
+  },
+  "painting-services": {
+    reason: "merged into painters_residential: the same business under another name",
+    redirectTo: "/industries/painters-residential",
+  },
+  "carpentry-services": {
+    reason: "merged into carpenters_finish: the same business under another name",
+    redirectTo: "/industries/carpenters-finish-work",
+  },
+  "book-retailing": {
+    reason: "merged into bookstores_indie: the same business under another name",
+    redirectTo: "/industries/indie-bookstores",
+  },
+  "small-museums": {
+    reason: "merged into museums_cultural: the same business under another name",
+    redirectTo: "/industries/museums-cultural",
+  },
+  "air-conditioning-refrigeration": {
+    reason: "merged into hvac_services: the same business under another name",
+    redirectTo: "/industries/hvac-services",
+  },
+  "hair-salons-full-service": {
+    reason: "merged into hairdressers_beauty: the same business under another name",
+    redirectTo: "/industries/hairdressers-beauty",
+  },
+  "childcare-social-services": {
+    reason: "merged into daycare_preschool: the same business under another name",
+    redirectTo: "/industries/daycare-preschool",
+  },
+  "specialty-construction-services": {
+    reason: "merged into specialty_trades: the same business under another name",
+    redirectTo: "/industries/specialty-trades-mixed",
+  },
+  "breweries-taprooms-retail": {
+    reason: "merged into craft_beer_mfg: the same business under another name",
+    redirectTo: "/industries/craft-breweries-taprooms",
+  },
+  "lingerie-intimates": {
+    reason: "merged into clothing_stores: the same business under another name",
+    redirectTo: "/industries/clothing-shoe-stores",
+  },
+  "clothing-boutiques": {
+    reason: "merged into clothing_stores: the same business under another name",
+    redirectTo: "/industries/clothing-shoe-stores",
+  },
+  "streetwear-casual-apparel": {
+    reason: "merged into clothing_stores: the same business under another name",
+    redirectTo: "/industries/clothing-shoe-stores",
+  },
+  "designer-fashion": {
+    reason: "merged into clothing_stores: the same business under another name",
+    redirectTo: "/industries/clothing-shoe-stores",
+  },
+  "children-s-maternity-clothing": {
+    reason: "merged into clothing_stores: the same business under another name",
+    redirectTo: "/industries/clothing-shoe-stores",
+  },
+  "vintage-consignment": {
+    reason: "merged into clothing_stores: the same business under another name",
+    redirectTo: "/industries/clothing-shoe-stores",
+  },
+  "shoe-stores": {
+    reason: "merged into clothing_stores: the same business under another name",
+    redirectTo: "/industries/clothing-shoe-stores",
+  },
+  "sit-down-restaurants": {
+    reason: "merged into restaurants: the same business under another name",
+    redirectTo: "/industries/restaurants",
+  },
+  "fast-casual-restaurants": {
+    reason: "merged into restaurants: the same business under another name",
+    redirectTo: "/industries/restaurants",
+  },
+  "chicken-shops": {
+    reason: "merged into restaurants: the same business under another name",
+    redirectTo: "/industries/restaurants",
+  },
+  "cake-shops-patisseries": {
+    reason: "merged into bakeries_retail: the same business under another name",
+    redirectTo: "/industries/bakeries-retail",
+  },
+  "pastry-dessert-shops": {
+    reason: "merged into bakeries_retail: the same business under another name",
+    redirectTo: "/industries/bakeries-retail",
+  },
+  "wine-bars": {
+    reason: "merged into bars_nightclubs: the same business under another name",
+    redirectTo: "/industries/bars-nightclubs",
+  },
+  "bed-breakfasts": {
+    reason: "merged into guest_houses: the same business under another name",
+    redirectTo: "/industries/guest-houses-pensions",
+  },
+  "independent-hotels-inns": {
+    reason: "merged into hotels_lodging: the same business under another name",
+    redirectTo: "/industries/hotels-lodging",
+  },
+  "sole-practitioner-law-firms": {
+    reason: "merged into legal_services: the same business under another name",
+    redirectTo: "/industries/legal-services",
+  },
+  "sole-practitioner-accountants": {
+    reason: "merged into accounting_tax: the same business under another name",
+    redirectTo: "/industries/accounting-tax",
+  },
+  "web-mobile-dev-shops": {
+    reason: "merged into software_development: the same business under another name",
+    redirectTo: "/industries/software-development",
+  },
+  "custom-software-contract-dev": {
+    reason: "merged into software_development: the same business under another name",
+    redirectTo: "/industries/software-development",
+  },
+  "it-services-msps-small": {
+    reason: "merged into it_services_hosting: the same business under another name",
+    redirectTo: "/industries/it-services-hosting",
+  },
+  "blocklaying-services": {
+    reason: "merged into bricklaying_services: the same business under another name",
+    redirectTo: "/industries/bricklaying-services",
+  },
+  "cement-rendering-services": {
+    reason: "merged into plastering_services: the same business under another name",
+    redirectTo: "/industries/plastering-services",
+  },
+  "carpet-laying-services": {
+    reason: "merged into flooring_installers: the same business under another name",
+    redirectTo: "/industries/flooring-installers",
+  },
+  "residential-cleaning-services": {
+    reason: "merged into cleaning_services: the same business under another name",
+    redirectTo: "/industries/cleaning-services",
+  },
+  "cleaning-building-industrial": {
+    reason: "merged into cleaning_services: the same business under another name",
+    redirectTo: "/industries/cleaning-services",
+  },
+  "cleaning-carpet-upholstery": {
+    reason: "merged into cleaning_services: the same business under another name",
+    redirectTo: "/industries/cleaning-services",
+  },
+  "watch-shops": {
+    reason: "merged into jewelry_stores: the same business under another name",
+    redirectTo: "/industries/jewelry-stores",
+  },
+  "independent-pharmacies": {
+    reason: "merged into health_beauty_stores: the same business under another name",
+    redirectTo: "/industries/pharmacies-health-stores",
+  },
+  "med-spas-small": {
+    reason: "merged into day_spas: the same business under another name",
+    redirectTo: "/industries/day-spas",
+  },
+  "automotive-electrical-services": {
+    reason: "merged into auto_repair_shops: the same business under another name",
+    redirectTo: "/industries/auto-repair-shops",
+  },
+  "test-prep-services": {
+    reason: "merged into tutoring_centers: the same business under another name",
+    redirectTo: "/industries/tutoring-centers",
+  },
+  "videography-services": {
+    reason: "merged into photography_studios: the same business under another name",
+    redirectTo: "/industries/photography-studios",
+  },
+  "building-garden-supply-stores": {
+    reason: "merged into hardware_stores: the same business under another name",
+    redirectTo: "/industries/hardware-stores-local",
+  },
+  "private-libraries-archives": {
+    reason: "merged into museums_cultural: the same business under another name",
+    redirectTo: "/industries/museums-cultural",
+  },
   "broadcasting-telecom": {
-    reason: "legacy slug for broadcasting, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for broadcasting, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "chemical-pharmaceutical-manufacturing": {
-    reason: "legacy slug for chemical-pharma-manufacturing, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for chemical-pharma-manufacturing, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "crop-farming": {
-    reason: "legacy slug for grain-farming, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for grain-farming, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "food-beverage-manufacturing": {
-    reason: "legacy slug for food-manufacturing, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for food-manufacturing, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "furniture-other-manufacturing": {
-    reason: "legacy slug for furniture-manufacturing, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for furniture-manufacturing, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "investment-securities": {
-    reason: "legacy slug for securities-brokerage, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for securities-brokerage, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "metal-products-manufacturing": {
-    reason: "legacy slug for fabricated-metal-manufacturing, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for fabricated-metal-manufacturing, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "mining-quarrying": {
-    reason: "legacy slug for mining-quarrying-metals-stone, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for mining-quarrying-metals-stone, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "passenger-transport": {
-    reason: "legacy slug for transit-ground-passenger-transport, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for transit-ground-passenger-transport, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "postal-courier": {
-    reason: "legacy slug for postal-service, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for postal-service, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "property-leasing-rental": {
-    reason: "legacy slug for real-estate-leasing, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for real-estate-leasing, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "textile-apparel-manufacturing": {
-    reason: "legacy slug for apparel-manufacturing, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for apparel-manufacturing, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
   "wood-paper-products": {
-    reason: "legacy slug for wood-products-manufacturing, which is out of scope. Direct, to avoid a two-hop chain",
+    reason: "legacy slug for wood-products-manufacturing, which is no longer published. Direct, to avoid a two-hop chain",
     redirectTo: "/industries",
   },
 };

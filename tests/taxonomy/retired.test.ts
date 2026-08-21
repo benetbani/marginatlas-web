@@ -19,6 +19,7 @@ import { RETIRED, redirectFor } from "../../src/lib/taxonomy/retired";
 import { isInScope } from "../../src/lib/taxonomy/scope_rules";
 import { industryToSlug } from "../../src/lib/taxonomy";
 import { TAXONOMY_REDIRECTS } from "../../src/lib/taxonomy/legacy_redirects";
+import { MERGES } from "../../src/lib/taxonomy/merges";
 import industriesJson from "../../src/lib/taxonomy/industries.json";
 
 interface Industry {
@@ -73,13 +74,21 @@ check(
     (uncollapsed.length ? "  , re-run scripts/gen_retired.ts" : ""),
 );
 
+/* MERGED activities are a THIRD legitimate source of a key, added in Phase 2.
+   Unlike a scope retirement they have a survivor, so they redirect to that
+   survivor's page rather than to the directory, and the checks below have to
+   know the difference or they read every merge as an accident. */
+const mergedSlugs = new Set(Object.keys(MERGES).map((id) => industryToSlug(id)));
+
 /* The record must agree with the rules that generated it. If someone edits the
    rules and forgets to re-run the generator, this is what says so. */
 const shouldBeRetired = new Set(
   INDUSTRIES.filter((i) => !isInScope(i).inScope).map((i) => industryToSlug(i.id)),
 );
 const missing = [...shouldBeRetired].filter((s) => !RETIRED[s]);
-const extra = slugs.filter((s) => !shouldBeRetired.has(s) && !TAXONOMY_REDIRECTS[s]);
+const extra = slugs.filter(
+  (s) => !shouldBeRetired.has(s) && !TAXONOMY_REDIRECTS[s] && !mergedSlugs.has(s),
+);
 check(
   "every out-of-scope activity is in the record",
   missing.length === 0,
@@ -133,6 +142,25 @@ check(
   "every retired slug can match the middleware's URL pattern",
   unroutable.length === 0,
   unroutable.join(", "),
+);
+
+/* A MERGE MUST LAND ON A PAGE THAT EXISTS. A scope retirement goes to the
+   directory, which always exists. A merge goes to a specific survivor's page,
+   and if that survivor is not published the reader lands on a 404 having been
+   promised a better answer. This is the merge-specific failure and nothing
+   above catches it. */
+const publishedSlugs = new Set(
+  INDUSTRIES.filter((i) => isInScope(i).inScope && !MERGES[i.id]).map((i) => industryToSlug(i.id)),
+);
+const deadMergeTargets = [...mergedSlugs].filter((s) => {
+  const dest = RETIRED[s]?.redirectTo ?? "";
+  const m = /^\/industries\/([a-z0-9-]+)$/.exec(dest);
+  return m ? !publishedSlugs.has(m[1]) : true;
+});
+check(
+  "every merged slug lands on a page that is actually published",
+  deadMergeTargets.length === 0,
+  deadMergeTargets.map((s) => `${s} -> ${RETIRED[s]?.redirectTo}`).join(", "),
 );
 
 check("resolves a destination for a retired slug", Boolean(redirectFor(slugs[0])));

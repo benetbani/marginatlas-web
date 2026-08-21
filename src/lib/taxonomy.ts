@@ -8,6 +8,7 @@ import sectorsJson from "./taxonomy/sectors.json";
 import industriesJson from "./taxonomy/industries.json";
 import { isInScope } from "./taxonomy/scope_rules";
 import { RETIRED } from "./taxonomy/retired";
+import { isMerged } from "./taxonomy/merges";
 
 export type Sector = {
   id: string;
@@ -96,10 +97,19 @@ export const ALL_INDUSTRIES = (industriesJson as { industries: Industry[] }).ind
  * nineteen call-site filters, which is nineteen chances to forget and, worse, a
  * rule a newly-written twentieth page would not inherit.
  *
- * Retired activities do not vanish: their URLs answer a permanent redirect from
- * the middleware. See src/lib/taxonomy/retired.ts.
+ * ALSO EXCLUDES MERGED ACTIVITIES, per the second half of the same ruling:
+ * "the types of businesses is too much ... lingerie & intimates fall in the
+ * category of clothing." Forty-six over-split entries fold onto one survivor
+ * each; see src/lib/taxonomy/merges.ts for the judgement rule and a reason per
+ * line.
+ *
+ * Neither kind vanishes: retired and merged URLs both answer a permanent
+ * redirect from the middleware, a merged one landing on its survivor's page.
+ * See src/lib/taxonomy/retired.ts.
  */
-export const INDUSTRIES: Industry[] = ALL_INDUSTRIES.filter((i) => isInScope(i).inScope);
+export const INDUSTRIES: Industry[] = ALL_INDUSTRIES.filter(
+  (i) => isInScope(i).inScope && !isMerged(i.id),
+);
 
 export const SECTOR_BY_ID: Record<string, Sector> = Object.fromEntries(
   SECTORS.map((s) => [s.id, s])

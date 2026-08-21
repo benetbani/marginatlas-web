@@ -21,6 +21,7 @@ import { writeFileSync } from "node:fs";
 import { isInScope } from "../src/lib/taxonomy/scope_rules";
 import { industryToSlug } from "../src/lib/taxonomy";
 import { TAXONOMY_REDIRECTS } from "../src/lib/taxonomy/legacy_redirects";
+import { MERGES } from "../src/lib/taxonomy/merges";
 import industriesJson from "../src/lib/taxonomy/industries.json";
 
 interface Industry {
@@ -58,25 +59,50 @@ for (const ind of INDUSTRIES) {
   );
 }
 
-/* CHAIN COLLAPSE. Thirteen legacy slugs point at an activity that is now
-   retired, so `/industries/crop-farming` would answer 308 to
-   `/industries/grain-farming`, which answers 308 to `/industries`: two hops.
-   Search engines follow a chain but dilute equity across it and read longer
-   ones as soft 404s, and the founder named search as his fear about this
-   change. Emit a DIRECT entry for each so every old URL resolves in one hop.
+/* MERGED ACTIVITIES. Unlike a scope retirement, a merge HAS a survivor, and
+   the survivor's page is a genuinely better destination than the directory: the
+   reader asked about lingerie and the clothing page answers them.
 
-   Order matters: this runs after the loop above, so `retiredSlugs` is complete
-   before it is consulted. */
+   Runs after the scope loop so a merged id that is ALSO out of scope keeps its
+   scope reason, which is the more informative of the two. */
+let merged = 0;
+for (const [fromId, toId] of Object.entries(MERGES)) {
+  const fromSlug = industryToSlug(fromId);
+  if (retiredSlugs.has(fromSlug)) continue; // already retired for scope
+  merged++;
+  retiredSlugs.add(fromSlug);
+  rows.push(
+    `  ${JSON.stringify(fromSlug)}: {\n` +
+      `    reason: ${JSON.stringify(`merged into ${toId}: the same business under another name`)},\n` +
+      `    redirectTo: ${JSON.stringify("/industries/" + industryToSlug(toId))},\n` +
+      `  },`,
+  );
+}
+
+/* CHAIN COLLAPSE. Legacy slugs point at activities that are now retired or
+   merged, so `/industries/crop-farming` would answer 308 to
+   `/industries/grain-farming`, which answers 308 again: two hops. Search
+   engines follow a chain but dilute equity across it and read longer ones as
+   soft 404s, and the founder named search as his fear about this change. Emit a
+   DIRECT entry for each so every old URL resolves in one hop.
+
+   Order matters: this runs after BOTH loops above, so `retiredSlugs` holds
+   every scope retirement and every merge before it is consulted. */
 for (const [legacySlug, target] of Object.entries(TAXONOMY_REDIRECTS)) {
   if (!retiredSlugs.has(target)) continue;
-  if (retiredSlugs.has(legacySlug)) continue; // already emitted as an activity
+  if (retiredSlugs.has(legacySlug)) continue; // already emitted above
   collapsed++;
+  /* Inherit the target's own destination rather than defaulting to the
+     directory: if the target was MERGED, the legacy slug should land on the
+     survivor's page too, not be dumped at the index. */
+  const targetRow = rows.find((r) => r.startsWith(`  ${JSON.stringify(target)}:`));
+  const dest = targetRow?.match(/redirectTo: "([^"]+)"/)?.[1] ?? "/industries";
   rows.push(
     `  ${JSON.stringify(legacySlug)}: {\n` +
       `    reason: ${JSON.stringify(
-        `legacy slug for ${target}, which is out of scope. Direct, to avoid a two-hop chain`,
+        `legacy slug for ${target}, which is no longer published. Direct, to avoid a two-hop chain`,
       )},\n` +
-      `    redirectTo: "/industries",\n` +
+      `    redirectTo: ${JSON.stringify(dest)},\n` +
       `  },`,
   );
 }
@@ -123,4 +149,7 @@ export function redirectFor(slug: string): string | null {
 `;
 
 writeFileSync("src/lib/taxonomy/retired.ts", body);
-console.log(`wrote src/lib/taxonomy/retired.ts with ${n + collapsed} entries (${n} out-of-scope activities, ${collapsed} legacy slugs collapsed to one hop)`);
+console.log(
+  `wrote src/lib/taxonomy/retired.ts with ${n + merged + collapsed} entries ` +
+    `(${n} out of scope, ${merged} merged, ${collapsed} legacy slugs collapsed to one hop)`,
+);
