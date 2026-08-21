@@ -108,7 +108,23 @@ export function PlainTerms({
   // spend, a team) and stays decorative; value + label carry the meaning.
   return (
     <BeatCard eyebrow={eyebrow} heading={heading} spot="calculator" id={id}>
-      <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {/* TWO UP ON A PHONE. Founder, 2026-08-21: "in mobile the look is always
+          stacked with one card after another where there is a good opportunity
+          that we can put two cards in the same row", and in the interview he
+          scoped that to SMALL NUMBER CARDS specifically, which is exactly what
+          these are: one figure and one label each.
+
+          THE PAIRING WAS ALREADY WRITTEN AND NEVER FIRED. It was
+          `sm:grid-cols-2`, and `sm:` is 640px while phones are 375 to 430, so
+          no phone has ever reached it. That is not a missing feature, it is a
+          breakpoint aimed past every device it was meant for, and 47 more
+          reader-facing grids still carry the same mistake.
+
+          Base `grid-cols-2` fires everywhere and `lg:` still takes it to three.
+          Names WRAP rather than truncate: an earlier attempt at two-up bought
+          the space by shortening cards 29% and turned every label into
+          "Softw...", "Legal ...", "Docto...". */}
+      <dl className="grid grid-cols-2 gap-3 lg:grid-cols-3">
         {rows.map((it, i) => (
           <div
             key={i}

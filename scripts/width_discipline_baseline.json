@@ -1,0 +1,629 @@
+{
+  "total": {
+    "remCaps": 230,
+    "chCaps": 14,
+    "smPairings": 54
+  },
+  "byFile": {
+    "src/app/(site)/about-data/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/account/AccountPreview.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/app/(site)/account/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/admin/anomalies/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/app/(site)/admin/data-quality/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/admin/review/page.tsx": {
+      "remCaps": 7,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/blog/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/blog/[slug]/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/calculator/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/app/(site)/check/page.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/cities/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/app/(site)/cities/[slug]/neighborhoods/page.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/cities/[slug]/page.tsx": {
+      "remCaps": 7,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/app/(site)/compare/cities/[pair]/page.tsx": {
+      "remCaps": 4,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/compare/CompareClient.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/app/(site)/compare/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/countries/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/app/(site)/coverage/[iso2]/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/decide/page.tsx": {
+      "remCaps": 6,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/decide/[activity]/[city]/page.tsx": {
+      "remCaps": 5,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/download/2026-benchmarks/page.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/extremes/page.tsx": {
+      "remCaps": 10,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/industries/[industry]/across/page.tsx": {
+      "remCaps": 7,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/industries/[industry]/page.tsx": {
+      "remCaps": 6,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/app/(site)/learn/page.tsx": {
+      "remCaps": 4,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/learn/[slug]/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/margin-index/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/methodology/key-benchmarks/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/methodology/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/pricing/page.tsx": {
+      "remCaps": 5,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/saved/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/saved/SavedClient.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/signin/SignInForm.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/status/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/tools/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/you/page.tsx": {
+      "remCaps": 4,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/embed/[country]/[geo]/[industry]/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/error.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/loading.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/app/not-found.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/app/page.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/industries/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/loading.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/page.tsx": {
+      "remCaps": 2,
+      "chCaps": 4,
+      "smPairings": 1
+    },
+    "src/app/[country]/[geo]/industries/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/[geo]/page.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/[geo]/[industry]/error.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/[geo]/[industry]/loading.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/[geo]/[industry]/opening/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/[country]/[geo]/[industry]/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/board/BreakInScore.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/board/FailureCards.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/buy/BuyVsStartCatches.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/buy/BuyVsStartCompare.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/buy/BuyVsStartHero.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/CalculatorForm.tsx": {
+      "remCaps": 6,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/components/CellFallbackBanner.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/cells/CellDecisionStack.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/cities/BusinessFormationCosts.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/cities/CityDistrictPicker.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/cities/CityPeers.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/cities/CitySearchBox.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/cities/CitySignaturePanel.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 3
+    },
+    "src/components/ComparableCitiesRibbon.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/countries/EasiestToBreakIn.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/decide/FounderDecisionLede.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/DistributionVisual.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/extremes/CatalogCollections.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/geo/GeoViabilityLede.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/GlobalSearch.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/home/AtlasLedger.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/home/AudienceBand.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/components/home/CatalogPlates.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/home/ExampleTiles.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/home/home2-view.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/components/home/NeighborhoodCards.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/home/Specimen.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/home/StateComparison.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/home/UpgradeTeaser.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/home/WorldMapSection.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/industries/ActivityPlacePicker.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/kit/AnswerFirstMasthead.tsx": {
+      "remCaps": 3,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/kit/blocks/MinimumWage.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/kit/blocks/OneThing.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/kit/blocks/OperatorVoices.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/kit/blocks/RiskList.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/kit/editorial.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/components/kit/engraved/HowFarYouReach.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/kit/HonestTakeBox.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/kit/MoneyGoesBreakdown.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/kit/sections.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/kit/StillFillingIn.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/kit/tables/helpers.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/LegalPage.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/LoadingSkeleton.tsx": {
+      "remCaps": 4,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/LocalContextCard.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/MobileNav.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/monetization/PaywallModalRoot.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/NeighborhoodOverview.tsx": {
+      "remCaps": 6,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/newsletter/LeadMagnetForm.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/newsletter/NewsletterSignupVariants.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/open/OpeningHero.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/sections/CityCharacter.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/sections/SubIndustryPicker.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/spine/atlas-index.tsx": {
+      "remCaps": 1,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/spine/cell/cell-view.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/spine/cell/masthead.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/spine/city/city-view.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/spine/city/masthead.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/spine/hood/hood-view.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/components/spine/hood/masthead.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/spine/industry/industry-view.tsx": {
+      "remCaps": 0,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/components/spine/kit-index.tsx": {
+      "remCaps": 1,
+      "chCaps": 1,
+      "smPairings": 1
+    },
+    "src/components/spine/NeighborhoodExplorer.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 2
+    },
+    "src/components/ui/disclosure.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/ui/empty-state.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/ui/error-state.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/ui/page-shell.tsx": {
+      "remCaps": 4,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/v2/CityHeroV2.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/v2/CountryScorecardV2.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/v2/CoverageHubV2.tsx": {
+      "remCaps": 0,
+      "chCaps": 2,
+      "smPairings": 0
+    },
+    "src/components/WorldMapPicker.tsx": {
+      "remCaps": 2,
+      "chCaps": 0,
+      "smPairings": 1
+    },
+    "src/lib/ui/typography.ts": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    }
+  }
+}

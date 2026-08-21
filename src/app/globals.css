@@ -2230,5 +2230,45 @@
   --t-section: 24px; /* chapter opener */
   --t-focal: 30px;   /* a section's own focal figure */
   --t-answer: 48px;  /* the page's one dominant figure, h1. NOTHING IS LARGER */
+
+  /* THE READING MEASURE. Founder, 2026-08-21: "on the desktop, some icons and
+     sections are very wide for the eye, so the eye has to do like an angle to
+     read all of it", and his fix: narrow the words, keep the pictures wide.
+
+     68ch is CONVERGED, not chosen: `.eng-*` captions in this same file already
+     cap at 68ch, against a measurement taken on the rendered country page where
+     11 of 16 substantial paragraphs ran past 75 characters, the worst at 131ch.
+     A second value would have made it 21 conventions instead of 20.
+
+     A REM CAP IS A WIDTH, NOT A MEASURE, which is why this is the unit. The
+     site's dominant cap is max-w-2xl, a fixed 672px, used 123 times in
+     reader-facing code: at 14px body type that is roughly 96 characters, so the
+     paragraphs that LOOKED capped were among the widest on the page. `ch` is
+     the width of the digit zero and follows the font size wherever it is
+     reused, which a rem cap cannot do. */
+  --measure-prose: 68ch;
+}
+
+/* ================== THE WORDS ARE NARROW, THE PICTURES ARE WIDE ==========
+   Founder ruling, 2026-08-21, on how to fix the desktop sweep: "narrow the
+   words, keep the pictures wide". Two widths on one page, not one.
+
+   APPLIED TO THE TEXT, NOT TO THE CONTAINERS, and that is the whole design of
+   this rule. Capping 123 container classes by hand would be 123 untested visual
+   edits, would narrow the charts and tables along with the prose, and would not
+   be inherited by the next paragraph anyone writes. Capping the paragraph
+   itself leaves every container exactly as wide as it is, so a chart, a table
+   and a map keep the full column while the running text does not.
+
+   `:where()` CARRIES ZERO SPECIFICITY, and that is load-bearing rather than
+   stylistic: it makes this a DEFAULT that any existing class silently beats. A
+   paragraph that already declares its own width keeps it, so this rule cannot
+   fight the 20 conventions already in the tree, it can only fill the gap where
+   none of them applies. That is what makes it safe to ship in one commit.
+
+   Scoped to `main` so it never touches the masthead, the footer or a chart's
+   own internals. */
+main :where(p, li, blockquote, dd) {
+  max-width: var(--measure-prose);
 }
 

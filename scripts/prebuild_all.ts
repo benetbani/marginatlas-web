@@ -238,6 +238,7 @@ const GATES: Gate[] = [
   { name: "activity-merges", script: "tests/taxonomy/merges.test.ts" },
   { name: "presence-threshold", script: "tests/taxonomy/presence.test.ts" },
   { name: "type-ladder", script: "scripts/verify_type_ladder.ts" },
+  { name: "width-discipline", script: "scripts/verify_width_discipline.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
