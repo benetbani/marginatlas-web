@@ -80,7 +80,7 @@ export function UpgradeTeaser({ variant = "band" }: { variant?: "band" | "panel"
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr>
-              <th className="text-left px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-semibold text-cocoa-700/85">
+              <th scope="col" className="text-left px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-semibold text-cocoa-700/85">
                 Feature
               </th>
               {cols.map((c) => (

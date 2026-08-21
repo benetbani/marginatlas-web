@@ -116,7 +116,7 @@ export default function PricingPage() {
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="bg-paper-100">
-                  <th className="text-left px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-semibold text-cocoa-700/85">Feature</th>
+                  <th scope="col" className="text-left px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-semibold text-cocoa-700/85">Feature</th>
                   {["Free", "Basic", "Premium"].map((c) => (
                     <th key={c} scope="col" className="text-center px-4 py-3 text-[11px] tracking-[0.16em] uppercase font-semibold text-cocoa-700/85" style={{ width: "16%" }}>
                       {c}
