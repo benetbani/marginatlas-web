@@ -1207,11 +1207,11 @@ export function CompareClient({
               <table className="w-full min-w-[34rem] border-collapse text-sm">
                 <thead>
                   <tr className="border-b border-parchment text-left align-bottom">
-                    <th className="w-44 py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+                    <th scope="col" className="w-44 py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
                       Metric
                     </th>
                     {activeCols.map((i) => (
-                      <th key={i} className="px-3 py-2 align-bottom">
+                      <th scope="col" key={i} className="px-3 py-2 align-bottom">
                         <span className="block font-display text-base font-semibold text-ink-900">
                           {slotLabel(i)}
                         </span>
@@ -1221,7 +1221,7 @@ export function CompareClient({
                       </th>
                     ))}
                     {anyLoading && activeCols.length === 0 ? (
-                      <th className="px-3 py-2 text-[11px] font-normal text-cocoa-500">
+                      <th scope="col" className="px-3 py-2 text-[11px] font-normal text-cocoa-500">
                         loading
                       </th>
                     ) : null}

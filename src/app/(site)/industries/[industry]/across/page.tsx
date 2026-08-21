@@ -366,11 +366,11 @@ export default async function AcrossCitiesPage({
           <table className="w-full min-w-[40rem] border-collapse text-sm">
             <thead>
               <tr className="border-b border-parchment text-left align-bottom">
-                <th className="sticky left-0 z-10 w-40 bg-white py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+                <th scope="col" className="sticky left-0 z-10 w-40 bg-white py-2 pr-4 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
                   Metric
                 </th>
                 {cities.map((c) => (
-                  <th key={c.href} className="px-3 py-2 align-bottom">
+                  <th scope="col" key={c.href} className="px-3 py-2 align-bottom">
                     <Link href={c.href} className="group block">
                       <span className="mb-1 flex items-center gap-1.5">
                         <CountryFlag iso2={c.country} className="w-4" />

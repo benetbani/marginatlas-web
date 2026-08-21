@@ -94,11 +94,11 @@ export function Ch13Cities({
           <table className="tb">
             <thead>
               <tr>
-                <th>City</th>
-                <th>Revenue</th>
-                <th>Owner keeps</th>
-                <th>Per 10k people</th>
-                <th>Break in</th>
+                <th scope="col">City</th>
+                <th scope="col">Revenue</th>
+                <th scope="col">Owner keeps</th>
+                <th scope="col">Per 10k people</th>
+                <th scope="col">Break in</th>
               </tr>
             </thead>
             <tbody>

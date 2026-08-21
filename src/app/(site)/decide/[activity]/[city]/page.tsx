@@ -434,19 +434,19 @@ export default async function DecideWizard({
               <table className="w-full text-sm">
                 <thead className="bg-white">
                   <tr className="border-b border-[rgba(76,39,18,0.10)]">
-                    <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                    <th scope="col" className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Neighborhood
                     </th>
-                    <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                    <th scope="col" className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Tags
                     </th>
-                    <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                    <th scope="col" className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Revenue
                     </th>
-                    <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                    <th scope="col" className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Rent
                     </th>
-                    <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                    <th scope="col" className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Net margin
                     </th>
                   </tr>

@@ -87,6 +87,16 @@ export function Neighbours({ metrics, countries, homeKey, caveat, sample, classN
       />
     );
   }
+  /* NOT MIGRATED to the shadcn table primitive, and the reason is recorded
+     rather than left to be rediscovered. This table is styled by the engraved
+     stylesheet, which targets `table.eng-neigh th` and its siblings directly.
+     Swapping in the primitive brings its own utility classes for header height,
+     padding and alignment, which would fight those rules and change how a
+     ratified design LOOKS, not just what it is built from. That is a visual
+     change and it needs a browser to judge; this machine could not launch one
+     (526MB free of 8GB). The accessibility defect is fixed here because it is
+     pure semantics and carries no visual risk. The substrate swap waits for a
+     machine that can show its result. */
   return (
     <div className={className} style={{ overflowX: "auto" }}>
       <table className="eng-neigh">
@@ -98,9 +108,12 @@ export function Neighbours({ metrics, countries, homeKey, caveat, sample, classN
         </colgroup>
         <thead>
           <tr>
+            {/* The empty corner cell of a two-dimensional table. It labels
+                nothing, so it takes no scope: giving it one would announce a
+                heading that is not there. */}
             <th className="k" />
             {countries.map((c) => (
-              <th key={c.key} className={c.key === homeKey ? "home" : undefined}>
+              <th scope="col" key={c.key} className={c.key === homeKey ? "home" : undefined}>
                 <span className="eng-neigh__col">
                   {c.iso2 ? (
                     <span className="eng-neigh__flag">
@@ -116,7 +129,12 @@ export function Neighbours({ metrics, countries, homeKey, caveat, sample, classN
         <tbody>
           {metrics.map((m) => (
             <tr key={m.label}>
-              <th>
+              {/* scope="row", and on a grid like this it matters more than the
+                  column scope does. Metrics run down, countries run across, so
+                  without both a screen reader reads a bare figure with no way
+                  to say WHICH metric in WHICH country it belongs to. This table
+                  renders on every country page. */}
+              <th scope="row">
                 <Glyph name={m.glyph} size={14} stroke={1.4} color="var(--cocoa-500)" />
                 {m.label}
               </th>
