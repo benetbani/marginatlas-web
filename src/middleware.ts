@@ -23,6 +23,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { redirectFor } from "@/lib/taxonomy/retired";
+import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 
@@ -270,24 +272,9 @@ function clientIp(req: NextRequest): string {
 }
 
 // --- Plan v13 Wave 4b: split-industry redirects (auto-generated) ---
-const TAXONOMY_REDIRECTS: Record<string, string> = {
-  "auto-dealers-gas-stations": "auto-dealers",
-  "broadcasting-telecom": "broadcasting",
-  "chemical-pharmaceutical-manufacturing": "chemical-pharma-manufacturing",
-  "crop-farming": "grain-farming",
-  "food-beverage-manufacturing": "food-manufacturing",
-  "furniture-home-goods-stores": "furniture-stores",
-  "furniture-other-manufacturing": "furniture-manufacturing",
-  "investment-securities": "securities-brokerage",
-  "media-publishing": "news-periodical-publishing",
-  "metal-products-manufacturing": "fabricated-metal-manufacturing",
-  "mining-quarrying": "mining-quarrying-metals-stone",
-  "passenger-transport": "transit-ground-passenger-transport",
-  "postal-courier": "postal-service",
-  "property-leasing-rental": "real-estate-leasing",
-  "textile-apparel-manufacturing": "apparel-manufacturing",
-  "wood-paper-products": "wood-products-manufacturing",
-};
+/* MOVED to src/lib/taxonomy/legacy_redirects.ts, unchanged, so that
+   scripts/gen_retired.ts can read it and collapse redirect chains. See that
+   file's header for why that matters. */
 // --- end Plan v13 Wave 4b ---
 
 export function middleware(req: NextRequest) {
@@ -320,6 +307,41 @@ export function middleware(req: NextRequest) {
     }
   }
 
+  // --- Retired ACTIVITIES → their destination (308, preserves SEO equity) ---
+  // Founder ruling 2026-08-21: this atlas covers businesses you can see on the
+  // street. Farming, banking, factories, mining, wholesale, network transport,
+  // hospitals, schools and management consulting were retired by
+  // src/lib/taxonomy/scope_rules.ts.
+  //
+  // THEY REDIRECT, THEY DO NOT 404. A 404 throws away whatever search authority
+  // the page had and adds a crawl error on top of losing it; his stated fear
+  // about this change was search, and it is a real one. Same 308 as the
+  // retired-sector block further down.
+  //
+  // THIS MUST RUN BEFORE THE WAVE 4b RENAME HANDLER BELOW, and that ordering is
+  // the whole reason it sits here rather than beside its sibling. Thirteen
+  // legacy slugs in TAXONOMY_REDIRECTS point at activities that are now
+  // retired. If the rename ran first, /industries/crop-farming would answer 308
+  // to /industries/grain-farming, which answers 308 to /industries: a two-hop
+  // chain that dilutes exactly the equity this block exists to preserve.
+  // scripts/gen_retired.ts emits a direct entry for each of those thirteen, and
+  // checking retirement first is what makes that collapse actually fire.
+  //
+  // Matched on the SLUG, which is derived from the activity's NAME, not its id.
+  // See the header of src/lib/taxonomy/retired.ts.
+  if (!path.startsWith("/api/") && !path.startsWith("/_next")) {
+    const retiredMatch = /^\/industries\/([a-z0-9-]+)\/?$/.exec(path);
+    if (retiredMatch) {
+      const target = redirectFor(retiredMatch[1]);
+      if (target) {
+        const url = req.nextUrl.clone();
+        url.pathname = target;
+        return NextResponse.redirect(url, 308);
+      }
+    }
+  }
+  // --- end retired activities redirect ---
+
   // --- Plan v13 Wave 4b redirect handler ---
   // Match either /us/<geo>/<old-slug> or /industries/<old-slug>.
   // Rewrite the last URL segment to the new canonical slug.
@@ -350,6 +372,7 @@ export function middleware(req: NextRequest) {
     }
   }
   // --- end retired sector pages redirect ---
+
 
   // 1. AI crawlers — 451 Unavailable For Legal Reasons
   for (const re of AI_CRAWLER_PATTERNS) {

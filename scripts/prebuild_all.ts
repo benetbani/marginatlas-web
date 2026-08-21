@@ -234,6 +234,7 @@ const GATES: Gate[] = [
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "build-compare", script: "tests/scripts/build_compare.test.ts" },
   { name: "scope-rules", script: "tests/taxonomy/scope_rules.test.ts" },
+  { name: "retired-activities", script: "tests/taxonomy/retired.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
