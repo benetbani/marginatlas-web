@@ -2247,6 +2247,28 @@
      the width of the digit zero and follows the font size wherever it is
      reused, which a rem cap cannot do. */
   --measure-prose: 68ch;
+
+  /* ============ THE CHART RAMP, for the shadcn chart primitive =============
+     src/components/ui/chart.tsx reads --chart-1 through --chart-5. They did not
+     exist, which is a large part of why every chart on this site was hand-rolled
+     out of divs and inline SVG instead of built on the substrate the founder
+     bought a shadcnblocks licence for. The registry is configured in
+     components.json with a bearer token and had never once been used.
+
+     THE RAMP IS THE LOCKED PALETTE, NOT SHADCN'S. FORM-CATALOG: "take only
+     chart legibility, direct labels, axis units, one-line legends, never their
+     aesthetics." So chart-1 is terracotta because terracotta marks THE ANSWER
+     and nothing else (rule 37), and 2 through 5 are the cool neutral ramp the
+     v2 spine already uses, darkest first, so a series reads as ordered without a
+     second hue entering the page.
+
+     One accent. Every studied design system writes that rule down; a second
+     live hue here would be a structural defect, not a cosmetic one. */
+  --chart-1: #fb8469; /* terracotta. The answer series, and only the answer */
+  --chart-2: #57575b;
+  --chart-3: #6f6f74;
+  --chart-4: #9a9a9e;
+  --chart-5: #c0c0c4;
 }
 
 /* ================== THE WORDS ARE NARROW, THE PICTURES ARE WIDE ==========
