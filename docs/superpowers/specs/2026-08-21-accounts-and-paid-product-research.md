@@ -12,6 +12,39 @@
 
 ---
 
+## FOUNDER RULING, 2026-08-21, taken after this research was written
+
+Asked which of the two conflicting strategies stands, he chose neither, and the
+answer he gave instead is the operative one:
+
+> **"keep everything free for now, we will hide them later"**
+
+**What that decides:**
+
+- **Nothing is gated. The paywall stays off.** `NEXT_PUBLIC_GATING_ENABLED`
+  remains at its default and must not be flipped.
+- **The tier question is DEFERRED, not settled.** §4 below proposes a tier shape
+  and it is now a proposal awaiting a decision, not a direction to build toward.
+  Do not design around it as though it were ratified.
+
+**What that does NOT decide, and the distinction matters:**
+
+- **The price list still has to be cut to what exists.** Six of the fourteen
+  sold features cannot be delivered (§1), and that page is public today. "Free
+  for now" is not a reason to keep advertising four features that have no code.
+  This item survives the ruling intact and is still the only urgent one.
+- **The workspace work survives too** (§3a). Saving a cell, a search or a
+  comparison is worth building whether it is free or paid, and today nothing a
+  reader does survives their visit.
+
+**AND A STANDING CONSTRAINT THAT FALLS OUT OF "LATER".** The gating machinery is
+built, wired through five surfaces, and must be **left intact**. Do not rip it
+out, do not simplify it away, and do not let a later refactor quietly delete it
+as dead code, because it is the option he has explicitly reserved. A comment
+saying so belongs on anything that touches it.
+
+---
+
 ## 0. The headline finding
 
 **The sign-in and subscription stack is not missing. It is BUILT, and switched OFF.**
