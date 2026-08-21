@@ -1,33 +1,53 @@
-# 04 — GUARDRAILS. The content cannot change.
+# 04 — GUARDRAILS. Structure adapts. Substance does not.
 
 The founder's constraint on this whole migration:
 
 > *"this is a new design thing. The replacement of elements should not impose
 > changes on the content unless they were all due to be changed beforehand."*
 
-This file makes that mechanical, because it is the rule most likely to be broken
-**by accident and with good intentions**. A shadcn component invites content that
-the bespoke one did not have: `CardDescription` under every `CardTitle`, a
-footer under every chart, a caption under every table. Each one is a sentence
-nobody asked for, and several are verdicts, which rule 14 forbids outright.
+**AMENDED 2026-08-21, by the founder, and the amendment reverses this file's
+original position.** His words:
 
----
+> *"due to the fact that these components are proven and tested, you should
+> really think whether we should remove the subtitles and their parts. The
+> tendency should be to switch to suit the content that we have according to the
+> structure of the new components."*
+
+The first draft of this file said: a shadcn component invites content the
+bespoke one did not have, so **decline the invitation**. That was wrong, and it
+was wrong in a way that would have quietly rebuilt the bespoke problem, because
+fighting a proven component's structure at every call site is how you end up
+maintaining a fork of it.
+
+**The rule is now the other way round: the component's STRUCTURE wins, and the
+content is arranged to fit it.** What may never change is the SUBSTANCE.
 
 ## 1. The rule, stated three ways
 
-**Plainly:** a swap may change how a thing looks and behaves. It may not change
-what it says or what it claims.
+**Plainly:** the component's structure decides the ARRANGEMENT. The site decides
+the SUBSTANCE. A migration may reshape how content is laid out; it may not add a
+claim, drop a figure, or change what a number says.
 
-**Operationally:** for any migrated surface, the set of visible strings and the
-set of rendered figures must be **identical** before and after, ignoring
-whitespace.
+**Operationally, and this is the line that matters:**
+
+| May change | May never change |
+|---|---|
+| which slot a string sits in | the set of figures, and their values |
+| whether a heading and its line are one block or two | a claim the site makes |
+| the order of elements within a section | which sections exist (that is a gated contract) |
+| a subtitle being dropped where the component has no slot for it | a figure gaining or losing precision |
+| a subtitle being kept where the component has one | anything a reader could act on |
+
+**On subtitles specifically, since he raised them.** Rulebook rule 14 already
+says a subtitle never delivers a verdict and **most should not exist**. So where
+a component has no description slot, the subtitle goes and that is an
+improvement, not a loss. Where a component has one, it may be used, but it may
+not be FILLED with something invented to justify the slot. **An empty slot is
+fine. A slot filled with a verdict is the thing rule 14 forbids.**
 
 **The exception, and its limit:** where a prior ratified decision had already
-scheduled a content change, that change proceeds. It must be **named, with its
-date and its ruling**, in the commit. "It seemed better" is not a ratified
-decision. Nothing new is invented under cover of a migration.
-
----
+scheduled a content change, that change proceeds, named with its date and its
+ruling in the commit. "It seemed better" is not a ratified decision.
 
 ## 2. THE CONTENT DIFF. The gate this migration lives or dies by.
 
@@ -41,8 +61,17 @@ Compare.
    - **strings**: every text node, trimmed, whitespace-collapsed
    - **figures**: every numeric token, with its unit and prefix
 3. Write them to `data/content-snapshots/<route>.json`.
-4. On a later run, diff. **Any added or removed string fails.** Reordering is
-   allowed, because Phase 2 onward may reorder.
+4. On a later run, diff **as SETS, not as sequences**, because the founder's
+   amendment explicitly permits rearrangement:
+   - **figures**: any added, removed or altered figure **fails**. Hard.
+   - **strings**: any REMOVED string is reported for review, not auto-failed,
+     because dropping a subtitle a component has no slot for is now sanctioned.
+     Any ADDED string **fails**: that is a claim nobody ratified.
+   - reordering alone: passes silently.
+
+**Why the asymmetry.** Losing a sentence is a judgement call the amendment now
+allows and a human should glance at. Gaining one is how an invented verdict
+enters the site, which is the defect class this whole effort exists to remove.
 
 **Why strings AND figures separately:** a figure that changes from `$86,000` to
 `$86000` is a formatting change and a string diff would flag it, correctly. A

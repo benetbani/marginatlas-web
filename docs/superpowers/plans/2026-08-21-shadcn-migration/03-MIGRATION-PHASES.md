@@ -27,13 +27,12 @@ environment as it stands.
 
 **Deliverables:**
 
-0. **Settle `--primary`.** Found 2026-08-21 by re-verifying the token bridge
-   rather than trusting it: `--primary` is `#991600` at lightness 30, while the
-   ratified accent is `#fb8469` at lightness 70. Same hue family, less than half
-   the lightness. Every shadcn button, focus ring and `bg-primary` surface will
-   use the dark one. Repointing it is one line and changes every existing
-   consumer of `--primary` too, so it is a decision, not a migration side-effect.
-   **Settle it before any component lands, or every component lands wrong.**
+0. ~~Settle `--primary`.~~ **RESOLVED, and it was never a problem.** `--primary`
+   holds atlas-700, which the colour guide specifies for text and headline
+   accents. The apparent mismatch came from reading a light tint as the primary.
+   One real error fell out of it and is fixed: `--chart-1` shipped as the tint
+   and is now atlas-500, the step the guide assigns to surfaces. See
+   `02-SKIN-CONTRACT.md`.
 
 1. A hydrated-page screenshot path that works. Options, in order of preference:
    - the Browser pane against `preview_start` (worked this session; `navigate`

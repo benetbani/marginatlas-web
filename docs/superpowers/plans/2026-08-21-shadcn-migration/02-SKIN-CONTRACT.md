@@ -24,65 +24,52 @@ tokens, and all fifteen are already declared in `src/app/globals.css`:
 | `bg-card`, `text-card-foreground` | `.atlas-card`'s surface |
 | `bg-muted`, `text-muted-foreground` | the quiet neutral and quiet text |
 | `border`, `ring`, `input` | the hairline |
-| `bg-primary` | **terracotta** |
+| `bg-primary` | **atlas-700 `#991600`**, the guide's text/headline accent |
 | `bg-accent`, `bg-secondary`, `bg-popover` | the cool neutrals |
-| `--chart-1` .. `--chart-5` | added 2026-08-21: terracotta, then the cool ramp |
+| `--chart-1` .. `--chart-5` | added 2026-08-21: **atlas-500 `#e62200`** (the guide's SURFACE accent), then the cool ramp |
 
 **Consequence:** an imported component is on-skin the moment it lands. Verify it
 rather than assume it, but the default is correct, not wrong.
 
-### CORRECTION, 2026-08-21, found by re-verifying this claim rather than repeating it
+### CORRECTION, 2026-08-21, AND THEN A CORRECTION TO THAT CORRECTION
 
-The first draft of this file asserted the tokens **exist**. It did not check what
-values they **hold**. Measured:
+**First pass:** this file asserted the fifteen tokens **exist** without checking
+what they **hold**. Checking was right. The conclusion drawn from it was wrong,
+and the wrong conclusion nearly became a Phase 0 blocker.
 
-| token | value | hue | lightness |
-|---|---|---|---|
-| `--background` | `#f7f7f8` | cool | 97% , the atlas paper ground. Correct |
-| `--card` | `#ffffff` | , | the atlas card. Correct |
-| `--border` | `#e3e3e3` | neutral | the atlas hairline. Correct |
-| `--primary` | `#991600` | 8.6 | **30%** |
-| `--foreground` | `#211810` | 28.2 | 9.6%, sat 35% |
-| `--muted-foreground` | `#534231` | 30.0 | 25.9%, sat 26% |
+**What was claimed:** that `--primary` (`#991600`) pointed at the wrong end of
+the accent ramp, because the "ratified accent" is `#fb8469`.
 
-**Two things follow, and neither is fatal.**
-
-**1. The accent is one hue at five lightnesses, and the bridge points at the
-darkest.** Every accent value on this site sits between hue 8.6 and 11.1, so
-this is a ramp rather than five different colours:
+**What is actually true.** `src/lib/design-tokens.ts` labels its own ramp, and
+`docs/design-system/TOKENS.md` says the same thing:
 
 ```
-#991600  L30   --primary        <- what a shadcn component will use
-#9e2e1b  L36   --terra-deep
-#c23a22  L45   --terra
-#d4573c  L53   --terra-bright
-#fb8469  L70   the FORM-CATALOG ratified accent
+atlas-300  #fb8469   a light tint
+atlas-500  #e62200   primary accent (SURFACES)
+atlas-700  #991600   primary accent (TEXT + HEADLINE)
 ```
 
-A shadcn button, focus ring or `bg-primary` surface therefore renders at **less
-than half the lightness** of the ratified accent. That is a visible mismatch, and
-it is a one-line fix, but it must be **decided rather than assumed**: pointing
-`--primary` at `#fb8469` changes every existing consumer of `--primary` too.
-**Phase 0 item. Do not fix it in passing during a component migration.**
+`--primary` holds **atlas-700**, which is exactly what the guide specifies for
+text and headline accents. **It is correct. There is no blocker.** `#fb8469` is a
+tint three steps up the ramp, and reading FORM-CATALOG's shorthand "terracotta
+#fb8469" as "the primary accent" rather than as one step of a labelled ramp is
+what produced the false alarm.
 
-**2. The ink is warm, and that is a known-open question, not a new finding.**
-`--foreground` and `--muted-foreground` sit at hue 28 to 30, which is the cocoa
-family. `01-DESIGN-STANDARD.md` section 4 already records this: *"cocoa was not
-deleted, and it is brown. Charter section 8 bans brown, so the site's entire
-quiet-text ladder is a banned hue"*, and routes it to `DECISIONS-NEEDED.md` as a
-palette-membership question rather than a contrast one.
+**The founder's response to this is the lesson worth keeping:** *"we have a guide
+on the colors that we should be using. So everything is clearly understandable.
+It's not rocket science to understand it."* The guide was sitting in
+`docs/design-system/TOKENS.md` and in the ramp's own comments the whole time.
+**Read the guide before reporting a palette problem.**
 
-**The migration inherits this; it does not create it and must not silently
-resolve it.** Every shadcn component using `text-muted-foreground` will wear the
-same warm grey the rest of the site already wears, which is the correct
-behaviour for a migration whose rule is "change nothing a reader reads."
+**One real error did fall out of it.** `--chart-1` shipped as `#fb8469`, the
+tint. A chart bar is a SURFACE, and the guide assigns surfaces to atlas-500.
+Corrected to `#e62200`.
 
-**The one thing to check on every import:** does it reference a token that does
-NOT exist here? A `var()` naming an unset property with no fallback is invalid at
-computed-value time and **voids the whole declaration**, which this project has
-already been bitten by (the font slots on `<body>` instead of `<html>`, where
-`--font-body` computed to the empty string and every element fell back to Times).
-An unstyled shadcn component usually means a missing token, not a broken import.
+**The remaining warm-ink note stands and is genuinely open.** `--foreground` and
+`--muted-foreground` sit at hue 28 to 30, the cocoa family that
+`01-DESIGN-STANDARD.md` section 4 already flags as a banned hue and routes to
+`DECISIONS-NEEDED.md`. The migration inherits it, does not create it, and must
+not silently resolve it.
 
 ---
 
@@ -132,10 +119,16 @@ The ladder is now ten steps, declared identically in `globals.css` and
 
 ## 3. THE PALETTE. One accent, and it is not negotiable.
 
-- Terracotta `#fb8469`, **on answers only**. Never on hover, never on a
-  "featured" item, never on a decorative accent.
+- **One accent, and the guide names which step does what.** `atlas-500`
+  `#e62200` for surfaces (a chart bar, a filled button). `atlas-700` `#991600`
+  for text and headline accents. `atlas-300` `#fb8469` is a light TINT, not the
+  accent, and mistaking it for one produced a false alarm on 2026-08-21.
+  The authority is `docs/design-system/TOKENS.md` plus the ramp's own comments
+  in `src/lib/design-tokens.ts`. **Read it before reporting a palette problem.**
+- The accent marks **answers only**. Never on hover, never on a "featured" item,
+  never decoratively.
 - Cool neutrals for everything else. **No green, no amber, no brown, no cream.**
-- `--chart-1` is terracotta because it is the answer series. `--chart-2..5` are
+- `--chart-1` is the accent because it is the answer series. `--chart-2..5` are
   the neutral ramp, darkest first, so a series reads as ordered **without a
   second hue entering the page**.
 - `verify_palette_membership` and `verify_no_cream` both run in the chain.

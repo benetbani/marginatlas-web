@@ -30,7 +30,7 @@ This is a maintenance argument, not an aesthetic one. He is buying fewer defects
 4. `docs/superpowers/plans/2026-08-21-shadcn-migration/03-MIGRATION-PHASES.md`
    , the seven phases, in order
 5. `docs/superpowers/plans/2026-08-21-shadcn-migration/04-GUARDRAILS.md`
-   , the content-cannot-change rule and every trap already paid for
+   , structure adapts and substance does not, plus every trap already paid for
 
 Then the standing authorities:
 
@@ -101,7 +101,7 @@ Build it first. `04-GUARDRAILS.md` section 2 specifies it.
                             the house tabular-figures rule is used ZERO times
 3  interaction              start with the currency switcher: it is why the trade
                             page scrolls sideways at 375
-4  charts, bars             [ONE FOUNDER RULING NEEDED, see below]
+4  charts, bars             [you decide the axis, see Step 5]
 5  charts, the rest         9 gauges become 1
 6  forms                    substrate only. Do NOT build sign-in here
 7  blocks                   the purchase, finally used
@@ -111,19 +111,35 @@ Build it first. `04-GUARDRAILS.md` section 2 specifies it.
 ratified review format is one file he opens, both widths, full length.
 `scripts/build_compare.mjs` builds it and is gated.
 
-## Step 5 , the decisions that are HIS, not yours
+## Step 5 , SOLVE THESE. Do not hand them back.
 
-Do not guess these. Ask, with options and consequences.
+**AMENDED 2026-08-21 by the founder, and this reverses the original step.** He
+said, of the list that used to live here:
 
-1. **The percentile axis.** Six percentile charts, two logarithmic. Converging
-   them means choosing one axis, and a log axis is a claim about how a reader
-   should read a spread. This blocks part of Phase 4.
-2. **Which blocks.** Phase 7 is a shortlist he picks from, not a sweep.
-3. **The marks contradiction.** `DESIGN-RULEBOOK` rules 4/4A demand a visible
-   badge on modelled figures. His ADR of 2026-08-20 rules the opposite. The
-   August ruling wins by the rulebook's own tiebreak, the July text was never
-   edited, and a gate still enforces the retired rule against workshop routes.
-   **A migration must not quietly pick a side.**
+> *"you should just push forward and define solutions for their problems. Like,
+> you should just find solutions and then push forward. That's your point.
+> That's your problem. The percentile axis, I have no idea. I have no idea about
+> that. You should try to understand. And that's the whole point. It's a major
+> process, and you should move forward with it."*
+
+So these are **yours to research and decide**, with the reasoning written down:
+
+1. **The percentile axis.** Six percentile charts, two logarithmic. Read what
+   each one plots and what a reader is meant to take from it, decide, and record
+   why. A log axis is defensible when a spread runs over orders of magnitude and
+   indefensible when it flatters a narrow one. **Measure the actual spreads
+   before choosing.**
+2. **Which blocks.** Shortlist against surfaces the site genuinely lacks, and
+   propose. Do not wait to be told.
+3. **The marks contradiction.** The August ADR is newer and wins by the
+   rulebook's own tiebreak. Apply that, edit the July rule text to record the
+   reversal, and rescope or retire the gate that still enforces it.
+
+**The colour schema is NOT one of these, and it never was.** It is written down
+in `docs/design-system/TOKENS.md` and in the ramp's own comments in
+`src/lib/design-tokens.ts`. A session on 2026-08-21 reported a palette problem
+that did not exist by reading a light tint as the primary accent. **Read the
+guide first.**
 
 ## Step 6 , the rules you will break by accident if you do not re-read them
 
