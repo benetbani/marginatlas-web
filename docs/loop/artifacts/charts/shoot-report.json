@@ -1,0 +1,24 @@
+[
+  {
+    "width": 1280,
+    "file": "docs\\loop\\artifacts\\charts\\CHART-1280.jpeg",
+    "seconds": 7,
+    "waitedFor": "found",
+    "height": 3135,
+    "horizontalOverflow": false,
+    "pageErrors": [
+      "a[c] is not a function"
+    ]
+  },
+  {
+    "width": 375,
+    "file": "docs\\loop\\artifacts\\charts\\CHART-375.jpeg",
+    "seconds": 3.4,
+    "waitedFor": "found",
+    "height": 4986,
+    "horizontalOverflow": false,
+    "pageErrors": [
+      "a[c] is not a function"
+    ]
+  }
+]
