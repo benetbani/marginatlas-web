@@ -1,0 +1,5 @@
+{
+  "generated_at": null,
+  "note": "UNGENERATED. Every pair reads as measured and nothing changes, which is deliberate: see the fail-open section in src/lib/taxonomy/presence.ts. Generating this needs a working database connection and cannot be done from a machine whose cell lookups time out. Run scripts/gen_presence_manifest.ts where the database is reachable.",
+  "countries": {}
+}

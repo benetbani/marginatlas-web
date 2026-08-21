@@ -14,6 +14,8 @@ import {
   withBudget,
 } from "@/lib/cells";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
+import { mayPublish, needsThinMarketNote } from "@/lib/taxonomy/presence";
+import { ThinMarketNote } from "@/components/kit/ThinMarketNote";
 import { INDUSTRIES, industryToSlug, isExcludedFromDiscovery } from "@/lib/taxonomy";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier, getCityPopulation, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
@@ -434,6 +436,27 @@ async function CellPageBody({
     withBudget(getCellVariants(country, geo, industry), [], 5_000, "getCellVariants"),
   ]);
   if (!cell) notFound();
+
+  /* THE PRESENCE THRESHOLD. Founder ruling 2026-08-21: "there should be clear
+     thresholds about not allowing certain countries to show all activities
+     because we end up with medical equipment production in Chad."
+
+     `if (!cell) notFound()` above CANNOT DO THIS JOB and never could:
+     getCellBySlug never returns null. When the database holds no row it
+     synthesizes one and stamps is_synthetic, so that line is unreachable for a
+     missing cell and every country crossed with every trade renders a page.
+
+     This is decided from a build-time manifest, never from the live cell above,
+     because a timeout and an empty result are indistinguishable at that call
+     site and hiding on uncertainty would let a slow database unpublish the site
+     page by page. Until the manifest is generated this resolves to "publish"
+     for everything, which is exactly today's behaviour. See
+     src/lib/taxonomy/presence.ts. */
+  if (cell.industry_id && !mayPublish(country, cell.industry_id)) notFound();
+  const showThinMarketNote = Boolean(
+    cell.industry_id && needsThinMarketNote(country, cell.industry_id),
+  );
+
   const availableSizes = distinctSizeBands(variants);
   const availableYears = distinctYears(variants);
 
@@ -1013,6 +1036,24 @@ async function CellPageBody({
         industryId={cell.industry_id}
         sizeBand={cell.size_band}
       />
+
+      {/* THE THIN-MARKET NOTE. Sits here, directly under the warning chips and
+          above every data section, because a caveat below the fold is a caveat
+          nobody reads. Renders only where the atlas holds something weaker than
+          a local measurement for this pair; see src/lib/taxonomy/presence.ts.
+
+          Its copy deliberately does NOT say the trade "barely exists" here,
+          which is what was originally asked for. Nothing in this codebase
+          measures that, and printing it on the strength of our own missing data
+          would be the same defect as any invented figure, aimed at a whole
+          market instead of at one number. The component's header carries the
+          full reasoning and a gate asserts the sentence stays out. */}
+      {showThinMarketNote ? (
+        <ThinMarketNote
+          trade={(cell.industry_name || industry).toLowerCase()}
+          place={cell.geo_name || geo}
+        />
+      ) : null}
 
       {/* Plan v13 Wave 4a (D2): EmptyStateCard removed. When a cell has no
          usable revenue metric, the data sections silently omit themselves
