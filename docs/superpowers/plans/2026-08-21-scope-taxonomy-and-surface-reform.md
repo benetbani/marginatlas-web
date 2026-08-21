@@ -1088,7 +1088,25 @@ Full width is the default, not the exception. And prose is capped eight differen
 
 **The founder's list, in his words:** tipping culture and percentage; taxes for taking public space; corruption incidence among local officials; subsidies, special regimes and zones (*"tiny details that matter"*); typical business structure (*"HVAC operators, 5 people, 2 trucks, $5000 equipment, $200 electricity"*); typical prices for the three most-sold items (*"haircut, beard trimming, face mask"*); talent availability and talent quality on a 1-to-4 scale; personas by wealth, resident type and age; licences higher up the page; burglary, lawsuit and penalty risk.
 
-**Measured starting point: the trade page has only seven sections** — hero, narrative, revenue tiles, revenue distribution, margin waterfall, tax and cost panel, related cells. There is plenty of room.
+**MEASURED STARTING POINT, CORRECTED IN PHASE 0. The trade page renders 21 sections, not seven.** The seven-section figure came from `CELL_PAGE_SECTIONS` in `src/lib/page-layout/section-order.ts`, which is **stale**: four of the seven it names do not render at all. What actually renders, in order:
+
+    honest-take, narrative, plain-terms, money, cost-drivers, owner-take-home,
+    break-even, wages, startup-cost, seasonality, first-year, nearby,
+    operator-voices, risks, vs-world, locals, contrarian, myths, fit,
+    gut-check, one-thing
+
+**This changes the phase materially, and the earlier draft would have made the page worse.** 21 plus 10 is 31 sections, which runs straight into the founder's own complaint that pages are unskimmable. **Four of his ten requests must REPLACE an existing section rather than add one:**
+
+| His request | Absorbs |
+|---|---|
+| Burglary, lawsuit and penalty risk (6.9) | `risks` |
+| Pay as a share of takings (from the interview) | `wages`, which is today the four hardcoded wage tables |
+| Personas by money, residency and age (6.8) | `locals` |
+| The four-plus-one onward rail (7.1) | `nearby`, which is today the four fixed multipliers |
+
+**Six of the 21 are opinion sections clustered at the close** — `operator-voices`, `contrarian`, `myths`, `fit`, `gut-check`, `one-thing` — and that is where the length is. `one-thing` already repeats `honest-take` word for word, so the close is a duplicate before anything is added. Under "replace, never cut", these get consolidated into fewer, stronger sections; they are not deleted.
+
+**Net section count after this phase must not exceed 24.** If a task would push it past that, it is adding where it should be absorbing.
 
 > **RE-READ THE ILLUSTRATIVE-CONTENT RULE at the top of this plan before starting any task in this phase.** Every section below is built in the workshop first. None reaches a reader-facing page without a real source.
 
