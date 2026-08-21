@@ -13,14 +13,14 @@
 | **0 — See it before you touch it** | **DONE** | `docs/loop/artifacts/before-london-restaurants/` , both widths plus `FINDINGS.md`. The review tool is built and gated (`build-compare`) |
 | **1 — Scope** | **DONE, awaiting founder review** | 243 activities to **184**. 59 retired behind 308s, 13 redirect chains collapsed. `docs/loop/artifacts/scope-phase1/` |
 | **2 — Taxonomy merge** | **DONE, awaiting founder review** | 184 to **138 published, 128 shown**. 46 merges. Directory 4,252px to 3,612px. **NEW FINDING: the SECTORS are now the problem**, see below |
-| 3 — Presence threshold | not started | |
+| **3 — Presence threshold** | **DONE, mechanism only** | The machine found: the cell lookup never returns null, it fabricates. Threshold built, wired, gated, and **FAILS OPEN** (the plan had this backwards). Manifest UNGENERATED, so behaviour is unchanged until a reachable database generates it |
 | 4 — Type ladder | not started | measured: 9.5px to 86px, ~25 sizes, two ladders |
 | 5 — Width | not started | measured: 32 Full against 2 Narrow, middle tier unused |
 | 6 — Specialised sections | not started | **cap the page at 24 sections**, see the phase note |
 | 7 — Onward navigation | not started | |
 | 8 — Industry page | not started | |
 
-**Chain: 109/109.** Started at 105; Phases 0 to 2 added `build-compare`, `scope-rules`, `retired-activities` and `activity-merges`.
+**Chain: 110/110.** Started at 105; Phases 0 to 2 added `build-compare`, `scope-rules`, `retired-activities`, `activity-merges` and `presence-threshold`.
 
 **A PHASE 2 FINDING THAT NEEDS ITS OWN WORK, and is deliberately not folded in.** Cutting and merging the activities has left the **sector headings** as the visible defect. Twenty headings now carry 128 trades, and several carry almost nothing: **Software & tech holds one** (game development) while Software development itself sits under Creative & media; **Real estate holds one**; **Transport holds one**; **Construction holds three** (bricklaying, plastering, tiling) while the other building trades sit under Trades & home services; and **Farming & food production contains neither farming nor food production**, only a coffee roaster and a craft brewery. This is a sector consolidation, not an activity one, and it wants deciding rather than guessing.
 
