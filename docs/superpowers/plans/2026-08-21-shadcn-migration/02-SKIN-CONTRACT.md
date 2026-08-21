@@ -31,6 +31,52 @@ tokens, and all fifteen are already declared in `src/app/globals.css`:
 **Consequence:** an imported component is on-skin the moment it lands. Verify it
 rather than assume it, but the default is correct, not wrong.
 
+### CORRECTION, 2026-08-21, found by re-verifying this claim rather than repeating it
+
+The first draft of this file asserted the tokens **exist**. It did not check what
+values they **hold**. Measured:
+
+| token | value | hue | lightness |
+|---|---|---|---|
+| `--background` | `#f7f7f8` | cool | 97% , the atlas paper ground. Correct |
+| `--card` | `#ffffff` | , | the atlas card. Correct |
+| `--border` | `#e3e3e3` | neutral | the atlas hairline. Correct |
+| `--primary` | `#991600` | 8.6 | **30%** |
+| `--foreground` | `#211810` | 28.2 | 9.6%, sat 35% |
+| `--muted-foreground` | `#534231` | 30.0 | 25.9%, sat 26% |
+
+**Two things follow, and neither is fatal.**
+
+**1. The accent is one hue at five lightnesses, and the bridge points at the
+darkest.** Every accent value on this site sits between hue 8.6 and 11.1, so
+this is a ramp rather than five different colours:
+
+```
+#991600  L30   --primary        <- what a shadcn component will use
+#9e2e1b  L36   --terra-deep
+#c23a22  L45   --terra
+#d4573c  L53   --terra-bright
+#fb8469  L70   the FORM-CATALOG ratified accent
+```
+
+A shadcn button, focus ring or `bg-primary` surface therefore renders at **less
+than half the lightness** of the ratified accent. That is a visible mismatch, and
+it is a one-line fix, but it must be **decided rather than assumed**: pointing
+`--primary` at `#fb8469` changes every existing consumer of `--primary` too.
+**Phase 0 item. Do not fix it in passing during a component migration.**
+
+**2. The ink is warm, and that is a known-open question, not a new finding.**
+`--foreground` and `--muted-foreground` sit at hue 28 to 30, which is the cocoa
+family. `01-DESIGN-STANDARD.md` section 4 already records this: *"cocoa was not
+deleted, and it is brown. Charter section 8 bans brown, so the site's entire
+quiet-text ladder is a banned hue"*, and routes it to `DECISIONS-NEEDED.md` as a
+palette-membership question rather than a contrast one.
+
+**The migration inherits this; it does not create it and must not silently
+resolve it.** Every shadcn component using `text-muted-foreground` will wear the
+same warm grey the rest of the site already wears, which is the correct
+behaviour for a migration whose rule is "change nothing a reader reads."
+
 **The one thing to check on every import:** does it reference a token that does
 NOT exist here? A `var()` naming an unset property with no fallback is invalid at
 computed-value time and **voids the whole declaration**, which this project has

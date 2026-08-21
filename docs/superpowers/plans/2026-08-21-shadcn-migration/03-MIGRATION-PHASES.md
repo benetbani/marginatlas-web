@@ -27,6 +27,14 @@ environment as it stands.
 
 **Deliverables:**
 
+0. **Settle `--primary`.** Found 2026-08-21 by re-verifying the token bridge
+   rather than trusting it: `--primary` is `#991600` at lightness 30, while the
+   ratified accent is `#fb8469` at lightness 70. Same hue family, less than half
+   the lightness. Every shadcn button, focus ring and `bg-primary` surface will
+   use the dark one. Repointing it is one line and changes every existing
+   consumer of `--primary` too, so it is a decision, not a migration side-effect.
+   **Settle it before any component lands, or every component lands wrong.**
+
 1. A hydrated-page screenshot path that works. Options, in order of preference:
    - the Browser pane against `preview_start` (worked this session; `navigate`
      to a localhost path was denied but `preview_start {url}` succeeded)
