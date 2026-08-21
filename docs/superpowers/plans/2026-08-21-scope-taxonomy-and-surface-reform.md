@@ -4,6 +4,28 @@
 
 **Goal:** Cut the atlas down to the businesses it should actually cover, collapse the over-split activity list, put one type ladder and one width rule across the whole site, and build the specialised per-trade sections that make a page feel like it was written by someone who knows the trade.
 
+---
+
+## STATUS
+
+| Phase | State | Evidence |
+|---|---|---|
+| **0 — See it before you touch it** | **DONE** | `docs/loop/artifacts/before-london-restaurants/` , both widths plus `FINDINGS.md`. The review tool is built and gated (`build-compare`) |
+| **1 — Scope** | **DONE, awaiting founder review** | 243 activities to **184**. 59 retired behind 308s, 13 redirect chains collapsed. `docs/loop/artifacts/scope-phase1/` |
+| 2 — Taxonomy merge | not started | target: under 130 |
+| 3 — Presence threshold | not started | |
+| 4 — Type ladder | not started | measured: 9.5px to 86px, ~25 sizes, two ladders |
+| 5 — Width | not started | measured: 32 Full against 2 Narrow, middle tier unused |
+| 6 — Specialised sections | not started | **cap the page at 24 sections**, see the phase note |
+| 7 — Onward navigation | not started | |
+| 8 — Industry page | not started | |
+
+**Chain: 108/108.** Started at 105; Phase 0 and 1 added `build-compare`, `scope-rules` and `retired-activities`.
+
+**Three corrections this plan has already taken from contact with the code**, each recorded at the point it bit: there is **no vitest** in this repository; the trade page has **21 sections, not 7**; and the taxonomy JSON is an **object with an `industries` array**, not a bare array.
+
+**A NEW WORKSTREAM ARRIVED 2026-08-21, mid-Phase-1**, and is deliberately NOT folded into this plan: site-wide UX, accounts and sign-in, and what a paying reader gets. It is a different kind of work (product surface and state, not catalogue and layout) and it wants its own plan. Named here so it is not lost.
+
 **Architecture:** Eight phases, strictly ordered so that destructive structural work happens *before* any per-page polish (never polish a page you are about to delete). Phases 1–3 shrink and gate the catalogue. Phases 4–5 are site-wide design ladders that every later phase inherits. Phases 6–8 add surface. Every phase ends with a rendered before/after file the founder opens.
 
 **Tech Stack:** Next.js 15.5, React 19.2, TypeScript 5, Tailwind 3.4, Supabase. Rendering harness: `scripts/serve_shot.mjs` + Playwright MCP. Gate chain: `npm run prebuild:serial`.
