@@ -6,6 +6,8 @@
  */
 import sectorsJson from "./taxonomy/sectors.json";
 import industriesJson from "./taxonomy/industries.json";
+import { isInScope } from "./taxonomy/scope_rules";
+import { RETIRED } from "./taxonomy/retired";
 
 export type Sector = {
   id: string;
@@ -63,13 +65,50 @@ export type Industry = {
 };
 
 export const SECTORS = (sectorsJson as { sectors: Sector[] }).sectors;
-export const INDUSTRIES = (industriesJson as { industries: Industry[] }).industries;
+/**
+ * EVERY activity the taxonomy file has ever listed, including the ones retired
+ * as out of scope. Almost nothing should read this.
+ *
+ * It exists for RESOLUTION, not for listing. Two jobs, both of which break if a
+ * retired activity disappears from the lookups:
+ *
+ *  1. `industryToSlug` falls back to slugifying the ID when it cannot find the
+ *     activity, and an id is not a name. `other_transport_mfg` would slugify to
+ *     `other-transport-mfg` while the real URL is
+ *     `aerospace-other-transport-mfg`, so the redirect record would be built
+ *     against slugs that never existed, and every one of those URLs would 404
+ *     with a green gate.
+ *  2. Anything holding a historical id (a stored cell row, an old export) still
+ *     needs to resolve it to a name.
+ *
+ * If you want "the activities this atlas covers", you want `INDUSTRIES`.
+ */
+export const ALL_INDUSTRIES = (industriesJson as { industries: Industry[] }).industries;
+
+/**
+ * The activities this atlas covers. Founder ruling 2026-08-21: businesses you
+ * can see on the street. Farming, banking and financial trading, factories,
+ * mining, wholesale, network transport, hospitals, schools and management
+ * consulting are out. See src/lib/taxonomy/scope_rules.ts for the four tests.
+ *
+ * FILTERED HERE, AT THE SOURCE, AND DELIBERATELY SO. Nineteen files read this
+ * constant and every one of them gets the change for free. The alternative was
+ * nineteen call-site filters, which is nineteen chances to forget and, worse, a
+ * rule a newly-written twentieth page would not inherit.
+ *
+ * Retired activities do not vanish: their URLs answer a permanent redirect from
+ * the middleware. See src/lib/taxonomy/retired.ts.
+ */
+export const INDUSTRIES: Industry[] = ALL_INDUSTRIES.filter((i) => isInScope(i).inScope);
 
 export const SECTOR_BY_ID: Record<string, Sector> = Object.fromEntries(
   SECTORS.map((s) => [s.id, s])
 );
+/* Built from ALL_INDUSTRIES, not INDUSTRIES: see the note on ALL_INDUSTRIES.
+   A retired id must still resolve to its name, or its slug is wrong and its
+   redirect never fires. */
 export const INDUSTRY_BY_ID: Record<string, Industry> = Object.fromEntries(
-  INDUSTRIES.map((i) => [i.id, i])
+  ALL_INDUSTRIES.map((i) => [i.id, i])
 );
 
 /** NAICS-3 → industry_id lookup (US cells). */
@@ -370,6 +409,19 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
   // 2. Alias map exact match
   const aliasId = INDUSTRY_SLUG_ALIASES[norm];
   if (aliasId && INDUSTRY_BY_ID[aliasId]) return INDUSTRY_BY_ID[aliasId];
+
+  /* 2b. A RETIRED SLUG RESOLVES TO NOTHING. It must never reach the fuzzy
+     fallback below, and this is not a theoretical hazard: measured the moment
+     the 2026-08-21 scope retirement landed, "management-consulting" fuzzy
+     matched to SHORT-TERM RENTAL MANAGEMENT and "residential-construction" to
+     RESIDENTIAL PAINTERS. Eight references across seven files, each one
+     silently pointing at a different business while every page still rendered.
+
+     That is exactly the defect class this whole effort exists to remove:
+     something that looks like an answer and is not. The activity is retired, so
+     the honest answer is that we do not hold it. The middleware redirects the
+     URL; callers get null and self-omit. */
+  if (RETIRED[norm]) return null;
 
   // 3. Tight fuzzy fallback (word-boundary token match, every token required)
   return fuzzyIndustryFallback(norm.replace(/-/g, " "));

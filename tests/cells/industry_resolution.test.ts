@@ -17,7 +17,7 @@ import {
   resolveDisplayIndustry,
   LEGACY_DB_TO_TAXONOMY,
 } from "../../src/lib/cells/industry_resolution";
-import { industryToSlug } from "../../src/lib/taxonomy";
+import { industryToSlug, slugToIndustry } from "../../src/lib/taxonomy";
 
 const errors: string[] = [];
 const check = (cond: boolean, msg: string) => {
@@ -44,18 +44,47 @@ const check = (cond: boolean, msg: string) => {
 }
 
 // 2. Crosswalk class via the TAXONOMY slug: visiting the taxonomy slug for
-//    fabricated_metal_mfg must also query the legacy id metal_products_mfg.
+//    auto_dealers must also query the legacy id auto_dealers_gas.
+//
+//    REPOINTED 2026-08-21, from fabricated_metal_mfg. That was a fabricated
+//    metal PLANT, retired by the scope rules, and a retired slug now resolves
+//    to nothing on purpose (block 2b). Eleven of the fifteen legacy crosswalk
+//    pairs point at a retired target after that change, so the subject here had
+//    to be one of the four that survive, or this block would be asserting the
+//    behaviour of a trade the atlas no longer publishes.
 {
-  const slug = industryToSlug("fabricated_metal_mfg"); // "fabricated-metal-manufacturing"
+  const slug = industryToSlug("auto_dealers"); // "auto-dealers"
   const cands = industryQueryCandidates(slug);
   check(
-    cands.includes("fabricated_metal_mfg"),
-    `${slug}: should include exact 'fabricated_metal_mfg', got [${cands.join(", ")}]`,
+    cands.includes("auto_dealers"),
+    `${slug}: should include exact 'auto_dealers', got [${cands.join(", ")}]`,
   );
   check(
-    cands.includes("metal_products_mfg"),
-    `${slug}: should include legacy 'metal_products_mfg' via reverse crosswalk, got [${cands.join(", ")}]`,
+    cands.includes("auto_dealers_gas"),
+    `${slug}: should include legacy 'auto_dealers_gas' via reverse crosswalk, got [${cands.join(", ")}]`,
   );
+}
+
+// 2b. A RETIRED ACTIVITY RESOLVES TO NOTHING, and must never fuzzy-match into a
+//     different business.
+//
+//     This is the behaviour the 2026-08-21 scope retirement had to add, and the
+//     reason is measured rather than theoretical: the moment 59 activities were
+//     retired, `slugToIndustry` fell through to its fuzzy token matcher and
+//     "management-consulting" returned SHORT-TERM RENTAL MANAGEMENT while
+//     "residential-construction" returned RESIDENTIAL PAINTERS. Every page still
+//     rendered. Eight references across seven files silently pointed at another
+//     trade.
+//
+//     The URL is handled by a 308 in the middleware. The resolver's job is to
+//     say honestly that we do not hold this, so callers self-omit.
+{
+  for (const retiredSlug of ["management-consulting", "residential-construction", "grain-farming", "banking"]) {
+    check(
+      slugToIndustry(retiredSlug) === null,
+      `${retiredSlug}: a retired activity must resolve to null, got ${slugToIndustry(retiredSlug)?.id ?? "null"}`,
+    );
+  }
 }
 
 // 3. Crosswalk class via the LEGACY slug: "metal-products-mfg" must resolve

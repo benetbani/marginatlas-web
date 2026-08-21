@@ -89,7 +89,7 @@ const HEADLINE_INDUSTRIES: Array<{
   { key: "coffee-shops", slug: "cafes-coffee-shops", label: "Coffee", base: 0.6 },
   { key: "law-offices", slug: null, label: "Law", base: 2.0 },
   { key: "hair-salons", slug: "hairdressers-beauty", label: "Hair", base: 0.4 },
-  { key: "construction-residential", slug: "residential-construction", label: "Construction", base: 1.4 },
+  { key: "construction-residential", slug: "carpenters-finish-work", label: "Carpentry", base: 1.4 },
   { key: "software-dev-services", slug: "software-development", label: "Software", base: 2.4 },
   { key: "fitness-centers", slug: "sports-fitness", label: "Fitness", base: 0.7 },
   { key: "specialty-retail", slug: null, label: "Retail", base: 0.8 },

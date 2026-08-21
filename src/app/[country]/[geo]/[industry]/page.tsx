@@ -226,7 +226,7 @@ export async function generateStaticParams(): Promise<Params[]> {
     // with src/app/page.tsx FEATURED array.
     { country: "us", geo: "california", industry: "software-development" },
     { country: "gb", geo: "gb",         industry: "legal-services" },
-    { country: "de", geo: "de21",       industry: "fabricated-metal-mfg" },
+    { country: "de", geo: "de21",       industry: "metal-fabrication-machine-shops" },
     { country: "es", geo: "es511",      industry: "restaurants" },
     { country: "mx", geo: "mx-roo",     industry: "hotels-lodging" },
     { country: "us", geo: "california", industry: "restaurants" },

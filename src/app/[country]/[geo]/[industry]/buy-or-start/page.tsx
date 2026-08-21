@@ -87,7 +87,7 @@ export async function generateStaticParams(): Promise<Params[]> {
     { country: "gb", geo: "london",     industry: "legal-services" },
     { country: "gb", geo: "london",     industry: "restaurants" },
     { country: "gb", geo: "london",     industry: "cafes-coffee" },
-    { country: "de", geo: "de21",       industry: "fabricated-metal-mfg" },
+    { country: "de", geo: "de21",       industry: "metal-fabrication-machine-shops" },
     { country: "de", geo: "berlin",     industry: "restaurants" },
     { country: "es", geo: "barcelona",  industry: "restaurants" },
     { country: "mx", geo: "mx-roo",     industry: "hotels-lodging" },

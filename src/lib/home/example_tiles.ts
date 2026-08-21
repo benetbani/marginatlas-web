@@ -78,7 +78,7 @@ const CURATED: Curated[] = [
   { business: "Software developers", city: "San Francisco", country: "us", geo: "california", industry: "software-development" },
   { business: "Law firms", city: "the UK", country: "gb", geo: "gb", industry: "legal-services" },
   { business: "Hotels", city: "Cancun", country: "mx", geo: "mx-roo", industry: "hotels-lodging" },
-  { business: "Metal manufacturers", city: "Bavaria", country: "de", geo: "de21", industry: "fabricated-metal-mfg" },
+  { business: "Machine shops", city: "Bavaria", country: "de", geo: "de21", industry: "metal-fabrication-machine-shops" },
   { business: "Coffee shops", city: "California", country: "us", geo: "california", industry: "coffee-shops" },
 ];
 

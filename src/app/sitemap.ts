@@ -254,7 +254,7 @@ async function neighborhoodSitemap(): Promise<MetadataRoute.Sitemap> {
     "specialty-trades-mixed",
     "auto-repair-shops",
     "veterinary-pet-care",
-    "fabricated-metal-mfg",
+    "metal-fabrication-machine-shops",
   ];
 
   type CityListEntry = { slug: string; iso2: string };

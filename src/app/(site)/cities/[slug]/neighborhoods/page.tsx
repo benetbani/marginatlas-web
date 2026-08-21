@@ -87,7 +87,7 @@ const CHARACTER_HEADLINE: Record<
   "affluent-residential": { industry: null, name: "Specialty retail" },
   "mid-residential": { industry: "restaurants", name: "Restaurants" },
   "working-residential": { industry: "auto-repair-shops", name: "Auto repair" },
-  "industrial": { industry: "residential-construction", name: "Construction" },
+  "industrial": { industry: "metal-fabrication-machine-shops", name: "Machine shops" },
   "tourist": { industry: "hotels-lodging", name: "Hotels" },
   "mixed-urban": { industry: "cafes-coffee-shops", name: "Coffee shops" },
   "academic": { industry: "indie-bookstores", name: "Bookstores" },
