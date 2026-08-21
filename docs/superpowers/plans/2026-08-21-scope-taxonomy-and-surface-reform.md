@@ -6,7 +6,11 @@
 
 **Architecture:** Eight phases, strictly ordered so that destructive structural work happens *before* any per-page polish (never polish a page you are about to delete). Phases 1–3 shrink and gate the catalogue. Phases 4–5 are site-wide design ladders that every later phase inherits. Phases 6–8 add surface. Every phase ends with a rendered before/after file the founder opens.
 
-**Tech Stack:** Next.js 15.5, React 19.2, TypeScript 5, Tailwind 3.4, Supabase. Rendering harness: `scripts/shoot.mjs` + Playwright MCP. Gate chain: `npm run prebuild:serial`.
+**Tech Stack:** Next.js 15.5, React 19.2, TypeScript 5, Tailwind 3.4, Supabase. Rendering harness: `scripts/serve_shot.mjs` + Playwright MCP. Gate chain: `npm run prebuild:serial`.
+
+> **CORRECTED IN PHASE 0 — THERE IS NO VITEST IN THIS REPOSITORY.** The first draft of this plan wrote its tests in vitest. There is no test runner here at all: a test is a plain TypeScript file run with `npx tsx`, using a `failed` counter, one `console.log` per check, and `process.exit(failed === 0 ? 0 : 1)`. It becomes real by being registered in the `GATES` array in `scripts/prebuild_all.ts`. `tests/lib/strip_comments.test.ts` is the reference shape; `tests/scripts/build_compare.test.ts` was written against it in Phase 0. **Every "write the failing test" step below means that shape, not vitest.** Adding a test runner to land one file would be a larger change than the thing being tested.
+>
+> Two consequences that are easy to miss: a test file nothing runs is not coverage, so **registering it is part of done**; and after registering one, run `npx tsx scripts/counts.ts --write`, or the `counts-fresh` gate fails the chain on a stale number.
 
 ---
 

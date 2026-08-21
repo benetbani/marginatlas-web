@@ -232,6 +232,7 @@ const GATES: Gate[] = [
      fixes it. Negative-tested by editing 103 to 99 in CLAUDE.md. */
   { name: "counts-fresh", script: "scripts/verify_counts_fresh.ts" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
+  { name: "build-compare", script: "tests/scripts/build_compare.test.ts" },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
