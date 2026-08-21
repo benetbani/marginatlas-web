@@ -130,7 +130,7 @@ export function FormatPicker({ d }: { d: any }) {
             DELETED (rulebook 14): the three tiles + the note below show it, never a sentence.
             The one surviving line is the interaction cue, not a conclusion. */}
         <p className="-mt-1 mb-4 flex flex-wrap items-center gap-2 text-[12.5px] text-[var(--c-ink2)]">
-          <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[10.5px] font-semibold text-[var(--c-ink2)]">
+          <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[11px] font-semibold text-[var(--c-ink2)]">
             <span className="fig">&#8595;</span> the money below updates
           </span>
         </p>
@@ -162,7 +162,7 @@ export function FormatPicker({ d }: { d: any }) {
                 className={`relative z-10 rounded-full px-2 py-2 text-center text-[13px] font-semibold transition-colors ${active ? "text-[var(--c-ink)]" : "text-[var(--c-ink2)] hover:text-[var(--c-ink)]"}`}
               >
                 {s.name}
-                <span className="mt-0.5 block text-[9.5px] font-medium uppercase tracking-wide text-[var(--c-muted)]">{s.size_band}</span>
+                <span className="mt-0.5 block text-[10px] font-medium uppercase tracking-wide text-[var(--c-muted)]">{s.size_band}</span>
               </button>
             );
           })}

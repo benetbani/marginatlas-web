@@ -170,7 +170,7 @@ export function ScoreBand({
       {sorted.length > 0 ? (
         <div className={["flex justify-between", have ? "mt-2.5" : "mt-2"].join(" ")}>
           {sorted.map((b) => (
-            <span key={b.word} className="text-[10.5px] tracking-wide text-cocoa-700">
+            <span key={b.word} className="text-[11px] tracking-wide text-cocoa-700">
               {b.word}
             </span>
           ))}

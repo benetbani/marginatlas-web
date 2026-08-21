@@ -40,7 +40,7 @@ export function CityHero({ d }: { d: any }) {
         {focal ? (
           <div className="md:justify-self-end md:text-right">
             <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.08em] text-[var(--c-muted)]">{focal.label}</div>
-            <div className="fig leading-none text-[var(--terra-text)] text-[44px] md:text-[52px]"><Fig>{focal.value}</Fig>{focal.unit ? <span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">{focal.unit}</span> : null}</div>
+            <div className="fig leading-none text-[var(--terra-text)] text-[30px] md:text-[48px]"><Fig>{focal.value}</Fig>{focal.unit ? <span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">{focal.unit}</span> : null}</div>
             {focal.sub ? <div className="mt-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{focal.sub}</div> : null}
           </div>
         ) : null}

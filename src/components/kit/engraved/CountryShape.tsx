@@ -410,7 +410,7 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
           pointer-events: none;
           white-space: nowrap;
           font-family: var(--font-body);
-          font-size: 10.5px;
+          font-size:11px;
           font-weight: 500;
           letter-spacing: 0.06em;
           color: var(--text-faint);
@@ -457,7 +457,7 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
           align-items: center;
           gap: 4px;
           font-family: var(--font-body);
-          font-size: 10.5px;
+          font-size:11px;
           font-weight: 500;
         }
         .eng-shape__rim[data-align="end"] .eng-shape__rim-read,
@@ -472,7 +472,7 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
           display: inline-block;
         }
         .eng-shape__rim-tag {
-          font-size: 8px;
+          font-size:10px;
           font-weight: 600;
           letter-spacing: 0.08em;
           text-transform: uppercase;
@@ -511,10 +511,10 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
             max-width: 72px;
           }
           .eng-shape__rim-label {
-            font-size: 10.5px;
+            font-size:11px;
           }
           .eng-shape__rim-read {
-            font-size: 9.5px;
+            font-size:10px;
           }
         }
       `}</style>

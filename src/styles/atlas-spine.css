@@ -104,6 +104,18 @@
   --sans:var(--font-geist,'Geist'),'Geist','Geist Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --fig:var(--font-grotesk,'Space Grotesk'),'Space Grotesk',ui-monospace,'SF Mono',monospace;
 
+  /* THE TYPE LADDER, 2026-08-21. Ten steps, declared identically in
+     website/src/app/globals.css so the v2 spine and the rest of the site stop
+     running separate scales. Measured before it was drawn: 44 distinct sizes
+     across 2,758 declarations, 8px to 86px, a 10.75x range, on two ladders that
+     did not know about each other. Converged on sizes this site already used
+     rather than invented. Read-text range is now 4.36x.
+     --t-mark is the ONLY step below the read floor and is for marks a reader
+     glances at, never for a sentence. Founder: "eleven for anything you read,
+     ten for marks." */
+  --t-mark:10px; --t-micro:11px; --t-small:12px; --t-body:14px; --t-lead:16px;
+  --t-sub:18px; --t-head:20px; --t-section:24px; --t-focal:30px; --t-answer:48px;
+
   --r-lg:10px; --r-md:8px; --r-sm:6px; --r-xs:4px;
   /* The small-control lift. Slider thumbs and map pins only: a round object a
      few pixels across that has to read as liftable against a 3px track. It is
@@ -154,7 +166,7 @@
 
 /* ---------- TYPE ---------- */
 .av2 .fig{font-family:var(--fig);font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1;letter-spacing:-.01em}
-.av2 .lab{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.av2 .lab{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
 .av2 h1,.av2 h2,.av2 h3{font-weight:600;letter-spacing:-.022em;line-height:1.06}
 .av2 h1{font-size:clamp(32px,4.6vw,48px)}
 .av2 h2{font-size:26px}
@@ -212,7 +224,7 @@
 .av2 .mast .lat a{padding:4px 10px;border-radius:999px;border:1px solid transparent}
 .av2 .mast .lat a.on{color:var(--terra-deep);font-weight:600;background:var(--terra-soft);border-color:var(--terra-line)}
 .av2 .mast .lat .s{color:var(--muted)}
-@media(max-width:640px){.av2 .mast .lat{font-size:10.5px;gap:4px}.av2 .mast .lat a{padding:3px 7px}}
+@media(max-width:640px){.av2 .mast .lat{font-size:11px;gap:4px}.av2 .mast .lat a{padding:3px 7px}}
 
 /* ---------- LAYOUT ---------- */
 .av2 section.ch{padding:58px 0}
@@ -231,12 +243,12 @@
 .av2 .pad-lg{padding:30px}
 
 /* ---------- HERO , THE PAIRING ---------- */
-.av2 .crumb{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
+.av2 .crumb{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
 .av2 .crumb .d{width:3px;height:3px;border-radius:50%;background:var(--faint)}
 .av2 .texture{font-size:15px;color:var(--ink-2);max-width:46ch;line-height:1.55;margin-top:24px}
 .av2 .texture b{font-family:var(--fig);font-weight:600;color:var(--ink)}
 .av2 .answer{margin-top:28px}
-.av2 .answer .num{font-family:var(--fig);font-weight:600;font-size:clamp(56px,8.4vw,86px);line-height:.84;letter-spacing:-.035em;color:var(--terra-deep)}
+.av2 .answer .num{font-family:var(--fig);font-weight:600;font-size:clamp(30px,5vw,48px);line-height:.84;letter-spacing:-.035em;color:var(--terra-deep)}
 .av2 .answer .l{font-size:16px;font-weight:500;color:var(--ink);line-height:1.35;margin-top:14px;max-width:30ch}
 /* the range line: nothing on this site pretends to be exact */
 .av2 .rng{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-size:11.5px;color:var(--muted)}
@@ -261,7 +273,7 @@
 .av2 .setter .val{font-family:var(--fig);font-size:17px;font-weight:600;color:var(--terra-deep);white-space:nowrap;min-width:64px;text-align:right}
 
 /* ---------- TAGS ---------- */
-.av2 .tag{display:inline-flex;align-items:center;gap:7px;font-size:9.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+.av2 .tag{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
   color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:3px 10px}
 .av2 .chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:var(--ink-2);
   background:rgba(0,0,0,.035);border:1px solid var(--hair);border-radius:999px;padding:4px 11px}
@@ -287,7 +299,7 @@
 .av2 .units .cut{position:absolute;height:2px;background:var(--terra);border-radius:2px;
   box-shadow:0 0 0 3px rgba(255,255,255,.8)}
 .av2 .units .cutlab{position:absolute;right:-6px;transform:translateY(-100%);margin-top:-9px;
-  font-size:10.5px;font-weight:600;letter-spacing:.02em;color:var(--terra-deep);white-space:nowrap;
+  font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--terra-deep);white-space:nowrap;
   background:var(--card);padding:2px 7px;border-radius:999px;border:1px solid var(--terra-line)}
 .av2 .ukey{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px}
 .av2 .ukey .k{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
@@ -320,7 +332,7 @@
 
 /* ---------- TABLE ---------- */
 .av2 table.tb{width:100%;border-collapse:collapse}
-.av2 table.tb th{font-size:9.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);
+.av2 table.tb th{font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);
   text-align:right;padding:0 0 11px;border-bottom:1px solid var(--line)}
 .av2 table.tb th:first-child{text-align:left}
 .av2 table.tb td{padding:13px 0;border-bottom:1px solid var(--hair);text-align:right;font-family:var(--fig);font-size:15px;font-weight:500}
@@ -344,7 +356,7 @@
 .av2 .range .r.axis{margin-top:-2px}
 .av2 .range .r.axis .rail{height:auto}
 .av2 .range .r.axis .rail .tk{position:absolute;top:0;transform:translateX(-50%);
-  font-family:var(--fig);font-size:10.5px;color:var(--muted);white-space:nowrap}
+  font-family:var(--fig);font-size:11px;color:var(--muted);white-space:nowrap}
 .av2 .range .r.axis .rail .tk:first-child{transform:none}
 .av2 .range .r.axis .rail .tk:last-child{transform:translateX(-100%)}
 .av2 .range .r.axis .rail .tk::before{content:"";position:absolute;left:50%;top:-7px;width:1px;height:4px;background:var(--line)}
@@ -356,7 +368,7 @@
 .av2 .worlds .w{padding:20px 18px;border-right:1px solid var(--hair)}
 .av2 .worlds .w:last-child{border-right:0}
 .av2 .worlds .w.bad{background:rgba(0,0,0,.028)}
-.av2 .worlds .w .t{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.av2 .worlds .w .t{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
 .av2 .worlds .w .n{font-family:var(--fig);font-size:26px;font-weight:600;line-height:1;margin-top:10px}
 .av2 .worlds .w.bad .n{color:var(--muted)}
 .av2 .worlds .w.now .n{color:var(--terra-deep)}
@@ -378,7 +390,7 @@
 .av2 .ctl .c{padding:20px}
 .av2 .ctl .c:first-child{border-right:1px solid var(--hair)}
 .av2 .ctl .c.not{background:rgba(0,0,0,.028)}
-.av2 .ctl .c .h{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}
+.av2 .ctl .c .h{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}
 .av2 .ctl .c.you .h{color:var(--terra-deep)}
 .av2 .ctl .c.not .h{color:var(--muted)}
 .av2 .ctl .c li{list-style:none;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--hair-2);color:var(--ink)}
@@ -423,7 +435,7 @@
 .av2 .chart svg{width:100%;height:auto;display:block;overflow:visible}
 .av2 .axis{stroke:var(--line);stroke-width:1}
 .av2 .gridline{stroke:var(--hair);stroke-dasharray:3 5;stroke-width:1}
-.av2 .axlbl{font-family:var(--fig);font-size:10.5px;fill:var(--muted)}
+.av2 .axlbl{font-family:var(--fig);font-size:11px;fill:var(--muted)}
 .av2 .ptlbl{font-family:var(--fig);font-size:15px;font-weight:600;fill:var(--ink)}
 .av2 .ptlbl.a{fill:var(--terra-deep)}
 .av2 .serie{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
@@ -442,7 +454,7 @@
 .av2 .spec .tk .d{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--n1);
   transform:translate(-50%,-50%);border:2.5px solid var(--white);box-shadow:0 0 0 1px var(--line)}
 .av2 .spec .tk .d.a{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
-.av2 .spec .r .po{display:flex;justify-content:space-between;margin-top:8px;font-size:10.5px;color:var(--muted)}
+.av2 .spec .r .po{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)}
 
 /* ---------- NUMBERED STEPS ---------- */
 .av2 .steps{display:flex;flex-direction:column}
@@ -478,7 +490,7 @@
 .av2 .mini .st.a{background:var(--terra);box-shadow:0 0 0 1px var(--terra-line)}
 .av2 .mini .cp{position:absolute;top:22px;transform:translateX(-50%);text-align:center;white-space:nowrap}
 .av2 .mini .cp .f{font-family:var(--fig);font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.25;display:block}
-.av2 .mini .cp .n{font-size:10.5px;color:var(--muted)}
+.av2 .mini .cp .n{font-size:11px;color:var(--muted)}
 .av2 .mini .cp.l{transform:none;text-align:left}
 .av2 .mini .cp.r{transform:translateX(-100%);text-align:right}
 
@@ -543,7 +555,7 @@
 }
 @media(max-width:520px){
   .av2 h1{font-size:30px}
-  .av2 .answer .num{font-size:52px}
+  .av2 .answer .num{font-size:30px}
   .av2 .units .grid-u{grid-template-columns:repeat(10,1fr)}
 }
 
@@ -579,7 +591,7 @@
 .av2 .statblock+.statblock{margin-top:20px}
 .av2 .statblock>.hd{display:flex;align-items:center;gap:9px;min-height:37px;padding:0 13px;
   border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.018);
-  font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+  font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
 .av2 .statblock>.hd .gi{color:var(--n2)}
 .av2 .statblock .row{display:grid;grid-template-columns:var(--ico-rail) minmax(0,1fr) var(--val-col);
   column-gap:9px;align-items:center;min-height:var(--row);padding:0 13px}
@@ -674,7 +686,7 @@
 .av2 .mixer .dial input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--ink);border:3px solid #fff;cursor:pointer}
 .av2 .mixer .dial .ends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px}
 .av2 .mixer .result{padding:16px 18px;background:linear-gradient(180deg,var(--terra-bright),var(--terra));color:#fff;display:flex;flex-direction:column;justify-content:center}
-.av2 .mixer .result .rl{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.85}
+.av2 .mixer .result .rl{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.85}
 .av2 .mixer .result .rn{font-family:var(--fig);font-size:34px;font-weight:600;line-height:1;margin-top:6px}
 .av2 .mixer .result .rs{font-size:12px;opacity:.9;margin-top:8px;line-height:1.4}
 @media(max-width:820px){.av2 .mixer{grid-template-columns:1fr 1fr}.av2 .mixer .dial:nth-child(2){border-right:0}.av2 .mixer .result{grid-column:1/-1}}
@@ -774,7 +786,7 @@
 .av2 .eight .e:nth-child(even){background:var(--zebra)}
 .av2 .eight .e .gi{color:var(--n2)}
 .av2 .eight .e .nm{font-size:13px;color:var(--ink)}
-.av2 .eight .e .nm .s{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+.av2 .eight .e .nm .s{display:block;font-size:11px;color:var(--muted);margin-top:1px}
 .av2 .eight .e .ax{position:relative;height:22px}
 .av2 .eight .e .ax .base{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
 .av2 .eight .e .ax .nat{position:absolute;top:calc(50% - 6px);width:1px;height:12px;background:var(--terra);left:50%}
@@ -813,7 +825,7 @@
 .av2 .slope{position:relative;height:220px;margin:8px 0}
 .av2 .slope .col{position:absolute;top:0;bottom:26px;width:1px;background:var(--line)}
 .av2 .slope .col.l{left:26%} .av2 .slope .col.r{right:26%}
-.av2 .slope .colh{position:absolute;top:-4px;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.av2 .slope .colh{position:absolute;top:-4px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .av2 .slope .colh.l{left:26%;transform:translateX(-50%)} .av2 .slope .colh.r{right:26%;transform:translateX(50%)}
 .av2 .slope svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .av2 .slope .ln{fill:none;stroke:var(--n4);stroke-width:1.5}
@@ -835,8 +847,8 @@
 .av2 .termline .cap.up{top:0} .av2 .termline .cap.dn{top:58px}
 .av2 .termline .cap .f{display:block;font-family:var(--fig);font-size:13px;font-weight:600}
 .av2 .termline .cap.a .f{color:var(--terra-deep)}
-.av2 .termline .cap .n{display:block;font-size:10.5px;color:var(--muted)}
-.av2 .termline .scale{position:absolute;left:0;right:0;top:58px;display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted)}
+.av2 .termline .cap .n{display:block;font-size:11px;color:var(--muted)}
+.av2 .termline .scale{position:absolute;left:0;right:0;top:58px;display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
 
 /* ---------- .fitgrid , which area suits which trade ---------- */
 .av2 .fitgrid{overflow-x:auto}
@@ -932,7 +944,7 @@
 .av2 .tline .lane.slow .track i{background:var(--terra)}
 .av2 .tline .lane .v{font-family:var(--fig);font-size:12.5px;font-weight:600;text-align:right}
 .av2 .tline .scale{display:grid;grid-template-columns:140px 1fr 58px;gap:12px;margin-top:2px}
-.av2 .tline .scale .s{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted)}
+.av2 .tline .scale .s{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
 
 /* ---------- .reach , concentric catchment arcs ---------- */
 .av2 .reachwrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
@@ -941,7 +953,7 @@
 .av2 .reach .ring{fill:none;stroke:var(--n4);stroke-width:1.5}
 .av2 .reach .ring.a{stroke:var(--terra);stroke-width:2}
 .av2 .reach .rl{font-family:var(--fig);font-size:11px;font-weight:600;fill:var(--ink)}
-.av2 .reach .rn{font-size:9px;fill:var(--muted)}
+.av2 .reach .rn{font-size:10px;fill:var(--muted)}
 .av2 .reach .cd{fill:var(--terra)}
 @media(max-width:560px){.av2 .reachwrap{grid-template-columns:1fr}}
 
@@ -1055,7 +1067,7 @@
 /* Must track .eight .e exactly, or the header labels drift off their columns. */
 .av2 .eight .rulerhd{display:grid;grid-template-columns:32px minmax(0,1fr) 1fr var(--val-col);gap:12px;
   padding:9px 15px;border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02)}
-.av2 .eight .rulerhd .sc{display:flex;justify-content:space-between;font-size:9.5px;letter-spacing:.08em;
+.av2 .eight .rulerhd .sc{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--muted)}
 .av2 .eight .rulerhd .sc b{color:var(--terra-deep);font-weight:600}
 .av2 .eight .e .ax .base{background:var(--n5);height:2px;border-radius:2px}
@@ -1069,7 +1081,7 @@
 .av2 .readcol{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--data-fill)}
 .av2 .readcol .rhd{display:grid;grid-template-columns:26px minmax(0,1fr) 1.15fr 92px;gap:12px;padding:9px 15px;
   border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02);
-  font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .av2 .readcol .rhd .sc{display:flex;justify-content:space-between}
 .av2 .readcol .rr{display:grid;grid-template-columns:26px minmax(0,1fr) 1.15fr 92px;gap:12px;align-items:center;
   min-height:38px;padding:0 15px}
@@ -1082,7 +1094,7 @@
 /* The group label. Says which question the readings under it answer, so
    "Paying by card" no longer sits beside "Borrowing to expand" with nothing
    between them. Quiet by design: it is a signpost, not a finding. */
-.av2 .readcol .rgrp{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+.av2 .readcol .rgrp{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
   color:var(--muted);padding:14px 15px 6px;background:transparent}
 .av2 .readcol .rgrp+.rr{box-shadow:none}
 .av2 .readcol .rr .gi{color:var(--n2)}
@@ -1178,7 +1190,7 @@
 .av2 .archetypes .detail .dg .c{padding:11px 13px;border-right:1px solid var(--grp-frame)}
 .av2 .archetypes .detail .dg .c:last-child{border-right:0}
 .av2 .archetypes .detail .dg .c .n{font-family:var(--fig);font-size:16px;font-weight:600;line-height:1}
-.av2 .archetypes .detail .dg .c .k{font-size:10.5px;color:var(--muted);margin-top:4px}
+.av2 .archetypes .detail .dg .c .k{font-size:11px;color:var(--muted);margin-top:4px}
 @media(max-width:820px){.av2 .archetypes .cards{grid-template-columns:1fr 1fr}.av2 .archetypes .pc:nth-child(3n){border-right:1px solid var(--grp-frame)}.av2 .archetypes .pc:nth-child(2n){border-right:0}.av2 .archetypes .detail .dg{grid-template-columns:1fr 1fr}}
 
 /* ---------- 9/15. THE CALCULATOR (merged, contextual, with leverage) ---------- */
@@ -1213,11 +1225,11 @@
 .av2 .calc .out{display:flex;flex-direction:column}
 .av2 .calc .out .res{padding:20px 18px;background:linear-gradient(180deg,var(--terra-bright),var(--terra));color:#fff}
 .av2 .calc .out .res.neg{background:linear-gradient(180deg,#57575b,var(--ink))}
-.av2 .calc .out .res .rl{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.85}
+.av2 .calc .out .res .rl{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;opacity:.85}
 .av2 .calc .out .res .rn{font-family:var(--fig);font-size:38px;font-weight:600;line-height:1;margin-top:7px}
 .av2 .calc .out .res .rs{font-size:12px;opacity:.92;margin-top:8px;line-height:1.45}
 .av2 .calc .lev{padding:15px 18px}
-.av2 .calc .lev .lh{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.av2 .calc .lev .lh{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
 .av2 .calc .lev .lr{display:grid;grid-template-columns:minmax(0,1fr) 1.1fr 62px;gap:10px;align-items:center;padding:6px 0}
 .av2 .calc .lev .lr .nm{font-size:12px;color:var(--ink-2)}
 .av2 .calc .lev .lr .bar{height:7px;border-radius:var(--r-xs);background:rgba(0,0,0,.05);position:relative}
@@ -1244,10 +1256,10 @@
 
 /* ---------- 16. BREAK-EVEN WITH AN HONEST RANGE ---------- */
 .av2 .mini .band-rng{position:absolute;top:5px;height:7px;border-radius:var(--r-xs);background:rgba(0,0,0,.10)}
-.av2 .mini .cp .n2{display:block;font-size:9.5px;color:var(--muted)}
+.av2 .mini .cp .n2{display:block;font-size:10px;color:var(--muted)}
 
 /* ---------- low-confidence chip ---------- */
-.av2 .lowconf{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;letter-spacing:.06em;
+.av2 .lowconf{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted);background:rgba(0,0,0,.035);border:1px solid var(--hair);
   border-radius:999px;padding:4px 11px}
 
@@ -1277,14 +1289,14 @@
 .av2 .ledger{border:1px solid var(--grp-frame);border-radius:var(--r-md);overflow:hidden;background:var(--data-fill)}
 .av2 .ledger .lh{display:grid;grid-template-columns:minmax(0,1.4fr) 96px 1fr;gap:14px;padding:9px 15px;
   border-bottom:1px solid var(--grp-frame);background:rgba(0,0,0,.02);
-  font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .av2 .ledger .lr{display:grid;grid-template-columns:minmax(0,1.4fr) 96px 1fr;gap:14px;align-items:center;
   min-height:38px;padding:8px 15px}
 .av2 .ledger .lr+.lr{box-shadow:inset 0 1px 0 var(--grp-rule)}
 .av2 .ledger .lr:nth-child(even){background:var(--zebra)}
 .av2 .ledger .lr .nm{font-size:13px}
 .av2 .ledger .lr .how{font-size:12px;color:var(--ink-2)}
-.av2 .tier{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;letter-spacing:.04em;
+.av2 .tier{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.04em;
   padding:3px 9px;border-radius:999px;white-space:nowrap}
 .av2 .tier::before{content:"";width:6px;height:6px;border-radius:50%;flex:none}
 .av2 .tier.measured{background:rgba(0,0,0,.055);color:var(--ink)}
@@ -1432,7 +1444,7 @@
 .av2 .year .axis-m{position:relative}
 .av2 .year .strip{position:relative}
 .av2 .year .strip .midlab{position:absolute;right:0;top:calc(50% - 26px);font-family:var(--fig);
-  font-size:9.5px;color:var(--muted);background:var(--data-fill);padding:0 5px}
+  font-size:10px;color:var(--muted);background:var(--data-fill);padding:0 5px}
 
 /* the deviation chart needed a visible axis and a label that does not sit on
    top of the tallest bar */
@@ -1440,7 +1452,7 @@
 .av2 .year .bars::before{background:var(--ink);opacity:.28;z-index:1}
 .av2 .year .bars .m{min-height:2px;border-radius:2px 2px 0 0}
 .av2 .year .strip .midlab{left:0;right:auto;top:calc(50% - 30px);background:transparent;padding:0;
-  font-size:9.5px;color:var(--muted);letter-spacing:.02em}
+  font-size:10px;color:var(--muted);letter-spacing:.02em}
 
 /* the deviation chart, rebuilt: each month is its own column and the bar is
    positioned from a drawn midline, growing up when above average and down when
@@ -1455,7 +1467,7 @@
 .av2 .year .bars .col.dn i{top:50%;border-radius:0 0 2px 2px;background:var(--n4)}
 .av2 .year .bars .col.peak i{background:var(--terra)}
 .av2 .year .axis-m{margin-top:8px}
-.av2 .year .strip .midlab{position:static;display:block;margin-bottom:6px;color:var(--muted);font-size:9.5px}
+.av2 .year .strip .midlab{position:static;display:block;margin-bottom:6px;color:var(--muted);font-size:10px}
 
 /* B13. the reference tick and the extreme marker were both terracotta inside
    one row, so a reader could not tell the reference from the reading. */
@@ -1645,7 +1657,7 @@
 /* the scatter's points name themselves. Anything past the horizontal middle
    flips its label inward so nothing runs off the plot. */
 .av2 .quad .pt .lb{position:absolute;top:50%;transform:translateY(-50%);white-space:nowrap;
-  font-size:10.5px;color:var(--ink-2);left:32px}
+  font-size:11px;color:var(--ink-2);left:32px}
 .av2 .quad .pt.flip .lb{left:auto;right:32px}
 .av2 .quad .pt.hi .lb{color:var(--terra-deep);font-weight:600}
 
@@ -1750,7 +1762,7 @@
    expansion reachable from the keyboard, not only the pointer */
 .av2 .jumprail:hover,.av2 .jumprail:focus-within{width:292px}
 .av2 .jumprail a{display:flex;align-items:center;gap:11px;min-height:22px;padding:0 15px;white-space:nowrap}
-.av2 .jumprail a .n{font-family:var(--fig);font-variant-numeric:tabular-nums;font-size:10.5px;
+.av2 .jumprail a .n{font-family:var(--fig);font-variant-numeric:tabular-nums;font-size:11px;
   font-weight:500;color:var(--muted);width:17px;text-align:right;flex:none}
 .av2 .jumprail a .t{font-size:12px;color:var(--ink-2);opacity:0;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .av2 .jumprail:hover a .t,.av2 .jumprail:focus-within a .t{opacity:1}

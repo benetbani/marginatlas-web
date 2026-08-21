@@ -43,7 +43,7 @@ const SIZE_PADDING: Record<Size, string> = {
 };
 
 const SIZE_LABEL: Record<Size, string> = {
-  sm: "text-[9px] tracking-[0.14em]",
+  sm: "text-[10px] tracking-[0.14em]",
   md: "text-[10px] tracking-[0.14em]",
   lg: "text-[11px] tracking-[0.16em]",
 };

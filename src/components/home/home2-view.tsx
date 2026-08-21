@@ -238,7 +238,7 @@ function BlogStrip({ posts }: { posts: BlogPost[] }) {
             <a key={p.slug} href={`/blog/${p.slug}`} className="cityhov flex flex-col overflow-hidden rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)]">
               <BlogCover image={p.image} />
               <div className="flex flex-col p-4">
-                <span className="fig text-[10.5px] uppercase tracking-wide text-[var(--c-muted)]">{formatPostDate(p.date)}</span>
+                <span className="fig text-[11px] uppercase tracking-wide text-[var(--c-muted)]">{formatPostDate(p.date)}</span>
                 <span className="mt-1.5 text-[14px] font-semibold leading-snug text-[var(--c-ink)]">{p.title}</span>
                 {p.excerpt ? <span className="mt-1.5 line-clamp-2 text-[12px] leading-snug text-[var(--c-ink2)]">{p.excerpt}</span> : null}
               </div>

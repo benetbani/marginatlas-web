@@ -394,7 +394,7 @@ export function SpineMap({
             <span className="block h-[8px] w-[8px] rounded-full" style={{ background: TERRA_ACCENT }} />
             <span className="block h-[16px] w-[16px] rounded-full" style={{ background: TERRA_ACCENT }} />
           </span>
-          <span className="text-[10.5px] font-medium leading-tight text-[var(--c-ink2)]">{legendLabel}</span>
+          <span className="text-[11px] font-medium leading-tight text-[var(--c-ink2)]">{legendLabel}</span>
         </div>
       ) : null}
       {!ready ? (

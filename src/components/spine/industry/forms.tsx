@@ -248,7 +248,7 @@ export function RangeBracket({ lo, hi, mid, unit, midLabel, accent = false }: { 
         </div>
         <div className="absolute top-1/2 h-3.5 w-[3px] -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ left: `${pos}%`, background: accent ? TERRA : "#1a1a1a" }} />
       </div>
-      <div className="mt-1 flex justify-between text-[10.5px] text-[var(--c-muted)]"><span>{lo} {unit}</span><span>{hi} {unit}</span></div>
+      <div className="mt-1 flex justify-between text-[11px] text-[var(--c-muted)]"><span>{lo} {unit}</span><span>{hi} {unit}</span></div>
     </div>
   );
 }

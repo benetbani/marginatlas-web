@@ -69,7 +69,7 @@ function Masthead({ d }: { d: any }) {
       <div className="mt-5 grid gap-5 md:grid-cols-[1.35fr_1fr] md:items-center">
         <div>
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <CountFig value={mi.keeps_per_100} prefix="$" className="text-[64px] leading-[0.9] text-[var(--terra-text)] md:text-[80px]" />
+            <CountFig value={mi.keeps_per_100} prefix="$" className="text-[30px] leading-[0.9] text-[var(--terra-text)] md:text-[48px]" />
             <span className="max-w-[22rem] text-[length:var(--t-sub)] leading-snug text-[var(--c-ink2)]">kept by the owner from every <Fig className="text-[var(--c-ink)]">$100</Fig> a customer spends.</span>
           </div>
         </div>

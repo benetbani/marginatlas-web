@@ -51,16 +51,16 @@ export function Masthead({ d }: { d: any }) {
           <div className={`grid ${hasFirms ? "grid-cols-3" : "grid-cols-2"} gap-px overflow-hidden rounded-xl border border-[var(--c-border)]`} style={{ background: "var(--c-border)" }}>
             <div className="bg-[var(--c-card)] px-3.5 py-3">
               <Fig className="text-[20px] text-[var(--c-ink)]">{d.margins?.net_pct}%</Fig>
-              <div className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">net margin<InfoTip gloss="Profit as a share of sales, after every cost." /></div>
+              <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">net margin<InfoTip gloss="Profit as a share of sales, after every cost." /></div>
             </div>
             <div className="bg-[var(--c-card)] px-3.5 py-3">
               <Fig className="text-[20px] text-[var(--c-ink)]">{breakWord}</Fig>
-              <div className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to break in</div>
+              <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to break in</div>
             </div>
             {hasFirms ? (
               <div className="bg-[var(--c-card)] px-3.5 py-3">
                 <Fig className="text-[20px] text-[var(--c-ink)]">{h.n_firms.toLocaleString()}</Fig>
-                <div className="text-[9.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">already trade here</div>
+                <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">already trade here</div>
               </div>
             ) : null}
           </div>
@@ -70,7 +70,7 @@ export function Masthead({ d }: { d: any }) {
             $43K take-home stays the hero's only terracotta */}
         {h.rev_p10_usd && h.rev_p50_usd && h.rev_p90_usd ? (
           <div className="mt-5 max-w-md">
-            <div className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Yearly turnover, comparable rooms</div>
+            <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Yearly turnover, comparable rooms</div>
             <SpreadStrip p10={h.rev_p10_usd} p50={h.rev_p50_usd} p90={h.rev_p90_usd} fmt={money} neutral />
           </div>
         ) : null}

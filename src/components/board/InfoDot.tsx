@@ -15,7 +15,7 @@ export function InfoDot({ tip }: { tip: string }) {
         tabIndex={0}
         role="note"
         aria-label={tip}
-        className="inline-flex h-3.5 w-3.5 cursor-help items-center justify-center rounded-full border border-cocoa-300 text-[9px] font-semibold leading-none text-cocoa-500 select-none"
+        className="inline-flex h-3.5 w-3.5 cursor-help items-center justify-center rounded-full border border-cocoa-300 text-[10px] font-semibold leading-none text-cocoa-500 select-none"
       >
         ?
       </span>

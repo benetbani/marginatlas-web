@@ -1340,7 +1340,7 @@
 }
 .eng-total__k {
   font-family: var(--font-body);
-  font-size: 10.5px;
+  font-size:11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -1627,7 +1627,7 @@
 .eng-lic__tag .k {
   display: block;
   font-family: var(--font-body);
-  font-size: 9.5px;
+  font-size:10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2136,7 +2136,7 @@
    along with the rest of the small ladder. */
 .eng-divlabel {
   font-family: var(--font-body);
-  font-size: 10.5px;
+  font-size:11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -2178,17 +2178,57 @@
   }
 }
 
-/* The spine type scale. Four steps, each ratio >= 1.20, so hierarchy is
-   resolvable by eye. Defined at :root so BOTH the live SpineShell and the dev
-   routes' inline shell copies inherit it. A var that resolves nowhere makes
-   font-size an invalid declaration, which the browser drops, silently falling
-   back to the inherited size. Denser than a generic legibility scale on
-   purpose (founder, 2026-06-18: "cut text 50%+, smaller type"); the disease
-   was never small text, it was six sizes spanning 2.5px with no hierarchy. */
+/* ===================== THE TYPE LADDER. Ten steps, one scale. =============
+   Founder, 2026-08-21: "a big variability in fonts which is traumatic to the
+   eye, the difference between H1 and the smallest font cannot be so gigantic."
+
+   MEASURED BEFORE IT WAS DRAWN, and worse than anyone had said: 44 DISTINCT
+   SIZES across 2,758 declarations, from 8px to 86px, a 10.75x range, running
+   on TWO ladders that did not know about each other (Tailwind's text-* classes
+   and a hand-written pixel scale in atlas-spine.css). The four steps this
+   block used to declare governed 432 uses; the other 2,300-odd went their own
+   way.
+
+   CONVERGED, NOT INVENTED. Every step below is a size this site already leans
+   on, picked by usage rather than by a formula, exactly as the `paper` token
+   was converged on during the cream purge. The ten steps cover 2,275 of the
+   2,758 declarations. A prettier modular scale would have been a bigger
+   migration for a worse fit.
+
+   THE READ-TEXT RANGE IS NOW 4.36x (11 to 48), down from 10.75x.
+
+   THREE STEPS CHANGED VALUE, and each is a deliberate call, not a rounding:
+     --t-micro  10px -> 11px   Founder ruling, 2026-08-21: "eleven for anything
+                               you read, ten for marks." This token's own
+                               comment calls it labels and axis units, which
+                               are read. 221 uses rise 1px.
+     --t-body   12px -> 14px   14px is already the single most-used size on the
+                               site (558 declarations) and 12px body prose is
+                               part of why sections read as unskimmable. 162
+                               uses rise 2px.
+     --t-lead   15px -> 16px   15px is not on the ladder and had 26 uses.
+
+   --t-mark IS THE ONLY STEP BELOW THE FLOOR and it is for marks a reader
+   glances at, never for a sentence. If a reader has to READ it, it is
+   --t-micro or larger. That distinction is the whole reason 10px survives.
+
+   Defined at :root so BOTH the live SpineShell and the dev routes' inline
+   shell copies inherit it. A var that resolves nowhere makes font-size an
+   invalid declaration, which the browser drops, silently falling back to the
+   inherited size.
+
+   src/styles/atlas-spine.css declares the same ten values. They must stay
+   byte-identical; verify_type_ladder is what stops them drifting. */
 :root {
-  --t-micro: 10px; /* labels, axis units, chips, uppercase tracked text */
-  --t-body: 12px;  /* body prose */
-  --t-lead: 15px;  /* lead / verdict line */
-  --t-sub: 20px;   /* the sub-focal tier */
+  --t-mark: 10px;    /* marks only. Never a sentence, never a label to read */
+  --t-micro: 11px;   /* the floor for anything read: axis units, chips, column heads */
+  --t-small: 12px;   /* secondary labels, captions, the key half of a key/value pair */
+  --t-body: 14px;    /* body prose. The default */
+  --t-lead: 16px;    /* a lede, a card's first line */
+  --t-sub: 18px;     /* subsection heading, h3 */
+  --t-head: 20px;    /* section heading, h2 */
+  --t-section: 24px; /* chapter opener */
+  --t-focal: 30px;   /* a section's own focal figure */
+  --t-answer: 48px;  /* the page's one dominant figure, h1. NOTHING IS LARGER */
 }
 

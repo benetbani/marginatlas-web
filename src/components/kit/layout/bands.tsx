@@ -141,7 +141,7 @@ export function SectionIndex({
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="mb-2.5 text-[10.5px] font-bold uppercase tracking-[0.16em] text-cocoa-500">
+      <div className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.16em] text-cocoa-500">
         {heading}
       </div>
       <ul className="space-y-1.5 border-l border-parchment pl-3.5">

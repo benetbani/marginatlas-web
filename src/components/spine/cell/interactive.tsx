@@ -58,13 +58,13 @@ export function Nearby({ d }: { d: any }) {
       <Rail icon="compare" kicker="The same trade, comparable places" sample />
       {/* sm+ header with click-to-sort (active = ink; selection is chrome, never the accent) */}
       <div className="hidden gap-3 border-b border-[var(--c-border)] pb-2 sm:grid" style={{ gridTemplateColumns: gridCols }}>
-        <span className="text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
         {cols.map((c) => {
           const on = c.key === sortKey;
           return (
             <div key={c.key} className="flex items-center justify-end gap-1">
               <button type="button" onClick={() => setSortKey(c.key)} aria-sort={on ? "descending" : "none"}
-                className={`flex items-center gap-1 text-[10.5px] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}>
+                className={`flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}>
                 <span>{c.label} <span className="font-normal lowercase tracking-normal">({c.unit})</span></span>
                 <span aria-hidden className={`fig text-[10px] ${on ? "opacity-100" : "opacity-30"}`}>{on ? "↓" : "↕"}</span>
               </button>
@@ -88,7 +88,7 @@ export function Nearby({ d }: { d: any }) {
                 const crowned = c.key === "rate" && isBest; // the ONE terracotta accent in this card
                 return (
                   <div key={c.key} className="min-w-0 sm:text-right">
-                    <span className="block text-[9.5px] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
+                    <span className="block text-[10px] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
                     <Fig className={`text-[13px] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
                   </div>
                 );

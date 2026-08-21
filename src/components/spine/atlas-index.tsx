@@ -152,7 +152,7 @@ function ReadCard({
     <Box className="flex flex-col">
       <div className="mb-1.5 flex items-center gap-2">
         <Ico id={icon} tone="terra" />
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[var(--terra-text)]">{kicker}</span>
+        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--terra-text)]">{kicker}</span>
       </div>
       <a
         href={row.href}
@@ -445,7 +445,7 @@ export function AtlasIndex({
           {sampleSignalLabels.map((label) => (
             <span
               key={label}
-              className="inline-flex items-center gap-1 rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider text-[var(--c-muted)]"
+              className="inline-flex items-center gap-1 rounded-full bg-[var(--c-soft2)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--c-muted)]"
             >
               {label}
               <span className="font-normal normal-case tracking-normal">sample</span>

@@ -33,7 +33,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
     <div className="w-full">
       <Box>
         <Rail icon="where-it-pays" kicker="The rent, city by city" sample />
-        <div className="grid grid-cols-[minmax(0,1fr)_4.5rem] items-end gap-3 border-b border-[var(--c-border)] px-2 pb-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+        <div className="grid grid-cols-[minmax(0,1fr)_4.5rem] items-end gap-3 border-b border-[var(--c-border)] px-2 pb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
           <span>Place, lightest rent first</span>
           <span className="text-right">Rent load<InfoTip gloss="Rent as a share of sales." /></span>
         </div>
