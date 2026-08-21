@@ -14,17 +14,17 @@
 | **1 — Scope** | **DONE, awaiting founder review** | 243 activities to **184**. 59 retired behind 308s, 13 redirect chains collapsed. `docs/loop/artifacts/scope-phase1/` |
 | **2 — Taxonomy merge** | **DONE, awaiting founder review** | 184 to **138 published, 128 shown**. 46 merges. Directory 4,252px to 3,612px. **NEW FINDING: the SECTORS are now the problem**, see below |
 | **3 — Presence threshold** | **DONE, mechanism only** | The machine found: the cell lookup never returns null, it fabricates. Threshold built, wired, gated, and **FAILS OPEN** (the plan had this backwards). Manifest UNGENERATED, so behaviour is unchanged until a reachable database generates it |
-| 4 — Type ladder | not started | measured: 9.5px to 86px, ~25 sizes, two ladders |
+| **4 — Type ladder** | **DONE, awaiting founder review** | Real measurement was **44 sizes, 8px to 86px, 10.75x**. Ten steps, converged not invented. Rendered page now **19 sizes, 10 to 48px, 4.8x**. Gated, both halves negative-tested |
 | 5 — Width | not started | measured: 32 Full against 2 Narrow, middle tier unused |
 | 6 — Specialised sections | not started | **cap the page at 24 sections**, see the phase note |
 | 7 — Onward navigation | not started | |
 | 8 — Industry page | not started | |
 
-**Chain: 110/110.** Started at 105; Phases 0 to 2 added `build-compare`, `scope-rules`, `retired-activities`, `activity-merges` and `presence-threshold`.
+**Chain: 111/111.** Started at 105; Phases 0 to 2 added `build-compare`, `scope-rules`, `retired-activities`, `activity-merges`, `presence-threshold` and `type-ladder`.
 
 **A PHASE 2 FINDING THAT NEEDS ITS OWN WORK, and is deliberately not folded in.** Cutting and merging the activities has left the **sector headings** as the visible defect. Twenty headings now carry 128 trades, and several carry almost nothing: **Software & tech holds one** (game development) while Software development itself sits under Creative & media; **Real estate holds one**; **Transport holds one**; **Construction holds three** (bricklaying, plastering, tiling) while the other building trades sit under Trades & home services; and **Farming & food production contains neither farming nor food production**, only a coffee roaster and a craft brewery. This is a sector consolidation, not an activity one, and it wants deciding rather than guessing.
 
-**Three corrections this plan has already taken from contact with the code**, each recorded at the point it bit: there is **no vitest** in this repository; the trade page has **21 sections, not 7**; and the taxonomy JSON is an **object with an `industries` array**, not a bare array.
+**Corrections this plan has already taken from contact with the code**, each recorded at the point it bit: there is **no vitest** in this repository; the trade page has **21 sections, not 7**; the taxonomy JSON is an **object with an `industries` array**, not a bare array; the presence threshold must **fail open**, not closed; and `src/styles/atlas-spine.css` is **generated** from the parent design repo and must never be hand-edited.
 
 **A NEW WORKSTREAM ARRIVED 2026-08-21, mid-Phase-1**, and is deliberately NOT folded into this plan: site-wide UX, accounts and sign-in, and what a paying reader gets. It is a different kind of work (product surface and state, not catalogue and layout) and it wants its own plan. Named here so it is not lost.
 
