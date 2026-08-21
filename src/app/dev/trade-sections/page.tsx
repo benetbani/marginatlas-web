@@ -233,6 +233,8 @@ export default function TradeSectionsWorkshop() {
         />
       </div>
 
+      {/* typography-ok: workshop page inside .av2, so it uses the spine's own
+          --t-section step rather than the canonical h1 token. No URL, no reader. */}
       <h1 className="mb-1 text-[length:var(--t-section)] font-semibold tracking-tight text-[var(--c-ink)]">
         Ten sections, two trades
       </h1>

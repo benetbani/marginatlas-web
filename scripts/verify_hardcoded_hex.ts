@@ -92,7 +92,22 @@ function scan(): Record<string, number> {
       .split("\n")
       .map((line) => stripComments(line, state))
       .join("\n");
-    const m = code.match(HEX);
+    /* A HEX INSIDE AN ATTRIBUTE SELECTOR IS NOT A COLOUR THIS SITE IS SETTING.
+       It is a selector MATCHING somebody else's markup so it can be overridden
+       with a token. Added 2026-08-21 when the shadcn chart primitive landed: its
+       class string carries five, all of the shape
+
+           [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50
+
+       where the hex is the thing being targeted and `stroke-border` is the token
+       replacing it. Counting those as hardcoded colour inverted the gate's
+       meaning: the line exists precisely BECAUSE the colour is being tokenised.
+
+       Stripped before counting rather than exempting the file, because
+       exempting a whole file would hide the next real violation in it, and
+       raising the baseline to pass is banned outright. */
+    const withoutSelectors = code.replace(/\[[a-zA-Z-]+=['"]#[0-9a-fA-F]{3,8}['"]\]/g, "[]");
+    const m = withoutSelectors.match(HEX);
     if (m && m.length) counts[f] = m.length;
   }
   return counts;

@@ -43,8 +43,19 @@ const REQUIRED_FILES = [
   "src/lib/types/deepening.ts",
   "src/lib/page-layout/section-registry.ts",
   "src/lib/taxonomy/sub_industries_seed.ts",
-  "src/components/sections/SubIndustryPicker.tsx",
-  "src/components/sections/AnnualCostStack.tsx",
+  /* SubIndustryPicker.tsx and AnnualCostStack.tsx were removed 2026-08-21.
+     Both were required BY THIS LIST and imported by NOTHING: the render graph
+     reached neither from any route, reader or workshop. SubIndustryPicker had
+     already been superseded, and the trade page still carries the comment
+     saying so ("the old SubIndustryPicker stub rendered non-navigating...").
+
+     Their entries go in the SAME change that deleted the files, which is the
+     discipline verify_no_stock_imagery states in its own failure message: a
+     sanctioned entry that no longer applies has to be removed, or the list
+     stops counting down and starts lying.
+
+     SetupCostBlock.tsx STAYS: it exists and has a real importer, which is how
+     this list is meant to look. */
   "src/components/sections/SetupCostBlock.tsx",
 ];
 
