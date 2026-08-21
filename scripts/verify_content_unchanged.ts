@@ -78,7 +78,63 @@ interface Snapshot {
  */
 const FIGURE_RE = /[$£€¥]?\s?\d[\d,. ]*\d\s?(?:%|k|K|m|M|bn|BN)?|[$£€¥]?\s?\d\s?(?:%|k|K|m|M)?/g;
 
+/**
+ * STATIC MODE. Extract the same two sets straight out of server-rendered HTML,
+ * with no browser at all.
+ *
+ * WHY IT EXISTS. Two reasons, and the second is the one that forced it.
+ *
+ *  1. It is CORRECT for server-rendered content, which is what the tables phase
+ *     migrates. A table is fully present in the HTML; sending a browser to look
+ *     at it buys nothing.
+ *  2. Chromium could not launch. Measured on this machine: 506MB free of 8GB
+ *     with the founder's own applications running. A verification path that
+ *     needs a gigabyte to check a table is a verification path that stops
+ *     working exactly when the machine is busy.
+ *
+ * BLIND SPOT, and it is the whole reason browser mode still exists: this sees
+ * nothing drawn in the browser. Point it at a chart and it will report the
+ * chart's container and none of its labels. **Use `--url` for anything with a
+ * chart in it; use a file for server-rendered surfaces.**
+ */
+function captureStatic(file: string): Snapshot {
+  const html = readFileSync(file, "utf8");
+
+  /* Drop what a reader never sees. Order matters: script and style first, or
+     their contents leak into the text as strings. */
+  const stripped = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ");
+
+  const strings: string[] = [];
+  /* Split on tags, keep the text between them. React inserts <!-- --> between
+     adjacent text nodes, which the comment strip above already removed, so a
+     sentence broken across those is rejoined here by the whitespace collapse. */
+  for (const chunk of stripped.split(/<[^>]+>/)) {
+    const t = chunk
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#(\d+);/g, (_m, d) => String.fromCharCode(Number(d)))
+      .replace(/\s+/g, " ")
+      .trim();
+    if (t) strings.push(t);
+  }
+
+  const figures: string[] = [];
+  for (const s2 of strings) {
+    const m = s2.match(FIGURE_RE);
+    if (m) figures.push(...m.map((x) => x.replace(/\s+/g, " ").trim()));
+  }
+
+  return { url: file, takenAt: new Date().toISOString(), strings, figures };
+}
+
 async function capture(url: string): Promise<Snapshot> {
+
   const browser = await chromium.launch({ headless: true });
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } } as never);
@@ -137,14 +193,16 @@ async function main() {
   const [mode, url, name] = process.argv.slice(2);
 
   if (!mode || !url || !name) {
-    console.error("usage: npx tsx scripts/verify_content_unchanged.ts <snapshot|check> <url> <name>");
+    console.error("usage: npx tsx scripts/verify_content_unchanged.ts <snapshot|check> <url-or-html-file> <name>");
     process.exit(2);
   }
 
   mkdirSync(DIR, { recursive: true });
   const path = join(DIR, `${name}.json`);
 
-  const now = await capture(url);
+  /* An http target goes through a browser; anything else is a file on disk and
+     is read directly. Server-rendered surfaces should use the file path. */
+  const now = /^https?:\/\//.test(url) ? await capture(url) : captureStatic(url);
 
   if (mode === "snapshot") {
     writeFileSync(path, JSON.stringify(now, null, 2) + "\n");

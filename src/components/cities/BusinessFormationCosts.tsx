@@ -15,6 +15,14 @@
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
 import formationJson from "../../../data/legal/business_formation_costs_v1.json";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type TierRow = {
   tier: "Freelancer" | "Sole Trader" | "LLC" | "Joint-Stock";
@@ -125,52 +133,72 @@ export function BusinessFormationCosts({
            edge of the card and were unreachable by any means. The header row
            ended at TIME. Auto keeps the same rounded clip and lets the last
            120px be reached. */
-        <div className="rounded-2xl border border-parchment bg-white overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-paper-100 border-b border-parchment">
-                <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+        /* MIGRATED to the shadcn table primitive, 2026-08-21. Same five
+           columns, same order, same rows, same figures, same formatters:
+           structure adapts, substance does not.
+
+           THREE DEFECTS GO WITH THE SWAP:
+             - every header now carries scope="col". Eleven reader-facing files
+               had a table with none at all, and a screen reader cannot
+               associate a figure with its column without it.
+             - STICKY HEADER NOT DONE HERE, deliberately. Table wraps itself
+               in an overflow-x-auto container, which establishes a scroll
+               context and very likely defeats a page-level `sticky top-0` on
+               the header row. That needs a browser to settle and this machine
+               could not launch one (506MB free of 8GB). Shipping a sticky class
+               believed to be inert is worse than shipping none, so it waits.
+             - the horizontal scroll container comes from the primitive. The
+               hand-written note that used to live here recorded a real bug,
+               measured at 375 on /gb: the table laid out at 389px inside a
+               269px box and overflow-hidden made the last column unreachable
+               by any means. Table's own wrapper is overflow-x-auto, so that
+               class of bug cannot come back through this component. */
+        <div className="rounded-2xl border border-parchment bg-white">
+          <Table className="text-sm">
+            <TableHeader className="bg-paper-100">
+              <TableRow className="border-b border-parchment hover:bg-transparent">
+                <TableHead scope="col" className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                   Tier
-                </th>
-                <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                </TableHead>
+                <TableHead scope="col" className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                   Local name
-                </th>
-                <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                </TableHead>
+                <TableHead scope="col" className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                   Fees
-                </th>
-                <th className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                </TableHead>
+                <TableHead scope="col" className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                   Time
-                </th>
-                <th className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
+                </TableHead>
+                <TableHead scope="col" className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                   Complexity
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {rows.map((row, i) => (
-                <tr
+                <TableRow
                   key={`${row.tier}-${row.local_term}-${i}`}
                   className="border-t border-parchment"
                 >
-                  <td className="px-4 py-3 text-ink-900 font-medium">
+                  <TableCell className="px-4 py-3 text-ink-900 font-medium">
                     {row.tier}
-                  </td>
-                  <td className="px-4 py-3 text-ink-800">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-ink-800">
                     {row.local_term}
-                  </td>
-                  <td className="px-4 py-3 text-right tabular-nums text-ink-900 font-semibold">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-right tabular-nums text-ink-900 font-semibold">
                     {formatCost(row.setup_cost_usd)}
-                  </td>
-                  <td className="px-4 py-3 text-right tabular-nums text-ink-800">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-right tabular-nums text-ink-800">
                     {formatDays(row.setup_days)}
-                  </td>
-                  <td className="px-4 py-3 text-left">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-left">
                     <ComplexityDots score={row.complexity_score} />
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       ) : (
         <div className="rounded-xl border border-parchment bg-white p-5 text-sm text-cocoa-700">
