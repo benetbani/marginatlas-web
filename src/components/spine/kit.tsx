@@ -376,14 +376,19 @@ export function Head({ children, sample, icon }: { children: React.ReactNode; sa
  * a gloss). A focusable button trigger, so it works on TAP at 390px (focus shows the tip),
  * not just hover; the gloss also rides the aria-label for screen readers. Educational copy
  * only , never sole-source data (that stays visible text). Promoted from the country page. */
-export function InfoTip({ gloss, className = "ml-1" }: { gloss: string; className?: string }) {
-  return (
-    <span className={`group/tip relative inline-flex align-middle ${className}`}>
-      <button type="button" aria-label={gloss} className="grid h-3.5 w-3.5 cursor-help place-items-center rounded-full border border-[var(--c-line-strong)] text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]">?</button>
-      <span className="pointer-events-none absolute bottom-full left-1/2 max-sm:left-auto max-sm:right-0 z-10 mb-1.5 w-44 max-sm:w-[min(11rem,calc(100vw-24px))] -translate-x-1/2 max-sm:translate-x-0 rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-2.5 py-1.5 text-[length:var(--t-micro)] font-normal normal-case leading-snug tracking-normal text-[var(--c-ink2)] opacity-0 shadow-[0_6px_18px_-8px_rgba(43,28,22,0.22)] transition-opacity group-focus-within/tip:opacity-100 group-hover/tip:opacity-100">{gloss}</span>
-    </span>
-  );
-}
+/* InfoTip MOVED to src/components/kit/InfoTip.tsx and re-exported here, so all
+   thirteen call sites keep importing it from the kit unchanged.
+
+   IT HAD TO MOVE BECAUSE IT HAD TO BECOME A CLIENT COMPONENT. The hand-rolled
+   version was a CSS-only hover panel, which fails WCAG 1.4.13 (Level AA) three
+   ways: it could not be dismissed with Escape, its panel carried
+   pointer-events-none so it could not be hovered to read a long gloss, and it
+   put the entire gloss in the trigger's aria-label AND left it permanently in
+   the DOM, so a screen reader announced it twice, once as a button name. Radix
+   fixes all three and needs the client; this file is server-rendered. */
+import { InfoTip } from "@/components/kit/InfoTip";
+export { InfoTip };
+
 /* SpectraTable , the character two-pole spectra (promoted from the country page so city +
  * country share ONE idiom, rule 22). `gradient` = the track runs dark-gray (LEFT = worse
  * for business) to terracotta (RIGHT = better) and the right pole reads bold ink; without
