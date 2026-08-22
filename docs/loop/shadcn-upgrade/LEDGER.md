@@ -205,6 +205,39 @@ and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
 
+## 2. INDUSTRY PAGE, opened 2026-08-22
+
+**FOUR OF ITS SECTIONS REACH NO READER**, found by pointing the same instrument
+at it that found five dead sections on the cell page. The live adapter names them
+in its own source as omitted for want of an honest source: **Payback window, When
+a day starts paying, Getting to break-even, and Across the year.** Marked blocked
+so no iteration is spent on a page nobody sees. The remaining nine sections are
+live.
+
+**Row 18, closed 2026-08-22. Kept. Three faults on one row.**
+
+**1. THE SCALE HAD FIFTY-EIGHT PIXELS ON A PHONE.** A name column nailed at 110
+and a figure column nailed at 40 leave the drawing almost nothing on a 320 screen,
+and the four dots sat so close together that a trade keeping **three times** what
+another keeps looked the same as it. The comparison the section exists to make was
+not visible on the width most readers use. **Third time this exact fixed-column
+fault has appeared**, after the pay brackets and the risk scale.
+
+**2. TRADE NAMES WERE CUT OFF AND THE REST PUT IN A TOOLTIP.** That is not a
+carrier on a touch screen: there is no hover, so the end of a trade name simply
+did not exist for the reader most likely to be holding a phone. Four of them.
+Names wrap now and the tooltips are gone with the need for them.
+
+**3. THE DOTS WERE A WARM GREY**, on a palette whose rule is terracotta plus
+strictly cool neutrals. Replaced by the cool neutral of the same weight, which is
+also a token rather than a literal. Five raw colour values retired in total.
+
+Identical at 760, transformed at 320. Every word and figure byte for byte
+identical. The width ratchet held at 54: the fix adds no breakpoint the gate
+counts.
+
+---
+
 **Row 16, closed 2026-08-22. Two of the three readings in the page's own
 scorecard were unreadable, and it took FOUR attempts to fix properly.**
 
@@ -577,15 +610,15 @@ swap on this page.
 
 | # | Section a visitor reads | Form today | Defect | Status |
 |---|---|---|---|---|
-| 18 | Kept per $100, by trade | margin ladder | NOT CHECKED | TODO |
+| 18 | Kept per $100, by trade | dots on a shared scale | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 19 | Where each $100 goes | stacked bar | NOT CHECKED | TODO |
 | 20 | Keep and cost, trades next door | comparison rows | NOT CHECKED | TODO |
 | 21 | What a customer spends | figure with range | NOT CHECKED | TODO |
 | 22 | Five-year survival | survival curve, line on zero baseline | NOT CHECKED | TODO |
-| 23 | Payback window | phase bar | NOT CHECKED | TODO |
-| 24 | When a day starts paying | two-marker scale | NOT CHECKED | TODO |
-| 25 | Getting to break-even | phase bar | NOT CHECKED | TODO |
-| 26 | Across the year | season ribbon | NOT CHECKED | TODO |
+| 23 | Payback window | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
+| 24 | When a day starts paying | two-marker scale | **NO DATA. Reaches no reader** | **BLOCKED** |
+| 25 | Getting to break-even | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
+| 26 | Across the year | season ribbon | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 27 | The typical operator | fact list | NOT CHECKED | TODO |
 | 28 | Who it suits | meters | NOT CHECKED | TODO |
 | 29 | What people get wrong | struck line pairs | NOT CHECKED | TODO |
@@ -692,7 +725,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 13 kept with evidence, 8 blocked, 39 to go.**
+64 rows. **4 replaced or retired, 14 kept with evidence, 12 blocked, 34 to go.**
 
 THE CELL PAGE IS DONE. All seventeen of its rows are closed or blocked. Five are
 blocked on missing data, not on design, and no component from any library moves

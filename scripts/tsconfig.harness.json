@@ -1,0 +1,5 @@
+{
+  "//": "The render harnesses import page components directly. Those components rely on Next's automatic JSX runtime and do not import React themselves, while the project's own tsconfig leaves JSX untransformed for Next to handle. Running a harness under the project config therefore fails at the first component that omits the import. This config exists so a harness can be run outside Next: npx tsx --tsconfig scripts/tsconfig.harness.json scripts/<name>.tsx",
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "jsx": "react-jsx" }
+}

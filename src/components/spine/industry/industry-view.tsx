@@ -94,7 +94,7 @@ function Masthead({ d }: { d: any }) {
  * terracotta: the self dot only.
  * idiom: dots on one shared $ scale, NO filled track (the July-3 lollipop, de-barred
  *   per rulebook v1 §25 bar rationing). Slate = modeled atlas trades only. */
-function Benchmark({ d }: { d: any }) {
+export function Benchmark({ d }: { d: any }) {
   const b = d.benchmark ?? {};
   const trades: any[] = (b.trades ?? []).slice().sort((a: any, c: any) => c.keeps_per_100 - a.keeps_per_100);
   if (!trades.length) return null;
@@ -113,32 +113,48 @@ function Benchmark({ d }: { d: any }) {
             const pos = (t.keeps_per_100 / max) * 100;
             const self = !!t.self;
             return (
-              <div key={t.slug} className="-mx-2 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md px-2 py-1.5">
-                <span className={`min-w-0 truncate text-[length:var(--t-body)] ${self ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`} title={t.name}>{t.name}</span>
-                <div className="relative h-3 min-w-0" role="img" aria-label={`${t.name} keeps $${t.keeps_per_100} per $100`}>
-                  <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#e7e2df" }} />
-                  <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: self ? TERRA : "#9a938e", boxShadow: "0 0 0 1px #e7e2df" }} />
+              /* THREE FAULTS ON ONE ROW.
+                 THE NAME WAS CUT AND THE REST HIDDEN BEHIND A HOVER. It was
+                 clipped to a fixed 110 pixels with the full text moved into a
+                 tooltip, which is not a carrier on a phone at all: there is no
+                 hover on a touch screen, so the end of a trade name simply did
+                 not exist for the reader most likely to be holding one. It wraps
+                 now, and the tooltip is gone with the need for it.
+                 THE SCALE HAD FIFTY-EIGHT PIXELS ON A PHONE. A fixed 110 for the
+                 name and 40 for the figure leaves the drawing almost nothing on a
+                 320 screen. Below the breakpoint the scale takes its own
+                 full-width line under the name and its figure, the same shape the
+                 pay brackets now use.
+                 THE DOT WAS A WARM GREY. #9a938e is warmer in red than in blue,
+                 on a palette whose rule is terracotta plus STRICTLY COOL
+                 neutrals. Replaced by the cool neutral of the same weight, which
+                 is also a token rather than a literal. */
+              <div key={t.slug} className="-mx-2 grid grid-cols-[1fr_auto] items-baseline gap-x-3 gap-y-2 rounded-md px-2 py-1.5 sm:grid-cols-[minmax(0,110px)_1fr_40px] sm:items-center sm:gap-3">
+                <span className={`min-w-0 leading-tight text-[length:var(--t-body)] ${self ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{t.name}</span>
+                <Fig className={`order-2 text-right text-[length:var(--t-body)] sm:order-3 ${self ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>${t.keeps_per_100}</Fig>
+                <div className="relative order-3 col-span-2 h-3 min-w-0 sm:order-2 sm:col-span-1" role="img" aria-label={`${t.name} keeps $${t.keeps_per_100} per $100`}>
+                  <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "var(--c-border)" }} />
+                  <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: self ? TERRA : "var(--chart-4)", boxShadow: "0 0 0 1px var(--c-border)" }} />
                 </div>
-                <Fig className={`text-right text-[length:var(--t-body)] ${self ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>${t.keeps_per_100}</Fig>
               </div>
             );
           })}
           {/* the all-trades average as a drawn reference tick on the SAME scale (a vertical
               rule, not a filled dot, so it never reads as one of the food trades). */}
           {avg != null ? (
-            <div className="-mx-2 mt-1 grid grid-cols-[110px_1fr_40px] items-center gap-3 rounded-md border-t border-[var(--c-border)] px-2 pt-2.5">
+            <div className="-mx-2 mt-1 grid grid-cols-[1fr_auto] items-baseline gap-x-3 gap-y-2 rounded-md border-t border-[var(--c-border)] px-2 pt-2.5 sm:grid-cols-[minmax(0,110px)_1fr_40px] sm:items-center sm:gap-3">
               {/* the reference is the WHOLE atlas (not just these four food trades), so it
                   is labeled "incl. non-food": that is why the tick can sit right of every
                   food dot without reading as "the average of its own parts". */}
               <span className="flex min-w-0 flex-col leading-tight text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
-                <span className="truncate font-semibold">All trades</span>
-                <span className="truncate font-normal normal-case tracking-normal opacity-80">incl. non-food</span>
+                <span className="font-semibold">All trades</span>
+                <span className="font-normal normal-case tracking-normal opacity-80">incl. non-food</span>
               </span>
-              <div className="relative h-3.5" role="img" aria-label={`All trades average, including non-food trades, keeps $${avg} per $100`}>
-                <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#e7e2df" }} />
-                <div className="absolute top-0 h-3.5 w-px -translate-x-1/2" style={{ left: `${(avg / max) * 100}%`, background: "#9a938e" }} />
+              <Fig className="order-2 text-right text-[length:var(--t-body)] text-[var(--c-muted)] sm:order-3">${avg}</Fig>
+              <div className="relative order-3 col-span-2 h-3.5 sm:order-2 sm:col-span-1" role="img" aria-label={`All trades average, including non-food trades, keeps $${avg} per $100`}>
+                <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "var(--c-border)" }} />
+                <div className="absolute top-0 h-3.5 w-px -translate-x-1/2" style={{ left: `${(avg / max) * 100}%`, background: "var(--chart-4)" }} />
               </div>
-              <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-muted)]">${avg}</Fig>
             </div>
           ) : null}
         </div>
