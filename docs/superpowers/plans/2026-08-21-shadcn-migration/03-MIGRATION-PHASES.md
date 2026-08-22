@@ -127,10 +127,20 @@ The largest and most defect-ridden area. `AtlasBarChart` already exists
    `ComparisonBars`.
 4. Converge the 3 `Waterfall`s and `SteppedWaterfall` to one.
 
-**Blocked, needs a founder ruling before it starts:** the **6 percentile
-charts**, two of which are **logarithmic**. Converging them means choosing an
-axis, and a log axis is a claim about how a reader should read a spread. That is
-a design decision, not a migration decision.
+**DECIDED 2026-08-21, no longer blocked.** See
+`docs/adr/0002-percentile-charts-use-a-linear-axis.md`. The converged chart uses
+a **linear** axis, and its bands **carry a mark**.
+
+The measurement moved the question. There is no measured spread on this site to
+fit an axis to: every percentile comes from five constants in `fill_defaults.ts`
+(0.25 / 0.55 / 1.0 / 1.85 / 3.4), so the p90/p10 ratio is a constant **13.6x**
+for every business on earth. A log axis spaces those three numbers almost evenly
+and makes a fixed-multiplier fan read as a measured distribution, which is this
+project's defect class wearing an axis instead of a badge. Linear is honest
+about how lopsided the fan is, and 13.6x needs no log scaling to be legible.
+
+The band mark follows from ADR 0001: a Band whose shape is invented carries one.
+Every band drawn from those constants is exactly that case.
 
 ---
 
