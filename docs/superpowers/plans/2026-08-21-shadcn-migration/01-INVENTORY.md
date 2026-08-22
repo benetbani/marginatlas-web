@@ -25,7 +25,7 @@ is, nine gauge geometries, and three separate components named `Waterfall`.
 | the month-of-year charts | **NO WORK NEEDED** | , | **The claim was wrong, re-measured 2026-08-21.** Four render for a reader and all four are already zero-based or are deviation charts. The one non-zero floor belongs to a pay-by-role RANGE chart, not a month chart |
 | the 6 percentile charts | **REPLACE** | one `BarChart` or `AreaChart` | **Two are logarithmic.** Picking one axis is a founder decision, not a migration decision. Route it |
 | `Waterfall` x3, `SteppedWaterfall` | **REPLACE**, then converge to one | recharts stacked bar with a transparent base | The money identity is a signature moment; get it right once |
-| `Gauge` x9 geometries | **REPLACE**, converge to one | recharts `RadialBarChart` | Nine is the defect. One survives |
+| `Gauge` | **RE-MEASURED, the nine were wrong** | possibly recharts `RadialBarChart` | Counting only arcs and needles that encode a VALUE: one gauge, one donut, two score rings. The nine came from matching `Math.PI` and `strokeDasharray`, which also hit radial layout and dashed strokes. Low-value consolidation |
 | `Spark` | **REPLACE** | recharts `AreaChart`, no axes | |
 | `SurvivalCurve`, `StruckLine` | **KEEP** | | A struck phantom line on the same axis is a local idiom with no shadcn equivalent. It is also rule 30 |
 | `SpectraTable` | **KEEP** | | Two-pole spectra. Nothing in shadcn does this and it is the country/city character standard |
@@ -109,8 +109,8 @@ component deleted here is one that never needs a verdict above.
 |---|---|---|
 | `.tsx` under `src/components` | **319** | fewer, and the number is not the point |
 | chart implementations | **29** (16 + 13) | **under 10** |
-| things named `Waterfall` | 3 | 1 |
-| gauge geometries | 9 | 1 |
+| things named `Waterfall` | **2**, not 3 | 1 |
+| gauge geometries | **1 gauge + 1 donut + 2 rings**, not 9 | little to do |
 | percentile charts | 6 | 1 |
 | month-of-year charts | 4, all already zero-based | no change needed |
 | tables with no `scope` | 11 files (not 13) | **0, done and gated** |
