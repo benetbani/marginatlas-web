@@ -152,7 +152,7 @@ export function IndexBar({ value, kind = "pct", accent = false }: { value: numbe
  * is the visible carrier of the same data). */
 export type StackSeg = { label: string; pct: number; color: string; kept?: boolean };
 /* magnitude grey ramp for sorted StackBars , index 0 (darkest) goes to the largest segment */
-const GREY_RAMP = ["#a3a3a1", "#b4b4b2", "#c4c4c2", "#d3d3d1", "#e0e0de", "#ebebe9"];
+export const GREY_RAMP = ["#a3a3a1", "#b4b4b2", "#c4c4c2", "#d3d3d1", "#e0e0de", "#ebebe9"];
 const isGreyHex = (c: string) => {
   const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec((c || "").trim());
   if (!m) return false;

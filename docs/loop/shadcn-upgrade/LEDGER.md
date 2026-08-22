@@ -214,6 +214,41 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 19, closed 2026-08-22. Kept. A well-built stack with one way out.**
+
+**This one is built better than its cousin on the trade-in-a-place page.** The
+last stage is the residual of the other three, so the four parts add to exactly a
+hundred and rounding cannot escape. Nothing to fix there.
+
+**What CAN escape is a floor.** Every stage is clamped at zero, and measured
+margins are under no obligation to arrive in textbook order. Nothing upstream
+promises they will: three margins are read independently and rounded
+independently. Run the real arithmetic on a ladder whose net sits above its
+operating figure and **the four parts total 107**; above its gross figure and they
+total **135**.
+
+**And the bar hides it.** It is a flexible row, so it squeezes itself back inside
+its own track and looks perfectly fine, while the percentages printed beside it
+add to a third more than the hundred dollars the section is about. Rendered and
+photographed: the legend reads **52% + 40% + 0% + 15%** under a heading that says
+where each $100 goes.
+
+It refuses to draw now. **The tolerance is ONE point, not the four the cell page
+uses, and the difference is deliberate:** that stack rounds each slice on its own
+and drifts by about a point in ordinary use, while this one is exact by
+construction, so anything off here means a floor fired and the ladder is
+genuinely inconsistent.
+
+**No normalising here, and that is the point.** Normalising would rescale the 107
+back to a hundred and hide exactly the thing worth surfacing. The two sections
+look alike and needed opposite treatments.
+
+**A duplicated grey ramp retired:** five values written out again, identical to
+the ramp the shared kit already declares, free to drift apart unnoticed. And one
+raw ink value tokenised.
+
+**Healthy ladder renders byte for byte identically.** Gate chain clean.
+
 **Row 18, closed 2026-08-22. Kept. Three faults on one row.**
 
 **1. THE SCALE HAD FIFTY-EIGHT PIXELS ON A PHONE.** A name column nailed at 110
@@ -611,7 +646,7 @@ swap on this page.
 | # | Section a visitor reads | Form today | Defect | Status |
 |---|---|---|---|---|
 | 18 | Kept per $100, by trade | dots on a shared scale | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 19 | Where each $100 goes | stacked bar | NOT CHECKED | TODO |
+| 19 | Where each $100 goes | stacked bar, guarded | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 20 | Keep and cost, trades next door | comparison rows | NOT CHECKED | TODO |
 | 21 | What a customer spends | figure with range | NOT CHECKED | TODO |
 | 22 | Five-year survival | survival curve, line on zero baseline | NOT CHECKED | TODO |
@@ -725,7 +760,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 14 kept with evidence, 12 blocked, 34 to go.**
+64 rows. **4 replaced or retired, 15 kept with evidence, 12 blocked, 33 to go.**
 
 THE CELL PAGE IS DONE. All seventeen of its rows are closed or blocked. Five are
 blocked on missing data, not on design, and no component from any library moves

@@ -27,7 +27,7 @@
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
-import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, usd, SampleTag } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, GREY_RAMP, usd, SampleTag } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
@@ -291,11 +291,30 @@ function SubtypeDrill({ d }: { d: any }) {
  * focal: the 100%-stacked bar, ON-BAR % labels on every segment >=12%; the legend
  *   stays as the name-to-colour mapping.
  * width: Full (T1). terracotta: the kept slice only. */
-function MoneySplit({ d }: { d: any }) {
+export function MoneySplit({ d }: { d: any }) {
   const ms = d.money_split ?? {};
   const items: any[] = ms.items ?? [];
   if (!items.length) return null;
-  const GREYS = ["#a3a3a1", "#b4b4b2", "#c4c4c2", "#d3d3d1", "#e0e0de"];
+  /* THE SHARED RAMP, not a second copy of it. These five values were written out
+     again here, identical to the ramp the spine kit already declares, so the two
+     could drift apart without anything noticing. */
+  const GREYS = GREY_RAMP.slice(0, 5);
+
+  /* THE STACK MUST TOTAL A HUNDRED, and this one is built so that it does: the
+     fixed stage is the residual of the other three, so rounding cannot escape.
+     What CAN escape is a floor. Every stage is clamped at zero, and a clamp is a
+     silent correction: measured margins are under no obligation to arrive in
+     textbook order, and nothing upstream promises they will. Run the real
+     arithmetic on a ladder where the net sits above the operating figure and the
+     four parts total 107; on one where it sits above the gross, 135. The bar is
+     a flex row, so it quietly squeezes itself back inside its own track and
+     looks fine, while the printed percentages beside it add up to a third more
+     than the hundred dollars the section is about.
+     So it refuses to draw. The tolerance is ONE point rather than the four the
+     cell page's version uses, and deliberately: that stack rounds each slice on
+     its own and can drift by about a point in ordinary use, while this one is
+     exact by construction. Anything off here means a floor fired, which is a
+     real inconsistency in the ladder and not a rounding artefact. */
   const groupRank: Record<string, number> = { variable: 0, fixed: 1, kept: 2 };
   const ordered = items.slice().sort((a, b) => (groupRank[a.group] ?? 1) - (groupRank[b.group] ?? 1) || b.pct - a.pct);
   const sizeRank = new Map<string, number>(ordered.filter((i) => !i.kept).slice().sort((a, b) => b.pct - a.pct).map((s, i) => [s.name as string, i] as [string, number]));
@@ -310,6 +329,8 @@ function MoneySplit({ d }: { d: any }) {
   // so the sentence is honest on both and byte-identical on the dev route.
   const nonKeptCount = items.filter((i) => !i.kept).length;
   const nonKeptWord = COUNT_WORD[nonKeptCount] ?? `${nonKeptCount}`;
+  const stackTotal = items.reduce((a, i) => a + (Number.isFinite(i.pct) ? i.pct : NaN), 0);
+  if (!Number.isFinite(stackTotal) || Math.abs(stackTotal - 100) > 1) return null;
   return (
     <Full>
       <Box>
@@ -322,7 +343,7 @@ function MoneySplit({ d }: { d: any }) {
           <StackBar segments={parts.map((p) => ({ label: p.name, pct: p.pct, color: p.color, kept: !!p.kept }))} sort={false} h="h-11" ariaLabel={parts.map((p) => `${p.name} ${p.pct}%`).join(", ")} legend />
           <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 flex h-11 items-center">
             {parts.map((p) => (
-              <span key={p.name} className="fig overflow-hidden whitespace-nowrap text-center text-[length:var(--t-micro)] font-semibold" style={{ width: `${p.pct}%`, color: "#1b1b1a", opacity: 0.8 }}>{p.pct >= 12 || p.kept ? `${p.pct}%` : ""}</span>
+              <span key={p.name} className="fig overflow-hidden whitespace-nowrap text-center text-[length:var(--t-micro)] font-semibold" style={{ width: `${p.pct}%`, color: "var(--c-ink)", opacity: 0.8 }}>{p.pct >= 12 || p.kept ? `${p.pct}%` : ""}</span>
             ))}
           </div>
         </div>
