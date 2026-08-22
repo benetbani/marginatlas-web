@@ -42,23 +42,63 @@ export function Masthead({ d }: { d: any }) {
         <h1 data-typography="custom" className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]">{h.answer}</h1>
 
         {/* the hero scorecard: owner-keeps dominant, the other two as support */}
-        <div className="mt-6 grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">
+        {/* THE TILE COLUMN IS SIZED BY ITS CONTENTS, not by a share of the row.
+            Stacking them on a phone was only half the fault. Above the wide
+            breakpoint the row splits one and a half to one, which hands the three
+            tiles roughly two hundred and seventy pixels between them, and
+            "Demanding" set at twenty needs more than that on its own. So the same
+            word clipped to "Demandin" at nine hundred pixels wide as clipped to
+            "Deman" at three hundred and twenty. Caught by photographing the first
+            fix and finding it had solved one end of the range and not the other.
+            The tiles now take the width they need and the headline figure takes
+            what is left, which it has in abundance. */}
+          <div className="mt-6 grid gap-5 md:grid-cols-[minmax(0,1.5fr)_auto] md:items-end">
           <div>
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">A typical owner keeps</div>
             <div className="fig leading-none text-[var(--terra-text)]" style={{ fontSize: "clamp(2.6rem, 7vw, 3.6rem)" }}>{money(reduced ? take : t)}</div>
             <div className="mt-1 text-[12.5px] text-[var(--c-ink2)]">a year, after every cost is paid.</div>
           </div>
-          <div className={`grid ${hasFirms ? "grid-cols-3" : "grid-cols-2"} gap-px overflow-hidden rounded-xl border border-[var(--c-border)]`} style={{ background: "var(--c-border)" }}>
-            <div className="bg-[var(--c-card)] px-3.5 py-3">
+          {/* THE TILES STACK BEFORE THEY CLIP.
+            This was three fixed columns with no width rule at all, inside a box
+            that hides its overflow. On a phone each tile got about fifty pixels
+            of room for a figure set at twenty, so "Demanding" printed as "Deman"
+            and the count of firms already trading here was cut off at its right
+            edge. Two of the three readings in the page's own scorecard were
+            unreadable on the width most people use, and the box quietly swallowed
+            the evidence.
+            The library's own stats grid stacks below its breakpoint and only
+            then goes to three across. That convention is the fix; the block
+            itself is a section-wide band with its own heading and does not
+            belong inside a masthead. Structure adopted, block declined.
+            NO BREAKPOINT, THOUGH. The first attempt used one, and the width gate
+            failed the build for it: this repo already carries fifty-four grids
+            whose second layout is pitched at a width no phone reaches, and it
+            refuses to accept a fifty-fifth. It is right to. A tile that asks for
+            the room it needs and wraps when it cannot get it works at EVERY
+            width, not at two of them, and needs no breakpoint at all.
+            A WRAPPING ROW, NOT A WRAPPING GRID. The grid version left a hole:
+            three tiles on a half card fitted two across, and the third sat in one
+            cell of a two-cell row with the empty half showing the hairline colour
+            through it. A row that wraps has no cells to leave empty, so the last
+            tile takes the rest of its line. Seen by photographing it at that
+            exact width; the grid looked right at every other one.
+            AND THE TILES SIZE THEMSELVES. A fixed minimum width is wrong in both
+            directions: large enough to stop a word being crushed on a half card
+            and it forces a wrap on a full one, small enough to keep three across
+            on a full card and it crushes the word again on the half. Sized to
+            their own contents they wrap exactly when they must and never before,
+            with no number in the stylesheet to get wrong. */}
+          <div className="flex flex-wrap gap-px overflow-hidden rounded-xl border border-[var(--c-border)]" style={{ background: "var(--c-border)" }}>
+            <div className="flex-[1_1_auto] whitespace-nowrap bg-[var(--c-card)] px-3.5 py-3">
               <Fig className="text-[20px] text-[var(--c-ink)]">{d.margins?.net_pct}%</Fig>
               <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">net margin<InfoTip gloss="Profit as a share of sales, after every cost." /></div>
             </div>
-            <div className="bg-[var(--c-card)] px-3.5 py-3">
+            <div className="flex-[1_1_auto] whitespace-nowrap bg-[var(--c-card)] px-3.5 py-3">
               <Fig className="text-[20px] text-[var(--c-ink)]">{breakWord}</Fig>
               <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to break in</div>
             </div>
             {hasFirms ? (
-              <div className="bg-[var(--c-card)] px-3.5 py-3">
+              <div className="flex-[1_1_auto] whitespace-nowrap bg-[var(--c-card)] px-3.5 py-3">
                 <Fig className="text-[20px] text-[var(--c-ink)]">{h.n_firms.toLocaleString()}</Fig>
                 <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">already trade here</div>
               </div>

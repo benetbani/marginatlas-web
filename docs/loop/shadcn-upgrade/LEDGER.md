@@ -57,7 +57,7 @@ looking at yet, and ranks accordingly.**
 | 13 | Myth vs. reality | survival curve, folklore struck on it | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 14 | Related trades in this place | ranked figure list | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 15 | The masthead turnover spread | spread strip, marked | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 16 | The masthead headline figure and its scorecard | three tiles | **the tiles clip at phone width** | TODO |
+| 16 | The masthead headline figure and its scorecard | a wrapping row of tiles | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 17 | The currency and format switch | segmented control | **NO DATA. Reaches no reader** | **BLOCKED** |
 
 **Row 2, closed 2026-08-22.** The money identity now runs on the chart library.
@@ -204,6 +204,45 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 16, closed 2026-08-22. Two of the three readings in the page's own
+scorecard were unreadable, and it took FOUR attempts to fix properly.**
+
+**THE DEFECT.** Three fixed columns with no width rule at all, inside a box that
+hides its overflow. **"Demanding" printed as "Deman" and the count of firms
+already trading here was cut off at its right edge.** The box swallowed the
+evidence, so nothing looked broken; the words were simply shorter than they
+should have been.
+
+**A stats block was pulled and read.** Its grid stacks below a breakpoint and only
+then goes three across, which is the right convention. The block itself is a
+section-wide band with its own heading and does not belong inside a masthead, so
+**the convention was taken and the block declined.**
+
+**FOUR ATTEMPTS, each one exposed by looking at the next width.**
+1. Stacked them below a breakpoint. Fixed the phone. **Photographed at 900 and
+   the same word still clipped**, because above the wide breakpoint the row splits
+   one and a half to one and hands three tiles about 270 pixels between them.
+2. Sized the tile column to its contents instead of a share of the row. Fixed
+   both ends. **The width gate then failed the build**: the repo already carries
+   54 grids whose second layout is pitched at a width no phone reaches and it
+   refuses a 55th. It is right to. Not raised.
+3. Replaced the breakpoint with a self-wrapping grid. **Photographed at 480 and
+   found a hole**: three tiles fitted two across and the third sat in one cell of
+   a two-cell row with the empty half showing the hairline colour through it.
+4. A wrapping ROW, whose tiles size to their own contents. A row has no cells to
+   leave empty. A fixed minimum width is wrong in both directions at once: big
+   enough to protect the word on a half card and it forces a wrap on a full one;
+   small enough to keep three across on a full card and it crushes the word
+   again. **Sized to their contents they wrap exactly when they must, with no
+   number in the stylesheet to get wrong.**
+
+**Verified at 320, 480, 768 and 900, and against the widest content this
+scorecard can ever hold**: the longest of its three fixed words and a
+seven-figure count of firms, both rendered in full with room to spare.
+
+**No breakpoint was added.** The width ratchet held at 54 and the fixed-width
+count moved DOWN, 230 to 229. Every word and figure is byte for byte identical.
 
 **Row 15, closed 2026-08-22. THE OPEN WOUND IS CLOSED, and the answer was that
 the mark was being thrown away.**
@@ -653,7 +692,11 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 12 kept with evidence, 8 blocked, 40 to go.**
+64 rows. **4 replaced or retired, 13 kept with evidence, 8 blocked, 39 to go.**
+
+THE CELL PAGE IS DONE. All seventeen of its rows are closed or blocked. Five are
+blocked on missing data, not on design, and no component from any library moves
+them.
 
 A pattern worth naming: THREE separate charts have now been found placing a mark
 or a label centred on its own value at the very end of a scale, where half of it

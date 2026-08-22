@@ -1,7 +1,7 @@
 {
   "total": {
-    "remCaps": 230,
-    "chCaps": 14,
+    "remCaps": 229,
+    "chCaps": 15,
     "smPairings": 54
   },
   "byFile": {
@@ -455,6 +455,11 @@
       "chCaps": 0,
       "smPairings": 0
     },
+    "src/components/kit/InfoTip.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
     "src/components/kit/MoneyGoesBreakdown.tsx": {
       "remCaps": 1,
       "chCaps": 0,
@@ -521,11 +526,6 @@
       "smPairings": 0
     },
     "src/components/sections/CityCharacter.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
-      "smPairings": 0
-    },
-    "src/components/sections/SubIndustryPicker.tsx": {
       "remCaps": 1,
       "chCaps": 0,
       "smPairings": 0
