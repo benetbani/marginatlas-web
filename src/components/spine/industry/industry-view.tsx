@@ -555,7 +555,7 @@ function CapitalPayback({ d }: { d: any }) {
  * open is definitional, nothing is invented. Skips any year the seed does not carry.
  * focal: the falling curve. width: Even (T3), paired with who-it-suits.
  * terracotta: the curve line + its end dot. idiom: drawn curve (1 of 2, with SeasonRibbon). */
-function Survival({ d }: { d: any }) {
+export function Survival({ d }: { d: any }) {
   const s = d.survival ?? {};
   const curve: Array<{ yr: number; pct: number }> = [
     { yr: 0, pct: 100 },

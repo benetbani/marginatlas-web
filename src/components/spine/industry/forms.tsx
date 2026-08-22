@@ -132,47 +132,105 @@ export function SurvivalCurve({ curve, note }: { curve: Array<{ yr: number; pct:
   const { ref, seen } = useInView<HTMLDivElement>();
   const p = useDraw(seen, reduced, 680);
   if (!curve.length) return null;
-  // padT 22 (was 12): the end-label paints 9px above the 100% start point, so the
-  // top padding must clear a full text line or the label clips at the card edge.
+  /* THE DRAWING STRETCHES. THE WORDS DO NOT.
+     This was one fixed 320-unit picture given the card's full width with no
+     height of its own, so it scaled UNIFORMLY to whatever it landed in and took
+     its text with it. The axis marks are set at eight and a half units: in a
+     half-band they render near ten pixels, on a phone card near six. The same
+     labels, three sizes apart, for no reason a reader could name.
+     Same treatment as the survival curve on the trade-in-a-place page: the SVG
+     holds the PATHS ONLY and stretches freely, every readable thing is real text
+     laid over it, and the line keeps a true thickness while the box stretches.
+     The horizontal scale is the only one that moves, so a percentage puts a mark
+     exactly on its path point, and the height comes from the same constant the
+     viewBox uses so the two cannot drift apart. */
   const W = 320, H = 150, padL = 30, padR = 14, padT = 22, padB = 24;
   const maxYr = Math.max(...curve.map((c) => c.yr)) || 1;
   const X = (yr: number) => padL + (yr / maxYr) * (W - padL - padR);
   const Y = (pct: number) => padT + (1 - pct / 100) * (H - padT - padB); // zero baseline
+  const leftPct = (yr: number) => (X(yr) / W) * 100;
   const pts = curve.map((c) => [X(c.yr), Y(c.pct)] as const);
-  // total path length approximation for the draw reveal (piecewise linear)
-  let total = 0; const segLen: number[] = [];
-  for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); segLen.push(l); total += l; }
+  let total = 0;
+  for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
   const line = "M " + pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L ");
   const area = `M ${pts[0][0].toFixed(1)},${(H - padB).toFixed(1)} L ` + pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L ") + ` L ${pts[pts.length - 1][0].toFixed(1)},${(H - padB).toFixed(1)} Z`;
   const dash = total, offset = total * (1 - p);
   const lastVisibleIdx = Math.max(0, Math.min(curve.length - 1, Math.round(p * (curve.length - 1))));
-  const end = pts[lastVisibleIdx];
+  /* the end reading anchors inward so it cannot hang off the right-hand edge,
+     the same rule three other charts on this site now use */
+  const endYr = curve[lastVisibleIdx].yr;
+  const endAnchor = leftPct(endYr) > 86 ? "translateX(-100%)" : "translateX(-50%)";
   return (
     <div ref={ref}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={curve.map((c) => `year ${c.yr}: ${c.pct}% open`).join(", ")} preserveAspectRatio="xMidYMid meet">
-        {/* zero baseline + gridlines at 50/100 */}
+      <div
+        className="relative w-full"
+        style={{ height: H }}
+        role="img"
+        aria-label={curve.map((c) => `year ${c.yr}: ${c.pct}% open`).join(", ")}
+      >
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
+          {[0, 50, 100].map((g) => (
+            <line
+              key={g}
+              x1={padL}
+              y1={Y(g)}
+              x2={W - padR}
+              y2={Y(g)}
+              stroke={g === 0 ? "var(--c-line-strong)" : "var(--c-soft2)"}
+              strokeWidth={g === 0 ? 1.4 : 1}
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+          <path d={area} fill={TERRA} opacity={0.1 * p} />
+          <path d={line} fill="none" stroke={TERRA} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={dash} strokeDashoffset={reduced ? 0 : offset} vectorEffect="non-scaling-stroke" />
+        </svg>
         {[0, 50, 100].map((g) => (
-          <g key={g}>
-            <line x1={padL} y1={Y(g)} x2={W - padR} y2={Y(g)} stroke={g === 0 ? "#d8d0cb" : "#eee9e6"} strokeWidth={g === 0 ? 1.4 : 1} />
-            <text x={padL - 5} y={Y(g) + 3} textAnchor="end" fill="#9a938e" fontSize={8.5}>{g}%</text>
-          </g>
+          <span
+            key={g}
+            aria-hidden
+            className="absolute w-6 text-right text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
+            style={{ left: 0, top: `${Y(g) - 5}px` }}
+          >
+            {g}%
+          </span>
         ))}
-        <path d={area} fill={TERRA} opacity={0.1 * p} />
-        <path d={line} fill="none" stroke={TERRA} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={dash} strokeDashoffset={reduced ? 0 : offset} />
         {curve.map((c, i) => {
           const shown = i <= lastVisibleIdx || reduced;
           const isLast = c.yr === maxYr;
-          return shown ? (
-            <g key={c.yr}>
-              <circle cx={X(c.yr)} cy={Y(c.pct)} r={isLast ? 4 : 3} fill={isLast ? TERRA : "#fff"} stroke={isLast ? "#fff" : "#1b1b1a"} strokeWidth={1.6} />
-              <text x={X(c.yr)} y={H - 8} textAnchor="middle" fill="#6f6f6d" fontSize={9}>{c.yr === 0 ? "open" : `yr ${c.yr}`}</text>
-            </g>
-          ) : null;
+          if (!shown) return null;
+          return (
+            <React.Fragment key={c.yr}>
+              <span
+                aria-hidden
+                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{
+                  left: `${leftPct(c.yr)}%`,
+                  top: `${Y(c.pct)}px`,
+                  width: isLast ? 8 : 6,
+                  height: isLast ? 8 : 6,
+                  background: isLast ? TERRA : "#fff",
+                  border: `1.6px solid ${isLast ? "#fff" : "var(--c-ink)"}`,
+                }}
+              />
+              <span
+                aria-hidden
+                className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
+                style={{ left: `${leftPct(c.yr)}%`, top: `${H - 12}px` }}
+              >
+                {c.yr === 0 ? "open" : `yr ${c.yr}`}
+              </span>
+            </React.Fragment>
+          );
         })}
-        {/* live end-label of the pct as the curve draws */}
-        <text x={end[0]} y={end[1] - 9} textAnchor="middle" fill="#c2410c" fontSize={11} fontWeight={600}>{curve[lastVisibleIdx].pct}%</text>
-      </svg>
-      {note ? <div className="mt-1 text-[11px] leading-snug text-[var(--c-muted)]">{note}</div> : null}
+        <span
+          aria-hidden
+          className="absolute whitespace-nowrap text-[length:var(--t-micro)] font-semibold leading-none text-[var(--terra-text)]"
+          style={{ left: `${leftPct(endYr)}%`, top: `${Y(curve[lastVisibleIdx].pct) - 18}px`, transform: endAnchor }}
+        >
+          {curve[lastVisibleIdx].pct}%
+        </span>
+      </div>
+      {note ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{note}</div> : null}
     </div>
   );
 }

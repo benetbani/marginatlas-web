@@ -214,6 +214,45 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 22, closed 2026-08-22. Kept. The same fault as the other survival curve,
+and a trade-off I introduced and am not hiding.**
+
+**A HYPOTHESIS THAT WAS WRONG, checked before acting on it.** The curve draws
+itself in with an animation, and the reading printed at its end follows the draw.
+If the draw started at zero, the static render would show "100%" and no line at
+all. It does not: the hook that drives it returns a finished state unconditionally,
+so the server render is complete. Read the hook before believing the chart.
+
+**THE REAL DEFECT: the whole drawing scaled with the card, text and all.** One
+fixed 320-unit picture given the card's full width with no height of its own, so
+it scaled uniformly to whatever it landed in. The axis marks are set at eight and
+a half units: in a half-band they render near ten pixels, **on a phone card near
+six**. The same labels, three sizes apart, for no reason a reader could name.
+Photographed at 320, the before is barely legible.
+
+Rebuilt the way the trade-in-a-place survival curve was in row 13: the drawing
+holds the PATHS ONLY and stretches, every readable thing is real text laid over
+it, and the line keeps a true thickness at any width. **Seven raw colour values
+retired**, including a warm grey on a palette whose rule is terracotta plus
+strictly cool neutrals.
+
+**THE TRADE-OFF I INTRODUCED, stated rather than buried.** Pinning the height
+while the width flexes means **the curve's slope now depends on the card width**:
+on a wide band it reads flatter than it used to. The old version held one aspect
+ratio at every size, which was the one thing it did right. What it bought with
+that was text three sizes apart. The values are printed on the chart, on the
+gridlines and at the end, so the shape is supporting rather than the only carrier,
+and this is the same trade every responsive chart makes, including the one on the
+cell page after row 13. **If the founder wants the aspect held instead, that is a
+one-line reversal and the cost comes straight back.**
+
+**Recorded, not changed: the two survival charts disagree about the accent.** This
+one draws the whole curve and its fill in terracotta; the cell page's draws the
+line in grey and puts the accent on a single node, with a written reason. Changing
+an accent policy is a design decision.
+
+Every word and figure byte for byte identical. Ladder held at 416.
+
 **Row 21, closed 2026-08-22. Kept. A band that split itself in half for one
 figure.**
 
@@ -703,7 +742,7 @@ swap on this page.
 | 19 | Where each $100 goes | stacked bar, guarded | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 20 | Keep and cost, trades next door | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
 | 21 | What a customer spends | one or two figures | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 22 | Five-year survival | survival curve, line on zero baseline | NOT CHECKED | TODO |
+| 22 | Five-year survival | survival curve | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 23 | Payback window | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 24 | When a day starts paying | two-marker scale | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 25 | Getting to break-even | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
@@ -814,7 +853,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **5 replaced or retired, 16 kept with evidence, 12 blocked, 31 to go.**
+64 rows. **5 replaced or retired, 17 kept with evidence, 12 blocked, 30 to go.**
 
 BOTH library wins so far are the same defect: a table built without a table.
 That is worth remembering when the remaining rows are triaged.
