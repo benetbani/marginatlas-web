@@ -924,6 +924,44 @@ swap on this page.
 
 ---
 
+**Row 33, closed 2026-08-22. THE FIRST CANDIDATE THE SWEEP NAMED, AND IT IS NOT A
+TABLE.**
+
+The sweep flagged this file for a pinned grid. Opened, that grid is the map
+sitting beside the list, not tabular data. **A false positive on the first one
+checked**, exactly as the sweep's own caveat said would happen, and worth stating
+before the other eleven are reported as if they were confirmed.
+
+**What it did have is worse than a missing table.** The file's own headline called
+this a map "cross-linked on hover" with the list beside it. **That cross-link was
+never built.** The map component takes points, a fit padding, a select callback, a
+label, a class and a height. It has **no prop for an externally highlighted
+point**, so nothing the list did could ever have reached it.
+
+**And the machinery for it was still there, doing a stylesheet's job.** A piece of
+state holding the hovered district, two mouse handlers, and an inline background
+applied to the matching row. That background is `var(--c-soft)`: **the exact value
+the shared hover class on the same element already applies.** So the state
+reproduced a CSS rule, re-rendering every row in the list on every mouse move
+across it, for a connection that does not exist.
+
+All of it is gone, **and with the last piece of state went the client boundary**:
+the section renders on the server now. The two renders are byte for byte
+identical, all 10,725 of them, which is the proof that nothing a reader sees was
+riding on it. The sentence claiming the cross-link is removed rather than left to
+mislead.
+
+**WIRING IT PROPERLY IS A REAL FEATURE AND WAS NOT ATTEMPTED.** It needs a new prop
+on the map and a browser to verify in, and this machine cannot keep a dev server
+alive. Written down instead of half-built.
+
+**An instrument was fixed on the way:** the render harness could not load this
+section at all, because the map imports a stylesheet only a bundler can read. The
+harness config now aliases it to an empty module, so any section carrying a map
+can be rendered from now on.
+
+---
+
 ## THE SWEEP, 2026-08-22: WHERE THE LIBRARY ACTUALLY LANDS
 
 Three times in this loop the paid library has been the right answer, and all
@@ -957,7 +995,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 
 | # | Section a visitor reads | Form today | Defect | Status |
 |---|---|---|---|---|
-| 33 | Where to trade, by district | district table | NOT CHECKED | TODO |
+| 33 | Where to trade, by district | map beside a ranked list | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 34 | The rent, district by district | ranked rows | NOT CHECKED | TODO |
 | 35 | Rent against peer cities | comparison bars | NOT CHECKED | TODO |
 | 36 | What space costs | figure group | NOT CHECKED | TODO |
@@ -1050,7 +1088,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows, one of them void. **6 replaced or retired, 21 kept with evidence, 12 blocked, 24 to go.**
+64 rows, one of them void. **6 replaced or retired, 22 kept with evidence, 12 blocked, 23 to go.**
 
 THE INDUSTRY PAGE IS DONE. Its fourteen sections are closed or blocked: four
 blocked on missing data, one void as a duplicate, the rest fixed or kept.

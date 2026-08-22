@@ -1,9 +1,8 @@
-"use client";
 /**
  * WhereToTrade , the city page's SIGNATURE moment. The old split (district
  * conveyor, then a chapter-weight Movement, then a separate map) is merged into
  * ONE coordinated pairing: a tall real MapLibre map beside a ranked district
- * list, cross-linked on hover. The list ranks by RENT LOAD, lightest first (the
+ * list. The list ranks by RENT LOAD, lightest first (the
  * founder's D1 call, 2026-07-11): rent is the held, knowable figure. The old
  * derived per-district "keep index" is DELETED , rulebook v1 §5 names it an
  * unknowable metric, never rendered , and the district x trade ProMatrix built
@@ -20,6 +19,25 @@
  * packed West End trio yields its labels first.
  * width: Full. The revenue-vs-city counterpoint stays one tap away in a quiet
  * disclosure; no cross-district revenue-vs-keep verdict footer (rulebook v1 §15).
+ *
+ * THE CROSS-LINK THIS FILE USED TO DESCRIBE WAS NEVER BUILT, and the sentence
+ * claiming it has been removed rather than left to mislead the next reader. The
+ * map component takes points, a fit padding, a select callback, a label, a class
+ * and a height. It has no prop for an externally highlighted point, so nothing
+ * the list did could ever have reached it.
+ *
+ * What the list DID keep was a piece of state for that link: a hovered slug, two
+ * mouse handlers, and an inline background applied when a row matched. That
+ * background is `var(--c-soft)`, which is the exact value the shared hover class
+ * on the same element already applies on hover. So the state reproduced a CSS
+ * rule, re-rendering every row in the list on every mouse move across it, in
+ * service of a connection that does not exist. All of it is gone, and with the
+ * last piece of state went the client boundary: this section renders on the
+ * server now, and the map, which is its own client component, still does not.
+ *
+ * WIRING THE CROSS-LINK PROPERLY IS A REAL FEATURE and is not attempted here: it
+ * needs a new prop on the map and a browser to verify in, and this machine could
+ * not keep a dev server alive. Written down instead.
  */
 import * as React from "react";
 import { Box, Rail, Fig, InfoTip, TERRA } from "@/components/spine/kit";
@@ -30,7 +48,6 @@ type District = { name: string; slug: string; character: string; rev_vs_city_pct
 export function WhereToTrade({ d }: { d: any }) {
   const w = d.where_to_trade ?? {};
   const list: District[] = w.list ?? [];
-  const [hover, setHover] = React.useState<string | null>(null);
   // Null-guard (real-data promotion): omit the whole section when no district set.
   if (list.length === 0) return null;
   // D1 (founder, 2026-07-11): rank by rent load, lightest first. The seed rent
@@ -100,16 +117,12 @@ export function WhereToTrade({ d }: { d: any }) {
           </div>
           <div className="space-y-1">
             {rows.map((r, i) => {
-              const on = hover === r.slug;
               const isLead = i === 0;
               return (
                 <a
                   key={r.slug}
                   href={hoodHref}
-                  onMouseEnter={() => setHover(r.slug)}
-                  onMouseLeave={() => setHover(null)}
                   className="hov -mx-2 block rounded-md px-2 py-1.5 transition-colors"
-                  style={on ? { background: "var(--c-soft)" } : undefined}
                 >
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink)]">{r.name}</span>
