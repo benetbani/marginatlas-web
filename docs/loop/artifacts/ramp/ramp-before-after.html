@@ -1,0 +1,158 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Getting to break-even, before and after</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 28px 60px;background:#fafaf9;color:#1b1b1a;
+       font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:14px;line-height:1.55}
+  h1{font-size:24px;font-weight:500;letter-spacing:-.01em;margin:0 0 12px}
+  h2{font-size:15px;font-weight:500;margin:34px 0 2px}
+  p{max-width:68ch;color:#57575b;margin:0 0 8px}
+  .sub{font-size:13px;margin:0 0 4px}
+  b{font-weight:500;font-variant-numeric:tabular-nums}
+  .cols{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start;margin-top:14px}
+  .col{max-width:100%}
+  .w{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8c8c8a;margin-bottom:10px}
+  .lab{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9a9a9e;margin:0 0 6px}
+  .card{background:#fff;border:1px solid #e7e2df;border-radius:14px;padding:16px;margin-bottom:22px}
+  .lblrow{position:relative;height:18px}
+  .belbl{position:absolute;top:0;white-space:nowrap;font-size:11px;font-weight:500;color:#c2410c}
+  .hold{position:relative}
+  .track{position:relative;display:flex;height:12px;overflow:hidden;border-radius:999px;border:1px solid #e7e2df}
+  .seg{height:100%;border-right:1px solid rgba(255,255,255,.7)}
+  .seg:last-child{border-right:0}
+  .dot{position:absolute;top:50%;width:14px;height:14px;transform:translate(-50%,-50%);
+       border-radius:50%;background:#fb8469;border:2px solid #fff;box-shadow:0 0 0 1px #e7e2df}
+  .ends{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;
+        letter-spacing:.04em;text-transform:uppercase;color:#6f6f6d}
+  .legend{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:10px;border-top:1px solid #e7e2df;padding-top:10px}
+  .lg{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#565654}
+  .lg i{width:10px;height:10px;border-radius:2px;display:inline-block}
+  .lg b{color:#1b1b1a}
+  footer{margin-top:36px;font-size:12px;color:#8c8c8a;max-width:68ch}
+</style>
+<h1>Getting to break-even, before and after</h1>
+<p>The break-even marker used to live inside the track, and the track hides its
+overflow so its ends stay rounded. A marker is centred on its position, so at
+either extreme half of it was eaten by the very rounding it shared a box with.</p>
+<p><b>The first case is what ships today, and the two versions are identical.</b>
+That is the point: nothing a reader currently sees changes. The second case is a
+trade whose ramp runs past the end of the year. Look at the right-hand end of the
+lower bar: half the orange marker is gone.</p>
+
+  <h2>Today: the one trade that has a ramp figure</h2>
+  <p class="sub">Opens at week 16. Break-even at week 26.</p>
+  <div class="cols">
+    
+    <section class="col" style="width:320px">
+      <div class="w">320px &middot; a phone</div>
+      <div class="lab">After</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:50.00%;transform:translateX(-50%)">Break-even, week 26</span></div>
+    <div class="hold"><div class="track"><div class="seg" style="width:30.77%;background:#d8d0cb"></div><div class="seg" style="width:19.23%;background:#e7e2df"></div><div class="seg" style="width:50.00%;background:#e6e6e6"></div></div><span class="dot" style="left:50.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 52</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 26</b></span><span class="lg"><i style="background:#e6e6e6"></i>Profit <b>wk 26-wk 52</b></span></div>
+  </div></div>
+      <div class="lab">Before</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:50.00%;transform:translateX(-50%)">Break-even, week 26</span></div>
+    <div class="track"><div class="seg" style="width:30.77%;background:#d8d0cb"></div><div class="seg" style="width:19.23%;background:#e7e2df"></div><div class="seg" style="width:50.00%;background:#e6e6e6"></div><span class="dot" style="left:50.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 52</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 26</b></span><span class="lg"><i style="background:#e6e6e6"></i>Profit <b>wk 26-wk 52</b></span></div>
+  </div></div>
+    </section>
+    <section class="col" style="width:480px">
+      <div class="w">480px &middot; a half card</div>
+      <div class="lab">After</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:50.00%;transform:translateX(-50%)">Break-even, week 26</span></div>
+    <div class="hold"><div class="track"><div class="seg" style="width:30.77%;background:#d8d0cb"></div><div class="seg" style="width:19.23%;background:#e7e2df"></div><div class="seg" style="width:50.00%;background:#e6e6e6"></div></div><span class="dot" style="left:50.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 52</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 26</b></span><span class="lg"><i style="background:#e6e6e6"></i>Profit <b>wk 26-wk 52</b></span></div>
+  </div></div>
+      <div class="lab">Before</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:50.00%;transform:translateX(-50%)">Break-even, week 26</span></div>
+    <div class="track"><div class="seg" style="width:30.77%;background:#d8d0cb"></div><div class="seg" style="width:19.23%;background:#e7e2df"></div><div class="seg" style="width:50.00%;background:#e6e6e6"></div><span class="dot" style="left:50.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 52</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 26</b></span><span class="lg"><i style="background:#e6e6e6"></i>Profit <b>wk 26-wk 52</b></span></div>
+  </div></div>
+    </section>
+    <section class="col" style="width:760px">
+      <div class="w">760px &middot; a full band</div>
+      <div class="lab">After</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:50.00%;transform:translateX(-50%)">Break-even, week 26</span></div>
+    <div class="hold"><div class="track"><div class="seg" style="width:30.77%;background:#d8d0cb"></div><div class="seg" style="width:19.23%;background:#e7e2df"></div><div class="seg" style="width:50.00%;background:#e6e6e6"></div></div><span class="dot" style="left:50.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 52</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 26</b></span><span class="lg"><i style="background:#e6e6e6"></i>Profit <b>wk 26-wk 52</b></span></div>
+  </div></div>
+      <div class="lab">Before</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:50.00%;transform:translateX(-50%)">Break-even, week 26</span></div>
+    <div class="track"><div class="seg" style="width:30.77%;background:#d8d0cb"></div><div class="seg" style="width:19.23%;background:#e7e2df"></div><div class="seg" style="width:50.00%;background:#e6e6e6"></div><span class="dot" style="left:50.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 52</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 26</b></span><span class="lg"><i style="background:#e6e6e6"></i>Profit <b>wk 26-wk 52</b></span></div>
+  </div></div>
+    </section>
+  </div>
+
+  <h2>A slower trade, once one gets a ramp figure</h2>
+  <p class="sub">Opens at week 16. Break-even at week 58.</p>
+  <div class="cols">
+    
+    <section class="col" style="width:320px">
+      <div class="w">320px &middot; a phone</div>
+      <div class="lab">After</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:100.00%;transform:translateX(-100%)">Break-even, week 58</span></div>
+    <div class="hold"><div class="track"><div class="seg" style="width:27.59%;background:#d8d0cb"></div><div class="seg" style="width:72.41%;background:#e7e2df"></div></div><span class="dot" style="left:100.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 58</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 58</b></span></div>
+  </div></div>
+      <div class="lab">Before</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:100.00%;transform:translateX(-100%)">Break-even, week 58</span></div>
+    <div class="track"><div class="seg" style="width:27.59%;background:#d8d0cb"></div><div class="seg" style="width:72.41%;background:#e7e2df"></div><span class="dot" style="left:100.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 58</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 58</b></span></div>
+  </div></div>
+    </section>
+    <section class="col" style="width:480px">
+      <div class="w">480px &middot; a half card</div>
+      <div class="lab">After</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:100.00%;transform:translateX(-100%)">Break-even, week 58</span></div>
+    <div class="hold"><div class="track"><div class="seg" style="width:27.59%;background:#d8d0cb"></div><div class="seg" style="width:72.41%;background:#e7e2df"></div></div><span class="dot" style="left:100.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 58</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 58</b></span></div>
+  </div></div>
+      <div class="lab">Before</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:100.00%;transform:translateX(-100%)">Break-even, week 58</span></div>
+    <div class="track"><div class="seg" style="width:27.59%;background:#d8d0cb"></div><div class="seg" style="width:72.41%;background:#e7e2df"></div><span class="dot" style="left:100.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 58</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 58</b></span></div>
+  </div></div>
+    </section>
+    <section class="col" style="width:760px">
+      <div class="w">760px &middot; a full band</div>
+      <div class="lab">After</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:100.00%;transform:translateX(-100%)">Break-even, week 58</span></div>
+    <div class="hold"><div class="track"><div class="seg" style="width:27.59%;background:#d8d0cb"></div><div class="seg" style="width:72.41%;background:#e7e2df"></div></div><span class="dot" style="left:100.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 58</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 58</b></span></div>
+  </div></div>
+      <div class="lab">Before</div>
+      <div class="card"><div class="phase">
+    <div class="lblrow"><span class="belbl" style="left:100.00%;transform:translateX(-100%)">Break-even, week 58</span></div>
+    <div class="track"><div class="seg" style="width:27.59%;background:#d8d0cb"></div><div class="seg" style="width:72.41%;background:#e7e2df"></div><span class="dot" style="left:100.00%"></span></div>
+    <div class="ends"><span>0</span><span>week 58</span></div>
+    <div class="legend"><span class="lg"><i style="background:#d8d0cb"></i>Fit-out <b>wk 0-wk 16</b></span><span class="lg"><i style="background:#e7e2df"></i>Ramp <b>wk 16-wk 58</b></span></div>
+  </div></div>
+    </section>
+  </div>
+<footer>Sample weeks. Nothing on this sheet is published anywhere.</footer>

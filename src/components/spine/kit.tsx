@@ -821,11 +821,23 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
     <div>
       <div className="relative pt-6">
         <span className="absolute top-0 whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--terra-text)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
-        <div className="relative h-3 overflow-hidden rounded-full border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
-          <div className="flex h-full w-full">
-            {segs.map((s) => <div key={s.label} className="h-full border-r border-white/70 last:border-0" style={{ width: `${pct(s.to - s.from)}%`, background: s.color }} />)}
+        {/* THE MARKER SITS OUTSIDE THE TRACK, not inside it.
+            The track hides its overflow so its segments keep the rounded ends,
+            and the break-even dot used to live inside that same box. A dot is
+            centred on its position, so at either extreme half of it was cut off
+            by the very rounding it was sharing a box with. It reaches an extreme
+            whenever break-even lands at or past the end of the horizon, which is
+            any ramp of a year or longer.
+            It cannot fire today: exactly one trade carries a ramp figure and it
+            puts the dot at the halfway mark. This is for the day a slower trade
+            gets one, which is the only day anybody would have noticed. */}
+        <div className="relative">
+          <div className="relative h-3 overflow-hidden rounded-full border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
+            <div className="flex h-full w-full">
+              {segs.map((s) => <div key={s.label} className="h-full border-r border-white/70 last:border-0" style={{ width: `${pct(s.to - s.from)}%`, background: s.color }} />)}
+            </div>
           </div>
-          <span className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: TERRA, boxShadow: "0 0 0 1px var(--c-border)" }} />
+          <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: TERRA, boxShadow: "0 0 0 1px var(--c-border)" }} />
         </div>
         <div className="mt-1.5 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>0</span><span>week {Math.round(horizon)}</span></div>
       </div>

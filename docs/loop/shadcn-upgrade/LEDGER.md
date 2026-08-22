@@ -50,7 +50,7 @@ looking at yet, and ranks accordingly.**
 | 6 | When the week fills up | daypart donut | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 7 | Who comes in, and how | share bar | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 8 | Busy months and quiet months | zero-baseline monthly columns | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 9 | Getting to break-even | two-anchor time axis | NOT CHECKED | TODO |
+| 9 | Getting to break-even | two-anchor time axis | **1 trade in 138. Latent fault fixed** | **DONE-KEPT** |
 | 10 | The same trade, comparable places | editorial table, no in-cell bars | NOT CHECKED | TODO |
 | 11 | What the team costs | track-free range brackets | NOT CHECKED | TODO |
 | 12 | What to watch | severity-marked risk list | NOT CHECKED | TODO |
@@ -204,6 +204,42 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 9, closed 2026-08-22. Kept. It reaches one trade in 138, and it raises a
+question only the founder can answer.**
+
+The library answers nothing: three blocks in a row and a dot. No axis, no scale
+beyond a straight line, nothing to measure.
+
+**REACH, measured.** The bar needs a ramp-to-break-even figure, and exactly ONE
+trade carries one. The guard that produces it deliberately refuses to borrow that
+figure across trades, which is correct, so on the other 137 the section omits
+itself entirely. Nobody is being misled. Almost nobody is being served either.
+
+**THE QUESTION, and this loop must not answer it.** The figure is named "ramp to
+break-even, months" and reads 6. The drawing counts those six months from week
+ZERO, which is the day the lease is signed, and the modelled time to open is 16
+weeks. So the picture gives the trade **ten weeks of actual trading** before it
+breaks even.
+
+Either the field means "from signing", in which case the drawing is right and the
+field is badly named, or it means "from opening", in which case break-even belongs
+at week 42 and **the chart is sixteen weeks optimistic**. Nothing in this
+repository settles it. Guessing would be fabricating a figure, so it is written
+down and left.
+
+**WHAT WAS FIXED: a fault that could not fire yet.** The break-even marker lived
+inside the track, and the track hides its overflow so its ends stay rounded. A
+marker is centred on its position, so at either extreme half of it was eaten by
+the rounding it shared a box with. It reaches an extreme whenever break-even
+lands at or past the end of the horizon: any ramp of a year or more. The one
+trade that has a ramp puts the marker at the halfway mark, so **it cannot fire
+today, and it would fire the day a slower trade gets a figure**, which is the only
+day anyone would have seen it.
+
+The marker now sits outside the clipping box. **Today's case renders identically
+at all three widths**, which is the proof that nothing a reader currently sees
+changed.
 
 **Row 8, closed 2026-08-22. The year chart was being stretched sideways.**
 
@@ -421,7 +457,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **3 replaced or retired, 7 kept with evidence, 8 blocked, 46 to go.**
+64 rows. **3 replaced or retired, 8 kept with evidence, 8 blocked, 45 to go.**
 
 Five of those blocked rows are the trade page sections that reach no reader.
 They are blocked on DATA, not on design, and no component from any library
