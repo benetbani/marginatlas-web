@@ -68,7 +68,7 @@ function TierBand({ steps = 4, pos, word, leftPole, rightPole }: { steps?: numbe
  * baseline / heaviest). The invented "The catch" prose box and the decorative
  * terracotta frame are DELETED (2026-07-12); the "district keep spread" focal and its
  * derived keep index were retired earlier (§5 + §13). Null-guards on the district set. */
-function CityVerdict({ d }: { d: any }) {
+export function CityVerdict({ d }: { d: any }) {
   const list: any[] = d.where_to_trade?.list ?? [];
   if (list.length === 0) return null;
   const byRent = list.slice().sort((a: any, b: any) => a.rent_mult - b.rent_mult);
@@ -91,12 +91,23 @@ function CityVerdict({ d }: { d: any }) {
       <div className="grid gap-5 md:grid-cols-[1fr_1.5fr] md:items-center">
         <Stat size="focal" accent value={`x${lightest.rent_mult}`} label="the lightest rent load" sub={`in ${lightest.name}, against the city-average x1`} />
         {/* the spread , a clean neutral three-cell strip, the answer already on the focal */}
-        <div className="grid grid-cols-3 divide-x divide-[var(--c-border)] overflow-hidden rounded-lg border border-[var(--c-border)]">
+        {/* A WRAPPING ROW OF CELLS SIZED BY THEIR CONTENTS, not three fixed
+            columns. Photographed at 320: three columns in a phone card leave each
+            cell about fifty pixels, so "the baseline" printed as "the bas..."
+            with nothing to recover it from, and the middle tag wrapped onto two
+            lines while its neighbours did not, dropping that cell's figure and
+            name below the other two. A three-cell strip that will not fit three
+            across is not a three-cell strip.
+            Sized to their contents they wrap exactly when they must, nothing is
+            cut, and the hairlines come from the gap rather than from a divider
+            rule, which is what stops a wrapped line starting with one. The same
+            shape the masthead scorecard now uses, and for the same reason. */}
+        <div className="flex flex-wrap gap-px overflow-hidden rounded-lg border border-[var(--c-border)]" style={{ background: "var(--c-border)" }}>
           {facts.map(([tag, fig, name]) => (
-            <div key={tag} className="min-w-0 px-3 py-2.5">
+            <div key={tag} className="flex-[1_1_auto] whitespace-nowrap bg-[var(--c-card)] px-3 py-2.5">
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{tag}</div>
               <Fig className="mt-0.5 block text-[length:var(--t-lead)] text-[var(--c-ink)]">{fig}</Fig>
-              <div className="mt-0.5 min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{name}</div>
+              <div className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{name}</div>
             </div>
           ))}
         </div>

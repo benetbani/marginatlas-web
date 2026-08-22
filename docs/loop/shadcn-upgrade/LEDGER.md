@@ -924,6 +924,29 @@ swap on this page.
 
 ---
 
+**Row 34, closed 2026-08-22. Kept. A three-cell strip that would not fit three
+across.**
+
+**SECOND CANDIDATE FROM THE SWEEP OPENED, AND ALSO NOT A TABLE.** Two for two.
+The pinned grid here is a focal figure beside a strip of three facts, not rows
+against columns. The sweep's caveat is holding up: it finds pinned grids, and
+pinned grids are not all tables.
+
+**The defect it did have, photographed at 320.** Three fixed columns in a phone
+card leave each cell about fifty pixels. **"the baseline" printed as "the
+bas..."** with nothing to recover it from, and the middle tag wrapped onto two
+lines while its neighbours did not, so that cell's figure and name dropped below
+the other two. **Three truncations in one strip, none with a tooltip.**
+
+Cells sized to their contents, wrapping when they must. **Nothing truncates now:
+three to zero.** The hairlines come from the gap rather than a divider rule, which
+is what stops a wrapped line beginning with one. Same shape the masthead scorecard
+uses, and for the same reason. At full width nothing moves.
+
+**Recorded, not changed: this section is London only.** Off London the district set
+is left undefined upstream and the whole card omits itself, which the adapter says
+in its own comment.
+
 **Row 33, closed 2026-08-22. THE FIRST CANDIDATE THE SWEEP NAMED, AND IT IS NOT A
 TABLE.**
 
@@ -996,7 +1019,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | # | Section a visitor reads | Form today | Defect | Status |
 |---|---|---|---|---|
 | 33 | Where to trade, by district | map beside a ranked list | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 34 | The rent, district by district | ranked rows | NOT CHECKED | TODO |
+| 34 | The rent, district by district | focal plus a wrapping strip | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 35 | Rent against peer cities | comparison bars | NOT CHECKED | TODO |
 | 36 | What space costs | figure group | NOT CHECKED | TODO |
 | 37 | The lease terms | fact table | NOT CHECKED | TODO |
@@ -1088,7 +1111,11 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows, one of them void. **6 replaced or retired, 22 kept with evidence, 12 blocked, 23 to go.**
+64 rows, one of them void. **6 replaced or retired, 23 kept with evidence, 12 blocked, 22 to go.**
+
+Two sweep candidates opened, neither a table. The sweep finds pinned grids; a
+pinned grid is a table only sometimes, and the count of twelve should be read as
+an upper bound until each is opened.
 
 THE INDUSTRY PAGE IS DONE. Its fourteen sections are closed or blocked: four
 blocked on missing data, one void as a duplicate, the rest fixed or kept.
