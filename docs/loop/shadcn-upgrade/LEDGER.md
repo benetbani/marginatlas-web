@@ -52,7 +52,7 @@ looking at yet, and ranks accordingly.**
 | 8 | Busy months and quiet months | zero-baseline monthly columns | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 9 | Getting to break-even | two-anchor time axis | **1 trade in 138. Latent fault fixed** | **DONE-KEPT** |
 | 10 | The same trade, comparable places | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
-| 11 | What the team costs | track-free range brackets | NOT CHECKED | TODO |
+| 11 | What the team costs | range brackets | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 12 | What to watch | severity-marked risk list | NOT CHECKED | TODO |
 | 13 | Myth vs. reality | struck-through line pairs | NOT CHECKED | TODO |
 | 14 | Related trades in this place | ranked figure list | **NO DATA. Reaches no reader** | **BLOCKED** |
@@ -204,6 +204,53 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 11, closed 2026-08-22. Kept. The spread was invisible on a phone.**
+
+**The nearest thing in the catalogue was pulled and read**, a chart plotting one
+series over months against a fixed target band. That answers "how did we do
+against target", not "what is the range from lowest to highest pay for this
+role". Different question, different shape, and it arrives with a card heading
+and a hover tooltip. Examined, not suitable.
+
+**KEPT.** Four absolutely placed marks in a row: no axis, no scale, nothing to
+measure, and it renders on the server.
+
+**THE DEFECT, found by photographing it at phone width.** The row gave a fixed
+120 pixels to the role name and 56 to the figure. On a 320 screen that leaves the
+drawing **forty pixels**, and it drew as a dot. The one thing this card exists to
+show, how far pay stretches from the lowest to the highest for each role, was not
+shown at all on the width most readers use. Below the breakpoint the bracket now
+takes its own full-width line under the role and its figure. Above it, nothing
+moves: the two render identically at 760.
+
+**Four raw greys retired** for the token this project already uses for a neutral
+mark, four values apart in a single channel. **Five text sizes put on the ladder**,
+and the ratchet moved DOWN again, 419 to 417.
+
+**The text is byte for byte identical**, checked by comparing the two renders node
+by node rather than by eye.
+
+**Adversarial pass.** The phone layout reorders the row with a layout rule, which
+changes the order a screen reader reads relative to what is seen. Counted the
+focusable elements in the section: **zero**, so nothing can affect tab order, and
+the spoken sequence stays coherent either way.
+
+**TWO THINGS DELIBERATELY LEFT, both the founder's call because both change what
+a reader reads:**
+
+1. **NINE FIGURES ON THIS CARD CANNOT BE READ BY ANYONE LOOKING AT IT.** Every
+   bracket has a low end and a high end. Neither is printed. They exist only in
+   the description a screen reader hears, and the scale carries no numbers, so a
+   sighted reader cannot recover a single one of them. Counted, not estimated:
+   fourteen figures are spoken, five are printed, **nine are spoken only**.
+2. **Three figures are printed twice on the same card.** The block at the top
+   takes the first three roles and the rows below take all five, so three mid
+   figures appear in both. Eight money figures are printed and only five are
+   distinct.
+
+**Also recorded: this section appears on London pages only.** Off London the
+figure source returns nothing and the whole card omits itself.
 
 **Row 10, closed 2026-08-22. THE FIRST ROW WHERE THE LIBRARY GENUINELY WON.**
 
@@ -509,7 +556,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 8 kept with evidence, 8 blocked, 44 to go.**
+64 rows. **4 replaced or retired, 9 kept with evidence, 8 blocked, 43 to go.**
 
 Five of those blocked rows are the trade page sections that reach no reader.
 They are blocked on DATA, not on design, and no component from any library

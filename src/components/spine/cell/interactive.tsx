@@ -165,30 +165,51 @@ export function Wages({ d }: { d: any }) {
   return (
     <Box className="md:flex-[2]">
       <Rail icon="wages" kicker="What the team costs" sample />
+      {/* FOUR RAW GREYS RETIRED, and the sizes put on the ladder. The grey was
+          one step off the token this project already uses for a neutral mark,
+          four values apart in one channel, so nothing visible moves.
+          TWO THINGS DELIBERATELY LEFT, because fixing either changes what a
+          reader reads and that is the founder's call, not this loop's:
+          1. The low and the high exist ONLY in the description a screen reader
+             hears. A sighted reader gets a bracket on a scale with no numbers on
+             it, so neither end of the spread can be recovered. Printing them
+             would add text to the card.
+          2. The three figures at the top of this card are printed AGAIN in the
+             rows below it, because the top block takes the first three roles and
+             the rows take all of them. Removing the repeat takes a figure off
+             the page. */}
       {/* the three mid-pay figures, first (the at-a-glance read) */}
       <div className="mt-1 space-y-1.5">
         {roles.slice(0, 3).map((r) => (
           <div key={r.role} className="flex items-baseline justify-between gap-3">
-            <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.role}</span>
-            <Fig className="text-[14px] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
+            <span className="min-w-0 truncate text-[length:var(--t-small)] text-[var(--c-ink2)]">{r.role}</span>
+            <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
           </div>
         ))}
       </div>
-      <div className="mt-2 text-[11px] text-[var(--c-muted)]">Typical mid pay a year.</div>
+      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Typical mid pay a year.</div>
       {/* the full spread, always visible: track-free range brackets (low tick, high tick, mid dot) */}
       <div className="mt-3 space-y-3 border-t border-[var(--c-border)] pt-3">
         {roles.map((r) => {
           const L = (r.low_usd / max) * 100, W = ((r.high_usd - r.low_usd) / max) * 100, M = (r.mid_usd / max) * 100;
           return (
-            <div key={r.role} className="grid grid-cols-[120px_1fr_56px] items-center gap-3">
-              <span className="min-w-0 truncate text-[12.5px] text-[var(--c-ink2)]">{r.role}</span>
-              <div className="relative h-3.5" role="img" aria-label={`${r.role} ${kUsd(r.low_usd)} to ${kUsd(r.high_usd)}, typically ${kUsd(r.mid_usd)}`}>
-                <div aria-hidden className="absolute top-1/2 h-px -translate-y-1/2" style={{ left: `${L}%`, width: `${W}%`, background: "#9a9a9a" }} />
-                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `${L}%`, background: "#9a9a9a" }} />
-                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `calc(${(L + W).toFixed(2)}% - 1px)`, background: "#9a9a9a" }} />
-                <div aria-hidden className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: "#9a9a9a" }} />
+            /* AT PHONE WIDTH THE BRACKET HAD FORTY PIXELS TO LIVE IN, and drew
+               as a dot. The row gave a fixed 120 to the role and 56 to the
+               figure, which on a 320 screen leaves the drawing almost nothing,
+               so the one thing this card exists to show, the spread from lowest
+               to highest pay, was not shown at all on the width most readers
+               use. Caught by photographing it at 320, not by reading the code.
+               Below the breakpoint the bracket now takes its own full-width line
+               under the role and its figure. Above it, nothing moves. */
+            <div key={r.role} className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 gap-y-2 sm:grid-cols-[120px_1fr_56px] sm:items-center sm:gap-3">
+              <span className="min-w-0 truncate text-[length:var(--t-small)] text-[var(--c-ink2)]">{r.role}</span>
+              <Fig className="order-2 text-right text-[length:var(--t-body)] text-[var(--c-ink)] sm:order-3">{kUsd(r.mid_usd)}</Fig>
+              <div className="order-3 col-span-2 relative h-3.5 sm:order-2 sm:col-span-1" role="img" aria-label={`${r.role} ${kUsd(r.low_usd)} to ${kUsd(r.high_usd)}, typically ${kUsd(r.mid_usd)}`}>
+                <div aria-hidden className="absolute top-1/2 h-px -translate-y-1/2" style={{ left: `${L}%`, width: `${W}%`, background: "var(--chart-4)" }} />
+                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `${L}%`, background: "var(--chart-4)" }} />
+                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `calc(${(L + W).toFixed(2)}% - 1px)`, background: "var(--chart-4)" }} />
+                <div aria-hidden className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: "var(--chart-4)" }} />
               </div>
-              <Fig className="text-right text-[14px] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
             </div>
           );
         })}
