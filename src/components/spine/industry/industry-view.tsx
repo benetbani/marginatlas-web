@@ -29,6 +29,7 @@ import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, GREY_RAMP, usd, SampleTag } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
 import { deriveSubtypes } from "./subtypes";
@@ -230,7 +231,7 @@ function Demand({ d }: { d: any }) {
  * focal: the keep-% column, sorted best-first; format, not cuisine, moves the keep.
  * width: Full (T1). terracotta: the leading (best-keep) figure only; the cost column stays ink.
  * Reads the derived subtype shape (keeps_pct + capital_usd) via deriveSubtypes. */
-function SubtypeDrill({ d }: { d: any }) {
+export function SubtypeDrill({ d }: { d: any }) {
   const items = deriveSubtypes(d).slice().sort((a, b) => b.keeps_pct - a.keeps_pct);
   if (!items.length) return null;
   const lead = items[0]?.slug;
@@ -239,7 +240,6 @@ function SubtypeDrill({ d }: { d: any }) {
   // there" column is cut (rule 26/19: no invented per-row sentences); the keep figures
   // rank themselves, sorted best-first with terracotta on the leader. No bar (the page
   // is at its 3-bar budget). The scope caveat lives in the Keep header's gloss.
-  const cols = "grid-cols-[minmax(0,1fr)_3.4rem_4.4rem] sm:grid-cols-[minmax(0,1fr)_4rem_5.2rem]";
   return (
     <Full>
       <Box>
@@ -263,23 +263,52 @@ function SubtypeDrill({ d }: { d: any }) {
             block, which is a section drop. The labels are what a reader sees
             and they are what was false. */}
         <Rail icon="subtype" kicker="Keep and cost, trades next door" sample />
-        <div className={`grid ${cols} items-end gap-3 border-b border-[var(--c-border)] px-2 pb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]`}>
-          <span>Trade, best keep first</span>
-          <span className="text-right">Keep<InfoTip gloss="Registered operators only; street and informal traders run on different economics and are not counted here." /></span>
-          <span className="text-right">To open</span>
-        </div>
-        <div className="space-y-1 pt-1">
-          {items.map((s) => {
-            const isLead = s.slug === lead;
-            return (
-              <div key={s.slug} className={`hov -mx-2 grid ${cols} items-baseline gap-3 rounded-md px-2 py-2`}>
-                <span className="min-w-0 text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{s.name}</span>
-                <Fig className={`text-right text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{s.keeps_pct.toFixed(1)}%</Fig>
-                <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink2)]">{money(s.capital_usd)}</Fig>
-              </div>
-            );
-          })}
-        </div>
+        {/* A REAL TABLE. This is trades down the side and two measures across the
+            top, with a header row, and it was built out of plain boxes on a grid:
+            ZERO table elements, no column headers, nothing tying a figure to the
+            word naming it. Worse than the comparison table on the trade-in-a-place
+            page, which at least carried a hidden label beside each figure for the
+            phone layout; this had none at all, at any width. So the whole reading
+            was a trade name followed by two bare numbers.
+            The columns also carried FIXED widths that changed at a breakpoint. The
+            two figure columns size to their own contents now, which needs no
+            breakpoint and cannot crush a longer figure. */}
+        <Table className="text-[length:var(--t-body)]">
+          <caption className="sr-only">
+            Trades next door, sorted by what the owner keeps, best first.
+          </caption>
+          <TableHeader>
+            <TableRow className="border-[var(--c-border)] hover:bg-transparent">
+              <TableHead scope="col" className="h-auto px-2 pb-1.5 text-left align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Trade, best keep first
+              </TableHead>
+              <TableHead scope="col" className="h-auto w-px whitespace-nowrap px-2 pb-1.5 text-right align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Keep<InfoTip gloss="Registered operators only; street and informal traders run on different economics and are not counted here." />
+              </TableHead>
+              <TableHead scope="col" className="h-auto w-px whitespace-nowrap px-2 pb-1.5 text-right align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                To open
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {items.map((s) => {
+              const isLead = s.slug === lead;
+              return (
+                <TableRow key={s.slug} className="hov border-0 hover:bg-transparent">
+                  <TableHead scope="row" className="h-auto min-w-0 px-2 py-2 text-left align-baseline text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">
+                    {s.name}
+                  </TableHead>
+                  <TableCell className="w-px whitespace-nowrap px-2 py-2 text-right align-baseline">
+                    <Fig className={`text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{s.keeps_pct.toFixed(1)}%</Fig>
+                  </TableCell>
+                  <TableCell className="w-px whitespace-nowrap px-2 py-2 text-right align-baseline">
+                    <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{money(s.capital_usd)}</Fig>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </Box>
     </Full>
   );

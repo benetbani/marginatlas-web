@@ -214,6 +214,31 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 20, closed 2026-08-22. THE LIBRARY WINS FOR THE SECOND TIME, same reason
+as the first.**
+
+Trades down the side, two measures across the top, a header row. **Zero table
+elements.** No column headers, nothing tying a figure to the word naming it, so
+the whole reading was a trade name followed by two bare numbers.
+
+**Worse than the comparison table on the trade-in-a-place page**, which at least
+carried a hidden label beside each figure for its phone layout. **This one had
+none, at any width.**
+
+Rebuilt on the library's table primitive, the same one row 10 used: 0 table
+elements to 21. Real column headers, a real row header per trade.
+
+**The two figure columns also carried fixed widths that changed at a
+breakpoint.** They size to their own contents now, which needs no breakpoint and
+cannot crush a longer figure. At phone width that is visibly BETTER than before,
+not merely equal: the trade names get the room the fixed columns were holding, so
+"Full-service casual dining" wraps to two lines instead of three.
+
+**ONE ADDED STRING, flagged:** a screen-reader-only caption naming what the table
+is and how it is sorted. No visible text. Same call as row 10 and reversible.
+
+No figure changed. The width ratchet held at 54. Gate chain clean.
+
 **Row 19, closed 2026-08-22. Kept. A well-built stack with one way out.**
 
 **This one is built better than its cousin on the trade-in-a-place page.** The
@@ -647,7 +672,7 @@ swap on this page.
 |---|---|---|---|---|
 | 18 | Kept per $100, by trade | dots on a shared scale | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 19 | Where each $100 goes | stacked bar, guarded | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 20 | Keep and cost, trades next door | comparison rows | NOT CHECKED | TODO |
+| 20 | Keep and cost, trades next door | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
 | 21 | What a customer spends | figure with range | NOT CHECKED | TODO |
 | 22 | Five-year survival | survival curve, line on zero baseline | NOT CHECKED | TODO |
 | 23 | Payback window | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
@@ -760,7 +785,10 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 15 kept with evidence, 12 blocked, 33 to go.**
+64 rows. **5 replaced or retired, 15 kept with evidence, 12 blocked, 32 to go.**
+
+BOTH library wins so far are the same defect: a table built without a table.
+That is worth remembering when the remaining rows are triaged.
 
 THE CELL PAGE IS DONE. All seventeen of its rows are closed or blocked. Five are
 blocked on missing data, not on design, and no component from any library moves
