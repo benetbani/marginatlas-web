@@ -185,24 +185,31 @@ export function Benchmark({ d }: { d: any }) {
  * universal: spend per head + visits a year, as plain figures behind a SampleTag.
  * decision: what a diner is worth per visit. Number: spend per head (the terra focal).
  * width: Full (T1); the two figures split the band so nothing floats centered. */
-function Demand({ d }: { d: any }) {
+export function Demand({ d }: { d: any }) {
   const dm = d.demand ?? {};
   const hasSpend = typeof dm.spend_per_head_usd === "number";
   const hasVisits = typeof dm.purchases_per_year === "number";
   if (!hasSpend && !hasVisits) return null;
+  /* TWO COLUMNS ONLY WHEN THERE ARE TWO FIGURES.
+     The live page supplies the spend figure and nothing else: the visits figure
+     is deliberately omitted upstream for want of an honest source. The band was
+     splitting into two halves regardless, so a reader on a real trade page got
+     one figure sitting in the left half of a full-width band with the right half
+     empty, and a dividing rule drawn down the middle of nothing. */
+  const both = hasSpend && hasVisits;
   return (
     <Full>
       <Box>
         <Rail icon="spending-power" kicker="What a customer spends" sample />
-        <div className="grid gap-5 border-t border-[var(--c-border)] pt-4 sm:grid-cols-2 sm:divide-x sm:divide-[var(--c-border)]">
+        <div className={`grid gap-5 border-t border-[var(--c-border)] pt-4${both ? " sm:grid-cols-2 sm:divide-x sm:divide-[var(--c-border)]" : ""}`}>
           {hasSpend ? (
-            <div className="sm:pr-6">
+            <div className={both ? "sm:pr-6" : ""}>
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div>
-              <div className="mt-1.5 flex items-baseline gap-2"><CountFig value={dm.spend_per_head_usd} prefix="$" className="text-[40px] leading-none text-[var(--terra-text)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">per visit</span></div>
+              <div className="mt-1.5 flex items-baseline gap-2"><CountFig value={dm.spend_per_head_usd} prefix="$" className="text-[length:var(--t-focal)] leading-none text-[var(--terra-text)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">per visit</span></div>
             </div>
           ) : null}
           {hasVisits ? (
-            <div className={hasSpend ? "sm:pl-6 sm:text-right" : ""}>
+            <div className={both ? "sm:pl-6 sm:text-right" : ""}>
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Visits a year</div>
               {/* the support figure: half the size of the spend focal (rule 16 >=1.6 contrast,
                   so the single terracotta accent sits on ONE dominant answer, not one of two

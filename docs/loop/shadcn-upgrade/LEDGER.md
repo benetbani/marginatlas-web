@@ -214,6 +214,35 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 21, closed 2026-08-22. Kept. A band that split itself in half for one
+figure.**
+
+**KEPT.** Two figures and two labels. Nothing to measure, no chart at all.
+
+**THE DEFECT: A DIVIDING RULE DRAWN DOWN THE MIDDLE OF NOTHING.** The section is
+designed for two figures side by side, spend per head and visits a year. **The
+live adapter supplies only the first**; the visits figure is deliberately left out
+upstream for want of an honest source, and says so in its own comment. The band
+split into two halves regardless, so on every real trade page a reader got one
+figure in the left half of a full-width band, the right half empty, and a rule
+drawn between them. Verified by rendering the section twice, once with the
+workshop shape and once with the shape the adapter actually returns. It splits
+only when there are two figures to split now.
+
+**THE FOCAL FIGURE WAS OFF THE LADDER at forty pixels.** This site's ladder has a
+step for a section's own focal figure and a larger one reserved for the single
+dominant figure of a whole page, and nothing between. This page's dominant figure
+already sits on that larger step, so forty was drift between two named sizes. It
+is on the section step now, which is **visibly smaller** and is the honest
+consequence of putting it on the ladder. Say so to the founder rather than hide
+it. **The ratchet moved DOWN, 417 to 416.**
+
+**A second forty-pixel figure exists on this page**, in another section. Left
+alone: it is a different row.
+
+Every word and figure byte for byte identical, in both the live and the workshop
+shape. Gate chain clean.
+
 **Row 20, closed 2026-08-22. THE LIBRARY WINS FOR THE SECOND TIME, same reason
 as the first.**
 
@@ -673,7 +702,7 @@ swap on this page.
 | 18 | Kept per $100, by trade | dots on a shared scale | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 19 | Where each $100 goes | stacked bar, guarded | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 20 | Keep and cost, trades next door | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
-| 21 | What a customer spends | figure with range | NOT CHECKED | TODO |
+| 21 | What a customer spends | one or two figures | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 22 | Five-year survival | survival curve, line on zero baseline | NOT CHECKED | TODO |
 | 23 | Payback window | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 24 | When a day starts paying | two-marker scale | **NO DATA. Reaches no reader** | **BLOCKED** |
@@ -785,7 +814,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **5 replaced or retired, 15 kept with evidence, 12 blocked, 32 to go.**
+64 rows. **5 replaced or retired, 16 kept with evidence, 12 blocked, 31 to go.**
 
 BOTH library wins so far are the same defect: a table built without a table.
 That is worth remembering when the remaining rows are triaged.
