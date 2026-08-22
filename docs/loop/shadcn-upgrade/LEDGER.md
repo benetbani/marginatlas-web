@@ -29,12 +29,32 @@ weakest and comes late on purpose.
 
 ## What a visitor actually sees
 
-Verified this iteration, not assumed. The cell, industry and city page rebuilds
-are LIVE by default: their flag resolves to on unless an environment variable
-turns them off, and nothing in the local environment turns them off. The country
-and region rebuilds default to OFF, so those readers still see the older pages.
-**Every country and region row below therefore describes a page nobody is
-looking at yet, and ranks accordingly.**
+**CORRECTED 2026-08-23, and the correction matters for every row in this file.**
+
+This section previously said the cell, industry and city rebuilds were LIVE by
+default. **That was wrong, and it was wrong in the way that matters: I read the
+per-page switch and not the resolver underneath it.** A page with a shipped
+adapter does not default to on; it defaults to FOLLOWING THE MASTER SWITCH, and
+the master switch defaults to OFF. Resolved by calling the function rather than
+reading it: with nothing set, **all six page types are OFF.**
+
+**And production agrees.** Fetched marginatlas.com/cities/london and
+/industries/restaurants: neither carries a single spine marker, and both headings
+carry the PRE-SPINE typography classes. **The rebuilt pages are not being served
+to anyone.**
+
+**What that means for this ledger, said plainly.** Every "a visitor sees" in the
+rows below describes the REBUILT page, which today is reached only in the
+workshop. The fixes are not wasted: these pages are the ratified destination and
+go live when the founder sets the switches in the hosting dashboard. But no
+sentence in this file should be read as "a reader is looking at this today", and
+several were written that way before this correction. **The one figure to
+re-read in that light is row 37's "251 of 252 city pages": true of the rebuilt
+city page, which is not currently served.**
+
+Whether the switches are on in production cannot be read from this repository at
+all: they are dashboard settings. The check above is a fetch of the live site,
+and that is the only instrument here that can answer it.
 
 ---
 
