@@ -295,13 +295,35 @@ export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: n
  * top") , the leading .fig index (muted grey) is the only accent carrier. The heading stays
  * de-bolded (semibold 20/24px, not bold 24/30px , too loud to read as professional). */
 export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow?: string; heading: string; sample?: boolean; icon?: AtlasIconId; index?: string }) {
+  /* TWO PROPS ARE ACCEPTED AND DELIBERATELY NOT DRAWN, and saying so is the point
+     of these two lines. Counted across the four page bodies that use this: 15 of
+     the 23 chapter dividers pass an eyebrow and 22 pass an icon, and not one of
+     them reaches a reader. Anyone reading a call site would reasonably think both
+     do something.
+     THE EYEBROW IS BANNED, by a ratified rule with a gate of its own that hunts
+     for a small upper-case label sitting above a title. Voiding it here is that
+     rule, enforced at the one place every chapter passes through.
+     THE ICON IS A LEVEL DOWN. The subsection-icon rule covers the section openers,
+     Head and Rail, and its gate scans exactly those two tags. Chapter dividers are
+     outside it by design.
+     Both props stay in the signature rather than being stripped from 37 call
+     sites: the words and the icon names are authored choices, and deleting a
+     design decision because the current rules do not render it is not this loop's
+     call to make. Written down for the founder instead. */
   void eyebrow;
+  void icon;
   return (
     <div className="mb-3 mt-12">
       <div className="mb-1.5 flex items-center gap-2.5">
         {index ? <span className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{index}</span> : null}
         {sample ? <SampleTag /> : null}
       </div>
+      {/* THE OPT-OUT IS NEEDED HERE, and I removed it before checking. The
+          canonical heading tokens this gate wants are the PRE-SPINE serif scale:
+          a display serif, an ink-900 colour, sizes in Tailwind steps. A spine
+          heading is on the v2 ladder and cannot wear them, so every spine heading
+          must opt out. That is what the typography file itself asks for, with an
+          explanation, and this is the explanation. */}
       <h2 data-typography="custom" className="text-[length:var(--t-sub)] font-semibold tracking-tight text-[var(--c-ink)]">{heading}</h2>
     </div>
   );
@@ -398,7 +420,8 @@ export function Head({ children, sample, icon }: { children: React.ReactNode; sa
   return (
     <div className="mb-3 flex items-center gap-2">
       {icon ? <Ico id={icon} /> : null}
-      <span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{children}</span>
+      {/* the other section opener, same level, same reasoning as Rail above */}
+      <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{children}</h3>
       {sample ? <SampleTag /> : null}
     </div>
   );
@@ -575,7 +598,23 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample }: { icon?: A
     <div className="mb-3">
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} /> : null}
-        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</span>
+        {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
+            section opener in the spine, which means a page's heading outline
+            stopped at its chapters. Counted on the two flagship pages: 8 heading
+            elements against 14 section titles on one, 12 on the other. Skimming
+            by heading is how a screen-reader user reads a long page, and on these
+            pages it reached the chapter names and nothing inside them.
+            The classes carry every pixel of the look, so the tag is the whole
+            change and nothing moves.
+            The opt-out attribute is the one this project's own typography file
+            asks for, with the reason it asks for: the canonical heading tokens
+            are the pre-spine serif scale, and a spine heading cannot wear them. */}
+        <h3
+          data-typography="custom"
+          className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]"
+        >
+          {kicker}
+        </h3>
         {sample ? <SampleTag /> : null}
       </div>
     </div>

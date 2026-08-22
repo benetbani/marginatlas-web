@@ -924,6 +924,56 @@ swap on this page.
 
 ---
 
+**Row 36, 2026-08-23. THE BIGGEST STRUCTURAL FIND SINCE THE TABLES: no spine page
+had a heading outline.**
+
+**A LEDGER CORRECTION FIRST.** This row was written as "What space costs, a figure
+group". It is neither: it is a chapter divider, and its two sections are rows 35
+and 37. Second mislabel of this kind, after row 28's "meters". Both came from
+reading the design map instead of the code when the ledger was built.
+
+**What the divider turned out to open onto.** Every section opener in the spine
+rendered a plain span. Not one of them was a heading element. So a page carried a
+heading for its own name and one for each chapter, **and nothing at all for the
+fourteen sections inside them.** Skimming by heading is the primary way a
+screen-reader user reads a long page, and on these pages it reached the chapter
+names and stopped.
+
+**Counted, not asserted: 6 heading elements on the trade page, now 21. Eight on
+the trade-across-places page, now 22.** Every section is reachable, and the
+outline runs h1, h2 chapters, h3 sections with **zero skipped levels** on both.
+
+**Nothing a sighted reader sees moved, and that is provable rather than
+eyeballed:** the two renders carry byte-identical text AND byte-identical class
+strings. The tag is the entire change. Photographed at two widths to confirm the
+browser agrees.
+
+**A change I made and reversed inside the same iteration.** I removed the
+typography gate's opt-out from the chapter heading, calling it an exemption taken
+for nothing. The gate then failed. The canonical heading tokens it wants are the
+**pre-spine serif scale**, a display serif at Tailwind step sizes in an ink-900
+colour, and a spine heading on the v2 ladder cannot wear them. So every spine
+heading must opt out. Restored, with the explanation the typography file itself
+asks for and did not have.
+
+**Two dead props documented rather than deleted.** The chapter divider accepts an
+eyebrow and an icon and draws neither. **15 of 23 call sites pass an eyebrow, 22
+pass an icon.** The eyebrow is banned by a ratified rule with its own gate, so
+voiding it is correct. The icon rule covers the section openers, not chapters, and
+its gate scans exactly those two tags. Both are dead by design, so the code is
+right and only its silence was wrong. **The props stay:** those words and icon
+names are authored choices, and deleting 37 of them because today's rules do not
+render them is not this loop's call. **The section openers discard a `verdict`
+too, passed by 10 callers.** All of it is the founder's to decide.
+
+**A false measurement I caught in my own instrument.** The probe that counts
+not-headings matched on a class name, so the moment the openers became real
+headings it went on counting them as failures. Fixed to exclude anything already
+inside a heading tag; it now reports zero.
+
+**The gate chain crashed four gates**, three with Windows process-abort codes, at
+memory exhaustion. All four pass alone. Third time in four rows.
+
 **Row 35, 2026-08-23. BLOCKED. A defect reproduced and deliberately not fixed.**
 
 The strip puts each peer city as a dot on one axis, labelled with its name and its
@@ -1060,7 +1110,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 33 | Where to trade, by district | map beside a ranked list | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 34 | The rent, district by district | focal plus a wrapping strip | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 35 | Rent against peer cities | dots on one axis | **VERIFIED, REPRODUCED** | **BLOCKED, founder call** |
-| 36 | What space costs | figure group | NOT CHECKED | TODO |
+| 36 | ~~What space costs~~ chapter divider, and the whole spine heading system | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 37 | The lease terms | fact table | NOT CHECKED | TODO |
 | 38 | The spending pool | figure group | NOT CHECKED | TODO |
 | 39 | Who buys, and when | mixed | NOT CHECKED | TODO |
@@ -1150,7 +1200,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows, one of them void. **6 replaced or retired, 23 kept with evidence, 13 blocked, 21 to go.**
+64 rows, one of them void. **6 replaced or retired, 24 kept with evidence, 13 blocked, 20 to go.**
 
 Thirteen blocked: twelve on missing data, and now ONE on a design decision that
 is the founder's to make.
