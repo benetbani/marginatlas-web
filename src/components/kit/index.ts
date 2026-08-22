@@ -177,9 +177,6 @@ export {
 // discipline, one warm ramp + the lone accent, each reduces to a legible 375px
 // form. RangeStrip (the signature spread, above/at kit root) is reconciled in place.
 export {
-  Waterfall,
-  type WaterfallProps,
-  type WaterfallStep,
   ScoreBand,
   type ScoreBandProps,
   type ScoreBandStop,
@@ -209,6 +206,10 @@ export {
   TierBar,
   type TierBarProps,
   type TierBarTone,
+  // The money waterfall, on the chart library. It replaced a hand cut drawing
+  // whose text scaled with its box, and it retired an unmounted duplicate that
+  // had been exported from here since the R6.5 port without ever being used.
+  AtlasWaterfall,
 } from "./charts";
 
 // The engraved-almanac foundation (2026-06-14, ported from the country-engraved

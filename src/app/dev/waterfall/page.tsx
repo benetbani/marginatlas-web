@@ -63,7 +63,7 @@ export default function WaterfallComparePage() {
   return (
     <div className="space-y-10 bg-neutral-50 px-6 py-10">
       <header className="max-w-3xl">
-        <h1 className="text-2xl tracking-tight text-neutral-900">
+        <h1 className="font-display text-4xl tracking-tight text-ink-900">
           The money waterfall, before and after
         </h1>
         <p className="mt-3 max-w-[68ch] text-sm leading-relaxed text-neutral-600">

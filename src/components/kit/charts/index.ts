@@ -17,7 +17,7 @@
  *
  * Tokens only, no raw color, no em-dashes, no source-agency names.
  */
-export { Waterfall, type WaterfallProps, type WaterfallStep } from "./Waterfall";
+export { AtlasWaterfall } from "./AtlasWaterfall";
 export {
   ScoreBand,
   type ScoreBandProps,
