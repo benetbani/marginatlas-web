@@ -214,6 +214,36 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 30, closed 2026-08-22. THE LIBRARY WINS A THIRD TIME, same defect again.**
+
+Cities down the side, one measure across the top, a header row drawn to look like
+one, and **nothing underneath it**: zero table elements, so the words naming the
+column were never attached to the figures they name. A screen reader got a city,
+a number, a city, a number. Rebuilt on the library's table primitive: **0 to 17**
+table elements.
+
+**Three sections have now had exactly this fault**, and the table primitive has
+answered all three. It is the only defect in twenty-six rows the library has been
+the right answer for, and it has been the right answer every time it appeared.
+
+**Two smaller things went with it.** The figure column was pinned at four and a
+half rem, which on a phone spent a third of the row on a two-character number; it
+sizes itself now. And **two written-out text sizes joined the ladder**, so the
+ratchet moved DOWN again, 416 to 414.
+
+**A BEHAVIOUR CHANGE, stated because it is one.** The link moved from the whole
+row to the city name and its arrow, because a row cannot be wrapped in a link
+inside a table. **One row in this list carries a link.** The row still lights on
+hover, so it still reads as reachable: the hover rule and the one that would
+cancel it have equal weight, and the page's own style is written after the
+framework's, so the page's wins. Reasoned rather than tested, because a still
+photograph cannot show a hover.
+
+**ONE ADDED STRING, flagged:** a screen-reader-only caption. Third time; same call
+as rows 10 and 20, and reversible.
+
+Every visible word and figure identical, checked node by node and at two widths.
+
 **Row 29, closed 2026-08-22. Kept. A crossed-out claim that came out over six
 lines of one word each.**
 
@@ -848,7 +878,7 @@ swap on this page.
 | 27 | The typical operator | fact strip | **NONE FOUND** | **DONE-KEPT** |
 | 28 | Who it suits | two bullet columns | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 29 | What people get wrong | struck claim, real figure | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 30 | Where the trade pays, place by place | ranked list with rent load | NOT CHECKED | TODO |
+| 30 | The rent, city by city | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
 | 31 | The subtype drill | nested breakdown | NOT CHECKED | TODO |
 | 32 | The close | editorial block | NOT CHECKED | TODO |
 
@@ -951,7 +981,10 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **5 replaced or retired, 20 kept with evidence, 12 blocked, 27 to go.**
+64 rows. **6 replaced or retired, 20 kept with evidence, 12 blocked, 26 to go.**
+
+All THREE library wins are the same defect: a table built without a table. Nothing
+else in twenty-six rows has needed a block.
 
 One of those eighteen needed NO change at all. Twenty-three rows in, that is the
 first.

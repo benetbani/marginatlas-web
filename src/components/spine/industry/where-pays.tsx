@@ -15,6 +15,7 @@
  * terracotta: none; the list is inputs, not an answer.
  */
 import { Box, Rail, Fig, InfoTip } from "@/components/spine/kit";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 type Place = { name: string; rent_load_pct?: number; href?: string };
 
@@ -33,25 +34,63 @@ export function WherePaysExplorer({ d }: { d: any }) {
     <div className="w-full">
       <Box>
         <Rail icon="where-it-pays" kicker="The rent, city by city" sample />
-        <div className="grid grid-cols-[minmax(0,1fr)_4.5rem] items-end gap-3 border-b border-[var(--c-border)] px-2 pb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-          <span>Place, lightest rent first</span>
-          <span className="text-right">Rent load<InfoTip gloss="Rent as a share of sales." /></span>
-        </div>
-        <div className="space-y-1 pt-1">
-          {rows.map((r) => {
-            const isLightest = r.name === lightest;
-            // Real links only: a row is an <a> solely when its seed place carries a
-            // real href (London -> the cell page). Every other city renders as a
-            // plain unlinked row: no arrow, no hover affordance.
-            const Tag: any = r.href ? "a" : "div";
-            return (
-              <Tag key={r.name} href={r.href} className={`${r.href ? "hov " : ""}-mx-2 grid grid-cols-[minmax(0,1fr)_4.5rem] items-center gap-3 rounded-md px-2 py-2`}>
-                <span className={`min-w-0 truncate text-[12.5px] ${isLightest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{r.name}{r.href ? <span className="text-[var(--c-muted)]"> &#8594;</span> : null}</span>
-                <Fig className="text-right text-[13px] text-[var(--c-ink)]">{r.rent_load_pct}%</Fig>
-              </Tag>
-            );
-          })}
-        </div>
+        {/* A REAL TABLE. Places down the side, one measure across the top, and a
+            header row drawn to look like one with NOTHING underneath it: zero
+            table elements, so the words "rent load" were never attached to the
+            figures they name. A screen reader got a city, a number, a city, a
+            number. Third section in this loop with the same fault, after the two
+            comparison tables, and the third time the library's own table answers
+            it.
+            THE LINK MOVED FROM THE ROW TO THE NAME. A row cannot be wrapped in a
+            link inside a table, and a link is the right element for the one row
+            that has somewhere to go. The clickable area narrows from the whole
+            row to the name and its arrow; the row still lights on hover, so it
+            still reads as reachable. One row in this list carries a link.
+            THE COLUMN SIZES ITSELF. It was pinned at four and a half rem, which
+            on a phone took a third of the row for a two-character figure. */}
+        <Table className="text-[length:var(--t-small)]">
+          <caption className="sr-only">
+            The rent as a share of sales, city by city, lightest first.
+          </caption>
+          <TableHeader>
+            <TableRow className="border-[var(--c-border)] hover:bg-transparent">
+              <TableHead scope="col" className="h-auto px-2 pb-2 text-left align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Place, lightest rent first
+              </TableHead>
+              <TableHead scope="col" className="h-auto w-px whitespace-nowrap px-2 pb-2 text-right align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Rent load<InfoTip gloss="Rent as a share of sales." />
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.map((r) => {
+              const isLightest = r.name === lightest;
+              return (
+                <TableRow key={r.name} className={`${r.href ? "hov " : ""}border-0 hover:bg-transparent`}>
+                  <TableHead
+                    scope="row"
+                    className={`h-auto min-w-0 px-2 py-2 text-left align-middle text-[length:var(--t-small)] ${isLightest ? "font-semibold text-[var(--c-ink)]" : "font-normal text-[var(--c-ink2)]"}`}
+                  >
+                    {/* Real links only: a row is a link solely when its place carries
+                        a real destination. Every other city is plain text: no arrow,
+                        no hover affordance. */}
+                    {r.href ? (
+                      <a href={r.href} className="underline-offset-2 hover:underline">
+                        {r.name}
+                        <span className="text-[var(--c-muted)]"> &#8594;</span>
+                      </a>
+                    ) : (
+                      r.name
+                    )}
+                  </TableHead>
+                  <TableCell className="w-px whitespace-nowrap px-2 py-2 text-right align-middle">
+                    <Fig className="text-[length:var(--t-small)] text-[var(--c-ink)]">{r.rent_load_pct}%</Fig>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </Box>
     </div>
   );
