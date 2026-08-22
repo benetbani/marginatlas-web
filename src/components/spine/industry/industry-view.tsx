@@ -575,15 +575,25 @@ export function Survival({ d }: { d: any }) {
 /* WHO IT SUITS , two columns: suits / think twice.
  * decision: is this operator you. focal: the two bullet columns as a contrast.
  * width: Even (T3), paired with survival. terracotta: the "suits" dots only. */
-function WhoItSuits({ d }: { d: any }) {
+export function WhoItSuits({ d }: { d: any }) {
   const w = d.who_suits ?? {};
   const suits: string[] = w.suits ?? [];
   const thinkTwice: string[] = w.think_twice ?? [];
   if (!suits.length && !thinkTwice.length) return null;
+  /* TWO COLUMNS ONLY WHEN THERE ARE TWO COLUMNS OF CONTENT.
+     The live builder fills each side from a different fact about the trade, and
+     it runs when EITHER one is present. So a trade with something to watch out
+     for and no stated edge, or the reverse, produced a full-width band with its
+     one list wrapping inside the left half and the right half empty. Same fault
+     the customer-spend band had two rows ago, arrived at from a different
+     direction: there the second figure was missing upstream, here either side
+     can be. The dividing rule was already guarded, so what was left was the
+     emptiness, not a line drawn through it. */
+  const both = suits.length > 0 && thinkTwice.length > 0;
   return (
     <Box>
       <Rail icon="who-for" kicker="Who it suits" verdict={w.verdict} sample />
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className={`grid gap-5${both ? " sm:grid-cols-2" : ""}`}>
         {suits.length ? (
           <div>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Suits</div>
@@ -591,7 +601,7 @@ function WhoItSuits({ d }: { d: any }) {
           </div>
         ) : null}
         {thinkTwice.length ? (
-          <div className={suits.length ? "sm:border-l sm:border-[var(--c-border)] sm:pl-5" : ""}>
+          <div className={both ? "sm:border-l sm:border-[var(--c-border)] sm:pl-5" : ""}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Think twice</div>
             <ul className="space-y-2">{thinkTwice.map((t: string, i: number) => <li key={i} className="relative pl-4 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"><span className="absolute left-0 top-[7px] h-1.5 w-1.5 rounded-full border border-[var(--c-line-strong)]" />{t}</li>)}</ul>
           </div>

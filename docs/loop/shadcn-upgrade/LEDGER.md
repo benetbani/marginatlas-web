@@ -214,6 +214,41 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 28, closed 2026-08-22. Kept. The half-empty band again, reached from the
+other direction.**
+
+**A LEDGER CORRECTION FIRST.** This row was recorded as "meters". It is not: it is
+two columns of bullets, suits on the left and think twice on the right. The label
+was written from the design map rather than from the code.
+
+**THE DEFECT.** The card fills its two sides from two different facts about the
+trade, and **it runs when EITHER one is present**. So a trade with something to
+watch out for and no stated edge, or the reverse, got a full-width band with its
+one list wrapping inside the left half and the right half empty. Rendered the
+one-sided shape to confirm it, rather than reasoning about it.
+
+**This is the same fault the customer-spend band had in row 21, arrived at from
+the opposite direction:** there the second figure was missing upstream and always
+will be; here either side can be missing depending on the trade. **Third
+appearance of a container that splits before it knows it has anything to put in
+both halves**, after the masthead scorecard's empty grid cell.
+
+It splits only when there are two columns of content now. Both-sided shapes render
+identically, checked at two widths and byte for byte.
+
+**THREE THINGS FOUND AND DELIBERATELY NOT TOUCHED, all belonging to a
+shared-primitive pass rather than to one row:**
+1. The bullet primitive carries a **raw colour value** and is used on **four
+   reader-facing surfaces**. Swapping it is a four-surface change, which is not a
+   thing to do inside a one-surface iteration.
+2. **The component's own comment and its code disagree about the accent.** The
+   comment says terracotta lives on the "suits" dots. In the code the dots are
+   grey and the accent is on the column heading. One of the two is wrong and only
+   the founder can say which.
+3. The "think twice" list is a **hand-inlined near-copy** of the bullet primitive
+   with a hollow dot instead of a filled one. The difference may well be
+   deliberate; the duplication is not obviously so.
+
 **Row 27, closed 2026-08-22. NOTHING WAS WRONG WITH IT. No change made.**
 
 The first section in twenty-three rows to come through clean, and it is recorded
@@ -775,7 +810,7 @@ swap on this page.
 | 25 | Getting to break-even | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 26 | Across the year | season ribbon | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 27 | The typical operator | fact strip | **NONE FOUND** | **DONE-KEPT** |
-| 28 | Who it suits | meters | NOT CHECKED | TODO |
+| 28 | Who it suits | two bullet columns | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 29 | What people get wrong | struck line pairs | NOT CHECKED | TODO |
 | 30 | Where the trade pays, place by place | ranked list with rent load | NOT CHECKED | TODO |
 | 31 | The subtype drill | nested breakdown | NOT CHECKED | TODO |
@@ -880,7 +915,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **5 replaced or retired, 18 kept with evidence, 12 blocked, 29 to go.**
+64 rows. **5 replaced or retired, 19 kept with evidence, 12 blocked, 28 to go.**
 
 One of those eighteen needed NO change at all. Twenty-three rows in, that is the
 first.
