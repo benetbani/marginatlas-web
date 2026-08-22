@@ -214,6 +214,33 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 27, closed 2026-08-22. NOTHING WAS WRONG WITH IT. No change made.**
+
+The first section in twenty-three rows to come through clean, and it is recorded
+with the same evidence a change would need.
+
+**What was checked and what it found.** No raw colour values in the section, only
+the card surface it sits on. No text size off the ladder: every one a named step.
+No text hidden behind a hover. **No breakpoint rules at all**, so nothing is
+pitched at a width no phone reaches. Rendered at 320, 480 and 760 in both the
+shapes it can take, and legible in all six.
+
+**And it already gets right the fault that has appeared twice elsewhere in this
+loop:** the column count follows the number of facts, so when the live page drops
+the third one, as it does, the strip becomes two columns rather than three with a
+hole in it.
+
+**The library was not pulled again.** The stats family was examined in row 16: the
+blocks are section-wide bands carrying their own heading, which cannot sit inside a
+card that already has one. Same conclusion, not re-litigated.
+
+**A nit I claimed and then withdrew.** I expected the three-fact shape to wrap its
+middle label at phone width. It does not; all three fit on one line at 320. The
+point of photographing a thing is that it can contradict you, and it did.
+
+The only edit to source is an export added so the section can be captured. No
+reader-visible change of any kind.
+
 **Row 22, closed 2026-08-22. Kept. The same fault as the other survival curve,
 and a trade-off I introduced and am not hiding.**
 
@@ -747,7 +774,7 @@ swap on this page.
 | 24 | When a day starts paying | two-marker scale | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 25 | Getting to break-even | phase bar | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 26 | Across the year | season ribbon | **NO DATA. Reaches no reader** | **BLOCKED** |
-| 27 | The typical operator | fact list | NOT CHECKED | TODO |
+| 27 | The typical operator | fact strip | **NONE FOUND** | **DONE-KEPT** |
 | 28 | Who it suits | meters | NOT CHECKED | TODO |
 | 29 | What people get wrong | struck line pairs | NOT CHECKED | TODO |
 | 30 | Where the trade pays, place by place | ranked list with rent load | NOT CHECKED | TODO |
@@ -853,7 +880,10 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **5 replaced or retired, 17 kept with evidence, 12 blocked, 30 to go.**
+64 rows. **5 replaced or retired, 18 kept with evidence, 12 blocked, 29 to go.**
+
+One of those eighteen needed NO change at all. Twenty-three rows in, that is the
+first.
 
 BOTH library wins so far are the same defect: a table built without a table.
 That is worth remembering when the remaining rows are triaged.

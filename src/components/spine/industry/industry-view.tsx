@@ -494,7 +494,7 @@ function Ramp({ d }: { d: any }) {
  * On real-data promotion the sale-multiple fact OMITS (no honest source); each held
  * fact is guarded so the strip never prints "x undefined" or a bare "%".
  * width: WideRail (T2) chart half. terracotta: none; the facts read in ink. */
-function Operator({ d }: { d: any }) {
+export function Operator({ d }: { d: any }) {
   const o = d.operator ?? {};
   const facts: Array<[string, string]> = [];
   if (typeof o.capital_to_open_usd === "number") facts.push([money(o.capital_to_open_usd), "to open"]);
