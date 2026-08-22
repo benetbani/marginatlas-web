@@ -214,6 +214,42 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 29, closed 2026-08-22. Kept. A crossed-out claim that came out over six
+lines of one word each.**
+
+**THE DEFECT, and it is the worst-looking one this loop has found.** Each row puts
+a piece of folklore, struck through, beside the real figure that kills it. The
+claim sat in a flexible column next to one sized to its own contents, and the
+block on the right carries a long line of explanation. On a phone that left the
+claim about **seventy pixels**, and the claim is a sentence. Photographed at 320:
+**"a fat / gross / margin / means / good / profit"**, six lines of one or two
+words, struck through. It reads as broken markup rather than as folklore being
+crossed out.
+
+At full width it reads perfectly, which is why it survived.
+
+**Fixed with a row that wraps rather than two columns that cannot.** The claim asks
+for a sensible width and the pair wraps when it cannot have it, so on a phone the
+struck line takes the full row and the figure sits under it. **No breakpoint:** it
+wraps when it must, at whatever width that turns out to be. Nothing moves at full
+width, checked.
+
+**A CHANGE I MADE AND THEN UNDID.** I moved the figure from a literal twenty
+pixels to a smaller named step, on the assumption that twenty was drift. It is
+not: twenty IS a step on the ladder, the one named for a section heading. The
+ratchet said so by refusing to move when I removed the literal. Restored to the
+same value, now written as its token, so the size is unchanged and the literal is
+gone. **Nearly shipped a visual change for no reason.**
+
+**Recorded, not touched: this section asserts folklore nobody is shown to hold.**
+Both struck claims are hard-coded sentences printed on every trade, whatever the
+trade. "Most fail within a year" is a real belief about restaurants; whether it is
+a belief about dental practices is a claim in itself. That is a content question
+and belongs to the founder.
+
+**And a third copy of the bullet markup**, after the two found in row 28, again
+with the same raw colour value. Same shared-primitive pass.
+
 **Row 28, closed 2026-08-22. Kept. The half-empty band again, reached from the
 other direction.**
 
@@ -811,7 +847,7 @@ swap on this page.
 | 26 | Across the year | season ribbon | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 27 | The typical operator | fact strip | **NONE FOUND** | **DONE-KEPT** |
 | 28 | Who it suits | two bullet columns | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 29 | What people get wrong | struck line pairs | NOT CHECKED | TODO |
+| 29 | What people get wrong | struck claim, real figure | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 30 | Where the trade pays, place by place | ranked list with rent load | NOT CHECKED | TODO |
 | 31 | The subtype drill | nested breakdown | NOT CHECKED | TODO |
 | 32 | The close | editorial block | NOT CHECKED | TODO |
@@ -915,7 +951,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **5 replaced or retired, 19 kept with evidence, 12 blocked, 28 to go.**
+64 rows. **5 replaced or retired, 20 kept with evidence, 12 blocked, 27 to go.**
 
 One of those eighteen needed NO change at all. Twenty-three rows in, that is the
 first.

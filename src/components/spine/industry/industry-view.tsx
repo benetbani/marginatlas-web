@@ -639,10 +639,21 @@ function Seasonality({ d }: { d: any }) {
  * figure into terracotta; the page's other ClaimRow stays ink (terracotta once per box). */
 function ClaimRow({ claim, real, realLabel, accent = false }: { claim: string; real: string; realLabel: string; accent?: boolean }) {
   return (
-    <div className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-md border border-[var(--c-border)] px-3 py-2.5">
-      <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] line-through decoration-2 decoration-[var(--c-line-strong)]">{claim}</span>
-      <div className="text-right">
-        <Fig className={`block text-[20px] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{real}</Fig>
+    /* A ROW THAT WRAPS, NOT TWO COLUMNS THAT CANNOT.
+       The claim sat in a flexible column beside a column sized to its own
+       contents, and the thing on the right carries a long line of explanation.
+       On a phone that leaves the claim about seventy pixels, and the claim is a
+       sentence: photographed at 320, "a fat gross margin means good profit"
+       came out over SIX lines of one or two words each, struck through, which
+       reads as broken rather than as folklore being crossed out.
+       The claim now asks for a sensible width and the pair wraps when it cannot
+       have it, so on a phone the struck line takes the full row and the figure
+       sits under it. No breakpoint: the row wraps when it must, at whatever
+       width that turns out to be. */
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-md border border-[var(--c-border)] px-3 py-2.5">
+      <span className="min-w-0 flex-[1_1_11rem] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] line-through decoration-2 decoration-[var(--c-line-strong)]">{claim}</span>
+      <div className="ml-auto text-right">
+        <Fig className={`block text-[length:var(--t-head)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{real}</Fig>
         <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{realLabel}</div>
       </div>
     </div>
@@ -657,7 +668,7 @@ function ClaimRow({ claim, real, realLabel, accent = false }: { claim: string; r
  * decision-support: the comfortable stories do not survive the maths.
  * width: the rail half of a WideRail (T2), beside the season ribbon.
  * terracotta: the survival reality figure only (one accent; the margin row stays ink). */
-function Caveats({ d }: { d: any }) {
+export function Caveats({ d }: { d: any }) {
   const c = d.caveats ?? {};
   const myths: string[] = c.myths ?? [];
   const s = d.survival ?? {};
