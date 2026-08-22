@@ -53,7 +53,7 @@ looking at yet, and ranks accordingly.**
 | 9 | Getting to break-even | two-anchor time axis | **1 trade in 138. Latent fault fixed** | **DONE-KEPT** |
 | 10 | The same trade, comparable places | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
 | 11 | What the team costs | range brackets | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 12 | What to watch | severity-marked risk list | NOT CHECKED | TODO |
+| 12 | What to watch | one shared safety scale | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 13 | Myth vs. reality | struck-through line pairs | NOT CHECKED | TODO |
 | 14 | Related trades in this place | ranked figure list | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 15 | The masthead turnover spread | spread strip, p10 / p50 / p90 | **VERIFIED, OPEN** | TODO |
@@ -204,6 +204,36 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 12, closed 2026-08-22. Kept. Three faults, one of them a rule this site
+wrote down and then broke.**
+
+**KEPT.** A dot on a track. No axis, no scale, nothing to measure.
+
+**1. THE TRACK FADED INTO THE ACCENT.** Every scale ran a gradient from grey into
+a pale terracotta at the safe end. That breaks the site's one hard colour rule
+twice: **the accent marks the answer and nothing else**, and decoration never
+sits on top of data. It also restated what the two words underneath already say.
+And it could not even be seen: the fade's two ends measure **1.01 to 1** against
+each other, where 3 to 1 is the floor for a graphic that carries meaning. It was
+a rule broken in exchange for nothing. Five gradients in the render, four gone;
+the one left is the card's own surface.
+
+**2. THE END LABELS COLLIDED ON A PHONE.** Caught by photographing it at 320:
+"RISKIER" and "SAFER" printed as **RISKIERSAFER**, jammed together with no gap,
+because the name column was a fixed 150 pixels and left the scale almost nothing.
+The column is fluid below the breakpoint now and the two words separate.
+
+**3. THE VALUE ABOVE EACH MARKER WAS CENTRED ON IT**, so a reading at either end
+pushed half the label outside the card. A reading of 10 puts the marker at the
+far right, which real data can produce. Anchored away from the ends, the same fix
+as the break-even marker two rows up.
+
+**Two stray colours retired** with the gradient. **The text is byte for byte
+identical**, checked node by node.
+
+**Scope checked before touching the shared piece:** the scale is used in three
+places and the other two are workshop routes, so exactly one reader surface moves.
 
 **Row 11, closed 2026-08-22. Kept. The spread was invisible on a phone.**
 
@@ -556,7 +586,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 9 kept with evidence, 8 blocked, 43 to go.**
+64 rows. **4 replaced or retired, 10 kept with evidence, 8 blocked, 42 to go.**
 
 Five of those blocked rows are the trade page sections that reach no reader.
 They are blocked on DATA, not on design, and no component from any library

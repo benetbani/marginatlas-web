@@ -312,20 +312,29 @@ export function Box({ children, className = "", elevation = "card", density = "d
  * under the row set, aligned to the track column. Default undefined = the historical render.
  * `plain` = a NEUTRAL flat track: use it when the right end is NOT better (a demands /
  * characteristics read), so the warm end never asserts a direction the data lacks (rule 10). */
-export function EaseScale({ rows, endLabels, plain = false }: { rows: Array<[string, number, string, string?]>; endLabels?: [string, string]; plain?: boolean }) {
+export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, string, string?]>; endLabels?: [string, string] }) {
+  /* THE TRACK IS FLAT. It used to fade from grey into a pale terracotta at the
+     right-hand end, which broke the site's one hard colour rule twice over: the
+     accent marks the answer and nothing else, and decoration never sits on top
+     of data. The fade also said the same thing the two end labels already say,
+     in a second language, so it carried no reading of its own.
+     THE VALUE LABEL IS ANCHORED AWAY FROM THE ENDS. It is centred on its own
+     marker, so a reading at either extreme pushed half the label outside the
+     card. The same fault, and the same fix, as the break-even marker. */
+  const anchor = (p: number) => (p < 14 ? "0%" : p > 86 ? "-100%" : "-50%");
   return (
     <div className="space-y-3.5">{rows.map(([label, pos, word, sub]) => (
-      <div key={label} className="hov -mx-2 grid grid-cols-[150px_1fr] items-center gap-3 rounded-md px-2 py-1.5">
-        <span className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</span> : null}</span>
-        <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: plain ? "#e6e6e6" : "linear-gradient(90deg,#e6e6e6,#ffe1d8)" }}>
+      <div key={label} className="hov -mx-2 grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 rounded-md px-2 py-1.5 sm:grid-cols-[150px_1fr]">
+        <span className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</span> : null}</span>
+        <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: TRACK }}>
           <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
-            <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
+            <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
           </div>
-          <span className="absolute -top-5 -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%` }}>{word}</span>
+          <span className="absolute -top-5 whitespace-nowrap text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%`, transform: `translateX(${anchor(pos)})` }}>{word}</span>
         </div>
       </div>))}
       {endLabels ? (
-        <div aria-hidden className="grid grid-cols-[150px_1fr] items-center gap-3">
+        <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
           <span />
           <div className="flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
         </div>
