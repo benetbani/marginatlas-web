@@ -214,6 +214,46 @@ a day starts paying, Getting to break-even, and Across the year.** Marked blocke
 so no iteration is spent on a page nobody sees. The remaining nine sections are
 live.
 
+**Row 31 is VOID: it was a duplicate of row 20.** The industry page carries
+fourteen section headings and none of them is a "subtype drill". Row 20, "keep and
+cost, trades next door", IS that component; the ledger listed the same surface
+twice, once by its reader-facing heading and once by its internal name. Recorded
+rather than quietly deleted, so the count of rows stays honest.
+
+**Row 32, closed 2026-08-22. Kept. A band that failed the rule written in its own
+comment.**
+
+The section restates the kept figure on the left and offers the one next step on
+the right. Its own comment states the rule: **one full-width band, both flanks
+carrying content, never a lockup huddled left over a blank right.**
+
+**The recap on the left is OPTIONAL**, and its guard drops it whenever the trade
+carries no kept figure. With it gone, the row's spacing rule had a single child to
+space and put it at the start, so the band delivered exactly what its comment
+forbids: a lone call to action on the left, an empty right. Rendered without the
+recap to confirm it rather than reasoning about it. With no recap that block now
+spans the row and pushes its own two halves apart. **With the recap present
+nothing moves at all.**
+
+**Fourth appearance of a container that splits before it knows what it has to put
+in both halves**, after the masthead scorecard, the customer-spend band and the
+who-it-suits columns. It is the most repeated structural fault in this loop.
+
+**A SITE-WIDE FINDING, recorded and NOT acted on, because only the founder can
+settle it.** The button here turns terracotta on hover. The cell page carries a
+comment quoting a ratified ruling: *"the accent never appears on hover"*. **Ten
+reader-facing controls across the site use terracotta on hover, including two on
+the cell page itself, eleven lines from where that rule is quoted.** Either the
+rule means what it literally says and is broken in ten places, or its scope was
+the decorative row motif it was written about and not interactive controls. Both
+readings are defensible from the text. **Not a row-32 question, and not one to
+guess at.**
+
+**The gate chain crashed four gates on this run** with Windows process-abort
+codes, one of them printing its own all-clear before dying, at 0.88GB of free
+memory. All four pass when run alone. This is the documented flakiness of this
+machine, not a code failure, and it is why the serial chain exists.
+
 **Row 30, closed 2026-08-22. THE LIBRARY WINS A THIRD TIME, same defect again.**
 
 Cities down the side, one measure across the top, a header row drawn to look like
@@ -879,8 +919,8 @@ swap on this page.
 | 28 | Who it suits | two bullet columns | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 29 | What people get wrong | struck claim, real figure | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 30 | The rent, city by city | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
-| 31 | The subtype drill | nested breakdown | NOT CHECKED | TODO |
-| 32 | The close | editorial block | NOT CHECKED | TODO |
+| 31 | ~~The subtype drill~~ | **DUPLICATE of row 20** | not a surface | **VOID** |
+| 32 | The close | recap plus one next step | **VERIFIED, FIXED** | **DONE-KEPT** |
 
 ---
 
@@ -981,7 +1021,10 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **6 replaced or retired, 20 kept with evidence, 12 blocked, 26 to go.**
+64 rows, one of them void. **6 replaced or retired, 21 kept with evidence, 12 blocked, 24 to go.**
+
+THE INDUSTRY PAGE IS DONE. Its fourteen sections are closed or blocked: four
+blocked on missing data, one void as a duplicate, the rest fixed or kept.
 
 All THREE library wins are the same defect: a table built without a table. Nothing
 else in twenty-six rows has needed a block.

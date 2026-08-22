@@ -718,7 +718,7 @@ export function Caveats({ d }: { d: any }) {
  * city) are CUT (rulebook v1 §15: the cross-entity "X keeps the most of it" verdict
  * footer is banned, and the per-city line restated an unknowable per-city net margin).
  * focal: the CTA. terracotta: the $-kept recap figure only (the page's answer restated). */
-function Close({ d }: { d: any }) {
+export function Close({ d }: { d: any }) {
   const mi = d.margin_index ?? {};
   // The keep recap label earns its words: read against the real all-trades average when
   // the benchmark carries one, else the plain fallback.
@@ -748,7 +748,18 @@ function Close({ d }: { d: any }) {
               ))}
             </div>
           ) : null}
-          <div className="flex flex-col items-start gap-3 sm:shrink-0 sm:flex-row sm:items-center">
+          {/* WHEN THERE IS NO RECAP, THIS BLOCK TAKES THE WHOLE ROW.
+              The comment above states the rule this band is built to: one
+              full-width band, both flanks carrying content, never a left-huddled
+              lockup over a blank right. The recap on the left is OPTIONAL, and
+              its guard lets it vanish whenever the trade carries no kept figure.
+              With it gone, the row's spacing rule had one child to space and put
+              it at the start, so the band failed its own stated rule: a lone call
+              to action on the left and an empty right. Rendered without the recap
+              to confirm it rather than reasoning about it.
+              With no recap this block spans the row and pushes its own two halves
+              apart instead, so both flanks carry something either way. */}
+          <div className={`flex flex-col items-start gap-3 sm:flex-row sm:items-center${recap.length ? " sm:shrink-0" : " sm:w-full sm:justify-between"}`}>
             <div className="max-w-[22rem] text-[length:var(--t-body)] leading-snug text-[var(--c-ink)]">See {d.meta?.name?.toLowerCase()} in a specific city, with the local rent, wages and take-home.</div>
             {/* the alt-city mark says what the button opens (city-level pages); its strokes
                 are var(--c-ink), so remap that var to currentColor inside the dark pill */}
