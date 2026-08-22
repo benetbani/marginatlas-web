@@ -376,7 +376,7 @@ function Ramp({ d }: { d: any }) {
  * text box beside it.
  * decision: bust the belief operators actually hold. Number: the real year-one survival rate (NEW, not restated).
  * focal: the survival curve with the folklore struck on it. width: Even half. terracotta target: the survival figure. */
-function Myth({ d }: { d: any }) {
+export function Myth({ d }: { d: any }) {
   const my = d.myth ?? {};
   const s = my.survival ?? {};
   const survival: Array<[string, number]> = [["Yr 1", s.year1_pct], ["Yr 3", s.year3_pct], ["Yr 5", s.year5_pct]]
@@ -410,38 +410,82 @@ const FOLKLORE_LABEL = "folklore: 9 in 10 fail";
  * X()/Y() scale (a flat line at the folklore's implied survival level, spanning the
  * same x-span as the real curve, struck out) , the kit.tsx:598 contract. */
 function SurvivalSlope({ points }: { points: Array<[string, number]> }) {
+  /* THE DRAWING STRETCHES. THE WORDS DO NOT.
+     This was one fixed 320-unit picture given the card's full width with its
+     height pinned and its aspect ratio LOCKED, which does not stretch it: it
+     scales the whole thing to FIT, and with the height already at its limit the
+     scale stays at one. So on any card wider than 320 the chart drew at its
+     native size and sat centred with blank space either side, a half-width
+     drawing floating in a full-width band.
+     Unlocking the ratio alone would repeat the fault fixed on the year chart,
+     where every letter got stretched sideways. So the SVG now holds the PATHS
+     ONLY and stretches freely, while every readable thing, the three readings,
+     the year names and the struck folklore words, is real text in the page laid
+     over it. The horizontal scale is the only one that changes, so a percentage
+     puts a DOM element exactly on its path point, and a viewBox unit stays a
+     pixel vertically. */
   const W = 320, H = 110, padL = 8, padR = 8, padTop = 22, padBot = 26;
   const min = 0, max = 100;
   const X = (i: number) => padL + (i / (points.length - 1)) * (W - padL - padR);
   const Y = (v: number) => padTop + (1 - (v - min) / (max - min)) * (H - padTop - padBot);
+  const leftPct = (i: number) => (X(i) / W) * 100;
+  /* THE END LABELS ANCHOR INWARD. Centring a label on its own point is right in
+     the middle of a chart and wrong at either end: once the drawing filled the
+     card, the first and last readings hung half outside it and "Yr 5" wrapped
+     onto two lines. Caught by photographing the fix, not by writing it. The
+     same anchor rule the break-even marker and the risk scale already use. */
+  const anchor = (i: number) =>
+    i === 0 ? "translateX(0)" : i === points.length - 1 ? "translateX(-100%)" : "translateX(-50%)";
   const coords = points.map(([, v], i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
   const line = "M " + coords.join(" L ");
   const area = `M ${X(0).toFixed(1)},${(H - padBot).toFixed(1)} L ` + coords.join(" L ") + ` L ${X(points.length - 1).toFixed(1)},${(H - padBot).toFixed(1)} Z`;
   const phantomPts: Array<[number, number]> = [[X(0), Y(FOLKLORE_SURVIVAL_PCT)], [X(points.length - 1), Y(FOLKLORE_SURVIVAL_PCT)]];
   return (
     <div className="mt-3 border-t border-[var(--c-border)] pt-3">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Still trading: ${points.map(([l, v]) => `${l} ${v}%`).join(", ")}. Folklore claims 9 in 10 fail in the first year, struck out on the same chart.`}>
-        {/* neutral fill: the line's carrier is grey, so the fill is too , the ONE accent
-            in this box is the year-one node + figure (the myth being busted) */}
-        <path d={area} fill="#9a9a98" opacity={0.08} />
-        <path d={line} fill="none" stroke="#c8c8c6" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
+      <div
+        className="relative w-full"
+        style={{ height: H }}
+        role="img"
+        aria-label={`Still trading: ${points.map(([l, v]) => `${l} ${v}%`).join(", ")}. Folklore claims 9 in 10 fail in the first year, struck out on the same chart.`}
+      >
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
+          {/* neutral fill: the line's carrier is grey, so the fill is too , the ONE accent
+              in this box is the year-one node + figure (the myth being busted) */}
+          <path d={area} fill="var(--chart-4)" opacity={0.08} />
+          <path d={line} fill="none" stroke="var(--chart-5)" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+          <StruckLine points={phantomPts} label={FOLKLORE_LABEL} hideLabel />
+        </svg>
         {points.map(([label, v], i) => {
           const lead = i === 0;
           return (
-            <g key={label}>
-              <circle cx={X(i)} cy={Y(v)} r={lead ? 4 : 3} fill={lead ? TERRA : "#1b1b1a"} stroke="#fff" strokeWidth={1.5} />
-              <text x={X(i)} y={Y(v) - 9} textAnchor="middle" fontSize={12} style={{ fontFamily: "var(--font-grotesk)", fontWeight: lead ? 600 : 500 }} fill={lead ? "#c2410c" : "#1b1b1a"}>{v}%</text>
-              <text x={X(i)} y={H - 8} textAnchor="middle" fontSize={9.5} fill="#8c8c8a">{label}</text>
-            </g>
+            <React.Fragment key={label}>
+              <span
+                aria-hidden
+                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"
+                style={{ left: `${leftPct(i)}%`, top: `${Y(v)}px`, width: lead ? 8 : 6, height: lead ? 8 : 6, background: lead ? TERRA : "var(--c-ink)" }}
+              />
+              <span className="absolute leading-none" style={{ left: `${leftPct(i)}%`, top: `${Y(v) - 19}px`, transform: anchor(i) }}>
+                <Fig className={`text-[length:var(--t-small)] ${lead ? "font-semibold text-[var(--terra-text)]" : "font-medium text-[var(--c-ink)]"}`}>{v}%</Fig>
+              </span>
+              <span className="absolute whitespace-nowrap text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]" style={{ left: `${leftPct(i)}%`, top: `${H - 13}px`, transform: anchor(i) }}>
+                {label}
+              </span>
+            </React.Fragment>
           );
         })}
-        <StruckLine points={phantomPts} label={FOLKLORE_LABEL} />
-      </svg>
+        <span
+          aria-hidden
+          className="absolute text-[length:var(--t-mark)] leading-none text-[var(--c-muted)] line-through"
+          style={{ right: `${100 - leftPct(points.length - 1)}%`, top: `${Y(FOLKLORE_SURVIVAL_PCT) - 15}px` }}
+        >
+          {FOLKLORE_LABEL}
+        </span>
+      </div>
       {/* one-line legend only (rulebook 26): names the two lines so the real curve reads
           against the struck folklore phantom. No sentence, no verdict, no "read". */}
       <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: "#c8c8c6" }} />still trading</span>
-        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-0 w-4 border-t border-dashed" style={{ borderColor: "#b0b0ae" }} />folklore</span>
+        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: "var(--chart-5)" }} />still trading</span>
+        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-0 w-4 border-t border-dashed" style={{ borderColor: "var(--c-line-strong)" }} />folklore</span>
       </div>
     </div>
   );

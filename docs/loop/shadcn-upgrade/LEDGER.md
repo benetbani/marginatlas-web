@@ -54,7 +54,7 @@ looking at yet, and ranks accordingly.**
 | 10 | The same trade, comparable places | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
 | 11 | What the team costs | range brackets | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 12 | What to watch | one shared safety scale | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 13 | Myth vs. reality | struck-through line pairs | NOT CHECKED | TODO |
+| 13 | Myth vs. reality | survival curve, folklore struck on it | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 14 | Related trades in this place | ranked figure list | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 15 | The masthead turnover spread | spread strip, p10 / p50 / p90 | **VERIFIED, OPEN** | TODO |
 | 16 | The masthead headline figure | one hero-scale number | NOT CHECKED | TODO |
@@ -204,6 +204,37 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 13, closed 2026-08-22. Kept. A chart that refused to grow, and clipped its
+own figures when it shrank.**
+
+**KEPT.** Three points and a line. No axis machinery, nothing to measure.
+
+**THE DEFECT, and it is the opposite of the year chart's.** This was one fixed
+320-unit drawing given the card's full width with its height pinned and its shape
+**locked**. A locked shape does not stretch, it scales to FIT, and with the height
+already at its limit it never scales at all. So past about 320 pixels the chart
+drew at its native size and **sat in the middle of the card with blank space on
+both sides**, a half-width drawing in a full-width band. Below 320 it shrank
+everything together, and at phone width the first reading **clipped from "74%" to
+"4%"** against the edge of its own box.
+
+**Unlocking the shape alone would have repeated the year chart's fault**, where
+every letter got stretched sideways. So the drawing now holds the PATHS ONLY and
+stretches freely, and every readable thing, the three readings, the year names,
+and the struck folklore words, is real text laid over it. The line keeps a true
+thickness while the box stretches. The horizontal scale is the only one that
+moves, so a percentage puts a mark exactly on its path point, and the two heights
+come from one constant so they cannot drift apart.
+
+**Caught by photographing the fix, not by writing it:** once the chart filled the
+card, the first and last readings hung half outside it and one year name wrapped
+onto two lines. The end labels now anchor inward, the same rule the break-even
+marker and the risk scale already use. **Third time that fault has appeared in
+this loop.**
+
+**Seven raw colour values retired.** The text is byte for byte identical.
+Fills the card at 760, legible at 320, gate chain clean.
 
 **Row 12, closed 2026-08-22. Kept. Three faults, one of them a rule this site
 wrote down and then broke.**
@@ -586,7 +617,11 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 10 kept with evidence, 8 blocked, 42 to go.**
+64 rows. **4 replaced or retired, 11 kept with evidence, 8 blocked, 41 to go.**
+
+A pattern worth naming: THREE separate charts have now been found placing a mark
+or a label centred on its own value at the very end of a scale, where half of it
+falls outside the box. It is the single most repeated defect in this codebase.
 
 Five of those blocked rows are the trade page sections that reach no reader.
 They are blocked on DATA, not on design, and no component from any library

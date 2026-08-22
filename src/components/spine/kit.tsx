@@ -610,7 +610,7 @@ export function Spark({ values, w = 96, h = 30, markerIndex }: { values: number[
  * draw a line through). Decorative: the group is aria-hidden, so a caller that
  * passes a phantom folds its claim into the HOST svg's own aria-label. Pure /
  * stateless, no window/document reference , SSR-safe by construction. */
-export function StruckLine({ points, label = "folklore" }: { points: Array<[number, number]>; label?: string }) {
+export function StruckLine({ points, label = "folklore", hideLabel = false }: { points: Array<[number, number]>; label?: string; hideLabel?: boolean }) {
   if (!points || points.length < 2) return null;
   const path = "M " + points.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L ");
   const xs = points.map((p) => p[0]), ys = points.map((p) => p[1]);
@@ -624,7 +624,9 @@ export function StruckLine({ points, label = "folklore" }: { points: Array<[numb
           bounding box slope, so it always crosses the phantom shape and reads as a
           deliberate cross-out rather than a second trend line */}
       <line x1={x0} y1={y1} x2={x1} y2={y0} stroke="var(--c-muted)" strokeWidth={1.5} strokeLinecap="round" />
-      <text x={lx} y={ly - 8} textAnchor="end" fontSize={9} fill="var(--c-muted)" style={{ textDecoration: "line-through" }}>{label}</text>
+      {/* hideLabel: when the caller draws its own text in the DOM instead, so the
+          words are not scaled along with the drawing. */}
+      {hideLabel ? null : <text x={lx} y={ly - 8} textAnchor="end" fontSize={9} fill="var(--c-muted)" style={{ textDecoration: "line-through" }}>{label}</text>}
     </g>
   );
 }
