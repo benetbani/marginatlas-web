@@ -59,7 +59,7 @@ const SHORT_COST: Record<string, string> = {
  * each $100 of sales spent left to right, every decrement a labeled floating drop with
  * connector rules at the running level, the final kept bar terracotta (the one accent).
  * Pure SVG, zero baseline drawn, values in Space Grotesk. */
-function SteppedWaterfall({ costs, keep }: { costs: Array<{ name: string; pct: number }>; keep: number }) {
+export function SteppedWaterfall({ costs, keep }: { costs: Array<{ name: string; pct: number }>; keep: number }) {
   const cols = costs.length + 2; // sales + decrements + keep
   const W = 480, H = 168, padL = 8, padR = 8, chartTop = 18, axisY = 128;
   const slot = (W - padL - padR) / cols;
