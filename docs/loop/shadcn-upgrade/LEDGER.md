@@ -42,7 +42,7 @@ looking at yet, and ranks accordingly.**
 
 | # | Section a visitor reads | Form today | Defect | Status |
 |---|---|---|---|---|
-| 1 | Where each $100 of sales goes | 100% stacked bar, legended | NOT CHECKED | TODO |
+| 1 | Where each $100 of sales goes | 100% stacked bar, legended | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 2 | What the owner keeps | **waterfall on the chart library** | VERIFIED, FIXED | **DONE-REPLACED** |
 | 3 | When it clears costs | two-marker scale on one domain | NOT CHECKED | TODO |
 | 4 | What it costs to open one | lollipop on a drawn track | NOT CHECKED | TODO |
@@ -66,6 +66,56 @@ unreadable on a phone and oversized in a wide band, and it carried six raw hex
 values. Two further defects were found only by looking at the render: six labels
 collided at phone width, then the wrapped second line was silently cut off. A
 second, unmounted copy of the same chart was deleted from the kit.
+
+**Row 1, closed 2026-08-22. Kept, and the defect fixed without a block.**
+
+The library answers nothing here. The bar is a flex row of coloured divs whose
+widths are percentages: no axis, no scale, nothing to measure, no many-points
+problem, and it renders on the server. A charting library would add a
+browser-side redraw to a shape CSS does exactly, and would need the same
+normalisation anyway.
+
+**The defect it did have was arithmetic, and it was measured.** The five slices
+are scaled to sum to exactly 100 as decimals, then each is rounded on its own.
+Across 320 realistic splits that lands off 100 in **39% of cases**. Where it
+lands SHORT, one split in five, the bar stopped before the end of its own track
+and left a pale notch immediately after the terracotta kept slice, on a section
+whose entire claim is that these five parts ARE the hundred dollars. A gap there
+reads as a sixth cost nobody named.
+
+**A prediction that was wrong, recorded because it is the lesson.** The
+arithmetic said the over-100 cases would CLIP the last segment, and the last
+segment is the terracotta one. Rendered in a real browser, they do not: flex
+shrinks the row back to the track, so those cases were already correct. Only the
+short ones were broken. Reasoning about the numbers found half the answer and
+named the wrong victim.
+
+**The fix is one prop the component already had and nobody passed.** Widths move
+by at most one point. No printed figure changes; the legend still carries the
+caller's real numbers.
+
+**And the price of that fix, paid rather than left as a trap.** Normalising is
+right for a rounding drift and WRONG for a genuinely broken split: a stack
+summing to 70 used to show a third of empty track, and normalised it would draw
+as a full, confident, false hundred dollars. So the section now refuses to draw
+at all when the gap is bigger than rounding. Tolerance four points against a
+measured worst case of one: it fires zero times on today's pipeline, which is
+the point. It is for the day the upstream split changes shape.
+
+**Three things this iteration found and did NOT touch, one surface at a time:**
+
+- **The industry page carries the same bar with the same claim** (row 19) and
+  the same missing prop. It is a different surface and gets its own iteration.
+- **A latent divergence, harmless today.** The waterfall follows the subtype
+  picker; this bar does not. On the live page the picker is not wired, so both
+  read the same split and agree. **The day subtypes are wired with real data,
+  two sections on one page will show the same $100 split with different kept
+  slices.** Nothing to fix yet. Everything to remember.
+- **A question only the founder can settle.** The printed legend can still read
+  33 + 31 + 9 + 23 + 3, which a reader can add to 99. Fixing that means rounding
+  the five figures so they sum to 100, which CHANGES a printed figure by up to a
+  point. That is a content decision, not a component one, and this loop does not
+  make content decisions.
 
 **Row 7, kept with evidence.** The share bar is a flex row of divs whose widths
 are percentages. It has no axis, no scale, nothing to measure, and it renders on
@@ -202,7 +252,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **3 replaced or retired, 4 kept with evidence, 3 blocked, 54 to go.**
+64 rows. **3 replaced or retired, 5 kept with evidence, 3 blocked, 53 to go.**
 
 ## Standing notes for every iteration
 

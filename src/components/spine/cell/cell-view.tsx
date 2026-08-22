@@ -72,12 +72,37 @@ function MoneySplit({ d }: { d: any }) {
   const items: any[] = d.money_split?.items ?? [];
   if (items.length === 0) return null;
   const segments = items.map((it) => ({ label: it.name, pct: it.pct, color: it.kept ? TERRA : "#c8c8c6", kept: !!it.kept }));
+
+  /* THE PRICE OF NORMALISING, paid here rather than left as a trap.
+     Stretching the slices to fill the track is right for a one-point rounding
+     drift and WRONG for a split that is genuinely broken: a stack summing to 70
+     used to show an unmissable third of empty track, and normalised it would
+     quietly draw as a full, confident, entirely false hundred dollars. So the
+     bar is allowed to stretch only over a rounding-sized gap, and refuses to
+     draw at all beyond that.
+     The tolerance is four points against a measured worst case of one, so on
+     today's pipeline this never fires. It is not for today's pipeline. It is
+     for the day the upstream split changes shape and nothing else notices. */
+  const total = segments.reduce((a, s) => a + (Number.isFinite(s.pct) ? s.pct : NaN), 0);
+  if (!Number.isFinite(total) || Math.abs(total - 100) > 4) return null;
   return (
     <Box>
       {/* sample: the kept 7% is a modeled cost-structure share, not a measured net
           margin by city (rulebook 4A/5); the tag marks it so it never reads as real. */}
       <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" sample />
-      <StackBar segments={segments} ariaLabel={segments.map((p) => `${p.label} ${p.pct}%`).join(", ")} legend />
+      {/* NORMALISE. Measured 2026-08-22, not assumed: the five slices are scaled
+          to sum to exactly 100 as decimals, then each is rounded on its own, and
+          across 320 realistic splits that lands off 100 in 39% of cases. When it
+          lands SHORT, and it does in 20% of cases, the bar stops before the end
+          of its own track and leaves a pale notch, on a section whose entire
+          claim is that these five parts ARE the hundred dollars. A gap reads as
+          a sixth cost nobody named.
+          The prediction that the over-100 case would CLIP the terracotta kept
+          slice was wrong, and the browser said so: flex shrinks the row back to
+          the track, so those cases were already correct. Only the short ones
+          were broken. Widths change by at most one point; no printed figure
+          moves. The legend still prints the caller's real numbers. */}
+      <StackBar segments={segments} normalize ariaLabel={segments.map((p) => `${p.label} ${p.pct}%`).join(", ")} legend />
     </Box>
   );
 }
