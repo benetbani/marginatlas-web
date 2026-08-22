@@ -121,8 +121,12 @@ The largest and most defect-ridden area. `AtlasBarChart` already exists
 1. Verify `AtlasBarChart` renders. It has a known-fixed bug already (per-bar
    colour needs `Cell`, not a nested `Bar`, which typechecks fine and would draw
    a second series over the first).
-2. Migrate the 5 month-of-year charts. They disagree on baseline today; one
-   implementation ends that.
+2. ~~Migrate the 5 month-of-year charts.~~ **DROPPED, the claim was wrong.**
+   Re-measured 2026-08-21: four month charts render for a reader and every one
+   is already zero-based or is a deviation chart. The only non-zero floor found
+   sits on a pay-by-role RANGE chart, where a shared scale is correct. Third
+   stale figure found in the readiness ledger in one day, after the
+   tabular-figures and table-scope counts.
 3. Migrate `MiniBar`, `IndexBar`, `StackBar`, `ShareStack`, `RankBars`,
    `ComparisonBars`.
 4. Converge the 3 `Waterfall`s and `SteppedWaterfall` to one.

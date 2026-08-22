@@ -16,13 +16,13 @@ bespoke one is good. **RETIRE** means it should not exist at all.
 13 more files under `src/components/kit/charts/`, drawn as `<div>` stacks and
 inline `<svg>`. The readiness ledger already records what that produced: six
 percentile charts that disagree on axis (two logarithmic), five different
-"where each $100 goes", five month-of-year charts that disagree about where zero
+"where each $100 goes", month-of-year charts once believed to disagree about where zero
 is, nine gauge geometries, and three separate components named `Waterfall`.
 
 | Bespoke | Verdict | Becomes | Note |
 |---|---|---|---|
 | `MiniBar`, `IndexBar`, `StackBar`, `ShareStack`, `RankBars`, `ComparisonBars` | **REPLACE** | `ui/chart` + recharts `BarChart` | One component, variants by prop. Zero baseline pinned; recharts will not do it unless told |
-| the 5 month-of-year charts | **REPLACE** | one `BarChart` | They disagree on baseline today. One implementation ends that |
+| the month-of-year charts | **NO WORK NEEDED** | , | **The claim was wrong, re-measured 2026-08-21.** Four render for a reader and all four are already zero-based or are deviation charts. The one non-zero floor belongs to a pay-by-role RANGE chart, not a month chart |
 | the 6 percentile charts | **REPLACE** | one `BarChart` or `AreaChart` | **Two are logarithmic.** Picking one axis is a founder decision, not a migration decision. Route it |
 | `Waterfall` x3, `SteppedWaterfall` | **REPLACE**, then converge to one | recharts stacked bar with a transparent base | The money identity is a signature moment; get it right once |
 | `Gauge` x9 geometries | **REPLACE**, converge to one | recharts `RadialBarChart` | Nine is the defect. One survives |
@@ -49,7 +49,7 @@ These are pure mechanism. A reader notices only that they stop misbehaving.
 | Bespoke | Verdict | Becomes | Why it matters |
 |---|---|---|---|
 | 13 hand-rolled switchers/toggles | **REPLACE** | `ui/tabs` or `ui/toggle-group` | Radix `tabs` is already installed and unused. Gets keyboard nav and ARIA for free, which G22 says is unmeasured today |
-| every `<table>` (13 files have one with **no `scope`**) | **REPLACE** | `ui/table` | G35: no table anywhere has a sticky header, and the house tabular-figures rule is used **zero** times, including in `Money.tsx` whose entire job is printing money |
+| every `<table>` | **DONE for semantics, 2026-08-21** | `ui/table` | **G35's figures were wrong and are corrected.** 19 files hold a table, 11 lacked `scope` (not 13), one already had a sticky header (not zero), and `tabular-nums` appears **405** times including in `Money.tsx`, the file G35 named as lacking it. All 37 reader-facing headers now carry `scope`, gated by `table-semantics`. Sticky headers still open |
 | bespoke tooltips / "?" glosses | **REPLACE** | `ui/tooltip` | Radix `tooltip` installed and unused. Fixes focus and escape handling |
 | `InlineDisclosure`, `Expand` | **REPLACE** | `ui/collapsible` or `ui/accordion` | Radix `accordion` installed and unused |
 | the currency switcher | **REPLACE** | `ui/select` or `ui/toggle-group` | **This is the thing that makes the trade page scroll sideways at 375**, measured this session: 371px of content in a 360px viewport, a label plus six pills on one unwrapped line |
@@ -112,7 +112,7 @@ component deleted here is one that never needs a verdict above.
 | things named `Waterfall` | 3 | 1 |
 | gauge geometries | 9 | 1 |
 | percentile charts | 6 | 1 |
-| month-of-year charts | 5 | 1 |
-| tables with no `scope` | 13 files | 0 |
-| tables with a sticky header | 0 | all that need one |
-| uses of the house tabular-figures rule | **0** | every numeric column |
+| month-of-year charts | 4, all already zero-based | no change needed |
+| tables with no `scope` | 11 files (not 13) | **0, done and gated** |
+| tables with a sticky header | 1 (not 0) | all that need one, still open |
+| uses of the house tabular-figures rule | **405, the ledger's zero was wrong** | keep |
