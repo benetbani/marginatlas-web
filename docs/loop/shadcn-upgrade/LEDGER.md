@@ -924,6 +924,45 @@ swap on this page.
 
 ---
 
+**Row 35, 2026-08-23. BLOCKED. A defect reproduced and deliberately not fixed.**
+
+The strip puts each peer city as a dot on one axis, labelled with its name and its
+gap from the home city. To stop labels colliding it puts every other one above the
+axis and the rest below, **alternating by position in the list**. That works only
+while the values happen to be spread.
+
+**REPRODUCED, not theorised.** Three peers within a few points of each other put
+two of them on the same side with almost no gap. At phone width the labels run
+together: **"ParisDublin"** over **"-22pp8pp"**. Photographed.
+
+**And today's data clears by about four pixels.** Measured from the render: two
+same-side labels roughly 48 pixels apart, each about 45 wide. That is luck, not
+logic. One more peer, or a different sort order, and it reads like the broken one.
+European rent indices genuinely cluster, so this is not a rare shape.
+
+**WHY IT IS BLOCKED RATHER THAN FIXED, and each alternative was considered:**
+- **Alternate by distance instead of index.** No help: with three in a cluster, two
+  still share a side whichever rule picks the sides.
+- **Assign more lanes.** Needs each label's width. A label's width is pixels and its
+  position is a percentage, and the two cannot be reconciled without measuring in a
+  browser. This section renders on the server and takes no measurements, which is
+  a virtue of it, not an oversight.
+- **Drop to a stacked list below some width**, or **move every label off the axis
+  into a wrapped row beneath it**. Both work. Both change what the section looks
+  like, and **this section carries a written rule that the finding lives on the
+  marker strip.** Changing that is a design decision.
+
+**So it is written down with its reproduction and left.** Redesigning a section
+around a rule the founder wrote, without asking, is the failure this whole project
+was set up to stop.
+
+**Source untouched except one word:** the section is exported so it can be
+captured. No reader-visible change.
+
+**The gate chain crashed one gate again**, printing its own PASS lines before
+dying, at 0.44GB free. It passes alone. Second time in three rows; this machine
+cannot hold the chain and a browser at once.
+
 **Row 34, closed 2026-08-22. Kept. A three-cell strip that would not fit three
 across.**
 
@@ -1020,7 +1059,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 |---|---|---|---|---|
 | 33 | Where to trade, by district | map beside a ranked list | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 34 | The rent, district by district | focal plus a wrapping strip | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 35 | Rent against peer cities | comparison bars | NOT CHECKED | TODO |
+| 35 | Rent against peer cities | dots on one axis | **VERIFIED, REPRODUCED** | **BLOCKED, founder call** |
 | 36 | What space costs | figure group | NOT CHECKED | TODO |
 | 37 | The lease terms | fact table | NOT CHECKED | TODO |
 | 38 | The spending pool | figure group | NOT CHECKED | TODO |
@@ -1111,7 +1150,10 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows, one of them void. **6 replaced or retired, 23 kept with evidence, 12 blocked, 22 to go.**
+64 rows, one of them void. **6 replaced or retired, 23 kept with evidence, 13 blocked, 21 to go.**
+
+Thirteen blocked: twelve on missing data, and now ONE on a design decision that
+is the founder's to make.
 
 Two sweep candidates opened, neither a table. The sweep finds pinned grids; a
 pinned grid is a table only sometimes, and the count of twelve should be read as

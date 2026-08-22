@@ -162,7 +162,7 @@ function CityLenses({ d }: { d: any }) {
  * against the home city (founder C3, 2026-07-11), dots on one axis, never bars. The peer
  * set carries no pricier city because none is defensibly pricier than London (C3: "only
  * cheaper exists; fine"). */
-function CommercialSpace({ d }: { d: any }) {
+export function CommercialSpace({ d }: { d: any }) {
   const s = d.space;
   if (!s || !s.read) return null;
   const peers = (d.peers?.list ?? [])
