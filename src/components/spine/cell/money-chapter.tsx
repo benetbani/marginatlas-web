@@ -19,6 +19,7 @@
  */
 import * as React from "react";
 import { Box, Rail, Fig, InfoTip, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
+import { AtlasWaterfall } from "@/components/kit/charts/AtlasWaterfall";
 import { useFormat, useCountUp, useInView } from "./format-picker";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
@@ -45,55 +46,6 @@ function FormatTag() {
     <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">
       {ctx.sel.name}
     </span>
-  );
-}
-
-/* short display names for the waterfall's cost steps (7 columns need tight labels) */
-const SHORT_COST: Record<string, string> = {
-  "Food & drink cost": "Food",
-  "Rent & rates": "Rent",
-  "Other running costs": "Other",
-};
-
-/* SteppedWaterfall , the money identity DRAWN (Visual Dictionary idiom #12, max 1/page):
- * each $100 of sales spent left to right, every decrement a labeled floating drop with
- * connector rules at the running level, the final kept bar terracotta (the one accent).
- * Pure SVG, zero baseline drawn, values in Space Grotesk. */
-export function SteppedWaterfall({ costs, keep }: { costs: Array<{ name: string; pct: number }>; keep: number }) {
-  const cols = costs.length + 2; // sales + decrements + keep
-  const W = 480, H = 168, padL = 8, padR = 8, chartTop = 18, axisY = 128;
-  const slot = (W - padL - padR) / cols;
-  const bw = slot * 0.6;
-  const bx = (i: number) => padL + i * slot + (slot - bw) / 2;
-  const Y = (v: number) => chartTop + (1 - v / 100) * (axisY - chartTop);
-  let level = 100;
-  const steps = costs.map((c) => { const from = level; level -= c.pct; return { ...c, from, to: level }; });
-  const grotesk = { fontFamily: "var(--font-grotesk)", fontWeight: 600 } as const;
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img"
-      aria-label={`Each $100 of sales: ${costs.map((c) => `${c.name} takes $${c.pct}`).join(", ")}; the owner keeps $${keep}`}>
-      {/* start: the full $100 of sales */}
-      <rect x={bx(0)} y={Y(100)} width={bw} height={Y(0) - Y(100)} rx={2} fill="#e7e5e3" />
-      <text x={bx(0) + bw / 2} y={Y(100) - 6} textAnchor="middle" fontSize={10.5} fill="#1b1b1a" style={grotesk}>$100</text>
-      <text x={bx(0) + bw / 2} y={axisY + 13} textAnchor="middle" fontSize={9} fill="#8c8c8a">Sales</text>
-      {/* the decrements, size-ordered, each a floating drop from the running level */}
-      {steps.map((s, i) => (
-        <g key={s.name}>
-          {/* connector at the level where the previous column ended */}
-          <line x1={bx(i) + bw} y1={Y(s.from)} x2={bx(i + 1) + bw} y2={Y(s.from)} stroke="#d8d4d1" strokeWidth={1} strokeDasharray="2 2" />
-          <rect x={bx(i + 1)} y={Y(s.from)} width={bw} height={Math.max(1, Y(s.to) - Y(s.from))} rx={2} fill="#c1c1bf" />
-          <text x={bx(i + 1) + bw / 2} y={Y(s.from) - 6} textAnchor="middle" fontSize={10} fill="#1b1b1a" style={grotesk}>-{s.pct}</text>
-          <text x={bx(i + 1) + bw / 2} y={axisY + 13} textAnchor="middle" fontSize={9} fill="#8c8c8a">{SHORT_COST[s.name] ?? s.name}</text>
-        </g>
-      ))}
-      {/* the kept slice: what is left, from the zero baseline, terracotta */}
-      <line x1={bx(steps.length) + bw} y1={Y(keep)} x2={bx(steps.length + 1) + bw} y2={Y(keep)} stroke="#d8d4d1" strokeWidth={1} strokeDasharray="2 2" />
-      <rect x={bx(steps.length + 1)} y={Y(keep)} width={bw} height={Math.max(1.5, Y(0) - Y(keep))} rx={2} fill={TERRA} />
-      <text x={bx(steps.length + 1) + bw / 2} y={Y(keep) - 6} textAnchor="middle" fontSize={10.5} fill="#c2410c" style={grotesk}>${keep}</text>
-      <text x={bx(steps.length + 1) + bw / 2} y={axisY + 13} textAnchor="middle" fontSize={9} fill="#8c8c8a">Keeps</text>
-      {/* the zero baseline, drawn */}
-      <line x1={padL} y1={Y(0)} x2={W - padR} y2={Y(0)} stroke="#c9c9c7" strokeWidth={1} />
-    </svg>
   );
 }
 
@@ -133,7 +85,19 @@ export function OwnerKeeps({ d }: { d: any }) {
         <Rail icon="owner-keeps" kicker="What the owner keeps" sample />
         <FormatTag />
       </div>
-      {costs.length ? <SteppedWaterfall costs={costs} keep={keepPct} /> : null}
+      {/* THE MONEY IDENTITY, on the chart library rather than hand cut SVG.
+          The drawing it replaced scaled its own TEXT with its box, so the same
+          labels were unreadable on a phone and oversized in a wide band. This
+          one holds a real size at every width, wraps a long cost name onto a
+          second line instead of running it into its neighbour, and renders
+          NOTHING at all if the split does not close to the opening figure. */}
+      <AtlasWaterfall
+        start={{ label: "Sales", value: 100 }}
+        steps={costs.map((c) => ({ label: c.name, value: c.pct }))}
+        end={{ label: "Keeps", value: keepPct }}
+        prefix="$"
+        height={190}
+      />
       <InlineDisclosure name="ownerkeeps" summary="What moves the margin">
         <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
           {drivers.map((c) => (

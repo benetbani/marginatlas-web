@@ -14,7 +14,6 @@
 import * as React from "react";
 import type { Metadata } from "next";
 import { AtlasWaterfall } from "@/components/kit/charts/AtlasWaterfall";
-import { SteppedWaterfall } from "@/components/spine/cell/money-chapter";
 
 export const metadata: Metadata = {
   title: "Waterfall, before and after (internal)",
@@ -52,17 +51,6 @@ function Column({ width, note }: { width: number; note: string }) {
               end={{ label: "Keeps", value: KEEP }}
               prefix="$"
               height={190}
-            />
-          </div>
-        </div>
-        <div>
-          <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.1em] text-neutral-400">
-            Before, hand cut
-          </div>
-          <div className="rounded-lg border border-neutral-200 bg-white p-4">
-            <SteppedWaterfall
-              costs={COSTS.map((c) => ({ name: c.name, pct: c.pct }))}
-              keep={KEEP}
             />
           </div>
         </div>
