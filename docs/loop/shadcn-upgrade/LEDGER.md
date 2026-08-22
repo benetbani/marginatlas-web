@@ -924,6 +924,35 @@ swap on this page.
 
 ---
 
+## THE SWEEP, 2026-08-22: WHERE THE LIBRARY ACTUALLY LANDS
+
+Three times in this loop the paid library has been the right answer, and all
+three were the same defect: a section that puts things down the side and measures
+across the top, with a header row drawn to look like one and no table underneath
+it. Rather than wait for the ledger to reach the rest, the codebase was swept for
+that one signature.
+
+**Twelve more reader-facing candidates.** Not verdicts: the instrument cannot tell
+a grid holding tabular data from a grid holding a layout, so each has to be
+opened. But the shape of the run ahead is now known rather than guessed:
+
+| where | files |
+|---|---|
+| city page | 4 files, 7 pinned grids |
+| neighbourhood explorer | 1 file, 4 pinned grids |
+| the shared spine kit | 2 files, 9 pinned grids, used by every page |
+| cell and industry leftovers | 5 files |
+
+**This corrects an impression these reports were giving.** Twenty-seven rows in,
+the library had won three times and I had been reporting, accurately but
+narrowly, that the blocks mostly did not fit. They fit in exactly one recurring
+place, and that place turns out to be **common**: the sweep says up to fifteen
+sections in total, of which three are done.
+
+The ledger order needs no change. Row 33 is one of the twelve.
+
+---
+
 ## 3. CITY PAGE
 
 | # | Section a visitor reads | Form today | Defect | Status |
