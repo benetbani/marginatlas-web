@@ -46,19 +46,19 @@ looking at yet, and ranks accordingly.**
 | 2 | What the owner keeps | **waterfall on the chart library** | VERIFIED, FIXED | **DONE-REPLACED** |
 | 3 | When it clears costs | two-marker scale on one domain | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 4 | What it costs to open one | three bars on a shared track | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 5 | Who this suits | discrete tier band, categorical pips | NOT CHECKED | TODO |
-| 6 | When the week fills up | daypart donut | NOT CHECKED | TODO |
-| 7 | Who comes in, and how | share bar, 2 to 3 segments | NONE FOUND | **DONE-KEPT** |
+| 5 | Who this suits | tier band | **NO DATA. Reaches no reader** | **BLOCKED** |
+| 6 | When the week fills up | daypart donut | **NO DATA. Reaches no reader** | **BLOCKED** |
+| 7 | Who comes in, and how | share bar | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 8 | Busy months and quiet months | zero-baseline monthly columns | NOT CHECKED | TODO |
 | 9 | Getting to break-even | two-anchor time axis | NOT CHECKED | TODO |
 | 10 | The same trade, comparable places | editorial table, no in-cell bars | NOT CHECKED | TODO |
 | 11 | What the team costs | track-free range brackets | NOT CHECKED | TODO |
 | 12 | What to watch | severity-marked risk list | NOT CHECKED | TODO |
 | 13 | Myth vs. reality | struck-through line pairs | NOT CHECKED | TODO |
-| 14 | Related trades in this place | ranked figure list | NOT CHECKED | TODO |
+| 14 | Related trades in this place | ranked figure list | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 15 | The masthead turnover spread | spread strip, p10 / p50 / p90 | **VERIFIED, OPEN** | TODO |
 | 16 | The masthead headline figure | one hero-scale number | NOT CHECKED | TODO |
-| 17 | The currency and format switch | segmented control | NOT CHECKED | TODO |
+| 17 | The currency and format switch | segmented control | **NO DATA. Reaches no reader** | **BLOCKED** |
 
 **Row 2, closed 2026-08-22.** The money identity now runs on the chart library.
 The drawing it replaced scaled its own text with its box, so the same labels were
@@ -205,13 +205,52 @@ and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
 
-**Row 7, kept with evidence.** The share bar is a flex row of divs whose widths
-are percentages. It has no axis, no scale, nothing to measure, and it renders on
-the server. It also already refuses to draw when its segments fail to sum to the
-whole. A charting library would add a browser-side redraw and a JavaScript
-payload to a shape CSS does exactly. Revisit only if it gains an axis.
+**Rows 5, 6, 7, 14 and 17, closed 2026-08-22. FIVE SECTIONS REACH NO READER.**
 
-**Row 15 is the open wound.** Three separate percentile fans exist across the
+Row 5 was the surface of this iteration, and researching it turned up something
+larger. **A third of the trade page does not exist for a visitor.**
+
+**How this was established, by rendering rather than reading.** The page body was
+rendered twice from the same component: once with the workshop data, once with
+the shape the live adapter actually returns. The live adapter leaves four keys
+undefined, on purpose, each with a written reason in its own source, and each one
+gates a whole section. Compared by section heading, which is what a reader
+actually sees:
+
+| section | a visitor gets it |
+|---|---|
+| Who this suits | **no** |
+| When the week fills up | **no** |
+| Who comes in, and how | **no** |
+| Related trades in this place | **no** |
+| The size and format switch | **no** |
+
+**The page that ships is 31% smaller than the page the design describes.**
+
+**A CORRECTION TO THIS LEDGER.** Row 7 was recorded last iteration as kept with
+evidence, on the assumption it was a live reader surface. **It is not.** The
+component judgement stands, and the claim that a visitor sees it was wrong. This
+is exactly the failure the ledger is supposed to prevent, so it is corrected in
+place rather than quietly.
+
+**Nothing is broken and nothing should be deleted.** These are ratified sections,
+correctly written, correctly self-omitting when their data is absent, which is
+the behaviour this codebase asks for. What is missing is upstream.
+
+**And nothing should be invented to fill them.** "Who this suits" wants a low,
+middle or high reading on four demands of the owner. The nearest data on hand is
+a list of sentences about who the trade suits. Turning sentences into positions
+on a scale is fabricating figures, which is a hard stop. The adapter's own source
+already flags this trade-off and declines it, correctly.
+
+**One consequence worth holding.** The size and format switch is one of the five.
+The money waterfall follows that switch and the hundred-dollar bar does not, so
+the day it is wired, two sections on this page will disagree about the same
+split. Recorded twice now, under rows 1 and 17.
+
+**Row 15 is the open wound.**
+
+Three separate percentile fans exist across the
 site, each inventing a different spread from the same kind of figure, and one of
 them was drawn on a logarithmic axis while labelled like a linear one. The axis
 and the default were corrected on 2026-08-21. **What has not been settled is
@@ -340,7 +379,11 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **3 replaced or retired, 7 kept with evidence, 3 blocked, 51 to go.**
+64 rows. **3 replaced or retired, 6 kept with evidence, 8 blocked, 47 to go.**
+
+Five of those blocked rows are the trade page sections that reach no reader.
+They are blocked on DATA, not on design, and no component from any library
+changes that.
 
 ## Standing notes for every iteration
 
