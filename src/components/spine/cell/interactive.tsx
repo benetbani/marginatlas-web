@@ -11,6 +11,7 @@
  */
 import * as React from "react";
 import { Box, Rail, Fig, EaseScale, InfoTip, InlineDisclosure, usd } from "@/components/spine/kit";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
 
@@ -56,47 +57,91 @@ export function Nearby({ d }: { d: any }) {
     <Box>
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
       <Rail icon="compare" kicker="The same trade, comparable places" sample />
-      {/* sm+ header with click-to-sort (active = ink; selection is chrome, never the accent) */}
-      <div className="hidden gap-3 border-b border-[var(--c-border)] pb-2 sm:grid" style={{ gridTemplateColumns: gridCols }}>
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
-        {cols.map((c) => {
-          const on = c.key === sortKey;
-          return (
-            <div key={c.key} className="flex items-center justify-end gap-1">
-              <button type="button" onClick={() => setSortKey(c.key)} aria-sort={on ? "descending" : "none"}
-                className={`flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}>
-                <span>{c.label} <span className="font-normal lowercase tracking-normal">({c.unit})</span></span>
-                <span aria-hidden className={`fig text-[10px] ${on ? "opacity-100" : "opacity-30"}`}>{on ? "↓" : "↕"}</span>
-              </button>
-              {/* rulebook 40: the coined "keeps per $1" metric carries its gloss as a "?"
-                  InfoTip on the header (OUTSIDE the sort button, no nested buttons), which
-                  replaces the glued definition caption that used to sit under the table. */}
-              {c.key === "rate" ? <InfoTip gloss="The owner's yearly take for every dollar of turnover." /> : null}
-            </div>
-          );
-        })}
-      </div>
-      <div className="space-y-2 sm:space-y-0">
-        {sorted.map((r) => (
-          <div key={r.name} className="group relative rounded-md border border-[var(--c-border)] p-3 sm:grid sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:border-b sm:p-0 sm:py-2.5"
-            style={{ ...(r.home ? { background: "var(--c-soft)" } : {}), gridTemplateColumns: gridCols }}>
-            <span className="block min-w-0 truncate font-medium text-[var(--c-ink)]">{r.name}{r.home ? <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}</span>
-            <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-2 sm:contents sm:mt-0">
+      {/* A REAL TABLE, because this is a real table.
+          It was a grid of plain boxes: places down the side, metrics across the
+          top, a header row, click-to-sort and a sorted-direction attribute, and
+          not one table element in it. Measured before changing anything:
+          FOUR sorted-direction attributes, all four sitting on buttons, where
+          that attribute means nothing and is discarded.
+          SIXTEEN column labels that vanish above 640 pixels. Each figure carries
+          a small label naming its column, and that label is hidden on anything
+          wider than a phone, because on a wide screen the column header does the
+          naming. Except there was no column header, only a box that looked like
+          one. So the desktop reading was a place name followed by four bare
+          numbers: "Birmingham, $340K, $39K, 11.5c, 5". Nothing said which was
+          which. The phone reading was better than the desktop one.
+          The structure now carries the meaning: real column headers, a real row
+          header per place, and the sort state on the header where it is read.
+          The small labels stay for the phone layout, and above it the header
+          does the work it was always drawn to look like it was doing. */}
+      <Table className="text-[length:var(--t-small)]">
+        <caption className="sr-only">
+          The same trade in comparable places, sorted by {col.label.toLowerCase()}, highest first.
+        </caption>
+        <TableHeader className="hidden sm:table-header-group">
+          <TableRow className="border-[var(--c-border)] hover:bg-transparent">
+            <TableHead scope="col" className="h-auto w-[30%] px-0 pb-2 text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+              Place
+            </TableHead>
+            {cols.map((c) => {
+              const on = c.key === sortKey;
+              return (
+                <TableHead
+                  key={c.key}
+                  scope="col"
+                  aria-sort={on ? "descending" : "none"}
+                  className="h-auto px-0 pb-2 text-right"
+                >
+                  <span className="flex items-center justify-end gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setSortKey(c.key)}
+                      className={`flex items-center gap-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}
+                    >
+                      <span>{c.label} <span className="font-normal lowercase tracking-normal">({c.unit})</span></span>
+                      <span aria-hidden className={`fig text-[length:var(--t-mark)] ${on ? "opacity-100" : "opacity-30"}`}>{on ? "↓" : "↕"}</span>
+                    </button>
+                    {/* rulebook 40: the coined "keeps per $1" metric carries its gloss as a "?"
+                        InfoTip on the header (OUTSIDE the sort button, no nested buttons), which
+                        replaces the glued definition caption that used to sit under the table. */}
+                    {c.key === "rate" ? <InfoTip gloss="The owner's yearly take for every dollar of turnover." /> : null}
+                  </span>
+                </TableHead>
+              );
+            })}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sorted.map((r) => (
+            <TableRow
+              key={r.name}
+              className="grid grid-cols-2 gap-x-3 gap-y-2 rounded-md border border-[var(--c-border)] p-3 hover:bg-transparent sm:table-row sm:gap-0 sm:rounded-none sm:border-0 sm:border-b sm:p-0"
+              style={r.home ? { background: "var(--c-soft)" } : undefined}
+            >
+              <TableHead
+                scope="row"
+                className="col-span-2 h-auto px-0 py-0 text-left text-[length:var(--t-body)] font-medium text-[var(--c-ink)] sm:table-cell sm:py-2.5 sm:align-middle"
+              >
+                <span className="block min-w-0 truncate">
+                  {r.name}
+                  {r.home ? <span className="ml-1.5 text-[length:var(--t-mark)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}
+                </span>
+              </TableHead>
               {cols.map((c) => {
                 const v = c.get(r);
                 const isBest = v === best[c.key];
                 const crowned = c.key === "rate" && isBest; // the ONE terracotta accent in this card
                 return (
-                  <div key={c.key} className="min-w-0 sm:text-right">
-                    <span className="block text-[10px] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
-                    <Fig className={`text-[13px] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
-                  </div>
+                  <TableCell key={c.key} className="min-w-0 px-0 py-0 align-middle sm:table-cell sm:py-2.5 sm:text-right">
+                    <span className="block text-[length:var(--t-mark)] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
+                    <Fig className={`text-[length:var(--t-small)] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
+                  </TableCell>
                 );
               })}
-            </div>
-          </div>
-        ))}
-      </div>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
       {/* the glued definition + "read like for like" instruction caption is DELETED
           (rulebook 26/40): the unit lives in the column header "(c)" and its InfoTip, and
           the section's own kicker already states the "same trade, comparable places" scope. */}

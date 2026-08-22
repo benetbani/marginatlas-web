@@ -51,7 +51,7 @@ looking at yet, and ranks accordingly.**
 | 7 | Who comes in, and how | share bar | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 8 | Busy months and quiet months | zero-baseline monthly columns | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 9 | Getting to break-even | two-anchor time axis | **1 trade in 138. Latent fault fixed** | **DONE-KEPT** |
-| 10 | The same trade, comparable places | editorial table, no in-cell bars | NOT CHECKED | TODO |
+| 10 | The same trade, comparable places | **a real table** | **VERIFIED, FIXED** | **DONE-REPLACED** |
 | 11 | What the team costs | track-free range brackets | NOT CHECKED | TODO |
 | 12 | What to watch | severity-marked risk list | NOT CHECKED | TODO |
 | 13 | Myth vs. reality | struck-through line pairs | NOT CHECKED | TODO |
@@ -204,6 +204,58 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 10, closed 2026-08-22. THE FIRST ROW WHERE THE LIBRARY GENUINELY WON.**
+
+The section puts places down the side and metrics across the top, with a header
+row, click-to-sort, and a sort-direction attribute. **It was a grid of plain
+boxes with not one table element in it.** Measured before touching anything:
+
+| | before | after |
+|---|---|---|
+| table, head, body, header-cell, cell elements | **0** | 28 |
+| sort-direction attributes sitting on a button, where the attribute is discarded | **4 of 4** | 0 of 4 |
+| column labels that disappear above 640 pixels | 16 | 16 |
+
+**Why that last row is the defect.** Every figure carries a small label naming
+its column, and that label is hidden on anything wider than a phone, because on a
+wide screen the column header is supposed to do the naming. There was no column
+header, only a box drawn to look like one. So the desktop reading was a place
+name and then four bare numbers: **"Birmingham, $340K, $39K, 11.5c, 5"**, with
+nothing saying which was which. **The phone reading was better than the desktop
+one.**
+
+**Rebuilt on the library's own table primitive**, which was already installed and
+unused here. Real column headers, a real row header per place, the sort state on
+the header that announces it. The small labels stay for the phone layout, and
+above it the structure carries the meaning.
+
+**Proved by rendering both, not by reproducing either.** The before is the shipped
+component's own server render, captured before the change. The after is the new
+one's. The styling is the project's real compiled output for exactly those two
+renders. **They are visually indistinguishable at 320, 645 and 760 pixels.**
+
+**An instrument fault, found and fixed mid-iteration.** The first sheet laid the
+three widths out as fixed-width columns inside one wide page. This section's phone
+layout is a media query on the VIEWPORT, so all three columns rendered as desktop
+and the stacked phone layout was invisible. Every earlier sheet in this loop
+tested container-relative CSS, where the two are equivalent; this one is not. The
+sheet is now one full-width column photographed at three viewport widths.
+
+**One visual regression I introduced and caught by looking:** the place names
+shrank a step. Restored to body size, re-rendered, re-photographed.
+
+**ONE ADDED STRING, flagged rather than slipped through.** The table now carries a
+screen-reader-only caption naming what it is and how it is sorted. It adds no
+visible text and it is the correct element for a table, but it is an addition and
+the founder may reverse it.
+
+**The ratchet moved DOWN again, 420 to 419**, because two off-ladder sizes went
+with the rewrite.
+
+**Also recorded: the table-semantics gate is blind to this whole class.** It only
+inspects files that contain a table element, so a grid of boxes impersonating a
+table is invisible to it, and it reported a clean pass on this file for months.
 
 **Row 9, closed 2026-08-22. Kept. It reaches one trade in 138, and it raises a
 question only the founder can answer.**
@@ -457,7 +509,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **3 replaced or retired, 8 kept with evidence, 8 blocked, 45 to go.**
+64 rows. **4 replaced or retired, 8 kept with evidence, 8 blocked, 44 to go.**
 
 Five of those blocked rows are the trade page sections that reach no reader.
 They are blocked on DATA, not on design, and no component from any library
