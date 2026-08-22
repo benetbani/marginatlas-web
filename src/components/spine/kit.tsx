@@ -248,15 +248,37 @@ export function Waterfall({ rows }: { rows: Array<[string, number, boolean?]> })
 /* percentile spread strip , p10..p90 with the typical (p50) marked. Cap 2 uses/page.
  * `neutral` renders the marker + track in ink/grey , for when the strip is SUPPORT beside
  * a box's one terracotta answer (the accent budget stays with the answer). */
-export function SpreadStrip({ p10, p50, p90, fmt, neutral = false }: { p10: number; p50: number; p90: number; fmt: (n: number) => string; neutral?: boolean }) {
+export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: number; p50: number; p90: number; fmt: (n: number) => string; basis?: "measured" | "modelled" }) {
+  /* THE BAND SAYS WHERE ITS SHAPE CAME FROM. The ratified ruling on invented
+     bands is explicit: an unmarked band is a claim about spread that the figures
+     behind it do not support. One of the two paths that feeds this strip builds
+     the band by multiplying the typical figure by fixed constants, so it draws
+     the SAME SHAPE for a restaurant, a barbershop and a dental practice. That
+     mark existed in the data and was being thrown away one layer above here.
+     The strip prints no percentile words, so nothing a reader SEES changes. What
+     changes is the description read aloud, which now says "modelled" when the
+     shape is modelled, in the same words the other band component already uses.
+     THE DEFAULT IS MODELLED, so a caller that forgets to pass it understates its
+     own confidence rather than overstating it.
+     THE ACCENT GRADIENT IS GONE. This strip had a second mode that ran the track
+     from grey into a pale terracotta. It has exactly one caller and that caller
+     always asked for the plain one, so the accent branch drew on no page at all,
+     and it broke the same colour rule the risk scale broke. */
   const span = Math.max(1, p90 - p10);
   const mid = Math.max(2, Math.min(98, ((p50 - p10) / span) * 100));
+  const aria =
+    basis === "modelled"
+      ? `Modelled range from ${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}.`
+      : `Spread from ${fmt(p10)} at the bottom tenth to ${fmt(p90)} at the top tenth, typical ${fmt(p50)}.`;
   return (
     <div>
-      <div className="relative h-2 rounded-full" role="img" aria-label={`${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}`} style={{ background: neutral ? "#ededed" : "linear-gradient(90deg,#ededed,#ffe1d8)" }}>
-        <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: neutral ? "var(--c-ink)" : TERRA, boxShadow: "0 0 0 1px #e3e3e3" }} />
+      <div className="relative h-2 rounded-full" role="img" aria-label={aria} style={{ background: TRACK }}>
+        <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
       </div>
-      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{fmt(p10)}</span><span className="font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span>{fmt(p90)}</span></div>
+      {/* THE THREE FIGURES WRAP RATHER THAN COLLIDE. Pushed to the two ends with
+          the typical in the middle, they had nothing stopping them meeting on a
+          narrow masthead. */}
+      <div className="mt-1 flex flex-wrap justify-between gap-x-3 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{fmt(p10)}</span><span className="font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span>{fmt(p90)}</span></div>
     </div>
   );
 }

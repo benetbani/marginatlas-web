@@ -71,7 +71,7 @@ export function Masthead({ d }: { d: any }) {
         {h.rev_p10_usd && h.rev_p50_usd && h.rev_p90_usd ? (
           <div className="mt-5 max-w-md">
             <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Yearly turnover, comparable rooms</div>
-            <SpreadStrip p10={h.rev_p10_usd} p50={h.rev_p50_usd} p90={h.rev_p90_usd} fmt={money} neutral />
+            <SpreadStrip p10={h.rev_p10_usd} p50={h.rev_p50_usd} p90={h.rev_p90_usd} fmt={money} basis={h.rev_spread_basis === "measured" ? "measured" : "modelled"} />
           </div>
         ) : null}
 

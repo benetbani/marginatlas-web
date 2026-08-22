@@ -304,6 +304,12 @@ export async function buildSpineCellSeed(
     rev_p10_usd: isNum(spread?.p10) ? Math.round(spread!.p10!) : undefined,
     rev_p50_usd: isNum(spread?.p50) ? Math.round(spread!.p50!) : undefined,
     rev_p90_usd: isNum(spread?.p90) ? Math.round(spread!.p90!) : undefined,
+    /* WHERE THE BAND'S SHAPE CAME FROM, carried instead of dropped. One of the
+       two paths that builds this spread multiplies the typical figure by fixed
+       constants, so it draws the same shape for every trade. The ruling on
+       invented bands says that must be marked; the mark was being discarded
+       here, one layer above the component that needs it. */
+    rev_spread_basis: spread && "basis" in spread && spread.basis ? spread.basis : "measured",
     break_in_0_100: isNum(breakInScore) ? Math.round(breakInScore) : undefined,
     n_firms: isNum(firms) ? Math.round(firms) : undefined,
   };

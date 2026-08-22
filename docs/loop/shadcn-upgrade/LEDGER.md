@@ -56,8 +56,8 @@ looking at yet, and ranks accordingly.**
 | 12 | What to watch | one shared safety scale | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 13 | Myth vs. reality | survival curve, folklore struck on it | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 14 | Related trades in this place | ranked figure list | **NO DATA. Reaches no reader** | **BLOCKED** |
-| 15 | The masthead turnover spread | spread strip, p10 / p50 / p90 | **VERIFIED, OPEN** | TODO |
-| 16 | The masthead headline figure | one hero-scale number | NOT CHECKED | TODO |
+| 15 | The masthead turnover spread | spread strip, marked | **VERIFIED, FIXED** | **DONE-KEPT** |
+| 16 | The masthead headline figure and its scorecard | three tiles | **the tiles clip at phone width** | TODO |
 | 17 | The currency and format switch | segmented control | **NO DATA. Reaches no reader** | **BLOCKED** |
 
 **Row 2, closed 2026-08-22.** The money identity now runs on the chart library.
@@ -204,6 +204,42 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 15, closed 2026-08-22. THE OPEN WOUND IS CLOSED, and the answer was that
+the mark was being thrown away.**
+
+This row sat open because I could not tell whether the two ends of the turnover
+band were measured or invented. **Both, depending on the page.** There are two
+paths. One reads the cell's own stored percentiles. The other multiplies the
+typical figure by fixed constants, so it draws **the same shape for a restaurant,
+a barbershop and a dental practice**, and it is the path London takes.
+
+**The data already knew which was which.** The ruling on invented bands is
+explicit: an unmarked band is a claim about spread the figures behind it do not
+support. The mark was set correctly at the source and then **discarded one layer
+above the strip**, so it never reached the thing that needed it.
+
+It arrives now. The strip prints no percentile words, so nothing a reader SEES
+changes; the description read aloud says **"Modelled range from ... to ..."**
+instead of stating the range as fact, in the same words the site's other band
+component already uses. **The default is modelled**, so a caller that forgets
+understates its confidence rather than overstating it.
+
+**A branch that drew on no page at all.** The strip carried a second mode running
+its track from grey into the accent colour. It has exactly one caller, that caller
+always asked for the plain track, so the accent branch was dead code that also
+broke the colour rule the risk scale broke. Retired.
+
+**The three figures under the track** were pushed to the two ends with nothing
+stopping them meeting on a narrow masthead. They wrap now. Two raw colours went,
+and the track is the same grey as every other track on the page, which it was not.
+
+**Every visible word and figure is byte for byte identical.**
+
+**FOUND WHILE HERE, NOT TOUCHED, and moved to row 16:** the three scorecard tiles
+under the headline **clip at phone width**. "Demand" prints as "Deman" and the
+firm count is cut off at the right edge. Present in both halves, so it is not a
+regression, and it belongs to the next row.
 
 **Row 13, closed 2026-08-22. Kept. A chart that refused to grow, and clipped its
 own figures when it shrank.**
@@ -617,7 +653,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **4 replaced or retired, 11 kept with evidence, 8 blocked, 41 to go.**
+64 rows. **4 replaced or retired, 12 kept with evidence, 8 blocked, 40 to go.**
 
 A pattern worth naming: THREE separate charts have now been found placing a mark
 or a label centred on its own value at the very end of a scale, where half of it
