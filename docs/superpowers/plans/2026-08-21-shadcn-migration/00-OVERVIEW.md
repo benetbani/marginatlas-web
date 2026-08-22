@@ -51,6 +51,15 @@ This is not a rewrite. Almost all the plumbing is already in place and unused.
 `SHADCNBLOCKS_API_KEY` **is set** in `.env.local`. Number of references to
 `shadcnblocks` anywhere in `src/`: **zero**. Nothing has ever been pulled.
 
+> **CORRECTED 2026-08-21: THE WIRING IS RIGHT, THE CREDENTIAL IS NOT WORKING.**
+> This section originally read the configuration as proof the licence was live.
+> When Phase 7 actually tried to pull a block, both a raw request and the
+> official CLI returned **401 Authentication failed**, identical with the key and
+> without it. The `registry.json` index that looked like proof is **public**: it
+> returns 200 with no key at all, so it proved the catalogue is readable and
+> nothing about the licence. See `05-BLOCK-SHORTLIST.md` for the two-minute fix,
+> which only the founder can perform.
+
 ### Finding 2: THE SKIN CONTRACT ALREADY EXISTS. This is the big one.
 
 shadcn components are plain Tailwind plus `cn()`, and they read **semantic
