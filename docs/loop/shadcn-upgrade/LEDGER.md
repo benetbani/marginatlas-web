@@ -45,7 +45,7 @@ looking at yet, and ranks accordingly.**
 | 1 | Where each $100 of sales goes | 100% stacked bar, legended | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 2 | What the owner keeps | **waterfall on the chart library** | VERIFIED, FIXED | **DONE-REPLACED** |
 | 3 | When it clears costs | two-marker scale on one domain | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 4 | What it costs to open one | lollipop on a drawn track | NOT CHECKED | TODO |
+| 4 | What it costs to open one | three bars on a shared track | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 5 | Who this suits | discrete tier band, categorical pips | NOT CHECKED | TODO |
 | 6 | When the week fills up | daypart donut | NOT CHECKED | TODO |
 | 7 | Who comes in, and how | share bar, 2 to 3 segments | NONE FOUND | **DONE-KEPT** |
@@ -162,6 +162,48 @@ an invented right end. It cannot happen: both numbers come from the same
 calculation, so when one is absent the other is too and the whole section is
 omitted. Checked rather than assumed, and the fallback is still a loaded gun if
 that calculation is ever split.
+
+**Row 4, closed 2026-08-22. THE BARS WERE NOT BEING DRAWN AT ALL.**
+
+The biggest thing found so far, and nothing on this site could see it. The card
+shows the three largest setup costs as bars on a shared track, so a reader can
+see that the fit-out dwarfs everything under it. **The track and the two smaller
+bars have been painting nothing.**
+
+They ask for two greys that are declared ONLY inside the v2 stylesheet's scope,
+every selector of which sits under a single class, with no root block anywhere in
+that file. This page never enters that scope: the live spine tree does not carry
+that class on one element. An undefined custom property makes the whole
+declaration invalid, and an invalid background computes to transparent. Read out
+of a real browser rather than reasoned about: **rgba(0, 0, 0, 0)** for the track
+and both neutral bars.
+
+Only the largest bar survived, because its terracotta is declared a second time
+at the page root by the shell. **So a visitor saw one orange bar floating in
+white space, on a drawing whose whole point is what it dwarfs.**
+
+**Why no check caught it.** The typecheck cannot see CSS. The raw-hex gate is
+happy, because these were tokens, and they were the RIGHT tokens for the
+stylesheet they were written against. The palette gate is happy for the same
+reason. Every automated check on this repo passes on a bar that does not exist.
+It took rendering the thing and asking the browser what colour it had actually
+painted.
+
+**The fix keeps the intent exactly.** The neutral is the same value the missing
+token held. The track moves by a hair and now matches the break-even track on the
+card beside it, which it never did.
+
+**Only two uses of that scoped family existed in the live tree, both on this
+card. Both are gone.** The city page family carries several more and is a
+different set of rows.
+
+**Adversarial pass, and it found something worth stating.** A grey bar on a grey
+track is 2.25 to 1 against the 3 to 1 floor for a meaningful graphic. The value
+as originally intended was WORSE at 2.09 to 1, so this is an improvement and
+still short. **Not fixed here on purpose:** darkening the bar is a design change,
+and mixing one into a repair makes neither falsifiable. Every bar prints its
+money figure beside it, so the bar is not the only carrier. Recorded for the
+founder.
 
 **Row 7, kept with evidence.** The share bar is a flex row of divs whose widths
 are percentages. It has no axis, no scale, nothing to measure, and it renders on
@@ -298,7 +340,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **3 replaced or retired, 6 kept with evidence, 3 blocked, 52 to go.**
+64 rows. **3 replaced or retired, 7 kept with evidence, 3 blocked, 51 to go.**
 
 ## Standing notes for every iteration
 

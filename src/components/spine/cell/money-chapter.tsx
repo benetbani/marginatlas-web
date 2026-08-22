@@ -254,12 +254,29 @@ export function CostToOpen({ d }: { d: any }) {
                   emphasis-not-categorical. The dominant line here is the fit-out
                   at roughly four fifths of the total, and the point of the
                   drawing is that it dwarfs everything under it. */}
+              {/* THESE BARS WERE NOT BEING DRAWN AT ALL, and no check could see it.
+                  They asked for two greys that are declared ONLY inside the v2
+                  stylesheet's scope, every selector of which sits under one class
+                  with no root block anywhere in the file. This page never enters
+                  that scope: the live spine tree does not carry that class on a
+                  single element. An undefined custom property makes the whole
+                  declaration invalid, and an invalid background computes to
+                  transparent, so the track and the two smaller bars painted
+                  NOTHING. Read out of a real browser: rgba(0, 0, 0, 0) for all
+                  three. Only the largest bar survived, because terracotta is
+                  declared again at the root by the shell.
+                  So a visitor saw one orange bar floating in white space, on a
+                  drawing whose entire point is that the fit-out dwarfs what sits
+                  under it. There was nothing left to dwarf.
+                  The neutral is the SAME VALUE the missing one held. The track
+                  moves by a hair and now matches the break-even track on the
+                  card beside it, which it never did. */}
               <span className="relative block h-4" role="img" aria-label={`${it.name} about ${money(v)}`}>
-                <span aria-hidden className="absolute inset-y-0 w-full rounded-[2px]" style={{ background: "var(--n5)" }} />
+                <span aria-hidden className="absolute inset-y-0 w-full rounded-[2px]" style={{ background: TRACK }} />
                 <span
                   aria-hidden
                   className="absolute inset-y-0 left-0 rounded-[2px]"
-                  style={{ width: `${p}%`, background: it === topItems[0] ? "var(--terra)" : "var(--n3)" }}
+                  style={{ width: `${p}%`, background: it === topItems[0] ? "var(--terra)" : "var(--chart-4)" }}
                 />
               </span>
               <Fig className="text-right text-[12.5px] text-[var(--c-ink)]">{money(v)}</Fig>
