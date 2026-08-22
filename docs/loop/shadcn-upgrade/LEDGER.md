@@ -924,6 +924,72 @@ swap on this page.
 
 ---
 
+**Row 37, 2026-08-23. THE WORST NUMBER THIS LOOP HAS FOUND: a comparison that
+was wrong on 251 of 252 city pages, and inverted on the ones that mattered.**
+
+**Row 37 itself is quiet, and I will give it first so it is not lost.** The lease
+terms card is three facts with their figures: deposit, typical lease length,
+rent-free fit-out. It is well built and **it reaches no reader.** The module that
+feeds a real city page drops all three fields on purpose, with the reason written
+in: no numeric source. It draws in the workshop sample and nowhere else. **KEPT,
+unchanged.** Tenth section found this loop that reaches nobody. One small thing
+noted and NOT changed: two of its three rows carry their unit on the figure ("3
+mo") and the third carries it in the label ("typical lease, years", figure "5 to
+10"). A card no reader sees is the last place to spend a change.
+
+**Reading the module that feeds it is what found the real thing.** The card sits
+beside the peer rent strip, row 35, which I passed two iterations ago and marked
+blocked for crowded labels. **I measured that row against the bundled sample and
+never against a real city page, and the sample is the one shape in which the bug
+is invisible.** Exactly the failure the working method names first: read the
+module that produces a number before acting on the number.
+
+**What the strip did.** It reads each peer as a signed gap from the home city, and
+it worked that gap out by **subtracting a fixed 100 from a cost index.** That is a
+gap from home only while home reads exactly 100. The bundled sample is built that
+way. Real data is not.
+
+**Counted, not asserted. The site carries 252 cities. Exactly ONE of them, New
+York, reads 100.** So on 251 of 252 city pages every figure on that strip was
+wrong. The typical city reads 52 and was drawn **48 points below itself.** The
+lowest, Alexandria, was drawn **80 points below itself.**
+
+**And it did not merely shift the numbers, it reversed them.** On London: Los
+Angeles was drawn 11 points CHEAPER than London when the source has it 14 points
+DEARER. A reader comparing rent got the answer backwards. Munich, which carries
+the identical index to London, was drawn 25 points below it instead of level.
+
+**The fix was already in the file.** The peer TABLE three hundred lines down has
+always subtracted the home city's index for this same figure. The strip is the
+only place that subtracted a constant. It now does what the table does, keeping
+its own sign convention. **The bundled sample renders byte for byte identical**,
+which is the proof that only the arithmetic moved.
+
+**Two more things fell out of looking at it.** The home city's terracotta dot,
+the single accent this whole site allows and the entire point of the strip, was
+being **painted over by a grey peer** whenever two cities shared an index. It is
+drawn on top now; one class, no reordering, so no label changed sides. And the
+"?" gloss beside the axis ended with the typed-in words "the London rent level",
+so **on 251 pages it named London while the axis above it named the city you were
+actually reading.** It takes the name from the page now, checked on London, Tokyo
+and Sao Paulo. That gloss lives inside a tooltip, so no screenshot and no content
+diff can see it: it was checked by reading the value off the element tree.
+
+**What is still blocked, and now certain rather than lucky.** At phone width the
+words Paris and Munich run together above the axis. Identical before and after.
+London and Munich share a cost index, so for London this crowding is structural,
+not a matter of which peers turn up. It cannot be fixed by arithmetic: separating
+labels needs their width in pixels and this section is drawn on the server. Both
+ways out change what the section looks like. **Founder call, as recorded in row 35.**
+
+**A false measurement caught in my own instrument, again.** The probe checking
+the gloss used a pattern whose leading "the" matched the one at the start of the
+sentence, so it captured the whole clause and reported a mismatch on three cities
+that were all correct. Checked by inclusion now.
+
+**Gates: 114 passed, 0 failed.** An earlier run of the same chain crashed two
+gates on memory exhaustion; the clean run is the one quoted.
+
 **Row 36, 2026-08-23. THE BIGGEST STRUCTURAL FIND SINCE THE TABLES: no spine page
 had a heading outline.**
 
@@ -1109,9 +1175,9 @@ The ledger order needs no change. Row 33 is one of the twelve.
 |---|---|---|---|---|
 | 33 | Where to trade, by district | map beside a ranked list | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 34 | The rent, district by district | focal plus a wrapping strip | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 35 | Rent against peer cities | dots on one axis | **VERIFIED, REPRODUCED** | **BLOCKED, founder call** |
+| 35 | Rent against peer cities | dots on one axis | **VERIFIED: WRONG NUMBERS, FIXED** | **FIXED, crowding still BLOCKED** |
 | 36 | ~~What space costs~~ chapter divider, and the whole spine heading system | **VERIFIED, FIXED** | **DONE-KEPT** |
-| 37 | The lease terms | fact table | NOT CHECKED | TODO |
+| 37 | The lease terms | fact table | **VERIFIED: reaches no reader** | **DONE-KEPT** |
 | 38 | The spending pool | figure group | NOT CHECKED | TODO |
 | 39 | Who buys, and when | mixed | NOT CHECKED | TODO |
 | 40 | How seasonal it is | month bars | NOT CHECKED | TODO |
@@ -1200,7 +1266,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows, one of them void. **6 replaced or retired, 24 kept with evidence, 13 blocked, 20 to go.**
+64 rows, one of them void. **6 replaced or retired, 25 kept with evidence, 13 blocked, 19 to go.**
 
 Thirteen blocked: twelve on missing data, and now ONE on a design decision that
 is the founder's to make.

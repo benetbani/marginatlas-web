@@ -165,9 +165,21 @@ function CityLenses({ d }: { d: any }) {
 export function CommercialSpace({ d }: { d: any }) {
   const s = d.space;
   if (!s || !s.read) return null;
-  const peers = (d.peers?.list ?? [])
-    .filter((p: any) => p.rent_index != null)
-    .map((p: any) => ({ ...p, delta: (p.rent_index || 0) - 100 }))
+  /* THE GAP IS FROM THE HOME CITY, NOT FROM A HARDCODED 100. Subtracting 100 is a
+   * gap from home only while the indices happen to be anchored there. The bundled
+   * sample is anchored (London = 100). The live adapter is NOT: it passes a real
+   * cost index on which London reads 75. So on every live city page this drew the
+   * home city 25 points below ITSELF, put Munich (also 75) on the identical spot,
+   * and INVERTED the sign of every city dearer than home, printing Los Angeles as
+   * 11 points cheaper than London when the source has it 14 points dearer. The
+   * peers TABLE further down this file has always subtracted the home index for
+   * this same field; this is that arithmetic, keeping the strip's own sign
+   * convention (below zero = cheaper than home). No home row means no anchor, and
+   * the strip omits rather than inventing one. */
+  const peerRows = (d.peers?.list ?? []).filter((p: any) => p.rent_index != null);
+  const homeIndex = peerRows.find((p: any) => p.home)?.rent_index;
+  const peers = (homeIndex != null ? peerRows : [])
+    .map((p: any) => ({ ...p, delta: Math.round((p.rent_index || 0) - homeIndex) }))
     .sort((a: any, b: any) => a.delta - b.delta);
   const hasPeerStrip = peers.length >= 2;
   const dVals = peers.map((p: any) => p.delta);
@@ -193,7 +205,7 @@ export function CommercialSpace({ d }: { d: any }) {
         {/* peers on ONE axis. Only rendered when at least two peers carry a real rent index. */}
         {hasPeerStrip ? (
           <div className="mt-2 border-t border-[var(--c-border)] pt-3">
-            <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Against {d.meta?.city}, in percentage points<InfoTip gloss="A percentage point is the plain gap between two percentages: a peer at -22pp pays 22 points less than the London rent level." /></div>
+            <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Against {d.meta?.city}, in percentage points<InfoTip gloss={`A percentage point is the plain gap between two percentages: a peer at -22pp pays 22 points less than the ${d.meta?.city} rent level.`} /></div>
             <div className="relative h-[76px]" role="img" aria-label={`Rent against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta)}`).join(", ")}`}>
               <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[var(--c-line-strong)]" />
               {peers.map((p: any, i: number) => {
@@ -201,7 +213,12 @@ export function CommercialSpace({ d }: { d: any }) {
                 const home = p.home;
                 const above = i % 2 === 0;
                 return (
-                  <span key={p.name} className="absolute -translate-x-1/2" style={{ left: `${x}%`, top: "50%" }}>
+                  /* The home marker paints LAST. Two cities can share a cost index (London
+                     and Munich both read 75), and the later dot covers the earlier one, so
+                     the one dot in terracotta, the whole point of the strip, was being
+                     hidden under a grey peer. Paint order only: the sort, and therefore
+                     which side each label sits on, is untouched. */
+                  <span key={p.name} className={`absolute -translate-x-1/2 ${home ? "z-[1]" : ""}`} style={{ left: `${x}%`, top: "50%" }}>
                     <span className="block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-white" style={{ background: home ? TERRA : "var(--c-line-strong)", boxShadow: "0 0 0 1px var(--c-border)" }} />
                     <span className={`absolute left-1/2 flex -translate-x-1/2 flex-col items-center whitespace-nowrap leading-tight ${above ? "bottom-[14px]" : "top-[9px]"}`}>
                       <span className={`text-[length:var(--t-micro)] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
