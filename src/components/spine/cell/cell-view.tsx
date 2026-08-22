@@ -238,33 +238,88 @@ function Seasonality({ d }: { d: any }) {
   const top = Math.max(100, ...m);
   const peak = m.indexOf(Math.max(...m)); // the busy month, data-derived (year-end in the seed)
   const trough = m.indexOf(Math.min(...m)); // the quiet month, data-derived
-  const W = 300, H = 110, padL = 22, padR = 6, padTop = 10, padBot = 18;
-  const innerW = W - padL - padR;
-  const slot = innerW / m.length;
-  const Y = (v: number) => padTop + (1 - v / top) * (H - padTop - padBot);
+  const PLOT = 78; // px of drawable column height, under a gutter that holds the two marks
+  const MONTHS_ROW = 15; // the baseline rule plus the month initials beneath it, at the ladder floor
+  const RULE = (100 / top) * PLOT + MONTHS_ROW; // the index-100 line, measured from the block bottom
   return (
     <Box className="md:flex-[2]">
       <Rail icon="seasonality" kicker="Busy months and quiet months" sample />
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 110 }} role="img" aria-label={`Monthly demand index, zero-based columns; ${MONTHS[peak] === "D" ? "December" : "the peak month"} is the highest at ${m[peak]}`} preserveAspectRatio="none">
-        {/* index-100 reference rule, labeled */}
-        <line x1={padL} y1={Y(100)} x2={W - padR} y2={Y(100)} stroke="#e0dedc" strokeWidth={0.75} strokeDasharray="3 3" />
-        <text x={padL - 4} y={Y(100) + 2.5} textAnchor="end" fill="#8c8c8a" fontSize={7.5}>100</text>
-        {/* zero-baseline columns, all neutral (no featured month) */}
-        {m.map((v, i) => {
-          const x = padL + i * slot + slot * 0.18, bw = slot * 0.64;
-          return <rect key={i} x={x.toFixed(1)} y={Y(v).toFixed(1)} width={bw.toFixed(1)} height={(Y(0) - Y(v)).toFixed(1)} rx={1.5} fill="#c9c9c7" />;
-        })}
+      {/* DRAWN IN LAYOUT, NOT IN A STRETCHED PICTURE.
+          This was a 300-unit wide drawing stretched to whatever width the card
+          landed at, with aspect ratio preservation switched OFF and the height
+          pinned. Every letter in it, the month initials, the axis mark, the two
+          values, was therefore scaled HORIZONTALLY ONLY: squeezed narrow in a
+          phone column and pulled wide in a full band. Not merely resized,
+          distorted, because the horizontal and vertical scales differed by more
+          than two and a half times at the wide end.
+          Columns whose heights are percentages fix it outright: the bars stretch
+          with the card and the text is real text at a real size that never
+          moves. It also stays on the server with no JavaScript, which a chart
+          library could not have done.
+          THE PAID BLOCK WAS PULLED AND READ FIRST. It is a recharts bar chart in
+          a card, and after refusing what it ships switched on, the rounded tops,
+          the hover tooltip carrying the values, the axis ticks, the card heading
+          duplicating the section heading above it, and terracotta on every
+          single month against the rule that no month may ever be featured,
+          nothing of it would have remained. */}
+      {/* THE AXIS MARK AND ITS RULE ARE POSITIONED FROM THE SAME BOX.
+          The first pass hung the "100" in a sibling column and the dashed rule
+          inside the plot, so the two were measured from different bottoms and
+          sat about eighteen pixels apart: an axis label pointing at nothing.
+          Both now share one offset, so they cannot drift. Measured in a browser
+          afterwards rather than trusted. */}
+      <div
+        className="relative mt-1 pl-6"
+        role="img"
+        aria-label={`Monthly demand index, zero-based columns. The busiest month reads ${m[peak]}, the quietest ${m[trough]}, against an index of 100.`}
+      >
+        <span
+          aria-hidden
+          className="absolute left-0 w-5 text-right text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
+          style={{ bottom: `${RULE - 4}px` }}
+        >
+          100
+        </span>
+        <div
+          aria-hidden
+          className="absolute inset-x-0 left-6 border-t border-dashed border-[var(--c-border)]"
+          style={{ bottom: `${RULE}px` }}
+        />
+        <div className="flex items-end" style={{ height: PLOT + 14 }}>
+          {m.map((v, i) => (
+            <div key={i} className="relative flex min-w-0 flex-1 flex-col items-center justify-end">
+              {/* the busy and quiet months carry their value ON the column
+                  (rulebook 26), neutral ink, never a featured month (rule 37) */}
+              {i === peak || i === trough ? (
+                <span
+                  className="absolute inset-x-0 text-center leading-none"
+                  style={{ bottom: `${(v / top) * PLOT + 3}px` }}
+                >
+                  <Fig className="text-[length:var(--t-mark)] text-[var(--c-ink)]">{v}</Fig>
+                </span>
+              ) : null}
+              {/* 64% of its slot, which is the proportion the old drawing used.
+                  A fixed pixel gap looked right in a phone column and turned the
+                  wide band into a solid block of bars: caught by photographing
+                  it, not by reading it. */}
+              <div
+                aria-hidden
+                className="w-[64%] rounded-[1.5px]"
+                style={{ height: `${(v / top) * PLOT}px`, background: "var(--chart-5)" }}
+              />
+            </div>
+          ))}
+        </div>
         {/* the zero baseline, drawn */}
-        <line x1={padL} y1={Y(0)} x2={W - padR} y2={Y(0)} stroke="#c9c9c7" strokeWidth={1} />
-        {m.map((_, i) => <text key={i} x={padL + i * slot + slot / 2} y={H - 5} textAnchor="middle" fill="#8c8c8a" fontSize={8}>{MONTHS[i]}</text>)}
-        {/* the busy + quiet months marked ON the visual (rulebook 26: the finding lives on
-            the chart, not a caption): each carries its index value, neutral ink, never a
-            terracotta-featured month (rule 37); both are data-derived so the read holds for
-            any cell (rule 21), not the seed's Western year-end peak. */}
-        {[peak, trough].map((idx) => (
-          <text key={`mk-${idx}`} x={padL + idx * slot + slot / 2} y={Y(m[idx]) - 4} textAnchor="middle" fontSize={8.5} fill="#1b1b1a" style={{ fontFamily: "var(--font-grotesk)", fontWeight: 600 }}>{m[idx]}</text>
-        ))}
-      </svg>
+        <div aria-hidden className="border-t border-[var(--chart-5)]" />
+        <div className="mt-1 flex">
+          {m.map((_, i) => (
+            <span key={i} className="min-w-0 flex-1 text-center text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]">
+              {MONTHS[i]}
+            </span>
+          ))}
+        </div>
+      </div>
       <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100.</div>
     </Box>
   );

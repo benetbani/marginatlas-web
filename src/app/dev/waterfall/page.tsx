@@ -36,12 +36,12 @@ const STEPS = COSTS.map((c) => ({ label: c.name, value: c.pct }));
 function Column({ width, note }: { width: number; note: string }) {
   return (
     <div>
-      <div className="mb-3 text-[11px] uppercase tracking-[0.12em] text-neutral-500">
+      <div className="mb-3 text-[length:var(--t-micro)] uppercase tracking-[0.12em] text-neutral-500">
         {width}px wide {"·"} {note}
       </div>
       <div style={{ width }} className="max-w-full space-y-8">
         <div>
-          <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.1em] text-neutral-400">
+          <div className="mb-2 text-[length:var(--t-micro)] font-medium uppercase tracking-[0.1em] text-neutral-400">
             After, on the library
           </div>
           <div className="rounded-lg border border-neutral-200 bg-white p-4">

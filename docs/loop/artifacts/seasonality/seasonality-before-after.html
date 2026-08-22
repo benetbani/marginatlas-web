@@ -1,0 +1,104 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Busy months and quiet months, before and after</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{ --chart-5:#c0c0c4; --c-border:#e7e2df; --c-ink:#1b1b1a; --c-muted:#6f6f6d; }
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 28px 60px;background:#fafaf9;color:var(--c-ink);
+       font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:14px;line-height:1.55}
+  h1{font-size:24px;font-weight:500;letter-spacing:-.01em;margin:0 0 12px}
+  p{max-width:68ch;color:#57575b;margin:0 0 8px}
+  .cols{display:flex}
+  .wrapcols{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start;margin-top:30px}
+  .col2{max-width:100%}
+  .w{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8c8c8a;margin-bottom:10px}
+  .lab{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9a9a9e;margin:0 0 6px}
+  .card{background:#fff;border:1px solid var(--c-border);border-radius:14px;padding:16px;margin-bottom:24px}
+  .cap{margin-top:6px;font-size:11px;color:var(--c-muted)}
+  /* the after chart */
+  .plot{position:relative;padding-left:24px}
+  .axis{position:absolute;left:0;width:20px;text-align:right;font-size:10px;line-height:1;color:var(--c-muted)}
+  .rule{position:absolute;left:24px;right:0;border-top:1px dashed var(--c-border)}
+  .plot .cols{display:flex;align-items:flex-end}
+  .col{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+  .bar{width:64%;border-radius:1.5px;background:var(--chart-5)}
+  .mk{position:absolute;left:0;right:0;text-align:center;font-size:10px;line-height:1;
+      color:var(--c-ink);font-family:"Space Grotesk",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  .base{border-top:1px solid var(--chart-5)}
+  .months{display:flex;margin-top:4px}
+  .mo{flex:1;min-width:0;text-align:center;font-size:10px;line-height:1;color:var(--c-muted)}
+  footer{margin-top:36px;font-size:12px;color:#8c8c8a;max-width:68ch}
+</style>
+<h1>Busy months and quiet months, before and after</h1>
+<p>The same twelve months, drawn twice, at three widths.</p>
+<p><b>Read the month initials along the bottom of each chart, across the three
+columns.</b> The lower one is a fixed three-hundred-unit picture stretched to fill
+whatever width the card ends up at, with its aspect ratio deliberately unlocked
+and its height pinned. So it is scaled sideways only: at the widest column the
+letters are two and a half times too wide for their height. They are not just
+bigger, they are the wrong shape. The upper chart is real text that never moves,
+above bars that stretch on their own.</p>
+<div class="wrapcols">
+  <section class="col2" style="width:320px">
+    <div class="w">320px &middot; a phone</div>
+    <div class="lab">After, drawn in layout</div>
+    <div class="card"><div class="plot" id="plot">
+    <span class="axis" id="axis" style="bottom:70.5px">100</span>
+    <div class="rule" id="rule" style="bottom:74.5px"></div>
+    <div class="cols" style="height:92px"><div class="col"><div class="bar" style="height:50.0px"></div></div><div class="col"><span class="mk" style="bottom:50.0px">79</span><div class="bar" style="height:47.0px"></div></div><div class="col"><div class="bar" style="height:52.4px"></div></div><div class="col"><div class="bar" style="height:56.6px"></div></div><div class="col"><div class="bar" style="height:60.1px"></div></div><div class="col"><div class="bar" style="height:61.9px"></div></div><div class="col"><div class="bar" style="height:58.4px"></div></div><div class="col"><div class="bar" style="height:54.8px"></div></div><div class="col"><div class="bar" style="height:61.3px"></div></div><div class="col"><div class="bar" style="height:65.5px"></div></div><div class="col"><div class="bar" style="height:70.3px"></div></div><div class="col"><span class="mk" style="bottom:81.0px">131</span><div class="bar" style="height:78.0px"></div></div></div>
+    <div class="base"></div>
+    <div class="months"><span class="mo">J</span><span class="mo">F</span><span class="mo">M</span><span class="mo">A</span><span class="mo">M</span><span class="mo">J</span><span class="mo">J</span><span class="mo">A</span><span class="mo">S</span><span class="mo">O</span><span class="mo">N</span><span class="mo">D</span></div>
+  </div><div class="cap">Monthly demand, indexed; the dashed rule marks 100.</div></div>
+    <div class="lab">Before, a stretched picture</div>
+    <div class="card"><svg viewBox="0 0 300 110" style="width:100%;height:110px" preserveAspectRatio="none">
+    <line x1="22" y1="29.4" x2="294" y2="29.4" stroke="#e0dedc" stroke-width="0.75" stroke-dasharray="3 3"/>
+    <text x="18" y="31.9" text-anchor="end" fill="#8c8c8a" font-size="7.5">100</text>
+    <rect x="26.1" y="39.4" width="14.5" height="52.6" rx="1.5" fill="#c9c9c7"/><rect x="48.7" y="42.5" width="14.5" height="49.5" rx="1.5" fill="#c9c9c7"/><rect x="71.4" y="36.9" width="14.5" height="55.1" rx="1.5" fill="#c9c9c7"/><rect x="94.1" y="32.5" width="14.5" height="59.5" rx="1.5" fill="#c9c9c7"/><rect x="116.7" y="28.8" width="14.5" height="63.2" rx="1.5" fill="#c9c9c7"/><rect x="139.4" y="26.9" width="14.5" height="65.1" rx="1.5" fill="#c9c9c7"/><rect x="162.1" y="30.7" width="14.5" height="61.3" rx="1.5" fill="#c9c9c7"/><rect x="184.7" y="34.4" width="14.5" height="57.6" rx="1.5" fill="#c9c9c7"/><rect x="207.4" y="27.5" width="14.5" height="64.5" rx="1.5" fill="#c9c9c7"/><rect x="230.1" y="23.1" width="14.5" height="68.9" rx="1.5" fill="#c9c9c7"/><rect x="252.7" y="18.1" width="14.5" height="73.9" rx="1.5" fill="#c9c9c7"/><rect x="275.4" y="10.0" width="14.5" height="82.0" rx="1.5" fill="#c9c9c7"/>
+    <line x1="22" y1="92.0" x2="294" y2="92.0" stroke="#c9c9c7" stroke-width="1"/>
+    <text x="33.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="56.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">F</text><text x="78.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">M</text><text x="101.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">A</text><text x="124.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">M</text><text x="146.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="169.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="192.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">A</text><text x="214.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">S</text><text x="237.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">O</text><text x="260.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">N</text><text x="282.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">D</text><text x="282.7" y="6.0" text-anchor="middle" font-size="8.5" fill="#1b1b1a" font-weight="600">131</text><text x="56.0" y="38.5" text-anchor="middle" font-size="8.5" fill="#1b1b1a" font-weight="600">79</text>
+  </svg><div class="cap">Monthly demand, indexed; the dashed rule marks 100.</div></div>
+  </section>
+
+  <section class="col2" style="width:480px">
+    <div class="w">480px &middot; a half card</div>
+    <div class="lab">After, drawn in layout</div>
+    <div class="card"><div class="plot" id="plot">
+    <span class="axis" id="axis" style="bottom:70.5px">100</span>
+    <div class="rule" id="rule" style="bottom:74.5px"></div>
+    <div class="cols" style="height:92px"><div class="col"><div class="bar" style="height:50.0px"></div></div><div class="col"><span class="mk" style="bottom:50.0px">79</span><div class="bar" style="height:47.0px"></div></div><div class="col"><div class="bar" style="height:52.4px"></div></div><div class="col"><div class="bar" style="height:56.6px"></div></div><div class="col"><div class="bar" style="height:60.1px"></div></div><div class="col"><div class="bar" style="height:61.9px"></div></div><div class="col"><div class="bar" style="height:58.4px"></div></div><div class="col"><div class="bar" style="height:54.8px"></div></div><div class="col"><div class="bar" style="height:61.3px"></div></div><div class="col"><div class="bar" style="height:65.5px"></div></div><div class="col"><div class="bar" style="height:70.3px"></div></div><div class="col"><span class="mk" style="bottom:81.0px">131</span><div class="bar" style="height:78.0px"></div></div></div>
+    <div class="base"></div>
+    <div class="months"><span class="mo">J</span><span class="mo">F</span><span class="mo">M</span><span class="mo">A</span><span class="mo">M</span><span class="mo">J</span><span class="mo">J</span><span class="mo">A</span><span class="mo">S</span><span class="mo">O</span><span class="mo">N</span><span class="mo">D</span></div>
+  </div><div class="cap">Monthly demand, indexed; the dashed rule marks 100.</div></div>
+    <div class="lab">Before, a stretched picture</div>
+    <div class="card"><svg viewBox="0 0 300 110" style="width:100%;height:110px" preserveAspectRatio="none">
+    <line x1="22" y1="29.4" x2="294" y2="29.4" stroke="#e0dedc" stroke-width="0.75" stroke-dasharray="3 3"/>
+    <text x="18" y="31.9" text-anchor="end" fill="#8c8c8a" font-size="7.5">100</text>
+    <rect x="26.1" y="39.4" width="14.5" height="52.6" rx="1.5" fill="#c9c9c7"/><rect x="48.7" y="42.5" width="14.5" height="49.5" rx="1.5" fill="#c9c9c7"/><rect x="71.4" y="36.9" width="14.5" height="55.1" rx="1.5" fill="#c9c9c7"/><rect x="94.1" y="32.5" width="14.5" height="59.5" rx="1.5" fill="#c9c9c7"/><rect x="116.7" y="28.8" width="14.5" height="63.2" rx="1.5" fill="#c9c9c7"/><rect x="139.4" y="26.9" width="14.5" height="65.1" rx="1.5" fill="#c9c9c7"/><rect x="162.1" y="30.7" width="14.5" height="61.3" rx="1.5" fill="#c9c9c7"/><rect x="184.7" y="34.4" width="14.5" height="57.6" rx="1.5" fill="#c9c9c7"/><rect x="207.4" y="27.5" width="14.5" height="64.5" rx="1.5" fill="#c9c9c7"/><rect x="230.1" y="23.1" width="14.5" height="68.9" rx="1.5" fill="#c9c9c7"/><rect x="252.7" y="18.1" width="14.5" height="73.9" rx="1.5" fill="#c9c9c7"/><rect x="275.4" y="10.0" width="14.5" height="82.0" rx="1.5" fill="#c9c9c7"/>
+    <line x1="22" y1="92.0" x2="294" y2="92.0" stroke="#c9c9c7" stroke-width="1"/>
+    <text x="33.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="56.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">F</text><text x="78.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">M</text><text x="101.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">A</text><text x="124.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">M</text><text x="146.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="169.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="192.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">A</text><text x="214.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">S</text><text x="237.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">O</text><text x="260.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">N</text><text x="282.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">D</text><text x="282.7" y="6.0" text-anchor="middle" font-size="8.5" fill="#1b1b1a" font-weight="600">131</text><text x="56.0" y="38.5" text-anchor="middle" font-size="8.5" fill="#1b1b1a" font-weight="600">79</text>
+  </svg><div class="cap">Monthly demand, indexed; the dashed rule marks 100.</div></div>
+  </section>
+
+  <section class="col2" style="width:760px">
+    <div class="w">760px &middot; a full band</div>
+    <div class="lab">After, drawn in layout</div>
+    <div class="card"><div class="plot" id="plot">
+    <span class="axis" id="axis" style="bottom:70.5px">100</span>
+    <div class="rule" id="rule" style="bottom:74.5px"></div>
+    <div class="cols" style="height:92px"><div class="col"><div class="bar" style="height:50.0px"></div></div><div class="col"><span class="mk" style="bottom:50.0px">79</span><div class="bar" style="height:47.0px"></div></div><div class="col"><div class="bar" style="height:52.4px"></div></div><div class="col"><div class="bar" style="height:56.6px"></div></div><div class="col"><div class="bar" style="height:60.1px"></div></div><div class="col"><div class="bar" style="height:61.9px"></div></div><div class="col"><div class="bar" style="height:58.4px"></div></div><div class="col"><div class="bar" style="height:54.8px"></div></div><div class="col"><div class="bar" style="height:61.3px"></div></div><div class="col"><div class="bar" style="height:65.5px"></div></div><div class="col"><div class="bar" style="height:70.3px"></div></div><div class="col"><span class="mk" style="bottom:81.0px">131</span><div class="bar" style="height:78.0px"></div></div></div>
+    <div class="base"></div>
+    <div class="months"><span class="mo">J</span><span class="mo">F</span><span class="mo">M</span><span class="mo">A</span><span class="mo">M</span><span class="mo">J</span><span class="mo">J</span><span class="mo">A</span><span class="mo">S</span><span class="mo">O</span><span class="mo">N</span><span class="mo">D</span></div>
+  </div><div class="cap">Monthly demand, indexed; the dashed rule marks 100.</div></div>
+    <div class="lab">Before, a stretched picture</div>
+    <div class="card"><svg viewBox="0 0 300 110" style="width:100%;height:110px" preserveAspectRatio="none">
+    <line x1="22" y1="29.4" x2="294" y2="29.4" stroke="#e0dedc" stroke-width="0.75" stroke-dasharray="3 3"/>
+    <text x="18" y="31.9" text-anchor="end" fill="#8c8c8a" font-size="7.5">100</text>
+    <rect x="26.1" y="39.4" width="14.5" height="52.6" rx="1.5" fill="#c9c9c7"/><rect x="48.7" y="42.5" width="14.5" height="49.5" rx="1.5" fill="#c9c9c7"/><rect x="71.4" y="36.9" width="14.5" height="55.1" rx="1.5" fill="#c9c9c7"/><rect x="94.1" y="32.5" width="14.5" height="59.5" rx="1.5" fill="#c9c9c7"/><rect x="116.7" y="28.8" width="14.5" height="63.2" rx="1.5" fill="#c9c9c7"/><rect x="139.4" y="26.9" width="14.5" height="65.1" rx="1.5" fill="#c9c9c7"/><rect x="162.1" y="30.7" width="14.5" height="61.3" rx="1.5" fill="#c9c9c7"/><rect x="184.7" y="34.4" width="14.5" height="57.6" rx="1.5" fill="#c9c9c7"/><rect x="207.4" y="27.5" width="14.5" height="64.5" rx="1.5" fill="#c9c9c7"/><rect x="230.1" y="23.1" width="14.5" height="68.9" rx="1.5" fill="#c9c9c7"/><rect x="252.7" y="18.1" width="14.5" height="73.9" rx="1.5" fill="#c9c9c7"/><rect x="275.4" y="10.0" width="14.5" height="82.0" rx="1.5" fill="#c9c9c7"/>
+    <line x1="22" y1="92.0" x2="294" y2="92.0" stroke="#c9c9c7" stroke-width="1"/>
+    <text x="33.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="56.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">F</text><text x="78.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">M</text><text x="101.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">A</text><text x="124.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">M</text><text x="146.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="169.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">J</text><text x="192.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">A</text><text x="214.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">S</text><text x="237.3" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">O</text><text x="260.0" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">N</text><text x="282.7" y="105" text-anchor="middle" fill="#8c8c8a" font-size="8">D</text><text x="282.7" y="6.0" text-anchor="middle" font-size="8.5" fill="#1b1b1a" font-weight="600">131</text><text x="56.0" y="38.5" text-anchor="middle" font-size="8.5" fill="#1b1b1a" font-weight="600">79</text>
+  </svg><div class="cap">Monthly demand, indexed; the dashed rule marks 100.</div></div>
+  </section>
+</div>
+<footer>Sample year, shaped like a real one. Nothing on this sheet is published anywhere.</footer>

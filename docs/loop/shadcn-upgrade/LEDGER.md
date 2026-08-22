@@ -49,7 +49,7 @@ looking at yet, and ranks accordingly.**
 | 5 | Who this suits | tier band | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 6 | When the week fills up | daypart donut | **NO DATA. Reaches no reader** | **BLOCKED** |
 | 7 | Who comes in, and how | share bar | **NO DATA. Reaches no reader** | **BLOCKED** |
-| 8 | Busy months and quiet months | zero-baseline monthly columns | NOT CHECKED | TODO |
+| 8 | Busy months and quiet months | zero-baseline monthly columns | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 9 | Getting to break-even | two-anchor time axis | NOT CHECKED | TODO |
 | 10 | The same trade, comparable places | editorial table, no in-cell bars | NOT CHECKED | TODO |
 | 11 | What the team costs | track-free range brackets | NOT CHECKED | TODO |
@@ -204,6 +204,48 @@ still short. **Not fixed here on purpose:** darkening the bar is a design change
 and mixing one into a repair makes neither falsifiable. Every bar prints its
 money figure beside it, so the bar is not the only carrier. Recorded for the
 founder.
+
+**Row 8, closed 2026-08-22. The year chart was being stretched sideways.**
+
+**THE PAID BLOCK WAS PULLED AND READ, for the first time in this loop.** The
+closest candidate is a vertical bar chart in a card. It is built on the same
+charting library this repo already installed, so it offers no new capability, and
+after refusing what it ships switched on, the rounded tops, the hover tooltip
+carrying the values, the axis ticks, the card heading duplicating the section
+heading above it, and the accent colour on every single month against the rule
+that no month may ever be featured, nothing of it would have remained. Recorded
+as examined, not assumed.
+
+**The defect.** The chart was a fixed three-hundred-unit picture given the card's
+full width, with its height pinned and its aspect ratio deliberately unlocked. So
+it scaled HORIZONTALLY ONLY. Every letter in it, the month initials, the axis
+mark, the two values, was 1.07 times too wide in a phone column and **2.53 times
+too wide in a full band**, against no vertical change at all. Not merely resized:
+the wrong shape.
+
+**Rebuilt in layout instead**, so the bars stretch and the text does not move. It
+stays on the server with no JavaScript, which the charting library could not have
+done. Four raw hex values retired with it.
+
+**Three faults in my own rebuild, each caught by a different check.**
+1. A fixed pixel gap between columns looked right on a phone and turned the wide
+   band into a solid block of bars. Caught by photographing it. The columns now
+   hold the same 64% proportion the old drawing used.
+2. The axis mark and its dashed rule were positioned from two different boxes and
+   sat about eighteen pixels apart, an axis label pointing at nothing. Caught by
+   the adversarial pass. Both now share one offset and cannot drift.
+3. **The type ladder ratchet failed the build.** The old sizes lived inside a
+   scaled picture, so eight units there was not eight pixels on screen; as real
+   text they were three sizes below the ladder floor. Not raised. All three moved
+   onto the ladder's smallest step, which also made a stray size on a workshop
+   route visible and fixed. **The ratchet moved DOWN, 421 to 420, and is locked
+   there.**
+
+**One string changed, flagged rather than slipped through.** The description read
+by a screen reader used to name the peak month only, through a hard-coded test for
+December that read "the peak month" for every other cell. It now states the
+busiest and quietest readings, both of which are printed on the chart already. No
+visible word or figure moved.
 
 **Rows 5, 6, 7, 14 and 17, closed 2026-08-22. FIVE SECTIONS REACH NO READER.**
 
@@ -379,7 +421,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **3 replaced or retired, 6 kept with evidence, 8 blocked, 47 to go.**
+64 rows. **3 replaced or retired, 7 kept with evidence, 8 blocked, 46 to go.**
 
 Five of those blocked rows are the trade page sections that reach no reader.
 They are blocked on DATA, not on design, and no component from any library
