@@ -128,9 +128,27 @@ export function BreakEven({ d }: { d: any }) {
   // so the picker can never render a contradicting sentence here.
   const covers = ctx ? ctx.sel.break_even_covers_per_day : (b.covers_per_day ?? 0);
   const typical = (ctx ? ctx.sel.typical_covers_per_day : b.typical_covers_per_day) ?? Math.max(covers, 1);
-  // the track is a full typical day (its right end); break-even falls partway along it.
+  /* BOTH MARKERS ARE POSITIONED FROM THE SAME DOMAIN, and the typical-day tick is
+     no longer pinned to the right edge.
+
+     WHY, measured rather than felt. The domain is the larger of the two numbers,
+     so when break-even sits ABOVE a typical day, which is exactly what an
+     unprofitable trade looks like and which the copy one file over already
+     branches on, the right edge became the BREAK-EVEN value while the tick
+     sitting on it still read "a typical day". The picture then showed the
+     typical-day mark to the RIGHT of the break-even dot: a comfortable cushion,
+     drawn on the trades that have none. The two figure tiles directly below it
+     said zero headroom and over a hundred percent of a typical day, so the
+     section contradicted itself, and the drawing was the half a reader believes.
+
+     The clamp is gone with it. It pushed the dot to 96% of the track, which made
+     "you cannot break even on a typical day" look like "you are nearly there".
+     Both markers are centred on their own value now, so at the extremes they
+     hang half over the end of the track, which is what a value at the end of a
+     scale should look like. */
   const domain = Math.max(typical, covers, 1);
-  const bePct = Math.max(4, Math.min(96, (covers / domain) * 100));
+  const bePct = (covers / domain) * 100;
+  const typPct = (typical / domain) * 100;
   return (
     <Box className="md:flex-[2]">
       <div className="flex items-center justify-between gap-2">
@@ -150,8 +168,8 @@ export function BreakEven({ d }: { d: any }) {
           <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-2 w-2 rounded-full" style={{ background: TERRA }} /><Fig className="text-[var(--terra-text)]">{Math.round(covers)}</Fig> to break even</span>
           <span className="inline-flex items-center gap-1.5"><Fig className="text-[var(--c-ink)]">{Math.round(typical)}</Fig> a typical day<span aria-hidden className="h-2.5 w-[2px] rounded-full" style={{ background: "var(--c-ink)" }} /></span>
         </div>
-        <div className="relative h-1.5 rounded-full" role="img" aria-label={`Break-even at ${Math.round(covers)} covers, of about ${Math.round(typical)} on a typical day`} style={{ background: "#e6e6e6" }}>
-          <span aria-hidden className="absolute top-1/2 right-0 h-3 w-[2px] -translate-y-1/2 rounded-full" style={{ background: "var(--c-ink)" }} />
+        <div className="relative h-1.5 rounded-full" role="img" aria-label={`Break-even at ${Math.round(covers)} covers, of about ${Math.round(typical)} on a typical day`} style={{ background: TRACK }}>
+          <span aria-hidden className="absolute top-1/2 h-3 w-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ left: `${typPct}%`, background: "var(--c-ink)" }} />
           <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${bePct}%`, background: TERRA, boxShadow: "0 0 0 1px #e3e3e3" }} />
         </div>
       </div>

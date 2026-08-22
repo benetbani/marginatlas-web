@@ -44,7 +44,7 @@ looking at yet, and ranks accordingly.**
 |---|---|---|---|---|
 | 1 | Where each $100 of sales goes | 100% stacked bar, legended | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 2 | What the owner keeps | **waterfall on the chart library** | VERIFIED, FIXED | **DONE-REPLACED** |
-| 3 | When it clears costs | two-marker scale on one domain | NOT CHECKED | TODO |
+| 3 | When it clears costs | two-marker scale on one domain | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 4 | What it costs to open one | lollipop on a drawn track | NOT CHECKED | TODO |
 | 5 | Who this suits | discrete tier band, categorical pips | NOT CHECKED | TODO |
 | 6 | When the week fills up | daypart donut | NOT CHECKED | TODO |
@@ -116,6 +116,52 @@ the point. It is for the day the upstream split changes shape.
   the five figures so they sum to 100, which CHANGES a printed figure by up to a
   point. That is a content decision, not a component one, and this loop does not
   make content decisions.
+
+**Row 3, closed 2026-08-22. Kept, and the picture made to agree with its own figures.**
+
+The library answers nothing here either: two markers on a six-pixel track. No
+axis, no ticks, no measurement, no many-points problem.
+
+**The defect, and it was the worst kind.** The scale shows break-even as an
+orange dot and a typical day as a black tick, and the gap between them is the
+room the owner still has. The track's span was the LARGER of the two numbers,
+while the typical-day tick was pinned to the right-hand end whatever the numbers
+said. So when break-even sits ABOVE a typical day, which is precisely what an
+unprofitable trade looks like, the right end became the BREAK-EVEN value and the
+tick sitting on it still read "a typical day". **The picture drew a comfortable
+cushion on exactly the trades that have none.** Measured: break-even 71 against a
+typical 54 put the dot at 96% and the tick at 100%, dot to the LEFT of tick.
+
+**The section already contradicted itself.** The two figure tiles directly below
+read zero covers of headroom and 131% of a typical day. Both true. The drawing
+above them said otherwise, and the drawing is the half a reader believes.
+
+**A clamp made it worse.** The dot was squeezed into the range 4% to 96%, so
+"you cannot break even on an ordinary day" was drawn as "you are nearly there".
+
+**Fixed by positioning both markers from the same span and deleting the clamp.**
+The healthy case renders byte-identically, checked at three widths. The
+underwater case now puts the tick at 76% and the dot at the end, which reads
+correctly. No printed word or figure changed anywhere.
+
+**One raw hex retired**, the track grey, which was a duplicate of a constant the
+same file already imports. Identical value, zero visual change. **One left in
+place on purpose:** the ring around the dot has no matching token, and swapping
+it for the nearest one would change a colour. Mixing a colour change into an
+honesty fix makes neither of them falsifiable.
+
+**Adversarial pass.** Removing the clamp lets a marker sit at either end of the
+track, where half of it hangs past the edge, so anything clipping would eat half
+a dot. Checked the whole ancestor chain: nothing clips, and the card's padding
+holds it. The only clipping element on that card is the tile grid below, which
+is a sibling.
+
+**A near miss worth recording.** The typical-day figure falls back to the
+break-even figure when it is missing, which would print an invented number and
+an invented right end. It cannot happen: both numbers come from the same
+calculation, so when one is absent the other is too and the whole section is
+omitted. Checked rather than assumed, and the fallback is still a loaded gun if
+that calculation is ever split.
 
 **Row 7, kept with evidence.** The share bar is a flex row of divs whose widths
 are percentages. It has no axis, no scale, nothing to measure, and it renders on
@@ -252,7 +298,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows. **3 replaced or retired, 5 kept with evidence, 3 blocked, 53 to go.**
+64 rows. **3 replaced or retired, 6 kept with evidence, 3 blocked, 52 to go.**
 
 ## Standing notes for every iteration
 
