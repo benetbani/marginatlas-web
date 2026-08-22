@@ -1,5 +1,5 @@
 /**
- * PercentileStrip — editorial revenue distribution on a log axis.
+ * PercentileStrip , editorial revenue distribution on a LINEAR axis (ADR 0002).
  *
  * Replaces the old flat gradient bar. Shows where firms land: a faint full
  * range (p10..p90), a bolder middle-half (p25..p75), and the typical (p50)
@@ -7,7 +7,7 @@
  * Server-renderable SVG (no client JS).
  */
 import * as React from "react";
-import { scaleLog } from "@visx/scale";
+import { scaleLinear } from "@visx/scale";
 
 type Props = {
   p10: number;
@@ -26,7 +26,10 @@ export function PercentileStrip({ p10, p25, p50, p75, p90, you, format }: Props)
   const padX = 64;
   const lo = Math.max(1, p10 * 0.85);
   const hi = p90 * 1.18;
-  const x = scaleLog({ domain: [lo, hi], range: [padX, W - padX] });
+  /* LINEAR, not logarithmic. ADR 0002, 2026-08-21: every percentile this site
+     draws is a fixed multiple of the typical figure, so a log axis spaces
+     constants evenly and makes a formula read as a measured distribution. */
+  const x = scaleLinear({ domain: [lo, hi], range: [padX, W - padX] });
   const xp = (v: number) => x(Math.max(lo, Math.min(hi, v)));
   const trackY = 50;
   const trackH = 8;

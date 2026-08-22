@@ -34,7 +34,7 @@
  * voice). Both are additive and optional, so every existing call site is intact.
  */
 import * as React from "react";
-import { scaleLog } from "@visx/scale";
+import { scaleLinear } from "@visx/scale";
 import { TierDot, type Tier } from "@/components/ui/tier-dot";
 
 export type RangeStripProps = {
@@ -147,7 +147,19 @@ export function RangeStrip({
   label,
   caption,
   ariaLabel,
-  basis = "measured",
+  /* DEFAULTS TO MODELLED, and the direction of that default is the point.
+     ADR 0001: a Band whose shape is invented carries a mark. With "measured" as
+     the default, a caller who simply forgets the prop makes a percentile claim
+     the figures cannot support, and two of them did exactly that: the city
+     income spread, and the calculator panel, which computes take-home x 0.55
+     and take-home x 1.6 and had this component print those as "Bottom 10%" and
+     "Top 10%" to a reader.
+
+     Defaulting the other way means forgetting understates rather than
+     over-claims. A caller must now assert "measured" deliberately, which is the
+     only state in which a percentile word is true. Same fail-safe direction as
+     the presence threshold: the cost of the two verdicts is not symmetric. */
+  basis = "modelled",
   className,
 }: RangeStripProps) {
   // Nullable in, silence out: the core three points must be real and ordered.
@@ -164,7 +176,13 @@ export function RangeStrip({
   // Clamp the plotted window a touch outside the data so the end ticks breathe.
   const lo = Math.max(1, p10 * 0.85);
   const hi = p90 * 1.18;
-  const x = scaleLog({ domain: [lo, hi], range: [padX, W - padX] });
+  /* LINEAR, not logarithmic. ADR 0002, 2026-08-21. Every spread this component
+     receives is a fixed multiple of the typical figure, so the p90/p10 ratio is
+     a constant by construction, not a measurement. A log axis spaces those
+     constants almost evenly and makes a fabricated fan read as a distribution
+     with real structure. Linear is honest about how lopsided the fan is, and
+     the ratios in play need no log scaling to stay legible. */
+  const x = scaleLinear({ domain: [lo, hi], range: [padX, W - padX] });
   const xp = (v: number) => x(Math.max(lo, Math.min(hi, v)));
   const trackY = compact ? 30 : 50;
   const trackH = 8;
