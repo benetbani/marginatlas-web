@@ -944,6 +944,37 @@ swap on this page.
 
 ---
 
+**Row 40, 2026-08-24. A WHOLE BAR IS A CLAIM, AND NOBODY WAS CHECKING IT.**
+
+**Mislabelled here as "month bars", the fourth mislabel.** It is a two-segment
+share bar: how much of the town is residents, how much is visitors.
+
+**Drawing them as one whole bar claims that between them they account for
+everything.** Nothing checked that they do. The two shares are rounded separately
+upstream, so each carries up to half a point of error and the pair can land on 99
+or 101. Reproduced: **at 99 a strip of bare card shows through the end of the bar;
+at 101 the last segment is squeezed and the drawn widths stop matching the printed
+figures.**
+
+**Two responses, because the two causes differ.** Within a point of 100 it is
+rounding, so the widths are taken as shares of the real total and the bar closes;
+the printed figures are untouched. Beyond that a slice has gone missing upstream,
+the shape no longer means what it claims, and the card draws NOTHING.
+
+**All eight real cities land on exactly 100 today, so nothing moves.** True by luck
+before; true by construction now. **Fourth thing this month that was correct only
+by coincidence**, after a label crowding that cleared by four pixels, a comparison
+anchored right on one city out of 252, and a chapter guard that happened to hold.
+
+**A floating-point artifact caught in the markup.** Dividing 28 by a total of
+exactly 100 and multiplying back gives 28.000000000000004, which went straight
+into the width. Rounded to two decimals; the live render is now byte-identical to
+what it was before this row.
+
+**Gates: 114 passed, 0 failed.** Typecheck clean.
+
+---
+
 **Row 46, 2026-08-24. A WHOLE SECTION THAT HAD NEVER ONCE APPEARED ON A PAGE.**
 
 Four rows, four measures, every peer city set beside the home city. Written,
@@ -1543,7 +1574,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 38a | What customers earn here | income scale | **VERIFIED: labels off their marks, geometry scaling, raw hex** | **DONE-REPLACED, rebuilt** |
 | 38b | Rent against income | ratio rail | **VERIFIED: reaches no reader; identity gap recorded** | **DONE-KEPT** |
 | 39 | ~~Who buys, and when~~ chapter divider, and the container at its foot | **VERIFIED: a rail drawn around nothing** | **DONE-KEPT, guarded** |
-| 40 | How seasonal it is | share bar, NOT month bars | **alive on 8 of 8; sum unguarded** | TODO |
+| 40 | How seasonal it is | share bar, NOT month bars | **VERIFIED: the total was unguarded** | **DONE-KEPT, guarded** |
 | 41 | Lowest bar to entry | featured card | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
 | 42 | Next-easiest, and the cost to open | plain table | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
 | 43 | Where the risks sit | risk list | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
@@ -1634,9 +1665,9 @@ and paste the result; do not hand-edit these figures.**
 
 ```
   66 rows
-    TODO               12
+    TODO               11
     BLOCKED            12
-    KEPT/FIXED         35
+    KEPT/FIXED         36
     REPLACED/RETIRED    6
     VOID                1
 ```

@@ -295,11 +295,30 @@ export function DemandSize({ d }: { d: any }) {
   ) : null;
   // the seasonal read , the ONLY honest seasonal signal held (the split), rendered as
   // the graphic; no invented "summer hump, December peak" prose (§4/§21, C7).
-  const tourismBox = hasSplit ? (
+  /* A WHOLE BAR IS A CLAIM THAT THE PARTS ACCOUNT FOR EVERYTHING, and nothing was
+     checking that they do. The two shares are rounded independently upstream, so
+     each carries up to half a point of error and the pair can land on 99 or 101.
+     At 99 a strip of bare card shows through the end of the bar; at 101 the last
+     segment is squeezed and the drawn widths stop matching the printed figures.
+     Reproduced in scripts/probe_split_identity.mjs.
+
+     Two responses, because the two causes are different. Within a point of 100 it
+     is rounding, so the WIDTHS are taken as proportions of the real total and the
+     bar closes; the printed figures are untouched. Further out than that, a slice
+     has gone missing somewhere upstream, the shape no longer means what it claims,
+     and the card draws NOTHING rather than draw a bar with a hole in it.
+
+     Today every one of eight real cities lands on exactly 100, so nothing moves.
+     That was true by luck and is now true by construction. Rounded to two decimals
+     because dividing by a total of exactly 100 does not give back the number you
+     started with: 28 came out as 28.000000000000004 and went into the markup. */
+  const splitTotal = (o.resident_pct ?? 0) + (o.visitor_pct ?? 0);
+  const splitCloses = Math.abs(100 - splitTotal) <= 1 && splitTotal > 0;
+  const tourismBox = hasSplit && splitCloses ? (
     <Box>
       <Head icon="seasonality" sample={sample}>How seasonal it is</Head>
       <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}% steady, visitors ${o.visitor_pct}% seasonal`}>
-        {segs.map(([n, pct, bg]) => <div key={n} className="h-full" style={{ width: `${pct}%`, background: bg }} />)}
+        {segs.map(([n, pct, bg]) => <div key={n} className="h-full" style={{ width: `${Math.round((pct / splitTotal) * 10000) / 100}%`, background: bg }} />)}
       </div>
       <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
         {segs.map(([n, pct, bg, tag]) => (
