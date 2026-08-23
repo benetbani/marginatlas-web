@@ -1494,15 +1494,33 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-66 rows, one of them void. **7 replaced or retired, 28 kept with evidence, 13 blocked, 17 to go.**
+**COUNTED, NOT TYPED, from 2026-08-23. Run `node scripts/count_ledger.mjs`
+and paste the result; do not hand-edit these figures.**
+
+```
+  66 rows
+    TODO               20
+    BLOCKED            12
+    KEPT/FIXED         28
+    REPLACED/RETIRED    5
+    VOID                1
+```
+
+**The line this replaces was wrong on three of its four figures.** It said 7
+replaced, 13 blocked and 17 to go, against a real 5, 12 and 20. Nobody mistyped
+it once: it was edited by hand at the end of thirty-odd iterations and drifted a
+little each time, which is exactly how the gate count in `CLAUDE.md` reached ten
+different values across 32 files. **A ledger that lies about how much is left
+produces a wrong plan**, and this one had been under-reporting the remaining work
+by three sections.
 
 **The count went UP by two on 2026-08-23.** Row 39 turned out to be a chapter
 divider whose chapter holds four cards, and only two of them were ever written
 into this file. The missing pair is listed as 38a and 38b rather than by
 renumbering, so every number already used in this file still points where it did.
 
-Thirteen blocked: twelve on missing data, and now ONE on a design decision that
-is the founder's to make.
+Twelve blocked: eleven on missing data, and ONE on a design decision that is the
+founder's to make.
 
 Two sweep candidates opened, neither a table. The sweep finds pinned grids; a
 pinned grid is a table only sometimes, and the count of twelve should be read as
