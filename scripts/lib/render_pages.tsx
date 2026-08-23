@@ -19,9 +19,12 @@
  * page renders. The two Supabase variables are needed because the adapters
  * construct a client at import time even when they never call it.
  *
- *   export $(grep -E "^NEXT_PUBLIC_SUPABASE_(URL|ANON_KEY)=" .env.local | xargs -d '
-')
- *   npx tsx --tsconfig scripts/tsconfig.harness.json  *     --require ./scripts/spikes/stub_next_font.cjs scripts/<sweep>.tsx
+ *   1. export the two NEXT_PUBLIC_SUPABASE_ variables out of .env.local
+ *   2. npx tsx --tsconfig scripts/tsconfig.harness.json
+ *        --require ./scripts/spikes/stub_next_font.cjs scripts/<sweep>.tsx
+ *
+ * Both steps are written out in full in the plan at
+ * docs/superpowers/plans/2026-08-23-autonomous-critique-and-optimisation.md.
  */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
