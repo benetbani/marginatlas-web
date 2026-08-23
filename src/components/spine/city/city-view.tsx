@@ -249,15 +249,22 @@ export function CommercialSpace({ d }: { d: any }) {
  * vague big total, §7). A second box carries the seasonal read as the resident/visitor
  * mix (the ONLY honest seasonal signal, C7); the invented month-by-month prose box is
  * DELETED (§4/§21). Both boxes carry the modeled tag. */
-function DemandSize({ d }: { d: any }) {
+export function DemandSize({ d }: { d: any }) {
   const o = d.demand;
   const hasSplit = o && o.resident_pct != null && o.visitor_pct != null;
   // the decision read is the per-resident figure (§7/§16, founder C6: the $196B metro
   // total is a vague big total, twice corrected, so it is CUT here, not just demoted).
   const hasMagnitude = o && o.spend_per_capita_usd != null;
-  if (!o || (!hasSplit && !hasMagnitude)) return null;
+  const hasMillionaires = o?.millionaires_count != null;
+  /* A HEADING IS NOT CONTENT. Both figures on this card are omitted upstream for a
+     real city, neither has a source, and the card was built anyway: a reader got a
+     bordered card carrying the words "The spending pool" and nothing at all under
+     them. It omits now, the way every other card in this file already does when its
+     figures are absent. The guard below gains the millionaire count for the same
+     reason, so a city holding only that figure no longer loses it. */
+  const hasSize = hasMagnitude || hasMillionaires;
+  if (!o || (!hasSplit && !hasSize)) return null;
   const growth = o?.growth_pct_yoy;
-  const hasMillionaires = o.millionaires_count != null;
   const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
   // residents = the steady base; visitors = the seasonal, tourism-led slice (founder C7:
   // city seasonality reads as the tourism / commuter mix, never an invented month index).
@@ -265,7 +272,7 @@ function DemandSize({ d }: { d: any }) {
     ["Residents", o.resident_pct, "var(--c-line-strong)", "steady"],
     ["Visitors", o.visitor_pct, "var(--c-border)", "seasonal"],
   ];
-  const sizeBox = (
+  const sizeBox = hasSize ? (
     <Box>
       <Head icon="market-size" sample={sample}>The spending pool</Head>
       {hasMagnitude ? (
@@ -285,7 +292,7 @@ function DemandSize({ d }: { d: any }) {
         </div>
       ) : null}
     </Box>
-  );
+  ) : null;
   // the seasonal read , the ONLY honest seasonal signal held (the split), rendered as
   // the graphic; no invented "summer hump, December peak" prose (§4/§21, C7).
   const tourismBox = hasSplit ? (
@@ -301,8 +308,8 @@ function DemandSize({ d }: { d: any }) {
       </div>
     </Box>
   ) : null;
-  if (tourismBox) return <WideRail>{sizeBox}{tourismBox}</WideRail>;
-  return sizeBox;
+  if (sizeBox && tourismBox) return <WideRail>{sizeBox}{tourismBox}</WideRail>;
+  return sizeBox ?? tourismBox;
 }
 
 /* ================= CH4 , TRADES AND RIVALS ================= */

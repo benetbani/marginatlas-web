@@ -944,6 +944,56 @@ swap on this page.
 
 ---
 
+**Row 38, 2026-08-23. A CARD THAT DREW ITS TITLE AND NOTHING ELSE, on every city
+page checked.**
+
+**What it is meant to be.** Two cards side by side: how much money is in the town
+on the left, how much of it is residents against visitors on the right. The left
+card carries a headline figure, dollars spent per resident a year, and under a
+rule a second figure, how many millionaires live there.
+
+**Neither figure has a source, so both are dropped before the page is built, and
+the card was drawn anyway.** A reader got a bordered card containing the words
+"The spending pool" and, underneath them, nothing at all.
+
+**Counted, not asserted: eight cities across four continents, and all eight.**
+London, Tokyo, New York, Sao Paulo, Berlin, Mumbai, Lagos, Sydney. Not one holds
+either figure. The two fields are set unconditionally or not at all by the module
+that builds the page, so a sample settles it.
+
+**A heading is not content.** The card leaves when its figures do, which is what
+every other card on this page already does. **The guard also gained the
+millionaire count**, because a city holding only that figure used to lose it.
+
+**Nothing else moved and the sample proves it:** that pair renders byte for byte
+identical. Three words leave the real page, "The spending pool", and they are the
+title of the box that was empty. No figure changed either way and nothing was
+added. Photographed at four widths; the card beside it takes the row on its own.
+
+**NOT REPLACED, and the library is the reason to say so out loud.** The catalogue
+carries **29 stat cards** and the closest, pulled and read, does exactly this job:
+a label, a big number, a percentage against last year. It ships **a green arrow
+for up and a red one for down**, a card title that repeats the section heading
+above it, a bold Tailwind-step figure and a fixed narrow width. Two live hues is
+a hard stop here, and stripping them takes the block's reason to exist with them;
+what remains is what is already on the page, rendered on the server in the right
+tokens. **No block fixes a missing guard.**
+
+**RECORDED FOR ROW 40 AND DELIBERATELY NOT ACTED ON.** The card beside this one
+draws a bar of two segments whose widths are per cent, so it claims to sum to
+100, and **there is no guard that it does.** The two figures are rounded
+independently upstream, which is precisely how a pair like that drifts off its
+own total. Measured on the same eight cities: **all eight close at exactly 100.**
+So it is correct today by luck, not by logic, the same shape as row 35's label
+crowding. Row 40 starts with this evidence in hand.
+
+**Also noted while reading the shared kit, for the sweep and not for this row:**
+the spectrum primitive carries **raw hex in the component** (a three-stop gradient
+and a ring colour). Raw hex is a named defect in this loop and a stated hard
+constraint of the repo.
+
+**Gates: 114 passed, 0 failed.** Typecheck clean.
+
 **Row 37, 2026-08-23. THE WORST NUMBER THIS LOOP HAS FOUND: a comparison that
 was wrong on 251 of 252 city pages, and inverted on the ones that mattered.**
 
@@ -1198,7 +1248,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 35 | Rent against peer cities | dots on one axis | **VERIFIED: WRONG NUMBERS, FIXED** | **FIXED, crowding still BLOCKED** |
 | 36 | ~~What space costs~~ chapter divider, and the whole spine heading system | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 37 | The lease terms | fact table | **VERIFIED: reaches no reader** | **DONE-KEPT** |
-| 38 | The spending pool | figure group | NOT CHECKED | TODO |
+| 38 | The spending pool | figure group | **VERIFIED: an empty card** | **DONE-KEPT, guarded** |
 | 39 | Who buys, and when | mixed | NOT CHECKED | TODO |
 | 40 | How seasonal it is | month bars | NOT CHECKED | TODO |
 | 41 | Lowest bar to entry | featured card | NOT CHECKED | TODO |
@@ -1286,7 +1336,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows, one of them void. **6 replaced or retired, 25 kept with evidence, 13 blocked, 19 to go.**
+64 rows, one of them void. **6 replaced or retired, 26 kept with evidence, 13 blocked, 18 to go.**
 
 Thirteen blocked: twelve on missing data, and now ONE on a design decision that
 is the founder's to make.
