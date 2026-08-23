@@ -43,12 +43,27 @@ export function IncomeCurve({ d }: { d: any }) {
   // H tightened (was 118): the markers only rise 44px off the baseline, so a taller box
   // left a dead band above the plot (rule 17, one-sided white space). The box now hugs the
   // marker stems, and the chart is the wide leg of a WideRail beside the rent-ratio rail.
-  const W = 320, H = 84, padL = 6, padR = 6, base = H - 20;
+  /* POSITION IN PER CENT, SIZE IN PIXELS. This was a fixed 320x84 drawing stretched
+     to the width of its card, so every part of it grew with the container: measured
+     in a browser, the marker dots went from a 2.5px radius at phone width to 6.9px at
+     reading width, the stems from 35px to 95px, and the box from 67px tall to 182px
+     for three ticks. The scale is the only thing here that should stretch, so the
+     x positions are a percentage and everything else is a fixed size. */
   const xmin = Math.log(med * 0.28), xmax = Math.log(t1 * 1.12), span = xmax - xmin || 1;
-  const X = (v: number) => padL + ((Math.log(v) - xmin) / span) * (W - padL - padR);
+  const X = (v: number) => ((Math.log(v) - xmin) / span) * 100;
   // ticks are static; `seen`/`reduced` are reserved for a future reveal but the
   // resting render is always the true figures (SSR-safe, never blank).
   void seen; void reduced;
+
+  /* THREE FIGURES, AND THE CARD LETS ITSELF IN ON ONE. The guard above asks only for
+     a median; the two tail figures fall back to zero when absent, and this scale is
+     logarithmic, so a zero is not a position at all, it is negative infinity, and the
+     mark would be placed outside any possible box. The scale also reads left to
+     right, so figures out of order would draw a picture that contradicts its own
+     labels. Neither is reached today, checked across ten cities, of which exactly
+     ONE draws this card at all. Unreached is not the same as impossible: the card
+     draws nothing rather than draw either. */
+  if (!(med > 0) || !(t10 >= med) || !(t1 >= t10)) return null;
 
   // the MEDIAN is the terracotta reference , the everyday customer is the page's
   // stated base; the tail ticks stay grey (the extreme is context, not the answer).
@@ -59,23 +74,52 @@ export function IncomeCurve({ d }: { d: any }) {
       <Head icon="spending-power" sample={sample}>What customers earn here</Head>
       <div ref={ref} className="grid gap-4">
         <div className="min-w-0">
-          <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale" preserveAspectRatio="none">
-            <line x1={padL} y1={base} x2={W - padR} y2={base} stroke="#e0dbd6" strokeWidth={1} />
+          {/* The plot. Four raw colours lived in the drawing this replaces; every one
+              of them is a token now. */}
+          <div className="relative h-[56px]" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale">
+            <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
+            {ticks.map(([label, v, accent]) => (
+              <span key={label} className="absolute bottom-0 top-0" style={{ left: `${X(v)}%` }}>
+                <span
+                  className="absolute bottom-0 h-[44px] w-0 -translate-x-1/2"
+                  style={{
+                    borderLeftWidth: accent ? 2 : 1,
+                    borderLeftStyle: accent ? "solid" : "dashed",
+                    borderLeftColor: accent ? TERRA : "var(--c-line-strong)",
+                  }}
+                />
+                <span
+                  className="absolute bottom-[41px] h-[7px] w-[7px] -translate-x-1/2 rounded-full border border-[var(--c-card)]"
+                  style={{ background: accent ? TERRA : "var(--c-muted)" }}
+                />
+              </span>
+            ))}
+          </div>
+          {/* THE LABELS SIT UNDER THEIR OWN MARKS. They used to be spread evenly across
+              the row while the marks sat at their real positions on a log scale, so the
+              two drifted apart as the card got wider: measured, the median label was 82
+              pixels from its mark at phone width and 258 at reading width, which is more
+              than a third of the card. Each label now takes its mark's position. A label
+              centred on a mark near either end would hang off the edge, the fault this
+              loop has now found on four different scales, so the outermost ones are
+              pinned inside the box instead of centred. */}
+          <div className="relative mt-1 h-[30px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
             {ticks.map(([label, v, accent]) => {
               const x = X(v);
+              const edge = x > 88 ? "right" : x < 12 ? "left" : "centre";
+              const style: React.CSSProperties =
+                edge === "right"
+                  ? { right: 0 }
+                  : edge === "left"
+                    ? { left: 0 }
+                    : { left: `${x}%`, transform: "translateX(-50%)" };
               return (
-                <g key={label}>
-                  <line x1={x} y1={base - 44} x2={x} y2={base} stroke={accent ? TERRA : "#9a9a9a"} strokeWidth={accent ? 1.6 : 1} strokeDasharray={accent ? undefined : "2 2"} />
-                  <circle cx={x} cy={base - 44} r={accent ? 3.2 : 2.4} fill={accent ? TERRA : "#6f6f6d"} stroke="#fff" strokeWidth={1} />
-                </g>
+                <span key={label} className={`absolute top-0 flex flex-col whitespace-nowrap ${edge === "right" ? "items-end" : ""}`} style={style}>
+                  <span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span>
+                  <Fig className={accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}>{money(v)}</Fig>
+                </span>
               );
             })}
-          </svg>
-          {/* direct labels carry the read , no glued verdict paragraph (§14/§26). */}
-          <div className="mt-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]">
-            {ticks.map(([label, v, accent]) => (
-              <span key={label} className="flex flex-col"><span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span><Fig className={accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}>{money(v)}</Fig></span>
-            ))}
           </div>
         </div>
       </div>

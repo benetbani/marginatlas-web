@@ -944,6 +944,62 @@ swap on this page.
 
 ---
 
+**Row 38a, 2026-08-23. THE LABELS WERE NOT UNDER THEIR MARKS, and the error grew
+with the card.**
+
+**What a visitor sees.** Three incomes marked on one scale: the median, the top
+tenth, the top hundredth. The gaps between them are enormous, so the scale
+squeezes, which is right. Under it, three labels naming those three marks.
+
+**The marks sat at their real places on that scale. The labels were spread evenly
+across the row**, one at each end and one in the middle. Two different rules, so
+they drifted further apart the wider the card got.
+
+**Measured in a browser, not eyeballed.** The word "Median" and its figure sat **82
+pixels** from the mark it names at phone width and **258 pixels** at reading width,
+more than a third of the card. At that size a reader scanning left to right met
+the Median label, then the Top 10% label, and only then the median's own mark.
+Top 10% was out by 43, 71 and 119 pixels at the three widths. **All now zero.**
+
+**The last label keeps a few pixels on purpose**: its mark is almost at the right
+edge, so a label centred on it would hang off the card. **That fault, a mark or a
+label centred at the very end of a scale with half of it outside the box, is now
+the most repeated one this loop has found: four scales.** It is pinned inside the
+edge instead.
+
+**Second defect: the whole drawing grew with the card.** It was one fixed picture
+stretched to whatever width it was given, so every part of it stretched. Measured:
+**the marker dots went from a 2.5 pixel radius on a phone to 6.9 at reading
+width**; the plot from 67 pixels tall to 182, for three ticks needing about fifty.
+**The card was 301 pixels tall at reading width and is 172 now, and the 129 that
+went was empty.** Positions are a proportion now; everything drawn is a fixed size.
+
+**Third defect: four raw colour codes**, typed into the drawing instead of taken
+from the palette, so they could not follow it anywhere. All four are palette
+entries now. Three hex values remain in the rendered markup and none belongs to
+this section: two are the card's own gradient and one is the accent's shared
+constant.
+
+**Fourth, found by asking what could break it.** The card admits itself on the
+median alone and then needs all three figures to place its marks. A missing tail
+figure falls back to zero, and on a logarithmic scale a zero is not a position, it
+is negative infinity. **Checked across ten cities: exactly ONE, London, draws this
+card at all**; the other nine hold no median and it omits. None reaches the broken
+state. Unreached is not impossible, so it now draws nothing rather than a mark it
+cannot place, or three marks out of order. **Fourth "correct by coincidence" this
+week.**
+
+**NOT A LIBRARY BLOCK, and the check is on the record.** The catalogue holds **141
+items** matching a scale, a range or a gauge. The nearest by description, a
+value-against-target chart, turned out on inspection to be **ten months of invented
+revenue with a band across it**: wrong shape, and content that would be deleted on
+arrival. Nothing in 3,968 blocks draws three labelled points on a squeezing scale.
+Same call as the two other charts this loop rebuilt by hand, for the same reason.
+
+**Reader text byte-identical on both the real page and the sample**, and the
+description a screen reader hears is word for word the one that was there.
+**Gates: 114 passed, 0 failed.** Typecheck clean.
+
 **Row 39, 2026-08-23. THIRD MISLABEL, AND THE LEDGER WAS TWO SECTIONS SHORT.**
 
 **What this row actually is.** Not a section: a chapter divider, like row 36. Its
@@ -1299,7 +1355,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 36 | ~~What space costs~~ chapter divider, and the whole spine heading system | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 37 | The lease terms | fact table | **VERIFIED: reaches no reader** | **DONE-KEPT** |
 | 38 | The spending pool | figure group | **VERIFIED: an empty card** | **DONE-KEPT, guarded** |
-| 38a | What customers earn here | income curve | **NEVER LISTED. Reaches London only** | TODO |
+| 38a | What customers earn here | income scale | **VERIFIED: labels off their marks, geometry scaling, raw hex** | **DONE-REPLACED, rebuilt** |
 | 38b | Rent against income | ratio rail | **NEVER LISTED. Reaches no reader** | TODO |
 | 39 | ~~Who buys, and when~~ chapter divider, and the container at its foot | **VERIFIED: a rail drawn around nothing** | **DONE-KEPT, guarded** |
 | 40 | How seasonal it is | month bars | NOT CHECKED | TODO |
@@ -1388,7 +1444,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-66 rows, one of them void. **6 replaced or retired, 27 kept with evidence, 13 blocked, 19 to go.**
+66 rows, one of them void. **7 replaced or retired, 27 kept with evidence, 13 blocked, 18 to go.**
 
 **The count went UP by two on 2026-08-23.** Row 39 turned out to be a chapter
 divider whose chapter holds four cards, and only two of them were ever written
