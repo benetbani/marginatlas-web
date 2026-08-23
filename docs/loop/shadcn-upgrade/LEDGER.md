@@ -944,6 +944,100 @@ swap on this page.
 
 ---
 
+## THE SIX SWEEPS, 2026-08-24: WHAT READING ONE SECTION AT A TIME COULD NOT SEE
+
+The founder, away from his computer: *"continue on your own... optimization.
+Look. Critic the pages. Try to understand mistakes. Overlapping. Idiotic mistakes
+and so on."* Overlapping and cross-page faults are structurally invisible to this
+loop, which reads one surface per iteration on purpose. Every cross-cutting thing
+it has found was found BY ACCIDENT. Six sweeps, run against fifteen real pages
+rendered through the real adapters: eight cities on four continents, three trade
+pages, three trade-across-places pages, one neighbourhood page.
+
+**FOUR OF THE SIX CARRY A CALIBRATION CASE**: pointed at a fault already confirmed
+by hand, and if they miss it their zeroes mean nothing. All four passed.
+
+**EVERY ONE OF THE SIX NEEDED ITS FIRST RESULT THROWN AWAY.** Four separate bugs in
+my own instruments, in one session:
+
+1. The figure sweep allowed a bare trailing comma, so "$100," counted as a
+   different number from "$100".
+2. The same sweep took its COUNT from a pattern and its EVIDENCE from a plain
+   substring search, so "$8" was located inside "$180K" and it printed a
+   quotation that had nothing to do with the figure it named. **A right count
+   beside wrong evidence is worse than being wrong twice.**
+3. The cross-page sweep grouped every trade page under "world" and reported three
+   conflicts that were three different trades honestly differing. It had invented
+   its own finding, against a ratified rule of this site.
+4. The scale-end sweep asked whether a clamp appeared ANYWHERE IN THE FILE, so a
+   `Math.max` three hundred lines away marked a scale as safe. It reported ONE
+   file. The honest answer is FIFTEEN. **A sweep that reassures is worse than no
+   sweep.**
+
+**THE FIRST DRAFT OF A SWEEP IS ALWAYS TOO FORGIVING.** That now has four data
+points and belongs in the standing notes.
+
+### What they found
+
+| sweep | result |
+|---|---|
+| sections that reach no reader | **23 of 48**, just under half the spine |
+| chapter headings opening onto nothing | 4, all the closing chapter of a city page |
+| the same figure printed twice on a page | 1 genuine: the pay ladder, twice, on every trade page |
+| the same claim disagreeing across pages | 0, and 0 agreements: the pages never make the same claim twice |
+| marks that can fall outside their box | 15 files, ~26 placements |
+| drawings that stretch their own geometry | **0. That fault is finished.** |
+
+**A CORRECTION I OWE.** One of the three sections the paid library was used on, the
+rent city-by-city table on the trade-across-places page, is in the dead list.
+Confirmed structurally: the module omits the one figure that section requires,
+with "no honest source" written beside it, so it can never draw for any trade.
+**The honest count of library wins a reader can see is TWO, not three**, and I have
+been reporting three.
+
+**THIRD TIME A DECISION MADE AGAINST THE BUNDLED SAMPLE IS WRONG AGAINST THE REAL
+DATA.** The pay card repeats its three figures and a note defends the repeat:
+"removing the repeat takes a figure off the page". The sample carries FIVE pay
+roles, so on the sample that holds. **Every real cell carries exactly THREE**, so
+the two blocks are identical and removing the top one takes nothing away. After
+the peer strip's arithmetic and the spending pool's empty card, the pattern is
+established: **the sample is not a small version of the real thing, it is a
+different shape, and it is consistently the flattering one.**
+
+### The triage, and what it saved
+
+Every candidate was confirmed against the module that feeds it, because a title
+absent from fifteen renders may be a sampling accident while a field the adapter
+drops unconditionally is dropped for everyone.
+
+**SIX ROWS CLOSED IN ONE BATCH, all genuine data gaps, all correctly
+self-omitting:** 41 and 42 (the adapter omits cost-to-open with "no honest
+source", and its own comment says this drops the section), 43 (risks omitted), 44
+(character omitted), 45 (locals omitted), 51 (the neighbourhood adapter supplies
+only two fields, districts and meta). **Six iterations that would have found
+nothing.**
+
+**ROW 46 IS NOT A DATA GAP. IT IS A BUG, AND THE SWEEP IS THE ONLY REASON IT WAS
+FOUND.** The peer comparison table adds a row only when some peer carries a field
+of a given name. The four calls pass DISPLAY keys, "rent", "spend", "income",
+"vis". The data fields are `rent_index`, `spend_index`, `median_income_usd`,
+`visitors_m`. **The check therefore never finds anything, no row is ever added,
+and the component returns null before it draws.** Reproduced in isolation against
+both shapes of data this site has: **it cannot render for ANY input, sample
+included.** A fully written comparison table, four rows, four measures, that has
+never once appeared on a page. Fixed in the next iteration, on its own commit.
+
+**ROW 47 IS DOWNSTREAM OF IT.** The closing chapter holds that table and one other
+card; on four of eight cities the other card omits too, so the chapter is a
+heading above nothing. Fixing 46 may fix 47 on those four, which is checked there
+and not assumed here.
+
+**Row 40 is mislabelled** in this file as "month bars". It is a two-segment share
+bar, and its two figures claim to sum to 100 with nothing checking that they do.
+Fourth mislabel.
+
+---
+
 **Row 38b, 2026-08-23. NOTHING CHANGED, and the most useful thing in the iteration
 is the edit I reverted.**
 
@@ -1408,14 +1502,14 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 38a | What customers earn here | income scale | **VERIFIED: labels off their marks, geometry scaling, raw hex** | **DONE-REPLACED, rebuilt** |
 | 38b | Rent against income | ratio rail | **VERIFIED: reaches no reader; identity gap recorded** | **DONE-KEPT** |
 | 39 | ~~Who buys, and when~~ chapter divider, and the container at its foot | **VERIFIED: a rail drawn around nothing** | **DONE-KEPT, guarded** |
-| 40 | How seasonal it is | month bars | NOT CHECKED | TODO |
-| 41 | Lowest bar to entry | featured card | NOT CHECKED | TODO |
-| 42 | Next-easiest, and the cost to open | plain table | NOT CHECKED | TODO |
-| 43 | Where the risks sit | risk list | NOT CHECKED | TODO |
-| 44 | How business runs here | fact list | NOT CHECKED | TODO |
-| 45 | What locals know | editorial block | NOT CHECKED | TODO |
-| 46 | Peer cities, side by side | comparison table | NOT CHECKED | TODO |
-| 47 | The pick, and where to take it | closing block | NOT CHECKED | TODO |
+| 40 | How seasonal it is | share bar, NOT month bars | **alive on 8 of 8; sum unguarded** | TODO |
+| 41 | Lowest bar to entry | featured card | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
+| 42 | Next-easiest, and the cost to open | plain table | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
+| 43 | Where the risks sit | risk list | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
+| 44 | How business runs here | fact list | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
+| 45 | What locals know | editorial block | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
+| 46 | Peer cities, side by side | comparison table | **VERIFIED: A BUG. Cannot render for ANY input** | TODO, next |
+| 47 | The pick, and where to take it | closing block | **VERIFIED: chapter empty on 4 of 8 cities** | TODO |
 
 ---
 
@@ -1426,7 +1520,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 48 | What rent takes, district by district | ranked rows | NOT CHECKED | TODO |
 | 49 | The revenue myth | revenue rank against rent rank | NOT CHECKED | TODO |
 | 50 | Compare districts, up to three | compare tray | NOT CHECKED | TODO |
-| 51 | Weekday and weekend footfall | paired toggle | NOT CHECKED | TODO |
+| 51 | Weekday and weekend footfall | paired toggle | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
 
 ---
 
@@ -1499,12 +1593,15 @@ and paste the result; do not hand-edit these figures.**
 
 ```
   66 rows
-    TODO               20
+    TODO               14
     BLOCKED            12
-    KEPT/FIXED         28
+    KEPT/FIXED         34
     REPLACED/RETIRED    5
     VOID                1
 ```
+
+**Twenty to fourteen in one pass on 2026-08-24**, six rows closed by the sweeps
+rather than by six iterations. See "THE SIX SWEEPS" below.
 
 **The line this replaces was wrong on three of its four figures.** It said 7
 replaced, 13 blocked and 17 to go, against a real 5, 12 and 20. Nobody mistyped
