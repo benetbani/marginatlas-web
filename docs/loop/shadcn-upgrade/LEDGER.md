@@ -1721,11 +1721,28 @@ changes that.
 
 ## Standing notes for every iteration
 
+- **THE FIRST DRAFT OF A SWEEP IS ALWAYS TOO FORGIVING.** Four data points in one
+  session, 2026-08-24. Every instrument built that day needed its first result
+  thrown away, and the worst of them reported a reassuring "one file" where the
+  honest answer was fifteen. **Before believing a count, read what it flagged and
+  what it did not.**
+- **THE BUNDLED SAMPLE IS NOT A SMALL VERSION OF THE REAL DATA. It is a different
+  shape, and it is consistently the flattering one.** Three decisions have now been
+  made against it and been wrong against real pages: the peer strip's arithmetic,
+  the spending pool's empty card, and the pay card's defence of its own repeat.
+  **Render both, every time.**
+- **Two sweeps became gates on 2026-08-24** (no-scaling-drawings, a hard zero; and
+  scale-end-clamps, a ratchet at 35). The other four stay manual, with reasons in
+  the gate list: two need a database client at import time and the chain must
+  never need a secret, one produces a list a human must judge, and one has never
+  found a fault.
+
+
 - The licence key is live. All 3,968 blocks pull. The index is public; the
   blocks are not.
 - Never run the installer with the overwrite flag. It has already destroyed a
   customised file in this project once.
-- The gate chain is 114 gates. Run it serially; this machine is short of memory
+- The gate chain is 116 gates as of 2026-08-24. Run it serially; this machine is short of memory
   and the parallel run fails differently on each attempt.
 - **A typecheck is not a render.** Both real defects in the money waterfall were
   invisible to every automated check and obvious the moment it was drawn.

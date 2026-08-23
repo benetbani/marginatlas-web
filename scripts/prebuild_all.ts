@@ -49,6 +49,20 @@ const GATES: Gate[] = [
      every build. Registered 2026-07-26 after each was negative-tested. */
   { name: "cell-lattice", script: "scripts/verify_cell_lattice.mjs" },
   { name: "derived-accents", script: "scripts/verify_derived_accents.mjs" },
+  /* The two visual faults the 2026-08-24 whole-site sweeps found and could prove.
+     Both are source scans: no network, no secret, no browser, so neither can fail
+     on a blip. Both were negative-tested against a deliberately broken file
+     before being registered here.
+
+     The other four sweeps built that day are NOT here, and the reason is written
+     down rather than left to be rediscovered. `sweep_dead_sections` and
+     `sweep_empty_chapters` have to RENDER the pages, which means importing the
+     adapters, which construct a database client at import time: the chain must
+     never need a secret. `sweep_repeated_figures` produces a list a human has to
+     judge, and a gate that cries wolf gets switched off. `sweep_cross_page_figures`
+     has never found a fault, so it has not earned a place. All four stay manual. */
+  { name: "no-scaling-drawings", script: "scripts/verify_no_scaling_drawings.mjs" },
+  { name: "scale-end-clamps", script: "scripts/verify_scale_end_clamps.mjs" },
   /* FRESHNESS of the two artifacts generated out of design/mockups/. Both are
      valid files when stale, so nothing else can notice: a stale stylesheet
      still compiles and a stale glyph module still typechecks. This actually
