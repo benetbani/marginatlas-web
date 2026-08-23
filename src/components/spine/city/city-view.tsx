@@ -491,8 +491,15 @@ function CityPeers({ d }: { d: any }) {
   // no two rows flip direction, so one skim rule applies). All deltas are home-relative
   // (home = 0), so the table is honest on the seed AND on real data.
   const compareRows: CompareRow[] = [];
-  const row = (key: string, label: string, valOf: (r: any) => number | null) => {
-    if (!has(key)) return;
+  /* THE FIELD NAME, NOT THE ROW'S NAME. `has` asks whether any peer carries a
+     field, and every call below passed the row's DISPLAY key instead: "rent" for
+     rent_index, "vis" for visitors_m. So the check never found anything, no row
+     was ever added, and this table returned null before it drew, for every input
+     including the bundled sample. Reproduced in isolation
+     (scripts/probe_city_peers_table.mjs): four rows, four measures, and it had
+     never once appeared on a page. */
+  const row = (key: string, field: string, label: string, valOf: (r: any) => number | null) => {
+    if (!has(field)) return;
     const values = Object.fromEntries(rows.map((r) => [r.name, valOf(r)]));
     compareRows.push({
       key, label, unit: "pp", higherIsBetter: true,
@@ -501,13 +508,13 @@ function CityPeers({ d }: { d: any }) {
     });
   };
   // rent INVERTED to a cost advantage: a peer at +22 pays 22 points less rent than home.
-  if (num(home?.rent_index)) row("rent", "Cheaper rent", (r) => (num(r.rent_index) ? (home.rent_index as number) - r.rent_index : null));
-  if (num(home?.spend_index)) row("spend", "Consumer spend", (r) => (num(r.spend_index) ? r.spend_index - (home.spend_index as number) : null));
+  if (num(home?.rent_index)) row("rent", "rent_index", "Cheaper rent", (r) => (num(r.rent_index) ? (home.rent_index as number) - r.rent_index : null));
+  if (num(home?.spend_index)) row("spend", "spend_index", "Consumer spend", (r) => (num(r.spend_index) ? r.spend_index - (home.spend_index as number) : null));
   // income + visitors as home-relative INDEX rows, never raw USD or a raw count (§10).
   if (num(home?.median_income_usd) && (home.median_income_usd as number) > 0)
-    row("income", "Customer income", (r) => (num(r.median_income_usd) ? Math.round((r.median_income_usd / (home.median_income_usd as number)) * 100) - 100 : null));
+    row("income", "median_income_usd", "Customer income", (r) => (num(r.median_income_usd) ? Math.round((r.median_income_usd / (home.median_income_usd as number)) * 100) - 100 : null));
   if (num(home?.visitors_m) && (home.visitors_m as number) > 0)
-    row("vis", "Visitors", (r) => (num(r.visitors_m) ? Math.round((r.visitors_m / (home.visitors_m as number)) * 100) - 100 : null));
+    row("vis", "visitors_m", "Visitors", (r) => (num(r.visitors_m) ? Math.round((r.visitors_m / (home.visitors_m as number)) * 100) - 100 : null));
   if (compareRows.length === 0) return null;
   return (
     <Box>

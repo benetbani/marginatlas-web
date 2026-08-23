@@ -944,6 +944,47 @@ swap on this page.
 
 ---
 
+**Row 46, 2026-08-24. A WHOLE SECTION THAT HAD NEVER ONCE APPEARED ON A PAGE.**
+
+Four rows, four measures, every peer city set beside the home city. Written,
+finished, mounted in the closing chapter, and it could not draw.
+
+**The table adds a row only when at least one city carries the figure that row
+needs. The check was handed the ROW'S NAME instead of the FIGURE'S NAME**: "rent"
+where the field is `rent_index`, "vis" where it is `visitors_m`. It therefore
+never found anything, no row was ever added, and the section returned null before
+drawing. **Reproduced in isolation against both shapes of data this site has: it
+could not draw for ANY input, the bundled sample included.**
+
+**HOW IT WAS FOUND, AND WHY THE LOOP COULD NOT HAVE.** Not by reading the section:
+it reads as correct, and I had read it once already, for row 35, without noticing.
+The dead-section sweep reported this title as never seen across fifteen real
+pages, while a second probe showed its data was plainly present. **That
+contradiction is the whole finding.** One surface at a time cannot produce a
+contradiction, because it only ever holds one fact at once.
+
+**IT ALSO FIXES ROW 47.** The closing chapter holds this table and one other card.
+On four of eight cities the other card omits too, so the chapter rendered as the
+words "The next move" and nothing else. **Empty city chapters: 4 of 8 before, 0 of
+8 after.** New York's closing chapter went from 340 bytes, a heading alone, to
+9,045.
+
+**THIS ADDS TEXT A READER SEES, which this loop otherwise refuses to do.** It is
+the point here: the section was meant to be there and was silently missing.
+Nothing is invented, every figure is computed from figures the page already held,
+and every row is a gap from the home city, so the home column reads zero all the
+way down. Photographed at three widths; below 480 the table becomes one stacked
+card per city with the home city tinted and marked "here".
+
+**The empty-chapter sweep's calibration is now a REGRESSION CHECK.** It was pinned
+to the four empty chapters it was built to prove; those are fixed, so a
+calibration pinned to a fixed bug would report a false failure forever. Inverted:
+those four must never go empty again.
+
+**Gates: 114 passed, 0 failed.** Typecheck clean.
+
+---
+
 ## THE SIX SWEEPS, 2026-08-24: WHAT READING ONE SECTION AT A TIME COULD NOT SEE
 
 The founder, away from his computer: *"continue on your own... optimization.
@@ -1508,8 +1549,8 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 43 | Where the risks sit | risk list | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
 | 44 | How business runs here | fact list | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
 | 45 | What locals know | editorial block | **VERIFIED by sweep: reaches no reader** | **DONE-KEPT** |
-| 46 | Peer cities, side by side | comparison table | **VERIFIED: A BUG. Cannot render for ANY input** | TODO, next |
-| 47 | The pick, and where to take it | closing block | **VERIFIED: chapter empty on 4 of 8 cities** | TODO |
+| 46 | Peer cities, side by side | comparison table | **VERIFIED: a bug, could not render for ANY input** | **DONE-REPLACED, fixed** |
+| 47 | The pick, and where to take it | closing block | **fixed as a consequence of row 46; 0 of 8 empty now** | **DONE-KEPT** |
 
 ---
 
@@ -1593,10 +1634,10 @@ and paste the result; do not hand-edit these figures.**
 
 ```
   66 rows
-    TODO               14
+    TODO               12
     BLOCKED            12
-    KEPT/FIXED         34
-    REPLACED/RETIRED    5
+    KEPT/FIXED         35
+    REPLACED/RETIRED    6
     VOID                1
 ```
 

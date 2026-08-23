@@ -11,9 +11,11 @@
  * and the next, which is the right reading here: the question is what a reader
  * sees, not what the tree holds.
  *
- * CALIBRATION: it must report "The next move" empty on New York, Mumbai, Lagos
- * and Sydney, all four confirmed by hand. If it does not, the instrument is
- * broken and its zeroes mean nothing.
+ * CALIBRATION, NOW A REGRESSION CHECK. It was built to prove the closing chapter
+ * of a city page was empty on New York, Mumbai, Lagos and Sydney. It was, on all
+ * four, and the cause was a comparison table whose guard checked a display key
+ * against a data object so it could never draw. With that repaired the four fill,
+ * so the check is inverted: they must never go empty again.
  *
  * See the header of scripts/lib/render_pages.tsx for how to run this.
  */
@@ -61,12 +63,20 @@ void (async () => {
   console.log(`\n  ${thin.length} carrying under 80 characters, which is thin but not empty\n`);
   for (const [k, n, t, c] of thin) console.log(`    ${String(c).padStart(4)}c  ${k.padEnd(9)} ${n.padEnd(22)} ${t}`);
 
-  const want = ["New York", "Mumbai", "Lagos", "Sydney"];
-  const got = empties.filter(([, , t]) => t === "The next move").map(([, n]) => n);
-  const missed = want.filter((w) => !got.includes(w));
+  /* THE CALIBRATION TURNED INTO A REGRESSION CHECK, 2026-08-24. It used to assert
+     that the closing chapter WAS empty on these four cities, which is what this
+     sweep was built to prove. That emptiness was then traced to a comparison
+     table whose guard checked a display key against a data object, so it could
+     never draw; repairing it filled all four. A calibration pinned to a fixed bug
+     reports a false failure forever, so it now asserts the opposite: these four
+     must never go empty again. */
+  const watch = ["New York", "Mumbai", "Lagos", "Sydney"];
+  const regressed = empties
+    .filter(([, n, t]) => t === "The next move" && watch.includes(n))
+    .map(([, n]) => n);
   console.log(
-    missed.length
-      ? `\n  CALIBRATION FAILED. "The next move" is empty on ${missed.join(", ")} and this\n  sweep did not say so. Do not trust the lists above.\n`
-      : `\n  Calibration passed: all four hand-confirmed empty chapters are in the list.\n`,
+    regressed.length
+      ? `\n  REGRESSION. The closing chapter is empty again on ${regressed.join(", ")}.\n  It was empty on all four until 2026-08-24, when repairing the peer comparison\n  table's guard filled them.\n`
+      : `\n  Regression check passed: the closing chapter carries content on all four\n  cities that used to render it empty.\n`,
   );
 })();
