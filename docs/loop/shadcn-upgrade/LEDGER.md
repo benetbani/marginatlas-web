@@ -29,6 +29,23 @@ weakest and comes late on purpose.
 
 ## What a visitor actually sees
 
+**LIVE FROM 2026-08-24. The rebuilt pages are being served.** 177 commits pushed
+after a full production build passed: 116 gates, the app compiled, static
+generation completed, exit 0. The four gates were switched on inside
+`next.config.js` rather than as dashboard settings, so the setting can be read
+from the code; a dashboard value still overrides it.
+
+Verified by fetching the live site, not assumed: `cities/london`,
+`industries/restaurants` and `cities/london/neighborhoods` all carry the spine
+markers. `gb/london/restaurants` renders the SPINE 2 trade page instead, which is
+a separate earlier rebuild with its own styling and no `spine-scope` class: the
+route prefers a hand-filled reconciled cell file when one exists and only falls
+through to this loop's trade page when it does not. **That is the route working as
+written, not a flag that failed.**
+
+**The section below is the state that held until 2026-08-24 and is kept for the
+record.**
+
 **CORRECTED 2026-08-23, and the correction matters for every row in this file.**
 
 This section previously said the cell, industry and city rebuilds were LIVE by
