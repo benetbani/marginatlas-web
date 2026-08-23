@@ -944,6 +944,56 @@ swap on this page.
 
 ---
 
+**Row 38b, 2026-08-23. NOTHING CHANGED, and the most useful thing in the iteration
+is the edit I reverted.**
+
+**What a visitor sees.** A card headed "Rent against income": one large figure,
+"61% of a median income goes to a year of one-bed rent", and under a rule the two
+figures it comes from, the monthly rent and the yearly income.
+
+**It reaches no reader.** The module that builds a real city page drops the whole
+cost-of-living block, reason written in: no honest source. **Checked on eight
+cities across four continents, London included: it draws nothing on every one.**
+Eleventh section this loop has found that reaches nobody. **KEPT, unchanged.**
+
+**The library's nearest block would undo the best decision in this card.** The
+catalogue holds a card of almost exactly this shape: a big figure, then labelled
+rows with values. It puts a coloured dot beside each row, cycling a five-colour
+ramp, and **the first colour in that ramp is this site's one accent.** That puts
+the accent on "One-bed rent". This card's author deliberately took the accent OFF
+it, on a written rule: **the accent marks the answer, and a cost is not an
+answer.** Adopting the block would have to re-break that.
+
+**A number a reader can check, that does not always survive checking. Recorded,
+not fixed.** The third figure is worked out from the other two, so a reader can
+verify it. Both printed figures are rounded and the percentage is computed from
+the unrounded ones. **The rent carries an extra decimal on purpose** and the card's
+own note says why: so the two sides reconcile. **The income beside it does not.**
+Swept 2.96 million plausible pairs: **52.7% agree, 40.4% are out by a point, 5.2%
+by two, 1.7% by three or more, worst case 9 points** (rent $1,151 shown as $1K
+against income $12,411 shown as $12K: the card says 111%, the figures say 120%).
+That is a low-income city, a shape this site covers. **Not fixed: the fix means
+printing a figure differently, and this card prints to nobody.**
+
+**THE EDIT THAT LOOKED FREE AND WAS NOT. This is the finding worth keeping.** The
+one improvement in reach was moving the big percentage off Tailwind's size scale
+onto the site's own ladder. **Both are thirty pixels, so it should have changed
+nothing. Measured in a browser, the card grew nine pixels.** Tailwind's step also
+sets a LINE HEIGHT; the ladder token sets a size only, so the swap left the line
+height to inherit. Pairing it with a tight line height, which is what the only
+other card on that ladder step does, makes the card six pixels SHORTER instead,
+and makes this card's spacing differ from its neighbour in the same band. Neither
+is neutral, and neither is worth it on a card no reader reaches. **Reverted; the
+rendered card is byte-identical to how the iteration found it, and the reason is
+written into the code where the next person will meet it.**
+
+**That generalises, and it is why this row was worth an iteration.** **414 sizes
+wait to be moved onto that ladder, and not one of them is a find and replace.**
+The ratchet was left exactly where it was.
+
+**Gates: 114 passed, 0 failed.** Typecheck clean. The only change in the source is
+a comment.
+
 **Row 38a, 2026-08-23. THE LABELS WERE NOT UNDER THEIR MARKS, and the error grew
 with the card.**
 
@@ -1356,7 +1406,7 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 37 | The lease terms | fact table | **VERIFIED: reaches no reader** | **DONE-KEPT** |
 | 38 | The spending pool | figure group | **VERIFIED: an empty card** | **DONE-KEPT, guarded** |
 | 38a | What customers earn here | income scale | **VERIFIED: labels off their marks, geometry scaling, raw hex** | **DONE-REPLACED, rebuilt** |
-| 38b | Rent against income | ratio rail | **NEVER LISTED. Reaches no reader** | TODO |
+| 38b | Rent against income | ratio rail | **VERIFIED: reaches no reader; identity gap recorded** | **DONE-KEPT** |
 | 39 | ~~Who buys, and when~~ chapter divider, and the container at its foot | **VERIFIED: a rail drawn around nothing** | **DONE-KEPT, guarded** |
 | 40 | How seasonal it is | month bars | NOT CHECKED | TODO |
 | 41 | Lowest bar to entry | featured card | NOT CHECKED | TODO |
@@ -1444,7 +1494,7 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-66 rows, one of them void. **7 replaced or retired, 27 kept with evidence, 13 blocked, 18 to go.**
+66 rows, one of them void. **7 replaced or retired, 28 kept with evidence, 13 blocked, 17 to go.**
 
 **The count went UP by two on 2026-08-23.** Row 39 turned out to be a chapter
 divider whose chapter holds four cards, and only two of them were ever written

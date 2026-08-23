@@ -202,6 +202,17 @@ export function RentAffordability({ d }: { d: any }) {
       <div className="flex h-full flex-col">
         <Head icon="commercial-rent" sample={sample}>Rent against income</Head>
         <div className="flex flex-wrap items-baseline gap-x-2">
+          {/* NOT MOVED ONTO THE LADDER, AND THE REASON IS WORTH MORE THAN THE MOVE.
+              `text-3xl` and the ladder's focal step are both 30 pixels, so swapping them
+              looks free. It is not: the Tailwind step also sets a line height of 36px and
+              the ladder token sets a size only, so the swap left the line height to
+              inherit and the card grew 9 pixels, measured in a browser. Pairing it with
+              `leading-none`, which is what the one other focal call site does, makes the
+              card 6 pixels SHORTER instead, and makes this card's leading differ from its
+              sibling in the same band. Neither is neutral, and neither is worth it on a
+              card no reader reaches. THIS IS THE TRAP IN THE WHOLE LADDER MIGRATION:
+              414 declarations wait to be moved and not one of them is a find and
+              replace. */}
           <Fig className="text-3xl text-[var(--c-ink)]">{pct}%</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of a median income goes to a year of one-bed rent.</span>
         </div>
