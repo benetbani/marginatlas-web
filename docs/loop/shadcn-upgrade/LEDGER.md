@@ -944,6 +944,56 @@ swap on this page.
 
 ---
 
+**Row 39, 2026-08-23. THIRD MISLABEL, AND THE LEDGER WAS TWO SECTIONS SHORT.**
+
+**What this row actually is.** Not a section: a chapter divider, like row 36. Its
+chapter is built to hold FOUR cards, and **only two of them were ever written into
+this file.** "What customers earn here" and "Rent against income" have been in the
+page since it was built and have never had a row. They have numbers now, 38a and
+38b, placed where they belong rather than appended, and **neither was touched this
+iteration.**
+
+**The divider's own guard is sound, and I can say exactly how narrowly.**
+Rendered eight real cities and measured what follows each chapter heading:
+this chapter carries between 67 and 132 characters on every one of them, so it
+never opens onto nothing. But the guard passes on the presence of a *proxy field*
+rather than on whether any card will draw, and it survives only because every city
+happens to hold that field. **Correct by coincidence, not by construction. Third
+of these now**, after row 35's crowding and row 38's neighbouring bar.
+
+**What was wrong, measured.** The two right-hand cards sit in a container that
+splits the row between them. **Both can leave, and the container was drawn
+anyway.** On seven of the eight cities it ended the chapter holding nothing, and
+the spacing above it still applied. Measured in a browser, not eyeballed: the
+Tokyo chapter is **260 pixels tall before and 244 after** at phone width, **239 and
+223** at both wider sizes. **Sixteen pixels of nothing, at every width.** London,
+where one half does draw, measures identical to the pixel before and after.
+
+**The fix is written as "hide me if I am empty" rather than as a list of
+conditions**, on purpose: the two cards decide for themselves whether to draw, and
+any condition restated on the container would be a copy of their guards, free to
+drift from them. It cannot hide a container that has anything in it.
+
+**MY OWN SHEET CANCELLED THE FIX IT WAS DRAWN TO SHOW.** The first draft tinted
+the empty container pink to point at it. That tint outranked the fix, forced the
+container back on in **both** cards, and the two then measured identically at 244
+pixels, which I nearly reported as "no change". The tint is gone and the gap is
+shown by the outline and the measured heights instead. **Fifth false measurement
+this loop, and the first that would have hidden a real result rather than invented
+one.**
+
+**What the chapter actually contains on a real page, and it is thin.** The
+spending pool: omitted everywhere (row 38). How seasonal it is: drawn. What
+customers earn: **London only**. Rent against income: **nowhere, London
+included.** So a heading promising who buys and when opens, on seven of eight
+cities, onto a single small card showing what share of the town is visitors. **The
+heading is authored copy and was not rewritten**, on the same reasoning as row
+36's dead props: the words are a ratified choice and changing them is not this
+loop's call.
+
+**Gates: 114 passed, 0 failed.** Typecheck clean. Reader text byte-identical on
+both cities; the only markup change is one rule.
+
 **Row 38, 2026-08-23. A CARD THAT DREW ITS TITLE AND NOTHING ELSE, on every city
 page checked.**
 
@@ -1249,7 +1299,9 @@ The ledger order needs no change. Row 33 is one of the twelve.
 | 36 | ~~What space costs~~ chapter divider, and the whole spine heading system | **VERIFIED, FIXED** | **DONE-KEPT** |
 | 37 | The lease terms | fact table | **VERIFIED: reaches no reader** | **DONE-KEPT** |
 | 38 | The spending pool | figure group | **VERIFIED: an empty card** | **DONE-KEPT, guarded** |
-| 39 | Who buys, and when | mixed | NOT CHECKED | TODO |
+| 38a | What customers earn here | income curve | **NEVER LISTED. Reaches London only** | TODO |
+| 38b | Rent against income | ratio rail | **NEVER LISTED. Reaches no reader** | TODO |
+| 39 | ~~Who buys, and when~~ chapter divider, and the container at its foot | **VERIFIED: a rail drawn around nothing** | **DONE-KEPT, guarded** |
 | 40 | How seasonal it is | month bars | NOT CHECKED | TODO |
 | 41 | Lowest bar to entry | featured card | NOT CHECKED | TODO |
 | 42 | Next-easiest, and the cost to open | plain table | NOT CHECKED | TODO |
@@ -1336,7 +1388,12 @@ starts from a block instead of another hand-built form.
 
 ## The count
 
-64 rows, one of them void. **6 replaced or retired, 26 kept with evidence, 13 blocked, 18 to go.**
+66 rows, one of them void. **6 replaced or retired, 27 kept with evidence, 13 blocked, 19 to go.**
+
+**The count went UP by two on 2026-08-23.** Row 39 turned out to be a chapter
+divider whose chapter holds four cards, and only two of them were ever written
+into this file. The missing pair is listed as 38a and 38b rather than by
+renumbering, so every number already used in this file still points where it did.
 
 Thirteen blocked: twelve on missing data, and now ONE on a design decision that
 is the founder's to make.

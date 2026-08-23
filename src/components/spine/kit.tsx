@@ -562,8 +562,17 @@ export const Even = Row;
  * legend, KV rows. Rulebook v2 S7: a chart must explain itself by its form (direct labels,
  * axis units, a one-line legend); the rail beside it is NEVER an explanatory paragraph. If
  * the rail content is a paragraph, the chart's own labeling is the thing to fix. */
+/* `empty:hidden` because BOTH FLANKS CAN SELF-OMIT AND THE RAIL STILL DREW. Every
+   card in the spine leaves when its figures are absent, which is right, and this
+   container had no matching behaviour: on seven of eight real city pages the
+   customers chapter ended with a rail holding nothing, and its parent's spacing
+   still gave it a gap. A reader saw dead space at the foot of the chapter. The
+   guard is CSS rather than a count of children on purpose: the flanks decide for
+   themselves whether to draw, and any condition restated here would be a copy of
+   their guards, free to drift from them. `:empty` cannot drift and cannot hide a
+   rail that has anything in it. */
 export function WideRail({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-4 md:flex-row md:items-stretch [&>*:first-child]:md:flex-[3] [&>*:last-child]:md:flex-[2] [&>*]:flex-1">{children}</div>;
+  return <div className="flex flex-col gap-4 empty:hidden md:flex-row md:items-stretch [&>*:first-child]:md:flex-[3] [&>*:last-child]:md:flex-[2] [&>*]:flex-1">{children}</div>;
 }
 /* T4 , 3-up: exactly three small homogeneous reads (never two Triptychs in a row). */
 export function Triptych({ children }: { children: React.ReactNode }) {
