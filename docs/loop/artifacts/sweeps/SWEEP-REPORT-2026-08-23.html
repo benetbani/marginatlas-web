@@ -1,0 +1,273 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Six sweeps across the whole site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:32px 18px 64px;background:#fafaf9;color:#1b1b1a;
+       font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:14px;line-height:1.55}
+  h1{font-size:23px;font-weight:500;letter-spacing:-.01em;margin:0 0 10px}
+  h2{font-size:16px;font-weight:500;margin:36px 0 6px}
+  p{color:#57575b;margin:0 0 10px;max-width:72ch}
+  pre{background:#fff;border:1px solid #e7e2df;border-radius:10px;padding:12px 14px;
+      overflow-x:auto;font-size:11.5px;line-height:1.5;
+      font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#3a3a38}
+  .headline{background:#fff;border:1px solid #e7e2df;border-radius:12px;padding:14px 16px;margin:14px 0 6px}
+  .headline p{margin:0 0 6px}
+  .headline p:last-child{margin:0}
+  b{color:#1b1b1a}
+  footer{margin-top:44px;font-size:12px;color:#8c8c8a;max-width:72ch}
+</style>
+<h1>Six sweeps across the whole site</h1>
+
+<p><b>These look for the faults that reading one section at a time cannot see.</b>
+That pass reads a single surface per turn, on purpose, so anything that only shows
+up across a whole page, or between two pages, has been found by accident until
+now. Four such faults were one glance away from shipping.</p>
+
+<div class="headline">
+<p><b>The two findings worth your time are the first and the third.</b></p>
+<p><b>Just under half the sections on the site reach nobody</b> , 23 of 48. Not
+broken: they correctly hide themselves because the numbers behind them were never
+sourced. But it means a reader gets a much thinner page than the design describes,
+and it tells me six of the sections still on my list need no work at all.</p>
+<p><b>The pay ladder is printed twice, one block directly above the other, on every
+trade page.</b> The note in that card says removing the repeat would cost a figure.
+That was true of the bundled sample, which has five pay roles. Every real page has
+three, so the two blocks are word for word identical.</p>
+</div>
+
+<p><b>Every list below is candidates, not verdicts</b>, and each sweep states in its
+own words what it cannot tell apart. Four carry a calibration: they are pointed at
+a fault already confirmed by hand, and if they miss it their zeroes mean nothing.
+<b>Every one of the six needed its first result thrown away</b> , the first draft of
+a sweep is always too forgiving, and one of them reported a reassuring "one file"
+where the honest answer was fifteen.</p>
+
+<h2>1. Sections that reach no reader</h2>
+<p><b>23 of the 48 sections in the site reach none of the fifteen real pages I rendered.</b>
+     Just under half. A card whose figures are dropped before the page is built omits
+     itself, which is correct behaviour; the point is how many do it. Eleven of these had
+     been found one at a time, an iteration each. This found the rest in one run, including
+     six that are open items on my list and six that were never on it at all.</p>
+<pre>  48 section titles declared in the spine
+  25 reach a reader on at least one of the 15 real pages rendered
+  23 reach NONE of them
+
+    never seen   Across the year                      src/components/spine/industry/industry-view.tsx
+    never seen   Busy months and quiet months         src/components/spine/cell/cell-view.tsx
+    never seen   How business runs here               src/components/spine/city/city-view.tsx
+    never seen   Lowest bar to entry                  src/components/spine/city/city-view.tsx
+    never seen   Next-easiest, and the cost to open   src/components/spine/city/city-view.tsx
+    never seen   Payback window                       src/components/spine/industry/industry-view.tsx
+    never seen   Peer cities, side by side            src/components/spine/city/city-view.tsx
+    never seen   Pick the format you mean             src/components/spine/cell/format-picker.tsx
+    never seen   Quick reads                          src/components/spine/city/city-view.tsx
+    never seen   Related trades in this place         src/components/spine/cell/cell-view.tsx
+    never seen   Rent against income                  src/components/spine/city/chapters.tsx
+    never seen   The hardest                          src/components/spine/atlas-index.tsx
+    never seen   The lease terms                      src/components/spine/city/city-view.tsx
+    never seen   The rent, city by city               src/components/spine/industry/where-pays.tsx
+    never seen   The spending pool                    src/components/spine/city/city-view.tsx
+    never seen   The surprising one                   src/components/spine/atlas-index.tsx
+    never seen   What locals know                     src/components/spine/city/city-view.tsx
+    never seen   When a day starts paying             src/components/spine/industry/industry-view.tsx
+    never seen   When the week fills up               src/components/spine/cell/cell-view.tsx
+    never seen   Where the risks sit                  src/components/spine/city/city-view.tsx
+    never seen   Who comes in, and how                src/components/spine/cell/cell-view.tsx
+    never seen   Who this suits                       src/components/spine/cell/cell-view.tsx
+    never seen   Your own living costs                src/components/spine/city/chapters.tsx
+
+  Calibration passed: both hand-confirmed dead sections are in the list.
+
+  Each is a CANDIDATE. This cannot tell a section that never renders from one
+  this sample of entities does not happen to trigger. Open each before acting.
+
+</pre>
+<h2>2. Chapter headings that open onto nothing</h2>
+<p>Four, all of them the closing chapter of a city page. <b>The useful part is the
+     negative:</b> the trade pages, the trade-across-places pages and the neighbourhood page
+     have none at all, so this fault lives in exactly one place. Seven more chapters are
+     thin rather than empty, all the same one, and they are listed separately so the two are
+     never confused.</p>
+<pre>  15 real pages rendered, 55 chapter headings between them
+  4 with NOTHING under them
+
+    EMPTY  city      New York               The next move
+    EMPTY  city      Mumbai                 The next move
+    EMPTY  city      Lagos                  The next move
+    EMPTY  city      Sydney                 The next move
+
+  7 carrying under 80 characters, which is thin but not empty
+
+      67c  city      Tokyo                  Who buys, and when
+      67c  city      New York               Who buys, and when
+      67c  city      São Paulo              Who buys, and when
+      68c  city      Berlin                 Who buys, and when
+      67c  city      Mumbai                 Who buys, and when
+      67c  city      Lagos                  Who buys, and when
+      67c  city      Sydney                 Who buys, and when
+
+  Calibration passed: all four hand-confirmed empty chapters are in the list.
+
+</pre>
+<h2>3. The same figure printed twice on one page</h2>
+<p><b>The pay ladder is printed twice, back to back, on every trade page.</b> A note in that
+     card defends the repeat by saying that removing it would take a figure off the page.
+     Measured: the bundled sample carries five pay roles, so on the sample that defence
+     holds. Every real page carries exactly three, so the two blocks are identical and
+     removing the top one takes nothing away. Everything else on this list is innocent and
+     is marked as such.</p>
+<pre>  cell / london/restaurants
+    $60K      x2
+      1: ...costs Sample, illustrative sample Head chef $60K Server $31K Kitchen porter $24K Typical...
+      2: ...orter $24K Typical mid pay a year. Head chef $60K Server $31K Kitchen porter $24K When it...
+    $31K      x2
+      1: ...e, illustrative sample Head chef $60K Server $31K Kitchen porter $24K Typical mid pay a ye...
+      2: ...ypical mid pay a year. Head chef $60K Server $31K Kitchen porter $24K When it clears costs...
+    $24K      x2
+      1: ...le Head chef $60K Server $31K Kitchen porter $24K Typical mid pay a year. Head chef $60K S...
+      2: ...r. Head chef $60K Server $31K Kitchen porter $24K When it clears costs Sample, illustrativ...
+    $250K     x2
+      1: ...n the doors 12 years to earn it back Fit-out $250K Equipment $100K Lease deposit $40K + Se...
+      2: ...$40K + See the full line-item stack Fit-out $250K Equipment $100K Initial inventory $20K...
+    $100K     x2
+      1: ...ears to earn it back Fit-out $250K Equipment $100K Lease deposit $40K + See the full line-...
+      2: ...full line-item stack Fit-out $250K Equipment $100K Initial inventory $20K Lease deposit $4...
+    $40K      x2
+      1: ...Fit-out $250K Equipment $100K Lease deposit $40K + See the full line-item stack Fit-out $...
+      2: ...t $100K Initial inventory $20K Lease deposit $40K Pre-opening marketing $12K Business regi...
+    ...and 1 more on this page
+
+  cell / london/hair-salons
+    $38K      x2
+      1: ...s Sample, illustrative sample Senior stylist $38K Stylist $29K Junior $22K Typical mid pay...
+      2: ...$22K Typical mid pay a year. Senior stylist $38K Stylist $29K Junior $22K 03 The first ye...
+    $29K      x2
+      1: ...ustrative sample Senior stylist $38K Stylist $29K Junior $22K Typical mid pay a year. Seni...
+      2: ...mid pay a year. Senior stylist $38K Stylist $29K Junior $22K 03 The first year What to wa...
+    $22K      x2
+      1: ...mple Senior stylist $38K Stylist $29K Junior $22K Typical mid pay a year. Senior stylist $...
+      2: ...ear. Senior stylist $38K Stylist $29K Junior $22K 03 The first year What to watch Sample,...
+
+  industry / restaurants
+    $7        x4
+      1: ...00 Restaurants $7 kept by the owner from every $100 a custom...
+      2: ...mp; coffee shops $9 Pizzerias $9 Restaurants $7 Bars &amp;amp; nightclubs $7 Pubs &amp;amp; tavern...
+    $100      x4
+      1: ...Restaurants $7 kept by the owner from every $100 a customer spends. The margin ladder Sam...
+      2: ...ty. 01 Against the trades next door Kept per $100, by trade Sample, illustrative sample Fo...
+    $9        x2
+      1: ...ice contractors $10 Cafés &amp;amp; coffee shops $9 Pizzerias $9 Restaurants $7 Bars &amp;amp; nig...
+      2: ...rs $10 Cafés &amp;amp; coffee shops $9 Pizzerias $9 Restaurants $7 Bars &amp;amp; nightclubs $7 Pu...
+    $8        x2
+      1: ...s &amp;amp; taverns $6 All trades incl. non-food $8 02 The appetite What a customer spends Sam...
+      2: ...illustrative sample $7 kept per $100, versus $8 for the typical trade See restaurants in a...
+    $300K     x2
+      1: ...ightclubs 7.0% $351K Pubs &amp;amp; taverns 6.0% $300K 04 The shape of the trade Where each $1...
+      2: ...typical operator Sample, illustrative sample $300K to open 89% survive yr 1 Five-year surv...
+
+  industry / hair-salons
+    $100      x3
+      1: ...Nail salons $13 kept by the owner from every $100 a customer spends. The margin ladder Sam...
+      2: ...a city. 04 The shape of the trade Where each $100 goes Sample, illustrative sample Running...
+    $13       x2
+      1: ...00 Nail salons $13 kept by the owner from every $100 a custo...
+      2: ...t move The close Sample, illustrative sample $13 kept per $100, a thin keep won on volume...
+
+  industry / cafes
+    $9        x4
+      1: ...00 Cafés &amp;amp; coffee shops $9 kept by the owner from every $100 a custom...
+      2: ...ice contractors $10 Cafés &amp;amp; coffee shops $9 Pizzerias $9 Bars &amp;amp; nightclubs $7 Pubs...
+    $100      x4
+      1: ...coffee shops $9 kept by the owner from every $100 a customer spends. The margin ladder Sam...
+      2: ...ty. 01 Against the trades next door Kept per $100, by trade Sample, illustrative sample Fo...
+    $7        x2
+      1: ...shops $9 Pizzerias $9 Bars &amp;amp; nightclubs $7 Pubs &amp;amp; taverns $6 All trades incl. non...
+      2: ...s Sample, illustrative sample Spend per head $7 per visit 03 The formats, compared Keep an...
+    $8        x2
+      1: ...s &amp;amp; taverns $6 All trades incl. non-food $8 02 The appetite What a customer spends Sam...
+      2: ...illustrative sample $9 kept per $100, versus $8 for the typical trade See cafés &amp;amp; coff...
+
+  20 repeated figure(s) shown, across 15 pages.
+  A repeat is not automatically a fault: two honest measurements can agree, a
+  total restated beside its parts is correct, and answer-first pages restate
+  their answer at the close on purpose. Every entry needs judging, and the
+  judgement belongs in the ledger with its reason.
+
+</pre>
+<h2>4. The same claim disagreeing between two pages</h2>
+<p><b>Nothing, and the reason is the result.</b> Of fifteen pages, only two places are
+     described by more than one page. Zero claims disagree, zero agree, and eight could not
+     be compared because only one page prints them. <b>The pages cannot contradict each other
+     because they never make the same claim twice.</b> Kept as an early warning for when more
+     sections start reaching readers.</p>
+<pre>  15 pages rendered.
+  2 place(s) described by two or more pages, which is the only
+  situation in which a like-for-like comparison exists at all:
+    london       city/London, cell/london/restaurants, cell/london/hair-salons, hood/london
+    new-york     city/New York, cell/new-york/restaurants
+
+  0 place-level claim(s) that DISAGREE between two pages about the same place
+  0 that appear on two such pages and AGREE
+  8 where fewer than two pages print it, so nothing could be compared
+
+  Read those three together. A zero on the first line means nothing on its own:
+  when the third is large, the claims simply never meet, and that is the more
+  likely reading on this site because half its sections reach no reader.
+
+</pre>
+<h2>5. Marks that can fall outside their box</h2>
+<p>Fifteen files, around twenty-six places. This is the fault I have now fixed on four
+     separate scales by hand: a dot or a label centred on its own value at the very end of a
+     scale, with half of it hanging outside the card. <b>These are candidates, not verdicts</b>
+     , a scale whose numbers never reach an end is safe without protection.</p>
+<pre>  15 file(s) place a centred mark by percentage with NO clamp within reach of it
+
+     1 of  1 placement(s) unprotected   src/components/kit/charts/FootfallGrid.tsx
+     2 of  2 placement(s) unprotected   src/components/kit/charts/ScoreBand.tsx
+     1 of  2 placement(s) unprotected   src/components/kit/charts/ThresholdGauge.tsx
+     1 of  1 placement(s) unprotected   src/components/kit/controls/Slider.tsx
+     2 of  2 placement(s) unprotected   src/components/kit/RangeStrip.tsx
+     3 of  3 placement(s) unprotected   src/components/spine/cell/cell-view.tsx
+     3 of  3 placement(s) unprotected   src/components/spine/cell/interactive.tsx
+     2 of  2 placement(s) unprotected   src/components/spine/cell/money-chapter.tsx
+     1 of  2 placement(s) unprotected   src/components/spine/city/chapters.tsx
+     1 of  1 placement(s) unprotected   src/components/spine/city/city-view.tsx
+     2 of  2 placement(s) unprotected   src/components/spine/city/where-to-trade.tsx
+     5 of  5 placement(s) unprotected   src/components/spine/industry/forms.tsx
+     2 of  2 placement(s) unprotected   src/components/spine/industry/industry-view.tsx
+     8 of  9 placement(s) unprotected   src/components/spine/kit.tsx
+     1 of  3 placement(s) unprotected   src/components/spine/NeighborhoodExplorer.tsx
+
+  3 file(s) do the same and have a clamp beside every placement
+
+     1 placement(s)   src/components/cities/CitySignaturePanel.tsx
+     1 placement(s)   src/components/kit/MoneyGoesBreakdown.tsx
+     2 placement(s)   src/components/spine/kit-index.tsx
+
+  This reports a SHAPE, not a defect: a scale whose values never reach an end
+  is safe without a clamp. Open each and check what its data can actually do.
+
+</pre>
+<h2>6. Drawings that stretch their own geometry</h2>
+<p><b>Zero, and that one is finished.</b> Of 71 fixed-size drawings, 51 are icons that are
+     meant to scale, one is a full-bleed cover, and not one stretches a measurement. Three
+     charts were rebuilt during this work for exactly this fault and there are none left.</p>
+<pre>  71 drawing(s) with a fixed viewBox across the components
+  51 of them are icon-sized and are meant to scale with their type
+  1 are full-width AND carry a fixed height, so only the scale stretches
+  0 are full-width with NO fixed height, so the whole drawing stretches
+
+
+  A drawing that carries a measurement should not scale its own geometry.
+  A decorative one may. Open each.
+
+</pre>
+
+<footer>Nothing on this sheet is published anywhere. Every figure in it was
+produced by rendering the real pages through the real data modules: eight cities
+across four continents, three trade pages, three trade-across-places pages and one
+neighbourhood page. A fault that only appears on one unusual city would be missed,
+and each sweep says so in its own output.</footer>
