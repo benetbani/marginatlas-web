@@ -9,6 +9,23 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  // THE REBUILT PAGES, SWITCHED ON HERE RATHER THAN IN A DASHBOARD (2026-08-24).
+  // These four gates decide whether a reader gets the rebuilt trade, city,
+  // trade-across-places and neighbourhood pages or the older ones. They default
+  // OFF, and production was serving the older pages: verified by fetching the
+  // live site, which carried no spine markers at all.
+  //
+  // They live here, in the repo, instead of as dashboard settings, for the same
+  // reason the build command belongs here: a setting nobody can read from the
+  // code is a setting nobody can check. A value set in the Vercel dashboard
+  // still wins over this block, so nothing is taken away by putting them here.
+  env: {
+    NEXT_PUBLIC_SPINE_REFORM_CITY: "1",
+    NEXT_PUBLIC_SPINE_REFORM_CELL: "1",
+    NEXT_PUBLIC_SPINE_REFORM_INDUSTRY: "1",
+    NEXT_PUBLIC_SPINE_REFORM_HOOD: "1",
+  },
+
 
   // Strip the `X-Powered-By: Next.js` header — small but standard
   // security hardening. Removes a free fingerprint for opportunistic
