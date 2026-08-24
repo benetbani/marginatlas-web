@@ -491,7 +491,7 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
 
      §29A, pinned: worse reads low and left, better high and right, and a COST is
      inverted before rendering so high = good on every scale in the band. Cost of
-     living is therefore flipped: a cheap city ranks HIGH on "Affordable space".
+     living is therefore flipped: a cheap city ranks HIGH on "Cost of living".
 
      §5 is respected: no per-district keep ranking, no derived crowding score. The
      baseline's "Room to enter" read was a crowding score and stays deleted.
@@ -520,7 +520,25 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       left: "Thin", right: "Deep", words: ["Thin", "Modest", "Solid", "Deep"] },
     { key: "income", label: "Customer income", pos: rankPct(city.avg_gross_salary_usd_year, "avg_gross_salary_usd_year"),
       left: "Modest", right: "High", words: ["Modest", "Middling", "Comfortable", "High"] },
-    { key: "rent_relief", label: "Affordable space", pos: rankPct(city.cost_of_living_index, "cost_of_living_index", true),
+    /* RENAMED 2026-08-24, and it was my own mislabel from two iterations earlier.
+       This read is built on the cost index, and that file describes itself as
+       "Cost-of-Living Plus Rent Index per city, NYC = 100". It measures what it
+       costs a PERSON to live somewhere. Calling it "Affordable space" on a page
+       about opening a business invites the reader to take it for commercial rent,
+       which it is not, and §13 asks for titles that are descriptive and instantly
+       understandable.
+
+       Renaming it also answers a second question the page could not otherwise
+       answer. "Your own living costs" wanted a founder's monthly burn, rent plus
+       groceries plus transport, none of which has a per-city source. This IS that
+       question, measured and already on the page; it was just wearing the wrong
+       name. See design/replacements/owner-runway.md.
+
+       THE SAME INDEX IS MISLABELLED ONCE MORE ON THIS PAGE, in the peer strip,
+       which calls it "Rent against peer cities" inside a chapter called "What
+       space costs". Not touched here, because that is its own section and its own
+       iteration, and it is recorded as the next row. */
+    { key: "rent_relief", label: "Cost of living", pos: rankPct(city.cost_of_living_index, "cost_of_living_index", true),
       left: "Costly", right: "Cheap", words: ["Costly", "Dear", "Fair", "Cheap"] },
     { key: "talent", label: "Talent pool", pos: rankPct(city.hdi, "hdi"),
       left: "Scarce", right: "Deep", words: ["Scarce", "Thin", "Solid", "Deep"] },
