@@ -1,6 +1,17 @@
 /**
  * build_final_pages , render the four rebuilt page types whole, with the real
  * stylesheet, into standalone files the founder can open.
+ *
+ * WHAT THESE FILES CANNOT SHOW, and it has already misled me once. They are STATIC
+ * markup with no React runtime. Anything that draws itself in the browser draws
+ * nothing here: the money waterfall on the trade page is a chart library that
+ * measures the DOM, so its card appears EMPTY in every one of these previews
+ * whether or not it is empty on a real page.
+ *
+ * On 2026-08-24 I read that empty card as a defect, diagnosed it, and only caught
+ * the mistake when the SAME test said a card that should draw also did not. Do not
+ * judge a chart card from these files. Judge data from the data, and charts from a
+ * running page.
  */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";

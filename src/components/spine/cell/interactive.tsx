@@ -174,20 +174,35 @@ export function Wages({ d }: { d: any }) {
              hears. A sighted reader gets a bracket on a scale with no numbers on
              it, so neither end of the spread can be recovered. Printing them
              would add text to the card.
-          2. The three figures at the top of this card are printed AGAIN in the
-             rows below it, because the top block takes the first three roles and
-             the rows take all of them. Removing the repeat takes a figure off
-             the page. */}
+          2. RESOLVED 2026-08-24, and the note that stood here was measured and
+             found false. It read: "the three figures at the top are printed AGAIN
+             in the rows below, because the top block takes the first three roles
+             and the rows take all of them. Removing the repeat takes a figure off
+             the page."
+
+             That holds on the BUNDLED SAMPLE, which carries five roles, so the top
+             block previews three of five. EVERY REAL PAGE CARRIES EXACTLY THREE.
+             The two blocks were therefore word for word identical on every page a
+             reader can reach, and removing the top one takes nothing off the page
+             at all.
+
+             So the preview is now CONDITIONAL: it draws only when it actually
+             previews something, which is when more roles exist than it shows. On
+             the sample nothing moves. On a real page the duplicate is gone. */}
       {/* the three mid-pay figures, first (the at-a-glance read) */}
-      <div className="mt-1 space-y-1.5">
-        {roles.slice(0, 3).map((r) => (
-          <div key={r.role} className="flex items-baseline justify-between gap-3">
-            <span className="min-w-0 truncate text-[length:var(--t-small)] text-[var(--c-ink2)]">{r.role}</span>
-            <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
+      {roles.length > 3 ? (
+        <>
+          <div className="mt-1 space-y-1.5">
+            {roles.slice(0, 3).map((r) => (
+              <div key={r.role} className="flex items-baseline justify-between gap-3">
+                <span className="min-w-0 truncate text-[length:var(--t-small)] text-[var(--c-ink2)]">{r.role}</span>
+                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Typical mid pay a year.</div>
+          <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Typical mid pay a year.</div>
+        </>
+      ) : null}
       {/* the full spread, always visible: track-free range brackets (low tick, high tick, mid dot) */}
       <div className="mt-3 space-y-3 border-t border-[var(--c-border)] pt-3">
         {roles.map((r) => {
