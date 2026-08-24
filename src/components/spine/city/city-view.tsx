@@ -206,19 +206,38 @@ export function CommercialSpace({ d }: { d: any }) {
     : [];
   const peerSample = d.peers?._meta?.confidence === "placeholder" || d.peers?._meta?.confidence === "modeled";
   const spaceSample = s._meta?.confidence === "placeholder" || s._meta?.confidence === "modeled";
-  // The left kicker is "Rent against peer cities" , NOT a restatement of the chapter
-  // title "What space costs" (§11/§13, the double-title defect). The verdict caption
-  // (peer_read) and the terms prose (terms_note) are DELETED (§14/§19/§26); the finding
-  // lives on the marker strip. Both boxes carry the modeled tag (§4).
+  /* RENAMED 2026-08-24. This strip called itself "Rent against peer cities" and it
+     is not built on rent. It is built on the same index as the conditions card,
+     which describes itself in its own data file as "Cost-of-Living Plus Rent Index
+     per city, NYC = 100": what it costs a PERSON to live somewhere, rent included.
+     Sitting inside a chapter called "What space costs", a reader takes it for the
+     rent on their shop. §13 asks for titles that are descriptive and instantly
+     understandable, and this one was neither.
+
+     Second of two. The sibling read in the conditions card carried the same
+     mislabel, as "Affordable space", and was renamed one iteration earlier. Both
+     came from the same mistake: reading the field's NAME, rent_index, instead of
+     the file that fills it.
+
+     THE CHAPTER HEADING IS NOW THE ODD ONE OUT and it is NOT changed here. "What
+     space costs" holds exactly one card and that card is about the cost of living.
+     The page carries no commercial-space figure at city level at all, which was
+     established when the lease terms were replaced. Chapter headings are ratified
+     copy, so the mismatch is recorded for the founder rather than rewritten: the
+     honest options are to rename the chapter to what it holds, or to fold this card
+     into the conditions chapter and let the chapter go.
+
+     The verdict caption (peer_read) and the terms prose (terms_note) stay DELETED
+     (§14/§19/§26); the finding lives on the marker strip. */
   return (
     <WideRail>
       <Box>
-        <Rail icon="commercial-rent" kicker="Rent against peer cities" sample={peerSample} />
+        <Rail icon="commercial-rent" kicker="Cost of living against peer cities" sample={peerSample} />
         {/* the peer dot strip below (home city = 0) IS the pressure read; no second scale. */}
         {/* peers on ONE axis. Only rendered when at least two peers carry a real rent index. */}
         {hasPeerStrip ? (
           <div className="mt-2 border-t border-[var(--c-border)] pt-3">
-            <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Against {d.meta?.city}, in percentage points<InfoTip gloss={`A percentage point is the plain gap between two percentages: a peer at -22pp pays 22 points less than the ${d.meta?.city} rent level.`} /></div>
+            <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Against {d.meta?.city}, in percentage points<InfoTip gloss={`What it costs a person to live in each city, rent included, set against ${d.meta?.city}. A percentage point is the plain gap between two percentages: a peer at -22pp sits 22 points below the ${d.meta?.city} level. It is not the rent on a shop.`} /></div>
             <div className="relative h-[76px]" role="img" aria-label={`Rent against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta)}`).join(", ")}`}>
               <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[var(--c-line-strong)]" />
               {peers.map((p: any, i: number) => {
