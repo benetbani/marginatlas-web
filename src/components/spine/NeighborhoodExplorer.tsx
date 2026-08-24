@@ -647,13 +647,45 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, pl
     const rents = withGeo.map((d) => d.rent_mult);
     const hi = Math.max(...rents);
     const span = Math.max(0.01, hi - Math.min(...rents));
+    /* THE SUB-LABEL IS THE DISTRICT'S PLACE IN THE RANKING, not its side of the
+       city rate, and the reason is measured rather than stylistic.
+
+       It used to read "rent runs lighter/heavier than the city". Every London
+       district is above the city rate, so all seven chips read the SAME SEVEN
+       WORDS, and London is the only city in the repository that carries
+       districts at all: counted 2026-08-24, eleven other cities return none. So
+       that label was identical for every district on every page it can appear
+       on. Rulebook v2 §7, a grade that reads the same for everyone is noise.
+
+       Worse, it contradicted the page around it. The masthead leads with "RENT
+       RUNS LIGHTEST, x1.20 South London" and the strip beneath is "ranked by
+       rent load, lightest first" , and then South London's own chip said rent
+       runs HEAVIER. Both were true against different reference points and no
+       reader can hold that.
+
+       Rank is not a new metric (§0): it is the strip's own row number, which is
+       already on the page directly above these chips. The multiple is not
+       repeated here because the pin already carries it as its figure and the
+       strip carries it for every row. */
+    const order = [...districts].sort((a, b) => a.rent_mult - b.rent_mult).map((d) => d.slug);
+    const total = order.length;
+    const ordinal = (n: number) => {
+      const t = n % 100;
+      const suffix = t >= 11 && t <= 13 ? "th" : n % 10 === 1 ? "st" : n % 10 === 2 ? "nd" : n % 10 === 3 ? "rd" : "th";
+      return `${n}${suffix}`;
+    };
     return withGeo.map((d) => {
       const rent = d.rent_mult;
+      const rank = order.indexOf(d.slug) + 1;
+      const place =
+        rank === 1 ? `lightest of ${total}`
+        : rank === total ? `heaviest of ${total}`
+        : `${ordinal(rank)} lightest`;
       return {
         name: d.name, slug: d.slug, lat: d.lat as number, lng: d.lng as number,
         signal: 20 + ((hi - rent) / span) * 80, // lightness of the lease, on the 0..100 dot-size scale
         signalLabel: `rent x${rent.toFixed(2)}`,
-        sub: rent < 1 ? "rent runs lighter than the city" : rent > 1 ? "rent runs heavier than the city" : "rent runs at the city rate",
+        sub: rank > 0 ? place : undefined,
         tone: rent < 1 ? ("terra" as const) : ("ink" as const),
       };
     });
@@ -678,7 +710,15 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, pl
               fitPadding={36}
               ariaLabel="District map"
               onSelect={(p) => p.slug && setSelected(p.slug)}
-              legendLabel="Dot size = how light the rent runs; terracotta = lighter than the city"
+              /* THE LEGEND ONLY NAMES A COLOUR THAT IS ON THE MAP. Terracotta
+                 marks a district below the city rate, and no London district is,
+                 so the legend promised a colour a reader could never find. It is
+                 built from the points rather than typed. */
+              legendLabel={
+                points.some((p) => p.tone === "terra")
+                  ? "Dot size = how light the rent runs; terracotta = lighter than the city"
+                  : "Dot size = how light the rent runs; the biggest dot is the lightest lease"
+              }
             />
           </div>
           {mapNote ? <p className="px-1 pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
