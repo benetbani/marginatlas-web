@@ -595,15 +595,29 @@ function CityPeers({ d }: { d: any }) {
  * district set. The Pro teaser omits when no teaser is held; in review builds the veil
  * renders unlocked (rulebook v1 §45). */
 function Close({ d }: { d: any }) {
+  /* THE PICK WAS CHOSEN BY A BANNED SCORE, which is worse than displaying one: it
+     silently decided what the whole page recommends. It sorted trades by the
+     break-in score, and reading the module that produces that score shows it
+     blends payback, built on per-city trade take-home, with a term its own
+     comment labels "ROOM (crowding)". §5 bans both at city altitude. It also
+     surfaced dental practices, which §32 names as the example of an
+     out-of-context trade, because dental happened to score highest.
+
+     §41 prescribes the remedy: reframe to the defensible neighbour before
+     deleting. The defensible half was always the second one. The lightest-rent
+     district is a real measurement from the district engine, it is the question
+     the page spent six chapters building toward, and it needs no ranking of
+     trades. The trades themselves sit one section above, as a funnel with no
+     ranking (§24). */
   const list: any[] = d.where_to_trade?.list ?? [];
-  const trades: any[] = d.trades?.list ?? [];
-  const pick = trades.filter((t: any) => t.break_in_0_100 != null).slice().sort((a: any, b: any) => (b.break_in_0_100 ?? 0) - (a.break_in_0_100 ?? 0))[0];
   const lightest = list.length > 0 ? list.slice().sort((a, b) => a.rent_mult - b.rent_mult)[0] : null;
-  // Nothing to hand off: no ease-ranked trade AND no district set.
-  if (!pick && !lightest) return null;
+  if (!lightest) return null;
   const teaser: string[] = d.where_to_trade?.pro_teaser ?? [];
-  const title = [pick?.name, lightest ? `in ${lightest.name}` : null].filter(Boolean).join(", ");
-  const sample = ["placeholder", "modeled", "mixed"].includes(d.trades?._meta?.confidence);
+  const title = lightest.name;
+  /* NO SampleTag now, and that is a change a reader sees. The tag was keyed to the
+     TRADES block, whose confidence is "mixed", and the trades are gone from this
+     card. What is left is the district rent multiple, from the real district
+     engine, so §4A does not ask for a tag on it. */
   // ONE accent: terracotta rides ONLY the $60K cost answer (§37). The kicker, the link,
   // and the card frame drop to neutral; the hand-holding prose ("Start there, then...")
   // is DELETED (§19). The two figures + the link carry the pick; the cost is tagged (§4).
@@ -614,17 +628,17 @@ function Close({ d }: { d: any }) {
         {/* the decision the whole page built toward */}
         <div className="flex flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] p-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The {d.meta?.city} pick</span>
-            {sample ? <SampleTag /> : null}
+            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where to start looking in {d.meta?.city}</span>
           </div>
           <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{title}</div>
-          {(pick?.cost_to_open_usd != null || lightest) ? (
-            <div className="mt-3 flex flex-wrap gap-6 border-t border-[var(--c-border)] pt-3">
-              {pick?.cost_to_open_usd != null ? <div><Fig className="text-[length:var(--t-sub)] text-[var(--terra-text)]">{k(pick.cost_to_open_usd)}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">cost to open the doors</div></div> : null}
-              {lightest ? <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{lightest.rent_mult}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div> : null}
-            </div>
-          ) : null}
-          {pick ? <a href={pick.href} className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a> : null}
+          <div className="mt-3 flex flex-wrap gap-6 border-t border-[var(--c-border)] pt-3">
+            <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{lightest.rent_mult}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div>
+            {lightest.character ? <div><div className="text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
+          </div>
+          {/* The destination is the district set, not a trade page. Hover is INK:
+              §37 says the accent never appears on hover, and the link this replaces
+              turned terracotta. */}
+          <a href={`/cities/${d.meta?.slug}/neighborhoods`} className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--c-ink)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See every district &#8594;</a>
         </div>
         {/* the Pro / compare hand-off */}
         <div className="flex flex-col gap-4">
