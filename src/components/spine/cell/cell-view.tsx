@@ -42,6 +42,7 @@ import { Masthead } from "./masthead";
 import { FormatPicker, FormatProvider } from "./format-picker";
 import { OwnerKeeps, BreakEven, CostToOpen } from "./money-chapter";
 import { Nearby, Wages, Risks } from "./interactive";
+import { WhoItSuits } from "@/components/spine/industry/industry-view";
 
 const X: any = spineCellSeed;
 
@@ -627,10 +628,12 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   // chapter has no content, so a promoted-but-thinner page never shows a bare
   // heading over empty space.
   const hasWhoSuits = Array.isArray(d.who_suits?.scales) && d.who_suits.scales.length > 0;
+  const hasTradeCharacter =
+    (d.trade_character?.suits ?? []).length > 0 || (d.trade_character?.think_twice ?? []).length > 0;
   const hasMoneySplit = Array.isArray(d.money_split?.items) && d.money_split.items.length > 0;
   // The break-in density figure now lives in the masthead scorecard (founder D7),
   // so the chapter no longer keys on the old verdict block.
-  const showVerdictChapter = hasWhoSuits || hasMoneySplit;
+  const showVerdictChapter = hasWhoSuits || hasTradeCharacter || hasMoneySplit;
 
   const hasDemand =
     Array.isArray(d.demand?.dayparts) ||
@@ -674,6 +677,13 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           <Movement index={cn()} eyebrow="The verdict" heading="What it takes, and what it pays" icon="gut-check" />
           <div className="space-y-4">
             {hasWhoSuits ? <Row><WhoSuits d={d} /></Row> : null}
+            {/* THE AUTHORED TRADE CHARACTER, connected across altitudes on
+                2026-08-24. The trade-across-places page has rendered this for
+                months from a lookup keyed by trade, 243 activities deep, and this
+                page never asked for it. Its component is imported rather than
+                rebuilt (§0, §44); its accent on the "suits" column is correct
+                under §29A, terracotta marks the good end. */}
+            {hasTradeCharacter ? <Row><WhoItSuits d={{ who_suits: d.trade_character }} /></Row> : null}
             {hasMoneySplit ? <Full><MoneySplit d={d} /></Full> : null}
           </div>
         </>
