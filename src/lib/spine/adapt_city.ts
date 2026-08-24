@@ -543,8 +543,28 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
      columns, so an ODD count leaves one read alone beside a blank half. Five of six
      is the floor and six is the shape; at five the band would be lopsided, which is
      the exact defect §17 names. */
+  /* HOW FAST YOU CAN OPEN, the knowable half of what the lease-terms card asked.
+     See design/replacements/lease-terms.md. §3: the deposit, lease length and
+     rent-free months it wanted are tier 4 with no per-city source, and the SPACE
+     half has no neighbour at all, because the one space field this record carries
+     is already spent twice on the page. The paperwork half is knowable for 235 of
+     252 cities, 93%.
+
+     IT SITS WITH THE CONDITIONS, AND THE FIRST ATTEMPT PUT IT IN THE WRONG PLACE.
+     It rode on the trades block, which is undefined unless a city holds four or
+     more trades with local figures, so on Lagos, Dhaka, New York and Mumbai the
+     figure was carried and reached nobody, which is the exact fault this whole
+     effort exists to fix. Caught by asking what could be wrong with it rather
+     than by any gate. The conditions card renders for every city, and how long
+     the paperwork takes is a condition of the place. */
+  const daysToRegister = isNum(econSnap.daysToStart) ? econSnap.daysToStart : undefined;
+
   const lenses = scales.length >= 5
-    ? { _meta: { confidence: "measured", source: "rank among all cities carried", as_of: "2026-08" }, scales }
+    ? {
+        _meta: { confidence: "measured", source: "rank among all cities carried", as_of: "2026-08" },
+        scales,
+        days_to_register: daysToRegister,
+      }
     : undefined;
 
   /* ============ WHAT TO OPEN HERE, RESTORED AS A FUNNEL BLOCK =============
@@ -591,7 +611,10 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     }));
   /* Below four this reads as a stub rather than a block, and a thin funnel is
      worse than none: it implies the city is barely covered. */
-  const trades_here = tradesHere.length >= 4 ? { list: tradesHere } : undefined;
+  const trades_here =
+    tradesHere.length >= 4
+      ? { list: tradesHere }
+      : undefined;
 
   return {
     meta,

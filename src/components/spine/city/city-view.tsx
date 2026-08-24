@@ -126,6 +126,7 @@ function CityLenses({ d }: { d: any }) {
   const o = d.lenses;
   if (!o || !(o.scales?.length)) return null;
   const scales: any[] = o.scales ?? [];
+  const days: number | undefined = o.days_to_register;
   const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
   // Categorical reads on labeled TIER chips, not continuous markers (FORM-CATALOG Meter
   // do-not: a marker at a precise position fakes precision). The word is the value; the
@@ -151,6 +152,18 @@ function CityLenses({ d }: { d: any }) {
           </div>
         ))}
       </div>
+      {/* HOW FAST YOU CAN OPEN. The knowable half of what the lease-terms card asked
+          (§3, design/replacements/lease-terms.md). Shown as itself: no scale, no
+          position, nothing to invert (§29A). A long registration is a fact about a
+          place, not a judgement of it (§21). */}
+      {days != null ? (
+        <div className="mt-5 flex flex-wrap items-baseline gap-x-3 border-t border-[var(--c-border)] pt-4">
+          <Fig className="text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{days}</Fig>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
+            {days === 1 ? "day" : "days"} to register a business here<InfoTip gloss="The typical time to complete the paperwork for a one-person business in this country. It does not include finding a site, fitting it out, or any licence a particular trade needs." />
+          </span>
+        </div>
+      ) : null}
     </Box>
   );
 }
