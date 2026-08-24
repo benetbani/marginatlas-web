@@ -251,9 +251,17 @@ export function Risks({ d }: { d: any }) {
       <Rail icon="watch" kicker="What to watch" sample />
       <div className="mt-1"><EaseScale rows={rows} endLabels={["Riskier", "Safer"]} /></div>
       <InlineDisclosure name="risks" summary="What each risk does">
-        <div className="mt-2 space-y-2 border-t border-[var(--c-border)] pt-2.5">
+        {/* TWO UP, AND THE REASON IS THE READING MEASURE. Rulebook v2 §17.
+            One item per row gave the note column every pixel the card had:
+            measured at 1280, 898px of card left 750px of note, which is 155
+            CHARACTERS PER LINE at this size, roughly double a comfortable
+            measure and the widest text anywhere in the four pages. Capping the
+            column instead would have left 300px of dead space on every row,
+            which §17 forbids in the same breath. Two columns spend the width on
+            a second item rather than on air, and take the measure to about 60. */}
+        <div className="mt-2 grid gap-x-7 gap-y-2.5 border-t border-[var(--c-border)] pt-2.5 sm:grid-cols-2">
           {arr.map((r) => (
-            <div key={r.name} className="grid grid-cols-[120px_1fr] items-baseline gap-3">
+            <div key={r.name} className="grid grid-cols-[104px_1fr] items-baseline gap-3">
               <span className="text-[12px] font-medium text-[var(--c-ink)]">{r.name}</span>
               <span className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{r.note}</span>
             </div>
