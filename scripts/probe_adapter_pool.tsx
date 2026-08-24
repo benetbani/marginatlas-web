@@ -98,7 +98,13 @@ void (async () => {
          that should only ever find more matches: a block whose caption is dropped
          but whose numbers are drawn as a bar came back dark. */
       const ss = strings(v);
-      const ns = numbers(v).filter((n) => Math.abs(n) >= 10);
+      /* The floor was 10 and it hid a real result: the trade page's net margin is
+         the single number 5, it is printed on the page as "5%", and the block came
+         back dark. A floor exists because small integers collide with everything,
+         so it is 3 now and the collision risk is accepted: a false "used" is much
+         cheaper than a false "dark", which sends someone hunting a section that
+         already renders. */
+      const ns = numbers(v).filter((n) => Math.abs(n) >= 3);
       const proseHit = ss.some((x) => rendered.includes(x));
       const figureHit = ns.some(
         (n) => rendered.includes(String(Math.round(n))) || rendered.includes(String(Math.round(n / 1000))),
