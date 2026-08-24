@@ -9,16 +9,18 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // THE REBUILT PAGES, SWITCHED ON HERE RATHER THAN IN A DASHBOARD (2026-08-24).
-  // These four gates decide whether a reader gets the rebuilt trade, city,
-  // trade-across-places and neighbourhood pages or the older ones. They default
-  // OFF, and production was serving the older pages: verified by fetching the
-  // live site, which carried no spine markers at all.
+  // THE PAGES STAY ON AND GET FILLED. Founder, 2026-08-24: the sections move
+  // forward, and the pages must exist as COMPLETE. A rollback was prepared and
+  // reversed on his instruction: reverting hides the problem instead of fixing it.
   //
-  // They live here, in the repo, instead of as dashboard settings, for the same
-  // reason the build command belongs here: a setting nobody can read from the
-  // code is a setting nobody can check. A value set in the Vercel dashboard
-  // still wins over this block, so nothing is taken away by putting them here.
+  // The problem, measured: the July-3 baseline (rulebook v2 §46) carries 11,077
+  // visible characters and nine headings on the London city page. What these flags
+  // serve carries 1,785 and four, because 23 of 48 sections self-omit when their
+  // figures have no source. Rulebook v2 §3 is the fix and was never applied: a t4
+  // figure is REPLACED with a knowable neighbour, not deleted. §2: "a page of
+  // dashes is a failure, not a virtue."
+  //
+  // Plan: docs/superpowers/plans/2026-08-24-london-vertical-restoration.md
   env: {
     NEXT_PUBLIC_SPINE_REFORM_CITY: "1",
     NEXT_PUBLIC_SPINE_REFORM_CELL: "1",

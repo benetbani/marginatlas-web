@@ -81,6 +81,10 @@ type City = {
   cost_of_living_index?: number;
   unemployment_pct?: number;
   tourist_arrivals_m?: number;
+  /* Added 2026-08-24 for the five reads. Counted, not assumed: 247 of 252 cities
+     carry it. The type omitted it, so the field was invisible to this module even
+     though every record had one. */
+  hdi?: number;
 };
 
 const CITIES = (cityListJson as { cities: City[] }).cities;
@@ -438,9 +442,89 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       "Modeled from local business demography; the district and per-trade figures are real per-trade measurements.",
   };
 
+  /* ===================== THE FIVE READS, RESTORED ==========================
+     Rulebook v2 §3: a t4 figure is REPLACED with a knowable neighbour, not
+     deleted. This section was dropped with "no honest source" and the whole
+     chapter went dark with it, which is exactly what §2 calls a failure: "a page
+     of dashes is a failure, not a virtue." The July-3 baseline (§46) carries this
+     chapter as "The city, in five reads".
+
+     Every input below is a MEASURED field on the city record, present for all or
+     nearly all 252 cities, counted rather than assumed:
+
+       gdp_b                     252/252    how much trade the place does
+       avg_gross_salary_usd_year 252/252    what a customer earns
+       cost_of_living_index      252/252    what it costs to be here
+       hdi                       247/252    the depth of the workforce
+       tourist_arrivals_m        246/252    how much demand comes from outside
+
+     ONE FIXED SITE-WIDE FORMULA, never hand-picked per city (§8): each read is a
+     PERCENTILE RANK within the whole 252-city set. A rank is like-for-like by
+     construction, which is what §10 requires, and it means no raw cross-geography
+     money is ever shown.
+
+     §29A, pinned: worse reads low and left, better high and right, and a COST is
+     inverted before rendering so high = good on every scale in the band. Cost of
+     living is therefore flipped: a cheap city ranks HIGH on "Affordable space".
+
+     §5 is respected: no per-district keep ranking, no derived crowding score. The
+     baseline's "Room to enter" read was a crowding score and stays deleted.
+
+     NOT TAGGED AS A SAMPLE (§4/§4A): every input is measured and the transform is
+     a rank, not a model. Nothing here is estimated. */
+  const RANK_POOL = CITIES.filter((c) => c.slug !== city.slug);
+  /** Where this city sits among all the others on one field, 0 to 100. */
+  const rankPct = (value: number | undefined, field: keyof City, invert = false): number | undefined => {
+    if (!isNum(value)) return undefined;
+    const others = RANK_POOL.map((c) => c[field]).filter((v): v is number => isNum(v as number));
+    if (others.length < 20) return undefined; // too thin a pool for a rank to mean anything
+    const below = others.filter((v) => v < value).length;
+    const pct = Math.round((below / others.length) * 100);
+    return invert ? 100 - pct : pct;
+  };
+  /** Four plain words across the scale. The word IS the value (FORM-CATALOG). */
+  const word = (pos: number, poles: [string, string, string, string]) =>
+    pos < 25 ? poles[0] : pos < 50 ? poles[1] : pos < 75 ? poles[2] : poles[3];
+
+  const lensSpecs: Array<{
+    key: string; label: string; pos?: number; left: string; right: string;
+    words: [string, string, string, string];
+  }> = [
+    { key: "demand", label: "Demand depth", pos: rankPct(city.gdp_b, "gdp_b"),
+      left: "Thin", right: "Deep", words: ["Thin", "Modest", "Solid", "Deep"] },
+    { key: "income", label: "Customer income", pos: rankPct(city.avg_gross_salary_usd_year, "avg_gross_salary_usd_year"),
+      left: "Modest", right: "High", words: ["Modest", "Middling", "Comfortable", "High"] },
+    { key: "rent_relief", label: "Affordable space", pos: rankPct(city.cost_of_living_index, "cost_of_living_index", true),
+      left: "Costly", right: "Cheap", words: ["Costly", "Dear", "Fair", "Cheap"] },
+    { key: "talent", label: "Talent pool", pos: rankPct(city.hdi, "hdi"),
+      left: "Scarce", right: "Deep", words: ["Scarce", "Thin", "Solid", "Deep"] },
+    { key: "visitors", label: "Trade from outside", pos: rankPct(city.tourist_arrivals_m, "tourist_arrivals_m"),
+      left: "Local", right: "Visited", words: ["Local", "Mostly local", "Mixed", "Visited"] },
+    /* SIX, not five, and the sixth earns its place two ways. It fills the 2x3 grid,
+       so no read is left alone beside a blank half (§17, the sparse-but-wide reject
+       this section is specifically named for). And it says something the others do
+       not: measured against how much trade a place does, market size correlates at
+       r = 0.63, so the two disagree for a large share of cities, and against
+       customer income at r = -0.29, which is the opposite direction. A big poor
+       city and a small rich one read differently here, which is what §7 asks. */
+    { key: "size", label: "Market size", pos: rankPct(city.pop_m, "pop_m"),
+      left: "Small", right: "Large", words: ["Small", "Modest", "Big", "Large"] },
+  ];
+  const scales = lensSpecs
+    .filter((l): l is typeof l & { pos: number } => isNum(l.pos))
+    .map((l) => ({ key: l.key, label: l.label, pos: l.pos, word: word(l.pos, l.words), left: l.left, right: l.right }));
+  /* The chapter needs enough reads to be worth a chapter, and the grid is two
+     columns, so an ODD count leaves one read alone beside a blank half. Five of six
+     is the floor and six is the shape; at five the band would be lopsided, which is
+     the exact defect §17 names. */
+  const lenses = scales.length >= 5
+    ? { _meta: { confidence: "measured", source: "rank among all cities carried", as_of: "2026-08" }, scales }
+    : undefined;
+
   return {
     meta,
     verdict,
+    lenses,
     headline,
     trades,
     income: income_out,
@@ -448,7 +532,7 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     demand,
     where_to_trade,
     peers: peers_out,
-    // OMITTED entirely (no honest source): lenses (CityLenses), owner_runway,
+    // OMITTED entirely (no honest source): owner_runway,
     // demand_calendar, first_year, risks, character, locals_intel. Leaving them
     // undefined makes the spine body render nothing there (null-guarded).
   };
