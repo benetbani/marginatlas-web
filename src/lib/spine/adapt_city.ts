@@ -81,6 +81,8 @@ type City = {
   cost_of_living_index?: number;
   unemployment_pct?: number;
   tourist_arrivals_m?: number;
+  /* Added 2026-08-24 for the spending pool's replacement. 234 of 252 carry it. */
+  gini?: number;
   /* Added 2026-08-24 for the five reads. Counted, not assumed: 247 of 252 cities
      carry it. The type omitted it, so the field was invisible to this module even
      though every record had one. */
@@ -317,11 +319,35 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   const vs = view.visitorSplit;
   const resItem = vs.items?.find((it) => it.kept);
   const visItem = vs.items?.find((it) => !it.kept);
+  /* HOW EVENLY THE MONEY IS SPREAD, the knowable neighbour for the spending pool.
+     See design/replacements/spending-pool.md. §3: the t4 figures that card wanted,
+     spend per resident and a millionaire count, are replaced rather than deleted.
+
+     The page already answers "is there money here" twice. Nothing on it answered
+     the SHAPE of that money: a broad middle to sell volume to, or a thin top to
+     sell premium to. For an owner choosing a ticket price that is the actionable
+     half, and it is knowable everywhere the field exists.
+
+     THE WORD IS THE VALUE and the position is not printed (§26, and FORM-CATALOG's
+     meter do-not: a precise marker on a rough measure fakes precision). Bands are
+     the quartiles of the 234 cities that carry the field, computed from the set
+     rather than chosen: 32.4, 35.7, 41.5. §40: the statistic's name never reaches
+     a reader. */
+  const spreadPool = CITIES.map((c) => c.gini).filter((v): v is number => isNum(v));
+  const spreadWord = (() => {
+    if (!isNum(city.gini) || spreadPool.length < 50) return undefined;
+    const sorted = spreadPool.slice().sort((a, b) => a - b);
+    const q = (f: number) => sorted[Math.floor(sorted.length * f)];
+    const g = city.gini as number;
+    return g < q(0.25) ? "Evenly spread" : g < q(0.5) ? "Fairly even" : g < q(0.75) ? "Somewhat uneven" : "Very uneven";
+  })();
+
   const demand =
     resItem && visItem
       ? {
           resident_pct: Math.round(resItem.perHundred),
           visitor_pct: Math.round(visItem.perHundred),
+          spread_word: spreadWord,
           read: vs.body ?? vs.headline,
           // consumer_spend_usd_bn / spend_per_capita_usd / growth_pct_yoy / trend_* OMITTED.
         }

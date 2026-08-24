@@ -262,7 +262,12 @@ export function DemandSize({ d }: { d: any }) {
      them. It omits now, the way every other card in this file already does when its
      figures are absent. The guard below gains the millionaire count for the same
      reason, so a city holding only that figure no longer loses it. */
-  const hasSize = hasMagnitude || hasMillionaires;
+  /* The spending pool's replacement (§3, see design/replacements/spending-pool.md).
+     The two figures this card was built for have no source and are dropped
+     upstream; this is the knowable neighbour, and it is what keeps the card from
+     being a heading over nothing (§2). */
+  const spreadWord: string | undefined = o?.spread_word;
+  const hasSize = hasMagnitude || hasMillionaires || !!spreadWord;
   if (!o || (!hasSplit && !hasSize)) return null;
   const growth = o?.growth_pct_yoy;
   const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
@@ -281,6 +286,19 @@ export function DemandSize({ d }: { d: any }) {
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
             spent per resident a year
             {growth != null ? <>, {growth >= 0 ? "up" : "down"} <Fig className="text-[var(--c-ink)]">{Math.abs(growth)}%</Fig> on the year</> : null}.
+          </span>
+        </div>
+      ) : null}
+      {/* THE WORD IS THE VALUE. No bar and no position: a precise marker on a rough
+          measure fakes precision, which FORM-CATALOG names as the meter do-not, and
+          §26 permits a lone value to stay a value. It is also a different form from
+          the tier bands and the share bar elsewhere on this page (§25, §33). The
+          statistic's own name never appears (§40); the gloss explains it plainly. */}
+      {spreadWord ? (
+        <div className="flex flex-wrap items-baseline gap-x-3">
+          <span className="text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{spreadWord}</span>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
+            how the money is spread here<InfoTip gloss={`Whether earnings in ${d.meta?.city} cluster around a middle or stretch between a wealthy few and everyone else. A place where they cluster suits a volume trade; a place where they stretch suits a premium one.`} />
           </span>
         </div>
       ) : null}
