@@ -48,9 +48,26 @@ export function CityHero({ d }: { d: any }) {
 
       {/* support strip , the smaller decision signals, clearly subordinate to the focal */}
       {support.length > 0 ? (
-        <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)] sm:grid-cols-2" style={{ background: "var(--c-border)" }}>
-          {support.map((c) => (
-            <div key={c.label} className="min-w-0 bg-[var(--c-card)] px-3 py-2.5">
+        /* THE TRACK COUNT FOLLOWS THE CONTENT. Rulebook v2 §17.
+           This was a fixed two-column grid whose own background is the hairline
+           colour, so an unfilled cell does not read as space, it reads as a flat
+           grey block. Counted across fifteen cities on 2026-08-24, THIRTEEN
+           render and every one of them carries exactly ONE tile, so every city
+           page has shown a hero strip that is half fact and half grey since the
+           day it shipped, and it is the first thing on the page.
+           One tile sizes to its content instead of stretching; two or more keep
+           the pair; an odd count above two lets the last one span, so there is
+           no arrangement left that can leave a cell empty. */
+        <div
+          className={`mt-5 grid gap-px overflow-hidden rounded-xl border border-[var(--c-border)]${support.length === 1 ? " w-fit" : ""}`}
+          style={{ background: "var(--c-border)", gridTemplateColumns: `repeat(${Math.min(support.length, 2)}, minmax(0, 1fr))` }}
+        >
+          {support.map((c, i) => (
+            <div
+              key={c.label}
+              className="min-w-0 bg-[var(--c-card)] px-3 py-2.5"
+              style={support.length > 2 && support.length % 2 === 1 && i === support.length - 1 ? { gridColumn: "1 / -1" } : undefined}
+            >
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.06em] text-[var(--c-muted)]">{c.label}</div>
               <div className="mt-1 text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]"><Fig>{c.value}</Fig>{c.unit ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{c.unit}</span> : null}</div>
               <div className="mt-1 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{c.sub}</div>
