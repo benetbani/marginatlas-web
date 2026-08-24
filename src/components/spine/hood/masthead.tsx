@@ -11,7 +11,7 @@
  */
 import * as React from "react";
 import { CountryFlag } from "@/components/CountryFlag";
-import { Fig } from "@/components/spine/kit";
+import { Fig, CARD_SURFACE } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 
 function usePrefersReducedMotion() {
@@ -83,7 +83,7 @@ export function HoodMasthead({ d }: { d: any }) {
           reads as two balanced panels, never a lone stat beside a blank middle band
           (rulebook v2 §17). Tokens/plain white, no warm wash; terracotta on the answer
           figure only (§37/§38). */}
-      <div className="mt-5 rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] px-5 py-5 md:px-6 md:py-6">
+      <div className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:px-6 md:py-6" style={CARD_SURFACE}>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-stretch sm:gap-6">
           {/* HERO , the lightest lease, the one terracotta figure, one focal size */}
           <div className="min-w-0 sm:flex-1">

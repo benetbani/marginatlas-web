@@ -11,7 +11,7 @@
  * HonestTake card was a lone figure swimming in white space, folded in here).
  */
 import * as React from "react";
-import { Fig, InfoTip, SampleTag, SpreadStrip, usd } from "@/components/spine/kit";
+import { Fig, InfoTip, SampleTag, SpreadStrip, usd, CARD_SURFACE } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { useCountUp } from "./format-picker";
 
@@ -28,7 +28,7 @@ export function Masthead({ d }: { d: any }) {
 
   return (
     <section className="overflow-hidden py-6 md:py-8">
-      <div className="rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] p-5 md:p-6">
+      <div className="rounded-[14px] border border-[var(--c-border)] p-5 md:p-6" style={CARD_SURFACE}>
         {/* crumb , real wayfinding: each segment carries its altitude mark, kept quiet (muted ink) */}
         {/* a trade/city/country wayfinding crumb, not a restated title; panel-approved (cell-00 passed) */}
         <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">{/* allow-eyebrow */}

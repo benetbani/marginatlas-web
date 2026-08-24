@@ -28,6 +28,14 @@ import { SpineShell } from "../src/components/spine/shell";
 
 const css = readFileSync("scratchpad/pages/site.css", "utf8");
 
+/* THE ATMOSPHERE PHOTOGRAPH, INLINED. The shell points at a server path, which a
+   file:// preview cannot fetch, so every preview built before 2026-08-24 rendered
+   the pages over PURE WHITE. That is why the frosted card looked like no card at
+   all: glass with nothing behind it is just a rectangle, and I measured contrast
+   against a white ground that no reader will ever see. Inlined as data so the
+   preview shows the same stack a reader gets. */
+const skyline = `data:image/jpeg;base64,${readFileSync("public/spine/_skyline.jpeg").toString("base64")}`;
+
 /* THE WRAPPER IS THE WHOLE POINT, and the first version of this file did not have
    it. A spine route renders <SpineShell><Body/></SpineShell>, and the shell
    carries the frame, the background and the type scope. Rendering the body alone
@@ -45,6 +53,7 @@ function page(title: string, body: string) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
 <style>${css}</style>
+<style>.spine-frame-layer[style*="_skyline"]{background-image:url("${skyline}") !important}</style>
 </head>
 <body class="[--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]" style="font-family: var(--font-body);">
 ${body}
@@ -59,10 +68,17 @@ async function main() {
     ["industry-restaurants", "Restaurants, across places", SpineIndustryBody, await buildSpineIndustrySeed("restaurants")],
     ["hood-london", "London neighbourhoods", SpineHoodBody, await buildSpineHoodSeed("london")],
   ];
+  /* THE HOOD VIEW MOUNTS ITS OWN SHELL and its header says so in as many words:
+     "do not double-wrap it at the route". This harness wrapped all four alike, so
+     every preview of that page carried TWO atmosphere photos and TWO readable
+     bands stacked on each other. Production was always correct; only the picture
+     lied, which is the worse of the two because the picture is what gets read. */
+  const SELF_SHELLED = new Set(["hood-london"]);
   for (const [slug, title, C, data] of jobs) {
     if (!data) { console.log(`  ${slug}: no data`); continue; }
+    const inner = React.createElement(C as any, { data });
     const body = renderToStaticMarkup(
-      React.createElement(SpineShell as any, null, React.createElement(C as any, { data })),
+      SELF_SHELLED.has(slug) ? inner : React.createElement(SpineShell as any, null, inner),
     );
     writeFileSync(`docs/loop/artifacts/final-pages/${slug}.html`, page(title, body), "utf8");
     console.log(`  ${slug.padEnd(26)} ${Math.round(body.length / 1024)}KB`);

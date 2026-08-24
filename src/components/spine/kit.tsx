@@ -336,14 +336,57 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow?: 
  * composed with the inset paper top-highlight. `elevation` is kept in the prop type as a
  * tolerated no-op (both call sites, home2-view.tsx:261/309, keep compiling). */
 const DENSITY_PAD: Record<"dense" | "default" | "lead", string> = { dense: "p-4", default: "p-5", lead: "p-7" };
+/**
+ * CARD_SURFACE , THE ONE CARD SURFACE, AND THERE IS EXACTLY ONE.
+ *
+ * Rulebook v2 §36. It lives here and is imported rather than copied, because the
+ * copy is what failed: NeighborhoodExplorer carried its own duplicate of the
+ * shadow string with a comment saying "matching Box in kit.tsx", and the moment
+ * Box changed, the neighbourhood page went to SEVEN distinct card surfaces while
+ * the city page held at one. A comment cannot keep two constants equal.
+ *
+ * THE CARD IS GLASS. The founder picked this on 2026-08-20, variant B of three
+ * shots of his own homepage: .80 alpha with a real blur, background left alone.
+ * It shipped to the homepage card and NEVER REACHED THE SPINE PAGES. Measured on
+ * all four London pages before this change: ZERO elements carried a
+ * backdrop-filter. He named it himself as the thing that had been forgotten.
+ *
+ * The alpha and the blur are read from the ratified tokens rather than retyped,
+ * which also buys the three fallbacks written beside them in globals.css: no
+ * backdrop-filter support takes the alpha to .94, and reduced-transparency or
+ * increased-contrast takes it to 1 with the blur off.
+ *
+ * THE DOCTRINE THIS ANSWERS TO. The spine stylesheet's own header says "GLASS IS
+ * THE FRAME, SOLID IS THE DATA , anything carrying a figure sits near-opaque so
+ * the image can never cost us a number." This surface holds figures. That fear
+ * was tested rather than argued: sampling the real composited pixels behind every
+ * figure on the city page, the ground reads 252 to 255 and the worst contrast
+ * measured is 5.10 against a 4.5 floor. The readable band under the content
+ * column already carries the photograph to near-white before a card is reached,
+ * so the number is never spent. If the band ever goes, this has to be re-measured.
+ *
+ * The fill is FLAT. Frosted glass over a flat field does not read as glass; it
+ * needs something to refract, and the shell lays a photograph behind every page.
+ * background-clip stops the fill at the padding box, because a border paints
+ * OUTSIDE it and the default clip composites the fill UNDER the border, which
+ * reads as a smudge rather than an edge.
+ */
+export const CARD_SURFACE: React.CSSProperties = {
+  background: "rgba(255, 255, 255, var(--glass-alpha, 0.8))",
+  backgroundClip: "padding-box",
+  WebkitBackdropFilter: "var(--glass-blur, blur(20px))",
+  backdropFilter: "var(--glass-blur, blur(20px))",
+  boxShadow:
+    "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)",
+};
+
 export function Box({ children, className = "", elevation = "card", density = "default" }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead" }) {
   void elevation;
   return (
     <div
       className={`rounded-[14px] border border-[var(--c-border)] ${DENSITY_PAD[density]} ${className}`}
       style={{
-        backgroundImage: "linear-gradient(180deg, #ffffff 0%, #fcfbfa 100%)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)",
+        ...CARD_SURFACE,
       }}
     >
       {children}

@@ -29,7 +29,7 @@
  */
 "use client";
 import * as React from "react";
-import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, SampleTag } from "@/components/spine/kit";
+import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, SampleTag, CARD_SURFACE } from "@/components/spine/kit";
 import { LockVeil, LockPill } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -127,16 +127,20 @@ function SectionLabel({ children, sample }: { children: React.ReactNode; sample?
 /* the ONE card chrome for this island's four framed blocks (rent strip, detail panel,
  * under-map card, compare table): rounded-[14px] hairline + the inset-highlight shadow,
  * extracted so the chrome is declared once (zero visual change). */
-/* Rulebook v1 §R1 (founder 2026-07-11, reverses S14): cards carry the SLIGHT July-3 drop
- * shadow again , the exact pair the ratified baseline renders shipped with, composed with
- * the inset paper top-highlight, matching Box in kit.tsx. */
-const HOOD_CARD_SHADOW = "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)";
+/* Rulebook v1 §R1 (founder 2026-07-11, reverses S14): cards carry the SLIGHT July-3
+ * drop shadow, composed with the inset paper top-highlight.
+ *
+ * IT IS NO LONGER COPIED HERE. This file used to hold its own duplicate of the
+ * shadow string under a comment reading "matching Box in kit.tsx", and the two
+ * stopped matching the first time Box changed: measured 2026-08-24, the city page
+ * held ONE card surface and this page had drifted to SEVEN. A comment cannot keep
+ * two constants equal, so the surface is imported from the kit. Rulebook v2 §36. */
 const HoodCard = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(function HoodCard({ className = "", style, ...rest }, ref) {
   return (
     <div
       ref={ref}
       className={`rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] ${className}`}
-      style={{ boxShadow: HOOD_CARD_SHADOW, ...style }}
+      style={{ ...CARD_SURFACE, ...style }}
       {...rest}
     />
   );
@@ -797,7 +801,7 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
   const lightest = byRent[0];
   const strikeLabel = myth.strike_label ?? "the loudest is the best place";
   return (
-    <div className="overflow-hidden rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)]" style={{ boxShadow: HOOD_CARD_SHADOW }}>
+    <div className="overflow-hidden rounded-[14px] border border-[var(--c-border)]" style={CARD_SURFACE}>
       <div className="p-5 md:p-6">
         <Rail icon="myth-reality" kicker="Revenue rank vs rent rank" sample />
         <div className="grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center">
