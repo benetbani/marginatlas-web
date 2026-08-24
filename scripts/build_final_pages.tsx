@@ -61,6 +61,30 @@ ${body}
 </html>`;
 }
 
+/* WHAT THESE PREVIEWS CANNOT SHOW, AND IT HAS COST TWO FALSE DEFECTS.
+ *
+ * The output is STATIC MARKUP. React never hydrates it, so anything that needs a
+ * runtime measurement renders its server output and no more. Concretely:
+ *
+ *   AtlasWaterfall     wrapped in shadcn's ChartContainer, which wraps recharts'
+ *                      ResponsiveContainer. With no measured width it emits the
+ *                      container and NONE of its children, so "What the owner
+ *                      keeps" on the trade page shows a heading, a disclosure and
+ *                      a tall blank between them. It draws correctly in
+ *                      production. Verified 2026-08-24 by computing the identity
+ *                      the chart guards on: 31+34+15+15 = 95 against a keep of 5,
+ *                      which closes, so the guard is not what emptied it. The
+ *                      giveaway is that the words "Sales" and "Keeps" appear in
+ *                      the markup ZERO times, so the chart is absent rather than
+ *                      blank.
+ *   SpineMap           "use client" + maplibre. The neighbourhood page's map
+ *                      panel is therefore an empty half beside the district
+ *                      chips. Production draws it.
+ *
+ * Charts built from divs or inline SVG DO appear, which is what makes this
+ * dangerous: most of the page looks right, so the two that cannot draw read as
+ * broken rather than as absent. BEFORE CALLING A CARD EMPTY, grep the markup for
+ * a word the card would print. */
 async function main() {
   const jobs: Array<[string, string, unknown, any]> = [
     ["city-london", "London, the city page", SpineCityBody, await buildSpineCitySeed("london")],

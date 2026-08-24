@@ -448,9 +448,32 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
     const fm = failureModes[0];
     myths.push(`${fm.label}: ${fm.explanation}`);
   }
-  const honestTake = character?.watchOut
-    ? `Survival is better than the folklore suggests, but the margin is thin: ${character.watchOut.charAt(0).toLowerCase()}${character.watchOut.slice(1)}`
-    : undefined;
+  /* THE HONEST TAKE IS THE TRADE'S MONEY SHAPE, and it used to be two things
+     already on the page glued to a claim nobody checked.
+
+     What it was: a fixed sentence, "Survival is better than the folklore
+     suggests, but the margin is thin", followed by the character's watch-out.
+     Both halves were faults.
+
+     The watch-out ALREADY RENDERS on this page, as the "think twice" column of
+     the who-it-suits block. Counted in the built page on 2026-08-24, that
+     26-word passage appeared TWICE on the trade-across-places page, word for
+     word, a few hundred pixels apart. A closing line that restates its own
+     neighbour is the definition of a passage carrying nothing (§7).
+
+     And the fixed half asserted that survival beats the folklore for EVERY one
+     of the 243 trades, whatever that trade's survival actually is. It was never
+     computed and never conditioned on a number. §0.
+
+     What replaces it is authored, covers 243 of 243 activities counted rather
+     than estimated, and reaches NO reader today: the character's economics
+     paragraph, which says where the money in this trade goes and why. The old
+     non-spine industry page has rendered it for months; the rebuilt page dropped
+     it, which makes this a §46 regression with a name rather than a new idea.
+
+     It sits inside a disclosure, after the myths, so length is not a §26 problem
+     here: nothing is beside a chart. */
+  const honestTake = character?.economics ?? undefined;
   const caveats =
     myths.length > 0 || honestTake
       ? {
