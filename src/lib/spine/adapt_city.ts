@@ -521,10 +521,57 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     ? { _meta: { confidence: "measured", source: "rank among all cities carried", as_of: "2026-08" }, scales }
     : undefined;
 
+  /* ============ WHAT TO OPEN HERE, RESTORED AS A FUNNEL BLOCK =============
+     The July-3 baseline (§46) carries a chapter called "What to open, and what
+     you keep". It has been dark since the real-data promotion, and it CANNOT be
+     restored in that form, for a reason worth writing down rather than
+     rediscovering.
+
+     Every metric it wanted is either absent or BANNED at this altitude:
+
+       cost to open, per trade, per city   omitted upstream, no source
+       net margin by trade in a CITY       banned outright by §5
+       owner take-home by trade in a CITY  the same figure, same ban
+       the break-in score                  read the module before using the
+                                           number: it blends payback (built on
+                                           the banned per-city take-home) with a
+                                           term its own comment labels "ROOM
+                                           (crowding)", and §5 bans a derived
+                                           crowding score
+
+     So the honest replacement is not another ranking. §24 asks for precisely what
+     belongs here instead: "higher pages (country, city) carry a block of real
+     clickable businesses funneling into the cell pages". No ranking, no margin,
+     no score. Just which trades this city actually holds a real local measurement
+     for, each linking to its own page where those figures are lawful.
+
+     §32, the fixed everyday set: restaurant, grocery, pharmacy, salon, gym, auto
+     repair, cafe, bar, with the named synonym collapses. Anything outside it is
+     dropped rather than shown, including dental practices, which §32 names as an
+     example of an out-of-context trade. */
+  /* The slugs are HYPHENATED here, and the first version of this filter guessed
+     underscores from a sibling module's naming and matched nothing at all. Read
+     off the real data, not inferred. */
+  const EVERYDAY = new Set([
+    "restaurants", "grocery-stores", "pharmacies", "hairdressers-beauty",
+    "sports-fitness", "auto-repair-shops", "cafes-coffee-shops", "bars-nightclubs",
+  ]);
+  const tradesHere = (trades?.list ?? [])
+    .filter((t: any) => t.local && t.slug && EVERYDAY.has(String(t.slug)))
+    .map((t: any) => ({
+      name: t.name,
+      slug: t.slug,
+      href: `/${String(city.iso2).toLowerCase()}/${city.slug}/${t.slug}`,
+    }));
+  /* Below four this reads as a stub rather than a block, and a thin funnel is
+     worse than none: it implies the city is barely covered. */
+  const trades_here = tradesHere.length >= 4 ? { list: tradesHere } : undefined;
+
   return {
     meta,
     verdict,
     lenses,
+    trades_here,
     headline,
     trades,
     income: income_out,

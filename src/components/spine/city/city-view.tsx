@@ -332,6 +332,52 @@ export function DemandSize({ d }: { d: any }) {
 }
 
 /* ================= CH4 , TRADES AND RIVALS ================= */
+/* TradesHere , the funnel block §24 asks for: "higher pages (country, city) carry a
+ * block of real clickable businesses funneling into the cell pages". It replaces the
+ * ranked "what to open, and what you keep" chapter, which cannot be restored at this
+ * altitude: cost-to-open per city is omitted upstream, per-city trade margin and
+ * take-home are banned outright by §5, and the break-in score blends the banned
+ * take-home with a term its own module labels "ROOM (crowding)", which §5 also bans.
+ * So there is no ranking here, and there is no score. Only which trades this city
+ * holds a real local measurement for, each linking to the page where those figures
+ * are lawful.
+ *
+ * Hover is INK, not the accent. §37: the accent marks answers and never appears on
+ * hover. The older affordance a few hundred lines above this does use terracotta on
+ * hover, and that is one of the open founder decisions; new code does not copy it. */
+function TradesHere({ d }: { d: any }) {
+  const list: Array<{ name: string; slug: string; href: string }> = d.trades_here?.list ?? [];
+  if (list.length < 4) return null;
+  return (
+    <Box>
+      {/* NOT a restatement of the chapter heading above it (§11, the double-title
+          defect): the chapter says what the reader gets, this says what the set IS. */}
+      <Head icon="best-areas">Trades with local figures</Head>
+      {/* A WRAPPING ROW, NOT A GRID. These are equal links with no ranking, and a
+          two-column grid leaves the odd one out beside a blank half whenever the
+          count is odd, which is §17 and is the fault I had just fixed one section
+          above. A wrap has no empty cell by construction. It is also a different
+          form from the bands and tables either side of it (§25, §33: the rule is
+          variety). */}
+      <div className="flex flex-wrap gap-2">
+        {list.map((t) => (
+          <a
+            key={t.slug}
+            href={t.href}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[length:var(--t-body)] text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]"
+          >
+            {t.name}
+            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">&#8594;</span>
+          </a>
+        ))}
+      </div>
+      <div className="mt-3 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        Each of these has a real local measurement in {d.meta?.city}.
+      </div>
+    </Box>
+  );
+}
+
 /* LowestBar , the July-3 "Lowest bar to entry" featured trade card + the "Next-easiest,
  * and the cost to open" plain 3-column table (rulebook v1 §46 restored forms; no bars,
  * §25). Replaces the take-home bar list whole: the per-city Keeps and Crowding columns
@@ -635,7 +681,10 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   // The owner-keeps net-margin block (MarginKept) is DELETED (§5 banned metric + the
   // "fundamentally wrong" horizontal-bar money split, founder C9); the chapter is now
   // the ease + cost-to-open read alone, so it only renders when those figures are held.
-  const hasTradesCh = tradeList.some((t: any) => t.break_in_0_100 != null && t.cost_to_open_usd != null);
+  /* The chapter now renders on the FUNNEL, not on a ranking. The old guard asked
+     for a break-in score and a cost to open together, and no city has ever carried
+     both, so this chapter has been dark since the real-data promotion. */
+  const hasTradesCh = (d.trades_here?.list?.length ?? 0) >= 4;
   const hasRunningCh = !!(d.risks?.list?.length) || !!(d.character?.texture?.length) || !!(d.locals_intel?.length) || !!(d.owner_runway?.rent_1bed_usd_mo != null);
   const hasCloseCh = (d.peers?.list?.length ?? 0) >= 2 || tradeList.some((t: any) => t.break_in_0_100 != null) || !!(d.where_to_trade?.list?.length);
 
@@ -696,8 +745,8 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           founder's "fundamentally wrong" C9 call). */}
       {hasTradesCh ? (
         <>
-          <Movement index={cn()} eyebrow="Trades and rivals" heading="What to open, and what it costs" icon="startup-cost" />
-          <LowestBar d={d} />
+          <Movement index={cn()} eyebrow="Trades and rivals" heading="What you can open here" icon="startup-cost" />
+          <TradesHere d={d} />
         </>
       ) : null}
 
