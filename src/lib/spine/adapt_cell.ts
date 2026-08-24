@@ -339,17 +339,54 @@ export async function buildSpineCellSeed(
       }
     : undefined;
 
-  /* -- money_split (the $100 cost stack; kept slice = net margin) ---------- */
+  /* -- money_split (the $100 cost stack; kept slice = net margin) ----------
+     ROUNDED AS A SET, NOT ONE AT A TIME. Each share used to go through its own
+     Math.round, and five independent roundings do not have to add up. Measured on
+     the real London pages: the raw shares sum to 100.00 in every case, and after
+     rounding, restaurants came to 30 + 34 + 15 + 15 + 5 = NINETY-NINE, while hair
+     salons and cafes happened to land on 100. Correct by luck on two of three and
+     wrong on the flagship.
+
+     It matters beyond the arithmetic: the card holding this is a waterfall whose
+     own code refuses to draw at all when the split does not close to the opening
+     figure. A lost point costs the reader the whole section.
+
+     The fix is the standard apportionment method: floor every share, then hand the
+     leftover points to the largest fractional parts. It has the property this needs,
+     which is that it REPRODUCES the naive result wherever the naive result already
+     closed. Verified against all three real pages: hair salons and cafes come out
+     byte for byte as before, restaurants gains its missing point on the largest
+     remainder. No share moves by more than one. */
+  const roundToTotal = (values: number[], total: number): number[] => {
+    const floors = values.map((x) => Math.floor(x));
+    let left = total - floors.reduce((a, b) => a + b, 0);
+    const order = values
+      .map((x, i) => ({ i, frac: x - Math.floor(x) }))
+      .sort((a, b) => b.frac - a.frac);
+    const out = floors.slice();
+    for (const { i } of order) {
+      if (left <= 0) break;
+      out[i] += 1;
+      left -= 1;
+    }
+    return out;
+  };
   const moneySplit =
     v.moneyGoes && v.moneyGoes.length > 0
-      ? {
-          surface_line: v.narrative ?? undefined,
-          items: v.moneyGoes.map((m) => ({
-            name: m.label,
-            pct: Math.round(m.perHundred),
-            kept: !!m.kept,
-          })),
-        }
+      ? (() => {
+          const pcts = roundToTotal(
+            v.moneyGoes.map((m) => m.perHundred),
+            100,
+          );
+          return {
+            surface_line: v.narrative ?? undefined,
+            items: v.moneyGoes.map((m, i) => ({
+              name: m.label,
+              pct: pcts[i],
+              kept: !!m.kept,
+            })),
+          };
+        })()
       : undefined;
 
   /* -- cost_drivers (the margin levers) ------------------------------------ */
