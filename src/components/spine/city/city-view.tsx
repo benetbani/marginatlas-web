@@ -613,23 +613,49 @@ function CityPeers({ d }: { d: any }) {
      including the bundled sample. Reproduced in isolation
      (scripts/probe_city_peers_table.mjs): four rows, four measures, and it had
      never once appeared on a page. */
-  const row = (key: string, field: string, label: string, valOf: (r: any) => number | null) => {
+  const row = (key: string, field: string, label: string, valOf: (r: any) => number | null, unit?: string) => {
     if (!has(field)) return;
     const values = Object.fromEntries(rows.map((r) => [r.name, valOf(r)]));
     compareRows.push({
-      key, label, unit: "pp", higherIsBetter: true,
+      key, label, unit, higherIsBetter: true,
       values,
-      display: Object.fromEntries(rows.map((r) => [r.name, num(values[r.name]) ? signed(values[r.name] as number) : null])),
+      /* A PEER LEVEL WITH HOME READS "same", NOT "0". Zero in a column of signed
+         differences reads as a measurement taken and found to be nil. It is not:
+         the cost-of-living index carries 65 distinct values across 252 cities, so
+         two cities sharing one sit in the same BAND rather than being identical.
+         Munich and London share 75, and share a salary figure too, so this table
+         was telling a reader that Munich costs exactly what London costs. Home
+         keeps 0, because on the home row zero is the anchor, not a finding. */
+      display: Object.fromEntries(
+        rows.map((r) => {
+          const v = values[r.name];
+          if (!num(v)) return [r.name, null];
+          return [r.name, v === 0 && !r.home ? "same" : signed(v as number)];
+        }),
+      ),
     });
   };
-  // rent INVERTED to a cost advantage: a peer at +22 pays 22 points less rent than home.
-  if (num(home?.rent_index)) row("rent", "rent_index", "Cheaper rent", (r) => (num(r.rent_index) ? (home.rent_index as number) - r.rent_index : null));
-  if (num(home?.spend_index)) row("spend", "spend_index", "Consumer spend", (r) => (num(r.spend_index) ? r.spend_index - (home.spend_index as number) : null));
+  /* THE FIELD IS NOT RENT, AND THIS IS THE THIRD PLACE ON THIS PAGE THAT SAID IT
+     WAS. The slot is named rent_index and what fills it is the city's
+     Cost-of-Living Plus Rent Index, which the adapter states in its own comment.
+     The peer strip and the six-reads card were both renamed off "rent" earlier
+     today; this row was missed, so the page called one measurement two different
+     things two chapters apart. Rulebook v2 §13.
+
+     NO UNIT. CompareRow's own note: index rows carry bare figures and the base is
+     named once in the caption. This is an index difference, so "pp" was claiming
+     percentage points for something that has none. The two rows below really are
+     percentage differences and keep it.
+
+     Still INVERTED, so higher stays better on every row (§29A): a peer at +22 is
+     22 index points cheaper to live in than home. */
+  if (num(home?.rent_index)) row("rent", "rent_index", "Cheaper to live", (r) => (num(r.rent_index) ? (home.rent_index as number) - r.rent_index : null));
+  if (num(home?.spend_index)) row("spend", "spend_index", "Consumer spend", (r) => (num(r.spend_index) ? r.spend_index - (home.spend_index as number) : null), "pp");
   // income + visitors as home-relative INDEX rows, never raw USD or a raw count (§10).
   if (num(home?.median_income_usd) && (home.median_income_usd as number) > 0)
-    row("income", "median_income_usd", "Customer income", (r) => (num(r.median_income_usd) ? Math.round((r.median_income_usd / (home.median_income_usd as number)) * 100) - 100 : null));
+    row("income", "median_income_usd", "Customer income", (r) => (num(r.median_income_usd) ? Math.round((r.median_income_usd / (home.median_income_usd as number)) * 100) - 100 : null), "pp");
   if (num(home?.visitors_m) && (home.visitors_m as number) > 0)
-    row("vis", "visitors_m", "Visitors", (r) => (num(r.visitors_m) ? Math.round((r.visitors_m / (home.visitors_m as number)) * 100) - 100 : null));
+    row("vis", "visitors_m", "Visitors", (r) => (num(r.visitors_m) ? Math.round((r.visitors_m / (home.visitors_m as number)) * 100) - 100 : null), "pp");
   if (compareRows.length === 0) return null;
   return (
     <Box>
