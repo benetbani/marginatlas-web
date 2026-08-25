@@ -405,10 +405,13 @@ export function Band({
    *  The set is closed on purpose: four ratios is a rhythm, an open number is the
    *  fourteen-white-alphas problem again. */
   split?: "1-1" | "1-2" | "2-1" | "2-3" | "3-2";
-  /** The ONE section on a page that may run the full width. Founder, same day:
-   *  "for every subsection that stretches left to right full width, I think we
-   *  should ban it except hero section." The gate reads data-hero, so a section
-   *  cannot become a hero by looking like one. */
+  /** A CHROME band, and the only kind that may run the full width: the hero and
+   *  the closing hand-off. Founder, same day: "for every subsection that
+   *  stretches left to right full width, I think we should ban it except hero
+   *  section." His rule is about READING DATA across a column; a hero states one
+   *  answer and a terminus offers one link, and neither asks the eye to traverse
+   *  a row of figures. Art direction D1. The gate reads the attribute, so a
+   *  section cannot claim the width by looking like one. */
   hero?: boolean;
 }) {
   if (hero) return <div data-hero="1" className="mt-5">{children}</div>;

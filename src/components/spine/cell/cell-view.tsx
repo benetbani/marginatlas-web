@@ -36,7 +36,7 @@ import * as React from "react";
 import { spineCellSeed, spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import {
-  Fig, Box, Rail, Movement, Row, Full, WideRail, Donut, StackBar, ShareStack, PhaseBar, InfoTip, StruckLine, TERRA, usd,
+  Fig, Box, Rail, Movement, Row, Full, WideRail, Donut, StackBar, ShareStack, PhaseBar, InfoTip, StruckLine, TERRA, usd, Band,
 } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { FormatPicker, FormatProvider } from "./format-picker";
@@ -667,7 +667,9 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const cn = () => String(++chapCount).padStart(2, "0");
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-      <Masthead d={d} />
+      {/* THE HERO, one of the two chrome bands that may run full width (art
+          direction D1). Everything below it divides. */}
+      <Band hero><Masthead d={d} /></Band>
 
       {/* The verdict , the who-suits scale band (the break-in count folded into the
           masthead scorecard, founder D7) then the canonical full-width $100
@@ -683,8 +685,14 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
                 page never asked for it. Its component is imported rather than
                 rebuilt (§0, §44); its accent on the "suits" column is correct
                 under §29A, terracotta marks the good end. */}
-            {hasTradeCharacter ? <Row><WhoItSuits d={{ who_suits: d.trade_character }} /></Row> : null}
-            {hasMoneySplit ? <Full><MoneySplit d={d} /></Full> : null}
+            {/* PAIRED, NOT STACKED. Both took the full column and neither needed
+                it: one is two short lists, the other a single stacked bar. */}
+            {hasTradeCharacter || hasMoneySplit ? (
+              <Band>
+                {hasTradeCharacter ? <WhoItSuits d={{ who_suits: d.trade_character }} /> : null}
+                {hasMoneySplit ? <MoneySplit d={d} /> : null}
+              </Band>
+            ) : null}
           </div>
         </>
       ) : null}
@@ -729,10 +737,18 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
         <>
           <Movement index={cn()} eyebrow="Running it" heading="The first year" icon="first-year" />
           <div className="space-y-4">
-            {hasSeasonality || hasRisks ? (
-              <Row>{hasSeasonality ? <Seasonality d={d} /> : null}{hasRisks ? <Risks d={d} /> : null}</Row>
+            {/* THE RISK SCALES PAIR WITH THE RAMP. The seasonality card that used
+                to sit beside the risks does not render for this trade, so the
+                risks took the whole column by default. The ramp is a single phase
+                bar and takes the small side. */}
+            {hasSeasonality ? <Band split="2-1"><Risks d={d} /><Seasonality d={d} /></Band> : null}
+            {!hasSeasonality && (hasRisks || hasRamp) ? (
+              <Band split="2-1">
+                {hasRisks ? <Risks d={d} /> : null}
+                {hasRamp ? <Ramp d={d} /> : null}
+              </Band>
             ) : null}
-            {hasRamp ? <Full><Ramp d={d} /></Full> : null}
+            {hasSeasonality && hasRamp ? <Band split="3-2"><Ramp d={d} /></Band> : null}
           </div>
         </>
       ) : null}
@@ -742,18 +758,28 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
         <>
           <Movement index={cn()} eyebrow="Place and rivals" heading="Place and rivals" icon="best-areas" />
           <div className="space-y-4">
-            {hasNearby ? <Full><Nearby d={d} /></Full> : null}
-            {hasMyth || hasRelated ? (
-              <Row>{hasMyth ? <Myth d={d} /> : null}{hasRelated ? <Related d={d} /> : null}</Row>
+            {/* THE LEADERBOARD PAIRS WITH THE MYTH. The related-trades card beside
+                the myth was rejected at 9% coverage with identical rows, so the
+                myth was left holding the column alone and the leaderboard above it
+                did the same. */}
+            {hasNearby || hasMyth ? (
+              <Band split="3-2">
+                {hasNearby ? <Nearby d={d} /> : null}
+                {hasMyth ? <Myth d={d} /> : null}
+              </Band>
             ) : null}
+            {hasRelated ? <Band split="2-1"><Related d={d} /></Band> : null}
           </div>
         </>
       ) : null}
 
       {/* The close , a deliberate full-width terminus so the page ends on a CTA band,
           not dead background-photo margin. Reads only meta + related, both guarded. */}
+      {/* THE TERMINUS, the second and last chrome band (art direction D1). It
+          offers one link and carries no finding, so it does not ask a reader to
+          traverse a row of figures. */}
       <div className="mt-6 mb-2">
-        <Full><Close d={d} /></Full>
+        <Band hero><Close d={d} /></Band>
       </div>
     </main>
   );
