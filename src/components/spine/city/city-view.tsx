@@ -76,8 +76,21 @@ export function CityVerdict({ d }: { d: any }) {
   const heaviest = byRent[byRent.length - 1];
   const sample = d.where_to_trade?._meta?.confidence === "placeholder" || d.where_to_trade?._meta?.confidence === "modeled";
   // the rent spread across districts , lightest, the city baseline, heaviest.
+  /* THE STRIP CARRIES WHAT THE FOCAL DOES NOT. It opened with a "lightest" tile
+     holding the same multiple and the same district name as the focal figure two
+     inches to its left, so this card stated its own answer twice: measured, "x1.2"
+     appeared at 473px and again at 487px, inside one card. The founder's words on
+     2026-08-25 were "you are repeating the front part", and this is the front part
+     repeating itself rather than a section below it.
+
+     The other two ends are what the focal cannot say: the baseline it is measured
+     against, and the far end of the same spread. Art direction H4, and the same
+     correction already made to the neighbourhood hero.
+
+     The focal's caption stops naming the baseline for the same reason: it read
+     "in South London, against the city-average x1" while the tile beside it read
+     "CITY AVERAGE x1 the baseline". One card, one statement of each thing. */
   const facts: Array<[string, string, string]> = [
-    ["lightest", `x${lightest.rent_mult}`, lightest.name],
     ["city average", "x1", "the baseline"],
     ["heaviest", `x${heaviest.rent_mult}`, heaviest.name],
   ];
@@ -89,7 +102,7 @@ export function CityVerdict({ d }: { d: any }) {
     <Box>
       <Head icon="commercial-rent" sample={sample}>The rent, district by district</Head>
       <div className="grid gap-5 md:grid-cols-[1fr_1.5fr] md:items-center">
-        <Stat size="focal" accent value={`x${lightest.rent_mult}`} label="the lightest rent load" sub={`in ${lightest.name}, against the city-average x1`} />
+        <Stat size="focal" accent value={`x${lightest.rent_mult}`} label="the lightest rent load" sub={`in ${lightest.name}`} />
         {/* the spread , a clean neutral three-cell strip, the answer already on the focal */}
         {/* A WRAPPING ROW OF CELLS SIZED BY THEIR CONTENTS, not three fixed
             columns. Photographed at 320: three columns in a phone card leave each

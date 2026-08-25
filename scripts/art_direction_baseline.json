@@ -10,7 +10,7 @@
   "city-london:ladder": 0,
   "city-london:rhythm": 0,
   "city-london:numerals": 0,
-  "city-london:frontRepeat": 3,
+  "city-london:frontRepeat": 1,
   "cell-london-restaurants:prose": 0,
   "cell-london-restaurants:ink": 0,
   "cell-london-restaurants:accents": 0,
@@ -34,7 +34,7 @@
   "industry-restaurants:ladder": 0,
   "industry-restaurants:rhythm": 0,
   "industry-restaurants:numerals": 4,
-  "industry-restaurants:frontRepeat": 1,
+  "industry-restaurants:frontRepeat": 0,
   "hood-london:prose": 0,
   "hood-london:ink": 0,
   "hood-london:accents": 0,
@@ -46,5 +46,5 @@
   "hood-london:ladder": 0,
   "hood-london:rhythm": 0,
   "hood-london:numerals": 0,
-  "hood-london:frontRepeat": 2
+  "hood-london:frontRepeat": 0
 }

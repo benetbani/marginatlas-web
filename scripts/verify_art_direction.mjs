@@ -344,6 +344,36 @@ const collect = () => {
   /* C2 page budget, and H4 front repetition. */
   const pageAccents = sections.reduce((a, s) => a + s.accents, 0);
 
+  /* THE PAGE'S ANSWER IS EXEMPT, AND THE RULE WAS WRONG WITHOUT THAT.
+     H4 says the hero answers and the sections below evidence it, then counted the
+     evidencing as a repeat. Evidencing an answer necessarily restates it: a hero
+     reading "rent runs lightest, x1.20, South London" is proved by a strip whose
+     first row is "1 South London x1.20", and that is the page working rather than
+     the page repeating.
+
+     What the founder actually saw on 2026-08-25 was a hero carrying a SECOND panel
+     that restated three of the strip's figures wholesale, and a hero card stating
+     its own focal twice. Both are gone. So the strings the hero itself carries are
+     exempt, and everything else in the first screen still counts. */
+  const heroCount = new Map();
+  for (const e of document.querySelectorAll("[data-hero='1'] *")) {
+    const eb = e.getBoundingClientRect();
+    if (eb.width < 1 || eb.height < 1) continue;
+    const own = [...e.childNodes]
+      .filter((x) => x.nodeType === 3 && x.textContent.trim())
+      .map((x) => x.textContent.trim())
+      .join(" ")
+      .replace(/\s+/g, " ");
+    if (own.length < 4) continue;
+    heroCount.set(own, (heroCount.get(own) ?? 0) + 1);
+  }
+  /* EXEMPT ONLY WHAT THE HERO SAYS ONCE. A string the hero states twice is the hero
+     repeating ITSELF, which is the fault this rule was written for and which was
+     found on the city hero the same day: its focal and one of its support tiles
+     carried the same multiple and the same district name. Exempting anything the
+     hero touches would have hidden exactly that. */
+  const answer = new Set([...heroCount.entries()].filter(([, n]) => n === 1).map(([t]) => t));
+
   const seen = new Map();
   for (const e of document.querySelectorAll("*")) {
     if (inDeadDetails(e)) continue;
@@ -366,6 +396,7 @@ const collect = () => {
        about the page telling a reader the same THING twice, not about a chrome
        marker doing its job. */
     if (/^sample$/i.test(own)) continue;
+    if (answer.has(own)) continue;
     const top = rb.top + window.scrollY;
     if (top > 900) continue;
     /* A REPEAT INSIDE ONE SECTION IS THE FORM WORKING. A tier band names its two
