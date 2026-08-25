@@ -89,46 +89,28 @@ export function HoodMasthead({ d }: { d: any }) {
         Money moves street to street. Rent load is what a district&rsquo;s leases run against the city rate. All <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> are ranked here, lightest first.
       </p>
 
-      {/* ONE dominant answer: the district where rent runs lightest (the single
-          terracotta figure on the page). The heaviest lease and the city baseline sit
-          in a smaller neutral support panel that FILLS the right half, so the card
-          reads as two balanced panels, never a lone stat beside a blank middle band
-          (rulebook v2 §17). Tokens/plain white, no warm wash; terracotta on the answer
-          figure only (§37/§38). */}
+      {/* THE HERO STATES THE ANSWER AND NOTHING THE STRIP ALREADY STATES.
+          Founder, 2026-08-25: "you are repeating the front part."
+
+          It used to carry a second panel holding the heaviest lease and the city
+          baseline, and that panel's own comment said what it was for: it FILLED
+          the right half so the card would not read as a lone stat beside a blank
+          band. Filling a hole with figures a reader is about to meet again is
+          padding, not composition. Measured: the strip 255px below opens on the
+          lightest and closes on the heaviest, and its centre line is labelled
+          CITY X1.00, so both support rows were the strip repeated early. They
+          fail differentiation against it, which is §41's second ground, and they
+          are the reason this card measured 59% ink.
+
+          What is left is the answer, once, at full size, and the strip proves it.
+          A hero states; the section below evidences. */}
       <div className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:px-6 md:py-6" style={CARD_SURFACE}>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-stretch sm:gap-6">
-          {/* HERO , the lightest lease, the one terracotta figure, one focal size */}
-          <div className="min-w-0 sm:flex-1">
-            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</div>
-            <div className="mt-1.5 flex items-end gap-3.5">
-              <Fig className="text-[48px] leading-none text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>
-              <div className="pb-1.5">
-                <div className="text-[length:var(--t-sub)] font-semibold leading-tight text-[var(--c-ink)]">{best.name}</div>
-                <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level</div>
-              </div>
-            </div>
-          </div>
-
-          {/* a hairline divider between the two panels */}
-          <div className="hidden w-px shrink-0 bg-[var(--c-border)] sm:block" />
-
-          {/* SUPPORT , heaviest lease + the city baseline, two neutral rows filling the
-              right half. No accent here (terracotta stays on the hero answer only). */}
-          <div className="sm:flex-1">
-            <div className="flex items-baseline justify-between gap-3 border-b border-[var(--c-border)] pb-2.5">
-              <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{d.meta?.support_label ?? "Heaviest rent"}</span>
-              <span className="flex items-baseline gap-2">
-                <Fig className="text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">x{heavy.rent_mult.toFixed(2)}</Fig>
-                <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{heavy.name}</span>
-              </span>
-            </div>
-            <div className="flex items-baseline justify-between gap-3 pt-2.5">
-              <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">City baseline</span>
-              <span className="flex items-baseline gap-2">
-                <Fig className="text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">x1.00</Fig>
-                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a comparable unit at the city rate</span>
-              </span>
-            </div>
+        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</div>
+        <div className="mt-1.5 flex flex-wrap items-end gap-x-3.5 gap-y-1">
+          <Fig className="text-[48px] leading-none text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>
+          <div className="pb-1.5">
+            <div className="text-[length:var(--t-sub)] font-semibold leading-tight text-[var(--c-ink)]">{best.name}</div>
+            <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level, against a comparable unit at the city rate</div>
           </div>
         </div>
       </div>

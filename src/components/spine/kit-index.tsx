@@ -306,8 +306,14 @@ export function CompareTable({ entities, rows, caption }: { entities: CompareEnt
       <div className="hidden sm:block">
         <div className="grid items-end gap-3 border-b border-[var(--c-border)] pb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide" style={{ gridTemplateColumns: cols }}>
           <span className="text-[var(--c-muted)]">Metric</span>
+          {/* THE REFERENCE IS TINTED, NEVER COLOURED. Art direction C6: colouring
+              the home column's header makes the reference look like the winner,
+              and terracotta means ANSWER on every other surface of this site
+              (§37). The row beneath it already carries a tint, which is what says
+              "this is the one you are comparing against". Counted on the city page
+              before this: fourteen accent marks, of which two were this header. */}
           {entities.map((e) => (
-            <span key={e.id} className="text-right text-[var(--c-ink)]" style={e.home ? { color: "var(--terra-text)" } : undefined}>
+            <span key={e.id} className="text-right text-[var(--c-ink)]">
               {e.flag ? <span className="mr-1">{e.flag}</span> : null}{e.name}
             </span>
           ))}

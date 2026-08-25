@@ -79,6 +79,14 @@ const collect = () => {
         bot = Math.max(bot, b.bottom);
       }
     }
+    /* MEASURED AGAINST THE CONTENT BOX, NOT THE BORDER BOX. A card's own padding
+       is not emptiness, and on a SHORT card it is most of the difference: the
+       neighbourhood hero is 121px tall of which 48 is its top and bottom padding,
+       so 71px of content read as 59% and looked like a crater. E2 is about a card
+       stretched past what it holds, which is the content box's business. */
+    const cs = getComputedStyle(c);
+    const padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    const inner = Math.max(1, cb.height - padY);
     const ink = Math.max(0, bot - top);
 
     /* C2, accent budget. A mark counts once whether it is coloured text, a fill
@@ -118,7 +126,7 @@ const collect = () => {
       w: Math.round(cb.width),
       h: Math.round(cb.height),
       prose,
-      inkPct: cb.height > 0 ? Math.round((ink / cb.height) * 100) : 100,
+      inkPct: Math.min(100, Math.round((ink / inner) * 100)),
       accents,
       nestedBoxes,
       label: (c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 36),
@@ -137,12 +145,20 @@ const collect = () => {
       .join(" ")
       .replace(/\s+/g, " ");
     if (own.length < 4) continue;
+    /* A ZERO-SIZE BOX IS NOT ON THE PAGE. <title>, <style> and every SVG <title>
+       accessibility label report a rect at 0,0 with no width or height, and the
+       map's pin titles carry a district name each. They were being counted as
+       repeats at the very top of the page, which is both wrong and the worst
+       possible place to be wrong, since the top of the page is what this rule is
+       about. A first probe of this hid it by truncating its own output. */
+    const rb = e.getBoundingClientRect();
+    if (rb.width < 1 || rb.height < 1) continue;
     /* THE HONESTY TAG IS NOT REPETITION. "sample" marks every section whose
        figures are modelled, and it is REQUIRED to appear on each of them. H4 is
        about the page telling a reader the same THING twice, not about a chrome
        marker doing its job. */
     if (/^sample$/i.test(own)) continue;
-    const top = e.getBoundingClientRect().top + window.scrollY;
+    const top = rb.top + window.scrollY;
     if (top > 900) continue;
     /* A REPEAT INSIDE ONE SECTION IS THE FORM WORKING. A tier band names its two
        poles and marks the value, so the word "Deep" legitimately appears three

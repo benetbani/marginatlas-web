@@ -26,7 +26,7 @@ export function CityHero({ d }: { d: any }) {
   const inPhrase = d.meta?.country_in_phrase ?? d.meta?.country_name;
   return (
     <section className="overflow-hidden py-6 md:py-8">
-      <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; All cities</a>
+      <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]">&#8592; All cities</a>
 
       {/* identity LEFT, the one answer figure RIGHT , the band fills, nothing competes */}
       <div className="grid gap-5 md:grid-cols-[1.3fr_1fr] md:items-end">
@@ -40,7 +40,21 @@ export function CityHero({ d }: { d: any }) {
         {focal ? (
           <div className="md:justify-self-end md:text-right">
             <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.08em] text-[var(--c-muted)]">{focal.label}</div>
-            <div className="fig leading-none text-[var(--terra-text)] text-[30px] md:text-[48px]"><Fig>{focal.value}</Fig>{focal.unit ? <span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">{focal.unit}</span> : null}</div>
+            {/* TWO FAULTS IN ONE LINE, BOTH MEASURED.
+
+                INK, NOT THE ACCENT. On the real-data path this page carries no
+                explicit focal, so the headline figure is whatever happened to sit
+                first in the scorecard: on London that is customer income. A figure
+                chosen by list order was wearing the colour this site reserves for
+                THE answer (§37), while the page's actual answer, the lightest rent
+                load, sits in the card directly below it also in terracotta. Two
+                answers, one page. The accent stays on the rent read.
+
+                AND leading-none SET THE LINE BOX SHORTER THAN THE GLYPHS, so a
+                48px figure rose into the label above it: measured 124x7px of
+                overlap at 1440, 1280 and 768, and 77x5px at 375. A figure needs a
+                line box at least as tall as itself. */}
+            <div className="fig mt-1.5 leading-[1.2] text-[var(--c-ink)] text-[30px] md:text-[48px]"><Fig>{focal.value}</Fig>{focal.unit ? <span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">{focal.unit}</span> : null}</div>
             {focal.sub ? <div className="mt-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{focal.sub}</div> : null}
           </div>
         ) : null}

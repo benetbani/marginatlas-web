@@ -4,7 +4,7 @@
   "city-london:accents": 3,
   "city-london:nested": 0,
   "city-london:pageAccents": 1,
-  "city-london:frontRepeat": 4,
+  "city-london:frontRepeat": 3,
   "cell-london-restaurants:prose": 1,
   "cell-london-restaurants:ink": 1,
   "cell-london-restaurants:accents": 1,
@@ -18,9 +18,9 @@
   "industry-restaurants:pageAccents": 1,
   "industry-restaurants:frontRepeat": 1,
   "hood-london:prose": 1,
-  "hood-london:ink": 1,
+  "hood-london:ink": 0,
   "hood-london:accents": 1,
   "hood-london:nested": 0,
   "hood-london:pageAccents": 1,
-  "hood-london:frontRepeat": 6
+  "hood-london:frontRepeat": 2
 }

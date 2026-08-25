@@ -199,6 +199,25 @@ export function CommercialSpace({ d }: { d: any }) {
   const lo = hasPeerStrip ? Math.min(...dVals) - 6 : 0;
   const hi = hasPeerStrip ? Math.max(...dVals) + 5 : 1;
   const span = Math.max(1, hi - lo);
+  /* FOUR LABEL SLOTS, NOT TWO. See the note on the axis below: two sides were
+     not enough. Three of London's four peers land within 7.4% of each other,
+     which at this card's width is 28px for names 30 to 40px wide, so a label
+     pushed to the free side still collided with the one already there. Each
+     side gets a near row and a far row, and a label takes whichever of the four
+     is furthest from the last label placed in it. */
+  const slots: number[] = (() => {
+    const xs = peers.map((q: any) => ((q.delta - lo) / span) * 100);
+    const order = xs.map((x: number, i: number) => ({ x, i })).sort((a: any, b: any) => a.x - b.x);
+    const out: number[] = new Array(xs.length).fill(0);
+    const last = [-999, -999, -999, -999];
+    for (const { x, i } of order) {
+      let best = 0;
+      for (let k = 1; k < 4; k++) if (Math.abs(x - last[k]) > Math.abs(x - last[best])) best = k;
+      out[i] = best;
+      last[best] = x;
+    }
+    return out;
+  })();
   const fmtDelta = (v: number) => (v === 0 ? "0" : `${v > 0 ? "+" : ""}${v}pp`);
   const hasTerms = s.deposit_months != null && s.lease_years_typical != null && s.rent_free_months != null;
   const terms: Array<[string, string]> = hasTerms
@@ -238,12 +257,19 @@ export function CommercialSpace({ d }: { d: any }) {
         {hasPeerStrip ? (
           <div className="mt-2 border-t border-[var(--c-border)] pt-3">
             <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Against {d.meta?.city}, in percentage points<InfoTip gloss={`What it costs a person to live in each city, rent included, set against ${d.meta?.city}. A percentage point is the plain gap between two percentages: a peer at -22pp sits 22 points below the ${d.meta?.city} level. It is not the rent on a shop.`} /></div>
-            <div className="relative h-[76px]" role="img" aria-label={`Rent against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta)}`).join(", ")}`}>
+            <div className="relative h-[116px]" role="img" aria-label={`Rent against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta)}`).join(", ")}`}>
+              {/* WHICH SIDE A LABEL SITS ON IS DECIDED BY POSITION, NOT BY LIST
+                  ORDER. It used to alternate on the index, so two peers close in
+                  value but two apart in the list both landed above the axis and
+                  their names overlapped: measured, "Paris" over "Munich" by 13x14px
+                  at 1440 and 9x14px at 375, and it got worse when this card moved
+                  into a half band. Each label now goes to whichever side is further
+                  from the last label placed there. */}
               <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[var(--c-line-strong)]" />
               {peers.map((p: any, i: number) => {
                 const x = ((p.delta - lo) / span) * 100;
                 const home = p.home;
-                const above = i % 2 === 0;
+                const slot = slots[i];
                 return (
                   /* The home marker paints LAST. Two cities can share a cost index (London
                      and Munich both read 75), and the later dot covers the earlier one, so
@@ -252,7 +278,7 @@ export function CommercialSpace({ d }: { d: any }) {
                      which side each label sits on, is untouched. */
                   <span key={p.name} className={`absolute -translate-x-1/2 ${home ? "z-[1]" : ""}`} style={{ left: `${x}%`, top: "50%" }}>
                     <span className="block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-white" style={{ background: home ? TERRA : "var(--c-line-strong)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-                    <span className={`absolute left-1/2 flex -translate-x-1/2 flex-col items-center whitespace-nowrap leading-tight ${above ? "bottom-[14px]" : "top-[9px]"}`}>
+                    <span className={`absolute left-1/2 flex -translate-x-1/2 flex-col items-center whitespace-nowrap leading-tight ${["bottom-[14px]", "top-[9px]", "bottom-[34px]", "top-[29px]"][slot]}`}>
                       <span className={`text-[length:var(--t-micro)] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
                       <Fig className={`text-[length:var(--t-micro)] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{fmtDelta(p.delta)}</Fig>
                     </span>
