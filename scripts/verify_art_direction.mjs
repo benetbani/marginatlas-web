@@ -158,6 +158,31 @@ const collect = () => {
     };
   });
 
+  /* C4, A LEGEND MAY NOT NAME A COLOUR THAT IS NOT ON THE PAGE.
+     Caught by hand on 2026-08-24: the district map's legend read "terracotta =
+     lighter than the city", and no London district is below the city rate, so it
+     promised a reader a colour they could never find. Any text naming the accent
+     is checked against whether the accent actually renders in the same section. */
+  const falseLegends = [];
+  for (const c of outer) {
+    let names = false;
+    for (const e of c.querySelectorAll("*")) {
+      if (inDeadDetails(e)) continue;
+      const own = [...e.childNodes]
+        .filter((x) => x.nodeType === 3 && x.textContent.trim())
+        .map((x) => x.textContent.trim())
+        .join(" ");
+      if (/terracotta|orange/i.test(own)) names = true;
+    }
+    if (!names) continue;
+    let has = false;
+    for (const e of c.querySelectorAll("*")) {
+      const st = getComputedStyle(e);
+      if (TERRA.includes(st.color) || TERRA.includes(st.backgroundColor)) { has = true; break; }
+    }
+    if (!has) falseLegends.push(`a legend names the accent and no mark in the section carries it: "${(c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 40)}"`);
+  }
+
   /* H3, A LABEL THAT READS THE SAME FOR EVERY ROW IS NOT A LABEL.
      Founder's rulebook §7 and this direction's H3. Caught by hand on 2026-08-24:
      seven district chips all read "rent runs heavier than the city", including the
@@ -324,7 +349,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, sameForAll, bandCount: bandSplits.length };
+  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, sameForAll, falseLegends, bandCount: bandSplits.length };
 };
 
 const RULES = [
@@ -359,6 +384,10 @@ for (const { name, result } of pages) {
   now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
   total += now[`${name}:pageAccents`];
   if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
+
+  now[`${name}:falseLegend`] = result.falseLegends.length;
+  total += result.falseLegends.length;
+  for (const x of result.falseLegends) lines.push(`  C4  ${x}`);
 
   now[`${name}:sameForAll`] = result.sameForAll.length;
   total += result.sameForAll.length;
