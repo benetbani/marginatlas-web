@@ -394,10 +394,34 @@ export const CARD_SURFACE: React.CSSProperties = {
  * width it takes `wide`, and `wide` is for a form that cannot be halved: a
  * four-column table, a seven-row strip, a map.
  */
-export function Band({ children, wide = false }: { children: React.ReactNode; wide?: boolean }) {
-  if (wide) return <div className="mt-5">{children}</div>;
-  return <div className="mt-5 grid grid-cols-1 items-start gap-5 md:grid-cols-2">{children}</div>;
+export function Band({
+  children,
+  split = "1-1",
+  hero = false,
+}: {
+  children: React.ReactNode;
+  /** How the row divides. Founder, 2026-08-25: "not all divides in width should
+   *  be 50/50, there can be cases when a section only needs 30% and another 70%."
+   *  The set is closed on purpose: four ratios is a rhythm, an open number is the
+   *  fourteen-white-alphas problem again. */
+  split?: "1-1" | "1-2" | "2-1" | "2-3" | "3-2";
+  /** The ONE section on a page that may run the full width. Founder, same day:
+   *  "for every subsection that stretches left to right full width, I think we
+   *  should ban it except hero section." The gate reads data-hero, so a section
+   *  cannot become a hero by looking like one. */
+  hero?: boolean;
+}) {
+  if (hero) return <div data-hero="1" className="mt-5">{children}</div>;
+  const cols = {
+    "1-1": "md:grid-cols-2",
+    "1-2": "md:grid-cols-[1fr_2fr]",
+    "2-1": "md:grid-cols-[2fr_1fr]",
+    "2-3": "md:grid-cols-[2fr_3fr]",
+    "3-2": "md:grid-cols-[3fr_2fr]",
+  }[split];
+  return <div className={`mt-5 grid grid-cols-1 items-start gap-5 ${cols}`}>{children}</div>;
 }
+
 
 export function Box({ children, className = "", elevation = "card", density = "default" }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead" }) {
   void elevation;

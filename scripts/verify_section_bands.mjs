@@ -9,9 +9,17 @@
  *
  * Measured 2026-08-25 at 1440: 28 of 39 sections were a single 1072px card.
  *
- * A section may be full width when it holds a WIDE FORM that cannot be halved: a
- * comparison table with four or more columns, a ranked strip with seven or more
- * rows, or a map. Those are counted separately and are not the defect.
+ * TIGHTENED 2026-08-25 BY THE FOUNDER, same day, after seeing the first count:
+ * "for every subsection that stretches left to right full width, I think we
+ * should ban it except hero section."
+ *
+ * So there is no wide-form exemption any more. A four-column table, a seven-row
+ * strip and a map are not licences to take the whole width; they are forms that
+ * have to be REDESIGNED to fit a half, or promoted to the hero. Only the hero is
+ * exempt, and a page has exactly one.
+ *
+ * A section declares itself the hero with data-hero="1". Nothing else counts,
+ * because "it looked like a hero" is how thirty-nine of them got there.
  *
  * BLIND SPOT: this counts what RENDERS at 1440. It cannot tell a section that is
  * full width by design from one that is full width by neglect. That is what the
@@ -37,11 +45,10 @@ const counts = await eachPage(1440, () => {
     }));
 });
 
-const wide = (s) => s.cols >= 4 || s.rows >= 7 || s.hasMap;
 const now = {};
 let total = 0;
 for (const { name, result } of counts) {
-  const bad = result.filter((s) => !wide(s));
+  const bad = result.filter((s) => !s.hero);
   now[name] = bad.length;
   total += bad.length;
   if (bad.length) {
