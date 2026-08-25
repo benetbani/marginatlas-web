@@ -85,3 +85,27 @@ needed.**
 Four self-inflicted instances of the top class in six ticks. The pattern is not
 that documents rot slowly. It is that **a number is wrong the moment it is typed,
 because typing it is the act that decouples it from its source.**
+
+## 2026-08-25, the emptiness rule only looks one way
+
+The founder's rejection listed "some sections have huge white space" beside
+"some sections are totally wide for no reason". Both were answered, and only one
+of them was actually answered.
+
+E2 measures a section's INK AGAINST ITS HEIGHT. So a card whose content sits in
+its left half and whose right quarter is dead passes, because vertically it is
+full. Looked at as a picture, the city page's "What you can open, and where to
+take it" is exactly that: a nested white panel, a line of text and a button, and
+then a strip of nothing running down the right of the card. The gate reports the
+city page clean on every one of its twelve counters, and the picture disagrees.
+
+This is the same shape as the six measurement corrections already recorded above,
+with the direction reversed: those were gates reporting faults that were not
+there, and this is a gate reporting cleanliness that is not there. The second
+kind is worse, because nothing prompts anyone to look.
+
+NOT FIXED IN THIS TICK, deliberately. Two ways to close it and they are not the
+same decision: measure horizontal emptiness inside a card, or redesign that one
+section. The first is a rule change and belongs in the art direction before any
+code; the second is a section rebuild and belongs in an inventory row. Choosing
+between them while a gate chain was running is how sections get invented.

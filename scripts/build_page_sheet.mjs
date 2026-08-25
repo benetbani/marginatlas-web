@@ -38,8 +38,9 @@ const MOVED = [
   ["Bands repeating their neighbour's split", "2", "0"],
   ["Elements carrying the frosted treatment", "0", "every card"],
   ["Rungs in the spacing ladder that were the same number", "3 of 4", "0"],
-  ["Rules from the art direction held by a gate", "0", "15"],
-  ["Pages the layout rules are checked on", "4", "17"],
+  ["Rules from the art direction held by a gate", "0", "14 of 55"],
+  ["Pages the layout rules run on at every build", "4", "4, and they are the four London ones"],
+  ["Pages rendered outside London to catch what London hides", "0", "17 of 19 tried"],
   ["Sections that were prose with nothing drawn", "3", "0"],
 ];
 
@@ -69,8 +70,11 @@ const DECISIONS = [
 const KNOWN = [
   "Two wrong numbers were found this session by rendering these pages for cities that are not London, which nothing had done before. A trade page headline read $0 where the figure simply is not held, and an honesty tag was leaking an internal token to readers. Both were on four of six non-London trade pages and neither was ever on London, which is exactly why neither was seen.",
   "One thing is yours to call rather than mine. The city masthead leads with customer income, and the six quick reads name customer income again 650px below it. The masthead gives the figure and the quick read gives the position among 252 cities, which is arguably complementary and arguably one metric twice. I have left it as it is.",
+  "Two of the nineteen pages that check the rest of the world render nothing at all: La Paz and Kinshasa. That is a data gap, not a layout fault, and it is why the figure reads 17 of 19 rather than 19.",
+  "The neighbourhood page is the one page type this wider check cannot cover. London is the only city in the whole repository that carries districts, so there is no second case to test it against.",
   "The neighbourhood map draws in the real app and not in these pictures: it needs a browser to measure its own box, and these are static renders. The empty half beside the district chips is that, not a hole in the page.",
   "The trade page's owner-keeps waterfall is the same: present and correct in the app, blank here.",
+  "One consistency check cannot run yet and is not a pass: nothing compares a city's keep-share against its country's for the same trade, because no country file exists to compare against. Two related checks are waiting on the same thing, a second city for a trade and a second trade for a country. They will start running the day that data lands, and until then that agreement is simply unchecked.",
   "Seven small figures still render without tabular numerals. All seven are scale END labels, which sit at opposite ends of a track and never line up with anything, so the check counts them and they are not really a fault.",
   "Five sections on the city page drew for none of the fifteen cities I checked: rent against income, owner runway, the risk list, the character read, the locals note. Fifteen, not all 252, so treat it as a strong signal rather than a proof. They are still in the code and will draw the day their data arrives.",
 ];

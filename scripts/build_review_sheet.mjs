@@ -97,7 +97,13 @@ function cropDataUri(page, section) {
   return null;
 }
 
-function sectionCardHtml(page, section) {
+/* A SECTION THAT NO LONGER RENDERS CANNOT BE APPROVED OR REJECTED. It keeps its
+   crop, because that is the record of what the July page carried and losing that
+   record is how the pages thinned in the first place, and it gets no verdict
+   controls, because asking for a decision on something that draws nothing is
+   noise in the one place his attention is expensive. Built 2026-08-25, when the
+   sheet asked for 36 decisions and only 18 sections existed to decide. */
+function sectionCardHtml(page, section, decidable = true) {
   const dataUri = cropDataUri(page, section);
   const img = dataUri
     ? `<img src="${dataUri}" alt="Crop of ${esc(section.id)}" loading="lazy">`
@@ -106,7 +112,7 @@ function sectionCardHtml(page, section) {
   const stateTag =
     section.state === "rejected" ? `<span class="tag tag-rej">previously rejected</span>` : "";
   return `
-<article class="card" data-page="${esc(page)}" data-nn="${nn(section)}">
+<article class="${decidable ? 'card' : 'card card-record'}" data-page="${esc(page)}" data-nn="${nn(section)}">
   <div class="card-head">
     <span class="sec-nn">${nn(section)}</span>
     <span class="sec-heading">${esc(section.heading || "(no heading)")}</span>
@@ -114,11 +120,11 @@ function sectionCardHtml(page, section) {
     ${stateTag}${staleTag}
   </div>
   ${img}
-  <div class="controls">
+  ${decidable ? `<div class="controls">
     <button type="button" class="btn btn-approve" aria-pressed="false">APPROVE</button>
     <button type="button" class="btn btn-reject" aria-pressed="false">REJECT</button>
     <input type="text" class="reason" placeholder="reject reason (one line)" disabled aria-label="Reject reason for ${esc(section.id || "")}">
-  </div>
+  </div>` : ""}
 </article>`;
 }
 
@@ -131,14 +137,25 @@ function lockedRowHtml(section) {
 
 function pageBlockHtml(page, reg) {
   const sections = [...reg.sections].sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
-  const rows = sections
+  const live = sections.filter((s) => !s.stale);
+  const gone = sections.filter((s) => s.stale);
+  const rows = live
     .map((s) => (s.state === "approved" ? lockedRowHtml(s) : sectionCardHtml(page, s)))
     .join("\n");
+  /* Folded shut. It is a record to open when a verdict needs the old picture
+     beside the new one, not a queue. */
+  const record = gone.length
+    ? `<details class="record-group">
+  <summary>${gone.length} section${gone.length > 1 ? "s" : ""} the July page carried and this one does not. No verdict asked.</summary>
+  ${gone.map((s) => sectionCardHtml(page, s, false)).join("\n")}
+</details>`
+    : "";
   const route = reg.route ? `<span class="route">${esc(reg.route)}</span>` : "";
   return `
 <section class="page-block">
   <h2>${esc(page)}${route}</h2>
   ${rows}
+  ${record}
 </section>`;
 }
 
@@ -166,6 +183,10 @@ h2 .route { color: var(--mut); font-weight: 400; text-transform: none; letter-sp
 .tag { color: var(--acc); font-weight: 600; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; }
 .tag-stale { color: var(--mut); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; }
 .tag-rej { color: var(--acc); }
+.record-group { margin: 22px 0 6px; border: 1px solid var(--line); border-radius: 8px; background: #f3f1ee; }
+.record-group > summary { cursor: pointer; padding: 11px 14px; font-size: 13px; color: var(--mut); }
+.record-group .card { margin: 12px 14px; }
+.card-record { opacity: 0.72; }
 .card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin: 16px 0; }
 .card-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; margin-bottom: 10px; }
 .sec-nn { font-family: ui-monospace, Consolas, monospace; font-weight: 700; color: var(--acc); font-size: 13px; }
@@ -210,7 +231,9 @@ h2 .route { color: var(--mut); font-weight: 400; text-transform: none; letter-sp
 // Client script: vanilla JS, no template literals (keeps this file's templating simple).
 const CLIENT_JS = `
 (function () {
-  var cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+  // Record cards carry no verdict controls, so wiring them throws and kills
+  // the whole script, copy button included. Select only what can be decided.
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".card:not(.card-record)"));
   var countEl = document.getElementById("count");
   var out = document.getElementById("out");
   var copyBtn = document.getElementById("copy");
@@ -295,7 +318,7 @@ const CLIENT_JS = `
 })();
 `;
 
-function buildHtml({ date, blocks, decidable, locked, pageCount }) {
+function buildHtml({ date, blocks, decidable, record, locked, pageCount }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -308,7 +331,7 @@ function buildHtml({ date, blocks, decidable, locked, pageCount }) {
 <div class="wrap">
 <header>
   <h1>Design review sheet</h1>
-  <p class="meta">${esc(date)} &middot; ${pageCount} page${pageCount === 1 ? "" : "s"} &middot; ${decidable} to decide &middot; ${locked} locked</p>
+  <p class="meta">${esc(date)} &middot; ${pageCount} page${pageCount === 1 ? "" : "s"} &middot; ${decidable} to decide &middot; ${record} kept as a record &middot; ${locked} locked</p>
   <p class="meta">Pick APPROVE or REJECT per section (click again to undo). Add a one-line reason on rejects. Then hit Copy verdict and paste the string back.</p>
 </header>
 <main>
@@ -350,6 +373,7 @@ function main() {
   const blocks = [];
   let decidable = 0;
   let locked = 0;
+  let record = 0;
   let missingCrops = 0;
   let loadedPages = 0;
 
@@ -359,6 +383,9 @@ function main() {
     loadedPages++;
     for (const s of reg.sections) {
       if (s.state === "approved") locked++;
+      /* A stale section is shown as a record and asked nothing, so counting it
+         here told the founder he had twice the decisions he actually had. */
+      else if (s.stale) record++;
       else {
         decidable++;
         if (!cropDataUri(page, s)) missingCrops++;
@@ -372,14 +399,14 @@ function main() {
     process.exit(1);
   }
 
-  const html = buildHtml({ date, blocks, decidable, locked, pageCount: loadedPages });
+  const html = buildHtml({ date, blocks, decidable, record, locked, pageCount: loadedPages });
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const outFile = path.join(OUT_DIR, `REVIEW-SHEET-${date}.html`);
   fs.writeFileSync(outFile, html);
 
   const kb = Math.round(fs.statSync(outFile).size / 1024);
   console.log(`[ok] wrote ${outFile} (${kb} KB)`);
-  console.log(`     pages ${loadedPages}, sections to decide ${decidable}, locked ${locked}${missingCrops ? `, crops missing ${missingCrops}` : ""}`);
+  console.log(`     pages ${loadedPages}, sections to decide ${decidable}, kept as a record ${record}, locked ${locked}${missingCrops ? `, crops missing ${missingCrops}` : ""}`);
 }
 
 main();

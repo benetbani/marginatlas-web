@@ -51,7 +51,7 @@ two or three crafted moments.
 | Bands repeating their neighbour's split | 2 | 0 |
 | Rungs of the spacing ladder sharing one number | 3 of 4 | 0 |
 | Elements carrying the ratified frosted treatment | 0 | every card |
-| Art-direction rules held by a gate | 0 | 13 |
+| Art-direction rules held by a gate | 0 | 14 of 55 |
 
 ## The honest part
 
@@ -74,6 +74,10 @@ voice on a page of figures.
 - Ledger: `E:\atlas\website\.superpowers\sdd\progress.md`
 - Correction plan: `docs/superpowers/plans/2026-08-25-london-four-pages-correction.md`
 - One file for the founder: `E:\atlas\design\PAGE-SHEET-2026-08-25.html`
-- Still ungated and named in section J: D7 top alignment, C6 tint not colour,
-  G6 a scale's domain following its data, F2 to F8 the rest of the table
-  conventions.
+- Gated, 14 of 55: A5 C2 C4 D1 D3 D6 E1 E2 E3 F1 G6 G7 H3 H4, plus the frost
+  floor, which is not a lettered rule. Section J of the art direction carries
+  this table and was re-checked against the gates on 2026-08-25 by extracting
+  the rule id from every finding each gate can emit. It matched. The two claims
+  that did not match it were this document's and the founder sheet's.
+- Still ungated and named in section J with the reason: D7 top alignment,
+  C6 tint not colour, F2 to F8 the rest of the table conventions.

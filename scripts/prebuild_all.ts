@@ -66,6 +66,11 @@ const GATES: Gate[] = [
   { name: "frost-reads", script: "scripts/verify_frost_reads.mjs" },
   { name: "section-bands", script: "scripts/verify_section_bands.mjs" },
   { name: "art-direction", script: "scripts/verify_art_direction.mjs" },
+  /* The coverage CLAIM, not the rules. Section J of the art direction says
+     which of its 55 rules a gate holds, and that claim was wrong in three
+     separate documents on the day it was written. A coverage claim nobody
+     verifies is worse than no claim: it stops anyone looking. */
+  { name: "art-direction-coverage", script: "scripts/verify_art_direction_coverage.ts" },
   /* FRESHNESS of the two artifacts generated out of design/mockups/. Both are
      valid files when stale, so nothing else can notice: a stale stylesheet
      still compiles and a stale glyph module still typechecks. This actually
