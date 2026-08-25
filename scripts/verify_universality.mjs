@@ -88,6 +88,7 @@ const run = async () => {
      runs this is exactly the person who should know that the same design produces
      a third of a page outside London. */
   const richness = {};
+  const markers = [];
   const write = (name, html, kind) => {
     writeFileSync(`scratchpad/universality/${name}.html`, `<!doctype html><meta charset="utf-8"><body>${html}</body>`, "utf8");
     rendered.push(name);
@@ -98,6 +99,21 @@ const run = async () => {
       .replace(/\s+/g, " ")
       .trim();
     (richness[kind] ??= []).push([name, text.length]);
+
+    /* AN INTERNAL MARKER MUST NEVER REACH A READER, and this is checked on the
+       rendered STRING rather than in the browser. These sentences are authored in
+       the data, not in code, so the gate that catches internal notes scans source
+       and walks straight past them: the Mumbai cafes page printed "Estimated from
+       regional patterns | scrub:revenue-cap-2026-05-31".
+
+       A first version asked the browser for document.body.innerText and found
+       nothing with the fault sitting in the markup, twice. Rather than keep
+       chasing why, it reads the text it just built, which is the same text and
+       cannot be wrong about it. */
+    for (const m of text.matchAll(/(?:^|\s)([a-z][\w-]*:[\w.\-]{3,})(?=\s|$)/g)) {
+      if (/^https?:/.test(m[1])) continue;
+      markers.push(`${name}: an internal marker reaches a reader, "${m[1]}"`);
+    }
   };
   for (const slug of CITIES) {
     const d = await buildSpineCitySeed(slug).catch(() => null);
@@ -116,7 +132,7 @@ const run = async () => {
   }
 
   const b = await chromium.launch();
-  const fails = [];
+  const fails = [...markers];
   for (const slug of rendered) {
     const p = await b.newPage({ viewport: { width: 1440, height: 1200 } });
     await p.goto(`file:///E:/atlas/website/scratchpad/universality/${slug}.html`);
@@ -154,6 +170,20 @@ const run = async () => {
           if (v > r.max) out.push(`"${own}" is ${r.why} past ${r.max}`);
         }
       }
+      /* A DISPLAY FIGURE OF ZERO IS A MISSING MEASUREMENT ASSERTED AS A MEASURED
+         NIL. Found on the same page: "$0 a year, after every cost is paid" in the
+         largest type on it. Only display sizes are checked, because a zero inside
+         a table or a scale can be a real reading. */
+      for (const e of document.querySelectorAll("*")) {
+        const own = [...e.childNodes]
+          .filter((x) => x.nodeType === 3 && x.textContent.trim())
+          .map((x) => x.textContent.trim())
+          .join(" ");
+        if (!/^[$£€]?0[a-zA-Z%]{0,2}$/.test(own)) continue;
+        if (parseFloat(getComputedStyle(e).fontSize) < 28) continue;
+        out.push(`a display figure reads "${own}", which asserts a measured nil`);
+      }
+
       return [...new Set(out)];
     }, ABSURD);
     for (const h of hits) fails.push(`${slug}: ${h}`);
