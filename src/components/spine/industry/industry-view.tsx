@@ -690,8 +690,14 @@ export function Caveats({ d }: { d: any }) {
           {hasSurvivalClaim ? (
             <ClaimRow claim='"most fail within a year"' real={`${s.yr1_pct}%`} realLabel="actually trade past year one" accent />
           ) : null}
+          {/* "that claim", not "that quote". The line read "the bills that quote does
+              not mention", and "quote" is a verb as readily as a noun, so a reader
+              parses "the bills that quote" as a relative clause and has to back up.
+              "Claim" cannot be misread that way, and it names the struck line
+              directly above it. One word, and the sentence stops garden-pathing.
+              Art direction H7. */}
           {hasMarginClaim ? (
-            <ClaimRow claim='"a fat gross margin means good profit"' real={`${m.net_pct}%`} realLabel="kept, after the bills that quote does not mention" />
+            <ClaimRow claim='"a fat gross margin means good profit"' real={`${m.net_pct}%`} realLabel="kept, after the bills that claim leaves out" />
           ) : null}
         </div>
       ) : null}
