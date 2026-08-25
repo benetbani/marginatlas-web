@@ -467,7 +467,10 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
           <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
             <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
           </div>
-          <span className="absolute -top-5 whitespace-nowrap text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%`, transform: `translateX(${anchor(pos)})` }}>{word}</span>
+          {/* TABULAR NUMERALS. Art direction F1: these values stack vertically down
+              the scale, one per row, and proportional numerals make 3/10 and 8/10
+              sit at visibly different widths so the column reads as ragged. */}
+          <span className="fig absolute -top-5 whitespace-nowrap text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%`, transform: `translateX(${anchor(pos)})` }}>{word}</span>
         </div>
       </div>))}
       {endLabels ? (

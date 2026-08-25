@@ -158,6 +158,28 @@ const collect = () => {
     };
   });
 
+  /* F1, TABULAR NUMERALS. Founder, 2026-08-25: every table, chart and visual
+     follows written conventions for how its elements render. A column of numbers
+     is scanned vertically and proportional numerals make equal values look
+     unequal, so a figure that stacks with other figures has to be tabular.
+
+     BLIND SPOT: this cannot tell a figure that STACKS from one that stands alone.
+     A scale's two end labels sit at opposite ends and never align with anything,
+     so they are counted here and are not really a fault. The number is a ratchet,
+     not a verdict, and it is the stacked ones worth spending on. */
+  let looseNumerals = 0;
+  for (const e of document.querySelectorAll("*")) {
+    if (inDeadDetails(e)) continue;
+    const own = [...e.childNodes]
+      .filter((x) => x.nodeType === 3 && x.textContent.trim())
+      .map((x) => x.textContent.trim())
+      .join(" ");
+    if (!own || !/^[+-]?[$£€x]?[\d][\d,. ]*(K|M|%|pp|\/10)?$/i.test(own)) continue;
+    if (e.getBoundingClientRect().width < 1) continue;
+    if (/tabular-nums/.test(getComputedStyle(e).fontVariantNumeric)) continue;
+    looseNumerals++;
+  }
+
   /* C2 page budget, and H4 front repetition. */
   const pageAccents = sections.reduce((a, s) => a + s.accents, 0);
 
@@ -202,7 +224,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats };
+  return { sections, pageAccents, frontRepeats, looseNumerals };
 };
 
 const RULES = [
@@ -237,6 +259,10 @@ for (const { name, result } of pages) {
   now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
   total += now[`${name}:pageAccents`];
   if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
+
+  now[`${name}:numerals`] = result.looseNumerals;
+  total += result.looseNumerals;
+  if (result.looseNumerals) lines.push(`  F1  ${String(result.looseNumerals).padStart(2)} figure(s) without tabular numerals`);
 
   now[`${name}:frontRepeat`] = result.frontRepeats.length;
   total += result.frontRepeats.length;

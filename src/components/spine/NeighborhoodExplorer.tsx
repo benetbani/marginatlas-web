@@ -875,7 +875,7 @@ function RankSlope({ districts, loudSlug, strikeLabel }: { districts: District[]
         return (
           <g key={d.slug}>
             <text className="hidden sm:block" x={xL - 10} y={y1 + 3.5} textAnchor="end" fontSize={11}>
-              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r1}  </tspan>
+              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)", fontVariantNumeric: "tabular-nums" }}>{r1}  </tspan>
               <tspan fill={ink} fontWeight={loud ? 600 : 500}>{d.name}</tspan>
             </text>
             {nameMobile ? (
@@ -895,7 +895,7 @@ function RankSlope({ districts, loudSlug, strikeLabel }: { districts: District[]
                 loudest takings and the lightest lease, keep a name. Art direction
                 H3, H4. */}
             <text className="hidden sm:block" x={xR + 10} y={y2 + 3.5} textAnchor="start" fontSize={11}>
-              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r2}</tspan>
+              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)", fontVariantNumeric: "tabular-nums" }}>{r2}</tspan>
               {nameMobile ? <tspan fill={ink} fontWeight={loud ? 600 : 500}>{"  " + d.name}</tspan> : null}
             </text>
             {nameMobile ? (
