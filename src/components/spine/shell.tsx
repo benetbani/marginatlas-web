@@ -64,9 +64,9 @@ export function SpineShell({ children, bg = DEFAULT_BG, bgPosition = "center 16%
       <div aria-hidden className="spine-band spine-frame-layer" style={{ position: "fixed", insetBlock: 0, left: "50%", transform: "translateX(-50%)", width: "min(1480px, 100%)", zIndex: 0, pointerEvents: "none" }} />
       <style>{`:root{--c-card:#ffffff;--c-soft:#f6f4f2;--c-soft2:#efebe8;--c-border:#e7e2df;--c-line-strong:#d8d0cb;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#6f6f6d;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}
 .fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
-/* Two-level passe-partout: EXACTLY two flat opacity plateaus with ONE hard step ~1cm outside the content edge. Content zone .82, no-content margins .16. Keyed to the 1480px band over the 1120px content column (content edge = 50% +/- 37.84%; the step, 1cm outside, = 9.61% / 90.39%). */
-.spine-band{background:linear-gradient(to right,rgba(255,255,255,.16) 0%,rgba(255,255,255,.16) 9.61%,rgba(255,255,255,.82) 9.61%,rgba(255,255,255,.82) 90.39%,rgba(255,255,255,.16) 90.39%,rgba(255,255,255,.16) 100%)}
-@media (max-width:767px){.spine-band{background:rgba(255,255,255,.82)}}
+/* Two-level passe-partout: EXACTLY two flat opacity plateaus with ONE hard step ~1cm outside the content edge. Content zone .34, no-content margins .10. Keyed to the 1480px band over the 1120px content column (content edge = 50% +/- 37.84%; the step, 1cm outside, = 9.61% / 90.39%). Lightened from .82/.16 on 2026-08-25 (rulebook v2 §36): at .82 the band took the photo to near-white before any card drew, leaving the ratified frosted card with nothing to refract. The cards now carry the legibility this band gave up , see --glass-alpha-spine in globals.css. */
+.spine-band{background:linear-gradient(to right,rgba(255,255,255,.10) 0%,rgba(255,255,255,.10) 9.61%,rgba(255,255,255,.34) 9.61%,rgba(255,255,255,.34) 90.39%,rgba(255,255,255,.10) 90.39%,rgba(255,255,255,.10) 100%)}
+@media (max-width:767px){.spine-band{background:rgba(255,255,255,.34)}}
 .focal{background:linear-gradient(180deg,#ffffff 0%,#fffaf8 100%);border-radius:10px}
 .hov{transition:background-color .15s ease-out,transform .15s ease-out,border-color .15s ease-out}
 .hov:hover{background:var(--c-soft)}

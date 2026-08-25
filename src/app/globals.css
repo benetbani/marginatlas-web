@@ -205,6 +205,13 @@
        he asks for it. */
     --glass-alpha: 0.80;
     --glass-blur: blur(20px);
+    /* Spine card ground (city/cell/industry/hood), independent of --glass-alpha
+       above. Rulebook v2 §36, 2026-08-25: the spine's readable band dropped from
+       .82 to .34 so the photo stays visible for the frost to refract, and this
+       token carries the legibility the band gave up. Starts at the brief's
+       recommended .92; scripts/verify_frost_reads.mjs and scratchpad/contrast.mjs
+       are the two gates that bound it. */
+    --glass-alpha-spine: 0.80;
     /* THE ALPHA IS NOT IN THIS TOKEN, AND THAT IS THE CORRECTION. It was, for one
        commit, and rendering the country page found what the homepage could not:
        **24 elements of the `eng-*` engraved family read this token**, and they

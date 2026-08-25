@@ -372,7 +372,7 @@ const DENSITY_PAD: Record<"dense" | "default" | "lead", string> = { dense: "p-4"
  * reads as a smudge rather than an edge.
  */
 export const CARD_SURFACE: React.CSSProperties = {
-  background: "rgba(255, 255, 255, var(--glass-alpha, 0.8))",
+  background: "rgba(255, 255, 255, var(--glass-alpha-spine, 0.80))",
   backgroundClip: "padding-box",
   WebkitBackdropFilter: "var(--glass-blur, blur(20px))",
   backdropFilter: "var(--glass-blur, blur(20px))",
