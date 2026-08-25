@@ -833,9 +833,27 @@ function RankSlope({ districts, loudSlug, strikeLabel }: { districts: District[]
           terracotta line drops away from it. */}
       {strikeLabel ? (
         <g aria-hidden="true">
+          {/* ONE STRIKE, ON ONE OBJECT. This carried THREE devices for a single
+              idea: a dashed line, a diagonal slash across it, and a caption with a
+              line through the text as well. Founder, 2026-08-25: "you just create
+              like a text and you slap like a line on top of it, what the fuck is
+              that." He was describing exactly that pile.
+
+              §30 says strike the CLAIM on the chart. The claim here IS the dashed
+              line, the flat rank-1 path the myth assumes, so the slash strikes the
+              line and the caption NAMES it. A struck caption over a struck line
+              strikes the same thing twice and reads as a mistake rather than a
+              finding. The caption also moves off the middle of the plot, where it
+              floated in whitespace with nothing to attach to, and sits at the end
+              of the line it labels. */}
           <line x1={xL} y1={y(1)} x2={xR} y2={y(1)} stroke="var(--c-line-strong)" strokeWidth={1.4} strokeDasharray="3 3" strokeLinecap="round" />
-          <line x1={xL + 26} y1={y(1) - 6} x2={xR - 26} y2={y(1) + 6} stroke="var(--c-muted)" strokeWidth={1.4} strokeLinecap="round" />
-          <text x={(xL + xR) / 2} y={y(1) - 9} textAnchor="middle" fontSize={8.5} fill="var(--c-muted)" style={{ textDecoration: "line-through" }}>{strikeLabel}</text>
+          {/* THE STRIKE MUST NOT LOOK LIKE DATA. At the same weight and colour as
+              a district's line it read as an eighth district running at a shallow
+              angle, which is the opposite of cancelling something. It is shorter,
+              steeper and inked now, so it crosses the claim rather than joining
+              the chart. */}
+          <line x1={(xL + xR) / 2 - 34} y1={y(1) + 9} x2={(xL + xR) / 2 + 34} y2={y(1) - 9} stroke="var(--c-ink)" strokeWidth={2} strokeLinecap="round" />
+          <text x={(xL + xR) / 2} y={y(1) - 10} textAnchor="middle" fontSize={8.5} fill="var(--c-muted)">{strikeLabel}</text>
         </g>
       ) : null}
       {districts.map((d) => {
@@ -863,9 +881,17 @@ function RankSlope({ districts, loudSlug, strikeLabel }: { districts: District[]
             <line x1={xL} y1={y1} x2={xR} y2={y2} stroke={stroke} strokeWidth={loud ? 2.2 : 1.4} strokeLinecap="round" />
             <circle cx={xL} cy={y1} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
             <circle cx={xR} cy={y2} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
+            {/* EVERY NAME ONCE. Both columns printed all seven names, so this one
+                chart supplied fourteen of the page's repeats and was most of the
+                reason "South London" appeared ten times on it. The left column is
+                the reader's index and keeps rank plus name; the right column is
+                the same districts re-ordered, so a rank alone says everything the
+                line does not, and only the two anchors that carry the finding, the
+                loudest takings and the lightest lease, keep a name. Art direction
+                H3, H4. */}
             <text className="hidden sm:block" x={xR + 10} y={y2 + 3.5} textAnchor="start" fontSize={11}>
-              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r2}  </tspan>
-              <tspan fill={ink} fontWeight={loud ? 600 : 500}>{d.name}</tspan>
+              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)" }}>{r2}</tspan>
+              {nameMobile ? <tspan fill={ink} fontWeight={loud ? 600 : 500}>{"  " + d.name}</tspan> : null}
             </text>
             {nameMobile ? (
               <text className="sm:hidden" x={xR + 10} y={y2 + 4} textAnchor="start" fontSize={12} fill={ink} fontWeight={loud ? 600 : 500}>{firstWord}</text>
@@ -914,7 +940,11 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
         <div className="grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center">
           {/* the chart carries the takeaway silently: one line per district, the myth
               struck on it, the loudest district's real drop in terracotta */}
-          <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] p-4">
+          {/* NO BOX INSIDE THE BOX. The chart sat in its own bordered, filled card
+              inside the section's bordered, filled card: two edges around one
+              drawing, which is the "you have just boxed it" defect (art direction
+              A5). The chart keeps its padding and loses its frame. */}
+          <div className="p-1">
             <RankSlope districts={list} loudSlug={loudest.slug} strikeLabel={strikeLabel} />
           </div>
           {/* the flip at the two extremes, schematic (the finding on the visual, §14) */}

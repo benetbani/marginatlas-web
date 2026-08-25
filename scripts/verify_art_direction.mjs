@@ -105,6 +105,12 @@ const collect = () => {
       if (s.borderTopWidth === "0px" || parseFloat(s.borderTopLeftRadius) < 6) continue;
       if (b.width < 200 || b.height < 60) continue;
       if (b.width > cb.width - 8) continue; // the card's own inner wrapper
+      /* AN INSET STAT PANEL IS NOT A NESTED SECTION. A5 forbids a SECTION inside a
+         section, and what makes a section is its rail: an icon and a name. Two
+         stat panels sitting beside a chart, carrying a figure each and no rail,
+         are the card's own furniture. Counting them read a correct composition as
+         two violations. */
+      if (!e.querySelector("[data-rail], h2, h3")) continue;
       nestedBoxes++;
     }
 
