@@ -87,6 +87,11 @@ const collect = () => {
     for (const e of c.querySelectorAll("*")) {
       if (inDeadDetails(e)) continue;
       const s = getComputedStyle(e);
+      /* A COMPARED SET MARKS ONE BEST PER ROW BY DESIGN. C1 requires it, so
+         counting table cells against a two-per-section budget put the rule in
+         conflict with itself: a three-row comparison is correct and read as three
+         violations. Cells are exempt; loose marks are not. */
+      if (e.closest("td, th")) continue;
       const own = [...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim());
       if (own && TERRA.includes(s.color)) accents++;
       else if (TERRA.includes(s.backgroundColor)) accents++;
@@ -133,10 +138,20 @@ const collect = () => {
     if (/^sample$/i.test(own)) continue;
     const top = e.getBoundingClientRect().top + window.scrollY;
     if (top > 900) continue;
-    if (!seen.has(own)) seen.set(own, new Set());
-    seen.get(own).add(Math.round(top));
+    /* A REPEAT INSIDE ONE SECTION IS THE FORM WORKING. A tier band names its two
+       poles and marks the value, so the word "Deep" legitimately appears three
+       times inside one card; counting that told the reader nothing and buried the
+       real finding, which was a figure printed in three DIFFERENT sections of the
+       first screen. Keyed by the section a run sits in, and only a run that
+       crosses sections counts. */
+    const card = e.closest("[data-hero='1']") || e.closest("div[style*='backdrop']") || e.closest("main > div") || document.body;
+    if (!seen.has(own)) seen.set(own, { ys: new Set(), cards: new Set() });
+    seen.get(own).ys.add(Math.round(top));
+    seen.get(own).cards.add(card);
   }
   const frontRepeats = [...seen.entries()]
+    .filter(([, v]) => v.cards.size > 1)
+    .map(([t, v]) => [t, v.ys])
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 

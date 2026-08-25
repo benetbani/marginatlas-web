@@ -38,9 +38,7 @@ const counts = await eachPage(1440, () => {
   return outer
     .filter((c) => c.getBoundingClientRect().width > 1000)
     .map((c) => ({
-      cols: c.querySelectorAll("thead th, thead td").length,
-      rows: c.querySelectorAll("tbody tr, ol > li").length,
-      hasMap: !!c.querySelector("[aria-label='District map'], canvas"),
+      hero: !!c.closest("[data-hero='1']"),
       label: (c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 40),
     }));
 });

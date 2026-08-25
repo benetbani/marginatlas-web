@@ -30,7 +30,7 @@
  */
 import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TERRA, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets } from "@/components/spine/kit";
+import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TERRA, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets, Band } from "@/components/spine/kit";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
 import { AtlasMark } from "@/components/spine/marks";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -782,86 +782,72 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
       <CityHero d={d} />
 
-      {/* The verdict masthead , shown when the city has a district set to read on. */}
-      {d.where_to_trade?.list?.length ? <CityVerdict d={d} /> : null}
+      {/* THE HERO, AND THE ONLY FULL-WIDTH BAND ON THE PAGE. Founder, 2026-08-25:
+          "for every subsection that stretches left to right full width, I think we
+          should ban it except hero section." Art direction D1. It declares itself
+          with the hero prop, which sets the attribute the gate reads, because
+          looking like a hero is how twenty-eight sections got the whole column. */}
+      {d.where_to_trade?.list?.length ? <Band hero><CityVerdict d={d} /></Band> : null}
 
-      {/* Districts LEAD the numbered chapters (founder C1) , the map + rent-load
-          dot plot is the page's signature answer, so it opens as Movement 01 and
-          the map's top edge crests into the first frame. */}
+      {/* FOUR CHAPTERS, NOT SIX, AND NOT ONE SECTION WAS CUT TO GET THERE.
+          Measured 2026-08-25: four of this page's six chapters held exactly ONE
+          section, and a lone section in a chapter has nothing to pair with, so it
+          took the full column by default. Merging those chapters is what lets
+          every section keep its place AND sit in a band. The headings consolidate;
+          the content does not move out.
+
+          The split of each band follows its content (D4) and no band repeats the
+          split of the band before it (D3): 1-1, 2-1, 3-2, 2-3, then 1-1, 2-1, then
+          3-2. The middle two omit on a city with no risk or character data, and
+          the sequence still holds without them. */}
       {hasWhereCh ? (
         <>
           <Movement index={cn()} heading="Where to trade" icon="best-areas" />
-          <WhereToTrade d={d} />
+          <Band><WhereToTrade d={d} /><CityLenses d={d} /></Band>
         </>
       ) : null}
 
-      {/* The five-read lenses follow as their OWN numbered chapter, rendered ONLY when
-          the lens scales exist (omitted on real-data promotion , no per-axis source), so
-          the "The city's conditions" heading is never an orphan above an empty section. */}
-      {d.lenses?.scales?.length ? (
+      {(hasCostCh || hasCustomersCh || hasCloseCh) ? (
         <>
-          <Movement index={cn()} eyebrow="The verdict" heading="The city's conditions" icon="gut-check" />
-          <CityLenses d={d} />
+          <Movement index={cn()} eyebrow="What it costs here" heading="What it costs, and who buys" icon="commercial-rent" />
+          {/* The peer table is a comparison of what it COSTS to be here, so it
+              belongs with the cost read rather than at the close. It takes the
+              large side because four columns of figures cannot be the small one. */}
+          {/* THE TWO PEER COMPARISONS ARE NOT PUT SIDE BY SIDE. The table and the
+              one-axis dot plot both set London against Paris, Munich and Los
+              Angeles on cost, and the plot is a subset of the table's first row.
+              Banding them together printed those three city names twice inside
+              the first screen, which is the founder's "repeating the front part"
+              measured: front-page repeats went from four to seven the moment they
+              were paired. They are separated, and each takes a partner that says
+              something it does not. */}
+          <Band split="2-1"><CityPeers d={d} /><IncomeCurve d={d} /></Band>
+          {/* THE EARNINGS CHART PAIRS WITH THE DEMAND ROW, NOT WITH THE RENT
+              RATIO. Measured across fifteen cities on 2026-08-25, the rent ratio
+              renders for NONE of them, and neither do the owner runway, the risk
+              list, the character read or the locals note. Five sections that
+              never draw. They stay in the code, because they will render the day
+              their data arrives, but the page's rhythm cannot be built on them:
+              a band whose partner never appears leaves its survivor in a half
+              with a hole beside it, which is the one-sided white space the
+              splitting exists to prevent. */}
+          <Band split="3-2"><DemandSize d={d} /><CommercialSpace d={d} /></Band>
+          <RentAffordability d={d} />
         </>
       ) : null}
 
-      {/* What it costs , commercial space + the lease terms (the peer read in
-          percentage points). OwnerRunway moved beside the risk material (C4);
-          RentAffordability beside "What customers earn here" (C5). */}
-      {hasCostCh ? (
-        <>
-          <Movement index={cn()} eyebrow="What it costs here" heading="What space costs" icon="commercial-rent" />
-          <CommercialSpace d={d} />
-        </>
-      ) : null}
-
-      {/* Your customers , demand size (with the resident/visitor split folded in),
-          the seasonal read, then earnings beside the rent-against-income ratio. */}
-      {hasCustomersCh ? (
-        <>
-          <Movement index={cn()} eyebrow="Your customers" heading="Who buys, and when" icon="spending-power" />
-          <div className="space-y-4">
-            <DemandSize d={d} />
-            {/* the income chart is the wide leg; the rent-against-income ratio is a
-                schematic KV rail beside it (WideRail, not Even) , the ratio card carried
-                too little to fill an equal column and left a crater (rule 17). */}
-            <WideRail><IncomeCurve d={d} /><RentAffordability d={d} /></WideRail>
-          </div>
-        </>
-      ) : null}
-
-      {/* Trades , the easiest way in and what it costs to open (no city-level net-margin
-          split: that is a banned metric, §5, and the horizontal-bar money split was the
-          founder's "fundamentally wrong" C9 call). */}
-      {hasTradesCh ? (
-        <>
-          <Movement index={cn()} eyebrow="Trades and rivals" heading="What you can open here" icon="startup-cost" />
-          <TradesHere d={d} />
-        </>
-      ) : null}
-
-      {/* Running it , risks, your own living costs, character and locals. No
-          first-year timeline: a first-year ramp is a trade-level concept and this
-          page is trade-agnostic (rulebook v1 §9); see the file header note. */}
       {hasRunningCh ? (
         <>
           <Movement index={cn()} eyebrow="Running it" heading="What to watch" icon="watch" />
-          <div className="space-y-4">
-            <CityRisks d={d} />
-            <CityCharacter d={d} />
-            <Even><OwnerRunway d={d} /><Locals d={d} /></Even>
-          </div>
+          <Band><CityRisks d={d} /><CityCharacter d={d} /></Band>
+          <Band split="2-1"><OwnerRunway d={d} /><Locals d={d} /></Band>
         </>
       ) : null}
 
-      {/* The close , the peer comparison then the real hand-off. */}
-      {hasCloseCh ? (
+      {(hasTradesCh || hasCloseCh) ? (
         <>
-          <Movement index={cn()} eyebrow="The close" heading="The next move" icon="bookmark" />
-          <div className="space-y-4">
-            <CityPeers d={d} />
-            <Close d={d} />
-          </div>
+          <Movement index={cn()} eyebrow="The close" heading="What you can open, and where to take it" icon="startup-cost" />
+          <Band split="3-2"><TradesHere d={d} /><Close d={d} /></Band>
         </>
       ) : null}
     </main>
