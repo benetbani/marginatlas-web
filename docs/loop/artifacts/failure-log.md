@@ -301,3 +301,52 @@ A LIMIT, RECORDED. The emptiness rule does not hold for tables. A right-aligned
 figure's CELL spans its whole column, so the space reads as inked even when it
 looks empty. That is why the trades table never appeared as a hole while looking
 exactly like one. For a table, the row-rule convention is the rule that holds.
+
+## 2026-08-25, a chart port, and the three faults it dragged out of a gate
+
+THE PORT. The rank slope on the neighbourhood page was one fixed picture handed
+the card's width with no height of its own, so it scaled uniformly and took its
+words and its dots with it. Dots read 5.5px at 1280 and 3.5px at 375 against a
+rule that says 6px at every size. The caption rendered near five pixels on a
+phone. The code had already conceded the point by hiding five of the seven
+district names below the small breakpoint, because at that size they were smears.
+The survival curve had been given the fix months earlier and carries a note about
+it; this chart never received it.
+
+Now: 6px dots and identical label sizes at both widths, and all seven names on a
+phone instead of two. The names were hidden because they were illegible, not
+because they were noise, and that reason is gone.
+
+THEN IT DRAGGED THREE FAULTS OUT OF THE ACCENT COUNTER, and the sequence is the
+interesting part, because each one only became visible after the one before it.
+
+1. THE PORT'S COUNT JUMPED FROM 2 TO 4 WITH NO COLOUR CHANGED. The old chart drew
+   its terracotta as SVG fill and stroke. The counter reads CSS colour. So every
+   accent drawn in SVG anywhere on this site was invisible to it: a chart could
+   paint its entire finding in the accent and score zero. Moving the same marks
+   to real elements is what made them appear.
+
+2. WITH SIGHT, ITS COLLAPSING WAS WRONG. The comment said boxes within 24px; the
+   code compared top-left CORNERS. A label sitting beside its own dot scored as
+   two separate marks whenever their corners were far apart, which for a
+   right-aligned label is always. Now edge distance, and transitive, because one
+   mark can be drawn as a chain: a name, a dot, a line across a plot, a dot, a
+   name, tracing ONE district. That is one thing claiming to be the answer.
+
+3. WITH SIGHT AND CORRECT COLLAPSING, IT COUNTED THE ICONS. Every section icon
+   carries terracotta details two to five pixels across inside a fourteen-pixel
+   glyph, ten of them on one page, and the moment SVG paint became visible every
+   section on the site read as over-marked. An icon is chrome. It is not claiming
+   to be the answer to anything.
+
+Findings went 9, then 18, then 7. Only the last number describes the pages.
+
+THE PATTERN WORTH KEEPING. Fixing an instrument does not converge in one step. A
+blind spot hides the faults BEHIND it, so correcting sight surfaces a second fault
+that was always there and never reachable. Budget for the cascade: the first
+correction is not the last one, and the count in between is not a regression.
+
+LEFT OPEN, DELIBERATELY: whether a section icon should carry the accent at all is
+C5's question, colour on chrome, and it has NOT been examined. It is excluded from
+the answer-budget because it is not an answer, which settles the counting and
+settles nothing about the design.

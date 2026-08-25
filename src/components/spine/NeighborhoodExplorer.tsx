@@ -830,15 +830,49 @@ function RankSlope({ districts, loudSlug, strikeLabel }: { districts: District[]
   const W = 400, rowH = 24, top = 34, H = top + n * rowH + 4;
   const xL = 128, xR = 272;
   const y = (rank: number) => top + (rank - 0.5) * rowH;
+  /* THE DRAWING STRETCHES. THE WORDS DO NOT.
+
+     This was one fixed 400-unit picture handed the card's full width with no
+     height of its own, so it scaled UNIFORMLY to whatever it landed in and took
+     its text and its dots with it. Measured 2026-08-25: the dots read 5.5px at
+     1280 and 3.5px at 375, against a convention that says a dot is 6px at every
+     size and that marks do not scale with the box. The column headings rendered
+     near six pixels on a phone and the strike caption near five, and the code
+     had already conceded the point by hiding five of the seven district names
+     below the small breakpoint, because at that size they were smears.
+
+     Same treatment the survival curve on the trade-across-places page was given
+     for the same fault: the SVG holds the LINES ONLY and stretches freely with
+     non-scaling strokes, the box keeps a true pixel height, and every readable
+     thing is real text laid over it at its own size. The horizontal scale is the
+     only one that moves, so a rank still lands exactly on its rail.
+
+     What a reader gains beyond the sizes: all seven names come back on a phone.
+     They were hidden because they were illegible, not because they were noise,
+     and that reason is gone. The right-hand column still shows a rank alone
+     except at the two anchors, which is the separate every-name-once decision
+     and is untouched. */
+  /* THE TWO RAILS ARE FIXED POSITIONS, NOT PLACED VALUES. Every dot sits on one
+     of them, so nothing here is centred on a number that could run to the end of
+     the scale and hang half outside the card, which is the most repeated visual
+     fault in this codebase and has its own check. Naming the two positions once
+     says that, and stops a structural rail reading as a placement. */
+  const pct = (x: number) => (x / W) * 100;
+  const railL = `${100 - pct(xL)}%`;
+  const railR = `${pct(xR)}%`;
+  const dotL = `${pct(xL)}%`;
+  const dotR = railR;
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img"
-      aria-label={`Rank slope: revenue rank against rent rank for ${n} districts, rent rank 1 being the lightest lease. ${byRev[0]?.name} holds revenue rank 1 but rent rank ${rentRank.get(byRev[0]?.slug ?? "") ?? n}, so the myth that the top-revenue district is also the lightest lease is struck out.`}>
-      {/* column headers , the two ends of the slope, named */}
-      <text x={xL - 10} y={16} textAnchor="end" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Revenue rank</text>
-      <text x={xR + 10} y={16} textAnchor="start" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".06em" }}>Rent rank</text>
+    <div
+      className="relative w-full"
+      style={{ height: H }}
+      role="img"
+      aria-label={`Rank slope: revenue rank against rent rank for ${n} districts, rent rank 1 being the lightest lease. ${byRev[0]?.name} holds revenue rank 1 but rent rank ${rentRank.get(byRev[0]?.slug ?? "") ?? n}, so the myth that the top-revenue district is also the lightest lease is struck out.`}
+    >
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
       {/* the two rank rails */}
-      <line x1={xL} y1={top - 8} x2={xL} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
-      <line x1={xR} y1={top - 8} x2={xR} y2={H - 4} stroke="#e7e2df" strokeWidth={1} />
+      <line x1={xL} y1={top - 8} x2={xL} y2={H - 4} stroke="#e7e2df" strokeWidth={1} vectorEffect="non-scaling-stroke" />
+      <line x1={xR} y1={top - 8} x2={xR} y2={H - 4} stroke="#e7e2df" strokeWidth={1} vectorEffect="non-scaling-stroke" />
       {/* THE MYTH, STRUCK ON THE CHART (§30): the flat line the myth assumes , top
           revenue would sit at rent rank 1 too , dashed, crossed out. The real
           terracotta line drops away from it. */}
@@ -857,60 +891,76 @@ function RankSlope({ districts, loudSlug, strikeLabel }: { districts: District[]
               finding. The caption also moves off the middle of the plot, where it
               floated in whitespace with nothing to attach to, and sits at the end
               of the line it labels. */}
-          <line x1={xL} y1={y(1)} x2={xR} y2={y(1)} stroke="var(--c-line-strong)" strokeWidth={1.4} strokeDasharray="3 3" strokeLinecap="round" />
+          <line x1={xL} y1={y(1)} x2={xR} y2={y(1)} stroke="var(--c-line-strong)" strokeWidth={1.4} strokeDasharray="3 3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
           {/* THE STRIKE MUST NOT LOOK LIKE DATA. At the same weight and colour as
               a district's line it read as an eighth district running at a shallow
               angle, which is the opposite of cancelling something. It is shorter,
               steeper and inked now, so it crosses the claim rather than joining
-              the chart. */}
-          <line x1={(xL + xR) / 2 - 34} y1={y(1) + 9} x2={(xL + xR) / 2 + 34} y2={y(1) - 9} stroke="var(--c-ink)" strokeWidth={2} strokeLinecap="round" />
-          <text x={(xL + xR) / 2} y={y(1) - 10} textAnchor="middle" fontSize={8.5} fill="var(--c-muted)">{strikeLabel}</text>
+              the chart. The caption that names it is no longer drawn in here: it
+              is real text over the box, so it keeps its size on a phone. */}
+          <line x1={(xL + xR) / 2 - 34} y1={y(1) + 9} x2={(xL + xR) / 2 + 34} y2={y(1) - 9} stroke="var(--c-ink)" strokeWidth={2} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
         </g>
       ) : null}
+      {/* solid lines, rendered at rest (no dash-offset draw-on-scroll: they must
+          always show, or the chart reads as two disconnected rank lists) */}
+      {districts.map((d) => {
+        const loud = d.slug === loudSlug;
+        const y1 = y(revRank.get(d.slug) ?? n), y2 = y(rentRank.get(d.slug) ?? n);
+        return (
+          <line key={d.slug} x1={xL} y1={y1} x2={xR} y2={y2} stroke={loud ? TERRA : "#c9c4bf"} strokeWidth={loud ? 2.2 : 1.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        );
+      })}
+      </svg>
+
+      {/* column headers , the two ends of the slope, named */}
+      <span className="absolute text-[length:var(--t-mark)] uppercase leading-none tracking-[0.06em] text-[var(--c-muted)]" style={{ right: `calc(${railL} + 10px)`, top: 8 }}>Revenue rank</span>
+      <span className="absolute text-[length:var(--t-mark)] uppercase leading-none tracking-[0.06em] text-[var(--c-muted)]" style={{ left: `calc(${railR} + 10px)`, top: 8 }}>Rent rank</span>
+
+      {strikeLabel ? (
+        <span className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]" style={{ left: "50%", top: y(1) - 22 }}>{strikeLabel}</span>
+      ) : null}
+
+      {/* EVERY NAME ONCE. The left column is the reader's index and keeps rank plus
+          name; the right column is the same districts re-ordered, so a rank alone
+          says everything the line does not, and only the two anchors that carry the
+          finding, the loudest takings and the lightest lease, keep a name there.
+          Both columns once printed all seven, which made this one chart the source
+          of fourteen of the page's repeats. Art direction H3, H4. */}
       {districts.map((d) => {
         const loud = d.slug === loudSlug;
         const r1 = revRank.get(d.slug) ?? n, r2 = rentRank.get(d.slug) ?? n;
         const y1 = y(r1), y2 = y(r2);
-        const stroke = loud ? TERRA : "#c9c4bf";
-        const ink = loud ? "var(--terra-text)" : "#1b1b1a";
-        // below sm only the two lines that carry the story get a label (first-word
-        // names at a readable 12px); the rest scale to ~4px smears at phone width,
-        // so the dots + lines draw the flip and the labels carry the two anchors.
-        const nameMobile = loud || d.slug === lightestSlug;
-        const firstWord = d.name.split(" ")[0];
+        const ink = loud ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]";
+        const weight = loud ? "font-semibold" : "font-medium";
+        const dot = loud ? TERRA : "#8f8f8d";
+        const nameRight = loud || d.slug === lightestSlug;
+        /* THE WHOLE NAME AT EVERY WIDTH. The first-word shortening was inherited
+           from the version that drew its text inside the picture, where a full
+           name at phone size was a smear. Applied to all seven rows it collides:
+           West End and West London both read "West", South Bank and South London
+           both read "South", which is a label reading identically for two
+           different things (H3). Measured at 375 the rail leaves about 90px on
+           each side and "South London" sets at roughly 72px, so the shortening
+           buys nothing and costs the distinction. */
+        const Name = <span className={weight}>{d.name}</span>;
         return (
-          <g key={d.slug}>
-            <text className="hidden sm:block" x={xL - 10} y={y1 + 3.5} textAnchor="end" fontSize={11}>
-              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)", fontVariantNumeric: "tabular-nums" }}>{r1}  </tspan>
-              <tspan fill={ink} fontWeight={loud ? 600 : 500}>{d.name}</tspan>
-            </text>
-            {nameMobile ? (
-              <text className="sm:hidden" x={xL - 10} y={y1 + 4} textAnchor="end" fontSize={12} fill={ink} fontWeight={loud ? 600 : 500}>{firstWord}</text>
-            ) : null}
-            {/* solid line, rendered at rest (no dash-offset draw-on-scroll: it must
-                always show, or the chart reads as two disconnected rank lists) */}
-            <line x1={xL} y1={y1} x2={xR} y2={y2} stroke={stroke} strokeWidth={loud ? 2.2 : 1.4} strokeLinecap="round" />
-            <circle cx={xL} cy={y1} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
-            <circle cx={xR} cy={y2} r={2.4} fill={loud ? TERRA : "#8f8f8d"} />
-            {/* EVERY NAME ONCE. Both columns printed all seven names, so this one
-                chart supplied fourteen of the page's repeats and was most of the
-                reason "South London" appeared ten times on it. The left column is
-                the reader's index and keeps rank plus name; the right column is
-                the same districts re-ordered, so a rank alone says everything the
-                line does not, and only the two anchors that carry the finding, the
-                loudest takings and the lightest lease, keep a name. Art direction
-                H3, H4. */}
-            <text className="hidden sm:block" x={xR + 10} y={y2 + 3.5} textAnchor="start" fontSize={11}>
-              <tspan fill="#8c8c8a" fontSize={10} style={{ fontFamily: "var(--font-grotesk)", fontVariantNumeric: "tabular-nums" }}>{r2}</tspan>
-              {nameMobile ? <tspan fill={ink} fontWeight={loud ? 600 : 500}>{"  " + d.name}</tspan> : null}
-            </text>
-            {nameMobile ? (
-              <text className="sm:hidden" x={xR + 10} y={y2 + 4} textAnchor="start" fontSize={12} fill={ink} fontWeight={loud ? 600 : 500}>{firstWord}</text>
-            ) : null}
-          </g>
+          <React.Fragment key={d.slug}>
+            <span className={`absolute flex -translate-y-1/2 items-baseline gap-1.5 whitespace-nowrap text-[length:var(--t-micro)] leading-none ${ink}`} style={{ right: `calc(${railL} + 10px)`, top: y1 }}>
+              <Fig className="text-[length:var(--t-mark)] text-[var(--c-muted)]">{r1}</Fig>
+              {Name}
+            </span>
+            {/* 6px at every size (G4), because it is a real element and not a shape
+                inside a picture that stretches. */}
+            <span aria-hidden className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ left: dotL, top: y1, background: dot }} />
+            <span aria-hidden className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ left: dotR, top: y2, background: dot }} />
+            <span className={`absolute flex -translate-y-1/2 items-baseline gap-1.5 whitespace-nowrap text-[length:var(--t-micro)] leading-none ${ink}`} style={{ left: `calc(${railR} + 10px)`, top: y2 }}>
+              <Fig className="text-[length:var(--t-mark)] text-[var(--c-muted)]">{r2}</Fig>
+              {nameRight ? Name : null}
+            </span>
+          </React.Fragment>
         );
       })}
-    </svg>
+    </div>
   );
 }
 

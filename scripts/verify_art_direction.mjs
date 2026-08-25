@@ -109,25 +109,47 @@ const collect = () => {
       const own = [...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim());
       const eb = e.getBoundingClientRect();
       if (eb.width < 1 || eb.height < 1) continue;
-      if (!((own && TERRA.includes(s.color)) || TERRA.includes(s.backgroundColor))) continue;
+      /* AN ACCENT DRAWN IN SVG IS AN ACCENT. This read CSS colour only, so every
+         terracotta stroke and fill on the site was invisible to it: a chart could
+         paint its whole finding in the accent and score zero. Found when a chart
+         was ported from SVG text to real text and its count jumped from 2 to 4
+         without one pixel of colour changing. */
+      /* AN ICON GLYPH IS CHROME, NOT A MARK. The section icons carry terracotta
+         details two to five pixels across inside a fourteen-pixel glyph. Ten of
+         them on one page. They are not claiming to be the answer to anything, and
+         counting them against the answer budget made every section on the site
+         look over-marked the moment SVG paint became visible to this check.
+         Whether an icon should carry the accent at all is C5's question, colour on
+         chrome, and it is a separate one from C2's. */
+      if (e.closest("svg.ma-glyph, .spine-ic")) continue;
+      const svgPaint = [s.fill, s.stroke].filter(Boolean);
+      const painted = svgPaint.some((v) => TERRA.includes(v)) && e.namespaceURI === "http://www.w3.org/2000/svg";
+      if (!((own && TERRA.includes(s.color)) || TERRA.includes(s.backgroundColor) || painted)) continue;
       /* A HIGHLIGHTED ROW IS ONE MARK. The rank, the dot and the value that mark
          the lightest district sit at the two ends and the middle of one row, far
          further apart than any proximity test would collapse, and they mark ONE
          thing. Marks sharing a row are one mark. */
       const row = e.closest("li, tr, [role='row']");
-      accentBoxes.push({ left: eb.left, top: eb.top, row });
+      accentBoxes.push({ l: eb.left, r: eb.right, t: eb.top, b: eb.bottom, row });
     }
-    const marks = [];
-    for (const b of accentBoxes) {
-      const near = marks.find(
-        (m) =>
-          (b.row && m.row === b.row) ||
-          (Math.abs(m.left - b.left) < 24 && Math.abs(m.top - b.top) < 24),
-      );
-      if (near) { near.left = Math.min(near.left, b.left); near.top = Math.min(near.top, b.top); }
-      else marks.push({ left: b.left, top: b.top, row: b.row });
+    /* BOXES WITHIN 24px, TRANSITIVELY, which is what the rule above always said
+       and what the code did not do: it compared top-left CORNERS, so two elements
+       that physically touch scored as two marks whenever their corners were far
+       apart. A label beside its own dot is the ordinary case and it failed.
+       Transitive because a mark can be drawn as a chain: a name, a dot, a line
+       across the plot, a dot, a name, tracing ONE district through a chart. That
+       is one thing claiming to be the answer, which is what C2 counts. */
+    const gap = (a, b) =>
+      Math.max(0, Math.max(a.l - b.r, b.l - a.r)) + Math.max(0, Math.max(a.t - b.b, b.t - a.b));
+    const parent = accentBoxes.map((_, i) => i);
+    const find = (i) => (parent[i] === i ? i : (parent[i] = find(parent[i])));
+    for (let i = 0; i < accentBoxes.length; i++) {
+      for (let j = i + 1; j < accentBoxes.length; j++) {
+        const a = accentBoxes[i], b = accentBoxes[j];
+        if ((a.row && a.row === b.row) || gap(a, b) < 24) parent[find(i)] = find(j);
+      }
     }
-    const accents = marks.length;
+    const accents = new Set(accentBoxes.map((_, i) => find(i))).size;
 
     /* A5, a bordered box inside a bordered card. */
     let nestedBoxes = 0;
