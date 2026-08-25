@@ -260,7 +260,7 @@ export function Risks({ d }: { d: any }) {
             which §17 forbids in the same breath. Two columns spend the width on
             a second item rather than on air, and take the measure to about 60.
 
-            THE PAIRING FIRES AT md, NOT sm. Founder, 2026-08-21: "in mobile the
+            THE PAIRING FIRES AT lg, NOT sm or md. Founder, 2026-08-21: "in mobile the
             look is always stacked with one card after another where there is a
             good opportunity that we can put two cards in the same row." sm: is
             640px and phones are 375 to 430, so a pairing written there has never
@@ -283,9 +283,9 @@ export function Risks({ d }: { d: any }) {
             change nobody can look at is not a change anyone can check. A ch cap is a MEASURE; a rem cap is a width, which
             is why max-w-2xl reads as 96 characters and is the thing being
             migrated away from. */}
-        <div className="mt-2 grid gap-x-7 gap-y-2.5 border-t border-[var(--c-border)] pt-2.5 md:grid-cols-2">
+        <div className="mt-2 grid gap-x-7 gap-y-2.5 border-t border-[var(--c-border)] pt-2.5 lg:grid-cols-2">
           {arr.map((r) => (
-            <div key={r.name} className="grid grid-cols-[104px_1fr] items-baseline gap-3">
+            <div key={r.name} className="grid grid-cols-1 items-baseline gap-x-3 gap-y-0.5 sm:grid-cols-[104px_1fr]">
               <span className="text-[12px] font-medium text-[var(--c-ink)]">{r.name}</span>
               <span className="block text-[11.5px] leading-snug text-[var(--c-ink2)]" style={{ maxWidth: "56ch" }}>{r.note}</span>
             </div>

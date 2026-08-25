@@ -16,6 +16,7 @@
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { writeFileSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { buildSpineCitySeed } from "../src/lib/spine/adapt_city";
 import { buildSpineCellSeed } from "../src/lib/spine/adapt_cell";
 import { buildSpineIndustrySeed } from "../src/lib/spine/adapt_industry";
@@ -26,7 +27,25 @@ import { SpineIndustryBody } from "../src/components/spine/industry/industry-vie
 import { SpineHoodBody } from "../src/components/spine/hood/hood-view";
 import { SpineShell } from "../src/components/spine/shell";
 
-const css = readFileSync("scratchpad/pages/site.css", "utf8");
+/* THE STYLESHEET IS REGENERATED, NOT READ FROM A SNAPSHOT, and this cost two
+   wrong readings in one session. It used to be a file captured by hand months
+   earlier, so any Tailwind class written AFTER that capture simply did not exist
+   in the preview: a new reading-measure cap silently did nothing, and a new grid
+   template silently collapsed a chart row into three stacked lines. Both looked
+   like real defects in the picture and neither was in the page. Tailwind emits
+   only the classes the source actually uses, so generating here means the
+   preview can never be behind the components it is drawing. */
+const CSS_PATH = "scratchpad/pages/site.css";
+/* The CLI is invoked through node against the package's own entry point rather
+   than through npx: npx resolves to a .cmd shim on Windows, which execFileSync
+   cannot spawn without a shell, and a shell here would be one more thing to get
+   wrong on the other platform. */
+execFileSync(
+  process.execPath,
+  ["node_modules/tailwindcss/lib/cli.js", "-i", "src/app/globals.css", "-o", CSS_PATH, "--minify"],
+  { stdio: "pipe" },
+);
+const css = readFileSync(CSS_PATH, "utf8");
 
 /* THE ATMOSPHERE PHOTOGRAPH, INLINED. The shell points at a server path, which a
    file:// preview cannot fetch, so every preview built before 2026-08-24 rendered

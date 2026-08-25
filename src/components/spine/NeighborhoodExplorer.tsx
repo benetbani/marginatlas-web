@@ -161,35 +161,68 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
     () => districts.map((d) => ({ d, rent: d.rent_mult })).sort((a, b) => a.rent - b.rent),
     [districts]
   );
-  // symmetric deviation span so the x1.00 line is visually centered.
   const maxDev = Math.max(0.2, ...rows.map((r) => Math.abs(r.rent - 1)));
+  /* THE AXIS SITS WHERE THE DATA IS, NOT ALWAYS IN THE MIDDLE.
+     This is a divergence chart and it was drawn symmetrically whatever the
+     numbers did: the city line at 50%, half the track for lighter-than-city and
+     half for heavier. Every London district is heavier than the city rate, so
+     every bar grew left, the right half of the hero chart was blank on all seven
+     rows, and the word LIGHTER labelled a region no bar can ever reach.
+     Rulebook v2 §17, and §2: reserving space for nothing is not restraint.
+
+     When both sides are present the chart is unchanged. When they are all on one
+     side the line moves to that edge and the bars get the whole width, which
+     doubles the resolution of the comparison the page exists to make. */
+  const hasLighter = rows.some((r) => r.rent < 1);
+  const hasHeavier = rows.some((r) => r.rent > 1);
+  const oneSided = hasLighter !== hasHeavier;
+  const axis = !oneSided ? 50 : hasHeavier ? 100 : 0;
+  const span = oneSided ? 100 : 50;
   const { ref, seen } = useInView<HTMLDivElement>();
   // mounted gate: SSR / no-JS render the bars at their REAL width (never empty);
   // only after hydration do we collapse-then-grow on scroll-in.
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => { setMounted(true); }, []);
-  const lighterCount = rows.filter((r) => r.rent <= 1).length;
-  const heavierCount = rows.length - lighterCount;
+  /* THE SUMMARY IS THE SPREAD, NOT A TALLY OF WHICH SIDE OF THE CITY RATE.
+     It used to read "<n> run lighter than the city, <n> heavier", and on London
+     that printed "0 run lighter than the city, 7 heavier". A line whose first
+     figure is zero has spent a reader's attention to tell them nothing, and it
+     carried the same confusion the district chips did: the page above it leads
+     with RENT RUNS LIGHTEST and then this said none of them were light.
+     Rulebook v2 §7, §3.
+
+     What replaces it is the one thing this strip shows that nothing else on the
+     page states: how far apart the ends are. Both figures are already on screen,
+     so this is arithmetic on the visible, not a new measurement (§0). It is
+     never a zero, and it is different for every city. */
+  const lightestRent = rows[0]?.rent;
+  const heaviestRent = rows[rows.length - 1]?.rent;
+  const spread =
+    typeof lightestRent === "number" && typeof heaviestRent === "number" && lightestRent > 0 && rows.length > 1
+      ? heaviestRent / lightestRent
+      : null;
 
   return (
     <HoodCard ref={ref} className="px-4 py-3.5">
       <div className="mb-1 flex items-end justify-between gap-3">
         <SectionLabel>Ranked by rent load, lightest first</SectionLabel>
-        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">
-          <Fig className="text-[var(--c-ink)]">{lighterCount}</Fig> run lighter than the city, <Fig className="text-[var(--c-ink)]">{heavierCount}</Fig> heavier
-        </span>
+        {spread ? (
+          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">
+            the heaviest lease runs <Fig className="text-[var(--c-ink)]">{spread.toFixed(1)}x</Fig> the lightest
+          </span>
+        ) : null}
       </div>
 
       {/* axis header , labels the shared scale so the center line reads as the city
           rent level. On mobile the bar column is too narrow for three captions (they
           overprint as one smear), so only the center CITY x1.00 caption survives below sm. */}
-      <div className="mb-1.5 grid grid-cols-[16px_88px_1fr_44px] items-center gap-2 px-0 sm:grid-cols-[18px_130px_1fr_52px] sm:gap-3">
+      <div className="mb-1.5 grid grid-cols-[16px_112px_1fr_44px] items-center gap-2 px-0 sm:grid-cols-[18px_130px_1fr_52px] sm:gap-3">
         <span />
         <span />
         <div className="flex items-center justify-center text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:justify-between">
-          <span className="hidden sm:inline">Heavier</span>
+          {hasHeavier ? <span className="hidden sm:inline">Heavier</span> : null}
           <span className="text-[var(--c-ink2)]">City x1.00</span>
-          <span className="hidden sm:inline">Lighter</span>
+          {hasLighter ? <span className="hidden sm:inline">Lighter</span> : null}
         </div>
         <span />
       </div>
@@ -208,16 +241,24 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
             // half-width of the track (each side gets 50% of it). The bar RESTS at its real
             // width (SSR / no-JS / reduced-motion): it only grows-from-center on scroll-in
             // by starting at 0 until `seen`, then transitioning via CSS (no per-row hook).
-            const target = (Math.abs(dev) / maxDev) * 50;
+            const target = (Math.abs(dev) / maxDev) * span;
             const animate = mounted && !reduced;
             // rest at the real width for SSR / no-JS / reduced-motion / already-seen;
             // collapse to 0 only while mounted + animating + not-yet-in-view.
             const w = animate && !seen ? 0 : target;
             return (
-              <li key={d.slug}>
+              /* max-w-none, AND IT IS NOT COSMETIC. A global readability rule caps
+                 every list item inside main at the prose measure, 68ch, which is
+                 right for a paragraph and wrong for a chart row. Measured at 1280
+                 on 2026-08-24: this strip lost 317px of a 1038px track to it, so a
+                 third of the page's hero chart was unusable and the axis captions
+                 sat well to the right of the axis they name. The rule has zero
+                 specificity by design, so declaring a width here is the intended
+                 way out. Prose lists on these pages keep the measure. */
+              <li key={d.slug} className="max-w-none">
                 <button
                   type="button" onClick={() => onSelect(d.slug)} aria-pressed={sel}
-                  className="nerow -mx-2 grid w-[calc(100%+1rem)] grid-cols-[16px_88px_1fr_44px] items-center gap-2 rounded-md px-2 py-1.5 text-left sm:grid-cols-[18px_130px_1fr_52px] sm:gap-3"
+                  className="nerow -mx-2 grid w-[calc(100%+1rem)] grid-cols-[16px_112px_1fr_44px] items-center gap-2 rounded-md px-2 py-1.5 text-left sm:grid-cols-[18px_130px_1fr_52px] sm:gap-3"
                 >
                   <Fig className={`text-[length:var(--t-body)] ${focal ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
                   <span className={`min-w-0 truncate text-[length:var(--t-body)] ${sel ? "font-semibold text-[var(--c-ink)]" : "font-medium text-[var(--c-ink2)]"}`}>
@@ -227,12 +268,24 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
                     {/* mid track */}
                     <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#efeae6" }} />
                     {/* the city x1.00 line , the single most important reference on the page */}
-                    <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2" style={{ background: "#b9b1ab" }} />
+                    {/* CLAMPED AT THE ENDS. Moving the axis to an edge put a
+                        centred mark half outside the box: the line lost half its
+                        width at 100%, and the selection ring below lost 6.5 of
+                        its 13px. Both are pinned inside instead of centred on
+                        their own value. */}
+                    <div
+                      className="absolute inset-y-0 w-px"
+                      style={{
+                        left: `${axis}%`,
+                        transform: `translateX(${axis >= 100 ? "-100%" : axis <= 0 ? "0" : "-50%"})`,
+                        background: "#b9b1ab",
+                      }}
+                    />
                     {/* divergence fill from the center */}
                     <div
                       className="absolute top-1/2 h-[9px] -translate-y-1/2 rounded-[2px]"
                       style={{
-                        left: lighter ? "50%" : `${50 - w}%`,
+                        left: lighter ? `${axis}%` : `${axis - w}%`,
                         width: `${w}%`,
                         background: focal ? TERRA : "#c8c2bd",
                         transition: animate ? "width .6s cubic-bezier(.2,.7,.2,1), left .6s cubic-bezier(.2,.7,.2,1)" : "none",
@@ -242,7 +295,11 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
                     {sel ? (
                       <span
                         className="absolute top-1/2 h-[13px] w-[13px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"
-                        style={{ left: `${lighter ? 50 + w : 50 - w}%`, background: "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3", transition: animate ? "left .6s cubic-bezier(.2,.7,.2,1)" : "none" }}
+                        style={{
+                          left: `clamp(6.5px, ${lighter ? axis + w : axis - w}%, 100% - 6.5px)`,
+                          background: "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3",
+                          transition: animate ? "left .6s cubic-bezier(.2,.7,.2,1)" : "none",
+                        }}
                         aria-hidden
                       />
                     ) : null}
@@ -588,7 +645,7 @@ function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | 
                 </div>
               );
               return (
-                <li key={t.name} className="flex gap-3">
+                <li key={t.name} className="flex max-w-none gap-3">
                   <Fig className={`mt-px w-4 shrink-0 text-[length:var(--t-body)] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
                   {href ? (
                     <a href={href} className="nerow -mx-1 min-w-0 rounded-md px-1">{body}</a>
@@ -614,7 +671,7 @@ function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | 
               <SectionLabel>Who is here</SectionLabel>
               <ul className="space-y-1">
                 {demos.map((s) => (
-                  <li key={s} className="flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
+                  <li key={s} className="flex max-w-none items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
                 ))}
               </ul>
             </div>

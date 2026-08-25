@@ -121,7 +121,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
             <Rail icon="high-street" kicker={`Open a trade in ${cityName}`} />
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {tradeLinks.map((t) => (
-                <li key={t.href}>
+                <li key={t.href} className="max-w-none">
                   <a href={t.href} className="flex items-center justify-between gap-3 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 transition hover:border-[var(--c-line-strong)] hover:bg-[var(--c-soft2)]">
                     <span className="flex min-w-0 items-center gap-2.5">
                       <Ico id={t.icon} />
