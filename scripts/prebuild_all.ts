@@ -65,6 +65,7 @@ const GATES: Gate[] = [
   { name: "scale-end-clamps", script: "scripts/verify_scale_end_clamps.mjs" },
   { name: "frost-reads", script: "scripts/verify_frost_reads.mjs" },
   { name: "section-bands", script: "scripts/verify_section_bands.mjs" },
+  { name: "art-direction", script: "scripts/verify_art_direction.mjs" },
   /* FRESHNESS of the two artifacts generated out of design/mockups/. Both are
      valid files when stale, so nothing else can notice: a stale stylesheet
      still compiles and a stale glyph module still typechecks. This actually
