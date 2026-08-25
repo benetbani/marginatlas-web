@@ -48,7 +48,7 @@
  * Usage: node scripts/verify_gathered_emptiness.mjs [--width N] [--crops] [--write-baseline]
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { eachPage } from "./lib/measure_pages.mjs";
+import { eachPageAtWidths } from "./lib/measure_pages.mjs";
 
 const BASELINE = "scripts/gathered_emptiness_baseline.json";
 const argv = process.argv.slice(2);
@@ -190,8 +190,9 @@ const runs = [];
 let unjudgeable = 0;
 let measured = 0;
 
-for (const width of WIDTHS) {
-  const pages = await eachPage(width, measure);
+/* ONE BROWSER FOR BOTH WIDTHS. Two calls launched two, to render the same four
+   files twice. */
+for (const { width, result: pages } of await eachPageAtWidths(WIDTHS, measure)) {
   runs.push({ width, pages });
   for (const { name, result } of pages) {
     let holes = 0;

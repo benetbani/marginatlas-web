@@ -67,7 +67,18 @@ export function InfoTip({
                whole gloss in aria-label, so a screen reader read a paragraph
                where a button name belongs. */
             aria-label="What this means"
-            className={`group/tip inline-flex align-middle ${className} grid h-3.5 w-3.5 cursor-help place-items-center rounded-full border border-[var(--c-line-strong)] text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]`}
+            /* ONE DISPLAY, AND IT IS AN INLINE ONE. This carried both inline-flex
+               and grid. Tailwind emits both and its own source order decides the
+               winner, so every one of these computed as display:grid , which is
+               BLOCK level. A marker that sits inside a sentence was therefore
+               breaking the line before and after itself: "16 covers / ? / a day to
+               break even" rendered as three lines in a card with 190px of unused
+               width beside it. Seven of them on the four London pages, seventeen
+               call sites in twelve files, every one of them wrong in the same way
+               and none of it visible to a typecheck. place-items-center is the
+               grid spelling of centring, so it goes with the grid and the flex
+               spelling takes its place. */
+            className={`group/tip inline-flex align-middle ${className} h-3.5 w-3.5 cursor-help items-center justify-center rounded-full border border-[var(--c-line-strong)] text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]`}
           >
             ?
           </button>

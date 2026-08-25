@@ -194,3 +194,71 @@ is still worth having: every hole it found after each correction was real, and o
 of them had been sitting on the neighbourhood page for weeks. But the ratio is the
 lesson. A new measurement should be assumed wrong until a picture agrees with it,
 and the first three pictures disagreed.
+
+## 2026-08-25, the last hole was a typographic fault two rules away
+
+The remaining gathered hole sat on the trade page's break-even card, 190 by 126
+of empty at the top right. Every instinct said layout: move the support figures
+up, change the split, narrow the card.
+
+IT WAS THE TOOLTIP MARKER. Its class string carried both inline-flex AND grid.
+Tailwind emits both declarations and the stylesheet's own source order picks the
+winner, which was grid, and grid is BLOCK level. So a marker built to sit inside a
+sentence was breaking the line before and after itself. "16 covers ? a day to
+break even" rendered as three lines, the sentence never used the width beside it,
+and the unused width is what the gate reported. Removing one word from a class
+string closed the hole, shortened the card by 60px, and the sentence reads as a
+sentence.
+
+SEVEN MARKERS ON THE FOUR LONDON PAGES, seventeen call sites in twelve files,
+every one wrong in the same way, and none of it visible to a typecheck, a linter
+or any of the 121 gates. It rendered, and it looked deliberate.
+
+THE LESSON IS THE DISTANCE. A measurement pointed at a hole; the cause was two
+rules away and in a different component. The temptation was to fix what the
+measurement named , the layout , and that fix would have worked, in the sense
+that the number would have gone down, while the sentence stayed broken on seven
+more places. Ask what CAUSED the shape before rearranging it.
+
+GATED, and negative-tested four ways: the real fault fails it, a deliberate
+ternary between two displays passes, a prefixed responsive override passes, and a
+synthetic collision fails. The first version of the check did NOT catch the fault
+it was written for, because its pattern stopped at the interpolation sitting
+between the two colliding words. It was worthless and would have shipped as
+reassurance. Negative-testing is the only reason that is not what happened.
+
+## 2026-08-25, five gates failed and four of them were fine
+
+A chain run reported 116 passed, 5 failed. Read at face value that is a bad
+regression. Four of the five were the machine, not the code:
+
+  one could not allocate: "VirtualAlloc failed"
+  one died on an access violation
+  one could not allocate, same message
+  one asserted inside a memory reallocation while reading a file
+
+All four passed on their own, immediately after, exit 0 each. The fifth was real
+and boring: a generated counts block was stale because a gate had been added.
+
+THE RUN TOOK 665 SECONDS AGAINST A USUAL 225. That is the tell, and it is worth
+more than the exit codes: a chain that takes three times as long is not reporting
+on the same conditions as the one it is being compared against. Free memory was
+under a gigabyte with no browser and no node process running, which means the
+pressure was transient and had already passed by the time it was looked at.
+
+WHAT THIS COSTS IF IT IS NOT CAUGHT. A crash exits non-zero and lands in the
+failure list beside genuine findings, with a stack trace that looks like evidence.
+The instinct is to start fixing the named gates. All four would have been
+'repaired' into a state nobody could explain, because there was nothing wrong
+with them.
+
+THE CHECK: before acting on a chain failure, look at the wall-clock and the
+failure TEXT, not just the count. An allocation failure, an access violation or
+an assertion inside a memory routine is an environment report, not a finding.
+Re-run the named gates alone before touching a line.
+
+Reduced the browser work that plausibly contributed: the emptiness gate measured
+two widths by launching two browsers to render the same four files twice. It now
+opens one, and the shared helper closes it in a finally so a throw cannot leave a
+stray browser behind, which is invisible until the next run goes short of memory
+and blames a gate that is working.

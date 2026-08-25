@@ -39,10 +39,11 @@ const MOVED = [
   ["Elements carrying the frosted treatment", "0", "every card"],
   ["Rungs in the spacing ladder that were the same number", "3 of 4", "0"],
   ["Rules from the art direction held by a gate", "0", "15 of 56"],
+  ["Places where a tooltip marker broke its own sentence into three lines", "7", "0"],
   ["Pages the layout rules run on at every build", "4", "4, and they are the four London ones"],
   ["Pages rendered outside London to catch what London hides", "0", "17 of 19 tried"],
   ["Sections that were prose with nothing drawn", "3", "0"],
-  ["Sections with a gathered block of empty space", "3", "1"],
+  ["Sections with a gathered block of empty space", "3", "0"],
 ];
 
 /* THE DECISIONS THAT ARE THE FOUNDER'S, WITH A RECOMMENDATION FOR EACH.
@@ -78,7 +79,7 @@ const KNOWN = [
   "The neighbourhood page is the one page type this wider check cannot cover. London is the only city in the whole repository that carries districts, so there is no second case to test it against.",
   "The neighbourhood map draws in the real app and not in these pictures: it needs a browser to measure its own box, and these are static renders. The empty half beside the district chips is that, not a hole in the page.",
   "The trade page's owner-keeps waterfall is the same: present and correct in the app, blank here.",
-  "One section still carries a gathered block of empty space: the break-even card on the trade page, where the top right is empty beside a short answer line. It is measured, named, and next. The pick on the city page was the other one and is now rebuilt.",
+  "No section on any of the four pages now carries a gathered block of empty space, at either desktop width. The last one turned out not to be a layout fault at all: the small question mark that explains a term had two conflicting display settings, and the one that won made it a block, so it broke its own sentence into three lines and left the space beside it unused. Seven of those markers across the four pages, all wrong the same way, none of it visible to any existing check.",
   "One thing I found and undid: a table appeared to have a large void down its middle, I moved it to a narrower column to fix that, and then discovered the measurement was wrong, a table row rule was not being counted as ink. The table never had a hole. The change was reverted and the page is exactly as it was.",
   "One consistency check cannot run yet and is not a pass: nothing compares a city's keep-share against its country's for the same trade, because no country file exists to compare against. Two related checks are waiting on the same thing, a second city for a trade and a second trade for a country. They will start running the day that data lands, and until then that agreement is simply unchecked.",
   "Seven small figures still render without tabular numerals. All seven are scale END labels, which sit at opposite ends of a track and never line up with anything, so the check counts them and they are not really a fault.",

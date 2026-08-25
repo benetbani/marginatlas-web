@@ -69,6 +69,10 @@ const GATES: Gate[] = [
   /* E6, the other half of "a lot of whitespace". The ink gate measures HEIGHT,
      so a card with a dead strip down its right passed as full. */
   { name: "gathered-emptiness", script: "scripts/verify_gathered_emptiness.mjs" },
+  /* Two display utilities on one element compile to two declarations and the
+     stylesheet picks the winner. Nothing warns and a typecheck cannot see it.
+     The tooltip marker carried inline-flex AND grid for months. */
+  { name: "one-display", script: "scripts/verify_one_display.mjs" },
   /* The coverage CLAIM, not the rules. Section J of the art direction says
      which of its 55 rules a gate holds, and that claim was wrong in three
      separate documents on the day it was written. A coverage claim nobody
