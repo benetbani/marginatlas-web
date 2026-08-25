@@ -158,6 +158,37 @@ const collect = () => {
     };
   });
 
+  /* G6, A SCALE'S DOMAIN FOLLOWS ITS DATA.
+     Caught by hand on 2026-08-24: the rent strip was a divergence chart drawn
+     symmetrically whatever the numbers did, and every London district is heavier
+     than the city rate, so half the track was blank on all seven rows and the word
+     LIGHTER labelled a region no bar could reach. A scale whose marks use less
+     than half their track is reserving room for values that cannot occur.
+
+     BLIND SPOTS, both real. It finds MARKS, small absolutely-positioned dots and
+     handles, so it sees dot plots and marker scales and does NOT see the bar
+     strip that motivated it, where the data is drawn as bar widths. And a scale
+     legitimately padded at both ends to make room for its labels looks the same
+     as one with a domain that is too wide; the 50% floor is set low for that
+     reason, and the four scales on these pages measure 57, 59, 93 and 95. */
+  const wideDomains = [];
+  for (const track of document.querySelectorAll('[role="img"]')) {
+    const tb = track.getBoundingClientRect();
+    if (tb.width < 120 || tb.height > 200) continue;
+    const marks = [...track.querySelectorAll("*")].filter((e) => {
+      if (getComputedStyle(e).position !== "absolute") return false;
+      const b = e.getBoundingClientRect();
+      return b.width > 2 && b.width < 40 && b.height > 2 && b.height < 40;
+    });
+    if (marks.length < 3) continue;
+    const xs = marks.map((m) => {
+      const b = m.getBoundingClientRect();
+      return ((b.left + b.width / 2 - tb.left) / tb.width) * 100;
+    });
+    const span = Math.max(...xs) - Math.min(...xs);
+    if (span < 50) wideDomains.push(`${marks.length} marks use ${Math.round(span)}% of a track: "${(track.getAttribute("aria-label") || "").slice(0, 40)}"`);
+  }
+
   /* C4, A LEGEND MAY NOT NAME A COLOUR THAT IS NOT ON THE PAGE.
      Caught by hand on 2026-08-24: the district map's legend read "terracotta =
      lighter than the city", and no London district is below the city rate, so it
@@ -354,7 +385,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, sameForAll, falseLegends, bandCount: bandSplits.length };
+  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, sameForAll, falseLegends, wideDomains, bandCount: bandSplits.length };
 };
 
 const RULES = [
@@ -389,6 +420,10 @@ for (const { name, result } of pages) {
   now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
   total += now[`${name}:pageAccents`];
   if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
+
+  now[`${name}:wideDomain`] = result.wideDomains.length;
+  total += result.wideDomains.length;
+  for (const x of result.wideDomains) lines.push(`  G6  ${x}`);
 
   now[`${name}:falseLegend`] = result.falseLegends.length;
   total += result.falseLegends.length;
