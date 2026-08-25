@@ -350,3 +350,61 @@ LEFT OPEN, DELIBERATELY: whether a section icon should carry the accent at all i
 C5's question, colour on chrome, and it has NOT been examined. It is excluded from
 the answer-budget because it is not an answer, which settles the counting and
 settles nothing about the design.
+
+## 2026-08-25, the exemption that was being claimed for the wrong figures
+
+The tabular-numerals check carries an honest note about its own blind spot: it
+cannot tell a figure that STACKS from one that stands alone, so a scale's two END
+labels get counted and are not really a fault. That note is true.
+
+The claim built on top of it was not. Seven figures were failing and the standing
+summary, repeated in a founder-facing document, was that all seven were scale end
+labels and none was worth spending on. Measured today by printing each one with
+its position: THREE of them are the survival chart's 0%, 50% and 100%, sitting in
+one column at the same left edge, three deep. That is not an end label. It is the
+exact case the rule exists for, a column of figures scanned vertically where
+proportional numerals make equal values look unequal.
+
+The other four are genuinely standalone and the note holds for them.
+
+FOURTH CARRIED CLAIM THIS WEEK THAT DID NOT SURVIVE BEING MEASURED, and they
+share a shape. A true observation about an instrument's limit gets written down.
+Then a count is attributed to that limit WITHOUT CHECKING which items the count
+contains. The limit is real, the attribution is a guess, and the guess inherits
+the credibility of the limit. It reads as diligence: the blind spot is named, so
+the number beside it looks accounted for.
+
+THE CHECK IS CHEAP: print the items, not the count. Three lines of code named all
+seven in one run and the answer was visible immediately. Any time a number is
+explained away by a documented limit, list what is actually in it.
+
+## 2026-08-25, a line that stopped short, and why nobody saw it
+
+The survival curve's stroke ended just past year three, with a rounded cap, while
+the area fill and the end dot carried on to year five. It had been doing that for
+months.
+
+THE CAUSE. A dash length was computed by summing the path's segments IN VIEWBOX
+UNITS and handed to a stroke drawn with non-scaling-stroke, which measures its
+dashes in SCREEN units. The box stretches horizontally and not vertically, so the
+rendered path is about half as long again as the sum that was measured, and the
+dash covered two thirds of it. Wider card, shorter line , which is the opposite of
+what anyone would guess, and it means the fault was WORST on the widest screens.
+
+It was a reveal animation that no longer animates. The draw fraction has been
+pinned at 1 for months so crawlers and fast scrolls could not catch a curve
+mid-draw. That fix left the dash in place, doing nothing but truncating.
+
+WHY IT SURVIVED. At normal size the truncation does not read as a broken line. It
+reads as the curve flattening out, which is exactly what a survival curve does in
+its later years, so the defect wore the shape of the data. It became obvious the
+moment the card was captured at three times its size: a rounded stroke cap sitting
+in open space is not something a chart does on purpose.
+
+THE PRACTICE THIS ARGUES FOR. Looking at a picture catches what a gate cannot.
+Looking at a picture ZOOMED catches what a picture cannot. Anything drawn with a
+stroke, a cap or a sub-pixel rule should be looked at above 1x at least once,
+because at 1x a two-pixel wrongness is indistinguishable from an intention.
+
+The other chart on this site using a dasharray is a donut with proportional dashes
+and no scaling conflict. Checked, not assumed.

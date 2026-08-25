@@ -150,11 +150,20 @@ export function SurvivalCurve({ curve, note }: { curve: Array<{ yr: number; pct:
   const Y = (pct: number) => padT + (1 - pct / 100) * (H - padT - padB); // zero baseline
   const leftPct = (yr: number) => (X(yr) / W) * 100;
   const pts = curve.map((c) => [X(c.yr), Y(c.pct)] as const);
-  let total = 0;
-  for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
   const line = "M " + pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L ");
   const area = `M ${pts[0][0].toFixed(1)},${(H - padB).toFixed(1)} L ` + pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" L ") + ` L ${pts[pts.length - 1][0].toFixed(1)},${(H - padB).toFixed(1)} Z`;
-  const dash = total, offset = total * (1 - p);
+  /* THE LINE STOPPED SHORT OF ITS LAST POINT, and looked at three times size that
+     is exactly what it did: the stroke ended just past year three with a rounded
+     cap while the area fill and the 38% dot carried on to year five.
+
+     A dash length was computed by summing the segments IN VIEWBOX UNITS and handed
+     to a stroke drawn with non-scaling-stroke, which measures its dashes in SCREEN
+     units. The box stretches horizontally and not vertically, so the rendered path
+     is about half as long again as the sum that was measured, and the dash covered
+     two thirds of it. Wider card, shorter line. It was a reveal animation that no
+     longer animates: the draw fraction has been pinned at 1 for months so crawlers
+     and fast scrolls could not catch a curve mid-draw. What was left was a dash
+     that only ever truncated. */
   const lastVisibleIdx = Math.max(0, Math.min(curve.length - 1, Math.round(p * (curve.length - 1))));
   /* the end reading anchors inward so it cannot hang off the right-hand edge,
      the same rule three other charts on this site now use */
@@ -169,7 +178,15 @@ export function SurvivalCurve({ curve, note }: { curve: Array<{ yr: number; pct:
         aria-label={curve.map((c) => `year ${c.yr}: ${c.pct}% open`).join(", ")}
       >
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
-          {[0, 50, 100].map((g) => (
+          {/* ONE AXIS AND ONE REFERENCE, NOT A GRID (G2, G3). This drew a rule at
+              0, 50 and 100. The 0 line is the axis and the 100 line is the
+              reference the curve falls away from , every trade opens with all of
+              its operators still trading, and the gap between that line and the
+              curve IS the finding. The 50 line was neither: a gridline, which the
+              conventions ban outright, earning its keep only by helping a reader
+              guess a value its own label already states. The label stays and the
+              rule goes, which is what "no gridlines" means. */}
+          {[0, 100].map((g) => (
             <line
               key={g}
               x1={padL}
@@ -182,13 +199,20 @@ export function SurvivalCurve({ curve, note }: { curve: Array<{ yr: number; pct:
             />
           ))}
           <path d={area} fill={TERRA} opacity={0.1 * p} />
-          <path d={line} fill="none" stroke={TERRA} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={dash} strokeDashoffset={reduced ? 0 : offset} vectorEffect="non-scaling-stroke" />
+          <path d={line} fill="none" stroke={TERRA} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
         </svg>
+        {/* TABULAR, BECAUSE THESE THREE STACK. F1 asks a figure that stacks with
+            other figures to carry tabular numerals, and its own note says the check
+            cannot tell a stacking figure from a standalone one, so a scale's two
+            END labels get counted and are not really a fault. That exemption was
+            being claimed for these, and they are not ends: 0%, 50% and 100% sit in
+            one column at the same left edge, three deep, which is the exact case
+            the rule exists for. Measured before believing the note. */}
         {[0, 50, 100].map((g) => (
           <span
             key={g}
             aria-hidden
-            className="absolute w-6 text-right text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
+            className="fig absolute w-6 text-right text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
             style={{ left: 0, top: `${Y(g) - 5}px` }}
           >
             {g}%

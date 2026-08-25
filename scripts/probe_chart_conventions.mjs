@@ -154,7 +154,11 @@ for (const { name, result } of wide.result) {
       console.log(`    ${c.w}x${c.h}px, viewBox "${c.viewBox || "none"}", preserveAspectRatio ${c.preserve}`);
       console.log(`    ${c.rects} bars, ${c.circles} dots, ${c.paths} paths, ${c.texts} text nodes`);
       if (c.curved) notes.push(`G5 ${c.curved} path(s) using curve commands`);
-      if (c.horizRules > 1) notes.push(`G3 ${c.horizRules} full-width rules inside the plot`);
+      /* An axis and a reference are two rules and both are allowed. Three is a
+         grid, which is banned. Two is reported with the allowance named, so the
+         line reads as information rather than an alarm. */
+      if (c.horizRules > 2) notes.push(`G3 ${c.horizRules} full-width rules inside the plot: an axis and one reference are the allowance, so this is a grid`);
+      else if (c.horizRules === 2) notes.push("G3 two full-width rules, which is the allowance if they are the axis and one reference");
       if (c.viewBox && c.preserve === "(default)" && (c.rects || c.circles)) {
         notes.push("G4 a viewBox with default aspect handling: the drawing scales, and marks scale with it");
       }
