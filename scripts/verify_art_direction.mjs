@@ -158,6 +158,30 @@ const collect = () => {
     };
   });
 
+  /* D3, RHYTHM. No band repeats the split of the band immediately before it, and
+     never three equal-halves bands in a row. A page of identical halves is as
+     monotonous as a page of full widths, just narrower.
+
+     Read from what each band RENDERS, not from what was written, so a split that
+     silently fails to compile is caught as well as one that was typed twice.
+     A band with one surviving child is skipped: its partner self-omitted, which
+     is a data condition rather than a rhythm choice. */
+  const bandSplits = [];
+  for (const el of document.querySelectorAll("div.grid")) {
+    const cls = String(el.className);
+    if (!/^mt-5 grid grid-cols-1 items-start gap-5/.test(cls)) continue;
+    if (el.childElementCount < 2) continue;
+    const m = cls.match(/md:grid-cols-(2|\[[^\]]+\])/);
+    if (m) bandSplits.push(m[1]);
+  }
+  const rhythm = [];
+  for (let i = 1; i < bandSplits.length; i++) {
+    if (bandSplits[i] === bandSplits[i - 1]) rhythm.push(`bands ${i} and ${i + 1} both split ${bandSplits[i]}`);
+  }
+  for (let i = 2; i < bandSplits.length; i++) {
+    if (bandSplits[i] === "2" && bandSplits[i - 1] === "2" && bandSplits[i - 2] === "2") rhythm.push(`bands ${i - 1} to ${i + 1} are three equal halves in a row`);
+  }
+
   /* F1, TABULAR NUMERALS. Founder, 2026-08-25: every table, chart and visual
      follows written conventions for how its elements render. A column of numbers
      is scanned vertically and proportional numerals make equal values look
@@ -224,7 +248,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals };
+  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, bandCount: bandSplits.length };
 };
 
 const RULES = [
@@ -259,6 +283,10 @@ for (const { name, result } of pages) {
   now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
   total += now[`${name}:pageAccents`];
   if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
+
+  now[`${name}:rhythm`] = result.rhythm.length;
+  total += result.rhythm.length;
+  for (const r of result.rhythm) lines.push(`  D3  ${r}`);
 
   now[`${name}:numerals`] = result.looseNumerals;
   total += result.looseNumerals;

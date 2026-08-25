@@ -117,7 +117,11 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
             D4). The slope takes the large side because it carries fourteen
             labelled points. */}
         <Movement index="02" icon="myth-reality" heading="The revenue myth, and the districts side by side" />
-        <Band split="3-2">
+        {/* EQUAL HALVES, because the band above this one is already 3-2 and two
+            neighbouring bands with the same split is the monotony D3 exists to
+            stop. Both halves also want width: the slope carries nine labelled
+            points and the comparison three columns of figures. */}
+        <Band>
           {d.meta?.myth && loudest ? <MythChapter myth={d.meta.myth} loudest={loudest} districts={districts} /> : null}
           <NeighborhoodCompare districts={districts} compare={d.meta?.compare} />
         </Band>

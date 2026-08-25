@@ -942,7 +942,14 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
     <div className="overflow-hidden rounded-[14px] border border-[var(--c-border)]" style={CARD_SURFACE}>
       <div className="p-5 md:p-6">
         <Rail icon="myth-reality" kicker="Revenue rank vs rent rank" sample />
-        <div className="grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center">
+        {/* THE STATS SIT UNDER THE CHART, NOT BESIDE IT. This card used to hold the
+            whole column, so a 1.5-to-1 internal split still left the slope 620px.
+            In a half band that same split leaves it 320px for nine labelled points
+            and two rank rails, which is not a chart any more. The card's own width
+            goes to the drawing and the two reads take a row beneath it, which is
+            also the anatomy the art direction asks for: the visual, then what it
+            says. */}
+        <div className="grid gap-5">
           {/* the chart carries the takeaway silently: one line per district, the myth
               struck on it, the loudest district's real drop in terracotta */}
           {/* NO BOX INSIDE THE BOX. The chart sat in its own bordered, filled card
@@ -952,8 +959,11 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
           <div className="p-1">
             <RankSlope districts={list} loudSlug={loudest.slug} strikeLabel={strikeLabel} />
           </div>
-          {/* the flip at the two extremes, schematic (the finding on the visual, §14) */}
-          <div className="space-y-3">
+          {/* the flip at the two extremes, schematic (the finding on the visual,
+              §14). Side by side beneath the chart rather than stacked beside it:
+              two short reads in a row read as a pair, and stacked in a narrow
+              column they read as a list of two. */}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <AnchorCase label="Loudest takings" name={loudest.name} rows={[["Revenue", `#${revRankOf(loudest.slug)}`], ["Rent", `#${rentRankOf(loudest.slug)} of ${n}`]]} />
             <AnchorCase label="Lightest lease" name={lightest.name} rows={[["Rent", `#${rentRankOf(lightest.slug)}`], ["Revenue", `#${revRankOf(lightest.slug)} of ${n}`]]} />
           </div>

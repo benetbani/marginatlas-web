@@ -881,7 +881,12 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
       {(hasTradesCh || (d.where_to_trade?.list?.length ?? 0) > 0) ? (
         <>
           <Movement index={cn()} eyebrow="The close" heading="What you can open, and where to take it" icon="startup-cost" />
-          <Band split="3-2"><TradesHere d={d} /><Close d={d} /></Band>
+          {/* 2-3, NOT 3-2, AND THE REASON IS RHYTHM (D3). The band before this one
+              is already 3-2, and two neighbouring bands with the same split is the
+              monotony the rule exists to stop. It also suits the content better
+              (D4): the chip row is a list of links and the pick card carries a
+              figure, a district and two actions. */}
+          <Band split="2-3"><TradesHere d={d} /><Close d={d} /></Band>
         </>
       ) : null}
     </main>
