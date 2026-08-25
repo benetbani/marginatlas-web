@@ -325,7 +325,13 @@ export function DemandSize({ d }: { d: any }) {
      upstream; this is the knowable neighbour, and it is what keeps the card from
      being a heading over nothing (§2). */
   const spreadWord: string | undefined = o?.spread_word;
-  const hasSize = hasMagnitude || hasMillionaires || !!spreadWord;
+  /* THE SPREAD WORD NO LONGER COUNTS TOWARDS THIS CARD EXISTING. It moved to the
+     earnings chart, which is the card that shows the spread, so a city holding
+     ONLY the spread word would render this card as a naked heading with nothing
+     under it. That is exactly what happened on London the moment the word moved,
+     measured at 314x28 holding the words "The spending pool" and nothing else. A
+     section's guard has to ask for the content the section still draws. */
+  const hasSize = hasMagnitude || hasMillionaires;
   if (!o || (!hasSplit && !hasSize)) return null;
   const growth = o?.growth_pct_yoy;
   const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
@@ -352,14 +358,14 @@ export function DemandSize({ d }: { d: any }) {
           §26 permits a lone value to stay a value. It is also a different form from
           the tier bands and the share bar elsewhere on this page (§25, §33). The
           statistic's own name never appears (§40); the gloss explains it plainly. */}
-      {spreadWord ? (
-        <div className="flex flex-wrap items-baseline gap-x-3">
-          <span className="text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{spreadWord}</span>
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
-            how the money is spread here<InfoTip gloss={`Whether earnings in ${d.meta?.city} cluster around a middle or stretch between a wealthy few and everyone else. A place where they cluster suits a volume trade; a place where they stretch suits a premium one.`} />
-          </span>
-        </div>
-      ) : null}
+      {/* THE SPREAD WORD MOVED TO THE CHART THAT SHOWS THE SPREAD. It used to sit
+          here, and on London it was the ONLY thing this card rendered: a 356x147
+          card holding one adjective and a caption, no figure and no visual, which
+          art direction E5 says is not a section. The earnings chart 650px down the
+          page draws the same finding properly, three marks on a log scale, so the
+          word joins it. Nothing is lost; the reader gets the word AND the shape in
+          one place. This card still renders whenever a city carries a spend figure
+          or a millionaire count, which is what it is actually for. */}
       {/* the millionaire count: how deep the premium ticket runs (the Head tag covers it). */}
       {hasMillionaires ? (
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 border-t border-[var(--c-border)] pt-3">

@@ -69,6 +69,18 @@ export function IncomeCurve({ d }: { d: any }) {
   // stated base; the tail ticks stay grey (the extreme is context, not the answer).
   const ticks: Array<[string, number, boolean]> = [["Median", med, true], ["Top 10%", t10, false], ["Top 1%", t1, false]];
 
+  /* THE SPREAD WORD LIVES HERE NOW, ON THE CHART THAT SHOWS THE SPREAD.
+     It had its own card 650px up the page: 356x147px holding one adjective,
+     "Somewhat uneven", and a caption. No figure, no visual. Art direction E5, a
+     section that is prose with nothing drawn is not a section, and A2, a section
+     needs a figure. The chart below it says the same thing properly, three marks
+     on a log scale showing how far the top pulls away from the middle.
+
+     So the word joins the chart it describes rather than competing with it from
+     another band. Nothing is lost: the reader still gets the word AND the shape,
+     and now they are in the same place, which is where a read belongs. */
+  const spreadWord = d.demand?.spread_word ?? null;
+
   return (
     <Box>
       <Head icon="spending-power" sample={sample}>What customers earn here</Head>
@@ -122,6 +134,12 @@ export function IncomeCurve({ d }: { d: any }) {
             })}
           </div>
         </div>
+        {spreadWord ? (
+          <div className="flex flex-wrap items-baseline gap-x-2.5 border-t border-[var(--c-border)] pt-3">
+            <span className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{spreadWord}</span>
+            <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">is how the money is spread here</span>
+          </div>
+        ) : null}
       </div>
     </Box>
   );

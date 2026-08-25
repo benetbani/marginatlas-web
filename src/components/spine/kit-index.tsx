@@ -299,42 +299,65 @@ function bestEntityForRow(row: CompareRow, entities: CompareEntity[]): string | 
 }
 const cellText = (row: CompareRow, id: string) => (row.values[id] == null ? dash : row.display?.[id] ?? `${row.values[id]}${row.unit ?? ""}`);
 export function CompareTable({ entities, rows, caption }: { entities: CompareEntity[]; rows: CompareRow[]; caption?: string }) {
-  const cols = `minmax(0,1.2fr) repeat(${entities.length},minmax(0,1fr))`;
   return (
     <div>
-      {/* sm+ : entities as columns */}
-      <div className="hidden sm:block">
-        <div className="grid items-end gap-3 border-b border-[var(--c-border)] pb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide" style={{ gridTemplateColumns: cols }}>
-          <span className="text-[var(--c-muted)]">Metric</span>
-          {/* THE REFERENCE IS TINTED, NEVER COLOURED. Art direction C6: colouring
-              the home column's header makes the reference look like the winner,
-              and terracotta means ANSWER on every other surface of this site
-              (§37). The row beneath it already carries a tint, which is what says
-              "this is the one you are comparing against". Counted on the city page
-              before this: fourteen accent marks, of which two were this header. */}
+      {/* sm+ : entities as columns, AS A REAL TABLE.
+          It was a grid of divs and spans that looked exactly like this, and being
+          a table only in appearance cost three things. A screen reader announced
+          a pile of text rather than rows and columns. The written table
+          conventions (art direction F1 to F8) are checked against table elements,
+          so the most table-like section on the site sat outside every one of
+          them. And the accent budget exempts cells in a compared set, because C1
+          requires one mark per row there, so the three correct best-value marks
+          were counted as three violations.
+
+          Column widths are preserved exactly: the first column took 1.2 of a
+          1.2+n share and still does, through a colgroup rather than a grid
+          template. Nothing about the rendering changes. */}
+      <table className="hidden w-full table-fixed border-collapse sm:table">
+        <colgroup>
+          <col style={{ width: `${(1.2 / (1.2 + entities.length)) * 100}%` }} />
           {entities.map((e) => (
-            <span key={e.id} className="text-right text-[var(--c-ink)]">
-              {e.flag ? <span className="mr-1">{e.flag}</span> : null}{e.name}
-            </span>
+            <col key={e.id} style={{ width: `${(1 / (1.2 + entities.length)) * 100}%` }} />
           ))}
-        </div>
-        <div className="divide-y divide-[var(--c-border)]">
+        </colgroup>
+        <thead>
+          <tr className="border-b border-[var(--c-border)]">
+            <th scope="col" className="pb-2 pr-3 text-left align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Metric</th>
+            {/* THE REFERENCE IS TINTED, NEVER COLOURED. Art direction C6: colouring
+                the home column's header makes the reference look like the winner,
+                and terracotta means ANSWER on every other surface of this site
+                (§37). The row beneath it already carries the tint that says "this
+                is the one you are comparing against". */}
+            {entities.map((e) => (
+              <th key={e.id} scope="col" className="pb-2 pl-3 text-right align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink)]">
+                {e.flag ? <span className="mr-1">{e.flag}</span> : null}{e.name}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
           {rows.map((row) => {
             const best = bestEntityForRow(row, entities);
             return (
-              <div key={row.key} className="grid items-center gap-3 py-2.5" style={{ gridTemplateColumns: cols }}>
-                <span className="text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]">{row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}</span>
+              <tr key={row.key} className="border-b border-[var(--c-border)] last:border-b-0">
+                <th scope="row" className="py-2.5 pr-3 text-left align-middle text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]">
+                  {row.label}{row.unit ? <span className="text-[var(--c-muted)]"> ({row.unit})</span> : null}
+                </th>
                 {entities.map((e) => (
-                  <span key={e.id} className="text-right" style={e.home ? { background: "#fff4f1", borderRadius: 6, paddingInline: 6 } : undefined}>
-                    <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
-                    {row.bar ? <CellScaleBar value={row.values[e.id]} domain={row.bar.domain} refValue={row.bar.refValue} /> : null}
-                  </span>
+                  <td key={e.id} className="py-2.5 pl-3 text-right align-middle">
+                    <span className="inline-block" style={e.home ? { background: "#fff4f1", borderRadius: 6, paddingInline: 6 } : undefined}>
+                      <Fig className={`text-[length:var(--t-body)] ${e.id === best ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{cellText(row, e.id)}</Fig>
+                      {row.bar ? <CellScaleBar value={row.values[e.id]} domain={row.bar.domain} refValue={row.bar.refValue} /> : null}
+                    </span>
+                  </td>
                 ))}
-              </div>
+              </tr>
             );
           })}
-        </div>
-      </div>
+        </tbody>
+      </table>
+
       {/* <=375px : stacked per-entity mini-cards (Nearby pattern) */}
       <div className="grid grid-cols-1 gap-2.5 sm:hidden">
         {entities.map((e) => (
