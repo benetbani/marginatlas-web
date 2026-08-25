@@ -66,6 +66,9 @@ const GATES: Gate[] = [
   { name: "frost-reads", script: "scripts/verify_frost_reads.mjs" },
   { name: "section-bands", script: "scripts/verify_section_bands.mjs" },
   { name: "art-direction", script: "scripts/verify_art_direction.mjs" },
+  /* E6, the other half of "a lot of whitespace". The ink gate measures HEIGHT,
+     so a card with a dead strip down its right passed as full. */
+  { name: "gathered-emptiness", script: "scripts/verify_gathered_emptiness.mjs" },
   /* The coverage CLAIM, not the rules. Section J of the art direction says
      which of its 55 rules a gate holds, and that claim was wrong in three
      separate documents on the day it was written. A coverage claim nobody

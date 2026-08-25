@@ -337,9 +337,15 @@ function MultWaterfall({ d }: { d: District }) {
   ];
   const net = 1 + d.rev_vs_city_pct / 100; // the modeled result the city page ships
   return (
-    <div className="space-y-1.5">
+    /* HAIRLINE RULES BETWEEN ROWS (F3), because this is a table of labels and
+       figures and it was drawn as bare flex rows. With the label hard left and
+       the figure hard right and nothing bridging them, a 268 by 198 void opened
+       down the middle of the district panel: the largest gathered hole left on
+       any of the four pages. The sibling peer table has carried row rules all
+       along, which is exactly why it never opened one. */
+    <div className="divide-y divide-[var(--c-border)]">
       {steps.map((r) => (
-        <div key={r.label} className="flex items-center justify-between gap-2.5">
+        <div key={r.label} className="flex items-center justify-between gap-2.5 py-1.5">
           <span className={`text-[length:var(--t-micro)] ${r.isCity ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>
             {r.label}
             {r.label === "Area character" ? <InfoTip gloss="A modeled premium or discount from what the district is known for: nightlife, luxury, markets." /> : null}
@@ -349,7 +355,7 @@ function MultWaterfall({ d }: { d: District }) {
       ))}
       {/* net row , the modeled result, in ink: the panel header rent figure carries
           the accent, so the readout stays neutral proof */}
-      <div className="mt-1 flex items-center justify-between gap-2.5 border-t border-[var(--c-border)] pt-2">
+      <div className="flex items-center justify-between gap-2.5 pt-2">
         <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">Net vs city</span>
         <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">x{net.toFixed(2)}</Fig>
       </div>

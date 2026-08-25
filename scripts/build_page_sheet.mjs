@@ -42,6 +42,7 @@ const MOVED = [
   ["Pages the layout rules run on at every build", "4", "4, and they are the four London ones"],
   ["Pages rendered outside London to catch what London hides", "0", "17 of 19 tried"],
   ["Sections that were prose with nothing drawn", "3", "0"],
+  ["Sections with a gathered block of empty space", "3", "2"],
 ];
 
 /* THE DECISIONS THAT ARE THE FOUNDER'S, WITH A RECOMMENDATION FOR EACH.
@@ -62,6 +63,9 @@ const DECISIONS = [
   ["The chapter heading on the city page",
    "It reads “What it costs, and who buys” after three chapters merged into it. Merging is what freed those sections to sit in bands rather than each taking the whole column.",
    "Confirm the wording. I chose it; you have not seen it before this."],
+  ["The four peer cities on the trade page",
+   "The table headed the same trade, comparable places lists Manchester at $504K, Edinburgh at $590K, Birmingham at $490K and Bristol at $562K. Every one of those is London's own median turnover multiplied by a fixed number written into the code: 0.7, 0.82, 0.68, 0.78. I checked all four against what the page renders and they match to the pound. It is not hidden: the section carries the sample tag and the code says the figures were invented for the exemplar on purpose.",
+   "This is yours to settle, not mine. A reader sees four real city names against specific dollar figures, and sample is a small word. It also decides a design question I ran into today: that card has empty space in it, and the obvious way to fill it is a bar showing each city against the others, which I will not build because it would draw proportions nobody measured. Either the figures become real, or the section says plainly that the peers are scaled from London, or it goes."],
   ["Whether a page should carry a bolder signature moment",
    "Each page has one dominant form: the district strip, the take-home figure, the kept-per-$100 plot, the rank slope. Your rule asks for two or three crafted moments per page, and most pages have one.",
    "This is the one place I deliberately did nothing, because inventing a bold treatment is what produced the work you rejected. Tell me the direction and I will build it; I will not guess it."],
@@ -74,6 +78,8 @@ const KNOWN = [
   "The neighbourhood page is the one page type this wider check cannot cover. London is the only city in the whole repository that carries districts, so there is no second case to test it against.",
   "The neighbourhood map draws in the real app and not in these pictures: it needs a browser to measure its own box, and these are static renders. The empty half beside the district chips is that, not a hole in the page.",
   "The trade page's owner-keeps waterfall is the same: present and correct in the app, blank here.",
+  "Two sections still carry a gathered block of empty space, both on the desktop layout: the pick on the city page, where a sentence and a button sit in a column stretched to match a taller panel beside them, and the break-even answer on the trade page. Neither is a wrong number; both are a column wider than what it holds. They are measured, named, and next.",
+  "One thing I found and undid: a table appeared to have a large void down its middle, I moved it to a narrower column to fix that, and then discovered the measurement was wrong, a table row rule was not being counted as ink. The table never had a hole. The change was reverted and the page is exactly as it was.",
   "One consistency check cannot run yet and is not a pass: nothing compares a city's keep-share against its country's for the same trade, because no country file exists to compare against. Two related checks are waiting on the same thing, a second city for a trade and a second trade for a country. They will start running the day that data lands, and until then that agreement is simply unchecked.",
   "Seven small figures still render without tabular numerals. All seven are scale END labels, which sit at opposite ends of a track and never line up with anything, so the check counts them and they are not really a fault.",
   "Five sections on the city page drew for none of the fifteen cities I checked: rent against income, owner runway, the risk list, the character read, the locals note. Fifteen, not all 252, so treat it as a strong signal rather than a proof. They are still in the code and will draw the day their data arrives.",

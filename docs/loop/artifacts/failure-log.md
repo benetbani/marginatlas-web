@@ -109,3 +109,56 @@ same decision: measure horizontal emptiness inside a card, or redesign that one
 section. The first is a rule change and belongs in the art direction before any
 code; the second is a section rebuild and belongs in an inventory row. Choosing
 between them while a gate chain was running is how sections get invented.
+
+## 2026-08-25, the emptiness rule, and two more instruments that could not see
+
+CLOSED the entry above. The fork was decided by a rule already ratified: "each
+section should not have a lot of text or a lot of whitespace". Horizontal
+emptiness is half of that and nothing measured it, so the rule was written first
+and the gate built from a measurement rather than a chosen number.
+
+THEN THE MEASUREMENT WAS WRONG TWICE, and both times the picture said so.
+
+1. It skipped anything under 2px tall. That is every rule, axis and chart track
+   on every page. A dot plot whose scale honestly starts at zero read as a 27%
+   hole while its own row lines ran straight through the space it was flagging.
+2. It tested the TOP and LEFT borders of an element and not the other two. A
+   table row rule is a BOTTOM border. So an ordinary two-column table read as a
+   45% void between its label column and its figure column, the worst score on
+   any of the four pages.
+
+THE SECOND ONE COST A REAL CHANGE. Acting on the 45%, the peer table was moved
+to the small side of its band, with a commit message quoting the founder's own
+2026-07-05 ruling on a table that was too wide. Then the instrument was fixed and
+the same table scored clean AT BOTH WIDTHS. The change had accomplished nothing,
+and at the wider size it stopped the myth chart drawing in previews. Reverted.
+
+What saved it was asking a question the number could not answer on its own: was
+the improvement the change or the correction? Measuring the OLD layout with the
+NEW instrument answered it in one run. That comparison is cheap and it should be
+the default whenever a fix and a gate change land near each other.
+
+WHAT THE RULE FOUND ONCE IT COULD SEE: three real holes, of which the district
+panel's multiplier readout was a table of labels and figures drawn as bare flex
+rows, label hard left, figure hard right, nothing bridging 268px. The written
+convention already covers it, F3, hairline rules between rows, and the sibling
+peer table has followed it all along, which is exactly why that one never opened
+a hole. Fixed. Two remain and both are layout rather than form.
+
+## 2026-08-25, four peer figures are a fixed multiple of one real number
+
+NOT A FAULT, AND NOT MINE TO CHANGE, but it should be said out loud. The trade
+page's "same trade, comparable places" table shows Manchester, Edinburgh,
+Birmingham and Bristol. Every figure is London's median turnover times a constant
+written into the source: 0.7, 0.82, 0.68 and 0.78. Verified against the rendered
+page, all four match to the pound.
+
+It is declared. The section carries the sample tag, the code says "invented for
+the exemplar (sanctioned)", and it is suppressed for districts. So this is a
+ratified choice, not a leak.
+
+It still decides a design question. A void in that card cannot be filled with a
+bar, because a bar would draw proportions nobody measured, and in-cell bars were
+removed from this very table on a founder verdict. Whether a table naming four
+real cities with derived figures should exist at all is his call and is now in
+front of him.
