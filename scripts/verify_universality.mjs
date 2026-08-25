@@ -40,13 +40,15 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import * as React from "react";
 import { chromium } from "playwright";
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync, rmSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { buildSpineCitySeed } from "../src/lib/spine/adapt_city";
 import { buildSpineCellSeed } from "../src/lib/spine/adapt_cell";
 import { buildSpineIndustrySeed } from "../src/lib/spine/adapt_industry";
 import { SpineCityBody } from "../src/components/spine/city/city-view";
 import { SpineCellBody } from "../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../src/components/spine/industry/industry-view";
+import { SpineShell } from "../src/components/spine/shell";
 
 /* A deliberate spread: the exemplar, two very poor and very large, one small and
    European, one Latin American, and the two the rulebook names by hand. */
@@ -78,8 +80,37 @@ const ABSURD = [
   { unit: "%", max: 1000, why: "a percentage" },
 ];
 
+/* THE RENDERS ARE FULL PAGES, SHELL AND STYLESHEET AND ALL.
+   They used to be bare markup with no CSS, which was enough to read figures out
+   of and useless for anything about LAYOUT. That meant every art-direction check
+   ran against four London pages and nothing else, which is the same blindness
+   that let a "$0" headline and an internal marker sit on four trade pages
+   unseen. The stylesheet is generated here for the same reason it is generated in
+   the preview builder: a snapshot goes stale and then lies quietly. */
+const shellPage = (body) =>
+  `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">` +
+  `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">` +
+  `<style>${CSS}</style><style>.spine-frame-layer[style*="_skyline"]{background-image:url("${SKY}") !important}</style>` +
+  `</head><body>${body}</body></html>`;
+
+let CSS = "";
+let SKY = "";
+
 const run = async () => {
+  /* THE DIRECTORY IS EMPTIED FIRST. Files from an earlier shape of this check sat
+     alongside the new ones and were read as if they were current: bare markup with
+     no stylesheet, which every layout measurement then reported as broken. A stale
+     artifact that looks like a fresh one is the same fault as a stale stylesheet,
+     and this loop has now paid for it twice. */
+  rmSync("scratchpad/universality", { recursive: true, force: true });
   mkdirSync("scratchpad/universality", { recursive: true });
+  execFileSync(
+    process.execPath,
+    ["node_modules/tailwindcss/lib/cli.js", "-i", "src/app/globals.css", "-o", "scratchpad/pages/site.css", "--minify"],
+    { stdio: "pipe" },
+  );
+  CSS = readFileSync("scratchpad/pages/site.css", "utf8");
+  SKY = `data:image/jpeg;base64,${readFileSync("public/spine/_skyline.jpeg").toString("base64")}`;
   const rendered = [];
   const missing = [];
   /* THE RICHNESS SPREAD IS REPORTED, NEVER FAILED. How much a page carries for a
@@ -90,7 +121,7 @@ const run = async () => {
   const richness = {};
   const markers = [];
   const write = (name, html, kind) => {
-    writeFileSync(`scratchpad/universality/${name}.html`, `<!doctype html><meta charset="utf-8"><body>${html}</body>`, "utf8");
+    writeFileSync(`scratchpad/universality/${name}.html`, shellPage(html), "utf8");
     rendered.push(name);
     const text = html
       .replace(/<script[\s\S]*?<\/script>/g, "")
@@ -118,17 +149,17 @@ const run = async () => {
   for (const slug of CITIES) {
     const d = await buildSpineCitySeed(slug).catch(() => null);
     if (!d) { missing.push(`city ${slug}`); continue; }
-    write(`city-${slug}`, renderToStaticMarkup(React.createElement(SpineCityBody, { data: d })), "city");
+    write(`city-${slug}`, renderToStaticMarkup(React.createElement(SpineShell, null, React.createElement(SpineCityBody, { data: d }))), "city");
   }
   for (const [c, g, t] of CELLS) {
     const d = await buildSpineCellSeed(c, g, t).catch(() => null);
     if (!d) { missing.push(`trade ${g}/${t}`); continue; }
-    write(`trade-${g}-${t}`, renderToStaticMarkup(React.createElement(SpineCellBody, { data: d })), "trade");
+    write(`trade-${g}-${t}`, renderToStaticMarkup(React.createElement(SpineShell, null, React.createElement(SpineCellBody, { data: d }))), "trade");
   }
   for (const i of INDUSTRIES) {
     const d = await buildSpineIndustrySeed(i).catch(() => null);
     if (!d) { missing.push(`across ${i}`); continue; }
-    write(`across-${i}`, renderToStaticMarkup(React.createElement(SpineIndustryBody, { data: d })), "across");
+    write(`across-${i}`, renderToStaticMarkup(React.createElement(SpineShell, null, React.createElement(SpineIndustryBody, { data: d }))), "across");
   }
 
   const b = await chromium.launch();
@@ -170,6 +201,42 @@ const run = async () => {
           if (v > r.max) out.push(`"${own}" is ${r.why} past ${r.max}`);
         }
       }
+      /* THE LAYOUT RULES, ACROSS EVERY PAGE RATHER THAN FOUR.
+         The art-direction gate reads the four London pages and nothing else, which
+         is the same blindness that let an asserted zero and an internal marker sit
+         on four trade pages unseen. Two of its rules travel cheaply and are worth
+         running everywhere: nothing but a chrome band may take the full column
+         (D1), and a card may not cover less than 60% of its own content box (E2).
+         Both found something the first time they ran here: a Sao Paulo trade page
+         whose partner card does not render took the whole column. */
+      {
+        const cards = [...document.querySelectorAll("div")].filter(
+          (e) => getComputedStyle(e).backdropFilter !== "none",
+        );
+        const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+        for (const c of outer) {
+          const cb = c.getBoundingClientRect();
+          if (cb.width > 1000 && !c.closest("[data-hero='1']")) {
+            out.push(`a section takes the full column and is not a chrome band: "${(c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 36)}"`);
+          }
+          const cs = getComputedStyle(c);
+          const inner = Math.max(1, cb.height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom));
+          let top = cb.bottom, bot = cb.top;
+          for (const e of c.querySelectorAll("*")) {
+            const st = getComputedStyle(e);
+            const bb = e.getBoundingClientRect();
+            const drawn =
+              [...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim()) ||
+              e.tagName === "svg" ||
+              st.backgroundColor !== "rgba(0, 0, 0, 0)";
+            if (drawn && bb.height > 2) { top = Math.min(top, bb.top); bot = Math.max(bot, bb.bottom); }
+          }
+          if (Math.max(0, bot - top) / inner < 0.6) {
+            out.push(`a card covers under 60% of its own box: "${(c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 36)}"`);
+          }
+        }
+      }
+
       /* A DISPLAY FIGURE OF ZERO IS A MISSING MEASUREMENT ASSERTED AS A MEASURED
          NIL. Found on the same page: "$0 a year, after every cost is paid" in the
          largest type on it. Only display sizes are checked, because a zero inside
@@ -201,11 +268,11 @@ const run = async () => {
   }
   if (missing.length) console.log(`  NO PAGE AT ALL: ${missing.join(", ")}  (a sourcing gap, not a failure of this check)`);
   if (fails.length) {
-    console.log(`\nx verify_universality: ${fails.length} figure(s) that no reader can hold.\n`);
+    console.log(`\nx verify_universality: ${fails.length} thing(s) a reader should never meet.\n`);
     fails.forEach((f) => console.log("     " + f));
     console.log("\n  A form that only reads correctly for the exemplar is the wrong form.\n");
     process.exit(1);
   }
-  console.log("\nPASS verify_universality , every rendered figure is within a magnitude a reader can hold.\n");
+  console.log("\nPASS verify_universality , no absurd magnitude, no asserted zero, no internal marker, no section taking the column.\n");
 };
 void run();

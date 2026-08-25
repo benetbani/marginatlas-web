@@ -720,11 +720,18 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
                   waterfall pairs with the tall pay plot so both fill the band; break-even
                   and cost-to-open are the shorter entry-threshold reads, paired together so
                   break-even is no longer stretched ~half-empty beside the waterfall. */}
+              {/* BANDS, NOT THE OLDER ROW WRAPPERS. Found by rendering this page for
+                  trades and cities that are not the exemplar: on Sao Paulo grocery
+                  stores the cost-to-open card does not render, and its partner took
+                  the whole column, because those wrappers have no rule for a lone
+                  survivor. Band gives it two thirds, which is a composition rather
+                  than an accident. It also brings both rows under the rhythm check,
+                  which reads bands and could not see them. */}
               {hasOwner || hasWages ? (
-                <WideRail>{hasOwner ? <OwnerKeeps d={d} /> : null}{hasWages ? <Wages d={d} /> : null}</WideRail>
+                <Band split="3-2">{hasOwner ? <OwnerKeeps d={d} /> : null}{hasWages ? <Wages d={d} /> : null}</Band>
               ) : null}
               {hasBreakEven || hasSetup ? (
-                <Row>{hasBreakEven ? <BreakEven d={d} /> : null}{hasSetup ? <CostToOpen d={d} /> : null}</Row>
+                <Band>{hasBreakEven ? <BreakEven d={d} /> : null}{hasSetup ? <CostToOpen d={d} /> : null}</Band>
               ) : null}
             </div>
           </FormatProvider>
