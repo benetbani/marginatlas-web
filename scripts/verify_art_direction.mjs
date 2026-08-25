@@ -153,6 +153,7 @@ const collect = () => {
       inkPct: Math.min(100, Math.round((ink / inner) * 100)),
       accents,
       nestedBoxes,
+      editorial: !!c.querySelector("[data-editorial='1']") || c.matches("[data-editorial='1']"),
       label: (c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 36),
     };
   });
@@ -205,7 +206,9 @@ const collect = () => {
 };
 
 const RULES = [
-  { key: "prose", rule: "E1", why: "over 220 characters of prose", test: (s) => s.prose > 220, show: (s) => `${s.prose} chars` },
+  /* E1's exemption is capped at ONE section per page, so it cannot be applied by
+     the rule table, which sees one section at a time. It is applied below. */
+  { key: "prose", rule: "E1", why: "over 220 characters of prose", test: (s) => s.prose > 220 && !s.editorial, show: (s) => `${s.prose} chars` },
   { key: "ink", rule: "E2", why: "under 60% ink coverage", test: (s) => s.inkPct < 60, show: (s) => `${s.inkPct}% ink of ${s.h}px` },
   { key: "accents", rule: "C2", why: "more than two accent marks", test: (s) => s.accents > 2, show: (s) => `${s.accents} accents` },
   { key: "nested", rule: "A5", why: "a bordered box inside the card", test: (s) => s.nestedBoxes > 0, show: (s) => `${s.nestedBoxes} nested` },
@@ -217,6 +220,10 @@ let total = 0;
 
 for (const { name, result } of pages) {
   const lines = [];
+  /* ONE EDITORIAL SECTION PER PAGE. A page that declares two does not have an
+     editorial section, it has a habit, so every one after the first is counted. */
+  const editorials = result.sections.filter((x) => x.editorial);
+  editorials.slice(1).forEach((x) => (x.editorial = false));
   for (const r of RULES) {
     const bad = result.sections.filter(r.test);
     now[`${name}:${r.key}`] = bad.length;

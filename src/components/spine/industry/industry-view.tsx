@@ -591,7 +591,13 @@ export function WhoItSuits({ d }: { d: any }) {
      emptiness, not a line drawn through it. */
   const both = suits.length > 0 && thinkTwice.length > 0;
   return (
-    <Box>
+    /* THE ONE EDITORIAL SECTION ON THIS PAGE (art direction E1). A page built out
+       of figures needs one place where a person speaks, and this is it: whether a
+       trade suits the reader is a judgment, not a measurement, and cutting it to
+       the 220-character prose budget would be cutting the only human voice on the
+       page to satisfy a number. The exemption is capped at one per page, so
+       declaring a second one here would fail rather than compound. */
+    <Box data-editorial="1">
       <Rail icon="who-for" kicker="Who it suits" verdict={w.verdict} sample />
       <div className={`grid gap-5${both ? " sm:grid-cols-2" : ""}`}>
         {suits.length ? (

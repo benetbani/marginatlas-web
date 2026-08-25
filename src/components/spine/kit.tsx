@@ -426,10 +426,14 @@ export function Band({
 }
 
 
-export function Box({ children, className = "", elevation = "card", density = "default" }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead" }) {
+export function Box({ children, className = "", elevation = "card", density = "default", ...rest }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead" } & React.HTMLAttributes<HTMLDivElement>) {
   void elevation;
+  /* rest carries the data attributes a section uses to declare itself: the
+     editorial exemption (art direction E1). Declaring is the point, so it has to
+     reach the DOM where the gate can read it. */
   return (
     <div
+      {...rest}
       className={`rounded-[14px] border border-[var(--c-border)] ${DENSITY_PAD[density]} ${className}`}
       style={{
         ...CARD_SURFACE,

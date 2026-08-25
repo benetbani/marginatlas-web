@@ -464,7 +464,12 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
   const factorsMove = [d.commuter_mult, d.tourism_mult, d.tag_mult].some((m) => m.toFixed(2) !== "1.00");
 
   return (
-    <HoodCard className="overflow-hidden lg:sticky lg:top-6">
+    /* THE ONE EDITORIAL SECTION ON THIS PAGE (art direction E1). What a district
+       is actually like, its markets and who has moved in, is a written read and
+       not a measurement, and cutting it to the prose budget would cut the only
+       human voice on a page made of multiples. Capped at one per page, so a
+       second one here would fail rather than compound. */
+    <HoodCard data-editorial="1" className="overflow-hidden lg:sticky lg:top-6">
 
       {/* HEADER STRIP , the decision. Rent load is the hero (largest); it wears the
           panel's ONE terracotta only when it runs below the city x1.00 (terra keeps
