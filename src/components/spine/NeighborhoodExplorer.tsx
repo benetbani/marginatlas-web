@@ -916,11 +916,18 @@ function AnchorCase({ label, name, rows }: { label: string; name: string; rows: 
     <div className="rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] px-3.5 py-3">
       <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{label}</div>
       <div className="mt-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{name}</div>
-      <div className="mt-2 flex items-center gap-5">
+      {/* THE LABEL SITS ABOVE ITS FIGURE, NOT BESIDE IT. Side by side, these two
+          reads fit while this card had a third of a full-width section. Paired on
+          a phone they get about 148px each, and "Rent #6 of 7" broke across three
+          lines with "of" and "7" alone on their own. A label over its figure is
+          the same information in a shape that survives the narrow case, and it
+          also puts the figure where B2 wants it: at the start of its own line,
+          scanning down the column. */}
+      <div className="mt-2 flex flex-wrap items-baseline gap-x-5 gap-y-2">
         {rows.map(([k, v]) => (
-          <div key={k} className="flex items-baseline gap-1.5">
-            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{k}</span>
-            <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</Fig>
+          <div key={k} className="min-w-0">
+            <div className="text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{k}</div>
+            <Fig className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{v}</Fig>
           </div>
         ))}
       </div>
@@ -963,7 +970,7 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
               §14). Side by side beneath the chart rather than stacked beside it:
               two short reads in a row read as a pair, and stacked in a narrow
               column they read as a list of two. */}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3">
             <AnchorCase label="Loudest takings" name={loudest.name} rows={[["Revenue", `#${revRankOf(loudest.slug)}`], ["Rent", `#${rentRankOf(loudest.slug)} of ${n}`]]} />
             <AnchorCase label="Lightest lease" name={lightest.name} rows={[["Rent", `#${rentRankOf(lightest.slug)}`], ["Revenue", `#${revRankOf(lightest.slug)} of ${n}`]]} />
           </div>
