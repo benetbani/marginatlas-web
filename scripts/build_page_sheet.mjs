@@ -38,7 +38,8 @@ const MOVED = [
   ["Bands repeating their neighbour's split", "2", "0"],
   ["Elements carrying the frosted treatment", "0", "every card"],
   ["Rungs in the spacing ladder that were the same number", "3 of 4", "0"],
-  ["Rules from the art direction held by a gate", "0", "13"],
+  ["Rules from the art direction held by a gate", "0", "15"],
+  ["Sections that were prose with nothing drawn", "3", "0"],
 ];
 
 const KNOWN = [
