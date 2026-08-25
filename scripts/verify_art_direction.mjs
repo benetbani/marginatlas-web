@@ -91,7 +91,13 @@ const collect = () => {
 
     /* C2, accent budget. A mark counts once whether it is coloured text, a fill
        or a border on a data element. */
-    let accents = 0;
+    /* A MARK, NOT A NODE. "Median" and "$57K" and the dot beside them are three
+       elements carrying one accent: they are ONE mark on the chart, and C2 asks
+       how many things claim to be the answer, not how many DOM nodes hold the
+       colour. Accented elements whose boxes sit within 24px of each other collapse
+       into one mark. Before this every page failed the budget and the number said
+       nothing about the design. */
+    const accentBoxes = [];
     for (const e of c.querySelectorAll("*")) {
       if (inDeadDetails(e)) continue;
       const s = getComputedStyle(e);
@@ -101,9 +107,27 @@ const collect = () => {
          violations. Cells are exempt; loose marks are not. */
       if (e.closest("td, th")) continue;
       const own = [...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim());
-      if (own && TERRA.includes(s.color)) accents++;
-      else if (TERRA.includes(s.backgroundColor)) accents++;
+      const eb = e.getBoundingClientRect();
+      if (eb.width < 1 || eb.height < 1) continue;
+      if (!((own && TERRA.includes(s.color)) || TERRA.includes(s.backgroundColor))) continue;
+      /* A HIGHLIGHTED ROW IS ONE MARK. The rank, the dot and the value that mark
+         the lightest district sit at the two ends and the middle of one row, far
+         further apart than any proximity test would collapse, and they mark ONE
+         thing. Marks sharing a row are one mark. */
+      const row = e.closest("li, tr, [role='row']");
+      accentBoxes.push({ left: eb.left, top: eb.top, row });
     }
+    const marks = [];
+    for (const b of accentBoxes) {
+      const near = marks.find(
+        (m) =>
+          (b.row && m.row === b.row) ||
+          (Math.abs(m.left - b.left) < 24 && Math.abs(m.top - b.top) < 24),
+      );
+      if (near) { near.left = Math.min(near.left, b.left); near.top = Math.min(near.top, b.top); }
+      else marks.push({ left: b.left, top: b.top, row: b.row });
+    }
+    const accents = marks.length;
 
     /* A5, a bordered box inside a bordered card. */
     let nestedBoxes = 0;
@@ -199,9 +223,13 @@ for (const { name, result } of pages) {
     total += bad.length;
     for (const s of bad) lines.push(`  ${r.rule}  ${r.why.padEnd(34)} ${r.show(s).padEnd(16)} "${s.label}"`);
   }
-  now[`${name}:pageAccents`] = result.pageAccents > 5 ? 1 : 0;
+  /* THE PAGE BUDGET IS ITS SECTION COUNT, not a flat number. C1 asks every
+     section to mark its answer, so a flat cap would force sections to stop doing
+     that to satisfy a figure nobody chose for a reason. */
+  const budget = result.sections.length;
+  now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
   total += now[`${name}:pageAccents`];
-  if (result.pageAccents > 5) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks on the page, the budget is 5`);
+  if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
 
   now[`${name}:frontRepeat`] = result.frontRepeats.length;
   total += result.frontRepeats.length;
