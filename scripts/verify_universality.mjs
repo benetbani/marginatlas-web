@@ -164,6 +164,33 @@ const run = async () => {
 
   const b = await chromium.launch();
   const fails = [...markers];
+
+  /* TABLET IS CHECKED TOO, because 768 is the width where two-up switches on and
+     nothing had ever looked at it. The first look found a chart squeezed into a
+     229px sliver on three of the four London pages. Cheap to hold: no horizontal
+     scroll, and no card under 260px, which is the floor below which a chart stops
+     being a chart. */
+  for (const slug of rendered) {
+    const p = await b.newPage({ viewport: { width: 768, height: 1200 } });
+    await p.goto(`file:///E:/atlas/website/scratchpad/universality/${slug}.html`);
+    await p.evaluate(() => document.fonts.ready);
+    await p.waitForTimeout(200);
+    const t = await p.evaluate(() => {
+      const cards = [...document.querySelectorAll("div")].filter(
+        (e) => getComputedStyle(e).backdropFilter !== "none",
+      );
+      const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+      return {
+        over: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+        cramped: outer
+          .filter((c) => c.getBoundingClientRect().width < 260)
+          .map((c) => (c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 34)),
+      };
+    });
+    if (t.over) fails.push(`${slug}: the page scrolls sideways at 768px`);
+    for (const c of t.cramped) fails.push(`${slug}: a card is under 260px at 768px, "${c}"`);
+    await p.close();
+  }
   for (const slug of rendered) {
     const p = await b.newPage({ viewport: { width: 1440, height: 1200 } });
     await p.goto(`file:///E:/atlas/website/scratchpad/universality/${slug}.html`);
@@ -273,6 +300,6 @@ const run = async () => {
     console.log("\n  A form that only reads correctly for the exemplar is the wrong form.\n");
     process.exit(1);
   }
-  console.log("\nPASS verify_universality , no absurd magnitude, no asserted zero, no internal marker, no section taking the column.\n");
+  console.log("\nPASS verify_universality , no absurd magnitude, no asserted zero, no internal marker, no section taking the column, nothing cramped at tablet.\n");
 };
 void run();
