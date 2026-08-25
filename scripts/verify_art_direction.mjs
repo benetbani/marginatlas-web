@@ -158,6 +158,17 @@ const collect = () => {
     };
   });
 
+  /* D6, THE SPACING LADDER. Chapter gap > band gap > card padding > slot gap, and
+     no rung may equal or exceed the one outside it. Measured before this rule ran:
+     the gap BETWEEN bands, the gap WITHIN a band and a card's own padding were all
+     20px, so three of the four rungs were the same number and a reader had nothing
+     telling them where one band ended and the next began.
+
+     BLIND SPOT: the slot gap, the space between a card's own anatomy slots, is not
+     measured here. It is set by utility classes on dozens of individual elements
+     and picking one to stand for all of them would be a number pretending to be a
+     measurement. The three outer rungs are the ones that carry the page's rhythm.
+
   /* D3, RHYTHM. No band repeats the split of the band immediately before it, and
      never three equal-halves bands in a row. A page of identical halves is as
      monotonous as a page of full widths, just narrower.
@@ -166,14 +177,37 @@ const collect = () => {
      silently fails to compile is caught as well as one that was typed twice.
      A band with one surviving child is skipped: its partner self-omitted, which
      is a data condition rather than a rhythm choice. */
+  const ladder = [];
+  const px = (v) => Math.round(parseFloat(v) || 0);
   const bandSplits = [];
   for (const el of document.querySelectorAll("div.grid")) {
     const cls = String(el.className);
-    if (!/^mt-5 grid grid-cols-1 items-start gap-5/.test(cls)) continue;
+    if (!/^mt-8 grid grid-cols-1 items-start gap-8/.test(cls)) continue;
     if (el.childElementCount < 2) continue;
     const m = cls.match(/md:grid-cols-(2|\[[^\]]+\])/);
     if (m) bandSplits.push(m[1]);
   }
+  {
+    const bandEls = [...document.querySelectorAll("div.grid")].filter((e) =>
+      /^mt-8 grid grid-cols-1 items-start gap-8/.test(String(e.className)),
+    );
+    const bandGap = Math.max(0, ...bandEls.map((e) => px(getComputedStyle(e).marginTop)));
+    const cardsAll = [...document.querySelectorAll("div")].filter(
+      (e) => getComputedStyle(e).backdropFilter !== "none",
+    );
+    const outerCards = cardsAll.filter((c) => !cardsAll.some((o) => o !== c && o.contains(c)));
+    const maxPad = Math.max(0, ...outerCards.map((e) => px(getComputedStyle(e).paddingTop)));
+    let chapterGap = 0;
+    for (const e of document.querySelectorAll("h2, h3, [data-movement]")) {
+      const m = px(getComputedStyle(e).marginTop);
+      if (m > chapterGap) chapterGap = m;
+    }
+    if (bandGap && maxPad) {
+      if (chapterGap && chapterGap <= bandGap) ladder.push(`chapter gap ${chapterGap} is not larger than the band gap ${bandGap}`);
+      if (bandGap <= maxPad) ladder.push(`band gap ${bandGap} is not larger than the largest card padding ${maxPad}`);
+    }
+  }
+
   const rhythm = [];
   for (let i = 1; i < bandSplits.length; i++) {
     if (bandSplits[i] === bandSplits[i - 1]) rhythm.push(`bands ${i} and ${i + 1} both split ${bandSplits[i]}`);
@@ -248,7 +282,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, bandCount: bandSplits.length };
+  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, bandCount: bandSplits.length };
 };
 
 const RULES = [
@@ -283,6 +317,10 @@ for (const { name, result } of pages) {
   now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
   total += now[`${name}:pageAccents`];
   if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
+
+  now[`${name}:ladder`] = result.ladder.length;
+  total += result.ladder.length;
+  for (const l of result.ladder) lines.push(`  D6  ${l}`);
 
   now[`${name}:rhythm`] = result.rhythm.length;
   total += result.rhythm.length;

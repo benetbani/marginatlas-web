@@ -414,7 +414,19 @@ export function Band({
    *  section cannot claim the width by looking like one. */
   hero?: boolean;
 }) {
-  if (hero) return <div data-hero="1" className="mt-5">{children}</div>;
+  /* THE SPACING LADDER (art direction D6). Measured on all four pages before
+     this: the gap BETWEEN bands, the gap WITHIN a band and a card's own padding
+     were all 20px, so three of the ladder's four rungs were the same number and
+     a reader had nothing telling them where one band ended. The ladder is now
+     chapter 48, band 32, card padding 16/20/28 by density, slot 8. Four rungs,
+     each strictly smaller than the one outside it, which is what D6 is for.
+
+     A BAND'S SPACING IS ONE VALUE IN BOTH DIRECTIONS. A first pass gave the
+     column gap its own number, which invented a fifth rung and immediately
+     collided with the lead card's padding: cards sitting 24px apart with 28px of
+     padding inside them read as merged, because their contents were further from
+     their own edges than the cards were from each other. */
+  if (hero) return <div data-hero="1" className="mt-8">{children}</div>;
   const cols = {
     "1-1": "md:grid-cols-2",
     "1-2": "md:grid-cols-[1fr_2fr]",
@@ -422,7 +434,7 @@ export function Band({
     "2-3": "md:grid-cols-[2fr_3fr]",
     "3-2": "md:grid-cols-[3fr_2fr]",
   }[split];
-  return <div className={`mt-5 grid grid-cols-1 items-start gap-5 ${cols}`}>{children}</div>;
+  return <div className={`mt-8 grid grid-cols-1 items-start gap-8 ${cols}`}>{children}</div>;
 }
 
 
