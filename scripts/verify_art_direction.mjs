@@ -287,7 +287,13 @@ const collect = () => {
        string, and matching that made every lone-survivor band report the same
        split and fake a rhythm regression. Anchored to a space so only the
        unprefixed utility matches. */
-    const m = cls.match(/(?:^|\s)md:grid-cols-(2|\[[^\]]+\])/);
+    /* THE DESKTOP SPLIT, NOT THE TABLET ONE. A band now carries both: equal halves
+       at md and its real ratio at lg, because a third of a tablet is a sliver. The
+       md class sits first in the string, so matching either made every band read
+       as equal halves and fake a rhythm violation on every page. Third time in this
+       loop that a change of mine has broken a measurement of mine; each was caught
+       because the number moved in a direction the change could not explain. */
+    const m = cls.match(/(?:^|\s)lg:grid-cols-(2|\[[^\]]+\])/) || cls.match(/(?:^|\s)md:grid-cols-(2|\[[^\]]+\])/);
     if (m) bandSplits.push(m[1]);
   }
   {

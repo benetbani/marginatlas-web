@@ -427,12 +427,20 @@ export function Band({
      padding inside them read as merged, because their contents were further from
      their own edges than the cards were from each other. */
   if (hero) return <div data-hero="1" className="mt-8">{children}</div>;
+  /* THE RATIO WAITS FOR DESKTOP; TABLET GETS EQUAL HALVES.
+     Measured at 768px, the first width where two-up switches on: the small side of
+     an uneven band is about 229px, and three of the four pages had a chart in one
+     of them, a log scale, a phase bar and a stacked bar. A third of a tablet is
+     not a column, it is a sliver. Equal halves at 768 give each card about 352px,
+     and the ratio takes over at 1024 where there is room for it to mean something.
+     Art direction D4: the split follows the content, and at 768 the content does
+     not fit the split. */
   const cols = {
     "1-1": "md:grid-cols-2",
-    "1-2": "md:grid-cols-[1fr_2fr]",
-    "2-1": "md:grid-cols-[2fr_1fr]",
-    "2-3": "md:grid-cols-[2fr_3fr]",
-    "3-2": "md:grid-cols-[3fr_2fr]",
+    "1-2": "md:grid-cols-2 lg:grid-cols-[1fr_2fr]",
+    "2-1": "md:grid-cols-2 lg:grid-cols-[2fr_1fr]",
+    "2-3": "md:grid-cols-2 lg:grid-cols-[2fr_3fr]",
+    "3-2": "md:grid-cols-2 lg:grid-cols-[3fr_2fr]",
   }[split];
   /* A BAND LEFT HOLDING ONE CARD TAKES A DELIBERATE TWO THIRDS. Several sections
      have a partner that renders for some cities and trades and not others, and
@@ -447,7 +455,7 @@ export function Band({
      rather than a row that lost something, and it is the same two thirds every
      time, which is what makes it read as a choice. */
   return (
-    <div className={`mt-8 grid grid-cols-1 items-start gap-8 [&:has(>*:only-child)]:md:grid-cols-[2fr_1fr] ${cols}`}>
+    <div className={`mt-8 grid grid-cols-1 items-start gap-8 [&:has(>*:only-child)]:lg:grid-cols-[2fr_1fr] ${cols}`}>
       {children}
     </div>
   );
