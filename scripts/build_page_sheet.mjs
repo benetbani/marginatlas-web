@@ -37,9 +37,12 @@ const MOVED = [
   ["Figures that stack without tabular numerals", "25", "7"],
   ["Bands repeating their neighbour's split", "2", "0"],
   ["Elements carrying the frosted treatment", "0", "every card"],
+  ["Rungs in the spacing ladder that were the same number", "3 of 4", "0"],
+  ["Rules from the art direction held by a gate", "0", "13"],
 ];
 
 const KNOWN = [
+  "One thing is yours to call rather than mine. The city masthead leads with customer income, and the six quick reads name customer income again 650px below it. The masthead gives the figure and the quick read gives the position among 252 cities, which is arguably complementary and arguably one metric twice. I have left it as it is.",
   "The neighbourhood map draws in the real app and not in these pictures: it needs a browser to measure its own box, and these are static renders. The empty half beside the district chips is that, not a hole in the page.",
   "The trade page's owner-keeps waterfall is the same: present and correct in the app, blank here.",
   "Seven small figures still render without tabular numerals. All seven are scale END labels, which sit at opposite ends of a track and never line up with anything, so the check counts them and they are not really a fault.",
