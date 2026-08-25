@@ -301,7 +301,16 @@ export function SubtypeDrill({ d }: { d: any }) {
             {items.map((s) => {
               const isLead = s.slug === lead;
               return (
-                <TableRow key={s.slug} className="hov border-0 hover:bg-transparent">
+                /* HAIRLINE RULES BETWEEN ROWS (F3). This carried border-0, which
+                   cancels the rule the table primitive draws by default. Six
+                   trades down the left, two figures hard right, and 300px of
+                   nothing between a name and its number with no line to follow.
+                   Both sibling tables on the other pages have carried row rules
+                   all along; this was the odd one out. The emptiness gate does
+                   not catch it, because a right-aligned figure's CELL spans the
+                   column and reads as inked even when the space looks empty, so
+                   for a table F3 is the rule that holds and E6 is not. */
+                <TableRow key={s.slug} className="hov border-b border-[var(--c-border)] hover:bg-transparent">
                   <TableHead scope="row" className="h-auto min-w-0 px-2 py-2 text-left align-baseline text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">
                     {s.name}
                   </TableHead>

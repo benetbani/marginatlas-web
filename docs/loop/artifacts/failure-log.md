@@ -262,3 +262,42 @@ two widths by launching two browsers to render the same four files twice. It now
 opens one, and the shared helper closes it in a finally so a throw cannot leave a
 stray browser behind, which is invisible until the next run goes short of memory
 and blames a gate that is working.
+
+## 2026-08-25, the table conventions, and a rule that was itself wrong
+
+Section J lists F2 to F8 as held by nothing but attention. These pages are largely
+tables, so that was the largest unchecked surface left. Probed all three real
+tables, deliberately reporting FACTS rather than verdicts, because three
+instruments written this week were wrong on their first reading and two of them
+shouted about faults that were not there.
+
+Four things came out of three tables, and only one was a page fault.
+
+ONE REAL FAULT. The trades-next-door table carried an explicit instruction to draw
+no rule between its rows, cancelling the one the table primitive draws by default.
+Six trades down the left, two figures hard right, 300px of nothing between a name
+and its number with no line to follow. Both sibling tables have carried row rules
+all along; this was the odd one out. Fixed.
+
+TWO ARTIFACTS. The peer table's header read as "not uppercase" and "two sizes".
+The label spans are all one size and the lowercase is a unit in parentheses; the
+larger figure belongs to a wrapper whose children override it. Measuring the CELL
+rather than the rendered label is what produced both.
+
+AND THE RULE ITSELF WAS WRONG. F5 said the best value "in a column" takes the
+accent. The city peer table puts METRICS down the side and CITIES across the top,
+so its winner is per ROW. Reading it column-wise reported a correct table as three
+separate faults. The rule now names the comparison rather than the axis, and says
+which way it runs in each orientation.
+
+THAT IS THE ONE WORTH REMEMBERING. Every other correction this week was an
+instrument disagreeing with a page. This was a RULE disagreeing with a page, and a
+rule is the thing everything else is measured against. It had been written down,
+reviewed and quoted, and it was still only true for half the tables it governed.
+When a check and a page disagree, the rule is the third thing that can be at
+fault, and it is the one nobody checks.
+
+A LIMIT, RECORDED. The emptiness rule does not hold for tables. A right-aligned
+figure's CELL spans its whole column, so the space reads as inked even when it
+looks empty. That is why the trades table never appeared as a hole while looking
+exactly like one. For a table, the row-rule convention is the rule that holds.
