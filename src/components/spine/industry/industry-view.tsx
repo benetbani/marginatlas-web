@@ -27,7 +27,7 @@
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
-import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, GREY_RAMP, usd, SampleTag } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, GREY_RAMP, usd, SampleTag, Band } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { WherePaysExplorer } from "./where-pays";
@@ -806,58 +806,66 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-      <Masthead d={d} />
+      {/* THE HERO, one of the two chrome bands that may run full width (art
+          direction D1). Everything below it divides. */}
+      <Band hero><Masthead d={d} /></Band>
 
-      {hasBenchmark ? <>
+      {/* SEVEN CHAPTERS BECOME FOUR, AND NOT ONE SECTION WAS CUT. Measured
+          2026-08-25 at 1440, seven of this page's ten sections took the full
+          column, and the cause was the same on every one: a chapter holding a
+          single section has nothing to pair with, so it takes the width by
+          default. Four of these seven chapters held exactly one. The headings
+          consolidate; the content stays.
+
+          No band repeats the split of the band before it (D3), and the split
+          follows the content (D4): the seven-row leaderboard takes the large side
+          of its band, the one-figure spend read takes the small one. */}
+      {hasBenchmark || hasDemand ? <>
         <Movement index="01" eyebrow="Against the neighbours" heading="Against the trades next door" icon="benchmark" />
-        <Benchmark d={d} />
+        <Band split="3-2">
+          {hasBenchmark ? <Benchmark d={d} /> : null}
+          {hasDemand ? <Demand d={d} /> : null}
+        </Band>
       </> : null}
 
-      {hasDemand ? <>
-        <Movement index="02" eyebrow="The demand" heading="The appetite" icon="spending-power" />
-        <Demand d={d} />
+      {subCount > 0 || hasMoneySplit || hasBreakEven ? <>
+        <Movement index="02" eyebrow="How the money works" heading="The formats, and the shape of the trade" icon="unit-economics" />
+        <Band split="2-1">
+          {subCount > 0 ? <SubtypeDrill d={d} /> : null}
+          {hasMoneySplit ? <MoneySplit d={d} /> : null}
+        </Band>
+        {hasBreakEven || hasRamp ? (
+          <Band split="1-2">
+            {hasBreakEven ? <BreakEven d={d} /> : null}
+            {hasRamp ? <Ramp d={d} /> : null}
+          </Band>
+        ) : null}
       </> : null}
 
-      {subCount > 0 ? <>
-        <Movement index="03" heading="The formats, compared" icon="subtype" />
-        <SubtypeDrill d={d} />
-      </> : null}
-
-      {hasMoneySplit || hasBreakEven ? <>
-        <Movement index="04" eyebrow="How the money works" heading="The shape of the trade" icon="unit-economics" />
-        <WideRail>
-          <MoneySplit d={d} />
-          <BreakEven d={d} />
-        </WideRail>
-      </> : null}
-
-      {hasRamp || hasOperator || hasPayback || hasSurvival || hasWhoSuits ? <>
-        <Movement index="05" eyebrow="The typical operator" heading="The owner's take, and the odds" icon="who-for" />
-        <div className="space-y-6">
-          <Ramp d={d} />
-          {hasOperator && hasPayback
-            ? <WideRail><Operator d={d} /><CapitalPayback d={d} /></WideRail>
-            : hasOperator || hasPayback
-              ? <Full>{hasOperator ? <Operator d={d} /> : <CapitalPayback d={d} />}</Full>
-              : null}
-          <Even><Survival d={d} /><WhoItSuits d={d} /></Even>
-        </div>
+      {hasOperator || hasPayback || hasSurvival || hasWhoSuits ? <>
+        <Movement index="03" eyebrow="The typical operator" heading="The owner's take, and the odds" icon="who-for" />
+        <Band split="2-3">
+          {hasOperator ? <Operator d={d} /> : null}
+          {hasPayback ? <CapitalPayback d={d} /> : null}
+        </Band>
+        <Band>
+          {hasSurvival ? <Survival d={d} /> : null}
+          {hasWhoSuits ? <WhoItSuits d={d} /> : null}
+        </Band>
       </> : null}
 
       {hasWherePays || hasSeasonality || hasCaveats ? <>
-        <Movement index="06" heading="The place, and the year" icon="where-it-pays" />
-        <div className="space-y-6">
-          <WherePaysExplorer d={d} />
-          {hasSeasonality && hasCaveats
-            ? <WideRail><Seasonality d={d} /><Caveats d={d} /></WideRail>
-            : hasSeasonality || hasCaveats
-              ? <Full>{hasSeasonality ? <Seasonality d={d} /> : <Caveats d={d} />}</Full>
-              : null}
-        </div>
+        <Movement index="04" heading="The place, and the year" icon="where-it-pays" />
+        <WherePaysExplorer d={d} />
+        <Band split="2-1">
+          {hasCaveats ? <Caveats d={d} /> : null}
+          {hasSeasonality ? <Seasonality d={d} /> : null}
+        </Band>
       </> : null}
 
-      <Movement index="07" heading="The next move" icon="bookmark" />
-      <Close d={d} />
+      {/* THE TERMINUS, the second and last chrome band (D1). */}
+      <Movement index="05" heading="The next move" icon="bookmark" />
+      <Band hero><Close d={d} /></Band>
     </main>
   );
 }

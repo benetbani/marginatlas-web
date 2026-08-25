@@ -31,7 +31,7 @@
  */
 import * as React from "react";
 import { spineHoodSeed } from "@/lib/spine-seeds";
-import { Movement, Box, Ico, Rail } from "@/components/spine/kit";
+import { Movement, Box, Ico, Rail, Band } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { SpineShell } from "@/components/spine/shell";
 import { NeighborhoodExplorer, NeighborhoodCompare, MythChapter } from "@/components/spine/NeighborhoodExplorer";
@@ -79,8 +79,10 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
   return (
     <SpineShell>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-        {/* MASTHEAD , answer-first two-figure honest headline (lightest rent vs heaviest). */}
-        <HoodMasthead d={d} />
+        {/* MASTHEAD , answer-first two-figure honest headline (lightest rent vs
+            heaviest), and one of the two chrome bands that may run full width
+            (art direction D1). */}
+        <Band hero><HoodMasthead d={d} /></Band>
 
         {/* the single, quiet provenance line for the whole page (stated once, under the
             hero). The real adapter supplies an honest modeled-coverage line; the dev
@@ -108,19 +110,26 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
           mapNote={d.meta?.map_note}
         />
 
-        {/* 02 , THE MYTH: promoted to its own full-width chapter, the honesty moat at real size. */}
-        <Movement index="02" icon="myth-reality" heading="The revenue myth" />
-        {d.meta?.myth && loudest ? <MythChapter myth={d.meta.myth} loudest={loudest} districts={districts} /> : null}
-
-        {/* 03 , COMPARE (Pro): hold two or three side by side, with an auto-derived verdict. */}
-        <Movement index="03" icon="compare" heading="Compare districts" />
-        <NeighborhoodCompare districts={districts} compare={d.meta?.compare} />
+        {/* 02 , THE MYTH AND THE COMPARISON, ONE CHAPTER, ONE BAND. Both took the
+            full column and neither needed it: the myth is a rank slope, the
+            comparison a three-column table. They were separate chapters holding
+            one section each, which is what forced the width (art direction D1,
+            D4). The slope takes the large side because it carries fourteen
+            labelled points. */}
+        <Movement index="02" icon="myth-reality" heading="The revenue myth, and the districts side by side" />
+        <Band split="3-2">
+          {d.meta?.myth && loudest ? <MythChapter myth={d.meta.myth} loudest={loudest} districts={districts} /> : null}
+          <NeighborhoodCompare districts={districts} compare={d.meta?.compare} />
+        </Band>
 
         {/* CLOSING , the funnel onward: canonical trades this atlas models, links only, no
             figures. Omits entirely (never a London fallback) when the city's iso2 + slug
             are not both known, so an unpromoted or malformed meta never mislinks. */}
+        {/* THE TERMINUS, the second and last chrome band (art direction D1): it
+            offers links and carries no finding, so it does not ask a reader to
+            traverse a row of figures. */}
         {tradeLinks.length > 0 && cityName ? (
-          <Box className="mt-8">
+          <Band hero><Box className="mt-8">
             <Rail icon="high-street" kicker={`Open a trade in ${cityName}`} />
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {tradeLinks.map((t) => (
@@ -135,7 +144,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
                 </li>
               ))}
             </ul>
-          </Box>
+          </Box></Band>
         ) : null}
       </main>
     </SpineShell>

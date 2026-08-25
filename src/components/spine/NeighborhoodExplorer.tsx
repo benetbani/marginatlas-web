@@ -29,7 +29,7 @@
  */
 "use client";
 import * as React from "react";
-import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, SampleTag, CARD_SURFACE } from "@/components/spine/kit";
+import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, SampleTag, CARD_SURFACE, Band } from "@/components/spine/kit";
 import { LockVeil, LockPill } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -753,8 +753,19 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, pl
       <NeStyles />
       <Rail icon="best-areas" tone="terra" kicker={rail?.kicker ?? "Where in the city"} verdict={rail?.verdict} />
 
-      {/* HERO , the divergence rent strip, full width */}
-      <RentStrip districts={districts} selected={selected} onSelect={setSelected} reduced={reduced} />
+      {/* THE STRIP PAIRS WITH THE WHAT-WORKS CARD. It was the last full-width
+          section on any of the four pages: seven ranked rows taking the whole
+          column, which is the sweep the founder banned. The two are close in
+          height, 312px against 193px measured, so neither leaves a crater beside
+          the other, and the card moves out of the map column where it was only
+          ever ballast. Art direction D1, D4, E2.
+
+          The map keeps the detail panel, which is the pairing that earns its
+          keep: selecting a pin drives the panel, and both are tall. */}
+      <Band split="3-2">
+        <RentStrip districts={districts} selected={selected} onSelect={setSelected} reduced={reduced} />
+        <UnderMapCard d={current} placePrefix={placePrefix} />
+      </Band>
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:items-start">
         {/* Left: the real orientation map (tight fit so the districts fill the frame,
@@ -779,7 +790,6 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, pl
             />
           </div>
           {mapNote ? <p className="max-w-[56ch] px-1 pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
-          <UnderMapCard d={current} placePrefix={placePrefix} />
         </div>
         <DetailPanel d={current} reduced={reduced} />
       </div>
