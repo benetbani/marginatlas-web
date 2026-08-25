@@ -73,8 +73,20 @@ export function HoodMasthead({ d }: { d: any }) {
         {/* wayfinding: this page reads at district level (calm, muted) */}
         <AtlasMark id="alt-district" size={16} className="opacity-60" />
       </div>
-      <p className="mt-2 max-w-2xl text-[13.5px] leading-snug text-[var(--c-ink2)]">
-        Money moves street to street: each district ranked by rent load, the multiple its leases run against a district with no premium, lightest first, across <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> districts.
+      {/* A REAL MEASURE, NOT A REM CAP. This was max-w-2xl, a fixed 672px, and at
+          13.5px that is 103 CHARACTERS PER LINE, measured: the widest text on any
+          of the four pages, on the first sentence a reader meets here. A rem cap
+          looks like restraint and is a width; ch is the measure. Rulebook v2 §17,
+          and the width ratchet exists to migrate exactly this class.
+
+          THE SENTENCE ALSO HAD FOUR CLAUSES AND AN APPOSITION IN THE MIDDLE. It
+          defined rent load in passing, halfway through, against "a district with
+          no premium", which is not what the page calls that baseline three inches
+          below: the hero says "a comparable unit at the city rate". Same facts,
+          same order, three short sentences, and the baseline is now named the way
+          the rest of the page names it (§13). */}
+      <p className="mt-2 max-w-[52ch] text-[13.5px] leading-snug text-[var(--c-ink2)]">
+        Money moves street to street. Rent load is what a district&rsquo;s leases run against the city rate. All <Fig className="text-[var(--c-ink)]">{districts.length}</Fig> are ranked here, lightest first.
       </p>
 
       {/* ONE dominant answer: the district where rent runs lightest (the single

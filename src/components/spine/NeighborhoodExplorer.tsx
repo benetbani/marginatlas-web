@@ -778,7 +778,7 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, pl
               }
             />
           </div>
-          {mapNote ? <p className="px-1 pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
+          {mapNote ? <p className="max-w-[56ch] px-1 pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
           <UnderMapCard d={current} placePrefix={placePrefix} />
         </div>
         <DetailPanel d={current} reduced={reduced} />

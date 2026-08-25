@@ -1,8 +1,8 @@
 {
   "total": {
-    "remCaps": 229,
-    "chCaps": 15,
-    "smPairings": 54
+    "remCaps": 228,
+    "chCaps": 19,
+    "smPairings": 53
   },
   "byFile": {
     "src/app/(site)/about-data/page.tsx": {
@@ -552,17 +552,17 @@
     },
     "src/components/spine/city/masthead.tsx": {
       "remCaps": 0,
-      "chCaps": 0,
-      "smPairings": 1
+      "chCaps": 1,
+      "smPairings": 0
     },
     "src/components/spine/hood/hood-view.tsx": {
       "remCaps": 0,
-      "chCaps": 0,
+      "chCaps": 1,
       "smPairings": 1
     },
     "src/components/spine/hood/masthead.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
+      "remCaps": 0,
+      "chCaps": 1,
       "smPairings": 0
     },
     "src/components/spine/industry/industry-view.tsx": {
@@ -577,7 +577,7 @@
     },
     "src/components/spine/NeighborhoodExplorer.tsx": {
       "remCaps": 1,
-      "chCaps": 0,
+      "chCaps": 1,
       "smPairings": 2
     },
     "src/components/ui/disclosure.tsx": {

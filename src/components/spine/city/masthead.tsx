@@ -80,7 +80,10 @@ export function CityHero({ d }: { d: any }) {
           masthead figure (the focal included); no per-tile dots, no legend. */}
       <div className="mt-4 flex items-start gap-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
         <AtlasMark id="modeled" size={14} className="mt-px shrink-0" />
-        <span>{d.meta?.provenance_line}</span>
+        {/* The provenance sentence carried no width at all and ran 99 characters a
+            line, measured, which made it the widest text on this page. 56ch is the
+            measure the spine stylesheet's own note class uses. Rulebook v2 §17. */}
+        <span className="max-w-[56ch]">{d.meta?.provenance_line}</span>
       </div>
     </section>
   );

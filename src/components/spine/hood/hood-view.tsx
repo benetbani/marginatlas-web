@@ -87,7 +87,10 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
             seed falls back to the illustrative note. */}
         <p className="-mt-2 mb-2 flex items-start gap-1.5 text-[11px] leading-snug text-[var(--c-muted)]">
           <AtlasMark id="modeled" size={13} className="mt-px shrink-0" />
-          <span>{d.meta?.provenance_line ?? DEV_PROVENANCE}</span>
+          {/* The provenance sentence carried NO width at all and ran 86 characters
+              a line, measured. It sits directly under the masthead sentence, so it
+              takes the same measure and the two read as one block. */}
+          <span className="max-w-[56ch]">{d.meta?.provenance_line ?? DEV_PROVENANCE}</span>
         </p>
 
         {/* 01 , THE MOVEMENT: what rent takes, district by district. Rent strip + real
