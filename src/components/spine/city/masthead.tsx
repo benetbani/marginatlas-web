@@ -19,10 +19,26 @@ import { AtlasMark } from "@/components/spine/marks";
 
 export function CityHero({ d }: { d: any }) {
   const scorecard: any[] = d.headline?.scorecard ?? [];
-  // The one dominant answer: the seed's explicit focal, else the first available tile
-  // promoted (real-data path carries no focal, only the scorecard).
-  const focal = d.headline?.focal ?? scorecard[0] ?? null;
-  const support: any[] = d.headline?.focal ? scorecard : scorecard.slice(1);
+  /* THE HEADLINE FIGURE IS ONE THE QUICK READS DO NOT ALREADY CARRY.
+     On the real-data path this page has no chosen focal, so it took the first
+     scorecard tile, which on London is customer income. The six quick reads 650px
+     below name customer income too, as a position among 252 cities. Two readings
+     of one metric near the top of a page is the founder's "repeating the front
+     part", measured at 82px and 760px.
+
+     So the focal prefers a tile whose label is not among the quick reads, and
+     falls back to the first tile when every one of them is. On London that
+     promotes self-employment, which is a real, measured, differentiating fact
+     about how entrepreneurial a place is: 14% here against 81% in Lagos. The
+     income figure keeps its place in the support strip, where it does not compete
+     with the read of it below. */
+  const lensLabels = new Set(
+    ((d.lenses?.scales ?? []) as any[]).map((x) => String(x?.label ?? "").trim().toLowerCase()),
+  );
+  const notDuplicated = scorecard.filter((t) => !lensLabels.has(String(t?.label ?? "").trim().toLowerCase()));
+  const chosen = d.headline?.focal ?? notDuplicated[0] ?? scorecard[0] ?? null;
+  const focal = chosen;
+  const support: any[] = d.headline?.focal ? scorecard : scorecard.filter((t) => t !== chosen);
   const inPhrase = d.meta?.country_in_phrase ?? d.meta?.country_name;
   return (
     <section className="overflow-hidden py-6 md:py-8">

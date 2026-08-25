@@ -355,24 +355,30 @@ const collect = () => {
      that restated three of the strip's figures wholesale, and a hero card stating
      its own focal twice. Both are gone. So the strings the hero itself carries are
      exempt, and everything else in the first screen still counts. */
-  const heroCount = new Map();
-  for (const e of document.querySelectorAll("[data-hero='1'] *")) {
-    const eb = e.getBoundingClientRect();
-    if (eb.width < 1 || eb.height < 1) continue;
-    const own = [...e.childNodes]
-      .filter((x) => x.nodeType === 3 && x.textContent.trim())
-      .map((x) => x.textContent.trim())
-      .join(" ")
-      .replace(/\s+/g, " ");
-    if (own.length < 4) continue;
-    heroCount.set(own, (heroCount.get(own) ?? 0) + 1);
+  /* EXACTLY ONE ELEMENT IS EXEMPT: the hero's largest figure.
+     A hero states ONE answer and the section below proves it, which is the page
+     working, so one occurrence of that figure has to be free. But the exemption
+     has to be an ELEMENT and not a string, and not a block either. Three earlier
+     attempts got this wrong and each one hid a fault that had just been fixed:
+     exempting anything the hero touched, then anything it said once, then the
+     focal's whole parent block. Each was found by putting the real fault back and
+     watching the rule stay quiet.
+
+     Dropping one element and counting the rest handles every case seen:
+       hero focal + strip proving it        one left, silent, correct
+       hero focal + hero tile + strip       two left, fires, correct
+       hero carrying a non-answer figure    not the largest, fires, correct */
+  let exemptEl = null;
+  {
+    let max = 0;
+    for (const e of document.querySelectorAll("[data-hero='1'] *")) {
+      const b = e.getBoundingClientRect();
+      if (b.width < 1 || b.height < 1) continue;
+      if (![...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim())) continue;
+      const fs = parseFloat(getComputedStyle(e).fontSize) || 0;
+      if (fs > max) { max = fs; exemptEl = e; }
+    }
   }
-  /* EXEMPT ONLY WHAT THE HERO SAYS ONCE. A string the hero states twice is the hero
-     repeating ITSELF, which is the fault this rule was written for and which was
-     found on the city hero the same day: its focal and one of its support tiles
-     carried the same multiple and the same district name. Exempting anything the
-     hero touches would have hidden exactly that. */
-  const answer = new Set([...heroCount.entries()].filter(([, n]) => n === 1).map(([t]) => t));
 
   const seen = new Map();
   for (const e of document.querySelectorAll("*")) {
@@ -396,7 +402,19 @@ const collect = () => {
        about the page telling a reader the same THING twice, not about a chrome
        marker doing its job. */
     if (/^sample$/i.test(own)) continue;
-    if (answer.has(own)) continue;
+    if (e === exemptEl) continue;
+    /* A REPEATED LABEL IS THE SITE OBEYING H8, NOT THE PAGE REPEATING ITSELF.
+       H8 requires one measurement to be named the same way throughout, so a metric
+       label WILL appear wherever that metric appears: the city masthead shows
+       "Customer income $65K" and the quick reads show "Customer income, High",
+       which is a figure and a position, two different things under the one name
+       the site is obliged to use. Counting that put two of this direction's own
+       rules against each other.
+
+       What the founder saw was a FIGURE stated twice, so a figure is what counts.
+       The district-chip fault, seven rows carrying identical words and no number,
+       is caught by H3 and does not need this rule. */
+    if (!/\d/.test(own)) continue;
     const top = rb.top + window.scrollY;
     if (top > 900) continue;
     /* A REPEAT INSIDE ONE SECTION IS THE FORM WORKING. A tier band names its two
