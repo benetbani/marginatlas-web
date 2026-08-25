@@ -158,6 +158,22 @@ const collect = () => {
     };
   });
 
+  /* H3, A LABEL THAT READS THE SAME FOR EVERY ROW IS NOT A LABEL.
+     Founder's rulebook §7 and this direction's H3. Caught by hand on 2026-08-24:
+     seven district chips all read "rent runs heavier than the city", including the
+     one the page's own headline called the LIGHTEST. Every London district is above
+     the city rate, so the grade was identical for every row on every page it could
+     appear on. Nothing stopped that, and nothing stopped it coming back.
+
+     A repeated structure is a list or a table body with three or more rows. For
+     each position within the row, the text at that position is collected across
+     all rows; if every row says the same thing and it is longer than three
+     characters, that position carries no information.
+
+     BLIND SPOT: a column that is identical because the DATA is identical, rather
+     than because the label was written once, reads the same here. That distinction
+     needs the source, not the page. Three rows minimum keeps the noise down.
+
   /* D6, THE SPACING LADDER. Chapter gap > band gap > card padding > slot gap, and
      no rung may equal or exceed the one outside it. Measured before this rule ran:
      the gap BETWEEN bands, the gap WITHIN a band and a card's own padding were all
@@ -177,6 +193,32 @@ const collect = () => {
      silently fails to compile is caught as well as one that was typed twice.
      A band with one surviving child is skipped: its partner self-omitted, which
      is a data condition rather than a rhythm choice. */
+  const sameForAll = [];
+  /* A REPEATED STRUCTURE IS NOT ONLY A LIST. Written first against ol, ul and
+     tbody, this could not see the fault it exists for: the seven district chips
+     that all read the same are BUTTONS in a plain div. Any parent whose visible
+     element children are three or more of the same tag is a repeated structure. */
+  const structures = [];
+  for (const parent of document.querySelectorAll("ol, ul, tbody, div")) {
+    const rows = [...parent.children].filter(
+      (r) => r.nodeType === 1 && r.getBoundingClientRect().height > 2,
+    );
+    if (rows.length < 3) continue;
+    if (!rows.every((r) => r.tagName === rows[0].tagName)) continue;
+    structures.push(rows);
+  }
+  for (const rows of structures) {
+    const width = Math.min(...rows.map((r) => r.children.length));
+    /* Position 0 is the row itself when a row has no element children, which is
+       how a chip row reads: the button IS the cell. */
+    const cells = (r, i) => (width ? r.children[i] : r);
+    for (let i = 0; i < Math.max(1, width); i++) {
+      const texts = rows.map((r) => (cells(r, i).textContent || "").trim().replace(/\s+/g, " "));
+      if (texts[0].length <= 3) continue;
+      if (texts.every((t) => t === texts[0])) sameForAll.push(`${rows.length} rows all read "${texts[0].slice(0, 40)}"`);
+    }
+  }
+
   const ladder = [];
   const px = (v) => Math.round(parseFloat(v) || 0);
   const bandSplits = [];
@@ -282,7 +324,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, bandCount: bandSplits.length };
+  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, sameForAll, bandCount: bandSplits.length };
 };
 
 const RULES = [
@@ -317,6 +359,10 @@ for (const { name, result } of pages) {
   now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
   total += now[`${name}:pageAccents`];
   if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
+
+  now[`${name}:sameForAll`] = result.sameForAll.length;
+  total += result.sameForAll.length;
+  for (const x of [...new Set(result.sameForAll)]) lines.push(`  H3  ${x}`);
 
   now[`${name}:ladder`] = result.ladder.length;
   total += result.ladder.length;
