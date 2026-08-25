@@ -42,11 +42,35 @@ import * as React from "react";
 import { chromium } from "playwright";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { buildSpineCitySeed } from "../src/lib/spine/adapt_city";
+import { buildSpineCellSeed } from "../src/lib/spine/adapt_cell";
+import { buildSpineIndustrySeed } from "../src/lib/spine/adapt_industry";
 import { SpineCityBody } from "../src/components/spine/city/city-view";
+import { SpineCellBody } from "../src/components/spine/cell/cell-view";
+import { SpineIndustryBody } from "../src/components/spine/industry/industry-view";
 
 /* A deliberate spread: the exemplar, two very poor and very large, one small and
    European, one Latin American, and the two the rulebook names by hand. */
 const CITIES = ["london", "lagos", "dhaka", "tirana", "mumbai", "sao-paulo", "la-paz", "kinshasa"];
+
+/* THE TRADE PAGE CARRIES THE SAME RISK AS THE CITY PAGE and for the same reason:
+   its comparisons are built from figures that vary by orders of magnitude across
+   the world. The neighbourhood page is NOT covered, and that is not an oversight:
+   counted 2026-08-25, London is the only city in the repository that carries
+   districts at all, so there is no second case to test it against. */
+const CELLS = [
+  ["gb", "london", "restaurants"],
+  ["ng", "lagos", "restaurants"],
+  ["bd", "dhaka", "restaurants"],
+  ["in", "mumbai", "cafes-coffee-shops"],
+  ["br", "sao-paulo", "grocery-stores"],
+  ["al", "tirana", "restaurants"],
+];
+
+/* The across-places page is per-trade rather than per-city, and measured the same
+   day it renders 2,261 to 3,122 characters for every trade tried, so it is the one
+   page type that is already universal. Included anyway, cheaply, because a form
+   can break on a trade as easily as on a city. */
+const INDUSTRIES = ["restaurants", "cafes-coffee-shops", "grocery-stores", "hairdressers-beauty", "auto-repair-shops"];
 
 const ABSURD = [
   { unit: "pp", max: 200, why: "percentage points" },
@@ -58,12 +82,37 @@ const run = async () => {
   mkdirSync("scratchpad/universality", { recursive: true });
   const rendered = [];
   const missing = [];
+  /* THE RICHNESS SPREAD IS REPORTED, NEVER FAILED. How much a page carries for a
+     place other than the exemplar is a SOURCING fact, not a design one, and this
+     check has no business failing a build over it. It is printed because whoever
+     runs this is exactly the person who should know that the same design produces
+     a third of a page outside London. */
+  const richness = {};
+  const write = (name, html, kind) => {
+    writeFileSync(`scratchpad/universality/${name}.html`, `<!doctype html><meta charset="utf-8"><body>${html}</body>`, "utf8");
+    rendered.push(name);
+    const text = html
+      .replace(/<script[\s\S]*?<\/script>/g, "")
+      .replace(/<style[\s\S]*?<\/style>/g, "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    (richness[kind] ??= []).push([name, text.length]);
+  };
   for (const slug of CITIES) {
     const d = await buildSpineCitySeed(slug).catch(() => null);
-    if (!d) { missing.push(slug); continue; }
-    const html = renderToStaticMarkup(React.createElement(SpineCityBody, { data: d }));
-    writeFileSync(`scratchpad/universality/${slug}.html`, `<!doctype html><meta charset="utf-8"><body>${html}</body>`, "utf8");
-    rendered.push(slug);
+    if (!d) { missing.push(`city ${slug}`); continue; }
+    write(`city-${slug}`, renderToStaticMarkup(React.createElement(SpineCityBody, { data: d })), "city");
+  }
+  for (const [c, g, t] of CELLS) {
+    const d = await buildSpineCellSeed(c, g, t).catch(() => null);
+    if (!d) { missing.push(`trade ${g}/${t}`); continue; }
+    write(`trade-${g}-${t}`, renderToStaticMarkup(React.createElement(SpineCellBody, { data: d })), "trade");
+  }
+  for (const i of INDUSTRIES) {
+    const d = await buildSpineIndustrySeed(i).catch(() => null);
+    if (!d) { missing.push(`across ${i}`); continue; }
+    write(`across-${i}`, renderToStaticMarkup(React.createElement(SpineIndustryBody, { data: d })), "across");
   }
 
   const b = await chromium.launch();
@@ -112,7 +161,14 @@ const run = async () => {
   }
   await b.close();
 
-  console.log(`\n  ${rendered.length} of ${CITIES.length} cities render a page.`);
+  console.log(`
+  ${rendered.length} pages rendered: ${CITIES.length} cities, ${CELLS.length} trades, ${INDUSTRIES.length} trade-across-places.`);
+  for (const [kind, list] of Object.entries(richness)) {
+    const sorted = [...list].sort((a, b) => b[1] - a[1]);
+    const top = sorted[0], bottom = sorted[sorted.length - 1];
+    const ratio = bottom[1] > 0 ? (top[1] / bottom[1]).toFixed(1) : "n/a";
+    console.log(`  ${kind.padEnd(7)} richest ${top[0]} at ${top[1]} chars, thinnest ${bottom[0]} at ${bottom[1]}, a spread of ${ratio}x`);
+  }
   if (missing.length) console.log(`  NO PAGE AT ALL: ${missing.join(", ")}  (a sourcing gap, not a failure of this check)`);
   if (fails.length) {
     console.log(`\nx verify_universality: ${fails.length} figure(s) that no reader can hold.\n`);
