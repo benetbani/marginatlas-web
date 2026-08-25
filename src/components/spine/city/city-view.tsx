@@ -774,38 +774,52 @@ function Close({ d }: { d: any }) {
   return (
     <Box>
       <Head icon="bookmark">The pick, and where to take it</Head>
-      <div className="grid gap-4 md:grid-cols-[1.3fr_1fr] md:items-stretch">
-        {/* the decision the whole page built toward */}
-        <div className="flex flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-soft)] p-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where to start looking in {d.meta?.city}</span>
-          </div>
-          <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{title}</div>
-          <div className="mt-3 flex flex-wrap gap-6 border-t border-[var(--c-border)] pt-3">
-            <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{lightest.rent_mult}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div>
-            {lightest.character ? <div><div className="text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
-          </div>
-          {/* The destination is the district set, not a trade page. Hover is INK:
-              §37 says the accent never appears on hover, and the link this replaces
-              turned terracotta. */}
-          <a href={`/cities/${d.meta?.slug}/neighborhoods`} className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--c-ink)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See every district &#8594;</a>
-        </div>
-        {/* the Pro / compare hand-off */}
-        <div className="flex flex-col gap-4">
-          <div>
-            <div className="text-[length:var(--t-body)] text-[var(--c-ink)]">Set {d.meta?.city} beside up to three cities, side by side.</div>
-            <a href="/compare" className="mt-2 inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
-          </div>
-          {/* the workbook preview , a tight SCHEMATIC bullet list, not floating prose
-              lines force-spread with min-h/justify-evenly (rule 19 schematic content;
-              rule 17 no crater). Bullets is the sanctioned neutral-dot list form. */}
-          {teaser.length > 0 ? (
-            <LockVeil unlocked={isReviewBuild()} headline={`The full ${d.meta?.city} workbook`} note="Every district by every trade, the real cost stack, and the owner-runway calculator." cta="Unlock with Pro">
-              <div className="py-1"><Bullets items={teaser} /></div>
-            </LockVeil>
-          ) : null}
+      {/* ONE CARD, ONE BORDER, ONE PADDING (art direction A5). This was a bordered,
+          tinted panel INSIDE the card holding the pick, with a sentence and a button
+          in a column beside it. Two faults came out of that shape and both were
+          visible in the picture before any of them was measured.
+
+          The card is a box inside a box, which is the thing he named in as many
+          words: "you have just boxed it". The panel's tint was doing the marking
+          and its border was doing the nesting, so the border goes and nothing that
+          marks the answer is lost.
+
+          And a sentence plus a button cannot fill a column set against a taller
+          panel: measured at 1280 and again at 1440, 256 by 162 of this card was
+          empty, the largest hole left on any of the four pages (E6). The hand-off
+          is not a second column of content, it is a way out of the page, so it sits
+          on a footer row with the district link where a way out belongs.
+
+          The grid also stretched its two children to equal height, which D7 forbids
+          outright. Removing the grid removes that too. */}
+      <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where to start looking in {d.meta?.city}</div>
+      <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{title}</div>
+      <div className="mt-3 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--c-border)] pt-3">
+        <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{lightest.rent_mult}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div>
+        {lightest.character ? <div><div className="text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
+      </div>
+      {/* The two ways out, on one row. The destination of the first is the district
+          set, not a trade page. Hover is INK on both: §37 says the accent never
+          appears on hover, and the link this replaces turned terracotta.
+          The compare line lost ", side by side", which said the same thing "beside"
+          had already said. */}
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-[var(--c-border)] pt-4">
+        <a href={`/cities/${d.meta?.slug}/neighborhoods`} className="inline-flex items-center gap-1.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--c-ink)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See every district &#8594;</a>
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">Set {d.meta?.city} beside up to three cities.</span>
+          <a href="/compare" className="inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
         </div>
       </div>
+      {/* the workbook preview , a tight SCHEMATIC bullet list, not floating prose
+          lines force-spread with min-h/justify-evenly (rule 19 schematic content;
+          rule 17 no crater). Bullets is the sanctioned neutral-dot list form. */}
+      {teaser.length > 0 ? (
+        <div className="mt-4">
+          <LockVeil unlocked={isReviewBuild()} headline={`The full ${d.meta?.city} workbook`} note="Every district by every trade, the real cost stack, and the owner-runway calculator." cta="Unlock with Pro">
+            <div className="py-1"><Bullets items={teaser} /></div>
+          </LockVeil>
+        </div>
+      ) : null}
     </Box>
   );
 }

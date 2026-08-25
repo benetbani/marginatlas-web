@@ -83,8 +83,22 @@ function measure() {
     const W = x1 - x0, H = y1 - y0;
     if (W < 40 || H < 40) continue;
 
+    /* A LARGE CHILDLESS, TEXTLESS ELEMENT IS THE SIGNATURE OF A CHART THAT FAILED
+       TO DRAW, and it is ALSO the signature of an ordinary SVG path, which has no
+       children and no text by nature. Without the svg exclusion this waved three
+       real charts through as unjudgeable, and unjudgeable is the category that
+       hides things: a card that stopped drawing would raise that count and lower
+       the hole count, and both would read as progress. Verified by grepping the
+       markup for a word each card prints, which is the check this repo already
+       prescribes before calling any card empty. */
     let blank = false;
     for (const e of c.querySelectorAll("*")) {
+      /* SVG interiors and table column definitions match the signature and are not
+         failures: a path has no children and no text by nature, and a <col> is pure
+         structure that reports a full-column rect while drawing nothing. Between
+         them they accounted for three of the four cards this first called
+         unjudgeable, every one of which drew correctly. */
+      if (e.closest("svg") || e.tagName === "COL" || e.tagName === "COLGROUP") continue;
       if (e.children.length || (e.textContent || "").trim()) continue;
       const b = e.getBoundingClientRect();
       if (b.width * b.height > 20000) { blank = true; break; }

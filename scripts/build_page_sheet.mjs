@@ -15,7 +15,7 @@
  *         scratchpad/shots-glass/P375-<page>.jpeg    (phone, 375)
  * Writes: E:/atlas/design/PAGE-SHEET-<date>.html
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
 
 const DATE = process.argv.includes("--date")
   ? process.argv[process.argv.indexOf("--date") + 1]
@@ -38,11 +38,11 @@ const MOVED = [
   ["Bands repeating their neighbour's split", "2", "0"],
   ["Elements carrying the frosted treatment", "0", "every card"],
   ["Rungs in the spacing ladder that were the same number", "3 of 4", "0"],
-  ["Rules from the art direction held by a gate", "0", "14 of 55"],
+  ["Rules from the art direction held by a gate", "0", "15 of 56"],
   ["Pages the layout rules run on at every build", "4", "4, and they are the four London ones"],
   ["Pages rendered outside London to catch what London hides", "0", "17 of 19 tried"],
   ["Sections that were prose with nothing drawn", "3", "0"],
-  ["Sections with a gathered block of empty space", "3", "2"],
+  ["Sections with a gathered block of empty space", "3", "1"],
 ];
 
 /* THE DECISIONS THAT ARE THE FOUNDER'S, WITH A RECOMMENDATION FOR EACH.
@@ -78,7 +78,7 @@ const KNOWN = [
   "The neighbourhood page is the one page type this wider check cannot cover. London is the only city in the whole repository that carries districts, so there is no second case to test it against.",
   "The neighbourhood map draws in the real app and not in these pictures: it needs a browser to measure its own box, and these are static renders. The empty half beside the district chips is that, not a hole in the page.",
   "The trade page's owner-keeps waterfall is the same: present and correct in the app, blank here.",
-  "Two sections still carry a gathered block of empty space, both on the desktop layout: the pick on the city page, where a sentence and a button sit in a column stretched to match a taller panel beside them, and the break-even answer on the trade page. Neither is a wrong number; both are a column wider than what it holds. They are measured, named, and next.",
+  "One section still carries a gathered block of empty space: the break-even card on the trade page, where the top right is empty beside a short answer line. It is measured, named, and next. The pick on the city page was the other one and is now rebuilt.",
   "One thing I found and undid: a table appeared to have a large void down its middle, I moved it to a narrower column to fix that, and then discovered the measurement was wrong, a table row rule was not being counted as ink. The table never had a hole. The change was reverted and the page is exactly as it was.",
   "One consistency check cannot run yet and is not a pass: nothing compares a city's keep-share against its country's for the same trade, because no country file exists to compare against. Two related checks are waiting on the same thing, a second city for a trade and a second trade for a country. They will start running the day that data lands, and until then that agreement is simply unchecked.",
   "Seven small figures still render without tabular numerals. All seven are scale END labels, which sit at opposite ends of a track and never line up with anything, so the check counts them and they are not really a fault.",
@@ -89,6 +89,42 @@ const img = (p) =>
   existsSync(p) ? `data:image/jpeg;base64,${readFileSync(p).toString("base64")}` : "";
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/* THE PICTURES ARE CAPTURED HERE, from the built preview files, whenever they are
+   missing or OLDER than the page they claim to show.
+
+   They used to come from an ad-hoc step nobody had written down, which is exactly
+   how they went stale: two pages were rebuilt and this sheet still carried their
+   portraits from two hours earlier, ready to be handed over. A founder-facing
+   picture that lags the page is worse than no picture, because he judges what he
+   sees. Now the sheet cannot ship one: it compares each capture against the page's
+   own timestamp and re-takes it. */
+async function refreshShots() {
+  const stale = PAGES.filter((p) => {
+    const page = `docs/loop/artifacts/final-pages/${p.slug}.html`;
+    if (!existsSync(page)) return false;
+    const t = statSync(page).mtimeMs;
+    return [`scratchpad/shots-glass/FINAL-${p.slug}.jpeg`, `scratchpad/shots-glass/P375-${p.slug}.jpeg`]
+      .some((s) => !existsSync(s) || statSync(s).mtimeMs < t);
+  });
+  if (!stale.length) return;
+  const { chromium } = await import("playwright");
+  const browser = await chromium.launch();
+  for (const p of stale) {
+    for (const [w, prefix] of [[1280, "FINAL"], [375, "P375"]]) {
+      const page = await browser.newPage({ viewport: { width: w, height: 1000 } });
+      await page.goto(`file:///E:/atlas/website/docs/loop/artifacts/final-pages/${p.slug}.html`);
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(500);
+      await page.screenshot({ path: `scratchpad/shots-glass/${prefix}-${p.slug}.jpeg`, type: "jpeg", quality: 82, fullPage: true });
+      await page.close();
+    }
+    console.log(`  re-captured ${p.slug} (its picture was older than the page)`);
+  }
+  await browser.close();
+}
+
+await refreshShots();
 
 const cards = PAGES.map((p) => {
   const d = img(`scratchpad/shots-glass/FINAL-${p.slug}.jpeg`);

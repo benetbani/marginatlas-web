@@ -162,3 +162,35 @@ bar, because a bar would draw proportions nobody measured, and in-cell bars were
 removed from this very table on a founder verdict. Whether a table naming four
 real cities with derived figures should exist at all is his call and is now in
 front of him.
+
+## 2026-08-25, the third instrument fault in the same rule, and the worst kind
+
+E6 reports a card as UNJUDGEABLE when it holds a large element with no children
+and no text, because that is what a chart looks like when it fails to draw. Four
+cards came back unjudgeable. Three of them were drawing perfectly well.
+
+An ordinary SVG path has no children and no text by nature. A table's column
+definitions report a full-column rectangle and draw nothing at all. Both match
+the signature exactly.
+
+THIS IS THE WORST OF THE THREE and it is worth saying why. The first two faults
+made the gate shout about holes that were not there, which is annoying and
+self-correcting: someone looks, sees nothing, and investigates. This one made the
+gate go QUIET about three sections while reporting a number that looked like
+diligence. Unjudgeable is the category that hides things. A card that quietly
+stopped drawing would raise that count and lower the hole count at the same time,
+and both movements read as progress.
+
+Caught by the check this repo already prescribes and I had not applied to my own
+instrument: before calling a card empty, grep the markup for a word the card would
+print. The survival curve prints its axis labels. The peer table prints its column
+of city names. Neither was empty and both had been excused.
+
+One card is genuinely unjudgeable now, and it is the one the preview limits
+already document.
+
+THREE FAULTS IN ONE RULE, all found by looking rather than by reasoning. The rule
+is still worth having: every hole it found after each correction was real, and one
+of them had been sitting on the neighbourhood page for weeks. But the ratio is the
+lesson. A new measurement should be assumed wrong until a picture agrees with it,
+and the first three pictures disagreed.
