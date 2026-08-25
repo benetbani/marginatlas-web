@@ -73,6 +73,9 @@ const GATES: Gate[] = [
      stylesheet picks the winner. Nothing warns and a typecheck cannot see it.
      The tooltip marker carried inline-flex AND grid for months. */
   { name: "one-display", script: "scripts/verify_one_display.mjs" },
+  /* Critique rounds may only improve on each other. Without this the record is
+     a diary: pleasant to keep, no obstacle to making the same mistake twice. */
+  { name: "critique-rounds", script: "scripts/verify_critique_rounds.mjs" },
   /* The coverage CLAIM, not the rules. Section J of the art direction says
      which of its 55 rules a gate holds, and that claim was wrong in three
      separate documents on the day it was written. A coverage claim nobody

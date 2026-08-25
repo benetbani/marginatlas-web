@@ -474,9 +474,13 @@ function SurvivalSlope({ points }: { points: Array<[string, number]> }) {
             </React.Fragment>
           );
         })}
+        {/* THE CAPTION NAMES THE CLAIM, IT IS NOT A SECOND STRIKE. It carried a
+            line through its own text while the dashed line it labels was already
+            struck: one idea cancelled twice, which reads as a mistake rather than
+            a finding, and it is the pile the founder described on 2026-08-25. */}
         <span
           aria-hidden
-          className="absolute text-[length:var(--t-mark)] leading-none text-[var(--c-muted)] line-through"
+          className="absolute text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
           style={{ right: `${100 - leftPct(points.length - 1)}%`, top: `${Y(FOLKLORE_SURVIVAL_PCT) - 15}px` }}
         >
           {FOLKLORE_LABEL}

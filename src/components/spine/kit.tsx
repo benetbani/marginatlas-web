@@ -825,16 +825,35 @@ export function StruckLine({ points, label = "folklore", hideLabel = false }: { 
   const x0 = Math.min(...xs) - 4, x1 = Math.max(...xs) + 4;
   const y0 = Math.min(...ys) - 4, y1 = Math.max(...ys) + 4;
   const [lx, ly] = points[points.length - 1];
+  /* THE STRIKE MUST NOT LOOK LIKE DATA, and drawn corner to corner across the
+     phantom's whole bounding box it does. On a flat folklore line that is a long,
+     shallow, full-width stroke: a third trend line running through the plot, which
+     is the opposite of cancelling something. Short, centred, steep and INKED, so
+     it crosses the claim instead of joining the chart.
+
+     ONE STRIKE, ON ONE OBJECT. This also carried a caption with a line through the
+     TEXT, so a struck line and a struck caption struck the same idea twice and the
+     pair read as a mistake rather than a finding. The founder, 2026-08-25, on
+     exactly this pile: "you just create like a text and you slap like a line on
+     top of it, what the fuck is that." The claim IS the dashed line; the strike
+     crosses it and the caption NAMES it. The rank chart on the neighbourhood page
+     was corrected this way the same day and this shared form was missed, so the
+     defect he named stayed live on the trade page. */
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  /* THE SAME PROPORTIONS THE RANK CHART SETTLED ON: 34 across by 9 down, near
+     enough 0.3. The first attempt here used 0.55 and the strike reached a third of
+     the way up the plot, close enough to the real curve that it read as crossing
+     BOTH lines. Steep enough to cancel, short enough to stay over the thing it
+     cancels. */
+  const halfW = Math.min(30, (x1 - x0) * 0.16);
+  const halfH = Math.max(6, halfW * 0.3);
   return (
     <g aria-hidden="true">
-      <path d={path} fill="none" stroke="var(--c-line-strong)" strokeWidth={1.3} strokeDasharray="3 3" strokeLinecap="round" strokeLinejoin="round" />
-      {/* the strike , one confident stroke on the diagonal OPPOSITE the curve's own
-          bounding box slope, so it always crosses the phantom shape and reads as a
-          deliberate cross-out rather than a second trend line */}
-      <line x1={x0} y1={y1} x2={x1} y2={y0} stroke="var(--c-muted)" strokeWidth={1.5} strokeLinecap="round" />
+      <path d={path} fill="none" stroke="var(--c-line-strong)" strokeWidth={1.3} strokeDasharray="3 3" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      <line x1={cx - halfW} y1={cy + halfH} x2={cx + halfW} y2={cy - halfH} stroke="var(--c-ink)" strokeWidth={2} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
       {/* hideLabel: when the caller draws its own text in the DOM instead, so the
           words are not scaled along with the drawing. */}
-      {hideLabel ? null : <text x={lx} y={ly - 8} textAnchor="end" fontSize={9} fill="var(--c-muted)" style={{ textDecoration: "line-through" }}>{label}</text>}
+      {hideLabel ? null : <text x={lx} y={ly - 8} textAnchor="end" fontSize={9} fill="var(--c-muted)">{label}</text>}
     </g>
   );
 }
