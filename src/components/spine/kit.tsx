@@ -434,7 +434,23 @@ export function Band({
     "2-3": "md:grid-cols-[2fr_3fr]",
     "3-2": "md:grid-cols-[3fr_2fr]",
   }[split];
-  return <div className={`mt-8 grid grid-cols-1 items-start gap-8 ${cols}`}>{children}</div>;
+  /* A BAND LEFT HOLDING ONE CARD TAKES A DELIBERATE TWO THIRDS. Several sections
+     have a partner that renders for some cities and trades and not others, and
+     when the partner is absent the survivor kept its declared share: a card at
+     two fifths of the column with three fifths of nothing beside it, which is the
+     one-sided white space the splitting exists to prevent. Spanning the full width
+     instead is not available, because full width is banned for anything carrying a
+     finding (D1).
+
+     So a band with a single child re-templates to two thirds and one third, and
+     the child lands in the larger column. It reads as an asymmetric composition
+     rather than a row that lost something, and it is the same two thirds every
+     time, which is what makes it read as a choice. */
+  return (
+    <div className={`mt-8 grid grid-cols-1 items-start gap-8 [&:has(>*:only-child)]:md:grid-cols-[2fr_1fr] ${cols}`}>
+      {children}
+    </div>
+  );
 }
 
 

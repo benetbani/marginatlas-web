@@ -251,7 +251,12 @@ const collect = () => {
     const cls = String(el.className);
     if (!/^mt-8 grid grid-cols-1 items-start gap-8/.test(cls)) continue;
     if (el.childElementCount < 2) continue;
-    const m = cls.match(/md:grid-cols-(2|\[[^\]]+\])/);
+    /* THE REAL SPLIT, NOT A CONDITIONAL VARIANT. The band's class also carries a
+       has-only-child variant whose own md:grid-cols- token sits earlier in the
+       string, and matching that made every lone-survivor band report the same
+       split and fake a rhythm regression. Anchored to a space so only the
+       unprefixed utility matches. */
+    const m = cls.match(/(?:^|\s)md:grid-cols-(2|\[[^\]]+\])/);
     if (m) bandSplits.push(m[1]);
   }
   {
