@@ -263,6 +263,23 @@ function breakInWord(score: number | null): "Manageable" | "Demanding" | "Brutal
  * render nothing there. Returns undefined when the cell does not resolve (the
  * route falls back to notFound() upstream, matching the non-spine page).
  */
+/**
+ * Strip internal markers from a reader-facing provenance sentence.
+ *
+ * These lines are authored in the data, not here, so a marker added upstream
+ * reaches a reader with nothing in between. Cuts a trailing pipe-separated
+ * segment that is a bare key:value token, which is what internal markers look
+ * like, and leaves prose alone: "Estimated from regional patterns | see note"
+ * keeps its second half, "Estimated from regional patterns | scrub:x-2026-05-31"
+ * loses it.
+ */
+function sanitiseProvenance(line: string | null | undefined): string | null {
+  if (!line) return null;
+  const parts = String(line).split("|").map((p) => p.trim()).filter(Boolean);
+  const kept = parts.filter((p) => !/^[a-z][\w-]*:[\w.\-/]+$/i.test(p));
+  return kept.length ? kept.join(" | ") : null;
+}
+
 export async function buildSpineCellSeed(
   country: string,
   geo: string,
@@ -294,7 +311,14 @@ export async function buildSpineCellSeed(
     city: placeName,
     country_name: countryName,
     trade: tradeName,
-    provenance_line: cell.coverage_source || "Modeled from national business statistics.",
+    /* THE PROVENANCE LINE IS SANITISED, BECAUSE IT COMES FROM DATA AND NOT FROM
+       CODE. Found by rendering a trade page for a city that is not the exemplar:
+       Mumbai cafes printed "Estimated from regional patterns |
+       scrub:revenue-cap-2026-05-31" to a reader. That token is an internal
+       marker, and the gate that catches internal notes scans SOURCE, so a note
+       carried in a database field walks straight past it. Anything after a pipe
+       that looks like an internal key is cut, and the sentence keeps its meaning. */
+    provenance_line: sanitiseProvenance(cell.coverage_source) || "Modeled from national business statistics.",
   };
 
   /* -- headline ------------------------------------------------------------ */

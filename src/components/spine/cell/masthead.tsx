@@ -21,7 +21,15 @@ export function Masthead({ d }: { d: any }) {
   const h = d.headline ?? {};
   const breakWord = h.break_in_0_100 >= 45 ? "Manageable" : h.break_in_0_100 >= 30 ? "Demanding" : "Brutal";
   const hasFirms = typeof h.n_firms === "number" && Number.isFinite(h.n_firms);
-  const take = d.owner?.take_home_usd ?? 0;
+  /* NO TAKE-HOME FIGURE MEANS NO TAKE-HOME FIGURE, NOT ZERO. Found by rendering
+     this page for a trade and city that are not the exemplar: Mumbai cafes carry
+     no owner take-home, and the masthead answered "$0 a year, after every cost is
+     paid" in the largest type on the page. A missing measurement asserted as a
+     measured nil is the worst kind of wrong number, and it was the FIRST thing a
+     reader saw. Art direction F6, rulebook §0. */
+  const takeRaw = d.owner?.take_home_usd;
+  const hasTake = typeof takeRaw === "number" && Number.isFinite(takeRaw) && takeRaw > 0;
+  const take = hasTake ? takeRaw : 0;
   const [reduced, setReduced] = React.useState(false);
   React.useEffect(() => { setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
   const t = useCountUp(take, reduced, 620);
@@ -55,8 +63,26 @@ export function Masthead({ d }: { d: any }) {
           <div className="mt-6 grid gap-5 md:grid-cols-[minmax(0,1.5fr)_auto] md:items-end">
           <div>
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">A typical owner keeps</div>
-            <div className="fig leading-none text-[var(--terra-text)]" style={{ fontSize: "clamp(2.6rem, 7vw, 3.6rem)" }}>{money(reduced ? take : t)}</div>
-            <div className="mt-1 text-[12.5px] text-[var(--c-ink2)]">a year, after every cost is paid.</div>
+            {hasTake ? (
+              <>
+                <div className="fig leading-none text-[var(--terra-text)]" style={{ fontSize: "clamp(2.6rem, 7vw, 3.6rem)" }}>{money(reduced ? take : t)}</div>
+                <div className="mt-1 text-[12.5px] text-[var(--c-ink2)]">a year, after every cost is paid.</div>
+              </>
+            ) : (
+              <>
+                {/* THE DASH IS SIZED AS AN ABSENCE, NOT AS A FIGURE. At display
+                    size an en-dash is a long thin bar that reads as a rule or a
+                    stray mark rather than as "no value here", which is the
+                    opposite of what it is for. It takes the same size as the
+                    sentence it belongs to. */}
+                <div className="fig mt-1 text-[length:var(--t-sub)] leading-none text-[var(--c-muted)]">&ndash;</div>
+                {/* A LADDER STEP, NOT 12.5px. The line above this one carries a
+                    grandfathered off-ladder size; adding a second copy of it would
+                    have grown a ratchet that only counts down, and it did, from
+                    414 to 415. New text takes a declared step. */}
+                <div className="mt-1.5 max-w-[46ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">not measured for this trade in this city yet. The margin and the cost to open below are modeled from the trade&rsquo;s own shape.</div>
+              </>
+            )}
           </div>
           {/* THE TILES STACK BEFORE THEY CLIP.
             This was three fixed columns with no width rule at all, inside a box
