@@ -380,6 +380,25 @@ export const CARD_SURFACE: React.CSSProperties = {
     "inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(43,28,22,0.04), 0 8px 24px -12px rgba(43,28,22,0.10)",
 };
 
+/**
+ * Band , TWO SECTIONS TO A ROW, WHICH IS THE DEFAULT AND NOT THE EXCEPTION.
+ *
+ * Founder, 2026-06-18: "bento two-up bands (never one section per row)."
+ * Restated 2026-08-25 with the reason: a reader at a desk cannot sweep their eyes
+ * from one edge of a 1072px card to the other, so a full-width section is a
+ * section that does not get read.
+ *
+ * Two children sit side by side from `md` and stack below it. A single child
+ * takes the LEFT half and leaves the right open, because a lone section that
+ * stretches is the fault this exists to stop; if a section genuinely needs the
+ * width it takes `wide`, and `wide` is for a form that cannot be halved: a
+ * four-column table, a seven-row strip, a map.
+ */
+export function Band({ children, wide = false }: { children: React.ReactNode; wide?: boolean }) {
+  if (wide) return <div className="mt-5">{children}</div>;
+  return <div className="mt-5 grid grid-cols-1 items-start gap-5 md:grid-cols-2">{children}</div>;
+}
+
 export function Box({ children, className = "", elevation = "card", density = "default" }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead" }) {
   void elevation;
   return (
