@@ -648,7 +648,8 @@ export function Full({ children }: { children: React.ReactNode }) {
 }
 /* T3 , 1:1: two peer reads of equal class. (Row is the historical name; Even is the tier name.) */
 export function Row({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-4 md:flex-row md:items-stretch [&>*]:flex-1">{children}</div>;
+  /* items-start for the reason on WideRail above (D7). */
+  return <div className="flex flex-col gap-4 md:flex-row md:items-start [&>*]:flex-1">{children}</div>;
 }
 export const Even = Row;
 /* T2 , 3:2: a chart (flex-[3]) paired with a SCHEMATIC rail (flex-[2]) , stats, chips, a
@@ -664,8 +665,13 @@ export const Even = Row;
    themselves whether to draw, and any condition restated here would be a copy of
    their guards, free to drift from them. `:empty` cannot drift and cannot hide a
    rail that has anything in it. */
+/* ITEMS-START, NOT ITEMS-STRETCH. Art direction D7. Stretching a short card to
+ * its taller neighbour's height is what MAKES the empty space the founder named
+ * on 2026-08-25: measured that day, the trade page's team-costs card was 314px
+ * tall with 154px of nothing under it, purely because the card beside it was
+ * taller. A ragged bottom edge is honest; a crater is not. */
 export function WideRail({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-4 empty:hidden md:flex-row md:items-stretch [&>*:first-child]:md:flex-[3] [&>*:last-child]:md:flex-[2] [&>*]:flex-1">{children}</div>;
+  return <div className="flex flex-col gap-4 empty:hidden md:flex-row md:items-start [&>*:first-child]:md:flex-[3] [&>*:last-child]:md:flex-[2] [&>*]:flex-1">{children}</div>;
 }
 /* T4 , 3-up: exactly three small homogeneous reads (never two Triptychs in a row). */
 export function Triptych({ children }: { children: React.ReactNode }) {

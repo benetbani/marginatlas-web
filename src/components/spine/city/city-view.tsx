@@ -870,7 +870,15 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
         </>
       ) : null}
 
-      {(hasTradesCh || hasCloseCh) ? (
+      {/* THE GUARD ASKS WHAT THESE TWO SECTIONS ACTUALLY NEED, not a loose OR.
+          It used to lean on hasCloseCh, which is true when the page has peer
+          cities, and the peer table used to live in this chapter. Moving that
+          table up to the cost read left the guard passing on cities where NEITHER
+          of the two sections here can draw: Mumbai, Lagos and Sydney rendered this
+          heading with nothing under it. Caught by the blast-radius sweep across
+          all fifteen real pages, which is what that sweep is for. Each condition
+          below is the section's own. */}
+      {(hasTradesCh || (d.where_to_trade?.list?.length ?? 0) > 0) ? (
         <>
           <Movement index={cn()} eyebrow="The close" heading="What you can open, and where to take it" icon="startup-cost" />
           <Band split="3-2"><TradesHere d={d} /><Close d={d} /></Band>
