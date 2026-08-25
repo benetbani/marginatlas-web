@@ -43,6 +43,29 @@ const MOVED = [
   ["Sections that were prose with nothing drawn", "3", "0"],
 ];
 
+/* THE DECISIONS THAT ARE THE FOUNDER'S, WITH A RECOMMENDATION FOR EACH.
+   Put in the sheet rather than in a chat message because a chat message scrolls
+   away and this is the thing he actually has to act on. Each one is a real fork
+   where I could have picked either way and where picking wrong is expensive to
+   undo. */
+const DECISIONS = [
+  ["The city page's headline figure",
+   "It reads self-employment, 14% of the workforce, because the metric that used to sit there is also one of the six quick reads below it and naming one thing twice near the top is what you objected to. Self-employment is measured, and it separates places hard: 14% here against 81% in Lagos.",
+   "Keep it. If you would rather the headline were income, the fix is to rename the quick read instead, and that costs the six-label set its parallel wording."],
+  ["The split ratios",
+   "Bands divide 1-1, 1-2, 2-1, 2-3 or 3-2, and no band repeats its neighbour's split. On a tablet every band is equal halves, because a third of 768px puts a chart in 229 pixels.",
+   "Look at whether the rhythm reads as deliberate or as arbitrary. It is the one thing here I cannot judge from a measurement."],
+  ["The frost strength",
+   "Cards sit at 80% white with a real blur, and the readable band under the content column dropped from 82% to 34% so the photograph has something left to show through. Every figure still clears the contrast floor, measured on real composited pixels.",
+   "If it reads too strong or too weak, it is one number and I can move it in a minute."],
+  ["The chapter heading on the city page",
+   "It reads “What it costs, and who buys” after three chapters merged into it. Merging is what freed those sections to sit in bands rather than each taking the whole column.",
+   "Confirm the wording. I chose it; you have not seen it before this."],
+  ["Whether a page should carry a bolder signature moment",
+   "Each page has one dominant form: the district strip, the take-home figure, the kept-per-$100 plot, the rank slope. Your rule asks for two or three crafted moments per page, and most pages have one.",
+   "This is the one place I deliberately did nothing, because inventing a bold treatment is what produced the work you rejected. Tell me the direction and I will build it; I will not guess it."],
+];
+
 const KNOWN = [
   "Two wrong numbers were found this session by rendering these pages for cities that are not London, which nothing had done before. A trade page headline read $0 where the figure simply is not held, and an honesty tag was leaking an internal token to readers. Both were on four of six non-London trade pages and neither was ever on London, which is exactly why neither was seen.",
   "One thing is yours to call rather than mine. The city masthead leads with customer income, and the six quick reads name customer income again 650px below it. The masthead gives the figure and the quick read gives the position among 252 cities, which is arguably complementary and arguably one metric twice. I have left it as it is.",
@@ -88,6 +111,7 @@ const html = `<!doctype html>
   th, td { text-align:left; padding:10px 14px; border-bottom:1px solid #efeae6; font-size:14px; }
   th { font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:#8c8c8a; font-weight:600; }
   tr:last-child td { border-bottom:0; }
+  table td:first-child { font-weight:600; width: 22%; }
   td.n { text-align:right; font-variant-numeric: tabular-nums; white-space:nowrap; }
   td.was { color:#8c8c8a; }
   td.now { color:#c2410c; font-weight:600; }
@@ -112,6 +136,12 @@ const html = `<!doctype html>
 
   <h2>What these pictures cannot show, and what is still open</h2>
   <ul>${KNOWN.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>
+
+  <h2>Decisions that are yours</h2>
+  <table>
+    <tr><th>The call</th><th>Where it stands</th><th>What I would do</th></tr>
+    ${DECISIONS.map(([a, b2, c]) => `<tr><td>${esc(a)}</td><td>${esc(b2)}</td><td>${esc(c)}</td></tr>`).join("")}
+  </table>
 
   ${cards}
 </div></body></html>`;
