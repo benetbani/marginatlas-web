@@ -645,7 +645,14 @@ function CityPeers({ d }: { d: any }) {
      including the bundled sample. Reproduced in isolation
      (scripts/probe_city_peers_table.mjs): four rows, four measures, and it had
      never once appeared on a page. */
-  const row = (key: string, field: string, label: string, valOf: (r: any) => number | null, unit?: string) => {
+  const row = (
+    key: string,
+    field: string,
+    label: string,
+    valOf: (r: any) => number | null,
+    unit?: string,
+    fmt?: (v: number) => string,
+  ) => {
     if (!has(field)) return;
     const values = Object.fromEntries(rows.map((r) => [r.name, valOf(r)]));
     compareRows.push({
@@ -662,6 +669,7 @@ function CityPeers({ d }: { d: any }) {
         rows.map((r) => {
           const v = values[r.name];
           if (!num(v)) return [r.name, null];
+          if (fmt) return [r.name, fmt(v as number)];
           return [r.name, v === 0 && !r.home ? "same" : signed(v as number)];
         }),
       ),
@@ -686,13 +694,34 @@ function CityPeers({ d }: { d: any }) {
   // income + visitors as home-relative INDEX rows, never raw USD or a raw count (§10).
   if (num(home?.median_income_usd) && (home.median_income_usd as number) > 0)
     row("income", "median_income_usd", "Customer income", (r) => (num(r.median_income_usd) ? Math.round((r.median_income_usd / (home.median_income_usd as number)) * 100) - 100 : null), "pp");
+  /* VISITORS ARE A MULTIPLE, NOT A PERCENTAGE-POINT DIFFERENCE, and the reason is
+     universality (§21) rather than taste. Visitor counts run across orders of
+     magnitude: London 16 million, Cairo 4.5, Lagos 0.1. As a percentage-point
+     difference that produced "+4400" on the Lagos page, which is arithmetically
+     correct and unreadable, and it only ever looked sane on London because
+     London's peers happen to sit within a factor of two. A difference form needs
+     a bounded quantity. A multiple carries any spread and reads the same
+     everywhere: 0.4x, 1.2x, 45x.
+
+     A ZERO IS WITHHELD, NOT DRAWN. Five cities carry exactly 0 in this field, and
+     a city with literally no visitors is an absent measurement rather than a
+     measured nil. It rendered "-100", which told a reader that Dhaka has a
+     hundred percentage points fewer visitors than Lagos. Art direction F6: an
+     unknown is a dash. */
   if (num(home?.visitors_m) && (home.visitors_m as number) > 0)
-    row("vis", "visitors_m", "Visitors", (r) => (num(r.visitors_m) ? Math.round((r.visitors_m / (home.visitors_m as number)) * 100) - 100 : null), "pp");
+    row(
+      "vis",
+      "visitors_m",
+      "Visitors",
+      (r) => (num(r.visitors_m) && r.visitors_m > 0 ? r.visitors_m / (home.visitors_m as number) : null),
+      "x",
+      (v) => `${v.toFixed(1)}x`,
+    );
   if (compareRows.length === 0) return null;
   return (
     <Box>
       <Rail icon="compare" kicker="Peer cities, side by side" sample={sample} />
-      <CompareTable entities={entities} rows={compareRows} caption={`Each shown against ${homeName} at 0; higher is better.`} />
+      <CompareTable entities={entities} rows={compareRows} caption={`Each row is shown against ${homeName}. Higher is better.`} />
     </Box>
   );
 }
