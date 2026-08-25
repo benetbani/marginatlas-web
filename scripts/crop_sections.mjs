@@ -9,7 +9,12 @@
  * Usage:  node scripts/crop_sections.mjs <page> [date]
  *         <page> = cell | city | country | industry | hood | home
  *         PREVIEW_PORT env overrides the default :3000.
- * Needs:  the dev server running. ONE page per invocation.
+ *
+ * NO DEV SERVER NEEDED FOR THE FOUR SPINE PAGES. It reads the built preview file
+ * when one exists and only falls back to localhost when it does not. The founder
+ * has said plainly not to run a dev server for his benefit, and the review loop
+ * asking for one made the whole loop something nobody would run. Set
+ * PREVIEW_PORT to force the server path.
  * Output: E:/atlas/design/crops/<page>/<id>.jpeg + the registry json.
  */
 import { chromium } from "playwright-core";
@@ -55,14 +60,31 @@ function findChrome() {
 const slugify = (s) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40).replace(/-+$/, "");
 
+/* THE BUNDLED BROWSER IS A FALLBACK, NOT AN ERROR. This exited when no system
+   Chrome was installed, which is a machine that can still render perfectly well
+   through playwright's own chromium. Every other script in this repository uses
+   that one. */
 const exe = findChrome();
-if (!exe) { console.error("No Chrome found. Set CHROME_EXE."); process.exit(1); }
-
-const browser = await chromium.launch({ executablePath: exe, headless: true });
+const browser = exe
+  ? await chromium.launch({ executablePath: exe, headless: true })
+  : await chromium.launch({ headless: true });
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 const tab = await ctx.newPage();
-const PORT = process.env.PREVIEW_PORT || "3000";
-await tab.goto(`http://localhost:${PORT}${ROUTES[page]}`, { waitUntil: "networkidle", timeout: 120000 });
+const BUILT = {
+  cell: "docs/loop/artifacts/final-pages/cell-london-restaurants.html",
+  city: "docs/loop/artifacts/final-pages/city-london.html",
+  industry: "docs/loop/artifacts/final-pages/industry-restaurants.html",
+  hood: "docs/loop/artifacts/final-pages/hood-london.html",
+};
+const builtFile = BUILT[page];
+const useBuilt = !process.env.PREVIEW_PORT && builtFile && existsSync(builtFile);
+if (useBuilt) {
+  await tab.goto(`file:///E:/atlas/website/${builtFile}`, { waitUntil: "load", timeout: 120000 });
+  console.log(`  reading the built preview: ${builtFile}`);
+} else {
+  const PORT = process.env.PREVIEW_PORT || "3000";
+  await tab.goto(`http://localhost:${PORT}${ROUTES[page]}`, { waitUntil: "networkidle", timeout: 120000 });
+}
 await tab.waitForSelector("h2", { timeout: 60000 });
 await tab.waitForTimeout(1500); // let streaming + fonts settle
 
