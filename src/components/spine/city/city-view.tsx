@@ -328,8 +328,17 @@ export function CommercialSpace({ d }: { d: any }) {
                      hidden under a grey peer. Paint order only: the sort, and therefore
                      which side each label sits on, is untouched. */
                   <span key={p.name} className={`absolute -translate-x-1/2 ${home ? "z-[1]" : ""}`} style={{ left: `${x}%`, top: "50%" }}>
-                    <span className="block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-white" style={{ background: home ? TERRA : "var(--c-line-strong)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-                    <span className={`absolute left-1/2 flex -translate-x-1/2 items-baseline gap-1 whitespace-nowrap leading-tight ${["bottom-[10px]", "top-[7px]", "bottom-[28px]", "top-[25px]"][slot]}`}>
+                    {/* TWO CITIES AT ONE VALUE LEFT ONE OF THEM WITH NO MARK. London and
+                        Munich both sit at the city level, the home dot paints last and
+                        deliberately so, and it covered Munich completely: the page showed
+                        a label pointing at a dot that belonged to somebody else.
+                        A peer dot is now wider than the home dot, so a peer underneath
+                        shows as a ring around it and a shared position reads as two
+                        cities rather than one. The home dot keeps its colour and its
+                        white separator, which is what makes it the answer, so nothing is
+                        de-emphasised by being the smaller of the two. */}
+                    <span className={`block -translate-y-1/2 rounded-full border-2 border-white ${home ? "h-2.5 w-2.5" : "h-3.5 w-3.5"}`} style={{ background: home ? TERRA : "var(--c-line-strong)", boxShadow: "0 0 0 1px var(--c-border)" }} />
+                    <span className={`absolute left-1/2 flex -translate-x-1/2 items-baseline gap-1 whitespace-nowrap leading-tight ${["bottom-[13px]", "top-[10px]", "bottom-[31px]", "top-[28px]"][slot]}`}>
                       <span className={`text-[length:var(--t-micro)] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
                       <Fig className={`text-[length:var(--t-micro)] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{fmtDelta(p.delta, home)}</Fig>
                     </span>

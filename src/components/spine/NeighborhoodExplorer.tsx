@@ -316,10 +316,17 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
                     {/* selection: a neutral ink ring at the bar tip */}
                     {sel ? (
                       <span
-                        className="absolute top-1/2 h-[13px] w-[13px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"
+                        className="absolute top-1/2 h-[13px] w-[13px] -translate-x-1/2 -translate-y-1/2 rounded-full"
                         style={{
                           left: `clamp(6.5px, ${lighter ? axis + w : axis - w}%, 100% - 6.5px)`,
-                          background: "#1b1b1a", boxShadow: "0 0 0 1px #e3e3e3",
+                          /* A MARK THAT IS NOT DATA MUST NOT LOOK LIKE DATA. This is the
+                             selection marker, and it was a solid ink dot sitting exactly where
+                             a value sits, on a strip whose every other mark IS a value. In a
+                             photograph it reads as a seventh datum on a chart of seven
+                             districts, and nothing anywhere says what it means.
+                             Hollow now: an ink ring around the bar tip, which reads as "this
+                             one is picked" rather than as "here is a number". */
+                          background: "#fff", border: "2px solid #1b1b1a", boxShadow: "0 0 0 1px #e3e3e3",
                           transition: animate ? "left .6s cubic-bezier(.2,.7,.2,1)" : "none",
                         }}
                         aria-hidden

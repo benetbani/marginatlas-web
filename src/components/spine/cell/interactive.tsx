@@ -227,6 +227,16 @@ export function Wages({ d }: { d: any }) {
       <div className="mt-3 space-y-3 border-t border-[var(--c-border)] pt-3">
         {roles.map((r) => {
           const L = (r.low_usd / max) * 100, W = ((r.high_usd - r.low_usd) / max) * 100, M = (r.mid_usd / max) * 100;
+          /* A ROLE PAID ONE FIGURE IS NOT A ROLE WITH NO FIGURES. The kitchen porter
+             row carries a low and a high that are both 24K, which is a real answer:
+             the job pays one rate. Drawn, it collapsed to a bare dot, and a bare dot
+             is exactly what a row with NO range would look like, so honest data and
+             missing data were the same picture.
+             The two end ticks are already drawn at the same point. They were shorter
+             than the dot that sits on them, so the dot hid them. When the range
+             collapses they stand taller than the dot instead, and the mark reads as a
+             range closed to a point rather than as a bracket that failed to draw. */
+          const flat = W <= 0;
           return (
             /* AT PHONE WIDTH THE BRACKET HAD FORTY PIXELS TO LIVE IN, and drew
                as a dot. The row gave a fixed 120 to the role and 56 to the
@@ -241,8 +251,8 @@ export function Wages({ d }: { d: any }) {
               <Fig className="order-2 text-right text-[length:var(--t-body)] text-[var(--c-ink)] sm:order-3">{kUsd(r.mid_usd)}</Fig>
               <div className="order-3 col-span-2 relative h-3.5 sm:order-2 sm:col-span-1" role="img" aria-label={`${r.role} ${kUsd(r.low_usd)} to ${kUsd(r.high_usd)}, typically ${kUsd(r.mid_usd)}`}>
                 <div aria-hidden className="absolute top-1/2 h-px -translate-y-1/2" style={{ left: `${L}%`, width: `${W}%`, background: "var(--chart-4)" }} />
-                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `${L}%`, background: "var(--chart-4)" }} />
-                <div aria-hidden className="absolute top-1/2 h-2 w-px -translate-y-1/2" style={{ left: `calc(${(L + W).toFixed(2)}% - 1px)`, background: "var(--chart-4)" }} />
+                <div aria-hidden className={`absolute top-1/2 w-px -translate-y-1/2 ${flat ? "h-3.5" : "h-2"}`} style={{ left: `${L}%`, background: "var(--chart-4)" }} />
+                <div aria-hidden className={`absolute top-1/2 w-px -translate-y-1/2 ${flat ? "h-3.5" : "h-2"}`} style={{ left: `calc(${(L + W).toFixed(2)}% - 1px)`, background: "var(--chart-4)" }} />
                 <div aria-hidden className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: "var(--chart-4)" }} />
               </div>
             </div>
