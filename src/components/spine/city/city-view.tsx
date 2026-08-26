@@ -321,7 +321,7 @@ export function CommercialSpace({ d }: { d: any }) {
                   the same slots clear each other with room to spare, and the strip
                   gets SHORTER rather than taller, which is the direction this project
                   is meant to move in. */}
-              <div className="relative h-[92px]" role="img" aria-label={`Rent against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta)}`).join(", ")}`}>
+              <div className="relative h-[92px]" role="img" aria-label={`Cost of living against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta, p.home)}`).join(", ")}`}>
               {/* WHICH SIDE A LABEL SITS ON IS DECIDED BY POSITION, NOT BY LIST
                   ORDER. It used to alternate on the index, so two peers close in
                   value but two apart in the list both landed above the axis and

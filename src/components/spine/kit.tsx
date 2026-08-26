@@ -578,7 +578,21 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
      card. The same fault, and the same fix, as the break-even marker. */
   const anchor = (p: number) => (p < 14 ? "0%" : p > 86 ? "-100%" : "-50%");
   return (
-    <div className="space-y-3.5">{rows.map(([label, pos, word, sub]) => (
+    /* THE KEY ARRIVES BEFORE THE VALUES IT EXPLAINS, not after them. The two ends
+       of this scale, which are the only thing telling a reader which direction is
+       good, were printed UNDER four rows of readings. A reader met four marks on
+       four unlabelled tracks, worked out nothing, reached the bottom, and then had
+       to go back up and read them again knowing what the sides meant.
+       A chart's key is furniture and stays quiet, but quiet is about weight, not
+       about order. */
+    <div className="space-y-3.5">
+      {endLabels ? (
+        <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
+          <span />
+          <div className="flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
+        </div>
+      ) : null}
+      {rows.map(([label, pos, word, sub]) => (
       <div key={label} className="hov -mx-2 grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 rounded-md px-2 py-1.5 sm:grid-cols-[150px_1fr]">
         <span className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</span> : null}</span>
         <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: TRACK }}>
@@ -591,12 +605,6 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
           <span className="fig absolute -top-5 whitespace-nowrap text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%`, transform: `translateX(${anchor(pos)})` }}>{word}</span>
         </div>
       </div>))}
-      {endLabels ? (
-        <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
-          <span />
-          <div className="flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
-        </div>
-      ) : null}
     </div>
   );
 }
