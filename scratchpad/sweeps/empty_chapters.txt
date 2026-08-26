@@ -1,0 +1,21 @@
+
+  15 real pages rendered, 55 chapter headings between them
+  4 with NOTHING under them
+
+    EMPTY  city      New York               The next move
+    EMPTY  city      Mumbai                 The next move
+    EMPTY  city      Lagos                  The next move
+    EMPTY  city      Sydney                 The next move
+
+  7 carrying under 80 characters, which is thin but not empty
+
+      67c  city      Tokyo                  Who buys, and when
+      67c  city      New York               Who buys, and when
+      67c  city      São Paulo              Who buys, and when
+      68c  city      Berlin                 Who buys, and when
+      67c  city      Mumbai                 Who buys, and when
+      67c  city      Lagos                  Who buys, and when
+      67c  city      Sydney                 Who buys, and when
+
+  Calibration passed: all four hand-confirmed empty chapters are in the list.
+

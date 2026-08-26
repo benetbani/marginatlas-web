@@ -1,0 +1,10 @@
+
+  71 drawing(s) with a fixed viewBox across the components
+  51 of them are icon-sized and are meant to scale with their type
+  1 are full-width AND carry a fixed height, so only the scale stretches
+  0 are full-width with NO fixed height, so the whole drawing stretches
+
+
+  A drawing that carries a measurement should not scale its own geometry.
+  A decorative one may. Open each.
+

@@ -1,0 +1,29 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-cp\\CP-320.jpeg",
+    "seconds": 5.7,
+    "waitedFor": "n/a",
+    "height": 4719,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 480,
+    "file": "scratchpad\\shots-cp\\CP-480.jpeg",
+    "seconds": 1.9,
+    "waitedFor": "n/a",
+    "height": 3965,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-cp\\CP-760.jpeg",
+    "seconds": 1.9,
+    "waitedFor": "n/a",
+    "height": 2945,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

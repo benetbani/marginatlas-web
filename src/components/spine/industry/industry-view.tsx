@@ -404,13 +404,20 @@ export function MoneySplit({ d }: { d: any }) {
           ];
           const cell = (b: { label: string; pct: number; sub?: string }) => (
             <>
-              <span className="font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{b.label} <Fig className="text-[var(--c-ink)]">{b.pct}%</Fig></span>
+              <span className="whitespace-nowrap font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{b.label} <Fig className="text-[var(--c-ink)]">{b.pct}%</Fig></span>
               {b.sub ? <span className="mt-0.5 block leading-tight text-[var(--c-muted)]">{b.sub}</span> : null}
             </>
           );
           return (
             <>
-              <div className="mt-4 hidden gap-1 text-[length:var(--t-micro)] sm:grid sm:grid-cols-[var(--vc)_var(--fc)_var(--kc)]" style={{ ["--vc" as any]: `${variablePct}fr`, ["--fc" as any]: `${fixedPct}fr`, ["--kc" as any]: `${keptPct}fr` }}>
+              <div /* MINMAX, SO A COLUMN NEVER GETS NARROWER THAN ITS OWN LABEL. The tracks
+                     are proportional to the values, which is the point of the bracket, but
+                     a 3fr track against a 90fr one is far too narrow to hold the words
+                     FIXED 3% on one line. So two of the three labels wrapped and one did
+                     not, and the row showed the same kind of information in two different
+                     arrangements. Each track now starts at the width its text needs and
+                     shares what is left in proportion. */
+                className="mt-4 hidden gap-1 text-[length:var(--t-micro)] sm:grid sm:grid-cols-[minmax(min-content,var(--vc))_minmax(min-content,var(--fc))_minmax(min-content,var(--kc))]" style={{ ["--vc" as any]: `${variablePct}fr`, ["--fc" as any]: `${fixedPct}fr`, ["--kc" as any]: `${keptPct}fr` }}>
                 {bracket.map((b) => <div key={b.label} className="border-t border-[var(--c-line-strong)] pt-1">{cell(b)}</div>)}
               </div>
               <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[length:var(--t-micro)] sm:hidden">
@@ -507,7 +514,20 @@ export function Operator({ d }: { d: any }) {
   const o = d.operator ?? {};
   const facts: Array<[string, string]> = [];
   if (typeof o.capital_to_open_usd === "number") facts.push([money(o.capital_to_open_usd), "to open"]);
-  if (typeof o.survival_1yr_pct === "number") facts.push([`${o.survival_1yr_pct}%`, "survive yr 1"]);
+  /* THE ONE-YEAR SURVIVAL FIGURE IS NOT SHOWN HERE ANY MORE, because this page
+     already printed it twice and drew it a third time. It reads as "89% survive
+     yr 1" on this scorecard, as the refutation of "most fail within a year" in
+     the myths card, and as the first point of the five-year curve. Three sections
+     of one page carrying one number, and the scorecard is the only one of the
+     three that does nothing with it: the myths card uses it to break a claim, and
+     the curve needs it to have a curve at all.
+     NOTHING TAKES ITS PLACE, and that was checked rather than assumed. The
+     adapter also carries what the owner keeps, which the page prints in the myths
+     card, in the close, and in the hundred-dollar split; and the five-year figure
+     is already the label on the curve. Every candidate neighbour was itself a
+     repeat, so a second fact here would only move the duplication rather than end
+     it. The card states the one thing on it that appears nowhere else. */
+  void o.survival_1yr_pct;
   if (typeof o.sale_multiple_low === "number" && typeof o.sale_multiple_high === "number") {
     facts.push([`x${o.sale_multiple_low}-${o.sale_multiple_high}`, "profit at sale"]);
   }
@@ -515,10 +535,15 @@ export function Operator({ d }: { d: any }) {
   if (facts.length === 0) return null;
   const factCols = facts.length >= 3 ? "grid-cols-3" : facts.length === 2 ? "grid-cols-2" : "grid-cols-1";
   return (
-    <Box>
+    <Box {...(facts.length === 1 ? { "data-lean": "1" } : {})}>
       <Rail icon="worked-example" kicker="The typical operator" verdict={o.verdict} sample />
       <div className={`grid ${factCols} divide-x divide-[var(--c-border)] border-t border-[var(--c-border)] pt-3`}>
-        {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{val}</Fig><div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
+        {/* A SCORECARD OF ONE IS NOT A SCORECARD, IT IS AN ANSWER. Three facts side by
+            side share a size because they are peers being compared. When only one
+            survives, that size makes the card look like a scorecard with two cells
+            missing, so the single fact takes answer size and the card reads as what
+            it now is: one figure and what it means. */}
+        {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className={`${facts.length === 1 ? "text-[length:var(--t-focal)] leading-none" : "text-[length:var(--t-sub)]"} text-[var(--c-ink)]`}>{val}</Fig><div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
       </div>
     </Box>
   );

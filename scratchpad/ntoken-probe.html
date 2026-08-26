@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Undefined token probe</title>
+<style>
+  body{font:14px/1.6 system-ui;margin:24px;background:#fafaf9;color:#1b1b1a}
+  /* The tokens exist ONLY inside this scope, exactly as the spine stylesheet
+     declares them: every selector in that file sits under .av2 and there is no
+     :root block at all. */
+  .av2{ --n3:#9a9a9e; --n5:#dededf; --terra:#fb8469; }
+  .row{display:grid;grid-template-columns:110px 1fr 52px;gap:12px;align-items:center;margin:8px 0}
+  .lab{font-size:12px;color:#565654}
+  .barwrap{position:relative;display:block;height:16px}
+  .track{position:absolute;top:0;bottom:0;width:100%;border-radius:2px;background:var(--n5)}
+  .fill{position:absolute;top:0;bottom:0;left:0;border-radius:2px}
+  .fig{text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums}
+  .card{background:#fff;border:1px solid #e7e5e3;border-radius:12px;padding:16px;width:420px;margin:8px 0 18px}
+  h2{font-size:14px;font-weight:500;margin:20px 0 4px}
+  .out{font:12px/1.5 ui-monospace,monospace;white-space:pre;color:#57575b}
+</style>
+
+<h1 style="font-size:18px;font-weight:500">What does an undefined token paint?</h1>
+<p style="max-width:70ch;color:#57575b">The same three bars twice. The first card sits
+inside the scope that declares the greys. The second does not, which is where the live
+cell page renders.</p>
+
+<h2>Inside the scope that declares them</h2>
+<div class="av2"><div class="card" id="inside"></div></div>
+
+<h2>Outside it, which is the live page</h2>
+<div class="card" id="outside"></div>
+
+<h2 style="margin-top:26px">Computed backgrounds, read from the browser</h2>
+<div class="out" id="out"></div>
+
+<script>
+  const ITEMS = [["Fit-out", 82, "$164K"], ["Equipment", 21, "$42K"], ["Deposit", 9, "$18K"]];
+  function build(el) {
+    ITEMS.forEach(([name, pct, money], i) => {
+      const row = document.createElement("div"); row.className = "row";
+      row.innerHTML =
+        '<span class="lab">' + name + '</span>' +
+        '<span class="barwrap"><span class="track"></span>' +
+        '<span class="fill" style="width:' + pct + '%;background:' +
+          (i === 0 ? "var(--terra)" : "var(--n3)") + '"></span></span>' +
+        '<span class="fig">' + money + '</span>';
+      el.appendChild(row);
+    });
+  }
+  build(document.getElementById("inside"));
+  build(document.getElementById("outside"));
+
+  requestAnimationFrame(() => {
+    const lines = [];
+    for (const which of ["inside", "outside"]) {
+      const card = document.getElementById(which);
+      const track = card.querySelector(".track");
+      const fills = card.querySelectorAll(".fill");
+      const cs = (n) => getComputedStyle(n).backgroundColor;
+      lines.push("  " + which.toUpperCase());
+      lines.push("    track  background: " + cs(track));
+      lines.push("    bar 1  background: " + cs(fills[0]) + "   (terracotta, declared in both)");
+      lines.push("    bar 2  background: " + cs(fills[1]));
+      lines.push("    bar 3  background: " + cs(fills[2]));
+      const invisible = cs(track) === "rgba(0, 0, 0, 0)";
+      lines.push("    verdict: " + (invisible ? "TRACK IS TRANSPARENT. The bars do not exist." : "drawn"));
+      lines.push("");
+    }
+    document.getElementById("out").textContent = lines.join("\n");
+  });
+</script>

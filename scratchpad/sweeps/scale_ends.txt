@@ -1,0 +1,28 @@
+
+  15 file(s) place a centred mark by percentage with NO clamp within reach of it
+
+     1 of  1 placement(s) unprotected   src/components/kit/charts/FootfallGrid.tsx
+     2 of  2 placement(s) unprotected   src/components/kit/charts/ScoreBand.tsx
+     1 of  2 placement(s) unprotected   src/components/kit/charts/ThresholdGauge.tsx
+     1 of  1 placement(s) unprotected   src/components/kit/controls/Slider.tsx
+     2 of  2 placement(s) unprotected   src/components/kit/RangeStrip.tsx
+     3 of  3 placement(s) unprotected   src/components/spine/cell/cell-view.tsx
+     3 of  3 placement(s) unprotected   src/components/spine/cell/interactive.tsx
+     2 of  2 placement(s) unprotected   src/components/spine/cell/money-chapter.tsx
+     1 of  2 placement(s) unprotected   src/components/spine/city/chapters.tsx
+     1 of  1 placement(s) unprotected   src/components/spine/city/city-view.tsx
+     2 of  2 placement(s) unprotected   src/components/spine/city/where-to-trade.tsx
+     5 of  5 placement(s) unprotected   src/components/spine/industry/forms.tsx
+     2 of  2 placement(s) unprotected   src/components/spine/industry/industry-view.tsx
+     8 of  9 placement(s) unprotected   src/components/spine/kit.tsx
+     1 of  3 placement(s) unprotected   src/components/spine/NeighborhoodExplorer.tsx
+
+  3 file(s) do the same and have a clamp beside every placement
+
+     1 placement(s)   src/components/cities/CitySignaturePanel.tsx
+     1 placement(s)   src/components/kit/MoneyGoesBreakdown.tsx
+     2 placement(s)   src/components/spine/kit-index.tsx
+
+  This reports a SHAPE, not a defect: a scale whose values never reach an end
+  is safe without a clamp. Open each and check what its data can actually do.
+

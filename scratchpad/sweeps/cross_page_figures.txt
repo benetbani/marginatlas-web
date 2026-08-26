@@ -1,0 +1,15 @@
+
+  15 pages rendered.
+  2 place(s) described by two or more pages, which is the only
+  situation in which a like-for-like comparison exists at all:
+    london       city/London, cell/london/restaurants, cell/london/hair-salons, hood/london
+    new-york     city/New York, cell/new-york/restaurants
+
+  0 place-level claim(s) that DISAGREE between two pages about the same place
+  0 that appear on two such pages and AGREE
+  8 where fewer than two pages print it, so nothing could be compared
+
+  Read those three together. A zero on the first line means nothing on its own:
+  when the third is large, the claims simply never meet, and that is the more
+  likely reading on this site because half its sections reach no reader.
+

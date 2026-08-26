@@ -1,0 +1,29 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-inc\\INC-320.jpeg",
+    "seconds": 2,
+    "waitedFor": "n/a",
+    "height": 3534,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 480,
+    "file": "scratchpad\\shots-inc\\INC-480.jpeg",
+    "seconds": 1.6,
+    "waitedFor": "n/a",
+    "height": 2819,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-inc\\INC-760.jpeg",
+    "seconds": 2,
+    "waitedFor": "n/a",
+    "height": 2501,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

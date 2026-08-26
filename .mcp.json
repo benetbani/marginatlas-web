@@ -6,6 +6,12 @@
         "shadcn@latest",
         "mcp"
       ]
+    },
+    "context-mode": {
+      "command": "node",
+      "args": [
+        "E:\\Others\\context-mode\\context-mode-main\\start.mjs"
+      ]
     }
   }
 }

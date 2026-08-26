@@ -1,0 +1,155 @@
+
+> marginatlas@0.1.0 prebuild
+> npx tsx scripts/prebuild_all.ts --no-bail
+
+=== prebuild_all  (116 gates, concurrency=4) ===
+
+(node:4292) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ✓ taxonomy                     3.8s
+  ✓ cell-lattice                 3.9s
+  ✓ no-source-agencies           4.7s
+  ✓ no-em-dashes                 4.8s
+  ✓ derived-accents              4.0s
+  ✓ no-scaling-drawings          3.8s
+  ✓ scale-end-clamps             4.4s
+  ✓ spine-css-fresh              4.4s
+  ✓ glyphs-fresh                 4.8s
+  ✓ cell-data                    4.8s
+  ✓ no-fixture-in-routes         4.3s
+  ✓ banned-vocabulary            6.2s
+  ✓ export-columns               3.6s
+  ✓ dead-anchors                 4.4s
+  ✓ population-mix               3.5s
+  ✓ district-wealth              4.2s
+  ✓ district-mix                 4.9s
+  ✓ subtypes                     4.9s
+  ✓ district-geometry            4.7s
+  ✓ token-contrast               3.6s
+  ✓ no-hardcoded-hex             5.4s
+  ✓ render-guards                3.9s
+  ✓ dead-links                   4.5s
+  ✓ deepening                    4.7s
+  ✓ monetization-coverage        5.2s
+  ✗ no-internal-notes            6.6s
+  ✓ v34-research-rules           8.6s
+  ✓ no-slot-counting             6.7s
+  ✓ page-has-h1                  7.7s
+  ✓ no-dev-links                 5.6s
+  ✓ api-endpoints-exist          5.9s
+  ✓ industry-refs                5.4s
+  ✓ no-hardcoded-place           5.5s
+  ✓ no-district-as-trade         5.8s
+  ✓ retired-claims               5.2s
+  ✓ no-stock-imagery             5.3s
+  ✓ no-cream                     4.3s
+  ✓ take-home-identity           3.9s
+  ✓ token-steps                  4.0s
+  ✓ no-self-referential-css-vars 4.0s
+  ✓ single-gate-chain            3.9s
+  ✓ a11y-static                  5.2s
+  ✓ strip-comments               4.8s
+  ✓ build-compare                4.7s
+  ✓ scope-rules                  4.2s
+  ✓ counts-fresh                 8.3s
+  ✓ retired-activities           4.8s
+  ✓ presence-threshold           6.8s
+  ✓ activity-merges              7.0s
+  ✓ table-semantics              4.6s
+  ✓ render-graph                 4.8s
+  ✓ type-ladder                  13.0s
+  ✓ width-discipline             11.5s
+  ✓ all-sizes-blend              4.6s
+  ✓ top-industries-plausibility  4.8s
+  ✓ geo-region-name              4.7s
+  ✓ industry-resolution          4.4s
+  ✓ research-drop-schema         3.4s
+  ✓ search-cascade               3.6s
+  ✓ facts-store                  3.7s
+  ✓ facts-shard                  3.8s
+  ✓ facts-confidence             4.0s
+  ✓ search-params-suspense       4.2s
+  ✓ sitemap-no-redirects         4.6s
+  ✓ main-landmark                4.3s
+  ✓ break-in-for-cell            4.5s
+  ✓ composite                    4.2s
+  ✓ country-board                4.8s
+  ✓ margin-index                 4.7s
+  ✓ recommend-core               5.0s
+  ✓ scores                       5.2s
+  ✓ wave2-flags                  4.6s
+  ✓ robots                       4.2s
+  ✓ route-chrome-contract        4.1s
+  ✓ no-silent-db-errors          4.0s
+  ✓ dev-routes-sealed            4.9s
+  ✓ palette-membership           5.0s
+  ✓ top-level-segments           4.4s
+  ✓ junk-url-rule                4.7s
+  ✓ typography                   4.3s
+  ✓ useless-tiles                4.6s
+  ✓ signature-quality            4.1s
+  ✓ cost-share-invariant         4.1s
+  ✓ key-benchmark                4.1s
+  ✓ turnover-bands               4.0s
+  ✓ wage-source                  4.0s
+  ✓ comparative-voice            5.1s
+  ✓ db-credential                3.7s
+  ✓ fx-freshness                 3.6s
+  ✓ city-wages                   3.5s
+  ✓ industry-medians             3.7s
+  ✓ econ-profile-integrity       3.7s
+  ✓ au-industry-map              3.8s
+  ✓ au-anchor-render             3.5s
+  ✓ layering                     4.1s
+  ✓ section-order                4.4s
+  ✓ page-sections                4.9s
+  ✓ cross-geography-guard        5.3s
+  ✓ bar-budget                   5.2s
+  ✓ no-bold-display              4.7s
+  ✓ registry                     4.2s
+  ✓ banned-patterns              4.9s
+  ✓ no-eyebrow                   4.3s
+  ✓ subsection-icons             4.0s
+  ✓ trade-set                    4.3s
+  ✓ sample-tags                  4.2s
+  ✓ no-parent-repo-reads         4.6s
+  ✓ two-surface-levels           3.5s
+  ✓ page-metadata                3.5s
+  ✓ canonical-urls               3.4s
+  ✓ paragraph-budget             3.2s
+  ✓ spacing-scale                3.2s
+  ✓ v2-scales                    3.5s
+  ✓ stated-totals                5.9s
+  ✓ shared-revenue               3.2s
+  ✓ geo-link-construction (KNOWN DEFECT) 3.4s
+
+=== Summary ===
+  Ran: 116 / 116 gates
+  Wall-clock: 138.4s
+  Passed: 115
+  Failed: 1
+  Deferred: 3 check(s) could not run (cell-lattice:3). These are NOT passes; run the gate directly for the conditions.
+
+=== Failures ===
+
+--- no-internal-notes (exit 1) ---
+
+Error: spawn UNKNOWN
+    at ChildProcess.spawn (node:internal/child_process:440:11)
+    at Object.spawn (node:child_process:797:9)
+    at ensureServiceIsRunning (E:\atlas\website\node_modules\esbuild\lib\main.js:2268:29)
+    at startSyncServiceWorker (E:\atlas\website\node_modules\esbuild\lib\main.js:2474:19)
+    at Object.<anonymous> (E:\atlas\website\node_modules\esbuild\lib\main.js:2515:3)
+    at Module._compile (node:internal/modules/cjs/loader:1873:14)
+    at Object..js (node:internal/modules/cjs/loader:2013:10)
+    at Module.load (node:internal/modules/cjs/loader:1596:32)
+    at Module._load (node:internal/modules/cjs/loader:1398:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19) {
+  errno: -4094,
+  code: 'UNKNOWN',
+  syscall: 'spawn',
+  name: 'TransformError'
+}
+
+Node.js v26.3.0
+

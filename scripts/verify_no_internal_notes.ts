@@ -230,6 +230,36 @@ for (const dir of SCAN_DIRS) {
   }
 }
 
+/* A BLOCK COMMENT INSIDE JSX WITHOUT BRACES IS NOT A COMMENT, IT IS A TEXT NODE.
+   This gate was written to stop working notes reaching a reader, and it missed the
+   most direct way that can happen. On 2026-08-26 five lines of notes were written
+   as a plain block comment between a div and its first child, which is a JSX text
+   child: it typechecked, it linted, all 123 gates passed, and the notes printed on
+   the page. Found by looking at a photograph.
+   The shape is unambiguous: a line opening with a block comment whose previous
+   non-empty line ends in an unclosed-tag bracket. Nothing legitimate looks like
+   that, because a real JSX comment opens with a brace. */
+for (const file of scanned) {
+  if (!file.endsWith(".tsx")) continue;
+  const lines = readFileSync(file, "utf8").split("\n");
+  for (let i = 1; i < lines.length; i++) {
+    const cur = lines[i].trim();
+    if (!cur.startsWith("/*")) continue;
+    let j = i - 1;
+    while (j >= 0 && lines[j].trim() === "") j--;
+    if (j < 0) continue;
+    const prev = lines[j].trimEnd();
+    if (/>$/.test(prev) && !/=>$/.test(prev)) {
+      hits.push({
+        file,
+        line: i + 1,
+        text: cur.slice(0, 80),
+        label: "block comment sitting as a JSX text child, which prints on the page. Wrap it in braces or move it above the markup",
+      });
+    }
+  }
+}
+
 if (hits.length === 0) {
   console.log(
     `[verify_no_internal_notes] PASS: no internal notes leaking into ` +

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "glassmorphism": {
+      "source": "bergside/awesome-design-skills",
+      "sourceType": "github",
+      "skillPath": "skills/glassmorphism/SKILL.md",
+      "computedHash": "a7814af3878a34f67442cdadc09bd79eebf57835b8ebe409f8c2f6b74ab26dc5"
+    }
+  }
+}

@@ -217,8 +217,14 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
       <div className="mb-1 flex items-end justify-between gap-3">
         <SectionLabel as="h3">Ranked by rent load, lightest first</SectionLabel>
         {spread ? (
-          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">
-            the heaviest lease runs <Fig className="text-[var(--c-ink)]">{spread.toFixed(1)}x</Fig> the lightest
+          /* THE FINDING WAS THE FAINTEST THING ON THE CARD. Seven district names
+             at body weight dominated, and the one sentence that says what the strip
+             is FOR , that the heaviest lease runs two and a half times the lightest ,
+             sat in muted micro in a corner. A reader who took only the largest text
+             away took a list of districts and no point. It steps up to body and the
+             multiple carries the weight. */
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
+            the heaviest lease runs <Fig className="font-semibold text-[var(--c-ink)]">{spread.toFixed(1)}x</Fig> the lightest
           </span>
         ) : null}
       </div>
@@ -666,8 +672,14 @@ function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | 
                 </div>
               );
               return (
+                /* NO RANK NUMBER ON A LIST OF ONE. A numbered list holding a single
+                   entry tells a reader there is an order to read, and there is not:
+                   a lone "1" beside a lone trade promises a second place that never
+                   arrives. The rank appears only when there is something to rank. */
                 <li key={t.name} className="flex max-w-none gap-3">
-                  <Fig className={`mt-px w-4 shrink-0 text-[length:var(--t-body)] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
+                  {trades.length > 1 ? (
+                    <Fig className={`mt-px w-4 shrink-0 text-[length:var(--t-body)] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
+                  ) : null}
                   {href ? (
                     <a href={href} className="nerow -mx-1 min-w-0 rounded-md px-1">{body}</a>
                   ) : (
@@ -692,7 +704,11 @@ function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | 
               <SectionLabel>Who is here</SectionLabel>
               <ul className="space-y-1">
                 {demos.map((s) => (
-                  <li key={s} className="flex max-w-none items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]"><span className="h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
+                  /* THE MARKER BELONGS TO THE FIRST LINE. items-center put the dot beside
+                     the MIDDLE line of a three-line entry, so a list of one item read as
+                     a stray dot floating in a paragraph. The shared Bullets form pins
+                     its marker to the first line and this one did not. */
+                  <li key={s} className="flex max-w-none items-start gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]"><span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full" style={{ background: "#8f8f8d" }} />{s}</li>
                 ))}
               </ul>
             </div>
@@ -1191,6 +1207,12 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
       </div>
 
       <HoodCard className="overflow-hidden">
+        {/* A CARD WITH NO TITLE. This opened straight onto its own column header,
+            so the page outline skipped it and a reader scrolling past had nothing
+            to name it by. It is not an invented title: the city page carries the
+            identical form under "Peer cities, side by side", so this is the same
+            naming already in use one altitude up. */}
+        <h3 data-typography="custom" className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Districts, side by side</h3>
 
         {/* DESKTOP / TABLET */}
         <div className="hidden sm:block">

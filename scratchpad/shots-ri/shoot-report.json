@@ -1,0 +1,29 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-ri\\RI-320.jpeg",
+    "seconds": 4.8,
+    "waitedFor": "n/a",
+    "height": 2510,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 480,
+    "file": "scratchpad\\shots-ri\\RI-480.jpeg",
+    "seconds": 1.7,
+    "waitedFor": "n/a",
+    "height": 1905,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-ri\\RI-760.jpeg",
+    "seconds": 1.7,
+    "waitedFor": "n/a",
+    "height": 1506,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

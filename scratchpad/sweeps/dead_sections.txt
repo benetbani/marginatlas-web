@@ -1,0 +1,34 @@
+
+  48 section titles declared in the spine
+  25 reach a reader on at least one of the 15 real pages rendered
+  23 reach NONE of them
+
+    never seen   Across the year                      src/components/spine/industry/industry-view.tsx
+    never seen   Busy months and quiet months         src/components/spine/cell/cell-view.tsx
+    never seen   How business runs here               src/components/spine/city/city-view.tsx
+    never seen   Lowest bar to entry                  src/components/spine/city/city-view.tsx
+    never seen   Next-easiest, and the cost to open   src/components/spine/city/city-view.tsx
+    never seen   Payback window                       src/components/spine/industry/industry-view.tsx
+    never seen   Peer cities, side by side            src/components/spine/city/city-view.tsx
+    never seen   Pick the format you mean             src/components/spine/cell/format-picker.tsx
+    never seen   Quick reads                          src/components/spine/city/city-view.tsx
+    never seen   Related trades in this place         src/components/spine/cell/cell-view.tsx
+    never seen   Rent against income                  src/components/spine/city/chapters.tsx
+    never seen   The hardest                          src/components/spine/atlas-index.tsx
+    never seen   The lease terms                      src/components/spine/city/city-view.tsx
+    never seen   The rent, city by city               src/components/spine/industry/where-pays.tsx
+    never seen   The spending pool                    src/components/spine/city/city-view.tsx
+    never seen   The surprising one                   src/components/spine/atlas-index.tsx
+    never seen   What locals know                     src/components/spine/city/city-view.tsx
+    never seen   When a day starts paying             src/components/spine/industry/industry-view.tsx
+    never seen   When the week fills up               src/components/spine/cell/cell-view.tsx
+    never seen   Where the risks sit                  src/components/spine/city/city-view.tsx
+    never seen   Who comes in, and how                src/components/spine/cell/cell-view.tsx
+    never seen   Who this suits                       src/components/spine/cell/cell-view.tsx
+    never seen   Your own living costs                src/components/spine/city/chapters.tsx
+
+  Calibration passed: both hand-confirmed dead sections are in the list.
+
+  Each is a CANDIDATE. This cannot tell a section that never renders from one
+  this sample of entities does not happen to trigger. Open each before acting.
+

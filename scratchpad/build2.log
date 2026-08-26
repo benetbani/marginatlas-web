@@ -1,0 +1,487 @@
+
+> marginatlas@0.1.0 prebuild
+> npx tsx scripts/prebuild_all.ts --no-bail
+
+=== prebuild_all  (116 gates, concurrency=4) ===
+
+(node:5436) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ✓ taxonomy                     1.9s
+  ✓ cell-lattice                 2.0s
+  ✓ no-source-agencies           2.5s
+  ✓ no-em-dashes                 2.5s
+  ✓ derived-accents              1.9s
+  ✓ no-scaling-drawings          2.0s
+  ✓ scale-end-clamps             2.0s
+  ✓ spine-css-fresh              2.2s
+  ✓ glyphs-fresh                 1.9s
+  ✓ cell-data                    1.9s
+  ✓ no-fixture-in-routes         1.9s
+  ✓ banned-vocabulary            2.8s
+  ✓ export-columns               1.8s
+  ✓ dead-anchors                 2.1s
+  ✓ population-mix               1.9s
+  ✓ district-wealth              1.9s
+  ✓ district-mix                 2.0s
+  ✓ subtypes                     2.1s
+  ✓ district-geometry            2.2s
+  ✓ no-hardcoded-hex             2.3s
+  ✓ token-contrast               2.0s
+  ✓ dead-links                   2.8s
+  ✓ render-guards                2.4s
+  ✓ deepening                    2.3s
+  ✓ monetization-coverage        2.6s
+  ✓ v34-research-rules           2.8s
+  ✓ no-slot-counting             2.4s
+  ✓ page-has-h1                  2.5s
+  ✓ no-dev-links                 2.4s
+  ✓ api-endpoints-exist          2.6s
+  ✓ no-internal-notes            5.7s
+  ✓ industry-refs                2.8s
+  ✓ no-hardcoded-place           2.6s
+  ✓ no-district-as-trade         2.7s
+  ✓ retired-claims               2.6s
+  ✓ no-stock-imagery             3.0s
+  ✓ no-cream                     3.0s
+  ✓ token-steps                  3.2s
+  ✓ take-home-identity           3.3s
+  ✓ no-self-referential-css-vars 3.2s
+  ✓ single-gate-chain            2.7s
+  ✓ a11y-static                  3.8s
+  ✓ strip-comments               2.6s
+  ✓ build-compare                2.3s
+  ✓ counts-fresh                 5.0s
+  ✓ scope-rules                  2.4s
+  ✓ retired-activities           2.3s
+  ✓ presence-threshold           2.1s
+  ✓ activity-merges              2.1s
+  ✓ table-semantics              3.1s
+  ✓ render-graph                 3.1s
+  ✓ width-discipline             6.1s
+  ✓ type-ladder                  7.3s
+  ✓ all-sizes-blend              3.0s
+  ✓ top-industries-plausibility  3.1s
+  ✓ geo-region-name              2.8s
+  ✓ industry-resolution          2.8s
+  ✓ search-cascade               2.6s
+  ✓ research-drop-schema         2.5s
+  ✓ facts-store                  2.9s
+  ✓ facts-shard                  2.8s
+  ✓ facts-confidence             2.9s
+  ✓ search-params-suspense       3.1s
+  ✓ sitemap-no-redirects         3.2s
+  ✓ main-landmark                3.2s
+  ✓ break-in-for-cell            3.4s
+  ✓ composite                    3.3s
+  ✓ margin-index                 2.9s
+  ✓ country-board                3.3s
+  ✓ recommend-core               3.0s
+  ✓ scores                       3.0s
+  ✓ wave2-flags                  3.1s
+  ✓ robots                       3.0s
+  ✓ route-chrome-contract        2.8s
+  ✓ no-silent-db-errors          2.8s
+  ✓ dev-routes-sealed            3.9s
+  ✓ palette-membership           3.8s
+  ✓ top-level-segments           3.5s
+  ✓ junk-url-rule                3.7s
+  ✓ signature-quality            3.1s
+  ✓ useless-tiles                3.5s
+  ✓ typography                   3.4s
+  ✓ cost-share-invariant         3.0s
+  ✓ key-benchmark                2.8s
+  ✓ wage-source                  2.7s
+  ✓ turnover-bands               2.7s
+  ✓ comparative-voice            3.3s
+  ✓ db-credential                2.7s
+  ✓ fx-freshness                 2.9s
+  ✓ city-wages                   2.9s
+  ✓ industry-medians             2.9s
+  ✓ econ-profile-integrity       3.1s
+  ✓ au-anchor-render             3.0s
+  ✓ au-industry-map              3.1s
+  ✓ layering                     3.1s
+  ✓ section-order                2.8s
+  ✓ page-sections                3.2s
+  ✓ cross-geography-guard        3.4s
+  ✓ bar-budget                   2.9s
+  ✓ no-bold-display              2.7s
+  ✓ banned-patterns              2.4s
+  ✓ registry                     2.5s
+  ✓ no-eyebrow                   2.5s
+  ✓ subsection-icons             2.1s
+  ✓ trade-set                    2.1s
+  ✓ sample-tags                  2.0s
+  ✓ no-parent-repo-reads         2.3s
+  ✓ two-surface-levels           1.9s
+  ✓ page-metadata                1.9s
+  ✓ canonical-urls               2.0s
+  ✓ paragraph-budget             1.8s
+  ✓ v2-scales                    2.1s
+  ✓ spacing-scale                2.0s
+  ✓ stated-totals                3.6s
+  ✓ shared-revenue               2.4s
+  ✓ geo-link-construction (KNOWN DEFECT) 2.2s
+
+=== Summary ===
+  Ran: 116 / 116 gates
+  Wall-clock: 82.1s
+  Passed: 116
+  Failed: 0
+  Deferred: 3 check(s) could not run (cell-lattice:3). These are NOT passes; run the gate directly for the conditions.
+
+  GATE: PASS
+
+> marginatlas@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.18
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ⚠ Compiled with warnings in 60s
+
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/index.js
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/index.js
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/index.js
+./node_modules/@prisma/instrumentation/dist/index.js
+./node_modules/@sentry/node/build/cjs/integrations/tracing/prisma.js
+./node_modules/@sentry/node/build/cjs/index.js
+./node_modules/@sentry/nextjs/build/cjs/index.server.js
+./src/app/error.tsx
+
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/node/index.js
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/platform/index.js
+./node_modules/@prisma/instrumentation/node_modules/@opentelemetry/instrumentation/build/esm/index.js
+./node_modules/@prisma/instrumentation/dist/index.js
+./node_modules/@sentry/node/build/cjs/integrations/tracing/prisma.js
+./node_modules/@sentry/node/build/cjs/index.js
+./node_modules/@sentry/nextjs/build/cjs/index.server.js
+
+ ✓ Compiled successfully in 91s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/688) ...
+[cells] across:sg/singapore/restaurants exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/cleaning-services exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/cleaning-services exceeded 4000ms budget, falling back
+[cells] across:us/new-york/management-consulting exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/marketing-design-agencies exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/marketing-design-agencies exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/marketing-design-agencies exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/software-development exceeded 4000ms budget, falling back
+[cells] across:us/new-york/barbershops exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/barbershops exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/barbershops exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/real-estate-agencies exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/restaurants exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/cafes-coffee-shops exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/sports-fitness exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/grocery-stores exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/auto-repair-shops exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/auto-repair-shops exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/dental-practices exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/dental-practices exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/dental-practices exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/veterinary-pet-care exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/veterinary-pet-care exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/veterinary-pet-care exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/hotels-lodging exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/hotels-lodging exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:gb/london/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:fr/paris/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:es/madrid/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:es/barcelona/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:de/berlin/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:jp/tokyo/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:au/sydney/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:ae/dubai/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/craft-breweries-taprooms exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:gb/london/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:fr/paris/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:es/madrid/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:es/barcelona/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:de/berlin/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:jp/tokyo/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:au/sydney/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:ae/dubai/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/custom-apparel-uniforms exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:gb/london/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:fr/paris/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:es/madrid/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:es/barcelona/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:de/berlin/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:jp/tokyo/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:au/sydney/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:ae/dubai/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/coffee-roasters exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:gb/london/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:fr/paris/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:es/madrid/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:es/barcelona/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:de/berlin/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:jp/tokyo/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:au/sydney/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:ae/dubai/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/small-leather-goods exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:gb/london/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:fr/paris/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:es/madrid/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:es/barcelona/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:de/berlin/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:jp/tokyo/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:au/sydney/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:ae/dubai/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/custom-furniture-makers exceeded 4000ms budget, falling back
+[cells] across:us/chicago/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:gb/london/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:es/madrid/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:es/barcelona/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:de/berlin/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:jp/tokyo/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:au/sydney/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:ae/dubai/print-shops-offset-digital exceeded 4000ms budget, falling back
+[cells] across:ca/toronto/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:gb/london/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:fr/paris/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:es/madrid/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:es/barcelona/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:de/berlin/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:jp/tokyo/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:au/sydney/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:ae/dubai/sign-shops-graphics-fab exceeded 4000ms budget, falling back
+[cells] across:us/miami/soap-candle-makers exceeded 4000ms budget, falling back
+[cells] across:es/madrid/soap-candle-makers exceeded 4000ms budget, falling back
+[cells] across:nl/amsterdam/soap-candle-makers exceeded 4000ms budget, falling back
+[cells] across:sg/singapore/soap-candle-makers exceeded 4000ms budget, falling back
+   Generating static pages (172/688) 
+   Generating static pages (344/688) 
+   Generating static pages (516/688) 
+ ✓ Generating static pages (688/688)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                                Size  First Load JS  Revalidate  Expire
+┌ ○ /                                                   8.51 kB         473 kB          1d      1y
+├ ○ /_not-found                                           254 B         182 kB
+├ ● /[country]                                            859 B         700 kB          1d      1y
+├   ├ /us                                                                               1d      1y
+├   ├ /gb                                                                               1d      1y
+├   ├ /de                                                                               1d      1y
+├   └ [+15 more paths]
+├ ● /[country]/[geo]                                      471 B         715 kB
+├ ● /[country]/[geo]/[industry]                         5.43 kB         484 kB          1d      1y
+├   ├ /us/california/software-development                                               1d      1y
+├   ├ /gb/gb/legal-services                                                             1d      1y
+├   ├ /de/de21/metal-fabrication-machine-shops                                          1d      1y
+├   └ [+17 more paths]
+├ ƒ /[country]/[geo]/[industry]/[sub]                    1.3 kB         419 kB
+├ ● /[country]/[geo]/[industry]/buy-or-start              785 B         405 kB          1d      1y
+├   ├ /us/california/software-development/buy-or-start                                  1d      1y
+├   ├ /us/california/restaurants/buy-or-start                                           1d      1y
+├   ├ /us/new-york/restaurants/buy-or-start                                             1d      1y
+├   └ [+17 more paths]
+├ ● /[country]/[geo]/[industry]/opening                   780 B         405 kB          1d      1y
+├   ├ /us/california/software-development/opening                                       1d      1y
+├   ├ /us/california/restaurants/opening                                                1d      1y
+├   ├ /us/new-york/restaurants/opening                                                  1d      1y
+├   └ [+17 more paths]
+├ ƒ /[country]/[geo]/industries                           785 B         405 kB
+├ ƒ /[country]/industries                                 785 B         405 kB
+├ ○ /about-data                                           254 B         182 kB          1d      1y
+├ ○ /account                                            12.4 kB         196 kB
+├ ƒ /admin/anomalies                                      254 B         182 kB
+├ ƒ /admin/data-quality                                   254 B         182 kB
+├ ƒ /admin/review                                         254 B         182 kB
+├ ƒ /api/cell-lookup                                      254 B         182 kB
+├ ƒ /api/cell-snapshot                                    254 B         182 kB
+├ ƒ /api/cell-take-home                                   254 B         182 kB
+├ ƒ /api/contact                                          254 B         182 kB
+├ ƒ /api/correction                                       254 B         182 kB
+├ ƒ /api/export-csv                                       202 B         183 kB
+├ ƒ /api/go                                               254 B         182 kB
+├ ƒ /api/newsletter                                       254 B         182 kB
+├ ○ /api/popular-cell-snapshot                            254 B         182 kB          1h      1y
+├ ƒ /api/saved-cells                                      254 B         182 kB
+├ ƒ /api/stripe/checkout                                  254 B         182 kB
+├ ƒ /api/stripe/webhook                                   254 B         182 kB
+├ ƒ /auth/callback                                        254 B         182 kB
+├ ƒ /auth/signout                                         254 B         182 kB
+├ ○ /blog                                                 202 B         183 kB          1d      1y
+├ ● /blog/[slug]                                          254 B         182 kB          1d      1y
+├   ├ /blog/us-small-business-overview                                                  1d      1y
+├   ├ /blog/uk-overview                                                                 1d      1y
+├   ├ /blog/typical-us-restaurant-earnings                                              1d      1y
+├   └ [+67 more paths]
+├ ○ /browse                                               254 B         182 kB
+├ ○ /calculator                                         7.72 kB         307 kB          1d      1y
+├ ○ /check                                              9.96 kB         212 kB          1d      1y
+├ ○ /cities                                             9.04 kB         246 kB          1d      1y
+├ ● /cities/[slug]                                      3.55 kB         658 kB         12h      1y
+├   ├ /cities/baghdad                                                                  12h      1y
+├   ├ /cities/barcelona                                                                12h      1y
+├   ├ /cities/beijing                                                                  12h      1y
+├   └ [+22 more paths]
+├ ● /cities/[slug]/neighborhoods                          362 B         537 kB         12h      1y
+├   ├ /cities/new-york/neighborhoods                                                   12h      1y
+├   ├ /cities/london/neighborhoods                                                     12h      1y
+├   ├ /cities/paris/neighborhoods                                                      12h      1y
+├   └ [+249 more paths]
+├ ƒ /compare                                            12.9 kB         437 kB
+├ ● /compare/cities/[pair]                                202 B         183 kB         12h      1y
+├   ├ /compare/cities/london-vs-new-york                                               12h      1y
+├   ├ /compare/cities/los-angeles-vs-new-york                                          12h      1y
+├   ├ /compare/cities/san-francisco-vs-shenzhen                                        12h      1y
+├   └ [+17 more paths]
+├ ƒ /contact                                              254 B         182 kB
+├ ○ /cookies                                              254 B         182 kB          1d      1y
+├ ○ /countries                                            202 B         183 kB          1d      1y
+├ ○ /coverage                                             254 B         182 kB          6h      1y
+├ ● /coverage/[iso2]                                      202 B         183 kB          6h      1y
+├   ├ /coverage/au                                                                      6h      1y
+├   ├ /coverage/us                                                                      6h      1y
+├   ├ /coverage/mx                                                                      6h      1y
+├   └ [+27 more paths]
+├ ○ /decide                                              4.3 kB         349 kB          1d      1y
+├ ƒ /decide/[activity]/[city]                             773 B         184 kB
+├ ƒ /decide/go                                            254 B         182 kB
+├ ○ /dev                                                  234 B         182 kB
+├ ○ /dev/brand-glyphs                                     254 B         182 kB
+├ ƒ /dev/calculator                                       254 B         182 kB
+├ ○ /dev/catalogue                                        234 B         182 kB
+├ ○ /dev/cell2                                            692 B         206 kB
+├ ○ /dev/charts                                           740 B         331 kB
+├ ƒ /dev/cities                                           254 B         182 kB
+├ ○ /dev/city2                                          1.82 kB         183 kB
+├ ○ /dev/compare2                                         234 B         182 kB
+├ ○ /dev/country2                                         234 B         182 kB
+├ ○ /dev/decide                                         5.28 kB         233 kB
+├ ○ /dev/decide-v2                                      1.77 kB         229 kB
+├ ○ /dev/distribution-states                            3.22 kB         202 kB
+├ ○ /dev/font-showcase                                    395 B         182 kB
+├ ○ /dev/gold-mine                                        254 B         182 kB
+├ ○ /dev/home3                                            234 B         182 kB
+├ ○ /dev/hood2                                            234 B         182 kB
+├ ○ /dev/index-cities                                     209 B         255 kB
+├ ○ /dev/index-countries                                  209 B         255 kB
+├ ○ /dev/index-extremes                                 1.03 kB         207 kB
+├ ○ /dev/index-world                                      224 B         531 kB
+├ ○ /dev/industries2                                      234 B         182 kB
+├ ○ /dev/industry2                                        234 B         182 kB
+├ ○ /dev/kit                                            4.27 kB         347 kB
+├ ○ /dev/lock-states                                      207 B         186 kB
+├ ○ /dev/london-commercial                                254 B         182 kB
+├ ○ /dev/options/calculator                               22 kB         320 kB
+├ ○ /dev/options/catalog                                  234 B         182 kB
+├ ○ /dev/options/day                                      234 B         182 kB
+├ ○ /dev/options/hero                                     234 B         182 kB
+├ ○ /dev/options/hexagon                                  234 B         182 kB
+├ ○ /dev/options/keep                                     234 B         182 kB
+├ ○ /dev/options/move                                     234 B         182 kB
+├ ○ /dev/options/opening                                  234 B         182 kB
+├ ○ /dev/options/scale                                    234 B         182 kB
+├ ○ /dev/options/trade-hero                               234 B         182 kB
+├ ○ /dev/options/year                                     234 B         182 kB
+├ ○ /dev/pricing2                                         227 B         186 kB
+├ ○ /dev/spine                                            328 B         485 kB
+├ ○ /dev/spine-cell                                       804 B         334 kB
+├ ○ /dev/spine-city                                     2.03 kB         523 kB
+├ ○ /dev/spine-hood                                       206 B         536 kB
+├ ○ /dev/spine-industry                                   653 B         225 kB
+├ ○ /dev/spine-kit                                      6.13 kB         234 kB
+├ ○ /dev/spine2-tracks                                    322 B         182 kB
+├ ○ /dev/trade-sections                                 5.34 kB         312 kB
+├ ○ /dev/v0                                               174 B         182 kB
+├ ○ /dev/variants/v1                                      254 B         182 kB
+├ ○ /dev/variants/v2                                      254 B         182 kB
+├ ○ /dev/variants/v3                                      254 B         182 kB
+├ ○ /dev/variants/v4                                      254 B         182 kB
+├ ○ /dev/variants/v5                                      254 B         182 kB
+├ ○ /dev/waterfall                                        175 B         295 kB
+├ ○ /dev/world2                                           234 B         182 kB          6h      1y
+├ ○ /download/2026-benchmarks                           2.49 kB         184 kB
+├ ƒ /embed/[country]/[geo]/[industry]                     254 B         182 kB
+├ ○ /extremes                                           1.04 kB         193 kB          1d      1y
+├ ○ /faq                                                  254 B         182 kB          1d      1y
+├ ○ /icon                                                 254 B         182 kB
+├ ○ /industries                                           234 B         182 kB          1d      1y
+├ ● /industries/[industry]                              1.61 kB         376 kB          1d      1y
+├   ├ /industries/craft-breweries-taprooms                                              1d      1y
+├   ├ /industries/coffee-roasters                                                       1d      1y
+├   ├ /industries/custom-apparel-uniforms                                               1d      1y
+├   └ [+27 more paths]
+├ ● /industries/[industry]/across                         202 B         183 kB          1d      1y
+├   ├ /industries/craft-breweries-taprooms/across                                       1d      1y
+├   ├ /industries/coffee-roasters/across                                                1d      1y
+├   ├ /industries/custom-apparel-uniforms/across                                        1d      1y
+├   └ [+11 more paths]
+├ ○ /learn                                                202 B         183 kB          1d      1y
+├ ● /learn/[slug]                                         746 B         332 kB          1d      1y
+├   ├ /learn/how-much-does-a-restaurant-make                                            1d      1y
+├   ├ /learn/how-much-does-a-coffee-shop-make                                           1d      1y
+├   ├ /learn/how-much-does-a-bakery-make                                                1d      1y
+├   └ [+51 more paths]
+├ ○ /margin-index                                       1.43 kB         229 kB          1d      1y
+├ ○ /methodology                                          202 B         183 kB          1d      1y
+├ ○ /methodology/key-benchmarks                           254 B         182 kB          1d      1y
+├ ƒ /og/cell                                              202 B         183 kB
+├ ƒ /og/city                                              254 B         182 kB
+├ ƒ /og/country                                           254 B         182 kB
+├ ○ /og/default                                           254 B         182 kB
+├ ƒ /og/industry                                          202 B         183 kB
+├ ○ /pricing                                            2.52 kB         188 kB
+├ ○ /privacy                                              254 B         182 kB          1d      1y
+├ ƒ /random                                               254 B         182 kB
+├ ○ /robots.txt                                           254 B         182 kB
+├ ○ /saved                                              1.05 kB         183 kB
+├ ○ /signin                                             1.57 kB         249 kB
+├ ● /sitemap/[__metadata_id__]                            254 B         182 kB
+├   ├ /sitemap/0.xml
+├   ├ /sitemap/1.xml
+├   ├ /sitemap/2.xml
+├   └ [+5 more paths]
+├ ƒ /status                                               254 B         182 kB
+├ ○ /terms                                                254 B         182 kB          1d      1y
+├ ○ /tools                                                202 B         183 kB          1d      1y
+├ ○ /world                                                234 B         182 kB          6h      1y
+└ ○ /you                                                7.99 kB         351 kB          1d      1y
++ First Load JS shared by all                            182 kB
+  ├ chunks/3434-0159c2fc543f7776.js                      125 kB
+  ├ chunks/4bd1b696-182b6b13bdad92e3.js                 54.2 kB
+  └ other shared chunks (total)                         2.62 kB
+
+
+ƒ Middleware                                             195 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> marginatlas@0.1.0 postbuild
+> npx tsx scripts/verify_edge_function_sizes.ts
+
+✓ No Edge functions detected in build output.

@@ -525,8 +525,19 @@ export function Band({
      the child lands in the larger column. It reads as an asymmetric composition
      rather than a row that lost something, and it is the same two thirds every
      time, which is what makes it read as a choice. */
+  /* A LONE CARD THAT IS ALSO A LEAN ONE TAKES THE NARROW COLUMN, NOT THE WIDE ONE.
+     Two thirds is right for a survivor that still has a table or a chart in it.
+     It is wrong for a card holding one figure: photographed at 1280, "The typical
+     operator" became a 705 by 154 box with a number in its top left corner and
+     three quarters of the box empty, which is the wide-for-no-reason emptiness the
+     splitting exists to prevent, just moved inside the border where it reads as a
+     hole rather than as rhythm.
+     A card may declare itself lean, and then the space falls OUTSIDE its edge,
+     where an uneven band is a composition instead of a gap. The attribute carries
+     higher specificity than the plain only-child rule, so it wins wherever both
+     apply without depending on which order the classes were written in. */
   return (
-    <div className={`mt-8 grid grid-cols-1 items-start gap-8 [&:has(>*:only-child)]:lg:grid-cols-[2fr_1fr] ${cols}`}>
+    <div className={`mt-8 grid grid-cols-1 items-start gap-8 [&:has(>*:only-child)]:lg:grid-cols-[2fr_1fr] [&:has(>*:only-child[data-lean])]:lg:grid-cols-[1fr_2fr] ${cols}`}>
       {children}
     </div>
   );
@@ -1120,16 +1131,33 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
   const pct = (w: number) => Math.max(0, Math.min(100, (w / horizon) * 100));
   const wk = (n: number) => `wk ${Math.round(n)}`;
   const segs: Array<{ label: string; from: number; to: number; color: string }> = [];
-  if (openAt > 0) segs.push({ label: "Fit-out", from: 0, to: openAt, color: "var(--c-line-strong)" });
-  if (breakevenWeek > openAt) segs.push({ label: "Ramp", from: openAt, to: breakevenWeek, color: "var(--c-border)" });
-  if (horizon > breakevenWeek) segs.push({ label: "Profit", from: breakevenWeek, to: horizon, color: TRACK });
+  /* THREE PHASES IN THREE NEAR-IDENTICAL GREYS. Line-strong, border and track
+     differ by a few percent of luminance, so at the size this renders the three
+     phases read as roughly two and the ramp-to-profit boundary vanishes entirely
+     under the break-even marker sitting on it. The phases are a SEQUENCE, so they
+     step from dark to light in the order they happen, which is also the order of
+     how much is at stake. */
+  if (openAt > 0) segs.push({ label: "Fit-out", from: 0, to: openAt, color: "var(--c-ink2)" });
+  if (breakevenWeek > openAt) segs.push({ label: "Ramp", from: openAt, to: breakevenWeek, color: "var(--c-line-strong)" });
+  if (horizon > breakevenWeek) segs.push({ label: "Profit", from: breakevenWeek, to: horizon, color: "var(--c-soft2)" });
   const tickPct = pct(breakevenWeek);
+  /* THE ANSWER OUTRANKS THE LEGEND. This card measured a single type size across
+     its whole height, so "Break-even, week 26", the one thing the section exists
+     to say, carried exactly the same weight as "Fit-out wk 0-wk 16" underneath
+     it. Nothing led, so a reader had to read all of it to find the sentence that
+     mattered. The answer line below is set at body weight; the legend is not.
+     THIS NOTE LIVES HERE, NOT IN THE MARKUP. It was first written inside the JSX
+     as a plain block comment rather than a braced one, which is not a comment at
+     all in JSX, it is a text child, so five lines of working notes were printed
+     on the page for a reader to see. It also sat between the anchor below and the
+     placement it protects, far enough apart that the scale-end gate could no
+     longer see the clamp and counted the placement as unprotected. */
   const tickAnchor = tickPct < 14 ? "0%" : tickPct > 86 ? "-100%" : "-50%";
   const ariaLabel = `${segs.map((s) => `${s.label} ${wk(s.from)} to ${wk(s.to)}`).join(", ")}; break-even ${wk(breakevenWeek)}`;
   return (
     <div>
-      <div className="relative pt-6">
-        <span className="absolute top-0 whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--terra-text)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
+      <div className="relative pt-7">
+        <span className="absolute top-0 whitespace-nowrap text-[length:var(--t-body)] font-semibold text-[var(--terra-text)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
         {/* THE MARKER SITS OUTSIDE THE TRACK, not inside it.
             The track hides its overflow so its segments keep the rounded ends,
             and the break-even dot used to live inside that same box. A dot is

@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>StackBar sum probe</title>
+<style>
+  body{font:14px/1.5 system-ui;margin:24px;background:#fafaf9;color:#1b1b1a}
+  .track{display:flex;height:32px;overflow:hidden;border-radius:8px;border:1px solid #d9d9d7;width:600px;margin:6px 0 2px}
+  .track > div{height:100%}
+  .out{font:12px/1.5 ui-monospace,monospace;white-space:pre;color:#57575b;margin-bottom:18px}
+  h2{font-size:14px;font-weight:500;margin:22px 0 0}
+</style>
+<h1 style="font-size:18px;font-weight:500">Does the $100 bar fill its track?</h1>
+<p style="max-width:70ch;color:#57575b">The exact markup the cell page uses: a flex row, each
+segment given a literal percentage width, the whole thing clipped. Three cases: a split
+that sums to 99, one that sums to 100, one that sums to 101. The kept slice is last and
+terracotta, as the page pins it.</p>
+<div id="cases"></div>
+<script>
+  const CASES = [
+    { total: 99,  parts: [["Cost of goods",33],["Payroll",31],["Rent",9],["Everything else",23],["Kept",3]] },
+    { total: 100, parts: [["Cost of goods",32],["Payroll",30],["Rent",9],["Everything else",21],["Kept",8]] },
+    { total: 101, parts: [["Cost of goods",32],["Payroll",30],["Rent",9],["Everything else",22],["Kept",8]] },
+  ];
+  const GREY = ["#a3a3a1","#b4b4b2","#c4c4c2","#d3d3d1"];
+  const TERRA = "#fb8469";
+  const root = document.getElementById("cases");
+  for (const c of CASES) {
+    const h = document.createElement("h2");
+    h.textContent = "segments sum to " + c.total;
+    root.appendChild(h);
+    const track = document.createElement("div");
+    track.className = "track";
+    c.parts.forEach(([label, pct], i) => {
+      const d = document.createElement("div");
+      d.style.width = pct + "%";
+      d.style.background = i === c.parts.length - 1 ? TERRA : GREY[i % GREY.length];
+      d.dataset.label = label;
+      d.dataset.pct = pct;
+      track.appendChild(d);
+    });
+    root.appendChild(track);
+    const out = document.createElement("div");
+    out.className = "out";
+    root.appendChild(out);
+    c._track = track; c._out = out;
+  }
+  requestAnimationFrame(() => {
+    for (const c of CASES) {
+      const trackW = c._track.clientWidth;
+      let drawn = 0;
+      const lines = [];
+      for (const d of c._track.children) {
+        const w = d.getBoundingClientRect().width;
+        drawn += w;
+        const asked = (Number(d.dataset.pct) / 100) * trackW;
+        lines.push(
+          "  " + d.dataset.label.padEnd(17) +
+          "asked " + asked.toFixed(1).padStart(6) + "px" +
+          "   drawn " + w.toFixed(1).padStart(6) + "px" +
+          (Math.abs(w - asked) > 0.6 ? "   <= SQUEEZED" : "")
+        );
+      }
+      const gap = trackW - drawn;
+      lines.push("  " + "TRACK".padEnd(17) + "        " + trackW.toFixed(1) + "px" +
+                 "   filled " + drawn.toFixed(1) + "px" +
+                 (gap > 0.6 ? "   <= GAP OF " + gap.toFixed(1) + "px AT THE RIGHT END"
+                            : gap < -0.6 ? "   <= OVERFLOWS" : "   <= fills exactly"));
+      c._out.textContent = lines.join("\n");
+    }
+  });
+</script>

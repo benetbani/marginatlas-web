@@ -1,0 +1,20 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-split\\SPLIT-320.jpeg",
+    "seconds": 4.9,
+    "waitedFor": "n/a",
+    "height": 1629,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-split\\SPLIT-760.jpeg",
+    "seconds": 1.6,
+    "waitedFor": "n/a",
+    "height": 1125,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

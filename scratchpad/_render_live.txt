@@ -1,0 +1,556 @@
+components/AtlasFrame.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/AuPrimaryDataBadge.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/AudienceCaveat.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/Breadcrumb.tsx
+   LIVE: /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/CalculatorForm.tsx
+   LIVE: /(site)/calculator
+components/CellFallbackBanner.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/CellWarningChips.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/CityHero.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/ComboField.tsx
+   LIVE: / /(site)/compare /(site)/industries/[industry] /(site)/you
+components/ComparableCitiesRibbon.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/CountryFlag.tsx
+   LIVE: / /(site) /(site)/cities /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /(site)/compare/cities/[pair] /(site)/countries /(site)/decide/[activity]/[city] /(site)/industries/[industry]/across /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries /world
+components/CoverageBadge.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/CurrencySwitcher.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/DecideActivitySelector.tsx
+   LIVE: /(site)/decide/[activity]/[city]
+components/DimensionSwitcher.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/DistributionVisual.tsx
+   NOT LIVE (/dev/distribution-states)
+components/FAQSchema.tsx
+   LIVE: /(site)/faq /[country]/[geo]/[industry]
+components/GlobalSearch.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/HeaderAuth.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/HeaderSearch.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/HowWeKnowThis.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/LegalPage.tsx
+   LIVE: /(site)/contact /(site)/cookies /(site)/faq /(site)/privacy /(site)/terms
+components/LoadingSkeleton.tsx
+   NOT LIVE (/_design)
+components/MarginWaterfall.tsx
+   LIVE: /(site)/industries/[industry]
+components/MobileNav.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/Money.tsx
+   NOT LIVE (/dev/distribution-states)
+components/NavigatorForm.tsx
+   LIVE: /
+components/NeighborhoodOverview.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/RotatingWord.tsx
+   LIVE: /
+components/SiteChrome.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/StructuredData.tsx
+   LIVE: / /[country]/[geo]/[industry]
+components/Tooltip.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/WorldMapPicker.tsx
+   LIVE: /
+components/billing/OnboardingChecklist.tsx
+   LIVE: /(site)/account
+components/billing/PricingFAQ.tsx
+   LIVE: /(site)/pricing
+components/blog/BlogCover.tsx
+   LIVE: / /(site)/blog /(site)/blog/[slug]
+components/board/BoardHero.tsx
+   NOT LIVE (/_design)
+components/board/BreakInScore.tsx
+   LIVE: /[country]/[geo]/[industry]/opening
+components/board/DataSection.tsx
+   NOT LIVE (/_design)
+components/board/FailureCards.tsx
+   NOT LIVE (/_design)
+components/board/InfoDot.tsx
+   LIVE: /[country]/[geo]/[industry]/opening
+components/board/RankRow.tsx
+   LIVE: /(site)/extremes
+components/board/ScoreStrip.tsx
+   NOT LIVE (/_design)
+components/board/ShowMore.tsx
+   NOT LIVE (/_design)
+components/board/StatCard.tsx
+   LIVE: /(site)/cities
+components/board/StatGrid.tsx
+   LIVE: /[country]/[geo]/[industry]/opening
+components/board/charts/CostBar.tsx
+   NOT LIVE (/_design)
+components/board/charts/CrowdingGauge.tsx
+   NOT LIVE (/_design)
+components/board/charts/RentGauge.tsx
+   NOT LIVE (/_design)
+components/board/charts/SpreadBar.tsx
+   LIVE: /(site)/industries/[industry]/across
+components/board/charts/SurvivalCurve.tsx
+   NOT LIVE (/_design)
+components/brand/LogoMark.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/brand/LogoWordmark.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/brand/icons/AtlasIcon.tsx
+   LIVE: / /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /(site)/industries/[industry] /(site)/margin-index /[country] /[country]/[geo] /[country]/[geo]/[industry]
+components/brand/pictograms/AtlasPictogram.tsx
+   LIVE: / /(site)/industries/[industry] /[country]/[geo]/[industry]
+components/brand/spots/AtlasSpot.tsx
+   LIVE: / /(site)/cities/[slug] /(site)/compare /(site)/industries/[industry] /(site)/learn/[slug] /(site)/you /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/buy/BuyVsStartCatches.tsx
+   LIVE: /[country]/[geo]/[industry]/buy-or-start
+components/buy/BuyVsStartCompare.tsx
+   LIVE: /[country]/[geo]/[industry]/buy-or-start
+components/buy/BuyVsStartHero.tsx
+   LIVE: /[country]/[geo]/[industry]/buy-or-start
+components/cells/CellDecisionStack.tsx
+   LIVE: /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/cells/CellRelatedLinks.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/cells/MakeItYoursPanel.tsx
+   LIVE: /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/charts/PercentileStrip.tsx
+   LIVE: /(site)/calculator
+components/cities/BusinessFormationCosts.tsx
+   LIVE: /[country]
+components/cities/CitiesWorldMap.tsx
+   LIVE: /(site)/cities
+components/cities/CityDistrictPicker.tsx
+   LIVE: /(site)/cities/[slug]
+components/cities/CityPeers.tsx
+   LIVE: /(site)/cities/[slug]
+components/cities/CitySearchBox.tsx
+   LIVE: /(site)/cities
+components/cities/CitySignaturePanel.tsx
+   LIVE: /(site)/cities/[slug]
+components/cities/CityWatchAction.tsx
+   LIVE: /(site)/cities/[slug]
+components/cities/NeighborhoodCover.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]/[industry]
+components/city2/CityDistrictMap.tsx
+   NOT LIVE (/dev/city2)
+components/city2/page/CityPage.tsx
+   NOT LIVE (/dev/city2)
+components/city2/page/CityYearStrip.tsx
+   NOT LIVE (/dev/city2)
+components/countries/EasiestToBreakIn.tsx
+   LIVE: /[country] /[country]/[geo]
+components/country2/page/CountryPage.tsx
+   NOT LIVE (/dev/country2)
+components/decide/FounderDecisionLede.tsx
+   LIVE: /(site)/decide
+components/editorial/LongformArticle.tsx
+   LIVE: /(site)/blog/[slug]
+components/extremes/CatalogCollections.tsx
+   LIVE: /(site)/extremes
+components/extremes/LensFilter.tsx
+   LIVE: /(site)/extremes
+components/geo/GeoViabilityLede.tsx
+   LIVE: /[country]/[geo]
+components/home/AtlasLedger.tsx
+   LIVE: /
+components/home/AudienceBand.tsx
+   LIVE: /
+components/home/CatalogPlates.tsx
+   LIVE: /
+components/home/ExampleTiles.tsx
+   LIVE: /
+components/home/HomeNewsletter.tsx
+   LIVE: /
+components/home/NeighborhoodCards.tsx
+   LIVE: /
+components/home/Specimen.tsx
+   LIVE: /
+components/home/StateComparison.tsx
+   LIVE: /
+components/home/UpgradeTeaser.tsx
+   LIVE: /
+components/home/WorldMapClient.tsx
+   LIVE: /
+components/home/WorldMapSection.tsx
+   LIVE: /
+components/home/home2-view.tsx
+   LIVE: /
+components/industries/ActivityPlacePicker.tsx
+   LIVE: /(site)/industries/[industry]
+components/kit/AnswerFirstMasthead.tsx
+   LIVE: /(site)/cities/[slug] /(site)/industries/[industry] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/CountUpNumber.tsx
+   LIVE: /(site)/cities/[slug] /(site)/industries/[industry] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/GoldMineCard.tsx
+   NOT LIVE (/dev/gold-mine)
+components/kit/HonestTakeBox.tsx
+   LIVE: /(site)/cities/[slug] /(site)/compare /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/MakeItYours.tsx
+   LIVE: /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/MoneyGoesBreakdown.tsx
+   LIVE: /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/RangeStrip.tsx
+   LIVE: /(site)/cities/[slug] /(site)/compare /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/SectionEmpty.tsx
+   LIVE: /(site)/cities/[slug] /(site)/compare /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/StickySectionNav.tsx
+   LIVE: /(site)/cities/[slug] /(site)/compare /(site)/industries/[industry] /(site)/learn/[slug] /[country] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/WatchTray.tsx
+   LIVE: / /(site) /(site)/cities/[slug] /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/kit/ZoomControl.tsx
+   LIVE: /(site)/cities/[slug] /(site)/decide/[activity]/[city] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/blocks/CostDrivers.tsx
+   LIVE: /(site)/industries/[industry] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/blocks/OneThing.tsx
+   LIVE: /(site)/cities/[slug] /(site)/industries/[industry] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/blocks/RiskList.tsx
+   LIVE: /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/blocks/StreetCharacter.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/kit/blocks/VsWorld.tsx
+   LIVE: /(site)/cities/[slug]
+components/kit/charts/ComparisonBars.tsx
+   LIVE: /(site)/cities/[slug]
+components/kit/charts/LikeForLikeBars.tsx
+   LIVE: /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/charts/ScoreBand.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/charts/SeverityGlyph.tsx
+   LIVE: /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/charts/ThresholdGauge.tsx
+   LIVE: /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/charts/TierBar.tsx
+   NOT LIVE (/dev/charts)
+components/kit/charts/TimelineRibbon.tsx
+   LIVE: /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/charts/VisitorSplit.tsx
+   LIVE: /(site)/cities/[slug]
+components/kit/charts/helpers.tsx
+   LIVE: /(site)/cities/[slug] /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/comparison.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/kit/controls/OrientationHeader.tsx
+   LIVE: /(site)/cities/[slug] /(site)/decide/[activity]/[city] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/controls/PendingShell.tsx
+   NOT LIVE (/dev/kit)
+components/kit/controls/ResetAnchor.tsx
+   LIVE: /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/controls/Segmented.tsx
+   LIVE: /(site)/decide
+components/kit/controls/Slider.tsx
+   LIVE: /(site)/compare /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/editorial.tsx
+   LIVE: /(site)/cities/[slug] /(site)/industries/[industry] /(site)/learn/[slug] /(site)/you /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/engraved/Compare.tsx
+   LIVE: /[country]
+components/kit/engraved/CountryShape.tsx
+   LIVE: /[country]
+components/kit/engraved/Editorial.tsx
+   LIVE: /[country]
+components/kit/engraved/GroundUnderYou.tsx
+   LIVE: /[country]
+components/kit/engraved/GutCheck.tsx
+   LIVE: /[country]
+components/kit/engraved/HowFarYouReach.tsx
+   LIVE: /[country]
+components/kit/engraved/OpportunityGap.tsx
+   LIVE: /[country]
+components/kit/engraved/SameBusinessAbroad.tsx
+   LIVE: /[country]
+components/kit/engraved/Scorecard.tsx
+   LIVE: /[country]
+components/kit/engraved/Setup.tsx
+   LIVE: /[country]
+components/kit/engraved/SpecialZones.tsx
+   LIVE: /[country]
+components/kit/engraved/TalentReality.tsx
+   LIVE: /[country]
+components/kit/engraved/WhoHasMoney.tsx
+   LIVE: /[country]
+components/kit/engraved/YourLifeHere.tsx
+   LIVE: /[country]
+components/kit/engraved/primitives.tsx
+   LIVE: /[country]
+components/kit/frame/AtlasGutters.tsx
+   LIVE: /
+components/kit/frame/HeroWash.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/kit/frame/NoPlacePhoto.tsx
+   LIVE: /(site)/cookies /(site)/privacy /(site)/terms
+components/kit/furniture.tsx
+   LIVE: /[country] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/index.ts
+   NOT LIVE (/dev/charts)
+components/kit/sections.tsx
+   LIVE: /(site)/industries/[industry] /(site)/learn/[slug] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/kit/tables/AtlasTable.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/kit/tables/ComparisonTable.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/kit/tables/OwnerKeepTable.tsx
+   LIVE: /(site)/cities/[slug]
+components/kit/tables/helpers.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]/[industry]
+components/monetization/BlurredOverlay.tsx
+   NOT LIVE (/_design/monetized /dev/lock-states)
+components/monetization/CheckoutButton.tsx
+   LIVE: /(site)/pricing
+components/monetization/GatedTakeHome.tsx
+   LIVE: /(site)/compare /(site)/industries/[industry]
+components/monetization/GhostBar.tsx
+   NOT LIVE (/_design/monetized /dev/lock-states)
+components/monetization/LockPill.tsx
+   NOT LIVE (/_design/monetized /dev/lock-states)
+components/monetization/MoreDepthBanner.tsx
+   NOT LIVE (/_design/monetized)
+components/monetization/PaywallModalRoot.tsx
+   LIVE: /
+components/monetization/RedactedNumber.tsx
+   LIVE: /(site)/compare /(site)/industries/[industry]
+components/monetization/TakeHomeValue.tsx
+   LIVE: /(site)/industries/[industry]
+components/monetization/TruncatedTease.tsx
+   NOT LIVE (/dev/lock-states)
+components/monetization/events.ts
+   LIVE: /
+components/newsletter/LeadMagnetForm.tsx
+   LIVE: / /(site)/download/2026-benchmarks
+components/newsletter/NewsletterSignupVariants.tsx
+   LIVE: / /(site) /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening /[country]/[geo]/industries /[country]/industries
+components/open/OpeningChecklist.tsx
+   LIVE: /[country]/[geo]/[industry]/opening
+components/open/OpeningComparisons.tsx
+   LIVE: /[country]/[geo]/[industry]/opening
+components/open/OpeningHero.tsx
+   LIVE: /[country]/[geo]/[industry]/opening
+components/open/OpeningPayback.tsx
+   LIVE: /[country]/[geo]/[industry]/opening
+components/sections/CityCharacter.tsx
+   LIVE: /[country]/[geo]
+components/sections/SetupCostBlock.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine/NeighborhoodExplorer.tsx
+   LIVE: /(site)/cities/[slug]/neighborhoods
+components/spine/SpineMap.tsx
+   LIVE: /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /[country] /[country]/[geo]
+components/spine/atlas-index.tsx
+   NOT LIVE (/dev/index-cities /dev/index-countries /dev/index-world)
+components/spine/cell/cell-view.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine/cell/format-picker.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine/cell/interactive.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine/cell/masthead.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine/cell/money-chapter.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine/city/chapters.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]
+components/spine/city/city-view.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]
+components/spine/city/masthead.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]
+components/spine/city/motion.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]
+components/spine/city/where-to-trade.tsx
+   LIVE: /(site)/cities/[slug] /[country]/[geo]
+components/spine/conveyor.tsx
+   LIVE: /[country]
+components/spine/hood/hood-view.tsx
+   LIVE: /(site)/cities/[slug]/neighborhoods
+components/spine/hood/masthead.tsx
+   LIVE: /(site)/cities/[slug]/neighborhoods
+components/spine/industry/forms.tsx
+   LIVE: /(site)/industries/[industry]
+components/spine/industry/industry-view.tsx
+   LIVE: /(site)/industries/[industry]
+components/spine/industry/where-pays.tsx
+   LIVE: /(site)/industries/[industry]
+components/spine/kit-index.tsx
+   LIVE: / /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /(site)/margin-index /[country] /[country]/[geo]
+components/spine/kit.tsx
+   LIVE: / /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /(site)/industries/[industry] /(site)/margin-index /[country] /[country]/[geo] /[country]/[geo]/[industry]
+components/spine/marks.tsx
+   LIVE: / /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /(site)/industries/[industry] /(site)/margin-index /[country] /[country]/[geo] /[country]/[geo]/[industry]
+components/spine/shell.tsx
+   LIVE: / /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /(site)/industries/[industry] /(site)/margin-index /[country] /[country]/[geo] /[country]/[geo]/[industry]
+components/spine2/AxisDots.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Band.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Calc.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/ChartFigure.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/ColSplit.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Ctl.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Defs.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/DivergingBars.tsx
+   NOT LIVE (/dev/options/scale)
+components/spine2/Fig.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/GlyphIcon.tsx
+   LIVE: /[country]/[geo]/[industry] /industries /world
+components/spine2/Hundred.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Late.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Ledger.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Method.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/MonthDeviation.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Myth.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Place.tsx
+   LIVE: /industries /world
+components/spine2/Qa.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Range.tsx
+   NOT LIVE (/dev/catalogue /dev/home3 /dev/spine2-tracks)
+components/spine2/RankBarsV2.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Reading.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Roster.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/RowLattice.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/RulerColumn.tsx
+   NOT LIVE (/dev/city2 /dev/country2)
+components/spine2/SBar.tsx
+   NOT LIVE (/dev/catalogue /dev/country2 /dev/spine2-tracks)
+components/spine2/Scale.tsx
+   NOT LIVE (/dev/spine2-tracks)
+components/spine2/ShrinkBars.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/SiteFooter.tsx
+   LIVE: /industries /world
+components/spine2/StatTiles.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Statblock.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/SwatchLegend.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Take.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/TierPill.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/Tiles.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/TrackBar.tsx
+   NOT LIVE (/dev/spine2-tracks)
+components/spine2/UnitGrid.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/CellPage.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch01Hero.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch02Calculator.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch03Keep.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch04Bill.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch05Day.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch06Money.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch07Floor.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch08Team.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch09Opening.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch10Year.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch11FirstYear.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch12Survival.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch13Cities.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch15Watch.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch17Verdict.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch18Method.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch19Words.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch20Questions.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/Ch21Next.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/ChapterGap.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/ChapterHead.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/spine2/page/store.tsx
+   LIVE: /[country]/[geo]/[industry]
+components/ui/badge.tsx
+   NOT LIVE (/_design)
+components/ui/button.tsx
+   NOT LIVE (/_design)
+components/ui/card.tsx
+   NOT LIVE (/_design)
+components/ui/disclosure.tsx
+   NOT LIVE (/_design)
+components/ui/empty-state.tsx
+   NOT LIVE (/_design)
+components/ui/error-state.tsx
+   NOT LIVE (/_design)
+components/ui/inline-link.tsx
+   NOT LIVE (/_design)
+components/ui/money.tsx
+   NOT LIVE (/_design)
+components/ui/motion/FadeIn.tsx
+   NOT LIVE (/_design)
+components/ui/motion/SlideUp.tsx
+   NOT LIVE (/_design)
+components/ui/motion/Stagger.tsx
+   NOT LIVE (/_design)
+components/ui/number.tsx
+   NOT LIVE (/_design)
+components/ui/page-shell.tsx
+   LIVE: /(site)/calculator
+components/ui/percent.tsx
+   NOT LIVE (/_design)
+components/ui/pill.tsx
+   LIVE: / /(site)/cities/[slug] /(site)/cities/[slug]/neighborhoods /(site)/industries/[industry] /(site)/margin-index /[country] /[country]/[geo] /[country]/[geo]/[industry]
+components/ui/progress-bar.tsx
+   LIVE: /(site)/coverage/[iso2] /(site)/decide/[activity]/[city]
+components/ui/section-eyebrow.tsx
+   LIVE: / /(site)/about-data /(site)/blog /(site)/calculator /(site)/cities /(site)/cities/[slug] /(site)/compare /(site)/contact /(site)/cookies /(site)/decide /(site)/extremes /(site)/faq /(site)/industries/[industry] /(site)/industries/[industry]/across /(site)/learn /(site)/learn/[slug] /(site)/methodology /(site)/pricing /(site)/privacy /(site)/terms /(site)/you /[country] /[country]/[geo] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub] /[country]/[geo]/[industry]/buy-or-start /[country]/[geo]/[industry]/opening
+components/ui/skeleton.tsx
+   NOT LIVE (/_design)
+components/ui/spinner.tsx
+   NOT LIVE (/_design)
+components/ui/stat-row.tsx
+   NOT LIVE (/_design)
+components/ui/tier-dot.tsx
+   LIVE: /(site)/cities/[slug] /(site)/compare /(site)/industries/[industry] /(site)/learn/[slug] /[country] /[country]/[geo]/[industry] /[country]/[geo]/[industry]/[sub]
+components/ui/tooltip.tsx
+   NOT LIVE (/_design)
+components/v2/CityHeroV2.tsx
+   NOT LIVE (/_design/v2-review)
+components/v2/CountryScorecardV2.tsx
+   NOT LIVE (/_design/v2-review)
+components/v2/CoverageHubV2.tsx
+   LIVE: /(site)/coverage
+components/v2/LondonRoadmap.tsx
+   NOT LIVE (/_design/v2-review)

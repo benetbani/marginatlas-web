@@ -1,0 +1,38 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-dem\\POOL-320.jpeg",
+    "seconds": 5,
+    "waitedFor": "n/a",
+    "height": 3363,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 480,
+    "file": "scratchpad\\shots-dem\\POOL-480.jpeg",
+    "seconds": 1.8,
+    "waitedFor": "n/a",
+    "height": 2621,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-dem\\POOL-760.jpeg",
+    "seconds": 1.9,
+    "waitedFor": "n/a",
+    "height": 2114,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 1024,
+    "file": "scratchpad\\shots-dem\\POOL-1024.jpeg",
+    "seconds": 1.9,
+    "waitedFor": "n/a",
+    "height": 1635,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

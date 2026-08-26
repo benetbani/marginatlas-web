@@ -1,0 +1,38 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-space\\SPACE-320.jpeg",
+    "seconds": 4.7,
+    "waitedFor": "n/a",
+    "height": 3758,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 480,
+    "file": "scratchpad\\shots-space\\SPACE-480.jpeg",
+    "seconds": 1.7,
+    "waitedFor": "n/a",
+    "height": 2967,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-space\\SPACE-760.jpeg",
+    "seconds": 1.7,
+    "waitedFor": "n/a",
+    "height": 2601,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 1024,
+    "file": "scratchpad\\shots-space\\SPACE-1024.jpeg",
+    "seconds": 1.8,
+    "waitedFor": "n/a",
+    "height": 1962,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

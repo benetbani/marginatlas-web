@@ -1,0 +1,16 @@
+
+   72 + 28 = 100   correct
+      (today's London)
+   92 +  8 = 100   correct
+      (today's Tokyo)
+   71 + 28 =  99   a 1% GAP of bare card showing through the end of the bar
+      (each rounded down)
+   72 + 29 = 101   1% too much: the last segment is squeezed, so the drawn widths stop matching the printed figures
+      (each rounded up)
+   60 + 25 =  85   a 15% GAP of bare card showing through the end of the bar
+      (a third slice that was dropped upstream)
+
+  The bar draws whatever it is given. A reader sees a whole bar and reads it as
+  a whole, so a bar that is 99% full is a claim about the missing 1% that nobody
+  made.
+

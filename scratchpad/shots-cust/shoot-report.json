@@ -1,0 +1,29 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-cust\\CUST-320.jpeg",
+    "seconds": 1.8,
+    "waitedFor": "n/a",
+    "height": 3508,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 480,
+    "file": "scratchpad\\shots-cust\\CUST-480.jpeg",
+    "seconds": 1.7,
+    "waitedFor": "n/a",
+    "height": 2924,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-cust\\CUST-760.jpeg",
+    "seconds": 1.7,
+    "waitedFor": "n/a",
+    "height": 2832,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

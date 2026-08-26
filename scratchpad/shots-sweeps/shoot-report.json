@@ -1,0 +1,29 @@
+[
+  {
+    "width": 320,
+    "file": "scratchpad\\shots-sweeps\\SWEEP-320.jpeg",
+    "seconds": 5.2,
+    "waitedFor": "n/a",
+    "height": 6325,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 760,
+    "file": "scratchpad\\shots-sweeps\\SWEEP-760.jpeg",
+    "seconds": 1.8,
+    "waitedFor": "n/a",
+    "height": 4985,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  },
+  {
+    "width": 1024,
+    "file": "scratchpad\\shots-sweeps\\SWEEP-1024.jpeg",
+    "seconds": 1.9,
+    "waitedFor": "n/a",
+    "height": 4985,
+    "horizontalOverflow": false,
+    "pageErrors": []
+  }
+]

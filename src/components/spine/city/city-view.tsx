@@ -100,7 +100,15 @@ export function CityVerdict({ d }: { d: any }) {
   // the focal figure and the spread strip; terracotta rides ONLY the answer (§37).
   return (
     <Box>
-      <Head icon="commercial-rent" sample={sample}>The rent, district by district</Head>
+      {/* THE RENT GLYPH APPEARED THREE TIMES ON THIS PAGE: on this card, on the
+          rent-against-income card, and on the chapter opener above them both. An
+          icon that marks three different things marks none of them, and a reader
+          scanning the page for the district read has the same picture pointing at
+          two cards.
+          THIS card is the one that is about districts rather than about rent, so it
+          takes the districts glyph and the rent glyph stays with the ratio card and
+          its chapter. */}
+      <Head icon="district-mix" sample={sample}>The rent, district by district</Head>
       <div className="grid gap-5 md:grid-cols-[1fr_1.5fr] md:items-center">
         <Stat size="focal" accent value={`x${lightest.rent_mult}`} label="the lightest rent load" sub={`in ${lightest.name}`} />
         {/* the spread , a clean neutral three-cell strip, the answer already on the focal */}
@@ -231,7 +239,27 @@ export function CommercialSpace({ d }: { d: any }) {
     }
     return out;
   })();
-  const fmtDelta = (v: number) => (v === 0 ? "0" : `${v > 0 ? "+" : ""}${v}pp`);
+  /* A NIL DIFFERENCE READS "same", AND THE PAGE HAD TWO SPELLINGS FOR IT.
+     The comparison table on this same page prints "same" where a peer matches
+     London, which is what the convention asks: a zero in a column of signed
+     differences reads as a measurement rather than a classification. This plot,
+     twenty-two hundred pixels below it, printed a bare "0" for the same fact. One
+     page, two languages.
+
+     The bare zero also carried no unit while every other value carried pp, so two
+     of the four figures were unitless and two were not.
+
+     The HOME city keeps its "0", because it is the reference showing its own
+     neutral value rather than a difference that happens to be nil, and that is
+     exactly what the table does with it.
+
+     THE UNIT IS NOW NAMED ONCE AND NEVER REPEATED, which is what the table on
+     this same page already does: its own note says index rows carry bare figures
+     with the base named once in the caption. The plot was naming the unit in its
+     heading AND stamping pp on each value, and because a nil difference carries
+     no suffix at all, two of the four figures ended up unitless and two did not.
+     Heading says percentage points; the figures are figures. */
+  const fmtDelta = (v: number, home = false) => (v === 0 ? (home ? "0" : "same") : `${v > 0 ? "+" : ""}${v}`);
   const hasTerms = s.deposit_months != null && s.lease_years_typical != null && s.rent_free_months != null;
   const terms: Array<[string, string]> = hasTerms
     ? [[`${s.deposit_months} mo`, "deposit up front"], [`${s.lease_years_typical}`, "typical lease, years"], [`${s.rent_free_months} mo`, "rent-free fit-out"]]
@@ -270,7 +298,17 @@ export function CommercialSpace({ d }: { d: any }) {
         {hasPeerStrip ? (
           <div className="mt-2 border-t border-[var(--c-border)] pt-3">
             <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Against {d.meta?.city}, in percentage points<InfoTip gloss={`What it costs a person to live in each city, rent included, set against ${d.meta?.city}. A percentage point is the plain gap between two percentages: a peer at -22pp sits 22 points below the ${d.meta?.city} level. It is not the rent on a shop.`} /></div>
-            <div className="relative h-[116px]" role="img" aria-label={`Rent against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta)}`).join(", ")}`}>
+            {/* A NAME OVER ITS FIGURE IS TWO LINES TALL, and the four slots this strip
+                  places labels in are twenty pixels apart, so two labels on the same
+                  side of the axis whose cities sit close together overlapped even
+                  though the placement had chosen different heights for them. Seen in
+                  the picture: "Paris" ran into Munich s value. The side-picking logic
+                  was right; the block it was placing was taller than the gap it had.
+                  THE NAME AND ITS FIGURE NOW SHARE A LINE. That halves the block, so
+                  the same slots clear each other with room to spare, and the strip
+                  gets SHORTER rather than taller, which is the direction this project
+                  is meant to move in. */}
+              <div className="relative h-[92px]" role="img" aria-label={`Rent against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta)}`).join(", ")}`}>
               {/* WHICH SIDE A LABEL SITS ON IS DECIDED BY POSITION, NOT BY LIST
                   ORDER. It used to alternate on the index, so two peers close in
                   value but two apart in the list both landed above the axis and
@@ -291,9 +329,9 @@ export function CommercialSpace({ d }: { d: any }) {
                      which side each label sits on, is untouched. */
                   <span key={p.name} className={`absolute -translate-x-1/2 ${home ? "z-[1]" : ""}`} style={{ left: `${x}%`, top: "50%" }}>
                     <span className="block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-2 border-white" style={{ background: home ? TERRA : "var(--c-line-strong)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-                    <span className={`absolute left-1/2 flex -translate-x-1/2 flex-col items-center whitespace-nowrap leading-tight ${["bottom-[14px]", "top-[9px]", "bottom-[34px]", "top-[29px]"][slot]}`}>
+                    <span className={`absolute left-1/2 flex -translate-x-1/2 items-baseline gap-1 whitespace-nowrap leading-tight ${["bottom-[10px]", "top-[7px]", "bottom-[28px]", "top-[25px]"][slot]}`}>
                       <span className={`text-[length:var(--t-micro)] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
-                      <Fig className={`text-[length:var(--t-micro)] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{fmtDelta(p.delta)}</Fig>
+                      <Fig className={`text-[length:var(--t-micro)] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{fmtDelta(p.delta, home)}</Fig>
                     </span>
                   </span>
                 );
@@ -350,9 +388,15 @@ export function DemandSize({ d }: { d: any }) {
   const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
   // residents = the steady base; visitors = the seasonal, tourism-led slice (founder C7:
   // city seasonality reads as the tourism / commuter mix, never an invented month index).
+  /* THE TWO SEGMENTS WERE NEARLY THE SAME COLOUR. A line-strong against a
+     border tint differ by so little that a 72 to 28 split had no visible
+     boundary: the bar read as one bar. Both are CONTEXT greys, and the
+     convention is that a data mark takes ink and grey is for context, so the
+     larger share , the one the section is about , now carries ink and the
+     other stays quiet. */
   const segs: Array<[string, number, string, string]> = [
-    ["Residents", o.resident_pct, "var(--c-line-strong)", "steady"],
-    ["Visitors", o.visitor_pct, "var(--c-border)", "seasonal"],
+    ["Residents", o.resident_pct, "var(--c-ink2)", "steady"],
+    ["Visitors", o.visitor_pct, "var(--c-soft2)", "seasonal"],
   ];
   const sizeBox = hasSize ? (
     <Box>
@@ -413,11 +457,29 @@ export function DemandSize({ d }: { d: any }) {
     <Box>
       <Head icon="seasonality" sample={sample}>How seasonal it is</Head>
       <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}% steady, visitors ${o.visitor_pct}% seasonal`}>
-        {segs.map(([n, pct, bg]) => <div key={n} className="h-full" style={{ width: `${Math.round((pct / splitTotal) * 10000) / 100}%`, background: bg }} />)}
+        {/* THE FIGURES SIT ON THE BAR, NOT ONLY IN THE KEY. This was the third
+            stacked bar in this vertical and the third different way of labelling
+            one: the trade page put all five figures in its legend, the
+            across-places page put them on the bar, and this one put them in a
+            legend too. A reader who learns how to read one of them should be able
+            to read all three. On the bar is the version that won, because it puts
+            the number inside the length it describes instead of asking the eye to
+            carry a colour from a key back to a shape.
+            THE LEGEND KEEPS THE NAMES AND LOSES THE FIGURES, so the same number is
+            not printed twice on one card. */}
+        {segs.map(([n, pct, bg]) => {
+          const w = Math.round((pct / splitTotal) * 10000) / 100;
+          const onDark = bg === "var(--c-ink2)";
+          return (
+            <div key={n} className="flex h-full items-center justify-center" style={{ width: `${w}%`, background: bg }}>
+              <span className={`fig text-[length:var(--t-micro)] font-semibold ${onDark ? "text-white" : "text-[var(--c-ink)]"}`}>{pct}%</span>
+            </div>
+          );
+        })}
       </div>
       <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
         {segs.map(([n, pct, bg, tag]) => (
-          <span key={n} className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: bg }} /><span className="fig font-semibold text-[var(--c-ink)]">{n} {pct}%</span>, {tag}</span>
+          <span key={n} className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: bg }} /><span className="font-semibold text-[var(--c-ink)]">{n}</span>, {tag}</span>
         ))}
       </div>
     </Box>

@@ -1,0 +1,171 @@
+
+> marginatlas@0.1.0 prebuild
+> npx tsx scripts/prebuild_all.ts --no-bail
+
+=== prebuild_all  (116 gates, concurrency=4) ===
+
+(node:15400) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ✓ taxonomy                     2.8s
+  ✓ cell-lattice                 2.7s
+  ✓ no-source-agencies           3.9s
+  ✓ no-em-dashes                 4.0s
+  ✓ no-scaling-drawings          3.2s
+  ✓ derived-accents              3.3s
+  ✓ scale-end-clamps             3.2s
+  ✓ spine-css-fresh              3.3s
+  ✓ glyphs-fresh                 2.9s
+  ✓ cell-data                    3.0s
+  ✓ no-fixture-in-routes         2.8s
+  ✓ banned-vocabulary            4.3s
+  ✓ export-columns               3.1s
+  ✓ dead-anchors                 3.6s
+  ✓ population-mix               3.4s
+  ✓ district-wealth              3.3s
+  ✓ district-mix                 3.1s
+  ✓ subtypes                     3.1s
+  ✓ district-geometry            3.1s
+  ✓ no-hardcoded-hex             3.3s
+  ✓ token-contrast               2.9s
+  ✓ dead-links                   3.4s
+  ✓ render-guards                3.0s
+  ✓ deepening                    2.8s
+  ✓ monetization-coverage        3.2s
+  ✓ v34-research-rules           3.8s
+  ✓ no-slot-counting             3.6s
+  ✓ page-has-h1                  4.4s
+  ✓ no-dev-links                 7.4s
+  ✓ api-endpoints-exist          8.6s
+  ✓ no-internal-notes            14.7s
+  ✓ industry-refs                8.8s
+  ✓ no-hardcoded-place           9.5s
+  ✓ no-district-as-trade         7.6s
+  ✓ retired-claims               7.1s
+  ✓ no-stock-imagery             6.9s
+  ✓ no-cream                     4.8s
+  ✓ take-home-identity           4.6s
+  ✓ no-self-referential-css-vars 4.2s
+  ✓ token-steps                  4.5s
+  ✓ single-gate-chain            4.3s
+  ✓ a11y-static                  5.8s
+  ✓ strip-comments               5.2s
+  ✓ build-compare                5.5s
+  ✓ counts-fresh                 10.2s
+  ✓ scope-rules                  6.0s
+  ✓ retired-activities           5.7s
+  ✓ activity-merges              5.8s
+  ✓ presence-threshold           5.1s
+  ✓ table-semantics              7.4s
+  ✓ width-discipline             11.7s
+  ✓ render-graph                 7.7s
+  ✓ type-ladder                  14.3s
+  ✓ geo-region-name              5.4s
+  ✓ all-sizes-blend              5.7s
+  ✓ top-industries-plausibility  6.0s
+  ✓ industry-resolution          4.7s
+  ✓ search-cascade               7.6s
+  ✓ facts-store                  7.4s
+  ✓ research-drop-schema         7.8s
+  ✓ facts-shard                  7.7s
+  ✓ sitemap-no-redirects         5.0s
+  ✓ facts-confidence             5.3s
+  ✓ search-params-suspense       5.6s
+  ✓ main-landmark                4.9s
+  ✓ composite                    3.5s
+  ✓ break-in-for-cell            3.7s
+  ✓ country-board                4.0s
+  ✓ margin-index                 3.8s
+  ✓ recommend-core               3.6s
+  ✓ scores                       4.4s
+  ✓ wave2-flags                  4.2s
+  ✓ robots                       4.6s
+  ✓ route-chrome-contract        4.0s
+  ✓ no-silent-db-errors          3.8s
+  ✓ dev-routes-sealed            4.2s
+  ✓ palette-membership           5.6s
+  ✓ top-level-segments           8.4s
+  ✓ junk-url-rule                11.5s
+  ✓ useless-tiles                14.0s
+  ✓ typography                   14.2s
+  ✓ signature-quality            10.2s
+  ✓ cost-share-invariant         8.1s
+  ✓ key-benchmark                6.6s
+  ✓ turnover-bands               5.8s
+  ✓ comparative-voice            6.5s
+  ✓ wage-source                  6.2s
+  ✓ db-credential                5.6s
+  ✓ fx-freshness                 5.6s
+  ✓ city-wages                   5.4s
+  ✓ industry-medians             4.4s
+  ✓ econ-profile-integrity       4.3s
+  ✓ au-industry-map              3.6s
+  ✓ au-anchor-render             3.8s
+  ✓ layering                     4.1s
+  ✓ section-order                3.8s
+  ✗ page-sections                10.8s
+  ✗ cross-geography-guard        11.2s
+  ✗ no-bold-display              10.2s
+  ✗ bar-budget                   11.1s
+  ✗ subsection-icons             2.2s
+  ✗ no-eyebrow                   2.4s
+  ✓ sample-tags                  10.1s
+  ✓ banned-patterns              14.5s
+  ✓ trade-set                    10.7s
+  ✓ registry                     14.5s
+  ✓ two-surface-levels           6.2s
+  ✓ page-metadata                6.2s
+  ✓ canonical-urls               6.2s
+  ✓ no-parent-repo-reads         7.8s
+  ✓ paragraph-budget             4.8s
+  ✓ v2-scales                    5.6s
+  ✓ spacing-scale                5.0s
+  ✓ stated-totals                9.6s
+  ✓ shared-revenue               6.4s
+  ✓ geo-link-construction (KNOWN DEFECT) 7.4s
+
+=== Summary ===
+  Ran: 116 / 116 gates
+  Wall-clock: 176.4s
+  Passed: 110
+  Failed: 6
+  Deferred: 3 check(s) could not run (cell-lattice:3). These are NOT passes; run the gate directly for the conditions.
+
+=== Failures ===
+
+--- page-sections (exit 3221226505) ---
+[low_level_alloc.cc : 584] RAW: Check new_pages != nullptr failed: VirtualAlloc failed
+
+
+--- cross-geography-guard (exit 1) ---
+runtime.schedinit()
+	runtime/proc.go:878 +0xfa fp=0xab70fffaa0 sp=0xab70fffa48 pc=0x7ff68828fe1a
+runtime.rt0_go()
+	runtime/asm_amd64.s:373 +0x143 fp=0xab70fffaa8 sp=0xab70fffaa0 pc=0x7ff6882c97c3
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+Error: The service was stopped
+    at E:\atlas\website\node_modules\esbuild\lib\main.js:999:38
+    at responseCallbacks.<computed> (E:\atlas\website\node_modules\esbuild\lib\main.js:884:9)
+    at Socket.afterClose (E:\atlas\website\node_modules\esbuild\lib\main.js:875:28)
+    at Socket.emit (node:events:521:24)
+    at endReadableNT (node:internal/streams/readable:1744:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  name: 'TransformError'
+}
+
+Node.js v26.3.0
+
+
+--- no-bold-display (exit 3221225773) ---
+
+--- bar-budget (exit 3221225773) ---
+
+--- subsection-icons (exit 1) ---
+
+--- no-eyebrow (exit 1) ---
+'CALL "C:\Program Files\nodejs\\node.exe" "C:\Program Files\nodejs\\node_modules\npm\bin\npm-prefix.js"' is not recognized as an internal or external command,
+operable program or batch file.
+The system cannot execute the specified program.
+

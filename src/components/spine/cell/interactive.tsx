@@ -142,6 +142,14 @@ export function Nearby({ d }: { d: any }) {
           ))}
         </TableBody>
       </Table>
+      {/* THE DISCLOSURE SAT WHERE THE NUMBERS ARE NOT. This card declares itself a
+          sample at its head, and the tables only other caption is screen-reader
+          only, so a sighted reader who scrolls down to four named cities and four
+          exact turnover figures has nothing beside those figures saying what they
+          are. A tag forty pixels above a table gets read once, on the way past;
+          the figures get read one at a time, and each one reads as a measurement.
+          One line, at the point of reading, in the same words the tag uses. */}
+      <p className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Illustrative. These are not measurements taken in each city.</p>
       {/* the glued definition + "read like for like" instruction caption is DELETED
           (rulebook 26/40): the unit lives in the column header "(c)" and its InfoTip, and
           the section's own kicker already states the "same trade, comparable places" scope. */}
@@ -162,6 +170,18 @@ export function Wages({ d }: { d: any }) {
   if (roles.length === 0) return null;
   const max = Math.max(1, ...roles.map((r) => r.high_usd)) * 1.05;
   const kUsd = (v: number) => `$${Math.round(v / 1000)}K`;
+  /* THE BRACKETS HAD NO SCALE UNDER THEM. Every role drew a low tick, a high tick
+     and a mid dot on a shared 0-to-max rail, and the rail carried no numbers at
+     all, so the one thing this card exists to show , how far pay spreads , could
+     be seen and not read. Only the mid figure was printed, and the number column
+     beside it already said that.
+     The fix is the convention for a shared scale: ONE axis for the whole plot,
+     not two labels on each of three rows. It adds a single line to the card and
+     makes every bracket end readable instead of just decorative. */
+  const tickStep = [5000, 10000, 20000, 25000, 50000, 100000].find((st) => max / st <= 4) ?? 100000;
+  const ticks: number[] = [];
+  for (let v = 0; v <= max; v += tickStep) ticks.push(v);
+  const tickLabel = (v: number) => (v === 0 ? "$0" : kUsd(v));
   return (
     <Box className="md:flex-[2]">
       <Rail icon="wages" kicker="What the team costs" sample />
@@ -228,6 +248,37 @@ export function Wages({ d }: { d: any }) {
             </div>
           );
         })}
+        {/* the shared axis, drawn once, in the bracket's own column */}
+        <div aria-hidden className="grid grid-cols-[1fr_auto] gap-x-3 sm:grid-cols-[120px_1fr_56px] sm:gap-3">
+          <span className="hidden sm:block" />
+          <div className="relative col-span-2 h-4 sm:col-span-1">
+            {ticks.map((v) => {
+              const x = (v / max) * 100;
+              /* A LABEL CENTRED ON A TICK AT EITHER END HANGS HALF OF ITSELF OFF THE
+                 CARD, which is the single most repeated drawing fault in this project
+                 and has its own gate. The outermost labels pin to the inside of the box
+                 instead of centring on their value.
+                 WRITTEN IN THE SAME SHAPE AS EVERY OTHER SCALE HERE, deliberately. The
+                 first version protected both ends correctly using a fraction of the
+                 maximum, which no check could recognise, so a real clamp read to the
+                 gate as an unprotected placement. A protection a check cannot see is
+                 not worth having. */
+              const edge = x > 92 ? "right" : x < 8 ? "left" : "centre";
+              return (
+                <span key={v} className="absolute top-0" style={{ left: `${x}%` }}>
+                  <span className="absolute top-0 h-1.5 w-px" style={{ background: "var(--c-border)" }} />
+                  <span
+                    className={`fig absolute top-2 whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)] ${edge === "left" ? "left-0" : edge === "right" ? "right-0" : "-translate-x-1/2"}`}
+                  >
+                    {tickLabel(v)}
+                  </span>
+                </span>
+              );
+            })}
+          </div>
+          <span className="hidden sm:block" />
+        </div>
+        <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">Bar spans lowest to highest pay a year. Dot is typical.</div>
       </div>
     </Box>
   );

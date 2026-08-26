@@ -83,17 +83,33 @@ export function IncomeCurve({ d }: { d: any }) {
 
   return (
     <Box>
-      <Head icon="spending-power" sample={sample}>What customers earn here</Head>
+      {/* THE GLYPH WAS A SHOPPING BAG, ON A CARD ABOUT WHAT PEOPLE EARN. Spending
+          power is what a reader does with income, not the income itself, and at
+          twenty-eight pixels the bag reads as a bin: a tapered body, a lid line and
+          a mark inside it. The column test run on this icon set put it in a
+          collision group with a second bag.
+          The set already holds the exact drawing this card makes , a low-to-high
+          band with the typical point marked , and nothing else on this page uses
+          it. The card s own closing line says "is how the money is spread here". */}
+      <Head icon="spread" sample={sample}>What customers earn here</Head>
       <div ref={ref} className="grid gap-4">
         <div className="min-w-0">
           {/* The plot. Four raw colours lived in the drawing this replaces; every one
               of them is a token now. */}
-          <div className="relative h-[56px]" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale">
+          {/* THE STEMS WERE 44px TALL AND ALL THE SAME HEIGHT, so the vertical
+              dimension of this plot encoded nothing: position on the scale already
+              carries the value, and three equal stems beside it read as three bars
+              whose heights a reader tries to compare and cannot. Most of the card's
+              height was that false encoding.
+
+              A short tick is different from a bar. It connects a mark to the label
+              beneath it and claims nothing, which is what these were always for. */}
+          <div className="relative h-[24px]" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale">
             <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
             {ticks.map(([label, v, accent]) => (
               <span key={label} className="absolute bottom-0 top-0" style={{ left: `${X(v)}%` }}>
                 <span
-                  className="absolute bottom-0 h-[44px] w-0 -translate-x-1/2"
+                  className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2"
                   style={{
                     borderLeftWidth: accent ? 2 : 1,
                     borderLeftStyle: accent ? "solid" : "dashed",
@@ -101,7 +117,7 @@ export function IncomeCurve({ d }: { d: any }) {
                   }}
                 />
                 <span
-                  className="absolute bottom-[41px] h-[7px] w-[7px] -translate-x-1/2 rounded-full border border-[var(--c-card)]"
+                  className="absolute bottom-[9px] h-[7px] w-[7px] -translate-x-1/2 rounded-full border border-[var(--c-card)]"
                   style={{ background: accent ? TERRA : "var(--c-muted)" }}
                 />
               </span>
@@ -115,7 +131,11 @@ export function IncomeCurve({ d }: { d: any }) {
               centred on a mark near either end would hang off the edge, the fault this
               loop has now found on four different scales, so the outermost ones are
               pinned inside the box instead of centred. */}
-          <div className="relative mt-1 h-[30px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
+          <div /* THE FIGURES LEAD, NOT THE ADJECTIVE. The verdict word sat at lead size,
+              the largest thing on the card, while the three figures it summarises sat
+              at micro, the smallest. A card about what customers earn was led by a
+              word, and the earnings were a footnote to it. */
+          className="relative mt-1 h-[42px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
             {ticks.map(([label, v, accent]) => {
               const x = X(v);
               const edge = x > 88 ? "right" : x < 12 ? "left" : "centre";
@@ -128,7 +148,13 @@ export function IncomeCurve({ d }: { d: any }) {
               return (
                 <span key={label} className={`absolute top-0 flex flex-col whitespace-nowrap ${edge === "right" ? "items-end" : ""}`} style={style}>
                   <span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span>
-                  <Fig className={accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}>{money(v)}</Fig>
+                  {/* THE MEDIAN IS THE ANSWER, THE TAILS ARE THE CONTEXT, and until now all
+                      three were printed at one size while the adjective below them and the
+                      card title above them were both larger. The card was asking a reader to
+                      find the finding. The median steps up a rung; the two tail figures do
+                      not, because a reader looking for "what do customers here earn" wants
+                      one number and gets a shape for free. */}
+                  <Fig className={`font-semibold ${accent ? "text-[length:var(--t-sub)] text-[var(--terra-text)]" : "text-[length:var(--t-body)] text-[var(--c-ink)]"}`}>{money(v)}</Fig>
                 </span>
               );
             })}
