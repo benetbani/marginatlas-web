@@ -105,7 +105,7 @@ export function HoodMasthead({ d }: { d: any }) {
           What is left is the answer, once, at full size, and the strip proves it.
           A hero states; the section below evidences. */}
       <div className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:px-6 md:py-6" style={CARD_SURFACE}>
-        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</div>
+        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</h3>
         <div className="mt-1.5 flex flex-wrap items-end gap-x-3.5 gap-y-1">
           <Fig className="text-[48px] leading-none text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>
           <div className="pb-1.5">

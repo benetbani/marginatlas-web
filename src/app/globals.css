@@ -634,6 +634,30 @@
     fill: #e62200;
     stroke: none;
   }
+  /* NO ACCENT INSIDE A SECTION ICON. Two deliberate decisions collided here and
+     the newer one wins.
+
+     The glyph family was drawn in June with one vermillion accent inside each
+     shape, and that is documented in the icon primitive. The colour rule ratified
+     on 2026-08-25 says the accent marks the ANSWER and nothing else, and that no
+     colour goes on chrome, naming icon tiles and tick marks specifically. Newest
+     wins, which is the standing rule for a conflict in the corpus.
+
+     Measured 2026-08-26 before changing anything: 36 of 36 section icons across
+     the four page types carried the accent. Two to five pixels of it, inside a
+     14px glyph. At that size it is not a shape, it is a smudge, and the colour
+     made every smudge look deliberate , so terracotta appeared in every section
+     whether or not that section had an answer to point at.
+
+     Scoped to .spine-ic, which is the section-icon usage. The glyph family keeps
+     its accent everywhere else, because elsewhere it is not chrome. */
+  .spine-scope .ma-glyph.spine-ic .a {
+    stroke: currentColor;
+  }
+  .spine-scope .ma-glyph.spine-ic .af {
+    fill: currentColor;
+    stroke: none;
+  }
   /* Spine pages: the lawful terracotta accent for the Atlas Modern family
      (ink lines ride currentColor from the Ico tile). Overrides the legacy
      #e62200 above via the extra .spine-scope class. */

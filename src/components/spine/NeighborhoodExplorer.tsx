@@ -115,12 +115,22 @@ function NeStyles() {
 /* `sample` marks a block whose figures have no honest source (adapt_hood.ts omits
  * them on promotion: footfall, prime streets, what-locals-know), so whenever the
  * illustrative seed DOES fill it, it never presents as real (rulebook v2 D4). */
-function SectionLabel({ children, sample }: { children: React.ReactNode; sample?: boolean }) {
+/* A CARD'S TITLE HAS TO BE A HEADING. Measured 2026-08-26 across the four pages:
+   six cards carry a title that is a styled div, so the heading outline skips them
+   entirely , a screen reader's heading list, a crawler's structure, any summary.
+   Four of the six are on this page. The city page has none, which is what makes it
+   an inconsistency rather than a house style.
+
+   The prop exists because only SOME of these are card titles. "Walkability" and
+   "Price tier" label blocks INSIDE a card and would be wrong as headings: they
+   would announce sections that do not exist. So the element is chosen at the call
+   site, and the default stays a div, which is what the inner labels want. */
+function SectionLabel({ children, sample, as: Tag = "div" }: { children: React.ReactNode; sample?: boolean; as?: "div" | "h3" }) {
   return (
-    <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">
+    <Tag data-typography="custom" className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">
       {children}
       {sample ? <span className="ml-1.5 inline-flex align-middle"><SampleTag /></span> : null}
-    </div>
+    </Tag>
   );
 }
 
@@ -205,7 +215,7 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
   return (
     <HoodCard ref={ref} className="px-4 py-3.5">
       <div className="mb-1 flex items-end justify-between gap-3">
-        <SectionLabel>Ranked by rent load, lightest first</SectionLabel>
+        <SectionLabel as="h3">Ranked by rent load, lightest first</SectionLabel>
         {spread ? (
           <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">
             the heaviest lease runs <Fig className="text-[var(--c-ink)]">{spread.toFixed(1)}x</Fig> the lightest
@@ -645,7 +655,7 @@ function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | 
     <HoodCard className="mt-4 p-4">
       {trades.length > 0 ? (
         <>
-          <SectionLabel>What works in {d.name}</SectionLabel>
+          <SectionLabel as="h3">What works in {d.name}</SectionLabel>
           <ol className="space-y-2">
             {trades.map((t, i) => {
               const href = tradeHref(t.name, placePrefix);

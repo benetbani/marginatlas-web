@@ -76,11 +76,32 @@ if (unactionable.length) {
   process.exit(1);
 }
 
+/* A ROUND IS ASSEMBLED OVER A SESSION, NOT DELIVERED IN ONE STRING.
+   This used to overwrite: a second call replaced the first, so twenty-seven
+   verdicts on the city page vanished the moment the trade page was recorded, and
+   nothing said so. The output looked identical to a complete round , same shape,
+   plausible counts, no warning , which is the failure mode this project keeps
+   paying for: a run that half-writes and a run that fully writes must not look
+   alike.
+
+   Entries now merge by node and dimension, later wins, so a judgment can be
+   revised within a round without silently deleting its neighbours. */
+const out = `${DIR}/round-${DATE}.json`;
+let merged = entries;
+if (existsSync(out)) {
+  const prior = JSON.parse(readFileSync(out, "utf8")).entries || [];
+  const byKey = new Map(prior.map((e) => [`${e.node}:${e.dim}`, e]));
+  for (const e of entries) byKey.set(`${e.node}:${e.dim}`, e);
+  merged = [...byKey.values()];
+  const added = merged.length - prior.length;
+  console.log(`  merged with the existing round: ${prior.length} already recorded, ${added} new, ${entries.length - added} revised`);
+}
+
 const counts = { good: 0, weak: 0, wrong: 0, unjudged: 0 };
-entries.forEach((e) => counts[e.verdict]++);
+merged.forEach((e) => counts[e.verdict]++);
 
 const judgeable = [...known.values()].filter((n) => n.kind !== "rail").length;
-const covered = new Set(entries.map((e) => e.node)).size;
+const covered = new Set(merged.map((e) => e.node)).size;
 
 const round = {
   date: DATE,
@@ -89,14 +110,13 @@ const round = {
   nodesJudgeable: judgeable,
   nodesCovered: covered,
   counts,
-  entries,
+  entries: merged,
 };
 
-const out = `${DIR}/round-${DATE}.json`;
 writeFileSync(out, JSON.stringify(round, null, 1) + "\n", "utf8");
 
 console.log(`  wrote ${out}`);
-console.log(`  ${entries.length} verdicts over ${covered} of ${judgeable} judgeable nodes`);
+console.log(`  ${merged.length} verdicts over ${covered} of ${judgeable} judgeable nodes`);
 console.log(`  good ${counts.good}   weak ${counts.weak}   wrong ${counts.wrong}   unjudged ${counts.unjudged}`);
 if (covered < judgeable) {
   console.log(`\n  ${judgeable - covered} node(s) carry no verdict at all. A node nobody judged is not a node that passed.`);

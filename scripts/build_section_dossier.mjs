@@ -337,20 +337,32 @@ async function run() {
         }
 
         if (CROPS) {
+          /* CLAMP EVERY CLIP INSIDE THE PAGE. A clip whose bottom runs past the
+             document's own height is an error, not an empty image, and it killed
+             this run twice: the process died mid-capture leaving 185 of 357 crops
+             written, and a retry that happened to succeed said nothing about it.
+             The page's real extent is read once per width and every clip is cut to
+             fit, so a node at the very bottom captures what exists instead of
+             asking for what does not. */
+          const extent = await p.evaluate(() => ({
+            h: document.documentElement.scrollHeight,
+            w: document.documentElement.scrollWidth,
+          }));
           for (const n of nodes) {
             /* EVERY NODE AT EVERY WIDTH. Skipping the phone capture for subsections
                saved 52 files and cost the sheet 52 broken pictures, which is the
                worse trade: a missing crop is indistinguishable from a section that
                renders nothing. */
             const id = `${slug}-${n.path}`.replace(/[^a-z0-9.-]+/gi, "-");
-            const clipH = Math.min(n.box.h + 12, 1400);
+            const top = Math.max(0, n.box.y - 6);
+            const clipH = Math.max(8, Math.min(n.box.h + 12, 1400, extent.h - top));
             await p.screenshot({
               path: `${CROP_DIR}/${id}-${tag}.png`,
               fullPage: true,
               clip: {
                 x: Math.max(0, n.box.x - 6),
-                y: Math.max(0, n.box.y - 6),
-                width: Math.min(width, n.box.w + 12),
+                y: top,
+                width: Math.max(8, Math.min(width, n.box.w + 12, extent.w - Math.max(0, n.box.x - 6))),
                 height: clipH,
               },
             });
@@ -369,6 +381,29 @@ async function run() {
   }
 
   await browser.close();
+
+  /* IT MUST PROVE ITS OWN OUTPUT BEFORE CLAIMING SUCCESS. This crashed once
+     mid-capture on a page-load race and exited non-zero, leaving 185 of 357 crops
+     missing; a retry succeeded and said nothing about the first attempt. A run
+     that half-writes and a run that fully writes must not look alike, because the
+     sheet built on the partial set renders 185 broken pictures and a round judged
+     from it would be recording verdicts for nodes nobody could see. */
+  if (CROPS) {
+    const missing = [];
+    for (const p of dossier.pages) {
+      for (const n of p.nodes) {
+        const id = `${p.page}-${n.path}`.replace(/[^a-z0-9.-]+/gi, "-");
+        for (const tag of ["1280", "375", "zoom"]) {
+          if (!existsSync(`${CROP_DIR}/${id}-${tag}.png`)) missing.push(`${id}-${tag}`);
+        }
+      }
+    }
+    if (missing.length) {
+      console.log(`\nx ${missing.length} crop(s) were not written: ${missing.slice(0, 4).join(", ")}`);
+      console.log("  The dossier is NOT written. Judging from a partial set is judging what you cannot see.");
+      process.exit(1);
+    }
+  }
 
   const out = `${OUT_DIR}/dossier-${DATE}.json`;
   writeFileSync(out, JSON.stringify(dossier, null, 1) + "\n", "utf8");

@@ -264,7 +264,7 @@ export function CommercialSpace({ d }: { d: any }) {
   return (
     <WideRail>
       <Box>
-        <Rail icon="commercial-rent" kicker="Cost of living against peer cities" sample={peerSample} />
+        <Rail icon="vs-world" kicker="Cost of living against peer cities" sample={peerSample} />
         {/* the peer dot strip below (home city = 0) IS the pressure read; no second scale. */}
         {/* peers on ONE axis. Only rendered when at least two peers carry a real rent index. */}
         {hasPeerStrip ? (
@@ -447,7 +447,7 @@ function TradesHere({ d }: { d: any }) {
     <Box>
       {/* NOT a restatement of the chapter heading above it (§11, the double-title
           defect): the chapter says what the reader gets, this says what the set IS. */}
-      <Head icon="best-areas">Trades with local figures</Head>
+      <Head icon="honest-take">Trades with local figures</Head>
       {/* A WRAPPING ROW, NOT A GRID. These are equal links with no ranking, and a
           two-column grid leaves the odd one out beside a blank half whenever the
           count is odd, which is §17 and is the fault I had just fixed one section

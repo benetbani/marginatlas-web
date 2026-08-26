@@ -593,7 +593,7 @@ function Close({ d }: { d: any }) {
               work keeps more" line are BOTH deleted (rulebook 15/19: a section's data shows
               the conclusion, the copy never asserts it). This is a navigation terminus: the
               label points at the next steps below, it states no finding. */}
-          <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</div>
+          <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</h3>
         </div>
         <a href="/pricing" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
           Compare this trade with Pro &#8594;

@@ -173,13 +173,84 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
   }
   const sum = normalize ? (ordered.reduce((a, s) => a + s.pct, 0) || 1) : 1;
   const segCls = segBorder ? "h-full border-r border-white/70 last:border-0" : "h-full";
+
+  /* ON-BAR LABELS, WHICH THIS FORM WAS SUPPOSED TO HAVE ALL ALONG. The written
+     convention is a percentage on every segment at or above 12%, and the
+     across-places page draws exactly that. This shared bar drew none, so the
+     trade page's identical chart put all five of its figures in the legend and
+     none on the bar: the same idea, on two pages, in two treatments, which is the
+     site failing to read as one system. Found by looking at the two crops beside
+     each other at 3x.
+
+     SELF-LIMITING BY HEIGHT rather than by a flag somebody has to remember. One
+     of the five callers is an eight-pixel progress sliver where a label would be
+     absurd, so the labels appear only on a bar tall enough to hold one. A prop
+     defaulting to off would have left the convention unenforced by default, which
+     is how it came to be unenforced in the first place.
+
+     The kept slice is labelled below the threshold too, because it is the answer
+     the whole bar exists to deliver and the sibling page labels it at 7%. */
+  const hNum = Number((h.match(/h-(\d+)/) || [])[1] || 0);
+  const onBar = hNum >= 7;
+  const share = (s: StackSeg) => (normalize ? (s.pct / sum) * 100 : s.pct);
+  /* White on a dark segment, ink on a light one, from the segment's own colour. */
+  const lightOn = (hex: string) => {
+    const m = /^#?([0-9a-f]{6})$/i.exec((hex || "").trim());
+    if (!m) return true;
+    const n = parseInt(m[1], 16);
+    const lin = (v: number) => { const x = v / 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); };
+    const L = 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255);
+    return L < 0.45;
+  };
   return (
     <>
       <div className={`flex ${h} overflow-hidden ${rounded} border border-[var(--c-border)]${className ? " " + className : ""}`} role="img" aria-label={ariaLabel}>
-        {ordered.map((s) => <div key={s.label} className={segCls} style={{ width: `${normalize ? (s.pct / sum) * 100 : s.pct}%`, background: s.color }} title={legend ? undefined : `${s.label} ${s.pct}%`} />)}
+        {ordered.map((s) => {
+          const pctOfBar = share(s);
+          const show = onBar && (pctOfBar >= 12 || (isKept(s) && pctOfBar >= 4));
+          return (
+            <div
+              key={s.label}
+              className={`${segCls} flex items-center justify-center overflow-hidden`}
+              style={{ width: `${pctOfBar}%`, background: s.color }}
+              title={legend ? undefined : `${s.label} ${s.pct}%`}
+            >
+              {show ? (
+                <span
+                  aria-hidden
+                  className="fig whitespace-nowrap text-[length:var(--t-mark)] font-semibold leading-none"
+                  style={{ color: lightOn(s.color) ? "#fff" : "var(--c-ink)" }}
+                >
+                  {s.pct}%
+                </span>
+              ) : null}
+            </div>
+          );
+        })}
       </div>
+      {/* THE LEGEND STOPS REPEATING THE BAR. Once the segments carry their own
+          percentages, a legend that also carries them prints every figure twice:
+          five on the bar and five underneath, on both pages that use this form. A
+          legend's job is to say which name goes with which colour. It keeps the
+          figures only when the bar is too short to hold them, which is the case
+          it was written for. */}
+      {/* THE LEGEND CARRIES WHAT THE BAR CANNOT, and nothing else. Once segments
+          label themselves, a legend repeating those figures prints every value
+          twice. But dropping the figures outright cost the 3% segment its value
+          entirely: too narrow for an on-bar label, and now unlabelled in the
+          legend too, so a reader could not find it anywhere. The figure appears
+          exactly where the bar failed to show it. */}
       {legend ? (
-        <div className={legendClassName}>{ordered.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></span>)}</div>
+        <div className={legendClassName}>{ordered.map((s) => {
+          const labelled = onBar && (share(s) >= 12 || (isKept(s) && share(s) >= 4));
+          return (
+            <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+              <span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
+              {s.label}
+              {labelled ? null : <> <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></>}
+            </span>
+          );
+        })}</div>
       ) : null}
     </>
   );

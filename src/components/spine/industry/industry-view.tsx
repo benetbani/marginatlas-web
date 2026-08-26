@@ -76,7 +76,7 @@ function Masthead({ d }: { d: any }) {
         </div>
         {/* the margin ladder: the gross-to-net collapse, seen as three shrinking bars */}
         <Box>
-          <div className="mb-3 flex items-center gap-2"><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The margin ladder</span><SampleTag /></div>
+          <div className="mb-3 flex items-center gap-2"><h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The margin ladder</h3><SampleTag /></div>
           <MarginLadder gross={m.gross_pct} operating={m.operating_pct} net={m.net_pct} />
         </Box>
       </div>
@@ -380,18 +380,18 @@ export function MoneySplit({ d }: { d: any }) {
     <Full>
       <Box>
         <Rail icon="cost-breakdown" kicker="Where each $100 goes" verdict={`The owner's slice is what ${nonKeptWord} bigger lines leave behind.`} sample />
-        {/* the stacked bar + the on-bar % overlay (ink on the light greys AND on the
-            soft-terracotta kept slice, both AA-safe). The kept slice is the card's
-            ANSWER, so it is never the one segment without a value: it labels on-bar
-            regardless of the >=12% width threshold ("7%" fits 7%). */}
-        <div className="relative">
-          <StackBar segments={parts.map((p) => ({ label: p.name, pct: p.pct, color: p.color, kept: !!p.kept }))} sort={false} h="h-11" ariaLabel={parts.map((p) => `${p.name} ${p.pct}%`).join(", ")} legend />
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 flex h-11 items-center">
-            {parts.map((p) => (
-              <span key={p.name} className="fig overflow-hidden whitespace-nowrap text-center text-[length:var(--t-micro)] font-semibold" style={{ width: `${p.pct}%`, color: "var(--c-ink)", opacity: 0.8 }}>{p.pct >= 12 || p.kept ? `${p.pct}%` : ""}</span>
-            ))}
-          </div>
-        </div>
+        {/* THE ON-BAR LABELS MOVED INTO THE SHARED BAR. This page drew its own
+            overlay, with the same rule the shared form now applies , at or above
+            12%, plus the kept slice regardless, because the kept slice is the
+            card's answer and must never be the one segment without a value.
+
+            The trade page uses the same form and drew NO on-bar labels, so one
+            idea rendered two ways on two pages. Fixing that in the shared bar
+            duplicated every label here, ink over ink, until this overlay came
+            out. The shared version also picks its text colour from each segment's
+            own luminance instead of one ink at 80% opacity, so it holds on the
+            dark grey as well as the light ones. */}
+        <StackBar segments={parts.map((p) => ({ label: p.name, pct: p.pct, color: p.color, kept: !!p.kept }))} sort={false} h="h-11" ariaLabel={parts.map((p) => `${p.name} ${p.pct}%`).join(", ")} legend />
         {/* fixed / variable bracket row , folds the old donut into an annotation over the same
             $100. Subs arrive from the seed (trade-specific copy never hardcodes here) and each
             omits when absent. Below sm the value-proportional grid becomes a wrapped flex legend
@@ -516,7 +516,7 @@ export function Operator({ d }: { d: any }) {
   const factCols = facts.length >= 3 ? "grid-cols-3" : facts.length === 2 ? "grid-cols-2" : "grid-cols-1";
   return (
     <Box>
-      <Rail icon="who-for" kicker="The typical operator" verdict={o.verdict} sample />
+      <Rail icon="worked-example" kicker="The typical operator" verdict={o.verdict} sample />
       <div className={`grid ${factCols} divide-x divide-[var(--c-border)] border-t border-[var(--c-border)] pt-3`}>
         {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{val}</Fig><div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
       </div>
@@ -575,7 +575,7 @@ export function Survival({ d }: { d: any }) {
   if (curve.length < 2) return null;
   return (
     <Box className="flex flex-col">
-      <Rail icon="myth-reality" kicker="Five-year survival" verdict={s.verdict} />
+      <Rail icon="trend" kicker="Five-year survival" verdict={s.verdict} />
       <SurvivalCurve curve={curve} />
     </Box>
   );
