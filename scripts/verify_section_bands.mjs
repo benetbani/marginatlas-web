@@ -29,6 +29,12 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { eachPage } from "./lib/measure_pages.mjs";
+import { requireBrowser } from "./lib/local_only.mjs";
+
+/* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
+   run where chromium is not installed, and trying killed a production deploy on
+   2026-08-27. It skips loudly there and runs unchanged on the design machine. */
+await requireBrowser("section-bands", "whether every section sits in a declared band");
 
 const BASELINE = "scripts/section_bands_baseline.json";
 

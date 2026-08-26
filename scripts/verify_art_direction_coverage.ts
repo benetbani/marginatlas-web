@@ -30,6 +30,7 @@
  * Usage: npx tsx scripts/verify_art_direction_coverage.ts
  */
 import { readFileSync, existsSync } from "node:fs";
+import { parentRepoFile } from "./lib/local_only.mjs";
 import { stripCommentLines } from "./lib/strip_comments";
 
 const DOC = "E:/atlas/design/ART-DIRECTION.md";
@@ -37,11 +38,14 @@ const CHAIN = "scripts/prebuild_all.ts";
 const fail: string[] = [];
 const note: string[] = [];
 
-if (!existsSync(DOC)) {
-  console.log(`x verify_art_direction_coverage: the art direction is not at ${DOC}`);
-  process.exit(1);
-}
-const doc = readFileSync(DOC, "utf8");
+/* THIS FAILED A PRODUCTION DEPLOY. The document lives in the design repo, which a
+   build server never clones, so on Vercel this gate could only ever exit 1. It now
+   skips loudly there and still fails hard on the machine that has the document. */
+const doc = parentRepoFile(
+  DOC,
+  "art-direction-coverage",
+  "whether every art-direction rule still has a gate behind it",
+);
 
 const jStart = doc.indexOf("## J.");
 const jEnd = doc.indexOf("## K.", jStart);

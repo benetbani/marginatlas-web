@@ -15,6 +15,12 @@
  * Usage: node scripts/verify_frost_reads.mjs
  */
 import { chromium } from "playwright";
+import { requireBrowser } from "./lib/local_only.mjs";
+
+/* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
+   run where chromium is not installed, and trying killed a production deploy on
+   2026-08-27. It skips loudly there and runs unchanged on the design machine. */
+await requireBrowser("frost-reads", "whether the frosted panels still read against their backgrounds");
 
 const PAGES = ["city-london", "cell-london-restaurants", "industry-restaurants", "hood-london"];
 const MIN_DELTA = 6; // the card ground must sit at least this far below pure white
