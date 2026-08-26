@@ -86,7 +86,7 @@ export function WhereToTrade({ d }: { d: any }) {
     .filter((x) => Number.isFinite(x.lat) && Number.isFinite(x.lng))
     .map((x, i) => ({
       name: x.name, slug: x.slug, lat: x.lat, lng: x.lng,
-      signal: 50, signalLabel: `rent x${x.rent_mult} the city level`, sub: x.character,
+      signal: 50, signalLabel: `rent x${Number(x.rent_mult).toFixed(2)} the city level`, sub: x.character,
       tone: i === 0 ? "terra" : "ink",
       href: hoodHref,
     }));
@@ -113,7 +113,7 @@ export function WhereToTrade({ d }: { d: any }) {
         <div className="min-w-0">
           <div className="mb-2 flex items-baseline justify-between gap-2">
             <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by rent load, lightest first</span>
-            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="The district's commercial rent as a multiple of the city-average level; x1 is the city average." /></span>
+            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="The district's commercial rent as a multiple of the city-average level; x1.00 is the city average." /></span>
           </div>
           <div className="space-y-1">
             {rows.map((r, i) => {
@@ -126,7 +126,7 @@ export function WhereToTrade({ d }: { d: any }) {
                 >
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink)]">{r.name}</span>
-                    <Fig className={`shrink-0 text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{r.rent_mult}</Fig>
+                    <Fig className={`shrink-0 text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{Number(r.rent_mult).toFixed(2)}</Fig>
                   </div>
                   {/* dot at the rent multiple on the shared, INVERTED track (cheaper = right,
                       rule 29A); the city-average x1 is the drawn line at the right edge, and
@@ -148,8 +148,9 @@ export function WhereToTrade({ d }: { d: any }) {
               it back" footer are DELETED (§15 cross-entity verdict footer; §18): the list
               reads on rent load alone, the founder's D1 metric. */}
           <div aria-hidden className="relative mt-1 h-4 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
-            <Fig className="absolute left-0">x{DOMAIN[1]}</Fig>
-            <span className="absolute right-0 whitespace-nowrap">city = x1</span>
+            {/* Notation N1: two decimals, so the axis end reads like every value under it. */}
+            <Fig className="absolute left-0 normal-case">x{Number(DOMAIN[1]).toFixed(2)}</Fig>
+            <span className="absolute right-0 whitespace-nowrap normal-case">city x1.00</span>
           </div>
         </div>
       </div>

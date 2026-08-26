@@ -104,7 +104,15 @@ export function MarginLadder({ gross, operating, net }: { gross: number; operati
   const reduced = useReduced();
   const { ref, seen } = useInView<HTMLDivElement>();
   const p = useDraw(seen, reduced);
-  const steps: Array<[string, number, boolean]> = [["Gross", gross, false], ["Operating", operating, false], ["Net / kept", net, true]];
+  /* ONE QUANTITY, ONE NAME. The last rung was labelled "Net / kept", which hands a
+     reader two words joined by a slash and tells them neither is the real one. The
+     site calls this quantity KEPT everywhere it speaks plainly: "What the owner
+     keeps", "kept per $100", "KEPT 7%". The ladder now uses the same word, so
+     somebody who learns it here recognises it on the next page, and a first-time
+     reader is not asked to hold an accounting term and a plain one at once.
+     Gross and Operating stay: they are the rungs below, and they have no plainer
+     name that is also accurate. Notation N7. */
+  const steps: Array<[string, number, boolean]> = [["Gross", gross, false], ["Operating", operating, false], ["Kept", net, true]];
   return (
     <div ref={ref}>
       <div className="flex items-end justify-between gap-3" style={{ height: 118 }} role="img" aria-label={`Gross ${gross}%, operating ${operating}%, net ${net}%`}>

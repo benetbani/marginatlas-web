@@ -1176,7 +1176,10 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
           </div>
           <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: TERRA, boxShadow: "0 0 0 1px var(--c-border)" }} />
         </div>
-        <div className="mt-1.5 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>0</span><span>week {Math.round(horizon)}</span></div>
+        {/* BOTH ENDS OF A RULER ARE WRITTEN ALIKE. This one read "0" at the left and
+            "WEEK 52" at the right, one bare and one carrying its unit, so a reader
+            had to work out that the bare end was also weeks. Notation N6. */}
+        <div className="mt-1.5 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
       </div>
       <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2.5">
         {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}

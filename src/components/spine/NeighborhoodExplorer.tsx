@@ -224,7 +224,7 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
              away took a list of districts and no point. It steps up to body and the
              multiple carries the weight. */
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
-            the heaviest lease runs <Fig className="font-semibold text-[var(--c-ink)]">{spread.toFixed(1)}x</Fig> the lightest
+            the heaviest lease runs <Fig className="font-semibold text-[var(--c-ink)]">{spread.toFixed(1)}</Fig> times the lightest
           </span>
         ) : null}
       </div>
@@ -237,7 +237,13 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
         <span />
         <div className="flex items-center justify-center text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:justify-between">
           {hasHeavier ? <span className="hidden sm:inline">Heavier</span> : null}
-          <span className="text-[var(--c-ink2)]">City x1.00</span>
+          {/* THE STYLESHEET WAS CAPITALISING THE FIGURE. The row is set uppercase so
+              "Heavier" and "Lighter" read as axis furniture, and the transform reached
+              the anchor too, so a reader saw CITY X1.00 above a column of values that
+              all read x1.20, x1.30, x3.00. The author wrote it correctly and the style
+              broke it, which is why reading the source never found this and a
+              photograph did. Notation N2 and N4. */}
+          <span className="normal-case text-[var(--c-ink2)]">city x1.00</span>
           {hasLighter ? <span className="hidden sm:inline">Lighter</span> : null}
         </div>
         <span />

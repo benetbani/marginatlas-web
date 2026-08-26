@@ -204,8 +204,15 @@ export function Demand({ d }: { d: any }) {
         <div className={`grid gap-5 border-t border-[var(--c-border)] pt-4${both ? " sm:grid-cols-2 sm:divide-x sm:divide-[var(--c-border)]" : ""}`}>
           {hasSpend ? (
             <div className={both ? "sm:pr-6" : ""}>
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div>
-              <div className="mt-1.5 flex items-baseline gap-2"><CountFig value={dm.spend_per_head_usd} prefix="$" className="text-[length:var(--t-focal)] leading-none text-[var(--terra-text)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">per visit</span></div>
+              {/* THE CARD SAID ONE THING THREE TIMES in a hundred and fifty pixels: the
+                  section is called "What a customer spends", the label under it read
+                  "Spend per head", and the figure carried "per visit". A head and a
+                  visit are the same person on the same occasion.
+                  The label survives only when there are TWO figures side by side and it
+                  is doing column-heading work. On its own the section name already
+                  said it. Notation N8. */}
+              {both ? <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div> : null}
+              <div className="mt-1.5 flex items-baseline gap-2"><CountFig value={dm.spend_per_head_usd} prefix="$" className="text-[length:var(--t-focal)] leading-none text-[var(--terra-text)]" /></div>
             </div>
           ) : null}
           {hasVisits ? (

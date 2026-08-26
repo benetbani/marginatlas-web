@@ -91,8 +91,8 @@ export function CityVerdict({ d }: { d: any }) {
      "in South London, against the city-average x1" while the tile beside it read
      "CITY AVERAGE x1 the baseline". One card, one statement of each thing. */
   const facts: Array<[string, string, string]> = [
-    ["city average", "x1", "the baseline"],
-    ["heaviest", `x${heaviest.rent_mult}`, heaviest.name],
+    ["city average", "x1.00", "the baseline"],
+    ["heaviest", `x${Number(heaviest.rent_mult).toFixed(2)}`, heaviest.name],
   ];
   // Neutral card + Head with the modeled tag (the multiples are placeholder, §4). The
   // invented "The catch" prose box and the decorative terracotta frame are DELETED
@@ -110,7 +110,7 @@ export function CityVerdict({ d }: { d: any }) {
           its chapter. */}
       <Head icon="district-mix" sample={sample}>The rent, district by district</Head>
       <div className="grid gap-5 md:grid-cols-[1fr_1.5fr] md:items-center">
-        <Stat size="focal" accent value={`x${lightest.rent_mult}`} label="the lightest rent load" sub={`in ${lightest.name}`} />
+        <Stat size="focal" accent value={`x${Number(lightest.rent_mult).toFixed(2)}`} label="the lightest rent load" sub={`in ${lightest.name}`} />
         {/* the spread , a clean neutral three-cell strip, the answer already on the focal */}
         {/* A WRAPPING ROW OF CELLS SIZED BY THEIR CONTENTS, not three fixed
             columns. Photographed at 320: three columns in a phone card leave each
@@ -790,7 +790,7 @@ function CityPeers({ d }: { d: any }) {
       "Visitors",
       (r) => (num(r.visitors_m) && r.visitors_m > 0 ? r.visitors_m / (home.visitors_m as number) : null),
       "x",
-      (v) => `${v.toFixed(1)}x`,
+      (v) => `x${v.toFixed(2)}`,
     );
   if (compareRows.length === 0) return null;
   return (
@@ -857,7 +857,7 @@ function Close({ d }: { d: any }) {
       <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where to start looking in {d.meta?.city}</div>
       <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{title}</div>
       <div className="mt-3 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--c-border)] pt-3">
-        <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{lightest.rent_mult}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div>
+        <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{Number(lightest.rent_mult).toFixed(2)}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div>
         {lightest.character ? <div><div className="text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
       </div>
       {/* The two ways out, on one row. The destination of the first is the district
