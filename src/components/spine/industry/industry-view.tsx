@@ -543,7 +543,14 @@ export function Operator({ d }: { d: any }) {
   const factCols = facts.length >= 3 ? "grid-cols-3" : facts.length === 2 ? "grid-cols-2" : "grid-cols-1";
   return (
     <Box {...(facts.length === 1 ? { "data-lean": "1" } : {})}>
-      <Rail icon="worked-example" kicker="The typical operator" verdict={o.verdict} sample />
+      {/* THE CARD IS NAMED FOR WHAT IT SHOWS. It was called "The typical operator",
+          which promises a portrait of a person, and after the duplicate survival
+          figure came off it holds one number and that number describes the venture,
+          not the owner: what it takes to open one.
+          It was also repeating, word for word, the eyebrow of the movement it sits
+          inside. A chapter opener and the first card under it saying the same three
+          words is a reader being told twice where they are. */}
+      <Rail icon="worked-example" kicker="What it takes to open" verdict={o.verdict} sample />
       <div className={`grid ${factCols} divide-x divide-[var(--c-border)] border-t border-[var(--c-border)] pt-3`}>
         {/* A SCORECARD OF ONE IS NOT A SCORECARD, IT IS AN ANSWER. Three facts side by
             side share a size because they are peers being compared. When only one

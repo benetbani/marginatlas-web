@@ -165,9 +165,22 @@ function CityLenses({ d }: { d: any }) {
       <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
         {scales.map((s: any) => (
           <div key={s.key ?? s.label}>
+            {/* THE WORD IS PRINTED ONLY WHEN IT IS NOT ALREADY ON THE SCALE BENEATH IT.
+                Photographed at 1280: all six reads on this page sit at an end of their
+                own scale, so every bold answer was the same word as the pole twenty
+                pixels below it. "Deep" over "Thin , Deep". "Large" over "Small ,
+                Large". Six reads, twelve words, six of them saying nothing the line
+                under them did not.
+                The poles are NOT shrunk to fix this, and that is deliberate: they were
+                once micro and low-contrast and the founder rejected them for it, rule
+                34, "text too small". The scale keeps its labels at full size and the
+                repeat goes instead. Where a read lands mid-scale the word carries
+                something the poles cannot, and there it still prints. */}
             <div className="mb-2 flex items-baseline justify-between gap-2">
               <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{s.label}</span>
-              <span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{s.word}</span>
+              {s.word !== s.left && s.word !== s.right ? (
+                <span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{s.word}</span>
+              ) : null}
             </div>
             <TierBand pos={s.pos} word={s.word} leftPole={s.left} rightPole={s.right} />
           </div>
@@ -866,7 +879,15 @@ function Close({ d }: { d: any }) {
       <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where to start looking in {d.meta?.city}</div>
       <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{title}</div>
       <div className="mt-3 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--c-border)] pt-3">
-        <div><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">x{Number(lightest.rent_mult).toFixed(2)}</Fig><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the lightest district rent</div></div>
+        {/* THE RENT MULTIPLE IS NOT REPRINTED HERE. It is the answer of the card that
+            opens this page, where it is set at forty-eight pixels beside the same
+            district name and the same words, "the lightest rent load". Printing it
+            again at the foot of the page, in the same notation under a label two
+            words different, told a reader nothing they had not been told at the top
+            and made this card read as a summary of a page they had just finished.
+            WHAT IS LEFT IS WHAT ONLY THIS CARD HAS: which district to start in, what
+            kind of place it is, and the two ways out. A closing card names the pick
+            and opens a door. It does not recite the page. */}
         {lightest.character ? <div><div className="text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
       </div>
       {/* The two ways out, on one row. The destination of the first is the district

@@ -120,7 +120,18 @@ export function Masthead({ d }: { d: any }) {
               <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">net margin<InfoTip gloss="Profit as a share of sales, after every cost." /></div>
             </div>
             <div className="flex-[1_1_auto] whitespace-nowrap bg-[var(--c-card)] px-3.5 py-3">
-              <Fig className="text-[20px] text-[var(--c-ink)]">{breakWord}</Fig>
+              {/* A WORD IS NOT A FIGURE AND MUST NOT BE DRESSED AS ONE. This tile sat
+                  between two hard measurements, a net margin and a count of firms, and
+                  it was set in the same numeral face at the same size, so a reader
+                  scanning three tiles read three numbers and one of them was an
+                  adjective.
+                  The word stays a word. Printing the score behind it would be worse,
+                  not better: rule 26 and the form catalogue both forbid a precise
+                  marker on a rough measure, and one of that score's three inputs is
+                  modeled everywhere. What changes is that it now LOOKS like the
+                  judgment it is, in the reading face, so the eye stops counting it
+                  among the measurements. */}
+              <span className="block text-[20px] font-medium leading-none text-[var(--c-ink)]">{breakWord}</span>
               <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to break in</div>
             </div>
             {hasFirms ? (
