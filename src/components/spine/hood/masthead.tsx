@@ -104,7 +104,19 @@ export function HoodMasthead({ d }: { d: any }) {
 
           What is left is the answer, once, at full size, and the strip proves it.
           A hero states; the section below evidences. */}
-      <div className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:px-6 md:py-6" style={CARD_SURFACE}>
+      {/* AND THE CARD NOW TAKES THE WIDTH ITS CONTENT NEEDS.
+          The note above is right that nothing should be invented to fill this
+          space, and it left the card stretching the full 1072 with the answer in
+          its left 45% and a blank band across the rest. Photographed at 1280:
+          1072 by 121, and over half of it nothing. A hero is ALLOWED the full
+          width. It is not obliged to take it, and taking it for one figure is the
+          wide-for-no-reason emptiness the whole effort exists to remove.
+          Shrink-to-fit rather than a chosen number, so the card is exactly as wide
+          as the answer, the district name and the one line explaining the unit,
+          at any width and in any place. The space then falls OUTSIDE the border,
+          where an off-centre block reads as composition instead of as a hole. Same
+          decision as the lone lean card in the band kit, same day, same reason. */}
+      <div className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:w-fit md:px-6 md:py-6" style={CARD_SURFACE}>
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</h3>
         <div className="mt-1.5 flex flex-wrap items-end gap-x-3.5 gap-y-1">
           <Fig className="text-[48px] leading-none text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>

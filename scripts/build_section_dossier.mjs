@@ -184,6 +184,22 @@ function harvest() {
         padLeft: px(cs.paddingLeft), padRight: px(cs.paddingRight),
       },
       icon: iconId,
+      /* WHAT THIS CAMERA CANNOT SEE, SAID OUT LOUD.
+         The pages are photographed from server-rendered markup with no script of
+         any kind, so a chart that draws itself in the browser leaves an empty box
+         behind and this instrument photographs the box. On 2026-08-26 that
+         produced TWELVE findings against one card of the trade page , the form is
+         absent, the card is empty, nothing rendered to inspect , and every one of
+         them was false. The card draws correctly for a real visitor: a six-step
+         waterfall from a hundred dollars of sales down to what the owner keeps,
+         confirmed on the live site.
+         The failure was not the blindness. It was that a blind spot and a real
+         hole looked identical in the output, which is the shape of mistake this
+         project keeps paying for. A node holding an unfilled runtime chart now
+         says so, and says how many, so no future round can mistake one for the
+         other. */
+      runtimeChartsUnrendered: [...node.querySelectorAll(".recharts-responsive-container")]
+        .filter((c) => c.children.length === 0).length,
       sentences,
       box: { x: b.left + window.scrollX, y: b.top + window.scrollY, w: b.width, h: b.height },
     };
@@ -409,6 +425,15 @@ async function run() {
   writeFileSync(out, JSON.stringify(dossier, null, 1) + "\n", "utf8");
   const total = dossier.pages.reduce((a, p) => a + p.nodes.length, 0);
   console.log(`\n  ${total} nodes across ${dossier.pages.length} pages`);
+  /* A BLIND SPOT NOBODY READS IS A BLIND SPOT NOBODY ACTS ON, so it is printed
+     beside the node count rather than buried in the file. */
+  const blind = dossier.pages.flatMap((p) => p.nodes.filter((n) => (n.runtimeChartsUnrendered || 0) > 0).map((n) => `${p.page}-${n.path}`));
+  if (blind.length) {
+    console.log(`
+  !! ${blind.length} node(s) hold a chart that draws in a browser and NOT in this capture.`);
+    console.log("     They look empty here and are not empty for a reader. Do NOT judge them from these crops:");
+    console.log(`     ${[...new Set(blind)].slice(0, 8).join(", ")}`);
+  }
   console.log(`  wrote ${out}`);
   if (CROPS) console.log(`  crops in ${CROP_DIR} at 1280, 375 and 3x`);
 }

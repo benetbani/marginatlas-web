@@ -161,10 +161,26 @@ function measure() {
       }
     }
 
+    /* A SHAPE FLOOR TALLER THAN THE CARD MAKES THE CARD UNJUDGEABLE, and until now
+       it made it PASS. The height floor is an absolute 120 pixels, put there so a
+       single ragged text row could not count as a hole. On a card whose inside is
+       shorter than that, no rectangle can ever reach 120, so no hole can ever
+       qualify, and the section came back clean without a single rectangle having
+       been eligible.
+       That is exactly the failure this project keeps paying for: a section nobody
+       could judge and a section that passed looked identical in the output. The
+       neighbourhood page carries a 1072 by 121 hero with half of it empty, and this
+       check reported it clean every time it ran.
+       The floor is NOT relaxed for short cards, because on a card one text row tall
+       a ragged right edge really is most of the card and relaxing it would flag
+       every short card on the site. Instead the card is named as unjudgeable, the
+       same treatment the runtime charts already get, so a person looks at it. */
+    const tooShort = minRows > nRows || minCols > COLS;
+
     const rail = c.querySelector("h2, h3, [class*=rail]");
     const label = ((rail && rail.textContent) || c.textContent || "").trim().replace(/\s+/g, " ").slice(0, 44);
     out.push({
-      label, blank,
+      label, blank, tooShort,
       pct: Math.round((best / (COLS * nRows)) * 100),
       w: box ? Math.round((box.cols / COLS) * W) : 0,
       h: box ? box.rows * ROW_PX : 0,
@@ -200,7 +216,12 @@ for (const { width, result: pages } of await eachPageAtWidths(WIDTHS, measure)) 
       measured++;
       if (s.blank) {
         unjudgeable++;
-        cannotJudge.push(`${width}px  ${name} "${s.label}"`);
+        cannotJudge.push(`${width}px  ${name} "${s.label}"  (a chart that needs a browser)`);
+        continue;
+      }
+      if (s.tooShort) {
+        unjudgeable++;
+        cannotJudge.push(`${width}px  ${name} "${s.label}"  (SHORTER THAN THE SHAPE FLOOR , no hole can qualify, look at this one by eye)`);
         continue;
       }
       if (!s.hole) continue;

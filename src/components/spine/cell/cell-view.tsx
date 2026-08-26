@@ -579,7 +579,16 @@ function Close({ d }: { d: any }) {
   // page of its own yet (it lives in this page's money chapter , and only exists at
   // all when this cell actually has a format picker to point at).
   const links: Array<{ t: string; href?: string }> = [
-    { t: `Compare ${trade} across nearby markets`, href: "/industries" },
+    /* THE DESTINATION NOW MATCHES THE PROMISE. This row said "compare X across
+       nearby markets" and went to the industries INDEX, a directory of trades,
+       not a comparison of anywhere. The page it describes exists and this cell
+       knows its own slug, so the link goes there. It falls back to the index only
+       when the slug is missing, which is a real directory rather than a wrong one.
+       AND IT NO LONGER STARTS WITH "COMPARE". The only other action in this
+       section is "Compare this trade with Pro", so a reader met two doors whose
+       first word was identical and had to read to the end of both to tell them
+       apart. This one names where it goes. */
+    { t: `See ${trade} in other cities`, href: d.meta?.industry ? `/industries/${d.meta.industry}` : "/industries" },
     ...(rel[0]
       ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug && placePrefix ? `${placePrefix}/${rel[0].slug}` : undefined }]
       : []),
@@ -587,7 +596,7 @@ function Close({ d }: { d: any }) {
   ];
   return (
     <Box>
-      <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+      <div>
         <div className="max-w-2xl">
           {/* the asserted "bottom line" verdict paragraph and the forward "where the same
               work keeps more" line are BOTH deleted (rulebook 15/19: a section's data shows
@@ -595,11 +604,28 @@ function Close({ d }: { d: any }) {
               label points at the next steps below, it states no finding. */}
           <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</h3>
         </div>
-        <a href="/pricing" className="shrink-0 self-start rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] md:self-auto">
-          Compare this trade with Pro &#8594;
-        </a>
       </div>
-      <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-4 sm:grid-cols-3">
+      {/* THE DOORS SIT IN ONE ROW AND THE ROW HAS AS MANY COLUMNS AS IT HAS DOORS.
+          Two faults, one shape. The row was fixed at three columns and this page
+          resolves ONE link, so two thirds of it were empty. And the paid door was
+          pinned to the far right of a header whose only other content was a
+          nine-word label in micro caps, which left a dead band across the middle
+          of a full-width card. Photographed at 1280: 1072 by 137, and most of it
+          nothing.
+          The paid door now sits with the others as the last item, which is what it
+          is, and the column count follows the number of doors, so the row is full
+          at one door or at four. */}
+      {/* A ROW THAT DISTRIBUTES, RATHER THAN COLUMNS THAT ARE COUNTED.
+          The first attempt at this picked a column count from the number of doors,
+          which meant writing three different breakpoint layouts where there had
+          been one, and the width gate refused it: this repo already carries
+          fifty-odd grids whose second layout is pitched at a width no phone
+          reaches and it will not take more. The gate was right, and the rewrite is
+          better than what it rejected. A distributing row needs no arithmetic at
+          all: it is full with one door and full with four, it wraps instead of
+          leaving empty cells, and it removes a breakpoint layout rather than
+          adding three. */}
+      <div className="mt-4 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
         {links.map((l, i) =>
           l.href ? (
             <a key={i} href={l.href} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--terra-text)]">{l.t} &#8594;</a>
@@ -607,6 +633,9 @@ function Close({ d }: { d: any }) {
             <span key={i} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{l.t}</span>
           )
         )}
+        <a href="/pricing" className="rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)]">
+          Compare this trade with Pro &#8594;
+        </a>
       </div>
     </Box>
   );

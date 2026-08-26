@@ -1,8 +1,8 @@
 {
   "total": {
     "remCaps": 228,
-    "chCaps": 19,
-    "smPairings": 53
+    "chCaps": 20,
+    "smPairings": 52
   },
   "byFile": {
     "src/app/(site)/about-data/page.tsx": {
@@ -538,11 +538,11 @@
     "src/components/spine/cell/cell-view.tsx": {
       "remCaps": 1,
       "chCaps": 0,
-      "smPairings": 1
+      "smPairings": 0
     },
     "src/components/spine/cell/masthead.tsx": {
       "remCaps": 2,
-      "chCaps": 0,
+      "chCaps": 1,
       "smPairings": 0
     },
     "src/components/spine/city/city-view.tsx": {
