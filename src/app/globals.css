@@ -2295,13 +2295,21 @@
 
      One accent. Every studied design system writes that rule down; a second
      live hue here would be a structural defect, not a cosmetic one. */
-  /* atlas-500, which design-tokens.ts labels "primary accent (surfaces)". A
-     chart bar IS a surface, so this is the step the colour guide specifies.
-     CORRECTED 2026-08-21: this shipped as atlas-300 (#fb8469), which is a light
-     TINT, not the accent. The mistake came from reading FORM-CATALOG's
-     "terracotta #fb8469" as the primary rather than as one step of a ramp whose
-     own comments name which step does what. */
-  --chart-1: #e62200; /* atlas-500. The answer series, and only the answer */
+  /* THE ACCENT IS PINNED BY THE RULEBOOK AND IT IS #fb8469.
+     Rulebook v2 rule 37, unreversed and still in the changelog table: "Accent
+     terracotta #fb8469 marks answers only". That names the hex, so which step of
+     the ramp is the accent is not a reading of the colour guide, it is a founder
+     ruling that has already been made.
+     On 2026-08-21 this token was moved to atlas-500 on the argument that a chart
+     bar is a surface and the guide assigns atlas-500 to surfaces. The argument is
+     reasonable and it loses to a pinned value, which is what pinning is for.
+     WHAT A READER SAW IN THE MEANTIME: the trade page renders exactly one accent
+     fill, #fb8469, on its hundred-dollar bar, its break-even marker and its dots.
+     The one chart driven by this token drew its answer bar in a different, louder
+     red directly below them. One page, two reds for one idea.
+     Only two components read this token, both for their answer series, so this
+     puts both on the pinned accent and moves nothing else. */
+  --chart-1: #fb8469; /* atlas-300, the pinned accent (rulebook v2 section 37). The answer series, and only the answer */
   --chart-2: #57575b;
   --chart-3: #6f6f74;
   --chart-4: #9a9a9e;

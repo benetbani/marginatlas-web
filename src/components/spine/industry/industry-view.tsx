@@ -643,7 +643,12 @@ export function WhoItSuits({ d }: { d: any }) {
       <div className={`grid gap-5${both ? " sm:grid-cols-2" : ""}`}>
         {suits.length ? (
           <div>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Suits</div>
+            {/* A COLUMN LABEL IS FURNITURE, NOT AN ANSWER. Rule 37: the accent marks
+                answers only. "Suits" and "Think twice" are the two headings of a
+                two-column read, and one of them was accented while its twin was
+                muted, which told a reader the left column mattered more when the
+                whole point of the pair is that both do. */}
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Suits</div>
             <Bullets items={suits} />
           </div>
         ) : null}
@@ -697,8 +702,18 @@ function ClaimRow({ claim, real, realLabel, accent = false }: { claim: string; r
        have it, so on a phone the struck line takes the full row and the figure
        sits under it. No breakpoint: the row wraps when it must, at whatever
        width that turns out to be. */
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-md border border-[var(--c-border)] px-3 py-2.5">
-      <span className="min-w-0 flex-[1_1_11rem] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] line-through decoration-2 decoration-[var(--c-line-strong)]">{claim}</span>
+    /* NO BOX AROUND EACH CLAIM. Founder verdict F1, "you have just boxed it": a
+       bordered panel inside a bordered card is two edges around one idea. Each of
+       these rows carried its own rounded border inside the card's border, and
+       there are two of them, so the card held three nested outlines. Siblings are
+       separated by a rule, not by being individually boxed.
+       AND THE STRIKE READS AS A CANCELLATION NOW, not as a highlight. It was two
+       pixels thick in a pale line colour laid across muted grey text, which is the
+       shape of a highlighter pen: the eye read it as the claim being EMPHASISED,
+       on a card whose entire job is to cross the claim out. One pixel, in ink dark
+       enough to be a line rather than a wash. */
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 py-2.5 first:pt-0 last:pb-0">
+      <span className="min-w-0 flex-[1_1_11rem] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] line-through decoration-1 decoration-[var(--c-ink2)]">{claim}</span>
       <div className="ml-auto text-right">
         <Fig className={`block text-[length:var(--t-head)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{real}</Fig>
         <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{realLabel}</div>
@@ -727,7 +742,7 @@ export function Caveats({ d }: { d: any }) {
     <Box>
       <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" sample />
       {(hasSurvivalClaim || hasMarginClaim) ? (
-        <div className="space-y-2">
+        <div className="divide-y divide-[var(--c-border)]">
           {hasSurvivalClaim ? (
             <ClaimRow claim='"most fail within a year"' real={`${s.yr1_pct}%`} realLabel="actually trade past year one" accent />
           ) : null}

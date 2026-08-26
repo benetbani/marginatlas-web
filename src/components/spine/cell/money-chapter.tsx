@@ -228,12 +228,17 @@ export function CostToOpen({ d }: { d: any }) {
       {/* schematic, not a sentence: the total and the payback as two figure+label reads */}
       <div className="mb-3 flex flex-wrap items-end gap-x-6 gap-y-1">
         <div>
-          <CountFig value={total} fmt={(n) => money(n)} className="text-2xl text-[var(--c-ink)]" />
+          {/* THE ACCENT SITS ON THE CARD'S OWN ANSWER. This card is called "What it
+              costs to open one", and the cost to open was in plain ink while the
+              payback figure beside it wore the accent. The support figure was
+              carrying the mark that belongs to the answer, so the eye landed on the
+              second-most-important number on the card. Rule 37. */}
+          <CountFig value={total} fmt={(n) => money(n)} className="text-2xl text-[var(--terra-text)]" />
           <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to open the doors</div>
         </div>
         {paybackMonths != null ? (
           <div>
-            <Fig className="text-2xl text-[var(--terra-text)]">{paybackLabel(paybackMonths)}</Fig>
+            <Fig className="text-2xl text-[var(--c-ink)]">{paybackLabel(paybackMonths)}</Fig>
             <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to earn it back</div>
           </div>
         ) : null}
@@ -276,7 +281,14 @@ export function CostToOpen({ d }: { d: any }) {
                 <span
                   aria-hidden
                   className="absolute inset-y-0 left-0 rounded-[2px]"
-                  style={{ width: `${p}%`, background: it === topItems[0] ? "var(--terra)" : "var(--chart-4)" }}
+                  /* THE LONGEST BAR IS NOT AN ANSWER, IT IS THE LONGEST BAR. Rule 37
+                     gives the accent to answers only, and this card's answer is the
+                     total above it, which now carries it. The largest cost line was
+                     wearing it too, so the card had two accents and a reader's eye had
+                     two places to land. The colour was also telling them nothing the
+                     drawing did not already say: it is the longest bar on a shared
+                     track, which is the whole encoding. */
+                  style={{ width: `${p}%`, background: "var(--chart-4)" }}
                 />
               </span>
               <Fig className="text-right text-[12.5px] text-[var(--c-ink)]">{money(v)}</Fig>
