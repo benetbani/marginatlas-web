@@ -1,6 +1,10 @@
 /**
- * build_final_pages , render the four rebuilt page types whole, with the real
- * stylesheet, into standalone files the founder can open.
+ * build_final_pages , render every page a site visitor can reach whole, with the
+ * real stylesheet, into standalone files the founder can open. Four are the
+ * rebuilt spine page types on bundled seeds (city, trade, industry, hood); three
+ * are the live legacy routes with real data fetches (home, the countries list,
+ * the GB country page). See the second render loop below for why the legacy
+ * three needed a different renderer than the first four.
  *
  * WHAT THESE FILES CANNOT SHOW, and it has already misled me once. They are STATIC
  * markup with no React runtime. Anything that draws itself in the browser draws
@@ -14,7 +18,8 @@
  * running page.
  */
 import * as React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
+import { renderToStaticMarkup, renderToPipeableStream } from "react-dom/server";
+import { Writable } from "node:stream";
 import { writeFileSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { buildSpineCitySeed } from "../src/lib/spine/adapt_city";
@@ -26,6 +31,10 @@ import { SpineCellBody } from "../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../src/components/spine/industry/industry-view";
 import { SpineHoodBody } from "../src/components/spine/hood/hood-view";
 import { SpineShell } from "../src/components/spine/shell";
+import { SiteChrome } from "../src/components/SiteChrome";
+import HomePage from "../src/app/page";
+import CountriesHub from "../src/app/(site)/countries/page";
+import CountryPage from "../src/app/[country]/page";
 
 /* THE STYLESHEET IS REGENERATED, NOT READ FROM A SNAPSHOT, and this cost two
    wrong readings in one session. It used to be a file captured by hand months
@@ -123,6 +132,93 @@ async function main() {
     const body = renderToStaticMarkup(
       SELF_SHELLED.has(slug) ? inner : React.createElement(SpineShell as any, null, inner),
     );
+    writeFileSync(`docs/loop/artifacts/final-pages/${slug}.html`, page(title, body), "utf8");
+    console.log(`  ${slug.padEnd(26)} ${Math.round(body.length / 1024)}KB`);
+  }
+
+  /* THE THREE SURFACES ABOVE COULD NOT REACH. A site visitor can land on seven
+     page types; the loop above only ever rendered four. Home, the countries
+     list and the legacy GB country page are the LIVE ROUTES' own component
+     trees, not bundled-seed bodies, and two of the three fetch real data the
+     way the four jobs above never had to.
+     renderToStaticMarkup CANNOT render them. It is a synchronous renderer, and
+     an async server component returns a Promise rather than a React node, which
+     throws "A component suspended while responding to synchronous input" the
+     instant renderToStaticMarkup reaches it. Home is `async function HomePage`
+     itself; the legacy country page is worse, because CountryPage the DEFAULT
+     EXPORT is a plain sync function that returns
+     `<SiteChrome><CountryPageBody/></SiteChrome>` with the async body left
+     UNAWAITED inside the tree, so even `await CountryPage(props)` only resolves
+     the outer call and leaves the inner Promise for the renderer to trip on.
+     This is not a new problem: scripts/spikes/render_country.tsx and
+     scripts/spikes/render_home_to_scratch.tsx hit exactly this wall rendering
+     these same two route files and solved it the same way, `renderAll` below is
+     that solution, reused rather than reinvented a third time. */
+  function renderAll(el: React.ReactElement): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const chunks: Buffer[] = [];
+      const sink = new Writable({
+        write(chunk, _enc, cb) {
+          chunks.push(Buffer.from(chunk));
+          cb();
+        },
+      });
+      sink.on("finish", () => resolve(Buffer.concat(chunks).toString("utf8")));
+      const { pipe, abort } = renderToPipeableStream(el, {
+        onAllReady() {
+          pipe(sink);
+        },
+        onError(e) {
+          abort();
+          reject(e);
+        },
+      });
+    });
+  }
+
+  /* Output slugs per the brief, exactly: home, countries-list, country-gb.
+     Each entry is an async THUNK rather than a resolved element, mirroring
+     scripts/spikes/render_country.tsx and render_home_to_scratch.tsx: `await`
+     the default export's own call first (a no-op for the two that are already
+     plain sync functions, real work for HomePage which awaits its own data
+     loaders), THEN hand the result to renderAll so it only has to wait out
+     whatever async server component is still nested inside, and so a bad slug
+     throwing NEXT_NOT_FOUND surfaces inside the try block below rather than as
+     an unhandled rejection (the route working correctly, not the harness
+     breaking). */
+  const extraJobs: Array<[string, string, () => Promise<React.ReactElement>]> = [
+    ["home", "Home", async () => await HomePage()],
+    [
+      "countries-list",
+      "All countries",
+      // /countries has no <SiteChrome> of its own. Production wraps it via
+      // src/app/(site)/layout.tsx, which this harness never runs, so the wrap
+      // happens here by hand, the same reason the four jobs above wrap in
+      // SpineShell explicitly.
+      async () => React.createElement(SiteChrome as any, null, React.createElement(CountriesHub as any)),
+    ],
+    [
+      "country-gb",
+      "United Kingdom, the legacy country page",
+      // Flags default OFF in this harness (no NEXT_PUBLIC_SPINE_REFORM* var is
+      // set in .env.local), and isSpineReformEnabledFor("country") hardcodes its
+      // own master-flag override to false besides, so this always takes the
+      // LEGACY branch, never the illustrative spine scaffold. Confirmed by
+      // reading src/lib/feature_flags.ts, not assumed.
+      async () => await CountryPage({ params: Promise.resolve({ country: "gb" }) }),
+    ],
+  ];
+
+  for (const [slug, title, build] of extraJobs) {
+    let body: string;
+    try {
+      const el = await build();
+      body = await renderAll(el);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      console.log(`  ${slug}: THREW ${msg}`);
+      continue;
+    }
     writeFileSync(`docs/loop/artifacts/final-pages/${slug}.html`, page(title, body), "utf8");
     console.log(`  ${slug.padEnd(26)} ${Math.round(body.length / 1024)}KB`);
   }
