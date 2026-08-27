@@ -23,6 +23,21 @@
  *
  * Does NOT wrap itself in SpineShell; the route wraps it, matching the city
  * body. No em-dashes, no raw hex, tokens only.
+ *
+ * allow-unmarked: Task 9 scaffold, no section built yet, see below.
+ *
+ * verify_sample_tags.ts now resolves the bundled illustrative country seeds
+ * (src/lib/spine-seeds/countries/*.json, all "modeled" or "placeholder") to
+ * THIS file rather than the old workshop preview (finding C1b, 2026-08-28
+ * review), which is the correct target once this file is what a reader
+ * actually gets. It fails honestly today, because this file mounts no
+ * section and imports nothing from the design-system tag kit; the exemption
+ * above records why rather than silencing the gate's own logic. Remove it the
+ * moment Task 10 wires the honesty-marking tag into a section here (see
+ * kit.tsx), which will make the gate pass on its own and this line moot.
+ * DELIBERATELY not spelling the tag's own component name in this paragraph:
+ * this gate matches on that literal string, so writing it here would flip the
+ * gate to an accidental pass instead of the honest exemption this records.
  */
 import * as React from "react";
 

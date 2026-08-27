@@ -18,12 +18,30 @@
  * no GDP per capita, no population, no net wealth anywhere in this file.
  *
  * EVERY BLOCK CARRIES `_meta.confidence`, one of "measured" | "modeled" |
- * "placeholder", and it is honest per source rather than optimistic. This is
+ * "placeholder", and its value is the WEAKEST confidence of any fact the block
+ * carries, never the confidence of its headline fact alone (finding I1, the
+ * 2026-08-28 review round: hero used to report "measured" whenever the take
+ * computed even when a support fact, sales tax for a tier-B profile, was
+ * "modeled", so 60 countries got a measured block hiding a modeled fact
+ * inside; the same rule now applies to every block, not hero alone). This is
  * plan correction 4: the legacy country route rendered from lib accessors, so
  * scripts/verify_sample_tags.ts (which reads seeds) could not see it, and the
- * fabricated figures on it passed the chain untouched. A seed puts the page back
- * under the gate. A modeled figure printed as real is the worst defect in the
- * system (rulebook v2 rule 4), so where this file is unsure it says "modeled".
+ * fabricated figures on it passed the chain untouched.
+ *
+ * A SEED ALONE DOES NOT PUT THE PAGE BACK UNDER THE GATE, and saying so here
+ * was wrong (finding C1, same review round). verify_sample_tags.ts walks JSON
+ * files under src/lib/spine-seeds/; this file is a runtime function awaited
+ * from a route, and a JSON walk cannot see a runtime function no matter how
+ * honest its tags are. Two changes make the claim true instead of
+ * aspirational: scripts/verify_country_seed_confidence.mjs is a new STATIC
+ * gate that parses THIS file's source directly and fails if any block lacks
+ * `_meta.confidence` or if the file ever reads a payroll figure from
+ * country_profile_v2 again; and verify_sample_tags.ts's "countries" render
+ * group now resolves to src/components/spine/country/country-view.tsx, the
+ * real body, instead of the workshop preview that always carried SampleTag
+ * regardless of what the real page would ever render. A modeled figure
+ * printed as real is the worst defect in the system (rulebook v2 rule 4), so
+ * where this file is unsure it says "modeled".
  *
  * THE FIVE PLAN CORRECTIONS THIS FILE IMPLEMENTS (2026-08-28 brief):
  *
@@ -40,6 +58,15 @@
  *    the hero, the peers table and the funnel all use `cit` from that one file,
  *    never the separate small-business effective rate, so one page never
  *    computes one quantity two ways (rulebook v2 rule 8).
+ *    CORRECTED 2026-08-28 (finding I2): the rule had a gap. The `hiring`
+ *    block's loaded multiplier still read profile.fully_loaded_labor_multiplier,
+ *    built from the excluded country_profile_v2 payroll table, and printed it
+ *    beside employer_payroll_pct from this file's one true source, so the two
+ *    payroll figures on one page could disagree (Cyprus: 8.4 percent beside a
+ *    multiplier that adds 36.9 percent). It is now payroll_only_multiplier,
+ *    1 + employerSocial from src/lib/tax/country_rates.ts, so the whole page
+ *    carries exactly one payroll number, not two that happen to sit near
+ *    each other.
  * 2. CITY COORDINATES. No row in src/lib/cities/top100.json carries a latitude
  *    or a longitude (counted: 0 of 102), so the map had nothing to plot. The
  *    coordinates come from src/lib/cities/coordinates_curated.json, a curated
@@ -198,6 +225,31 @@ function median(values: number[]): number | undefined {
   return s.length % 2 === 0 ? (s[mid - 1] + s[mid]) / 2 : s[mid];
 }
 
+/**
+ * Finding I1 (2026-08-28 review round). A block's confidence is the WEAKEST
+ * confidence of any fact it carries, never the confidence of its headline
+ * fact alone: hero used to report "measured" whenever the take computed even
+ * when a support fact (sales tax, a tier-B profile fallback) was "modeled",
+ * so 60 countries got a measured block hiding a modeled fact inside.
+ * "measured" beats "modeled" beats "placeholder", so the weakest one present
+ * wins. Applied to every block that assembles from more than one source
+ * (hero, lenses, hiring); a single-source block still calls this with a
+ * one-element list, so the rule is uniform rather than special-cased per
+ * block. An empty list defaults to "placeholder": a block asserting a
+ * confidence about zero facts should never claim to be measured.
+ */
+const CONFIDENCE_WEAKNESS: Record<SpineConfidence, number> = {
+  measured: 0,
+  modeled: 1,
+  placeholder: 2,
+};
+function weakestConfidence(confidences: SpineConfidence[]): SpineConfidence {
+  if (confidences.length === 0) return "placeholder";
+  return confidences.reduce((worst, c) =>
+    CONFIDENCE_WEAKNESS[c] > CONFIDENCE_WEAKNESS[worst] ? c : worst,
+  );
+}
+
 /* ------------------------------------------------------------------------- */
 /* World reference values, computed ONCE at module scope from held data only.  */
 /* ------------------------------------------------------------------------- */
@@ -329,13 +381,23 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
     profileHeld && isNum(v) ? v : undefined;
 
   /* ===================== HERO , THE GOVERNMENT TAKE ======================= */
-  /* The one dominant figure (Task 10): what the state takes of each 100 of
-     profit, composed from the business tax rate and the employer payroll rate.
-     BOTH come from src/lib/tax/country_rates.ts and nowhere else, so the figure
-     the hero prints and the rate the money block's arithmetic uses are the same
-     number. Sales tax is named beside it and never added into it: the customer
-     carries it, so it is not the owner's burden, which is the reason the legacy
-     view model already gave and it is correct.
+  /* The one dominant figure (Task 10), and finding C2 (2026-08-28 review) is
+     why it is named and unitised the way it now is. The old name,
+     government_take_pct, and the old lens unit, pct_of_profit, both implied a
+     single denominator: "38.8 of each 100 of profit." That sentence is false
+     for every shop, because the figure sums a tax on PROFIT (the business tax
+     rate) with a tax on WAGES (the employer payroll rate), and profit and
+     wages are different bases. The field is government_take_composed_pct, the
+     word "composed" is load-bearing, and the two components ride beside the
+     total everywhere it appears (take_components on the hero, profit_tax_pct
+     and payroll_tax_pct on the tax_burden lens) so a reader is never shown the
+     sum without also being shown what it is a sum OF.
+
+     BOTH numbers come from src/lib/tax/country_rates.ts and nowhere else, so
+     the figure the hero prints and the rate the money block's arithmetic uses
+     are the same number. Sales tax is named beside it and never added into it:
+     the customer carries it, so it is not the owner's burden, which is the
+     reason the legacy view model already gave and it is correct.
 
      Self-omits when either rate is missing, which is 65 of 195 countries. It
      does not fall back to the country profile: that is the source conflict plan
@@ -422,18 +484,28 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
     });
   }
 
+  /* Finding I1 (2026-08-28 review). The take itself carries no tiering
+     (src/lib/tax/country_rates.ts makes no measured/modeled distinction), so
+     it counts as "measured" whenever present; every support fact contributes
+     its OWN confidence, so a tier-B country's fallback sales-tax fact
+     correctly pulls the whole hero down to "modeled" instead of hiding inside
+     a block that reads "measured". */
+  const heroFactConfidences: SpineConfidence[] = [];
+  if (governmentTakePct != null) heroFactConfidences.push("measured");
+  for (const fact of support) heroFactConfidences.push(fact.confidence);
+
   const hero =
     governmentTakePct != null || support.length > 0
       ? {
           _meta: {
-            confidence: (governmentTakePct != null
-              ? "measured"
-              : support.every((s) => s.confidence === "measured")
-                ? "measured"
-                : "modeled") as SpineConfidence,
+            confidence: weakestConfidence(heroFactConfidences),
             source: "Published tax rates and registration fees for this country.",
           },
-          government_take_pct: governmentTakePct,
+          // Finding C2: named government_take_COMPOSED_pct, not
+          // government_take_pct. The figure sums a tax on profit and a tax on
+          // wages, two different denominators, so no single "pct of X"
+          // sentence about it is true; "composed" says so in the name itself.
+          government_take_composed_pct: governmentTakePct,
           // Named separately so the hero figure can never print as an
           // unexplained total: a reader can see both halves of it.
           take_components:
@@ -511,22 +583,39 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
     index_vs_world?: number;
     context?: Record<string, number | undefined>;
     confidence: SpineConfidence;
+    // The tax_burden lens's two components, so its composed total can never
+    // render without what it is a sum of (finding C2). Optional because only
+    // one lens carries them; every other lens is already single-basis.
+    profit_tax_pct?: number;
+    profit_tax_basis?: string;
+    payroll_tax_pct?: number;
+    payroll_tax_basis?: string;
   };
   const lensList: Lens[] = [];
 
   // 1. Tax burden. The RANKED version of the hero number (the July-5
   //    ratification: reinforcing, not repeating), so it is the same composed
-  //    take from src/lib/tax/country_rates.ts, never a second formula.
+  //    take from src/lib/tax/country_rates.ts, never a second formula. Unit is
+  //    "composed_pct", not "pct_of_profit" (finding C2): the value sums a
+  //    profit-based tax and a wage-based tax, so no single denominator
+  //    sentence about it is true. profit_tax_pct and payroll_tax_pct ride
+  //    beside the composite as first-class fields with their bases named.
+  //    RULE FOR TASK 10: the two components render beside the total, never
+  //    the total alone.
   if (governmentTakePct != null) {
     lensList.push({
       key: "tax_burden",
       label: "What the state takes",
       value: governmentTakePct,
-      unit: "pct_of_profit",
+      unit: "composed_pct",
       inverted: true,
       rank_pct: rankPct(governmentTakePct, WORLD.takePool, true),
       context: { world_median_pct: asWhole(WORLD.takeMedian) },
       confidence: "measured",
+      profit_tax_pct: corporatePct,
+      profit_tax_basis: "pct of taxable profit",
+      payroll_tax_pct: payrollPct,
+      payroll_tax_basis: "pct of gross wages",
     });
   }
   // 2. Ease of entry. src/lib/economics/country_metrics.ts, daysToStart.
@@ -605,9 +694,12 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
     lensList.length >= 4
       ? {
           _meta: {
-            confidence: (lensList.every((l) => l.confidence === "measured")
-              ? "measured"
-              : "modeled") as SpineConfidence,
+            // Finding I1: the weakest lens confidence, not a binary
+            // all-measured check. The old ternary called the block "modeled"
+            // the instant one lens was not "measured", which happened to read
+            // right only because no lens has ever been tagged "placeholder";
+            // weakestConfidence is correct for that case too, not by luck.
+            confidence: weakestConfidence(lensList.map((l) => l.confidence)),
             source: "One published figure per lens, each with its own unit.",
           },
           list: lensList,
@@ -836,16 +928,48 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
 
      Retention and turnover are NOT here and are not estimated: the repo holds no
      country-wide row for either, and a made-up retention score is the exact
-     defect this rebuild exists to remove. */
+     defect this rebuild exists to remove.
+
+     FINDING I2 (2026-08-28 review): the multiplier used to read
+     profile.fully_loaded_labor_multiplier, built from the country_profile_v2
+     payroll table this file otherwise excludes (plan correction 1), and sat
+     beside employer_payroll_pct from the tax module: a rival source inside a
+     single-source block. Cyprus printed 8.4 percent beside a multiplier that
+     adds 36.9 percent, two disagreeing stories about the same on-cost on one
+     page. It is now payroll_only_multiplier, 1 + employerSocial from the SAME
+     src/lib/tax/country_rates.ts source as employer_payroll_pct, and the name
+     says what it excludes: pension autoenrolment, employer insurance and paid
+     leave, all of which the profile's rival figure folded in and this one does
+     not. Omitted, never estimated, when the tax module holds no rate. */
   const wageFloor = prof(profile.minimum_wage_annual_usd);
   const typicalPay = prof(profile.median_wage_full_time_usd);
+  const labourForcePct = asWhole(prof(profile.labor_force_participation_pct));
+  const informalSharePct = asWhole(prof(profile.informal_economy_share_pct));
+  const payrollOnlyMultiplier =
+    rates.employerSocial != null ? Math.round((1 + rates.employerSocial) * 100) / 100 : undefined;
+  /* FINDING I1 (2026-08-28 review): the weakest confidence of the facts this
+     block actually carries, not a special case over two of its six fields.
+     The old ternary called the whole block "modeled" the instant payrollPct
+     was absent, even when every other fact present was tier-A measured, and
+     called it "measured" only when both payroll AND the profile tier lined
+     up, which is the identical defect from the opposite direction. */
+  const hiringFactConfidences: SpineConfidence[] = [];
+  // employer_payroll_pct: src/lib/tax/country_rates.ts, no tiering, measured
+  // whenever the country holds a rate.
+  if (payrollPct != null) hiringFactConfidences.push("measured");
+  if (wageFloor != null) hiringFactConfidences.push(profileConfidence);
+  if (typicalPay != null) hiringFactConfidences.push(profileConfidence);
+  // payroll_only_multiplier is derived from the same measured rate as
+  // employer_payroll_pct, so it carries the same confidence.
+  if (payrollOnlyMultiplier != null) hiringFactConfidences.push("measured");
+  if (labourForcePct != null) hiringFactConfidences.push(profileConfidence);
+  if (informalSharePct != null) hiringFactConfidences.push(profileConfidence);
+
   const hiring =
     payrollPct != null || wageFloor != null || typicalPay != null
       ? {
           _meta: {
-            confidence: (payrollPct != null && profileConfidence === "measured"
-              ? "measured"
-              : "modeled") as SpineConfidence,
+            confidence: weakestConfidence(hiringFactConfidences),
             source: "Published payroll rates beside this country's own pay figures.",
           },
           // src/lib/tax/country_rates.ts, employer_social. Measured everywhere
@@ -853,12 +977,9 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
           employer_payroll_pct: payrollPct,
           wage_floor_usd_year: wageFloor != null ? Math.round(wageFloor) : undefined,
           typical_pay_usd_year: typicalPay != null ? Math.round(typicalPay) : undefined,
-          // src/lib/economic_profile: 1 + everything the employer adds.
-          loaded_multiplier: prof(profile.fully_loaded_labor_multiplier) != null
-            ? Math.round(profile.fully_loaded_labor_multiplier * 100) / 100
-            : undefined,
-          labour_force_pct: asWhole(prof(profile.labor_force_participation_pct)),
-          informal_share_pct: asWhole(prof(profile.informal_economy_share_pct)),
+          payroll_only_multiplier: payrollOnlyMultiplier,
+          labour_force_pct: labourForcePct,
+          informal_share_pct: informalSharePct,
           informal_is_burden: true,
           confidence_pay: profileConfidence,
         }

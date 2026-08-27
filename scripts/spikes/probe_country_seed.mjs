@@ -81,7 +81,7 @@ for (const iso of SUBJECTS) {
       defects += 1;
     }
   }
-  const takeVal = seed.hero ? seed.hero.government_take_pct : undefined;
+  const takeVal = seed.hero ? seed.hero.government_take_composed_pct : undefined;
   const cityCount = seed.cities ? seed.cities.list.length : 0;
   const mapCount = seed.cities && seed.cities.map_points ? seed.cities.map_points.length : 0;
   const funnel = seed.money ? `${seed.money.coverage.resolved} of ${seed.money.coverage.attempted}` : "block omitted";

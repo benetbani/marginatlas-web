@@ -19,11 +19,20 @@
  * spine-city/city-view.tsx, spineHoodSeed -> spine-hood/hood-view.tsx
  * (which itself imports and mounts NeighborhoodExplorer.tsx , included in
  * its render group), spineIndustrySeed -> spine-industry/industry-view.tsx,
- * SPINE_COUNTRIES -> spine/page.tsx directly, confirmed for GB/DE/FR/NL/IE
- * all resolving to the one country page). A render group is every .tsx
- * file in the same dev-route directory (mirrors verify_bar_budget's
- * per-page-type grouping), since a directory's masthead/chapters/forms
- * files commonly share one Movement/Head/Rail `sample` convention.
+ * SPINE_COUNTRIES -> src/components/spine/country/country-view.tsx). A render
+ * group is every .tsx file in the same dev-route directory (mirrors
+ * verify_bar_budget's per-page-type grouping), since a directory's
+ * masthead/chapters/forms files commonly share one Movement/Head/Rail
+ * `sample` convention.
+ *
+ * THE COUNTRIES MAPPING CHANGED 2026-08-28 (finding C1b), and it is worth
+ * saying why it was wrong before. It used to point at the workshop preview,
+ * src/app/dev/spine/page.tsx, which renders these same JSON seeds directly
+ * and has always carried SampleTag, so this gate read PASS no matter what the
+ * live country page would ever mark. The country page now has a real adapter
+ * (src/lib/spine/adapt_country.ts) and a real body under src/components/spine,
+ * so the render group this gate checks has to be the file that determines
+ * what a reader sees, not a workshop file that never ships to one.
  *
  * A NEW seed file under an unrecognized subdirectory resolves to nothing
  * and is reported as a WARN (ambiguous), never silently skipped and never
@@ -96,7 +105,15 @@ function resolveRenderGroup(seedRelPath: string): { label: string; files: string
   }
   if (dir === "cities") return { label: "spine-city", files: group("city") };
   if (dir === "industries") return { label: "spine-industry", files: group("industry") };
-  if (dir === "countries") return { label: "spine (country)", files: ["src/app/dev/spine/page.tsx"] };
+  if (dir === "countries") {
+    // Finding C1b (2026-08-28 review round). Points at the real body,
+    // src/components/spine/country/country-view.tsx, not the workshop preview
+    // that used to sit here. See the header note above for why the swap.
+    return {
+      label: "spine (country)",
+      files: ["src/components/spine/country/country-view.tsx"],
+    };
+  }
   return null;
 }
 

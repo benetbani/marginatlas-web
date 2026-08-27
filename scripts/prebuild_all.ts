@@ -390,6 +390,18 @@ const GATES: Gate[] = [
   { name: "subsection-icons", script: "scripts/verify_subsection_icons.ts" },
   { name: "trade-set", script: "scripts/verify_trade_set.ts" },
   { name: "sample-tags", script: "scripts/verify_sample_tags.ts" },
+  /* Finding C1a, 2026-08-28 review round on src/lib/spine/adapt_country.ts.
+     buildSpineCountrySeed needs the database for its money block, so it can
+     never be called from a gate (this chain must never need the network). A
+     STATIC gate instead: parse the adapter's own source (comments stripped),
+     confirm every block in its returned seed object carries _meta.confidence,
+     and confirm the file never imports country_profile_v2 or reads
+     employer_social_pct, so plan correction 1 (one source for payroll and tax)
+     stays enforced mechanically rather than by review alone. Negative-tested
+     against a scratch copy with one block's _meta deleted (caught, and
+     isolated to that one block) and a scratch copy with a rival import added
+     (caught). */
+  { name: "country-seed-confidence", script: "scripts/verify_country_seed_confidence.mjs" },
   { name: "no-parent-repo-reads", script: "scripts/verify_no_parent_repo_reads.ts" },
   { name: "two-surface-levels", script: "scripts/verify_two_surface_levels.ts" },
   /* A route with no metadata export has no title of its own. 101 page.tsx
