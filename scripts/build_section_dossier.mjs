@@ -2,10 +2,21 @@
 /**
  * build_section_dossier , THE EVIDENCE FOR ONE CRITIQUE ROUND.
  *
- * Enumerates every SECTION and every SUBSECTION on the four London pages, gathers
- * the evidence each of the nine critique dimensions needs, and captures each node
- * as a picture at three magnifications. Writes one dossier the critique sheet
- * renders and the round record is scored against.
+ * Enumerates every SECTION and every SUBSECTION across the seven pages a visitor
+ * can actually reach (four rebuilt spine types plus the three live legacy routes:
+ * home, the countries list, the GB country page), gathers the evidence each of
+ * the nine critique dimensions needs, and captures each node as a picture at
+ * three magnifications. Writes one dossier the critique sheet renders and the
+ * round record is scored against.
+ *
+ * THE LEGACY THREE HAVE NO SPINE MARKUP. The four rebuilt pages carry glass
+ * cards (backdrop-filter) as their section unit, and subsections fall out of a
+ * card's direct children. Home, the countries list and the GB country page were
+ * never rebuilt to that kit: their sections are plain `<section>`/`<article>`/
+ * `<nav>` landmarks with backdrop-filter computing to none, so the card query
+ * returns zero and harvest() falls back to walking those landmarks instead. See
+ * the LEGACY PAGE FALLBACK block below for how a band is chosen and why
+ * subsections are not attempted for these three.
  *
  * WHY SUBSECTIONS. Every previous round judged outermost cards and nothing else.
  * A card can pass while the labelled block inside it has no hierarchy, its own
@@ -37,7 +48,10 @@ import { chromium } from "playwright";
 
 const OUT_DIR = "E:/atlas/design/critique";
 const CROP_DIR = `${OUT_DIR}/crops`;
-const PAGES = ["city-london", "cell-london-restaurants", "industry-restaurants", "hood-london"];
+const PAGES = [
+  "city-london", "cell-london-restaurants", "industry-restaurants", "hood-london",
+  "home", "countries-list", "country-gb",
+];
 const argv = process.argv.slice(2);
 const CROPS = !argv.includes("--no-crops");
 const ONLY = argv.includes("--page") ? argv[argv.indexOf("--page") + 1] : null;
@@ -205,10 +219,88 @@ function harvest() {
     };
   }
 
+  const out = [];
+
+  /* LEGACY PAGE FALLBACK, keyed on structure, never on slug. The four rebuilt
+     pages are bare spine bodies with no site chrome around them; the three live
+     routes wrap in <SiteChrome>, which is <header> and <footer>. That wrap is
+     the tell, not an empty card query: home.html DOES have a handful of stray
+     `<div class="atlas-card">` panels nested inside its `<section>`s that would
+     satisfy the old backdrop-filter query on their own and, read as "found some
+     cards", would have sent this page down the spine branch with eleven of its
+     twelve sections and its own chrome never seen. */
+  const isLegacy = !!document.querySelector("header") && !!document.querySelector("footer");
+
+  if (isLegacy) {
+    const isDecor = (el) => el.getAttribute("aria-hidden") === "true";
+    const isBand = (el) => {
+      const r = el.getBoundingClientRect();
+      return r.width > 20 && r.height > 20;
+    };
+
+    /* The candidate unit is a semantic landmark, not a styled card , these pages
+       have no shared card class to lean on, only the tags the markup actually
+       uses. `nav` catches the sticky table-of-contents rail beside the country
+       page's sections, itself a band a reader sees and scrolls past. */
+    const landmarks = [...document.querySelectorAll("header, footer, nav, section, article")]
+      .filter((el) => !isDecor(el) && isBand(el));
+
+    const landmarkChildren = (el) => landmarks.filter((o) => o !== el && el.contains(o)
+      && !landmarks.some((m) => m !== el && m !== o && el.contains(m) && m.contains(o)));
+
+    /* A LANDMARK THAT IS ALMOST ENTIRELY ITS OWN CHILDREN CARRIES NO BAND OF ITS
+       OWN. The countries-list `<article>` is 4046px and 3807 of that is an inner
+       `<header>` plus six `<section>`s , descend, or the whole page becomes one
+       node, which is the failure this fallback exists to avoid. A single nested
+       landmark is a different shape: a lens table nested inside its own country
+       section is 338 of that section's 452px, and descending there would cut a
+       real band in half rather than unwrap a see-through layout div. Two or more
+       nested landmarks covering most of the parent is the wrapper signature;
+       one nested landmark never is. */
+    const bands = [];
+    const visit = (el) => {
+      const kids = landmarkChildren(el);
+      const ownH = el.getBoundingClientRect().height;
+      const kidsH = kids.reduce((a, k) => a + k.getBoundingClientRect().height, 0);
+      if (kids.length >= 2 && kidsH >= ownH * 0.75) { kids.forEach(visit); return; }
+      bands.push(el);
+    };
+    landmarks.filter((el) => !landmarks.some((o) => o !== el && o.contains(el))).forEach(visit);
+
+    /* A VISIBLE BAND WITH NO SEMANTIC TAG AT ALL, e.g. the newsletter strip
+       between main and the footer on all three of these pages. Only direct
+       children of body or main qualify, so the layout div that wraps every
+       section on the home page is never a candidate here , it CONTAINS a
+       landmark and is excluded by `covered` below, leaving the sections inside
+       it to be found on their own. */
+    const covered = (el) => landmarks.some((l) => el.contains(l) || l.contains(el));
+    const divBands = [];
+    for (const root of [document.body, document.querySelector("main")]) {
+      if (!root) continue;
+      for (const el of [...root.children]) {
+        if (el.tagName !== "DIV" || isDecor(el) || !isBand(el) || covered(el) || divBands.includes(el)) continue;
+        divBands.push(el);
+      }
+    }
+
+    const ordered = [...bands, ...divBands]
+      .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+
+    /* SUBSECTION DETECTION IS SKIPPED HERE. These pages carry no honest signal
+       for it , no rail, no card composed of labelled blocks , so every band
+       is kind "section" and nothing is kind "subsection" or "rail". */
+    ordered.forEach((el, i) => {
+      const sec = measure(el, "section", `${i}`);
+      if (!sec) return;
+      sec.label = sec.heading || `section ${i}`;
+      out.push(sec);
+    });
+    return out;
+  }
+
   const cards = [...document.querySelectorAll("div")].filter((e) => getComputedStyle(e).backdropFilter !== "none");
   const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
 
-  const out = [];
   outer.forEach((card, i) => {
     const sec = measure(card, "section", `${i}`);
     if (!sec) return;
