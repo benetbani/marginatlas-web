@@ -58,28 +58,23 @@ function walk(d, out = []) {
   return out;
 }
 
-/* ONE KNOWN LEAK, NAMED, WITH ITS REASON AND ITS EXIT.
-   This is a hole in the gate and it is recorded as one rather than hidden.
-   Do not add a second entry. If you are tempted to, move the module instead.
+/* ZERO KNOWN LEAKS, AND THE ONE THAT WAS HERE MET ITS OWN EXIT CONDITION.
 
-   src/app/[country]/page.tsx imports the DEFAULT EXPORT of a dev route page and
-   renders it as a component:  import SpineCountry from "@/app/dev/spine/page".
-   That is a different and worse shape than the four view modules moved on
-   2026-08-09: those were components living in the wrong folder, this is a whole
-   112KB route (1,666 lines) being mounted inside another route.
+   src/app/[country]/page.tsx used to import the DEFAULT EXPORT of a dev route
+   page and render it as a component: `import SpineCountry from
+   "@/app/dev/spine/page"`. It was allowed on a written exit condition: "when the
+   country page gets an honest data adapter, its body becomes a component under
+   src/components/spine/country/ and this entry is deleted along with the
+   allowance."
 
-   It is left in place for now on two grounds, both checkable. It sits behind
-   isSpineReformEnabledFor("country"), which returns false and whose own comment
-   records that the master flag can never enable it: "Illustrative hero has no
-   honest country-level source." And untangling a route page into a component is
-   not a move, it is a rewrite, which is not something to start at the end of a
-   long session on the largest file in src/app.
+   That happened on 2026-08-28. src/lib/spine/adapt_country.ts is the adapter and
+   src/components/spine/country/country-view.tsx is the body, so the route mounts
+   a component from src/components and reaches into the workshop for nothing.
+   The gate caught the closure itself and asked for this deletion, which is the
+   allowance behaving exactly as it was written to.
 
-   EXIT CONDITION: when the country page gets an honest data adapter, its body
-   becomes a component under src/components/spine/country/ and this entry is
-   deleted along with the allowance. Until then the leak is one line, it is
-   here, and it is counted. */
-const KNOWN_LEAKS = new Set(["src/app/[country]/page.tsx"]);
+   Do not add an entry back. If you are tempted to, move the module instead. */
+const KNOWN_LEAKS = new Set([]);
 
 let failed = 0;
 

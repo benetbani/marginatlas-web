@@ -106,7 +106,8 @@ import {
 } from "@/lib/countries/country_view";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
-import SpineCountry from "@/app/dev/spine/page";
+import { SpineCountryBody } from "@/components/spine/country/country-view";
+import { buildSpineCountrySeed } from "@/lib/spine/adapt_country";
 import { SiteChrome } from "@/components/SiteChrome";
 
 // Keep section-order constant referenced for type checking.
@@ -410,13 +411,19 @@ function EngravedSection({
 }
 
 async function CountryPageBody({ params }: { params: Promise<Params> }) {
-  // Spine reform (flag-gated, default OFF). The spine body renders the bundled
-  // GB seed regardless of `params`; that is intentional for this scaffold and
-  // never ships live because the flag stays OFF until real-data adapters land.
+  // Spine reform (flag-gated, default OFF). The branch now mounts the REAL body
+  // with the REAL seed (buildSpineCountrySeed), never the bundled illustrative
+  // dev sample it used to render for every country regardless of `params`. The
+  // adapter returns undefined for a code the taxonomy does not hold, so this
+  // notFound()s exactly as the non-spine page below does. The flag stays OFF and
+  // the master switch cannot open it while the body is still a scaffold.
   if (isSpineReformEnabledFor("country")) {
+    const { country: spineCountry } = await params;
+    const spineData = await buildSpineCountrySeed(spineCountry);
+    if (!spineData) notFound();
     return (
       <SpineShell>
-        <SpineCountry />
+        <SpineCountryBody data={spineData} />
       </SpineShell>
     );
   }

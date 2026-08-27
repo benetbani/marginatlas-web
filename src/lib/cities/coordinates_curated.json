@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "created": "2026-08-28",
+  "source": "Public atlas facts: the city-centre latitude and longitude of each place, rounded to four decimals. These are geographic constants, not measurements of anything commercial, so they carry no confidence tier of their own beyond t1 (published, checkable on any map). Keyed by the city id in src/lib/cities/top100.json so a row can never drift from the city set it draws.",
+  "why": "No row in top100.json carries coordinates (counted 2026-08-27: 0 of 102), so the country map had nothing to plot. This file holds the coordinates for the cities the country pages plot, and nothing else. Add a country's cities here when that country's map is built; the map self-omits below three coordinate-carrying cities rather than drawing a thin scatter.",
+  "cities": {
+    "london": { "iso2": "GB", "name": "London", "lat": 51.5074, "lng": -0.1278 },
+    "birmingham-uk": { "iso2": "GB", "name": "Birmingham", "lat": 52.4862, "lng": -1.8904 },
+    "manchester": { "iso2": "GB", "name": "Manchester", "lat": 53.4808, "lng": -2.2426 },
+    "edinburgh": { "iso2": "GB", "name": "Edinburgh", "lat": 55.9533, "lng": -3.1883 }
+  }
+}
