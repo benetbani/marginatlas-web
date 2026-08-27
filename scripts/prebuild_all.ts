@@ -69,6 +69,11 @@ const GATES: Gate[] = [
   /* E6, the other half of "a lot of whitespace". The ink gate measures HEIGHT,
      so a card with a dead strip down its right passed as full. */
   { name: "gathered-emptiness", script: "scripts/verify_gathered_emptiness.mjs" },
+  /* D1 read across every surface a visitor can walk, not only the four rebuilt
+     spine pages `section-bands` already holds the line for. 2026-08-27: "the ban
+     is site-wide, every live surface, not only the four reformed page types."
+     Ratchet, negative-tested; the legacy three carry real counts today. */
+  { name: "fullwidth-sitewide", script: "scripts/verify_full_width_sitewide.mjs" },
   /* Two display utilities on one element compile to two declarations and the
      stylesheet picks the winner. Nothing warns and a typecheck cannot see it.
      The tooltip marker carried inline-flex AND grid for months. */
