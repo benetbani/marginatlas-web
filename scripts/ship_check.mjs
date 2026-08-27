@@ -15,7 +15,10 @@
  *      before the last code change shows a page that no longer exists.
  *   2. CHAIN CLEAN        the gate-chain log named with --chain actually
  *      finished, in full, with nothing failing: a "REAL EXIT CODE: 0" line
- *      and a "Ran: N / N gates" line where both numbers match.
+ *      and a "Ran: N / N gates" line where both numbers match. The log file's
+ *      mtime must also not be older than the newest commit that touched
+ *      src/, the same freshness test as check 1: a clean log from before the
+ *      newest code change does not speak to the code as it stands now.
  *   3. DOSSIER COVERS THE WALK   the newest design/critique/dossier-*.json
  *      carries exactly the seven walk pages, including home, countries-list
  *      and country-gb. Fewer than seven means part of the journey was never
@@ -72,6 +75,24 @@ function humanTime(ms) {
   return new Date(ms).toISOString();
 }
 
+/* ---------- shared: newest commit touching src/, used by checks 1 and 2 ---------- */
+let srcCommitEpoch = null;
+let srcCommitHash = null;
+let srcCommitLookupFailed = false;
+try {
+  const raw = execFileSync("git", ["log", "-1", "--format=%H%x09%ct", "--", "src/"], {
+    cwd: REPO_ROOT,
+    encoding: "utf8",
+  }).trim();
+  if (raw) {
+    const [hash, epoch] = raw.split("\t");
+    srcCommitHash = hash;
+    srcCommitEpoch = parseInt(epoch, 10);
+  }
+} catch {
+  srcCommitLookupFailed = true;
+}
+
 const failures = [];
 
 /* ---------- 1. WALK STRIP FRESH ---------- */
@@ -84,19 +105,7 @@ if (!walk) {
       `Run build_walk_strip.mjs first.`,
   );
 } else {
-  let srcCommitEpoch = null;
-  let srcCommitHash = null;
-  try {
-    const raw = execFileSync("git", ["log", "-1", "--format=%H%x09%ct", "--", "src/"], {
-      cwd: REPO_ROOT,
-      encoding: "utf8",
-    }).trim();
-    if (raw) {
-      const [hash, epoch] = raw.split("\t");
-      srcCommitHash = hash;
-      srcCommitEpoch = parseInt(epoch, 10);
-    }
-  } catch {
+  if (srcCommitLookupFailed) {
     failures.push(
       `WALK STRIP FRESHNESS UNKNOWN. Could not ask git for the newest commit touching src/ ` +
         `(the git command itself failed). Freshness cannot be confirmed, so this counts as a ` +
@@ -149,6 +158,26 @@ if (!args.chain) {
         : `It found no "Ran: N / N gates" line at all, so it cannot confirm every gate ran.`,
     );
     failures.push(bits.join(" "));
+  }
+
+  if (srcCommitLookupFailed) {
+    failures.push(
+      `CHAIN LOG FRESHNESS UNKNOWN. Could not ask git for the newest commit touching src/ ` +
+        `(the git command itself failed). Freshness cannot be confirmed, so this counts as a ` +
+        `refusal, not a pass.`,
+    );
+  } else if (srcCommitEpoch != null && !Number.isNaN(srcCommitEpoch)) {
+    const chainMtimeMs = statSync(args.chain).mtimeMs;
+    const chainEpoch = Math.floor(chainMtimeMs / 1000);
+    if (chainEpoch < srcCommitEpoch) {
+      failures.push(
+        `CHAIN LOG STALE. The quality checks recorded in "${args.chain}" were run before the ` +
+          `newest code change and must be re-run: a clean log from before a change proves nothing ` +
+          `about the code as it stands now. The log is dated ${humanTime(chainMtimeMs)}, but src/ ` +
+          `was last changed at ${humanTime(srcCommitEpoch * 1000)} in commit ${srcCommitHash?.slice(0, 12)}. ` +
+          `Re-run the gate chain and try again.`,
+      );
+    }
   }
 }
 
