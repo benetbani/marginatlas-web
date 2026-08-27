@@ -74,6 +74,18 @@ const GATES: Gate[] = [
      is site-wide, every live surface, not only the four reformed page types."
      Ratchet, negative-tested; the legacy three carry real counts today. */
   { name: "fullwidth-sitewide", script: "scripts/verify_full_width_sitewide.mjs" },
+  /* Task 6, 2026-08-27 verdicts 2, 4, 7: one card radius, and country flags
+     that are always rectangles and always legible, read across the same
+     seven pages `fullwidth-sitewide` reads. The task brief called the flags
+     gate hard with no baseline; the controller shipped both as RATCHETS
+     instead, because the violators it catches (194 rounded flags on
+     countries-list, minuscule flags in the legacy country page's peers
+     table, the legacy pages' own 16px/12px card radii) are only repaired in
+     later tasks, and a hard gate would fail the whole chain from today until
+     then. `country-gb`'s flags baseline MUST reach 0 once its peers table is
+     rebuilt. Both negative-tested against a scratch copy of a real page. */
+  { name: "radius-uniform", script: "scripts/verify_radius_uniform.mjs" },
+  { name: "flag-marks", script: "scripts/verify_flag_marks.mjs" },
   /* Two display utilities on one element compile to two declarations and the
      stylesheet picks the winner. Nothing warns and a typecheck cannot see it.
      The tooltip marker carried inline-flex AND grid for months. */
