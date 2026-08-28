@@ -32,6 +32,8 @@ import * as React from "react";
 import { Band, Box, Fig, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
+import { CountryFlag } from "@/components/CountryFlag";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -43,6 +45,7 @@ import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The government take" },
   { id: "cities", label: "The cities" },
+  { id: "peers", label: "Against the peers" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -360,6 +363,106 @@ function Cities({ cities }: { cities: any }) {
 }
 
 /**
+ * The peers table , the section the founder tore apart on the legacy page and
+ * the one place besides the hero and the close that may take the full width,
+ * declared with data-wide-table so the gate reads a sanction and not a claim.
+ *
+ * FOUNDER VERDICT 4, 2026-08-27, verbatim: "the flags are very minuscule, which
+ * makes it ugly, and the table is just ugly... It shows no character... the
+ * lines are botched." So: flags at a size a person can recognise (28x19, the
+ * component is rectangular with its own hairline, which is what the flag gate
+ * now enforces site-wide), one hairline per row and nothing else, the home row
+ * on the soft wash with its name at weight, and per column the BEST value in
+ * ink and weight while the rest sit quiet, the same winner convention the
+ * district table settled (lower is better in all four columns here, rule 29A
+ * inverted burdens read by their best end).
+ *
+ * The caveat sentence renders visibly under the table: round 4 judged exactly
+ * that sentence GOOD on the legacy page ("the honest voice"), and a table
+ * caption is table furniture, not the banned chart-sentence.
+ *
+ * Units ride the values, one convention per column (N5): money as money, days
+ * as days, rates as percentages, and a zero registration fee is the word Free
+ * in the reading face, never $0, which reads as a missing number.
+ */
+function Peers({ peers }: { peers: any }) {
+  const rows: any[] = Array.isArray(peers?.list) ? peers.list : [];
+  if (rows.length < 2) return null;
+  const cols: Array<{ key: string; head: string; fmt: (v: number) => React.ReactNode; best: (vs: number[]) => number }> = [
+    { key: "business_tax_pct", head: "Business tax", fmt: (v) => <>{v}%</>, best: (vs) => Math.min(...vs) },
+    { key: "payroll_pct", head: "Payroll on staff", fmt: (v) => <>{v}%</>, best: (vs) => Math.min(...vs) },
+    {
+      key: "register_cost_usd",
+      head: "Cost to register",
+      fmt: (v) => (v === 0 ? <span className="font-medium">Free</span> : <>{usd(v)}</>),
+      best: (vs) => Math.min(...vs),
+    },
+    { key: "register_days", head: "Time to register", fmt: (v) => <>{v} {v === 1 ? "day" : "days"}</>, best: (vs) => Math.min(...vs) },
+  ];
+  const bestOf: Record<string, number | undefined> = {};
+  for (const c of cols) {
+    const vs = rows.map((r) => r[c.key]).filter((v: unknown): v is number => isNum(v));
+    bestOf[c.key] = vs.length >= 2 ? c.best(vs) : undefined;
+  }
+  return (
+    /* The sanctioned wide-table band: the same bare full-width wrapper the hero
+       uses, carrying the attribute the width gate reads. Not a Band split, since
+       the table IS the whole band. */
+    <div data-wide-table className="mt-8">
+      <Box id="peers">
+        <Rail icon="benchmark" kicker="Against the peers" />
+        <Table className="text-[length:var(--t-small)]">
+          <caption className="sr-only">The same four set-up facts for each country, side by side.</caption>
+          <TableHeader>
+            <TableRow className="border-[var(--c-border)] hover:bg-transparent">
+              <TableHead scope="col" className="h-auto px-0 pb-2 text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Country
+              </TableHead>
+              {cols.map((c) => (
+                <TableHead key={c.key} scope="col" className="h-auto px-2 pb-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                  {c.head}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.map((r) => (
+              <TableRow
+                key={r.iso2}
+                className={`border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}
+              >
+                <TableCell className="px-0 py-2.5">
+                  <span className="flex items-center gap-2.5">
+                    <CountryFlag iso2={r.iso2} className="w-7 shrink-0" />
+                    <span className={`text-[length:var(--t-body)] ${r.home ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{r.name}</span>
+                  </span>
+                </TableCell>
+                {cols.map((c) => {
+                  const v = r[c.key];
+                  const isBest = isNum(v) && bestOf[c.key] != null && v === bestOf[c.key];
+                  return (
+                    <TableCell key={c.key} className="px-2 py-2.5 text-right">
+                      {isNum(v) ? (
+                        <Fig className={`text-[length:var(--t-body)] ${isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{c.fmt(v)}</Fig>
+                      ) : (
+                        <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        {peers?.caveat ? (
+          <p className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{peers.caveat}</p>
+        ) : null}
+      </Box>
+    </div>
+  );
+}
+
+/**
  * The country spine page body. `data` is the seed from buildSpineCountrySeed.
  * Every block on it is optional by design, so read defensively.
  */
@@ -373,6 +476,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         <Masthead name={name} hero={d.hero} />
         <Cities cities={d.cities} />
+        <Peers peers={d.peers} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>
