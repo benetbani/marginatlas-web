@@ -29,8 +29,9 @@
  * exemption that recorded the gap is gone with the gap.
  */
 import * as React from "react";
-import { Band, Box, Fig, SampleTag, usd } from "@/components/spine/kit";
+import { Band, Box, Fig, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
+import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -41,6 +42,7 @@ import { AtlasMark } from "@/components/spine/marks";
  */
 const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The government take" },
+  { id: "cities", label: "The cities" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -284,6 +286,80 @@ function Masthead({ name, hero }: { name: string; hero: any }) {
 }
 
 /**
+ * The cities , the second signature moment (art direction D5) and the funnel
+ * rule 24 asks every higher page to carry: real clickable places leading a
+ * reader down one altitude. The map takes the large side of a 3-2 band and the
+ * city cards the small side, because the map is the drawing and the cards are
+ * its index (D4, the split follows the content).
+ *
+ * FOUNDER VERDICT 6, 2026-08-27, is the whole reason this section looks the way
+ * it does: "The cities of United Kingdom, you have given four cards two times,
+ * catastrophe, and the upper cards are not even clickable." The cities appear
+ * ONCE, and every card IS its link: one list, no echo of chips below it, and a
+ * city whose page does not exist yet renders nothing at all rather than a card
+ * that looks pressable and is not. A dead-looking card is worse than a missing
+ * one, because a reader who presses it learns to stop pressing things.
+ *
+ * The map self-omits below three placed cities (plan correction 2), and the
+ * card list self-omits when empty, so Chad renders no stub here (rule 21). The
+ * map draws itself in a browser and not in a static capture, the same blind
+ * spot the district map already carries; the emptiness gate names that class
+ * rather than counting it as a hole, and the cards carry the section's whole
+ * reading without it.
+ */
+function Cities({ cities }: { cities: any }) {
+  const list: any[] = Array.isArray(cities?.list) ? cities.list : [];
+  const linked = list.filter((c) => typeof c?.href === "string" && c.href.length > 0);
+  const rawPoints: any[] = Array.isArray(cities?.map_points) ? cities.map_points : [];
+  const points: SpinePoint[] = rawPoints
+    .filter((p) => isNum(p?.lat) && isNum(p?.lng))
+    .map((p) => ({ id: String(p.id ?? p.name), name: String(p.name), lat: p.lat, lng: p.lng, href: typeof p.href === "string" ? p.href : undefined }));
+  const hasMap = points.length >= 3;
+  if (linked.length === 0 && !hasMap) return null;
+
+  return (
+    <Band split="3-2">
+      {hasMap ? (
+        <Box id="cities" density="dense">
+          <Rail icon="best-areas" kicker="The cities" />
+          {/* The map is the craft object and gets the card's whole room; a
+              shorter band than the city page's because four national pins need
+              breathing room, not street detail. */}
+          <SpineMap points={points} ariaLabel="Map of the covered cities" fitPadding={64} heightClass="h-[320px] w-full md:h-[420px]" fallbackNote="The map is drawing. Every city on it is in the list beside." />
+        </Box>
+      ) : null}
+      <Box {...(hasMap ? {} : { id: "cities" })}>
+        {hasMap ? (
+          <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Open a city</div>
+        ) : (
+          <Rail icon="best-areas" kicker="The cities" />
+        )}
+        {/* One row per city, the whole row the link (verdict 6). The name leads,
+            the region sits muted beside it, the arrow says it goes somewhere.
+            Hover is INK, never the accent (rule 37). */}
+        <div className="divide-y divide-[var(--c-border)]">
+          {linked.map((c) => (
+            <a
+              key={c.id}
+              href={c.href}
+              className="group flex items-baseline justify-between gap-3 py-2.5 first:pt-0 last:pb-0"
+            >
+              <span className="min-w-0">
+                <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]">{c.name}</span>
+                {c.region ? (
+                  <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{c.region}</span>
+                ) : null}
+              </span>
+              <span aria-hidden className="shrink-0 text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
+            </a>
+          ))}
+        </div>
+      </Box>
+    </Band>
+  );
+}
+
+/**
  * The country spine page body. `data` is the seed from buildSpineCountrySeed.
  * Every block on it is optional by design, so read defensively.
  */
@@ -296,6 +372,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
     <>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         <Masthead name={name} hero={d.hero} />
+        <Cities cities={d.cities} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>

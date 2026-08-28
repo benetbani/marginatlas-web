@@ -196,6 +196,7 @@ function buildMarkerEl(
 
 export function SpineMap({
   points,
+  fallbackNote,
   fitPadding = 64,
   onSelect,
   ariaLabel = "Interactive map",
@@ -204,6 +205,13 @@ export function SpineMap({
   heightClass = "h-[440px] w-full md:h-[560px]",
 }: {
   points: SpinePoint[];
+  /** Replaces the chip-list fallback with one muted sentence, for a caller that
+   *  already lists every point BESIDE the map. The chips exist so a place is
+   *  reachable when the map cannot draw; where a full list sits next to the
+   *  canvas they are a duplicate of it, and a duplicated city list is founder
+   *  verdict 6 verbatim. Optional; the city page passes nothing and keeps its
+   *  chips, byte-identical. */
+  fallbackNote?: string;
   fitPadding?: number;
   onSelect?: (p: SpinePoint) => void;
   ariaLabel?: string;
@@ -400,6 +408,13 @@ export function SpineMap({
       {!ready ? (
         // Default (server render, no-JS preview) AND the no-WebGL fallback: a clickable
         // list overlay so every place is reachable. Removed the moment the map paints.
+        // With fallbackNote set, the chips give way to one muted sentence instead:
+        // a caller that lists every point beside the canvas must not list them twice.
+        fallbackNote ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-[var(--c-card)] p-4">
+            <p className="max-w-[32ch] text-center text-[12px] text-[var(--c-muted)]">{fallbackNote}</p>
+          </div>
+        ) : (
         <div className="absolute inset-0 overflow-auto bg-[var(--c-card)] p-4">
           <p className="mb-3 text-[12px] text-[var(--c-muted)]">Choose a place to explore:</p>
           <div className="flex flex-wrap gap-2">
@@ -417,6 +432,7 @@ export function SpineMap({
             ))}
           </div>
         </div>
+        )
       ) : null}
     </div>
   );
