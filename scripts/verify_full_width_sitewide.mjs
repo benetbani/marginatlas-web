@@ -113,6 +113,12 @@ const DEFAULT_PAGES = [
   ["hood-london", "docs/loop/artifacts/final-pages/hood-london.html"],
   ["cell-london-restaurants", "docs/loop/artifacts/final-pages/cell-london-restaurants.html"],
   ["industry-restaurants", "docs/loop/artifacts/final-pages/industry-restaurants.html"],
+  /* The country page being rebuilt behind a shut flag. It holds NO baseline
+     entry and is not getting one: `base[page] ?? 0` makes its budget zero, so
+     the rebuilt page has to be clean from its first render rather than
+     inheriting a legacy page's allowance. That is the whole point of reading it
+     here from the first section onward instead of after the last. */
+  ["country-gb-new", "docs/loop/artifacts/final-pages/country-gb-new.html"],
 ];
 
 /* --pages name=path,name2=path2 REPLACES the default set entirely. This is how

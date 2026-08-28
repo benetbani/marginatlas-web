@@ -6,6 +6,14 @@
  * the GB country page). See the second render loop below for why the legacy
  * three needed a different renderer than the first four.
  *
+ * THE EIGHTH SURFACE IS NOT A PAGE A VISITOR CAN REACH YET, and that is exactly
+ * why it is here. `country-gb-new` is the country page being rebuilt behind a
+ * shut flag (walk-reform tasks 10 to 18): the real SpineCountryBody over the
+ * real adapter seed. Nothing can be judged that cannot be photographed, so the
+ * rebuild gets a surface from its first section rather than after its last. The
+ * legacy `country-gb` surface stays untouched beside it, because that is what
+ * production actually serves until the flag opens.
+ *
  * WHAT THESE FILES CANNOT SHOW, and it has already misled me once. They are STATIC
  * markup with no React runtime. Anything that draws itself in the browser draws
  * nothing here: the money waterfall on the trade page is a chart library that
@@ -26,10 +34,12 @@ import { buildSpineCitySeed } from "../src/lib/spine/adapt_city";
 import { buildSpineCellSeed } from "../src/lib/spine/adapt_cell";
 import { buildSpineIndustrySeed } from "../src/lib/spine/adapt_industry";
 import { buildSpineHoodSeed } from "../src/lib/spine/adapt_hood";
+import { buildSpineCountrySeed } from "../src/lib/spine/adapt_country";
 import { SpineCityBody } from "../src/components/spine/city/city-view";
 import { SpineCellBody } from "../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../src/components/spine/industry/industry-view";
 import { SpineHoodBody } from "../src/components/spine/hood/hood-view";
+import { SpineCountryBody } from "../src/components/spine/country/country-view";
 import { SpineShell } from "../src/components/spine/shell";
 import { SiteChrome } from "../src/components/SiteChrome";
 import HomePage from "../src/app/page";
@@ -119,6 +129,10 @@ async function main() {
     ["cell-london-restaurants", "Restaurants in London, the trade page", SpineCellBody, await buildSpineCellSeed("gb", "london", "restaurants")],
     ["industry-restaurants", "Restaurants, across places", SpineIndustryBody, await buildSpineIndustrySeed("restaurants")],
     ["hood-london", "London neighbourhoods", SpineHoodBody, await buildSpineHoodSeed("london")],
+    // The rebuild, rendered exactly the way its four siblings are: the real body
+    // over the real seed. It is one section wide today and grows a section per
+    // task; the legacy country-gb below is untouched and stays the shipped page.
+    ["country-gb-new", "United Kingdom, the rebuilt country page", SpineCountryBody, await buildSpineCountrySeed("gb")],
   ];
   /* THE HOOD VIEW MOUNTS ITS OWN SHELL and its header says so in as many words:
      "do not double-wrap it at the route". This harness wrapped all four alike, so

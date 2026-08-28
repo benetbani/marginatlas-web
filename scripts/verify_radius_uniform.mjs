@@ -54,7 +54,7 @@ import { requireBrowser } from "./lib/local_only.mjs";
 /* A BUILD SERVER HAS NO BROWSER. Same guard as every other rendered-design
    gate in this chain: skip loudly where chromium is not installed, run
    unchanged on the design machine. */
-await requireBrowser("radius-uniform", "whether every card-like box on the seven pages shares one border radius");
+await requireBrowser("radius-uniform", "whether every card-like box on the built pages shares one border radius");
 
 const BASELINE = "scripts/radius_baseline.json";
 const argv = process.argv.slice(2);
@@ -67,6 +67,11 @@ const DEFAULT_PAGES = [
   ["hood-london", "docs/loop/artifacts/final-pages/hood-london.html"],
   ["cell-london-restaurants", "docs/loop/artifacts/final-pages/cell-london-restaurants.html"],
   ["industry-restaurants", "docs/loop/artifacts/final-pages/industry-restaurants.html"],
+  /* The country page being rebuilt behind a shut flag, with no baseline entry
+     and none coming: `base[page] ?? 0` holds it at zero from its first render,
+     so the rebuild cannot quietly acquire the legacy page's 37 off-scale
+     corners while nobody is measuring it. */
+  ["country-gb-new", "docs/loop/artifacts/final-pages/country-gb-new.html"],
 ];
 
 /* --pages name=path,name2=path2 REPLACES the default set entirely. This is how

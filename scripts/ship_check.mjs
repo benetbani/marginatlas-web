@@ -20,9 +20,17 @@
  *      src/, the same freshness test as check 1: a clean log from before the
  *      newest code change does not speak to the code as it stands now.
  *   3. DOSSIER COVERS THE WALK   the newest design/critique/dossier-*.json
- *      carries exactly the seven walk pages, including home, countries-list
- *      and country-gb. Fewer than seven means part of the journey was never
- *      captured.
+ *      carries all seven walk pages by name. Missing one means part of the
+ *      journey was never captured.
+ *
+ *      IT ASKS FOR THE SEVEN, NOT FOR EXACTLY SEVEN, changed 2026-08-28. It
+ *      used to compare the page COUNT to seven, which read as a strict check
+ *      and was in fact a loose one: seven pages of the wrong names would have
+ *      passed it, and the eighth surface the country rebuild is photographed
+ *      on (country-gb-new, behind a shut flag) failed it while every page a
+ *      visitor can reach was present and clean. The names are what the check
+ *      is about, so the names are now what it checks, all seven of them
+ *      rather than the three it happened to list.
  *
  * On PASS, prints the founder checklist: the walk strip path to deliver, the
  * reminder that nothing flips without the founder's APPROVE, and the
@@ -46,8 +54,19 @@ const REPO_ROOT = path.resolve(SCRIPT_DIR, "..");
 const CRITIQUE_DIR = "E:/atlas/design/critique";
 const WALK_PATTERN = /^WALK-.*\.html$/i;
 const DOSSIER_PATTERN = /^dossier-.*\.json$/i;
-const REQUIRED_PAGES = ["home", "countries-list", "country-gb"];
-const WALK_PAGE_COUNT = 7;
+/** Every page of the walk, by name. A dossier missing any one of these is a
+ *  journey that was only partly photographed. Extra pages are allowed: a
+ *  surface under construction is photographed alongside the walk, never
+ *  instead of it. */
+const REQUIRED_PAGES = [
+  "home",
+  "countries-list",
+  "country-gb",
+  "city-london",
+  "hood-london",
+  "cell-london-restaurants",
+  "industry-restaurants",
+];
 
 function parseArgs(argv) {
   const out = { chain: null };
@@ -204,13 +223,14 @@ if (!dossier) {
     const pageIds = pages.map((p) => p && p.page).filter(Boolean);
     const missingRequired = REQUIRED_PAGES.filter((id) => !pageIds.includes(id));
 
-    if (pageIds.length !== WALK_PAGE_COUNT || missingRequired.length > 0) {
-      const bits = [
-        `DOSSIER INCOMPLETE. "${dossier.file}" does not cover the whole seven-page walk.`,
-        `It carries ${pageIds.length} page(s)${pageIds.length ? ` (${pageIds.join(", ")})` : ""}.`,
-      ];
-      if (missingRequired.length > 0) bits.push(`Missing required page(s): ${missingRequired.join(", ")}.`);
-      failures.push(bits.join(" "));
+    if (missingRequired.length > 0) {
+      failures.push(
+        [
+          `DOSSIER INCOMPLETE. "${dossier.file}" does not cover the whole seven-page walk.`,
+          `It carries ${pageIds.length} page(s)${pageIds.length ? ` (${pageIds.join(", ")})` : ""}.`,
+          `Missing required page(s): ${missingRequired.join(", ")}.`,
+        ].join(" "),
+      );
     }
   }
 }

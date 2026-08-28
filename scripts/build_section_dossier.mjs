@@ -4,10 +4,11 @@
  *
  * Enumerates every SECTION and every SUBSECTION across the seven pages a visitor
  * can actually reach (four rebuilt spine types plus the three live legacy routes:
- * home, the countries list, the GB country page), gathers the evidence each of
- * the nine critique dimensions needs, and captures each node as a picture at
- * three magnifications. Writes one dossier the critique sheet renders and the
- * round record is scored against.
+ * home, the countries list, the GB country page), and across the country page
+ * being rebuilt behind a shut flag, gathers the evidence each of the nine
+ * critique dimensions needs, and captures each node as a picture at three
+ * magnifications. Writes one dossier the critique sheet renders and the round
+ * record is scored against.
  *
  * THE LEGACY THREE HAVE NO SPINE MARKUP. The four rebuilt pages carry glass
  * cards (backdrop-filter) as their section unit, and subsections fall out of a
@@ -48,9 +49,15 @@ import { chromium } from "playwright";
 
 const OUT_DIR = "E:/atlas/design/critique";
 const CROP_DIR = `${OUT_DIR}/crops`;
+/* The seven a visitor can walk, plus `country-gb-new`, the country page being
+   rebuilt behind a shut flag. It is captured from its first section rather than
+   after its last: a section nobody has photographed is a section nobody has
+   judged, and this rebuild replaces a page whose faults were all found in
+   pictures. It renders as a spine page (glass cards), so it takes the same
+   branch the four rebuilt types take, not the legacy landmark walk. */
 const PAGES = [
   "city-london", "cell-london-restaurants", "industry-restaurants", "hood-london",
-  "home", "countries-list", "country-gb",
+  "home", "countries-list", "country-gb", "country-gb-new",
 ];
 const argv = process.argv.slice(2);
 const CROPS = !argv.includes("--no-crops");

@@ -53,7 +53,7 @@ import { requireBrowser } from "./lib/local_only.mjs";
 /* A BUILD SERVER HAS NO BROWSER. Same guard as every other rendered-design
    gate in this chain: skip loudly where chromium is not installed, run
    unchanged on the design machine. */
-await requireBrowser("flag-marks", "whether every country flag on the seven pages is a rectangle and legible");
+await requireBrowser("flag-marks", "whether every country flag on the built pages is a rectangle and legible");
 
 const BASELINE = "scripts/flags_baseline.json";
 const argv = process.argv.slice(2);
@@ -66,6 +66,11 @@ const DEFAULT_PAGES = [
   ["hood-london", "docs/loop/artifacts/final-pages/hood-london.html"],
   ["cell-london-restaurants", "docs/loop/artifacts/final-pages/cell-london-restaurants.html"],
   ["industry-restaurants", "docs/loop/artifacts/final-pages/industry-restaurants.html"],
+  /* The country page being rebuilt behind a shut flag, with no baseline entry
+     and none coming: `base[page] ?? 0` holds it at zero from its first render.
+     The legacy country page carries 6 violations in its peers table and must
+     reach 0; the page replacing it may never start above 0. */
+  ["country-gb-new", "docs/loop/artifacts/final-pages/country-gb-new.html"],
 ];
 
 /* --pages name=path,name2=path2 REPLACES the default set entirely. This is how
