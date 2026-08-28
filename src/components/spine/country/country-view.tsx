@@ -46,6 +46,7 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The government take" },
   { id: "cities", label: "The cities" },
   { id: "peers", label: "Against the peers" },
+  { id: "lenses", label: "Pay, lending, customers, currency" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -115,7 +116,7 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
  * small-profits rate, so an unqualified figure would overstate the burden for
  * exactly the small shops this site is written for.
  */
-function Masthead({ name, hero }: { name: string; hero: any }) {
+function Masthead({ name, hero, worldTakeMedian }: { name: string; hero: any; worldTakeMedian?: number }) {
   const take = isNum(hero?.government_take_composed_pct) ? hero.government_take_composed_pct : undefined;
   const onProfit = isNum(hero?.take_components?.corporate_rate_pct) ? hero.take_components.corporate_rate_pct : undefined;
   const onWages = isNum(hero?.take_components?.employer_payroll_pct) ? hero.take_components.employer_payroll_pct : undefined;
@@ -255,6 +256,11 @@ function Masthead({ name, hero }: { name: string; hero: any }) {
                 <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">on wages</span>
               </span>
             </div>
+            {isNum(worldTakeMedian) ? (
+              <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+                the world median is {worldTakeMedian}%
+              </div>
+            ) : null}
           </div>
         ) : null}
 
@@ -411,7 +417,14 @@ function Peers({ peers }: { peers: any }) {
     <div data-wide-table className="mt-8">
       <Box id="peers">
         <Rail icon="benchmark" kicker="Against the peers" />
-        <Table className="text-[length:var(--t-small)]">
+        {/* AT PHONE WIDTH THE TABLE CLIPPED, photographed at 375: the last column
+            read COST TO REGIST and the fee column read Fr. Five columns do not
+            fit 343 pixels and must not pretend to. The table keeps its shape and
+            scrolls INSIDE the card, which is the convention for a comparison a
+            reader swipes across, and the first column stays sticky so the
+            country names never leave the eye while the figures slide. */}
+        <div className="overflow-x-auto">
+        <Table className="min-w-[560px] text-[length:var(--t-small)]">
           <caption className="sr-only">The same four set-up facts for each country, side by side.</caption>
           <TableHeader>
             <TableRow className="border-[var(--c-border)] hover:bg-transparent">
@@ -454,11 +467,117 @@ function Peers({ peers }: { peers: any }) {
             ))}
           </TableBody>
         </Table>
+        </div>
         {peers?.caveat ? (
           <p className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{peers.caveat}</p>
         ) : null}
       </Box>
     </div>
+  );
+}
+
+/**
+ * The lens grid , what REPLACES the hexagon, and the shape of the replacement
+ * is the whole argument (founder 2026-08-27, verbatim: "this hexagon. It's
+ * overloaded with information... and it occupies the full width"; art direction
+ * ratified 2026-08-25: a wrong form is REPLACED, not tidied).
+ *
+ * A LENS THE MASTHEAD ALREADY STATED DOES NOT RESTATE. The first render of this
+ * grid printed 38.8 percent twice on one screen, once in the hero and once as
+ * the tax lens, and "1 day" twice, which is the exact fault round 3 closed on
+ * the trade page (one number, three cards). The grid therefore drops any lens
+ * whose figure the masthead carries, and the one reading that would have been
+ * lost with it, the world-median take, moves UP into the masthead where the
+ * figure it gives meaning to lives. What remains here is what the page has not
+ * yet said: pay, lending, customers, currency.
+ *
+ * The radar put six word-ratings at six positions on axes with no units, printed
+ * every word twice, and stretched one reading across the page. What stands in
+ * its place is six PUBLISHED FIGURES, each a tile: a plain label, one number
+ * with its unit, and a one-line context where the seed carries one. No scale is
+ * drawn, so no position can fake precision (the form catalogue's meter do-not),
+ * and a grid of six distinct tiles is the founder's own sanctioned pattern
+ * ("six neighborhoods... those are six different pieces").
+ *
+ * The tax tile obeys the composed-take rule: the total never renders without
+ * its two components, here as the tile's own sub-line.
+ *
+ * Direction is not drawn because nothing is ranked: a burden's tile reads as
+ * what it costs, a strength's tile as what it pays, and the label wording does
+ * the teaching (rule 40) rather than an arrow doing the asserting.
+ */
+function Lenses({ lenses, hero }: { lenses: any; hero: any }) {
+  const all: any[] = Array.isArray(lenses?.list) ? lenses.list : [];
+  const heroStatesTake = isNum(hero?.government_take_composed_pct);
+  const heroFacts: SupportFact[] = Array.isArray(hero?.support) ? hero.support : [];
+  const heroStatesDays = heroFacts.some((f) => f?.key === "register_days" && isNum(f.value));
+  const list = all.filter((l) => {
+    if (l.key === "tax_burden" && heroStatesTake) return false;
+    if (l.key === "entry" && heroStatesDays) return false;
+    return true;
+  });
+  if (list.length < 3) return null;
+  const tagged = typeof lenses?._meta?.confidence === "string" && lenses._meta.confidence !== "measured";
+  const onProfit = hero?.take_components?.corporate_rate_pct;
+  const onWages = hero?.take_components?.employer_payroll_pct;
+
+  const fmt = (l: any): { value: React.ReactNode; sub?: string } => {
+    const v = l.value;
+    switch (l.unit) {
+      case "composed_pct":
+        return {
+          value: <>{v}%</>,
+          sub: isNum(onProfit) && isNum(onWages) ? onProfit + "% on profit + " + onWages + "% on wages" : undefined,
+        };
+      case "days":
+        return { value: <>{v} {v === 1 ? "day" : "days"}</>, sub: "to legally trading" };
+      case "usd_per_year":
+        return { value: <>{usd(v)}</>, sub: "typical full-time pay, a year" };
+      case "pct":
+        return l.key === "finance"
+          ? { value: <>{v}%</>, sub: "typical bank lending rate" }
+          : {
+              value: <>{v}%</>,
+              sub: isNum(l.context?.inflation_5y_avg_pct)
+                ? "currency swing a year; inflation " + l.context.inflation_5y_avg_pct + "% averaged over five"
+                : "currency swing a year",
+            };
+      case "index_world_median_100":
+        return { value: <>x{(v / 100).toFixed(2)}</>, sub: "the world-median wage" };
+      default:
+        return { value: <Fig>{String(v)}</Fig> };
+    }
+  };
+
+  return (
+    <Band>
+      <Box id="lenses">
+        <Rail icon="gut-check" kicker="Pay, lending, customers, currency" sample={tagged} />
+        {/* NO BREAKPOINT. The first version pitched two columns at a width class
+            the width gate refuses to grow (a phone never reaches it, so the
+            second layout exists for nobody). Tiles ask for a readable minimum
+            and wrap when they cannot have it: one column on a phone, two in
+            this band, at every width in between, with no number in a stylesheet
+            to be wrong. The same lesson as the trade page closing row. */}
+        <div className="flex flex-wrap gap-x-6 gap-y-5">
+          {list.map((l: any) => {
+            const f = fmt(l);
+            return (
+              <div key={l.key} className="min-w-[15rem] flex-[1_1_15rem]">
+                <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{l.label}</div>
+                <Fig className="mt-1 block text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{f.value}</Fig>
+                {f.sub ? (
+                  <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{f.sub}</div>
+                ) : null}
+                {l.key === "tax_burden" && isNum(l.context?.world_median_pct) ? (
+                  <div className="mt-0.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">world median {l.context.world_median_pct}%</div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </Box>
+    </Band>
   );
 }
 
@@ -474,9 +593,14 @@ export function SpineCountryBody({ data }: { data?: any }) {
   return (
     <>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-        <Masthead name={name} hero={d.hero} />
+        <Masthead
+          name={name}
+          hero={d.hero}
+          worldTakeMedian={(Array.isArray(d.lenses?.list) ? d.lenses.list : []).find((l: any) => l?.key === "tax_burden")?.context?.world_median_pct}
+        />
         <Cities cities={d.cities} />
         <Peers peers={d.peers} />
+        <Lenses lenses={d.lenses} hero={d.hero} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>
