@@ -981,7 +981,14 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
           labour_force_pct: labourForcePct,
           informal_share_pct: informalSharePct,
           informal_is_burden: true,
-          confidence_pay: profileConfidence,
+          /* THE TAG DESCRIBES THE FACTS IT SITS BESIDE, OR IT DOES NOT PRINT.
+             This used to carry the profile confidence unconditionally, so a
+             country in the tax module but without a profile got confidence_pay
+             = modeled while wage_floor and typical_pay were absent, a tag
+             describing nothing present. A body author pattern-matching on a
+             confidence-shaped field would tag the wrong figure. Review finding,
+             2026-08-28. */
+          confidence_pay: wageFloor != null || typicalPay != null ? profileConfidence : undefined,
         }
       : undefined;
 
