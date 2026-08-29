@@ -63,6 +63,7 @@ import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { Money } from "@/components/Money";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { getCountryProfile } from "@/lib/economic_profile";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
@@ -754,6 +755,16 @@ async function CellPageBody({
   const londonEntry = getLondonEntry(cell);
   const Le = londonEntry?.economics ?? null;
   const trustedLocalCell = isTrustedLocalCell(cell, expectedIndustryId);
+  // The credibility screen's yardstick (buildCellView): the country's own
+  // median full-time pay, counted only when this country's profile row is
+  // actually held (getCountryProfile answers a generic fallback otherwise).
+  const countryProfile = getCountryProfile(country.toUpperCase());
+  const medianWageUsd =
+    countryProfile.iso2.toUpperCase() === country.toUpperCase() &&
+    Number.isFinite(countryProfile.median_wage_full_time_usd) &&
+    countryProfile.median_wage_full_time_usd > 0
+      ? countryProfile.median_wage_full_time_usd
+      : null;
   const placeName =
     cell.geo_name || iso2ToName(country) || country.toUpperCase();
   const tradeName = cell.industry_name || industry.replace(/-/g, " ");
@@ -796,6 +807,7 @@ async function CellPageBody({
     wagePerEmployee: wageEstimate ?? null,
     peers: nearbyPeers,
     narrative,
+    medianWageUsd,
   });
   const navSections = cellViewNav(cellView);
 

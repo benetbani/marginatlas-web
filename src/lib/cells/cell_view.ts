@@ -129,6 +129,13 @@ export type CellViewInput = {
    * cities (Manchester, Edinburgh), which is a like-for-like category error.
    */
   suppressInventedPeers?: boolean;
+  /**
+   * The country's median full-time pay (USD), the yardstick of the credibility
+   * screen (see buildCellView). Null when the country's own profile row is not
+   * held; the screen cannot run without its yardstick, and the keep passes
+   * with its modeled tag.
+   */
+  medianWageUsd: number | null;
 };
 
 /* ------------------------------ helpers --------------------------------- */
@@ -156,7 +163,40 @@ function dailyUnit(slug: string): string {
 
 /* ---------------------------- the builder ------------------------------- */
 
-export function buildCellView(input: CellViewInput): CellView {
+export function buildCellView(rawInput: CellViewInput): CellView {
+  /* THE CREDIBILITY SCREEN, the same ONE FIXED FORMULA the country page runs
+     (src/lib/spine/adapt_country.ts, founder-decided 2026-08-29), applied here
+     so no trade-page surface can print a keep the country page would refuse.
+
+     The engine converts whatever revenue a cell carries into an owner
+     take-home, and a country-aggregate cell carrying chain-scale revenue
+     produced keeps that are visibly wrong for one everyday shop: a UK gym
+     owner at $513K against a $38.4K median wage, a Chad gym owner at $231K
+     against $3K. The yardstick is the country's own typical full-time pay: a
+     single shop whose modeled keep exceeds SIX TIMES the median wage is a
+     chain's number wearing one shop's name and is WITHHELD. Six is a
+     generosity bound: a well-run single shop clearing two or three times the
+     median is believable everywhere.
+
+     Withholding means the keep is nulled ONCE, here at the top, so every
+     surface derived from it (the masthead title and stat, the narrative, the
+     owner-keeps section, the what-if panel and watch chip fed from ownerKeeps
+     downstream) self-omits into its existing honest empty state. No
+     replacement figure is ever synthesized; the revenue surfaces keep their
+     own gates (trust, plausibility suppression) and are not this screen's
+     business. Where no median is held the screen cannot run and the keep
+     passes with its modeled tag, the same ruling as the country page: a
+     screen with no yardstick withholding figures would be guesswork in the
+     other direction. */
+  const CREDIBLE_KEEP_CAP = 6;
+  const keepWithheld =
+    isNum(rawInput.ownerTakeHome) &&
+    isNum(rawInput.medianWageUsd) &&
+    rawInput.ownerTakeHome > rawInput.medianWageUsd * CREDIBLE_KEEP_CAP;
+  const input: CellViewInput = keepWithheld
+    ? { ...rawInput, ownerTakeHome: null }
+    : rawInput;
+
   const {
     cell,
     londonEntry: L,

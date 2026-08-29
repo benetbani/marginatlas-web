@@ -292,6 +292,11 @@ const GATES: Gate[] = [
   { name: "render-graph", script: "scripts/audit_render_graph.ts", args: ["--gate"] },
   { name: "top-industries-plausibility", script: "tests/cells/top_industries_plausibility.test.ts" },
   { name: "all-sizes-blend", script: "tests/cells/extrapolated_all_sizes_blend.test.ts" },
+  /* The 6x-median keep screen at the trade-page layer (2026-08-29): the same
+     fixed credibility formula the country page runs, pinned so no cell_view
+     surface can print an owner take-home the country page would withhold.
+     Negative-tested by removing the screen from buildCellView (4 failures). */
+  { name: "cell-keep-credibility", script: "tests/cells/cell_view_credibility_screen.test.ts" },
   { name: "geo-region-name", script: "tests/cells/geo_region_name.test.ts" },
   /* ELEVEN TEST FILES THAT PASSED AND NEVER RAN, wired 2026-08-09.
      tests/ held 16 files. Four were in this list. The other twelve were written,

@@ -48,6 +48,7 @@ import { countryPagePath, resolveGeoPage } from "@/lib/cells/related_links";
 import { CountryFlag } from "@/components/CountryFlag";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
+import { getCountryProfile } from "@/lib/economic_profile";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier } from "@/lib/cities/city_tier";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
@@ -323,6 +324,16 @@ async function NeighborhoodCellPageBody({
   // neighborhood scaling means a non-London cell is never trusted-local
   // here, so the money sections only show when the London exemplar is on.
   const trustedLocalCell = isTrustedLocalCell(cell, ind.id);
+  // The credibility screen's yardstick (buildCellView): the country's own
+  // median full-time pay, counted only when this country's profile row is
+  // actually held (getCountryProfile answers a generic fallback otherwise).
+  const countryProfile = getCountryProfile(country.toUpperCase());
+  const medianWageUsd =
+    countryProfile.iso2.toUpperCase() === country.toUpperCase() &&
+    Number.isFinite(countryProfile.median_wage_full_time_usd) &&
+    countryProfile.median_wage_full_time_usd > 0
+      ? countryProfile.median_wage_full_time_usd
+      : null;
 
   // Avoid a doubled place name when the district label already carries the city
   // (e.g. "City of London" beside "London" read as "City of London, London").
@@ -368,6 +379,7 @@ async function NeighborhoodCellPageBody({
     peers: [],
     narrative: null,
     suppressInventedPeers: true,
+    medianWageUsd,
   });
   const navSections = cellViewNav(cellView);
 
