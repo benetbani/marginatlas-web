@@ -987,7 +987,7 @@ function Close({ meta }: { meta: any }) {
   const iso = typeof meta?.iso2 === "string" ? meta.iso2.toLowerCase() : undefined;
   return (
     <div data-terminus className="mt-8">
-      <Box>
+      <Box id="close">
         <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</h3>
         <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
           {iso === "gb" ? (
