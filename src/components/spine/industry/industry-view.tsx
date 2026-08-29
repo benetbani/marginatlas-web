@@ -75,7 +75,13 @@ function Masthead({ d }: { d: any }) {
           </div>
         </div>
         {/* the margin ladder: the gross-to-net collapse, seen as three shrinking bars */}
-        <Box>
+        {/* THE SECTION IDS ARE THE BLUEPRINT'S, NOT THIS FILE'S. Each of the ten
+            cards carries the id its row declares in design/blueprints/industry.md,
+            so the conformance gate can read the page's sections and their order
+            straight off the rendered markup. An id born here without a row there,
+            or a row there without an id here, is the drift the gate exists to
+            catch: fix the file or fix the page, the same day. */}
+        <Box id="ladder">
           <div className="mb-3 flex items-center gap-2"><h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The margin ladder</h3><SampleTag /></div>
           <MarginLadder gross={m.gross_pct} operating={m.operating_pct} net={m.net_pct} />
         </Box>
@@ -107,7 +113,7 @@ export function Benchmark({ d }: { d: any }) {
   const max = Math.max(...trades.map((t) => t.keeps_per_100), avg ?? 0) * 1.12;
   return (
     <Full>
-      <Box>
+      <Box id="kept">
         <Rail icon="benchmark" kicker="Kept per $100, by trade" verdict={b.verdict} sample />
         <div className="space-y-1.5">
           {trades.map((t) => {
@@ -199,7 +205,7 @@ export function Demand({ d }: { d: any }) {
   const both = hasSpend && hasVisits;
   return (
     <Full>
-      <Box>
+      <Box id="spend">
         <Rail icon="spending-power" kicker="What a customer spends" sample />
         <div className={`grid gap-5 border-t border-[var(--c-border)] pt-4${both ? " sm:grid-cols-2 sm:divide-x sm:divide-[var(--c-border)]" : ""}`}>
           {hasSpend ? (
@@ -256,7 +262,7 @@ export function SubtypeDrill({ d }: { d: any }) {
   // is at its 3-bar budget). The scope caveat lives in the Keep header's gloss.
   return (
     <Full>
-      <Box>
+      <Box id="neighbours">
         {/* "Trades next door", NOT "by format". These rows are the exact array
             `benchmark.trades` carries minus the self row: measured 2026-08-18,
             identical in 23 of the 23 seeds that hold either, and confirmed here
@@ -385,7 +391,7 @@ export function MoneySplit({ d }: { d: any }) {
   if (!Number.isFinite(stackTotal) || Math.abs(stackTotal - 100) > 1) return null;
   return (
     <Full>
-      <Box>
+      <Box id="split">
         <Rail icon="cost-breakdown" kicker="Where each $100 goes" verdict={`The owner's slice is what ${nonKeptWord} bigger lines leave behind.`} sample />
         {/* THE ON-BAR LABELS MOVED INTO THE SHARED BAR. This page drew its own
             overlay, with the same rule the shared form now applies , at or above
@@ -542,7 +548,7 @@ export function Operator({ d }: { d: any }) {
   if (facts.length === 0) return null;
   const factCols = facts.length >= 3 ? "grid-cols-3" : facts.length === 2 ? "grid-cols-2" : "grid-cols-1";
   return (
-    <Box {...(facts.length === 1 ? { "data-lean": "1" } : {})}>
+    <Box id="open" {...(facts.length === 1 ? { "data-lean": "1" } : {})}>
       {/* THE CARD IS NAMED FOR WHAT IT SHOWS. It was called "The typical operator",
           which promises a portrait of a person, and after the duplicate survival
           figure came off it holds one number and that number describes the venture,
@@ -613,7 +619,7 @@ export function Survival({ d }: { d: any }) {
   ];
   if (curve.length < 2) return null;
   return (
-    <Box className="flex flex-col">
+    <Box id="survival" className="flex flex-col">
       <Rail icon="trend" kicker="Five-year survival" verdict={s.verdict} />
       <SurvivalCurve curve={curve} />
     </Box>
@@ -645,7 +651,7 @@ export function WhoItSuits({ d }: { d: any }) {
        the 220-character prose budget would be cutting the only human voice on the
        page to satisfy a number. The exemption is capped at one per page, so
        declaring a second one here would fail rather than compound. */
-    <Box data-editorial="1">
+    <Box id="suits" data-editorial="1">
       <Rail icon="who-for" kicker="Who it suits" verdict={w.verdict} sample />
       <div className={`grid gap-5${both ? " sm:grid-cols-2" : ""}`}>
         {suits.length ? (
@@ -746,7 +752,7 @@ export function Caveats({ d }: { d: any }) {
   const hasMarginClaim = typeof m.gross_pct === "number" && typeof m.net_pct === "number";
   if (!hasSurvivalClaim && !hasMarginClaim && !myths.length && !c.honest_take) return null;
   return (
-    <Box>
+    <Box id="myths">
       <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" sample />
       {(hasSurvivalClaim || hasMarginClaim) ? (
         <div className="divide-y divide-[var(--c-border)]">
@@ -806,7 +812,7 @@ export function Close({ d }: { d: any }) {
   ];
   return (
     <Full>
-      <Box>
+      <Box id="close">
         <Rail icon="bookmark" kicker="The close" sample />
         {/* one full-width band, not a left-huddled recap over a blank right (rule 17):
             the answer restated on the left, the one next action on the right, both flanks
