@@ -123,7 +123,7 @@ import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
 import { isKeepCredible } from "@/lib/finance/keep_credibility";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
-import { getVatRow } from "@/lib/tax/smb_effective_rates";
+import { getVatRow, getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { getCountrySignature } from "@/lib/countries/country_signature";
 import { PEER_GROUPS } from "@/lib/countries/country_view";
 import { ownerTakeHomeForCell } from "@/lib/scores/country_board";
@@ -411,6 +411,20 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
       ? Math.round((corporatePct + payrollPct) * 10) / 10
       : undefined;
 
+  /* THE ANSWER'S NEW BASIS (founder verdict 2026-08-30): "the calculations we
+     should make should be on the effective tax that the business that has,
+     let's say, under twenty employees is effectively paying." That is exactly
+     what src/lib/tax/smb_effective_rates.ts holds (read whole before use: its
+     own header says headline CIT is the wrong frame for small shops, and its
+     rates are conservative reads at median SMB revenue , which makes them
+     MODELED, not measured, so the block's confidence says so). 128 of 195
+     countries carry a regime; the rest render no answer figure rather than
+     falling back to the retired composed sum. The employer payroll rate rides
+     BESIDE it as a separately named burden and is never added in: profit and
+     wages are different denominators. */
+  const smbRegime = getSmbRegime(code);
+  const smbRatePct = smbRegime ? Math.round(smbRegime.effective_rate * 1000) / 10 : undefined;
+
   /* The support strip (Task 10), replacing the eight-tile grade board. Four
      published facts, each with its own unit and its own guard, and NO grade
      word anywhere: the board's Strong / Excellent / Fair adjectives came from
@@ -492,11 +506,11 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
      correctly pulls the whole hero down to "modeled" instead of hiding inside
      a block that reads "measured". */
   const heroFactConfidences: SpineConfidence[] = [];
-  if (governmentTakePct != null) heroFactConfidences.push("measured");
+  if (smbRatePct != null) heroFactConfidences.push("modeled");
   for (const fact of support) heroFactConfidences.push(fact.confidence);
 
   const hero =
-    governmentTakePct != null || support.length > 0
+    smbRatePct != null || support.length > 0
       ? {
           _meta: {
             confidence: weakestConfidence(heroFactConfidences),
@@ -506,19 +520,16 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
           // government_take_pct. The figure sums a tax on profit and a tax on
           // wages, two different denominators, so no single "pct of X"
           // sentence about it is true; "composed" says so in the name itself.
-          government_take_composed_pct: governmentTakePct,
-          // Named separately so the hero figure can never print as an
-          // unexplained total: a reader can see both halves of it.
-          take_components:
-            governmentTakePct != null
+          /* The answer and its named companions. rate + regime are one fact
+             (the regime names what the rate IS); payroll is a SEPARATE burden
+             on a separate base, shown beside and never summed. */
+          effective_burden:
+            smbRatePct != null && smbRegime
               ? {
-                  corporate_rate_pct: corporatePct,
-                  employer_payroll_pct: payrollPct,
+                  rate_pct: smbRatePct,
+                  regime_name: smbRegime.local_name,
+                  payroll_pct: payrollPct,
                 }
-              : undefined,
-          take_basis:
-            governmentTakePct != null
-              ? "The business tax rate plus the employer payroll rate on wages. Sales tax is not added in."
               : undefined,
           support: support.length > 0 ? support : undefined,
         }
@@ -611,7 +622,6 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
       unit: "composed_pct",
       inverted: true,
       rank_pct: rankPct(governmentTakePct, WORLD.takePool, true),
-      context: { world_median_pct: asWhole(WORLD.takeMedian) },
       confidence: "measured",
       profit_tax_pct: corporatePct,
       profit_tax_basis: "pct of taxable profit",
@@ -901,7 +911,10 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
         iso2: pc,
         name: pMeta.name,
         home: pc === code,
-        business_tax_pct: asPct(pRates.cit),
+        effective_tax_pct: (() => {
+          const r = getSmbRegime(pc);
+          return r ? Math.round(r.effective_rate * 1000) / 10 : undefined;
+        })(),
         payroll_pct: asPct(pRates.employerSocial),
         register_cost_usd: (() => {
           const v = getTypicalFormationCostUsd(pc);
@@ -920,7 +933,7 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
           },
           list: peerFacts,
           caveat:
-            "Peers are picked for comparable size and market, not for sharing a border. These are different price regimes, so read each column on its own terms.",
+            "Peers are picked for comparable size and market, not for sharing a border. Effective tax is what a small business typically pays under each country's own small-business rules, so read each column on its own terms.",
         }
       : undefined;
 
