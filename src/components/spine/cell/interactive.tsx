@@ -54,7 +54,7 @@ export function Nearby({ d }: { d: any }) {
   const gridCols = `1.3fr ${cols.map(() => "1fr").join(" ")}`;
 
   return (
-    <Box>
+    <Box id="peers">
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
       <Rail icon="compare" kicker="The same trade, comparable places" sample />
       {/* A REAL TABLE, because this is a real table.
@@ -183,7 +183,7 @@ export function Wages({ d }: { d: any }) {
   for (let v = 0; v <= max; v += tickStep) ticks.push(v);
   const tickLabel = (v: number) => (v === 0 ? "$0" : kUsd(v));
   return (
-    <Box className="md:flex-[2]">
+    <Box id="wages" className="md:flex-[2]">
       <Rail icon="wages" kicker="What the team costs" sample />
       {/* FOUR RAW GREYS RETIRED, and the sizes put on the ladder. The grey was
           one step off the token this project already uses for a neutral mark,
@@ -308,7 +308,7 @@ export function Risks({ d }: { d: any }) {
     .sort((a, b) => a.safe - b.safe)
     .map(({ r, safe }) => [r.name, (safe / 10) * 100, `${safe}/10`]) as Array<[string, number, string, string?]>;
   return (
-    <Box className="md:flex-[2]">
+    <Box id="risks" className="md:flex-[2]">
       <Rail icon="watch" kicker="What to watch" sample />
       <div className="mt-1"><EaseScale rows={rows} endLabels={["Riskier", "Safer"]} /></div>
       <InlineDisclosure name="risks" summary="What each risk does">

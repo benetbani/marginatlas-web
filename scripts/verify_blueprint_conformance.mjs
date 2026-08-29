@@ -39,7 +39,7 @@ import { requireBrowser } from "./lib/local_only.mjs";
 const BLUEPRINT_DIR = "E:/atlas/design/blueprints";
 const PAGES_DIR = "docs/loop/artifacts/final-pages";
 /** blueprint slug -> rendered surface slug */
-const SURFACE = { country: "country-gb-new", hood: "hood-london", industry: "industry-restaurants" };
+const SURFACE = { country: "country-gb-new", hood: "hood-london", industry: "industry-restaurants", cell: "cell-london-restaurants" };
 
 const argv = process.argv.slice(2);
 const overrides = {};
@@ -129,8 +129,13 @@ for (const file of blueprints) {
     const railIds = [...document.querySelectorAll('nav[aria-label="On this page"] a')]
       .map((a) => (a.getAttribute("href") || "").replace(/^#/, ""));
     const count = (sel) => document.querySelectorAll(sel).length;
+    /* ANSWER-CLASS, NOT ANSWER-EXACT. The trade page's answer is a responsive
+       clamp (57.6 at 1280, 41.6 at 375), never exactly 48, so an equality probe
+       counts zero on a correct page, and a red gate on a good page is how gates
+       get switched off (the cell constitution names this as its precondition).
+       The ladder ends at focal 30; anything a step above it is answer-class. */
     const answerFigs = [...document.querySelectorAll(".fig")].filter(
-      (e) => Math.round(parseFloat(getComputedStyle(e).fontSize)) === 48,
+      (e) => parseFloat(getComputedStyle(e).fontSize) > 36,
     ).length;
     const wrapped = (id, attr) => {
       const el = document.getElementById(id);

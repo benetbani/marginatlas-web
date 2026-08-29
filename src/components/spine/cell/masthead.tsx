@@ -35,7 +35,7 @@ export function Masthead({ d }: { d: any }) {
   const t = useCountUp(take, reduced, 620);
 
   return (
-    <section className="overflow-hidden py-6 md:py-8">
+    <section id="take" className="overflow-hidden py-6 md:py-8">
       <div className="rounded-[14px] border border-[var(--c-border)] p-5 md:p-6" style={CARD_SURFACE}>
         {/* crumb , real wayfinding: each segment carries its altitude mark, kept quiet (muted ink) */}
         {/* a trade/city/country wayfinding crumb, not a restated title; panel-approved (cell-00 passed) */}

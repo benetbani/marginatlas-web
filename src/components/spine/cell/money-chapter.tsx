@@ -80,7 +80,7 @@ export function OwnerKeeps({ d }: { d: any }) {
   const costs = floored.map(({ name, pct }) => ({ name, pct })).sort((a, b) => b.pct - a.pct);
   const drivers: any[] = d.cost_drivers ?? [];
   return (
-    <Box className="md:flex-[3]">
+    <Box id="keeps" className="md:flex-[3]">
       <div className="flex items-start justify-between gap-2">
         <Rail icon="owner-keeps" kicker="What the owner keeps" sample />
         <FormatTag />
@@ -150,7 +150,7 @@ export function BreakEven({ d }: { d: any }) {
   const bePct = (covers / domain) * 100;
   const typPct = (typical / domain) * 100;
   return (
-    <Box className="md:flex-[2]">
+    <Box id="breakeven" className="md:flex-[2]">
       <div className="flex items-center justify-between gap-2">
         <Rail icon="break-even" kicker="When it clears costs" sample />
         <FormatTag />
@@ -219,7 +219,7 @@ export function CostToOpen({ d }: { d: any }) {
   const topItems = ranked.slice(0, 3);
   const maxItem = Math.max(1, ...topItems.map((it) => it.usd * scale));
   return (
-    <Box className="md:flex-[3]">
+    <Box id="opening" className="md:flex-[3]">
       <div className="flex items-start justify-between gap-2">
         {/* same section-opener treatment as the sibling money cards (Rail kicker, not a bold Head) */}
         <Rail icon="startup-cost" kicker="What it costs to open one" sample />

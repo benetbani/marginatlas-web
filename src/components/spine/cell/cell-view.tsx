@@ -87,7 +87,7 @@ function MoneySplit({ d }: { d: any }) {
   const total = segments.reduce((a, s) => a + (Number.isFinite(s.pct) ? s.pct : NaN), 0);
   if (!Number.isFinite(total) || Math.abs(total - 100) > 4) return null;
   return (
-    <Box>
+    <Box id="split">
       {/* sample: the kept 7% is a modeled cost-structure share, not a measured net
           margin by city (rulebook 4A/5); the tag marks it so it never reads as real. */}
       <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" sample />
@@ -361,7 +361,7 @@ function Ramp({ d }: { d: any }) {
   if (breakevenWeek == null) return null;
   const openWeek = timeToOpenWeeks(d.meta?.industry ?? null);
   return (
-    <Box>
+    <Box id="ramp">
       <Rail icon="first-year" kicker="Getting to break-even" sample />
       <PhaseBar openWeek={openWeek} breakevenWeek={breakevenWeek} />
     </Box>
@@ -383,7 +383,7 @@ export function Myth({ d }: { d: any }) {
   const survival: Array<[string, number]> = [["Yr 1", s.year1_pct], ["Yr 3", s.year3_pct], ["Yr 5", s.year5_pct]]
     .filter(([, v]) => typeof v === "number") as Array<[string, number]>;
   return (
-    <Box className="md:flex-[3]">
+    <Box id="myth" className="md:flex-[3]">
       {/* ink rail: the ONE accent in this box is the year-one survival node + figure. */}
       <Rail icon="myth-reality" kicker="Myth vs. reality" sample />
       {/* the evidence, ALONE: a survival curve with the "9 in 10 fail" folklore struck ON
@@ -595,7 +595,7 @@ function Close({ d }: { d: any }) {
     ...(hasSubtypes ? [{ t: "See what an owner keeps, format by format" }] : []),
   ];
   return (
-    <Box>
+    <Box id="close">
       <div>
         <div className="max-w-2xl">
           {/* the asserted "bottom line" verdict paragraph and the forward "where the same
