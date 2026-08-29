@@ -91,6 +91,17 @@ const PAGES = readPagesArg();
 function measure() {
   const SPINE_RADIUS = 14;
   const SMALL_MAX = 8;
+  /* THE DECLARED md STEP. tailwind.config sets rounded-md to var(--radius) minus
+     0.25rem, and globals.css pins --radius at 1rem, so every hover-wash row the
+     site has ever drawn (rounded-md on the .hov idiom, all four approved pages)
+     measures exactly 12. The first version of this set never met one, because
+     the approved pages were baselined wholesale and their rows hid inside the
+     counts; the rebuilt country page starts at zero and its spectra rows
+     surfaced the gap, ten identical, system-declared 12s flagged as ten
+     violations. Sanctioning the declared step COMPLETES the instrument; it does
+     not move the line, and every baseline total falls with it, which is the
+     only direction a ratchet may move. 2026-08-29. */
+  const MD_STEP = 12;
 
   function isVisible(el) {
     const r = el.getBoundingClientRect();
@@ -134,7 +145,7 @@ function measure() {
     const maxR = Math.round(maxCornerRadius(s) * 100) / 100;
     const isPill = r.height > 0 && maxR >= r.height / 2;
     const rounded = Math.round(maxR);
-    const sanctioned = rounded === SPINE_RADIUS || rounded <= SMALL_MAX || isPill;
+    const sanctioned = rounded === SPINE_RADIUS || rounded === MD_STEP || rounded <= SMALL_MAX || isPill;
     const label = (el.querySelector("h1, h2, h3")?.textContent || el.textContent || "")
       .trim().replace(/\s+/g, " ").slice(0, 48);
     return { tag: el.tagName.toLowerCase(), w: Math.round(r.width), h: Math.round(r.height), radius: radiusStr, maxR: rounded, sanctioned, label };

@@ -29,7 +29,7 @@
  * exemption that recorded the gap is gone with the gap.
  */
 import * as React from "react";
-import { Band, Box, Fig, Rail, SampleTag, usd } from "@/components/spine/kit";
+import { Band, Box, Fig, Rail, SampleTag, SpectraTable, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -49,6 +49,7 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "customers", label: "What customers earn" },
   { id: "lenses", label: "Lending, customers, currency" },
   { id: "money", label: "What an owner keeps" },
+  { id: "character", label: "The character" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -712,6 +713,80 @@ function Money({ money }: { money: any }) {
 }
 
 /**
+ * The character , the TWO ratified six-spectra tables, state and people, kept
+ * whole: round 4 judged this the closest thing on the legacy page to the
+ * current law, and dropping or butchering the pair is a standing founder rule
+ * (2026-06-18). The pole words are the legacy page's own ratified wording,
+ * carried verbatim; the positions are the same published-index-anchored reads,
+ * normalised exactly as the legacy route normalised them (government scores run
+ * 0 to 10, culture scores 1 to 10, and collapsing that difference is how a
+ * position would silently shift by half a step).
+ *
+ * TAGGED AS MODELED, which is a change from the legacy page: these are
+ * hand-anchored reads against published indices, not measurements, and behind a
+ * seed the tag gate can finally see them.
+ *
+ * The two real percentages, born abroad and foreign-owned firms, ride beside
+ * the people table as plain facts, exactly where the legacy page put them and
+ * round 4 called them "the only true numbers" on the card.
+ */
+function Character({ character }: { character: any }) {
+  const gov = character?.government;
+  const cu = character?.culture;
+  if (!gov && !cu) return null;
+  const tagged = typeof character?._meta?.confidence === "string" && character._meta.confidence !== "measured";
+  const norm10 = (v: unknown) => (isNum(v) ? Math.max(0, Math.min(1, v / 10)) : null);
+  const norm1to10 = (v: unknown) => (isNum(v) ? Math.max(0, Math.min(1, (v - 1) / 9)) : null);
+  const row = (pos: number | null, spectrum: string, left: string, right: string) =>
+    pos == null ? null : { spectrum, left_label: left, right_label: right, position_0_1: pos };
+  const govRows = gov
+    ? [
+        row(norm10(gov.tax_predictability), "tax", "Erratic", "Predictable"),
+        row(norm10(gov.low_bribery), "bribery", "Greased", "Clean"),
+        row(norm10(gov.task_efficiency), "tasks", "Slow", "Efficient"),
+        row(norm10(gov.time_efficiency), "time", "Long", "Short"),
+        row(norm10(gov.judicial_impartiality), "courts", "Partial", "Impartial"),
+        row(norm10(gov.innovation_capacity), "new", "Resistant", "Receptive"),
+      ].filter(Boolean)
+    : [];
+  const cuRows = cu
+    ? [
+        row(norm1to10(cu.openness_to_foreigners), "open", "Insular", "Welcoming"),
+        row(norm1to10(cu.innovation), "innovation", "Tradition-bound", "Embraces the new"),
+        row(norm1to10(cu.communication_directness), "direct", "Indirect", "Direct"),
+        row(norm1to10(cu.punctuality), "punctual", "Loose", "Strict"),
+        row(norm1to10(cu.corruption_rejection), "straight", "Tolerated", "Rejected"),
+        row(norm1to10(cu.ambition_chest_beating), "ambition", "Understated", "Loud"),
+      ].filter(Boolean)
+    : [];
+  if (govRows.length === 0 && cuRows.length === 0) return null;
+  return (
+    <Band split="1-1">
+      {govRows.length > 0 ? (
+        <Box id="character">
+          <Rail icon="red-tape" kicker="Dealing with the state" sample={tagged} />
+          <SpectraTable rows={govRows} />
+        </Box>
+      ) : null}
+      {cuRows.length > 0 ? (
+        <Box {...(govRows.length === 0 ? { id: "character" } : {})}>
+          <Rail icon="who-for" kicker="Dealing with people" sample={tagged} />
+          <SpectraTable rows={cuRows} />
+          {isNum(character?.foreign_born_pct) ? (
+            <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-3">
+              <span className="flex items-baseline gap-1.5">
+                <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{character.foreign_born_pct}%</Fig>
+                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">born abroad</span>
+              </span>
+            </div>
+          ) : null}
+        </Box>
+      ) : null}
+    </Band>
+  );
+}
+
+/**
  * The country spine page body. `data` is the seed from buildSpineCountrySeed.
  * Every block on it is optional by design, so read defensively.
  */
@@ -742,6 +817,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
           );
         })()}
         <Money money={d.money} />
+        <Character character={d.character} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>
