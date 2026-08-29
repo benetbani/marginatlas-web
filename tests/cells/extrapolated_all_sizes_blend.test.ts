@@ -104,12 +104,21 @@ const BIG_USD = 65_000_000 * FX; // 501,930 — the largest band
   expect(out != null && out < 30_000, `Catastrophic band must be dropped; blend should stay ~$25K, got $${out?.toFixed(0)}`);
 }
 
-// --- Test 4: no firm distribution -> equal-weight mean across present bands.
-// mean(10,038.6, 42,471, 154,440, 501,930) = 177,219.9
+// --- Test 4: no firm distribution -> DEFAULT micro-dominant weights, never an
+// equal-weight mean. The old fallback averaged a micro shop and a 20-49-staff
+// operation as equals, which is how a country with no research-drop economics
+// printed a chain's revenue as "typical" (the 2026-08-29 take-home defect: a
+// UK gym at $2.5M, an owner keeping $513K against a $38K median wage). Every
+// national business registry is micro-dominated, so when no per-pair
+// distribution exists the blend now weights with the documented default
+// (70/15/8/4/2/1), landing near the modal micro firm:
+// (70*10,038.6 + 15*42,471 + 8*154,440 + 4*501,930) / 97 = 47,247.49
 {
   const out = blendBandsToAllSizesRevenue(KE_RESTAURANT_BANDS, {});
-  const mean = KE_RESTAURANT_BANDS.reduce((s, b) => s + (b.predicted_rev_per_firm ?? 0), 0) / 4;
-  expect(out != null && Math.abs(out - mean) < 1, `No-distribution fallback should be the equal-weight mean ($${mean.toFixed(0)}), got $${out?.toFixed(0)}`);
+  expect(
+    out != null && Math.abs(out - 47_247.49) < 1,
+    `No-distribution fallback should use the default micro-dominant weights ($47,247), got $${out?.toFixed(0)}`,
+  );
 }
 
 // --- Test 5: single band returns that band's value untouched.
@@ -169,23 +178,104 @@ const BIG_USD = 65_000_000 * FX; // 501,930 — the largest band
   const weighted = blendBandsToAllSizesRevenue(withJunk, { firmDistribution: KE_RESTAURANT_FIRM_DIST });
   expect(weighted != null && Math.abs(weighted - 25_598.43) < 1, `Junk bands must not change the weighted blend, got $${weighted?.toFixed(0)}`);
 
-  // Equal-weight fallback (no distribution): must average ONLY the canonical
-  // bands, not the junk. Mean of the 4 canonical bands = $177,220.
-  const canonicalMean = KE_RESTAURANT_BANDS.reduce((s, b) => s + (b.predicted_rev_per_firm ?? 0), 0) / 4;
+  // No-distribution fallback with a TOTAL row present: the TOTAL band IS the
+  // direct all-sizes estimate the loader wrote, so it beats any synthetic
+  // weighting and is returned as-is. (With a per-pair distribution, the
+  // researched weighted blend above still wins; TOTAL is the second rung.)
   const fallback = blendBandsToAllSizesRevenue(withJunk, {});
   expect(
-    fallback != null && Math.abs(fallback - canonicalMean) < 1,
-    `Equal-weight fallback must average only canonical bands ($${canonicalMean.toFixed(0)}), got $${fallback?.toFixed(0)}`,
+    fallback != null && Math.abs(fallback - 23_000) < 1,
+    `With no distribution, an explicit TOTAL row must be returned directly ($23,000), got $${fallback?.toFixed(0)}`,
   );
 
-  // Only-junk input (no canonical band at all): fall back to those bands rather
-  // than returning null, still deterministically.
+  // Only turnover classes (no employee band, no TOTAL): weighted small-dominant
+  // (80/15/5), never an equal mean; the modal firm in every economy is small.
+  // (80*40,000 + 5*160,000) / 85 = 47,058.82
   const onlyJunk: ExtrapolatedBandRow[] = [
     { size_band: "small", predicted_rev_per_firm: 40_000 },
     { size_band: "large", predicted_rev_per_firm: 160_000 },
   ];
   const j = blendBandsToAllSizesRevenue(onlyJunk, {});
-  expect(j != null && Math.abs(j - 100_000) < 1, `Only-junk input should fall back to their mean ($100K), got $${j?.toFixed(0)}`);
+  expect(
+    j != null && Math.abs(j - 47_058.82) < 1,
+    `Turnover-class-only input should blend small-dominant ($47,059), got $${j?.toFixed(0)}`,
+  );
+}
+
+// --- Test 10: THE 2026-08-29 DEFECT, pinned with the real GB sports_fitness
+// rows. This (country, industry) pair has no canonical band, no TOTAL row and
+// no research-drop distribution, so the old code fell to an equal-weight mean
+// across every label present, junk included:
+// mean(416K, 1.11M, 5.08M, 8M, 360K, 600K, 1.68M) = $2,465,390, which the
+// engine converted into a $513K owner take-home, 13.4x the UK median wage.
+// The fix maps the alternate employee bands onto the canonical axis ("2-9"
+// covers 1-4 + 5-9, "10-49" covers 10-19 + 20-49, "50-249" covers 50-99 +
+// 100+, "250+" covers nothing a single shop lives in) and weights with the
+// default micro-dominant shares:
+// (85*416,338 + 12*1,113,359 + 3*5,084,154) / 100 = 640,015.0
+{
+  const GB_SPORTS_BANDS: ExtrapolatedBandRow[] = [
+    { size_band: "2-9", predicted_rev_per_firm: 416_338 },
+    { size_band: "10-49", predicted_rev_per_firm: 1_113_359 },
+    { size_band: "50-249", predicted_rev_per_firm: 5_084_154 },
+    { size_band: "250+", predicted_rev_per_firm: 8_000_000 },
+    { size_band: "small", predicted_rev_per_firm: 360_529 },
+    { size_band: "medium", predicted_rev_per_firm: 600_881 },
+    { size_band: "large", predicted_rev_per_firm: 1_682_467 },
+  ];
+  const out = blendBandsToAllSizesRevenue(GB_SPORTS_BANDS, { ceiling: 24_000_000 });
+  expect(
+    out != null && Math.abs(out - 640_015) < 1,
+    `GB sports_fitness must blend micro-dominant ($640,015), got $${out?.toFixed(0)}`,
+  );
+  expect(out != null && out < 1_000_000, `GB sports_fitness blend must stay far below the old chain-scale $2.47M, got $${out?.toFixed(0)}`);
+}
+
+// --- Test 11: a TOTAL row wins over the default-weighted blend (the real TD /
+// AL sports_fitness rows). TOTAL is the loader's own direct all-sizes
+// per-firm estimate; when the pair holds one and no researched distribution,
+// synthesizing weights around it would be a worse figure wearing more math.
+{
+  const TD_SPORTS_BANDS: ExtrapolatedBandRow[] = [
+    { size_band: "10-49", predicted_rev_per_firm: 113_377 },
+    { size_band: "total", predicted_rev_per_firm: 49_438 },
+    { size_band: "2-9", predicted_rev_per_firm: 42_397 },
+    { size_band: "50-249", predicted_rev_per_firm: 517_735 },
+    { size_band: "small", predicted_rev_per_firm: 14_305 },
+    { size_band: "medium", predicted_rev_per_firm: 23_841 },
+    { size_band: "large", predicted_rev_per_firm: 66_755 },
+    { size_band: "250+", predicted_rev_per_firm: 8_000_000 },
+  ];
+  const out = blendBandsToAllSizesRevenue(TD_SPORTS_BANDS, { ceiling: 24_000_000 });
+  expect(out === 49_438, `An explicit total row must be returned directly ($49,438), got $${out}`);
+}
+
+// --- Test 12: layered duplicate bands never count the same firms twice, and
+// the 250+ class never receives weight.
+{
+  // "1-4" and "0-9" both present: the exact canonical band claims its own
+  // share (80) and the wider alias receives only the share the exact band did
+  // not claim (5-9's 15): (80*10,000 + 15*99,999) / 95 = 24,210.37
+  const layered: ExtrapolatedBandRow[] = [
+    { size_band: "1-4", predicted_rev_per_firm: 10_000 },
+    { size_band: "0-9", predicted_rev_per_firm: 99_999 },
+  ];
+  const out = blendBandsToAllSizesRevenue(layered, {
+    firmDistribution: { "1-4": 80, "5-9": 15 },
+  });
+  expect(
+    out != null && Math.abs(out - 24_210.37) < 1,
+    `A duplicate wider band must only claim unowned shares ($24,210), got $${out?.toFixed(2)}`,
+  );
+
+  // A GE250 band alongside one micro band: the corporate band gets zero weight,
+  // so the blend IS the micro value.
+  const withCorporate: ExtrapolatedBandRow[] = [
+    { size_band: "2-9", predicted_rev_per_firm: 50_000 },
+    { size_band: "GE250", predicted_rev_per_firm: 8_000_000 },
+  ];
+  const micro = blendBandsToAllSizesRevenue(withCorporate, {});
+  expect(micro === 50_000, `The 250+ class must never receive weight; expected $50,000, got $${micro}`);
 }
 
 if (errors.length > 0) {
@@ -194,4 +284,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log("extrapolated_all_sizes_blend: PASS. 9 test groups, blend is deterministic and sensible.");
+console.log("extrapolated_all_sizes_blend: PASS. 12 test groups, blend is deterministic and sensible.");

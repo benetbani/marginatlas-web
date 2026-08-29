@@ -1128,10 +1128,21 @@ export async function getExtrapolatedCell(
     // value that flickered between identical requests. Weighting by share_of_firms
     // keeps the micro-dominated reality near the floor while the larger bands lift
     // it, and folding in a fixed band order makes the result identical every time.
+    //
+    // Scrub-capped rows are excluded from the fold (2026-08-29 take-home fix):
+    // a row whose source carries the scrub:revenue-cap marker holds a CLAMP,
+    // not a measurement; its true value was even larger and is unknown, so it
+    // can only distort a typical-single-shop figure. Kept only when every row
+    // is capped, so a junk-only pair still resolves rather than 404ing; the
+    // render-side credibility screens are the backstop there.
+    const uncapped = yearRows.filter(
+      (row) => !/scrub:revenue-cap/i.test(String(row.coverage_source ?? "")),
+    );
+    const rowsForBlend = uncapped.length > 0 ? uncapped : yearRows;
     const firmDistribution = getCountryIndustryFirmDistribution(dispId, iso2);
     predRev =
       blendBandsToAllSizesRevenue(
-        yearRows.map((row) => ({
+        rowsForBlend.map((row) => ({
           size_band: (row.size_band as string) ?? null,
           predicted_rev_per_firm: (row.predicted_rev_per_firm as number) ?? null,
         })),
