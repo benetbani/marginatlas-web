@@ -8,9 +8,10 @@
  * cell carries chain-scale revenue, that keep is visibly wrong: a UK gym
  * owner "keeping" $513K against a $38.4K median wage, a Chad gym owner
  * keeping $231K against $3K. The country page withholds such keeps behind
- * its credibility screen (src/lib/spine/adapt_country.ts, founder-decided
- * 2026-08-29: withhold any keep above SIX TIMES the country's median
- * full-time pay). This test pins the SAME fixed formula at the cell_view
+ * its credibility screen (founder-decided 2026-08-29: withhold any keep above
+ * SIX TIMES the country's median full-time pay, and since the same day any
+ * keep below a TWENTIETH of it). Both bounds live in
+ * src/lib/finance/keep_credibility.ts. This test pins that formula at the cell_view
  * layer, so no trade-page surface (masthead stat, title, narrative,
  * owner-keeps section, and everything derived from them) can print a keep
  * the country page would refuse.
@@ -125,7 +126,52 @@ function baseInput(overrides: Partial<CellViewInput>): CellViewInput {
   );
 }
 
-// --- Test 5: the trust gate is untouched. An untrusted cell shows no money
+// --- Test 5: THE LOW BOUND. A keep under a twentieth of the median wage is an
+// artifact, not a thin margin, and is withheld the same way. $1,247 against a
+// $42,000 median is the real San Marino auto-repair figure the all-sizes blend
+// fix produced: before it that pair read too high and the high screen hid it,
+// after it read too low and nothing looked. See keep_credibility.ts.
+{
+  const view = buildCellView(baseInput({ ownerTakeHome: 1_247, medianWageUsd: 42_000 }));
+  expect(view.ownerKeeps === null, "A keep at 0.03x the median must be withheld");
+  const stat = view.masthead.stats.find((s) => s.label === "Owner take-home");
+  expect(stat != null && stat.value === null, "The masthead stat must dash on a too-low keep");
+  expect(
+    !view.masthead.title.includes("clears about"),
+    `The title must not lead with a withheld low keep, got "${view.masthead.title}"`,
+  );
+}
+
+// --- Test 6: exactly a twentieth passes; the low screen is strictly below.
+{
+  const view = buildCellView(baseInput({ ownerTakeHome: 38_400 / 20 }));
+  expect(
+    view.ownerKeeps != null && view.ownerKeeps.takeHome === 38_400 / 20,
+    "A keep at exactly median/20 must pass (the screen is strictly below)",
+  );
+}
+
+// --- Test 7: a thin but real keep is NOT withheld. The low bound is set to
+// catch artifacts, not to punish a genuinely marginal business: median/8 is
+// thin and stays.
+{
+  const view = buildCellView(baseInput({ ownerTakeHome: 38_400 / 8 }));
+  expect(
+    view.ownerKeeps != null,
+    "A thin-but-real keep at median/8 must survive the screen",
+  );
+}
+
+// --- Test 8: the low screen cannot run without a median either.
+{
+  const view = buildCellView(baseInput({ ownerTakeHome: 1_247, medianWageUsd: null }));
+  expect(
+    view.ownerKeeps != null && view.ownerKeeps.takeHome === 1_247,
+    "With no median wage the low screen must not run",
+  );
+}
+
+// --- Test 9: the trust gate is untouched. An untrusted cell shows no money
 // regardless of what the screen would say.
 {
   const view = buildCellView(baseInput({ ownerTakeHome: 80_000, isTrustedLocal: false }));
@@ -138,4 +184,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log("cell_view_credibility_screen: PASS. The 6x-median keep screen holds at the trade-page layer.");
+console.log("cell_view_credibility_screen: PASS. The keep credibility band holds at the trade-page layer.");

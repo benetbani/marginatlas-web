@@ -23,6 +23,7 @@ import type { Cell } from "@/lib/cells";
 import type { LondonEntry } from "@/lib/scores/cell_board";
 import type { NumberFormatSpec } from "@/components/kit/numberFormat";
 import { CELL_SECTIONS } from "@/lib/page-sections";
+import { isKeepCredible } from "@/lib/finance/keep_credibility";
 
 /* ----------------------------- output shape ----------------------------- */
 
@@ -174,9 +175,12 @@ export function buildCellView(rawInput: CellViewInput): CellView {
      owner at $513K against a $38.4K median wage, a Chad gym owner at $231K
      against $3K. The yardstick is the country's own typical full-time pay: a
      single shop whose modeled keep exceeds SIX TIMES the median wage is a
-     chain's number wearing one shop's name and is WITHHELD. Six is a
-     generosity bound: a well-run single shop clearing two or three times the
-     median is believable everywhere.
+     chain's number wearing one shop's name and is WITHHELD, and so is one
+     below a TWENTIETH of it, which is an artifact rather than a thin margin.
+     Both bounds and the reasoning behind their asymmetry live in
+     src/lib/finance/keep_credibility.ts, which is the one definition this
+     page and the country funnel share so they cannot reach different
+     verdicts about the same figure.
 
      Withholding means the keep is nulled ONCE, here at the top, so every
      surface derived from it (the masthead title and stat, the narrative, the
@@ -188,11 +192,7 @@ export function buildCellView(rawInput: CellViewInput): CellView {
      passes with its modeled tag, the same ruling as the country page: a
      screen with no yardstick withholding figures would be guesswork in the
      other direction. */
-  const CREDIBLE_KEEP_CAP = 6;
-  const keepWithheld =
-    isNum(rawInput.ownerTakeHome) &&
-    isNum(rawInput.medianWageUsd) &&
-    rawInput.ownerTakeHome > rawInput.medianWageUsd * CREDIBLE_KEEP_CAP;
+  const keepWithheld = !isKeepCredible(rawInput.ownerTakeHome, rawInput.medianWageUsd);
   const input: CellViewInput = keepWithheld
     ? { ...rawInput, ownerTakeHome: null }
     : rawInput;

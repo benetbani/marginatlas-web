@@ -121,6 +121,7 @@ import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
+import { isKeepCredible } from "@/lib/finance/keep_credibility";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { getVatRow } from "@/lib/tax/smb_effective_rates";
 import { getCountrySignature } from "@/lib/countries/country_signature";
@@ -789,12 +790,16 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
 
      Where no median exists the screen cannot run and rows pass with their
      modeled tag: a screen with no yardstick withholding figures would be
-     guesswork in the other direction. */
+     guesswork in the other direction.
+
+     BOTH BOUNDS NOW LIVE IN ONE PLACE, src/lib/finance/keep_credibility.ts,
+     because this rule was written twice (here and in the cell view) and two
+     copies of a ratified constant drift. That module also carries the low
+     bound added the same day, a twentieth of the median, after the all-sizes
+     blend fix moved eight pairs from a wrong the high screen hid into a wrong
+     nothing was looking at. */
   const screenMedian = prof(profile.median_wage_full_time_usd);
-  const CREDIBLE_KEEP_CAP = 6;
-  const moneyKept = isNum(screenMedian)
-    ? money0.filter((r) => r.keeps_usd_year <= (screenMedian as number) * CREDIBLE_KEEP_CAP)
-    : money0;
+  const moneyKept = money0.filter((r) => isKeepCredible(r.keeps_usd_year, screenMedian));
   const moneyWithheld = money0.length - moneyKept.length;
   const money =
     moneyKept.length >= 2
