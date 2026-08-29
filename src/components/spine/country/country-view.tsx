@@ -50,6 +50,10 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "lenses", label: "Lending, customers, currency" },
   { id: "money", label: "What an owner keeps" },
   { id: "character", label: "The character" },
+  { id: "setup", label: "Registering, by legal form" },
+  { id: "premises", label: "What premises cost" },
+  { id: "hiring", label: "What staff cost" },
+  { id: "locals", label: "What locals know" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -787,6 +791,217 @@ function Character({ character }: { character: any }) {
 }
 
 /**
+ * Getting set up + what premises cost , Task 16, a 3-2 band.
+ *
+ * The legal-form table is the one piece of the legacy page the July-5 review
+ * marked "execution GOOD, keep": tier, local name, fee, filing time, and the
+ * complexity read as dots. The dots are QUIET, ink on line, because complexity
+ * is furniture here, not an answer (rule 37), and a zero fee is the word Free.
+ *
+ * Premises: the two CONNECTs of plan correction 3 that belong to running a
+ * site, rent by location tier and commercial electricity. The lending rate the
+ * seed also carries is NOT here: the lens grid already states it, and one page
+ * says one number once. Rent tiers are three labelled figures on one line, the
+ * spread IS the reading (prime runs nearly eight times edge in the UK), and the
+ * unit is named once for all three (N5).
+ */
+function Setup({ setup }: { setup: any }) {
+  const tiers: any[] = Array.isArray(setup?.tiers) ? setup.tiers : [];
+  if (tiers.length === 0) return null;
+  const tagged = typeof setup?._meta?.confidence === "string" && setup._meta.confidence !== "measured";
+  return (
+    <Box id="setup">
+      <Rail icon="register-cost" kicker="Registering, by legal form" sample={tagged} />
+      <div className="divide-y divide-[var(--c-border)]">
+        {tiers.map((t: any) => (
+          <div key={t.tier} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-2.5 first:pt-0 last:pb-0">
+            <span className="min-w-[9rem] flex-[1_1_9rem]">
+              <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.tier}</span>
+              {t.local_term && t.local_term !== t.tier ? (
+                <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{t.local_term}</span>
+              ) : null}
+            </span>
+            <span className="whitespace-nowrap">
+              {t.cost_usd === 0 ? (
+                <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">Free</span>
+              ) : isNum(t.cost_usd) ? (
+                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig>
+              ) : null}
+            </span>
+            {isNum(t.days) ? (
+              <span className="whitespace-nowrap">
+                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.days} {t.days === 1 ? "day" : "days"}</Fig>
+              </span>
+            ) : null}
+            {isNum(t.complexity_1_5) ? (
+              <span aria-label={"complexity " + t.complexity_1_5 + " of 5"} className="ml-auto flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <span
+                    key={i}
+                    aria-hidden
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ background: i <= t.complexity_1_5 ? "var(--c-ink2)" : "var(--c-soft2)" }}
+                  />
+                ))}
+              </span>
+            ) : null}
+          </div>
+        ))}
+      </div>
+    </Box>
+  );
+}
+
+function Premises({ premises }: { premises: any }) {
+  const prime = premises?.rent_prime_usd_sqm_year;
+  const mid = premises?.rent_mid_usd_sqm_year;
+  const edge = premises?.rent_edge_usd_sqm_year;
+  const kwh = premises?.electricity_usd_per_kwh;
+  const hasRent = isNum(prime) || isNum(mid) || isNum(edge);
+  if (!hasRent && !isNum(kwh)) return null;
+  const tagged = typeof premises?._meta?.confidence === "string" && premises._meta.confidence !== "measured";
+  const rents: Array<[string, number]> = [];
+  if (isNum(prime)) rents.push(["Prime street", prime]);
+  if (isNum(mid)) rents.push(["Ordinary street", mid]);
+  if (isNum(edge)) rents.push(["Edge of town", edge]);
+  return (
+    <Box id="premises">
+      <Rail icon="commercial-rent" kicker="What premises cost to run" sample={tagged} />
+      {rents.length > 0 ? (
+        <>
+          <div className="flex flex-wrap gap-x-8 gap-y-3">
+            {rents.map(([label, v]) => (
+              <div key={label} className="min-w-[7rem]">
+                <Fig className="block text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{usd(v)}</Fig>
+                <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Commercial rent for a square metre, a year.</div>
+        </>
+      ) : null}
+      {isNum(kwh) ? (
+        <div className={"flex flex-wrap items-baseline gap-x-2 " + (rents.length > 0 ? "mt-3 border-t border-[var(--c-border)] pt-3" : "")}>
+          <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{"$" + kwh}</Fig>
+          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a kilowatt hour, the commercial electricity rate</span>
+        </div>
+      ) : null}
+    </Box>
+  );
+}
+
+/**
+ * Sections 8, 9 and 10, built EXACTLY to design/blueprints/country.md, which
+ * was written first. Where these components and that file disagree, one of
+ * them is wrong and gets fixed the same day.
+ *
+ * 8 , WHAT STAFF COST: replaces the legacy "ground under you" (founder
+ * verdict 5) with the staffing half of what it tried to say. The page's only
+ * bar-family spend: TWO bars, one shared zero-based track, BOTH NEUTRAL,
+ * because neither figure is an answer and the legacy version accenting the
+ * higher cost was a rule-29A inversion fault.
+ *
+ * 9 , WHAT LOCALS KNOW: label-over-fact rows, never a wall of text (founder
+ * verdict 9), capped at five, always sample-tagged (hand-written).
+ *
+ * 10 , WHERE TO NEXT: the terminus, the second sanctioned full width. Three
+ * doors that LEAVE the page and share no first word. The legacy honest-take
+ * SECTION is cut here under rule 41, credibility ground: hand-written verdict
+ * prose presented as a read is the patronizing class the founder condemned.
+ */
+function Hiring({ hiring }: { hiring: any }) {
+  const floor = hiring?.wage_floor_usd_year;
+  const typical = hiring?.typical_pay_usd_year;
+  const canDraw = isNum(floor) || isNum(typical);
+  if (!canDraw) return null;
+  const tagged = typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured";
+  const max = Math.max(isNum(floor) ? floor : 0, isNum(typical) ? typical : 0) * 1.05;
+  const bars: Array<[string, number, string]> = [];
+  if (isNum(floor)) bars.push(["Wage floor", floor, "var(--chart-4)"]);
+  if (isNum(typical)) bars.push(["Typical pay", typical, "var(--c-ink2)"]);
+  const addPct = hiring?.payroll_only_multiplier != null && isNum(hiring?.employer_payroll_pct)
+    ? hiring.employer_payroll_pct
+    : undefined;
+  const labour = hiring?.labour_force_pct;
+  const informal = hiring?.informal_share_pct;
+  return (
+    <Box id="hiring">
+      <Rail icon="hiring" kicker="What staff cost" sample={tagged} />
+      <div className="space-y-2.5">
+        {bars.map(([label, v, fill]) => (
+          <div key={label} className="grid grid-cols-[6.5rem_1fr_auto] items-center gap-3">
+            <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{label}</span>
+            <span className="relative block h-3 overflow-hidden rounded-full" style={{ background: "var(--c-soft)" }} role="img" aria-label={label + " " + usd(v) + " a year"}>
+              <span aria-hidden className="absolute inset-y-0 left-0 rounded-full" style={{ width: ((v / max) * 100).toFixed(1) + "%", background: fill }} />
+            </span>
+            <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(v)}</Fig>
+          </div>
+        ))}
+      </div>
+      {isNum(addPct) ? (
+        <div className="mt-3 flex flex-wrap items-baseline gap-x-1.5">
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">On top of gross pay, employers add</span>
+          <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">+{addPct}%</Fig>
+          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">(pension auto-enrolment and insurance sit on top)</span>
+        </div>
+      ) : null}
+      {isNum(labour) || isNum(informal) ? (
+        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-3">
+          {isNum(labour) ? (
+            <span className="flex items-baseline gap-1.5">
+              <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{labour}%</Fig>
+              <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of adults are in the labour force</span>
+            </span>
+          ) : null}
+          {isNum(informal) ? (
+            <span className="flex items-baseline gap-1.5">
+              <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{informal}%</Fig>
+              <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of the economy runs informal</span>
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+    </Box>
+  );
+}
+
+function LocalsKnow({ locals }: { locals: any }) {
+  const items: any[] = Array.isArray(locals?.items) ? locals.items.slice(0, 5) : [];
+  if (items.length === 0) return null;
+  return (
+    <Box>
+      <Rail icon="locals-know" kicker="What locals know" sample />
+      <div id="locals" className="divide-y divide-[var(--c-border)]">
+        {items.map((it: any, i: number) => (
+          <div key={i} className="py-2.5 first:pt-0 last:pb-0">
+            <div className="text-[length:var(--t-small)] font-semibold text-[var(--c-ink)]">{it.label}</div>
+            <div className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{it.fact}</div>
+          </div>
+        ))}
+      </div>
+    </Box>
+  );
+}
+
+function Close({ meta }: { meta: any }) {
+  const iso = typeof meta?.iso2 === "string" ? meta.iso2.toLowerCase() : undefined;
+  return (
+    <div data-terminus className="mt-8">
+      <Box>
+        <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</h3>
+        <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
+          {iso === "gb" ? (
+            <a href="/cities/london" className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">Start in London, the deepest city &#8594;</a>
+          ) : null}
+          <a href="/industries" className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">See every trade measured here &#8594;</a>
+          <a href="/pricing" className="rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)]">Compare this country with Pro &#8594;</a>
+        </div>
+      </Box>
+    </div>
+  );
+}
+
+/**
  * The country spine page body. `data` is the seed from buildSpineCountrySeed.
  * Every block on it is optional by design, so read defensively.
  */
@@ -818,6 +1033,19 @@ export function SpineCountryBody({ data }: { data?: any }) {
         })()}
         <Money money={d.money} />
         <Character character={d.character} />
+        {d.setup?.tiers?.length || d.premises ? (
+          <Band split="3-2">
+            <Setup setup={d.setup} />
+            <Premises premises={d.premises} />
+          </Band>
+        ) : null}
+        {d.hiring || d.locals_know ? (
+          <Band split="2-1">
+            <Hiring hiring={d.hiring} />
+            <LocalsKnow locals={d.locals_know} />
+          </Band>
+        ) : null}
+        <Close meta={d.meta} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>
