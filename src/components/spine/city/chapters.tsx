@@ -82,7 +82,7 @@ export function IncomeCurve({ d }: { d: any }) {
   const spreadWord = d.demand?.spread_word ?? null;
 
   return (
-    <Box>
+    <Box id="earnings">
       {/* THE GLYPH WAS A SHOPPING BAG, ON A CARD ABOUT WHAT PEOPLE EARN. Spending
           power is what a reader does with income, not the income itself, and at
           twenty-eight pixels the bag reads as a bin: a tapered body, a lid line and

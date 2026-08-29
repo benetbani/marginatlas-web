@@ -39,7 +39,7 @@ import { requireBrowser } from "./lib/local_only.mjs";
 const BLUEPRINT_DIR = "E:/atlas/design/blueprints";
 const PAGES_DIR = "docs/loop/artifacts/final-pages";
 /** blueprint slug -> rendered surface slug */
-const SURFACE = { country: "country-gb-new", hood: "hood-london", industry: "industry-restaurants", cell: "cell-london-restaurants" };
+const SURFACE = { country: "country-gb-new", hood: "hood-london", industry: "industry-restaurants", cell: "cell-london-restaurants", city: "city-london" };
 
 const argv = process.argv.slice(2);
 const overrides = {};
@@ -70,6 +70,11 @@ function parseSpine(md) {
   for (const line of md.split(/\r?\n/)) {
     const m = line.match(/^\|\s*\d+\s*\|\s*([a-z0-9_+\- ]+?)\s*\|(.+?)\|\s*([^|]+?)\s*\|\s*[^|]+\|\s*([A-Z]+)\s*\|$/);
     if (!m) continue;
+    /* Only BUILT rows bind. DARK and DORMANT sections are built, guarded and
+       waiting for data; the constitution keeps naming them (the city file's
+       own ruling: a section waiting for data is not one the constitution
+       should stop naming), and the gate must not report them missing. */
+    if (m[4] !== "BUILT") continue;
     const ids = m[1].split("+").map((x) => x.trim()).filter(Boolean);
     rows.push({ ids, band: m[3].trim().toLowerCase() });
   }
@@ -134,8 +139,12 @@ for (const file of blueprints) {
        counts zero on a correct page, and a red gate on a good page is how gates
        get switched off (the cell constitution names this as its precondition).
        The ladder ends at focal 30; anything a step above it is answer-class. */
+    /* Innermost only: a focal built as div.fig wrapping a Fig span carries the
+       answer size on two elements for ONE answer, and counting containers
+       double-counts every nested figure (the city constitution predicted this
+       failure from the code before the gate ever ran there). */
     const answerFigs = [...document.querySelectorAll(".fig")].filter(
-      (e) => parseFloat(getComputedStyle(e).fontSize) > 36,
+      (e) => parseFloat(getComputedStyle(e).fontSize) > 36 && !e.querySelector(".fig"),
     ).length;
     const wrapped = (id, attr) => {
       const el = document.getElementById(id);

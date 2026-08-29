@@ -41,7 +41,7 @@ export function CityHero({ d }: { d: any }) {
   const support: any[] = d.headline?.focal ? scorecard : scorecard.filter((t) => t !== chosen);
   const inPhrase = d.meta?.country_in_phrase ?? d.meta?.country_name;
   return (
-    <section className="overflow-hidden py-6 md:py-8">
+    <section id="masthead" className="overflow-hidden py-6 md:py-8">
       <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]">&#8592; All cities</a>
 
       {/* identity LEFT, the one answer figure RIGHT , the band fills, nothing competes */}

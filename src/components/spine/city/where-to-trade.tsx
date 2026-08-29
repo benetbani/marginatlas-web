@@ -96,7 +96,7 @@ export function WhereToTrade({ d }: { d: any }) {
   const hasMap = points.length > 0;
 
   return (
-    <Box>
+    <Box id="districts">
       {/* "By district" , plain, and deliberately NOT "Where to trade": this chapter's
           Movement heading (city-view.tsx) already carries those words, and the same
           words on two labels is the exact defect the rulebook's residue pass exists

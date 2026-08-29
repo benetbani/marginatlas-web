@@ -99,7 +99,7 @@ export function CityVerdict({ d }: { d: any }) {
   // (§14/§19 verdict-in-a-box; §37/§38 accent decorates chrome). The finding lives on
   // the focal figure and the spread strip; terracotta rides ONLY the answer (§37).
   return (
-    <Box>
+    <Box id="verdict">
       {/* THE RENT GLYPH APPEARED THREE TIMES ON THIS PAGE: on this card, on the
           rent-against-income card, and on the chapter opener above them both. An
           icon that marks three different things marks none of them, and a reader
@@ -154,7 +154,7 @@ function CityLenses({ d }: { d: any }) {
   // banned "Room to enter" crowding read is DELETED at the seed (rule 5). No verdict
   // prose subtitle, no per-row advice sentence (§14/§19); the read lives on the chips.
   return (
-    <Box>
+    <Box id="lenses">
       <Head icon="scorecard" sample={sample}>Quick reads</Head>
       {/* 2x2 grid, not four full-width rows: a single 4-step band stretched across the
           whole card left acres of dead track (rule 17, sparse-but-wide, the founder's
@@ -304,7 +304,7 @@ export function CommercialSpace({ d }: { d: any }) {
      (§14/§19/§26); the finding lives on the marker strip. */
   return (
     <WideRail>
-      <Box>
+      <Box id="space">
         <Rail icon="vs-world" kicker="Cost of living against peer cities" sample={peerSample} />
         {/* the peer dot strip below (home city = 0) IS the pressure read; no second scale. */}
         {/* peers on ONE axis. Only rendered when at least two peers carry a real rent index. */}
@@ -476,7 +476,7 @@ export function DemandSize({ d }: { d: any }) {
   const splitTotal = (o.resident_pct ?? 0) + (o.visitor_pct ?? 0);
   const splitCloses = Math.abs(100 - splitTotal) <= 1 && splitTotal > 0;
   const tourismBox = hasSplit && splitCloses ? (
-    <Box>
+    <Box id="seasonal">
       <Head icon="seasonality" sample={sample}>How seasonal it is</Head>
       <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}% steady, visitors ${o.visitor_pct}% seasonal`}>
         {/* THE FIGURES SIT ON THE BAR, NOT ONLY IN THE KEY. This was the third
@@ -528,7 +528,7 @@ function TradesHere({ d }: { d: any }) {
   const list: Array<{ name: string; slug: string; href: string }> = d.trades_here?.list ?? [];
   if (list.length < 4) return null;
   return (
-    <Box>
+    <Box id="trades">
       {/* NOT a restatement of the chapter heading above it (§11, the double-title
           defect): the chapter says what the reader gets, this says what the set IS. */}
       <Head icon="honest-take">Trades with local figures</Head>
@@ -816,7 +816,7 @@ function CityPeers({ d }: { d: any }) {
     );
   if (compareRows.length === 0) return null;
   return (
-    <Box>
+    <Box id="peers">
       <Rail icon="compare" kicker="Peer cities, side by side" sample={sample} />
       <CompareTable entities={entities} rows={compareRows} caption={`Each row is shown against ${homeName}. Higher is better.`} />
     </Box>
@@ -856,7 +856,7 @@ function Close({ d }: { d: any }) {
   // and the card frame drop to neutral; the hand-holding prose ("Start there, then...")
   // is DELETED (§19). The two figures + the link carry the pick; the cost is tagged (§4).
   return (
-    <Box>
+    <Box id="pick">
       <Head icon="bookmark">The pick, and where to take it</Head>
       {/* ONE CARD, ONE BORDER, ONE PADDING (art direction A5). This was a bordered,
           tinted panel INSIDE the card holding the pick, with a sentence and a button
