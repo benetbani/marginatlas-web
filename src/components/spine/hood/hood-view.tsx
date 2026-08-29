@@ -133,7 +133,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
             offers links and carries no finding, so it does not ask a reader to
             traverse a row of figures. */}
         {tradeLinks.length > 0 && cityName ? (
-          <Band hero><Box className="mt-8">
+          <Band hero><Box id="funnel" className="mt-8">
             <Rail icon="high-street" kicker={`Open a trade in ${cityName}`} />
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {tradeLinks.map((t) => (

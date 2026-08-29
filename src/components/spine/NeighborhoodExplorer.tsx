@@ -213,7 +213,7 @@ function RentStrip({ districts, selected, onSelect, reduced }: { districts: Dist
       : null;
 
   return (
-    <HoodCard ref={ref} className="px-4 py-3.5">
+    <HoodCard id="strip" ref={ref} className="px-4 py-3.5">
       <div className="mb-1 flex items-end justify-between gap-3">
         <SectionLabel as="h3">Ranked by rent load, lightest first</SectionLabel>
         {spread ? (
@@ -504,7 +504,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
        not a measurement, and cutting it to the prose budget would cut the only
        human voice on a page made of multiples. Capped at one per page, so a
        second one here would fail rather than compound. */
-    <HoodCard data-editorial="1" className="overflow-hidden lg:sticky lg:top-6">
+    <HoodCard id="detail" data-editorial="1" className="overflow-hidden lg:sticky lg:top-6">
 
       {/* HEADER STRIP , the decision. Rent load is the hero (largest); it wears the
           panel's ONE terracotta only when it runs below the city x1.00 (terra keeps
@@ -671,7 +671,7 @@ function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | 
   // all three sources omitted: render nothing rather than an empty shell.
   if (trades.length === 0 && !hasBottom) return null;
   return (
-    <HoodCard className="mt-4 p-4">
+    <HoodCard id="works" className="mt-4 p-4">
       {trades.length > 0 ? (
         <>
           <SectionLabel as="h3">What works in {d.name}</SectionLabel>
@@ -1041,7 +1041,7 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
   const lightest = byRent[0];
   const strikeLabel = myth.strike_label ?? "the loudest is the best place";
   return (
-    <div className="overflow-hidden rounded-[14px] border border-[var(--c-border)]" style={CARD_SURFACE}>
+    <div id="ranks" className="overflow-hidden rounded-[14px] border border-[var(--c-border)]" style={CARD_SURFACE}>
       <div className="p-5 md:p-6">
         <Rail icon="myth-reality" kicker="Revenue rank vs rent rank" sample />
         {/* THE STATS SIT UNDER THE CHART, NOT BESIDE IT. This card used to hold the
@@ -1198,7 +1198,11 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
    * row-best figures (color-marked), never asserted above it. */
 
   return (
-    <div>
+    /* id="compare" sits on the SECTION, not on the table card: the picker and the
+       rail are part of what a reader arriving here needs, and the card alone would
+       drop both. `ranks` covers its own rail the same way, because there the rail
+       is inside the card. */
+    <div id="compare">
       <Rail icon="compare" tone="terra" kicker={compare?.kicker ?? "Hold two or three side by side"} verdict={compare?.verdict} />
 
       {/* picker */}
