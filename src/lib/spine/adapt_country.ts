@@ -770,8 +770,34 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
     }),
   );
   const money0 = tradeRows.filter((r): r is NonNullable<typeof r> => r !== null);
+
+  /* THE CREDIBILITY SCREEN, founder-decided 2026-08-29 and applied as ONE FIXED
+     FORMULA rather than a picked list (rule 8 bans hand-picking per entity).
+     The upstream engine produces keeps that are visibly wrong for some
+     country-level aggregates: a UK gym owner keeping $513K, a Chad gym owner
+     keeping $231K against a $3K median wage. Those figures are already live on
+     the trade pages; they must not reach this page while they stand.
+
+     The yardstick is the country's own typical full-time pay: a single everyday
+     shop whose modeled keep exceeds SIX TIMES the median wage is in visibly
+     wrong territory and is WITHHELD, counted, never silently dropped. Six is a
+     generosity bound: a well-run single restaurant clearing two or three times
+     the median is believable everywhere; past six is a chain's number wearing
+     one shop's name. The founder's illustrative pass-list named auto repair,
+     but at $293K, 7.6 times the UK median, it fails the very smell test he
+     defined, and the formula, not the list, is what was ratified.
+
+     Where no median exists the screen cannot run and rows pass with their
+     modeled tag: a screen with no yardstick withholding figures would be
+     guesswork in the other direction. */
+  const screenMedian = prof(profile.median_wage_full_time_usd);
+  const CREDIBLE_KEEP_CAP = 6;
+  const moneyKept = isNum(screenMedian)
+    ? money0.filter((r) => r.keeps_usd_year <= (screenMedian as number) * CREDIBLE_KEEP_CAP)
+    : money0;
+  const moneyWithheld = money0.length - moneyKept.length;
   const money =
-    money0.length > 0
+    moneyKept.length >= 2
       ? {
           _meta: {
             confidence: "modeled" as SpineConfidence,
@@ -779,8 +805,18 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
               "Modeled at country altitude from country and industry patterns, not a local measurement.",
           },
           altitude: "national",
-          coverage: { resolved: money0.length, attempted: EVERYDAY_TRADE_IDS.length },
-          list: money0,
+          coverage: { resolved: money0.length, attempted: EVERYDAY_TRADE_IDS.length, shown: moneyKept.length },
+          withheld:
+            moneyWithheld > 0
+              ? {
+                  count: moneyWithheld,
+                  reason:
+                    moneyWithheld === 1
+                      ? "One trade is withheld while its figure is checked upstream."
+                      : String(moneyWithheld) + " trades are withheld while their figures are checked upstream.",
+                }
+              : undefined,
+          list: moneyKept,
         }
       : undefined;
 

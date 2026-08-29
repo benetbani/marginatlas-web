@@ -48,6 +48,7 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "peers", label: "Against the peers" },
   { id: "customers", label: "What customers earn" },
   { id: "lenses", label: "Lending, customers, currency" },
+  { id: "money", label: "What an owner keeps" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -647,6 +648,69 @@ function Customers({ customers }: { customers: any }) {
   );
 }
 
+/** The trade glyphs for the everyday set, by slug. A trade without a glyph
+ *  gets none rather than a wrong one. */
+const TRADE_GLYPHS: Record<string, string> = {
+  restaurants: "trade-restaurant",
+  "grocery-stores": "trade-grocery",
+  "hairdressers-beauty": "trade-salon",
+  "sports-fitness": "trade-gym",
+  "auto-repair-shops": "trade-auto",
+  "cafes-coffee-shops": "trade-cafe",
+};
+
+/**
+ * The money , what an owner keeps, trade by trade, and the funnel rule 24 asks
+ * for: every row is a real link down to that trade's national page. The whole
+ * block is modeled at country altitude and says so with the tag; every figure
+ * inside it came through the SAME engine the trade pages run, so the two can
+ * never disagree.
+ *
+ * WITHHELD IS SAID, NEVER SILENT. The adapter screens out any keep past six
+ * times the country's own typical pay (the founder's 2026-08-29 decision,
+ * applied as one fixed formula), and this section prints how many rows that
+ * screen held back. A row that quietly vanished would read as coverage; a
+ * counted withholding reads as honesty, which is the difference this site is
+ * built on.
+ *
+ * No bars (rule 25's budget is precious and length would encode nothing a
+ * reader needs here): each trade is a row, the keep is the row's figure in ink,
+ * the cost to open rides muted beside it, the arrow says it goes somewhere.
+ */
+function Money({ money }: { money: any }) {
+  const rows: any[] = (Array.isArray(money?.list) ? [...money.list] : []).sort((x, y) => (y?.keeps_usd_year ?? 0) - (x?.keeps_usd_year ?? 0));
+  if (rows.length < 2) return null;
+  const tagged = typeof money?._meta?.confidence === "string" && money._meta.confidence !== "measured";
+  return (
+    <Band>
+      <Box id="money">
+        <Rail icon="owner-keeps" kicker="What an owner keeps, trade by trade" sample={tagged} />
+        <div className="divide-y divide-[var(--c-border)]">
+          {rows.map((r: any) => (
+            <a key={r.slug} href={r.href} className="group flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5 first:pt-0 last:pb-0">
+              <span className="flex min-w-[11rem] flex-[1_1_11rem] items-baseline gap-2">
+                <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]">{r.name}</span>
+              </span>
+              <span className="flex items-baseline gap-x-3 whitespace-nowrap">
+                <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(r.keeps_usd_year)}</Fig>
+                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">kept a year</span>
+              </span>
+              <span className="flex items-baseline gap-x-1.5 whitespace-nowrap">
+                <Fig className="text-[length:var(--t-small)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
+                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">to open</span>
+              </span>
+              <span aria-hidden className="ml-auto shrink-0 text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
+            </a>
+          ))}
+        </div>
+        {money?.withheld?.reason ? (
+          <p className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{money.withheld.reason}</p>
+        ) : null}
+      </Box>
+    </Band>
+  );
+}
+
 /**
  * The country spine page body. `data` is the seed from buildSpineCountrySeed.
  * Every block on it is optional by design, so read defensively.
@@ -677,6 +741,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
             </Band>
           );
         })()}
+        <Money money={d.money} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>
