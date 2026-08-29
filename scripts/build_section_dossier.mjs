@@ -61,7 +61,11 @@ const PAGES = [
 ];
 const argv = process.argv.slice(2);
 const CROPS = !argv.includes("--no-crops");
-const ONLY = argv.includes("--page") ? argv[argv.indexOf("--page") + 1] : null;
+/* Comma-separated: a targeted run that crops two pages in one pass exists
+   because the crops directory is wiped per run, and a run for page A used to
+   silently delete page B's crops (it cost the review sheet its legacy
+   photographs on 2026-08-30). */
+const ONLY = argv.includes("--page") ? argv[argv.indexOf("--page") + 1].split(",") : null;
 
 const DATE = new Date().toISOString().slice(0, 10);
 
@@ -421,7 +425,7 @@ async function run() {
 
   const browser = await chromium.launch();
   const dossier = { date: DATE, pages: [] };
-  const pages = ONLY ? PAGES.filter((p) => p === ONLY) : PAGES;
+  const pages = ONLY ? PAGES.filter((p) => ONLY.includes(p)) : PAGES;
 
   for (const slug of pages) {
     const url = `file:///E:/atlas/website/docs/loop/artifacts/final-pages/${slug}.html`;

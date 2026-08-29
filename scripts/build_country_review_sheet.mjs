@@ -2,21 +2,18 @@
 /**
  * build_country_review_sheet , THE FOUNDER'S ONE FILE for the rebuilt UK page.
  *
- * Ten sections, each: the LEGACY section it replaces (one 1280 crop, labelled
- * BEFORE), the rebuilt section at 1280 and 375 (labelled AFTER), one
- * APPROVE / REJECT control with an optional reason. The Copy button emits:
+ * THE PAIRING LAW (founder 2026-08-30, verbatim: "before and after, the
+ * sections are just not the same. For before you just give the hexagon and
+ * after you give the table, it doesn't really make sense"): a BEFORE/AFTER
+ * pair must be the SAME reading in two states. A section whose replacement is
+ * a different KIND of thing shows the AFTER alone, with one plain line naming
+ * what it replaced , never an unlike photograph pretending to be its past.
  *
+ * Verdict controls: APPROVE / REJECT with optional reason per section, one
+ * open QUESTION row (the lens world-median anchor), Copy button emitting
  *   country-new:<id>=A;country-new:<id>=R(reason);...
  *
- * Undecided sections are omitted from the string. Reasons are sanitized the
- * way the registry sheet sanitizes them (";" -> ",", parens -> brackets).
- *
- * The mapping from new section to the legacy section it answers comes from the
- * Task-8 inventory; a section with no legacy ancestor says so instead of
- * showing an unrelated BEFORE.
- *
- * Output: E:/atlas/design/COUNTRY-REVIEW-<date>.html, fully offline, images
- * inlined base64.
+ * Output: E:/atlas/design/COUNTRY-REVIEW-<date>.html, fully offline.
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
@@ -24,49 +21,141 @@ const CROPS = "E:/atlas/design/critique/crops";
 const OUT = "E:/atlas/design";
 const date = new Date().toISOString().slice(0, 10);
 
-/** new-section id -> { title, before: legacy dossier node (2026-08-29 crops), note } */
+/* after: crop indices on country-gb-new (today's dossier: 0 take, 1 cities,
+   2 peers, 3 customers, 4 lenses, 5 money, 6+7 character, 8 setup,
+   9 premises, 10 hiring, 11 locals, 12 close). */
 const SECTIONS = [
-  { id: "take", title: "The masthead , the government take", before: "country-gb-3", beforeNote: "the legacy masthead had no answer figure at all", after: "country-gb-new-0" },
-  { id: "cities", title: "The cities, once, every card its link", before: "country-gb-12", beforeNote: "the legacy page showed the four cities twice and the cards were dead", after: "country-gb-new-1", mapNote: true },
-  { id: "peers", title: "Against the peers", before: "country-gb-10", beforeNote: "minuscule flags, no character", after: "country-gb-new-2" },
-  { id: "customers", title: "What customers earn + the lens grid (replaces the hexagon)", before: "country-gb-5", beforeNote: "the overloaded radar, full width", after: "country-gb-new-3" },
-  { id: "money", title: "What an owner keeps, trade by trade", before: "country-gb-13", beforeNote: "a modeled 0-100 ease score on out-of-set trades", after: "country-gb-new-4" },
-  { id: "character", title: "The character, the two ratified tables", before: "country-gb-14", beforeNote: "kept whole; newly sample-tagged", after: "country-gb-new-5" },
-  { id: "setup", title: "Registering, by legal form + what premises cost", before: "country-gb-6", beforeNote: "the eleven-hundred-pixel one-step stepper", after: "country-gb-new-6" },
-  { id: "hiring", title: "What staff cost (replaces the ground under you)", before: "country-gb-11", beforeNote: "the SHAKY-FIRM card nobody understood", after: "country-gb-new-7" },
-  { id: "locals", title: "What locals know, structured", before: "country-gb-15", beforeNote: "the wall of text", after: "country-gb-new-8" },
-  { id: "close", title: "Where to next", before: "country-gb-19", beforeNote: "one door and a gut-check card of fake checkboxes", after: "country-gb-new-9" },
+  {
+    id: "take",
+    title: "The masthead , total effective tax burden",
+    pair: true, before: "country-gb-3",
+    beforeNote: "the same opening, as it stands live",
+    after: [0],
+    note: "Applied from your 2026-08-30 verdicts: the answer is what a small business effectively pays (20%, its regime named), not 'the government take'; the flag is back and the name appears once; no world-median line; the register/sales-tax facts are one quiet sentence, not cards. The honest price: the small-business rate is a conservative modeled read, so the page now carries the SAMPLE tag here.",
+  },
+  {
+    id: "cities",
+    title: "The cities, as cards",
+    pair: true, before: "country-gb-12",
+    beforeNote: "the same section live today (the doubled card rows)",
+    after: [1],
+    note: "The map is removed, per your verdict. Five cards a row; a country with more gets click arrows and a count; 'Every covered city' leads to the full list. The UK holds four covered cities, so no arrows render here.",
+  },
+  {
+    id: "peers",
+    title: "Against the peers",
+    pair: true, before: "country-gb-10",
+    beforeNote: "the same table live today (minuscule flags)",
+    after: [2],
+    note: "One basis across the whole table now: the effective small-business rate per country, the same procedure as the masthead answer. On a phone the table no longer slides sideways; each country becomes its own card. Both forms are photographed above.",
+  },
+  {
+    id: "customers",
+    title: "What customers earn + the lens tiles",
+    pair: false,
+    replaces: "This stands where the hexagon radar stood. No before photograph: the radar and these tiles are different kinds of thing, and pairing unlike sections is what you rejected on the last sheet.",
+    after: [3, 4],
+    note: "The pay spread is dark for now: you asked for the top and bottom ten percent, the data today holds only quarter marks, and relabelling those would be a lie. The typical figure stands alone until the ten-percent figures are researched in (that task is queued).",
+  },
+  {
+    id: "money",
+    title: "What an owner keeps, trade by trade",
+    pair: false,
+    replaces: "This stands where the modeled 0-100 'ease' scores stood. No before photograph: scores and kept-money rows are different kinds of thing.",
+    after: [5],
+    note: "Three trades (gym, grocery, auto repair) stay withheld because their figures fail the six-times-typical-pay screen; the page says so in one line. The upstream fix runs in your other session; the rows return when the figures hold.",
+  },
+  {
+    id: "character",
+    title: "The character, the two ratified tables",
+    pair: true, before: "country-gb-14",
+    beforeNote: "the same two tables live today",
+    after: [6, 7],
+  },
+  {
+    id: "setup",
+    title: "Registering, by legal form + what premises cost",
+    pair: true, before: "country-gb-6",
+    beforeNote: "the same question live today (the eleven-hundred-pixel one-step stepper)",
+    after: [8, 9],
+  },
+  {
+    id: "hiring",
+    title: "What staff cost",
+    pair: false,
+    replaces: "This stands where 'the ground under you' (the SHAKY-FIRM card) stood. No before photograph: a verdict card and a staff-cost table are different kinds of thing.",
+    after: [10],
+  },
+  {
+    id: "locals",
+    title: "What locals know, structured",
+    pair: true, before: "country-gb-15",
+    beforeNote: "the same section live today (the block of text)",
+    after: [11],
+  },
+  {
+    id: "close",
+    title: "Where to next",
+    pair: true, before: "country-gb-19",
+    beforeNote: "the same hand-off live today",
+    after: [12],
+  },
+  {
+    id: "lens-world-anchor",
+    title: "AN OPEN QUESTION , the one remaining world-median figure",
+    pair: false,
+    question: true,
+    after: [4],
+    note: "You removed the masthead's world-median line ('a little bit disgusting'). One lens tile still reads x4.27 the world-median wage , customer purchasing power has no absolute form without some anchor. APPROVE keeps that tile; REJECT removes it (the tile disappears rather than being restated another way, and the section keeps its other tiles).",
+  },
 ];
 
 const b64 = (p) => (existsSync(p) ? `data:image/png;base64,${readFileSync(p).toString("base64")}` : null);
 
+let missing = 0;
 let cards = "";
 for (const s of SECTIONS) {
-  const before = b64(`${CROPS}/${s.before}-1280.png`);
-  const after1280 = b64(`${CROPS}/${s.after}-1280.png`);
-  const after375 = b64(`${CROPS}/${s.after}-375.png`);
+  const afterImgs = s.after.map((n) => ({
+    d1280: b64(`${CROPS}/country-gb-new-${n}-1280.png`),
+    d375: b64(`${CROPS}/country-gb-new-${n}-375.png`),
+  }));
+  const before = s.pair ? b64(`${CROPS}/${s.before}-1280.png`) : null;
+  if (s.pair && !before) missing++;
+  for (const a of afterImgs) if (!a.d1280) missing++;
+
+  let figures = "";
+  if (s.pair) {
+    figures += `
+      <figure>
+        <figcaption>BEFORE , ${s.beforeNote}</figcaption>
+        ${before ? `<img src="${before}" alt="before" />` : "<p class='miss'>legacy crop missing</p>"}
+      </figure>`;
+  }
+  afterImgs.forEach((a, i) => {
+    figures += `
+      <figure>
+        <figcaption>${s.question ? "AS IT STANDS" : "AFTER"} , desktop${afterImgs.length > 1 ? " (" + (i + 1) + " of " + afterImgs.length + ")" : ""}</figcaption>
+        ${a.d1280 ? `<img src="${a.d1280}" alt="after 1280" />` : "<p class='miss'>crop missing</p>"}
+      </figure>`;
+  });
+  if (afterImgs[0]?.d375 && !s.question) {
+    figures += `
+      <figure class="phone">
+        <figcaption>${"AFTER , phone"}</figcaption>
+        <img src="${afterImgs[0].d375}" alt="after 375" />
+      </figure>`;
+  }
+
   cards += `
   <section class="card" data-id="${s.id}">
     <h2>${s.title}</h2>
-    <div class="pair">
-      <figure>
-        <figcaption>BEFORE , ${s.beforeNote}</figcaption>
-        ${before ? `<img src="${before}" alt="before" />` : "<p class='miss'>no legacy crop held</p>"}
-      </figure>
-      <figure>
-        <figcaption>AFTER , at desktop width</figcaption>
-        ${after1280 ? `<img src="${after1280}" alt="after 1280" />` : "<p class='miss'>crop missing</p>"}
-      </figure>
-      <figure class="phone">
-        <figcaption>AFTER , at phone width</figcaption>
-        ${after375 ? `<img src="${after375}" alt="after 375" />` : "<p class='miss'>crop missing</p>"}
-      </figure>
+    ${s.replaces ? `<p class="replaces">${s.replaces}</p>` : ""}
+    <div class="pair">${figures}
     </div>
-    ${s.id === "cities" ? `<p class="note">THE MAP: its canvas draws only on the running site, never in these photographs, so the box above shows its one-line placeholder. The map's first real photograph comes from the preview deployment the moment the preview-only switch below is set. Judge the city list here; judge the map on the preview link.</p>` : ""}
-    ${s.id === "money" ? `<p class="note">Three trades are deliberately withheld on this page (gym, grocery, auto repair) because their figures fail the six-times-typical-pay smell test you set; the page says so in one line. The upstream fix ran in your other session; the rows return when the figures hold up.</p>` : ""}
+    ${s.note ? `<p class="note">${s.note}</p>` : ""}
     <div class="verdict">
-      <label><input type="radio" name="v-${s.id}" value="A" /> APPROVE</label>
-      <label><input type="radio" name="v-${s.id}" value="R" /> REJECT</label>
+      <label><input type="radio" name="v-${s.id}" value="A" /> ${s.question ? "KEEP IT" : "APPROVE"}</label>
+      <label><input type="radio" name="v-${s.id}" value="R" /> ${s.question ? "REMOVE IT" : "REJECT"}</label>
       <input type="text" class="reason" placeholder="reason (optional, used on reject)" />
     </div>
   </section>`;
@@ -78,9 +167,10 @@ const html = `<!doctype html>
   body{font-family:system-ui,-apple-system,sans-serif;margin:0;background:#faf8f6;color:#1b1b1a;}
   header{padding:28px 32px;border-bottom:1px solid #e3ded9;background:#fff;position:sticky;top:0;z-index:2;}
   h1{margin:0;font-size:22px;font-weight:600;}
-  header p{margin:8px 0 0;color:#6b6560;font-size:14px;max-width:72ch;}
+  header p{margin:8px 0 0;color:#6b6560;font-size:14px;max-width:76ch;}
   .card{margin:28px 32px;background:#fff;border:1px solid #e3ded9;border-radius:14px;padding:20px;}
-  h2{margin:0 0 14px;font-size:17px;font-weight:600;}
+  h2{margin:0 0 12px;font-size:17px;font-weight:600;}
+  .replaces{margin:0 0 12px;font-size:13px;color:#6b6560;border-left:3px solid #e3ded9;padding-left:10px;}
   .pair{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;}
   figure{margin:0;flex:1 1 340px;min-width:280px;}
   figure.phone{flex:0 1 220px;min-width:180px;}
@@ -93,27 +183,28 @@ const html = `<!doctype html>
   .bar{position:fixed;bottom:0;left:0;right:0;background:#1b1b1a;color:#fff;padding:12px 32px;display:flex;gap:16px;align-items:center;}
   .bar button{background:#fb8469;color:#1b1b1a;border:none;border-radius:999px;padding:9px 18px;font-weight:600;font-size:14px;cursor:pointer;}
   .bar code{font-size:12px;opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
-  .steps{background:#fff;border:1px dashed #cfc8c1;border-radius:14px;margin:28px 32px;padding:20px;}
+  .steps{background:#fff;border:1px dashed #cfc8c1;border-radius:14px;margin:28px 32px 96px;padding:20px;}
   .steps h2{font-size:15px;}
   .steps ol{margin:8px 0 0;padding-left:20px;font-size:14px;line-height:1.7;color:#3d3935;}
 </style></head><body>
 <header>
-  <h1>The United Kingdom page, rebuilt , ten sections for your verdict</h1>
-  <p>Every section: what stood before, what stands now, at desktop and phone width.
-  Mark APPROVE or REJECT on each (a reject can carry a reason, or not), then press
-  COPY THE VERDICTS at the bottom and paste the string back to me. Approving locks a
-  section; rejecting requeues it with your reason on the record. Nothing goes live
-  from this sheet , the page stays dark until you say otherwise.</p>
+  <h1>The United Kingdom page, rebuilt , for your verdict</h1>
+  <p>Every one of your 2026-08-30 corrections is applied and photographed below.
+  Where the new section is the SAME reading as the live one, you see before and
+  after; where it replaced a different kind of thing, you see only what stands
+  now, with one line naming what it replaced , no more unlike pairings. Mark
+  each section, press COPY THE VERDICTS, paste me the string. Nothing goes live
+  from this sheet.</p>
 </header>
 ${cards}
 <section class="steps">
-  <h2>To see the live page yourself (including the map), two minutes in Vercel</h2>
+  <h2>To see the live page yourself, two minutes in Vercel (optional)</h2>
   <ol>
     <li>vercel.com, your project, <b>Settings</b>, then <b>Environment Variables</b>.</li>
     <li><b>Add Environment Variable</b>: Type <b>Config</b>, Key <code>NEXT_PUBLIC_SPINE_REFORM_COUNTRY</code>, Value <code>1</code>.</li>
     <li>In the Environments dropdown pick <b>Preview only</b> , NOT Production. Save.</li>
     <li><b>Deployments</b>, newest one, <b>&#8943;</b>, <b>Redeploy</b>. Open the PREVIEW link it gives you and visit /gb.</li>
-    <li>Production stays exactly as it is; only preview links show the new page.</li>
+    <li>Production stays exactly as it is; only preview links show the new page. (The map is gone, so nothing on this page needs the live site to draw; this step is only if you want to walk it.)</li>
   </ol>
 </section>
 <div class="bar">
@@ -144,4 +235,4 @@ document.addEventListener("change",()=>{document.getElementById("out").textConte
 
 const out = `${OUT}/COUNTRY-REVIEW-${date}.html`;
 writeFileSync(out, html);
-console.log(`wrote ${out} (${Math.round(html.length / 1024)}KB)`);
+console.log(`wrote ${out} (${Math.round(html.length / 1024)}KB), missing crops: ${missing}`);
