@@ -46,7 +46,8 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The government take" },
   { id: "cities", label: "The cities" },
   { id: "peers", label: "Against the peers" },
-  { id: "lenses", label: "Pay, lending, customers, currency" },
+  { id: "customers", label: "What customers earn" },
+  { id: "lenses", label: "Lending, customers, currency" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -506,7 +507,7 @@ function Peers({ peers }: { peers: any }) {
  * what it costs, a strength's tile as what it pays, and the label wording does
  * the teaching (rule 40) rather than an arrow doing the asserting.
  */
-function Lenses({ lenses, hero }: { lenses: any; hero: any }) {
+function Lenses({ lenses, hero, customersShown }: { lenses: any; hero: any; customersShown?: boolean }) {
   const all: any[] = Array.isArray(lenses?.list) ? lenses.list : [];
   const heroStatesTake = isNum(hero?.government_take_composed_pct);
   const heroFacts: SupportFact[] = Array.isArray(hero?.support) ? hero.support : [];
@@ -514,6 +515,9 @@ function Lenses({ lenses, hero }: { lenses: any; hero: any }) {
   const list = all.filter((l) => {
     if (l.key === "tax_burden" && heroStatesTake) return false;
     if (l.key === "entry" && heroStatesDays) return false;
+    /* The customers section states the median pay ON A SPREAD, which is the same
+       figure this lens carried alone; one page, one statement of one number. */
+    if (l.key === "talent" && customersShown) return false;
     return true;
   });
   if (list.length < 3) return null;
@@ -550,9 +554,8 @@ function Lenses({ lenses, hero }: { lenses: any; hero: any }) {
   };
 
   return (
-    <Band>
       <Box id="lenses">
-        <Rail icon="gut-check" kicker="Pay, lending, customers, currency" sample={tagged} />
+        <Rail icon="gut-check" kicker={customersShown ? "Lending, customers, currency" : "Pay, lending, customers, currency"} sample={tagged} />
         {/* NO BREAKPOINT. The first version pitched two columns at a width class
             the width gate refuses to grow (a phone never reaches it, so the
             second layout exists for nobody). Tiles ask for a readable minimum
@@ -577,7 +580,70 @@ function Lenses({ lenses, hero }: { lenses: any; hero: any }) {
           })}
         </div>
       </Box>
-    </Band>
+  );
+}
+
+/**
+ * What customers earn , the first CONNECT of plan correction 3: the pay spread
+ * held for 195 of 195 countries and rendered nowhere. The form is the one the
+ * city income card settled in round 3: marks on a scale, each label UNDER its
+ * own mark, the typical figure a step larger and in the accent because it is
+ * the card's answer, the outermost labels pinned inside the box (the
+ * scale-end rule, four scales paid for it). The spread here is quartiles, so
+ * the scale is linear; the city card's log scale exists for top-1-percent
+ * tails this card does not carry.
+ *
+ * Quarter labels are words, not statistics: "lower quarter" and "upper
+ * quarter" say what p25 and p75 are without the jargon rule 13 bans. The
+ * basis sentence renders once for the whole card (N5).
+ */
+function Customers({ customers }: { customers: any }) {
+  if (!isNum(customers?.p25_usd) || !isNum(customers?.median_usd) || !isNum(customers?.p75_usd)) return null;
+  const p25 = customers.p25_usd, med = customers.median_usd, p75 = customers.p75_usd;
+  const lo = p25 * 0.9, hi = p75 * 1.1, span = Math.max(1, hi - lo);
+  const X = (v: number) => ((v - lo) / span) * 100;
+  const tagged = typeof customers?._meta?.confidence === "string" && customers._meta.confidence !== "measured";
+  const marks: Array<[string, number, boolean]> = [
+    ["Lower quarter", p25, false],
+    ["Typical", med, true],
+    ["Upper quarter", p75, false],
+  ];
+  return (
+    <Box id="customers">
+      {/* The range glyph, not the shopping bag: at sixteen pixels the bag reads
+          as a bin, the city page paid for that in round 3, and this card draws
+          exactly what the range glyph depicts, a low-to-high band with the
+          typical point marked. */}
+      <Rail icon="spread" kicker="What customers earn" sample={tagged} />
+      <div className="relative mt-1 h-[24px]" role="img" aria-label={"Full-time pay a year: lower quarter " + usd(p25) + ", typical " + usd(med) + ", upper quarter " + usd(p75)}>
+        <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
+        {marks.map(([label, v, accent]) => (
+          <span key={label} className="absolute bottom-0 top-0" style={{ left: X(v) + "%" }}>
+            <span
+              className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2"
+              style={{ borderLeftWidth: accent ? 2 : 1, borderLeftStyle: "solid", borderLeftColor: accent ? "var(--terra-text)" : "var(--c-line-strong)" }}
+            />
+          </span>
+        ))}
+      </div>
+      <div className="relative mt-1 h-[42px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        {marks.map(([label, v, accent]) => {
+          const x = X(v);
+          const edge = x > 82 ? "right" : x < 14 ? "left" : "centre";
+          const style: React.CSSProperties =
+            edge === "right" ? { right: 0 } : edge === "left" ? { left: 0 } : { left: x + "%", transform: "translateX(-50%)" };
+          return (
+            <span key={label} className={"absolute top-0 flex flex-col whitespace-nowrap " + (edge === "right" ? "items-end" : "")} style={style}>
+              <span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span>
+              <Fig className={"font-semibold " + (accent ? "text-[length:var(--t-sub)] text-[var(--terra-text)]" : "text-[length:var(--t-body)] text-[var(--c-ink)]")}>{usd(v)}</Fig>
+            </span>
+          );
+        })}
+      </div>
+      {customers.basis ? (
+        <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{customers.basis}</div>
+      ) : null}
+    </Box>
   );
 }
 
@@ -600,7 +666,17 @@ export function SpineCountryBody({ data }: { data?: any }) {
         />
         <Cities cities={d.cities} />
         <Peers peers={d.peers} />
-        <Lenses lenses={d.lenses} hero={d.hero} />
+        {(() => {
+          const customersShown = isNum(d.customers?.p25_usd) && isNum(d.customers?.median_usd) && isNum(d.customers?.p75_usd);
+          const lensNode = <Lenses lenses={d.lenses} hero={d.hero} customersShown={customersShown} />;
+          if (!customersShown) return <Band>{lensNode}</Band>;
+          return (
+            <Band split="2-3">
+              <Customers customers={d.customers} />
+              {lensNode}
+            </Band>
+          );
+        })()}
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>
