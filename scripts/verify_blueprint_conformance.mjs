@@ -39,7 +39,7 @@ import { requireBrowser } from "./lib/local_only.mjs";
 const BLUEPRINT_DIR = "E:/atlas/design/blueprints";
 const PAGES_DIR = "docs/loop/artifacts/final-pages";
 /** blueprint slug -> rendered surface slug */
-const SURFACE = { country: "country-gb-new", hood: "hood-london" };
+const SURFACE = { country: "country-gb-new", hood: "hood-london", industry: "industry-restaurants" };
 
 const argv = process.argv.slice(2);
 const overrides = {};
