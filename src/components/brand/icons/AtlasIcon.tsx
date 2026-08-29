@@ -22,11 +22,14 @@ export interface AtlasIconProps
 }
 
 export const AtlasIcon = React.forwardRef<SVGSVGElement, AtlasIconProps>(
-  function AtlasIcon({ id, size = 24, className, ...rest }, ref) {
+  function AtlasIcon({ id, size = 24, className, strokeWidth = 1.9, ...rest }, ref) {
     const def = ATLAS_ICONS_BY_ID[id];
     if (!def) return null;
     const labelled = rest["aria-label"] != null;
-    const body = size <= 16 && def.body16 ? def.body16 : def.body;
+    /* The simplified 16-grid body also serves 18 (the spine section-icon
+       step, founder 2026-08-30 "the icons should be bolder"): the full 24
+       body crams at that size, the reduced one reads. */
+    const body = size <= 18 && def.body16 ? def.body16 : def.body;
     return (
       <svg
         {...rest}
@@ -36,7 +39,7 @@ export const AtlasIcon = React.forwardRef<SVGSVGElement, AtlasIconProps>(
         height={size}
         fill="none"
         stroke="currentColor"
-        strokeWidth={1.9}
+        strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
         role={labelled ? "img" : undefined}

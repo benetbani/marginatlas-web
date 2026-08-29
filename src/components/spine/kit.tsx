@@ -39,7 +39,9 @@ export function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "ter
   const terra = tone === "terra";
   return (
     <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border" style={{ background: terra ? "var(--terra-soft)" : "var(--c-soft)", borderColor: terra ? "var(--terra-border)" : "var(--c-border)" }}>
-      <AtlasIcon id={id} size={16} className="spine-ic" style={{ color: terra ? "var(--terra-text)" : "var(--c-ink2)" }} />
+      {/* 18px at stroke 2.4 (was 16 at 1.9): founder 2026-08-30, "the icons
+          should be bolder because right now they are very small." */}
+      <AtlasIcon id={id} size={18} strokeWidth={2.4} className="spine-ic" style={{ color: terra ? "var(--terra-text)" : "var(--c-ink2)" }} />
     </span>
   );
 }
