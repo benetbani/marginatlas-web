@@ -86,6 +86,13 @@ const GATES: Gate[] = [
      rebuilt. Both negative-tested against a scratch copy of a real page. */
   { name: "radius-uniform", script: "scripts/verify_radius_uniform.mjs" },
   { name: "flag-marks", script: "scripts/verify_flag_marks.mjs" },
+  /* The 2026-08-30 verdicts, each a gate the same day (working method rule 4):
+     law M, nothing scrolls sideways at phone width on the rebuilt surfaces
+     (the peers table paid first); N9, quartile words never reach a reader ,
+     deciles or the typical alone. Both scoped to the rebuilt spine with the
+     legacy remainder named loudly, not silently passed. */
+  { name: "no-phone-sideways", script: "scripts/verify_no_phone_sideways.mjs" },
+  { name: "no-quartile-words", script: "scripts/verify_no_quartile_words.mjs" },
   /* The blueprint reform, 2026-08-29: each page's constitution lives in
      design/blueprints/<page>.md, written before the code, and this gate fails
      the build when a rendered page disagrees with its own SPINE table. It
