@@ -39,7 +39,7 @@ import { requireBrowser } from "./lib/local_only.mjs";
 const BLUEPRINT_DIR = "E:/atlas/design/blueprints";
 const PAGES_DIR = "docs/loop/artifacts/final-pages";
 /** blueprint slug -> rendered surface slug */
-const SURFACE = { country: "country-gb-new" };
+const SURFACE = { country: "country-gb-new", hood: "hood-london" };
 
 const argv = process.argv.slice(2);
 const overrides = {};
@@ -98,6 +98,22 @@ for (const file of blueprints) {
     continue;
   }
   const spine = parseSpine(md);
+  /* GENERALISED 2026-08-29, the day the second page bound. The first version
+     hardcoded the country page's shape: exactly one 48px figure, a hero id of
+     "take", a wide id of "peers". The neighbourhood page legitimately carries
+     TWO answer figures by design and different ids, so the gate now reads what
+     each constitution DECLARES: an optional "ANSWER FIGURES: N" line (default
+     1), and the hero/wide anchor ids from the table's own first hero and wide
+     rows. A gate shaped like one page enforces that page's habits on every
+     other, which is drift wearing a uniform. */
+  const answerDecl = (() => {
+    const m = md.match(/^ANSWER FIGURES:\s*(\d+)/m);
+    return m ? parseInt(m[1], 10) : 1;
+  })();
+  const heroRow = spine.find((r) => r.band.includes("data-hero"));
+  const wideRow = spine.find((r) => r.band.includes("data-wide-table"));
+  const heroId = heroRow ? heroRow.ids[0] : null;
+  const wideId = wideRow ? wideRow.ids[0] : null;
   if (spine.length === 0) {
     failures.push(`${slug}: the blueprint's SPINE table could not be parsed at all; a constitution nobody can read is not one.`);
     continue;
@@ -120,7 +136,7 @@ for (const file of blueprints) {
       const el = document.getElementById(id);
       return !!(el && el.closest("[" + attr + "]"));
     };
-    return { ids, railIds, hero: count("[data-hero]"), wide: count("[data-wide-table]"), terminus: count("[data-terminus]"), answerFigs, wrappedHero: wrapped("take", "data-hero"), wrappedWide: wrapped("peers", "data-wide-table") };
+    return { ids, railIds, hero: count("[data-hero]"), wide: count("[data-wide-table]"), terminus: count("[data-terminus]"), answerFigs, wrappedIds: Object.fromEntries([...document.querySelectorAll("main [id]")].map((e) => [e.id, { hero: !!e.closest("[data-hero]"), wide: !!e.closest("[data-wide-table]") }])) };
   });
   await page.close();
 
@@ -139,10 +155,10 @@ for (const file of blueprints) {
   if (seen.hero !== declHero) failures.push(`${slug}: the blueprint sanctions ${declHero} hero band(s); the page carries ${seen.hero}.`);
   if (seen.wide !== declWide) failures.push(`${slug}: the blueprint sanctions ${declWide} wide table(s); the page carries ${seen.wide}.`);
   if (seen.terminus !== declTerm) failures.push(`${slug}: the blueprint sanctions ${declTerm} terminus band(s); the page carries ${seen.terminus}.`);
-  if (declHero > 0 && !seen.wrappedHero) failures.push(`${slug}: the take section is not wrapped by its declared data-hero.`);
-  if (declWide > 0 && !seen.wrappedWide) failures.push(`${slug}: the peers section is not wrapped by its declared data-wide-table.`);
+  if (heroId && declHero > 0 && !(seen.wrappedIds[heroId] && seen.wrappedIds[heroId].hero)) failures.push(`${slug}: the ${heroId} section is not wrapped by its declared data-hero.`);
+  if (wideId && declWide > 0 && !(seen.wrappedIds[wideId] && seen.wrappedIds[wideId].wide)) failures.push(`${slug}: the ${wideId} section is not wrapped by its declared data-wide-table.`);
 
-  if (seen.answerFigs !== 1) failures.push(`${slug}: the constants demand exactly ONE answer-size figure; the page carries ${seen.answerFigs}.`);
+  if (seen.answerFigs !== answerDecl) failures.push(`${slug}: the constitution declares ${answerDecl} answer-size figure(s); the page carries ${seen.answerFigs}.`);
 
   const declRail = declaredIds.filter((id) => seen.railIds.length === 0 || true);
   if (seen.railIds.length > 0) {
