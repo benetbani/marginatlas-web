@@ -40,7 +40,12 @@ const DATE = new Date().toISOString().slice(0, 10);
 const WALK = [
   { slug: "home", label: "Home" },
   { slug: "countries-list", label: "Countries" },
-  { slug: "country-gb", label: "Country, United Kingdom" },
+  { slug: "country-gb", label: "Country, United Kingdom (serving today)" },
+  /* The rebuilt country page rides directly under the page it replaces, dark
+     behind its flag, so a review of the walk sees the replacement exactly
+     where a reader will meet it. It leaves this list when the flag opens and
+     the legacy row retires. */
+  { slug: "country-gb-new", label: "Country, United Kingdom (the rebuild, dark)" },
   { slug: "city-london", label: "City, London" },
   { slug: "hood-london", label: "Neighbourhood, London" },
   { slug: "cell-london-restaurants", label: "Trade, restaurants in London" },
