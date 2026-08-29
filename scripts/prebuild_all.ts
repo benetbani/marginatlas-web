@@ -86,6 +86,12 @@ const GATES: Gate[] = [
      rebuilt. Both negative-tested against a scratch copy of a real page. */
   { name: "radius-uniform", script: "scripts/verify_radius_uniform.mjs" },
   { name: "flag-marks", script: "scripts/verify_flag_marks.mjs" },
+  /* The blueprint reform, 2026-08-29: each page's constitution lives in
+     design/blueprints/<page>.md, written before the code, and this gate fails
+     the build when a rendered page disagrees with its own SPINE table. It
+     caught a real drift in its first minute (the terminus missing its declared
+     id). Negative-tested both directions with a planted lie. */
+  { name: "blueprint-conformance", script: "scripts/verify_blueprint_conformance.mjs" },
   /* Two display utilities on one element compile to two declarations and the
      stylesheet picks the winner. Nothing warns and a typecheck cannot see it.
      The tooltip marker carried inline-flex AND grid for months. */

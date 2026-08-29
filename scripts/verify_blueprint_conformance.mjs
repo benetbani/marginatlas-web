@@ -87,7 +87,17 @@ for (const file of blueprints) {
   const htmlPath = `${PAGES_DIR}/${surface}.html`;
   if (!existsSync(htmlPath)) continue;
   const mdPath = overrides[slug] ?? `${BLUEPRINT_DIR}/${file}`;
-  const spine = parseSpine(readFileSync(mdPath, "utf8"));
+  const md = readFileSync(mdPath, "utf8");
+  /* A REBUILD SPEC IS A TARGET, NOT A BINDING. home.md and countries-list.md
+     describe the page TO BE BUILT while the legacy page still serves; comparing
+     a target against the page it exists to replace fails forever and teaches
+     people to ignore the gate. A blueprint declares CONFORMANCE: TARGET until
+     its build lands, and the skip is LOUD so a target cannot quietly stay one. */
+  if (/^CONFORMANCE:\s*TARGET/m.test(md)) {
+    console.log(`  TARGET (not yet binding): ${slug} , its delta from the live page IS the recorded work queue.`);
+    continue;
+  }
+  const spine = parseSpine(md);
   if (spine.length === 0) {
     failures.push(`${slug}: the blueprint's SPINE table could not be parsed at all; a constitution nobody can read is not one.`);
     continue;
