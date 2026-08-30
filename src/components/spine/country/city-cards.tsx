@@ -57,7 +57,10 @@ export function CityCardsPager({ cities, allHref }: { cities: CityCardRow[]; all
           </button>
         </div>
       ) : null}
-      <div className="grid gap-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(9.5rem, 1fr))" }}>
+      {/* TWO PER ROW on phones (founder, 2026-08-30 second batch: "on phones
+          we should have two cities in a row instead of one"); from md up the
+          row is auto-fill at a readable minimum, five across at 1280. */}
+      <div className="grid grid-cols-2 gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))]">
         {slice.map((c) => (
           <a
             key={c.id}

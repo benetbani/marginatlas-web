@@ -181,6 +181,27 @@ const REGION_GROUPS: RegionGroup[] = (() => {
   })).filter((g) => g.cities.length > 0);
 })();
 
+/* Each country FIRST occurrence in reading order carries an anchor id
+   (c-<iso2>), so a country page can deep-link its reader straight to that
+   country in this index (founder, 2026-08-30: "the redirection should put him
+   immediately at the section of the page that has to do with the specific
+   country that he is clicking from"). Computed once, in the same order the
+   groups render. */
+const FIRST_OF_COUNTRY: Set<string> = (() => {
+  const seen = new Set<string>();
+  const first = new Set<string>();
+  for (const g of REGION_GROUPS) {
+    for (const c of g.cities) {
+      const key = c.iso2.toUpperCase();
+      if (!seen.has(key)) {
+        seen.add(key);
+        first.add(c.slug);
+      }
+    }
+  }
+  return first;
+})();
+
 /** One hero figure: the number set large, its label quiet underneath. */
 function HeroStat({ value, label }: { value: number; label: string }) {
   return (
@@ -234,6 +255,7 @@ function CityStatCard({ city }: { city: DirectoryCity }) {
 function CityIndexLink({ city }: { city: DirectoryCity }) {
   return (
     <Link
+      id={FIRST_OF_COUNTRY.has(city.slug) ? `c-${city.iso2.toLowerCase()}` : undefined}
       href={`/cities/${city.slug}`}
       /* `break-inside-avoid` so a multi-column box never splits a flag from
          its city across a column boundary. */

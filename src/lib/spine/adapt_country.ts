@@ -121,6 +121,7 @@ import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
+import { getWageDecileConfidence } from "@/lib/economic_profile/wage_deciles";
 import { isKeepCredible } from "@/lib/finance/keep_credibility";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { getVatRow, getSmbRegime } from "@/lib/tax/smb_effective_rates";
@@ -641,10 +642,14 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
       confidence: "measured",
     });
   }
-  // 3. Talent pool. src/lib/economic_profile: median full-time pay read against
-  //    THIS country's own p25 to p75 spread. Deliberately NOT ranked across
-  //    countries: it is a money figure, and rule 10 is a hard rail, so it is
-  //    read on the country's own terms with its own spread as the context.
+  // 3. Talent pool. src/lib/economic_profile: median full-time pay, read on the
+  //    country's own terms and deliberately NOT ranked across countries, since
+  //    it is a money figure and rule 10 is a hard rail.
+  //    The quartile context this lens used to carry is GONE (N9, 2026-08-30):
+  //    that pair is a fixed multiple of the median rather than a measurement,
+  //    so it described nothing, and carrying it here kept a fabricated spread
+  //    one render away from a reader. The measured spread lives on the
+  //    customers card, which is why this lens stands down when that card shows.
   if (prof(profile.median_wage_full_time_usd) != null) {
     lensList.push({
       key: "talent",
@@ -652,10 +657,6 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
       value: Math.round(profile.median_wage_full_time_usd),
       unit: "usd_per_year",
       inverted: false,
-      context: {
-        p25_usd: prof(profile.wage_p25_usd) != null ? Math.round(profile.wage_p25_usd) : undefined,
-        p75_usd: prof(profile.wage_p75_usd) != null ? Math.round(profile.wage_p75_usd) : undefined,
-      },
       confidence: profileConfidence,
     });
   }
@@ -836,25 +837,45 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
       : undefined;
 
   /* ===================== WHAT CUSTOMERS EARN ============================= */
-  /* Task 14's second half, and one of the three CONNECTs plan correction 3
-     names: the figures are in an already-imported module and render on no page
-     in the repo. design/replacements/spending-power.md: three marks, p25,
-     median, p75, read on the country's own terms, replacing a blended word that
-     printed no figure at all. Rule 10 holds: never ranked against another
-     country's money. Rule 26 holds: this is not a bar, and the founder ruled on
-     this exact section. 195 of 195 countries hold all three. */
+  /* Task 14's second half: pay read on the country's own terms, never ranked
+     against another country's money (rule 10).
+
+     THE MARKS ARE DECILES (N9, 2026-08-30). The founder: "we should seek to
+     find the average, the top ten percent and the bottom ten percent. Instead
+     you are just saying the lower quarter or the upper quarter... that's not
+     very helpful." The quartile pair this block used to emit was never
+     measured , recompute_wages_from_median.ts writes p25 as median x 0.65 and
+     p75 as median x 1.55 for all 197 countries , so it is not passed on here
+     at all, under any name.
+
+     THE MEDIAN ALONE IS ENOUGH TO RENDER. The card states the typical figure
+     whenever the country holds it, and adds the drawn spread only when real
+     deciles have been researched for that country (wage_p10_usd /
+     wage_p90_usd, filled from data/economics/wage_deciles_v1.json). The
+     ordering guard is not decoration: a spread whose marks are out of order
+     would be a data fault, and it is better to show the typical alone than a
+     drawing that lies about which end is which. */
+  const medianPay = prof(profile.median_wage_full_time_usd);
+  const payP10 = prof(profile.wage_p10_usd);
+  const payP90 = prof(profile.wage_p90_usd);
+  const decilesOrdered =
+    medianPay != null && payP10 != null && payP90 != null && payP10 < medianPay && medianPay < payP90;
+  /* A modeled dispersion tags the card. getWageDecileConfidence answers for the
+     spread only, so a measured typical is not demoted by a country that simply
+     has no decile research yet. */
+  const decileConfidence = decilesOrdered ? getWageDecileConfidence(code) : null;
   const customers =
-    prof(profile.median_wage_full_time_usd) != null &&
-    prof(profile.wage_p25_usd) != null &&
-    prof(profile.wage_p75_usd) != null
+    medianPay != null
       ? {
           _meta: {
-            confidence: profileConfidence,
+            confidence:
+              decileConfidence === "modeled" ? ("modeled" as SpineConfidence) : profileConfidence,
             source: "Full-time pay for this country, read on its own terms.",
           },
-          p25_usd: Math.round(profile.wage_p25_usd),
-          median_usd: Math.round(profile.median_wage_full_time_usd),
-          p75_usd: Math.round(profile.wage_p75_usd),
+          median_usd: Math.round(medianPay),
+          ...(decilesOrdered
+            ? { p10_usd: Math.round(payP10 as number), p90_usd: Math.round(payP90 as number) }
+            : {}),
           basis: "Full-time pay, a year.",
         }
       : undefined;
@@ -962,6 +983,10 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
           government: signature.government,
           culture: signature.culture,
           foreign_born_pct: asWhole(signature.foreign_born_pct, 0),
+          /* Carried by the signature type all along and never passed; the
+             founder's 2026-08-30 second batch seats it at the bottom of the
+             dealing-with-the-state table. */
+          foreign_owned_pct: asWhole(signature.foreign_owned_pct, 0),
           // Labels only. The source blurbs carry parenthetical notes written for
           // the data team, which is internal copy and never reaches a reader.
           signature_sectors: (signature.signature_sectors ?? [])

@@ -673,24 +673,49 @@ export { InfoTip };
  * it the track is neutral with a centre tick and BOTH poles carry equal weight (no implied
  * better end , form must not assert a direction the copy disclaims). `glossFor` supplies
  * the per-spectrum "?" gloss, rendered LEFT of the row per the founder's spec. */
-export function SpectraTable({ rows, gradient = false, glossFor }: { rows: any[]; gradient?: boolean; glossFor?: (spectrum: string) => string | undefined }) {
+export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink" }: { rows: any[]; gradient?: boolean; glossFor?: (spectrum: string) => string | undefined; dot?: "ink" | "terra" }) {
   if (!rows?.length) return null;
+  /* dot: the founder's 2026-08-30 split on the country page ("dealing with the
+     state, the points should be black; dealing with the people, terracotta").
+     Defaults to ink so every existing caller renders unchanged.
+     A row carrying `name` takes the NAMED form (his same order: the pole
+     words alone are not enough; the trait name leads, the explanatory poles
+     sit under the track's ends). Rows without a name keep the compact form. */
+  const dotBg = dot === "terra" ? "var(--terra)" : "var(--c-ink)";
   return (
     <div className="divide-y divide-[var(--c-border)]">
       {rows.map((r: any, i: number) => {
         const pos = Math.max(5, Math.min(95, Math.round((r.position_0_1 ?? 0.5) * 100)));
         const right = pos >= 50;
         const gloss = glossFor?.(r.spectrum);
+        const track = (
+          <span className="relative block h-[6px] rounded-full" role="img" aria-label={`${r.name ? r.name + ": " : ""}${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`} style={{ background: gradient ? "linear-gradient(90deg, #6f6f6d, var(--terra))" : "#ecebe9" }}>
+            {!gradient ? <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} /> : null}
+            <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: dotBg, boxShadow: "0 0 0 1px #e3e3e3" }} />
+          </span>
+        );
+        if (r.name) {
+          return (
+            <div key={i} className="py-2.5 first:pt-0 last:pb-0">
+              <div className="flex items-center text-[length:var(--t-small)] font-medium text-[var(--c-ink)]">
+                {gloss ? <InfoTip gloss={gloss} className="mr-1.5" /> : null}
+                {r.name}
+              </div>
+              <div className="mt-1.5">{track}</div>
+              <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">
+                <span>{r.left_label}</span>
+                <span className="text-right">{r.right_label}</span>
+              </div>
+            </div>
+          );
+        }
         return (
           <div key={i} className="hov -mx-2 grid grid-cols-[130px_1fr_118px] items-center gap-2 rounded-md px-2 py-2">
             <span className={`flex items-center text-[length:var(--t-micro)] leading-tight ${gradient ? "text-[var(--c-muted)]" : "text-[var(--c-ink2)]"}`}>
               {gloss ? <InfoTip gloss={gloss} className="mr-1.5" /> : null}
               {r.left_label}
             </span>
-            <span className="relative block h-[6px] rounded-full" role="img" aria-label={`${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`} style={{ background: gradient ? "linear-gradient(90deg, #6f6f6d, var(--terra))" : "#ecebe9" }}>
-              {!gradient ? <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} /> : null}
-              <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
-            </span>
+            {track}
             <span className={`text-right text-[length:var(--t-micro)] leading-tight ${gradient ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{r.right_label}</span>
           </div>
         );

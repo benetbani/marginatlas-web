@@ -32,6 +32,7 @@ import * as React from "react";
 import { Band, Box, Fig, Rail, SampleTag, SpectraTable, usd } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { CityCardsPager } from "@/components/spine/country/city-cards";
+import { SetupTiers } from "@/components/spine/country/setup-tiers";
 import { CountryFlag } from "@/components/CountryFlag";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
@@ -46,9 +47,8 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The tax burden" },
   { id: "cities", label: "The cities" },
   { id: "peers", label: "Against the peers" },
-  { id: "customers", label: "What customers earn" },
-  { id: "lenses", label: "Lending, customers, currency" },
   { id: "money", label: "What an owner keeps" },
+  { id: "customers", label: "What customers earn" },
   { id: "character", label: "The character" },
   { id: "setup", label: "Registering, by legal form" },
   { id: "premises", label: "What premises cost" },
@@ -104,31 +104,20 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
 }
 
 /**
- * The masthead , where the reader is, and the one number this page exists to
- * state. Rebuilt 2026-08-30 to five founder verdicts, all recorded in
- * FOUNDER-VERDICTS.md that day:
+ * The masthead , two-sided since the founder's second 2026-08-30 batch:
+ * "those eight details that we put a little bit below, they can be put on the
+ * right side of this section in two columns and four rows, something that
+ * would look nice." LEFT: identity row (mark, flag, name , once), subtitle,
+ * the label and the answer with its regime clause. RIGHT: a quiet grid, two
+ * columns, capacity four rows, no borders and no tiles (his tile ban stands):
+ * payroll on wages, sales tax, time to register, cost to register. The four
+ * remaining slots are reserved for the upkeep and decile figures when their
+ * data lands; nothing fills them speculatively.
  *
- * 1. THE ANSWER IS THE SMALL-BUSINESS EFFECTIVE RATE, and its label is "Total
- *    effective tax burden". The composed profit+wages sum and its name "the
- *    government take" are retired ("what's the point of saying the government
- *    take?"). The rate comes from the SMB regime table, whose own header
- *    reasons exactly as he did: headline CIT is the wrong frame for small
- *    shops. The employer payroll rate is a SEPARATE burden on a SEPARATE base
- *    and renders beside the answer, never summed into it.
- * 2. THE NAME APPEARS ONCE, WITH ITS FLAG. The old crumb spelled the country
- *    name above the H1 that also spelled it, and the flag was missing
- *    ("duplicates are completely forbidden... the flag is very important").
- *    One identity row: altitude mark, flag, H1.
- * 3. NO WORLD-MEDIAN LINE ("a little bit disgusting").
- * 4. THE SUPPORT FACTS ARE ONE QUIET SENTENCE, never tiles ("things that
- *    don't really need their own cards and so much space").
- * 5. Hierarchy: the answer at 48 is the only large thing; everything else
- *    supports it (rule 16, the 1.6x rule, kept).
- *
- * The SMB rate is a conservative modeled read at median SMB revenue (the
- * module says so), so it contributes "modeled" to the block's weakest-of
- * confidence and GB now carries the honesty tag here. That is the honest
- * price of the more honest number.
+ * Everything the first batch settled still binds: the answer is the
+ * small-business effective rate labelled "Total effective tax burden", the
+ * name appears once with its flag, no world-median line, and the SMB rate's
+ * modeled confidence keeps the honesty tag on the block.
  */
 function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any }) {
   const eb = hero?.effective_burden;
@@ -142,41 +131,65 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
   const cost = factFor("register_cost");
   const salesTax = factFor("sales_tax");
 
-  /* Rule 4A: the block's confidence is the WEAKEST of every fact inside it,
-     and the SMB effective rate is modeled by its own module's admission, so
-     the tag now appears wherever the answer does. */
   const confidence = hero?._meta?.confidence;
   const tagged = typeof confidence === "string" && confidence !== "measured";
 
-  /* The subtitle promises what this page holds for THIS country, composed
-     from what resolved, never promising an absent section. */
   const promises: string[] = [];
   if (rate != null) promises.push("what a small business effectively pays the state");
   if (cost) promises.push("what it costs to register one");
   else if (days) promises.push("how long it takes to register one");
   const subtitle = promises.length > 0 ? `${promises.join(", and ").replace(/^./, (c) => c.toUpperCase())}.` : null;
 
-  /* THE QUIET SENTENCE (verdict 4). Each clause guards its own field and
-     drops out silently; a zero fee is the word "nothing", never $0. */
-  const clauses: string[] = [];
-  const dayWord = days ? `${days.value} ${days.value === 1 ? "day" : "days"}` : null;
-  const costWord = cost ? (cost.value === 0 ? "nothing" : usd(cost.value as number)) : null;
-  if (dayWord && costWord) clauses.push(`Registering takes ${dayWord} and costs ${costWord}`);
-  else if (dayWord) clauses.push(`Registering takes ${dayWord}`);
-  else if (costWord) clauses.push(`Registering costs ${costWord}`);
-  if (salesTax) clauses.push(`sales tax is ${salesTax.value}%, carried by the customer`);
-  const factLine = clauses.length > 0 ? clauses.join("; ") + "." : null;
+  /* The right-side grid's cells, each guarding its own field, in his order of
+     weight: the payroll burden first (it is a burden, not trivia), then the
+     tax the customer carries, then the two registration facts. */
+  const cells: Array<{ key: string; label: string; value: React.ReactNode; note?: string }> = [];
+  if (payroll != null) {
+    cells.push({
+      key: "payroll",
+      label: "Payroll on wages",
+      value: <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{payroll}%</Fig>,
+      note: "a separate burden, never added to the rate",
+    });
+  }
+  if (salesTax) {
+    cells.push({
+      key: "sales-tax",
+      label: "Sales tax",
+      value: <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{salesTax.value}%</Fig>,
+      note: "carried by the customer",
+    });
+  }
+  if (days) {
+    cells.push({
+      key: "days",
+      label: "Time to register",
+      value: (
+        <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">
+          {days.value} {days.value === 1 ? "day" : "days"}
+        </Fig>
+      ),
+    });
+  }
+  if (cost) {
+    cells.push({
+      key: "cost",
+      label: "Cost to register",
+      value:
+        cost.value === 0 ? (
+          <span className="block text-[length:var(--t-head)] font-medium leading-none text-[var(--c-ink)]">Free</span>
+        ) : (
+          <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{usd(cost.value as number)}</Fig>
+        ),
+    });
+  }
 
   return (
     <Band hero>
       <Box id="take">
-        {/* The identity row: the altitude mark, the flag, the name , ONCE. */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <AtlasMark id="alt-country" size={13} className="opacity-55" />
           {iso2 ? <CountryFlag iso2={iso2} className="w-9 shrink-0" /> : null}
-          {/* Rule 35: semibold, never bold. Focal 30, below the answer's 48:
-              the identity names the place, the figure answers the question,
-              and only one of them may be the largest thing on the page. */}
           <h1
             id="headline"
             data-typography="custom"
@@ -190,58 +203,47 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
           <p className="mt-1.5 max-w-[52ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p>
         ) : null}
 
-        {rate != null ? (
-          <div className="mt-6">
-            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Total effective tax burden</div>
-            {/* The accent, and the only one on the page at answer size. */}
-            <div className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{rate}%</div>
-            <div className="mt-2.5 flex flex-wrap items-baseline gap-x-2.5 gap-y-1.5">
-              <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
+        <div className="mt-6 flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
+          {rate != null ? (
+            <div>
+              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Total effective tax burden</div>
+              <div className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{rate}%</div>
+              <div className="mt-2.5 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">
                 on profit, for a small business
                 {regime ? (
                   <>
                     {" "}under <span className="text-[var(--c-ink)]">{regime}</span>
                   </>
                 ) : null}
-              </span>
-              {payroll != null ? (
-                <span aria-hidden className="text-[length:var(--t-body)] text-[var(--c-muted)]">&middot;</span>
-              ) : null}
-              {payroll != null ? (
-                /* A separate burden on a separate base: named beside, never
-                   summed. The words say "separate" so a reader cannot add
-                   the two rates into a number that is true of nothing. */
-                <span className="inline-flex items-baseline gap-1.5 whitespace-nowrap">
-                  <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{payroll}%</Fig>
-                  <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">employer costs on wages, separate</span>
-                </span>
-              ) : null}
+              </div>
             </div>
-          </div>
-        ) : null}
-
-        {factLine ? (
-          <p className="mt-6 max-w-[64ch] text-[length:var(--t-small)] text-[var(--c-ink2)]">{factLine}</p>
-        ) : null}
+          ) : null}
+          {cells.length > 0 ? (
+            <div className="grid shrink-0 grid-cols-2 gap-x-10 gap-y-4 md:w-[320px]">
+              {cells.map((c) => (
+                <div key={c.key}>
+                  <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{c.label}</div>
+                  <div className="mt-1">{c.value}</div>
+                  {c.note ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{c.note}</div> : null}
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
       </Box>
     </Band>
   );
 }
 
 /**
- * The cities , rebuilt 2026-08-30. FOUNDER VERDICT, verbatim: "we should
- * avoid the functionality of the map... remove the map altogether and just
- * replace everything with the cards. The standard row should have five cities
- * maximum, and if there are more, the person can click left or right. And we
- * should have an option so the person sees the full list of cities, which
- * redirects him to the terminal." The SpineMap import left this file with the
- * verdict, and with it the map's camera blind spot: every element here
- * photographs statically.
- *
- * Verdict 6 (2026-08-27) still binds: the cities appear ONCE and every card
- * IS its link; a city whose page does not exist renders nothing at all.
+ * The cities as a card pager (the map removed by the first 2026-08-30 batch).
+ * Second batch: TWO CARDS PER ROW on phones ("on phones we should have two
+ * cities in a row instead of one"), and the terminal link deep-links to this
+ * country's own cities ("the redirection should put him immediately at the
+ * section of the page that has to do with the specific country"). Verdict 6
+ * still binds: every card IS its link; a city without a page renders nothing.
  */
-function Cities({ cities }: { cities: any }) {
+function Cities({ cities, iso2 }: { cities: any; iso2?: string }) {
   const list: any[] = Array.isArray(cities?.list) ? cities.list : [];
   const linked = list.filter((c) => typeof c?.href === "string" && c.href.length > 0);
   if (linked.length === 0) return null;
@@ -255,7 +257,7 @@ function Cities({ cities }: { cities: any }) {
             (photographed 2026-08-30), so a trailing parenthetical is dropped. */}
         <CityCardsPager
           cities={linked.map((c) => ({ id: String(c.id), name: String(c.name).replace(/\s*\([^)]*\)\s*$/, ""), region: typeof c.region === "string" ? c.region : undefined, href: c.href }))}
-          allHref="/cities"
+          allHref={iso2 ? `/cities#c-${iso2.toLowerCase()}` : "/cities"}
         />
       </Box>
     </Band>
@@ -405,205 +407,155 @@ function Peers({ peers }: { peers: any }) {
 }
 
 /**
- * The lens grid , what REPLACES the hexagon, and the shape of the replacement
- * is the whole argument (founder 2026-08-27, verbatim: "this hexagon. It's
- * overloaded with information... and it occupies the full width"; art direction
- * ratified 2026-08-25: a wrong form is REPLACED, not tidied).
+ * What customers earn. THE SPREAD IS DECILES (2026-08-30, notation N9),
+ * founder verbatim: "we should seek to find the average, the top ten percent
+ * and the bottom ten percent. Instead you are just saying the lower quarter or
+ * the upper quarter... that's not very helpful."
  *
- * A LENS THE MASTHEAD ALREADY STATED DOES NOT RESTATE. The first render of this
- * grid printed 38.8 percent twice on one screen, once in the hero and once as
- * the tax lens, and "1 day" twice, which is the exact fault round 3 closed on
- * the trade page (one number, three cards). The grid therefore drops any lens
- * whose figure the masthead carries, and the one reading that would have been
- * lost with it, the world-median take, moves UP into the masthead where the
- * figure it gives meaning to lives. What remains here is what the page has not
- * yet said: pay, lending, customers, currency.
+ * The drawing returns only for a country whose deciles were actually
+ * researched (data/economics/wage_deciles_v1.json, pushed into the profile as
+ * wage_p10_usd / wage_p90_usd). A country without them states the typical
+ * figure alone, exactly as it did while the spread was dark, because the
+ * quartile pair the profile still carries is a fixed multiple of the median
+ * rather than a measurement, and relabelling it would be a fabricated
+ * statistic. Quartile words never render again; the gate is
+ * scripts/verify_no_quartile_words.mjs.
  *
- * The radar put six word-ratings at six positions on axes with no units, printed
- * every word twice, and stretched one reading across the page. What stands in
- * its place is six PUBLISHED FIGURES, each a tile: a plain label, one number
- * with its unit, and a one-line context where the seed carries one. No scale is
- * drawn, so no position can fake precision (the form catalogue's meter do-not),
- * and a grid of six distinct tiles is the founder's own sanctioned pattern
- * ("six neighborhoods... those are six different pieces").
- *
- * The tax tile obeys the composed-take rule: the total never renders without
- * its two components, here as the tile's own sub-line.
- *
- * Direction is not drawn because nothing is ranked: a burden's tile reads as
- * what it costs, a strength's tile as what it pays, and the label wording does
- * the teaching (rule 40) rather than an arrow doing the asserting.
- */
-function Lenses({ lenses, hero, customersShown }: { lenses: any; hero: any; customersShown?: boolean }) {
-  const all: any[] = Array.isArray(lenses?.list) ? lenses.list : [];
-  const heroStatesTake = isNum(hero?.effective_burden?.rate_pct);
-  const heroFacts: SupportFact[] = Array.isArray(hero?.support) ? hero.support : [];
-  const heroStatesDays = heroFacts.some((f) => f?.key === "register_days" && isNum(f.value));
-  const list = all.filter((l) => {
-    if (l.key === "tax_burden" && heroStatesTake) return false;
-    if (l.key === "entry" && heroStatesDays) return false;
-    /* The customers section states the median pay ON A SPREAD, which is the same
-       figure this lens carried alone; one page, one statement of one number. */
-    if (l.key === "talent" && customersShown) return false;
-    return true;
-  });
-  if (list.length < 3) return null;
-  const tagged = typeof lenses?._meta?.confidence === "string" && lenses._meta.confidence !== "measured";
-
-
-  const fmt = (l: any): { value: React.ReactNode; sub?: string } => {
-    const v = l.value;
-    switch (l.unit) {
-      case "composed_pct":
-        /* The lens carries its own components (the adapter's Lens type), so
-           the composed total never renders without what it is a sum of even
-           now the hero no longer holds take_components. */
-        return {
-          value: <>{v}%</>,
-          sub: isNum(l.profit_tax_pct) && isNum(l.payroll_tax_pct) ? l.profit_tax_pct + "% on profit + " + l.payroll_tax_pct + "% on wages" : undefined,
-        };
-      case "days":
-        return { value: <>{v} {v === 1 ? "day" : "days"}</>, sub: "to legally trading" };
-      case "usd_per_year":
-        return { value: <>{usd(v)}</>, sub: "typical full-time pay, a year" };
-      case "pct":
-        return l.key === "finance"
-          ? { value: <>{v}%</>, sub: "typical bank lending rate" }
-          : {
-              value: <>{v}%</>,
-              sub: isNum(l.context?.inflation_5y_avg_pct)
-                ? "currency swing a year; inflation " + l.context.inflation_5y_avg_pct + "% averaged over five"
-                : "currency swing a year",
-            };
-      case "index_world_median_100":
-        return { value: <>x{(v / 100).toFixed(2)}</>, sub: "the world-median wage" };
-      default:
-        return { value: <Fig>{String(v)}</Fig> };
-    }
-  };
-
-  return (
-      <Box id="lenses">
-        <Rail icon="gut-check" kicker={customersShown ? "Lending, customers, currency" : "Pay, lending, customers, currency"} sample={tagged} />
-        {/* NO BREAKPOINT. The first version pitched two columns at a width class
-            the width gate refuses to grow (a phone never reaches it, so the
-            second layout exists for nobody). Tiles ask for a readable minimum
-            and wrap when they cannot have it: one column on a phone, two in
-            this band, at every width in between, with no number in a stylesheet
-            to be wrong. The same lesson as the trade page closing row. */}
-        <div className="flex flex-wrap gap-x-6 gap-y-5">
-          {list.map((l: any) => {
-            const f = fmt(l);
-            return (
-              <div key={l.key} className="min-w-[15rem] flex-[1_1_15rem]">
-                <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{l.label}</div>
-                <Fig className="mt-1 block text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{f.value}</Fig>
-                {f.sub ? (
-                  <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{f.sub}</div>
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-      </Box>
-  );
-}
-
-/**
- * What customers earn , THE SPREAD IS DARK (2026-08-30, notation N9). The
- * founder's convention is deciles, verbatim: "we should seek to find the
- * average, the top ten percent and the bottom ten percent. Instead you are
- * just saying the lower quarter or the upper quarter... that's not very
- * helpful." The profile today carries only quartiles (wage_p25/p75_usd), and
- * quartiles relabelled as deciles would be a fabricated statistic, so the
- * scale drawing does not render until wage_p10_usd / wage_p90_usd exist (the
- * queued data task). Until then the card states the typical figure alone.
- * The tick-scale form and its edge rules are preserved in the blueprint for
- * the day the deciles land; quartile words never render again.
+ * THE LABELS DO NOT COLLIDE, and that is the whole reason the outer two wrap.
+ * Pay distributions lean right, so the typical mark sits well left of centre
+ * (about 29 percent of the span for the United Kingdom) while "Bottom ten
+ * percent" is anchored at the left edge. Held on one line, those two blocks
+ * overlap at every width the card is ever laid out at. Capped at 5rem the
+ * outer labels take two short lines and clear the typical block at 1280 and at
+ * 390 alike, with no invented breakpoint and nothing scrolling sideways (law
+ * M).
  */
 function Customers({ customers }: { customers: any }) {
   if (!isNum(customers?.median_usd)) return null;
+  const med = customers.median_usd;
+  const p10 = customers?.p10_usd, p90 = customers?.p90_usd;
+  const spread = isNum(p10) && isNum(p90) && p10 < med && med < p90;
   const tagged = typeof customers?._meta?.confidence === "string" && customers._meta.confidence !== "measured";
+  const basis = customers.basis ?? "Full-time pay, a year.";
+  if (!spread) {
+    return (
+      <Box id="customers">
+        <Rail icon="spread" kicker="What customers earn" sample={tagged} />
+        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Typical pay</div>
+        {/* Accent register entry 2: the customers card's answer. */}
+        <Fig className="mt-1 block text-[length:var(--t-sub)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
+        <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</div>
+      </Box>
+    );
+  }
+  /* The ten percent of room at each end is the round-3 scale rule kept intact:
+     an end mark sits inside the track rather than on its edge, so a tick is
+     never half-drawn against the card's own boundary. */
+  const lo = p10 * 0.9, hi = p90 * 1.1, span = Math.max(1, hi - lo);
+  const X = (v: number) => ((v - lo) / span) * 100;
+  const marks: Array<[string, number, boolean]> = [
+    ["Bottom ten percent", p10, false],
+    ["Typical", med, true],
+    ["Top ten percent", p90, false],
+  ];
   return (
     <Box id="customers">
+      {/* The range glyph, not the shopping bag: at sixteen pixels the bag reads
+          as a bin, the city page paid for that in round 3, and this card draws
+          exactly what the range glyph depicts, a low-to-high band with the
+          typical point marked. */}
       <Rail icon="spread" kicker="What customers earn" sample={tagged} />
-      <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Typical pay</div>
-      {/* Accent register entry 2: the customers card's answer. */}
-      <Fig className="mt-1 block text-[length:var(--t-sub)] font-semibold leading-none text-[var(--terra-text)]">{usd(customers.median_usd)}</Fig>
-      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{customers.basis ?? "Full-time pay, a year."}</div>
+      <div
+        className="relative mt-1 h-[24px]"
+        role="img"
+        aria-label={"Full-time pay a year: bottom ten percent " + usd(p10) + ", typical " + usd(med) + ", top ten percent " + usd(p90)}
+      >
+        <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
+        {marks.map(([label, v, accent]) => (
+          <span key={label} className="absolute bottom-0 top-0" style={{ left: X(v) + "%" }}>
+            <span
+              className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2"
+              style={{ borderLeftWidth: accent ? 2 : 1, borderLeftStyle: "solid", borderLeftColor: accent ? "var(--terra-text)" : "var(--c-line-strong)" }}
+            />
+          </span>
+        ))}
+      </div>
+      <div className="relative mt-1 h-[52px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        {marks.map(([label, v, accent]) => {
+          const x = X(v);
+          const edge = x > 82 ? "right" : x < 14 ? "left" : "centre";
+          const style: React.CSSProperties =
+            edge === "right" ? { right: 0 } : edge === "left" ? { left: 0 } : { left: x + "%", transform: "translateX(-50%)" };
+          return (
+            <span
+              key={label}
+              className={"absolute top-0 flex flex-col " + (accent ? "whitespace-nowrap " : "max-w-[5rem] ") + (edge === "right" ? "items-end text-right" : "")}
+              style={style}
+            >
+              <span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span>
+              <Fig className={"mt-0.5 font-semibold " + (accent ? "text-[length:var(--t-sub)] text-[var(--terra-text)]" : "text-[length:var(--t-body)] text-[var(--c-ink)]")}>{usd(v)}</Fig>
+            </span>
+          );
+        })}
+      </div>
+      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</div>
     </Box>
   );
 }
 
 /**
- * The money , what an owner keeps, trade by trade, and the funnel rule 24 asks
- * for: every row is a real link down to that trade's national page. The whole
- * block is modeled at country altitude and says so with the tag; every figure
- * inside it came through the SAME engine the trade pages run, so the two can
- * never disagree.
- *
- * WITHHELD IS SAID, NEVER SILENT. The adapter screens out any keep past six
- * times the country's own typical pay (the founder's 2026-08-29 decision,
- * applied as one fixed formula), and this section prints how many rows that
- * screen held back. A row that quietly vanished would read as coverage; a
- * counted withholding reads as honesty, which is the difference this site is
- * built on.
- *
- * No bars (rule 25's budget is precious and length would encode nothing a
- * reader needs here): each trade is a row, the keep is the row's figure in ink,
- * the cost to open rides muted beside it, the arrow says it goes somewhere.
+ * What an owner keeps , the repetition is out (founder, second batch: "for
+ * each row you say kept a year and to open... you could have just said it
+ * once at the top as a column and not repeated the same word six times in a
+ * row"). Column headers ONCE; each row carries the trade, two figures and the
+ * arrow, on one shared grid template so the headers sit over their columns.
+ * Returns a bare Box: the body composes it into the 2-1 band beside the
+ * customers card. His standing note, recorded and queued: "a little bit stale
+ * and without a lot of character."
  */
 function Money({ money }: { money: any }) {
   const rows: any[] = (Array.isArray(money?.list) ? [...money.list] : []).sort((x, y) => (y?.keeps_usd_year ?? 0) - (x?.keeps_usd_year ?? 0));
   if (rows.length < 2) return null;
   const tagged = typeof money?._meta?.confidence === "string" && money._meta.confidence !== "measured";
+  const cols = "grid grid-cols-[minmax(0,1fr)_5.5rem_5.5rem_1.25rem] items-baseline gap-x-3";
   return (
-    <Band>
-      <Box id="money">
-        <Rail icon="owner-keeps" kicker="What an owner keeps, trade by trade" sample={tagged} />
-        <div className="divide-y divide-[var(--c-border)]">
-          {rows.map((r: any) => (
-            <a key={r.slug} href={r.href} className="group flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5 first:pt-0 last:pb-0">
-              <span className="flex min-w-[11rem] flex-[1_1_11rem] items-baseline gap-2">
-                <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]">{r.name}</span>
-              </span>
-              <span className="flex items-baseline gap-x-3 whitespace-nowrap">
-                <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(r.keeps_usd_year)}</Fig>
-                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">kept a year</span>
-              </span>
-              <span className="flex items-baseline gap-x-1.5 whitespace-nowrap">
-                <Fig className="text-[length:var(--t-small)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
-                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">to open</span>
-              </span>
-              <span aria-hidden className="ml-auto shrink-0 text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
-            </a>
-          ))}
-        </div>
-        {money?.withheld?.reason ? (
-          <p className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{money.withheld.reason}</p>
-        ) : null}
-      </Box>
-    </Band>
+    <Box id="money">
+      <Rail icon="owner-keeps" kicker="What an owner keeps, trade by trade" sample={tagged} />
+      <div className={cols + " pb-2"}>
+        <span aria-hidden />
+        <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Kept a year</span>
+        <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To open</span>
+        <span aria-hidden />
+      </div>
+      <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+        {rows.map((r: any) => (
+          <a key={r.slug} href={r.href} className={"group " + cols + " py-2.5"}>
+            <span className="truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]">{r.name}</span>
+            <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(r.keeps_usd_year)}</Fig>
+            <Fig className="text-right text-[length:var(--t-small)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
+            <span aria-hidden className="text-right text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
+          </a>
+        ))}
+      </div>
+      {money?.withheld?.reason ? (
+        <p className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{money.withheld.reason}</p>
+      ) : null}
+    </Box>
   );
 }
 
 /**
- * The character , the TWO ratified six-spectra tables, state and people, kept
- * whole: round 4 judged this the closest thing on the legacy page to the
- * current law, and dropping or butchering the pair is a standing founder rule
- * (2026-06-18). The pole words are the legacy page's own ratified wording,
- * carried verbatim; the positions are the same published-index-anchored reads,
- * normalised exactly as the legacy route normalised them (government scores run
- * 0 to 10, culture scores 1 to 10, and collapsing that difference is how a
- * position would silently shift by half a step).
- *
- * TAGGED AS MODELED, which is a change from the legacy page: these are
- * hand-anchored reads against published indices, not measurements, and behind a
- * seed the tag gate can finally see them.
- *
- * The two real percentages, born abroad and foreign-owned firms, ride beside
- * the people table as plain facts, exactly where the legacy page put them and
- * round 4 called them "the only true numbers" on the card.
+ * The character , the two ratified tables, rebuilt to the founder's second
+ * 2026-08-30 batch: every row carries its TRAIT NAME again (the previous
+ * build had dropped them, leaving generic pole words , half the fault he
+ * named); the pole words are EXPLANATORY of their category ("you should make
+ * the two words explanatory to the category that they are referring to");
+ * best on the right, worst on the left, every row; the STATE table's dots are
+ * INK and the PEOPLE table's dots TERRACOTTA ("that's the feeling"); the
+ * state's icon is an institution (the bank glyph); foreign-owned firms sits
+ * at the bottom of the state table and born abroad at the bottom of the
+ * people table. The positions are the same published-index-anchored reads,
+ * normalised exactly as before (government 0 to 10, culture 1 to 10).
  */
 function Character({ character }: { character: any }) {
   const gov = character?.government;
@@ -612,26 +564,26 @@ function Character({ character }: { character: any }) {
   const tagged = typeof character?._meta?.confidence === "string" && character._meta.confidence !== "measured";
   const norm10 = (v: unknown) => (isNum(v) ? Math.max(0, Math.min(1, v / 10)) : null);
   const norm1to10 = (v: unknown) => (isNum(v) ? Math.max(0, Math.min(1, (v - 1) / 9)) : null);
-  const row = (pos: number | null, spectrum: string, left: string, right: string) =>
-    pos == null ? null : { spectrum, left_label: left, right_label: right, position_0_1: pos };
+  const row = (pos: number | null, spectrum: string, rowName: string, left: string, right: string) =>
+    pos == null ? null : { spectrum, name: rowName, left_label: left, right_label: right, position_0_1: pos };
   const govRows = gov
     ? [
-        row(norm10(gov.tax_predictability), "tax", "Erratic", "Predictable"),
-        row(norm10(gov.low_bribery), "bribery", "Greased", "Clean"),
-        row(norm10(gov.task_efficiency), "tasks", "Slow", "Efficient"),
-        row(norm10(gov.time_efficiency), "time", "Long", "Short"),
-        row(norm10(gov.judicial_impartiality), "courts", "Partial", "Impartial"),
-        row(norm10(gov.innovation_capacity), "new", "Resistant", "Receptive"),
+        row(norm10(gov.tax_predictability), "tax", "Tax predictability", "Rules change yearly", "Set for years"),
+        row(norm10(gov.low_bribery), "bribery", "Clean dealing", "Bribes expected", "By the book"),
+        row(norm10(gov.task_efficiency), "tasks", "Getting things done", "Weeks of stamps", "Same-week answers"),
+        row(norm10(gov.time_efficiency), "time", "Waiting time", "Queues for months", "Days, not months"),
+        row(norm10(gov.judicial_impartiality), "courts", "Courts", "Connections decide", "Contracts hold"),
+        row(norm10(gov.innovation_capacity), "new", "Openness to the new", "New ways resisted", "New ways welcomed"),
       ].filter(Boolean)
     : [];
   const cuRows = cu
     ? [
-        row(norm1to10(cu.openness_to_foreigners), "open", "Insular", "Welcoming"),
-        row(norm1to10(cu.innovation), "innovation", "Tradition-bound", "Embraces the new"),
-        row(norm1to10(cu.communication_directness), "direct", "Indirect", "Direct"),
-        row(norm1to10(cu.punctuality), "punctual", "Loose", "Strict"),
-        row(norm1to10(cu.corruption_rejection), "straight", "Tolerated", "Rejected"),
-        row(norm1to10(cu.ambition_chest_beating), "ambition", "Understated", "Loud"),
+        row(norm1to10(cu.openness_to_foreigners), "open", "Openness", "Keep to themselves", "Quick to include you"),
+        row(norm1to10(cu.innovation), "innovation", "Innovation", "The old way rules", "New ideas land"),
+        row(norm1to10(cu.communication_directness), "direct", "Directness", "Read between the lines", "Said to your face"),
+        row(norm1to10(cu.punctuality), "punctual", "Timekeeping", "Schedules drift", "Clocks are kept"),
+        row(norm1to10(cu.corruption_rejection), "straight", "Straight dealing", "Corners get cut", "A word is kept"),
+        row(norm1to10(cu.ambition_chest_beating), "ambition", "Ambition", "Kept quiet", "Worn openly"),
       ].filter(Boolean)
     : [];
   if (govRows.length === 0 && cuRows.length === 0) return null;
@@ -639,14 +591,22 @@ function Character({ character }: { character: any }) {
     <Band split="1-1">
       {govRows.length > 0 ? (
         <Box id="character">
-          <Rail icon="red-tape" kicker="Dealing with the state" sample={tagged} />
+          <Rail icon="bank" kicker="Dealing with the state" sample={tagged} />
           <SpectraTable rows={govRows} />
+          {isNum(character?.foreign_owned_pct) ? (
+            <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-3">
+              <span className="flex items-baseline gap-1.5">
+                <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{character.foreign_owned_pct}%</Fig>
+                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of firms are foreign-owned</span>
+              </span>
+            </div>
+          ) : null}
         </Box>
       ) : null}
       {cuRows.length > 0 ? (
         <Box {...(govRows.length === 0 ? { id: "character" } : {})}>
           <Rail icon="who-for" kicker="Dealing with people" sample={tagged} />
-          <SpectraTable rows={cuRows} />
+          <SpectraTable rows={cuRows} dot="terra" />
           {isNum(character?.foreign_born_pct) ? (
             <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-3">
               <span className="flex items-baseline gap-1.5">
@@ -662,19 +622,10 @@ function Character({ character }: { character: any }) {
 }
 
 /**
- * Getting set up + what premises cost , Task 16, a 3-2 band.
- *
- * The legal-form table is the one piece of the legacy page the July-5 review
- * marked "execution GOOD, keep": tier, local name, fee, filing time, and the
- * complexity read as dots. The dots are QUIET, ink on line, because complexity
- * is furniture here, not an answer (rule 37), and a zero fee is the word Free.
- *
- * Premises: the two CONNECTs of plan correction 3 that belong to running a
- * site, rent by location tier and commercial electricity. The lending rate the
- * seed also carries is NOT here: the lens grid already states it, and one page
- * says one number once. Rent tiers are three labelled figures on one line, the
- * spread IS the reading (prime runs nearly eight times edge in the UK), and the
- * unit is named once for all three (N5).
+ * Registering, by legal form , expandable since the founder's second batch
+ * ("I've told you multiple times that this should be an expandable section").
+ * The rows, the quiet local term and the terracotta complexity dots live in
+ * the SetupTiers client component; this wrapper holds the section chrome.
  */
 function Setup({ setup }: { setup: any }) {
   const tiers: any[] = Array.isArray(setup?.tiers) ? setup.tiers : [];
@@ -683,73 +634,73 @@ function Setup({ setup }: { setup: any }) {
   return (
     <Box id="setup">
       <Rail icon="register-cost" kicker="Registering, by legal form" sample={tagged} />
-      <div className="divide-y divide-[var(--c-border)]">
-        {tiers.map((t: any) => (
-          <div key={t.tier} className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-2.5 first:pt-0 last:pb-0">
-            <span className="min-w-[9rem] flex-[1_1_9rem]">
-              <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.tier}</span>
-              {t.local_term && t.local_term !== t.tier ? (
-                <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{t.local_term}</span>
-              ) : null}
-            </span>
-            <span className="whitespace-nowrap">
-              {t.cost_usd === 0 ? (
-                <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">Free</span>
-              ) : isNum(t.cost_usd) ? (
-                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig>
-              ) : null}
-            </span>
-            {isNum(t.days) ? (
-              <span className="whitespace-nowrap">
-                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.days} {t.days === 1 ? "day" : "days"}</Fig>
-              </span>
-            ) : null}
-            {isNum(t.complexity_1_5) ? (
-              <span aria-label={"complexity " + t.complexity_1_5 + " of 5"} className="ml-auto flex items-center gap-1">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <span
-                    key={i}
-                    aria-hidden
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{ background: i <= t.complexity_1_5 ? "var(--c-ink2)" : "var(--c-soft2)" }}
-                  />
-                ))}
-              </span>
-            ) : null}
-          </div>
-        ))}
-      </div>
+      <SetupTiers tiers={tiers} />
     </Box>
   );
 }
 
+/**
+ * What premises cost , the bare figure list is out (founder, second batch:
+ * "this is just a list of numbers, so it doesn't feel well at all"). The
+ * three rent tiers draw on ONE linear scale, the settled tick form: hairline
+ * baseline, 12px ticks, each label UNDER its own mark, outermost labels
+ * pinned inside the box, all ink (nothing here is the answer, so no accent).
+ * The electricity rate keeps its own quiet line beneath.
+ */
 function Premises({ premises }: { premises: any }) {
   const prime = premises?.rent_prime_usd_sqm_year;
   const mid = premises?.rent_mid_usd_sqm_year;
   const edge = premises?.rent_edge_usd_sqm_year;
   const kwh = premises?.electricity_usd_per_kwh;
-  const hasRent = isNum(prime) || isNum(mid) || isNum(edge);
-  if (!hasRent && !isNum(kwh)) return null;
-  const tagged = typeof premises?._meta?.confidence === "string" && premises._meta.confidence !== "measured";
   const rents: Array<[string, number]> = [];
-  if (isNum(prime)) rents.push(["Prime street", prime]);
-  if (isNum(mid)) rents.push(["Ordinary street", mid]);
   if (isNum(edge)) rents.push(["Edge of town", edge]);
+  if (isNum(mid)) rents.push(["Ordinary street", mid]);
+  if (isNum(prime)) rents.push(["Prime street", prime]);
+  if (rents.length === 0 && !isNum(kwh)) return null;
+  const tagged = typeof premises?._meta?.confidence === "string" && premises._meta.confidence !== "measured";
+  /* LOG SCALE, and the photograph is why: prime street rents run near eight
+     times edge-of-town, so a linear scale crushed the two lower marks into
+     one unreadable overlap ("Edge oOtdiuary street", photographed
+     2026-08-30). The log form spreads a multiplicative spread evenly; the
+     city income card made the same call for the same reason. */
+  const lo = rents.length > 0 ? Math.min(...rents.map(([, v]) => v)) * 0.9 : 1;
+  const hi = rents.length > 0 ? Math.max(...rents.map(([, v]) => v)) * 1.1 : 2;
+  const span = Math.max(0.01, Math.log(hi) - Math.log(Math.max(1, lo)));
+  const X = (v: number) => ((Math.log(Math.max(1, v)) - Math.log(Math.max(1, lo))) / span) * 100;
   return (
     <Box id="premises">
       <Rail icon="commercial-rent" kicker="What premises cost to run" sample={tagged} />
-      {rents.length > 0 ? (
+      {rents.length >= 2 ? (
         <>
-          <div className="flex flex-wrap gap-x-8 gap-y-3">
+          <div className="relative mt-1 h-[24px]" role="img" aria-label={"Commercial rent for a square metre, a year: " + rents.map(([l, v]) => l + " " + usd(v)).join(", ")}>
+            <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
             {rents.map(([label, v]) => (
-              <div key={label} className="min-w-[7rem]">
-                <Fig className="block text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{usd(v)}</Fig>
-                <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div>
-              </div>
+              <span key={label} className="absolute bottom-0 top-0" style={{ left: X(v) + "%" }}>
+                <span className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2" style={{ borderLeftWidth: 1, borderLeftStyle: "solid", borderLeftColor: "var(--c-line-strong)" }} />
+              </span>
             ))}
           </div>
-          <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Commercial rent for a square metre, a year.</div>
+          <div className="relative mt-1 h-[42px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
+            {rents.map(([label, v]) => {
+              const x = X(v);
+              const pin = x > 82 ? "right" : x < 14 ? "left" : "centre";
+              const style: React.CSSProperties =
+                pin === "right" ? { right: 0 } : pin === "left" ? { left: 0 } : { left: x + "%", transform: "translateX(-50%)" };
+              return (
+                <span key={label} className={"absolute top-0 flex flex-col whitespace-nowrap " + (pin === "right" ? "items-end" : "")} style={style}>
+                  <span>{label}</span>
+                  <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(v)}</Fig>
+                </span>
+              );
+            })}
+          </div>
+          <div className="mt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">Commercial rent for a square metre, a year.</div>
         </>
+      ) : rents.length === 1 ? (
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{usd(rents[0][1])}</Fig>
+          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{rents[0][0].toLowerCase()}, a square metre a year</span>
+        </div>
       ) : null}
       {isNum(kwh) ? (
         <div className={"flex flex-wrap items-baseline gap-x-2 " + (rents.length > 0 ? "mt-3 border-t border-[var(--c-border)] pt-3" : "")}>
@@ -788,8 +739,12 @@ function Hiring({ hiring }: { hiring: any }) {
   const tagged = typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured";
   const max = Math.max(isNum(floor) ? floor : 0, isNum(typical) ? typical : 0) * 1.05;
   const bars: Array<[string, number, string]> = [];
-  if (isNum(floor)) bars.push(["Wage floor", floor, "var(--chart-4)"]);
-  if (isNum(typical)) bars.push(["Typical pay", typical, "var(--c-ink2)"]);
+  /* Terracotta, the founder's second-batch order ("there is a problem that
+     you are removing the terracotta color from the bars"): the typical bar in
+     the full accent fill, the floor in the lighter border tone so the two
+     stay tellable apart at a glance. Accent register 5. */
+  if (isNum(floor)) bars.push(["Wage floor", floor, "var(--terra-border)"]);
+  if (isNum(typical)) bars.push(["Typical pay", typical, "var(--terra)"]);
   const addPct = hiring?.payroll_only_multiplier != null && isNum(hiring?.employer_payroll_pct)
     ? hiring.employer_payroll_pct
     : undefined;
@@ -885,20 +840,17 @@ export function SpineCountryBody({ data }: { data?: any }) {
     <>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         <Masthead name={name} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} hero={d.hero} />
-        <Cities cities={d.cities} />
+        <Cities cities={d.cities} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
         <Peers peers={d.peers} />
-        {(() => {
-          const customersShown = isNum(d.customers?.median_usd);
-          const lensNode = <Lenses lenses={d.lenses} hero={d.hero} customersShown={customersShown} />;
-          if (!customersShown) return <Band>{lensNode}</Band>;
-          return (
-            <Band split="2-3">
-              <Customers customers={d.customers} />
-              {lensNode}
-            </Band>
-          );
-        })()}
-        <Money money={d.money} />
+        {/* The 2-1 band the second batch made: the money grid takes the wide
+            side, the customers card the narrow; the lens grid that stood here
+            is retired, every tile by his own words. */}
+        {Array.isArray(d.money?.list) || isNum(d.customers?.median_usd) ? (
+          <Band split="2-1">
+            <Money money={d.money} />
+            <Customers customers={d.customers} />
+          </Band>
+        ) : null}
         <Character character={d.character} />
         {d.setup?.tiers?.length || d.premises ? (
           <Band split="3-2">
