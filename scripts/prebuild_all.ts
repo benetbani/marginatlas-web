@@ -377,6 +377,12 @@ const GATES: Gate[] = [
   { name: "comparative-voice", script: "scripts/verify_comparative_voice.ts" },
   { name: "turnover-bands", script: "scripts/verify_turnover_bands.ts" },
   { name: "wage-source", script: "scripts/verify_wage_source_consistency.ts" },
+  { name: "wage-deciles", script: "scripts/verify_wage_deciles.ts" },
+  /* The expandable legal-form table actually expands: jsdom mounts the real
+     client component and clicks it, because the static final-pages render is
+     unhydrated and cannot tell a working expander from a dead one (its own
+     header states the blind spot). Founder order 2026-08-30, gated same day. */
+  { name: "setup-expand", script: "tests/spine/setup_tiers_expand.test.ts" },
   /* The check that would have caught a three-month outage. The service-role key
      was rotated and Vercel kept the old value; every supabaseAdmin read failed,
      every page fell back to synthesised figures, and nothing said a word.
