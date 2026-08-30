@@ -9,8 +9,9 @@
  * a different KIND of thing shows the AFTER alone, with one plain line naming
  * what it replaced , never an unlike photograph pretending to be its past.
  *
- * Verdict controls: APPROVE / REJECT with optional reason per section, one
- * open QUESTION row (the lens world-median anchor), Copy button emitting
+ * Verdict controls: APPROVE / REJECT with optional reason per section (the
+ * lens question is gone with the lens grid, answered by his own words), Copy
+ * button emitting
  *   country-new:<id>=A;country-new:<id>=R(reason);...
  *
  * Output: E:/atlas/design/COUNTRY-REVIEW-<date>.html, fully offline.
@@ -21,92 +22,87 @@ const CROPS = "E:/atlas/design/critique/crops";
 const OUT = "E:/atlas/design";
 const date = new Date().toISOString().slice(0, 10);
 
-/* after: crop indices on country-gb-new (today's dossier: 0 take, 1 cities,
-   2 peers, 3 customers, 4 lenses, 5 money, 6+7 character, 8 setup,
-   9 premises, 10 hiring, 11 locals, 12 close). */
+/* after: crop indices on country-gb-new (the 2026-08-30 second-batch dossier:
+   0 take, 1 cities, 2 peers, 3 money, 4 customers, 5+6 character, 7 setup,
+   8 premises, 9 hiring, 10 locals, 11 close). The lens grid is gone from the
+   page and from this sheet: every tile fell by his own words. */
 const SECTIONS = [
   {
     id: "take",
-    title: "The masthead , total effective tax burden",
+    title: "The masthead , the details on the right, as ordered",
     pair: true, before: "country-gb-3",
     beforeNote: "the same opening, as it stands live",
     after: [0],
-    note: "Applied from your 2026-08-30 verdicts: the answer is what a small business effectively pays (20%, its regime named), not 'the government take'; the flag is back and the name appears once; no world-median line; the register/sales-tax facts are one quiet sentence, not cards. The honest price: the small-business rate is a conservative modeled read, so the page now carries the SAMPLE tag here.",
+    note: "Your second batch applied: the support details sit on the right in a two-column grid (four cells today; the grid holds eight, and the reserved slots take the upkeep and pay-spread figures when their research lands). The answer and its regime stay left.",
   },
   {
     id: "cities",
-    title: "The cities, as cards",
+    title: "The cities, two per row on a phone",
     pair: true, before: "country-gb-12",
     beforeNote: "the same section live today (the doubled card rows)",
     after: [1],
-    note: "The map is removed, per your verdict. Five cards a row; a country with more gets click arrows and a count; 'Every covered city' leads to the full list. The UK holds four covered cities, so no arrows render here.",
+    note: "Two cards per row on phones now. 'Every covered city' drops the reader at this country's own cities on the full list , the list page gained an anchor per country.",
   },
   {
     id: "peers",
     title: "Against the peers",
     pair: true, before: "country-gb-10",
-    beforeNote: "the same table live today (minuscule flags)",
+    beforeNote: "the same table live today",
     after: [2],
-    note: "One basis across the whole table now: the effective small-business rate per country, the same procedure as the masthead answer. On a phone the table no longer slides sideways; each country becomes its own card. Both forms are photographed above.",
-  },
-  {
-    id: "customers",
-    title: "What customers earn + the lens tiles",
-    pair: false,
-    replaces: "This stands where the hexagon radar stood. No before photograph: the radar and these tiles are different kinds of thing, and pairing unlike sections is what you rejected on the last sheet.",
-    after: [3, 4],
-    note: "The pay spread is dark for now: you asked for the top and bottom ten percent, the data today holds only quarter marks, and relabelling those would be a lie. The typical figure stands alone until the ten-percent figures are researched in (that task is queued).",
+    note: "Untouched this round: you called it one of the best versions you have seen, and that verdict is on the record.",
   },
   {
     id: "money",
-    title: "What an owner keeps, trade by trade",
+    title: "What an owner keeps + what customers earn (one band)",
     pair: false,
-    replaces: "This stands where the modeled 0-100 'ease' scores stood. No before photograph: scores and kept-money rows are different kinds of thing.",
-    after: [5],
-    note: "Three trades (gym, grocery, auto repair) stay withheld because their figures fail the six-times-typical-pay screen; the page says so in one line. The upstream fix runs in your other session; the rows return when the figures hold.",
+    replaces: "The kept-money grid and the customers card now share one band; the lens tiles that stood beside customers are gone , lending, the world-median multiple, and the currency tile, each removed by your own words.",
+    after: [3, 4],
+    note: "The repeated words are out: 'kept a year' and 'to open' are said once as column headers. The customers card now draws the real bottom and top ten percent , researched in the session you started from the task chip , with the typical in the accent between them; where a country's deciles are not yet researched, the typical stands alone. The top one percent is not added: no credible per-country source is at hand, and a fourth mark would re-crowd the three-mark form your ten-percent convention settled.",
   },
   {
     id: "character",
-    title: "The character, the two ratified tables",
+    title: "The character, rebuilt to your six orders",
     pair: true, before: "country-gb-14",
     beforeNote: "the same two tables live today",
-    after: [6, 7],
+    after: [5, 6],
+    note: "Trait names lead every row again; the pole words explain their own category (no more Slow/Efficient); the favourable end is the right end on every row; the state's dots are ink and the people's terracotta; the state's icon is an institution; foreign-owned firms sits under the state table and born abroad under the people table.",
   },
   {
     id: "setup",
-    title: "Registering, by legal form + what premises cost",
+    title: "Registering, by legal form , now expandable",
     pair: true, before: "country-gb-6",
-    beforeNote: "the same question live today (the eleven-hundred-pixel one-step stepper)",
-    after: [8, 9],
+    beforeNote: "the same question live today (the one-step stepper)",
+    after: [7],
+    note: "Each row opens on a click to explain what that legal form IS, in plain words that are true in every country. The photograph above shows the closed state: these pages render as static captures with no working click, so the opening is proven by a machine test that mounts the real component, clicks it, and watches the panel open and close , and you will see it live on the preview link. The terracotta complexity dots you liked are back.",
+  },
+  {
+    id: "premises",
+    title: "What premises cost, drawn",
+    pair: false,
+    replaces: "This stands where this morning's bare figure list stood ('just a list of numbers'). The three rents now draw on one scale.",
+    after: [8],
+    note: "The scale is logarithmic because prime street runs near eight times edge of town; the linear first draft collided its two lower labels, which the photograph caught before you had to.",
   },
   {
     id: "hiring",
     title: "What staff cost",
     pair: false,
-    replaces: "This stands where 'the ground under you' (the SHAKY-FIRM card) stood. No before photograph: a verdict card and a staff-cost table are different kinds of thing.",
-    after: [10],
+    replaces: "The same bars as this morning, with the terracotta returned to them.",
+    after: [9],
   },
   {
     id: "locals",
     title: "What locals know, structured",
     pair: true, before: "country-gb-15",
     beforeNote: "the same section live today (the block of text)",
-    after: [11],
+    after: [10],
   },
   {
     id: "close",
     title: "Where to next",
     pair: true, before: "country-gb-19",
     beforeNote: "the same hand-off live today",
-    after: [12],
-  },
-  {
-    id: "lens-world-anchor",
-    title: "AN OPEN QUESTION , the one remaining world-median figure",
-    pair: false,
-    question: true,
-    after: [4],
-    note: "You removed the masthead's world-median line ('a little bit disgusting'). One lens tile still reads x4.27 the world-median wage , customer purchasing power has no absolute form without some anchor. APPROVE keeps that tile; REJECT removes it (the tile disappears rather than being restated another way, and the section keeps its other tiles).",
+    after: [11],
   },
 ];
 
@@ -189,12 +185,14 @@ const html = `<!doctype html>
 </style></head><body>
 <header>
   <h1>The United Kingdom page, rebuilt , for your verdict</h1>
-  <p>Every one of your 2026-08-30 corrections is applied and photographed below.
-  Where the new section is the SAME reading as the live one, you see before and
-  after; where it replaced a different kind of thing, you see only what stands
-  now, with one line naming what it replaced , no more unlike pairings. Mark
-  each section, press COPY THE VERDICTS, paste me the string. Nothing goes live
-  from this sheet.</p>
+  <p>Both of your 2026-08-30 batches are applied and photographed below , the
+  morning's rulings and the evening's, every section you named. Same-reading
+  sections show before and after; a replacement of a different kind shows only
+  what stands now, with one line naming what it replaced. Your message cut off
+  after the staff-cost bars, so if anything was coming about the locals or the
+  close, it never reached me , both stand for your verdict below. Mark each
+  section, press COPY THE VERDICTS, paste me the string. Nothing goes live from
+  this sheet.</p>
 </header>
 ${cards}
 <section class="steps">
