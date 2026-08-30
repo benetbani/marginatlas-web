@@ -642,7 +642,13 @@ export function SampleTag({ note }: { note?: string }) {
  * already passes its icon id, so this is a kit-only restore. */
 export function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
   return (
-    <div className="mb-3 flex items-center gap-2">
+    // THE SLOT GAP IS THE 8 RUNG, NOT 12. The spacing ladder runs 48 > 32 >
+    // card padding > 8, strictly descending, and 12 sits on no rung of it; at
+    // mb-3 this margin was the single most common off-ladder gap on the city
+    // page, measured on all nine top sections. The city blueprint's own
+    // written fix: take Head and Rail bottom margin to the slot rung 8.
+    // City finding #4 (2026-08-30), S1.
+    <div className="mb-2 flex items-center gap-2">
       {icon ? <Ico id={icon} /> : null}
       {/* the other section opener, same level, same reasoning as Rail above */}
       <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{children}</h3>
@@ -859,7 +865,9 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample }: { icon?: A
   void tone;
   void verdict;
   return (
-    <div className="mb-3">
+    // mb-2, the slot rung: same written kit fix as Head above (the spacing
+    // ladder holds no 12). City finding #4 (2026-08-30), S1.
+    <div className="mb-2">
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} /> : null}
         {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
