@@ -892,7 +892,17 @@ export function Stat({ value, label, sub, size = "support", accent = false }: { 
   return (
     <div>
       {label ? <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div> : null}
-      <div className={`fig leading-none ${focal ? "text-[38px] md:text-[42px]" : "text-[length:var(--t-body)]"}`} style={{ color: accent ? "var(--terra-text)" : "var(--c-ink)" }}>{value}</div>
+      {/* THE FOCAL'S TWO SIZES ARE OFF THE LADDER BY DECLARATION, NOT BY DRIFT.
+          38 at phone and 42 at md sit between the 30 focal rung and the 48
+          answer rung; the city blueprint's constants block records them as fact
+          (b) and round 2026-08-27 recorded D4 good on every node that carries
+          them, so they are the settled form, reproduced exactly. The trade
+          masthead's clamp is the precedent: a responsive answer is never
+          exactly one ladder size, and the custom marker is the escape hatch
+          the ladder law provides for exactly this. The marker rides only the
+          focal branch; the support branch sits on the body rung and needs no
+          opt-out. City finding #3 (2026-08-30), T1. */}
+      <div data-typography={focal ? "custom" : undefined} className={`fig leading-none ${focal ? "text-[38px] md:text-[42px]" : "text-[length:var(--t-body)]"}`} style={{ color: accent ? "var(--terra-text)" : "var(--c-ink)" }}>{value}</div>
       {sub ? <div className={`text-[var(--c-muted)] ${focal ? "mt-1.5 text-[length:var(--t-body)]" : "mt-0.5 text-[length:var(--t-micro)]"}`}>{sub}</div> : null}
     </div>
   );
