@@ -27,8 +27,20 @@ export type CountryEconomicProfile = {
 
   // ===== Labor cost structure =====
   median_wage_full_time_usd: number;
+  /* The quartile pair is NOT measured: recompute_wages_from_median.ts writes it
+     as median x 0.65 and median x 1.55, one fixed multiplier for all 197
+     countries. It survives only because the cost engine's wage blend reads it.
+     It must never reach a reader, and notation N9 bans the words that would
+     describe it. */
   wage_p25_usd: number;
   wage_p75_usd: number;
+  /* The decile pair IS measured, per country, from a published earnings
+     distribution: data/economics/wage_deciles_v1.json holds the research and
+     apply_wage_deciles.ts pushes it here. Optional because a country only
+     carries deciles once a real source has been read for it; the country page
+     draws its spread from these two and shows the typical alone without them. */
+  wage_p10_usd?: number;
+  wage_p90_usd?: number;
   minimum_wage_annual_usd: number;
   employer_social_pct: number;
   payroll_tax_other_pct: number;

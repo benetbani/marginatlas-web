@@ -92,7 +92,9 @@
       "urbanization_pct": 83,
       "median_age": 39,
       "labor_force_participation_pct": 62.5,
-      "gini": 41
+      "gini": 41,
+      "wage_p10_usd": 30153,
+      "wage_p90_usd": 141708
     },
     "CN": {
       "iso2": "CN",
@@ -184,7 +186,9 @@
       "urbanization_pct": 77,
       "median_age": 46,
       "labor_force_participation_pct": 61.5,
-      "gini": 31
+      "gini": 31,
+      "wage_p10_usd": 30002,
+      "wage_p90_usd": 87084
     },
     "JP": {
       "iso2": "JP",
@@ -230,7 +234,9 @@
       "urbanization_pct": 92,
       "median_age": 49,
       "labor_force_participation_pct": 62.3,
-      "gini": 33
+      "gini": 33,
+      "wage_p10_usd": 23514,
+      "wage_p90_usd": 61944
     },
     "IN": {
       "iso2": "IN",
@@ -276,7 +282,9 @@
       "urbanization_pct": 36,
       "median_age": 29,
       "labor_force_participation_pct": 50,
-      "gini": 33
+      "gini": 33,
+      "wage_p10_usd": 2234,
+      "wage_p90_usd": 13608
     },
     "GB": {
       "iso2": "GB",
@@ -322,7 +330,9 @@
       "urbanization_pct": 84,
       "median_age": 41,
       "labor_force_participation_pct": 63.5,
-      "gini": 35
+      "gini": 35,
+      "wage_p10_usd": 24776,
+      "wage_p90_usd": 73728
     },
     "FR": {
       "iso2": "FR",
@@ -368,7 +378,9 @@
       "urbanization_pct": 82,
       "median_age": 42,
       "labor_force_participation_pct": 56,
-      "gini": 32
+      "gini": 32,
+      "wage_p10_usd": 28573,
+      "wage_p90_usd": 80640
     },
     "IT": {
       "iso2": "IT",
@@ -414,7 +426,9 @@
       "urbanization_pct": 72,
       "median_age": 47,
       "labor_force_participation_pct": 50.5,
-      "gini": 35
+      "gini": 35,
+      "wage_p10_usd": 25845,
+      "wage_p90_usd": 61488
     },
     "BR": {
       "iso2": "BR",
@@ -460,7 +474,9 @@
       "urbanization_pct": 88,
       "median_age": 34,
       "labor_force_participation_pct": 62,
-      "gini": 52
+      "gini": 52,
+      "wage_p10_usd": 6338,
+      "wage_p90_usd": 27000
     },
     "CA": {
       "iso2": "CA",
@@ -506,7 +522,9 @@
       "urbanization_pct": 82,
       "median_age": 41,
       "labor_force_participation_pct": 65.5,
-      "gini": 33
+      "gini": 33,
+      "wage_p10_usd": 30170,
+      "wage_p90_usd": 100440
     },
     "RU": {
       "iso2": "RU",
@@ -598,7 +616,9 @@
       "urbanization_pct": 81,
       "median_age": 30,
       "labor_force_participation_pct": 60.5,
-      "gini": 45
+      "gini": 45,
+      "wage_p10_usd": 8323,
+      "wage_p90_usd": 26928
     },
     "AU": {
       "iso2": "AU",
@@ -644,7 +664,9 @@
       "urbanization_pct": 87,
       "median_age": 38,
       "labor_force_participation_pct": 67,
-      "gini": 34
+      "gini": 34,
+      "wage_p10_usd": 37241,
+      "wage_p90_usd": 126360
     },
     "KR": {
       "iso2": "KR",
@@ -690,7 +712,9 @@
       "urbanization_pct": 81,
       "median_age": 44,
       "labor_force_participation_pct": 63.5,
-      "gini": 31
+      "gini": 31,
+      "wage_p10_usd": 23558,
+      "wage_p90_usd": 85248
     },
     "ES": {
       "iso2": "ES",
@@ -736,7 +760,9 @@
       "urbanization_pct": 82,
       "median_age": 44,
       "labor_force_participation_pct": 59,
-      "gini": 34
+      "gini": 34,
+      "wage_p10_usd": 23414,
+      "wage_p90_usd": 55584
     },
     "ID": {
       "iso2": "ID",
@@ -828,7 +854,9 @@
       "urbanization_pct": 77,
       "median_age": 33,
       "labor_force_participation_pct": 56,
-      "gini": 42
+      "gini": 42,
+      "wage_p10_usd": 7605,
+      "wage_p90_usd": 25488
     },
     "NL": {
       "iso2": "NL",
@@ -874,7 +902,9 @@
       "urbanization_pct": 93,
       "median_age": 43,
       "labor_force_participation_pct": 65,
-      "gini": 28
+      "gini": 28,
+      "wage_p10_usd": 34055,
+      "wage_p90_usd": 86184
     },
     "SA": {
       "iso2": "SA",
@@ -966,7 +996,9 @@
       "urbanization_pct": 74,
       "median_age": 43,
       "labor_force_participation_pct": 68,
-      "gini": 33
+      "gini": 33,
+      "wage_p10_usd": 62403,
+      "wage_p90_usd": 173160
     },
     "TW": {
       "iso2": "TW",
@@ -1058,7 +1090,9 @@
       "urbanization_pct": 60,
       "median_age": 42,
       "labor_force_participation_pct": 58,
-      "gini": 30
+      "gini": 30,
+      "wage_p10_usd": 13491,
+      "wage_p90_usd": 47424
     },
     "AR": {
       "iso2": "AR",
@@ -1104,7 +1138,9 @@
       "urbanization_pct": 92,
       "median_age": 32,
       "labor_force_participation_pct": 61.5,
-      "gini": 42
+      "gini": 42,
+      "wage_p10_usd": 3600,
+      "wage_p90_usd": 21600
     },
     "BE": {
       "iso2": "BE",
@@ -1150,7 +1186,9 @@
       "urbanization_pct": 98,
       "median_age": 42,
       "labor_force_participation_pct": 56,
-      "gini": 27
+      "gini": 27,
+      "wage_p10_usd": 29620,
+      "wage_p90_usd": 78624
     },
     "SE": {
       "iso2": "SE",
@@ -1196,7 +1234,9 @@
       "urbanization_pct": 88,
       "median_age": 41,
       "labor_force_participation_pct": 64,
-      "gini": 30
+      "gini": 30,
+      "wage_p10_usd": 35911,
+      "wage_p90_usd": 79212
     },
     "IE": {
       "iso2": "IE",
@@ -1242,7 +1282,9 @@
       "urbanization_pct": 65,
       "median_age": 39,
       "labor_force_participation_pct": 62,
-      "gini": 31
+      "gini": 31,
+      "wage_p10_usd": 37938,
+      "wage_p90_usd": 128184
     },
     "AT": {
       "iso2": "AT",
@@ -1288,7 +1330,9 @@
       "urbanization_pct": 59,
       "median_age": 44,
       "labor_force_participation_pct": 61.5,
-      "gini": 30
+      "gini": 30,
+      "wage_p10_usd": 27976,
+      "wage_p90_usd": 84816
     },
     "NG": {
       "iso2": "NG",
@@ -1380,7 +1424,9 @@
       "urbanization_pct": 93,
       "median_age": 30,
       "labor_force_participation_pct": 64,
-      "gini": 39
+      "gini": 39,
+      "wage_p10_usd": 24641,
+      "wage_p90_usd": 138552
     },
     "NO": {
       "iso2": "NO",
@@ -1426,7 +1472,9 @@
       "urbanization_pct": 83,
       "median_age": 39,
       "labor_force_participation_pct": 64.5,
-      "gini": 27
+      "gini": 27,
+      "wage_p10_usd": 46807,
+      "wage_p90_usd": 108240
     },
     "AE": {
       "iso2": "AE",
@@ -1564,7 +1612,9 @@
       "urbanization_pct": 88,
       "median_age": 42,
       "labor_force_participation_pct": 64,
-      "gini": 28
+      "gini": 28,
+      "wage_p10_usd": 46402,
+      "wage_p90_usd": 121104
     },
     "PH": {
       "iso2": "PH",
@@ -1702,7 +1752,9 @@
       "urbanization_pct": 88,
       "median_age": 36,
       "labor_force_participation_pct": 60,
-      "gini": 44
+      "gini": 44,
+      "wage_p10_usd": 10633,
+      "wage_p90_usd": 45192
     },
     "VN": {
       "iso2": "VN",
@@ -1840,7 +1892,9 @@
       "urbanization_pct": 82,
       "median_age": 31,
       "labor_force_participation_pct": 63,
-      "gini": 51
+      "gini": 51,
+      "wage_p10_usd": 5488,
+      "wage_p90_usd": 25740
     },
     "ZA": {
       "iso2": "ZA",
@@ -1932,7 +1986,9 @@
       "urbanization_pct": 74,
       "median_age": 43,
       "labor_force_participation_pct": 60.5,
-      "gini": 25
+      "gini": 25,
+      "wage_p10_usd": 13256,
+      "wage_p90_usd": 42408
     },
     "PT": {
       "iso2": "PT",
@@ -2024,7 +2080,9 @@
       "urbanization_pct": 73,
       "median_age": 43,
       "labor_force_participation_pct": 60,
-      "gini": 30
+      "gini": 30,
+      "wage_p10_usd": 10909,
+      "wage_p90_usd": 39744
     },
     "RO": {
       "iso2": "RO",
@@ -2070,7 +2128,9 @@
       "urbanization_pct": 55,
       "median_age": 43,
       "labor_force_participation_pct": 56,
-      "gini": 34
+      "gini": 34,
+      "wage_p10_usd": 10182,
+      "wage_p90_usd": 37800
     },
     "TH": {
       "iso2": "TH",
@@ -2162,7 +2222,9 @@
       "urbanization_pct": 79,
       "median_age": 30,
       "labor_force_participation_pct": 73,
-      "gini": 41
+      "gini": 41,
+      "wage_p10_usd": 4243,
+      "wage_p90_usd": 20076
     },
     "HK": {
       "iso2": "HK",
@@ -2254,7 +2316,9 @@
       "urbanization_pct": 87,
       "median_age": 38,
       "labor_force_participation_pct": 70.5,
-      "gini": 32
+      "gini": 32,
+      "wage_p10_usd": 38297,
+      "wage_p90_usd": 97740
     },
     "FI": {
       "iso2": "FI",
@@ -2300,7 +2364,9 @@
       "urbanization_pct": 86,
       "median_age": 43,
       "labor_force_participation_pct": 60,
-      "gini": 27
+      "gini": 27,
+      "wage_p10_usd": 30623,
+      "wage_p90_usd": 74592
     },
     "GR": {
       "iso2": "GR",
@@ -2346,7 +2412,9 @@
       "urbanization_pct": 80,
       "median_age": 45,
       "labor_force_participation_pct": 53,
-      "gini": 33
+      "gini": 33,
+      "wage_p10_usd": 14572,
+      "wage_p90_usd": 40188
     },
     "AF": {
       "iso2": "AF",
@@ -3312,7 +3380,9 @@
       "median_age": 41.1382,
       "labor_force_participation_pct": 59.7235,
       "ease_of_doing_business_index": 62.8,
-      "gini": 39
+      "gini": 39,
+      "wage_p10_usd": 9397,
+      "wage_p90_usd": 35880
     },
     "BF": {
       "iso2": "BF",
@@ -3726,7 +3796,9 @@
       "median_age": 35.5071,
       "labor_force_participation_pct": 60.2047,
       "ease_of_doing_business_index": 68,
-      "gini": 47
+      "gini": 47,
+      "wage_p10_usd": 9583,
+      "wage_p90_usd": 27600
     },
     "CI": {
       "iso2": "CI",
@@ -3818,7 +3890,9 @@
       "median_age": 42.8518,
       "labor_force_participation_pct": 57.238,
       "ease_of_doing_business_index": 64.8,
-      "gini": 29
+      "gini": 29,
+      "wage_p10_usd": 9066,
+      "wage_p90_usd": 41004
     },
     "CU": {
       "iso2": "CU",
@@ -3910,7 +3984,9 @@
       "median_age": 44.3346,
       "labor_force_participation_pct": 57.6905,
       "ease_of_doing_business_index": 68.4,
-      "gini": 32
+      "gini": 32,
+      "wage_p10_usd": 19482,
+      "wage_p90_usd": 71400
     },
     "CD": {
       "iso2": "CD",
@@ -4278,7 +4354,9 @@
       "median_age": 43.5303,
       "labor_force_participation_pct": 59.601,
       "ease_of_doing_business_index": 76.4,
-      "gini": 30
+      "gini": 30,
+      "wage_p10_usd": 14082,
+      "wage_p90_usd": 51612
     },
     "SZ": {
       "iso2": "SZ",
@@ -4968,7 +5046,9 @@
       "median_age": 41.0437,
       "labor_force_participation_pct": 64.4489,
       "ease_of_doing_business_index": 74.8,
-      "gini": 26
+      "gini": 26,
+      "wage_p10_usd": 43487,
+      "wage_p90_usd": 106272
     },
     "IR": {
       "iso2": "IR",
@@ -5520,7 +5600,9 @@
       "median_age": 44.9842,
       "labor_force_participation_pct": 53.0445,
       "ease_of_doing_business_index": 70,
-      "gini": 34
+      "gini": 34,
+      "wage_p10_usd": 9863,
+      "wage_p90_usd": 44280
     },
     "LB": {
       "iso2": "LB",
@@ -5796,7 +5878,9 @@
       "median_age": 45.8663,
       "labor_force_participation_pct": 59.3534,
       "ease_of_doing_business_index": 71.2,
-      "gini": 36
+      "gini": 36,
+      "wage_p10_usd": 15528,
+      "wage_p90_usd": 50160
     },
     "LU": {
       "iso2": "LU",
@@ -5842,7 +5926,9 @@
       "median_age": 40.4193,
       "labor_force_participation_pct": 64.7484,
       "ease_of_doing_business_index": 78.4,
-      "gini": 35
+      "gini": 35,
+      "wage_p10_usd": 46153,
+      "wage_p90_usd": 166920
     },
     "MO": {
       "iso2": "MO",
@@ -6118,7 +6204,9 @@
       "median_age": 44.8225,
       "labor_force_participation_pct": 56.469,
       "ease_of_doing_business_index": 66.4,
-      "gini": 32
+      "gini": 32,
+      "wage_p10_usd": 13538,
+      "wage_p90_usd": 45408
     },
     "MH": {
       "iso2": "MH",
@@ -7866,7 +7954,9 @@
       "median_age": 44.0873,
       "labor_force_participation_pct": 56.1917,
       "ease_of_doing_business_index": 65.6,
-      "gini": 24
+      "gini": 24,
+      "wage_p10_usd": 12216,
+      "wage_p90_usd": 38352
     },
     "SI": {
       "iso2": "SI",
@@ -7912,7 +8002,9 @@
       "median_age": 43.9717,
       "labor_force_participation_pct": 58.9506,
       "ease_of_doing_business_index": 68.4,
-      "gini": 24
+      "gini": 24,
+      "wage_p10_usd": 18461,
+      "wage_p90_usd": 56160
     },
     "SB": {
       "iso2": "SB",
