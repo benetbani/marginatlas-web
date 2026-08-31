@@ -2034,7 +2034,9 @@
       "urbanization_pct": 67,
       "median_age": 47,
       "labor_force_participation_pct": 59,
-      "gini": 33
+      "gini": 33,
+      "wage_p10_usd": 15723,
+      "wage_p90_usd": 52801
     },
     "HU": {
       "iso2": "HU",

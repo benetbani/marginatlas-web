@@ -453,11 +453,11 @@ function Customers({ customers }: { customers: any }) {
      never half-drawn against the card's own boundary. */
   const lo = p10 * 0.9, hi = p90 * 1.1, span = Math.max(1, hi - lo);
   const X = (v: number) => ((v - lo) / span) * 100;
-  const marks: Array<[string, number, boolean]> = [
-    ["Bottom ten percent", p10, false],
-    ["Typical", med, true],
-    ["Top ten percent", p90, false],
-  ];
+  /* An end block sits flush to the card edge rather than centred on a mark that
+     is already near it, so nothing is ever clipped. The round-3 thresholds. */
+  const place = (x: number): React.CSSProperties =>
+    x > 82 ? { right: 0 } : x < 14 ? { left: 0 } : { left: x + "%", transform: "translateX(-50%)" };
+  const xMed = X(med);
   return (
     <Box id="customers">
       {/* The range glyph, not the shopping bag: at sixteen pixels the bag reads
@@ -465,14 +465,32 @@ function Customers({ customers }: { customers: any }) {
           exactly what the range glyph depicts, a low-to-high band with the
           typical point marked. */}
       <Rail icon="spread" kicker="What customers earn" sample={tagged} />
+      {/* THE TYPICAL RIDES ABOVE ITS OWN MARK, and the reason is measured, not
+          preferred. Held under the track with the other two, its block overlaps
+          "Bottom ten percent" at every width the card is ever laid out at:
+          measured overlaps of 17px at 1536, 1280 and 768, 22px at 360, 6px at
+          430, and 0px clearance at 900. Pay leans right, so the typical mark
+          sits around 27 percent of the span while the bottom label is anchored
+          at the left edge, and no wrapping or width cap closes a gap that is
+          negative before it starts. Lifting the answer to its own row above the
+          rule leaves the two ends alone below it, where they are anchored to
+          opposite edges and cannot meet. Every mark still stands over its own
+          tick, the accent register is unchanged (the Typical word, its figure,
+          its 2px tick), and nothing scrolls sideways at any width (law M). */}
+      <div className="relative mt-1 h-[40px]">
+        <span className="absolute bottom-0 flex flex-col whitespace-nowrap" style={place(xMed)}>
+          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--terra-text)]">Typical</span>
+          <Fig className="mt-0.5 text-[length:var(--t-sub)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
+        </span>
+      </div>
       <div
-        className="relative mt-1 h-[24px]"
+        className="relative h-[24px]"
         role="img"
         aria-label={"Full-time pay a year: bottom ten percent " + usd(p10) + ", typical " + usd(med) + ", top ten percent " + usd(p90)}
       >
         <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
-        {marks.map(([label, v, accent]) => (
-          <span key={label} className="absolute bottom-0 top-0" style={{ left: X(v) + "%" }}>
+        {([[p10, false], [med, true], [p90, false]] as Array<[number, boolean]>).map(([v, accent]) => (
+          <span key={v} className="absolute bottom-0 top-0" style={{ left: X(v) + "%" }}>
             <span
               className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2"
               style={{ borderLeftWidth: accent ? 2 : 1, borderLeftStyle: "solid", borderLeftColor: accent ? "var(--terra-text)" : "var(--c-line-strong)" }}
@@ -480,20 +498,18 @@ function Customers({ customers }: { customers: any }) {
           </span>
         ))}
       </div>
-      <div className="relative mt-1 h-[52px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        {marks.map(([label, v, accent]) => {
+      <div className="relative mt-1 h-[36px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        {([["Bottom ten percent", p10], ["Top ten percent", p90]] as Array<[string, number]>).map(([label, v]) => {
           const x = X(v);
-          const edge = x > 82 ? "right" : x < 14 ? "left" : "centre";
-          const style: React.CSSProperties =
-            edge === "right" ? { right: 0 } : edge === "left" ? { left: 0 } : { left: x + "%", transform: "translateX(-50%)" };
+          const atRight = x > 82;
           return (
             <span
               key={label}
-              className={"absolute top-0 flex flex-col " + (accent ? "whitespace-nowrap " : "max-w-[5rem] ") + (edge === "right" ? "items-end text-right" : "")}
-              style={style}
+              className={"absolute top-0 flex flex-col whitespace-nowrap " + (atRight ? "items-end text-right" : "")}
+              style={place(x)}
             >
-              <span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span>
-              <Fig className={"mt-0.5 font-semibold " + (accent ? "text-[length:var(--t-sub)] text-[var(--terra-text)]" : "text-[length:var(--t-body)] text-[var(--c-ink)]")}>{usd(v)}</Fig>
+              <span>{label}</span>
+              <Fig className="mt-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(v)}</Fig>
             </span>
           );
         })}
