@@ -80,7 +80,9 @@ const RESTAURANT = {
   ],
   typicalTicket: 31,
   tipping: { expectation: 78, share: 12 },
-  publicSpace: { annual: 1240, unit: "table" },
+  /* What the licence buys: how many tables it covers and how many more people
+     they seat. Without both, the break-even line is omitted, never estimated. */
+  publicSpace: { annual: 1240, unit: "table", unitsCovered: 4, seatsPerUnit: 4 },
   hire: [
     ["Chef", 22, "Hard", "months to fill"],
     ["Sous chef", 41, "Slow"],
@@ -100,11 +102,29 @@ const RESTAURANT = {
     { risk: "Being sued", safety: 7, driver: "allergen and slip claims" },
     { risk: "Fines and penalties", safety: 5, driver: "hygiene and licensing checks" },
   ],
+  /* What cover costs, so the risk ranking becomes a decision. A trade holding no
+     such figure gets the ranking alone and no implied price. */
+  riskCover: 2100,
+  /* The worth sits on the row and the terms sit behind the click (K6: no figure
+     ever hides). The two bite on different costs, so the composed consequence
+     has to say so rather than reaching for "both". */
   deals: [
-    ["Hospitality rate", "Reduced business rates below a rateable value threshold"],
-    ["Apprentice relief", "No employer contributions on staff under 25 in year one"],
-  ] as Array<[string, React.ReactNode]>,
-  townHall: { cleanliness: 71, scale: "Published perception measure, national" },
+    {
+      name: "Hospitality rate",
+      worth: 2600,
+      cuts: "premises" as const,
+      detail:
+        "Business rates are reduced for premises below a rateable value threshold, applied by the council each April and claimed once rather than annually.",
+    },
+    {
+      name: "Apprentice relief",
+      worth: 1700,
+      cuts: "staff" as const,
+      detail:
+        "No employer contributions on staff under twenty-five in their first year, which is claimed through payroll and stops the month the year ends.",
+    },
+  ],
+  townHall: { cleanliness: 71, scale: "A published perception measure" },
 };
 
 const PLUMBER = {
@@ -135,6 +155,8 @@ const PLUMBER = {
     { item: "Bathroom install", price: 3400 },
   ],
   typicalTicket: 190,
+  /* The fourth slot is a DURATION: it becomes the second half of the merged
+     people card's answer, "Qualified plumber. Months to fill." */
   hire: [
     ["Qualified plumber", 18, "Hard", "months to fill"],
     ["Apprentice", 62, "Steady"],
@@ -146,6 +168,8 @@ const PLUMBER = {
     { risk: "Being sued", safety: 5, driver: "water damage claims" },
     { risk: "Fines and penalties", safety: 8, driver: "certification checks" },
   ],
+  /* The same $1,400 his setup card lists as insurance: one trade, one figure. */
+  riskCover: 1400,
 };
 
 function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "plumber" }) {
@@ -181,11 +205,19 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
     case "tipping":
       return isR ? <Tipping expectation={r.tipping.expectation} typicalShare={r.tipping.share} /> : null;
     case "public-space":
-      return isR ? <PublicSpaceCost annual={r.publicSpace.annual} unit={r.publicSpace.unit} /> : null;
+      return isR ? (
+        <PublicSpaceCost
+          annual={r.publicSpace.annual}
+          unit={r.publicSpace.unit}
+          unitsCovered={r.publicSpace.unitsCovered}
+          seatsPerUnit={r.publicSpace.seatsPerUnit}
+          typicalTicket={r.typicalTicket}
+          localHourlyPay={r.localHourlyPay}
+        />
+      ) : null;
     /* B1 and B2 are ONE card. The profile still lists both ids because a profile
-       says what a trade HAS, not how a page lays it out: the merged card renders
-       under the first and the second draws nothing, so neither the profile nor
-       the section order had to be rewritten to get the merge. */
+       says what a trade has, not how a page lays it out: the merged card renders
+       under the first and the second draws nothing. */
     case "can-you-hire":
       return <PeopleYouNeed roles={isR ? r.hire : p.hire} level={isR ? r.skill : p.skill} />;
     case "skill-level":
@@ -193,7 +225,13 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
     case "who-walks-in":
       return isR ? <WhoWalksIn rows={r.personas} /> : null;
     case "what-goes-wrong":
-      return <WhatGoesWrong rows={isR ? r.risks : p.risks} />;
+      return (
+        <WhatGoesWrong
+          rows={isR ? r.risks : p.risks}
+          insuranceAnnual={isR ? r.riskCover : p.riskCover}
+          localHourlyPay={isR ? r.localHourlyPay : p.localHourlyPay}
+        />
+      );
     case "deals-and-regimes":
       return isR ? <DealsAndRegimes rows={r.deals} /> : null;
     case "town-hall":

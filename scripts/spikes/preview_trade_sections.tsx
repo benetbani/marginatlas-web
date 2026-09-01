@@ -102,7 +102,10 @@ const RESTAURANT = {
      reason, which is what the constitution allows for. */
   typicalTicket: 31,
   tipping: { expectation: 78, share: 12 },
-  publicSpace: { annual: 1240, unit: "table" },
+  /* WHAT THE LICENCE BUYS, which the card never held: how many tables one covers
+     and how many more people they seat. Without both, the break-even line is
+     omitted rather than estimated, which is the constitution's own instruction. */
+  publicSpace: { annual: 1240, unit: "table", unitsCovered: 4, seatsPerUnit: 4 },
   hire: [
     ["Chef", 22, "Hard", "months to fill"],
     ["Sous chef", 41, "Slow"],
@@ -110,8 +113,9 @@ const RESTAURANT = {
     ["Kitchen porter", 88, "Same week"],
   ] as Array<[string, number, string, string?]>,
   skill: 3 as const,
-  /* `kind` is structure, not copy: it says which of the three fixed spectra a row
-     is, so the section composes its own English instead of gluing pole labels. */
+  /* `kind` IS STRUCTURE, NOT COPY. It tells the section which of the three fixed
+     spectra a row is, so the component can compose the portrait and the
+     consequence in its own English rather than gluing pole labels together. */
   personas: [
     { kind: "money" as const, spectrum: "Money", left: "Careful", right: "Comfortable", value: 64 },
     { kind: "residency" as const, spectrum: "Lives here", left: "Passing through", right: "Local", value: 38 },
@@ -122,11 +126,29 @@ const RESTAURANT = {
     { risk: "Being sued", safety: 7, driver: "allergen and slip claims" },
     { risk: "Fines and penalties", safety: 5, driver: "hygiene and licensing checks" },
   ],
+  /* WHAT COVER COSTS, so the risk ranking becomes a decision. Where a trade holds
+     no such figure the ranking stands alone and the card implies no price. */
+  riskCover: 2100,
+  /* THE WORTH IS ON THE ROW, THE TERMS ARE BEHIND THE CLICK (K6: no figure ever
+     hides). The two bite on different costs on purpose, so the composed
+     consequence has to say so rather than reaching for "both". */
   deals: [
-    ["Hospitality rate", "Reduced business rates below a rateable value threshold"],
-    ["Apprentice relief", "No employer contributions on staff under 25 in year one"],
-  ] as Array<[string, React.ReactNode]>,
-  townHall: { cleanliness: 71, scale: "Published perception measure, national" },
+    {
+      name: "Hospitality rate",
+      worth: 2600,
+      cuts: "premises" as const,
+      detail:
+        "Business rates are reduced for premises below a rateable value threshold, applied by the council each April and claimed once rather than annually.",
+    },
+    {
+      name: "Apprentice relief",
+      worth: 1700,
+      cuts: "staff" as const,
+      detail:
+        "No employer contributions on staff under twenty-five in their first year, which is claimed through payroll and stops the month the year ends.",
+    },
+  ],
+  townHall: { cleanliness: 71, scale: "A published perception measure" },
 };
 
 const PLUMBER = {
@@ -160,6 +182,10 @@ const PLUMBER = {
     { item: "Bathroom install", price: 3400 },
   ],
   typicalTicket: 190,
+  /* THE FOURTH SLOT IS A DURATION NOW, not a description. It became the second
+     half of the card's answer ("Qualified plumber. Months to fill."), and
+     "the binding constraint" there would have read as a sentence explaining
+     itself in a circle. */
   hire: [
     ["Qualified plumber", 18, "Hard", "months to fill"],
     ["Apprentice", 62, "Steady"],
@@ -171,6 +197,10 @@ const PLUMBER = {
     { risk: "Being sued", safety: 5, driver: "water damage claims" },
     { risk: "Fines and penalties", safety: 8, driver: "certification checks" },
   ],
+  /* The same $1,400 his setup card lists as insurance, on purpose: one trade, one
+     figure, and a reader who notices it twice should find it agreeing with
+     itself. */
+  riskCover: 1400,
 };
 
 function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "plumber" }) {
@@ -212,11 +242,21 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
     case "tipping":
       return isR ? <Tipping expectation={r.tipping.expectation} typicalShare={r.tipping.share} /> : null;
     case "public-space":
-      return isR ? <PublicSpaceCost annual={r.publicSpace.annual} unit={r.publicSpace.unit} /> : null;
-    /* B1 and B2 are ONE card. The profile still lists both ids because a profile
-       says what a trade HAS, not how a page lays it out: the merged card renders
-       under the first and the second draws nothing, so neither the profile nor
-       the section order had to be rewritten to get the merge. */
+      return isR ? (
+        <PublicSpaceCost
+          annual={r.publicSpace.annual}
+          unit={r.publicSpace.unit}
+          unitsCovered={r.publicSpace.unitsCovered}
+          seatsPerUnit={r.publicSpace.seatsPerUnit}
+          typicalTicket={r.typicalTicket}
+          localHourlyPay={r.localHourlyPay}
+        />
+      ) : null;
+    /* B1 AND B2 ARE ONE CARD. The profile still lists both ids, because a
+       profile describes what a trade HAS rather than how a page lays it out.
+       The merged card renders under the first and the second draws nothing, so
+       neither the profile nor the section order had to be rewritten to get the
+       merge the constitution asks for. */
     case "can-you-hire":
       return <PeopleYouNeed roles={isR ? r.hire : p.hire} level={isR ? r.skill : p.skill} />;
     case "skill-level":
@@ -224,7 +264,13 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
     case "who-walks-in":
       return isR ? <WhoWalksIn rows={r.personas} /> : null;
     case "what-goes-wrong":
-      return <WhatGoesWrong rows={isR ? r.risks : p.risks} />;
+      return (
+        <WhatGoesWrong
+          rows={isR ? r.risks : p.risks}
+          insuranceAnnual={isR ? r.riskCover : p.riskCover}
+          localHourlyPay={isR ? r.localHourlyPay : p.localHourlyPay}
+        />
+      );
     case "deals-and-regimes":
       return isR ? <DealsAndRegimes rows={r.deals} /> : null;
     case "town-hall":
@@ -234,20 +280,49 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
   }
 }
 
+/**
+ * THE BANDS, straight off the constitution's own SPACE line for each section.
+ * This is the fifth test ("does it earn the room it takes") answered
+ * structurally, once, rather than card by card. Measured before any of this
+ * existed: every card was 1072px wide at 1280, which is wider than a reader can
+ * sweep in one go, and the thin ones spent two thirds of it on nothing.
+ *
+ * The ratios are the constitution's own two-thirds/one-third pairings:
+ *   A1 setup (2) beside A2 prices (1)
+ *   B1+B2 the merged people card (2) beside B3 who walks in (1)
+ *   C1 tipping and C2 the pavement, two lean cards, equal halves
+ *   C3 the schemes (2) beside C4 the town hall (1)
+ *   C5 what goes wrong, alone
+ *
+ * TWO PLACES WHERE THE KIT ANSWERS AND NOT THE CONSTITUTION. `Band`'s ratio set
+ * is closed at five, so "one third each" for a PAIR is not expressible: two lean
+ * cards take equal halves, which is the closest honest reading of C1 and C2. And
+ * C5 alone is given a band of its own rather than the full width the
+ * constitution allows it, because Band's lone-child rule re-templates to two
+ * thirds and art direction D1 bans full width for anything carrying a finding.
+ *
+ * `skill-level` IS ABSENT FROM EVERY BAND. It merged into `can-you-hire`, and it
+ * renders nothing on its own, so listing it would leave a hole in a row.
+ */
+const BANDS: Array<{ ids: TradeSectionId[]; split: "2-1" | "1-1" }> = [
+  { ids: ["typical-setup", "what-things-cost"], split: "2-1" },
+  { ids: ["can-you-hire", "who-walks-in"], split: "2-1" },
+  { ids: ["tipping", "public-space"], split: "1-1" },
+  { ids: ["deals-and-regimes", "town-hall"], split: "2-1" },
+  { ids: ["what-goes-wrong"], split: "2-1" },
+];
+
 function Column({ trade, activityId, name }: { trade: "restaurant" | "plumber"; activityId: string; name: string }) {
   const profile = profileFor(activityId);
   /* town-hall is a PLACE fact, so no trade profile lists it; shown here because
      the point of this file is to see all ten at once. */
   const ids: TradeSectionId[] =
     trade === "restaurant" ? [...profile.sections, "deals-and-regimes", "town-hall"] : profile.sections;
-  /* CHAPTER A IS A BAND, NOT TWO STACKED CARDS, and that is the fifth test
-     answered structurally rather than card by card. Measured on the previous
-     render at 1280: every card was 1072px wide, which is wider than a reader can
-     sweep, and the setup card spent two thirds of that width on nothing. The
-     constitution gives A1 two thirds of a band and A2 one third; `2-1` is that
-     ratio. The other eight still stack, because wave 2 bands them.  */
-  const chapterA: TradeSectionId[] = ids.filter((id) => id === "typical-setup" || id === "what-things-cost");
-  const rest = ids.filter((id) => !chapterA.includes(id));
+  const held = new Set(ids);
+  /* A BAND KEEPS ONLY THE SECTIONS THIS TRADE HAS, and a band left with nothing
+     does not draw. That is the whole reason a plumber's chapter C is one card
+     and not a row with a gap in it. */
+  const bands = BANDS.map((b) => ({ ...b, ids: b.ids.filter((id) => held.has(id)) })).filter((b) => b.ids.length > 0);
   return (
     <div style={{ minWidth: 0, flex: "1 1 380px" }}>
       <div style={{ marginBottom: 12 }}>
@@ -258,18 +333,13 @@ function Column({ trade, activityId, name }: { trade: "restaurant" | "plumber"; 
           {ids.length} sections, chosen for this trade and no other
         </div>
       </div>
-      {chapterA.length > 0 ? (
-        <Band split="2-1">
-          {chapterA.map((id) => (
+      {bands.map((b) => (
+        <Band key={b.ids.join("-")} split={b.split}>
+          {b.ids.map((id) => (
             <Rendered key={id} id={id} trade={trade} />
           ))}
         </Band>
-      ) : null}
-      <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 16 }}>
-        {rest.map((id) => (
-          <Rendered key={id} id={id} trade={trade} />
-        ))}
-      </div>
+      ))}
     </div>
   );
 }

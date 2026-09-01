@@ -49,25 +49,33 @@
  * and not of whoever wrote the tenth card.
  *
  * WAVE 1 did chapter A (TypicalSetup, WhatThingsCost) and built the wrapper and
- * the yardstick.
+ * the yardstick. The other eight carried a rail and their evidence and NO answer
+ * and NO consequence, which the constitution's own empty state calls
+ * non-conforming: a section renders when it has its ANSWER field.
  *
- * ============ THE 2026-09-01 REDESIGN, WAVE 2, CHAPTER B ==================
+ * ================= THE 2026-09-01 REDESIGN, WAVE 2 ========================
  *
- * THE PEOPLE. B1 and B2 MERGED INTO ONE CARD: "can you hire" and "how skilled"
- * answer one question, and two cards made the reader assemble the answer
- * themselves. `CanYouHire` and `SkillLevel` survive as thin wrappers over the
- * merged `PeopleYouNeed`, so no call site breaks and neither can render a
- * half-card. B3 gained the composed portrait it was making its reader derive
- * from three unlabelled sliders.
+ * The remaining eight, to the same anatomy. Three things changed shape rather
+ * than gaining a line, and each is written up at its own section below:
  *
- * CHAPTER C IS STILL UNTOUCHED as of this commit. Its five carry a rail and
- * their evidence and NO answer and NO consequence, which is knowingly
- * non-conforming: the constitution's own empty state says a section renders when
- * it has its ANSWER field. Their shape is the honest record of what is missing,
- * not a claim that they are finished.
+ *   B1 + B2 MERGED INTO ONE CARD. "Can you hire" and "how skilled" answer one
+ *   question, and two cards made the reader assemble the answer themselves.
+ *   `CanYouHire` and `SkillLevel` survive as thin wrappers over the merged
+ *   `PeopleYouNeed`, so no call site breaks and neither renders a half-card.
+ *
+ *   C2 PUBLIC SPACE lost the second of its two faults. It was a lone number in a
+ *   card (the founder's named fault class) AND it drew that number at 42, out-
+ *   sizing chapter A's 30 and inverting the page's own hierarchy. It now takes
+ *   the wrapper's focal rung like every other answer, and it carries evidence
+ *   and a break-even.
+ *
+ *   C5 WHAT GOES WRONG moved off Dots and onto the shared EaseScale. Dots draw a
+ *   score with no ends named at all, so a reader could not tell whether four
+ *   filled dots was good news; three risks on one labelled track are comparable
+ *   at a glance, which is what the constitution asks of it.
  */
 import * as React from "react";
-import { Box, Rail, Fig, KV, Stat, Meter, EaseScale, SpectraTable, CatRows, Dots, cap } from "@/components/spine/kit";
+import { Box, Rail, Fig, KV, Meter, EaseScale, SpectraTable, Expand, cap } from "@/components/spine/kit";
 
 /* ------------------------------------------------------------------ */
 /* Shared                                                              */
@@ -233,7 +241,15 @@ const HOURS_DAY = 8;
 const HOURS_WEEK = 40;
 const HOURS_MONTH = 173.33;
 const HOURS_YEAR = 2080;
-const WORD = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+/* TWENTY, NOT TWELVE. The list stopped at twelve, which is all a DURATION ever
+   needs (twelve months, twelve weeks). C2 counts seats, and four tables seating
+   four people each printed "Four tables ... seat 16 more people": one sentence in
+   two number systems, which reads as a bug rather than as a sentence. */
+const WORD = [
+  "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+  "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+  "nineteen", "twenty",
+];
 const wordFor = (n: number) => WORD[n] ?? String(n);
 
 /** A count of some unit, in words. "a day", "a day and a half", "three days". */
@@ -580,8 +596,25 @@ export function WhatThingsCost({
  *
  * UNIVERSALITY, and this section is one of the two most likely to fail it. In
  * much of the world the honest answer is "not expected", and that must render
- * as a real answer rather than as an empty section or a hedge. It does: the
- * marker sits at the left end and the share reads as nothing.
+ * as a real answer rather than as an empty section or a hedge.
+ *
+ * WHAT CHANGED, 2026-09-01, constitution C1. The bar led and the money was
+ * buried beneath it, so the card's biggest element was a custom and its smallest
+ * was the number.
+ *
+ * THE ANSWER is the SHARE. That is the money, so it takes the focal rung and the
+ * accent, and the meter drops to where evidence belongs, underneath it.
+ *
+ * "NOT EXPECTED HERE" IS A REAL ANSWER AND RENDERS AS ONE. The section never
+ * self-omits for a low value and never hedges: it says so in words at the same
+ * size the share would have taken, in ink rather than accent because a custom
+ * that does not exist is not a quantity to point at. This is the branch that
+ * decides whether the section survives rule 21 or patronises half the world.
+ *
+ * THE CONSEQUENCE IS THE FUNCTIONAL HEART, and it is the one thing the old card
+ * never said: tips change the WAGE BILL. They land on staff take-home without
+ * landing on the owner's payroll, which is the only reason an owner needs to
+ * know the custom at all.
  */
 export function Tipping({
   expectation,
@@ -593,14 +626,25 @@ export function Tipping({
   typicalShare: number | null;
 }) {
   if (expectation == null) return null;
+  /* A ZERO IS NOT A MEASUREMENT OF A SHARE, it is the absence of a custom, and
+     "0%" at focal would render absence as a quantity. Both halves have to agree
+     before the card claims a customary share: a share with nobody expecting it
+     is folklore, and an expectation with no share attached has no money in it. */
+  const expected = typicalShare != null && typicalShare > 0 && expectation > 10;
   return (
-    <Section kicker="Tipping" icon="payments">
+    <Section
+      kicker="Tipping"
+      icon="payments"
+      accent={expected}
+      answer={expected ? <Fig>{typicalShare}%</Fig> : "Not expected here."}
+      answerNote={expected ? "The customary share of the bill, on top of it." : undefined}
+      consequence={
+        expected
+          ? `${expectation >= 55 ? "Expected" : "Offered rather than expected"} here, and it goes to the staff, so it lifts their take-home without lifting your wage cost.`
+          : "Wages carry the whole of pay here, so budget the full cost of a shift into the rota."
+      }
+    >
       <Meter value={expectation} left="Not expected" right="Always expected" />
-      {typicalShare != null ? (
-        <div className="mt-3">
-          <Stat value={`${typicalShare}%`} label="Customary share of the bill" />
-        </div>
-      ) : null}
     </Section>
   );
 }
@@ -609,28 +653,105 @@ export function Tipping({
 /* 4. PAYING FOR THE PAVEMENT                                          */
 /* ================================================================== */
 /**
- * FORM: Stat. A lone number may stay a number (rule 26); the corollary that
- * every lone number must become a chart was repealed for being a
- * bar-manufacturing machine.
+ * FORM: KV rows under a focal figure. A lone number may stay a number (rule 26),
+ * and this one was the counter-example the rule needs: it was a number and
+ * NOTHING ELSE, in a card of its own, which is the founder's first named fault
+ * class, big white space.
  *
- * His words: "Taxes for taking public space." A terrace, an A-board, a
- * pavement table. It is one annual figure and a unit, and drawing it as
- * anything would be decoration.
+ * His words: "Taxes for taking public space." A terrace, an A-board, a pavement
+ * table.
+ *
+ * WHAT CHANGED, 2026-09-01, constitution C2. TWO faults, and the second was only
+ * visible in a screenshot beside chapter A. The figure drew through the kit's
+ * Stat at size="focal", which is 38 at phone and 42 at md: the MASTHEAD
+ * treatment, a page's one dominant figure. A pavement licence was therefore
+ * drawing LARGER than the headcount and the typical ticket, so the smallest fact
+ * in the chapter was the biggest thing on the page. It now takes the wrapper's
+ * focal rung, 30, like every other section answer.
+ *
+ * THE EVIDENCE is what the fee BUYS, which the card never said: how many tables
+ * one licence covers, and therefore the total. A per-table fee with no count
+ * beside it cannot be turned into a decision by anyone.
+ *
+ * THE CONSEQUENCE is the break-even, and it is the whole reason to read the
+ * section: what those tables have to earn to pay for themselves. It is composed
+ * from the fields and OMITTED ENTIRELY when the covers figure is absent, never
+ * estimated from a typical table.
+ *
+ * THE YARDSTICK RIDES BOTH MONEY FIGURES, the per-table fee under the answer and
+ * the total in its own row, because "$1,240 a year" is meaningless in Tirana and
+ * "about a week and a half of local pay" is not.
  */
 export function PublicSpaceCost({
   annual,
   unit,
+  unitsCovered,
+  seatsPerUnit,
+  typicalTicket,
+  localHourlyPay,
   currency = "$",
 }: {
   annual: number | null;
   /** What the fee is charged per: a table, a square metre, a frontage metre. */
   unit: string | null;
+  /** How many of them one licence typically covers. Absent kills the consequence. */
+  unitsCovered?: number | null;
+  /** How many more people each one seats. Absent kills the consequence. */
+  seatsPerUnit?: number | null;
+  /** What one customer pays, so the licence can be priced in customers. */
+  typicalTicket?: number | null;
+  localHourlyPay?: number | null;
   currency?: string;
 }) {
   if (annual == null || !unit) return null;
+  const plural = unit.endsWith("s") ? unit : `${unit}s`;
+  const covered = unitsCovered != null && unitsCovered > 0 ? unitsCovered : null;
+  const total = covered != null ? annual * covered : null;
+  const seats = covered != null && seatsPerUnit != null && seatsPerUnit > 0 ? covered * seatsPerUnit : null;
+  /* THE BREAK-EVEN IS COUNTED IN CUSTOMERS A WEEK, because that is the unit an
+     owner already thinks in and a year of licence fees is not. It floors at one:
+     a licence that pays for itself on half a customer a week still needs a whole
+     customer to walk in, and "about zero extra customers a week" is not English. */
+  const perWeek =
+    total != null && typicalTicket != null && typicalTicket > 0
+      ? Math.max(1, Math.round(total / typicalTicket / 52))
+      : null;
+  const consequence =
+    seats != null && total != null && covered != null
+      ? `${cap(wordFor(covered))} ${plural} cost ${money(total, currency)} a year and seat ${wordFor(seats)} more people${
+          perWeek != null
+            ? `, so they pay for themselves at about ${wordFor(perWeek)} extra ${perWeek === 1 ? "customer" : "customers"} a week`
+            : ""
+        }.`
+      : null;
+  const perUnitYard = localPayPhrase(annual, localHourlyPay);
+  const totalYard = localPayUnit(total, localHourlyPay);
+
   return (
-    <Section kicker="Putting tables on the pavement" icon="high-street">
-      <Stat value={money(annual, currency)} label={`A year, per ${unit}`} size="focal" />
+    <Section
+      kicker="Putting tables on the pavement"
+      icon="high-street"
+      accent
+      answer={<Fig>{money(annual, currency)}</Fig>}
+      answerNote={`A year, per ${unit}.${perUnitYard ? ` ${cap(perUnitYard)}.` : ""}`}
+      consequence={consequence}
+    >
+      {covered != null ? (
+        <>
+          <KV k="Covered" v={`${covered} ${plural}`} />
+          <KV
+            k="All of them"
+            v={
+              <>
+                {money(total as number, currency)} a year
+                {totalYard ? (
+                  <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{totalYard} of local pay</span>
+                ) : null}
+              </>
+            }
+          />
+        </>
+      ) : null}
     </Section>
   );
 }
@@ -745,7 +866,8 @@ export function PeopleYouNeed({
           "Chef. Months to fill." at focal and then "Chef / months to fill" again
           as the first row of the scale directly underneath it. The same words
           twice in four centimetres read as a bug, not as emphasis. The answer
-          carries the driver; the scale ranks it. */}
+          carries the driver; the scale ranks it. Same fix, same reason, as the
+          risk card's top row. */}
       {ranked.length > 0 ? (
         <EaseScale
           rows={ranked.map((r, i) => (i === 0 ? [r[0], r[1], r[2]] : r))}
@@ -960,7 +1082,12 @@ export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
 /* 8. WHAT CAN GO WRONG                                                */
 /* ================================================================== */
 /**
- * FORM: Dots, the 0-10 score rows the July country render used.
+ * FORM: EaseScale, the one shared left-right track, and this is a CHANGE of form
+ * with a reason. It was Dots, a 0-10 score row per risk, and Dots name neither
+ * end of their own scale: a reader met four filled dots beside "Break-in" and
+ * could not tell whether that was reassuring or alarming. Three risks on one
+ * labelled track are comparable at a glance, which is exactly what the
+ * constitution asks the evidence here to be.
  *
  * His words: "Also burglary risk, lawsuit risk, penality risk, other typical
  * risks."
@@ -973,7 +1100,18 @@ export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
  * THE SEVERITY MUST BE DERIVED, NOT LITERAL. The chip this replaces read "rare"
  * on all twenty trades in the atlas because it was a hardcoded string. Callers
  * pass a score computed from figures the atlas holds, and a risk with no figure
- * behind it is omitted rather than given a default.
+ * behind it is omitted rather than given a default. The WORD on each marker is
+ * derived from that score here, for the same reason.
+ *
+ * THE ANSWER is the biggest risk NAMED WITH ITS DRIVER, ranked to the top of the
+ * scale beneath it. Its driver is then suppressed on its own row: the answer
+ * directly above already carries it, and printing it twice in one card reads as
+ * a mistake rather than as emphasis.
+ *
+ * THE CONSEQUENCE IS A COST ONLY WHERE A COST EXISTS. With an insurance figure
+ * the ranking becomes a decision; without one the ranking stands alone and the
+ * card implies no price at all, because a made-up premium is the single most
+ * actionable fabrication this section could carry.
  */
 export interface RiskRow {
   /** "Break-in", "Being sued", "Fines and penalties". */
@@ -984,24 +1122,55 @@ export interface RiskRow {
   driver?: string;
 }
 
-export function WhatGoesWrong({ rows }: { rows: RiskRow[] | null }) {
+/** The word on the marker, derived from the score. Never a caller's string. */
+const riskWord = (safety: number) =>
+  safety <= 3 ? "Often" : safety <= 5 ? "Sometimes" : safety <= 7 ? "Occasional" : "Rare";
+
+export function WhatGoesWrong({
+  rows,
+  insuranceAnnual,
+  localHourlyPay,
+  currency = "$",
+}: {
+  rows: RiskRow[] | null;
+  /** What cover against these costs a year. Absent means no cost is implied. */
+  insuranceAnnual?: number | null;
+  localHourlyPay?: number | null;
+  currency?: string;
+}) {
   const held = (rows ?? []).filter((r) => r.safety != null);
   if (held.length === 0) return null;
+  /* WORST FIRST, on a copy of the caller's array. Low is bad on this scale. */
+  const ranked = [...held].sort((a, b) => (a.safety as number) - (b.safety as number));
+  const worst = ranked[0];
+  const yard = localPayPhrase(insuranceAnnual, localHourlyPay);
+  const consequence =
+    insuranceAnnual != null
+      ? `Cover against these runs about ${money(insuranceAnnual, currency)} a year here${yard ? `, ${yard}` : ""}.`
+      : null;
+
   return (
-    <Section kicker="What tends to go wrong" icon="safety">
-      <div className="space-y-2">
-        {held.map((r) => (
-          <div key={r.risk} className="flex items-center justify-between gap-4">
-            <div className="min-w-0">
-              <div className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.risk}</div>
-              {r.driver ? (
-                <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.driver}</div>
-              ) : null}
-            </div>
-            <Dots score={r.safety as number} max={10} />
-          </div>
-        ))}
-      </div>
+    <Section
+      kicker="What tends to go wrong"
+      icon="safety"
+      answer={
+        <>
+          {worst.risk}.
+          {worst.driver ? <span style={{ color: "var(--c-ink2)" }}> {cap(worst.driver)}.</span> : null}
+        </>
+      }
+      answerNote="The one most likely to bite here, and what makes it likely."
+      consequence={consequence}
+    >
+      <EaseScale
+        rows={ranked.map((r, i) => [
+          r.risk,
+          (r.safety as number) * 10,
+          riskWord(r.safety as number),
+          i === 0 ? undefined : r.driver,
+        ])}
+        endLabels={["Bites often", "Rarely bites"]}
+      />
     </Section>
   );
 }
@@ -1010,7 +1179,8 @@ export function WhatGoesWrong({ rows }: { rows: RiskRow[] | null }) {
 /* 9. DEALS AND SPECIAL REGIMES                                        */
 /* ================================================================== */
 /**
- * FORM: CatRows. Key on the left, the detail on the right, hairline between.
+ * FORM: Expand, the founder's own ratified expandable row from the legal-form
+ * table. Name and worth visible collapsed, the explanation behind the click.
  *
  * His words, and the reason this one is worth building: "Government subsidies
  * in social contributions, deals for special sectors, special economic zones or
@@ -1018,24 +1188,104 @@ export function WhatGoesWrong({ rows }: { rows: RiskRow[] | null }) {
  * blah, get a 10% attribution cost under blah blah blah, tiny details that
  * matter."
  *
- * The value is the TINY DETAIL, so the form has to hold prose-length values
- * without turning into a chart. CatRows is the schematic row list the rulebook
- * already sanctions for exactly this (rule 19: schematic content, no invented
- * prose paragraphs).
+ * WHAT CHANGED, 2026-09-01, constitution C3. It was CatRows: a name and a
+ * sentence of prose per row, so the reader had to read two paragraphs to learn
+ * what two schemes were worth. The value here IS the tiny detail, and a tiny
+ * detail only matters if its WORTH is legible without reading the detail.
+ *
+ * K6 HOLDS AND IS THE REASON THE WORTH SITS IN THE SUMMARY. "Never hide a
+ * graphic behind a popup, expand or disclosure; disclosures exist only to move
+ * BULLET TEXT out of the first view." No figure hides here: every worth is on
+ * the collapsed row, and only the words explaining the scheme are behind the
+ * click.
+ *
+ * THE ANSWER is what they are worth together, where every scheme carries a
+ * figure, and THE COUNT where they do not. That branch is not a degraded state:
+ * for a scheme whose worth depends on a payroll nobody here knows, the count is
+ * the only honest headline and the card says why the money is missing.
  *
  * NOTHING RENDERS WITHOUT A SOURCE. A scheme is a legal fact with a name and a
  * rate; inventing one would be the single most damaging fabrication on the
  * site, because a reader might act on it.
  */
+export interface RegimeRow {
+  /** The scheme's own name, as the law calls it. */
+  name: string;
+  /** What it is worth a year to this trade. Null where that is not knowable. */
+  worth: number | null;
+  /** The tiny detail, behind the click. Words only, never a figure of its own. */
+  detail: React.ReactNode;
+  /** Which cost it bites on. Drives the consequence; absent drops the clause. */
+  cuts?: "staff" | "profit" | "premises";
+}
+
+const CUT_NOUN: Record<"staff" | "profit" | "premises", string> = {
+  staff: "staff",
+  profit: "profit",
+  premises: "the premises",
+};
+
 export function DealsAndRegimes({
   rows,
+  currency = "$",
 }: {
-  rows: Array<[string, React.ReactNode]> | null;
+  rows: RegimeRow[] | null;
+  currency?: string;
 }) {
-  if (!rows || rows.length === 0) return null;
+  const held = rows ?? [];
+  if (held.length === 0) return null;
+  const priced = held.filter((r) => r.worth != null);
+  const total = priced.length === held.length ? priced.reduce((a, r) => a + (r.worth as number), 0) : null;
+
+  /* THE CONSEQUENCE SAYS WHAT THEY BITE ON, because two schemes worth the same
+     money are different businesses if one cuts payroll and the other cuts rent.
+     The count leads it only when the ANSWER is not already the count: repeating
+     the answer one line under itself is rule N8's restatement. */
+  const kinds = [...new Set(held.map((r) => r.cuts).filter(Boolean))] as Array<"staff" | "profit" | "premises">;
+  let tail: string | null = null;
+  if (kinds.length === 1) {
+    const only = kinds[0];
+    const subject = held.length === 1 ? "it cuts" : held.length === 2 ? "both cut" : "all of them cut";
+    tail = `${subject} what you pay on ${CUT_NOUN[only]}${only === "profit" ? "" : " rather than on profit"}`;
+  } else if (kinds.length > 1) {
+    tail = `they cut what you pay on ${kinds.map((k) => CUT_NOUN[k]).join(" and on ")}`;
+  }
+  const scheme = held.length === 1 ? "scheme applies" : "schemes apply";
+  const consequence = tail
+    ? total != null
+      ? `${cap(wordFor(held.length))} ${scheme} to this trade here, and ${tail}.`
+      : `${cap(tail)}.`
+    : null;
+
   return (
-    <Section kicker="Schemes you may qualify for" icon="free-zone">
-      <CatRows rows={rows} />
+    <Section
+      kicker="Schemes you may qualify for"
+      icon="free-zone"
+      accent={total != null}
+      answer={total != null ? <Fig>{money(total, currency)}</Fig> : `${cap(wordFor(held.length))} ${held.length === 1 ? "scheme" : "schemes"}.`}
+      answerNote={
+        total != null
+          ? "What they are worth to this trade in a year, together."
+          : "What each is worth depends on a payroll this page does not know, so the count leads and the terms sit behind each row."
+      }
+      consequence={consequence}
+    >
+      <div className="space-y-2">
+        {held.map((r) => (
+          <Expand
+            key={r.name}
+            name="trade-regimes"
+            title={r.name}
+            right={
+              r.worth != null ? (
+                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{money(r.worth, currency)} a year</Fig>
+              ) : null
+            }
+          >
+            {r.detail}
+          </Expand>
+        ))}
+      </div>
     </Section>
   );
 }
@@ -1059,6 +1309,28 @@ export function DealsAndRegimes({
  * condescending in exactly the places rule 21 names. If no such measure exists
  * for a country, this renders NOTHING. That is not a degraded state; for this
  * section it is the correct one.
+ *
+ * WHAT CHANGED, 2026-09-01, constitution C4.
+ *
+ * THE DIRECTION IS NAMED IN WORDS, INSIDE THE ANSWER. A bare 71 on a scale
+ * nobody has named is the exact shape of a number a reader cannot use: high
+ * might be clean or high might be corrupt, and a meter with two end labels a
+ * line below does not settle it fast enough. The answer now says "of 100, high
+ * is clean" in ink2 beside the figure, so the reading and its direction arrive
+ * together and nothing has to be inferred from the track.
+ *
+ * THE SCALE IS NAMED PLAINLY AND NEVER BY AGENCY (the standing rule and its own
+ * gate). "A published perception measure" is what a reader needs; whose measure
+ * it is belongs to the provenance envelope, not to the card.
+ *
+ * THE CONSEQUENCE is what the reading predicts for an owner, which is whether a
+ * permit moves on its own or needs chasing. That is the only thing this number
+ * changes about anybody's week.
+ *
+ * IT CARRIES THE SAMPLE TAG ALWAYS, and it says the substitution in its own
+ * words underneath. This is a NATIONAL measure standing in for a local one, and
+ * a card that quietly let a country's reading pass as its town hall's would be
+ * the honesty failure this whole section is most exposed to.
  */
 export function TownHall({
   cleanliness,
@@ -1070,12 +1342,36 @@ export function TownHall({
   scale?: string;
 }) {
   if (cleanliness == null) return null;
+  const consequence =
+    cleanliness >= 65
+      ? "At this end a permit usually moves on its own, so budget the waiting rather than somebody to do the chasing."
+      : cleanliness >= 40
+        ? "In the middle a permit moves when it is followed up, so somebody has to own it rather than file it."
+        : "At this end assume nothing moves unless it is chased, and budget somebody's week for the chasing.";
   return (
-    <Section kicker="Dealing with the council" icon="corruption">
+    <Section
+      kicker="Dealing with the council"
+      icon="corruption"
+      sample
+      answer={
+        <>
+          {/* THE DIRECTION DOES NOT BREAK IN HALF. Photographed at 375 and in the
+              one-third column at 1280, the answer wrapped as "71 of 100, high is"
+              over "clean", which reads as a sentence that ran out of room. Held
+              together, it breaks after the comma instead and the two halves of
+              the answer land one per line, which is what they are. */}
+          <Fig>{cleanliness}</Fig>{" "}
+          <span style={{ color: "var(--c-ink2)" }}>
+            of 100, <span className="whitespace-nowrap">high is clean</span>
+          </span>
+        </>
+      }
+      consequence={consequence}
+    >
       <Meter value={cleanliness} left="Expect friction" right="Straightforward" />
-      {scale ? (
-        <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{scale}</div>
-      ) : null}
+      <div className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+        {scale ? `${scale}. ` : ""}Measured for the country rather than the town, so it stands in for the local read.
+      </div>
     </Section>
   );
 }
