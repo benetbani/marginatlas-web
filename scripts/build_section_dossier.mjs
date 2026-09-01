@@ -385,6 +385,14 @@ function harvest() {
          rail row every time, because a rail carries a sample tag and a tag is a
          painted element. A label introduces what comes AFTER it, so only
          descendants starting at or below the label's baseline count as its body. */
+      /* THE NODE COUNT IS NOT COMPARABLE ACROSS A TYPE OR SPACING CHANGE, and
+         this line is why. The floor is the label's own BOTTOM EDGE, so anything
+         that moves that edge by a pixel can push a neighbouring element across
+         it and turn a label into a counted block. Measured 2026-09-01: raising
+         --t-micro from 11 to 12 moved the count from 208 to 210 across eight
+         pages with no page gaining any content, and a first reading blamed data
+         drift. If a count moves after a ladder or gap change, compare the TITLE
+         LISTS, not the totals. */
       const carriesBody = (el) => {
         if (!el) return false;
         const floor = l.getBoundingClientRect().bottom - 2;
