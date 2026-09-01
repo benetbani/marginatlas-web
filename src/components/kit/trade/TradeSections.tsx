@@ -59,7 +59,7 @@
  * of what is missing, not a claim that they are finished.
  */
 import * as React from "react";
-import { Box, Rail, KV, Stat, Meter, EaseScale, SpectraTable, CatRows, Dots } from "@/components/spine/kit";
+import { Box, Rail, Fig, KV, Stat, Meter, EaseScale, SpectraTable, CatRows, Dots, cap } from "@/components/spine/kit";
 
 /* ------------------------------------------------------------------ */
 /* Shared                                                              */
@@ -307,26 +307,108 @@ export function localPayPhrase(
  * This is the SHAPE of a business, not its accounts, and a shape is a list. A
  * bar chart of "5 people, 2 trucks" would be comparing a person to a van, which
  * is the "form = meaning" rule broken in one picture (rule 28). A lone number
- * may stay a number (rule 26).
+ * may stay a number (rule 26). All of that still holds and none of it changed.
  *
- * NO ANSWER, NO CONSEQUENCE, YET. This is one of the ten skeletons the shared
- * anatomy above now hosts unchanged. Chapter A of the constitution redesigns it
- * in the very next commit; it is left alone here so the anatomy lands on its own
- * and can be read without a redesign mixed into it.
+ * WHAT CHANGED, 2026-09-01, constitution A1:
+ *
+ * THE ANSWER is the headcount, at focal, and it is its own field rather than the
+ * first of six equal rows. It is what a reader pictures first and the figure
+ * every other fact hangs off; buried in a grid it was doing none of that work.
+ * Ink, not accent: a headcount is the shape of the business, not a price to
+ * point at, and the accent budget in this band belongs to the money card beside
+ * it.
+ *
+ * THE EVIDENCE is regrouped from a flat six into NAMED FAMILIES, because a flat
+ * list of six makes the reader do the sorting. The constitution names the
+ * restaurant's two, the place and the kit; the names are the caller's because a
+ * plumber's two are the round and the kit and a page that printed "THE PLACE:
+ * none" for him would be a shape forced onto a trade (rule 21). Two families is
+ * the shape. Grouping is what turns a list into a shape.
+ *
+ * THE CONSEQUENCE is composed, and it never restates the answer, which is why it
+ * says what those people are FOR rather than counting them again. Each clause
+ * drops out with its field, so a trade holding none of them gets no line rather
+ * than a sentence with a hole in it.
+ *
+ * IT RENDERS ONLY WITH ITS ANSWER, per the constitution's one empty state. Rows
+ * without a headcount used to render, and that card is precisely the shell this
+ * wave exists to stop: a border around facts with nothing leading them.
  */
-export interface TypicalSetupProps {
-  rows: Array<{ label: string; value: string }> | null;
+export interface SetupFamily {
+  /** A quiet micro-caps subhead: "The place", "The kit", "The round". */
+  name: string;
+  rows: Array<{ label: string; value: string }>;
 }
 
-export function TypicalSetup({ rows }: TypicalSetupProps) {
-  if (!rows || rows.length === 0) return null;
+export interface TypicalSetupProps {
+  /** THE ANSWER. Its own field, never a row. */
+  headcount: { low: number; high: number } | null;
+  /** THE EVIDENCE, in named families. */
+  families: SetupFamily[] | null;
+  /** Consequence clauses. Each drops out when absent; none is ever estimated. */
+  covers?: string | null;
+  lease?: string | null;
+  vehicles?: string | null;
+  premises?: string | null;
+  /** THE EXPECTED CHOICE: having seen the shape, they want the cost. */
+  next?: { label: string; href: string };
+  /** The caller owns the anchor, because one document can hold two trades. */
+  anchorId?: string;
+}
+
+export function TypicalSetup({ headcount, families, covers, lease, vehicles, premises, next, anchorId }: TypicalSetupProps) {
+  if (!headcount) return null;
+  const held = (families ?? []).filter((f) => f.rows.length > 0);
+  const one = headcount.low === headcount.high;
+  const people = headcount.high === 1 ? "person" : "people";
+
+  /* THE SENTENCE IS ASSEMBLED, NOT WRITTEN. One verb clause saying what the
+     people are for, one tail saying what is signed behind them, and either half
+     may be missing. The subject is "those people" so the headcount is referred
+     to rather than repeated (rule N8: never a restatement of the figure). */
+  const work: string[] = [];
+  if (covers) work.push(`fill a room of ${covers}`);
+  if (vehicles) work.push(`run ${vehicles}`);
+  const tail = lease
+    ? `on a lease of ${lease}`
+    : premises && /^(none|no)\b/i.test(premises)
+      ? "with no premises to rent"
+      : null;
+  const consequence =
+    work.length > 0
+      ? `Those ${people} ${work.join(" and ")}${tail ? `, ${tail}` : ""}.`
+      : tail
+        ? `Behind them sits ${tail.replace(/^on |^with /, "")}.`
+        : null;
+
   return (
-    <Section kicker="What it takes to run one" icon="unit-economics">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-1 lg:grid-cols-3">
-        {rows.map((r) => (
-          <KV key={r.label} k={r.label} v={r.value} />
-        ))}
-      </div>
+    <Section
+      id={anchorId}
+      kicker="What it takes to run one"
+      icon="unit-economics"
+      answer={
+        <>
+          <Fig>{one ? headcount.low : `${headcount.low} to ${headcount.high}`}</Fig>{" "}
+          <span style={{ color: "var(--c-ink2)" }}>{people}</span>
+        </>
+      }
+      consequence={consequence}
+      next={next}
+    >
+      {held.length > 0 ? (
+        <div className="grid gap-x-7 gap-y-4 sm:grid-cols-2">
+          {held.map((f) => (
+            <div key={f.name} className="min-w-0">
+              <div className="mb-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                {f.name}
+              </div>
+              {f.rows.map((r) => (
+                <KV key={r.label} k={r.label} v={r.value} />
+              ))}
+            </div>
+          ))}
+        </div>
+      ) : null}
     </Section>
   );
 }
@@ -345,6 +427,30 @@ export function TypicalSetup({ rows }: TypicalSetupProps) {
  * THREE ROWS, NOT FIVE. The trade profile carries exactly three, because the
  * value here is that a reader recognises the list instantly. A longer list is a
  * menu, and a menu is not a benchmark.
+ *
+ * WHAT CHANGED, 2026-09-01, constitution A2. The table's form is untouched: the
+ * founder praised it and praised form stays. What it lacked was any way to JUDGE
+ * the prices, and a price nobody can judge is trivia with a border.
+ *
+ * THE ANSWER is the typical ticket, at focal: what one customer pays on a normal
+ * visit. It is the figure that connects prices to revenue, and the one a reader
+ * actually needs. Terracotta, because this is the card in the band whose answer
+ * is a quantity worth pointing at.
+ *
+ * THE EVIDENCE gains ONE column, hours of local pay, and the column is the whole
+ * reason the section now works: a reader can tell in two seconds whether these
+ * prices are high or low FOR THIS PLACE, which no absolute figure can ever tell
+ * them. It carries the bare unit because the header already says what it
+ * measures. It disappears entirely without a wage figure rather than estimating
+ * one.
+ *
+ * THE EXPECTED CHOICE IS DEFERRED, AND RECORDED AS DEFERRED. What a reader wants
+ * next is these three items in a peer city. No peer prices are held for any
+ * trade, and a switch that reveals nothing is worse than no switch. When they
+ * exist this is where they go.
+ *
+ * IT RENDERS ONLY WITH ITS ANSWER, same empty state as A1. A price table with no
+ * ticket above it is the exact card the founder called a shell.
  */
 export interface PriceRow {
   item: string;
@@ -354,45 +460,102 @@ export interface PriceRow {
 
 export function WhatThingsCost({
   rows,
+  typicalTicket,
+  localHourlyPay,
   currency = "$",
+  next,
+  anchorId,
 }: {
   rows: PriceRow[] | null;
+  /** THE ANSWER: what one customer pays on a normal visit. Carried, never derived. */
+  typicalTicket: number | null;
+  /** The place's median hourly pay. Absent means no yardstick anywhere in the card. */
+  localHourlyPay?: number | null;
   currency?: string;
+  next?: { label: string; href: string };
+  /** The caller owns the anchor, because one document can hold two trades. */
+  anchorId?: string;
 }) {
+  if (typicalTicket == null) return null;
   const held = (rows ?? []).filter((r) => r.price != null);
-  if (held.length === 0) return null;
+  const ticketPhrase = localPayPhrase(typicalTicket, localHourlyPay);
+  const yard = held.length > 0 ? localPayPhrase(held[0].price, localHourlyPay) : null;
+  /* THE ITEM KEEPS ITS OWN CAPITAL AND TAKES NO ARTICLE. An article machine
+     would have to choose "a" or "an" from a letter, and it gets "an English
+     breakfast" wrong the first time a trade sells one. The item names come from
+     the trade profile as labels, and a label reads correctly as the subject of
+     a headline-style line. */
+  const consequence = yard ? `${held[0].item} costs ${yard} here.` : null;
+  const showYard = localPayUnit(1, localHourlyPay) != null;
+
   return (
-    <Section kicker="What people pay here" icon="sale-tag">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b border-[var(--c-border)]">
-            <th scope="col" className="py-1.5 text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-              Item
-            </th>
-            <th scope="col" className="py-1.5 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-              Typical price
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {held.map((r) => (
-            <tr key={r.item} className="border-b border-[var(--c-border)] last:border-0">
-              <td className="py-2 text-[length:var(--t-body)] text-[var(--c-ink)]">
-                {r.item}
-                {r.note ? (
-                  <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.note}</span>
-                ) : null}
-              </td>
-              {/* Right-aligned AND tabular. Half the rule is useless without the
-                  other half: right alignment only lines figures up if the digits
-                  are the same width. */}
-              <td className="fig py-2 text-right text-[length:var(--t-body)] tabular-nums text-[var(--c-ink)]">
-                {money(r.price as number, currency)}
-              </td>
+    <Section
+      id={anchorId}
+      kicker="What people pay here"
+      icon="sale-tag"
+      accent
+      answer={<Fig>{money(typicalTicket, currency)}</Fig>}
+      answerNote={
+        ticketPhrase
+          ? `What one customer pays on a normal visit. ${cap(ticketPhrase)}.`
+          : "What one customer pays on a normal visit."
+      }
+      consequence={consequence}
+      next={next}
+    >
+      {held.length > 0 ? (
+        <table className="w-full border-collapse">
+          <thead>
+            {/* THE HEADERS BOTTOM-ALIGN, AND IT IS NOT A NICETY. Photographed at
+                the constitution's one-third width: "TYPICAL PRICE" wrapped to two
+                lines beside "HOURS OF LOCAL PAY" wrapping to two lines, and top-
+                aligned the four half-headers interleaved into one scrambled line
+                that read "TYPICAL HOURS OF LOCAL / PRICE PAY". Bottom-aligned,
+                each header's last word sits on the shared baseline and the two
+                columns separate. The price header also stops wrapping: it is the
+                one a reader looks for. */}
+            <tr className="border-b border-[var(--c-border)]">
+              <th scope="col" className="py-1.5 align-bottom text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Item
+              </th>
+              <th scope="col" className="py-1.5 align-bottom text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Typical price
+              </th>
+              {showYard ? (
+                <th scope="col" className="py-1.5 pl-2 align-bottom text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                  Hours of local pay
+                </th>
+              ) : null}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {held.map((r) => (
+              <tr key={r.item} className="border-b border-[var(--c-border)] last:border-0">
+                <td className="py-2 text-[length:var(--t-body)] text-[var(--c-ink)]">
+                  {r.item}
+                  {r.note ? (
+                    <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.note}</span>
+                  ) : null}
+                </td>
+                {/* Right-aligned AND tabular. Half the rule is useless without the
+                    other half: right alignment only lines figures up if the digits
+                    are the same width. */}
+                <td className="fig whitespace-nowrap py-2 text-right text-[length:var(--t-body)] tabular-nums text-[var(--c-ink)]">
+                  {money(r.price as number, currency)}
+                </td>
+                {/* THE YARDSTICK IS SUPPORT, NOT A SECOND PRICE. Micro and muted,
+                    so the eye reads the money column and takes this as the gloss
+                    on it. Two columns at the same weight would be two answers. */}
+                {showYard ? (
+                  <td className="py-2 pl-2 text-right text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">
+                    {localPayUnit(r.price, localHourlyPay)}
+                  </td>
+                ) : null}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : null}
     </Section>
   );
 }

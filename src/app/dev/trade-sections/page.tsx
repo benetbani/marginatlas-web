@@ -48,20 +48,38 @@ export const metadata: Metadata = {
    anything real: verify_no_fixture_in_routes exists because placeholder data
    with the right shape is indistinguishable from a page citing its own
    provenance while every number in it was invented. */
+/* A PLACE FIGURE, NOT A TRADE ONE. Both trades below stand for two pages of the
+   same city, so they measure their prices against the same hour of pay. */
+const LOCAL_HOURLY_PAY = 19;
+
 const RESTAURANT = {
-  setup: [
-    { label: "People", value: "9 to 12" },
-    { label: "Covers", value: "48 seats" },
-    { label: "Kitchen kit", value: "$34,000" },
-    { label: "Fit-out", value: "$120,000" },
-    { label: "Power", value: "$740 a month" },
-    { label: "Lease", value: "10 years" },
+  localHourlyPay: LOCAL_HOURLY_PAY,
+  headcount: { low: 9, high: 12 },
+  covers: "48 seats",
+  lease: "10 years",
+  setupFamilies: [
+    {
+      name: "The place",
+      rows: [
+        { label: "Covers", value: "48 seats" },
+        { label: "Lease", value: "10 years" },
+        { label: "Fit-out", value: "$120,000" },
+      ],
+    },
+    {
+      name: "The kit",
+      rows: [
+        { label: "Kitchen", value: "$34,000" },
+        { label: "Power", value: "$740 a month" },
+      ],
+    },
   ],
   prices: [
     { item: "Main course", price: 22 },
     { item: "Glass of wine", price: 8, note: "175ml" },
     { item: "Dessert", price: 9 },
   ],
+  typicalTicket: 31,
   tipping: { expectation: 78, share: 12 },
   publicSpace: { annual: 1240, unit: "table" },
   hire: [
@@ -89,19 +107,33 @@ const RESTAURANT = {
 };
 
 const PLUMBER = {
-  setup: [
-    { label: "People", value: "1 to 3" },
-    { label: "Vans", value: "2" },
-    { label: "Tools", value: "$9,500" },
-    { label: "Stock held", value: "$3,000" },
-    { label: "Insurance", value: "$1,400 a year" },
-    { label: "Premises", value: "None" },
+  localHourlyPay: LOCAL_HOURLY_PAY,
+  headcount: { low: 1, high: 3 },
+  vehicles: "2 vans",
+  premises: "None",
+  setupFamilies: [
+    {
+      name: "The round",
+      rows: [
+        { label: "Vans", value: "2" },
+        { label: "Premises", value: "None" },
+        { label: "Insurance", value: "$1,400 a year" },
+      ],
+    },
+    {
+      name: "The kit",
+      rows: [
+        { label: "Tools", value: "$9,500" },
+        { label: "Stock held", value: "$3,000" },
+      ],
+    },
   ],
   prices: [
     { item: "Call-out", price: 85 },
     { item: "Boiler service", price: 110 },
     { item: "Bathroom install", price: 3400 },
   ],
+  typicalTicket: 190,
   hire: [
     ["Qualified plumber", 18, "Hard", "the binding constraint"],
     ["Apprentice", 62, "Steady"],
@@ -119,11 +151,32 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
   const r = RESTAURANT;
   const p = PLUMBER;
   const isR = trade === "restaurant";
+  /* Two trades in one document, so the anchors are prefixed and the plumber's
+     "what it costs" link cannot land on the restaurant's card. */
+  const a = (s: string) => `${trade}-${s}`;
   switch (id) {
     case "typical-setup":
-      return <TypicalSetup rows={isR ? r.setup : p.setup} />;
+      return (
+        <TypicalSetup
+          anchorId={a("typical-setup")}
+          headcount={isR ? r.headcount : p.headcount}
+          families={isR ? r.setupFamilies : p.setupFamilies}
+          covers={isR ? r.covers : null}
+          lease={isR ? r.lease : null}
+          vehicles={isR ? null : p.vehicles}
+          premises={isR ? null : p.premises}
+          next={{ label: "What people pay here", href: `#${a("what-things-cost")}` }}
+        />
+      );
     case "what-things-cost":
-      return <WhatThingsCost rows={isR ? r.prices : p.prices} />;
+      return (
+        <WhatThingsCost
+          anchorId={a("what-things-cost")}
+          rows={isR ? r.prices : p.prices}
+          typicalTicket={isR ? r.typicalTicket : p.typicalTicket}
+          localHourlyPay={isR ? r.localHourlyPay : p.localHourlyPay}
+        />
+      );
     case "tipping":
       return isR ? <Tipping expectation={r.tipping.expectation} typicalShare={r.tipping.share} /> : null;
     case "public-space":
