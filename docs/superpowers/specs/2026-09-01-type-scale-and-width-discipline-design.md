@@ -106,9 +106,32 @@ values.
 stylesheet, and a gate fails the build if either returns. A retired token that
 still resolves is a rung people keep stepping on.
 
-**Step 4, the page titles drop.** Every page whose h1 uses `--t-focal` (or an
-off-ladder size, which the city page's 36px h1 does) moves to `--t-section`.
-This closes the city masthead's recorded off-ladder debt as a side effect.
+**Step 4, the page titles.** AMENDED 2026-09-01, before any code, because the
+first draft of this step was wrong and the check that caught it is the reason
+the step is written this way now. Only one of the five h1s uses a ladder token
+at all; the other four are Tailwind sizes off the ladder entirely, at 36, 36,
+41.6 and 44 pixels. Sweeping all five to `--t-section` would have shrunk the
+trade page's h1, and the trade page's h1 is not a name, it is the answer
+sentence itself.
+
+**THE RULE, therefore, is about what the h1 SAYS, not what size it currently
+is.** An h1 that NAMES the page takes `--t-section` (24), because a separate
+figure carries the answer. An h1 that IS the page's answer takes `--t-answer`
+(40), and then nothing else on that page may take the answer size.
+
+Verified against the five mastheads, one by one:
+
+| page | the h1 renders | today | becomes |
+|---|---|---|---|
+| country | the country name | `--t-focal` 30 | `--t-section` 24 |
+| city | the city name | 30, 36 at desktop | `--t-section` 24 |
+| hood | the city name | 30, 36 at desktop | `--t-section` 24 |
+| industry | the trade name | 30, 44 at desktop | `--t-section` 24 |
+| cell | THE ANSWER SENTENCE | 30, 41.6 at desktop | `--t-answer` 40 |
+
+This closes four pages' off-ladder h1 debt, including the city's recorded one,
+and it moves the trade page's answer sentence by 1.6 pixels rather than
+demoting it.
 
 ---
 
