@@ -336,7 +336,7 @@ function TheCatch({ d }: { d: any }) {
         <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Tax on company profit</div>
         <div className="mt-2 flex items-end gap-3.5" role="img" aria-label={`Headline rate ${headline}%, but the all-in load on profit is ${allIn}%`}>
           <div className="flex flex-col items-start">
-            <span className="fig text-[length:var(--t-sub)] leading-none text-[var(--c-muted)] line-through">{headline}%</span>
+            <span className="fig text-[length:var(--t-head)] leading-none text-[var(--c-muted)] line-through">{headline}%</span>
             <span className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">headline rate</span>
           </div>
           <span aria-hidden className="mb-4 text-[length:var(--t-lead)] text-[var(--c-muted)]">&#8594;</span>
@@ -451,7 +451,7 @@ function Banking({ d }: { d: any }) {
       <Rail icon="bank" kicker="Opening a bank account" />
       <div className="focal mb-3 flex items-baseline justify-between p-3.5">
         <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How hard</span>
-        <Fig className="text-[length:var(--t-sub)] capitalize text-[var(--c-ink)]">{b.friction}</Fig>
+        <Fig className="text-[length:var(--t-head)] capitalize text-[var(--c-ink)]">{b.friction}</Fig>
       </div>
       <Bullets items={b.bullets ?? []} />
       <div className="mt-3 divide-y divide-[var(--c-border)]">
@@ -695,7 +695,7 @@ function OperatingCosts({ d }: { d: any }) {
       <div className="focal flex flex-wrap items-end justify-between gap-x-6 gap-y-2 p-4">
         <Stat value={<>${c.commercial_rent_usd_sqm_yr?.toLocaleString("en-US")}</>} label="Commercial rent / sqm a year" size="focal" />
         <div className="text-right">
-          <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{fmtc(c.energy_usd_per_kwh ?? 0)}</Fig>
+          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{fmtc(c.energy_usd_per_kwh ?? 0)}</Fig>
           <div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">electricity / kWh</div>
         </div>
       </div>
@@ -887,7 +887,7 @@ function Income({ d }: { d: any }) {
         {tiers.map((t) => (
           <div key={t.label} className="rounded-lg border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-3 text-center">
             <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{t.label}</div>
-            <Fig className="mt-0.5 text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">{t.m.toFixed(1)}x</Fig>
+            <Fig className="mt-0.5 text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{t.m.toFixed(1)}x</Fig>
             <div className="mt-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">the median, at {k$(t.v)}</div>
           </div>
         ))}
@@ -1222,7 +1222,7 @@ function SellingAbroad({ d }: { d: any }) {
   const partners = (e.partners ?? []).slice().sort((a: any, b: any) => b.pct - a.pct);
   return (
     <Box><Head icon="global-spread" sample>How easy it is to export</Head>
-      <div className="mb-3 flex items-baseline gap-2"><Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{e.openness_0_100}<span className="text-[length:var(--t-body)] text-[var(--c-muted)]"> / 100</span></Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">ease of exporting from here</span></div>
+      <div className="mb-3 flex items-baseline gap-2"><Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{e.openness_0_100}<span className="text-[length:var(--t-body)] text-[var(--c-muted)]"> / 100</span></Fig><span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">ease of exporting from here</span></div>
       {/* quiet where not sourced: the procedures detail (timings, paperwork, trade
           deals) fills in when researched per country , never a builder note here. */}
       <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Top markets, share of exports</div>
@@ -1470,7 +1470,7 @@ function DigitalPayments({ d }: { d: any }) {
         </div>
         <div className="flex-1">
           <div className="grid grid-cols-3 gap-2.5">
-            {tiles.map(([v, l, fig]) => <div key={l} className="hov rounded-lg border border-[var(--c-border)] p-3">{fig ? <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{v}</Fig> : <div className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{v}</div>}<div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
+            {tiles.map(([v, l, fig]) => <div key={l} className="hov rounded-lg border border-[var(--c-border)] p-3">{fig ? <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{v}</Fig> : <div className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{v}</div>}<div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-ink2)]">{l}</div></div>)}
           </div>
         </div>
       </div>

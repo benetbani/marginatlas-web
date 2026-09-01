@@ -154,7 +154,7 @@ export function IncomeCurve({ d }: { d: any }) {
                       find the finding. The median steps up a rung; the two tail figures do
                       not, because a reader looking for "what do customers here earn" wants
                       one number and gets a shape for free. */}
-                  <Fig className={`font-semibold ${accent ? "text-[length:var(--t-sub)] text-[var(--terra-text)]" : "text-[length:var(--t-body)] text-[var(--c-ink)]"}`}>{money(v)}</Fig>
+                  <Fig className={`font-semibold ${accent ? "text-[length:var(--t-head)] text-[var(--terra-text)]" : "text-[length:var(--t-body)] text-[var(--c-ink)]"}`}>{money(v)}</Fig>
                 </span>
               );
             })}

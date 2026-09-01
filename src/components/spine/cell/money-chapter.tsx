@@ -179,11 +179,11 @@ export function BreakEven({ d }: { d: any }) {
           to its neighbour's height (rulebook 17). No bar: plain figures (rule 26 corollary). */}
       <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)]" style={{ background: "var(--c-border)" }}>
         <div className="bg-[var(--c-card)] px-3.5 py-2.5">
-          <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{Math.max(0, Math.round(typical - covers))}</Fig>
+          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{Math.max(0, Math.round(typical - covers))}</Fig>
           <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">covers of headroom</div>
         </div>
         <div className="bg-[var(--c-card)] px-3.5 py-2.5">
-          <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{Math.round((covers / Math.max(typical, 1)) * 100)}%</Fig>
+          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{Math.round((covers / Math.max(typical, 1)) * 100)}%</Fig>
           <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">of a typical day</div>
         </div>
       </div>

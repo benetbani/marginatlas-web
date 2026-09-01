@@ -125,7 +125,7 @@ export function HoodMasthead({ d }: { d: any }) {
         <div className="mt-1.5 flex flex-wrap items-end gap-x-3.5 gap-y-1">
           <Fig className="text-[48px] leading-none text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>
           <div className="pb-1.5">
-            <div className="text-[length:var(--t-sub)] font-semibold leading-tight text-[var(--c-ink)]">{best.name}</div>
+            <div className="text-[length:var(--t-head)] font-semibold leading-tight text-[var(--c-ink)]">{best.name}</div>
             <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level, against a comparable unit at the city rate</div>
           </div>
         </div>

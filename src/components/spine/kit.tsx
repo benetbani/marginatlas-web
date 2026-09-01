@@ -397,7 +397,7 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow?: 
           heading is on the v2 ladder and cannot wear them, so every spine heading
           must opt out. That is what the typography file itself asks for, with an
           explanation, and this is the explanation. */}
-      <h2 data-typography="custom" className="text-[length:var(--t-sub)] font-semibold tracking-tight text-[var(--c-ink)]">{heading}</h2>
+      <h2 data-typography="custom" className="text-[length:var(--t-head)] font-semibold tracking-tight text-[var(--c-ink)]">{heading}</h2>
     </div>
   );
 }

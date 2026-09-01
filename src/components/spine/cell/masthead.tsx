@@ -75,7 +75,7 @@ export function Masthead({ d }: { d: any }) {
                     stray mark rather than as "no value here", which is the
                     opposite of what it is for. It takes the same size as the
                     sentence it belongs to. */}
-                <div className="fig mt-1 text-[length:var(--t-sub)] leading-none text-[var(--c-muted)]">&ndash;</div>
+                <div className="fig mt-1 text-[length:var(--t-head)] leading-none text-[var(--c-muted)]">&ndash;</div>
                 {/* A LADDER STEP, NOT 12.5px. The line above this one carries a
                     grandfathered off-ladder size; adding a second copy of it would
                     have grown a ratchet that only counts down, and it did, from

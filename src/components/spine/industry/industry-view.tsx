@@ -71,7 +71,13 @@ function Masthead({ d }: { d: any }) {
         <div>
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <CountFig value={mi.keeps_per_100} prefix="$" className="text-[30px] leading-[0.9] text-[var(--terra-text)] md:text-[48px]" />
-            <span className="max-w-[22rem] text-[length:var(--t-sub)] leading-snug text-[var(--c-ink2)]">kept by the owner from every <Fig className="text-[var(--c-ink)]">$100</Fig> a customer spends.</span>
+            {/* PROSE, NOT A SUBSECTION HEADING. This is the one use of the
+                retired 18 rung, site-wide, that did not fold onto the head step
+                with the other 23. It is a sentence a reader reads, set beside
+                the figure it explains, so it takes the lead prose step and
+                drops from 20 to 16. Everything else that wore the retired rung
+                was a heading or a figure. */}
+            <span className="max-w-[22rem] text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">kept by the owner from every <Fig className="text-[var(--c-ink)]">$100</Fig> a customer spends.</span>
           </div>
         </div>
         {/* the margin ladder: the gross-to-net collapse, seen as three shrinking bars */}
@@ -227,7 +233,7 @@ export function Demand({ d }: { d: any }) {
               {/* the support figure: half the size of the spend focal (rule 16 >=1.6 contrast,
                   so the single terracotta accent sits on ONE dominant answer, not one of two
                   equal siblings) and right-aligned so it fills the band's right edge (rule 17). */}
-              <div className="mt-1.5 flex items-baseline gap-2 sm:justify-end"><CountFig value={dm.purchases_per_year} className="text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">per diner</span></div>
+              <div className="mt-1.5 flex items-baseline gap-2 sm:justify-end"><CountFig value={dm.purchases_per_year} className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">per diner</span></div>
             </div>
           ) : null}
         </div>
@@ -563,7 +569,7 @@ export function Operator({ d }: { d: any }) {
             survives, that size makes the card look like a scorecard with two cells
             missing, so the single fact takes answer size and the card reads as what
             it now is: one figure and what it means. */}
-        {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className={`${facts.length === 1 ? "text-[length:var(--t-focal)] leading-none" : "text-[length:var(--t-sub)]"} text-[var(--c-ink)]`}>{val}</Fig><div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
+        {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className={`${facts.length === 1 ? "text-[length:var(--t-focal)] leading-none" : "text-[length:var(--t-head)]"} text-[var(--c-ink)]`}>{val}</Fig><div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
       </div>
     </Box>
   );
@@ -823,7 +829,7 @@ export function Close({ d }: { d: any }) {
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-6 sm:gap-y-1">
               {recap.map(([fig, label, accent], i) => (
                 <div key={i} className="flex items-baseline gap-2.5">
-                  <div className={`fig text-[length:var(--t-sub)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{fig}</div>
+                  <div className={`fig text-[length:var(--t-head)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{fig}</div>
                   <div className="max-w-[20rem] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{label}</div>
                 </div>
               ))}

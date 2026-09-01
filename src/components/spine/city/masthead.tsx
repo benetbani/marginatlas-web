@@ -99,7 +99,7 @@ export function CityHero({ d }: { d: any }) {
               style={support.length > 2 && support.length % 2 === 1 && i === support.length - 1 ? { gridColumn: "1 / -1" } : undefined}
             >
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.06em] text-[var(--c-muted)]">{c.label}</div>
-              <div className="mt-1 text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]"><Fig>{c.value}</Fig>{c.unit ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{c.unit}</span> : null}</div>
+              <div className="mt-1 text-[length:var(--t-head)] leading-none text-[var(--c-ink)]"><Fig>{c.value}</Fig>{c.unit ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{c.unit}</span> : null}</div>
               <div className="mt-1 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{c.sub}</div>
             </div>
           ))}

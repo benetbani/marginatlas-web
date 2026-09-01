@@ -443,7 +443,7 @@ function Customers({ customers }: { customers: any }) {
         <Rail icon="spread" kicker="What customers earn" sample={tagged} />
         <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Typical pay</div>
         {/* Accent register entry 2: the customers card's answer. */}
-        <Fig className="mt-1 block text-[length:var(--t-sub)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
+        <Fig className="mt-1 block text-[length:var(--t-head)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
         <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</div>
       </Box>
     );
@@ -480,7 +480,7 @@ function Customers({ customers }: { customers: any }) {
       <div className="relative mt-1 h-[40px]">
         <span className="absolute bottom-0 flex flex-col whitespace-nowrap" style={place(xMed)}>
           <span className="text-[length:var(--t-micro)] font-semibold text-[var(--terra-text)]">Typical</span>
-          <Fig className="mt-0.5 text-[length:var(--t-sub)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
+          <Fig className="mt-0.5 text-[length:var(--t-head)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
         </span>
       </div>
       <div

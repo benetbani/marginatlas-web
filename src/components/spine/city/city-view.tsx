@@ -448,7 +448,7 @@ export function DemandSize({ d }: { d: any }) {
       {/* the millionaire count: how deep the premium ticket runs (the Head tag covers it). */}
       {hasMillionaires ? (
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 border-t border-[var(--c-border)] pt-3">
-          <Fig className="text-[length:var(--t-sub)] text-[var(--c-ink)]">{Math.round((o.millionaires_count || 0) / 1000)}K</Fig>
+          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{Math.round((o.millionaires_count || 0) / 1000)}K</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">millionaires live here, net worth $1M and up beyond the main home.</span>
         </div>
       ) : null}
@@ -585,7 +585,7 @@ function LowestBar({ d }: { d: any }) {
           <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">cost to open the doors</div>
         </div>
         <div>
-          <div className="fig text-[length:var(--t-sub)] leading-none text-[var(--c-ink)]">{lead.break_in_0_100}<span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/100</span></div>
+          <div className="fig text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{lead.break_in_0_100}<span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/100</span></div>
           <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">ease to enter</div>
         </div>
       </div>
@@ -877,7 +877,7 @@ function Close({ d }: { d: any }) {
           The grid also stretched its two children to equal height, which D7 forbids
           outright. Removing the grid removes that too. */}
       <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where to start looking in {d.meta?.city}</div>
-      <div className="mt-1 text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{title}</div>
+      <div className="mt-1 text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">{title}</div>
       <div className="mt-3 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--c-border)] pt-3">
         {/* THE RENT MULTIPLE IS NOT REPRINTED HERE. It is the answer of the card that
             opens this page, where it is set at forty-eight pixels beside the same
@@ -888,7 +888,7 @@ function Close({ d }: { d: any }) {
             WHAT IS LEFT IS WHAT ONLY THIS CARD HAS: which district to start in, what
             kind of place it is, and the two ways out. A closing card names the pick
             and opens a door. It does not recite the page. */}
-        {lightest.character ? <div><div className="text-[length:var(--t-sub)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
+        {lightest.character ? <div><div className="text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
       </div>
       {/* The two ways out, on one row. The destination of the first is the district
           set, not a trade page. Hover is INK on both: §37 says the accent never

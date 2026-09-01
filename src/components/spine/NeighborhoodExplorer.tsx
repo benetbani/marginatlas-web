@@ -514,7 +514,7 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 data-typography="custom" className="text-[length:var(--t-sub)] font-semibold tracking-tight text-[var(--c-ink)]">{d.name}</h3>
+              <h3 data-typography="custom" className="text-[length:var(--t-head)] font-semibold tracking-tight text-[var(--c-ink)]">{d.name}</h3>
               <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{d.character}</span>
             </div>
             <p className="mt-1.5 max-w-md text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.blurb}</p>
