@@ -48,15 +48,23 @@
  * in the one `Section` wrapper below, so hierarchy is a property of the family
  * and not of whoever wrote the tenth card.
  *
- * WHAT WAVE 1 DID AND DID NOT DO, stated so the gap is legible rather than
- * mysterious. Chapter A (TypicalSetup, WhatThingsCost) is redesigned to the
- * constitution. The other eight are UNTOUCHED except for one mechanical rename,
- * `title=` to `kicker=`, which is the cost of all ten sharing one wrapper. They
- * therefore render today with a rail and their evidence and NO answer and NO
- * consequence, which is knowingly non-conforming: the constitution's own empty
- * state says a section renders when it has its ANSWER field. Wave 2 gives them
- * one, copying chapter A's pattern. Until then their shape is the honest record
- * of what is missing, not a claim that they are finished.
+ * WAVE 1 did chapter A (TypicalSetup, WhatThingsCost) and built the wrapper and
+ * the yardstick.
+ *
+ * ============ THE 2026-09-01 REDESIGN, WAVE 2, CHAPTER B ==================
+ *
+ * THE PEOPLE. B1 and B2 MERGED INTO ONE CARD: "can you hire" and "how skilled"
+ * answer one question, and two cards made the reader assemble the answer
+ * themselves. `CanYouHire` and `SkillLevel` survive as thin wrappers over the
+ * merged `PeopleYouNeed`, so no call site breaks and neither can render a
+ * half-card. B3 gained the composed portrait it was making its reader derive
+ * from three unlabelled sliders.
+ *
+ * CHAPTER C IS STILL UNTOUCHED as of this commit. Its five carry a rail and
+ * their evidence and NO answer and NO consequence, which is knowingly
+ * non-conforming: the constitution's own empty state says a section renders when
+ * it has its ANSWER field. Their shape is the honest record of what is missing,
+ * not a claim that they are finished.
  */
 import * as React from "react";
 import { Box, Rail, Fig, KV, Stat, Meter, EaseScale, SpectraTable, CatRows, Dots, cap } from "@/components/spine/kit";
@@ -628,45 +636,46 @@ export function PublicSpaceCost({
 }
 
 /* ================================================================== */
-/* 5. CAN YOU HIRE                                                     */
+/* 5 + 6. THE PEOPLE YOU NEED  (B1 CAN YOU HIRE + B2 SKILL LEVEL)      */
 /* ================================================================== */
 /**
- * FORM: EaseScale. Several labelled markers on ONE shared left-right scale
- * with end labels, so the roles are compared against each other rather than
- * each getting its own track.
+ * ONE CARD, NOT TWO, and the merge is the design rather than a tidy-up.
  *
- * His words: "Availability of talent for this specific activity in this place
- * (influenced by unemployment and young unemployment in that country or
- * province)."
+ * The founder's two asks were separate sentences: "availability of talent for
+ * this specific activity in this place" and "how skilled they need to be, scale
+ * of 1 to 4, simple." They are separate sentences and ONE question. A reader
+ * looking at a card of role bars and a card of four numbered boxes has to hold
+ * both and work out what will actually delay their opening. That assembly is the
+ * reader's second minute, spent on something the page should have done.
+ *
+ * FORMS, both already in the kit, neither invented:
+ *   EaseScale , several labelled markers on ONE shared left-right track with its
+ *   ends named, so the roles are compared against each other rather than each
+ *   getting a track of its own.
+ *   A discrete four-step band for the skill , NOT a meter. A continuous marker
+ *   claims 2.7 means something. Skill level is a category: you can train them in
+ *   a week, or you cannot (FORM-CATALOG, PriceTierBand).
+ *
+ * THE ANSWER is the BINDING CONSTRAINT, named. The hardest role is what will
+ * delay an opening, so the hardest role IS the answer, with the time it takes to
+ * fill beside it in ink2 so the phrase has its own internal rank. Ink, never
+ * accent: a role is not a quantity to point at, and the constitution rations the
+ * accent to answers that are.
  *
  * SCALE DIRECTION, rule 29A: scarcity is a BURDEN, so it is inverted before it
  * reaches this component. High and right reads "easy to find", never "scarce".
- */
-export function CanYouHire({
-  roles,
-}: {
-  /** [role, 0-100 where high = easy to find, word, optional sub]. Already inverted. */
-  roles: Array<[string, number, string, string?]> | null;
-}) {
-  if (!roles || roles.length === 0) return null;
-  return (
-    <Section kicker="Can you find people" icon="hiring">
-      <EaseScale rows={roles} endLabels={["Hard to find", "Easy to find"]} />
-    </Section>
-  );
-}
-
-/* ================================================================== */
-/* 6. HOW SKILLED THEY NEED TO BE                                      */
-/* ================================================================== */
-/**
- * FORM: a discrete four-step band, per the founder's "scale of 1 to 4, simple".
+ * The roles are then ranked HARDEST FIRST, because the top of a list is where a
+ * reader looks and the hardest role is the one that matters.
  *
- * NOT A METER, and that is the whole reason this is a separate component rather
- * than a second call to the one above. A continuous marker on a track claims
- * that 2.7 means something. Skill level is a category: you can train them in a
- * week, or you cannot. A continuous meter for a categorical read is false
- * precision (FORM-CATALOG, PriceTierBand).
+ * THE ACTIVE SKILL STEP READS IN INK, NOT TERRACOTTA, and that is a change from
+ * what was here. A terracotta fill on the active step put the card's only accent
+ * on its EVIDENCE while its answer sat in ink, which is the hierarchy upside
+ * down. A darker border, a soft fill and an ink figure mark the step just as
+ * unmistakably without spending an accent this card is not entitled to.
+ *
+ * THE CONSEQUENCE is what the level MEANS in time and money, which four numbered
+ * boxes never said. Level 3 is not a number, it is "trained elsewhere, so expect
+ * to hire rather than train".
  */
 const SKILL_STEPS = [
   { n: 1, label: "Train in a week" },
@@ -675,41 +684,133 @@ const SKILL_STEPS = [
   { n: 4, label: "Licensed or certified" },
 ];
 
-export function SkillLevel({ level }: { level: 1 | 2 | 3 | 4 | null }) {
-  if (level == null) return null;
+/** THE CONSEQUENCE, one line per step. Time and money, never a restated number. */
+const SKILL_MEANS: Record<1 | 2 | 3 | 4, string> = {
+  1: "You can train someone yourself in a week, so a gap in the rota costs a week rather than a season.",
+  2: "You can train them yourself, but a new hire only earns their wage after a season of it.",
+  3: "They are trained somewhere else, so expect to hire rather than train, and to pay what the market asks.",
+  4: "The certificate belongs to the person and not to the business, so you are hiring a licence and waiting on whoever holds one.",
+};
+
+/** [role, 0-100 where high = easy to find, word, optional time to fill]. Already inverted. */
+export type HireRole = [string, number, string, string?];
+
+export function PeopleYouNeed({
+  roles,
+  level,
+  next,
+  anchorId,
+}: {
+  roles: HireRole[] | null;
+  /** The four-step read. Null renders the card on its roles alone. */
+  level: 1 | 2 | 3 | 4 | null;
+  /** THE EXPECTED CHOICE: having seen who they need, they want what those people cost. */
+  next?: { label: string; href: string };
+  anchorId?: string;
+}) {
+  const held = (roles ?? []).filter((r) => Number.isFinite(r[1]));
+  /* HARDEST FIRST. The scale is already inverted, so the hardest role is the
+     LOWEST value on it. Sorted on a copy: the caller's array is its own. */
+  const ranked = [...held].sort((a, b) => a[1] - b[1]);
+  const hardest = ranked[0];
+  const step = level != null ? SKILL_STEPS[level - 1] : null;
+  /* THE EMPTY STATE, the constitution's single one: no answer field, no card. */
+  if (!hardest && !step) return null;
+
+  /* THE ANSWER TAKES NO ARTICLE, for the reason written on the price table: an
+     article machine picks "a" or "an" from a letter and gets it wrong the first
+     time a trade needs a hostess or an hour. The role names arrive as labels, and
+     a label reads correctly as the subject of a headline. */
+  const answer = hardest ? (
+    <>
+      {hardest[0]}.{" "}
+      <span style={{ color: "var(--c-ink2)" }}>{cap(hardest[3] ?? `${hardest[2]} to find`)}.</span>
+    </>
+  ) : (
+    <>{step?.label}.</>
+  );
+
   return (
-    <Section kicker="How skilled they need to be" icon="staffing-rota">
-      <div className="grid grid-cols-4 gap-1.5">
-        {SKILL_STEPS.map((s) => {
-          const active = s.n === level;
-          return (
-            <div
-              key={s.n}
-              aria-current={active ? "step" : undefined}
-              className={
-                "rounded-md border px-2 py-2 text-center " +
-                (active
-                  ? "border-[var(--terra-border)] bg-[var(--terra-soft)]"
-                  : "border-[var(--c-border)]")
-              }
-            >
-              <div
-                className={
-                  "fig text-[length:var(--t-lead)] tabular-nums " +
-                  (active ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]")
-                }
-              >
-                {s.n}
-              </div>
-              <div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">
-                {s.label}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+    <Section
+      id={anchorId}
+      kicker="Can you find the people"
+      icon="hiring"
+      answer={answer}
+      answerNote={hardest ? "The hardest role to fill, which is what will delay an opening." : undefined}
+      consequence={level != null ? SKILL_MEANS[level] : null}
+      next={next}
+    >
+      {/* THE HARDEST ROLE LOSES ITS SUB ON THE SCALE, and this was found by
+          looking rather than by reasoning: photographed at 1280, the card read
+          "Chef. Months to fill." at focal and then "Chef / months to fill" again
+          as the first row of the scale directly underneath it. The same words
+          twice in four centimetres read as a bug, not as emphasis. The answer
+          carries the driver; the scale ranks it. */}
+      {ranked.length > 0 ? (
+        <EaseScale
+          rows={ranked.map((r, i) => (i === 0 ? [r[0], r[1], r[2]] : r))}
+          endLabels={["Hard to find", "Easy to find"]}
+        />
+      ) : null}
+      {step ? (
+        <div className={ranked.length > 0 ? "mt-5" : ""}>
+          {/* THE SUBHEAD IS THE SAME QUIET MICRO-CAPS TypicalSetup USES over its
+              families. Two subjects in one card need a named seam, or the four
+              boxes read as a second, unexplained scale. */}
+          <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+            How skilled they must be
+          </div>
+          <div className="grid grid-cols-4 gap-1.5">
+            {SKILL_STEPS.map((s) => {
+              const active = s.n === level;
+              return (
+                <div
+                  key={s.n}
+                  aria-current={active ? "step" : undefined}
+                  className={
+                    "rounded-md border px-2 py-2 text-center " +
+                    (active
+                      ? "border-[var(--c-line-strong)] bg-[var(--c-soft2)]"
+                      : "border-[var(--c-border)]")
+                  }
+                >
+                  <div
+                    className={
+                      "fig text-[length:var(--t-lead)] tabular-nums " +
+                      (active ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]")
+                    }
+                  >
+                    {s.n}
+                  </div>
+                  <div
+                    className={
+                      "mt-0.5 text-[length:var(--t-micro)] leading-tight " +
+                      (active ? "text-[var(--c-ink2)]" : "text-[var(--c-muted)]")
+                    }
+                  >
+                    {s.label}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
     </Section>
   );
+}
+
+/* BOTH OLD NAMES SURVIVE, and they are not dead weight. A trade can hold roles
+   with no skill level, or a level with no roles, and each wrapper renders the
+   merged card on what it has: the answer falls back to the skill step's own words
+   when there are no roles to rank. Every existing call site keeps compiling and
+   none of them can produce the two half-cards the merge exists to remove. */
+export function CanYouHire({ roles }: { roles: HireRole[] | null }) {
+  return <PeopleYouNeed roles={roles} level={null} />;
+}
+
+export function SkillLevel({ level }: { level: 1 | 2 | 3 | 4 | null }) {
+  return <PeopleYouNeed roles={null} level={level} />;
 }
 
 /* ================================================================== */
@@ -731,15 +832,74 @@ export function SkillLevel({ level }: { level: 1 | 2 | 3 | 4 | null }) {
  *
  * NO DIRECTION GRADIENT. These are neutral reads: neither end of "younger to
  * older" is better for business, and colouring one end would assert a direction
- * the data does not have (rule 28).
+ * the data does not have (rule 28). The dots are INK, which is the default, and
+ * saying so here is the point: money, residency and age have no better end, so
+ * no end is marked and no dot carries the accent.
+ *
+ * WHAT CHANGED, 2026-09-01, constitution B3. Three unlabelled sliders were the
+ * whole card, and a reader cannot act on a slider at 64.
+ *
+ * THE ANSWER is the PORTRAIT, composed from the three spectra into one phrase:
+ * "Comfortable passers-by, middle-aged." That is what a reader wants and what
+ * three sliders made them derive for themselves.
+ *
+ * THE EVIDENCE is the same three spectra in the ratified NAMED-ROW form, the
+ * trait name leading and the explanatory poles under the track's own ends, which
+ * is the founder's 2026-08-30 order on the country page.
+ *
+ * WHY EACH ROW DECLARES A `kind` AND NOT ITS OWN COPY. The portrait and the
+ * consequence are English, and English cannot be assembled out of pole labels:
+ * "Passing through" is a phrase, "Comfortable" is an adjective, and gluing them
+ * gives "Comfortable passing through". The alternative, shipping the words in
+ * with the data, would put this card's writing in a fixture where it would drift
+ * per place and read as invented. So the three spectra the constitution fixes
+ * declare WHICH they are, which is a structural fact rather than copy, and the
+ * component owns one well-written vocabulary that every place renders.
+ *
+ * AGE CONTRIBUTES TO THE PORTRAIT AND NOT TO THE CONSEQUENCE, deliberately. What
+ * an age skew does to a business (evenings against daytimes, say) is folklore
+ * until something measures it, and the constitution's own worked consequence
+ * names only money and residency.
  */
+export type PersonaKind = "money" | "residency" | "age";
+
 export interface PersonaSpectrum {
+  /** Which of the three fixed spectra this row is. Drives the composed English. */
+  kind: PersonaKind;
   spectrum: string;
   left: string;
   right: string;
   /** 0-100 position. */
   value: number;
 }
+
+/** The portrait's vocabulary: [leans left, sits in the middle, leans right]. */
+const PORTRAIT: Record<PersonaKind, [string, string, string]> = {
+  money: ["careful with money", "mixed incomes", "comfortable"],
+  residency: ["passers-by", "a mix of locals and visitors", "locals"],
+  age: ["younger", "middle-aged", "older"],
+};
+
+/** What each lean means for an owner. Null where nothing measured says anything. */
+const PERSONA_MEANS: Record<PersonaKind, [string, string, string] | null> = {
+  money: [
+    "price at the bottom of the local range",
+    "price for a mixed room, with a cheap option and a dear one",
+    "price at the top of the local range",
+  ],
+  residency: [
+    "win the sale on the first visit, because most of them will not come back",
+    "expect some of the trade to repeat and some of it to pass through",
+    "expect the same faces, so the trade is steady rather than seasonal",
+  ],
+  age: null,
+};
+
+/* THE MIDDLE IS A REAL BAND, NOT A HAIRLINE AT FIFTY. A cut at exactly 50 would
+   make 49 and 51 render opposite portraits off a difference neither the data nor
+   a reader can defend. Twenty points either side of centre reads as "mixed",
+   which is the honest word for a spectrum sitting near its middle. */
+const leanOf = (v: number): 0 | 1 | 2 => (v <= 40 ? 0 : v >= 60 ? 2 : 1);
 
 export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
   if (!rows || rows.length === 0) return null;
@@ -756,13 +916,41 @@ export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
      names here and translating once means the wrong shape cannot recur, and a
      screenshot is what caught it. */
   const mapped = rows.map((r) => ({
+    /* `name` IS WHAT SELECTS THE NAMED ROW. SpectraTable renders the compact
+       two-pole row when a row has no name and the ratified named form when it
+       has one, and the constitution asks for the named form here. */
+    name: r.spectrum,
     spectrum: r.spectrum,
     left_label: r.left,
     right_label: r.right,
     position_0_1: Math.max(0, Math.min(1, r.value / 100)),
   }));
+
+  /* THE PHRASE IS ASSEMBLED FROM WHAT IS HELD, and the join is the whole grammar:
+     everything but the last word is an adjective phrase, and the last is a tail
+     after a comma. "Comfortable passers-by, middle-aged." One spectrum alone
+     still reads as a portrait; a spectrum with no vocabulary drops out silently
+     rather than leaving a hole in the sentence. */
+  const words = rows.map((r) => PORTRAIT[r.kind]?.[leanOf(r.value)]).filter(Boolean) as string[];
+  const portrait =
+    words.length === 0
+      ? null
+      : words.length === 1
+        ? `${cap(words[0])}.`
+        : `${cap(words.slice(0, -1).join(" "))}, ${words[words.length - 1]}.`;
+
+  const clauses = rows.map((r) => PERSONA_MEANS[r.kind]?.[leanOf(r.value)]).filter(Boolean) as string[];
+  const consequence = clauses.length > 0 ? `${cap(clauses.join(", and "))}.` : null;
+
+  if (!portrait) return null;
   return (
-    <Section kicker="Who walks in" icon="who-for">
+    <Section
+      kicker="Who walks in"
+      icon="who-for"
+      answer={portrait}
+      answerNote="The room this trade sells to, read off the three spectra below."
+      consequence={consequence}
+    >
       <SpectraTable rows={mapped} />
     </Section>
   );

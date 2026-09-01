@@ -28,8 +28,7 @@ import {
   WhatThingsCost,
   Tipping,
   PublicSpaceCost,
-  CanYouHire,
-  SkillLevel,
+  PeopleYouNeed,
   WhoWalksIn,
   WhatGoesWrong,
   DealsAndRegimes,
@@ -89,10 +88,12 @@ const RESTAURANT = {
     ["Kitchen porter", 88, "Same week"],
   ] as Array<[string, number, string, string?]>,
   skill: 3 as const,
+  /* `kind` is structure, not copy: it says which of the three fixed spectra a row
+     is, so the section composes its own English instead of gluing pole labels. */
   personas: [
-    { spectrum: "Money", left: "Careful", right: "Comfortable", value: 64 },
-    { spectrum: "Lives here", left: "Passing through", right: "Local", value: 38 },
-    { spectrum: "Age", left: "Younger", right: "Older", value: 45 },
+    { kind: "money" as const, spectrum: "Money", left: "Careful", right: "Comfortable", value: 64 },
+    { kind: "residency" as const, spectrum: "Lives here", left: "Passing through", right: "Local", value: 38 },
+    { kind: "age" as const, spectrum: "Age", left: "Younger", right: "Older", value: 45 },
   ],
   risks: [
     { risk: "Break-in", safety: 4, driver: "street frontage, cash on site" },
@@ -135,7 +136,7 @@ const PLUMBER = {
   ],
   typicalTicket: 190,
   hire: [
-    ["Qualified plumber", 18, "Hard", "the binding constraint"],
+    ["Qualified plumber", 18, "Hard", "months to fill"],
     ["Apprentice", 62, "Steady"],
     ["Labourer", 84, "Same week"],
   ] as Array<[string, number, string, string?]>,
@@ -181,10 +182,14 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
       return isR ? <Tipping expectation={r.tipping.expectation} typicalShare={r.tipping.share} /> : null;
     case "public-space":
       return isR ? <PublicSpaceCost annual={r.publicSpace.annual} unit={r.publicSpace.unit} /> : null;
+    /* B1 and B2 are ONE card. The profile still lists both ids because a profile
+       says what a trade HAS, not how a page lays it out: the merged card renders
+       under the first and the second draws nothing, so neither the profile nor
+       the section order had to be rewritten to get the merge. */
     case "can-you-hire":
-      return <CanYouHire roles={isR ? r.hire : p.hire} />;
+      return <PeopleYouNeed roles={isR ? r.hire : p.hire} level={isR ? r.skill : p.skill} />;
     case "skill-level":
-      return <SkillLevel level={isR ? r.skill : p.skill} />;
+      return null;
     case "who-walks-in":
       return isR ? <WhoWalksIn rows={r.personas} /> : null;
     case "what-goes-wrong":
