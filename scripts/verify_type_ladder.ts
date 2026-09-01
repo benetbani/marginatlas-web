@@ -39,8 +39,11 @@ import { stripCommentLines } from "./lib/strip_comments";
 
 const BASELINE_PATH = "scripts/type_ladder_baseline.json";
 
-/** The ladder, as the single source of truth for this check. */
-const LADDER = [10, 11, 12, 14, 16, 18, 20, 24, 30, 48];
+/** The ladder, as the single source of truth for this check.
+ *  COMPRESSED 2026-09-01: the 11 rung rose to 12 and absorbed the old 12, the
+ *  18 folded into 20, and the ceiling fell from 48 to 40. Eight steps, and the
+ *  read range is 12 to 40. */
+const LADDER = [10, 12, 14, 16, 20, 24, 30, 40];
 
 /** Tailwind's own scale, in px, so `text-sm` is judged like `text-[14px]`. */
 const TW_PX: Record<string, number> = {
@@ -86,6 +89,9 @@ function collectSizes(): Finding[] {
 function declaredLadder(file: string): Record<string, string> {
   const src = readFileSync(file, "utf8");
   const found: Record<string, string> = {};
+  /* small and sub stay in this pattern DELIBERATELY after their retirement:
+     the gate must still SEE a retired rung if one is redeclared, and report it
+     as an unexpected step rather than skipping it silently. */
   for (const m of src.matchAll(/--t-(mark|micro|small|body|lead|sub|head|section|focal|answer)\s*:\s*([0-9.]+px)/g)) {
     found[m[1]] = m[2];
   }
@@ -103,14 +109,16 @@ const ok = (msg: string) => console.log(`  ok    ${msg}`);
 /* ---- 1. The two stylesheets must agree. Hard. ---- */
 const A = declaredLadder("src/app/globals.css");
 const B = declaredLadder("src/styles/atlas-spine.css");
-const STEPS = ["mark", "micro", "small", "body", "lead", "sub", "head", "section", "focal", "answer"];
+const STEPS = ["mark", "micro", "body", "lead", "head", "section", "focal", "answer"];
+/** Retired 2026-09-01. Declaring either again is a defect, not a missing step. */
+const RETIRED_STEPS = ["small", "sub"];
 
 const missingA = STEPS.filter((s) => !A[s]);
 const missingB = STEPS.filter((s) => !B[s]);
 if (missingA.length) fail("globals.css is missing ladder steps", missingA.join(", "));
-else ok("globals.css declares all ten steps");
+else ok("globals.css declares all eight steps");
 if (missingB.length) fail("atlas-spine.css is missing ladder steps", missingB.join(", "));
-else ok("atlas-spine.css declares all ten steps");
+else ok("atlas-spine.css declares all eight steps");
 
 const drifted = STEPS.filter((s) => A[s] && B[s] && A[s] !== B[s]);
 if (drifted.length) {
