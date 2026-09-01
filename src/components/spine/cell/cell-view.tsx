@@ -466,7 +466,7 @@ function SurvivalSlope({ points }: { points: Array<[string, number]> }) {
                 style={{ left: `${leftPct(i)}%`, top: `${Y(v)}px`, width: lead ? 8 : 6, height: lead ? 8 : 6, background: lead ? TERRA : "var(--c-ink)" }}
               />
               <span className="absolute leading-none" style={{ left: `${leftPct(i)}%`, top: `${Y(v) - 19}px`, transform: anchor(i) }}>
-                <Fig className={`text-[length:var(--t-small)] ${lead ? "font-semibold text-[var(--terra-text)]" : "font-medium text-[var(--c-ink)]"}`}>{v}%</Fig>
+                <Fig className={`text-[length:var(--t-micro)] ${lead ? "font-semibold text-[var(--terra-text)]" : "font-medium text-[var(--c-ink)]"}`}>{v}%</Fig>
               </span>
               <span className="absolute whitespace-nowrap text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]" style={{ left: `${leftPct(i)}%`, top: `${H - 13}px`, transform: anchor(i) }}>
                 {label}

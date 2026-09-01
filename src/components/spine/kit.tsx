@@ -703,7 +703,7 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink" }: 
         if (r.name) {
           return (
             <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-              <div className="flex items-center text-[length:var(--t-small)] font-medium text-[var(--c-ink)]">
+              <div className="flex items-center text-[length:var(--t-micro)] font-medium text-[var(--c-ink)]">
                 {gloss ? <InfoTip gloss={gloss} className="mr-1.5" /> : null}
                 {r.name}
               </div>

@@ -74,7 +74,7 @@ export function Nearby({ d }: { d: any }) {
           header per place, and the sort state on the header where it is read.
           The small labels stay for the phone layout, and above it the header
           does the work it was always drawn to look like it was doing. */}
-      <Table className="text-[length:var(--t-small)]">
+      <Table className="text-[length:var(--t-micro)]">
         <caption className="sr-only">
           The same trade in comparable places, sorted by {col.label.toLowerCase()}, highest first.
         </caption>
@@ -134,7 +134,7 @@ export function Nearby({ d }: { d: any }) {
                 return (
                   <TableCell key={c.key} className="min-w-0 px-0 py-0 align-middle sm:table-cell sm:py-2.5 sm:text-right">
                     <span className="block text-[length:var(--t-mark)] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
-                    <Fig className={`text-[length:var(--t-small)] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
+                    <Fig className={`text-[length:var(--t-micro)] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
                   </TableCell>
                 );
               })}
@@ -215,7 +215,7 @@ export function Wages({ d }: { d: any }) {
           <div className="mt-1 space-y-1.5">
             {roles.slice(0, 3).map((r) => (
               <div key={r.role} className="flex items-baseline justify-between gap-3">
-                <span className="min-w-0 truncate text-[length:var(--t-small)] text-[var(--c-ink2)]">{r.role}</span>
+                <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.role}</span>
                 <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
               </div>
             ))}
@@ -247,7 +247,7 @@ export function Wages({ d }: { d: any }) {
                Below the breakpoint the bracket now takes its own full-width line
                under the role and its figure. Above it, nothing moves. */
             <div key={r.role} className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 gap-y-2 sm:grid-cols-[120px_1fr_56px] sm:items-center sm:gap-3">
-              <span className="min-w-0 truncate text-[length:var(--t-small)] text-[var(--c-ink2)]">{r.role}</span>
+              <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.role}</span>
               <Fig className="order-2 text-right text-[length:var(--t-body)] text-[var(--c-ink)] sm:order-3">{kUsd(r.mid_usd)}</Fig>
               <div className="order-3 col-span-2 relative h-3.5 sm:order-2 sm:col-span-1" role="img" aria-label={`${r.role} ${kUsd(r.low_usd)} to ${kUsd(r.high_usd)}, typically ${kUsd(r.mid_usd)}`}>
                 <div aria-hidden className="absolute top-1/2 h-px -translate-y-1/2" style={{ left: `${L}%`, width: `${W}%`, background: "var(--chart-4)" }} />

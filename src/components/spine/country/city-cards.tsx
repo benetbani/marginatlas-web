@@ -80,7 +80,7 @@ export function CityCardsPager({ cities, allHref }: { cities: CityCardRow[]; all
         ))}
       </div>
       <div className="mt-2.5 text-right">
-        <a href={allHref} className="text-[length:var(--t-small)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">
+        <a href={allHref} className="text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">
           Every covered city <span aria-hidden>&#8594;</span>
         </a>
       </div>

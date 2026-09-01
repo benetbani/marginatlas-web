@@ -96,7 +96,7 @@ export function SetupTiers({ tiers }: { tiers: SetupTier[] }) {
             </button>
             {isOpen && explainer ? (
               <div className="mt-2 rounded-[8px] bg-[var(--c-soft)] px-3 py-2.5">
-                <p className="text-[length:var(--t-small)] leading-relaxed text-[var(--c-ink2)]">{explainer}</p>
+                <p className="text-[length:var(--t-micro)] leading-relaxed text-[var(--c-ink2)]">{explainer}</p>
                 <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">
                   {[
                     isNum(t.cost_usd) ? (t.cost_usd === 0 ? "Registers free" : "Registers for " + usd(t.cost_usd)) : null,

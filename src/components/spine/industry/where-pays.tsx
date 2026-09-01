@@ -48,7 +48,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
             still reads as reachable. One row in this list carries a link.
             THE COLUMN SIZES ITSELF. It was pinned at four and a half rem, which
             on a phone took a third of the row for a two-character figure. */}
-        <Table className="text-[length:var(--t-small)]">
+        <Table className="text-[length:var(--t-micro)]">
           <caption className="sr-only">
             The rent as a share of sales, city by city, lightest first.
           </caption>
@@ -69,7 +69,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
                 <TableRow key={r.name} className={`${r.href ? "hov " : ""}border-0 hover:bg-transparent`}>
                   <TableHead
                     scope="row"
-                    className={`h-auto min-w-0 px-2 py-2 text-left align-middle text-[length:var(--t-small)] ${isLightest ? "font-semibold text-[var(--c-ink)]" : "font-normal text-[var(--c-ink2)]"}`}
+                    className={`h-auto min-w-0 px-2 py-2 text-left align-middle text-[length:var(--t-micro)] ${isLightest ? "font-semibold text-[var(--c-ink)]" : "font-normal text-[var(--c-ink2)]"}`}
                   >
                     {/* Real links only: a row is a link solely when its place carries
                         a real destination. Every other city is plain text: no arrow,
@@ -84,7 +84,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
                     )}
                   </TableHead>
                   <TableCell className="w-px whitespace-nowrap px-2 py-2 text-right align-middle">
-                    <Fig className="text-[length:var(--t-small)] text-[var(--c-ink)]">{r.rent_load_pct}%</Fig>
+                    <Fig className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{r.rent_load_pct}%</Fig>
                   </TableCell>
                 </TableRow>
               );

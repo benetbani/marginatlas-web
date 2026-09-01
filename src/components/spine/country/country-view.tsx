@@ -92,7 +92,7 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
           <li key={s.id}>
             <a
               href={`#${s.id}`}
-              className="block max-w-[18ch] text-[length:var(--t-small)] leading-snug text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"
+              className="block max-w-[18ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"
             >
               {s.label}
             </a>
@@ -322,7 +322,7 @@ function Peers({ peers }: { peers: any }) {
             the table reconfigures to one stacked card per country (rendered
             after the table below); the real table renders from md up. */}
         <div className="hidden md:block">
-        <Table className="text-[length:var(--t-small)]">
+        <Table className="text-[length:var(--t-micro)]">
           <caption className="sr-only">The same four set-up facts for each country, side by side.</caption>
           <TableHeader>
             <TableRow className="border-[var(--c-border)] hover:bg-transparent">
@@ -548,7 +548,7 @@ function Money({ money }: { money: any }) {
           <a key={r.slug} href={r.href} className={"group " + cols + " py-2.5"}>
             <span className="truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]">{r.name}</span>
             <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(r.keeps_usd_year)}</Fig>
-            <Fig className="text-right text-[length:var(--t-small)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
+            <Fig className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
             <span aria-hidden className="text-right text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
           </a>
         ))}
@@ -816,7 +816,7 @@ function LocalsKnow({ locals }: { locals: any }) {
       <div id="locals" className="divide-y divide-[var(--c-border)]">
         {items.map((it: any, i: number) => (
           <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-            <div className="text-[length:var(--t-small)] font-semibold text-[var(--c-ink)]">{it.label}</div>
+            <div className="text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">{it.label}</div>
             <div className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{it.fact}</div>
           </div>
         ))}
