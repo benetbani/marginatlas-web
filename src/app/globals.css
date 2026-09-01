@@ -2252,15 +2252,35 @@
    byte-identical; verify_type_ladder is what stops them drifting. */
 :root {
   --t-mark: 10px;    /* marks only. Never a sentence, never a label to read */
-  --t-micro: 11px;   /* the floor for anything read: axis units, chips, column heads */
-  --t-small: 12px;   /* secondary labels, captions, the key half of a key/value pair */
+  /* THE LADDER, compressed 2026-09-01. Founder: "a big variability in fonts
+     which is traumatic to the eye, the difference between H1 and the smallest
+     font cannot be so gigantic." Measured first: the country page used seven
+     sizes, and two of them (12 beside 11, 18 beside 20) carried a twentieth and
+     a third of their neighbour's work while adding a size to every screen. A
+     reader cannot perceive a one-pixel step as hierarchy.
+
+     The floor RISES, which compresses the range from below and makes the
+     smallest text more readable at the same time: the 26 smallest labels on the
+     country page get bigger, not smaller. Supersedes the 2026-08-21 ruling that
+     set it at 11, in the same direction and for the same reason.
+
+     The ceiling is DERIVED, not chosen. Rule 16 wants the answer at 1.6x its
+     supports; the page title shares the masthead card with it. 40 over a 24
+     title is 1.67x. A 36 ceiling would force titles to 20, colliding with
+     headings site-wide. So 40 is the smallest ceiling that keeps both laws.
+
+     --t-small and --t-sub are RETIRED. They still resolve during this step so
+     the reference sweep that follows is provably visual-neutral; they are
+     deleted in the step after, and a gate stops them returning. */
+  --t-micro: 12px;   /* the floor for anything read: axis units, chips, column heads */
+  --t-small: 12px;   /* RETIRING: equal to micro so the sweep changes nothing */
   --t-body: 14px;    /* body prose. The default */
   --t-lead: 16px;    /* a lede, a card's first line */
-  --t-sub: 18px;     /* subsection heading, h3 */
-  --t-head: 20px;    /* section heading, h2 */
-  --t-section: 24px; /* chapter opener */
+  --t-sub: 20px;     /* RETIRING: equal to head so the sweep changes nothing */
+  --t-head: 20px;    /* every heading, h2 and h3 */
+  --t-section: 24px; /* chapter opener, and a naming h1 */
   --t-focal: 30px;   /* a section's own focal figure */
-  --t-answer: 48px;  /* the page's one dominant figure, h1. NOTHING IS LARGER */
+  --t-answer: 40px;  /* the page's one dominant figure. NOTHING IS LARGER */
 
   /* THE READING MEASURE. Founder, 2026-08-21: "on the desktop, some icons and
      sections are very wide for the eye, so the eye has to do like an angle to
