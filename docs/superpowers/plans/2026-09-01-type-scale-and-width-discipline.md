@@ -305,7 +305,9 @@ node scripts/verify_retired_type_tokens.mjs; echo "REAL EXIT CODE: $?"
 **Files:**
 - Modify: `src/components/spine/country/country-view.tsx` (h1 at ~line 193), `src/components/spine/city/masthead.tsx` (~52), `src/components/spine/hood/masthead.tsx` (~72), `src/components/spine/industry/industry-view.tsx` (~69), `src/components/spine/cell/masthead.tsx` (~50)
 
-- [ ] **Step 1: Apply the rule from the spec's step 4 table.** Four naming h1s (country, city, hood, industry) take `text-[length:var(--t-section)]`, replacing `var(--t-focal)` or the Tailwind pair `text-3xl md:text-4xl` / `md:text-[2.75rem]`. The trade page's answering h1 takes `text-[length:var(--t-answer)]`, replacing `text-3xl md:text-[2.6rem]`.
+- [ ] **Step 1: Apply the rule from the spec's step 4 tables, CORRECTED 2026-09-01.** All FIVE h1s take `text-[length:var(--t-section)]`, replacing `var(--t-focal)` or the Tailwind pairs (`text-3xl md:text-4xl`, `md:text-[2.75rem]`, `md:text-[2.6rem]`). No h1 takes the answer size: it belongs to the page's dominant figure.
+
+- [ ] **Step 1b: Move the two off-ladder figures onto the ceiling.** In `src/components/spine/cell/masthead.tsx` (~line 68) the take-home figure's inline `style={{ fontSize: "clamp(2.6rem, 7vw, 3.6rem)" }}` is deleted and the element takes `text-[length:var(--t-answer)]`; its upper bound of 57.6px sat above the new ceiling. In `src/components/spine/city/masthead.tsx` (~line 73) the hardcoded `text-[30px] md:text-[48px]` becomes `text-[length:var(--t-answer)]`. This is what makes the city masthead's contrast pass: its tiles rise to 20 with the folded rung, and 30 against 20 would be 1.5x, under rule 16's floor, while 40 against 20 is 2.0x at every width.
 
 - [ ] **Step 2: Remove any now-pointless `data-typography="custom"`** on those h1s: the marker exists to declare an off-ladder size, and these are now on the ladder. Where the marker is removed, remove its written reason with it.
 

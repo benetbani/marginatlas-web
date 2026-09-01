@@ -114,12 +114,15 @@ at all; the other four are Tailwind sizes off the ladder entirely, at 36, 36,
 trade page's h1, and the trade page's h1 is not a name, it is the answer
 sentence itself.
 
-**THE RULE, therefore, is about what the h1 SAYS, not what size it currently
-is.** An h1 that NAMES the page takes `--t-section` (24), because a separate
-figure carries the answer. An h1 that IS the page's answer takes `--t-answer`
-(40), and then nothing else on that page may take the answer size.
+**THE RULE, corrected 2026-09-01 during task 1, before any code moved.** The
+first draft said an h1 that IS the answer takes `--t-answer` (40). Task 1's
+implementer refused to guess at two arithmetic consequences it could not
+settle, and reading the mastheads' code settled both the same way and proved
+that draft wrong.
 
-Verified against the five mastheads, one by one:
+**EVERY h1 takes `--t-section` (24). The answer size belongs to the page's one
+dominant FIGURE and never to an h1.** A title is read as language; a figure is
+read as a quantity; only the quantity may be the largest thing (rule 16).
 
 | page | the h1 renders | today | becomes |
 |---|---|---|---|
@@ -127,11 +130,30 @@ Verified against the five mastheads, one by one:
 | city | the city name | 30, 36 at desktop | `--t-section` 24 |
 | hood | the city name | 30, 36 at desktop | `--t-section` 24 |
 | industry | the trade name | 30, 44 at desktop | `--t-section` 24 |
-| cell | THE ANSWER SENTENCE | 30, 41.6 at desktop | `--t-answer` 40 |
+| cell | an answer SENTENCE | 30, 41.6 at desktop | `--t-section` 24 |
 
-This closes four pages' off-ladder h1 debt, including the city's recorded one,
-and it moves the trade page's answer sentence by 1.6 pixels rather than
-demoting it.
+**AND TWO FIGURES MOVE ONTO THE CEILING, both off the ladder today, both found
+by the same check:**
+
+| page | figure | today | becomes |
+|---|---|---|---|
+| cell | the take-home figure | a clamp, 41.6 to 57.6 | `--t-answer` 40 |
+| city | the masthead focal | hardcoded 30 / 48 | `--t-answer` 40 |
+
+**Why the draft was wrong, page by page.** On the trade page the h1 is an answer
+sentence, but the same masthead already carries a bigger take-home figure whose
+clamp tops out at 57.6, above the new ceiling. An h1 fixed at 40 would have
+stood 1.6 pixels from that figure's phone floor: two same-weight answers
+stacked on a phone. On the city page the masthead's tiles rise from 18 to 20
+with the folded rung, and its focal is hardcoded at 30 on a phone, so 30 against
+20 is 1.5x and fails rule 16's floor where 30 against 18 had cleared it. Moving
+that focal to a flat 40 gives 2.0x at every width and removes two off-ladder
+sizes at the same time.
+
+This closes all five pages' off-ladder h1 debt, retires the last two figure
+sizes living outside the ladder, and settles a standing open question in the
+trade page's constitution about whether its clamp should ever become a token:
+it must, because its upper bound sat above the new ceiling.
 
 ---
 
