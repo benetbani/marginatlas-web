@@ -73,9 +73,34 @@
  *   score with no ends named at all, so a reader could not tell whether four
  *   filled dots was good news; three risks on one labelled track are comparable
  *   at a glance, which is what the constitution asks of it.
+ *
+ * ============ THE 2026-09-02 MIGRATION, ONE SECTION AT A TIME ==============
+ *
+ * Wave 2's EaseScale answer above is exactly what the founder then rejected: he
+ * saw all ten and said "in all sections you have just used this horizontal bar
+ * with the points in between, which is so bad. You have overused it like crazy."
+ * Nine of ten readings had come out as a line with a dot on it, because the kit
+ * exported three drawings and all three were horizontal tracks.
+ *
+ * The catalogue's version 2 put a cap of TWO on that idea per page and gave every
+ * other reading its own form; version 3 rebuilt seven of those forms after he
+ * called them slop, and they now live in src/components/spine/forms-v2.tsx where
+ * a shipping file can reach them. THIS FILE MIGRATES ONTO THEM ONE SECTION PER
+ * COMMIT, each with its warrant, its declared width and its photograph, because a
+ * batch of ten is what produced the work he rejected. The subsection queue at
+ * E:/atlas/design/loop/SUBSECTION-QUEUE.md holds the order and the ledger beside
+ * it holds what each photograph changed.
  */
 import * as React from "react";
 import { Box, Rail, Fig, KV, Meter, EaseScale, SpectraTable, Expand, cap } from "@/components/spine/kit";
+/* THE CATALOGUE'S OWN VOCABULARY, WHICH THIS FILE COULD NOT REACH UNTIL NOW.
+   Every section below was written against a kit that exported three drawings,
+   all three of them horizontal tracks, which is the whole mechanism behind the
+   founder's 2026-09-01 rejection ("in all sections you have just used this
+   horizontal bar with the points in between"). forms-v2.tsx holds the eight
+   replacements; sections migrate onto them one at a time, each with its own
+   photograph and its own commit. */
+import { RankedTiles } from "@/components/spine/forms-v2";
 
 /* ------------------------------------------------------------------ */
 /* Shared                                                              */
@@ -134,11 +159,13 @@ function Section({
   icon,
   sample,
   answer,
+  answerKind = "figure",
   answerNote,
   accent = false,
   children,
   consequence,
   next,
+  lean = false,
   id,
 }: {
   kicker: string;
@@ -146,6 +173,19 @@ function Section({
   sample?: boolean;
   /** THE ANSWER. Absent means the section is a wave-2 skeleton, not a finished card. */
   answer?: React.ReactNode;
+  /** WHETHER THE ANSWER IS A QUANTITY OR A PHRASE, and it is a ladder rule
+   *  rather than a taste. The subsection procedure, step 5: "A WORD IS NOT A
+   *  QUANTITY. A state, a name, a verdict phrase takes lead or section size,
+   *  never focal or answer. Sizing a word like a figure was a named fault: it
+   *  makes a card look shouted rather than designed." Version 3 of the form
+   *  catalogue struck StateWord's 30px word for the same reason.
+   *  A price, a headcount, a break-even is a `figure` and keeps the focal rung.
+   *  A named risk, a named role, a verdict is `words` and takes the section
+   *  rung at 24 with semibold weight (rule 35: 600, never 700), which still
+   *  clears the 1.6x ratio against the 14px evidence beneath it.
+   *  IT DEFAULTS TO `figure` so the sections not yet migrated render unchanged;
+   *  each one opts in as its own row of the subsection queue comes up. */
+  answerKind?: "figure" | "words";
   /** Sits BENEATH the answer at micro, never beside it competing. The yardstick's seat. */
   answerNote?: React.ReactNode;
   accent?: boolean;
@@ -155,16 +195,30 @@ function Section({
   consequence?: React.ReactNode;
   /** THE EXPECTED CHOICE, one click. */
   next?: { label: string; href: string };
+  /** THE CARD ASKS FOR THE NARROW COLUMN, and it is a width declaration rather
+   *  than a style. Band's lone-child rule re-templates to two thirds and one
+   *  third, which is right for a survivor still carrying a table or a chart and
+   *  wrong for a card whose evidence is a few short rows: photographed at 1280,
+   *  the risk card came out 693px wide with about 480px of nothing between each
+   *  risk's name and its reading, three rows deep. That is the founder's first
+   *  named fault class, big white space, and the fix is the width and not the
+   *  content. `data-lean` moves the air OUTSIDE the card's edge, where an uneven
+   *  band reads as a composition instead of as a hole. */
+  lean?: boolean;
   id?: string;
 }) {
   return (
-    <Box id={id} data-trade-section="1">
+    <Box id={id} data-trade-section="1" data-lean={lean ? "1" : undefined}>
       <div style={{ padding: "20px" }}>
         <Rail icon={icon} kicker={kicker} sample={sample} />
         {answer != null ? (
           <div className="mb-3.5">
             <div
-              className="text-[length:var(--t-focal)] leading-none"
+              className={
+                answerKind === "words"
+                  ? "text-[length:var(--t-section)] font-semibold leading-snug tracking-[-0.01em]"
+                  : "text-[length:var(--t-focal)] leading-none"
+              }
               style={{ color: accent ? "var(--terra-text)" : "var(--c-ink)" }}
             >
               {answer}
@@ -1082,20 +1136,42 @@ export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
 /* 8. WHAT CAN GO WRONG                                                */
 /* ================================================================== */
 /**
- * FORM: EaseScale, the one shared left-right track, and this is a CHANGE of form
- * with a reason. It was Dots, a 0-10 score row per risk, and Dots name neither
- * end of their own scale: a reader met four filled dots beside "Break-in" and
- * could not tell whether that was reassuring or alarming. Three risks on one
- * labelled track are comparable at a glance, which is exactly what the
- * constitution asks the evidence here to be.
+ * WARRANT (subsection procedure, step 1). A visitor reads this to decide WHICH
+ * FAILURE TO SPEND MONEY AND ATTENTION ON BEFORE OPENING, and whether cover is
+ * worth buying at all. Without it they would have to find out which of the three
+ * actually bites this trade in this place the expensive way, after it has bitten.
  *
  * His words: "Also burglary risk, lawsuit risk, penality risk, other typical
  * risks."
  *
+ * INFORMATION TYPE (step 2): A RANKING OF NAMED THINGS, worst first. The
+ * catalogue's index sends a ranking of FEW things to RankedTiles and a ranking of
+ * many to LollipopColumn. Three named risks is few, so RankedTiles, which is what
+ * the queue predicted.
+ *
+ * FORM: RankedTiles (idea I6), and this is the SECOND change of form here. It was
+ * Dots, then EaseScale, and EaseScale is the shape the founder rejected across
+ * the whole page on 2026-09-01: "in all sections you have just used this
+ * horizontal bar with the points in between... you have overused it like crazy."
+ * The diagnosis is not that a track is ugly. A track is the right drawing for ONE
+ * reading, a position between two named poles, and this is not that reading:
+ * "bites often" and "rarely bites" are not two poles a risk sits between, they are
+ * the top and bottom of an ORDER. Drawing three markers at 40, 50 and 70 on a
+ * rail also publishes distances that a modelled 0-to-10 score does not hold. The
+ * standing claims the order and claims nothing else, which is exactly as much as
+ * this data can carry.
+ *
+ * THE BUDGET (step 3): the trade page is at the horizontal-track cap of two, so a
+ * fourth I1 was never available here. This move SPENDS one I6 of three and
+ * RETURNS one I1, which is the direction every remaining row of the queue has to
+ * run in.
+ *
  * INVERTED BEFORE IT ARRIVES, rule 29A: a big risk reads as a LOW score, so
  * this section runs the same direction as every other scale on the page. Two
  * boxes in one band that disagree about which end is good is a defect, and the
- * risk section is where that always happens.
+ * risk section is where that always happens. On a standing the inversion is
+ * invisible to the reader, which is the point: they meet the worst risk at rank
+ * one and never have to learn which end of a scale is the bad one.
  *
  * THE SEVERITY MUST BE DERIVED, NOT LITERAL. The chip this replaces read "rare"
  * on all twenty trades in the atlas because it was a hardcoded string. Callers
@@ -1103,10 +1179,36 @@ export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
  * behind it is omitted rather than given a default. The WORD on each marker is
  * derived from that score here, for the same reason.
  *
- * THE ANSWER is the biggest risk NAMED WITH ITS DRIVER, ranked to the top of the
- * scale beneath it. Its driver is then suppressed on its own row: the answer
- * directly above already carries it, and printing it twice in one card reads as
- * a mistake rather than as emphasis.
+ * THE ANSWER is the biggest risk NAMED WITH ITS DRIVER, standing at rank one of
+ * the list beneath it. IT IS SET AT THE SECTION RUNG AND NOT THE FOCAL ONE, which
+ * is a correction rather than a preference: "Break-in" is a name, and step 5 of
+ * the subsection procedure says a name takes lead or section size and never the
+ * size a figure takes. At 30 it was a word shouted; at 24 semibold it is a
+ * verdict, and it still stands 1.7x over the 14px names ranked under it.
+ *
+ * WHAT THE DRIVERS COST, said plainly because it is the one thing this form gives
+ * up. EaseScale carried a fourth slot, so every risk could show what drives it. A
+ * standing has two columns, the name and the reading, and a third would turn the
+ * form into something the catalogue does not hold. So the WORST risk's driver
+ * rides in the answer, where a reader needs it, and the other two are not printed.
+ * That is a real loss and it buys the reading: three risks in rank order with
+ * their frequency down one aligned column, legible in about a second, against
+ * four markers on a rail that had to be decoded against its end labels first.
+ *
+ * COMPOSITION (step 4): the rank numerals align down the left at mark size, the
+ * frequency words align down the right in the figure face, and the risk names run
+ * between them. ADJACENCY carries the meaning: rank one sits directly under the
+ * answer that named it, so the answer and the top row are read as one object.
+ *
+ * THE FREQUENCY WORD IS DERIVED AND COARSER THAN THE ORDER, deliberately. Two
+ * risks can both read "Sometimes" and still rank one above the other, because the
+ * score behind them is finer than the four words it is bucketed into. That is a
+ * league table with equal points separated on goal difference, and it is honest;
+ * printing "4.0" and "5.0" instead would claim a precision the score has not got.
+ *
+ * THE SAMPLE TAG IS ON, and it belongs to the whole card. Every one of these
+ * scores is derived rather than counted, and step 8 of the procedure is blunt
+ * about it: a modelled figure without the tag is a lie the reader cannot see.
  *
  * THE CONSEQUENCE IS A COST ONLY WHERE A COST EXISTS. With an insurance figure
  * the ranking becomes a decision; without one the ranking stands alone and the
@@ -1153,23 +1255,27 @@ export function WhatGoesWrong({
     <Section
       kicker="What tends to go wrong"
       icon="safety"
+      sample
+      lean
       answer={
         <>
           {worst.risk}.
-          {worst.driver ? <span style={{ color: "var(--c-ink2)" }}> {cap(worst.driver)}.</span> : null}
+          {worst.driver ? (
+            <span style={{ color: "var(--c-ink2)", fontWeight: 400 }}> {cap(worst.driver)}.</span>
+          ) : null}
         </>
       }
+      answerKind="words"
       answerNote="The one most likely to bite here, and what makes it likely."
       consequence={consequence}
     >
-      <EaseScale
-        rows={ranked.map((r, i) => [
-          r.risk,
-          (r.safety as number) * 10,
-          riskWord(r.safety as number),
-          i === 0 ? undefined : r.driver,
-        ])}
-        endLabels={["Bites often", "Rarely bites"]}
+      {/* THE ORDER IS THE READING, so the form is a standing and not a scale.
+          The caller has already sorted worst first; RankedTiles never sorts,
+          because half of this site's rankings are best-when-low and a component
+          that sorted would be guessing a direction nobody told it. */}
+      <RankedTiles
+        rows={ranked.map((r) => ({ name: r.risk, value: riskWord(r.safety as number) }))}
+        ariaLabel="Risks here, worst first"
       />
     </Section>
   );
