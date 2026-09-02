@@ -92,15 +92,17 @@
  * it holds what each photograph changed.
  */
 import * as React from "react";
-/* EaseScale IS GONE FROM THIS IMPORT, and its absence is the point of the two
-   commits on 2026-09-02. It drew both the risk ranking and the role ranking as
-   one left-to-right rail with markers on it, which is two of the nine tracks the
-   founder counted. Meter survives for the TOWN HALL alone now (B6, untaken);
-   tipping gave its Meter back on 2026-09-02, which returns the restaurant column
-   to the cap of two rather than one over it. SpectraTable stays because
-   who-walks-in is the one legitimate track on this page: three positions between
-   two named poles, which is the reading the form exists for. */
-import { Box, Rail, Fig, KV, Meter, SpectraTable, InlineDisclosure, cap } from "@/components/spine/kit";
+/* EaseScale AND Meter ARE BOTH GONE FROM THIS IMPORT, and their absence is the
+   point of four commits on 2026-09-02. EaseScale drew both the risk ranking and
+   the role ranking as one left-to-right rail with markers on it, which is two of
+   the nine tracks the founder counted. Meter drew tipping (B2 handed it back) and
+   the town hall (B6 handed the last one back); catalogue version 2 retired that
+   form outright and this file was its last caller.
+   SpectraTable STAYS, and it is now the only horizontal track on this page:
+   who-walks-in is three positions between two named poles, which is the one
+   reading the catalogue reserves the idea for. The restaurant column runs I1 1 of
+   2 as a result, where it was 3 of 2 when this migration started. */
+import { Box, Rail, Fig, KV, SpectraTable, InlineDisclosure, cap } from "@/components/spine/kit";
 /* THE CATALOGUE'S OWN VOCABULARY, WHICH THIS FILE COULD NOT REACH UNTIL NOW.
    Every section below was written against a kit that exported three drawings,
    all three of them horizontal tracks, which is the whole mechanism behind the
@@ -1904,14 +1906,58 @@ export function DealsAndRegimes({
 /* 10. HOW CLEAN IS THE TOWN HALL                                      */
 /* ================================================================== */
 /**
- * FORM: Meter, inverted.
+ * WARRANT (subsection procedure, step 1). A visitor reads this to decide WHETHER
+ * OPENING HERE NEEDS SOMEBODY'S TIME BUDGETED FOR THE PAPERWORK, or only the
+ * waiting. Without it they would put a permit in the post and fix an opening date
+ * against it, and find out in the third silent month that the permit was never
+ * going to move on its own and nobody was assigned to push it.
+ * NOT A DUPLICATE, checked on the render: no other card in either trade column
+ * says anything about the council, a permit or a licence being granted. The
+ * pavement card states what a licence COSTS; this one states whether it arrives.
  *
- * His words: "Incidence of corruption of mayoral/government officials."
+ * INFORMATION TYPE (step 2): A LEVEL ON A NAMED LADDER. The reading is one
+ * published 0-to-100 figure, and what a reader can act on is which of three named
+ * states it puts the town hall in, which is the card's own banding and has been
+ * since it was built: the consequence has branched on 65 and on 40 all along.
+ *
+ * FORM: StepLadder (idea I4, cap 2). DISAGREES WITH THE QUEUE, which predicted
+ * "BenchmarkPair + StateWord", and both halves are refused on the fixture, which
+ * is the fifth row in this loop where the prediction was wrong about its own data
+ * after A5, A8, B2 and B3.
+ *   NOT BenchmarkPair (I9): it renders literally nothing without a REFERENCE, and
+ *   there is no second figure of this kind anywhere in the fixture or in src/lib.
+ *   B1 could add one because its own queue row named a reference as its content;
+ *   this row's names "one reading with its DIRECTION named", which is a different
+ *   request. A direction is not a comparison: it says which way the scale runs,
+ *   and a named ladder says that by drawing the states in order.
+ *   NOT StateWord (I9): its index row is a yes or no, and a 0-to-100 perception
+ *   score is not binary. Its three marks are tick, cross and dash, where the dash
+ *   means not-applicable, so a middling town hall would have to borrow a mark that
+ *   means something else. B2 refused the mirror image of this for tipping.
+ *   NOT the Meter it replaces: version 2 of the catalogue retired that form
+ *   outright, and its own entry says why. A modelled 0-to-100 score has no unit
+ *   and no meaningful zero, and a marker positions it to the pixel, so the drawing
+ *   claimed 71 was a measured distance along a scale whose two ends are English
+ *   phrases. The fill made it worse than tipping's did: it ran FROM the friction
+ *   end, so 71% of the track was painted terracotta and length read as goodness.
+ * BUDGET, counted on the render before building, per trade column: restaurant I1
+ * 2 of 2 (at cap), I4 1 of 2, I8 9, I9 2, I11 2 of 2 (at cap). This card renders
+ * ONE I4 and RETURNS the I1, so the page goes to I1 1 of 2 and I4 2 of 2. Nothing
+ * queued needs another stepped sequence. Adjacency holds: the card beside it is
+ * the schemes table (I8), the band above holds tipping (I9) and the pavement
+ * licence (I9 and I8), the band below is the risk standing (I11), and the page's
+ * other ladder is two bands up in the other column.
+ *
+ * THE LADDER RUNS CLEAN AT THE TOP, which is a departure from the form's default
+ * and a deliberate one. StepLadder's own entry says "hardest at the top", which is
+ * right for the skill ladder two bands up, where the reading is how much training
+ * a trade demands. Here the card's answer says "high is clean" in words at 30px
+ * directly above the drawing, and a ladder putting clean at the bottom would make
+ * one card point two ways at once. Rule 29A and this file's own rule 2 both say
+ * the same thing: one scale, high reads good, everywhere.
  *
  * INVERTED SO HIGH READS GOOD, rule 29A. Corruption is a burden, so the value
- * passed in is CLEANLINESS, and the ends are labelled accordingly. A meter
- * where right means "more corrupt" would be the only scale on the page pointing
- * the other way.
+ * passed in is CLEANLINESS, and the rungs are named accordingly.
  *
  * THE UNIVERSALITY TEST IS THE HARD ONE HERE, harder than for tipping. This
  * section renders a judgement about a place's officials, and it must be a
@@ -1920,14 +1966,14 @@ export function DealsAndRegimes({
  * for a country, this renders NOTHING. That is not a degraded state; for this
  * section it is the correct one.
  *
- * WHAT CHANGED, 2026-09-01, constitution C4.
+ * WHAT CHANGED, 2026-09-01, constitution C4; and again 2026-09-02, queue row B6.
  *
  * THE DIRECTION IS NAMED IN WORDS, INSIDE THE ANSWER. A bare 71 on a scale
  * nobody has named is the exact shape of a number a reader cannot use: high
  * might be clean or high might be corrupt, and a meter with two end labels a
- * line below does not settle it fast enough. The answer now says "of 100, high
+ * line below does not settle it fast enough. The answer says "of 100, high
  * is clean" in ink2 beside the figure, so the reading and its direction arrive
- * together and nothing has to be inferred from the track.
+ * together and nothing has to be inferred from a drawing.
  *
  * THE SCALE IS NAMED PLAINLY AND NEVER BY AGENCY (the standing rule and its own
  * gate). "A published perception measure" is what a reader needs; whose measure
@@ -1942,6 +1988,25 @@ export function DealsAndRegimes({
  * a card that quietly let a country's reading pass as its town hall's would be
  * the honesty failure this whole section is most exposed to.
  */
+/* THE RUNGS, IN CLIMBING ORDER, WORST FIRST, which is what StepLadder takes and
+   which puts the clean end at the top of the drawing. Each rung says what the
+   COUNCIL does; the consequence below says what the OWNER budgets, so no rung and
+   no foot ever state the same fact twice. Every rung is drawn whatever the
+   reading, which is the whole reason this is a ladder and not a marker: a reader
+   learns what the other two would have meant, and a track threw that away. */
+const COUNCIL_RUNGS = [
+  { name: "Chased at every step", meaning: "Nothing moves unless somebody pushes it, and then pushes it again." },
+  { name: "Followed up", meaning: "It moves while somebody is watching it, and stalls when they stop." },
+  { name: "Moves on its own", meaning: "Filed is filed, and the waiting is the whole of what it costs." },
+];
+/* THE TWO THRESHOLDS ARE THE CARD'S OWN AND ARE NOT NEW. The consequence has
+   branched on 65 and on 40 since this section was built; naming them once means
+   the ladder and the sentence cannot drift apart, which is the fault B5 found in
+   this same file an hour earlier. */
+const COUNCIL_EASY = 65;
+const COUNCIL_MIXED = 40;
+const councilRung = (v: number): 1 | 2 | 3 => (v >= COUNCIL_EASY ? 3 : v >= COUNCIL_MIXED ? 2 : 1);
+
 export function TownHall({
   cleanliness,
   scale,
@@ -1951,13 +2016,29 @@ export function TownHall({
   /** What the reader is looking at, in a few words. Never a sentence. */
   scale?: string;
 }) {
-  if (cleanliness == null) return null;
+  /* THE SCALE IS PART OF THE CLAIM, so a reading off it is refused rather than
+     drawn. The answer says "of 100" in the reader's own line, and the Meter this
+     replaced would happily fill a track past its own end for a 150: a figure
+     outside the scale is not the measure this card names, and rendering it would
+     put a sentence about a place's officials underneath a number nobody holds. */
+  if (cleanliness == null || !Number.isFinite(cleanliness)) return null;
+  if (cleanliness < 0 || cleanliness > 100) return null;
+  const reached = councilRung(cleanliness);
   const consequence =
-    cleanliness >= 65
-      ? "At this end a permit usually moves on its own, so budget the waiting rather than somebody to do the chasing."
-      : cleanliness >= 40
-        ? "In the middle a permit moves when it is followed up, so somebody has to own it rather than file it."
-        : "At this end assume nothing moves unless it is chased, and budget somebody's week for the chasing.";
+    reached === 3
+      ? "Budget the waiting into the opening date, and nobody's week into the paperwork."
+      : reached === 2
+        ? "Budget one person's attention for the paperwork, and the following up into the opening date."
+        : "Budget somebody's week for the paperwork, and expect the opening date to move with it.";
+  /* THE BASIS SITS UNDER THE FIGURE IT QUALIFIES, which is where a basis belongs
+     and where it was not: it used to hang below the drawing, three objects away
+     from the number it is about. The substitution is stated every time, because a
+     card quietly letting a country's reading pass as its town hall's is the
+     honesty failure this section is most exposed to.
+     IT IS BUILT HERE AND NOT IN THE ATTRIBUTE LIST because a {comment} between
+     two JSX attributes is a parse error, which is the same trap the repo has paid
+     for six times inside a ternary branch and which cost this row a typecheck. */
+  const basis = `${scale ? `${scale}. ` : ""}Measured for the country rather than the town, so it stands in for the local read.`;
   return (
     <Section
       kicker="Dealing with the council"
@@ -1976,12 +2057,10 @@ export function TownHall({
           </span>
         </>
       }
+      answerNote={basis}
       consequence={consequence}
     >
-      <Meter value={cleanliness} left="Expect friction" right="Straightforward" />
-      <div className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
-        {scale ? `${scale}. ` : ""}Measured for the country rather than the town, so it stands in for the local read.
-      </div>
+      <StepLadder steps={COUNCIL_RUNGS} reached={reached} ariaLabel="How a permit moves at this town hall" />
     </Section>
   );
 }
