@@ -300,6 +300,15 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
   // `note` below is the one string this module owns, and it now says plainly
   // what the rows are. REPORTED for the component owner, not silently reshaped.
   //
+  // RESOLVED 2026-09-02, C6, BY THE COMPONENT OWNER, AND BY A CUT RATHER THAN A
+  // RENAME. SubtypeDrill no longer draws the keep at all. The benchmark block
+  // was already printing the same six keeps in dollars, and it draws them as
+  // height above a zero, carries the reader's OWN trade in the set and carries
+  // the atlas average, none of which this block could offer. What the drill keeps
+  // is the one quantity `benchmark.trades` does not hold, the cost of the door.
+  // The array is still shipped twice and that is now honest: two cards read one
+  // array for two different measures, and neither prints the other's.
+  //
   // The capital is a MODELED archetype, never a measurement: the archetype
   // module's own header says the figure is directional and that the surface
   // must say so on the row.
@@ -351,7 +360,14 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
         base_net_pct: netPct,
         base_capital_usd: baseCapital,
         list,
-        note: "Each of these is its own trade in the same sector, not a format inside this one. The keep is that trade's own measured net margin; the cost to open is a modeled figure for a baseline economy, not a quote for any one place.",
+        /* THE KEEP SENTENCE IS GONE, 2026-09-02, C6. This note described a card with
+           two figure columns, and that card now has one: the keeps moved to the
+           benchmark block, which was already printing the same six of them in
+           dollars, and SubtypeDrill's consumer draws the cost of the door alone.
+           A note explaining a column that is not drawn is a caveat about nothing.
+           The first sentence is untouched and is still the reason this string
+           exists: the rows are peer trades, never formats inside this one. */
+        note: "Each of these is its own trade in the same sector, not a format inside this one. The cost to open is a modeled figure for a baseline economy, not a quote for any one place.",
       };
     }
   }

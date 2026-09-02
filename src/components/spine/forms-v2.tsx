@@ -614,7 +614,15 @@ export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | nul
                  few pixels inside the card's edge and reads as a second, badly
                  aligned card edge rather than as a division between entries. */
               borderTop: i === 0 ? undefined : "1px solid var(--c-border)",
-              gap: 10,
+              /* 8, THE SLOT RUNG. It was 10, which sits between two rungs of the
+                 spacing ladder (48 / 32 / 28-20-16 / 8), and step 7 forbids a
+                 value between rungs outright. Tenth off-ladder value this loop
+                 has found in a shared component, after StepLadder's 14,
+                 ClearanceRing's 12, A7's three, A8's one, B3's 14,
+                 InlineDisclosure's 12 and B8's 10 and 12. It also buys the name
+                 column four pixels, which is not why it changed but is why C6
+                 measured it. */
+              gap: 8,
               paddingTop: i === 0 ? 0 : 8,
               paddingBottom: 8,
             }}
@@ -628,8 +636,26 @@ export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | nul
             >
               <Fig>{i + 1}</Fig>
             </span>
+            {/* A LONG NAME WRAPS TO TWO LINES; IT USED TO BE CUT WITH AN ELLIPSIS.
+                C6 measured the case that forced this: on the industry page's
+                trades-next-door standing the leader is "Catering & food service
+                contractors", which needs 238px and gets 231 in a full-width
+                phone card. SEVEN PIXELS, on the one row carrying the card's
+                accent, printed as "Catering & food service contract...". A name
+                a reader cannot finish is the founder's own rejected fault class
+                arriving through a different door, and the `title` that carried
+                the rest of it is a hover, which a phone does not have.
+                IT DOES NOT BREACH THE EQUAL-ROWS CLAIM ABOVE, and the claim is
+                worth re-reading rather than waving at: it says a row must never
+                be sized by its VALUE, because that turns a standing into a bar
+                chart. A row that is taller because its NAME is longer says
+                nothing about magnitude and cannot be misread as saying it.
+                Two lines and not more, because past two a name is competing with
+                the standing. Verified against the two shipping callers before
+                changing it: A1's risks and A2's roles are all under 100px at
+                every width either card is drawn at, so neither moves a pixel. */}
             <span
-              className="min-w-0 flex-1 truncate text-[length:var(--t-body)] leading-none"
+              className="line-clamp-2 min-w-0 flex-1 break-words text-[length:var(--t-body)] leading-tight"
               title={row.name ?? undefined}
               /* THE LEADER'S NAME IS THE ONLY SEMIBOLD ONE. Weight and colour
                  are doing one job between them, and the row carries no fill and

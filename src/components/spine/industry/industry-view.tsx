@@ -29,8 +29,11 @@ import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, GREY_RAMP, usd, SampleTag, Band } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
-import { LollipopColumn } from "@/components/spine/forms-v2";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+/* RankedTiles joins LollipopColumn here for C6: the trades-next-door card gave
+   up its keep column to the benchmark card above it, and six named things with
+   ONE figure each is a standing, not a table. The ui/table imports left with the
+   columns they carried. */
+import { LollipopColumn, RankedTiles } from "@/components/spine/forms-v2";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
 import { deriveSubtypes } from "./subtypes";
@@ -295,102 +298,110 @@ export function Demand({ d }: { d: any }) {
 }
 
 /* ============================================================
- * SUBTYPE DRILL , the richness lever (hero) and the chapter's ONE card: a plain ranked
- * TABLE (format | keep % | capital to open), the July-3 figures-and-columns treatment.
- * The ranked track+fill bars are gone (rulebook v1 §25 bar rationing: a third bar list
- * in a row read as monotony; the figures rank themselves).
- * decision: which FORMAT to run, and what each door costs. Numbers: keep % (one decimal
- * everywhere) + capital-to-open (right-aligned column).
- * focal: the keep-% column, sorted best-first; format, not cuisine, moves the keep.
- * width: Full (T1). terracotta: the leading (best-keep) figure only; the cost column stays ink.
- * Reads the derived subtype shape (keeps_pct + capital_usd) via deriveSubtypes. */
+ * WHAT THE DOOR COSTS (queue row C6) , the trades next door, ranked by the price
+ * of getting in. A STANDING, six rows, cheapest first.
+ * decision: whether paying more for the door buys a better business.
+ * focal: the standing; the cheapest door carries the form's one accent.
+ * width: the small side of a 2-3 band. terracotta: entry one only.
+ *
+ * WHAT THIS CARD GAVE UP, AND WHY IT HAD TO. It printed the SAME SIX TRADES'
+ * KEEPS as the benchmark card one chapter above, in percent where that card
+ * prints dollars: 12.0% here and $12 there, 10.0% and $10, 9.0% and $9, down to
+ * 6.0% and $6. The adapter says so in its own comment, that one seed ships one
+ * array twice. Six trade names printed twice and six keep figures printed twice
+ * is the founder's "one quantity, one statement" broken six times over, and
+ * restyling both cards would have left it exactly where it was.
+ *
+ * THE BENCHMARK CARD EARNS THE KEEP, on three counts and not on seniority. It
+ * DRAWS the figure, as height above a zero, where this card only printed it. It
+ * carries the reader's OWN trade in the set, which is the whole reason a keep
+ * is worth ranking, and this card never could: its rows are the neighbours
+ * only. And it carries the atlas average as a drawn reference, so a reader
+ * learns whether $7 is normal. Nothing here could be given up to make room for
+ * any of that.
+ *
+ * WHAT THIS CARD UNIQUELY HOLDS IS THE COST OF THE DOOR, and it is the only
+ * place in the atlas a reader sees six of them side by side: $81K to $351K, a
+ * four-fold spread inside one sector. Each neighbour's own page states its own
+ * cost; not one of them states the spread.
+ * The reading that needs BOTH quantities survives as a computed sentence rather
+ * than as a second column of figures: in this sector the dearest door keeps
+ * LESS, not more, which is the opposite of what a reader expects and is the one
+ * thing neither card could say alone.
+ *
+ * Reads the derived subtype shape (capital_usd) via deriveSubtypes. The keeps
+ * are still read, and only to decide which way that sentence runs. */
 export function SubtypeDrill({ d }: { d: any }) {
-  const items = deriveSubtypes(d).slice().sort((a, b) => b.keeps_pct - a.keeps_pct);
-  if (!items.length) return null;
-  const lead = items[0]?.slug;
-  // A skimmable three-column table (the founder's numbers-only "best-executed" table
-  // idiom): the format, its keep, and the cost of the door. The prose "why it lands
-  // there" column is cut (rule 26/19: no invented per-row sentences); the keep figures
-  // rank themselves, sorted best-first with terracotta on the leader. No bar (the page
-  // is at its 3-bar budget). The scope caveat lives in the Keep header's gloss.
+  /* CHEAPEST FIRST, which is rule 29A satisfied by the ORDER rather than by an
+     inversion, exactly as A6 and A7 did for a rent. A cost is a burden, the
+     form's one accent lands on entry one, and entry one is therefore the good
+     end. A door with no price is dropped rather than drawn at zero. */
+  const items = deriveSubtypes(d)
+    .filter((s) => Number.isFinite(s.capital_usd) && s.capital_usd > 0)
+    .slice()
+    .sort((a, b) => a.capital_usd - b.capital_usd);
+  /* A RANKING OF ONE IS NOT A RANKING, and the form refuses it anyway. */
+  if (items.length < 2) return null;
+  const cheapest = items[0];
+  const dearest = items[items.length - 1];
+  const ratio = dearest.capital_usd / cheapest.capital_usd;
+  /* THE ANSWER IS THE ONE THING NEITHER CARD COULD SAY ALONE, and it is a
+     COMPARISON rather than a figure: the keeps themselves are printed once, one
+     chapter above, in dollars. It is COMPUTED, never typed, for the reason A9
+     gives for its own finding one card up: the same six rows render on all 23
+     food-and-drink pages, so a sentence asserting a direction has to be read off
+     the data or it is a claim about a page nobody checked.
+     A WORD IS NOT A QUANTITY, so this takes the section rung and never focal
+     (step 5, and A1's own answerKind="words" for the standing it shares). */
+  const answer =
+    dearest.keeps_pct < cheapest.keeps_pct
+      ? "The dearest door keeps less than the cheapest."
+      : dearest.keeps_pct > cheapest.keeps_pct
+        ? "The dearest door keeps more than the cheapest."
+        : "The dearest door keeps the same as the cheapest.";
+  /* Under 1.15 the spread is not a finding and the note says so rather than
+     dressing a rounding as a range. */
+  const spread =
+    ratio >= 1.15
+      ? `It costs ${ratio.toFixed(1)} times as much to open.`
+      : `Every door here costs about the same to open.`;
+  const note: string | undefined = d?.subtypes?.note;
   return (
     <Full>
       <Box id="neighbours">
-        {/* "Trades next door", NOT "by format". These rows are the exact array
-            `benchmark.trades` carries minus the self row: measured 2026-08-18,
-            identical in 23 of the 23 seeds that hold either, and confirmed here
-            on the real restaurants seed. One array, shipped twice, and its two
-            consumers labelled it incompatibly. `benchmark` said "a neighbour in
-            the same sector", which is true; this said "by format", which
-            asserts a containment the taxonomy does not have.
-
-            `Industry` has no parent-child relation, and the siblings come from
-            eight hardcoded food-service ids, so grocery-stores,
-            specialty-grocers-delis and wine-liquor-stores each received the
-            SAME six rows. Those three pages were telling a reader that
-            restaurants, bars and food trucks are formats inside a grocery
-            store. Restaurants is the one trade where "format" happens to read
-            true, which is why this survived.
-
-            The FIELD stays `subtypes`: renaming it from here empties this
-            block, which is a section drop. The labels are what a reader sees
-            and they are what was false. */}
-        <Rail icon="subtype" kicker="Keep and cost, trades next door" sample />
-        {/* A REAL TABLE. This is trades down the side and two measures across the
-            top, with a header row, and it was built out of plain boxes on a grid:
-            ZERO table elements, no column headers, nothing tying a figure to the
-            word naming it. Worse than the comparison table on the trade-in-a-place
-            page, which at least carried a hidden label beside each figure for the
-            phone layout; this had none at all, at any width. So the whole reading
-            was a trade name followed by two bare numbers.
-            The columns also carried FIXED widths that changed at a breakpoint. The
-            two figure columns size to their own contents now, which needs no
-            breakpoint and cannot crush a longer figure. */}
-        <Table className="text-[length:var(--t-body)]">
-          <caption className="sr-only">
-            Trades next door, sorted by what the owner keeps, best first.
-          </caption>
-          <TableHeader>
-            <TableRow className="border-[var(--c-border)] hover:bg-transparent">
-              <TableHead scope="col" className="h-auto px-2 pb-1.5 text-left align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-                Trade, best keep first
-              </TableHead>
-              <TableHead scope="col" className="h-auto w-px whitespace-nowrap px-2 pb-1.5 text-right align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-                Keep<InfoTip gloss="Registered operators only; street and informal traders run on different economics and are not counted here." />
-              </TableHead>
-              <TableHead scope="col" className="h-auto w-px whitespace-nowrap px-2 pb-1.5 text-right align-bottom text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-                To open
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items.map((s) => {
-              const isLead = s.slug === lead;
-              return (
-                /* HAIRLINE RULES BETWEEN ROWS (F3). This carried border-0, which
-                   cancels the rule the table primitive draws by default. Six
-                   trades down the left, two figures hard right, and 300px of
-                   nothing between a name and its number with no line to follow.
-                   Both sibling tables on the other pages have carried row rules
-                   all along; this was the odd one out. The emptiness gate does
-                   not catch it, because a right-aligned figure's CELL spans the
-                   column and reads as inked even when the space looks empty, so
-                   for a table F3 is the rule that holds and E6 is not. */
-                <TableRow key={s.slug} className="hov border-b border-[var(--c-border)] hover:bg-transparent">
-                  <TableHead scope="row" className="h-auto min-w-0 px-2 py-2 text-left align-baseline text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">
-                    {s.name}
-                  </TableHead>
-                  <TableCell className="w-px whitespace-nowrap px-2 py-2 text-right align-baseline">
-                    <Fig className={`text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{s.keeps_pct.toFixed(1)}%</Fig>
-                  </TableCell>
-                  <TableCell className="w-px whitespace-nowrap px-2 py-2 text-right align-baseline">
-                    <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{money(s.capital_usd)}</Fig>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Rail icon="subtype" kicker="What the door costs, trades next door" sample />
+        {/* A1'S COMPOSITION, NOT A9'S, AND THE PHOTOGRAPH IS WHY. The first
+            build of this card wore the benchmark card's head row, a micro-caps
+            label at the left and the finding at the right, because that card is
+            one chapter up and sharing its grammar looked like step 9's
+            predictability. Photographed at 1280 it was six rows of body type
+            under two lines of body type: NOTHING in the card was larger than
+            14px, so there was no first thing to see and no ratio to state.
+            That escape belongs to a card with a DRAWING (A6, A7, A9, A10 all
+            declare drawing-to-type), and a standing draws nothing at all, which
+            the catalogue says in as many words. A1 settled the shape for this
+            form: the answer at the section rung, its note under it, then the
+            standing. */}
+        <div className="text-[length:var(--t-section)] font-semibold leading-snug text-[var(--c-ink)]">{answer}</div>
+        <div className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+          Ranked by what it costs to open one, cheapest first. {spread}
+        </div>
+        <div className="mt-4">
+          <RankedTiles
+            rows={items.map((s) => ({ name: s.name, value: money(s.capital_usd) }))}
+            ariaLabel="Trades next door, ranked by what it costs to open one, cheapest first"
+          />
+        </div>
+        {/* THE NOTE HAS NEVER REACHED A READER. The adapter has owned this
+            string since 2026-08-18, calls it "the one string this module owns"
+            and wrote it precisely to say that these rows are peer trades rather
+            than formats inside this one; the card it was written for never
+            rendered it. It carries the second half too, which is the half this
+            card now depends on entirely: the cost is a modeled archetype for a
+            baseline economy, not a quote for any one place. */}
+        {note ? (
+          <p className="mt-4 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{note}</p>
+        ) : null}
       </Box>
     </Full>
   );
@@ -963,8 +974,19 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
       </> : null}
 
       {subCount > 0 || hasMoneySplit || hasBreakEven ? <>
-        <Movement index="02" eyebrow="How the money works" heading="The formats, and the shape of the trade" icon="unit-economics" />
-        <Band split="2-1">
+        <Movement index="02" eyebrow="How the money works" heading="What a door costs, and where the money goes" icon="unit-economics" />
+        {/* 2-1 TO 2-3, AND BOTH CARDS GAIN, WHICH IS THE STRONGEST KIND OF WIDTH
+            ARGUMENT. C6 turned the first card into a STANDING, and A1 measured
+            what a standing does past roughly 500px: the name sits at one edge and
+            the figure at the other and the rows read as pairs marooned across a
+            gap. At 693 this one put 386px between "Pizzerias" and its price. The
+            money split beside it is a stacked bar, and a bar wants every pixel of
+            width it can get. So the standing takes 416 and the bar takes 624.
+            D3 pins the choice rather than leaving it to taste: the band above is
+            3-2 and the band below is 1-2, so of the five legal splits only 1-1,
+            2-1 and 2-3 remain, and 1-1 leaves the standing at 520 where A1's
+            stranding is worse, not better. */}
+        <Band split="2-3">
           {subCount > 0 ? <SubtypeDrill d={d} /> : null}
           {hasMoneySplit ? <MoneySplit d={d} /> : null}
         </Band>

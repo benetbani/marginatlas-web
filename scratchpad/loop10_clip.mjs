@@ -1,0 +1,10 @@
+import { chromium } from "playwright";
+import { pathToFileURL } from "node:url";
+const [slug, x, y, w, h, out, vw] = process.argv.slice(2);
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: +(vw||1280), height: 1200 }, deviceScaleFactor: 2 });
+await p.goto(pathToFileURL(`E:/atlas/website/docs/loop/artifacts/final-pages/${slug}.html`).href, { waitUntil: "load" });
+await p.waitForTimeout(300);
+await p.screenshot({ path: out, quality: 88, type: "jpeg", fullPage: true, clip: { x: +x, y: +y, width: +w, height: +h } });
+console.log("wrote", out);
+await b.close();
