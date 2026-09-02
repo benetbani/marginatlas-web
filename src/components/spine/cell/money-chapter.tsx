@@ -18,8 +18,8 @@
  * so scaled cells read specific, not templated.
  */
 import * as React from "react";
-import { Box, Rail, Fig, InfoTip, InlineDisclosure, TRACK, usd } from "@/components/spine/kit";
-import { ClearanceRing } from "@/components/spine/forms-v2";
+import { Box, Rail, Fig, InfoTip, InlineDisclosure, usd } from "@/components/spine/kit";
+import { ClearanceRing, LollipopColumn } from "@/components/spine/forms-v2";
 import { AtlasWaterfall } from "@/components/kit/charts/AtlasWaterfall";
 import { useFormat, useCountUp, useInView } from "./format-picker";
 
@@ -221,12 +221,54 @@ export function BreakEven({ d }: { d: any }) {
   );
 }
 
-/* CostToOpen , WI-4 brief (enriched, Final Ascent):
- * decision: the up-front cash to open. Number: total to open (subtype-propagated) + payback
- * with its basis NAMED (capex over the owner's yearly take). The top-3 line items are
- * VISIBLE as lollipops on a shared drawn track (idiom #5; a collapsed one-number card
- * wasted the half-band); the full stack sits behind the disclosure.
- * width: Even half. terracotta target: the payback figure only (lollipop dots stay ink). */
+/* CostToOpen , A5 of the subsection queue, rebuilt 2026-09-02 on the catalogue's
+ * LollipopColumn (idea I2, bar set, cap 3 per page; the cell page had spent none).
+ *
+ * WARRANT (subsection procedure, step 1). A visitor reads this to decide WHETHER
+ * THEY CAN RAISE THE MONEY TO OPEN AT ALL, and which part of the bill is worth
+ * attacking if they cannot. Without it they would price a fit-out, a kitchen and
+ * a deposit from scratch, or believe the licence fee is what stands between them
+ * and a restaurant, which is wrong by two orders of magnitude: the paperwork here
+ * is about $4K of a $426K bill.
+ *
+ * THE QUEUE PREDICTED RangeBracket AND THE DATA SAYS NO, which is the one
+ * disagreement this row turns on and it was settled by reading the fixture rather
+ * than the brief. A range needs a low, a high and a typical, and this surface
+ * holds ONE point estimate: `setup_costs` carries a single figure per line with
+ * no lo/hi anywhere in its type; the same cell resolved at every size band
+ * carries setup costs on the all-sizes row ONLY; and the three-format spread that
+ * does hold a real span (140K / 197K / 340K) lives in the bundled seed's
+ * `subtypes`, which the live adapter deliberately omits, so it reaches no reader
+ * on any real page. Drawing a bracket here would have meant inventing its two
+ * ends. The information is not a span; it is a total and the named lines that
+ * sum to it, which is a RANKING WHOSE MAGNITUDES MATTER.
+ *
+ * WHAT WAS HERE. Three horizontal bars in a shared track, hand-rolled inline, so
+ * they carried no data-idea and no budget could see them: the catalogue
+ * addendum's "where the sameness actually lives", and the shape the founder named
+ * on 2026-09-01. Six of the nine lines were not drawn at all, only listed in the
+ * disclosure, and the largest bar ran the full width of the card, so the drawing
+ * said "the fit-out is 100% of something" without saying of what.
+ *
+ * THE STEMS STAND UP, AND THAT IS THE WHOLE POINT OF THE FORM. Nothing else on
+ * this page is vertical. A dot at the top of a stem rising from a drawn zero says
+ * "this much"; the same dot on a rail says "somewhere between these two ends",
+ * and the page already has two rails it is allowed to keep.
+ *
+ * IT YIELDS ITS ACCENT, by the rule this card ratified for itself before the form
+ * existed: the longest bar is not an answer, it is the longest bar. Rule 29A puts
+ * terracotta on the good end and entry one here is the BIGGEST COST. The card's
+ * one accent stays on the total, which is what the card is called.
+ *
+ * COMPOSITION: the rail, then the answer and its consequence on one baseline,
+ * then the stems, then the full stack behind the disclosure. Six lines are drawn
+ * and they carry 99.5% of the bill; the tail is three items worth about $2K and
+ * it is listed rather than drawn, because a column 0.008% of the tallest is a dot
+ * on the floor with a name under it and the name is the only part a reader can
+ * use.
+ *
+ * width: two thirds of the band, which the columns earn: six names at 12px need
+ * about 100px each and the ring beside it cannot use width at all. */
 export function CostToOpen({ d }: { d: any }) {
   const ctx = useFormat();
   const items: any[] = d.setup?.items ?? [];
@@ -245,9 +287,57 @@ export function CostToOpen({ d }: { d: any }) {
     const y = Math.round((mo / 12) * 2) / 2; // nearest half year past 3 years
     return `${y} years`;
   };
-  const ranked = [...items].sort((a, b) => (b.usd || 0) - (a.usd || 0));
-  const topItems = ranked.slice(0, 3);
-  const maxItem = Math.max(1, ...topItems.map((it) => it.usd * scale));
+  /* ROUNDED ONCE, HERE, so the drawn stem and the printed figure are the same
+     number. Ranked by the caller because the form refuses to sort: half this
+     site's rankings are best-when-low and a component that sorted would be
+     guessing a direction nobody told it. */
+  const ranked = [...items]
+    .map((it) => ({ name: String(it.name ?? ""), value: Math.round((it.usd || 0) * scale) }))
+    .filter((it) => it.name && it.value > 0)
+    .sort((a, b) => b.value - a.value);
+  /* FIVE AND FOUR, BOTH DECIDED BY A PHOTOGRAPH AND NEITHER BY PREFERENCE.
+     Six names in the 303px phone card leave 45px a column and "Equipment" is
+     60px at the 12px read floor, so the centred names bled into both
+     neighbours: "EquipmentLease deposit". Five columns are 56px, still under
+     the longest word, and the form's word-break guard then split it as
+     "Equipmen / t". Four columns are 71px and every name in the set fits on one
+     line. At 1280 the card is 651px wide, where five columns are 125px each and
+     six would have been legal too; five is the honest stop, because the sixth
+     line is $2K against a $250K tallest and its dot sits ON the zero line,
+     which is a column whose only readable part is its name.
+     The five carry 99.1% of the bill and the four carry 96.2%; everything left
+     out is listed in the stack below, which is where the remaining $4K of
+     licences, insurance and certificates already lived. */
+  const drawn = ranked.slice(0, 5);
+  /* THE ANSWER AND ITS CONSEQUENCE, as cells rather than as two stacked blocks.
+     A flex row baseline-aligns each cell on its OWN first line, so a 30px figure
+     drops its label four pixels below its neighbour's; a grid with the figures on
+     one row and the labels on the next puts both pairs on two shared baselines.
+     RangeBracket carries the same note for the same reason. */
+  const reads: Array<{ key: string; figure: React.ReactNode; label: string }> = [
+    {
+      key: "total",
+      figure: (
+        <CountFig
+          value={total}
+          fmt={(n) => money(n)}
+          className="text-[length:var(--t-focal)] leading-none text-[var(--terra-text)]"
+        />
+      ),
+      label: "to open the doors",
+    },
+  ];
+  if (paybackMonths != null) {
+    reads.push({
+      key: "payback",
+      figure: (
+        <Fig className="text-[length:var(--t-lead)] leading-none text-[var(--c-ink)]">
+          {paybackLabel(paybackMonths)}
+        </Fig>
+      ),
+      label: "to earn it back",
+    });
+  }
   return (
     <Box id="opening" className="md:flex-[3]">
       <div className="flex items-start justify-between gap-2">
@@ -255,76 +345,50 @@ export function CostToOpen({ d }: { d: any }) {
         <Rail icon="startup-cost" kicker="What it costs to open one" sample />
         <FormatTag />
       </div>
-      {/* schematic, not a sentence: the total and the payback as two figure+label reads */}
-      <div className="mb-3 flex flex-wrap items-end gap-x-6 gap-y-1">
-        <div>
-          {/* THE ACCENT SITS ON THE CARD'S OWN ANSWER. This card is called "What it
-              costs to open one", and the cost to open was in plain ink while the
-              payback figure beside it wore the accent. The support figure was
-              carrying the mark that belongs to the answer, so the eye landed on the
-              second-most-important number on the card. Rule 37. */}
-          <CountFig value={total} fmt={(n) => money(n)} className="text-2xl text-[var(--terra-text)]" />
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to open the doors</div>
-        </div>
-        {paybackMonths != null ? (
-          <div>
-            <Fig className="text-2xl text-[var(--c-ink)]">{paybackLabel(paybackMonths)}</Fig>
-            <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">to earn it back</div>
-          </div>
-        ) : null}
+      {/* THE ACCENT SITS ON THE CARD'S OWN ANSWER. This card is called "What it
+          costs to open one", and the cost to open was once in plain ink while the
+          payback figure beside it wore the accent: the support figure carrying the
+          mark that belongs to the answer, so the eye landed on the second-most
+          important number on the card. Rule 37.
+          AND THE TWO WERE THE SAME SIZE, both at the 24 rung, which rule 16 forbids
+          outright: two things competing for first place leave the card with no
+          answer at all. The total takes focal, the payback takes lead, 30 over 16
+          is 1.875x and clears the 1.6 floor. */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${reads.length}, auto)`,
+          justifyContent: "start",
+          alignItems: "baseline",
+          columnGap: 28,
+          rowGap: 4,
+        }}
+      >
+        {reads.map((r) => (
+          <span key={`fig-${r.key}`}>{r.figure}</span>
+        ))}
+        {reads.map((r) => (
+          <span
+            key={`lab-${r.key}`}
+            className="text-[length:var(--t-mark)] font-semibold uppercase tracking-wide text-[var(--c-muted)]"
+          >
+            {r.label}
+          </span>
+        ))}
       </div>
-      {/* the three big lines, visible: lollipops on a shared zero-based track */}
-      <div className="space-y-2">
-        {topItems.map((it) => {
-          const v = Math.round(it.usd * scale);
-          const p = Math.max(3, (v / maxItem) * 100);
-          return (
-            <div key={it.name} className="grid grid-cols-[110px_1fr_52px] items-center gap-3">
-              <span className="min-w-0 truncate text-[12px] text-[var(--c-ink2)]">{it.name}</span>
-              {/* THE STACK, ratified 2026-08-09 (option A of /dev/options/opening).
-                  Was three lollipops: a dot on a rule, where the dot carried the
-                  value and the length carried it a second time. His grammar is a
-                  bar , lightest neutral behind, one fill, largest line in
-                  terracotta and the rest on the neutral ramp, which is
-                  emphasis-not-categorical. The dominant line here is the fit-out
-                  at roughly four fifths of the total, and the point of the
-                  drawing is that it dwarfs everything under it. */}
-              {/* THESE BARS WERE NOT BEING DRAWN AT ALL, and no check could see it.
-                  They asked for two greys that are declared ONLY inside the v2
-                  stylesheet's scope, every selector of which sits under one class
-                  with no root block anywhere in the file. This page never enters
-                  that scope: the live spine tree does not carry that class on a
-                  single element. An undefined custom property makes the whole
-                  declaration invalid, and an invalid background computes to
-                  transparent, so the track and the two smaller bars painted
-                  NOTHING. Read out of a real browser: rgba(0, 0, 0, 0) for all
-                  three. Only the largest bar survived, because terracotta is
-                  declared again at the root by the shell.
-                  So a visitor saw one orange bar floating in white space, on a
-                  drawing whose entire point is that the fit-out dwarfs what sits
-                  under it. There was nothing left to dwarf.
-                  The neutral is the SAME VALUE the missing one held. The track
-                  moves by a hair and now matches the break-even track on the
-                  card beside it, which it never did. */}
-              <span className="relative block h-4" role="img" aria-label={`${it.name} about ${money(v)}`}>
-                <span aria-hidden className="absolute inset-y-0 w-full rounded-[2px]" style={{ background: TRACK }} />
-                <span
-                  aria-hidden
-                  className="absolute inset-y-0 left-0 rounded-[2px]"
-                  /* THE LONGEST BAR IS NOT AN ANSWER, IT IS THE LONGEST BAR. Rule 37
-                     gives the accent to answers only, and this card's answer is the
-                     total above it, which now carries it. The largest cost line was
-                     wearing it too, so the card had two accents and a reader's eye had
-                     two places to land. The colour was also telling them nothing the
-                     drawing did not already say: it is the longest bar on a shared
-                     track, which is the whole encoding. */
-                  style={{ width: `${p}%`, background: "var(--chart-4)" }}
-                />
-              </span>
-              <Fig className="text-right text-[12.5px] text-[var(--c-ink)]">{money(v)}</Fig>
-            </div>
-          );
-        })}
+      {/* THE STEMS. Six of the nine lines, tallest first, on one drawn zero line.
+          The gap is a spacing-ladder rung and not a number that felt right: 20 is
+          the middle card-padding rung, one step below the 28 that would read as a
+          band break inside a card and one above the 16 the ring uses to hold its
+          own caption. */}
+      <div style={{ marginTop: 20 }}>
+        <LollipopColumn
+          rows={drawn}
+          format={(n) => money(n)}
+          narrowCount={4}
+          accent={false}
+          ariaLabel="The biggest lines in the cost to open, largest first"
+        />
       </div>
       <InlineDisclosure name="costopen" summary="See the full line-item stack">
         <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">

@@ -512,7 +512,7 @@ export function StateWord({
 }
 
 /* ------------------------------------------------------------------ */
-/* RankedTiles , I6 tile set, shares the cap of 3                      */
+/* RankedTiles , I11 ranked rows, cap of 2 (catalogue v4)             */
 /* ------------------------------------------------------------------ */
 /**
  * THE STANDING: A SHORT RANKING WHERE THE ORDER IS THE READING.
@@ -904,6 +904,8 @@ export function LollipopColumn({
   rows,
   format = (n: number) => String(n),
   ariaLabel,
+  narrowCount,
+  accent = true,
 }: {
   /** The entries, already in rank order. Null renders nothing. */
   rows?: Array<LollipopEntry | null | undefined> | null;
@@ -911,6 +913,37 @@ export function LollipopColumn({
   format?: (n: number) => string;
   /** Names the ranking for a screen reader: what is ranked, and which way. */
   ariaLabel?: string;
+  /** How many entries survive BELOW the `lg` breakpoint. Default: all of them.
+   *
+   *  THE CHART REDRAWS, WHICH IS THE RULE AND WAS NOT THE BEHAVIOUR. Step 6 of
+   *  the subsection procedure: at phone width nothing scrolls sideways, a wide
+   *  thing RECONFIGURES, and a chart redraws. This one could not. Its columns
+   *  divide whatever width they are given, so a set sized for a 651px card
+   *  arrives at a 303px one with 56px per column, and the names, which are
+   *  centred and cannot be shrunk below the 12px read floor, collide with their
+   *  neighbours. Photographed: "EquipmentLease deposit".
+   *  The extra entries are dropped from the DOM below `lg` rather than clipped
+   *  or scrolled, so the remaining columns expand to fill the card and the zero
+   *  line still spans the set. The BREAKPOINT IS lg AND NOT md ON PURPOSE: a
+   *  band goes two-up at md, where each card is about 352px, narrower than the
+   *  same card at 375 running full width.
+   *  Every stem is still measured against the whole set's maximum, so an entry
+   *  that disappears on a phone never changes the height of one that stays. */
+  narrowCount?: number;
+  /** Marks entry one, on its dot and its figure. ON by default, because a
+   *  ranking whose leader IS the card's answer is the common case.
+   *
+   *  IT IS TURNED OFF FOR TWO DIFFERENT REASONS AND BOTH ARE REAL. The first is
+   *  the shared-card rule StepLadder already carries: every form here rations
+   *  its own accent, so two forms in one box put two orange marks in it, and
+   *  the accent stays with the drawing holding the card's own answer.
+   *  The second is rule 29A, and it is the one this form walks into on its own.
+   *  Terracotta marks the good end, never the worse one. Where the ranking is a
+   *  BURDEN read largest-first, a rent, a cost line, a bill, entry one is the
+   *  WORST entry, and accenting it points the reader's eye at the thing they
+   *  are trying to avoid. Such a set passes accent={false} and lets the stem
+   *  heights do the work they were drawn for. */
+  accent?: boolean;
 }) {
   const kept = (rows ?? [])
     .filter(
@@ -927,6 +960,10 @@ export function LollipopColumn({
      taste: the names sit under the columns at the 12px read floor, and in a
      half-band card at 1280 an eleventh column leaves under 40px of name. */
   if (kept.length < 4) return null;
+  /* The narrow set never drops below the form's own floor of four: a caller
+     asking for three would get a set the catalogue says is a tile set, on a
+     drawn axis, which is the wrong form rather than a smaller one. */
+  const narrowKept = Math.max(4, Math.min(kept.length, narrowCount ?? kept.length));
   const max = Math.max(...kept.map((r) => r.value));
   /* An all-zero set has nothing to draw and no honest ceiling to draw it
      against, so it self-omits rather than rendering ten bald dots sitting in a
@@ -960,7 +997,13 @@ export function LollipopColumn({
         }}
       >
         {kept.map((row, i) => (
-          <li key={`${row.name}-${i}`} style={{ minWidth: 0 }}>
+          <li
+            key={`${row.name}-${i}`}
+            /* Below `lg` the tail is removed from the layout entirely, so the
+               survivors' columns widen instead of the whole set squeezing. */
+            className={i < narrowKept ? undefined : "hidden lg:list-item"}
+            style={{ minWidth: 0 }}
+          >
             <div
               style={{
                 height: HEAD,
@@ -973,8 +1016,11 @@ export function LollipopColumn({
               <div
                 className="text-[length:var(--t-micro)] leading-none"
                 /* THE LEADER TAKES THE ACCENT, on its dot and on its own
-                   figure, and that pair is the whole of the colour here. */
-                style={{ marginBottom: 4, color: i === 0 ? "var(--terra-text)" : "var(--c-ink2)" }}
+                   figure, and that pair is the whole of the colour here. A set
+                   that has yielded its accent draws every figure in ink2 and
+                   every dot in ink, and the stem heights carry the reading
+                   alone, which is what they were drawn to do. */
+                style={{ marginBottom: 4, color: accent && i === 0 ? "var(--terra-text)" : "var(--c-ink2)" }}
               >
                 <Fig>{format(row.value)}</Fig>
               </div>
@@ -984,7 +1030,7 @@ export function LollipopColumn({
                   width: DOT,
                   height: DOT,
                   borderRadius: "50%",
-                  background: i === 0 ? "var(--terra)" : "var(--c-ink)",
+                  background: accent && i === 0 ? "var(--terra)" : "var(--c-ink)",
                 }}
               />
               {/* The stem stays thin on purpose: thicken it and the set becomes
@@ -994,9 +1040,20 @@ export function LollipopColumn({
                 style={{ width: 2, height: Math.round((row.value / max) * STEM), background: "var(--c-line-strong)" }}
               />
             </div>
+            {/* A NAME MAY NOT LEAVE ITS OWN COLUMN, and until it was
+                photographed at 375 it could. The names are centred, so a word
+                wider than its column overflowed equally into BOTH neighbours:
+                six cost lines in a 303px card printed "EquipmentLease deposit"
+                and "inventoryPre-opening", which is the founder's own
+                "Edge oOtdiuary street" fault reappearing in a different form.
+                `break-word` breaks at spaces first and only splits a single word
+                when that word cannot fit a line by itself, so a normal set is
+                untouched and a pathological one degrades instead of colliding.
+                The real guard is still the entry COUNT, which the caller sets
+                from the narrowest width it renders at. */}
             <div
               className="text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"
-              style={{ paddingTop: 7 }}
+              style={{ paddingTop: 7, overflowWrap: "break-word" }}
             >
               {row.name}
             </div>
@@ -1008,7 +1065,7 @@ export function LollipopColumn({
 }
 
 /* ------------------------------------------------------------------ */
-/* StepLadder , I6 tile set, shares the cap of 3                       */
+/* StepLadder , I4 stepped sequence, cap of 2 (catalogue v4)          */
 /* ------------------------------------------------------------------ */
 /**
  * THE LADDER, AND A LADDER IS VERTICAL.
@@ -1427,7 +1484,7 @@ export function ClearanceRing({
 }
 
 /* ------------------------------------------------------------------ */
-/* RangeBracket , I6 tile set, shares the cap of 3                     */
+/* RangeBracket , I12 span, cap of 2 (catalogue v4)                   */
 /* ------------------------------------------------------------------ */
 /**
  * THE SPAN, WHERE THE NUMBERS ARE THE COMPOSITION.
