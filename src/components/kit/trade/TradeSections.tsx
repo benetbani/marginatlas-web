@@ -92,7 +92,12 @@
  * it holds what each photograph changed.
  */
 import * as React from "react";
-import { Box, Rail, Fig, KV, Meter, EaseScale, SpectraTable, Expand, cap } from "@/components/spine/kit";
+/* EaseScale IS GONE FROM THIS IMPORT, and its absence is the point of the two
+   commits on 2026-09-02. It drew both the risk ranking and the role ranking as
+   one left-to-right rail with markers on it, which is two of the nine tracks the
+   founder counted. Meter and SpectraTable are still here because tipping, the
+   town hall and who-walks-in have not had their rows taken yet. */
+import { Box, Rail, Fig, KV, Meter, SpectraTable, Expand, cap } from "@/components/spine/kit";
 /* THE CATALOGUE'S OWN VOCABULARY, WHICH THIS FILE COULD NOT REACH UNTIL NOW.
    Every section below was written against a kit that exported three drawings,
    all three of them horizontal tracks, which is the whole mechanism behind the
@@ -823,13 +828,54 @@ export function PublicSpaceCost({
  * both and work out what will actually delay their opening. That assembly is the
  * reader's second minute, spent on something the page should have done.
  *
- * FORMS, both already in the kit, neither invented:
- *   EaseScale , several labelled markers on ONE shared left-right track with its
- *   ends named, so the roles are compared against each other rather than each
- *   getting a track of its own.
- *   A discrete four-step band for the skill , NOT a meter. A continuous marker
- *   claims 2.7 means something. Skill level is a category: you can train them in
- *   a week, or you cannot (FORM-CATALOG, PriceTierBand).
+ * WARRANT (subsection procedure, step 1). A visitor reads this to decide WHICH
+ * HIRE TO START LOOKING FOR FIRST, and how long that search will hold up an
+ * opening. Without it they would have to sign a lease and then find out which
+ * single role they cannot fill, which is the most expensive order to learn it in.
+ *
+ * TWO READINGS IN ONE CARD, AND THEY ARE TWO INFORMATION TYPES. The roles are a
+ * RANKING; the skill level is a LEVEL ON A NAMED LADDER. The catalogue's index
+ * points those at two different forms and they must not be fused into one
+ * drawing. The 2026-09-02 migration therefore takes the RANKING only, which is
+ * this card's own queue row; the ladder is its own row (A3, StepLadder) and its
+ * four-step band is left standing here, untagged, until that row is taken. A
+ * declaration lands with its fix and never before it.
+ *
+ * FORM FOR THE RANKING: RankedTiles (idea I6), AND THIS DISAGREES WITH THE
+ * QUEUE, which predicted LollipopColumn. The queue's own rule is that a
+ * prediction is not a licence and that steps 2 and 3 win, with the disagreement
+ * written down. Three reasons, any one of which would be arguable and which
+ * together are not:
+ *
+ *   RULE 29A CANNOT BE SATISFIED BY A LOLLIPOP HERE. Worse reads low, better
+ *   reads high, and a burden is inverted before rendering. Availability is
+ *   already inverted, so the hardest role is the LOWEST value and therefore the
+ *   SHORTEST stem, while the form's one accent sits on entry one. That puts the
+ *   card's whole answer on the smallest mark in the drawing. Drawing "hardness"
+ *   tall instead fixes the picture and breaks the rule, which every other scale
+ *   on the page obeys.
+ *
+ *   THE MAGNITUDE IS NOT A QUANTITY. It is a modelled 0-to-100 availability
+ *   index with no unit and no meaningful zero, so stem heights would publish
+ *   distances the data does not hold, and the figures above the dots would be
+ *   naked numbers ("22", "41") that answer no question a reader asked. That is
+ *   the same objection that moved the risk section off its track.
+ *
+ *   A TRADE WITH THREE ROLES WOULD RENDER NOTHING. LollipopColumn's floor is
+ *   four entries, on the catalogue's own instruction, and a plumber has three.
+ *   The card would keep its answer and lose its evidence.
+ *
+ * WHAT CARRIES THE DISTANCES INSTEAD: the word already held against each role,
+ * "Hard", "Slow", "Quick", "Same week". That is the resolution this data
+ * honestly has, it descends down the column so the spread is legible without an
+ * axis, and it says in a reader's own language what a stem height would have
+ * said in an invented one.
+ *
+ * THE SKILL BAND STAYS AS IT WAS: a discrete four-step read, NOT a meter. A
+ * continuous marker claims 2.7 means something. Skill level is a category: you
+ * can train them in a week, or you cannot (FORM-CATALOG, PriceTierBand). A3
+ * replaces it with the vertical StepLadder, whose rungs each carry their own
+ * words, and that is a different subsection's photograph.
  *
  * THE ANSWER is the BINDING CONSTRAINT, named. The hardest role is what will
  * delay an opening, so the hardest role IS the answer, with the time it takes to
@@ -837,10 +883,21 @@ export function PublicSpaceCost({
  * accent: a role is not a quantity to point at, and the constitution rations the
  * accent to answers that are.
  *
+ * IT IS SET AT THE SECTION RUNG AND NOT THE FOCAL ONE, the same correction the
+ * risk card took: "Chef" is a name, and step 5 of the subsection procedure says
+ * a name takes lead or section size and never the size a figure takes. At 24
+ * semibold it still stands 1.7x over the 14px roles ranked beneath it.
+ *
  * SCALE DIRECTION, rule 29A: scarcity is a BURDEN, so it is inverted before it
- * reaches this component. High and right reads "easy to find", never "scarce".
- * The roles are then ranked HARDEST FIRST, because the top of a list is where a
- * reader looks and the hardest role is the one that matters.
+ * reaches this component. High reads "easy to find", never "scarce". The roles
+ * are then ranked HARDEST FIRST, because the top of a list is where a reader
+ * looks and the hardest role is the one that matters. On a standing the
+ * inversion never reaches the reader, which is the second reason the form suits:
+ * nobody has to learn which end of a scale is the bad one.
+ *
+ * THE SAMPLE TAG IS ON, for the whole card. The availability behind the order is
+ * modelled rather than counted, and a modelled figure without the tag is a lie
+ * the reader cannot see (step 8).
  *
  * THE ACTIVE SKILL STEP READS IN INK, NOT TERRACOTTA, and that is a change from
  * what was here. A terracotta fill on the active step put the card's only accent
@@ -910,22 +967,23 @@ export function PeopleYouNeed({
       id={anchorId}
       kicker="Can you find the people"
       icon="hiring"
+      sample
       answer={answer}
+      answerKind="words"
       answerNote={hardest ? "The hardest role to fill, which is what will delay an opening." : undefined}
       consequence={level != null ? SKILL_MEANS[level] : null}
       next={next}
     >
-      {/* THE HARDEST ROLE LOSES ITS SUB ON THE SCALE, and this was found by
-          looking rather than by reasoning: photographed at 1280, the card read
-          "Chef. Months to fill." at focal and then "Chef / months to fill" again
-          as the first row of the scale directly underneath it. The same words
-          twice in four centimetres read as a bug, not as emphasis. The answer
-          carries the driver; the scale ranks it. Same fix, same reason, as the
-          risk card's top row. */}
+      {/* THE ANSWER SAYS HOW LONG, THE ROW SAYS HOW HARD, so the two never print
+          the same words twice. That distinction was found by looking rather than
+          by reasoning: photographed at 1280 on the old track, the card read
+          "Chef. Months to fill." and then "Chef / months to fill" again directly
+          underneath it, which reads as a bug and not as emphasis. The standing
+          carries each role's difficulty word, which the answer does not. */}
       {ranked.length > 0 ? (
-        <EaseScale
-          rows={ranked.map((r, i) => (i === 0 ? [r[0], r[1], r[2]] : r))}
-          endLabels={["Hard to find", "Easy to find"]}
+        <RankedTiles
+          rows={ranked.map((r) => ({ name: r[0], value: r[2] }))}
+          ariaLabel="Roles, hardest to fill first"
         />
       ) : null}
       {step ? (

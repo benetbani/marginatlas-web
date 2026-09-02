@@ -289,10 +289,26 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
  *
  * The ratios are the constitution's own two-thirds/one-third pairings:
  *   A1 setup (2) beside A2 prices (1)
- *   B1+B2 the merged people card (2) beside B3 who walks in (1)
+ *   B1+B2 the merged people card, equal halves beside B3 who walks in
  *   C1 tipping and C2 the pavement, two lean cards, equal halves
  *   C3 the schemes (2) beside C4 the town hall (1)
  *   C5 what goes wrong, alone
+ *
+ * TWO SPLITS THE PHOTOGRAPH CHANGED, on 2026-09-02, and both for one reason: a
+ * ranking set as a standing wants a column and not a sweep.
+ *
+ * THE PEOPLE CARD WENT FROM TWO THIRDS TO EQUAL HALVES. Photographed at 1280 on
+ * two thirds, each role's name sat about 500px from its own reading, four rows
+ * deep, which is the founder's first named fault class arriving inside a border.
+ * Photographed at one third instead, the standing was perfect and the four-step
+ * skill band under it collapsed to three-line labels in skinny boxes. Halves is
+ * the width at which BOTH readings hold, and it is a measurement rather than a
+ * preference: 520px at 1280. Who-walks-in gains room by the same move, which its
+ * three spectra and their pole labels wanted anyway.
+ *
+ * C5 DECLARES ITSELF LEAN. Alone in a band it took Band's two thirds and came
+ * out 693px wide holding three short rows. `lean` moves that air outside the
+ * card's edge, where an uneven band is a composition instead of a hole.
  *
  * TWO PLACES WHERE THE KIT ANSWERS AND NOT THE CONSTITUTION. `Band`'s ratio set
  * is closed at five, so "one third each" for a PAIR is not expressible: two lean
@@ -306,7 +322,7 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
  */
 const BANDS: Array<{ ids: TradeSectionId[]; split: "2-1" | "1-1" }> = [
   { ids: ["typical-setup", "what-things-cost"], split: "2-1" },
-  { ids: ["can-you-hire", "who-walks-in"], split: "2-1" },
+  { ids: ["can-you-hire", "who-walks-in"], split: "1-1" },
   { ids: ["tipping", "public-space"], split: "1-1" },
   { ids: ["deals-and-regimes", "town-hall"], split: "2-1" },
   { ids: ["what-goes-wrong"], split: "2-1" },
