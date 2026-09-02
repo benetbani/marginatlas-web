@@ -62,6 +62,7 @@ const GLOSS_UTILISATION = "Share of a typical day's trade.";
  * terracotta: the $7 figure + the ladder's kept bar (one focal + the kept slice). */
 function Masthead({ d }: { d: any }) {
   const mi = d.margin_index ?? {}; const m = d.margins ?? {};
+  const hasLadder = [m.gross_pct, m.operating_pct, m.net_pct].every((v) => typeof v === "number" && Number.isFinite(v));
   return (
     <section className="pt-4 md:pt-6">
       <div className="mb-2 flex items-center gap-2.5">
@@ -88,10 +89,21 @@ function Masthead({ d }: { d: any }) {
             straight off the rendered markup. An id born here without a row there,
             or a row there without an id here, is the drift the gate exists to
             catch: fix the file or fix the page, the same day. */}
-        <Box id="ladder">
-          <div className="mb-3 flex items-center gap-2"><h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The margin ladder</h3><SampleTag /></div>
-          <MarginLadder gross={m.gross_pct} operating={m.operating_pct} net={m.net_pct} />
-        </Box>
+        {/* THE CARD GOES WHEN THE LADDER GOES. Every other card on this page
+            early-returns null when its figures are absent; this one printed its
+            kicker and its sample tag over three NaN% rungs, because the three
+            margins arrive from `d.margins ?? {}` and nothing checked them. The
+            form self-omits on a partial set, so the Box has to as well or the
+            masthead keeps an empty box beside its hero.
+            THE HEAD GAP IS 8, NOT 12. Twelve sits between two rungs of the
+            spacing ladder, and 8 is what the kit's own Rail leaves under every
+            other kicker on the site. Sixth instance of that fault in this loop. */}
+        {hasLadder ? (
+          <Box id="ladder">
+            <div className="mb-2 flex items-center gap-2"><h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The margin ladder</h3><SampleTag /></div>
+            <MarginLadder gross={m.gross_pct} operating={m.operating_pct} net={m.net_pct} />
+          </Box>
+        ) : null}
       </div>
       <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.provenance_line}</p>
     </section>

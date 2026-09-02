@@ -96,35 +96,189 @@ export function CountFig({ value, prefix = "", suffix = "", decimals = 0, classN
 }
 
 /* ============================================================================
- * MARGIN LADDER , gross -> operating -> net as three DESCENDING stepped bars on a
- * shared 0-100 vertical scale, so the collapse from 64 to 7 is seen, not just read.
- * Only the net (kept) bar is terracotta. Bars grow up from a zero baseline on scroll-in.
+ * MARGIN LADDER (queue row A10) , THE THREE MARGINS AS A DESCENDING STAIR.
+ *
+ * Of every $100 a customer spends, 65 survives the cost of the goods, 10
+ * survives running the place, 7 reaches the owner. Three LEVELS of one
+ * quantity at three named, ordered stages, drawn as three treads at their own
+ * heights joined by the risers between them, falling away from a rule at the
+ * top that is the sale itself.
+ *
+ * WHY IT IS NOT THE TWO FORMS THE QUEUE PREDICTED, decided on the data.
+ *
+ * NOT A STACKED WHOLE (StackBar, I3). Gross, operating and net do not sum to
+ * anything: 65 + 10 + 7 is 82, and a stacked bar of them would assert a total
+ * that is not one. They are nested levels of the same hundred dollars. The page
+ * ALSO already carries its one stacked whole, "Where each $100 goes", four
+ * cards below, which is the same hundred divided at one moment.
+ *
+ * NOT A STEPPED WATERFALL (I4) EITHER, and this is the closer call. The reading
+ * genuinely is a running total reaching a net, which is the index row that names
+ * that form. But a waterfall's PRINTED values are its decrements, and this
+ * page's adapter builds the money split FROM this ladder in as many words:
+ * direct cost of sales = 100 minus gross, running the business = gross minus
+ * operating, fixed and tax = operating minus net. So a waterfall here would
+ * print the four figures the money split already prints, by name, and would stop
+ * printing gross and operating, which appear NOWHERE ELSE on the page. It would
+ * turn the one card that states the levels into a second drawing of the card
+ * that states the gaps.
+ *
+ * SO IT DRAWS THE LEVELS, and it is a stepped sequence (idea I4) rather than the
+ * bar set it used to be. That last part was forced rather than chosen: three
+ * descending bars from a common baseline is a BAR SET, and the card immediately
+ * after this one in reading order is now a seven-stem ranking, which is also a
+ * bar set. Two touching sections may not share a visual idea, and a page whose
+ * first two drawings wear one silhouette is the founder's 2026-09-01 complaint
+ * arriving from a new direction.
+ *
+ * WHAT ELSE THE OLD DRAWING GOT WRONG, and none of it was a matter of taste. Its
+ * figures were 15px and its rung names 10px: one is off the type ladder
+ * altogether and the other is a word set below the 12px read floor. Its three
+ * bars were separated by gaps, so a card called a LADDER held three unconnected
+ * objects with nothing climbing between them. And with 10 and 7 on a 0-100
+ * scale, two of its three bars were flat coloured pills a dozen pixels high,
+ * which is the honest height and an unreadable shape: what carries the collapse
+ * is the DROP between one rung and the next, and nothing drew the drops.
+ *
+ * DO NOT fill the area under the treads, which turns the stair back into a bar
+ * chart. DO NOT add a fourth rung: the sale is the rule at the top, not a step.
  * ========================================================================== */
-export function MarginLadder({ gross, operating, net }: { gross: number; operating: number; net: number }) {
-  const reduced = useReduced();
-  const { ref, seen } = useInView<HTMLDivElement>();
-  const p = useDraw(seen, reduced);
+export function MarginLadder({
+  gross,
+  operating,
+  net,
+}: {
+  gross?: number | null;
+  operating?: number | null;
+  net?: number | null;
+}) {
   /* ONE QUANTITY, ONE NAME. The last rung was labelled "Net / kept", which hands a
      reader two words joined by a slash and tells them neither is the real one. The
      site calls this quantity KEPT everywhere it speaks plainly: "What the owner
      keeps", "kept per $100", "KEPT 7%". The ladder now uses the same word, so
      somebody who learns it here recognises it on the next page, and a first-time
      reader is not asked to hold an accounting term and a plain one at once.
-     Gross and Operating stay: they are the rungs below, and they have no plainer
+     Gross and Operating stay: they are the rungs above, and they have no plainer
      name that is also accurate. Notation N7. */
-  const steps: Array<[string, number, boolean]> = [["Gross", gross, false], ["Operating", operating, false], ["Kept", net, true]];
+  const rungs = ([
+    ["Gross", gross, false],
+    ["Operating", operating, false],
+    ["Kept", net, true],
+  ] as Array<[string, number | null | undefined, boolean]>)
+    .filter((r): r is [string, number, boolean] => typeof r[1] === "number" && Number.isFinite(r[1]) && r[1] >= 0)
+    .map(([name, value, kept]) => ({ name, value: Math.min(100, value), kept }));
+  /* A LADDER WITH A RUNG MISSING IS NOT A SHORTER LADDER, it is a different
+     claim, so a partial set renders nothing rather than a two-step stair a
+     reader would take for the whole descent. */
+  if (rungs.length < 3) return null;
+
+  /* THE SCALE IS 0 TO 100 AND THE CEILING IS THE SALE, not the largest rung.
+     Measuring against the largest value is right for a ranking, where the
+     entries are only comparable to each other; it is wrong here, because every
+     rung is a share of one stated hundred dollars and a gross margin drawn at
+     full height would say the goods cost nothing. The gap between the top rule
+     and the first tread is the first thing the money loses, and it is drawn. */
+  const PLOT = 104; // pixels for 0..100
+  const CAP = 16; // room above the rule for what the rule is
+  const TREAD = 2;
+  const h = (v: number) => Math.round((v / 100) * PLOT);
+  const pct = (i: number) => `${(i / rungs.length) * 100}%`;
   return (
-    <div ref={ref}>
-      <div className="flex items-end justify-between gap-3" style={{ height: 118 }} role="img" aria-label={`Gross ${gross}%, operating ${operating}%, net ${net}%`}>
-        {steps.map(([label, val, kept]) => (
-          <div key={label} className="flex flex-1 flex-col items-center justify-end gap-1.5" style={{ height: "100%" }}>
-            {/* the kept BAR stays terracotta; its numeral reads ink so the $7 masthead
-                focal is the band's only terra figure */}
-            <Fig className="text-[15px] leading-none text-[var(--c-ink)]">{Math.round(val * p)}%</Fig>
-            <div className="w-full max-w-[64px] rounded-t" style={{ height: `${val * p}%`, background: kept ? TERRA : "#cfcac6", transition: reduced ? "none" : undefined }} />
-            <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</span>
-          </div>
+    <div>
+      <div
+        data-idea="I4"
+        className="relative"
+        style={{ height: CAP + PLOT }}
+        role="img"
+        aria-label={`Of every $100 of sales, ${rungs.map((r) => `${r.name.toLowerCase()} ${r.value}%`).join(", ")}`}
+      >
+        {/* WHAT THE STAIR FALLS FROM. Its label sits above the rule at the right,
+            where the shortest rungs leave the drawing empty, so the one part of
+            the picture that carries nothing carries the scale instead. */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 text-right text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]"
+          style={{ top: 0 }}
+        >
+          <Fig className="text-[var(--c-ink2)]">$100</Fig> of sales
+        </div>
+        {/* DASHED, AND FOR THE SAME REASON THE RANKING BESIDE THIS CARD DRAWS
+            ITS ALL-TRADES AVERAGE DASHED: a reference is not a value, and a page
+            that marks both the same way teaches a reader one thing twice. Solid,
+            it read as the plot's own border and the stair looked as though it
+            were falling inside a box rather than away from a level. */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0"
+          style={{ top: CAP, height: 0, borderTop: "1px dashed var(--c-line-strong)" }}
+        />
+        {/* THE ZERO LINE, one element spanning the set rather than a border under
+            each tread, for the reason the sibling ranking gives: a baseline cut
+            into pieces by the gaps stops reading as an axis. */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0"
+          style={{ bottom: 0, height: 1, background: "var(--c-line-strong)" }}
+        />
+        {rungs.map((r, i) => (
+          <React.Fragment key={r.name}>
+            {/* THE TREAD. The kept one is the card's single accent; its figure
+                stays ink, so the $7 beside this card is the band's only
+                terracotta FIGURE and this drawing does not compete with it. */}
+            <div
+              aria-hidden
+              className="absolute"
+              style={{
+                left: pct(i),
+                width: pct(1),
+                bottom: h(r.value),
+                height: TREAD,
+                background: r.kept ? TERRA : "var(--c-ink)",
+              }}
+            />
+            {/* THE RISER, which is the drawing's whole subject: one long drop and
+                one short one says the trade loses almost everything in a single
+                stage. Drawn from the higher tread's top to the lower tread's top
+                so the treads and risers are one unbroken line. */}
+            {i > 0 ? (
+              <div
+                aria-hidden
+                className="absolute"
+                style={{
+                  left: pct(i),
+                  width: TREAD,
+                  transform: `translateX(-${TREAD / 2}px)`,
+                  bottom: Math.min(h(rungs[i - 1].value), h(r.value)),
+                  height: Math.abs(h(rungs[i - 1].value) - h(r.value)) + TREAD,
+                  background: "var(--c-ink)",
+                }}
+              />
+            ) : null}
+            {/* THE FIGURE RIDES ITS OWN TREAD rather than sharing a row with the
+                others, which is what makes the height readable as the value. The
+                four pixels between them are the same kerning the ranking beside
+                this card puts between a figure and its dot. */}
+            <div
+              className="absolute text-center text-[length:var(--t-body)] leading-none text-[var(--c-ink)]"
+              style={{ left: pct(i), width: pct(1), bottom: h(r.value) + TREAD + 4 }}
+            >
+              <Fig>{r.value}%</Fig>
+            </div>
+          </React.Fragment>
         ))}
+      </div>
+      <div className="relative" style={{ paddingTop: 8 }}>
+        {rungs.map((r, i) => (
+          <span
+            key={r.name}
+            className={`absolute text-center text-[length:var(--t-micro)] leading-none ${r.kept ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}
+            style={{ left: pct(i), width: pct(1) }}
+          >
+            {r.name}
+          </span>
+        ))}
+        {/* one line of height for the absolutely placed names above */}
+        <span aria-hidden className="block text-[length:var(--t-micro)] leading-none">&nbsp;</span>
       </div>
     </div>
   );
