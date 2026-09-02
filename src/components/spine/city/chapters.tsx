@@ -23,7 +23,7 @@ import * as React from "react";
 import { Box, Head, Fig, InlineDisclosure, TERRA, usd } from "@/components/spine/kit";
 import { CountFig, useReducedMotion, useInView } from "./motion";
 
-const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
 /* ---- income distribution curve ----
  * Null-guards (real-data promotion): the whole card omits when no real median is held,
@@ -193,18 +193,26 @@ export function OwnerRunway({ d }: { d: any }) {
   const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
   // IDENTITY (must close): runway = monthly burn x months to break-even.
   // burn = rent + groceries + transport = $3,060; months = round(38wk / 52 x 12) = 9;
-  // runway = $3,060 x 9 = $27,540 -> $28K focal, "$3.1K a month for 9 months" subline.
+  // runway = $3,060 x 9 = $27,540 -> $28K focal, "$3,060 a month for 9 months" subline.
   const burn = (o.rent_1bed_usd_mo || 0) + (o.groceries_usd_mo || 0) + (o.transport_usd_mo || 0);
   const weeks = o.weeks_to_breakeven || 0;
   const months = Math.round((weeks / 52) * 12);
   const runway = burn * months;
-  // subline burn keeps a decimal ($3.1K, not $3K) so the shown mental math
-  // ($3.1K x 9 = ~$28K) reproduces the focal figure.
-  const burnLabel = "$" + (burn / 1000).toFixed(1) + "K";
+  /* THE DECIMAL WORKAROUND IS GONE (C29, 2026-09-02). The subline used to print
+     "$" + (burn / 1000).toFixed(1) + "K" because the shared formatter rounded a
+     monthly burn to the nearest thousand, so $3,060 read "$3K" and the shown
+     mental math ($3K x 9) missed the focal figure by two thousand dollars. The
+     founder's ratified grammar prints a figure under $10,000 exactly, so the
+     subline is the shared function now and the arithmetic closes on the nose:
+     $3,060 x 9 = $27,540, printed "$28K". The three lines behind the disclosure
+     were hand-rolled a third and a fourth way in the same card, one with a
+     thousands separator and two without, so a four-figure grocery bill would have
+     printed "$1200" beside a rent reading "$1,200". */
+  const burnLabel = money(burn);
   const items: Array<[string, string]> = [
-    [`$${(o.rent_1bed_usd_mo || 0).toLocaleString("en-US")}`, "one-bed rent, a month"],
-    [`$${o.groceries_usd_mo}`, "groceries, a month"],
-    [`$${o.transport_usd_mo}`, "transport, a month"],
+    [money(o.rent_1bed_usd_mo || 0), "one-bed rent, a month"],
+    [money(o.groceries_usd_mo || 0), "groceries, a month"],
+    [money(o.transport_usd_mo || 0), "transport, a month"],
   ];
   return (
     <Box>
@@ -240,9 +248,12 @@ export function RentAffordability({ d }: { d: any }) {
   if (rentMo == null || income == null) return null;
   const sample = d.owner_runway?._meta?.confidence === "placeholder" || d.owner_runway?._meta?.confidence === "modeled" || d.income?._meta?.confidence === "modeled";
   const pct = Math.round(((rentMo * 12) / income) * 100);
-  // Show the monthly rent to one decimal ($2.4K, not a rounded $2K) so the two sides
-  // of the ratio reconcile with the focal percentage (§26 trust).
-  const rentShown = "$" + (rentMo / 1000).toFixed(1) + "K";
+  /* THE SECOND DECIMAL WORKAROUND, GONE FOR THE SAME REASON (C29, 2026-09-02).
+     It kept a decimal ($2.4K rather than a rounded $2K) so the two sides of the
+     ratio reconciled with the focal percentage; the ratified grammar prints a
+     monthly rent exactly, so they reconcile to the dollar instead of to a
+     tenth of a thousand. */
+  const rentShown = money(rentMo);
   // Rent-against-income is a BURDEN, not an answer: the ratio stays INK (rule 37, accent
   // marks answers only, never a cost) and the terracotta progress bar is DELETED , it read
   // high = good on a burden (rule 29A), it was the second horizontal bar in this band

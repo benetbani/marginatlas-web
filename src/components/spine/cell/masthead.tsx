@@ -15,7 +15,7 @@ import { Fig, InfoTip, SampleTag, SpreadStrip, usd, CARD_SURFACE } from "@/compo
 import { AtlasMark } from "@/components/spine/marks";
 import { useCountUp } from "./format-picker";
 
-const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
 export function Masthead({ d }: { d: any }) {
   const h = d.headline ?? {};

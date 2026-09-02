@@ -29,10 +29,40 @@ import { AtlasMark } from "./marks";
 
 export const TERRA = "#fb8469"; // atlas-300 soft terracotta , the only fill color
 export const TRACK = "#e6e6e6";
-/* THE canonical money grammar, page-set-wide (Final Ascent P4): $680 / $43K / $1.4M ,
- * round K, one decimal above a million. Route hand-rolled money formatting here. */
-export const usd = (v: number) => (v >= 1e6 ? "$" + (v / 1e6).toFixed(1) + "M" : "$" + (v >= 1000 ? Math.round(v / 1000) + "K" : Math.round(v)));
-export const usdMo = (vYr: number) => "$" + (vYr / 12 / 1000).toFixed(1) + "K";
+/* THE MONEY GRAMMAR, RATIFIED BY THE FOUNDER 2026-09-02: EXACT BELOW $10,000,
+ * and nothing changes above it. $1,500 prints "$1,500"; $426,000 stays "$426K";
+ * $1.4M stays "$1.4M". His reasoning is the one the options carried: a published
+ * fee or a published wage is never rounded, so no figure on the site is ever
+ * wrong by a third, and the price is slightly longer figures in a table.
+ *
+ * WHAT IT REPLACES, and the defect was measured four times before it was fixed.
+ * The old rule abbreviated from a THOUSAND and rounded to the nearest one, which
+ * is right for a $426K fit-out, where the last three digits are noise, and wrong
+ * for anything a source publishes exactly. Counted on the shipped data files:
+ * FIFTY-THREE legal-form fees across 52 countries misprinted (B8), FOUR prime
+ * rents (C11, Hong Kong's $1,850 as "$2K"), NINETY-NINE of 197 minimum wages and
+ * THIRTY-NINE of 197 median full-time wages misstated by more than five percent
+ * (C12), worst Burkina Faso's $1,512 as "$2K" (32.3%) and the Central African
+ * Republic's $1,440 as "$1K" (30.6%). Re-counted under this grammar: ZERO, on
+ * every one of those fields, and zero of the 443 legal fees.
+ *
+ * THE BOUNDARY IS $10,000 AND NOT A THOUSAND, because that is where the rounding
+ * stops discarding a meaningful share: at $10,000 the nearest thousand is at
+ * worst 5 percent away, and at $1,500 it is 33 percent away.
+ *
+ * ROUTE EVERY HAND-ROLLED MONEY FORMAT HERE. Five private copies existed when
+ * this landed (C29), and every one of them had been written because the shared
+ * function could not be fixed without this ruling. */
+export const usd = (v: number) =>
+  v >= 1e6
+    ? "$" + (v / 1e6).toFixed(1) + "M"
+    : v >= 1e4
+      ? "$" + Math.round(v / 1000) + "K"
+      : "$" + Math.round(v).toLocaleString("en-US");
+/* A MONTHLY FIGURE IS STILL A FIGURE, so the ruling reaches this one too: it
+ * divides and then prints in the one grammar rather than carrying a second.
+ * Before, it printed "K" at every magnitude, so $200 a month read "$0.2K". */
+export const usdMo = (vYr: number) => usd(vYr / 12);
 export const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : "");
 
 export function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "terra" }) {

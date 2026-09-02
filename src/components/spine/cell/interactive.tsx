@@ -13,7 +13,7 @@ import * as React from "react";
 import { Box, Rail, Fig, EaseScale, InfoTip, InlineDisclosure, usd } from "@/components/spine/kit";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
 type Col = { key: string; label: string; unit: string; get: (x: any) => number; cell: (v: number) => string };
 
@@ -212,7 +212,13 @@ export function Nearby({ d }: { d: any }) {
 export function Wages({ d }: { d: any }) {
   const roles: any[] = d.wages?.roles ?? [];
   if (roles.length === 0) return null;
-  const kUsd = (v: number) => `$${Math.round(v / 1000)}K`;
+  /* A FOURTH PRIVATE FORMATTER STOOD HERE AND IS GONE (C29, 2026-09-02): a local
+     `kUsd` that rounded every wage to the nearest thousand and printed a K
+     whatever the magnitude, so a role paid $4,200 a year read "$4K" and one paid
+     $600 read "$1K". The three figures use this file's own `money` now, which is
+     the kit's ratified formatter. London's roles are all above $10,000, so no
+     committed render moves; the card renders on every cell page in the atlas,
+     including the ones where a kitchen porter is paid four figures. */
   /* DEAREST FIRST, sorted here rather than trusted from the adapter, because
      the order is the reading: a budget starts at the hire that costs most. */
   const rows = [...roles].sort((a, b) => (b.mid_usd ?? 0) - (a.mid_usd ?? 0));
@@ -274,13 +280,13 @@ export function Wages({ d }: { d: any }) {
               <tr key={r.role} className="border-b border-[var(--c-border)] last:border-b-0">
                 <th scope="row" className="py-2 pr-2 text-left align-baseline text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{r.role}</th>
                 <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-body)] text-[var(--c-ink2)]">
-                  {Number.isFinite(r.low_usd) ? <Fig>{kUsd(r.low_usd)}</Fig> : null}
+                  {Number.isFinite(r.low_usd) ? <Fig>{money(r.low_usd)}</Fig> : null}
                 </td>
                 <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-section)] leading-none text-[var(--c-ink)]">
-                  <Fig>{kUsd(r.mid_usd)}</Fig>
+                  <Fig>{money(r.mid_usd)}</Fig>
                 </td>
                 <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-body)] text-[var(--c-ink2)]">
-                  {Number.isFinite(r.high_usd) ? <Fig>{kUsd(r.high_usd)}</Fig> : null}
+                  {Number.isFinite(r.high_usd) ? <Fig>{money(r.high_usd)}</Fig> : null}
                 </td>
               </tr>
             ))}

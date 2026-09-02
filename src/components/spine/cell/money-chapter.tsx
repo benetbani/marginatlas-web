@@ -23,7 +23,7 @@ import { ClearanceRing, LollipopColumn } from "@/components/spine/forms-v2";
 import { AtlasWaterfall } from "@/components/kit/charts/AtlasWaterfall";
 import { useFormat, useCountUp, useInView } from "./format-picker";
 
-const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 function useReduced() {
   const [r, setR] = React.useState(false);
   React.useEffect(() => { const mq = window.matchMedia("(prefers-reduced-motion: reduce)"); setR(mq.matches); }, []);

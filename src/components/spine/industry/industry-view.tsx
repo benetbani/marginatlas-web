@@ -38,7 +38,7 @@ import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
 import { deriveSubtypes } from "./subtypes";
 
-const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
 /* count words shared by the count-derived sentences (kept in the component, never the seed) */
 const COUNT_WORD: Record<number, string> = { 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven" };

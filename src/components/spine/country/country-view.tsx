@@ -59,19 +59,16 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-/* AN EXACT FIGURE, BECAUSE THE KIT'S `usd` ABBREVIATES AT A THOUSAND and rounds
-   to the nearest one. B8 found that on the legal-form fees, where 53 rows across
-   52 countries printed a published fee wrong; C11 found the SAME defect live in
-   the premises card, which reads a rent per square metre. Measured on
-   country_profile_v2.json: four of 198 countries carry a prime rent at or above
-   a thousand, Hong Kong at $1,850 printing "$2K", Monaco at $1,437 and Macao and
-   Liechtenstein at about $1,200 all printing "$1K". Beside an edge rent of $278
-   that pair says 3.6 times where the truth is 5.2, and this card now STATES the
-   ratio, so a rounded figure would put the drawing and the sentence in open
-   disagreement. This is the SECOND private copy of this formatter, after
-   setup-tiers.tsx's `fee`; the honest fix is one exact formatter in the kit, and
-   it is a queue row rather than a reach into a shared file from here. */
-const rentUsd = (v: number) => "$" + Math.round(v).toLocaleString("en-US");
+/* THE PRIVATE COPY IS GONE AND THE KIT'S `usd` IS THE EXACT ONE (C29,
+   2026-09-02). It was written here because the shared function abbreviated at a
+   thousand: four of 198 countries carry a prime rent at or above one, Hong Kong
+   at $1,850 printing "$2K", Monaco at $1,437 and Macao and Liechtenstein at about
+   $1,200 all printing "$1K". Beside an edge rent of $278 that pair said 3.6 times
+   where the truth is 5.2, and this card STATES the ratio, so a rounded figure put
+   the drawing and the sentence in open disagreement. The founder ratified the
+   grammar on 2026-09-02 and the kit carries it, so the premises card calls `usd`
+   directly and no second name for money survives in this file. Every prime rent
+   in the atlas is below $10,000, so the collapse changes no figure here. */
 
 /** One published fact from hero.support, shaped as the adapter emits it. */
 type SupportFact = { key?: string; label?: string; value?: number; unit?: string; note?: string };
@@ -793,15 +790,15 @@ function Premises({ premises }: { premises: any }) {
           <div className="mt-4">
             <RankedTiles
               accent={false}
-              ariaLabel={"Commercial rent for a square metre a year, cheapest address first: " + rents.map(([l, v]) => l + " " + rentUsd(v)).join(", ")}
-              rows={rents.map(([label, v]) => ({ name: label, value: rentUsd(v) }))}
+              ariaLabel={"Commercial rent for a square metre a year, cheapest address first: " + rents.map(([l, v]) => l + " " + usd(v)).join(", ")}
+              rows={rents.map(([label, v]) => ({ name: label, value: usd(v) }))}
             />
           </div>
           <div className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">Commercial rent for a square metre, a year.</div>
         </>
       ) : rents.length === 1 ? (
         <div className="flex flex-wrap items-baseline gap-x-2">
-          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{rentUsd(rents[0][1])}</Fig>
+          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{usd(rents[0][1])}</Fig>
           <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{rents[0][0].toLowerCase()}, a square metre a year</span>
         </div>
       ) : null}

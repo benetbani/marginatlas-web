@@ -63,7 +63,7 @@
  * one run earlier by tagging its wrapper once.
  */
 import * as React from "react";
-import { Fig } from "@/components/spine/kit";
+import { Fig, usd } from "@/components/spine/kit";
 
 export type SetupTier = {
   tier: string;
@@ -102,18 +102,21 @@ const PAPERWORK: Record<number, string> = {
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-/* THE FEE IS PRINTED EXACTLY, AND IT IS A CORRECTION RATHER THAN A PREFERENCE.
-   The kit's `usd` abbreviates at a thousand and rounds to the nearest one, which
-   is right for a $426K fit-out, where the last three digits are noise, and wrong
-   for a fee a registry publishes to the euro. Counted on the file: FIFTY-THREE
-   rows across FIFTY-TWO countries carry a fee that the abbreviation misprints.
-   Germany's GmbH costs $1,500 and read "$2K"; Belgium's limited company costs
-   $1,200 and read "$1K"; Italy's S.r.l. costs $2,500 and read "$2K". A published
-   exact figure overstated by a third is the visibly-wrong-number class, not a
-   rounding style. Nothing else on the page is affected, because the masthead and
-   the peers table both carry the cheapest tier's fee, which is under a thousand
-   almost everywhere. */
-const fee = (v: number) => "$" + Math.round(v).toLocaleString("en-US");
+/* THE PRIVATE FORMATTER IS GONE, AND THE KIT'S `usd` IS NOW THE EXACT ONE (C29,
+   2026-09-02). It was written here because the shared function abbreviated at a
+   thousand and rounded to the nearest one, so Germany's $1,500 GmbH read "$2K",
+   Belgium's $1,200 limited company read "$1K" and Italy's $2,500 S.r.l. read
+   "$2K": FIFTY-THREE rows across FIFTY-TWO countries. The founder ratified the
+   grammar on 2026-09-02, exact below $10,000, and the shared function carries it,
+   so keeping a copy here would be a second grammar for one card.
+   WHAT THE COLLAPSE COSTS ABOVE $10,000, counted rather than assumed, because the
+   copy printed exact at EVERY magnitude and the kit abbreviates above ten
+   thousand: FIVE of the file's 443 fees sit at or above $10,000 and every one of
+   them is a round thousand (Germany, Italy and Austria at $12,000, Kuwait and
+   Qatar at $10,000), so not one row in the atlas prints differently for it. Zero
+   of 443 are misstated by more than half a percent under the new grammar, against
+   53 under the old. The row calls `usd` directly; no second name for money
+   survives in this file. */
 
 /* THE PANEL IS ITS OWN EXPORT SO ITS OPEN STATE CAN BE PHOTOGRAPHED, which is
    not a convenience: this is a client component and BOTH harnesses render it
@@ -201,7 +204,7 @@ export function SetupTiers({ tiers }: { tiers: SetupTier[] }) {
                 {t.cost_usd === 0 ? (
                   <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">Free</span>
                 ) : isNum(t.cost_usd) ? (
-                  <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{fee(t.cost_usd)}</Fig>
+                  <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig>
                 ) : null}
               </span>
               <span className="text-right">

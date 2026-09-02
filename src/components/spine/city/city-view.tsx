@@ -32,7 +32,7 @@ import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
 /* TERRA is gone from this import with the peer cost strip (C9): it was the strip's one
    accent, the home city's dot, and nothing else in this file paints with it. */
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets, Band } from "@/components/spine/kit";
+import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets, Band, usd } from "@/components/spine/kit";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
 import { AtlasMark } from "@/components/spine/marks";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -40,7 +40,13 @@ import { CityHero } from "./masthead";
 import { IncomeCurve, OwnerRunway, RentAffordability } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
 
-const k = (v: number) => "$" + Math.round((v || 0) / 1000) + "K";
+/* A FIFTH PRIVATE FORMATTER, GONE (C29, 2026-09-02). It rounded a cost to open to
+   the nearest thousand and printed a K whatever the magnitude, which is the same
+   defect the kit's own `usd` carried until the founder ratified the money grammar
+   on 2026-09-02: a trade costing $8,400 to open read "$8K" and one costing $600
+   read "$1K". What survives here is the NULL GUARD and not a grammar, so a card
+   whose cost is absent still prints what it printed before rather than "$NaN". */
+const k = (v: number) => usd(v || 0);
 
 /* TierBand , the CATEGORICAL read form (FORM-CATALOG PriceTierBand: a discrete N-step
  * band, the active step inked). Replaces a continuous marker for a categorical read

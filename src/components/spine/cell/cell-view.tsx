@@ -50,7 +50,7 @@ import { WhoItSuits } from "@/components/spine/industry/industry-view";
 
 const X: any = spineCellSeed;
 
-const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
 const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 

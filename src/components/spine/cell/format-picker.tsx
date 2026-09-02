@@ -16,7 +16,7 @@ import * as React from "react";
 import { Box, Rail, Fig, usd } from "@/components/spine/kit";
 import { isReviewBuild } from "@/lib/feature_flags";
 
-const money = usd; // ONE money grammar page-set-wide (kit usd: $43K / $1.4M)
+const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
 export type Subtype = {
   slug: string; name: string; size_band: string; keeps_pct: number;
