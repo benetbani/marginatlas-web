@@ -679,7 +679,19 @@ export { InfoTip };
  * it the track is neutral with a centre tick and BOTH poles carry equal weight (no implied
  * better end , form must not assert a direction the copy disclaims). `glossFor` supplies
  * the per-spectrum "?" gloss, rendered LEFT of the row per the founder's spec. */
-export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", middle }: { rows: any[]; gradient?: boolean; glossFor?: (spectrum: string) => string | undefined; dot?: "ink" | "terra";
+export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", middle, scale = "micro" }: { rows: any[]; gradient?: boolean; glossFor?: (spectrum: string) => string | undefined; dot?: "ink" | "terra";
+  /* THE NAMED ROW'S TYPE SCALE, OPT-IN, AND IT EXISTS BECAUSE ONE CARD CARRIES A
+     RECORDED CORRECTION THE FORM WOULD OTHERWISE UNDO. The named form sets its trait
+     name and its two pole words at micro in muted gray. On the city page's quick reads
+     that exact treatment was rejected by the founder for legibility, rule 34, "text
+     too small", and the card has read at body size ever since; C9 replaced six
+     hand-rolled tier bands there with this form and would have put the poles straight
+     back to micro gray. `scale="body"` lifts the name and the poles a rung and takes
+     the poles to ink2, which is the treatment that survived his correction.
+     IT AFFECTS THE NAMED FORM ONLY and defaults to micro, so the country and city
+     character tables and the trade page's who-walks-in render exactly what they render
+     today, verified by re-rendering all eight pages. */
+  scale?: "micro" | "body";
   /* THE MIDDLE IS A BAND WHEREVER THE CALLER READS IT AS ONE, and this prop
      exists because the drawing was contradicting the words above it. The neutral
      track carries ONE hairline at 50, which asserts a cut: everything left of it
@@ -706,6 +718,8 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
      words alone are not enough; the trait name leads, the explanatory poles
      sit under the track's ends). Rows without a name keep the compact form. */
   const dotBg = dot === "terra" ? "var(--terra)" : "var(--c-ink)";
+  const nameCls = scale === "body" ? "text-[length:var(--t-body)]" : "text-[length:var(--t-micro)]";
+  const poleCls = scale === "body" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-micro)] text-[var(--c-muted)]";
   return (
     <div data-idea="I1" className="divide-y divide-[var(--c-border)]">
       {rows.map((r: any, i: number) => {
@@ -731,12 +745,12 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
         if (r.name) {
           return (
             <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-              <div className="flex items-center text-[length:var(--t-micro)] font-medium text-[var(--c-ink)]">
+              <div className={`flex items-center ${nameCls} font-medium text-[var(--c-ink)]`}>
                 {gloss ? <InfoTip gloss={gloss} className="mr-1.5" /> : null}
                 {r.name}
               </div>
               <div className="mt-1.5">{track}</div>
-              <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">
+              <div className={`mt-1 flex justify-between gap-3 leading-tight ${poleCls}`}>
                 <span>{r.left_label}</span>
                 <span className="text-right">{r.right_label}</span>
               </div>

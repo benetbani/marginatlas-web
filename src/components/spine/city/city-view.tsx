@@ -30,7 +30,9 @@
  */
 import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TERRA, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets, Band } from "@/components/spine/kit";
+/* TERRA is gone from this import with the peer cost strip (C9): it was the strip's one
+   accent, the home city's dot, and nothing else in this file paints with it. */
+import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets, Band } from "@/components/spine/kit";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
 import { AtlasMark } from "@/components/spine/marks";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -42,10 +44,19 @@ const k = (v: number) => "$" + Math.round((v || 0) / 1000) + "K";
 
 /* TierBand , the CATEGORICAL read form (FORM-CATALOG PriceTierBand: a discrete N-step
  * band, the active step inked). Replaces a continuous marker for a categorical read
- * (Deep / Fair / Scarce, Riskier / Safer): a marker at a precise position fakes a
- * precision the category does not hold (Meter do-not, rule 6). The word is the value
- * beside the read; the band shows WHICH tier, in whole steps, between two named poles.
- * Ink only , these are conditions, not the box's one answer (rule 37, no accent). */
+ * (Riskier / Safer): a marker at a precise position fakes a precision the category
+ * does not hold (Meter do-not, rule 6). The word is the value beside the read; the
+ * band shows WHICH tier, in whole steps, between two named poles.
+ * Ink only , these are conditions, not the box's one answer (rule 37, no accent).
+ *
+ * ONE CALLER LEFT, AND THE OTHER ONE'S REASON DID NOT HOLD (C9, 2026-09-02). The quick
+ * reads used this six times in one box, which is the form-variety gate's per-card
+ * clause failed, and their positions turned out to be MEASURED percentile ranks rather
+ * than categories: see CityLenses below. This survives for the risk severities, which
+ * are a placeholder 0-to-100 severity the seed itself calls illustrative, so a
+ * quartile is the honest granularity there. That card is dark on every real city page
+ * today, so this drawing reaches no reader; the day the risk data lands it is an
+ * undeclared drawing and a third horizontal track on a page whose cap is two. */
 function TierBand({ steps = 4, pos, word, leftPole, rightPole }: { steps?: number; pos: number; word: string; leftPole: string; rightPole: string }) {
   const active = Math.max(0, Math.min(steps - 1, Math.floor((pos / 100) * steps)));
   return (
@@ -137,62 +148,75 @@ export function CityVerdict({ d }: { d: any }) {
   );
 }
 
-/* CityLenses. Null-guards on d.lenses.scales (omitted on real-data promotion , the
- * live adapter never supplies lenses; see adapt_city.ts's omitted-fields list). The
- * hand-authored condition reads carry a SampleTag (§4). Each read is a CATEGORICAL tier
- * chip (TierBand), not a continuous marker (§6 false precision); the banned "Room to
- * enter" crowding read is dropped at the seed (§5), and the verdict prose subtitle and
- * per-row advice sentences are gone (§14/§19). */
+/* CityLenses , SIX POSITIONS BETWEEN TWO NAMED POLES, WHICH IS ONE OBJECT AND NOT SIX.
+ *
+ * Wave C, row C9 (2026-09-02). This card drew SIX hand-rolled four-step tier bands,
+ * one per read, each an undeclared drawing in a view file. Declaring them as they
+ * stood would have been six of one idea inside one bordered box, and the
+ * form-variety gate's per-card clause fails at three: three of one shape in one card
+ * is three claimants and no answer. So the set becomes ONE drawing, exactly as A6 did
+ * for this page's district rents and A9 did for the industry page's eight rails.
+ *
+ * THE FORM IS THE CATALOGUE'S OWN ANSWER TO THIS INFORMATION. Every read here names
+ * two poles ("Thin to Deep", "Costly to Cheap", "Local to Visited"), which is the
+ * index's row "a position between two named poles" six times over, and SpectraTable is
+ * the form it points at. It tags its wrapper ONCE, so a six-spectra table is one I1
+ * (ratified in B5), and the catalogue's own entry says the country/city character
+ * standard is a 6-spectra table. It renders the NAMED row form because these rows
+ * carry a name, which is the founder's 2026-08-30 order: the trait name leads and the
+ * explanatory poles sit under the track's ends.
+ *
+ * THE FALSE-PRECISION ARGUMENT THAT PUT THE TIER BANDS HERE DOES NOT SURVIVE READING
+ * THE ADAPTER. Their comment said a marker at a precise position fakes a precision the
+ * category does not hold. `adapt_city.ts` builds every `pos` as `rankPct`, a
+ * percentile rank of this city among every other city carried on one MEASURED field,
+ * and marks the block `confidence: "measured"`; the four words are then a quartile
+ * BUCKET of that rank. So the precision is held and the band was throwing it away, and
+ * the drawing that publishes a dot at the rank is the more honest of the two.
+ *
+ * ONE COLUMN, NOT TWO, AND THAT IS THE READING RATHER THAN A LAYOUT PREFERENCE. The
+ * 2x3 grid put three reads on one x-axis and three on another, so no two dots in
+ * different columns could be compared. On one shared width the six dots are one
+ * profile of the city, read down: five hard right and one hard left on London.
+ *
+ * THE WORD IS GONE and it is a real loss, recorded rather than hidden. It was computed
+ * from `pos` by the same quartile cut the band drew, so it stated the dot twice; the
+ * card already suppressed it whenever it matched a pole, which is six of six here.
+ * Where a read lands mid-scale a reader now takes the direction off the dot's position
+ * between its two named poles instead of off a bucket word.
+ *
+ * Null-guards on d.lenses.scales unchanged. No accent: the dot stays ink, because
+ * these are conditions and not the box's one answer (rule 37). */
 function CityLenses({ d }: { d: any }) {
   const o = d.lenses;
   if (!o || !(o.scales?.length)) return null;
   const scales: any[] = o.scales ?? [];
   const days: number | undefined = o.days_to_register;
   const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
-  // Categorical reads on labeled TIER chips, not continuous markers (FORM-CATALOG Meter
-  // do-not: a marker at a precise position fakes precision). The word is the value; the
-  // banned "Room to enter" crowding read is DELETED at the seed (rule 5). No verdict
-  // prose subtitle, no per-row advice sentence (§14/§19); the read lives on the chips.
+  /* SpectraTable's own row shape: it clamps the dot to 5..95 itself, so a rank of 0
+     or 100 still renders inside the track rather than on its edge. */
+  const rows = scales.map((s: any) => ({
+    spectrum: s.key ?? s.label,
+    name: s.label,
+    left_label: s.left,
+    right_label: s.right,
+    position_0_1: Math.max(0, Math.min(1, Number(s.pos ?? 50) / 100)),
+  }));
   return (
     <Box id="lenses">
       <Head icon="scorecard" sample={sample}>Quick reads</Head>
-      {/* 2x2 grid, not four full-width rows: a single 4-step band stretched across the
-          whole card left acres of dead track (rule 17, sparse-but-wide, the founder's
-          most-named reject on this exact "Quick reads" section). Two columns halve each
-          band's width and double the density; the read (word) sits at lead size and the
-          pole labels read at body size, not the micro low-contrast gray he rejected
-          (rule 34, "text too small"). */}
-      <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
-        {scales.map((s: any) => (
-          <div key={s.key ?? s.label}>
-            {/* THE WORD IS PRINTED ONLY WHEN IT IS NOT ALREADY ON THE SCALE BENEATH IT.
-                Photographed at 1280: all six reads on this page sit at an end of their
-                own scale, so every bold answer was the same word as the pole twenty
-                pixels below it. "Deep" over "Thin , Deep". "Large" over "Small ,
-                Large". Six reads, twelve words, six of them saying nothing the line
-                under them did not.
-                The poles are NOT shrunk to fix this, and that is deliberate: they were
-                once micro and low-contrast and the founder rejected them for it, rule
-                34, "text too small". The scale keeps its labels at full size and the
-                repeat goes instead. Where a read lands mid-scale the word carries
-                something the poles cannot, and there it still prints. */}
-            <div className="mb-2 flex items-baseline justify-between gap-2">
-              <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{s.label}</span>
-              {s.word !== s.left && s.word !== s.right ? (
-                <span className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{s.word}</span>
-              ) : null}
-            </div>
-            <TierBand pos={s.pos} word={s.word} leftPole={s.left} rightPole={s.right} />
-          </div>
-        ))}
-      </div>
+      {/* `scale="body"` because this card carries a founder correction the form's own
+          default would undo: its pole words read at body size, not the micro
+          low-contrast gray he rejected (rule 34, "text too small"). Opt-in, so the
+          character tables that already wear this form do not move. */}
+      <SpectraTable rows={rows} scale="body" />
       {/* HOW FAST YOU CAN OPEN. The knowable half of what the lease-terms card asked
           (§3, design/replacements/lease-terms.md). Shown as itself: no scale, no
           position, nothing to invert (§29A). A long registration is a fact about a
           place, not a judgement of it (§21). */}
       {days != null ? (
         <div className="mt-5 flex flex-wrap items-baseline gap-x-3 border-t border-[var(--c-border)] pt-4">
-          <Fig className="text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{days}</Fig>
+          <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{days}</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
             {days === 1 ? "day" : "days"} to register a business here<InfoTip gloss="The typical time to complete the paperwork for a one-person business in this country. It does not include finding a site, fitting it out, or any licence a particular trade needs." />
           </span>
@@ -203,174 +227,57 @@ function CityLenses({ d }: { d: any }) {
 }
 
 /* ================= CH2 , WHAT IT COSTS HERE ================= */
-/* CommercialSpace. Null-guards: the whole card omits when no space read; the peer rent
- * STRIP + the lease-terms card each omit when their (omitted) fields are absent, leaving
- * the sanctioned space prose alone. Peer costs read as SIGNED PERCENTAGE-POINT deltas
- * against the home city (founder C3, 2026-07-11), dots on one axis, never bars. The peer
- * set carries no pricier city because none is defensibly pricier than London (C3: "only
- * cheaper exists; fine"). */
+/* CommercialSpace , WHAT IS LEFT AFTER THE PEER STRIP WAS CUT AS A DUPLICATE.
+ *
+ * Wave C, row C9 (2026-09-02). This card carried a four-city dot plot of the cost of
+ * living against the home city, an undeclared horizontal track, and it was cut rather
+ * than declared. Three findings, in the order they decided it.
+ *
+ * IT WAS THE SAME QUANTITY AS THE PEERS TABLE ONE BAND ABOVE, WITH THE SIGN INVERTED.
+ * `CityPeers` builds its first row as `home.rent_index - r.rent_index` and this strip
+ * built `r.rent_index - home.rent_index`, off the same field, for the same four
+ * cities, both free of any lock. Rendered, the table printed "Cheaper to live: Paris
+ * +2" and this strip printed "Paris -2", seven hundred pixels apart. That is step 1's
+ * duplicate test failed: without this drawing a reader loses nothing, because the card
+ * above states every figure it stated. The file's own comment already said so, "the
+ * plot is a subset of the table's first row", and treated that as a banding problem.
+ *
+ * ITS FORM WAS WRONG FOR ITS INFORMATION ANYWAY. Four named entities compared on ONE
+ * metric is the index's "a ranking of named things", which points at a standing or a
+ * column chart, never at a track: a horizontal track is for a position between two
+ * NAMED POLES and this axis had none, only a home city at zero.
+ *
+ * AND THE PAGE HAD NO ROOM FOR IT. The city page's two horizontal tracks are now the
+ * six-spectra quick reads and the earnings marker plot, which is the cap.
+ *
+ * WHAT SURVIVES: the lease terms, the only reading here that is this card's alone. It
+ * renders for a city carrying all three fields and nothing today does, so this
+ * component is dark on every real page. The card that remains is not a heading over
+ * nothing, because it omits when its own figures are absent, exactly as every other
+ * card in this file does.
+ *
+ * THE CHAPTER HEADING WAS ALREADY THE ODD ONE OUT and it is still not changed here.
+ * "What it costs, and who buys" now holds the peers table, the earnings plot and the
+ * seasonal split. Chapter headings are ratified copy; the mismatch is recorded for the
+ * founder rather than rewritten. */
 export function CommercialSpace({ d }: { d: any }) {
   const s = d.space;
   if (!s || !s.read) return null;
-  /* THE GAP IS FROM THE HOME CITY, NOT FROM A HARDCODED 100. Subtracting 100 is a
-   * gap from home only while the indices happen to be anchored there. The bundled
-   * sample is anchored (London = 100). The live adapter is NOT: it passes a real
-   * cost index on which London reads 75. So on every live city page this drew the
-   * home city 25 points below ITSELF, put Munich (also 75) on the identical spot,
-   * and INVERTED the sign of every city dearer than home, printing Los Angeles as
-   * 11 points cheaper than London when the source has it 14 points dearer. The
-   * peers TABLE further down this file has always subtracted the home index for
-   * this same field; this is that arithmetic, keeping the strip's own sign
-   * convention (below zero = cheaper than home). No home row means no anchor, and
-   * the strip omits rather than inventing one. */
-  const peerRows = (d.peers?.list ?? []).filter((p: any) => p.rent_index != null);
-  const homeIndex = peerRows.find((p: any) => p.home)?.rent_index;
-  const peers = (homeIndex != null ? peerRows : [])
-    .map((p: any) => ({ ...p, delta: Math.round((p.rent_index || 0) - homeIndex) }))
-    .sort((a: any, b: any) => a.delta - b.delta);
-  const hasPeerStrip = peers.length >= 2;
-  const dVals = peers.map((p: any) => p.delta);
-  const lo = hasPeerStrip ? Math.min(...dVals) - 6 : 0;
-  const hi = hasPeerStrip ? Math.max(...dVals) + 5 : 1;
-  const span = Math.max(1, hi - lo);
-  /* FOUR LABEL SLOTS, NOT TWO. See the note on the axis below: two sides were
-     not enough. Three of London's four peers land within 7.4% of each other,
-     which at this card's width is 28px for names 30 to 40px wide, so a label
-     pushed to the free side still collided with the one already there. Each
-     side gets a near row and a far row, and a label takes whichever of the four
-     is furthest from the last label placed in it. */
-  const slots: number[] = (() => {
-    const xs = peers.map((q: any) => ((q.delta - lo) / span) * 100);
-    const order = xs.map((x: number, i: number) => ({ x, i })).sort((a: any, b: any) => a.x - b.x);
-    const out: number[] = new Array(xs.length).fill(0);
-    const last = [-999, -999, -999, -999];
-    for (const { x, i } of order) {
-      let best = 0;
-      for (let k = 1; k < 4; k++) if (Math.abs(x - last[k]) > Math.abs(x - last[best])) best = k;
-      out[i] = best;
-      last[best] = x;
-    }
-    return out;
-  })();
-  /* A NIL DIFFERENCE READS "same", AND THE PAGE HAD TWO SPELLINGS FOR IT.
-     The comparison table on this same page prints "same" where a peer matches
-     London, which is what the convention asks: a zero in a column of signed
-     differences reads as a measurement rather than a classification. This plot,
-     twenty-two hundred pixels below it, printed a bare "0" for the same fact. One
-     page, two languages.
-
-     The bare zero also carried no unit while every other value carried pp, so two
-     of the four figures were unitless and two were not.
-
-     The HOME city keeps its "0", because it is the reference showing its own
-     neutral value rather than a difference that happens to be nil, and that is
-     exactly what the table does with it.
-
-     THE UNIT IS NOW NAMED ONCE AND NEVER REPEATED, which is what the table on
-     this same page already does: its own note says index rows carry bare figures
-     with the base named once in the caption. The plot was naming the unit in its
-     heading AND stamping pp on each value, and because a nil difference carries
-     no suffix at all, two of the four figures ended up unitless and two did not.
-     Heading says percentage points; the figures are figures. */
-  const fmtDelta = (v: number, home = false) => (v === 0 ? (home ? "0" : "same") : `${v > 0 ? "+" : ""}${v}`);
-  const hasTerms = s.deposit_months != null && s.lease_years_typical != null && s.rent_free_months != null;
-  const terms: Array<[string, string]> = hasTerms
-    ? [[`${s.deposit_months} mo`, "deposit up front"], [`${s.lease_years_typical}`, "typical lease, years"], [`${s.rent_free_months} mo`, "rent-free fit-out"]]
-    : [];
-  const peerSample = d.peers?._meta?.confidence === "placeholder" || d.peers?._meta?.confidence === "modeled";
   const spaceSample = s._meta?.confidence === "placeholder" || s._meta?.confidence === "modeled";
-  /* RENAMED 2026-08-24. This strip called itself "Rent against peer cities" and it
-     is not built on rent. It is built on the same index as the conditions card,
-     which describes itself in its own data file as "Cost-of-Living Plus Rent Index
-     per city, NYC = 100": what it costs a PERSON to live somewhere, rent included.
-     Sitting inside a chapter called "What space costs", a reader takes it for the
-     rent on their shop. §13 asks for titles that are descriptive and instantly
-     understandable, and this one was neither.
-
-     Second of two. The sibling read in the conditions card carried the same
-     mislabel, as "Affordable space", and was renamed one iteration earlier. Both
-     came from the same mistake: reading the field's NAME, rent_index, instead of
-     the file that fills it.
-
-     THE CHAPTER HEADING IS NOW THE ODD ONE OUT and it is NOT changed here. "What
-     space costs" holds exactly one card and that card is about the cost of living.
-     The page carries no commercial-space figure at city level at all, which was
-     established when the lease terms were replaced. Chapter headings are ratified
-     copy, so the mismatch is recorded for the founder rather than rewritten: the
-     honest options are to rename the chapter to what it holds, or to fold this card
-     into the conditions chapter and let the chapter go.
-
-     The verdict caption (peer_read) and the terms prose (terms_note) stay DELETED
-     (§14/§19/§26); the finding lives on the marker strip. */
+  const hasTerms = s.deposit_months != null && s.lease_years_typical != null && s.rent_free_months != null;
+  if (!hasTerms) return null;
+  const terms: Array<[string, string]> = [
+    [`${s.deposit_months} mo`, "deposit up front"],
+    [`${s.lease_years_typical}`, "typical lease, years"],
+    [`${s.rent_free_months} mo`, "rent-free fit-out"],
+  ];
   return (
-    <WideRail>
-      <Box id="space">
-        <Rail icon="vs-world" kicker="Cost of living against peer cities" sample={peerSample} />
-        {/* the peer dot strip below (home city = 0) IS the pressure read; no second scale. */}
-        {/* peers on ONE axis. Only rendered when at least two peers carry a real rent index. */}
-        {hasPeerStrip ? (
-          <div className="mt-2 border-t border-[var(--c-border)] pt-3">
-            <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Against {d.meta?.city}, in percentage points<InfoTip gloss={`What it costs a person to live in each city, rent included, set against ${d.meta?.city}. A percentage point is the plain gap between two percentages: a peer at -22pp sits 22 points below the ${d.meta?.city} level. It is not the rent on a shop.`} /></div>
-            {/* A NAME OVER ITS FIGURE IS TWO LINES TALL, and the four slots this strip
-                  places labels in are twenty pixels apart, so two labels on the same
-                  side of the axis whose cities sit close together overlapped even
-                  though the placement had chosen different heights for them. Seen in
-                  the picture: "Paris" ran into Munich s value. The side-picking logic
-                  was right; the block it was placing was taller than the gap it had.
-                  THE NAME AND ITS FIGURE NOW SHARE A LINE. That halves the block, so
-                  the same slots clear each other with room to spare, and the strip
-                  gets SHORTER rather than taller, which is the direction this project
-                  is meant to move in. */}
-              <div className="relative h-[92px]" role="img" aria-label={`Cost of living against ${d.meta?.city} in percentage points: ${peers.map((p: any) => `${p.name} ${fmtDelta(p.delta, p.home)}`).join(", ")}`}>
-              {/* WHICH SIDE A LABEL SITS ON IS DECIDED BY POSITION, NOT BY LIST
-                  ORDER. It used to alternate on the index, so two peers close in
-                  value but two apart in the list both landed above the axis and
-                  their names overlapped: measured, "Paris" over "Munich" by 13x14px
-                  at 1440 and 9x14px at 375, and it got worse when this card moved
-                  into a half band. Each label now goes to whichever side is further
-                  from the last label placed there. */}
-              <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[var(--c-line-strong)]" />
-              {peers.map((p: any, i: number) => {
-                const x = ((p.delta - lo) / span) * 100;
-                const home = p.home;
-                const slot = slots[i];
-                return (
-                  /* The home marker paints LAST. Two cities can share a cost index (London
-                     and Munich both read 75), and the later dot covers the earlier one, so
-                     the one dot in terracotta, the whole point of the strip, was being
-                     hidden under a grey peer. Paint order only: the sort, and therefore
-                     which side each label sits on, is untouched. */
-                  <span key={p.name} className={`absolute -translate-x-1/2 ${home ? "z-[1]" : ""}`} style={{ left: `${x}%`, top: "50%" }}>
-                    {/* TWO CITIES AT ONE VALUE LEFT ONE OF THEM WITH NO MARK. London and
-                        Munich both sit at the city level, the home dot paints last and
-                        deliberately so, and it covered Munich completely: the page showed
-                        a label pointing at a dot that belonged to somebody else.
-                        A peer dot is now wider than the home dot, so a peer underneath
-                        shows as a ring around it and a shared position reads as two
-                        cities rather than one. The home dot keeps its colour and its
-                        white separator, which is what makes it the answer, so nothing is
-                        de-emphasised by being the smaller of the two. */}
-                    <span className={`block -translate-y-1/2 rounded-full border-2 border-white ${home ? "h-2.5 w-2.5" : "h-3.5 w-3.5"}`} style={{ background: home ? TERRA : "var(--c-line-strong)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-                    <span className={`absolute left-1/2 flex -translate-x-1/2 items-baseline gap-1 whitespace-nowrap leading-tight ${["bottom-[13px]", "top-[10px]", "bottom-[31px]", "top-[28px]"][slot]}`}>
-                      <span className={`text-[length:var(--t-micro)] ${home ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{p.name}</span>
-                      <Fig className={`text-[length:var(--t-micro)] ${home ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{fmtDelta(p.delta, home)}</Fig>
-                    </span>
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        ) : null}
-      </Box>
-      {hasTerms ? (
-        <Box>
-          <Rail icon="red-tape" kicker="The lease terms" sample={spaceSample} />
-          <div className="divide-y divide-[var(--c-border)]">{terms.map(([v, l]) => (
-            <div key={l} className="flex items-baseline justify-between gap-3 py-2"><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{l}</span><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{v}</Fig></div>
-          ))}</div>
-        </Box>
-      ) : null}
-    </WideRail>
+    <Box id="space">
+      <Rail icon="red-tape" kicker="The lease terms" sample={spaceSample} />
+      <div className="divide-y divide-[var(--c-border)]">{terms.map(([v, l]) => (
+        <div key={l} className="flex items-baseline justify-between gap-3 py-2"><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{l}</span><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{v}</Fig></div>
+      ))}</div>
+    </Box>
   );
 }
 
@@ -478,7 +385,16 @@ export function DemandSize({ d }: { d: any }) {
   const tourismBox = hasSplit && splitCloses ? (
     <Box id="seasonal">
       <Head icon="seasonality" sample={sample}>How seasonal it is</Head>
-      <div className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}% steady, visitors ${o.visitor_pct}% seasonal`}>
+      {/* DECLARED I3, WAVE C ROW C9, 2026-09-02. One bar divided into two named parts
+          that sum to a whole is the catalogue's STACKED WHOLE, and this drew it with
+          no idea on it. The shape is already right for the information, so this is a
+          declaration rather than a replacement; the kit's own StackBar was measured
+          against it and refused for a reason worth recording: its on-bar label colour
+          is chosen by parsing the segment's colour as hex, and these two segments are
+          CSS variables, which it cannot read, so it would set white type on the light
+          segment. That is the form's defect and it belongs in the form. The city page
+          spends its first I3 of two here. */}
+      <div data-idea="I3" className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}% steady, visitors ${o.visitor_pct}% seasonal`}>
         {/* THE FIGURES SIT ON THE BAR, NOT ONLY IN THE KEY. This was the third
             stacked bar in this vertical and the third different way of labelling
             one: the trade page put all five figures in its legend, the
@@ -983,7 +899,17 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
       {hasWhereCh ? (
         <>
           <Movement index={cn()} heading="Where to trade" icon="best-areas" />
-          <Band><WhereToTrade d={d} /><CityLenses d={d} /></Band>
+          {/* 2-1, NOT EQUAL HALVES, AND BOTH CARDS ARE MEASURED (C9, 2026-09-02).
+              Measured on the render at 520: SIX of the district ranking's seven names
+              wrap to two lines, "South London" through "City of London", every one at
+              63px in a 62px column. That is the number run 4 wrote down while building
+              the same ranking one altitude below, "seven columns want 693px for one
+              line each", and this band is where it bites. At 693 the columns are 91px
+              and every district sits on one line.
+              The quick reads gain by the same move rather than paying for it: six
+              two-pole tracks at 478px are a dot on a long empty rail, and at 307px the
+              same six read as a profile. */}
+          <Band split="2-1"><WhereToTrade d={d} /><CityLenses d={d} /></Band>
         </>
       ) : null}
 
@@ -1001,7 +927,16 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
               measured: front-page repeats went from four to seven the moment they
               were paired. They are separated, and each takes a partner that says
               something it does not. */}
-          <Band split="2-1"><CityPeers d={d} /><IncomeCurve d={d} /></Band>
+          {/* 3-2, NOT 2-1, AND D3 FORCED IT (C9, 2026-09-02). The band below this one
+              lost its second card when the peer cost strip was cut as a duplicate, and
+              `Band`'s only-child rule re-templates a lone survivor to two thirds and
+              one third, which is the 2-1 geometry. Two neighbouring bands measuring the
+              same split is the monotony D3 exists to stop, so one of the two had to
+              move and this is the one with a choice. Both cards gain: the earnings plot
+              goes 347 to 416, where its three log-scale labels stop crowding, and the
+              peers table gives up 69px it was not using, five columns being the widest
+              thing in it. */}
+          <Band split="3-2"><CityPeers d={d} /><IncomeCurve d={d} /></Band>
           {/* THE EARNINGS CHART PAIRS WITH THE DEMAND ROW, NOT WITH THE RENT
               RATIO. Measured across fifteen cities on 2026-08-25, the rent ratio
               renders for NONE of them, and neither do the owner runway, the risk

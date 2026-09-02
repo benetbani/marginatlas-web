@@ -104,7 +104,17 @@ export function IncomeCurve({ d }: { d: any }) {
 
               A short tick is different from a bar. It connects a mark to the label
               beneath it and claims nothing, which is what these were always for. */}
-          <div className="relative h-[24px]" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale">
+          {/* DECLARED I1, WAVE C ROW C9, 2026-09-02. Three real figures as marks on one
+              shared log axis is the catalogue's "shared-axis marker plot", and under
+              the version-2 idea budget a line with marks positioned along it is a
+              HORIZONTAL TRACK. It was drawn here with no idea on it, which is the
+              catalogue addendum's "where the sameness actually lives": bespoke inline
+              markup in a view file, where no budget could reach it. The shape is right
+              for the information (a spread of one quantity, index row "a spread: low,
+              typical, high"), so this row is a declaration and not a replacement.
+              The page's other track is the six-spectra quick reads, so the city page
+              is now AT the cap of two and nothing else on it may be a track. */}
+          <div data-idea="I1" className="relative h-[24px]" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale">
             <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
             {ticks.map(([label, v, accent]) => (
               <span key={label} className="absolute bottom-0 top-0" style={{ left: `${X(v)}%` }}>
