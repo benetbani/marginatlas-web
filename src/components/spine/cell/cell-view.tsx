@@ -18,7 +18,9 @@
  *   ranked figure list (label + right-aligned figure, no track): Demand catchment
  *   lollipop on a drawn track (thin, marker family, not a fill bar): CostToOpen line items x1
  *   line/area zero baseline: SurvivalSlope x1; zero-baseline monthly COLUMNS: Seasonality x1
- *   two-marker scale (break-even vs a typical day on one domain): BreakEven headroom x1
+ *   ClearanceRing (idea I7, area, cap 1: the ring closes AT break-even and the
+ *      surplus takes a second lap outside it): BreakEven x1. It replaced a
+ *      two-marker scale on 2026-09-02, subsection queue row A4.
  *   editorial table (figures + bold-best, no in-cell bars): Nearby x1
  *   waterfall (gross -> labeled decrements -> net, from the $100 split): OwnerKeeps x1 (max 1)
  *   spread strip: masthead turnover p10/p50/p90 x1
@@ -763,8 +765,18 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               {hasOwner || hasWages ? (
                 <Band split="3-2">{hasOwner ? <OwnerKeeps d={d} /> : null}{hasWages ? <Wages d={d} /> : null}</Band>
               ) : null}
+              {/* ONE THIRD FOR THE RING, TWO FOR THE STACK, and a photograph decided
+                  it rather than the constitution. At equal halves the break-even card
+                  came out 520 by 285 with a 168px ring floating in the middle of it
+                  and about 175px of nothing on either side, which is the founder's
+                  first named fault class arriving inside a border. A ring has a fixed
+                  size and cannot fill a width, so the width has to come to the ring.
+                  CostToOpen takes the other two thirds, which its lollipop line items
+                  wanted anyway.
+                  THIS COMMENT SITS ABOVE THE TERNARY, NOT INSIDE ITS BRANCH: a branch
+                  is one expression and a comment plus an element is two. */}
               {hasBreakEven || hasSetup ? (
-                <Band>{hasBreakEven ? <BreakEven d={d} /> : null}{hasSetup ? <CostToOpen d={d} /> : null}</Band>
+                <Band split="1-2">{hasBreakEven ? <BreakEven d={d} /> : null}{hasSetup ? <CostToOpen d={d} /> : null}</Band>
               ) : null}
             </div>
           </FormatProvider>

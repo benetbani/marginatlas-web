@@ -18,7 +18,8 @@
  * so scaled cells read specific, not templated.
  */
 import * as React from "react";
-import { Box, Rail, Fig, InfoTip, InlineDisclosure, TERRA, TRACK, usd } from "@/components/spine/kit";
+import { Box, Rail, Fig, InfoTip, InlineDisclosure, TRACK, usd } from "@/components/spine/kit";
+import { ClearanceRing } from "@/components/spine/forms-v2";
 import { AtlasWaterfall } from "@/components/kit/charts/AtlasWaterfall";
 import { useFormat, useCountUp, useInView } from "./format-picker";
 
@@ -112,81 +113,110 @@ export function OwnerKeeps({ d }: { d: any }) {
   );
 }
 
-/* BreakEven , WI-3/4 brief (rulebook v1 sections 25/26, 2026-07-11: the headroom
- * fill bar is gone; a lone number may stay a number, and the page's bar budget is
- * spent elsewhere):
- * decision: how full the room must be to clear costs. Number: break-even covers vs the typical day (real headroom).
- * focal: the covers-a-day figure; the headroom reads as figures in words below it.
- * width: rail half. terracotta target: none (the break-even figure is the read).
- * No invented ceiling: both numbers are measured (subtype break-even + typical daily covers). */
+/* BreakEven , A4 of the subsection queue, rebuilt 2026-09-02 on the catalogue's
+ * ClearanceRing (idea I7, area, cap 1 per page).
+ *
+ * WARRANT (subsection procedure, step 1). A visitor reads this to decide WHETHER
+ * AN ORDINARY DAY IN THIS ROOM ALREADY COVERS THE COSTS, and how much slack sits
+ * between a normal day and a bad one. Without it they would sign a lease against
+ * a number of covers nobody has checked against the trade's own cost base, and
+ * find out on the first slow week that a normal day WAS the break-even day.
+ *
+ * THE INFORMATION IS A THRESHOLD YOU MUST CLEAR, which is its own row in the
+ * catalogue's index, and the form that row points at is this one. Version 2's
+ * ThresholdBlock, two bars from one baseline, is struck: it was a two-row bar
+ * chart, which is the exact silhouette the whole catalogue exists to stop the
+ * pages repeating.
+ *
+ * WHAT WAS HERE, AND WHY IT HAD TO GO. A two-marker horizontal scale, the shape
+ * the founder named on 2026-09-01: "in all sections you have just used this
+ * horizontal bar with the points in between... you have overused it like crazy."
+ * It was also hand-rolled inline rather than a kit form, so it carried no
+ * data-idea and no budget could see it, which is the catalogue addendum's
+ * "where the sameness actually lives" in one card.
+ *
+ * AND IT SAID ONE FACT THREE TIMES. A focal "16 covers a day to break even", a
+ * track with both figures marked on it, and then two tiles reading "5 covers of
+ * headroom" and "76% of a typical day". The headroom IS the gap between the two
+ * marks, and the percentage IS the fill; the card spent three readings and a
+ * hairline saying what one drawing says at a glance.
+ *
+ * WHAT THE RING FIXES THAT NO REWORDING COULD. The old track's own comment
+ * records the bug at length: when break-even sits ABOVE a typical day, the
+ * domain becomes the break-even value, so the typical-day tick lands at the
+ * right-hand end and the picture shows a comfortable cushion drawn on exactly
+ * the trades that have none. A ring cannot do that. The full circle IS the
+ * threshold, so a day that does not cover costs leaves the ring OPEN, and there
+ * is no end of a track for a mark to be pinned to.
+ *
+ * COMPOSITION: the ring, its clearance standing in the middle, the two figures
+ * named in one line beneath. Nothing else. The clearance is the answer and the
+ * line under it says what the answer was measured from.
+ *
+ * HIERARCHY: first the clearance at the focal rung inside the ring, second the
+ * two named figures at micro. 30 over 12 is 2.5x, well over the 1.6 floor. There
+ * is no second claimant, which is the point: the card used to have three.
+ *
+ * ACCENT: the closed sweep, and only when the day CLEARS. It is the card's one
+ * accent now; before, the break-even figure and the track's dot both wore it.
+ * A shortfall draws in ink and gets no red, because this palette has none.
+ *
+ * THE FALLBACK IS GONE, AND IT WAS A FABRICATED FINDING. The typical day used to
+ * read `?? Math.max(covers, 1)`, so a cell holding a break-even and no typical
+ * day rendered "0 covers of headroom" and "100% of a typical day" as though both
+ * had been measured. On a ring the same fallback would close the circle exactly
+ * and print "level", which is worse, because a drawing is the half a reader
+ * believes. A cell with only the threshold now renders the threshold alone, as a
+ * figure and its words, which is the catalogue's form for one number standing on
+ * its own.
+ *
+ * PROPAGATION IS UNCHANGED AND STILL TOTAL: both the numerator and the
+ * denominator follow the format picker, so the ring can never draw one subtype's
+ * threshold against another's day. */
 export function BreakEven({ d }: { d: any }) {
   const ctx = useFormat();
   const b = d.break_even ?? {};
-  // TOTAL propagation: BOTH the break-even numerator and the typical-day denominator
-  // follow the picked format (seed subtypes carry typical_covers_per_day per format).
-  // The verdict line is format-neutral BY DESIGN (the seed bakes no numbers into it),
-  // so the picker can never render a contradicting sentence here.
   const covers = ctx ? ctx.sel.break_even_covers_per_day : (b.covers_per_day ?? 0);
-  const typical = (ctx ? ctx.sel.typical_covers_per_day : b.typical_covers_per_day) ?? Math.max(covers, 1);
-  /* BOTH MARKERS ARE POSITIONED FROM THE SAME DOMAIN, and the typical-day tick is
-     no longer pinned to the right edge.
-
-     WHY, measured rather than felt. The domain is the larger of the two numbers,
-     so when break-even sits ABOVE a typical day, which is exactly what an
-     unprofitable trade looks like and which the copy one file over already
-     branches on, the right edge became the BREAK-EVEN value while the tick
-     sitting on it still read "a typical day". The picture then showed the
-     typical-day mark to the RIGHT of the break-even dot: a comfortable cushion,
-     drawn on the trades that have none. The two figure tiles directly below it
-     said zero headroom and over a hundred percent of a typical day, so the
-     section contradicted itself, and the drawing was the half a reader believes.
-
-     The clamp is gone with it. It pushed the dot to 96% of the track, which made
-     "you cannot break even on a typical day" look like "you are nearly there".
-     Both markers are centred on their own value now, so at the extremes they
-     hang half over the end of the track, which is what a value at the end of a
-     scale should look like. */
-  const domain = Math.max(typical, covers, 1);
-  const bePct = (covers / domain) * 100;
-  const typPct = (typical / domain) * 100;
+  const typicalRaw = ctx ? ctx.sel.typical_covers_per_day : b.typical_covers_per_day;
+  /* ROUNDED ONCE, HERE, AND THE DRAWING READS THE ROUNDED PAIR. Half a cover is
+     not a thing that walks through a door, and a ring drawn from 16.4 against a
+     caption saying 16 would be a drawing disagreeing with its own caption by a
+     few degrees of arc: small, invisible, and exactly the kind of thing this
+     page has been caught on before. */
+  const need = Number.isFinite(covers) && covers > 0 ? Math.round(covers) : null;
+  const takes =
+    typeof typicalRaw === "number" && Number.isFinite(typicalRaw) ? Math.round(typicalRaw) : null;
+  const gloss = "One cover is one customer served; a table of four is four covers.";
   return (
     <Box id="breakeven" className="md:flex-[2]">
       <div className="flex items-center justify-between gap-2">
         <Rail icon="break-even" kicker="When it clears costs" sample />
         <FormatTag />
       </div>
-      <div className="flex items-baseline gap-2">
-        <CountFig value={covers} fmt={(n) => Math.round(n)} className="text-3xl leading-none text-[var(--c-ink)]" />
-        <span className="text-[13px] text-[var(--c-ink2)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a day to break even</span>
-      </div>
-      {/* the headroom ON a visual, not in prose (rulebook 26/30): break-even
-          (terracotta) sits partway along a full typical day (the ink tick at the
-          track's end). The gap is the room you still have. Markers are positioned,
-          never a fill bar. */}
-      <div className="mt-4 border-t border-[var(--c-border)] pt-4">
-        <div className="mb-2 flex items-baseline justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]">
-          <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-2 w-2 rounded-full" style={{ background: TERRA }} /><Fig className="text-[var(--terra-text)]">{Math.round(covers)}</Fig> to break even</span>
-          <span className="inline-flex items-center gap-1.5"><Fig className="text-[var(--c-ink)]">{Math.round(typical)}</Fig> a typical day<span aria-hidden className="h-2.5 w-[2px] rounded-full" style={{ background: "var(--c-ink)" }} /></span>
+      {need != null && takes != null ? (
+        <ClearanceRing
+          needed={need}
+          given={takes}
+          neededLabel="break-even needs"
+          givenLabel="a typical day takes"
+          format={(n) => String(Math.round(n))}
+          unit="covers"
+          note={
+            <>
+              <Fig>{need}</Fig> covers
+              <InfoTip gloss={gloss} /> to break even, about <Fig>{takes}</Fig> on a typical day
+            </>
+          }
+        />
+      ) : (
+        <div className="flex items-baseline gap-2">
+          <CountFig value={need ?? 0} fmt={(n) => Math.round(n)} className="text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]" />
+          <span className="text-[13px] text-[var(--c-ink2)]">
+            covers
+            <InfoTip gloss={gloss} /> a day to break even
+          </span>
         </div>
-        <div className="relative h-1.5 rounded-full" role="img" aria-label={`Break-even at ${Math.round(covers)} covers, of about ${Math.round(typical)} on a typical day`} style={{ background: TRACK }}>
-          <span aria-hidden className="absolute top-1/2 h-3 w-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ left: `${typPct}%`, background: "var(--c-ink)" }} />
-          <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${bePct}%`, background: TERRA, boxShadow: "0 0 0 1px #e3e3e3" }} />
-        </div>
-      </div>
-      {/* the headroom made explicit as figures, not a caption sentence (rulebook 26): the
-          cushion of covers between break-even and a typical day, and how much of a typical
-          day break-even already consumes. Both follow the picked format, and fill the rail
-          to its neighbour's height (rulebook 17). No bar: plain figures (rule 26 corollary). */}
-      <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--c-border)]" style={{ background: "var(--c-border)" }}>
-        <div className="bg-[var(--c-card)] px-3.5 py-2.5">
-          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{Math.max(0, Math.round(typical - covers))}</Fig>
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">covers of headroom</div>
-        </div>
-        <div className="bg-[var(--c-card)] px-3.5 py-2.5">
-          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{Math.round((covers / Math.max(typical, 1)) * 100)}%</Fig>
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">of a typical day</div>
-        </div>
-      </div>
+      )}
     </Box>
   );
 }

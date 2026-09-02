@@ -1284,6 +1284,7 @@ export function ClearanceRing({
   neededLabel,
   givenLabel,
   format = (n: number) => String(n),
+  unit,
   note,
 }: {
   /** What has to be cleared. Null, non-finite or not above zero renders nothing,
@@ -1297,6 +1298,16 @@ export function ClearanceRing({
   givenLabel?: string | null;
   /** Formats every figure. Pass the kit's `usd` for money. */
   format?: (n: number) => string;
+  /** THE UNIT, FOR THE ACCESSIBLE NAME AND NOTHING ELSE: "covers", "orders",
+   *  "jobs a week". It is deliberately not drawn, and that is a measurement
+   *  rather than a preference: the centre figure sits in a hole 99px across,
+   *  and "+5 covers" at the focal rung is about 130px wide, so a unit in the
+   *  middle runs straight over the ring's own stroke. A sighted reader takes
+   *  the unit off the line beneath the drawing, which every caller writes; a
+   *  screen reader never reaches that line, because the ring is one image with
+   *  one name, so it takes the unit from here. Money needs none of this: `usd`
+   *  carries its own symbol into the figure itself. */
+  unit?: string | null;
   /** Replaces the composed line beneath where the section has better words. */
   note?: React.ReactNode;
 }) {
@@ -1311,6 +1322,7 @@ export function ClearanceRing({
      section did not ask for. */
   const word = given === needed ? "level" : clears ? "clear" : "short";
   const centre = clears ? `+${format(gap)}` : format(gap);
+  const u = unit ? ` ${unit}` : "";
 
   /* THE GEOMETRY. R1 is the threshold ring; the surplus lap sits outside it,
      thinner, with a 3px of air between so the two never read as one thick
@@ -1337,8 +1349,8 @@ export function ClearanceRing({
           viewBox="0 0 168 168"
           style={{ width: "100%", display: "block" }}
           role="img"
-          aria-label={`${givenLabel} ${format(given)} against ${neededLabel} ${format(needed)}: ${
-            word === "level" ? "level" : `${format(gap)} ${word}`
+          aria-label={`${givenLabel} ${format(given)}${u} against ${neededLabel} ${format(needed)}${u}: ${
+            word === "level" ? "level" : `${format(gap)}${u} ${word}`
           }`}
         >
           {/* THE TRACK IS THE THRESHOLD, and it is the only track in the form. An
@@ -1392,9 +1404,17 @@ export function ClearanceRing({
           <div className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">{word}</div>
         </div>
       </div>
+      {/* SIXTEEN, NOT TWELVE, for the reason written over StepLadder's rung gap:
+          the spacing ladder is 48 / 32 / 28-20-16 / 8 and a value between two
+          rungs is a gap a reader cannot place (step 7). This one separates two
+          BLOCKS, the drawing and its caption, so it takes a card-padding rung
+          and not the slot. The 5px inside the ring's centre is a different
+          relationship and stays: a figure and the word naming it are one
+          object, kerned rather than spaced, the same as a rung's name over its
+          own meaning. */}
       <p
         className="text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"
-        style={{ marginTop: 12 }}
+        style={{ marginTop: 16 }}
       >
         {note ?? (
           <>
