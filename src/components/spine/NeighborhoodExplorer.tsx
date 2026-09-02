@@ -14,9 +14,11 @@
  * and CTAs are neutral ink.
  * All prose lives in the seed. Count-up-safe motion, reduced-motion safe.
  *
- * As-built chart dictionary (perceptual idiom census; bar budget per rulebook v1 §25:
- * the rent strip is this page's ONLY fill-bar graphic):
- *   divergence bar-list (deviation from x1.00): RentStrip x1  , the page hero.
+ * As-built chart dictionary (perceptual idiom census; the visual-idea budget of the
+ * form catalogue, which replaced the bar budget of rulebook v1 §25):
+ *   ranked columns from a drawn zero (I2, the only DECLARED idea on this page):
+ *     DistrictRents x1  , the page hero, and A7 of the subsection queue. It was
+ *     seven horizontal tracks and an undeclared I1 seven times over.
  *   real tile map (position + rent-encoded pins): SpineMap x1  , dot size = how
  *     light the rent runs, terracotta = lighter than the city, ink = heavier.
  *   multiplier readout (running product, printed figures, SampleTagged): "Why the
@@ -29,7 +31,8 @@
  */
 "use client";
 import * as React from "react";
-import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, SampleTag, CARD_SURFACE, Band } from "@/components/spine/kit";
+import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, InlineDisclosure, SampleTag, CARD_SURFACE, Band } from "@/components/spine/kit";
+import { LollipopColumn } from "@/components/spine/forms-v2";
 import { LockVeil, LockPill } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -89,18 +92,6 @@ function useCountUp(target: number, reduced: boolean, ms = 520, active = true) {
   }, [target, reduced, ms, active]);
   return v;
 }
-function useInView<T extends HTMLElement>() {
-  const ref = React.useRef<T | null>(null);
-  const [seen, setSeen] = React.useState(false);
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el || seen) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } }, { threshold: 0.3 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [seen]);
-  return { ref, seen };
-}
 
 /* island-scoped hover language: the quiet grey row wash + faint lift only (rulebook
  * v1 §37, founder 2026-07-11: no terracotta motif on hover), reduced-motion safe. */
@@ -157,195 +148,144 @@ const HoodCard = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 });
 
 /* ============================================================================
- * RENT STRIP , the page hero, and its ONE ranked bar graphic (rulebook v1 §25).
- * A DIVERGENCE bar-list centered on the city rent level of x1.00: lighter-than-city
- * grows RIGHT in terracotta, heavier grows LEFT in grey, so "who signs the light
- * lease" reads in one glance. The x1.00 line is a bold labeled gridline (the single
- * most important reference on the page). Length encodes deviation from x1.00
- * (Cleveland-McGill: position + length). Selection is a neutral INK ring + bold
- * name, never terracotta: the accent is fixed to the lightest lease (the answer)
- * regardless of what the reader picks. Ranked ascending, lightest first (D1).
+ * DISTRICT RENTS , the page's ranked reading, and A7 OF THE SUBSECTION QUEUE.
+ *
+ * WARRANT (procedure step 1). A visitor reads this to decide WHICH DISTRICT OF
+ * THIS CITY TO GO LOOKING FOR A UNIT IN, given what they can carry in rent.
+ * Without it they would have the lightest district from the masthead and nothing
+ * about the six behind it, so they could not tell a city whose districts sit
+ * close together from one that doubles in a step. London does the second: two
+ * districts sit within a tenth of the cheapest and then the ladder jumps.
+ *
+ * WHAT WAS HERE, AND WHY IT HAD TO GO. Seven horizontal tracks, one per
+ * district, each with a fill and a marker on it, hand-rolled inline so none
+ * carried a data-idea and no budget could see them: the catalogue addendum's
+ * "where the sameness actually lives", and the same drawing the city page shed
+ * one altitude up on 2026-09-02 (A6). Seven against an I1 cap of two. A track is
+ * the right drawing for a POSITION BETWEEN TWO NAMED POLES; this one had one
+ * named end, the city rate, and its other end was whatever the widest deviation
+ * happened to be, which is not a pole a district could reach.
+ *
+ * IT IS THE SAME FORM AS A6, ON PURPOSE (procedure step 9). The city page ranks
+ * districts by rent load in a LollipopColumn, cheapest first, and a reader who
+ * has learned that shape one altitude up meets it here meaning the same thing.
+ * The stems rise from a TRUE ZERO, which a rent multiple has: x2.40 really is
+ * twice x1.20, so a stem twice as tall is a true statement. Rule 29A is satisfied
+ * by the ORDER rather than by an inversion, cheapest first (founder D1), so the
+ * one accent lands on entry one, the lightest lease, the good end.
+ *
+ * THIS CARD IS ALSO THE PAGE'S PICKER, WHICH A6'S WAS NOT, and it is the one
+ * thing A7 could not inherit. The card beside it reads "What works in
+ * <district>" and the panel below it holds that district's detail, so the
+ * ranking is how a reader changes them. The form takes the two props for it, and
+ * the picked column gains no MARK: its name goes semibold ink, because every
+ * mark in this drawing is a value and a selection ring would read as one more
+ * (the strip this replaced had that exact fault corrected once already).
+ *
+ * WHAT THE CARD STATES AND WHAT IT DOES NOT. The masthead states the LIGHTEST
+ * district and its multiple, so this card never restates it, which is the same
+ * call A6 made against the city page's verdict card. What nothing else on the
+ * page states is the far end: the masthead deliberately deleted its heaviest
+ * panel because this card showed it. So the finding line names the heaviest
+ * district and how many times the lightest lease it runs, which is one figure
+ * and one name, both stated once on the page.
  * ========================================================================== */
-function RentStrip({ districts, selected, onSelect, reduced }: { districts: District[]; selected: string; onSelect: (s: string) => void; reduced: boolean }) {
+function DistrictRents({ districts, selected, onSelect }: { districts: District[]; selected: string; onSelect: (s: string) => void }) {
+  // ONE order page-wide: rent load ascending, lightest lease first (founder D1).
   const rows = React.useMemo(
-    () => districts.map((d) => ({ d, rent: d.rent_mult })).sort((a, b) => a.rent - b.rent),
+    () => [...districts].sort((a, b) => a.rent_mult - b.rent_mult),
     [districts]
   );
-  const maxDev = Math.max(0.2, ...rows.map((r) => Math.abs(r.rent - 1)));
-  /* THE AXIS SITS WHERE THE DATA IS, NOT ALWAYS IN THE MIDDLE.
-     This is a divergence chart and it was drawn symmetrically whatever the
-     numbers did: the city line at 50%, half the track for lighter-than-city and
-     half for heavier. Every London district is heavier than the city rate, so
-     every bar grew left, the right half of the hero chart was blank on all seven
-     rows, and the word LIGHTER labelled a region no bar can ever reach.
-     Rulebook v2 §17, and §2: reserving space for nothing is not restraint.
-
-     When both sides are present the chart is unchanged. When they are all on one
-     side the line moves to that edge and the bars get the whole width, which
-     doubles the resolution of the comparison the page exists to make. */
-  const hasLighter = rows.some((r) => r.rent < 1);
-  const hasHeavier = rows.some((r) => r.rent > 1);
-  const oneSided = hasLighter !== hasHeavier;
-  const axis = !oneSided ? 50 : hasHeavier ? 100 : 0;
-  const span = oneSided ? 100 : 50;
-  const { ref, seen } = useInView<HTMLDivElement>();
-  // mounted gate: SSR / no-JS render the bars at their REAL width (never empty);
-  // only after hydration do we collapse-then-grow on scroll-in.
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => { setMounted(true); }, []);
-  /* THE SUMMARY IS THE SPREAD, NOT A TALLY OF WHICH SIDE OF THE CITY RATE.
-     It used to read "<n> run lighter than the city, <n> heavier", and on London
-     that printed "0 run lighter than the city, 7 heavier". A line whose first
-     figure is zero has spent a reader's attention to tell them nothing, and it
-     carried the same confusion the district chips did: the page above it leads
-     with RENT RUNS LIGHTEST and then this said none of them were light.
-     Rulebook v2 §7, §3.
-
-     What replaces it is the one thing this strip shows that nothing else on the
-     page states: how far apart the ends are. Both figures are already on screen,
-     so this is arithmetic on the visible, not a new measurement (§0). It is
-     never a zero, and it is different for every city. */
-  const lightestRent = rows[0]?.rent;
-  const heaviestRent = rows[rows.length - 1]?.rent;
+  const lightest = rows[0];
+  const heaviest = rows[rows.length - 1];
+  /* THE FINDING IS THE SPREAD, and it is arithmetic on two figures already on
+     screen rather than a new measurement. It is never a zero and it differs for
+     every city, unlike the tally it replaced long ago ("0 run lighter than the
+     city, 7 heavier"). It NAMES the heaviest district because this is now the
+     only place on the page that does, and because at phone width the drawing
+     shows five of seven and the two it drops are the dear end. */
   const spread =
-    typeof lightestRent === "number" && typeof heaviestRent === "number" && lightestRent > 0 && rows.length > 1
-      ? heaviestRent / lightestRent
+    lightest && heaviest && lightest.rent_mult > 0 && rows.length > 1
+      ? heaviest.rent_mult / lightest.rent_mult
       : null;
 
+  const asMult = (v: number) => `x${v.toFixed(2)}`;
+  const entries = rows.map((r) => ({ name: r.name, value: r.rent_mult }));
+  const picked = rows.findIndex((r) => r.slug === selected);
+
   return (
-    <HoodCard id="strip" ref={ref} className="px-4 py-3.5">
-      <div className="mb-1 flex items-end justify-between gap-3">
+    <HoodCard id="strip" className="p-4">
+      {/* THE HEAD ROW, ONE BASELINE, EDGE TO EDGE: what the ranking is ordered by
+          at the left, what it found at the right. The two share a baseline so the
+          eye reads them as one line rather than as a title above a sentence, and
+          together they span the card, which is what keeps the quietest row of the
+          card from being a half-empty one.
+          IT STACKS BELOW sm. At 343px the label runs three lines and the finding
+          two, and side by side that is a column of caps beside a column of prose
+          with a ragged gutter between them. Stacked, each takes the full measure
+          and neither wraps more than twice. */}
+      {/* THE GAPS ARE 16 AND NOT 12, and the card's padding is 16 and not 14.
+          Both were off the spacing ladder, which runs 48 / 32 / 28-20-16 / 8 with
+          no value between rungs, and both are the third and fourth instance of
+          the same fault this loop has found in a form: StepLadder's rung gap was
+          14 and ClearanceRing's caption gap was 12. Nearly-equal reads as a
+          mistake rather than as a decision, which is the worse of the two. */}
+      <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
         <SectionLabel as="h3">Ranked by rent load, lightest first</SectionLabel>
-        {spread ? (
-          /* THE FINDING WAS THE FAINTEST THING ON THE CARD. Seven district names
-             at body weight dominated, and the one sentence that says what the strip
-             is FOR , that the heaviest lease runs two and a half times the lightest ,
-             sat in muted micro in a corner. A reader who took only the largest text
-             away took a list of districts and no point. It steps up to body and the
-             multiple carries the weight. */
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
-            the heaviest lease runs <Fig className="font-semibold text-[var(--c-ink)]">{spread.toFixed(1)}</Fig> times the lightest
+        {spread && heaviest ? (
+          <span className="mb-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)] sm:mb-0 sm:shrink-0">
+            {heaviest.name} runs <Fig className="font-semibold text-[var(--c-ink)]">{spread.toFixed(1)}</Fig> times the lightest lease
           </span>
         ) : null}
       </div>
 
-      {/* axis header , labels the shared scale so the center line reads as the city
-          rent level. On mobile the bar column is too narrow for three captions (they
-          overprint as one smear), so only the center CITY x1.00 caption survives below sm. */}
-      <div className="mb-1.5 grid grid-cols-[16px_112px_1fr_44px] items-center gap-2 px-0 sm:grid-cols-[18px_130px_1fr_52px] sm:gap-3">
-        <span />
-        <span />
-        <div className="flex items-center justify-center text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] sm:justify-between">
-          {hasHeavier ? <span className="hidden sm:inline">Heavier</span> : null}
-          {/* THE STYLESHEET WAS CAPITALISING THE FIGURE. The row is set uppercase so
-              "Heavier" and "Lighter" read as axis furniture, and the transform reached
-              the anchor too, so a reader saw CITY X1.00 above a column of values that
-              all read x1.20, x1.30, x3.00. The author wrote it correctly and the style
-              broke it, which is why reading the source never found this and a
-              photograph did. Notation N2 and N4. */}
-          <span className="normal-case text-[var(--c-ink2)]">city x1.00</span>
-          {hasLighter ? <span className="hidden sm:inline">Lighter</span> : null}
-        </div>
-        <span />
-      </div>
+      {/* FIVE COLUMNS BELOW lg, ALL SEVEN ABOVE IT, and the count is measured at
+          THIS card's own width rather than copied from the city page's. At 375
+          this card is 311px inside its padding: seven columns are 38px each and
+          the word "London" alone is 46px, so every name would break mid-word.
+          Five are 57px, which clears the longest word in the set. */}
+      <LollipopColumn
+        rows={entries}
+        format={asMult}
+        narrowCount={5}
+        selectedIndex={picked >= 0 ? picked : undefined}
+        onSelect={(i) => { const r = rows[i]; if (r) onSelect(r.slug); }}
+        ariaLabel="Districts ranked by commercial rent, lightest first"
+      />
 
-      {/* the divergence chart: each row carries its own centered baseline at 50% of the bar cell */}
-      <div className="relative">
-        <ol className="relative z-10">
-          {rows.map(({ d, rent }, i) => {
-            const sel = d.slug === selected;
-            const lighter = rent <= 1;
-            const dev = 1 - rent;
-            // the ONE terracotta bar: the lightest lease, ALWAYS (terracotta = the answer).
-            // Selection never moves the accent: a picked row gets the neutral ink ring
-            // + bold name only, so the page's one color keeps one meaning.
-            const focal = i === 0;
-            // half-width of the track (each side gets 50% of it). The bar RESTS at its real
-            // width (SSR / no-JS / reduced-motion): it only grows-from-center on scroll-in
-            // by starting at 0 until `seen`, then transitioning via CSS (no per-row hook).
-            const target = (Math.abs(dev) / maxDev) * span;
-            const animate = mounted && !reduced;
-            // rest at the real width for SSR / no-JS / reduced-motion / already-seen;
-            // collapse to 0 only while mounted + animating + not-yet-in-view.
-            const w = animate && !seen ? 0 : target;
-            return (
-              /* max-w-none, AND IT IS NOT COSMETIC. A global readability rule caps
-                 every list item inside main at the prose measure, 68ch, which is
-                 right for a paragraph and wrong for a chart row. Measured at 1280
-                 on 2026-08-24: this strip lost 317px of a 1038px track to it, so a
-                 third of the page's hero chart was unusable and the axis captions
-                 sat well to the right of the axis they name. The rule has zero
-                 specificity by design, so declaring a width here is the intended
-                 way out. Prose lists on these pages keep the measure. */
-              <li key={d.slug} className="max-w-none">
-                <button
-                  type="button" onClick={() => onSelect(d.slug)} aria-pressed={sel}
-                  className="nerow -mx-2 grid w-[calc(100%+1rem)] grid-cols-[16px_112px_1fr_44px] items-center gap-2 rounded-md px-2 py-1.5 text-left sm:grid-cols-[18px_130px_1fr_52px] sm:gap-3"
-                >
-                  <Fig className={`text-[length:var(--t-body)] ${focal ? "text-[var(--terra-text)]" : "text-[var(--c-muted)]"}`}>{i + 1}</Fig>
-                  <span className={`min-w-0 truncate text-[length:var(--t-body)] ${sel ? "font-semibold text-[var(--c-ink)]" : "font-medium text-[var(--c-ink2)]"}`}>
-                    {d.name}
-                  </span>
-                  <div className="relative h-[14px]" role="img" aria-label={`${d.name}: rent x${rent.toFixed(2)} the city rate, ${lighter ? "lighter than" : "heavier than"} the city`}>
-                    {/* mid track */}
-                    <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "#efeae6" }} />
-                    {/* the city x1.00 line , the single most important reference on the page */}
-                    {/* CLAMPED AT THE ENDS. Moving the axis to an edge put a
-                        centred mark half outside the box: the line lost half its
-                        width at 100%, and the selection ring below lost 6.5 of
-                        its 13px. Both are pinned inside instead of centred on
-                        their own value. */}
-                    <div
-                      className="absolute inset-y-0 w-px"
-                      style={{
-                        left: `${axis}%`,
-                        transform: `translateX(${axis >= 100 ? "-100%" : axis <= 0 ? "0" : "-50%"})`,
-                        background: "#b9b1ab",
-                      }}
-                    />
-                    {/* divergence fill from the center */}
-                    <div
-                      className="absolute top-1/2 h-[9px] -translate-y-1/2 rounded-[2px]"
-                      style={{
-                        left: lighter ? `${axis}%` : `${axis - w}%`,
-                        width: `${w}%`,
-                        background: focal ? TERRA : "#c8c2bd",
-                        transition: animate ? "width .6s cubic-bezier(.2,.7,.2,1), left .6s cubic-bezier(.2,.7,.2,1)" : "none",
-                      }}
-                    />
-                    {/* selection: a neutral ink ring at the bar tip */}
-                    {sel ? (
-                      <span
-                        className="absolute top-1/2 h-[13px] w-[13px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-                        style={{
-                          left: `clamp(6.5px, ${lighter ? axis + w : axis - w}%, 100% - 6.5px)`,
-                          /* A MARK THAT IS NOT DATA MUST NOT LOOK LIKE DATA. This is the
-                             selection marker, and it was a solid ink dot sitting exactly where
-                             a value sits, on a strip whose every other mark IS a value. In a
-                             photograph it reads as a seventh datum on a chart of seven
-                             districts, and nothing anywhere says what it means.
-                             Hollow now: an ink ring around the bar tip, which reads as "this
-                             one is picked" rather than as "here is a number". */
-                          background: "#fff", border: "2px solid #1b1b1a", boxShadow: "0 0 0 1px #e3e3e3",
-                          transition: animate ? "left .6s cubic-bezier(.2,.7,.2,1)" : "none",
-                        }}
-                        aria-hidden
-                      />
-                    ) : null}
-                  </div>
-                  <Fig className={`text-right text-[length:var(--t-body)] ${focal ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{rent.toFixed(2)}</Fig>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
+      {/* THE FOOT IS ONE ROW, both halves chrome, one at each edge, spanning what
+          the drawing above it spans. The unit rides here rather than in the head,
+          which is where A6 put it, because this card's head row is already two
+          objects and a third would crowd it; the words are the city page's words
+          so a reader meets the same gloss in both places.
+          WHAT EACH DISTRICT IS, kept rather than dropped: the character line used
+          to sit under every track, and a column has one line of label, which
+          belongs to the name. It is text and not a graphic, so a disclosure is
+          where it is allowed to live (rulebook v2 S6). It also holds every
+          district in order, which is the phone reader's route to the two the
+          drawing drops. */}
+      <div className="mt-4 flex items-baseline justify-between gap-3">
+        <InlineDisclosure name="districts" summary="What each district is" className="group min-w-0">
+          <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+            {rows.map((r) => (
+              <div key={r.slug} className="flex items-baseline justify-between gap-3 py-1.5">
+                <span className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{r.name}</span>
+                <span className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.character}</span>
+              </div>
+            ))}
+          </div>
+        </InlineDisclosure>
+        <span className="shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+          rent, x the city level
+          <InfoTip gloss="The district&#39;s commercial rent as a multiple of the city-average level; x1.00 is the city average." />
+        </span>
       </div>
     </HoodCard>
   );
 }
 
 /* (the explorer chip rail was REMOVED , Final Ascent audit "district-chips" merge
- * verdict: three redundant selectors for one state. The strip rows and the map pins
+ * verdict: three redundant selectors for one state. The ranking columns and the map pins
  * both select; the chapter-03 compare picker keeps the one chip rail on the page.) */
 
 /* ============================================================================
@@ -733,9 +673,10 @@ function UnderMapCard({ d, placePrefix }: { d: District; placePrefix?: string | 
 }
 
 /* ============================================================================
- * THE EXPLORER , the "01" movement body. Rail opener, the divergence rent-strip
+ * THE EXPLORER , the "01" movement body. Rail opener, the ranked district rents
  * (hero), the real map + under-map district card (orientation that earns its
- * pixels), and the disciplined panel. Two selectors only: strip rows + map pins.
+ * pixels), and the disciplined panel. Two selectors only: ranking columns + map
+ * pins.
  * ========================================================================== */
 export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, placePrefix }: { districts: District[]; defaultSlug?: string; rail?: Rail2; mapNote?: string; placePrefix?: string | null }) {
   const reduced = usePrefersReducedMotion();
@@ -803,17 +744,30 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, pl
       <NeStyles />
       <Rail icon="best-areas" tone="terra" kicker={rail?.kicker ?? "Where in the city"} verdict={rail?.verdict} />
 
-      {/* THE STRIP PAIRS WITH THE WHAT-WORKS CARD. It was the last full-width
+      {/* THE RANKING PAIRS WITH THE WHAT-WORKS CARD. It was the last full-width
           section on any of the four pages: seven ranked rows taking the whole
-          column, which is the sweep the founder banned. The two are close in
-          height, 312px against 193px measured, so neither leaves a crater beside
-          the other, and the card moves out of the map column where it was only
-          ever ballast. Art direction D1, D4, E2.
+          column, which is the sweep the founder banned. The card also moves out
+          of the map column, where it was only ever ballast. Art direction D1,
+          D4, E2.
+
+          THE PAIRING IS WHY THE RANKING IS STILL A PICKER. The card beside it is
+          named for whichever district is picked, so a ranking with no affordance
+          would leave it stranded on a default beside a set of seven. The
+          alternative was to leave the page one selector, its map, which needs
+          WebGL and a tile fetch before it can draw at all.
+
+          THE SPLIT MOVED FROM 3-2 TO 2-1, AND A PHOTOGRAPH DECIDED IT. Seven
+          columns in a 624px card are 79px each, which is one or two pixels under
+          what "South London" and "City of London" need at the 12px read floor,
+          so those two wrapped to a second line while their neighbours stayed on
+          one and the name row went ragged. At 693px the columns are 91px and
+          every district in the set sits on one line. The what-works card gives up
+          68px for it and loses nothing: it holds a short list and one sentence.
 
           The map keeps the detail panel, which is the pairing that earns its
           keep: selecting a pin drives the panel, and both are tall. */}
-      <Band split="3-2">
-        <RentStrip districts={districts} selected={selected} onSelect={setSelected} reduced={reduced} />
+      <Band split="2-1">
+        <DistrictRents districts={districts} selected={selected} onSelect={setSelected} />
         <UnderMapCard d={current} placePrefix={placePrefix} />
       </Band>
 

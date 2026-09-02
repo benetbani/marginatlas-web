@@ -11,15 +11,16 @@
  * ranked surface runs on RENT LOAD, the seed input an owner can verify (rulebook v1
  * §5, founder 2026-07-11: the derived per-district keep index never renders). Built
  * to the masterplan publish bar: answer-first two-figure masthead, one dominant rent
- * figure per chapter, a REAL orientation map, a divergence rent-strip on the city
- * x1.00 line, progressive disclosure in the panel (the free/Pro seam, unveiled on
+ * figure per chapter, a REAL orientation map, the district rents ranked as columns
+ * from a drawn zero (A7), progressive disclosure in the panel (the free/Pro seam, unveiled on
  * review builds per §45), and a full-width myth chapter. All prose lives in the
  * seed; every sourceless field is null-guarded so it renders nothing on the real page.
  *
  * As-built chart dictionary (page-level idiom census; bar budget per rulebook v1
  * §25: the rent strip is the ONLY fill-bar graphic):
  *   big figure: masthead rent hero x1 (the ONE hero-scale figure) + panel rent x1.
- *   divergence bar-list (deviation from x1.00): RentStrip x1  , the page hero chart.
+ *   ranked columns from a drawn zero (idea I2): DistrictRents x1  , the page hero
+ *     chart, and the page's only DECLARED visual idea.
  *   real tile map (position): SpineMap x1  , rent-encoded pins (size = how light the
  *     rent runs, terracotta = lighter than the city, ink = heavier), legended.
  *   marker-on-a-shared-scale (neutral, no fill): footfall two-marker x1 (omitted on
@@ -117,7 +118,7 @@ export function SpineHoodBody({ data = spineHoodSeed }: { data?: any }) {
             D4). The slope takes the large side because it carries fourteen
             labelled points. */}
         <Movement index="02" icon="myth-reality" heading="The revenue myth, and the districts side by side" />
-        {/* EQUAL HALVES, because the band above this one is already 3-2 and two
+        {/* EQUAL HALVES, because the band above this one is already 2-1 and two
             neighbouring bands with the same split is the monotony D3 exists to
             stop. Both halves also want width: the slope carries nine labelled
             points and the comparison three columns of figures. */}

@@ -906,6 +906,8 @@ export function LollipopColumn({
   ariaLabel,
   narrowCount,
   accent = true,
+  selectedIndex,
+  onSelect,
 }: {
   /** The entries, already in rank order. Null renders nothing. */
   rows?: Array<LollipopEntry | null | undefined> | null;
@@ -944,6 +946,35 @@ export function LollipopColumn({
    *  are trying to avoid. Such a set passes accent={false} and lets the stem
    *  heights do the work they were drawn for. */
   accent?: boolean;
+  /** Which entry is picked, when the set is also the page's picker. Indexes the
+   *  set the CALLER passed, so it survives the narrow drop. */
+  selectedIndex?: number;
+  /** Makes every column a button. Omit and the set is a pure drawing, which is
+   *  what it is on the cell and city pages, and the markup is unchanged there.
+   *
+   *  A RANKING IS SOMETIMES ALSO A PICKER, AND THE HOOD PAGE IS WHERE THAT LANDS.
+   *  Its ranked districts sit beside a card reading "what works in <district>",
+   *  so the ranking is how a reader changes the card next to it; a chart with no
+   *  affordance would leave that card stranded on a default beside a set of
+   *  seven. The alternative was to leave the page one selector, its map, which
+   *  needs WebGL and a tile fetch to draw at all.
+   *  THE PICKED COLUMN GAINS NO MARK, and that is deliberate rather than
+   *  minimal. Every mark in this drawing is a value, so a ring or a dot for the
+   *  selection would read as one more datum: the fault the strip this replaced
+   *  had already been corrected for once. What the picked column gains is its
+   *  NAME IN INK rather than muted, and nothing else; the hover surface, which
+   *  only exists under the pointer, carries the affordance.
+   *  TWO LOUDER TREATMENTS WERE BUILT AND PHOTOGRAPHED FIRST, and both failed on
+   *  the picture rather than in the argument. Setting the picked name semibold
+   *  made it WIDER, so "South London" wrapped to two lines while "North London"
+   *  beside it stayed on one, and the name row went ragged as a reader clicked
+   *  along it: a selection must never move the layout it is selecting in.
+   *  Tinting the whole picked column drew a filled rectangle the full height of
+   *  the drawing behind the SHORTEST stem in the set, so the smallest value wore
+   *  the largest area, which is a chart contradicting itself.
+   *  The accent never moves: it stays on entry one, which is the ranking's own
+   *  answer, whatever the reader picks. */
+  onSelect?: (index: number) => void;
 }) {
   const kept = (rows ?? [])
     .filter(
@@ -996,14 +1027,10 @@ export function LollipopColumn({
           columnGap: 6,
         }}
       >
-        {kept.map((row, i) => (
-          <li
-            key={`${row.name}-${i}`}
-            /* Below `lg` the tail is removed from the layout entirely, so the
-               survivors' columns widen instead of the whole set squeezing. */
-            className={i < narrowKept ? undefined : "hidden lg:list-item"}
-            style={{ minWidth: 0 }}
-          >
+        {kept.map((row, i) => {
+          const picked = selectedIndex === i;
+          const column = (
+            <>
             <div
               style={{
                 height: HEAD,
@@ -1052,13 +1079,41 @@ export function LollipopColumn({
                 The real guard is still the entry COUNT, which the caller sets
                 from the narrowest width it renders at. */}
             <div
-              className="text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"
+              className={`text-center text-[length:var(--t-micro)] leading-snug ${picked ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}
               style={{ paddingTop: 7, overflowWrap: "break-word" }}
             >
               {row.name}
             </div>
-          </li>
-        ))}
+            </>
+          );
+          return (
+            <li
+              key={`${row.name}-${i}`}
+              /* Below `lg` the tail is removed from the layout entirely, so the
+                 survivors' columns widen instead of the whole set squeezing. */
+              className={i < narrowKept ? undefined : "hidden lg:list-item"}
+              style={{ minWidth: 0 }}
+            >
+              {/* A PICKER ONLY WHERE ONE WAS ASKED FOR. With no onSelect the
+                  column renders exactly the markup it always did, so the two
+                  pages already carrying this form are untouched, and no event
+                  handler is ever created, which is what keeps it legal inside a
+                  server component. */}
+              {onSelect ? (
+                <button
+                  type="button"
+                  onClick={() => onSelect(i)}
+                  aria-pressed={picked}
+                  className="w-full rounded-md px-0.5 pb-1 transition-colors hover:bg-[var(--c-soft)]"
+                >
+                  {column}
+                </button>
+              ) : (
+                column
+              )}
+            </li>
+          );
+        })}
       </ol>
     </div>
   );
