@@ -574,7 +574,7 @@ export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | nul
      and drawing a lone row would imply five siblings that were withheld. */
   if (kept.length < 2) return null;
   return (
-    <ol data-idea="I6" aria-label={ariaLabel} style={{ listStyle: "none", margin: 0, padding: 0 }}>
+    <ol data-idea="I11" aria-label={ariaLabel} style={{ listStyle: "none", margin: 0, padding: 0 }}>
       {kept.map((row, i) => {
         const leader = i === 0;
         return (
@@ -1105,7 +1105,7 @@ export function StepLadder({
   const C = 10;
   const GAP = 14;
   return (
-    <div data-idea="I6">
+    <div data-idea="I4">
       <ol aria-label={ariaLabel} style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {shown.map(({ rung, here }, i) => {
           const first = i === 0;
@@ -1465,7 +1465,7 @@ export function RangeBracket({
   const NOTCH = 9;
   return (
     <div
-      data-idea="I6"
+      data-idea="I12"
       role="img"
       aria-label={`${format(typical)} ${caption ?? "typical"}, between ${format(lo)} and ${format(hi)}`}
     >
