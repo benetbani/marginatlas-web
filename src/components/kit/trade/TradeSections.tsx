@@ -95,8 +95,11 @@ import * as React from "react";
 /* EaseScale IS GONE FROM THIS IMPORT, and its absence is the point of the two
    commits on 2026-09-02. It drew both the risk ranking and the role ranking as
    one left-to-right rail with markers on it, which is two of the nine tracks the
-   founder counted. Meter and SpectraTable are still here because tipping, the
-   town hall and who-walks-in have not had their rows taken yet. */
+   founder counted. Meter survives for the TOWN HALL alone now (B6, untaken);
+   tipping gave its Meter back on 2026-09-02, which returns the restaurant column
+   to the cap of two rather than one over it. SpectraTable stays because
+   who-walks-in is the one legitimate track on this page: three positions between
+   two named poles, which is the reading the form exists for. */
 import { Box, Rail, Fig, KV, Meter, SpectraTable, Expand, cap } from "@/components/spine/kit";
 /* THE CATALOGUE'S OWN VOCABULARY, WHICH THIS FILE COULD NOT REACH UNTIL NOW.
    Every section below was written against a kit that exported three drawings,
@@ -105,7 +108,7 @@ import { Box, Rail, Fig, KV, Meter, SpectraTable, Expand, cap } from "@/componen
    horizontal bar with the points in between"). forms-v2.tsx holds the eight
    replacements; sections migrate onto them one at a time, each with its own
    photograph and its own commit. */
-import { BenchmarkPair, RankedTiles, StepLadder } from "@/components/spine/forms-v2";
+import { BenchmarkPair, RankedTiles, StateWord, StepLadder } from "@/components/spine/forms-v2";
 
 /* ------------------------------------------------------------------ */
 /* Shared                                                              */
@@ -756,11 +759,29 @@ export function WhatThingsCost({
 /* 3. TIPPING                                                          */
 /* ================================================================== */
 /**
- * FORM: Meter. One marker on a two-end labelled track.
+ * FORM: StateWord. A mark on a disc, the state as a phrase, the fact beneath.
  *
- * Tipping is a position on a known scale from "nobody does" to "always, and
- * they notice", which is exactly what a Meter is for. A percentage bar would
- * claim a precision that tipping custom does not have.
+ * ============== B2, 2026-09-02: THE METER YIELDS TO A STATE ===============
+ *
+ * WHAT WAS HERE WAS THE FOUNDER'S OWN COMPLAINT, DRAWN. A full-width terracotta
+ * track with a black dot at 78 of 100, labelled "NOT EXPECTED" and "ALWAYS
+ * EXPECTED": one of the three horizontal tracks left on this page, on a page
+ * whose cap is two. The catalogue's StateWord entry names this exact card in as
+ * many words: "Version 1 answered questions like these with a meter reading 100
+ * or 0, or with a dot pinned to one end of a track, which is a continuous scale
+ * asserting itself over a binary fact."
+ *
+ * AND THE TRACK PUBLISHED A NUMBER NOBODY HOLDS. `expectation` is a modelled
+ * 0-to-100 score with no unit and no meaningful zero, and a marker positions it
+ * to the pixel, so the drawing claimed that 78 is a measured distance along a
+ * scale whose ends are two English phrases. That is A2's argument against a
+ * lollipop, arriving on a track instead. The score still decides the branch and
+ * chooses the phrase, and it is no longer DRAWN anywhere, so the card stops
+ * asserting a precision it never had.
+ *
+ * IT ALSO CARRIED TWO ACCENTS. The share at focal in terracotta AND the track's
+ * terracotta fill, in one card, which step 8 of the subsection procedure calls a
+ * card with no answer. There is one now.
  *
  * UNIVERSALITY, and this section is one of the two most likely to fail it. In
  * much of the world the honest answer is "not expected", and that must render
@@ -773,16 +794,35 @@ export function WhatThingsCost({
  * THE ANSWER is the SHARE. That is the money, so it takes the focal rung and the
  * accent, and the meter drops to where evidence belongs, underneath it.
  *
- * "NOT EXPECTED HERE" IS A REAL ANSWER AND RENDERS AS ONE. The section never
- * self-omits for a low value and never hedges: it says so in words at the same
- * size the share would have taken, in ink rather than accent because a custom
- * that does not exist is not a quantity to point at. This is the branch that
- * decides whether the section survives rule 21 or patronises half the world.
+ * "NOT EXPECTED HERE" IS A REAL ANSWER AND RENDERS AS ONE, and it is now a
+ * DESIGNED object rather than a sentence in the answer slot: a cross on a disc,
+ * the phrase beside it, the fact under it, which is the same shape the expected
+ * branch wears. The two branches are ONE PICTURE WITH AND WITHOUT ITS FIGURE,
+ * which is the construction B1 uses in the same run for its verdict, so a
+ * reader who has learned one meets the other.
+ *
+ * WHERE THE ANSWER SITS, AND WHY IT MOVES. Where a custom exists, the money is
+ * the answer and takes the focal rung and the card's one accent, exactly as
+ * constitution C1 ruled. Where none exists there IS no money, so the state row
+ * carries the card alone, in ink, with no accent anywhere: a custom that does
+ * not exist is not a quantity to point at. That is not two hierarchies for one
+ * card, it is one card whose answer is whatever the place actually has, which is
+ * the same construction ClearanceRing uses for a month that clears and a month
+ * that does not.
+ *
+ * THE STATE CARRIES THE DEGREE NOW, which the consequence used to carry:
+ * "Expected" above 55 and "Offered rather than expected" below it. A degree
+ * belongs to the state it qualifies, not to a sentence three lines down.
+ *
+ * TWO OF THE FORM'S THREE MARKS ARE REACHED HERE, the tick and the cross. The
+ * dash, "not applicable", is not a tipping state: a custom is either kept or it
+ * is not. B3 is the row that reaches it.
  *
  * THE CONSEQUENCE IS THE FUNCTIONAL HEART, and it is the one thing the old card
  * never said: tips change the WAGE BILL. They land on staff take-home without
  * landing on the owner's payroll, which is the only reason an owner needs to
- * know the custom at all.
+ * know the custom at all. It says what the owner DOES now, and the fact beside
+ * the mark says who the money reaches, so neither is the other in other words.
  */
 export function Tipping({
   expectation,
@@ -795,24 +835,48 @@ export function Tipping({
 }) {
   if (expectation == null) return null;
   /* A ZERO IS NOT A MEASUREMENT OF A SHARE, it is the absence of a custom, and
-     "0%" at focal would render absence as a quantity. Both halves have to agree
-     before the card claims a customary share: a share with nobody expecting it
-     is folklore, and an expectation with no share attached has no money in it. */
-  const expected = typicalShare != null && typicalShare > 0 && expectation > 10;
+     "0%" at focal would render absence as a quantity. A share with nobody
+     expecting it is folklore, so either half saying no is a no.
+     THREE STATES, NOT TWO, AND THE THIRD WAS FOUND BY PHOTOGRAPHING THE CARD IN
+     EVERY BRANCH ITS READING CAN REACH. The guard used to require BOTH halves
+     before the card said the custom existed, which collapsed "there is no
+     custom" into "we do not hold the share": a place at 70 out of 100 with no
+     share figure rendered "Not expected here", the opposite of what the card
+     knew. The Meter used to hide that, badly, by drawing its marker at 70 beside
+     the words denying it; with the track gone the contradiction would have been
+     invisible instead of merely wrong. So a custom with no share attached says
+     the custom exists and prints no figure, which is A4's own fix for the same
+     fault class: render what is held, never a fallback that reads as measured. */
+  const noCustom = expectation <= 10 || typicalShare === 0;
+  const shareHeld = typicalShare != null && typicalShare > 0;
+  const expected = !noCustom && shareHeld;
+  const state = noCustom
+    ? "Not expected here"
+    : expectation >= 55
+      ? "Expected"
+      : "Offered rather than expected";
   return (
     <Section
       kicker="Tipping"
       icon="payments"
       accent={expected}
-      answer={expected ? <Fig>{typicalShare}%</Fig> : "Not expected here."}
+      answer={expected ? <Fig>{typicalShare}%</Fig> : undefined}
       answerNote={expected ? "The customary share of the bill, on top of it." : undefined}
       consequence={
-        expected
-          ? `${expectation >= 55 ? "Expected" : "Offered rather than expected"} here, and it goes to the staff, so it lifts their take-home without lifting your wage cost.`
-          : "Wages carry the whole of pay here, so budget the full cost of a shift into the rota."
+        noCustom
+          ? "Wages carry the whole of pay here, so budget the full cost of a shift into the rota."
+          : "Budget the wage alone: a shift costs you the wage and pays the person more than it."
       }
     >
-      <Meter value={expectation} left="Not expected" right="Always expected" />
+      <StateWord
+        kind={noCustom ? "no" : "yes"}
+        state={state}
+        fact={
+          noCustom
+            ? "No customary top-up reaches the staff on top of their wage."
+            : "Left on the bill and paid to the staff, never to the business."
+        }
+      />
     </Section>
   );
 }

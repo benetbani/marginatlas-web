@@ -323,20 +323,33 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
  * out 693px wide holding three short rows. `lean` moves that air outside the
  * card's edge, where an uneven band is a composition instead of a hole.
  *
- * TWO PLACES WHERE THE KIT ANSWERS AND NOT THE CONSTITUTION. `Band`'s ratio set
- * is closed at five, so "one third each" for a PAIR is not expressible: two lean
- * cards take equal halves, which is the closest honest reading of C1 and C2. And
- * C5 alone is given a band of its own rather than the full width the
- * constitution allows it, because Band's lone-child rule re-templates to two
- * thirds and art direction D1 bans full width for anything carrying a finding.
+ * C1 AND C2 WENT FROM EQUAL HALVES TO TWO FIFTHS AND THREE, on 2026-09-02, and
+ * the photograph decided it. Tipping's Meter had been the one thing spanning its
+ * card edge to edge; with the track gone (B2) the card was a figure, a note and a
+ * state row in a 520px box, and the block beside the figure came out about 255 by
+ * 100 pixels of nothing, which is half the card's width and taller than a line.
+ * The pavement card wanted the other way anyway: at 520 its "ALL OF THEM $4,960 a
+ * year, a month and a half of local pay" row was already running at its own edge.
+ * At 416 and 624 tipping's fact and consequence both wrap and fill, and only its
+ * answer block is left-packed, which is the grammar of the rail above it and the
+ * reading A5 ratified for exactly this test.
+ * NOT 1-2, WHICH IS WHAT THE CONTENT WOULD OTHERWISE HAVE ASKED FOR: the band
+ * directly above is already 1-2, and D3 forbids a band repeating the split of the
+ * band before it. The effective sequence down the page is now 2-1, 1-2, 2-3, 2-1
+ * and a lone lean card, with no two neighbours alike.
+ *
+ * ONE PLACE WHERE THE KIT ANSWERS AND NOT THE CONSTITUTION. C5 alone is given a
+ * band of its own rather than the full width the constitution allows it, because
+ * Band's lone-child rule re-templates to two thirds and art direction D1 bans
+ * full width for anything carrying a finding.
  *
  * `skill-level` IS ABSENT FROM EVERY BAND. It merged into `can-you-hire`, and it
  * renders nothing on its own, so listing it would leave a hole in a row.
  */
-const BANDS: Array<{ ids: TradeSectionId[]; split: "2-1" | "1-1" | "1-2" }> = [
+const BANDS: Array<{ ids: TradeSectionId[]; split: "2-1" | "1-1" | "1-2" | "2-3" | "3-2" }> = [
   { ids: ["typical-setup", "what-things-cost"], split: "2-1" },
   { ids: ["can-you-hire", "who-walks-in"], split: "1-2" },
-  { ids: ["tipping", "public-space"], split: "1-1" },
+  { ids: ["tipping", "public-space"], split: "2-3" },
   { ids: ["deals-and-regimes", "town-hall"], split: "2-1" },
   { ids: ["what-goes-wrong"], split: "2-1" },
 ];
