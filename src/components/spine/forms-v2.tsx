@@ -19,12 +19,21 @@
  *
  *   BenchmarkPair  (I9)  one number, with its verdict on the same baseline.
  *   StateWord      (I9)  a yes, a no, a not-applicable, as a marked status row.
- *   RankedTiles    (I6)  a short ranking, where the ORDER is the reading.
+ *   RankedTiles    (I11) a short ranking, where the ORDER is the reading.
  *   OptionCards    (I6)  a choice among two to four comparable options.
  *   LollipopColumn (I2)  a longer ranking, where the MAGNITUDE matters too.
- *   StepLadder     (I6)  a level on a ladder whose rungs have meanings.
+ *   StepLadder     (I4)  a level on a ladder whose rungs have meanings.
  *   ClearanceRing  (I7)  what must be cleared, and whether a period clears it.
- *   RangeBracket   (I6)  a low, a high, and the typical held between them.
+ *   RangeBracket   (I12) a low, a high, and the typical held between them.
+ *
+ * THREE OF THOSE IDEAS WERE STALE UNTIL 2026-09-02 AND THIS LIST WAS THE LAST
+ * PLACE THEY SURVIVED. Catalogue version 4 reclassified RankedTiles to I11,
+ * StepLadder to I4 and RangeBracket to I12 once version 3 had redesigned what
+ * they draw. The per-form banners below were corrected while A5 was built and
+ * the catalogue index while A6 was; this summary, which is the first thing a
+ * builder reads in this file, still charged all three to I6. A8 needed the
+ * RangeBracket line to be right and it was not, which is the third time in
+ * three runs that a stale declaration has been found one file further along.
  *
  * THE ONE RULE ALL EIGHT SHARE: none of them may read as a line with a dot on
  * it.

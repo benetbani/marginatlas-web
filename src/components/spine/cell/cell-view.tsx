@@ -24,7 +24,9 @@
  *   editorial table (figures + bold-best, no in-cell bars): Nearby x1
  *   waterfall (gross -> labeled decrements -> net, from the $100 split): OwnerKeeps x1 (max 1)
  *   spread strip: masthead turnover p10/p50/p90 x1
- *   track-free range brackets (low/high ticks + mid dot): Wages x1
+ *   pay table, three roles across a lowest / typical / highest (idea I8, free):
+ *      Wages x1. It replaced three hand-rolled range brackets on a shared rail
+ *      on 2026-09-02, subsection queue row A8, which also closes queue row C1.
  *   segmented-control (selection chrome, ink): FormatPicker x1
  * REMOVED forms: Gauge, 3-pip meters, Dots, invented-ceiling break-even fill bar, the
  *   3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area,

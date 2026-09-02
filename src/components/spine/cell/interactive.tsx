@@ -157,138 +157,142 @@ export function Nearby({ d }: { d: any }) {
   );
 }
 
-/* Wages , WI-4 brief (rulebook v1 sections 25/37, founder G2/G4, 2026-07-11):
- * decision: the payroll you budget against. Leads with the three at-a-glance
- * mid-pay figures (the July-3 lead read, figures only, no summary bars). The full
- * per-role range plot stays PERMANENTLY VISIBLE below (rulebook v2 S6, a chart
- * never hides behind a disclosure) but its filled tracks are gone: each row is a
- * track-free range bracket , low/high end ticks joined by a hairline, mid dot.
- * width: rail half. terracotta target: none (a head-chef row is a roster
- * position, not an answer; the figures are the read). */
+/* Wages , "What each role is paid", and A8 OF THE SUBSECTION QUEUE.
+ *
+ * WARRANT (procedure step 1). A visitor reads this to decide WHAT THEY MUST
+ * OFFER TO FILL EACH ROLE, and which of those wages they can move. Without it
+ * they would budget one figure a role, discover the market's floor sits above
+ * it for the role they cannot open without, and find out too late that the
+ * cheapest role has no room in it at all.
+ *
+ * NOT THREE RANGE BRACKETS, AND NOT A GROUPED ONE EITHER, which is the decision
+ * this row turned on and it is worth writing out because the queue predicted
+ * both.
+ *
+ * THREE BRACKETS ARE FORBIDDEN BY THE CAP, and the arithmetic is simpler than
+ * the note that reopened it. RangeBracket declares data-idea="I12" per
+ * instance, SPAN is capped at two a page, and three is more than two whether or
+ * not any other section has spent one. They are also the same shape three times
+ * in one card, which is the sameness this whole effort exists to end, and each
+ * one sets its typical at the focal rung, so the card would hold three figures
+ * competing to be read first and therefore no answer at all.
+ *
+ * A GROUPED RANGE FORM IS NOT IN THE CATALOGUE, and inventing one is rule 0's
+ * ban. The nearest thing that exists, SpreadStrip, is a horizontal track and
+ * this page is at the track cap of two. So step 3's own escape applies: when
+ * every form the named type points at is unavailable, the information was named
+ * wrongly. Three roles, each carrying a lowest, a typical and a highest, is not
+ * three ranges read one at a time. It is ENTITIES ACROSS SEVERAL METRICS, whose
+ * catalogue row is a table, idea I8, free. The reader compares roles down the
+ * columns, which is what a table is for and what three stacked brackets cannot
+ * do at all.
+ *
+ * WHAT WAS HERE, AND WHY IT HAD TO GO. Three range brackets on a shared rail,
+ * hand-rolled inline, carrying no data-idea: the catalogue addendum's "where
+ * the sameness actually lives", and the three tracks that put this page at five
+ * against a cap of two the moment anyone declared them. They also could not be
+ * read. The card's own comment said so: the low and the high existed only in
+ * the description a screen reader hears, so a sighted reader got a bracket on a
+ * scale and could recover neither end. The table prints all nine figures.
+ *
+ * A ROLE PAID ONE RATE PRINTS THE SAME FIGURE THREE TIMES, and that is the
+ * honest picture rather than a rendering fault. Every cell that carries wages
+ * has one such role, the kitchen porter here at 24K and the junior stylist in a
+ * salon, and the drawing this replaces had already been corrected once for
+ * making that role look like a role with no figures at all. Empty cells would
+ * reintroduce exactly that.
+ *
+ * THE CARD HAS NO ACCENT, and that is inherited rather than newly decided: a
+ * head-chef row is a roster position, not an answer, so the figures are the
+ * read. Rule 29A would forbid the obvious alternative anyway, because a wage is
+ * a burden and terracotta never marks the dearest of anything.
+ *
+ * width: two fifths of the band, beside the money waterfall.
+ */
 export function Wages({ d }: { d: any }) {
   const roles: any[] = d.wages?.roles ?? [];
   if (roles.length === 0) return null;
-  const max = Math.max(1, ...roles.map((r) => r.high_usd)) * 1.05;
   const kUsd = (v: number) => `$${Math.round(v / 1000)}K`;
-  /* THE BRACKETS HAD NO SCALE UNDER THEM. Every role drew a low tick, a high tick
-     and a mid dot on a shared 0-to-max rail, and the rail carried no numbers at
-     all, so the one thing this card exists to show , how far pay spreads , could
-     be seen and not read. Only the mid figure was printed, and the number column
-     beside it already said that.
-     The fix is the convention for a shared scale: ONE axis for the whole plot,
-     not two labels on each of three rows. It adds a single line to the card and
-     makes every bracket end readable instead of just decorative. */
-  const tickStep = [5000, 10000, 20000, 25000, 50000, 100000].find((st) => max / st <= 4) ?? 100000;
-  const ticks: number[] = [];
-  for (let v = 0; v <= max; v += tickStep) ticks.push(v);
-  const tickLabel = (v: number) => (v === 0 ? "$0" : kUsd(v));
+  /* DEAREST FIRST, sorted here rather than trusted from the adapter, because
+     the order is the reading: a budget starts at the hire that costs most. */
+  const rows = [...roles].sort((a, b) => (b.mid_usd ?? 0) - (a.mid_usd ?? 0));
+  /* A ROLE WITH NO TYPICAL HAS NOTHING FOR THE MIDDLE COLUMN TO SAY, so it is
+     dropped rather than printed as a zero or a dash beside two real ends. */
+  const kept = rows.filter((r) => Number.isFinite(r.mid_usd));
+  if (kept.length === 0) return null;
+  /* Number.isFinite FIRST: two undefined ends are equal to each other, so the
+     bare comparison printed the one-rate caveat for a role that simply carries
+     no ends at all. */
+  const flat = kept.some((r) => Number.isFinite(r.low_usd) && r.low_usd === r.high_usd);
   return (
-    <Box id="wages" className="md:flex-[2]">
+    <Box id="wages">
       <Rail icon="wages" kicker="What the team costs" sample />
-      {/* FOUR RAW GREYS RETIRED, and the sizes put on the ladder. The grey was
-          one step off the token this project already uses for a neutral mark,
-          four values apart in one channel, so nothing visible moves.
-          TWO THINGS DELIBERATELY LEFT, because fixing either changes what a
-          reader reads and that is the founder's call, not this loop's:
-          1. The low and the high exist ONLY in the description a screen reader
-             hears. A sighted reader gets a bracket on a scale with no numbers on
-             it, so neither end of the spread can be recovered. Printing them
-             would add text to the card.
-          2. RESOLVED 2026-08-24, and the note that stood here was measured and
-             found false. It read: "the three figures at the top are printed AGAIN
-             in the rows below, because the top block takes the first three roles
-             and the rows take all of them. Removing the repeat takes a figure off
-             the page."
-
-             That holds on the BUNDLED SAMPLE, which carries five roles, so the top
-             block previews three of five. EVERY REAL PAGE CARRIES EXACTLY THREE.
-             The two blocks were therefore word for word identical on every page a
-             reader can reach, and removing the top one takes nothing off the page
-             at all.
-
-             So the preview is now CONDITIONAL: it draws only when it actually
-             previews something, which is when more roles exist than it shows. On
-             the sample nothing moves. On a real page the duplicate is gone. */}
-      {/* the three mid-pay figures, first (the at-a-glance read) */}
-      {roles.length > 3 ? (
-        <>
-          <div className="mt-1 space-y-1.5">
-            {roles.slice(0, 3).map((r) => (
-              <div key={r.role} className="flex items-baseline justify-between gap-3">
-                <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.role}</span>
-                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{kUsd(r.mid_usd)}</Fig>
-              </div>
+      {/* THE TABLE IS THE FORM, idea I8, and its craft is the alignment. Every
+          role's three figures sit on ONE baseline, so a row reads as one span
+          rather than as three separate facts, and every column's digits line up
+          under each other, so a reader compares roles by looking down rather
+          than by reading across three times.
+          SIZE CONTRAST CARRIES THE MEANING: the typical stands at the section
+          rung against its own two ends at body, 24 against 14, so each row says
+          "this much, and it can move between these" in one glance. The column
+          of typicals is therefore the first thing on the card and the ends are
+          the second, which is the same hierarchy the catalogue's own span form
+          uses and the reason this reads as its relative rather than as a
+          different idea wearing a table.
+          LOW, TYPICAL, HIGH IN THAT ORDER, left to right, and in the span
+          form's own words: those are RangeBracket's default end labels, and its
+          own layout puts the low at the left, the typical between and the high
+          at the right. A reader who has met one meets the other
+          in the same arrangement. */}
+      {/* NO mt HERE. The Rail already carries 8 below it, which is the spacing
+          ladder's slot rung, and adding 4 made the gap 12, a value between two
+          rungs, which is the same fault this loop has now found four times. */}
+      <div data-idea="I8">
+        <table className="w-full table-fixed border-collapse">
+          {/* THE TYPICAL COLUMN IS THE WIDEST OF THE THREE, because it holds the
+              largest type. At four equal-ish columns a 24px figure filled its
+              cell edge to edge and sat about eight pixels from the 14px figure
+              beside it at 375, which is the collision fault class one measurement
+              short of happening. */}
+          <colgroup>
+            <col style={{ width: "30%" }} />
+            <col style={{ width: "21%" }} />
+            <col style={{ width: "28%" }} />
+            <col style={{ width: "21%" }} />
+          </colgroup>
+          <thead>
+            <tr className="border-b border-[var(--c-border)]">
+              {/* the corner cell labels nothing, so it declares nothing */}
+              <th className="pb-2" />
+              <th scope="col" className="pb-2 pl-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Low</th>
+              <th scope="col" className="pb-2 pl-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">Typical</th>
+              <th scope="col" className="pb-2 pl-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">High</th>
+            </tr>
+          </thead>
+          <tbody>
+            {kept.map((r) => (
+              <tr key={r.role} className="border-b border-[var(--c-border)] last:border-b-0">
+                <th scope="row" className="py-2 pr-2 text-left align-baseline text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{r.role}</th>
+                <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-body)] text-[var(--c-ink2)]">
+                  {Number.isFinite(r.low_usd) ? <Fig>{kUsd(r.low_usd)}</Fig> : null}
+                </td>
+                <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-section)] leading-none text-[var(--c-ink)]">
+                  <Fig>{kUsd(r.mid_usd)}</Fig>
+                </td>
+                <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-body)] text-[var(--c-ink2)]">
+                  {Number.isFinite(r.high_usd) ? <Fig>{kUsd(r.high_usd)}</Fig> : null}
+                </td>
+              </tr>
             ))}
-          </div>
-          <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Typical mid pay a year.</div>
-        </>
-      ) : null}
-      {/* the full spread, always visible: track-free range brackets (low tick, high tick, mid dot) */}
-      <div className="mt-3 space-y-3 border-t border-[var(--c-border)] pt-3">
-        {roles.map((r) => {
-          const L = (r.low_usd / max) * 100, W = ((r.high_usd - r.low_usd) / max) * 100, M = (r.mid_usd / max) * 100;
-          /* A ROLE PAID ONE FIGURE IS NOT A ROLE WITH NO FIGURES. The kitchen porter
-             row carries a low and a high that are both 24K, which is a real answer:
-             the job pays one rate. Drawn, it collapsed to a bare dot, and a bare dot
-             is exactly what a row with NO range would look like, so honest data and
-             missing data were the same picture.
-             The two end ticks are already drawn at the same point. They were shorter
-             than the dot that sits on them, so the dot hid them. When the range
-             collapses they stand taller than the dot instead, and the mark reads as a
-             range closed to a point rather than as a bracket that failed to draw. */
-          const flat = W <= 0;
-          return (
-            /* AT PHONE WIDTH THE BRACKET HAD FORTY PIXELS TO LIVE IN, and drew
-               as a dot. The row gave a fixed 120 to the role and 56 to the
-               figure, which on a 320 screen leaves the drawing almost nothing,
-               so the one thing this card exists to show, the spread from lowest
-               to highest pay, was not shown at all on the width most readers
-               use. Caught by photographing it at 320, not by reading the code.
-               Below the breakpoint the bracket now takes its own full-width line
-               under the role and its figure. Above it, nothing moves. */
-            <div key={r.role} className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 gap-y-2 sm:grid-cols-[120px_1fr_56px] sm:items-center sm:gap-3">
-              <span className="min-w-0 truncate text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.role}</span>
-              <Fig className="order-2 text-right text-[length:var(--t-body)] text-[var(--c-ink)] sm:order-3">{kUsd(r.mid_usd)}</Fig>
-              <div className="order-3 col-span-2 relative h-3.5 sm:order-2 sm:col-span-1" role="img" aria-label={`${r.role} ${kUsd(r.low_usd)} to ${kUsd(r.high_usd)}, typically ${kUsd(r.mid_usd)}`}>
-                <div aria-hidden className="absolute top-1/2 h-px -translate-y-1/2" style={{ left: `${L}%`, width: `${W}%`, background: "var(--chart-4)" }} />
-                <div aria-hidden className={`absolute top-1/2 w-px -translate-y-1/2 ${flat ? "h-3.5" : "h-2"}`} style={{ left: `${L}%`, background: "var(--chart-4)" }} />
-                <div aria-hidden className={`absolute top-1/2 w-px -translate-y-1/2 ${flat ? "h-3.5" : "h-2"}`} style={{ left: `calc(${(L + W).toFixed(2)}% - 1px)`, background: "var(--chart-4)" }} />
-                <div aria-hidden className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white" style={{ left: `${M}%`, borderColor: "var(--chart-4)" }} />
-              </div>
-            </div>
-          );
-        })}
-        {/* the shared axis, drawn once, in the bracket's own column */}
-        <div aria-hidden className="grid grid-cols-[1fr_auto] gap-x-3 sm:grid-cols-[120px_1fr_56px] sm:gap-3">
-          <span className="hidden sm:block" />
-          <div className="relative col-span-2 h-4 sm:col-span-1">
-            {ticks.map((v) => {
-              const x = (v / max) * 100;
-              /* A LABEL CENTRED ON A TICK AT EITHER END HANGS HALF OF ITSELF OFF THE
-                 CARD, which is the single most repeated drawing fault in this project
-                 and has its own gate. The outermost labels pin to the inside of the box
-                 instead of centring on their value.
-                 WRITTEN IN THE SAME SHAPE AS EVERY OTHER SCALE HERE, deliberately. The
-                 first version protected both ends correctly using a fraction of the
-                 maximum, which no check could recognise, so a real clamp read to the
-                 gate as an unprotected placement. A protection a check cannot see is
-                 not worth having. */
-              const edge = x > 92 ? "right" : x < 8 ? "left" : "centre";
-              return (
-                <span key={v} className="absolute top-0" style={{ left: `${x}%` }}>
-                  <span className="absolute top-0 h-1.5 w-px" style={{ background: "var(--c-border)" }} />
-                  <span
-                    className={`fig absolute top-2 whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)] ${edge === "left" ? "left-0" : edge === "right" ? "right-0" : "-translate-x-1/2"}`}
-                  >
-                    {tickLabel(v)}
-                  </span>
-                </span>
-              );
-            })}
-          </div>
-          <span className="hidden sm:block" />
-        </div>
-        <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">Bar spans lowest to highest pay a year. Dot is typical.</div>
+          </tbody>
+        </table>
+        {/* THE UNIT, AND THEN THE ONE CAVEAT THE TABLE CANNOT STATE ABOUT
+            ITSELF. The second sentence renders only when a role in this cell
+            actually pays one rate, so a page where every role has a spread is
+            never told about a case it does not contain. */}
+        <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+          Pay a year, for one person in the role.{flat ? " A role that pays one rate shows the same figure three times." : ""}
+        </p>
       </div>
     </Box>
   );
