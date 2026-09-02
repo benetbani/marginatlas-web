@@ -915,6 +915,8 @@ export function LollipopColumn({
   ariaLabel,
   narrowCount,
   accent = true,
+  accentIndex = 0,
+  reference,
   selectedIndex,
   onSelect,
 }: {
@@ -955,6 +957,47 @@ export function LollipopColumn({
    *  are trying to avoid. Such a set passes accent={false} and lets the stem
    *  heights do the work they were drawn for. */
   accent?: boolean;
+  /** WHICH entry the accent marks, when the card's subject is not the leader.
+   *  Defaults to 0, so every set that does not pass it draws exactly what it
+   *  always drew.
+   *
+   *  THE THIRD CASE OF ONE SEAM, AND IT IS THE ONE THE PROP EXISTS FOR. A5
+   *  turned the accent OFF because entry one was the largest COST. A6 and A7
+   *  left it ON because their entry one was the cheapest rent, the good end. A9
+   *  is neither: its ranking is of the trades NEXT DOOR and its subject sits
+   *  fifth, so the leader is a trade the reader did not come for and accenting
+   *  it would put the card's one orange mark on somebody else's answer.
+   *
+   *  IT IS NOT A RULE 29A BREACH TO POINT AT A LOW ENTRY HERE, and the
+   *  distinction is worth keeping. 29A governs a SCALE'S DIRECTION: a burden
+   *  must never be drawn so that worse reads as higher. The set this serves runs
+   *  higher-is-better with nothing inverted, so the direction clause is
+   *  satisfied by construction. What the accent then marks is WHOSE stem it is,
+   *  which is the card's own answer, not a claim that the entry is the best one.
+   *  A caller whose subject IS the worst entry on an inverted scale should still
+   *  pass accent={false}: this prop moves the mark, it does not license it. */
+  accentIndex?: number;
+  /** One drawn line across the whole set at a stated value, with its name in the
+   *  caller's own legend. Omit and nothing is drawn, which is what the three
+   *  sets already shipping do.
+   *
+   *  A6 PREDICTED THIS PROP IN WORDS AND A9 IS WHERE IT LANDS. That row lost the
+   *  city average when its seven rent rails became stems from a true zero, and
+   *  its ledger says the fix "is a reference line on the form, not a return to
+   *  seven rails". A9 has the same shape of loss and cannot absorb it: its whole
+   *  question is whether the subject keeps more or less than the typical trade,
+   *  and the figure that answers it belongs to no entry in the set.
+   *
+   *  IT IS DRAWN BEHIND THE COLUMNS on purpose. A reference near a dot's own
+   *  value will pass within a few pixels of it, and a rule painted OVER a mark
+   *  reads as a correction to that mark rather than as a level it sits under.
+   *  It also carries no label of its own: a label inside the plot has nowhere to
+   *  go, because the tallest stem always occupies the left edge at every height
+   *  and the shortest stems crowd the right. The legend row belongs to the card.
+   *
+   *  The set's ceiling stretches to hold it, so a reference above every entry
+   *  still draws inside the box instead of off the top of it. */
+  reference?: { value: number } | null;
   /** Which entry is picked, when the set is also the page's picker. Indexes the
    *  set the CALLER passed, so it survives the narrow drop. */
   selectedIndex?: number;
@@ -981,8 +1024,8 @@ export function LollipopColumn({
    *  Tinting the whole picked column drew a filled rectangle the full height of
    *  the drawing behind the SHORTEST stem in the set, so the smallest value wore
    *  the largest area, which is a chart contradicting itself.
-   *  The accent never moves: it stays on entry one, which is the ranking's own
-   *  answer, whatever the reader picks. */
+   *  The accent never moves for a pick: it stays wherever `accentIndex` put it,
+   *  which is the card's own answer, whatever the reader clicks. */
   onSelect?: (index: number) => void;
 }) {
   const kept = (rows ?? [])
@@ -1004,7 +1047,13 @@ export function LollipopColumn({
      asking for three would get a set the catalogue says is a tile set, on a
      drawn axis, which is the wrong form rather than a smaller one. */
   const narrowKept = Math.max(4, Math.min(kept.length, narrowCount ?? kept.length));
-  const max = Math.max(...kept.map((r) => r.value));
+  /* THE CEILING HOLDS THE REFERENCE TOO. A line above the tallest entry would
+     otherwise be drawn off the top of the box, which is the one way a reference
+     can be worse than no reference: absent from the picture while named in the
+     legend. */
+  const refValue =
+    reference && Number.isFinite(reference.value) && reference.value > 0 ? reference.value : null;
+  const max = Math.max(...kept.map((r) => r.value), refValue ?? 0);
   /* An all-zero set has nothing to draw and no honest ceiling to draw it
      against, so it self-omits rather than rendering ten bald dots sitting in a
      row on the zero line, which would be the rejected shape exactly. */
@@ -1024,6 +1073,30 @@ export function LollipopColumn({
         aria-hidden
         style={{ position: "absolute", left: 0, right: 0, top: HEAD, height: 1, background: "var(--c-line-strong)" }}
       />
+      {/* THE REFERENCE, dashed so it cannot be mistaken for a value, and at
+          z-index 0 so every dot and stem paints over it. */}
+      {refValue != null ? (
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            /* HALF A DOT ABOVE THE STEM HEIGHT, because a reader compares DOTS
+               and this form draws each dot ABOVE its stem rather than centred
+               on it. Set at the raw stem height the rule lands on the bottom
+               edge of a dot of the same value, so an entry a dollar UNDER the
+               reference has its dot straddling the line and reads as level with
+               it: photographed at 1280 with two $7 dots sitting on an $8 rule.
+               Offset by DOT/2 the rule sits where a dot of that value would be
+               centred, which is the comparison the reader is actually making. */
+            top: HEAD - Math.round((refValue / max) * STEM) - Math.round(DOT / 2),
+            height: 0,
+            borderTop: "1px dashed var(--c-line-strong)",
+            zIndex: 0,
+          }}
+        />
+      ) : null}
       <ol
         aria-label={ariaLabel}
         className="grid"
@@ -1034,6 +1107,8 @@ export function LollipopColumn({
           gridAutoFlow: "column",
           gridAutoColumns: "minmax(0, 1fr)",
           columnGap: 6,
+          position: "relative",
+          zIndex: 1,
         }}
       >
         {kept.map((row, i) => {
@@ -1051,12 +1126,13 @@ export function LollipopColumn({
             >
               <div
                 className="text-[length:var(--t-micro)] leading-none"
-                /* THE LEADER TAKES THE ACCENT, on its dot and on its own
-                   figure, and that pair is the whole of the colour here. A set
-                   that has yielded its accent draws every figure in ink2 and
-                   every dot in ink, and the stem heights carry the reading
-                   alone, which is what they were drawn to do. */
-                style={{ marginBottom: 4, color: accent && i === 0 ? "var(--terra-text)" : "var(--c-ink2)" }}
+                /* THE MARKED ENTRY TAKES THE ACCENT, on its dot and on its own
+                   figure, and that pair is the whole of the colour here. It is
+                   the leader unless the caller names another. A set that has
+                   yielded its accent draws every figure in ink2 and every dot
+                   in ink, and the stem heights carry the reading alone, which
+                   is what they were drawn to do. */
+                style={{ marginBottom: 4, color: accent && i === accentIndex ? "var(--terra-text)" : "var(--c-ink2)" }}
               >
                 <Fig>{format(row.value)}</Fig>
               </div>
@@ -1066,7 +1142,7 @@ export function LollipopColumn({
                   width: DOT,
                   height: DOT,
                   borderRadius: "50%",
-                  background: accent && i === 0 ? "var(--terra)" : "var(--c-ink)",
+                  background: accent && i === accentIndex ? "var(--terra)" : "var(--c-ink)",
                 }}
               />
               {/* The stem stays thin on purpose: thicken it and the set becomes

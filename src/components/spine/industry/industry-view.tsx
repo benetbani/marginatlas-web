@@ -29,6 +29,7 @@ import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, GREY_RAMP, usd, SampleTag, Band } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
+import { LollipopColumn } from "@/components/spine/forms-v2";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { WherePaysExplorer } from "./where-pays";
 import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
@@ -99,90 +100,124 @@ function Masthead({ d }: { d: any }) {
 
 
 /* ============================================================
- * BENCHMARK , the "vs the neighbours" USP, proving $7 is low (moved up, top 20%)
- * decision: is $7 actually low? Number: restaurants vs the food trades next door.
- * focal: the lollipop dots on one shared $ scale, the self trade lit.
- * width: Full (T1), a ranked distribution; rows render UNLINKED (plain spans) until
- *   those trade pages exist , no dead hrefs (real links only).
- * terracotta: the self dot only.
- * idiom: dots on one shared $ scale, NO filled track (the July-3 lollipop, de-barred
- *   per rulebook v1 §25 bar rationing). Slate = modeled atlas trades only. */
+ * BENCHMARK (queue row A9) , the "vs the neighbours" USP, proving $7 is low.
+ * decision: is $7 actually low? Number: this trade against the trades next door.
+ * focal: the drawing , seven stems from one drawn zero, the subject's dot lit,
+ *   the all-trades average as one dashed rule across the set.
+ * width: the large side of a band; it earns it by the column count (see below).
+ * terracotta: the subject's dot and figure, and nothing else.
+ *
+ * WHAT THIS REPLACED, AND WHY IT WAS THE WRONG DRAWING RATHER THAN A REPEATED ONE.
+ * Eight hand-rolled horizontal tracks with a dot on each, stacked, carrying no
+ * data-idea: the founder's own 2026-09-01 complaint in a single card, and eight
+ * of the eleven undeclared drawings on this whole page. A dot ON a rail says
+ * "somewhere between these two ends", and the two ends here were never named:
+ * the left end was zero and the right end was 1.12 times the largest entry, a
+ * ceiling nobody stated and no reader could infer. Height above a drawn zero
+ * says "this much", which is the sentence the card is actually making.
+ * The reference moved with it. It used to be a vertical tick on its OWN eighth
+ * rail under a divider, so a reader had to compare a mark on one rail against
+ * dots on seven others; it is one dashed rule across the whole set now, and the
+ * four stems above it and three below are the reading. */
 export function Benchmark({ d }: { d: any }) {
   const b = d.benchmark ?? {};
   const trades: any[] = (b.trades ?? []).slice().sort((a: any, c: any) => c.keeps_per_100 - a.keeps_per_100);
   if (!trades.length) return null;
-  // The broad all-trades average lands as a DRAWN reference tick on the same shared $ scale
-  // (never a prose sentence): the food dots cluster low and the tick sits visibly right of
-  // them, so the gap to the whole-universe average is read, not told. The domain stretches
-  // to include the tick so it never falls off the axis.
   const avg: number | null = typeof b.all_trades_avg === "number" ? b.all_trades_avg : null;
-  const max = Math.max(...trades.map((t) => t.keeps_per_100), avg ?? 0) * 1.12;
+  /* THE ACCENT GOES ON THE SUBJECT, NOT ON THE LEADER, and the form takes an
+     index for it rather than this card drawing its own mark. The leader here is
+     a trade the reader did not come for; the card's answer is where THEIRS
+     lands. With no self row the index falls back to entry one, where the leader
+     is the answer and the form's default is right. */
+  const selfIdx = trades.findIndex((t: any) => !!t.self);
+  const self = selfIdx >= 0 ? trades[selfIdx] : null;
+  /* THE FINDING IS TWO COUNTS, WHICH IS WHAT THE DRAWING SHOWS AND DOES NOT
+     SAY. Every figure in this card is printed exactly once: the seven keeps
+     ride their own dots, the average rides the legend, and this sentence names
+     none of them.
+     THE SECOND CLAUSE EXISTS BECAUSE OF THE PHONE. Below `lg` the set drops to
+     the four columns this card's width can hold at the 12px read floor, and
+     the subject is fifth, so a phone reader sees neither the terracotta dot nor
+     the stem sitting under the dashed rule. The sentence renders at EVERY
+     width and carries both facts in words, which is the escape A6 took when its
+     own tail dropped: the fact a reader loses from the drawing has to be
+     within reach, and here it is one line above it. */
+  const neighbours = trades.length - 1;
+  const beat = self ? trades.filter((t: any) => !t.self && t.keeps_per_100 > self.keeps_per_100).length : 0;
+  const word = (n: number) => COUNT_WORD[n] ?? `${n}`;
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const vsAvg =
+    self && avg != null
+      ? avg > self.keeps_per_100
+        ? " The atlas average is higher too."
+        : avg < self.keeps_per_100
+          ? " The atlas average is lower."
+          : ""
+      : "";
+  const finding = self
+    ? (beat === 0
+        ? `Nothing next door keeps more.`
+        : `${cap(word(beat))} of the ${word(neighbours)} trades next door ${beat === 1 ? "keeps" : "keep"} more.`) + vsAvg
+    : `${trades[0].name} keeps the most.`;
   return (
     <Full>
       <Box id="kept">
         <Rail icon="benchmark" kicker="Kept per $100, by trade" verdict={b.verdict} sample />
-        <div className="space-y-1.5">
-          {trades.map((t) => {
-            const pos = (t.keeps_per_100 / max) * 100;
-            const self = !!t.self;
-            return (
-              /* THREE FAULTS ON ONE ROW.
-                 THE NAME WAS CUT AND THE REST HIDDEN BEHIND A HOVER. It was
-                 clipped to a fixed 110 pixels with the full text moved into a
-                 tooltip, which is not a carrier on a phone at all: there is no
-                 hover on a touch screen, so the end of a trade name simply did
-                 not exist for the reader most likely to be holding one. It wraps
-                 now, and the tooltip is gone with the need for it.
-                 THE SCALE HAD FIFTY-EIGHT PIXELS ON A PHONE. A fixed 110 for the
-                 name and 40 for the figure leaves the drawing almost nothing on a
-                 320 screen. Below the breakpoint the scale takes its own
-                 full-width line under the name and its figure, the same shape the
-                 pay brackets now use.
-                 THE DOT WAS A WARM GREY. #9a938e is warmer in red than in blue,
-                 on a palette whose rule is terracotta plus STRICTLY COOL
-                 neutrals. Replaced by the cool neutral of the same weight, which
-                 is also a token rather than a literal. */
-              <div key={t.slug} className="-mx-2 grid grid-cols-[1fr_auto] items-baseline gap-x-3 gap-y-2 rounded-md px-2 py-1.5 sm:grid-cols-[minmax(0,110px)_1fr_40px] sm:items-center sm:gap-3">
-                <span className={`min-w-0 leading-tight text-[length:var(--t-body)] ${self ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{t.name}</span>
-                <Fig className={`order-2 text-right text-[length:var(--t-body)] sm:order-3 ${self ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>${t.keeps_per_100}</Fig>
-                <div className="relative order-3 col-span-2 h-3 min-w-0 sm:order-2 sm:col-span-1" role="img" aria-label={`${t.name} keeps $${t.keeps_per_100} per $100`}>
-                  <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "var(--c-border)" }} />
-                  <span className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: self ? TERRA : "var(--chart-4)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-                </div>
-              </div>
-            );
-          })}
-          {/* the all-trades average as a drawn reference tick on the SAME scale (a vertical
-              rule, not a filled dot, so it never reads as one of the food trades). */}
+        {/* THE HEAD, one baseline carrying two objects: what the ranking is
+            ordered by at the left, what it found at the right.
+            THEY STACK BELOW `lg` RATHER THAN BELOW `sm`, and the breakpoint was
+            measured rather than copied from A7. Side by side they need about
+            560px: the label is 250 and the finding is two sentences. This card
+            has 584 at 1280 and 312 at the two-up md width, so a shared row
+            anywhere below lg squeezes the finding to a column of two-word lines
+            beside a block of capitals. Stacked, the label reads as a column head
+            over the sentence, which is what it is. */}
+        <div className="mb-4 flex flex-col gap-2 border-t border-[var(--c-border)] pt-2 lg:flex-row lg:items-baseline lg:justify-between lg:gap-4">
+          <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] lg:whitespace-nowrap">Ranked by what the owner keeps</span>
+          <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{finding}</span>
+        </div>
+        <LollipopColumn
+          rows={trades.map((t: any) => ({ name: t.name, value: t.keeps_per_100 }))}
+          format={(n) => `$${n}`}
+          accentIndex={selfIdx >= 0 ? selfIdx : 0}
+          reference={avg != null ? { value: avg } : null}
+          narrowCount={4}
+          ariaLabel={`Trades ranked by what the owner keeps of every $100 of sales, most first${avg != null ? `, against an all-trades average of $${avg}` : ""}`}
+        />
+        {/* THE FOOT, one baseline: the reference's own legend at the left, the
+            disclosure at the right when the seed carries the sentences for it.
+            The legend is where the dashed rule is named, because inside the plot
+            there is nowhere to put it: the tallest stem holds the left edge at
+            every height and the shortest stems crowd the right. */}
+        <div className="mt-4 flex flex-col gap-2 border-t border-[var(--c-border)] pt-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
           {avg != null ? (
-            <div className="-mx-2 mt-1 grid grid-cols-[1fr_auto] items-baseline gap-x-3 gap-y-2 rounded-md border-t border-[var(--c-border)] px-2 pt-2.5 sm:grid-cols-[minmax(0,110px)_1fr_40px] sm:items-center sm:gap-3">
-              {/* the reference is the WHOLE atlas (not just these four food trades), so it
-                  is labeled "incl. non-food": that is why the tick can sit right of every
-                  food dot without reading as "the average of its own parts". */}
-              <span className="flex min-w-0 flex-col leading-tight text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
-                <span className="font-semibold">All trades</span>
-                <span className="font-normal normal-case tracking-normal opacity-80">incl. non-food</span>
-              </span>
-              <Fig className="order-2 text-right text-[length:var(--t-body)] text-[var(--c-muted)] sm:order-3">${avg}</Fig>
-              <div className="relative order-3 col-span-2 h-3.5 sm:order-2 sm:col-span-1" role="img" aria-label={`All trades average, including non-food trades, keeps $${avg} per $100`}>
-                <div className="absolute top-1/2 h-px w-full -translate-y-1/2" style={{ background: "var(--c-border)" }} />
-                <div className="absolute top-0 h-3.5 w-px -translate-x-1/2" style={{ left: `${(avg / max) * 100}%`, background: "var(--chart-4)" }} />
+            <span className="inline-flex items-center gap-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+              {/* THE REFERENCE IS EVERY TRADE IN THE ATLAS, NOT EVERY FOOD TRADE,
+                  and that is why the rule can sit above most of the set without
+                  reading as the average of its own parts. It used to say "incl.
+                  non-food", which is true on a restaurant page and false on every
+                  page that is not about food: rule 21, a section has to hold in
+                  Dhaka and Lagos as well as in London. */}
+              <span aria-hidden className="inline-block w-4 border-t border-dashed border-[var(--c-line-strong)]" />
+              Every trade in the atlas, <Fig className="text-[var(--c-ink2)]">${avg}</Fig>
+            </span>
+          ) : null}
+          {trades.some((t: any) => t.why) ? (
+            <InlineDisclosure name="bench" summary="Why each neighbour keeps what it keeps" className="group">
+              <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+                {trades.map((t: any) => (
+                  <div key={t.slug} className="grid grid-cols-[110px_1fr] items-baseline gap-3 py-2">
+                    {/* NO FIGURE HERE. It rides its own dot four lines above, and
+                        a card that prints one quantity twice is asking a reader
+                        which of the two to believe. */}
+                    <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.name}</span>
+                    <span className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{t.why}</span>
+                  </div>
+                ))}
               </div>
-            </div>
+            </InlineDisclosure>
           ) : null}
         </div>
-        {trades.some((t) => t.why) ? (
-          <InlineDisclosure name="bench" summary="Why each neighbour keeps what it keeps">
-            <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
-              {trades.map((t) => (
-                <div key={t.slug} className="grid grid-cols-[110px_1fr] items-baseline gap-3 py-2">
-                  <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.name} <Fig className="text-[var(--c-muted)]">${t.keeps_per_100}</Fig></span>
-                  <span className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{t.why}</span>
-                </div>
-              ))}
-            </div>
-          </InlineDisclosure>
-        ) : null}
       </Box>
     </Full>
   );
