@@ -240,7 +240,7 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
         />
       );
     case "deals-and-regimes":
-      return isR ? <DealsAndRegimes rows={r.deals} /> : null;
+      return isR ? <DealsAndRegimes rows={r.deals} localHourlyPay={r.localHourlyPay} /> : null;
     case "town-hall":
       return isR ? <TownHall cleanliness={r.townHall.cleanliness} scale={r.townHall.scale} /> : null;
     default:

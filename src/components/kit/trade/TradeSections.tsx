@@ -100,7 +100,7 @@ import * as React from "react";
    to the cap of two rather than one over it. SpectraTable stays because
    who-walks-in is the one legitimate track on this page: three positions between
    two named poles, which is the reading the form exists for. */
-import { Box, Rail, Fig, KV, Meter, SpectraTable, Expand, cap } from "@/components/spine/kit";
+import { Box, Rail, Fig, KV, Meter, SpectraTable, InlineDisclosure, cap } from "@/components/spine/kit";
 /* THE CATALOGUE'S OWN VOCABULARY, WHICH THIS FILE COULD NOT REACH UNTIL NOW.
    Every section below was written against a kit that exported three drawings,
    all three of them horizontal tracks, which is the whole mechanism behind the
@@ -1589,8 +1589,10 @@ export function WhatGoesWrong({
 /* 9. DEALS AND SPECIAL REGIMES                                        */
 /* ================================================================== */
 /**
- * FORM: Expand, the founder's own ratified expandable row from the legal-form
- * table. Name and worth visible collapsed, the explanation behind the click.
+ * FORM: a plain three-column table (I8), with the terms behind one disclosure.
+ * Every name and every worth is visible; only the explanation is behind a click.
+ * IT WAS a per-row `Expand`, the founder's own ratified expandable row from the
+ * legal-form table, and B4 below says why that had to yield.
  *
  * His words, and the reason this one is worth building: "Government subsidies
  * in social contributions, deals for special sectors, special economic zones or
@@ -1617,6 +1619,62 @@ export function WhatGoesWrong({
  * NOTHING RENDERS WITHOUT A SOURCE. A scheme is a legal fact with a name and a
  * rate; inventing one would be the single most damaging fabrication on the
  * site, because a reader might act on it.
+ *
+ * ============ B4, 2026-09-02, THE SUBSECTION QUEUE ========================
+ *
+ * WARRANT (step 1). A visitor reads this to decide WHETHER THERE IS MONEY HERE
+ * WORTH THE PAPERWORK, and which of their costs a relief actually lands on.
+ * Without it they would budget the full rate on premises and payroll and never
+ * learn that a relief exists, which is money left on the table every year and
+ * invisible from outside. NOT A DUPLICATE: no other card in either trade column
+ * states a relief, a subsidy or a special regime.
+ *
+ * THE QUEUE PREDICTED OptionCards AND IT IS REFUSED, ON THE SEMANTICS, and this
+ * is the row's finding. Step zero rendered OptionCards in every state its
+ * reading reaches and measured its craft claim clean at 0.00px, so the form is
+ * not at fault; it is simply not this card's form.
+ *   THESE SCHEMES ADD. The card's own answer is their SUM and the code sums
+ *   them: a trade claims every one it qualifies for. A choice is a set of
+ *   answers to ONE question, of which the reader takes exactly one, which is
+ *   what the form's entry says in as many words ("a sole trader is not a worse
+ *   limited company; it is a different answer to the same question"). Drawing
+ *   two entitlements as a choice tells a reader to pick one of two reliefs they
+ *   can both have. That is not a style error, it costs them money.
+ *   ITS "USUAL CHOICE" BADGE CANNOT BE USED AT ALL here, which is the same fact
+ *   read off the form's own parts: there is no usual scheme, only the ones you
+ *   qualify for. B8, registering by legal form, is the row OptionCards is for,
+ *   because a legal form is genuinely exclusive.
+ *
+ * SO THE INFORMATION IS ENTITIES ACROSS SEVERAL METRICS: each scheme has a name,
+ * a worth, and what that worth is in the reader's own labour. The index sends
+ * that to a plain table, and the catalogue calls the three-column table "the
+ * founder's best-executed element". It is ALSO B1's table one band up, meaning
+ * the same thing at the same widths, which is step 9's predictability rather
+ * than a repetition of it.
+ *
+ * EVERY DRAWN FORM WAS COUNTED FIRST AND EVERY ONE IS UNAVAILABLE OR WRONG, which
+ * is A8's own path through step 3. Measured on the render, per trade column:
+ * I1 2 of 2 AT CAP, so no track. I2 LollipopColumn has a floor of four entries
+ * and there are two, so it renders nothing. I3 StackBar is free and the parts do
+ * sum, and it is refused on ADJACENCY: this card's band partner is the town hall,
+ * whose Meter draws a horizontal bar, so a stacked bar beside it puts two
+ * horizontal bars in one band, which is A10's own argument and the founder's
+ * 2026-09-01 complaint arriving from a new direction. I4 is free and these are
+ * not an ordered sequence. I7 has nothing to clear. I11 RankedTiles is 2 of 2 AT
+ * CAP and the order is not the reading anyway. I12 is not a range.
+ *
+ * AND ONE FAULT THAT FORCED A FORM WHATEVER ELSE WAS DECIDED: the worth used to
+ * ride an `Expand`, and `Expand` is filed under Chrome, "free; never counts,
+ * never carries data alone". The only copy of every figure in this card sat on a
+ * chrome element, where no catalogue and no budget could see it. It also
+ * stranded: photographed at 693px, each scheme's name ended about 150px in and
+ * its money began about 400px later, which is A1's "pairs marooned across a gap"
+ * in a different card. A table's columns divide the width by construction, so
+ * the stranding cannot come back at any width.
+ *
+ * THE TERMS STAY, BEHIND ONE CLICK, because they are the founder's own reason for
+ * the section ("tiny details that matter") and K6 allows exactly this: words move
+ * out of the first view, figures never do. Every worth is in the table.
  */
 export interface RegimeRow {
   /** The scheme's own name, as the law calls it. */
@@ -1637,15 +1695,24 @@ const CUT_NOUN: Record<"staff" | "profit" | "premises", string> = {
 
 export function DealsAndRegimes({
   rows,
+  localHourlyPay,
   currency = "$",
 }: {
   rows: RegimeRow[] | null;
+  /** THE UNIVERSAL YARDSTICK, and this card had none. Rule 21: "$4,300 a year"
+   *  is meaningless in Tirana and "about two months of local pay" is not. It is
+   *  the third column, exactly as it is in B1's price table one band up. Absent,
+   *  the column does not draw and the table is two columns wide. */
+  localHourlyPay?: number | null;
   currency?: string;
 }) {
   const held = rows ?? [];
   if (held.length === 0) return null;
   const priced = held.filter((r) => r.worth != null);
   const total = priced.length === held.length ? priced.reduce((a, r) => a + (r.worth as number), 0) : null;
+  /* THE YARDSTICK COLUMN DRAWS ONLY WHERE A WAGE IS HELD, which is B1's own
+     `showYard` guard reused rather than rediscovered. */
+  const showYard = localPayUnit(1, localHourlyPay) != null && priced.length > 0;
 
   /* THE CONSEQUENCE SAYS WHAT THEY BITE ON, because two schemes worth the same
      money are different businesses if one cuts payroll and the other cuts rent.
@@ -1673,29 +1740,109 @@ export function DealsAndRegimes({
       icon="free-zone"
       accent={total != null}
       answer={total != null ? <Fig>{money(total, currency)}</Fig> : `${cap(wordFor(held.length))} ${held.length === 1 ? "scheme" : "schemes"}.`}
+      {...(total == null ? { answerKind: "words" as const } : {})}
       answerNote={
         total != null
-          ? "What they are worth to this trade in a year, together."
-          : "What each is worth depends on a payroll this page does not know, so the count leads and the terms sit behind each row."
+          ? held.length === 1
+            ? /* A ONE-ROW TABLE MADE A PRE-EXISTING COPY FAULT VISIBLE: "what
+                 THEY are worth, TOGETHER" of a single scheme. The consequence
+                 was already singular-aware and the note was not. */
+              "What it is worth to this trade in a year."
+            : "What they are worth to this trade in a year, together."
+          : "What each is worth depends on a payroll this page does not know, so the count leads and the terms sit behind the table."
       }
       consequence={consequence}
     >
-      <div className="space-y-2">
-        {held.map((r) => (
-          <Expand
-            key={r.name}
-            name="trade-regimes"
-            title={r.name}
-            right={
-              r.worth != null ? (
-                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{money(r.worth, currency)} a year</Fig>
-              ) : null
-            }
-          >
-            {r.detail}
-          </Expand>
-        ))}
-      </div>
+      {/* THE COLUMN SPLIT IS DECLARED, NOT LEFT TO THE CONTENT, which is B1's own
+          finding on this surface: left to itself a table hands the widest column
+          to the muted support and starves the name. A scheme's name is the
+          longest thing here by a distance ("Employment allowance for small
+          employers" is a real name shape), so it takes the half and the two
+          figure columns divide the rest. */}
+      {/* THE DECLARATION LANDS WITH THE FIX, which is the wave-C rule applied
+          to a card that was hiding its figures on chrome. B1's price table one
+          band up carries the same tag meaning the same thing. */}
+      <table data-idea="I8" className="w-full border-collapse">
+        <colgroup>
+          {/* B1'S OWN 46/22/32, MEASURED THERE AND REUSED HERE RATHER THAN
+              GUESSED AGAIN. A first cut gave the name 50% and the yardstick 28,
+              and at 327px that is an 86px column where "OF LOCAL PAY" broke to
+              THREE lines and left a ragged block of capitals floating above two
+              bottom-aligned heads. At 32% the column is 98px and the head takes
+              two lines, which is exactly what it does one band up. */}
+          <col className={showYard ? "w-[46%]" : "w-[70%]"} />
+          <col className={showYard ? "w-[22%]" : "w-[30%]"} />
+          {showYard ? <col className="w-[32%]" /> : null}
+        </colgroup>
+        <thead>
+          {/* BOTTOM-ALIGNED, B1's rule, kept for the same reason: a longer unit
+              in another currency brings the two-line head straight back, and
+              top-aligned half-heads interleave into one scrambled line. */}
+          <tr className="border-b border-[var(--c-border)]">
+            <th scope="col" className="py-1.5 align-bottom text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+              Scheme
+            </th>
+            <th scope="col" className="py-1.5 align-bottom text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+              A year
+            </th>
+            {showYard ? (
+              <th scope="col" className="py-1.5 pl-2 align-bottom text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
+                Of local pay
+              </th>
+            ) : null}
+          </tr>
+        </thead>
+        <tbody>
+          {held.map((r) => (
+            <tr key={r.name} className="border-b border-[var(--c-border)] last:border-0">
+              <td className="py-2 text-[length:var(--t-body)] text-[var(--c-ink)]">{r.name}</td>
+              {/* AN UNPRICED SCHEME SAYS SO, IN THE SPACE ITS FIGURES WOULD HAVE
+                  TAKEN. A blank cell reads as an oversight and a dash reads as a
+                  value; the row exists because the scheme exists and the money is
+                  the part nobody holds. The words are the TYPE'S own ("null where
+                  that is not knowable") and nothing more, because a cell claiming
+                  WHY it is not knowable would be inventing a reason: a relief can
+                  turn on a payroll, a turnover or a floor area, and this row
+                  carries no field saying which.
+                  IT SPANS BOTH FIGURE COLUMNS, which is not a nicety: at 327px the
+                  money column is 67px and the phrase is about 78, so on its own it
+                  would break across two lines in a table where every other cell is
+                  one. Spanning gives it 165px and one line. */}
+              {r.worth != null ? (
+                <td className="fig whitespace-nowrap py-2 text-right text-[length:var(--t-body)] tabular-nums text-[var(--c-ink)]">
+                  {money(r.worth, currency)}
+                </td>
+              ) : (
+                <td
+                  colSpan={showYard ? 2 : 1}
+                  className="py-2 text-right text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]"
+                >
+                  Not knowable
+                </td>
+              )}
+              {showYard && r.worth != null ? (
+                <td className="py-2 pl-2 text-right text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">
+                  {localPayUnit(r.worth, localHourlyPay)}
+                </td>
+              ) : null}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {/* THE TINY DETAILS, WORDS ONLY, ONE CLICK. They were a per-row Expand,
+          which is chrome, and the chrome was carrying every figure in the card.
+          The figures are in the table now and only the prose is behind the
+          click, which is exactly what K6 permits a disclosure to hold. */}
+      <InlineDisclosure name="trade-regimes" className="group mt-4" summary="What each of these actually says">
+        <div className="mt-2 space-y-2.5">
+          {held.map((r) => (
+            <p key={r.name} className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">
+              <span className="font-semibold text-[var(--c-ink)]">{r.name}. </span>
+              {r.detail}
+            </p>
+          ))}
+        </div>
+      </InlineDisclosure>
     </Section>
   );
 }

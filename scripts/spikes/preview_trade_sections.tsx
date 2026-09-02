@@ -281,7 +281,7 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
         />
       );
     case "deals-and-regimes":
-      return isR ? <DealsAndRegimes rows={r.deals} /> : null;
+      return isR ? <DealsAndRegimes rows={r.deals} localHourlyPay={r.localHourlyPay} /> : null;
     case "town-hall":
       return isR ? <TownHall cleanliness={r.townHall.cleanliness} scale={r.townHall.scale} /> : null;
     default:
@@ -350,7 +350,7 @@ const BANDS: Array<{ ids: TradeSectionId[]; split: "2-1" | "1-1" | "1-2" | "2-3"
   { ids: ["typical-setup", "what-things-cost"], split: "2-1" },
   { ids: ["can-you-hire", "who-walks-in"], split: "1-2" },
   { ids: ["tipping", "public-space"], split: "2-3" },
-  { ids: ["deals-and-regimes", "town-hall"], split: "2-1" },
+  { ids: ["deals-and-regimes", "town-hall"], split: "1-1" },
   { ids: ["what-goes-wrong"], split: "2-1" },
 ];
 
