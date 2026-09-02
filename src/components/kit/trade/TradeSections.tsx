@@ -105,7 +105,7 @@ import { Box, Rail, Fig, KV, Meter, SpectraTable, Expand, cap } from "@/componen
    horizontal bar with the points in between"). forms-v2.tsx holds the eight
    replacements; sections migrate onto them one at a time, each with its own
    photograph and its own commit. */
-import { RankedTiles } from "@/components/spine/forms-v2";
+import { RankedTiles, StepLadder } from "@/components/spine/forms-v2";
 
 /* ------------------------------------------------------------------ */
 /* Shared                                                              */
@@ -871,11 +871,36 @@ export function PublicSpaceCost({
  * axis, and it says in a reader's own language what a stem height would have
  * said in an invented one.
  *
- * THE SKILL BAND STAYS AS IT WAS: a discrete four-step read, NOT a meter. A
- * continuous marker claims 2.7 means something. Skill level is a category: you
- * can train them in a week, or you cannot (FORM-CATALOG, PriceTierBand). A3
- * replaces it with the vertical StepLadder, whose rungs each carry their own
- * words, and that is a different subsection's photograph.
+ * THE SKILL READING IS A LADDER NOW (A3, 2026-09-02), and it was four boxes in a
+ * row until then. It was never a meter and must never become one: a continuous
+ * marker claims 2.7 means something, and skill level is a category, you can
+ * train them in a week or you cannot. What changed is that the four boxes were
+ * `grid-cols-4` with no responsive variant, so at 375 they held three-line
+ * labels and one of them broke "Train in a season" across three lines with the
+ * article stranded alone on the second. The catalogue's StepLadder (idea I4) is
+ * VERTICAL, so the defect goes by construction rather than by a breakpoint, and
+ * every rung gains room for its own words.
+ *
+ * THE NUMERALS WENT WITH THE BOXES, on the catalogue's own instruction: "DO NOT
+ * number the rungs." A reader learns nothing from a "3" in a box, and the boxed
+ * numeral was the largest thing in the lower half of this card while saying the
+ * least. What replaces it as the mark is the FILLED marker on the connector.
+ *
+ * THE LADDER YIELDS THE ACCENT, and that is the one composition decision this
+ * card forced back into the form library. Two forms now share this box, and each
+ * rations its own accent, so together they would put two orange marks in one
+ * card, which step 8 calls a card with no answer. The standing keeps it, because
+ * the standing's leader IS the card's answer restated; the ladder marks its
+ * reached rung by filling the marker in ink instead. `accent={false}` says so at
+ * the call site rather than in a comment.
+ *
+ * EVERY RUNG CARRIES ITS OWN CONSEQUENCE, AND THE CARD'S FOOT LOST ONE. The four
+ * long sentences that used to print under the card, one per level, now sit on
+ * their own rungs in short form, which is the whole reason the catalogue draws
+ * the rungs a reader is NOT on: someone at "trained elsewhere" now learns what
+ * "train in a week" would have meant. Keeping the long sentence in the foot as
+ * well would have printed the reached rung's meaning twice in one card, which is
+ * the repeated-title fault a photograph already caught on this exact card once.
  *
  * THE ANSWER is the BINDING CONSTRAINT, named. The hardest role is what will
  * delay an opening, so the hardest role IS the answer, with the time it takes to
@@ -899,30 +924,16 @@ export function PublicSpaceCost({
  * modelled rather than counted, and a modelled figure without the tag is a lie
  * the reader cannot see (step 8).
  *
- * THE ACTIVE SKILL STEP READS IN INK, NOT TERRACOTTA, and that is a change from
- * what was here. A terracotta fill on the active step put the card's only accent
- * on its EVIDENCE while its answer sat in ink, which is the hierarchy upside
- * down. A darker border, a soft fill and an ink figure mark the step just as
- * unmistakably without spending an accent this card is not entitled to.
- *
- * THE CONSEQUENCE is what the level MEANS in time and money, which four numbered
- * boxes never said. Level 3 is not a number, it is "trained elsewhere, so expect
- * to hire rather than train".
+ * WHAT A RUNG SAYS IS TIME AND MONEY, never a restated number. Level 3 is not a
+ * "3", it is "hire rather than train, and pay what the market asks", and that is
+ * the sentence a reader acts on.
  */
-const SKILL_STEPS = [
-  { n: 1, label: "Train in a week" },
-  { n: 2, label: "Train in a season" },
-  { n: 3, label: "Trained elsewhere" },
-  { n: 4, label: "Licensed or certified" },
+const SKILL_STEPS: Array<{ name: string; meaning: string }> = [
+  { name: "Train in a week", meaning: "A gap in the rota costs a week, not a season." },
+  { name: "Train in a season", meaning: "A new hire earns their wage after a season of it." },
+  { name: "Trained elsewhere", meaning: "Hire rather than train, at what the market asks." },
+  { name: "Licensed or certified", meaning: "You hire a licence, and it leaves when they do." },
 ];
-
-/** THE CONSEQUENCE, one line per step. Time and money, never a restated number. */
-const SKILL_MEANS: Record<1 | 2 | 3 | 4, string> = {
-  1: "You can train someone yourself in a week, so a gap in the rota costs a week rather than a season.",
-  2: "You can train them yourself, but a new hire only earns their wage after a season of it.",
-  3: "They are trained somewhere else, so expect to hire rather than train, and to pay what the market asks.",
-  4: "The certificate belongs to the person and not to the business, so you are hiring a licence and waiting on whoever holds one.",
-};
 
 /** [role, 0-100 where high = easy to find, word, optional time to fill]. Already inverted. */
 export type HireRole = [string, number, string, string?];
@@ -959,7 +970,7 @@ export function PeopleYouNeed({
       <span style={{ color: "var(--c-ink2)" }}>{cap(hardest[3] ?? `${hardest[2]} to find`)}.</span>
     </>
   ) : (
-    <>{step?.label}.</>
+    <>{step?.name}.</>
   );
 
   return (
@@ -968,10 +979,10 @@ export function PeopleYouNeed({
       kicker="Can you find the people"
       icon="hiring"
       sample
+      lean
       answer={answer}
       answerKind="words"
       answerNote={hardest ? "The hardest role to fill, which is what will delay an opening." : undefined}
-      consequence={level != null ? SKILL_MEANS[level] : null}
       next={next}
     >
       {/* THE ANSWER SAYS HOW LONG, THE ROW SAYS HOW HARD, so the two never print
@@ -989,45 +1000,23 @@ export function PeopleYouNeed({
       {step ? (
         <div className={ranked.length > 0 ? "mt-5" : ""}>
           {/* THE SUBHEAD IS THE SAME QUIET MICRO-CAPS TypicalSetup USES over its
-              families. Two subjects in one card need a named seam, or the four
-              boxes read as a second, unexplained scale. */}
+              families. Two subjects in one card need a named seam, or the ladder
+              reads as a second, unexplained scale hanging off the standing. It
+              carries the subsection's own title, so the reader is told what the
+              second reading measures before they read a rung of it. */}
           <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
             How skilled they must be
           </div>
-          <div className="grid grid-cols-4 gap-1.5">
-            {SKILL_STEPS.map((s) => {
-              const active = s.n === level;
-              return (
-                <div
-                  key={s.n}
-                  aria-current={active ? "step" : undefined}
-                  className={
-                    "rounded-md border px-2 py-2 text-center " +
-                    (active
-                      ? "border-[var(--c-line-strong)] bg-[var(--c-soft2)]"
-                      : "border-[var(--c-border)]")
-                  }
-                >
-                  <div
-                    className={
-                      "fig text-[length:var(--t-lead)] tabular-nums " +
-                      (active ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]")
-                    }
-                  >
-                    {s.n}
-                  </div>
-                  <div
-                    className={
-                      "mt-0.5 text-[length:var(--t-micro)] leading-tight " +
-                      (active ? "text-[var(--c-ink2)]" : "text-[var(--c-muted)]")
-                    }
-                  >
-                    {s.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* THE LADDER RUNS HARDEST-RUNG-FIRST WITHOUT BEING TOLD TO: the form
+              reverses for the drawing and `reached` keeps counting from the
+              lowest, which is the order this file has always written the steps
+              in and the order a reader would climb them. */}
+          <StepLadder
+            steps={SKILL_STEPS.map((s) => ({ name: s.name, meaning: s.meaning }))}
+            reached={level}
+            accent={false}
+            ariaLabel="How skilled the people must be"
+          />
         </div>
       ) : null}
     </Section>

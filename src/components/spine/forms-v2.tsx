@@ -99,6 +99,16 @@
  * ClearanceRing; and in the two silent forms and in RangeBracket, an accent
  * the caller has to ask for, because those three are the ones a section is
  * likeliest to place beside a figure that has already claimed the box's orange.
+ *
+ * ONE FORM PER CARD IS THE ASSUMPTION UNDER ALL OF THAT, and the trade page
+ * broke it on 2026-09-02: the people card carries a standing AND a ladder,
+ * because "can I staff this" is one question asked two ways. Two forms that each
+ * ration their own accent still put two accents in one box, and step 8 of the
+ * subsection procedure says a section with two accented things has no answer. So
+ * StepLadder took an `accent` prop that DEFAULTS ON and is turned off by the
+ * second form in a shared card. Any form that later joins another inside one box
+ * needs the same escape, and the rule for which one yields is not taste: the
+ * accent stays with the drawing that carries the card's own answer.
  */
 import * as React from "react";
 
@@ -1076,6 +1086,7 @@ export type LadderRung = {
 export function StepLadder({
   steps,
   reached,
+  accent = true,
   ariaLabel,
 }: {
   /** The rungs IN CLIMBING ORDER, lowest first, which is the order anyone
@@ -1086,6 +1097,25 @@ export function StepLadder({
   /** Which rung this subject is on, counting from 1 AT THE LOWEST, in the same
    *  order the caller passed. Null renders nothing. */
   reached?: number | null;
+  /** Whether the reached rung takes the accent, and it DEFAULTS ON because on
+   *  its own this form's one accent is the answer: a ladder whose reached rung
+   *  is not marked has no reading at all.
+   *
+   *  IT IS OPT-OUT RATHER THAN OPT-IN, which is the opposite of StateWord's and
+   *  RangeBracket's, and the difference is not an inconsistency. Those two hold
+   *  a figure that a section can easily have accented already; this one holds a
+   *  POSITION, and the mark IS the position. So the caller only turns it off in
+   *  the one case where turning it off is right: a card carrying a SECOND
+   *  reading whose own drawing already spends the box's single accent. The
+   *  trade page's people card is exactly that, a standing above and this ladder
+   *  below, and step 8 of the subsection procedure is explicit that a section
+   *  with two accented things has no answer.
+   *
+   *  WHAT MARKS THE RUNG WHEN THE ACCENT IS OFF: the marker still FILLS, in ink
+   *  rather than terracotta, and the name still goes semibold. The rung is
+   *  legible before a word is read either way, which is the property the form
+   *  cannot give up; the colour is the only thing being spent elsewhere. */
+  accent?: boolean;
   /** Names the ladder for a screen reader: what its rungs measure. */
   ariaLabel?: string;
 }) {
@@ -1103,7 +1133,16 @@ export function StepLadder({
      the row instead and the connector breaks in every gap. */
   const M = 9;
   const C = 10;
-  const GAP = 14;
+  /* SIXTEEN, NOT FOURTEEN, and it is the spacing ladder rather than an eye. The
+     ladder's rungs are 48 chapter, 32 band, 28/20/16 card padding, 8 slot, and
+     14 is between two rungs, which step 7 of the subsection procedure forbids
+     outright: a value off the ladder is a gap a reader cannot place. Sixteen
+     also matches the 8+8 that RankedTiles puts between its rows, so where a card
+     carries a standing above a ladder, which the trade page's people card now
+     does, the two readings breathe on one rhythm instead of two nearly-equal
+     ones. Nearly-equal is the worse fault of the two: it reads as a mistake. */
+  const GAP = 16;
+  const mark = accent ? "var(--terra)" : "var(--c-ink)";
   return (
     <div data-idea="I4">
       <ol aria-label={ariaLabel} style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -1134,7 +1173,9 @@ export function StepLadder({
                 />
                 {/* THE MARKER, AND THE REACHED ONE IS THIS FORM'S ONE ACCENT.
                     Filled where the subject stands, hollow everywhere else, so
-                    the answer is legible before a single word is read. */}
+                    the answer is legible before a single word is read. The FILL
+                    is what carries that, not the colour, which is why turning
+                    the accent off swaps the ink in and changes nothing else. */}
                 <div
                   aria-hidden
                   style={{
@@ -1144,8 +1185,8 @@ export function StepLadder({
                     width: M,
                     height: M,
                     borderRadius: 2,
-                    border: `1px solid ${here ? "var(--terra)" : "var(--c-line-strong)"}`,
-                    background: here ? "var(--terra)" : "var(--c-card)",
+                    border: `1px solid ${here ? mark : "var(--c-line-strong)"}`,
+                    background: here ? mark : "var(--c-card)",
                   }}
                 />
               </div>
