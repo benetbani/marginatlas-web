@@ -814,7 +814,31 @@ function Hiring({ hiring }: { hiring: any }) {
   return (
     <Box id="hiring">
       <Rail icon="hiring" kicker="What staff cost" sample={tagged} />
-      <div className="space-y-2.5">
+      {/* C12, 2026-09-02. THE DECLARATION IS THE WHOLE FIX HERE, and saying so
+          plainly is the point: two fills measured by length from ONE shared zero
+          is what the catalogue calls a BAR SET in its own words, "rectangles
+          compared by length from a common baseline", and the addendum already
+          classified this exact markup, a fill inside a track from one common
+          left edge, as I2 when it re-read the kit's Waterfall. Nothing about the
+          drawing was wrong, so nothing about the drawing changed.
+          IT IS TAGGED ON THE SET AND NOT ON EACH BAR, which is the rule B5, B7
+          and B8 each settled in a different component: if a reader would call the
+          SET one object, the set declares. Two tags here would have been two bar
+          sets in one card, which is the arithmetic that binds a card.
+          THE BUDGET, counted on the render: the page was I2 0 of 3 and is now 1
+          of 3, and this is the page's only bar set. The blueprint's own condition
+          holds too, that the hiring bars be "non-adjacent to any other bar user":
+          the band above is the setup pips (I5) and the rent standing (I11), the
+          card beside it draws nothing, and nothing else on the page is an I2.
+          THE ACCENT IS UNTOUCHED. Register entry 5 names these bars and the
+          founder's 2026-08-30 order put the colour back on them.
+          THE ROW GAP GOES 10 TO 8, the slot rung, because ten sits between two
+          rungs of the spacing ladder and step 7 forbids that outright. It is the
+          twelfth off-ladder value this loop has found. The 12 INSIDE each row
+          stays and the distinction is A4's: a label, its own bar and its own
+          figure on one baseline are ONE object kerned, while the gap between the
+          rows separates two of them. */}
+      <div data-idea="I2" className="space-y-2">
         {bars.map(([label, v, fill]) => (
           <div key={label} className="grid grid-cols-[6.5rem_1fr_auto] items-center gap-3">
             <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{label}</span>
@@ -825,15 +849,18 @@ function Hiring({ hiring }: { hiring: any }) {
           </div>
         ))}
       </div>
+      {/* 16, THE CARD-PADDING RUNG, on both blocks below. Both were 12, which is
+          between two rungs, and so was the 12 of padding above the last block's
+          own rule. Thirteenth, fourteenth and fifteenth off-ladder values. */}
       {isNum(addPct) ? (
-        <div className="mt-3 flex flex-wrap items-baseline gap-x-1.5">
+        <div className="mt-4 flex flex-wrap items-baseline gap-x-1.5">
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">On top of gross pay, employers add</span>
           <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">+{addPct}%</Fig>
           <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">(pension auto-enrolment and insurance sit on top)</span>
         </div>
       ) : null}
       {isNum(labour) || isNum(informal) ? (
-        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-3">
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-4">
           {isNum(labour) ? (
             <span className="flex items-baseline gap-1.5">
               <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{labour}%</Fig>
