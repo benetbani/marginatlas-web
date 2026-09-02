@@ -59,8 +59,23 @@ export function CityCardsPager({ cities, allHref }: { cities: CityCardRow[]; all
       ) : null}
       {/* TWO PER ROW on phones (founder, 2026-08-30 second batch: "on phones
           we should have two cities in a row instead of one"); from md up the
-          row is auto-fill at a readable minimum, five across at 1280. */}
-      <div className="grid grid-cols-2 gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))]">
+          row is auto-fill at a readable minimum.
+
+          THE MINIMUM IS 9rem AND IT IS A MEASUREMENT, NOT A ROUND NUMBER. It was
+          9.5rem, 152px, and at 768 to 787 that produced ONE tile per row: `Band`
+          hands every band equal halves from md to lg (its own ratified D4 rule),
+          so the card there is 344px, one pixel WIDER than the same card on a
+          375px phone, and 302px of inner width holds only one 152px track. A
+          reader on a 768px tablet got four 302px boxes each with a 79px city
+          name in its corner while a reader on a 375px phone got two per row.
+          The narrower screen showed more, which is the tablet window C43
+          measured on two other cards and the same cause: a viewport breakpoint
+          standing in for a card width. Two tracks fit 302px only at a minimum of
+          (302 - 8) / 2 = 147px, so 9rem = 144px is the nearest clean value under
+          it. Photographed at 768, 900, 1024 and 1280: every other width renders
+          exactly what it rendered before, 2 up at 900, 3 up at 1024, 4 up at
+          1280, to the pixel. */}
+      <div className="grid grid-cols-2 gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]">
         {slice.map((c) => (
           <a
             key={c.id}

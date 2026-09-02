@@ -253,8 +253,17 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
           </h1>
           {tagged ? <SampleTag /> : null}
         </div>
+        {/* BALANCED, BECAUSE BOTH SENTENCES IN THIS CARD BROKE TO A RUNT.
+            Measured on the render at 1280 with a Range rect: this subtitle ran
+            439px and then 79px, so its second line was 18 percent of its first,
+            and the regime clause below ran 360px and then 110px. At 375 the
+            clause was worse than ragged, it split the regime's NAME, "under
+            Trading / Allowance + Self-Assessment". Balanced, both sit as two
+            even lines at both widths and the name arrives whole on line two.
+            `text-wrap: balance` is inert where a browser does not support it,
+            so the fallback is exactly today's wrap. */}
         {subtitle ? (
-          <p className="mt-1.5 max-w-[52ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p>
+          <p className="mt-1.5 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p>
         ) : null}
 
         <div className="mt-6 flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
@@ -262,7 +271,7 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
             <div>
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Total effective tax burden</div>
               <div className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{rate}%</div>
-              <div className="mt-2.5 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">
+              <div className="mt-2.5 max-w-[40ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">
                 on profit, for a small business
                 {regime ? (
                   <>
@@ -452,8 +461,16 @@ function Peers({ peers }: { peers: any }) {
             </div>
           ))}
         </div>
+        {/* THE ONE CHANGE THIS CARD TAKES, AND IT IS SAID OUT LOUD BECAUSE THE
+            FOUNDER PRAISED THIS TABLE UNPROMPTED ("this seems like, wow, this is
+            one of the best versions that I've seen so far", 2026-08-30). Nothing
+            structural moves: no column, no flag, no winner mark, no figure. Only
+            where the caption's lines break. Measured: at 1280 it ran 527px, 538px
+            and then 93px, and at 375 it ran to a FIVE-line block whose last line
+            was the single word "terms." at 34px. Balanced it is three even lines
+            at 1280 and five at 375 with no orphan at either. */}
         {peers?.caveat ? (
-          <p className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{peers.caveat}</p>
+          <p className="mt-2.5 text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]">{peers.caveat}</p>
         ) : null}
       </Box>
     </div>
