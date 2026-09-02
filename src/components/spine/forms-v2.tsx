@@ -50,15 +50,16 @@
  * lazy decision away:
  *
  *   LollipopColumn  lay it on its side, and it is markers on a rail.
- *   StepLadder      join the steps up, and it is a track with a marker on it.
+ *   StepLadder      hang ONE marker off the connector, and it is a track.
  *   ThresholdBlock  draw one bar and tick the threshold onto it, the same.
  *   RangeBracket    fill the middle, or rule a line end to end, the same.
  *
  * So each is built to make its own lazy decision awkward rather than merely
  * forbidden: the lollipop's stems stand up from a drawn zero line and its dots
- * ride above them, the ladder's steps are separated blocks that climb, the
- * threshold draws two lengths and no marker anywhere at all, and the bracket's
- * ends turn inward across open air that nothing crosses.
+ * ride above them, the ladder runs its connector DOWN through a marker for
+ * every named rung so no marker's position is the reading, the threshold draws
+ * two lengths and no marker anywhere at all, and the bracket's ends turn inward
+ * across open air that nothing crosses.
  *
  * EVERY FORM DECLARES ITS OWN VISUAL IDEA on its outermost element, as
  * data-idea="I2".."I9". scripts/verify_form_variety.mjs enforces the catalog's
@@ -999,7 +1000,7 @@ export function LollipopColumn({
 /* StepLadder , I6 tile set, shares the cap of 3                       */
 /* ------------------------------------------------------------------ */
 /**
- * A LEVEL ON A LADDER WHOSE RUNGS HAVE MEANINGS, AND ALL OF THEM ARE DRAWN.
+ * THE LADDER, AND A LADDER IS VERTICAL.
  *
  * "How hard is this trade to enter" has about five real answers and they are
  * not five points on a continuum: learn it on the job, train in a week, take a
@@ -1009,105 +1010,163 @@ export function LollipopColumn({
  * hides four of the five answers, since a reader can see the position but never
  * learns what the positions are.
  *
- * SO EVERY STEP IS DRAWN AND EVERY STEP CARRIES ITS OWN WORDS. The reader sees
+ * SO EVERY RUNG IS DRAWN AND EVERY RUNG CARRIES ITS OWN WORDS. The reader sees
  * where this trade sits AND what the rungs above and below it would have meant,
  * which is most of the value in the reading and all of what the track threw
  * away.
  *
- * THE BLOCKS CLIMB, AND NOTHING JOINS THEM UP. The rise is a fixed offset per
- * step, identical whatever the values are, so it says ORDER and never
- * magnitude; every block is the same size, which is what keeps this a tile set
- * rather than a bar chart with its numbers hidden. No baseline is drawn beneath
- * them for the same reason: a rule under a row of climbing blocks turns them
- * into columns of increasing height and re-tells the lie.
+ * WHAT VERSION 3 STRUCK. Version 2 drew the rungs as five boxes climbing left
+ * to right by a fixed offset, each holding a numeral in a rounded square. Two
+ * faults, and the founder saw both. The climb was a GIMMICK: a ladder read
+ * sideways is a staircase graphic, and the offset was decoration standing in
+ * for a relationship the form had already refused to claim. And the numerals
+ * were furniture: a reader learns nothing from a "3" in a box that the rung's
+ * own words do not already say, and five boxed digits across a card is the
+ * shape of a progress tracker, not of a scale of difficulty.
  *
- * IT REFUSES A LADDER WITH A HOLE IN IT. A missing step is not dropped and the
- * rest closed up, because closing up silently renumbers every rung and moves
- * the reached one to somewhere it is not. Three to six steps: below three there
- * is no ladder to climb, above six a reader is counting rather than reading,
- * and the form for a long ordered set is a table.
+ * SO IT IS VERTICAL NOW, hardest at the top, read downward, and it looks like
+ * what it is:
  *
- * DO NOT join the steps into a continuous track, and do not size them by
- * anything at all. Both turn this back into the shape it replaces.
+ *   [ ] Years of apprenticeship
+ *    |  Three or four years under someone else's name
+ *   [#] Licensed or certified                 <- reached: filled, semibold ink
+ *    |  An exam and a licence before you open
+ *   [ ] A short course
+ *    |  Two or three weekends and a certificate
+ *
+ * THE CONNECTOR IS WHAT MAKES IT ONE OBJECT. A 1px rule runs down through every
+ * marker, from the top marker's centre to the bottom marker's centre, so five
+ * rungs read as one ladder rather than as five stacked tiles. It is drawn per
+ * rung as a full-height segment in the marker column, and the space between
+ * rungs is padding on the TEXT column rather than on the row, so the segments
+ * meet and the line never breaks into dashes across the gaps.
+ *
+ * THAT IS NOT THE TRACK THIS FORM REPLACES, and the difference is countable. A
+ * track is one rail carrying ONE marker, and the reading is the marker's
+ * POSITION along it. This is a rule carrying a marker for every named rung, and
+ * the reading is which of the named rungs is filled. Take the words away from a
+ * track and nothing is left to read; take them away from this and the form is
+ * gone, which is the test.
+ *
+ * THE MARKERS ARE SQUARES AND ALL THE SAME SIZE. Square, because the dots on
+ * this site belong to LollipopColumn and two forms sharing an idea must not
+ * share a silhouette; the same size, because sizing a marker by anything would
+ * make this a bar chart with its numbers hidden, and bar charts have their own
+ * entry and their own budget.
+ *
+ * IT REFUSES A LADDER WITH A HOLE IN IT. A missing rung is not dropped and the
+ * rest closed up, because closing up silently renumbers the ladder and moves
+ * the reached rung to somewhere it is not. Three to six rungs: below three
+ * there is no ladder to climb, above six a reader is counting rather than
+ * reading, and the form for a long ordered set is a table.
+ *
+ * DO NOT number the rungs, and do not size them by anything at all.
  */
+export type LadderRung = {
+  /** The rung's own words: "Licensed or certified". A rung without one refuses
+   *  the whole form, because a ladder cannot have an unnamed rung in it. */
+  name?: string | null;
+  /** What standing on it would mean, one short line. Optional, and the form is
+   *  poorer without it: the reason every rung is drawn is so that the reader
+   *  learns what the ones they are not on would have meant. */
+  meaning?: string | null;
+};
+
 export function StepLadder({
   steps,
   reached,
   ariaLabel,
 }: {
-  /** The rungs' own words, first to last. Any missing one refuses the form. */
-  steps?: Array<string | null | undefined> | null;
-  /** Which rung this subject is on, counting from 1. Null renders nothing. */
+  /** The rungs IN CLIMBING ORDER, lowest first, which is the order anyone
+   *  writes a ladder down in. The component draws them hardest-at-the-top,
+   *  because a ladder is read downward; the caller never has to think about
+   *  which way the drawing runs. Any rung missing its name refuses the form. */
+  steps?: Array<LadderRung | null | undefined> | null;
+  /** Which rung this subject is on, counting from 1 AT THE LOWEST, in the same
+   *  order the caller passed. Null renders nothing. */
   reached?: number | null;
   /** Names the ladder for a screen reader: what its rungs measure. */
   ariaLabel?: string;
 }) {
   const rungs = steps ?? [];
   if (rungs.length < 3 || rungs.length > 6) return null;
-  if (rungs.some((s) => typeof s !== "string" || s.trim() === "")) return null;
+  if (rungs.some((r) => r == null || typeof r.name !== "string" || r.name.trim() === "")) return null;
   if (reached == null || !Number.isInteger(reached) || reached < 1 || reached > rungs.length) return null;
-  /* The block, and how far each one climbs above the last. HEAD is the tallest
-     column's total, so the words beneath every block start on one line. */
-  const BLOCK = 30;
-  const RISE = 9;
-  const HEAD = BLOCK + (rungs.length - 1) * RISE;
+  const climbing = rungs as LadderRung[];
+  /* HARDEST AT THE TOP. The reversal happens here and nowhere else, so
+     `reached` keeps meaning what the caller said it meant. */
+  const shown = climbing.map((rung, i) => ({ rung, here: i === reached - 1 })).reverse();
+  /* M is the marker's edge, C where its centre sits below the rung's top, which
+     is the optical middle of the first line of a 14px name at leading-snug.
+     GAP is the air under a rung, and it belongs to the TEXT column: put it on
+     the row instead and the connector breaks in every gap. */
+  const M = 9;
+  const C = 10;
+  const GAP = 14;
   return (
     <div data-idea="I6">
-      <ol
-        aria-label={ariaLabel}
-        className="grid"
-        style={{
-          listStyle: "none",
-          margin: 0,
-          padding: 0,
-          gridAutoFlow: "column",
-          gridAutoColumns: "minmax(0, 1fr)",
-          columnGap: 8,
-        }}
-      >
-        {rungs.map((words, i) => {
-          const here = i === reached - 1;
+      <ol aria-label={ariaLabel} style={{ listStyle: "none", margin: 0, padding: 0 }}>
+        {shown.map(({ rung, here }, i) => {
+          const first = i === 0;
+          const last = i === shown.length - 1;
           return (
-            <li key={`${words}-${i}`} aria-current={here ? "step" : undefined} style={{ minWidth: 0 }}>
-              <div
-                style={{
-                  height: HEAD,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  paddingBottom: i * RISE,
-                }}
-              >
+            <li
+              key={`${rung.name}-${i}`}
+              aria-current={here ? "step" : undefined}
+              style={{ display: "grid", gridTemplateColumns: `${M}px 1fr`, columnGap: 11 }}
+            >
+              <div style={{ position: "relative" }}>
+                {/* THE CONNECTOR SEGMENT. It stops AT the first and last
+                    markers' centres rather than running past them, because a
+                    rule overshooting the end of a ladder reads as a scale that
+                    continues somewhere the form is not showing. */}
                 <div
+                  aria-hidden
                   style={{
-                    height: BLOCK,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 8,
-                    border: "1px solid",
-                    /* REACHED IS FILLED AND THE REST ARE HOLLOW, which is the
-                       catalog's own anatomy and this form's one accent. The
-                       ordinal inside the filled block stays ink rather than
-                       going white: terracotta is a light fill and white on it
-                       fails at 10px, which is the size an ordinal is. */
-                    borderColor: here ? "var(--terra)" : "var(--c-border)",
-                    background: here ? "var(--terra)" : "transparent",
+                    position: "absolute",
+                    left: (M - 1) / 2,
+                    width: 1,
+                    background: "var(--c-line-strong)",
+                    top: first ? C : 0,
+                    ...(last ? { height: first ? 0 : C } : { bottom: 0 }),
                   }}
-                >
-                  <span
-                    className="text-[length:var(--t-mark)] font-semibold leading-none"
-                    style={{ color: here ? "var(--c-ink)" : "var(--c-muted)" }}
-                  >
-                    <Fig>{i + 1}</Fig>
-                  </span>
-                </div>
+                />
+                {/* THE MARKER, AND THE REACHED ONE IS THIS FORM'S ONE ACCENT.
+                    Filled where the subject stands, hollow everywhere else, so
+                    the answer is legible before a single word is read. */}
+                <div
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: C - M / 2,
+                    width: M,
+                    height: M,
+                    borderRadius: 2,
+                    border: `1px solid ${here ? "var(--terra)" : "var(--c-line-strong)"}`,
+                    background: here ? "var(--terra)" : "var(--c-card)",
+                  }}
+                />
               </div>
-              <div
-                className="text-center text-[length:var(--t-micro)] leading-snug"
-                style={{ paddingTop: 7, color: here ? "var(--c-ink)" : "var(--c-ink2)" }}
-              >
-                {words}
+              <div style={{ minWidth: 0, paddingBottom: last ? 0 : GAP }}>
+                <div
+                  className="text-[length:var(--t-body)] leading-snug"
+                  style={{ fontWeight: here ? 600 : 400, color: here ? "var(--c-ink)" : "var(--c-ink2)" }}
+                >
+                  {rung.name}
+                </div>
+                {/* THE MEANING STAYS LEGIBLE ON EVERY RUNG, not only the reached
+                    one. The whole reason all five are drawn is that the reader
+                    learns what the other four would have meant, and greying the
+                    unreached ones out of readability throws that away again. */}
+                {rung.meaning ? (
+                  <div
+                    className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"
+                    style={{ marginTop: 2 }}
+                  >
+                    {rung.meaning}
+                  </div>
+                ) : null}
               </div>
             </li>
           );

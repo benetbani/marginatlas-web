@@ -240,12 +240,15 @@ const body = renderToStaticMarkup(
       >
         <StepLadder
           ariaLabel="How much training this trade takes before you can open"
+          /* PASSED IN CLIMBING ORDER, LOWEST FIRST, and drawn hardest at the
+             top: the component reverses for the drawing so `reached` keeps
+             counting the way anyone writing a ladder down would count. */
           steps={[
-            "Learn on the job",
-            "Train in a week",
-            "A short course",
-            "Licensed or certified",
-            "Years of apprenticeship",
+            { name: "Learn on the job", meaning: "Someone shows you on your first shift." },
+            { name: "Train in a week", meaning: "A few days with a supplier or a trade body." },
+            { name: "A short course", meaning: "Two or three weekends and a certificate." },
+            { name: "Licensed or certified", meaning: "An exam and a licence before you open." },
+            { name: "Years of apprenticeship", meaning: "Three or four years under someone else's name." },
           ]}
           reached={4}
         />
