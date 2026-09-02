@@ -271,7 +271,7 @@ const body = renderToStaticMarkup(
       <Specimen
         name="RangeBracket"
         idea="I6 tile set, shares a cap of 3"
-        useWhen="Use for an honest range: what it costs to open, what a fit-out runs to. The ends turn inward, the middle stays open, and the typical stands inside it as a numeral."
+        useWhen="Use for an honest range: what it costs to open, what a fit-out runs to. The three figures are the composition, tied by a brace whose ends turn up and whose notch drops under the typical."
       >
         <RangeBracket
           lo={42000}

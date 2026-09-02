@@ -52,15 +52,15 @@
  *   LollipopColumn  lay it on its side, and it is markers on a rail.
  *   StepLadder      hang ONE marker off the connector, and it is a track.
  *   ClearanceRing   put a tick on the closed ring, and it is a track bent round.
- *   RangeBracket    fill the middle, or rule a line end to end, the same.
+ *   RangeBracket    put a dot on the brace's rule, and it is a track again.
  *
  * So each is built to make its own lazy decision awkward rather than merely
  * forbidden: the lollipop's stems stand up from a drawn zero line and its dots
  * ride above them, the ladder runs its connector DOWN through a marker for
  * every named rung so no marker's position is the reading, the clearance ring
  * carries no mark at all and lets a second lap outside it say what a mark would
- * have said, and the bracket's ends turn inward across open air that nothing
- * crosses.
+ * have said, and the bracket's rule turns UP at both ends and drops a notch
+ * under the middle figure, so nothing on it is ever a position.
  *
  * EVERY FORM DECLARES ITS OWN VISUAL IDEA on its outermost element, as
  * data-idea="I2".."I9". scripts/verify_form_variety.mjs enforces the catalog's
@@ -1369,34 +1369,56 @@ export function ClearanceRing({
 /* RangeBracket , I6 tile set, shares the cap of 3                     */
 /* ------------------------------------------------------------------ */
 /**
- * A LOW, A HIGH, AND THE TYPICAL HELD BETWEEN THEM, DRAWN AS A BRACKET.
+ * THE SPAN, WHERE THE NUMBERS ARE THE COMPOSITION.
  *
  * What it costs to open is a range and this site refuses to pretend otherwise.
  * The trouble is that every obvious drawing of a range is the rejected shape: a
  * filled span is a bar, a rule between two ticks with a dot on it is a track,
  * and a gradient between the ends asserts a direction the data has not got.
  *
- * A BRACKET IS THE ONE DRAWING THAT SAYS "BETWEEN" WITHOUT DRAWING A SCALE.
- * Both ends TURN INWARD, which is what makes the shape read as an enclosure
- * rather than as two loose ticks; the middle is OPEN AIR with nothing crossing
- * it, which is what stops it reading as a track; and the typical stands inside
- * as a NUMERAL rather than as a dot, because a dot inside a span is the exact
- * habit this file exists to break.
+ * WHAT VERSION 3 STRUCK, and it is two faults with one cause. Version 2 drew
+ * the bracket at the site's 1px CARD-HAIRLINE weight, and at that weight its
+ * four turned corners came out as four faint ticks with air between them: a
+ * bracket that does not read as a bracket reads as the ends of a rail whose
+ * middle failed to render. And the two end figures sat in the far corners with
+ * nothing tying them to anything, because the only thing that could have tied
+ * them was the drawing that had failed. The cause of both is the same: a DRAWN
+ * MARK was given the weight of a card edge.
  *
- * THE NUMERAL'S POSITION IS ITS ONLY MARK, so it is anchored honestly. Near the
- * middle it is centred on its own value; within a fifth of either end it is
- * anchored by that edge instead, so a typical sitting close to the low end hugs
- * the low arm and can never overhang the bracket it belongs inside. The
- * alternative, clamping the position away from the ends, moves a real value to
- * a place it is not, and a form built to be honest about a range must not lie
- * about where inside the range the typical falls.
+ * SO THE NUMBERS ARE THE COMPOSITION AND THE BRACKET IS DRAWN AT DRAWN WEIGHT:
+ *
+ *   $42K              $96K              $210K     <- ONE baseline row
+ *   at the cheapest   typical fit-out   at the dearest
+ *   |_________________________________________|
+ *                     |
+ *
+ * Three figures on one row, each above its own label and no label anywhere but
+ * under its own figure. The low and the high sit at body in ink2 because they
+ * are the frame; the typical stands between them at focal in ink because it is
+ * the answer, and the size difference is the entire hierarchy. Beneath all
+ * three, a bracket at MARK WEIGHT, 2px: a horizontal rule whose two ends turn
+ * UP toward the figures they enclose, with a short notch dropping under the
+ * typical.
+ *
+ * THE BRACKET IS A BRACE AND NOT AN AXIS, which has to be said because the one
+ * misreading available here is a real one. Nothing is measured ALONG this rule:
+ * the notch says WHICH of the three figures the span is summarised by, never
+ * WHERE inside the span it falls, and the typical is laid out in the middle of
+ * the row for the same reason the low is at the left, which is that there are
+ * three of them. A reader who took the notch for a position would be reading a
+ * scale, and the form draws none: nothing is filled, no second rail runs behind
+ * the rule, and neither end carries a value the rule is measuring toward. This
+ * is the tension version 2 solved the other way, by anchoring the numeral at
+ * its true fraction, and that solution is what produced a typical hugging one
+ * arm of a bracket that had already failed to read as a bracket.
  *
  * IT REFUSES A TYPICAL FROM OUTSIDE ITS OWN RANGE rather than clamping it to an
  * end, because a typical above the high is a fault upstream and drawing it at
  * the high would hide that fault and publish a wrong number.
  *
- * DO NOT fill the interior, which makes it a bar. DO NOT rule a line from arm
- * to arm, which makes it a track. DO NOT swap the numeral for a dot.
+ * DO NOT draw the arms at card-hairline weight. DO NOT let a label sit anywhere
+ * but under its own figure. DO NOT fill the interior, which makes it a bar, and
+ * DO NOT put a dot on the rule, which makes it a track.
  */
 export function RangeBracket({
   lo,
@@ -1415,77 +1437,87 @@ export function RangeBracket({
   typical?: number | null;
   /** Formats every figure. Pass the kit's `usd` for money. */
   format?: (n: number) => string;
-  /** The word under the numeral inside the bracket. */
+  /** The label under the middle figure. */
   caption?: string | null;
   /** What the two ends are called: "cheapest" and "dearest", say. */
   endLabels?: [string, string];
-  /** Marks the typical, the one accentable thing here. */
+  /** Marks the typical, the one accentable thing here. It colours the FIGURE
+   *  and never the bracket: the bracket is furniture holding three numbers, and
+   *  an accented brace would point at the frame rather than at the answer. */
   accent?: boolean;
 }) {
   if (lo == null || !Number.isFinite(lo)) return null;
   if (hi == null || !Number.isFinite(hi) || hi <= lo) return null;
   if (typical == null || !Number.isFinite(typical)) return null;
   if (typical < lo || typical > hi) return null;
-  /* ARM is how far each end turns inward, OPEN the height of the air between
-     the turns. The bracket is deliberately tall: a short one starts to read as
-     a pair of ticks on a missing rail, which is the shape being avoided. */
-  const ARM = 11;
-  const OPEN = 52;
-  const at = (typical - lo) / (hi - lo);
-  const anchor = at < 0.2 ? "translateX(0)" : at > 0.8 ? "translateX(-100%)" : "translateX(-50%)";
-  /* TWO PIXELS, WHICH A PHOTOGRAPH DECIDED. Drawn at the site's 1px hairline
-     the arms came out as four faint ticks with a gap between them, which is
-     the one reading this form cannot afford: a bracket that does not read as a
-     bracket reads as the ends of a rail whose middle failed to render. This is
-     a DRAWN MARK and not a card edge, so it takes the same weight as the
-     lollipop's stem rather than the weight of a border. */
-  const rule = "2px solid var(--c-line-strong)";
+  /* ARM is how far each end turns up toward its figure, NOTCH how far the
+     middle drops away from the rule, RULE the drawn weight itself. TWO PIXELS,
+     WHICH A PHOTOGRAPH DECIDED: at the site's 1px hairline this drawing came
+     out as four faint ticks. It is a drawn mark and not a card edge, so it
+     takes the lollipop's stem weight rather than a border's. */
+  const RULE = 2;
+  const ARM = 8;
+  const NOTCH = 7;
   return (
     <div
       data-idea="I6"
       role="img"
       aria-label={`${format(typical)} ${caption ?? "typical"}, between ${format(lo)} and ${format(hi)}`}
     >
-      <div style={{ position: "relative", height: OPEN }}>
-        <div
-          aria-hidden
-          style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: ARM, borderLeft: rule, borderTop: rule, borderBottom: rule }}
-        />
-        <div
-          aria-hidden
-          style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: ARM, borderRight: rule, borderTop: rule, borderBottom: rule }}
-        />
+      {/* ONE ROW, THREE COLUMNS, TWO GRID ROWS. The figures baseline-align with
+          each other and the labels baseline-align with each other, which a flex
+          row cannot do: there, each cell aligns on its own first baseline and a
+          30px figure drops its label four pixels below its neighbours'. */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
+          alignItems: "baseline",
+          columnGap: 14,
+          rowGap: 4,
+        }}
+      >
+        <span className="text-[length:var(--t-body)] leading-none text-[var(--c-ink2)]" style={{ justifySelf: "start" }}>
+          <Fig>{format(lo)}</Fig>
+        </span>
+        <span
+          className="text-[length:var(--t-focal)] leading-none"
+          style={{ justifySelf: "center", color: accent ? "var(--terra-text)" : "var(--c-ink)" }}
+        >
+          <Fig>{format(typical)}</Fig>
+        </span>
+        <span className="text-[length:var(--t-body)] leading-none text-[var(--c-ink2)]" style={{ justifySelf: "end" }}>
+          <Fig>{format(hi)}</Fig>
+        </span>
+        <span className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ justifySelf: "start" }}>
+          {endLabels[0]}
+        </span>
+        <span className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ justifySelf: "center" }}>
+          {caption}
+        </span>
+        <span className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ justifySelf: "end" }}>
+          {endLabels[1]}
+        </span>
+      </div>
+      {/* THE BRACKET. Four rules and no fill: the spine, two arms turning up
+          toward the figures they enclose, and the notch dropping away under the
+          middle one. Drawn in divs rather than an svg so the 2px never lands on
+          a half pixel after a viewBox has been scaled to the card. */}
+      <div aria-hidden style={{ position: "relative", height: ARM + RULE + NOTCH, marginTop: 11 }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: ARM, height: RULE, background: "var(--c-line-strong)" }} />
+        <div style={{ position: "absolute", left: 0, top: 0, width: RULE, height: ARM + RULE, background: "var(--c-line-strong)" }} />
+        <div style={{ position: "absolute", right: 0, top: 0, width: RULE, height: ARM + RULE, background: "var(--c-line-strong)" }} />
         <div
           style={{
             position: "absolute",
-            top: "50%",
-            /* Measured from INSIDE the arms, so the numeral can never land on
-               top of one of the turns. */
-            left: `calc(${ARM}px + (100% - ${ARM * 2}px) * ${at.toFixed(4)})`,
-            transform: `translateY(-50%) ${anchor}`,
-            whiteSpace: "nowrap",
+            left: "50%",
+            marginLeft: -RULE / 2,
+            top: ARM,
+            width: RULE,
+            height: RULE + NOTCH,
+            background: "var(--c-line-strong)",
           }}
-        >
-          <div
-            className="text-[length:var(--t-head)] leading-none"
-            style={{ color: accent ? "var(--terra-text)" : "var(--c-ink)" }}
-          >
-            <Fig>{format(typical)}</Fig>
-          </div>
-          {caption ? (
-            <div className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ marginTop: 5 }}>
-              {caption}
-            </div>
-          ) : null}
-        </div>
-      </div>
-      <div className="flex items-baseline justify-between" style={{ marginTop: 7, gap: 12 }}>
-        <span className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">
-          <Fig>{format(lo)}</Fig> {endLabels[0]}
-        </span>
-        <span className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">
-          <Fig>{format(hi)}</Fig> {endLabels[1]}
-        </span>
+        />
       </div>
     </div>
   );
