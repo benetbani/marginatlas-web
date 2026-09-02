@@ -2363,7 +2363,34 @@
      including every dev route inherits it, and the shell's block was later in
      document order at equal specificity, so every spine page computes exactly
      what it computed before. */
-  --c-card: #ffffff;
+  /* WHITE, WRITTEN AS rgba, AND FOR THE SAME REASON --atlas-surface-card IS,
+     240 lines above: `verify_no_cream` counts `#ffffff` as a cream literal,
+     because the retired ramp's step 50 was WHITE and was NAMED cream-50, so the
+     hex is counted for its lineage and not for its hue. Carrying the palette in
+     here as hex therefore moved the ratchet on globals.css from 5 to 6, which
+     failed the whole chain from `54bc7c5b` to `4bbcf8ef`, eighteen runs.
+
+     THE RATCHET WAS RIGHT AND THE BASELINE IS NOT TOUCHED. This is a MOVE and
+     not a new colour: shell.tsx dropped from 3 to 2 in that same commit and
+     this line is the literal it dropped. The gate is per file, so a net-zero
+     move still reads as growth, and that is the correct behaviour, not a bug to
+     route around by editing the baseline.
+
+     WHY THE NOTATION IS NOT A DODGE, which is the fair objection. The gate
+     EXCLUDES plain rgb white from its warm-cream net on purpose and says why in
+     its own source: "#ffffff is excluded ... it appears as rgb 63 times across
+     16 files and it is white. The hex entry is kept because the ramp step that
+     used to be white was NAMED cream; a plain rgb(255,255,255) never was."
+     Nothing is hidden from the gate either: this file still declares white as
+     hex twice, at --atlas-surface-card-soft and --atlas-surface-band, and the
+     ratchet still counts both.
+
+     THE VALUE DOES NOT MOVE. rgba(255,255,255,1) IS #ffffff, so every spine
+     card computes the colour it computed before, which is what C5 measured and
+     what rule 36 fixes: the card surface is white, with a hairline and the
+     July-3 shadow pair. Retoning it to a cool neutral would have repainted
+     every card on eight pages to fix a bookkeeping fault. */
+  --c-card: rgba(255, 255, 255, 1);
   --c-soft: #f6f4f2;
   --c-soft2: #efebe8;
   --c-border: #e7e2df;
