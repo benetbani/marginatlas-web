@@ -75,14 +75,46 @@ let totalTagged = 0;
 for (const file of pages) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1200 } });
     await page.goto(pathToFileURL(resolve(PAGES_DIR, file)).href);
-  const counts = await page.evaluate(() => {
+  const measured = await page.evaluate(() => {
     const out = {};
     for (const el of document.querySelectorAll("[data-idea]")) {
       const k = el.getAttribute("data-idea");
       out[k] = (out[k] || 0) + 1;
     }
-    return out;
+    /* PER-CARD CONCENTRATION, added 2026-09-02 after loop run 6 rendered three
+       BenchmarkPairs in one card and found the page budget could not see it:
+       I9 is uncapped, and it is rightly uncapped, because every card on the site
+       carries figures. The fault was never "this page has many figures", it was
+       "this ONE CARD repeats one shape three times", which is the founder's
+       original complaint at card scale. Three focal figures in one card is
+       three claimants and no answer, and the badges rag because each starts
+       where its own figure ends.
+       A card is the bordered box the kit draws; matching on the radius plus a
+       border is how every other rendered-design gate here finds one. */
+    const crowded = [];
+    for (const card of document.querySelectorAll('[class*="rounded-[14px]"][class*="border"]')) {
+      const inner = {};
+      for (const el of card.querySelectorAll("[data-idea]")) {
+        /* only the card's OWN forms, not a nested card's */
+        if (el.closest('[class*="rounded-[14px]"][class*="border"]') !== card) continue;
+        const k = el.getAttribute("data-idea");
+        inner[k] = (inner[k] || 0) + 1;
+      }
+      for (const [k, n] of Object.entries(inner)) {
+        if (n >= 3) {
+          const kicker = (card.textContent || "").trim().replace(/\s+/g, " ").slice(0, 40);
+          crowded.push({ idea: k, n, kicker });
+        }
+      }
+    }
+    return { counts: out, crowded };
   });
+  const counts = measured.counts;
+  for (const c of measured.crowded) {
+    failures.push(
+      `${file}: one card repeats ${c.idea} ${c.n} times ("${c.kicker}"). A page budget cannot see this, because the crowding is inside a single card; three of one shape in one card is three claimants and no answer.`,
+    );
+  }
   await page.close();
   for (const [idea, n] of Object.entries(counts)) {
     totalTagged += n;
