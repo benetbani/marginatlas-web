@@ -93,6 +93,13 @@ const GATES: Gate[] = [
      legacy remainder named loudly, not silently passed. */
   { name: "no-phone-sideways", script: "scripts/verify_no_phone_sideways.mjs" },
   { name: "no-quartile-words", script: "scripts/verify_no_quartile_words.mjs" },
+  /* THE CHECK THAT WOULD HAVE CAUGHT THE SLOP, 2026-09-01. Every other gate
+     here tests a rule; none tested sameness, so ten sections drawn as the same
+     horizontal track passed the entire suite and reached the founder. Counts
+     each page's declared visual ideas against the caps parsed out of
+     FORM-CATALOG v2. Negative-tested by planting three I1 declarations on a
+     page whose cap is two and watching it fail. */
+  { name: "form-variety", script: "scripts/verify_form_variety.mjs" },
   /* The blueprint reform, 2026-08-29: each page's constitution lives in
      design/blueprints/<page>.md, written before the code, and this gate fails
      the build when a rendered page disagrees with its own SPINE table. It
