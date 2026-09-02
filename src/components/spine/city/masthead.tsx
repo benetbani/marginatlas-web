@@ -49,7 +49,15 @@ export function CityHero({ d }: { d: any }) {
         <div className="flex items-center gap-3.5">
           <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[44px] shadow-sm" />
           <div>
-            <h1 data-typography="custom" className="text-balance text-3xl font-semibold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city}</h1>
+            {/* THE TITLE RULE, applied at last. `design/blueprints/city.md` wrote
+                it on 2026-09-01 and said outright that the code had not followed:
+                "The code migration is queued, not yet applied: until it lands,
+                this file and the deployed masthead disagree on purpose,
+                blueprint first." It named this exact class string, `text-3xl
+                md:text-4xl`, 30 on the ladder at phone and 36 off it at md, and
+                the rung it moves to, --t-section 24 at every width, "because the
+                h1 NAMES the city and a separate figure carries the answer". */}
+            <h1 data-typography="custom" className="text-balance text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]">{d.meta?.city}</h1>
             <div className="text-[length:var(--t-body)] text-[var(--c-muted)]">Opening a business in {inPhrase}</div>
           </div>
         </div>
@@ -70,7 +78,15 @@ export function CityHero({ d }: { d: any }) {
                 48px figure rose into the label above it: measured 124x7px of
                 overlap at 1440, 1280 and 768, and 77x5px at 375. A figure needs a
                 line box at least as tall as itself. */}
-            <div className="fig mt-1.5 leading-[1.2] text-[var(--c-ink)] text-[30px] md:text-[48px]"><Fig>{focal.value}</Fig>{focal.unit ? <span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">{focal.unit}</span> : null}</div>
+            {/* AND THE THIRD FAULT, WHICH THE SAME BLUEPRINT HAD ALSO ALREADY
+                SETTLED: `text-[30px] md:text-[48px]` put this figure eight pixels
+                above the ceiling at desktop and let it TIE the h1 at 30 on a
+                phone, so the masthead read as one composition at 1280 and another
+                at 375. Measured before the change: 48 over 36 at 1280 (1.33x) and
+                30 over 30 at 375 (1.00x, a dead tie). city.md's own arithmetic is
+                "40 against 20 is 2.0x and clears it at every width". One size,
+                --t-answer, no breakpoint, and 40 over the h1's 24 is 1.67x. */}
+            <div className="fig mt-1.5 leading-[1.2] text-[var(--c-ink)] text-[length:var(--t-answer)]"><Fig>{focal.value}</Fig>{focal.unit ? <span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">{focal.unit}</span> : null}</div>
             {focal.sub ? <div className="mt-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{focal.sub}</div> : null}
           </div>
         ) : null}

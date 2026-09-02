@@ -496,7 +496,20 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
           </div>
           {/* the ONE hero figure: rent load, count-up safe; terra only below city x1.00 */}
           <div className="shrink-0 text-right">
-            <Fig className={`block text-[48px] leading-none ${lighter ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{rentShown.toFixed(2)}</Fig>
+            {/* 48 TO --t-answer 40, AND IT STAYS AN ANSWER-SIZE FIGURE, WHICH IS
+                THE BLUEPRINT'S OWN RULING RATHER THAN THIS ROW'S PREFERENCE.
+                `design/blueprints/hood.md` heads its file with "ANSWER FIGURES:
+                2" and argues it in full under TWO ANSWER-SIZE FIGURES, DECLARED:
+                "the masthead answers which district, the panel answers this
+                district, and the panel's figure changes under the reader's hand
+                while the masthead's does not." The first attempt at this change
+                took it to focal 30 on the ladder's "one dominant figure" comment
+                and `verify_blueprint_conformance` refused it by name. The fault
+                was never the count, it was the SIZE: 48 is eight pixels above a
+                ceiling the blueprint itself records falling from 48 to 40, and
+                the blueprint had already written this figure down as "the detail
+                panel's 40px figure". The code simply never followed. */}
+            <Fig className={`block text-[length:var(--t-answer)] leading-[1] ${lighter ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{rentShown.toFixed(2)}</Fig>
             <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">rent, {dirWord}</div>
             <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">revenue <Fig className="text-[var(--c-ink2)]">{up ? "+" : ""}{d.rev_vs_city_pct}%</Fig> vs city</div>
           </div>

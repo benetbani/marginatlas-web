@@ -47,7 +47,17 @@ export function Masthead({ d }: { d: any }) {
           <span className="inline-flex items-center gap-1.5"><AtlasMark id="alt-country" size={13} className="opacity-55" />{d.meta?.country_name}</span>
         </div>
         {/* rulebook v1 section 35: H1 is font-semibold, never bold (bold display reads cheap) */}
-        <h1 data-typography="custom" className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2.6rem]">{h.answer}</h1>
+        {/* THE h1 IS THIS PAGE'S ANSWER IN WORDS, AND THAT IS PRECISELY WHY IT
+            DOES NOT TAKE THE ANSWER RUNG. Step 5: "A WORD IS NOT A QUANTITY. A
+            state, a name, a verdict phrase takes lead or section size, never
+            focal or answer." This is a verdict phrase, so --t-section is the top
+            rung open to it, and the quantity beside it, the take-home under "A
+            typical owner keeps", is what carries the answer rung.
+            It was text-3xl md:text-[2.6rem], 30 and 41.6, and 41.6 is above the
+            ceiling: measured on the render the pair read 57.6 over 41.6 at 1280
+            (1.38x) and 41.6 over 30 at 375 (1.39x), failing step 5's floor at
+            both. One size now, and 40 over 24 is 1.67x at every width. */}
+        <h1 data-typography="custom" className="max-w-3xl text-[length:var(--t-section)] font-semibold leading-tight tracking-tight text-[var(--c-ink)]">{h.answer}</h1>
 
         {/* the hero scorecard: owner-keeps dominant, the other two as support */}
         {/* THE TILE COLUMN IS SIZED BY ITS CONTENTS, not by a share of the row.
@@ -65,7 +75,15 @@ export function Masthead({ d }: { d: any }) {
             <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--c-muted)]">A typical owner keeps</div>
             {hasTake ? (
               <>
-                <div className="fig leading-none text-[var(--terra-text)]" style={{ fontSize: "clamp(2.6rem, 7vw, 3.6rem)" }}>{money(reduced ? take : t)}</div>
+                {/* THE CLAMP IS GONE AND THE RUNG IS DECLARED. clamp(2.6rem,
+                    7vw, 3.6rem) resolved to 57.6px at 1280 and 41.6px at 375,
+                    and BOTH ends sit above the ladder's ceiling of 40, whose own
+                    comment reads "NOTHING IS LARGER". An inline fontSize is also
+                    invisible to verify_type_ladder, which reads classes, so the
+                    largest figure on this page was outside the instrument as
+                    well as outside the ladder: the same blind spot C7 found in
+                    rem and C17 found again on home. */}
+                <div className="fig text-[length:var(--t-answer)] leading-[1] text-[var(--terra-text)]">{money(reduced ? take : t)}</div>
                 <div className="mt-1 text-[12.5px] text-[var(--c-ink2)]">a year, after every cost is paid.</div>
               </>
             ) : (

@@ -238,10 +238,19 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <AtlasMark id="alt-country" size={13} className="opacity-55" />
           {iso2 ? <CountryFlag iso2={iso2} className="w-9 shrink-0" /> : null}
+          {/* THE NAMING h1 SITS AT --t-section, WHICH IS THE LADDER'S OWN
+              ARITHMETIC AND NOT A PREFERENCE. globals.css derives the 40 ceiling
+              in its own words: "Rule 16 wants the answer at 1.6x its supports;
+              the page title shares the masthead card with it. 40 over a 24 title
+              is 1.67x." At --t-focal this h1 stood at 30 under a 40 answer, which
+              is 1.33x at 1280 AND at 375, measured on the render, and 1.33 fails
+              step 5's floor. --t-focal is "a section's own focal figure"; a
+              country's name is not a figure. C7 settled the identical case on
+              the industry masthead. */}
           <h1
             id="headline"
             data-typography="custom"
-            className="text-balance text-[length:var(--t-focal)] font-semibold leading-tight tracking-tight text-[var(--c-ink)]"
+            className="text-balance text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]"
           >
             {name}
           </h1>

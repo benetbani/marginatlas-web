@@ -69,7 +69,13 @@ export function HoodMasthead({ d }: { d: any }) {
       <a href={d.meta?.city_href ?? "/cities"} className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]">&#8592; Back to {d.meta?.city}</a>
       <div className="flex items-center gap-3.5">
         <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[36px] shadow-sm" />
-        <h1 data-typography="custom" className="text-3xl font-semibold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city} neighborhoods</h1>
+        {/* THE NAME AT --t-section, THE ANSWER AT --t-answer, AND NEITHER
+            CARRIES A BREAKPOINT. It was text-3xl md:text-4xl, 30 and 36, under a
+            rent figure fixed at 48: measured on the render, 1.33x at 1280 and
+            1.60x at 375, so the same band read as two different compositions at
+            the two widths, which is C7's own diagnosis of how an inversion hides.
+            One size each now, and 40 over 24 is 1.67x at every width. */}
+        <h1 data-typography="custom" className="text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]">{d.meta?.city} neighborhoods</h1>
         {/* wayfinding: this page reads at district level (calm, muted) */}
         <AtlasMark id="alt-district" size={16} className="opacity-60" />
       </div>
@@ -123,7 +129,12 @@ export function HoodMasthead({ d }: { d: any }) {
       <div id="head" className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:w-fit md:px-6 md:py-6" style={CARD_SURFACE}>
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</h3>
         <div className="mt-1.5 flex flex-wrap items-end gap-x-3.5 gap-y-1">
-          <Fig className="text-[48px] leading-none text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>
+          {/* 48 was eight pixels above the ladder's ceiling, whose comment reads
+              "the page's one dominant figure. NOTHING IS LARGER". This IS the
+              page's one dominant figure, so it takes that rung rather than
+              exceeding it. The district card's own rent figure came off 48 in the
+              same change, so only one figure on this page reaches the top rung. */}
+          <Fig className="text-[length:var(--t-answer)] leading-[1] text-[var(--terra-text)]">x{rentShown.toFixed(2)}</Fig>
           <div className="pb-1.5">
             <div className="text-[length:var(--t-head)] font-semibold leading-tight text-[var(--c-ink)]">{best.name}</div>
             <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level, against a comparable unit at the city rate</div>
