@@ -1297,9 +1297,31 @@ export function SkillLevel({ level }: { level: 1 | 2 | 3 | 4 | null }) {
 /* 7. WHO WALKS IN                                                     */
 /* ================================================================== */
 /**
- * FORM: SpectraTable, the two-pole character spectra the country and city pages
- * already use. Reusing it means a reader who has seen one page reads this one
- * without learning a new idiom (rule 32, one shared kit).
+ * WARRANT (subsection procedure, step 1). A visitor reads this to decide WHAT TO
+ * PUT ON THE PRICE LIST AND WHETHER TO SELL FOR A RETURN VISIT OR FOR THIS ONE.
+ * Without it they would price for the room they imagine rather than the room that
+ * walks past, and would build a repeat-trade business on a street of strangers,
+ * or a one-visit business among people who were going to come back every week.
+ * NOT A DUPLICATE, checked on the render: no other card in either trade column
+ * describes the customer at all. The price card states what things cost; it does
+ * not say who is paying, and a price list is set by the room and not by the menu.
+ *
+ * INFORMATION TYPE (step 2): A POSITION BETWEEN TWO NAMED POLES, three times.
+ * That is one index row and it names one form, and it is the ONLY reading on this
+ * page for which a horizontal track is the right drawing rather than the lazy one.
+ *
+ * FORM: SpectraTable (idea I1), the two-pole character spectra the country and
+ * city pages already use. Reusing it means a reader who has seen one page reads
+ * this one without learning a new idiom (rule 32, one shared kit). It renders in
+ * the ratified NAMED form, not the compact one: the trait name leads the row and
+ * the explanatory poles sit under the track's own ends, which is the founder's
+ * 2026-08-30 order on the country page, and it is selected by giving each row a
+ * `name` below.
+ * BUDGET, counted on the render before building, per trade column: restaurant I1
+ * 2 of 2, I4 1 of 2, I8 9, I9 2, I11 2 of 2 (at cap). This card renders ONE I1,
+ * because the form tags its wrapper once and not once per row, so the arithmetic
+ * that binds it is one of two. It KEEPS the track it has rather than spending a
+ * new one; the town hall hands the other back in the commit after this.
  *
  * His three characteristics, verbatim: "Personas by 3 characteristics: Wealth,
  * Resident/tourist/expat/commuter (speculative mechanic tbh), Age cohort."
@@ -1310,11 +1332,19 @@ export function SkillLevel({ level }: { level: 1 | 2 | 3 | 4 | null }) {
  * for it and because the FORM is sound; it must not render until a source
  * exists that varies.
  *
- * NO DIRECTION GRADIENT. These are neutral reads: neither end of "younger to
- * older" is better for business, and colouring one end would assert a direction
- * the data does not have (rule 28). The dots are INK, which is the default, and
- * saying so here is the point: money, residency and age have no better end, so
- * no end is marked and no dot carries the accent.
+ * NO DIRECTION GRADIENT, AND IT IS A DECISION RATHER THAN A DEFAULT. The form
+ * marks a favourable end where one exists (`gradient`, the country page's
+ * government-and-business table). None of these three has one. A careful room is
+ * not a worse room than a comfortable one: it is a different price list, which is
+ * exactly what the consequence beneath says in both directions. A district of
+ * passers-by is not worse than a district of locals: it is a first-visit sale
+ * instead of a repeat one. And a younger room is not worse than an older one at
+ * all. Colouring an end would assert a direction the data does not have (rule 28,
+ * form equals meaning), and rule 29A only ever puts the accent on a GOOD end, so
+ * where there is no good end there is no accent: the dots are INK and the card
+ * carries no terracotta anywhere. It also fails rule 21 the moment it is tried,
+ * because "comfortable is the good end" is a claim about Dhaka and La Paz that
+ * nothing in this section measures.
  *
  * WHAT CHANGED, 2026-09-01, constitution B3. Three unlabelled sliders were the
  * whole card, and a reader cannot act on a slider at 64.
@@ -1322,6 +1352,19 @@ export function SkillLevel({ level }: { level: 1 | 2 | 3 | 4 | null }) {
  * THE ANSWER is the PORTRAIT, composed from the three spectra into one phrase:
  * "Comfortable passers-by, middle-aged." That is what a reader wants and what
  * three sliders made them derive for themselves.
+ * IT TAKES THE SECTION RUNG AND NOT THE FOCAL ONE, and that is a ladder rule
+ * rather than a taste. Step 5 of the subsection procedure: "A WORD IS NOT A
+ * QUANTITY. A state, a name, a verdict phrase takes lead or section size, never
+ * focal or answer. Sizing a word like a figure was a named fault: it makes a card
+ * look shouted rather than designed." Photographed at 375 before the fix, the
+ * portrait ran to three lines of 30px type and was four fifths of everything
+ * above the drawing. B4's count branch made the same move for the same reason.
+ *
+ * IT CARRIES THE SAMPLE TAG, and it had none until 2026-09-02. All three spectra
+ * are modelled 0-to-100 positions with no unit, one of which the founder himself
+ * called speculative; the people card beside it tags an availability index of
+ * exactly that kind, and step 8 is explicit that a modelled figure without the
+ * tag is a lie the reader cannot see.
  *
  * THE EVIDENCE is the same three spectra in the ratified NAMED-ROW form, the
  * trait name leading and the explanatory poles under the track's own ends, which
@@ -1378,8 +1421,16 @@ const PERSONA_MEANS: Record<PersonaKind, [string, string, string] | null> = {
 /* THE MIDDLE IS A REAL BAND, NOT A HAIRLINE AT FIFTY. A cut at exactly 50 would
    make 49 and 51 render opposite portraits off a difference neither the data nor
    a reader can defend. Twenty points either side of centre reads as "mixed",
-   which is the honest word for a spectrum sitting near its middle. */
-const leanOf = (v: number): 0 | 1 | 2 => (v <= 40 ? 0 : v >= 60 ? 2 : 1);
+   which is the honest word for a spectrum sitting near its middle.
+   THE TWO THRESHOLDS ARE NAMED BECAUSE THE DRAWING NEEDS THEM TOO. They used to
+   live only inside this function, so the track below drew its own middle as a
+   hairline at 50 while this read it as a band: photographed at 1280, the age dot
+   at 45 sat visibly left of the tick under a portrait calling the room
+   middle-aged. A threshold that lives in two places diverges, so the spectra
+   table is passed these and draws the same middle this composes from. */
+const LEAN_LO = 40;
+const LEAN_HI = 60;
+const leanOf = (v: number): 0 | 1 | 2 => (v <= LEAN_LO ? 0 : v >= LEAN_HI ? 2 : 1);
 
 export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
   if (!rows || rows.length === 0) return null;
@@ -1427,11 +1478,13 @@ export function WhoWalksIn({ rows }: { rows: PersonaSpectrum[] | null }) {
     <Section
       kicker="Who walks in"
       icon="who-for"
+      sample
       answer={portrait}
+      answerKind="words"
       answerNote="The room this trade sells to, read off the three spectra below."
       consequence={consequence}
     >
-      <SpectraTable rows={mapped} />
+      <SpectraTable rows={mapped} middle={[LEAN_LO, LEAN_HI]} />
     </Section>
   );
 }

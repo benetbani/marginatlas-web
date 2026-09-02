@@ -679,8 +679,26 @@ export { InfoTip };
  * it the track is neutral with a centre tick and BOTH poles carry equal weight (no implied
  * better end , form must not assert a direction the copy disclaims). `glossFor` supplies
  * the per-spectrum "?" gloss, rendered LEFT of the row per the founder's spec. */
-export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink" }: { rows: any[]; gradient?: boolean; glossFor?: (spectrum: string) => string | undefined; dot?: "ink" | "terra" }) {
+export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", middle }: { rows: any[]; gradient?: boolean; glossFor?: (spectrum: string) => string | undefined; dot?: "ink" | "terra";
+  /* THE MIDDLE IS A BAND WHEREVER THE CALLER READS IT AS ONE, and this prop
+     exists because the drawing was contradicting the words above it. The neutral
+     track carries ONE hairline at 50, which asserts a cut: everything left of it
+     leans one way and everything right of it the other. A caller that composes
+     English off these positions does not read the scale that way. The trade
+     page's who-walks-in treats 41 to 59 as "mixed", on the stated ground that a
+     cut at exactly 50 would make 49 and 51 print opposite portraits off a
+     difference neither the data nor a reader can defend; so a persona at 45 sat
+     visibly LEFT of the tick while the card called it middle-aged. Passing the
+     caller's own thresholds moves the same hairline mark to each EDGE of the
+     band, so the drawing says what the sentence says and a dot inside the pair
+     reads as the middle rather than as a lean.
+     IT IS OPT-IN AND UNDEFINED BY DEFAULT, so the country and city character
+     tables render exactly the mark they render today. It has no effect on the
+     `gradient` track, which carries no tick at all because its direction is the
+     reading. */
+  middle?: [number, number] | null }) {
   if (!rows?.length) return null;
+  const band = middle && middle[0] < middle[1] ? middle : null;
   /* dot: the founder's 2026-08-30 split on the country page ("dealing with the
      state, the points should be black; dealing with the people, terracotta").
      Defaults to ink so every existing caller renders unchanged.
@@ -693,10 +711,20 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink" }: 
       {rows.map((r: any, i: number) => {
         const pos = Math.max(5, Math.min(95, Math.round((r.position_0_1 ?? 0.5) * 100)));
         const right = pos >= 50;
+        /* THE ACCESSIBLE NAME FOLLOWS THE SAME BAND THE DRAWING DOES. Left to
+           the >= 50 cut, a screen reader was told "leans Younger" about the very
+           row a sighted reader saw sitting inside the middle band, which is the
+           drawing-contradicts-the-words fault in the layer nobody photographs. */
+        const lean = band ? (pos < band[0] ? r.left_label : pos > band[1] ? r.right_label : null) : right ? r.right_label : r.left_label;
         const gloss = glossFor?.(r.spectrum);
         const track = (
-          <span className="relative block h-[6px] rounded-full" role="img" aria-label={`${r.name ? r.name + ": " : ""}${r.left_label} to ${r.right_label}: leans ${right ? r.right_label : r.left_label}`} style={{ background: gradient ? "linear-gradient(90deg, #6f6f6d, var(--terra))" : "#ecebe9" }}>
-            {!gradient ? <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} /> : null}
+          <span className="relative block h-[6px] rounded-full" role="img" aria-label={`${r.name ? r.name + ": " : ""}${r.left_label} to ${r.right_label}: ${lean ? `leans ${lean}` : "in the middle"}`} style={{ background: gradient ? "linear-gradient(90deg, #6f6f6d, var(--terra))" : "#ecebe9" }}>
+            {!gradient && !band ? <span className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px" style={{ background: "var(--c-border)" }} /> : null}
+            {!gradient && band
+              ? band.map((edge) => (
+                  <span key={edge} className="absolute -bottom-[3px] -top-[3px] w-px" style={{ left: `${edge}%`, background: "var(--c-border)" }} />
+                ))
+              : null}
             <span className="absolute top-1/2 h-[11px] w-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: dotBg, boxShadow: "0 0 0 1px #e3e3e3" }} />
           </span>
         );
