@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>flag gate negative test</title>
+<style>
+  body { font: 14px system-ui; padding: 24px; }
+  .frame { display:inline-block; overflow:hidden; border-radius:6px; line-height:0; }
+  .fits  { display:inline-block; border-radius:6px; line-height:0; }
+  .card  { display:inline-flex; align-items:center; gap:12px; width:300px; padding:12px;
+           border:1px solid #ddd; border-radius:16px; overflow:visible; }
+  .flag  { width:48px; height:32px; background:linear-gradient(#c00 0 33%,#fff 33% 66%,#00c 66%); border:1px solid #ccc; }
+  .self  { border-radius:6px; }
+  .short { width:18px; height:10px; }
+</style>
+
+<p>1 CLIPPING FRAME, must be caught:</p>
+<span class="frame"><img class="flag" alt="Testland flag" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></span>
+
+<p>2 TIGHT FITTING WRAPPER, no overflow, must be caught:</p>
+<span class="fits"><img class="flag" alt="Fitland flag" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></span>
+
+<p>3 ROUNDED CARD CONTAINING A SQUARE FLAG, must be CLEARED:</p>
+<a class="card" href="#"><img class="flag" alt="Cardland flag" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><span>a country name</span></a>
+
+<p>4 FLAG ROUNDED ON ITSELF inside a plain box, must be caught:</p>
+<div><img class="flag self" alt="Selfland flag" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></div>
+
+<p>5 SQUARE FLAG UNDER THE HEIGHT FLOOR, must be caught:</p>
+<div><img class="flag short" alt="Shortland flag" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></div>
+
+<p>6 SQUARE FLAG, PLAIN PARENT, ABOVE THE FLOOR, must be CLEARED:</p>
+<div><img class="flag" alt="Cleanland flag" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></div>

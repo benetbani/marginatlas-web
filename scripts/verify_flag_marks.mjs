@@ -35,13 +35,31 @@
  * THE VIOLATION TEST. Two independent reasons, either one is enough:
  *   - border-radius > 0, read as the MAX of the four computed corners so a
  *     flag rounded on only two corners still counts, checked on the flag
- *     element itself AND on its direct parent (a flag is very often an `img`
- *     inside a `span` or `div` that carries the actual rounding via
- *     `overflow: hidden`, and a check that only reads the `img`'s own style
- *     would clear every one of those while the rendered shape is still
- *     rounded).
+ *     element itself AND on a direct parent that is actually the flag's FRAME
+ *     (a flag is very often an `img` inside a `span` or `div` that carries the
+ *     actual rounding via `overflow: hidden`, and a check that only reads the
+ *     `img`'s own style would clear every one of those while the rendered
+ *     shape is still rounded).
  *   - rendered height < 14px, the floor below which a flag's own detail
  *     (stripes, a small emblem) stops being legible rather than merely small.
+ *
+ * WHAT COUNTS AS A FRAME, narrowed 2026-09-02 against the two real cases on
+ * this site rather than by argument. The original clause read the radius of
+ * ANY direct parent, and that made the gate unable to see its own fix. On the
+ * countries list every flag's direct parent is the country TILE: a 195x63
+ * link at `rounded-lg`, `overflow: visible`, whose nearest rounded corner sits
+ * 150px from the flag's right edge. It cannot clip the flag, and while it was
+ * counted, unrounding all 194 flags would have moved the number 194 to 194.
+ * A ratchet that cannot come down when the fault is repaired stops recording
+ * the fault and starts recording the instrument. Contrast the genuine frame,
+ * `country-gb`'s `.eng-neigh__flag`: a 17x11 span around a 15x9 flag,
+ * `overflow: hidden`, radius 2px, whose corner IS the flag's corner.
+ * So a parent's radius counts only when the parent either CLIPS (computed
+ * overflow hidden / clip / scroll / auto on either axis) or FITS, its border
+ * box within 2px of the flag's on all four sides. Both of those describe the
+ * frame the original clause was written for; neither describes a card that
+ * merely contains a flag among other content. Verified with --pages against a
+ * scratch page carrying one of each.
  *
  * Usage: node scripts/verify_flag_marks.mjs [--write-baseline] [--pages name=path,...]
  */
@@ -128,11 +146,25 @@ function measure() {
     const s = getComputedStyle(el);
     const ownR = Math.round(maxCornerRadius(s));
     const wrapper = el.parentElement;
-    const wrapperR = wrapper ? Math.round(maxCornerRadius(getComputedStyle(wrapper))) : 0;
+    /* A parent is the flag's FRAME only if it clips it or fits it. See the
+       header note: a card that merely contains a flag rounds its own corners,
+       not the flag's, and counting those made the fix invisible. */
+    let wrapperR = 0;
+    if (wrapper) {
+      const ws = getComputedStyle(wrapper);
+      const wr = wrapper.getBoundingClientRect();
+      const clips = /hidden|clip|scroll|auto/.test(ws.overflowX) || /hidden|clip|scroll|auto/.test(ws.overflowY);
+      const fits =
+        Math.abs(r.left - wr.left) <= 2 &&
+        Math.abs(r.top - wr.top) <= 2 &&
+        Math.abs(wr.right - r.right) <= 2 &&
+        Math.abs(wr.bottom - r.bottom) <= 2;
+      if (clips || fits) wrapperR = Math.round(maxCornerRadius(ws));
+    }
     const h = Math.round(r.height);
     const reasons = [];
     if (ownR > 0) reasons.push(`radius ${ownR}px on the flag itself`);
-    if (wrapperR > 0) reasons.push(`radius ${wrapperR}px on its wrapper (<${wrapper.tagName.toLowerCase()}>)`);
+    if (wrapperR > 0) reasons.push(`radius ${wrapperR}px on its frame (<${wrapper.tagName.toLowerCase()}>)`);
     if (h < MIN_HEIGHT) reasons.push(`height ${h}px, below the ${MIN_HEIGHT}px legibility floor`);
     const label = el.getAttribute("alt") || el.getAttribute("aria-label") || el.getAttribute("title")
       || (el.tagName === "SVG" ? el.querySelector("title")?.textContent : "")

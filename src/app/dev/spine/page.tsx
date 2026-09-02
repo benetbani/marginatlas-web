@@ -159,7 +159,7 @@ function Hero({ d }: { d: any }) {
         <a className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--terra-border)] hover:text-[var(--terra-text)]">&#8592; All countries</a>
         <div className="mt-2 grid items-center gap-x-8 gap-y-6 md:grid-cols-[1fr_auto]">
           <div>
-            <div className="flex items-center gap-3.5"><CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[52px] rounded-sm shadow-sm" /><h1 data-typography="custom" className="text-balance text-3xl font-semibold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
+            <div className="flex items-center gap-3.5"><CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[52px] shadow-sm" /><h1 data-typography="custom" className="text-balance text-3xl font-semibold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.name}</h1></div>
             {/* THE answer, in the top 20%. The unit is FUSED into the figure lockup
                 ("$36 / $100") so the hero can never read as a price; the side line
                 carries the meaning and NAMES the base (profit), so the figure can

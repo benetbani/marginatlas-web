@@ -47,7 +47,7 @@ export function CityHero({ d }: { d: any }) {
       {/* identity LEFT, the one answer figure RIGHT , the band fills, nothing competes */}
       <div className="grid gap-5 md:grid-cols-[1.3fr_1fr] md:items-end">
         <div className="flex items-center gap-3.5">
-          <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[44px] rounded-sm shadow-sm" />
+          <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[44px] shadow-sm" />
           <div>
             <h1 data-typography="custom" className="text-balance text-3xl font-semibold tracking-tight text-[var(--c-ink)] md:text-4xl">{d.meta?.city}</h1>
             <div className="text-[length:var(--t-body)] text-[var(--c-muted)]">Opening a business in {inPhrase}</div>

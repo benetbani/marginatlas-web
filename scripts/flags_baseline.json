@@ -1,9 +1,10 @@
 {
   "home": 6,
-  "countries-list": 194,
+  "countries-list": 0,
   "country-gb": 6,
-  "city-london": 1,
-  "hood-london": 1,
+  "city-london": 0,
+  "hood-london": 0,
   "cell-london-restaurants": 0,
-  "industry-restaurants": 0
+  "industry-restaurants": 0,
+  "country-gb-new": 0
 }

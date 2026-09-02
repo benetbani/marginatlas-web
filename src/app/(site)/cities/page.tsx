@@ -261,7 +261,7 @@ function CityIndexLink({ city }: { city: DirectoryCity }) {
          its city across a column boundary. */
       className="group flex break-inside-avoid items-center gap-2 rounded-md py-1.5 pl-1 pr-2 transition-colors hover:bg-atlas-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
     >
-      <CountryFlag iso2={city.iso2} className="w-5 shrink-0 rounded-[2px]" />
+      <CountryFlag iso2={city.iso2} className="w-5 shrink-0" />
       <span className="min-w-0 truncate text-sm text-ink-900 group-hover:text-atlas-700">
         {city.name}
         {/* `hidden sm:inline`. The index runs two columns from the base width

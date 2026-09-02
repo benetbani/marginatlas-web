@@ -487,7 +487,7 @@ export function AtlasIndex({
                         aria-hidden
                         className="atlas-flag pointer-events-none absolute left-2 top-[15px] z-[1] grid h-7 w-7 place-items-center rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)]"
                       >
-                        <CountryFlag iso2={r.flagIso2} className="h-[15px] w-[22px] rounded-[2px] border-0" />
+                        <CountryFlag iso2={r.flagIso2} className="h-[15px] w-[22px] border-0" />
                       </span>
                     ) : null}
                     <DecisionRow d={focalToDatum(r)} signals={supportSignals} />

@@ -209,7 +209,21 @@ export default function CountriesHub() {
                   {sorted.length} countries
                 </span>
               </div>
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {/* ONE COLUMN AT PHONE, measured rather than chosen. Two columns
+                  inside a 327px card leave a name 68px, and 68px does not hold
+                  "Cameroon" (69px), let alone "Madagascar" (83px): 27 names
+                  still overflowed after they were allowed to wrap, because a
+                  single word has nowhere to break. One column gives the name
+                  219px and every country on the list fits, one name on one
+                  line, except the longest, which wraps in two. Step 6's own
+                  instruction: at phone width a wide thing reconfigures.
+                  The ladder above phone moved down one rung with it, 1 / 2 / 3 /
+                  4 / 5, because the old 3-at-640 and 4-at-768 were the two rungs
+                  that still overflowed after the wrap: 88px of name at 768 does
+                  not hold "Turkmenistan" or "Liechtenstein" (91px each), and a
+                  single word has nowhere to break. Counted at eight widths after
+                  the change, no name is cut at any of them. */}
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {sorted.map((country) => {
                   const cityCount = CITY_COUNT_BY_ISO2.get(country.code) || 0;
                   /* Benchmarks first, cities second, because the benchmark is
@@ -225,12 +239,25 @@ export default function CountriesHub() {
                       href={`/${country.code.toLowerCase()}`}
                       className="group flex items-center gap-3 rounded-lg border border-parchment bg-white p-3 transition-all hover:-translate-y-px hover:border-atlas-300 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2"
                     >
-                      <CountryFlag
-                        iso2={country.code}
-                        className="w-8 shrink-0 rounded-sm"
-                      />
+                      {/* No radius class here, and none anywhere else that
+                          draws a flag: CountryFlag strips one now, and the
+                          note in that file says why. This tile carried
+                          `rounded-sm` on all 194 of its flags. */}
+                      <CountryFlag iso2={country.code} className="w-8 shrink-0" />
                       <span className="min-w-0">
-                        <span className="block truncate text-sm font-semibold text-ink-900 group-hover:text-atlas-700">
+                        {/* A NAME WRAPS, IT NEVER CLIPS. `truncate` cut a
+                            country's name at every width this page renders at:
+                            measured on the render, 55 of 194 at 375, 20 at 768,
+                            10 at 1280 and at 1440, and "Saint Vincent and the
+                            Grenadines" needs 224px against the widest column
+                            this grid ever gives a name, 125px, so it was cut on
+                            every screen there is. A visitor comes here to find
+                            the country they came for; a clipped name defeats
+                            that. C6 settled the same fault the same way on the
+                            trades card: wrap. `leading-snug` keeps the second
+                            line tight to the first so the pair still reads as
+                            one name. */}
+                        <span className="block text-sm font-semibold leading-snug text-ink-900 group-hover:text-atlas-700">
                           {country.name}
                         </span>
                         {benchmarks > 0 ? (
