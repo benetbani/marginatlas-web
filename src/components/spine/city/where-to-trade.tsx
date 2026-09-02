@@ -8,17 +8,52 @@
  * unknowable metric, never rendered , and the district x trade ProMatrix built
  * on it is deleted with it (it squared the banned figure).
  *
- * form: a dot plot on one shared, drawn domain, INVERTED per rule 29A so the
- * lighter (better) rent reads RIGHT and the heavier (worse) rent reads LEFT ,
- * rent is a cost/burden, so cheaper is the good end and carries terracotta. The
- * city-average x1 is the drawn reference line at the RIGHT (the cheapest point),
- * labelled once; every inner district sits to its left. Dots, not bars (§25).
- * focal: the map + the lightest-rent district; terracotta on the leader's dot only.
+ * A6 OF THE SUBSECTION QUEUE, rebuilt 2026-09-02 on the catalogue's
+ * LollipopColumn (idea I2, bar set, cap 3 per page). The city page had declared
+ * ONE idea in total, an I9, so this is its second declaration and its first
+ * drawn one.
+ *
+ * WARRANT (subsection procedure, step 1). A visitor reads this to decide WHICH
+ * DISTRICT TO GO LOOKING FOR A UNIT IN, given what they can carry in rent.
+ * Without it they would have the two ends of the spread from the card above and
+ * would have to assume the districts in between are spaced evenly across it,
+ * which they are not: two sit within a tenth of the cheapest, and then the ladder
+ * jumps by two thirds.
+ *
+ * NOT A DUPLICATE OF THE VERDICT CARD ABOVE IT, checked rather than assumed. That
+ * card states three figures, the lightest, the city average and the heaviest. This
+ * one states the SHAPE of the ladder between them, which is the part a reader
+ * cannot infer from two ends, and it is the only place the five districts in the
+ * middle appear at all.
+ *
+ * WHAT WAS HERE, AND WHY IT HAD TO GO. Seven horizontal tracks, one per district,
+ * each with a dot on it, hand-rolled inline so none of them carried a data-idea
+ * and no budget could see them: the catalogue addendum's "where the sameness
+ * actually lives", and the exact shape the founder named on 2026-09-01. Seven
+ * against a cap of two. A track is the right drawing for a POSITION BETWEEN TWO
+ * NAMED POLES, and only one of this one's ends was named: the right-hand end was
+ * the city average, the left-hand end was `max + 0.2 rounded`, which is not a pole
+ * a reader could name or a district could reach.
+ *
+ * THE STEMS STAND UP FROM A TRUE ZERO, which a rent MULTIPLE has: x2.40 really is
+ * twice x1.20, so a stem twice as tall is a true statement rather than a drawn
+ * one. That is the test the previous run applied to a modelled 0-to-100 index and
+ * failed it; this figure passes it.
+ *
+ * RULE 29A IS SATISFIED BY THE ORDER, NOT BY AN INVERSION. Rent is a burden, so
+ * the rule wants the good end marked and never the worse one. The entries are
+ * passed CHEAPEST FIRST, which is the founder's own D1 call for this section, so
+ * the form's one accent lands on entry one, which is the lightest district: the
+ * good end. Nothing is inverted before rendering, because inverting a rent would
+ * make every stem publish a number the data does not hold and disagree with the
+ * figure printed on its own dot.
+ *
  * map: ink pins, terra ONLY on the rent-load leader; uniform pin size; label
  * declutter priority follows rent rank (points passed in rank order), so the
  * packed West End trio yields its labels first.
- * width: Full. The revenue-vs-city counterpoint stays one tap away in a quiet
- * disclosure; no cross-district revenue-vs-keep verdict footer (rulebook v1 §15).
+ * width: half the band, beside the six quick reads. The revenue-vs-city
+ * counterpoint and the cross-district verdict footer stay deleted (rulebook v1
+ * §15).
  *
  * THE CROSS-LINK THIS FILE USED TO DESCRIBE WAS NEVER BUILT, and the sentence
  * claiming it has been removed rather than left to mislead the next reader. The
@@ -40,7 +75,8 @@
  * not keep a dev server alive. Written down instead.
  */
 import * as React from "react";
-import { Box, Rail, Fig, InfoTip, TERRA } from "@/components/spine/kit";
+import { Box, Rail, InfoTip, InlineDisclosure } from "@/components/spine/kit";
+import { LollipopColumn } from "@/components/spine/forms-v2";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 
 type District = { name: string; slug: string; character: string; rev_vs_city_pct: number; rent_mult: number; lat: number; lng: number };
@@ -68,15 +104,12 @@ export function WhereToTrade({ d }: { d: any }) {
     : undefined;
   const sample = w._meta?.confidence === "placeholder" || w._meta?.confidence === "modeled";
 
-  // dot-plot geometry: one shared DATA-DERIVED domain , x1 is the drawn floor AND the
-  // city-average reference; the far end sits just past the heaviest district, so a
-  // high-spread city never renders a dot past the track (§21, the hardcoded 2.8 clipped).
-  const maxRent = Math.max(...rows.map((r) => r.rent_mult), 1.2);
-  const DOMAIN: [number, number] = [1, Math.round((maxRent + 0.2) * 10) / 10];
-  // INVERTED (rule 29A): rent is a cost/burden, so the cheaper (better) end reads
-  // RIGHT (pos 100) and the heavier (worse) end reads LEFT (pos 0). The city floor
-  // x1 lands at the right, the lightest-rent leader's dot sits just left of it.
-  const posOf = (v: number) => Math.max(0, Math.min(100, ((DOMAIN[1] - v) / (DOMAIN[1] - DOMAIN[0])) * 100));
+  /* THE UNIT IS PRINTED ON EVERY MARK, in the notation the rest of this page
+     already uses for a rent multiple: an x and two decimals. The form draws its
+     stems from a true zero, so the heights are ratios between districts and the
+     figures say which ratio. */
+  const asMult = (v: number) => `x${v.toFixed(2)}`;
+  const entries = rows.map((r) => ({ name: r.name, value: r.rent_mult }));
 
   // map points in RENT-RANK order (declutter keeps labels by array priority, so
   // the lightest-rent districts keep their names and the packed West End trio
@@ -100,57 +133,82 @@ export function WhereToTrade({ d }: { d: any }) {
       {/* "By district" , plain, and deliberately NOT "Where to trade": this chapter's
           Movement heading (city-view.tsx) already carries those words, and the same
           words on two labels is the exact defect the rulebook's residue pass exists
-          to kill , so the box's own kicker carries different words. */}
-      <Rail icon="best-areas" tone="terra" kicker="By district" sample={sample} />
-      <div className={hasMap ? "grid gap-4 lg:grid-cols-[1.35fr_1fr] lg:items-stretch" : "grid gap-4"}>
+          to kill , so the box's own kicker carries different words.
+          THE RAIL IS INK. It carried tone="terra", which put the accent on chrome:
+          an icon tile is an affordance, not an answer, and this card's one accent
+          belongs to the lightest district's mark. Rule 37, and the same call the
+          format picker's own header records in as many words. */}
+      <Rail icon="best-areas" kicker="By district" sample={sample} />
+      {/* THE MAP SITS ABOVE THE CHART RATHER THAN BESIDE IT, and the reason is
+          measurable. The pairing used to be 1.35fr of map to 1fr of list, which
+          suited a stack of rows and starves a set of columns: in a half-band card
+          at 1280 that column is under 200px, where seven districts get 27px of
+          name each. A map wants HEIGHT and a column chart wants WIDTH, so stacked
+          each one gets the axis it needs and neither takes it from the other.
+          It changes nothing a reader has seen: the live adapter carries no
+          coordinates for any city, so hasMap is false on every real page today. */}
+      <div className="grid gap-4">
         {/* the map , the highest-craft object, given real height. Omitted with no coords. */}
         {hasMap ? (
           <div className="min-w-0">
             <SpineMap points={points} ariaLabel="Map of London districts" fitPadding={56} />
           </div>
         ) : null}
-        {/* the ranked list , a rent-load dot plot against the drawn city = x1 line */}
         <div className="min-w-0">
-          <div className="mb-2 flex items-baseline justify-between gap-2">
+          {/* THE COLUMN HEAD, and it is a label rather than a caption: what the
+              ranking is ordered by on the left, what the figures are counted in on
+              the right. Rule 26 allows a chart its direct labels and its unit and
+              nothing else. */}
+          <div className="mb-3 flex items-baseline justify-between gap-2">
             <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Ranked by rent load, lightest first</span>
-            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="The district's commercial rent as a multiple of the city-average level; x1.00 is the city average." /></span>
+            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">rent, x the city level<InfoTip gloss="The district&#39;s commercial rent as a multiple of the city-average level; x1.00 is the city average." /></span>
           </div>
-          <div className="space-y-1">
-            {rows.map((r, i) => {
-              const isLead = i === 0;
-              return (
-                <a
-                  key={r.slug}
-                  href={hoodHref}
-                  className="hov -mx-2 block rounded-md px-2 py-1.5 transition-colors"
-                >
-                  <div className="flex items-baseline justify-between gap-2">
-                    <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink)]">{r.name}</span>
-                    <Fig className={`shrink-0 text-[length:var(--t-body)] ${isLead ? "font-semibold text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>x{Number(r.rent_mult).toFixed(2)}</Fig>
+          {/* FIVE COLUMNS BELOW lg, ALL OF THEM ABOVE IT, and the count came off a
+              photograph rather than a preference. At 375 this card is 303px inside
+              its padding, where seven columns are 38px each and the word "London"
+              alone is 46px: every name would break mid-word or run into its
+              neighbour. Five are 56px, which clears the longest word in the set.
+              WHAT THE PHONE LOSES IS THE TOP OF THE LADDER, and it is the one
+              honest place to lose it: the card directly above states the heaviest
+              district and its multiple as one of its three figures, so a reader
+              scrolling a phone meets x3.00 in the West End immediately before this
+              drawing rather than not at all. */}
+          <LollipopColumn
+            rows={entries}
+            format={asMult}
+            narrowCount={5}
+            ariaLabel="Districts ranked by commercial rent, lightest first"
+          />
+          {/* THE CARD'S FOOT IS ONE ROW, NOT TWO, and a photograph is why. Stacked,
+              the disclosure and the link left about 290px of nothing to their right
+              across two lines, which is an empty rectangle wider than a third of a
+              480px card: the founder's first fault class, in the quietest part of
+              the card. Both are chrome, so they share a row, one at each edge, and
+              the row spans what the drawing above it spans.
+              WHAT EACH DISTRICT IS, kept rather than dropped: the character line
+              used to sit under every row, and a column chart has one line of label
+              per entry which belongs to the name. The words are text and not a
+              graphic, so a disclosure is where they are allowed to be (rulebook v2
+              S6).
+              ONE LINK, NOT SEVEN: every district row used to be an anchor and all
+              seven pointed at the same page, so the card offered one destination
+              dressed as seven choices. Navigation is chrome and stays ink. */}
+          <div className="mt-3 flex items-baseline justify-between gap-3">
+            <InlineDisclosure name="districts" summary="What each district is" className="group min-w-0">
+              <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+                {rows.map((r) => (
+                  <div key={r.slug} className="flex items-baseline justify-between gap-3 py-1.5">
+                    <span className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{r.name}</span>
+                    <span className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.character}</span>
                   </div>
-                  {/* dot at the rent multiple on the shared, INVERTED track (cheaper = right,
-                      rule 29A); the city-average x1 is the drawn line at the right edge, and
-                      every district sits to its LEFT (all pay above the city average) */}
-                  <div className="relative mt-1.5 h-2" role="img" aria-label={`${r.name}: rent ${r.rent_mult} times the city-average level`}>
-                    <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full" style={{ background: "var(--c-border)" }} />
-                    <span className="absolute -bottom-[2px] -top-[2px] w-px bg-[var(--c-line-strong)]" style={{ left: `${posOf(1)}%` }} />
-                    <span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${posOf(r.rent_mult)}%`, background: isLead ? TERRA : "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-                  </div>
-                  <div className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-                    <span className="truncate">{r.character}</span>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-          {/* the shared axis, drawn once: the labelled city floor + the far end. The
-              revenue-vs-city disclosure and its "loud names take the most, but rent takes
-              it back" footer are DELETED (§15 cross-entity verdict footer; §18): the list
-              reads on rent load alone, the founder's D1 metric. */}
-          <div aria-hidden className="relative mt-1 h-4 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
-            {/* Notation N1: two decimals, so the axis end reads like every value under it. */}
-            <Fig className="absolute left-0 normal-case">x{Number(DOMAIN[1]).toFixed(2)}</Fig>
-            <span className="absolute right-0 whitespace-nowrap normal-case">city x1.00</span>
+                ))}
+              </div>
+            </InlineDisclosure>
+            {hoodHref ? (
+              <a href={hoodHref} className="hov shrink-0 -mr-2 rounded-md px-2 py-1 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">
+                The districts &#8594;
+              </a>
+            ) : null}
           </div>
         </div>
       </div>
