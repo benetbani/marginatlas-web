@@ -1264,16 +1264,68 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
             to name it by. It is not an invented title: the city page carries the
             identical form under "Peer cities, side by side", so this is the same
             naming already in use one altitude up. */}
-        <h3 data-typography="custom" className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Districts, side by side</h3>
+        {/* THE TITLE SAT ON THE CARD'S OWN BORDER AND ITS FIRST LETTER WAS BEING
+            EATEN BY THE CORNER, at every width, since the title was added. Found
+            in C43's 768px photograph, which is the only reason anyone saw it: the
+            card has `overflow-hidden` and a 14px radius and NO horizontal padding
+            of its own, and every other block inside it carries its own `px-4`, so
+            the h3 rendered one pixel inside the border and the "D" of "Districts"
+            was clipped by the rounded corner. It takes the same `px-4` its rows
+            take, and `pt-3` to match the header row's own top padding. Not the
+            row's original scope and squarely its fault class: a name a reader
+            cannot read whole. */}
+        <h3 data-typography="custom" className="mb-2 px-4 pt-3 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Districts, side by side</h3>
 
-        {/* DESKTOP / TABLET */}
-        <div className="hidden sm:block">
+        {/* ===== C43, 2026-09-02: THE SIDE-BY-SIDE COLUMNS ARE SHOWN ONLY WHERE
+             THERE IS ROOM FOR THEM, AND THE TABLET IS NOT SUCH A PLACE. ========
+
+             WHAT WAS WRONG, measured with a Range rect after
+             `document.fonts.ready` (`scratchpad/loop18_c43.mjs`):
+
+               viewport   card   district column   headers cut
+               1280       520    105               0
+               1024       472    93                0, by ONE TENTH OF A PIXEL
+               900        410    79                4 of 6
+               768        344    64                4 of 6
+               640        608    125               0
+
+             At 768 and 900 this card printed "South Lon..." beside "North
+             Lon...", two districts separated by one letter, and "mid resid..."
+             twice beneath them. A comparison whose column headings cannot be
+             told apart is not a comparison.
+
+             THE CAUSE IS NOT THIS TABLE, it is that `Band` gives every band
+             equal halves from `md` to `lg` (its own ratified D4 rule, kept on
+             trial by C21), so between 768 and 1023 this card is 344px: ONE PIXEL
+             wider than the same card on a 375px phone, and holding four columns
+             where the phone is given one block per district. That is run 7's
+             ruling arriving for the fourth time, "a viewport breakpoint is a
+             proxy for a card width and it is wrong wherever a narrow card sits
+             on a wide screen", and A5's `lg`-not-`md` finding in the same words.
+
+             SO THE SWITCH MOVES ONTO THE BREAKPOINTS THAT CAUSE THE NARROWNESS
+             rather than onto a proxy for them. `md:hidden lg:block` hides the
+             columns across exactly the window where `Band` has halved the row,
+             and the stacked block that already exists for the phone, and was
+             already built and photographed, covers it. The 640-to-767 range
+             keeps the columns, because there the band is ONE column and this
+             card is 608 to 668px, which is 125px a district.
+
+             AND THE HEADINGS WRAP RATHER THAN CUT, which is the belt and not the
+             fix, in A5's own division of the two: at 1024 "South London" needs
+             92.9px in a 93px column, a tenth of a pixel of margin, which is a
+             coin flip rather than a clearance. Wrapped, the worst case is a name
+             on two lines, and every single WORD in the set fits ("London" 49.6,
+             "residential" 56.8). Truncation was refused for C6's and C19's
+             reason: a table's own row and column names are what a reader
+             identifies the data by. */}
+        <div className="hidden sm:block md:hidden lg:block">
           <div className="grid items-end gap-3 border-b border-[var(--c-border)] px-4 py-3" style={{ gridTemplateColumns: `minmax(0,1.3fr) repeat(${cols.length}, minmax(0,1fr))` }}>
             <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Metric</span>
             {cols.map((d) => (
               <div key={d.slug} className="min-w-0">
-                <div className="truncate text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{d.name}</div>
-                <div className="truncate text-[length:var(--t-micro)] text-[var(--c-muted)]">{d.character}</div>
+                <div className="text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{d.name}</div>
+                <div className="mt-0.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.character}</div>
               </div>
             ))}
           </div>
@@ -1298,8 +1350,11 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
           ) : null}
         </div>
 
-        {/* MOBILE , one stacked block per district */}
-        <div className="divide-y divide-[var(--c-border)] sm:hidden">
+        {/* MOBILE, AND THE TABLET, one stacked block per district. The second
+            range is C43's: from `md` to `lg` this card is 344px, so it gets the
+            layout built for a card that size rather than four columns squeezed
+            into it. See the desktop block above for the measurements. */}
+        <div className="divide-y divide-[var(--c-border)] sm:hidden md:block lg:hidden">
           {cols.map((d) => (
             <div key={d.slug} className="px-4 py-3">
               <div className="mb-2 flex items-baseline justify-between gap-2">

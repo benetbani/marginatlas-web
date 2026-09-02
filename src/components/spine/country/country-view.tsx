@@ -575,23 +575,95 @@ function Money({ money }: { money: any }) {
   const rows: any[] = (Array.isArray(money?.list) ? [...money.list] : []).sort((x, y) => (y?.keeps_usd_year ?? 0) - (x?.keeps_usd_year ?? 0));
   if (rows.length < 2) return null;
   const tagged = typeof money?._meta?.confidence === "string" && money._meta.confidence !== "measured";
-  const cols = "grid grid-cols-[minmax(0,1fr)_5.5rem_5.5rem_1.25rem] items-baseline gap-x-3";
+  /* ===== C43, 2026-09-02: THE ROW IS TWO BLOCKS, AND THE CARD'S OWN WIDTH SAYS
+     WHETHER THEY SHARE A LINE. ================================================
+
+     WHAT WAS WRONG, measured with a Range rect after `document.fonts.ready`
+     (`scratchpad/loop18_c43.mjs`), because a name's own element box IS its
+     column's width and can never tell you the name was cut. The row was ONE
+     four-column grid whose name track was `minmax(0,1fr)`, so the name got
+     whatever the two fixed figure columns left. Against the six names' true
+     widths, "Restaurants" 79.6, "Grocery stores" 96.2, "Sports & fitness"
+     104.5, "Auto repair shops" 115.6, "Cafes & coffee shops" 138 and
+     "Hairdressers & beauty" 144.3:
+
+       viewport   card   name track   names cut
+       1280       624    350          0
+       1024       566    292          0
+       900        410    136          2
+       768        344    70           SIX OF SIX
+       640        608    334          0
+       480        448    174          0
+       375        343    69           SIX OF SIX
+
+     TWO WINDOWS, NOT ONE, and the queue's row had found only the outer pair: the
+     phone, and the WHOLE TABLET RANGE, 768 to 1023, where `Band` gives every band
+     equal halves under its own ratified D4 rule and this card is 344px, one pixel
+     wider than the same card at 375.
+
+     TWO FIXES WERE WEIGHED AND REFUSED.
+     TRUNCATION IS ALREADY RULED OUT, twice this loop and both times on a
+     photograph: C6 made RankedTiles wrap rather than cut, and C19 found the
+     countries list cutting a name at every width on a page whose whole job is
+     finding the country you came for. A row named by a trade cannot cut the
+     trade. SMALLER TYPE IS NOT AVAILABLE either: step 5 makes the ladder the only
+     source of sizes and body 14 is where a table's names sit everywhere else.
+     AND WRAPPING THE NAME INSIDE ITS OWN TRACK DOES NOT FINISH IT, which is
+     C19's hardest-won finding: a word has nowhere to break, and "Hairdressers"
+     alone measures 82.9 against a 69px track, so wrapping there buys a split
+     mid-word, which A5 photographed as "Equipmen / t" and rejected.
+
+     SO THE READINGS LEAVE THE LINE, and this is not a new shape: it is the idiom
+     `setup-tiers.tsx` already ships on THIS PAGE, ratified with a photograph in
+     run 9, for the identical problem of a name plus several readings in a card
+     too narrow to hold both. A name block and a readings block in a wrapping flex
+     row, so a break can only ever happen BETWEEN them and never inside either,
+     driven by the CARD's own width rather than by a viewport breakpoint. That is
+     run 7's ruling and it is the only rule that can work here: this card is 343px
+     at 375, 448 at 480, 608 at 640, 344 at 768 and 624 at 1280, so its width is
+     NOT monotonic in the viewport and no breakpoint ladder can name the narrow
+     cases.
+
+     THE ARITHMETIC, so the basis is a measurement and not a taste. The readings
+     block is 5.5rem + 5.5rem + 1.25rem + three 12px gaps = 232px, and it does not
+     shrink. The name's basis is 10rem, 160px, the longest name in the fixed six
+     (144.3) rounded up. A flex line breaks when 160 + 12 + 232 = 404 exceeds the
+     card's inner width, and whenever it does NOT break the name's share is at
+     least 160, which holds every name on one line. The two thresholds coincide by
+     construction, which is why the basis is that number.
+     THE LEADING 1fr SPACER inside the readings block keeps the figures packed to
+     the card's own right edge on BOTH lines: the block grows and the spacer eats
+     the growth, so the two figure columns and the arrow land in the same place
+     whether they sit beside a name or beneath one. Taken from setup-tiers, which
+     records the 375 measurement that made it necessary. */
+  const nameSlot = "min-w-0 flex-[1_1_10rem]";
+  const readings = "grid flex-[1_0_auto] grid-cols-[minmax(0,1fr)_5.5rem_5.5rem_1.25rem] items-baseline gap-x-3";
+  const line = "flex flex-wrap items-baseline gap-x-3";
   return (
     <Box id="money">
       <Rail icon="owner-keeps" kicker="What an owner keeps, trade by trade" sample={tagged} />
-      <div className={cols + " pb-2"}>
-        <span aria-hidden />
-        <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Kept a year</span>
-        <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To open</span>
-        <span aria-hidden />
+      {/* The header takes the SAME two blocks as a row, so its labels sit over
+          their own columns at every width rather than over a template only the
+          wide case ever uses. */}
+      <div className={line + " pb-2"}>
+        <span aria-hidden className={nameSlot} />
+        <span className={readings}>
+          <span aria-hidden />
+          <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Kept a year</span>
+          <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To open</span>
+          <span aria-hidden />
+        </span>
       </div>
       <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
         {rows.map((r: any) => (
-          <a key={r.slug} href={r.href} className={"group " + cols + " py-2.5"}>
-            <span className="truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]">{r.name}</span>
-            <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(r.keeps_usd_year)}</Fig>
-            <Fig className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
-            <span aria-hidden className="text-right text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
+          <a key={r.slug} href={r.href} className={"group " + line + " py-2.5"}>
+            <span className={nameSlot + " text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]"}>{r.name}</span>
+            <span className={readings}>
+              <span aria-hidden />
+              <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(r.keeps_usd_year)}</Fig>
+              <Fig className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
+              <span aria-hidden className="text-right text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
+            </span>
           </a>
         ))}
       </div>
