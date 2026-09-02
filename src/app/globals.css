@@ -2334,6 +2334,47 @@
   --chart-3: #6f6f74;
   --chart-4: #9a9a9e;
   --chart-5: #c0c0c4;
+
+  /* ============ THE SPINE PALETTE, MOVED HERE AND NOT COPIED =============
+     These twelve declared inside SpineShell's own inline <style>, at `:root`
+     and therefore unscoped, so they existed on a spine page and nowhere else.
+     Every kit form reads them: StackBar's hairline is `--c-border`, its legend
+     is `--c-ink2`, every fill is `--terra`.
+
+     WHAT THAT COST, MEASURED RATHER THAN ASSUMED (loop run 10, C5). Rendered
+     outside the shell with the same stylesheet, `--c-border`, `--c-ink`,
+     `--c-ink2` and `--terra` ALL resolve to the empty string, so the
+     declarations that read them become invalid and fall back: a bar's hairline
+     lands on `currentColor`, a near-black rule where the shell draws a warm
+     #e7e2df, and a muted legend prints in full ink. Photographed side by side.
+     The TYPE ladder above does not have this problem, because it lives here.
+
+     FOUR SURFACES ALREADY REFERENCED THEM WITH NOTHING DEFINING THEM:
+     src/app/industries/page.tsx, src/components/country2/page/CountryPage.tsx,
+     src/components/city2/page/CityYearStrip.tsx and
+     src/components/home/home2-view.tsx all read `var(--c-*)` and none of the
+     four renders inside SpineShell (atlas-spine.css declares the type ladder
+     and the neutral ramp, and none of these twelve). So this is a fix to live
+     code as well as an unlock.
+
+     IT IS A MOVE, NOT A SECOND COPY. The shell's own block is deleted in the
+     same change: a value living in two files diverges, which this repo has paid
+     for repeatedly. globals.css is imported by the ROOT layout, so every route
+     including every dev route inherits it, and the shell's block was later in
+     document order at equal specificity, so every spine page computes exactly
+     what it computed before. */
+  --c-card: #ffffff;
+  --c-soft: #f6f4f2;
+  --c-soft2: #efebe8;
+  --c-border: #e7e2df;
+  --c-line-strong: #d8d0cb;
+  --c-ink: #1b1b1a;
+  --c-ink2: #565654;
+  --c-muted: #6f6f6d;
+  --terra: #fb8469;
+  --terra-text: #c2410c;
+  --terra-soft: #fff1ed;
+  --terra-border: #ffc7ba;
 }
 
 /* ================== THE WORDS ARE NARROW, THE PICTURES ARE WIDE ==========

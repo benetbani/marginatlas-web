@@ -62,8 +62,16 @@ export function SpineShell({ children, bg = DEFAULT_BG, bgPosition = "center 16%
       <div aria-hidden className="spine-frame-layer" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", backgroundImage: `url('${bg}')`, backgroundSize: "cover", backgroundPosition: bgPosition, opacity: 0.32, filter: "saturate(0.85) contrast(1.02)" }} />
       {/* Layer 4: READABLE BAND , centered, feathers to the untouched photo in the gutters. */}
       <div aria-hidden className="spine-band spine-frame-layer" style={{ position: "fixed", insetBlock: 0, left: "50%", transform: "translateX(-50%)", width: "min(1480px, 100%)", zIndex: 0, pointerEvents: "none" }} />
-      <style>{`:root{--c-card:#ffffff;--c-soft:#f6f4f2;--c-soft2:#efebe8;--c-border:#e7e2df;--c-line-strong:#d8d0cb;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#6f6f6d;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}
-.fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
+      {/* THE TWELVE COLOUR TOKENS THAT USED TO OPEN THIS BLOCK NOW LIVE IN
+          globals.css, and the reason is that they were never scoped to anything.
+          They were declared at `:root` from inside a component, so they existed
+          on a page that mounted this shell and nowhere else, while four surfaces
+          outside the spine tree already read them. Moved, not copied: globals.css
+          is imported by the root layout, so every route inherits them and this
+          page computes what it always computed. The rules below stay, because
+          each depends on something this shell owns: `.fig` on --font-grotesk,
+          which only the spine loads, and the band and hover rules on the frame. */}
+      <style>{`.fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
 /* Two-level passe-partout: EXACTLY two flat opacity plateaus with ONE hard step ~1cm outside the content edge. Content zone .34, no-content margins .10. Keyed to the 1480px band over the 1120px content column (content edge = 50% +/- 37.84%; the step, 1cm outside, = 9.61% / 90.39%). Lightened from .82/.16 on 2026-08-25 (rulebook v2 §36): at .82 the band took the photo to near-white before any card drew, leaving the ratified frosted card with nothing to refract. The cards now carry the legibility this band gave up , see --glass-alpha-spine in globals.css. */
 .spine-band{background:linear-gradient(to right,rgba(255,255,255,.10) 0%,rgba(255,255,255,.10) 9.61%,rgba(255,255,255,.34) 9.61%,rgba(255,255,255,.34) 90.39%,rgba(255,255,255,.10) 90.39%,rgba(255,255,255,.10) 100%)}
 @media (max-width:767px){.spine-band{background:rgba(255,255,255,.34)}}
