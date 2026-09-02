@@ -1,16 +1,22 @@
 /**
  * scripts/spikes/preview_form_library.tsx
  *
- * ONE FILE THE FOUNDER OPENS, showing the four catalog-v2 forms built into
+ * ONE FILE THE FOUNDER OPENS, showing all eight catalog-v2 forms built into
  * src/components/spine/forms-v2.tsx, side by side, at the width a real card
  * gives them.
  *
- * WHY THESE FOUR ARE SHOWN TOGETHER AND NOT ONE AT A TIME. The defect they
- * correct is SAMENESS: the ten trade sections of 2026-08-31 were each defensible
- * alone and all read as one shape when the page was photographed. A form library
- * previewed form by form would pass exactly the same way. Four specimens in one
- * frame is the only arrangement in which "these two are the same shape" is
- * visible, which is the question this file exists to answer.
+ * WHY THEY ARE SHOWN TOGETHER AND NOT ONE AT A TIME. The defect they correct is
+ * SAMENESS: the ten trade sections of 2026-08-31 were each defensible alone and
+ * all read as one shape when the page was photographed. A form library previewed
+ * form by form would pass exactly the same way. Eight specimens in one frame is
+ * the only arrangement in which "these two are the same shape" is visible, which
+ * is the question this file exists to answer.
+ *
+ * THE SECOND FOUR ARE THE ONES THAT DRAW, and they are the harder half. A form
+ * that draws nothing cannot slip back into a horizontal track; a lollipop, a
+ * ladder, a threshold and a range each can, and each does it by a different
+ * lazy move. They are placed in this grid directly under the four that draw
+ * nothing so that the page is read in one scroll rather than two.
  *
  * EVERY NUMBER IN HERE IS INVENTED, and the file says so at the top of itself in
  * the reader's own words. The forms take their figures as props and hold none.
@@ -28,8 +34,25 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 
-import { BenchmarkPair, StateWord, RankedTiles, OptionCards } from "../../src/components/spine/forms-v2";
+import {
+  BenchmarkPair,
+  StateWord,
+  RankedTiles,
+  OptionCards,
+  LollipopColumn,
+  StepLadder,
+  ThresholdBlock,
+  RangeBracket,
+} from "../../src/components/spine/forms-v2";
 import { Box, usd } from "../../src/components/spine/kit";
+
+/**
+ * ONE DECIMAL OF THOUSANDS, for the ranking only. The kit's `usd` rounds to
+ * whole thousands above 1000, which is right on a page and wrong in a specimen:
+ * three of the seven rents below round to the same "$3K" and a ranking whose
+ * labels repeat cannot be judged for whether its stems are readable.
+ */
+const usdK = (n: number) => "$" + (n / 1000).toFixed(1) + "K";
 
 const CSS_PATH = "scratchpad/pages/site.css";
 try {
@@ -94,13 +117,15 @@ const body = renderToStaticMarkup(
         Every number on this page is made up.
       </div>
       <div style={{ fontSize: 14, lineHeight: 1.6, color: "#3d3935", maxWidth: "72ch" }}>
-        Four of the eight forms the form catalog gained on 2026-09-01, built into the kit where a
-        page can import them. Each one replaces a reading that the ten trade sections drew as a
-        horizontal line with a dot on it, and none of these may read that way. Two of the four draw
-        nothing at all: a number beside its reference, and a word at the size of a figure, are
-        complete answers, and adding a meter underneath one so that it looks designed is the exact
-        fault being corrected. The only question this file asks is whether the four SHAPES are
-        different enough to tell apart at a glance.
+        All eight forms the form catalog gained on 2026-09-01, built into the kit where a page can
+        import them. Each one replaces a reading that the ten trade sections drew as a horizontal
+        line with a dot on it, and none of these may read that way. The first four are on the top
+        two rows and two of them draw nothing at all: a number beside its reference, and a word at
+        the size of a figure, are complete answers, and adding a meter underneath one so that it
+        looks designed is the exact fault being corrected. The last four are on the bottom two rows
+        and those are the ones that draw, which is where the old habit pulls hardest. The only
+        question this file asks is whether the eight SHAPES are different enough to tell apart at a
+        glance.
       </div>
     </div>
 
@@ -110,9 +135,10 @@ const body = renderToStaticMarkup(
         idea="I9 figure alone, free"
         useWhen="Use when one number only means something beside another one: a price against the typical price, a rent against the city median."
       >
-        {/* THE ACCENT IS ON, HERE AND NOWHERE ELSE ON THE PAGE. A ticket is a
-            price and a price is worth pointing at; the other three specimens
-            carry their accent inside the form or not at all. */}
+        {/* THE ACCENT PROP IS ASKED FOR HERE AND NOWHERE ELSE ON THE PAGE. A
+            ticket is a price and a price is worth pointing at; of the other
+            seven specimens, four carry their accent inside the form and three
+            are left in ink so the page can be judged for shape before colour. */}
         <BenchmarkPair
           label="What a table spends"
           value={31}
@@ -180,6 +206,77 @@ const body = renderToStaticMarkup(
               means: "One return for the partnership and one each, with the liability shared between you.",
             },
           ]}
+        />
+      </Specimen>
+
+      {/* THE FOUR THAT DRAW. Each one is a shape the ten rejected sections
+          could have used instead of a track, and each is one lazy decision away
+          from being a track again. They sit under the four silent forms so the
+          whole vocabulary photographs in a single frame. */}
+      <Specimen
+        name="LollipopColumn"
+        idea="I2 bar set, shares a cap of 3"
+        useWhen="Use for a ranking of five or more named things where the DISTANCES matter as well as the order. Vertical, always: laid on its side it is the shape being replaced."
+      >
+        <LollipopColumn
+          ariaLabel="Monthly rent by trade in this district, most expensive first"
+          format={usdK}
+          rows={[
+            { name: "Restaurant", value: 6400 },
+            { name: "Cafe", value: 4800 },
+            { name: "Bakery", value: 4100 },
+            { name: "Barber", value: 2900 },
+            { name: "Nail salon", value: 2600 },
+            { name: "Dry cleaner", value: 2200 },
+            { name: "Locksmith", value: 1400 },
+          ]}
+        />
+      </Specimen>
+
+      <Specimen
+        name="StepLadder"
+        idea="I6 tile set, shares a cap of 3"
+        useWhen="Use for a level on a ladder whose rungs have meanings: how hard a trade is to enter, how far a licence goes. Every rung is drawn, so the reader learns what the others would have meant."
+      >
+        <StepLadder
+          ariaLabel="How much training this trade takes before you can open"
+          steps={[
+            "Learn on the job",
+            "Train in a week",
+            "A short course",
+            "Licensed or certified",
+            "Years of apprenticeship",
+          ]}
+          reached={4}
+        />
+      </Specimen>
+
+      <Specimen
+        name="ThresholdBlock"
+        idea="I2 bar set, shares a cap of 3"
+        useWhen="Use for anything that must clear a line: break-even, a minimum wage bill, a licence threshold. Two lengths from one baseline, and no marker anywhere."
+      >
+        <ThresholdBlock
+          neededLabel="Break-even needs"
+          givenLabel="A typical month takes"
+          needed={18400}
+          given={23100}
+          format={usd}
+        />
+      </Specimen>
+
+      <Specimen
+        name="RangeBracket"
+        idea="I6 tile set, shares a cap of 3"
+        useWhen="Use for an honest range: what it costs to open, what a fit-out runs to. The ends turn inward, the middle stays open, and the typical stands inside it as a numeral."
+      >
+        <RangeBracket
+          lo={42000}
+          hi={210000}
+          typical={96000}
+          format={usd}
+          caption="typical fit-out"
+          endLabels={["at the cheapest", "at the dearest"]}
         />
       </Specimen>
     </div>
