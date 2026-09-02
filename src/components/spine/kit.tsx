@@ -546,7 +546,26 @@ export function Band({
      not a column, it is a sliver. Equal halves at 768 give each card about 352px,
      and the ratio takes over at 1024 where there is room for it to mean something.
      Art direction D4: the split follows the content, and at 768 the content does
-     not fit the split. */
+     not fit the split.
+
+     THIS RULE WAS PUT ON TRIAL AND KEPT, and the verdict belongs here because the
+     question will be asked again. It makes every band equal halves at 768, so the
+     industry page runs five of them in a row, the country page four and the city
+     page two, against D3's cap of three. D3 is not breached: it governs the SPLIT,
+     a split is a choice, and at 768 D4 has already taken the choice away. Art
+     direction now says so in D3a rather than leaving it in this comment.
+
+     AND THE ONLY-CHILD RULES BELOW STAY `lg:`-SCOPED DELIBERATELY, which is the
+     other half of that trial. At 768 a lone card takes half the row, 344px, with
+     376px beside it, and that reads as a fault until it is measured against what
+     desktop already ships: at 1280 a lone LEAN card takes 347px and leaves 68% of
+     its row empty, and a lone plain card takes 693px and leaves 35%. The tablet's
+     344px card with 52% beside it sits between two ratified compositions, on a
+     card three pixels narrower than the desktop one. Photographed on the industry
+     and country pages at 768 and checked with the gathered-emptiness gate at that
+     width: neither lone card carries a hole inside itself. So the re-template has
+     nothing to add at 768, and firing it there would give a lean survivor 229px,
+     which is the sliver this whole rule exists to prevent. */
   const cols = {
     "1-1": "md:grid-cols-2",
     "1-2": "md:grid-cols-2 lg:grid-cols-[1fr_2fr]",

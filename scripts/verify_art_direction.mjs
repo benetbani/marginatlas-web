@@ -274,9 +274,19 @@ const collect = () => {
      monotonous as a page of full widths, just narrower.
 
      Read from what each band RENDERS, not from what was written, so a split that
-     silently fails to compile is caught as well as one that was typed twice.
-     A band with one surviving child is skipped: its partner self-omitted, which
-     is a data condition rather than a rhythm choice. */
+     silently fails to compile is caught as well as one that was typed twice. The
+     reading is the computed track sizes; see the block that collects them.
+
+     READ AT ONE WIDTH ON PURPOSE, and the width is the law's rather than this
+     file's convenience. D3 governs the SPLIT, and a split is a choice that exists
+     only where the ratio applies. Below `lg` the ratio waits, because `Band`
+     measured an uneven band's small side at 768 as about 229px, narrower than the
+     303px a phone card gets, and D4 hands the width to the content; at 375 there
+     are no columns at all. So a page read at 768 shows equal halves everywhere and
+     a page read at 375 shows one column everywhere, and neither is a page that
+     chose the same split twice. Art direction D3 now states this in the law
+     itself. Do NOT add a second width here to make the tablet fail: what is
+     actually wrong at 768 is content, not rhythm, and it is measured in C21. */
   const sameForAll = [];
   /* A REPEATED STRUCTURE IS NOT ONLY A LIST. Written first against ol, ul and
      tbody, this could not see the fault it exists for: the seven district chips
@@ -306,23 +316,49 @@ const collect = () => {
   const ladder = [];
   const px = (v) => Math.round(parseFloat(v) || 0);
   const bandSplits = [];
+  /* THE SHAPE THE BAND DRAWS, NOT THE CLASS IT CARRIES, and the difference is not
+     academic. This block used to read the class string, which is what was WRITTEN,
+     while the comment above it claimed to read what the band RENDERS. On three of
+     the four lone-survivor bands in the atlas the two disagree outright: the
+     industry page's `#open` declares 2fr_3fr and draws 1-2, the city page's
+     `#seasonal` declares 3fr_2fr and draws 2-1, the country page's `#cities`
+     declares grid-cols-2 and draws 2-1. `Band` re-templates a lone child through a
+     :has() variant, so no reading of the call site or of the class list can know
+     what the row became. The computed track sizes can, and they also catch a split
+     that failed to compile, which is what the old comment said it was for and what
+     a class match cannot do.
+
+     A LONE SURVIVOR COUNTS, and it used to be skipped on the ground that its
+     partner self-omitting is "a data condition rather than a rhythm choice". Two
+     shipped rows had already ruled the other way, each by hand, because the gate
+     could not: run 7 refused a width for B4 because "the lean band at the foot of
+     the restaurant column counts as a 1-2 for D3 purposes", and run 12 moved a
+     whole band on the city page because cutting a card "silently created two
+     neighbouring 2-1 bands". And the ground is false where it matters most:
+     `adapt_industry.ts` omits those fields on EVERY industry page, so two of that
+     page's five bands are permanent lone survivors rather than this restaurant's
+     luck. A reader sees the shape either way, which is the only test D3 has. */
+  const RATIOS = { "1-1": 1, "1-2": 0.5, "2-1": 2, "2-3": 2 / 3, "3-2": 1.5 };
   for (const el of document.querySelectorAll("div.grid")) {
     const cls = String(el.className);
     if (!/^mt-8 grid grid-cols-1 items-start gap-8/.test(cls)) continue;
-    if (el.childElementCount < 2) continue;
-    /* THE REAL SPLIT, NOT A CONDITIONAL VARIANT. The band's class also carries a
-       has-only-child variant whose own md:grid-cols- token sits earlier in the
-       string, and matching that made every lone-survivor band report the same
-       split and fake a rhythm regression. Anchored to a space so only the
-       unprefixed utility matches. */
-    /* THE DESKTOP SPLIT, NOT THE TABLET ONE. A band now carries both: equal halves
-       at md and its real ratio at lg, because a third of a tablet is a sliver. The
-       md class sits first in the string, so matching either made every band read
-       as equal halves and fake a rhythm violation on every page. Third time in this
-       loop that a change of mine has broken a measurement of mine; each was caught
-       because the number moved in a direction the change could not explain. */
-    const m = cls.match(/(?:^|\s)lg:grid-cols-(2|\[[^\]]+\])/) || cls.match(/(?:^|\s)md:grid-cols-(2|\[[^\]]+\])/);
-    if (m) bandSplits.push(m[1]);
+    const tracks = getComputedStyle(el)
+      .gridTemplateColumns.split(" ")
+      .map((v) => parseFloat(v))
+      .filter((v) => !Number.isNaN(v));
+    if (tracks.length !== 2) {
+      /* One track is a band whose split did not compile, or a phone. Named rather
+         than dropped: two of them in a row is a repeat a reader sees. */
+      bandSplits.push("no split");
+      continue;
+    }
+    const r = tracks[0] / tracks[1];
+    let best = "", bd = Infinity;
+    for (const [k, v] of Object.entries(RATIOS)) {
+      const d = Math.abs(r - v);
+      if (d < bd) { bd = d; best = k; }
+    }
+    bandSplits.push(best);
   }
   {
     const bandEls = [...document.querySelectorAll("div.grid")].filter((e) =>
@@ -350,7 +386,7 @@ const collect = () => {
     if (bandSplits[i] === bandSplits[i - 1]) rhythm.push(`bands ${i} and ${i + 1} both split ${bandSplits[i]}`);
   }
   for (let i = 2; i < bandSplits.length; i++) {
-    if (bandSplits[i] === "2" && bandSplits[i - 1] === "2" && bandSplits[i - 2] === "2") rhythm.push(`bands ${i - 1} to ${i + 1} are three equal halves in a row`);
+    if (bandSplits[i] === "1-1" && bandSplits[i - 1] === "1-1" && bandSplits[i - 2] === "1-1") rhythm.push(`bands ${i - 1} to ${i + 1} are three equal halves in a row`);
   }
 
   /* F1, TABULAR NUMERALS. Founder, 2026-08-25: every table, chart and visual
