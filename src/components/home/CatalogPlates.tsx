@@ -92,6 +92,7 @@
 import { getCatalogCollections, displayMembers, type CatalogCollection } from "@/lib/home/catalog";
 import { AtlasIcon } from "@/components/brand/icons";
 import type { AtlasIconId } from "@/components/brand/icons";
+import { DotsSet } from "@/components/spine/kit";
 
 const COLLECTIONS = getCatalogCollections();
 
@@ -115,6 +116,55 @@ const PAD = 7;
 /** Cap the marks drawn. Past this a field reads as texture and the count is
  *  carried by the figure beside it, not by counting dots. */
 const MAX_MARKS = 260;
+
+/**
+ * WHICH MARKS ARE LIT, AND WHY IT IS NOT `i % k`.
+ *
+ * It was `litEvery = round(n / qualifying)` and `i % litEvery === 0`, whose own
+ * comment claimed the lit marks were "spread evenly through the field rather
+ * than clustered, so the eye reads a proportion instead of a corner". The
+ * photograph said otherwise and the arithmetic explains it. Lighting every k-th
+ * mark of a golden-ratio walk moves each lit mark by a CONSTANT step,
+ * `frac(k * 0.618)` across and `frac(k * 0.755)` down, so the lit set is a
+ * straight line whenever that step is small. Measured on the shipped values:
+ *
+ *   countries  k=5   step (0.090, 0.774)   pairs
+ *   cities     k=10  step (0.180, 0.549)   spread
+ *   trades     k=8   step (0.944, 0.039)   a step of (-0.056, +0.039)
+ *
+ * The trades plate drew THREE long diagonal stripes, and 27 of its 30 lit marks
+ * sat within 25 viewBox units of the one before it. A reader looking at that
+ * sees three groups of high-margin trades. There are no groups. The drawing was
+ * asserting a structure the data does not hold, which is the same fault class as
+ * a smoothed curve between two known points.
+ *
+ * AND IT DREW ONE MARK TOO MANY. `ceil(243 / 8)` is 31, so the trades plate lit
+ * 31 marks while the figure beside it read "30 of 243". The picture and the
+ * number disagreed by one on the most-read surface on the site.
+ *
+ * BOTH ARE FIXED BY STRATIFYING INSTEAD OF STRIDING. The field is cut into
+ * exactly `qualifying` equal stretches and ONE mark is lit in each, so the count
+ * is exact by construction and the spread is even by construction. Which mark
+ * inside a stretch comes from an integer hash of the stretch's own number, so
+ * the step from one lit mark to the next is never constant and no line can form.
+ * Integers only, no `Math.random`: this renders on the server and a layout that
+ * differed on the client is a hydration mismatch.
+ */
+function litIndices(n: number, qualifying: number): Set<number> {
+  const out = new Set<number>();
+  if (n <= 0 || qualifying <= 0) return out;
+  const q = Math.min(qualifying, n);
+  for (let j = 0; j < q; j++) {
+    const lo = Math.floor((j * n) / q);
+    const hi = Math.max(lo + 1, Math.floor(((j + 1) * n) / q));
+    let h = Math.imul(j + 1, 2654435761) >>> 0;
+    h ^= h >>> 15;
+    h = Math.imul(h, 2246822519) >>> 0;
+    h ^= h >>> 13;
+    out.add(lo + (h % (hi - lo)));
+  }
+  return out;
+}
 
 /**
  * An even, non-gridded scatter that is identical on every render.
@@ -153,7 +203,7 @@ const FIGURE = /(\$?\d[\d,]*(?:\.\d+)?%?)/g;
 function Rule({ text }: { text: string }) {
   const parts = text.split(FIGURE);
   return (
-    <p className="mt-1 text-[13px] leading-snug text-graphite">
+    <p className="mt-1 text-[14px] leading-snug text-graphite">
       {parts.map((part, i) =>
         i % 2 === 1 ? (
           <span key={i} className="tabular-nums text-ink-900">
@@ -171,9 +221,12 @@ function Plate({ c }: { c: CatalogCollection }) {
   const held = c.measured > 0;
   const members = displayMembers(c);
   const n = Math.min(c.measured, MAX_MARKS);
-  /* Which marks are lit, spread evenly through the field rather than clustered,
-     so the eye reads a proportion instead of a corner. */
-  const litEvery = c.qualifying > 0 ? Math.max(1, Math.round(n / c.qualifying)) : 0;
+  /* The field is capped at MAX_MARKS, so the LIT count is scaled with it or the
+     drawn share would over-state the collection. A no-op on today's data, where
+     194, 252 and 243 all sit under the cap and this is exactly `c.qualifying`;
+     it is the guard for the day a collection passes it. */
+  const q = held ? Math.round((c.qualifying * n) / c.measured) : 0;
+  const lit = litIndices(n, q);
 
   return (
     <a
@@ -181,6 +234,21 @@ function Plate({ c }: { c: CatalogCollection }) {
       className="group block no-underline"
       aria-label={`${c.title}. ${held ? `${c.qualifying} of ${c.measured} ${c.unit}, ${c.rule}` : "not held yet"}.`}
     >
+      {/* AN UNHELD COLLECTION KEEPS ITS FRAME AND DRAWS NOTHING IN IT.
+          It used to draw SIXTY marks, "the field drawn, nothing lit", to show
+          the shape the collection will take. That is a fabricated figure: this
+          collection's `measured` is 0, so sixty marks assert sixty measured
+          districts on the most-read surface on the site, and the repo's rule is
+          to return nothing rather than a placeholder when a figure is absent.
+          An empty frame says the same thing truthfully, and says it better: the
+          reader sees the atlas's own hole at the size of the thing that will
+          fill it.
+          THE FRAME STAYS RATHER THAN THE PANEL COLLAPSING, and that was measured
+          rather than argued. Dropping the field made the cell 29px of content in
+          a 304px grid row, a 459 by 275 empty rectangle at 1280, which is step
+          7's own test failed and the largest void on the page. Four panels of a
+          small multiple are equal panels; one that shrinks is a hole in the
+          grid, wherever it is ordered. */}
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="block w-full"
@@ -189,27 +257,20 @@ function Plate({ c }: { c: CatalogCollection }) {
         style={{ opacity: held ? 1 : 0.4 }}
       >
         <rect x="0" y="0" width={W} height={H} rx="3" className="fill-parchment" />
-        {held
-          ? Array.from({ length: n }, (_, i) => {
-              const { x, y } = markAt(i, n);
-              const lit = litEvery > 0 && i % litEvery === 0;
-              return (
-                <circle
-                  key={i}
-                  cx={x}
-                  cy={y}
-                  r={lit ? 2.6 : 1.4}
-                  className={lit ? "fill-atlas-500" : "fill-cocoa-300"}
-                  opacity={lit ? 1 : 0.75}
-                />
-              );
-            })
-          : /* The honest empty state: the field drawn, nothing lit. It shows the
-               shape the collection WILL take without asserting a member. */
-            Array.from({ length: 60 }, (_, i) => {
-              const { x, y } = markAt(i, 60);
-              return <circle key={i} cx={x} cy={y} r={1.4} className="fill-cocoa-300" opacity={0.5} />;
-            })}
+        {Array.from({ length: n }, (_, i) => {
+          const { x, y } = markAt(i, n);
+          const on = lit.has(i);
+          return (
+            <circle
+              key={i}
+              cx={x}
+              cy={y}
+              r={on ? 2.6 : 1.4}
+              className={on ? "fill-atlas-500" : "fill-cocoa-300"}
+              opacity={on ? 1 : 0.75}
+            />
+          );
+        })}
       </svg>
 
       <div className="mt-3 flex items-baseline justify-between gap-3">
@@ -219,17 +280,22 @@ function Plate({ c }: { c: CatalogCollection }) {
             size={16}
             className="shrink-0 translate-y-px text-atlas-700"
           />
-          <span className="text-[15px] font-semibold text-ink-900 group-hover:text-atlas-600 transition-colors">
+          <span className="text-[16px] font-semibold text-ink-900 group-hover:text-atlas-600 transition-colors">
             {c.title}
           </span>
         </span>
         {/* The count set as a figure, not as grey mouse-type. The qualifying
             half is the answer, so it carries the accent and the size; the
             measured half is the denominator and stays quiet. */}
-        <span className="shrink-0 tabular-nums text-[12.5px] text-cocoa-700">
+        {/* ON THE LADDER, 2026-09-02. This row carried 15, 17 and 12.5px, none
+            of them a rung, and the panel therefore spoke three sizes no other
+            card on the site uses. They are the lead, head and micro rungs now:
+            20 over 16 is 1.25x inside the label row, and the panel's first
+            object is still the field above it. */}
+        <span className="shrink-0 tabular-nums text-[12px] text-cocoa-700">
           {held ? (
             <>
-              <span className="font-display text-[17px] text-atlas-700">{c.qualifying}</span>
+              <span className="font-display text-[20px] text-atlas-700">{c.qualifying}</span>
               {` of ${c.measured}`}
             </>
           ) : (
@@ -243,7 +309,7 @@ function Plate({ c }: { c: CatalogCollection }) {
           words, so printing it would restate a restatement. */}
       {held ? <Rule text={c.rule} /> : null}
       {members.length > 0 ? (
-        <p className="mt-1 text-[12.5px] text-cocoa-700">{members.join(", ")}</p>
+        <p className="mt-1 text-[12px] text-cocoa-700">{members.join(", ")}</p>
       ) : null}
     </a>
   );
@@ -252,7 +318,7 @@ function Plate({ c }: { c: CatalogCollection }) {
 /** The plate's own key, in place of the sentence that used to explain it. */
 function Legend() {
   return (
-    <span className="flex items-center gap-4 text-[11px] text-cocoa-700">
+    <span className="flex items-center gap-4 text-[12px] text-cocoa-700">
       <span className="inline-flex items-center gap-1.5">
         <span aria-hidden className="h-2 w-2 rounded-full bg-atlas-500" />
         qualifying
@@ -295,12 +361,34 @@ export function CatalogPlates() {
           lands UNDER the picture. .atlas-card sets position: relative itself,
           so that requirement now travels with the class instead of depending on
           the next person reading a comment. */}
+      {/* THE FOUR FIELDS ARE ONE DRAWING AND THEY DECLARE ONCE.
+          Every plate draws a count of identical marks with no continuous scale,
+          which is the budget's own words for I5, and four of them sat inside
+          ONE `.atlas-card`. Declared per plate that is four of one idea in one
+          bordered box, past the form-variety gate's per-card threshold of three
+          and past I5's own page cap of three, and the honest way to pass a cap
+          is never to declare a different idea than the one you drew.
+
+          A READER WOULD CALL THIS ONE OBJECT, which is the test the loop has now
+          applied five times (SpectraTable, KV, the legal-form pip column, Dots,
+          and this). The tell is in the picture rather than in the markup: ONE
+          legend at the top right labels all four fields, so they share an
+          encoding, and four panels sharing one legend and one encoding are a
+          small multiple, not four charts. They stay four panels rather than
+          becoming one shared scale on purpose: a mark means a country in one and
+          a trade in another, and putting incomparable units on one axis would
+          invite the cross-geography ranking rule 10 forbids.
+
+          `DotsSet` is the kit's own wrapper, built one run ago for exactly this
+          row. It sets no type, no size, no colour and no spacing, so it moves
+          nothing here, and it means home declares a set in the same word the
+          spine does. */}
       <div className="atlas-card mt-5 px-5 py-6 md:px-8 md:py-8">
-        <div className="grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
+        <DotsSet className="grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
           {COLLECTIONS.map((c) => (
             <Plate key={c.id} c={c} />
           ))}
-        </div>
+        </DotsSet>
       </div>
     </section>
   );
