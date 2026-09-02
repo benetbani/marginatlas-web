@@ -23,7 +23,7 @@
  *   OptionCards    (I6)  a choice among two to four comparable options.
  *   LollipopColumn (I2)  a longer ranking, where the MAGNITUDE matters too.
  *   StepLadder     (I6)  a level on a ladder whose rungs have meanings.
- *   ThresholdBlock (I2)  what must be cleared, and what a period gives.
+ *   ClearanceRing  (I7)  what must be cleared, and whether a period clears it.
  *   RangeBracket   (I6)  a low, a high, and the typical held between them.
  *
  * THE ONE RULE ALL EIGHT SHARE: none of them may read as a line with a dot on
@@ -51,15 +51,16 @@
  *
  *   LollipopColumn  lay it on its side, and it is markers on a rail.
  *   StepLadder      hang ONE marker off the connector, and it is a track.
- *   ThresholdBlock  draw one bar and tick the threshold onto it, the same.
+ *   ClearanceRing   put a tick on the closed ring, and it is a track bent round.
  *   RangeBracket    fill the middle, or rule a line end to end, the same.
  *
  * So each is built to make its own lazy decision awkward rather than merely
  * forbidden: the lollipop's stems stand up from a drawn zero line and its dots
  * ride above them, the ladder runs its connector DOWN through a marker for
- * every named rung so no marker's position is the reading, the threshold draws
- * two lengths and no marker anywhere at all, and the bracket's ends turn inward
- * across open air that nothing crosses.
+ * every named rung so no marker's position is the reading, the clearance ring
+ * carries no mark at all and lets a second lap outside it say what a mark would
+ * have said, and the bracket's ends turn inward across open air that nothing
+ * crosses.
  *
  * EVERY FORM DECLARES ITS OWN VISUAL IDEA on its outermost element, as
  * data-idea="I2".."I9". scripts/verify_form_variety.mjs enforces the catalog's
@@ -94,8 +95,8 @@
  *
  * ACCENT IS RATIONED TO ONE THING PER FORM, and never to a hover state. The
  * leader's figure in RankedTiles, the leader's dot in LollipopColumn, the usual
- * choice in OptionCards, the reached step in StepLadder, the subject's own bar
- * in ThresholdBlock; and in the two silent forms and in RangeBracket, an accent
+ * choice in OptionCards, the reached rung in StepLadder, the closed sweep in
+ * ClearanceRing; and in the two silent forms and in RangeBracket, an accent
  * the caller has to ask for, because those three are the ones a section is
  * likeliest to place beside a figure that has already claimed the box's orange.
  */
@@ -1177,38 +1178,66 @@ export function StepLadder({
 }
 
 /* ------------------------------------------------------------------ */
-/* ThresholdBlock , I2 bar set, shares the cap of 3                    */
+/* ClearanceRing , I7 area, cap of 1                                   */
 /* ------------------------------------------------------------------ */
 /**
- * WHAT MUST BE CLEARED, AND WHAT A TYPICAL PERIOD ACTUALLY GIVES.
+ * WHAT MUST BE CLEARED, AND WHETHER A TYPICAL PERIOD CLEARS IT.
  *
- * Break-even is the reading this site exists to deliver, and version 1 drew it
- * as one bar with a tick on it, which is a track wearing a bar's clothes: the
- * eye has to find the tick, decide which side of it the fill ends on, and only
- * then learn whether the business covers its costs. Two lengths from one
- * baseline answer that before the reader has finished looking, because a longer
- * second bar IS the answer and needs no decoding at all.
+ * Break-even is the reading this site exists to deliver, and it has been drawn
+ * wrong twice. Version 1 drew one bar with a tick on it, a track wearing a
+ * bar's clothes: the eye has to find the tick, decide which side of it the fill
+ * ends on, and only then learn whether the business covers its costs. Version 2
+ * answered that with TWO LENGTHS FROM ONE BASELINE, which is a two-row bar
+ * chart, which is the exact silhouette the whole catalog exists to stop the
+ * pages repeating. The founder saw it rendered and it went out with the rest.
+ * ThresholdBlock is struck; this replaces it.
  *
- * NO MARKER IS DRAWN ANYWHERE IN THIS FORM. That is the catalog's DO NOT
- * verbatim, and it is also the only thing standing between this and the
- * rejected shape: one bar plus one tick is a track, whatever it gets called.
+ * A RATIO AGAINST A TARGET THE DATA ITSELF SETS IS A RING, and that idiom is
+ * already bought: scratchpad/freeblocks/chart-radial-shape.json and
+ * chart-radial-simple.json, a sweep on a closed track with the answer standing
+ * in the middle of it. This is that shape, drawn to the spine's tokens.
  *
- * THERE IS NO EMPTY RAIL BEHIND EITHER BAR EITHER. A grey full-width track with
- * a filled portion in front of it is the meter this catalog version retired,
- * and it would put a right-hand end on the drawing that no data supports. Both
- * bars are measured against the larger of the two, so one of them always
- * reaches the full width and the comparison is between them and nothing else.
+ *   THE FULL CIRCLE IS THE THRESHOLD. Not a ceiling anyone invented: the ring
+ *   closes at exactly what break-even needs, so "all the way round" and "paid
+ *   for" are the same fact, and a reader who sees an unclosed ring has read the
+ *   shortfall before reading a number.
  *
- * THE GAP IS SAID IN WORDS, which is where the reading actually lands. The
- * default sentence is composed from the two figures with the same
- * fraction-rounding BenchmarkPair uses, so "clears it by $4.7K" is followed by
- * a phrase a reader can picture; inside the dead band it says the two land in
- * the same place rather than inventing a difference out of rounding.
+ *   PAST IT THE SURPLUS TAKES A SECOND LAP, thinner and lighter, outside the
+ *   ring it has already closed. That is what makes clearing VISIBLE instead of
+ *   merely stated: the drawing runs out of track and keeps going. A form that
+ *   stopped at the closed circle would look identical whether a month cleared
+ *   break-even by a hundred pounds or by half again.
  *
- * DO NOT draw one bar with a marker on it. DO NOT stack these two into a single
- * bar: they are not parts of a whole, they are two measurements of one thing.
+ *   THE CLEARANCE STANDS IN THE MIDDLE at focal and signed, with one word under
+ *   it saying which way it runs, and the two figures are named plainly beneath
+ *   the drawing. The centre answers the question; the line under it says what
+ *   the question was measured from.
+ *
+ * IT IS NOT THE GAUGE, and the two are worth keeping apart because they share
+ * an idea and therefore a budget. Gauge is a needle on a 0-to-100 SCORE, a
+ * scale this site invented and has to explain. This is a ratio against a target
+ * the data itself sets, in the reader's own money, and it explains nothing
+ * because there is nothing to explain: the ring is full or it is not.
+ *
+ * ONE ACCENT, SPENT ON CLEARING. The sweep is terracotta when the period clears
+ * and ink when it falls short, so the colour is carrying the finding rather
+ * than decorating the form. A shortfall gets no red: this palette has no red in
+ * it, and inventing a semantic ramp for one drawing would be a second language
+ * on one page.
+ *
+ * WHAT THE DRAWING SATURATES AT, said out loud because a saturated drawing that
+ * does not admit it is a lie. The surplus lap is capped at one full turn, so a
+ * month taking three times break-even draws the same closed outer ring as one
+ * taking twice. At that point the ring has said all it can say, which is
+ * "cleared it by at least as much again", and that IS true; the exact figure is
+ * standing in the middle of it at 30px.
+ *
+ * DO NOT draw one bar with a marker on it. DO NOT draw two bars from one
+ * baseline. DO NOT put a needle, a tick or a marker anywhere on this ring: a
+ * mark on a closed track is a position again, and a position is what both
+ * rejected versions were.
  */
-export function ThresholdBlock({
+export function ClearanceRing({
   needed,
   given,
   neededLabel,
@@ -1216,62 +1245,121 @@ export function ThresholdBlock({
   format = (n: number) => String(n),
   note,
 }: {
-  /** What has to be cleared. Null, non-finite or not above zero renders nothing. */
+  /** What has to be cleared. Null, non-finite or not above zero renders nothing,
+   *  because a threshold of zero has no ring to close. */
   needed?: number | null;
   /** What a typical period gives, in the same unit. Null renders nothing. */
   given?: number | null;
-  /** Names the threshold: "break-even needs", "the licence demands". */
+  /** A verb phrase naming the threshold, lower case: "break-even needs". */
   neededLabel?: string | null;
-  /** Names the subject: "a typical month takes". */
+  /** A verb phrase naming the subject: "a typical month takes". */
   givenLabel?: string | null;
-  /** Formats both figures. Pass the kit's `usd` for money. */
+  /** Formats every figure. Pass the kit's `usd` for money. */
   format?: (n: number) => string;
-  /** Replaces the composed sentence where the section has better words. */
+  /** Replaces the composed line beneath where the section has better words. */
   note?: React.ReactNode;
 }) {
   if (needed == null || !Number.isFinite(needed) || needed <= 0) return null;
   if (given == null || !Number.isFinite(given) || given < 0) return null;
   if (!neededLabel || !givenLabel) return null;
-  const domain = Math.max(needed, given);
-  const said = differenceInWords(given, needed);
-  const composed =
-    said === "the same, near enough"
-      ? "The two land in the same place, near enough."
-      : `${given >= needed ? "Clears it by" : "Falls short by"} ${format(Math.abs(given - needed))}. That is ${said}.`;
-  /* The subject is drawn SECOND, beneath the line it has to clear, because that
-     is the order a reader asks the question in: what does this need, and does
-     it get there. It is also the row that carries the form's one accent. */
-  const bars: Array<[string, number, boolean]> = [
-    [neededLabel, needed, false],
-    [givenLabel, given, true],
-  ];
+  const clears = given > needed;
+  const gap = Math.abs(given - needed);
+  /* The three states are drawn from the two figures alone and never from a
+     rounded string: "level" is EXACT equality here, because unlike a ratio this
+     is money against money and a dead band would be inventing a tolerance the
+     section did not ask for. */
+  const word = given === needed ? "level" : clears ? "clear" : "short";
+  const centre = clears ? `+${format(gap)}` : format(gap);
+
+  /* THE GEOMETRY. R1 is the threshold ring; the surplus lap sits outside it,
+     thinner, with a 3px of air between so the two never read as one thick
+     stroke. Everything is measured from the centre of a 168 box so the outer
+     lap's outer edge lands clear of the viewBox at 71.5 of 84. */
+  const CX = 84;
+  const R1 = 56;
+  const W1 = 13;
+  const W2 = 5;
+  const R2 = R1 + W1 / 2 + 3 + W2 / 2;
+  const C1 = 2 * Math.PI * R1;
+  const C2 = 2 * Math.PI * R2;
+  const closed = Math.min(given / needed, 1);
+  const spare = clears ? Math.min((given - needed) / needed, 1) : 0;
   return (
-    <div data-idea="I2">
-      {bars.map(([label, value, subject], i) => (
-        <div key={label} style={{ marginTop: i === 0 ? 0 : 14 }}>
-          <div className="flex items-baseline justify-between" style={{ gap: 12 }}>
-            <span className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">{label}</span>
-            <span className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">
-              <Fig>{format(value)}</Fig>
-            </span>
-          </div>
-          {/* A minimum width, so a real but tiny value still draws something
-              rather than vanishing and reading as a bar that failed to render. */}
-          <div
-            aria-hidden
-            style={{
-              marginTop: 6,
-              height: 13,
-              width: `${(value / domain) * 100}%`,
-              minWidth: 3,
-              borderRadius: 3,
-              background: subject ? "var(--terra)" : "var(--c-line-strong)",
-            }}
+    <div data-idea="I7">
+      {/* THE RING AND ITS CENTRE SHARE A POSITIONING CONTEXT rather than being
+          pulled together with a negative margin. The svg scales with the card,
+          so any offset measured in pixels against a 168 box is wrong the moment
+          the card is narrower than that; an absolutely positioned centre is
+          right at every width. */}
+      <div style={{ position: "relative", width: 168, maxWidth: "100%", margin: "0 auto" }}>
+        <svg
+          viewBox="0 0 168 168"
+          style={{ width: "100%", display: "block" }}
+          role="img"
+          aria-label={`${givenLabel} ${format(given)} against ${neededLabel} ${format(needed)}: ${
+            word === "level" ? "level" : `${format(gap)} ${word}`
+          }`}
+        >
+          {/* THE TRACK IS THE THRESHOLD, and it is the only track in the form. An
+              outer track behind the surplus lap would draw a second ceiling that
+              no figure in the data supports. */}
+          <circle cx={CX} cy={CX} r={R1} fill="none" stroke="var(--c-soft2)" strokeWidth={W1} />
+          <circle
+            cx={CX}
+            cy={CX}
+            r={R1}
+            fill="none"
+            stroke={clears ? "var(--terra)" : "var(--c-ink)"}
+            strokeWidth={W1}
+            strokeLinecap="round"
+            strokeDasharray={`${(closed * C1).toFixed(2)} ${C1.toFixed(2)}`}
+            /* Twelve o'clock, clockwise, which is the only starting point a reader
+               does not have to be told about. */
+            transform={`rotate(-90 ${CX} ${CX})`}
           />
+          {spare > 0 ? (
+            <circle
+              cx={CX}
+              cy={CX}
+              r={R2}
+              fill="none"
+              stroke="var(--terra-border)"
+              strokeWidth={W2}
+              strokeLinecap="round"
+              strokeDasharray={`${(spare * C2).toFixed(2)} ${C2.toFixed(2)}`}
+              transform={`rotate(-90 ${CX} ${CX})`}
+            />
+          ) : null}
+        </svg>
+        {/* THE CENTRE IS HTML, NOT AN SVG <text>, so the clearance is set in the
+            same ladder rung and the same figure face as every other answer in
+            the kit rather than in whatever an svg inherits. */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "grid",
+            placeContent: "center",
+            justifyItems: "center",
+            rowGap: 5,
+            pointerEvents: "none",
+          }}
+        >
+          <div className="text-[length:var(--t-focal)] leading-none" style={{ color: "var(--c-ink)" }}>
+            <Fig>{centre}</Fig>
+          </div>
+          <div className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">{word}</div>
         </div>
-      ))}
-      <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" style={{ marginTop: 12 }}>
-        {note ?? composed}
+      </div>
+      <p
+        className="text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"
+        style={{ marginTop: 12 }}
+      >
+        {note ?? (
+          <>
+            {neededLabel} <Fig>{format(needed)}</Fig>, {givenLabel} <Fig>{format(given)}</Fig>
+          </>
+        )}
       </p>
     </div>
   );

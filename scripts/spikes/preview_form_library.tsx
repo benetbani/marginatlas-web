@@ -41,7 +41,7 @@ import {
   OptionCards,
   LollipopColumn,
   StepLadder,
-  ThresholdBlock,
+  ClearanceRing,
   RangeBracket,
 } from "../../src/components/spine/forms-v2";
 import { Box, usd } from "../../src/components/spine/kit";
@@ -255,13 +255,13 @@ const body = renderToStaticMarkup(
       </Specimen>
 
       <Specimen
-        name="ThresholdBlock"
-        idea="I2 bar set, shares a cap of 3"
-        useWhen="Use for anything that must clear a line: break-even, a minimum wage bill, a licence threshold. Two lengths from one baseline, and no marker anywhere."
+        name="ClearanceRing"
+        idea="I7 area, cap of 1"
+        useWhen="Use for anything that must clear a line: break-even, a minimum wage bill, a licence threshold. The ring closes at the threshold and the surplus takes a second lap outside it, so clearing is seen rather than stated."
       >
-        <ThresholdBlock
-          neededLabel="Break-even needs"
-          givenLabel="A typical month takes"
+        <ClearanceRing
+          neededLabel="break-even needs"
+          givenLabel="a typical month takes"
           needed={18400}
           given={23100}
           format={usd}
