@@ -47,17 +47,52 @@ function Entry({
       href={href}
       className="group block px-5 py-5 md:px-7 md:py-6 transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40"
     >
+      {/* THE FOCAL RUNG, ONE NUMBER AT EVERY WIDTH, 2026-09-02 (C17).
+          It was `text-[2rem] md:text-[2.75rem]`, 32px and 44px, and neither is
+          a rung of the ladder. 44 is also above the ceiling, which is written
+          "the page's one dominant figure. NOTHING IS LARGER" beside it in
+          globals.css, and both sizes were invisible to `verify_type_ladder`
+          because it matches an arbitrary class written in PIXELS and these were
+          in rem. C7 found the identical pair of faults on the industry page.
+          (Written in words rather than as the pattern itself: Tailwind scans
+          comments too, and spelling the class out here made it emit a junk rule
+          into every page's stylesheet.) */}
+      {/*
+
+          THE FAULT WAS BIGGER THAN THE CEILING AND IT IS WHY 40 WAS NOT THE
+          ANSWER HERE. Measured on the render before the change: this band's
+          counts were 44 against the page's answer figure at 40 (0.91x) at 1280,
+          and 32 against 30 (0.94x) at 375. So on the site's front door the
+          largest figure was a COUNT OF WHAT THE ATLAS HOLDS and the figure
+          answering the question the h1 asks was smaller, at both widths. A
+          count of inventory is not a page's answer.
+
+          30 rather than 40, and the site's own ladder chose it: `--t-focal` is
+          commented "a section's own focal figure", which is exactly what these
+          four are, and `--t-answer` is "the page's one dominant figure", which
+          is the specimen card's $57K and only that. 24 was the other candidate
+          and it is `--t-section`, a heading rung, and it would have set four
+          figures at the same size as the six revenue figures in the band
+          directly above.
+
+          THE BREAKPOINT IS GONE, C7's ruling: two responsive curves crossing
+          between widths is how an inversion hides at one width and merely looks
+          tight at the other. One number, one grammar, every width. */}
       <div
-        className={`font-display text-[2rem] md:text-[2.75rem] leading-none tracking-tight tabular-nums ${
+        className={`font-display text-[30px] leading-none tracking-tight tabular-nums ${
           accent ? "text-atlas-700" : "text-ink-900"
         }`}
       >
         {figure}
       </div>
-      <div className="mt-2 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-cocoa-700/70 transition-colors group-hover:text-atlas-700">
+      {/* The label and the note were 10/11 and 11/12. 10 is `--t-mark`, whose
+          own comment reads "marks only. Never a sentence, never a label to
+          read", and 11 is not a rung at all. Anything a reader reads sits at
+          `--t-micro` 12 or above, which is the ladder's stated floor. */}
+      <div className="mt-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-cocoa-700/70 transition-colors group-hover:text-atlas-700">
         {label}
       </div>
-      <div className="mt-1 text-[11px] md:text-xs leading-snug text-cocoa-700/55">
+      <div className="mt-1 text-[12px] leading-snug text-cocoa-700/55">
         {note}
       </div>
     </Link>
@@ -133,15 +168,31 @@ export function AtlasLedger() {
             it labels a ruled manifest line whose figures carry the size. */}
         {/* typography-ok: band label promoted to h2 for the outline,
             deliberately not display-sized */}
-        <h2 className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.2em] text-cocoa-700/60">
+        <h2 className="text-[12px] font-semibold uppercase tracking-[0.2em] text-cocoa-700/60">
           What the atlas holds
         </h2>
 
-        {/* Two up on a phone, four across from md. The dividers are hairlines
-            between columns rather than borders around them: a manifest line,
-            not a row of tiles. */}
-        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 border-t border-parchment">
-          <div className="border-b border-parchment md:border-b-0 md:border-r">
+        {/* ONE PER ROW ON A PHONE, four across from md. The dividers are
+            hairlines between the entries rather than borders around them: a
+            manifest line, not a row of tiles.
+            IT WAS TWO UP AT 375 AND THE FIGURES COLLIDED, which no probe saw
+            and one photograph did. Two columns inside a 279px card leave each
+            entry 79px of content, and "363,575" needs about 118px at 30px and
+            135 at the 32 this used to render: the before picture prints
+            "363,5759 4", the accent figure's last digit sitting ON the next
+            entry's first. The labels overlapped too, "BENCHMARKS" running into
+            "COUNTRIES". This is the wide thing RECONFIGURING rather than
+            scrolling, and it costs less height than it looks: at full width the
+            three notes stop wrapping to three lines each.
+            AND FOUR ACROSS STARTS AT lg, NOT md, FOR THE SAME REASON ONE WIDTH
+            UP. Measured at seven widths: at 768 the four-column layout gives
+            each entry 95px of content and the accent figure needs 115, so the
+            band overflowed on every tablet, and did so before this row too,
+            worse, at 44px. Two up carries it from 640; four fit from 1024. The
+            widths were measured on the render rather than reasoned from the
+            breakpoint names, because the card's own padding is what decides. */}
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-parchment">
+          <div className="border-b border-parchment sm:border-r lg:border-b-0">
             <Entry
               figure={l.benchmarks.toLocaleString()}
               label="Benchmarks"
@@ -150,7 +201,7 @@ export function AtlasLedger() {
               accent
             />
           </div>
-          <div className="border-b border-l border-parchment md:border-b-0 md:border-r">
+          <div className="border-b border-parchment lg:border-b-0 lg:border-r">
             <Entry
               figure={String(l.countriesMeasured)}
               label="Countries"
@@ -158,7 +209,7 @@ export function AtlasLedger() {
               href="/countries"
             />
           </div>
-          <div className="border-parchment md:border-r">
+          <div className="border-b border-parchment sm:border-b-0 sm:border-r">
             <Entry
               figure={String(l.cities)}
               label="Cities"
@@ -166,7 +217,7 @@ export function AtlasLedger() {
               href="/cities"
             />
           </div>
-          <div className="border-l border-parchment md:border-l-0">
+          <div>
             <Entry
               figure={String(l.trades)}
               label="Trades"

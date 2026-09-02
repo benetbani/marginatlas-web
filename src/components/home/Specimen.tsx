@@ -136,9 +136,18 @@ export function Specimen({ specimen }: { specimen: SpecimenData | null }) {
             <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-cocoa-700/70">
               The owner keeps
             </div>
-            {/* 30 and 40 are both rungs of the type ladder; the 32px this
-                previously rendered at on a phone is not one. */}
-            <div className="font-display text-[30px] md:text-[40px] leading-none tracking-tight tabular-nums text-atlas-700">
+            {/* THE ANSWER RUNG, AT EVERY WIDTH, 2026-09-02 (C17). C5 landed both
+                ends of this on rungs, 30 and 40, in place of a phone that
+                rendered 32. It is one number now, and the reason is the ledger
+                band four screens down: its counts were 44 over this figure's 40
+                at 1280 and 32 over 30 at 375, so home's largest figure was a
+                count of what the atlas holds and its answer was smaller, at
+                both widths. Those counts are at `--t-focal` 30 now. A responsive
+                pair here would have re-opened the same gap at 375, where 30
+                against 30 is a tie and the six-digit count is three times as
+                wide as "$57K"; flat 40 makes this the ONE figure on the page at
+                the answer rung, at 1.33x the next largest, at every width. */}
+            <div className="font-display text-[40px] leading-none tracking-tight tabular-nums text-atlas-700">
               {fmtMoney(takeHome)}
             </div>
             {/* text-balance, because at 375 this ran to two lines with "year"
