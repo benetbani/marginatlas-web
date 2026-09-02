@@ -913,6 +913,55 @@ export function Tipping({
  * THE YARDSTICK RIDES BOTH MONEY FIGURES, the per-table fee under the answer and
  * the total in its own row, because "$1,240 a year" is meaningless in Tirana and
  * "about a week and a half of local pay" is not.
+ *
+ * ============ B3, 2026-09-02, THE SUBSECTION QUEUE ========================
+ *
+ * WARRANT (step 1), and the row was taken as a candidate for CUTTING and is not
+ * cut. A visitor reads this to decide WHETHER TO TAKE PAVEMENT SPACE AT ALL, and
+ * whether the seats it buys earn back what the licence costs. Without it they
+ * would have to find the council's own per-table fee and work out for themselves
+ * how much extra trade a terrace has to bring before it is worth having, which is
+ * the arithmetic that separates a terrace that is a business from one that is a
+ * decoration. NOT A DUPLICATE, checked on the render: no other card in either
+ * trade column states a licence fee, a table count or a break-even.
+ *
+ * THE FORM DID NOT MOVE AND THE QUEUE'S PREDICTION IS REFUSED, on the fixture
+ * rather than on taste. The queue predicted "StateWord or BenchmarkPair".
+ *   NOT BenchmarkPair (I9): it renders literally nothing without a REFERENCE, and
+ *   there is none here. `localHourlyPay` is a YARDSTICK, which B1 settled in as
+ *   many words: it re-expresses one figure in a second unit and says nothing
+ *   about whether the figure is high or low. `typicalTicket` is what a CUSTOMER
+ *   pays, not what a licence costs elsewhere. Reaching for the form would have
+ *   deleted the card's answer rather than degrading it.
+ *   NOT StateWord (I9): there is no yes-or-no field. `annual == null` makes the
+ *   whole card self-omit, so "it does not apply here" is said by the card's
+ *   ABSENCE, and a state row asserting it would be a branch nothing can reach,
+ *   which is B2's own recorded refusal.
+ * So the information is what it always was: ONE NUMBER STANDING ALONE for the
+ * answer (I9) and PAIRED LABELLED FACTS for the evidence (KV, I8). What was
+ * wrong was the composition, and three faults were measured on the photograph.
+ *
+ * ONE: THE CARD SAID ITS OWN FIGURES TWICE. The total and the count sat in KV
+ * rows and then again in the consequence, word for word: "$4,960" and "four
+ * tables" both printed twice in a card 281px tall. Every fact is stated once
+ * now, in one place: the total is the ANSWER, the rate is its BASIS, the count
+ * and the seats are the EVIDENCE, and the break-even is the CONSEQUENCE.
+ *
+ * TWO: THE ANSWER WAS THE WRONG FIGURE. It was the per-table rate, which is how
+ * the council CHARGES; the reader pays the total, and the total is what decides
+ * whether the terrace happens. The rate moves to the basis line under it, where
+ * B1 already puts the figure an answer was measured against. Where no count is
+ * held there is no total, so the rate takes the answer back and the card is
+ * exactly what it was: the missing fact takes its own object away and the rest
+ * holds, which is how B1 and B2 both degrade.
+ *
+ * THREE, AND IT IS THE HONESTY FAULT: A FREE LICENCE PRINTED A FABRICATED
+ * BREAK-EVEN. Charging nothing for pavement space is ordinary, `annual` of 0
+ * renders, and the break-even floored at one, so a city that charges nothing
+ * said its tables "pay for themselves at about one extra customer a week". That
+ * is A4's own fault class, a fallback that reads as measured, and it is the
+ * "whether it applies at all" half of this row answered by the only state the
+ * data can actually reach. A free licence now says so and states no payback.
  */
 export function PublicSpaceCost({
   annual,
@@ -944,45 +993,80 @@ export function PublicSpaceCost({
      owner already thinks in and a year of licence fees is not. It floors at one:
      a licence that pays for itself on half a customer a week still needs a whole
      customer to walk in, and "about zero extra customers a week" is not English. */
+  /* A LICENCE THAT COSTS NOTHING IS A STATE THE WORLD HAS AND THE DATA REACHES.
+     It is also the only place this card can honestly answer "does it apply at
+     all": a trade that pays nothing for the space renders `annual` of 0, while a
+     trade the charge does not touch renders no card. */
+  const free = annual === 0;
+  /* THE BREAK-EVEN REFUSES A ZERO BILL rather than flooring it to one customer.
+     `Math.max(1, ...)` is right for a bill of $40 and a lie for a bill of $0, and
+     the drawing a reader believes here is the sentence. */
   const perWeek =
-    total != null && typicalTicket != null && typicalTicket > 0
+    total != null && total > 0 && typicalTicket != null && typicalTicket > 0
       ? Math.max(1, Math.round(total / typicalTicket / 52))
       : null;
-  const consequence =
-    seats != null && total != null && covered != null
-      ? `${cap(wordFor(covered))} ${plural} cost ${money(total, currency)} a year and seat ${wordFor(seats)} more people${
-          perWeek != null
-            ? `, so they pay for themselves at about ${wordFor(perWeek)} extra ${perWeek === 1 ? "customer" : "customers"} a week`
-            : ""
-        }.`
-      : null;
-  const perUnitYard = localPayPhrase(annual, localHourlyPay);
-  const totalYard = localPayUnit(total, localHourlyPay);
+  /* THE CONSEQUENCE SAYS THE ONE THING NOTHING ELSE IN THE CARD SAYS. The count,
+     the seats and the money are each stated once, above; repeating them here was
+     the fault the photograph found. */
+  const consequence = free
+    ? `The space itself costs nothing here, so only the tables and the chairs are yours to pay for.`
+    : perWeek != null
+      ? `The space pays for itself at about ${wordFor(perWeek)} extra ${perWeek === 1 ? "customer" : "customers"} a week.`
+      : `The licence costs the same whether the tables are full or empty.`;
+  /* THE ANSWER IS WHAT THE OWNER PAYS, which is the whole licence and not the
+     rate the council quotes. Without a count there is no total, so the rate
+     takes the answer back and its own yardstick with it. */
+  const answerFigure = total ?? annual;
+  const answerYard = localPayPhrase(answerFigure, localHourlyPay);
+  const basis =
+    covered != null
+      ? free
+        ? `A year for the space. Nothing is charged for it here.`
+        : `A year for the space, at ${money(annual, currency)} a ${unit}.`
+      : `A year, per ${unit}.`;
 
   return (
     <Section
       kicker="Putting tables on the pavement"
       icon="high-street"
       accent
-      answer={<Fig>{money(annual, currency)}</Fig>}
-      answerNote={`A year, per ${unit}.${perUnitYard ? ` ${cap(perUnitYard)}.` : ""}`}
+      answer={<Fig>{money(answerFigure, currency)}</Fig>}
+      answerNote={`${basis}${answerYard ? ` ${cap(answerYard)}.` : ""}`}
       consequence={consequence}
     >
+      {/* THE TWO FACTS SIT SIDE BY SIDE ON A WIDE CARD AND STACK ON A NARROW ONE,
+          and both halves of that were measured rather than chosen.
+          STACKED AT 624px each row ran a 96px label and a value to about 148px of
+          a 584px card, leaving 436px of nothing under a full-width hairline, two
+          rows deep: an empty rectangle three quarters of the card wide and taller
+          than a line, which is step 7's own test failed. Side by side each fact
+          gets a 280px cell and ends about 62px short of it.
+          THE WRAPPER ALSO REMOVES A DOUBLE HAIRLINE that predates this row. KV
+          carries `last:border-0`, and as direct children of the Section the last
+          KV was never `:last-child`, because the foot div is: so the card drew a
+          rule under SEATS and the foot's own rule 14px below it, two nearly
+          parallel hairlines, which reads as a mistake rather than as a decision.
+          Inside a wrapper the last row is last again.
+          NEITHER ROW KEEPS ITS OWN RULE, at any width, and that is a decision the
+          branches forced rather than a tidy-up. A rule under one cell of a
+          two-cell row and none under the other is the same asymmetry seen from
+          the other side; and putting one under the whole block instead lands it
+          14px above the foot's own rule, which is the double hairline again.
+          Two labelled facts are a PAIR, not a list, so the foot's rule closes
+          them and nothing divides them.
+          THE COLUMNS FOLLOW THE CARD'S OWN WIDTH AND NOT THE VIEWPORT'S. A first
+          cut used `lg:grid-cols-2`, and the branch harness showed exactly what
+          the third run recorded for LollipopColumn: a viewport breakpoint is a
+          PROXY for a card width and it is wrong wherever a narrow card sits on a
+          wide screen. At 327px with `lg` active the two cells collided into "4 /
+          tables" and "16 / more / people". `auto-fit` with a 220px floor asks the
+          card instead: two abreast above about 464px of content box, stacked
+          below it, at every viewport. */}
       {covered != null ? (
-        <>
+        <div className="grid gap-x-6 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))] [&>*]:border-b-0">
           <KV k="Covered" v={`${covered} ${plural}`} />
-          <KV
-            k="All of them"
-            v={
-              <>
-                {money(total as number, currency)} a year
-                {totalYard ? (
-                  <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{totalYard} of local pay</span>
-                ) : null}
-              </>
-            }
-          />
-        </>
+          {seats != null ? <KV k="Seats" v={`${seats} more people`} /> : null}
+        </div>
       ) : null}
     </Section>
   );
