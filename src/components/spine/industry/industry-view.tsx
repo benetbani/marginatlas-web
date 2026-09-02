@@ -59,10 +59,26 @@ const GLOSS_UTILISATION = "Share of a typical day's trade.";
 /* ============================================================
  * MASTHEAD , THE MARGIN INDEX (hero, answer-first)
  * decision: does this trade make money? Number: the $7 kept per $100.
- * focal: the $7 keeps-per-100 figure (largest .fig on the page, top 20%).
+ * answer: the $7 keeps-per-100 figure, the ONE figure on this page at the 40 rung.
  * width: hero band, dissolved onto the atmosphere (no half-scrim); the margin
- *   ladder shows the collapse as three descending bars beside it.
- * terracotta: the $7 figure + the ladder's kept bar (one focal + the kept slice). */
+ *   ladder shows the collapse as a stair of three levels beside it.
+ * terracotta: the $7 figure + the ladder's kept tread (one answer + the kept level).
+ *
+ * THE TWO SIZES IN THIS BAND WERE BOTH ABOVE THE LADDER'S CEILING (queue row C7),
+ * and only one of them was visible to the gate. The figure was `md:text-[48px]`,
+ * which `verify_type_ladder` counts; the h1 was `md:text-[2.75rem]`, which is 44px
+ * and which that gate cannot see, because it reads px and this was written in rem.
+ * The ladder tops at 40 with "NOTHING IS LARGER" beside it.
+ *
+ * SHRINKING THE FIGURE ALONE WOULD HAVE INVERTED THE BAND. At 48 against 44 the
+ * answer outranked the name by 1.09x, which is two claimants and no answer (step
+ * 5); at 40 against 44 the name would have won outright. Measured at 375 the
+ * inversion was ALREADY SHIPPING: the h1 rendered at 33.6px over a 30px figure,
+ * so on every phone the page's title outranked the page's answer, 0.89x.
+ * Both are on the ladder now and neither carries a breakpoint: the answer takes
+ * --t-answer (40) and the name takes --t-section (24), which is the rung the
+ * ladder's own comment in globals.css assigns to "a naming h1". 1.67x at every
+ * width, which clears step 5's floor of 1.6, and one grammar instead of two. */
 function Masthead({ d }: { d: any }) {
   const mi = d.margin_index ?? {}; const m = d.margins ?? {};
   const hasLadder = [m.gross_pct, m.operating_pct, m.net_pct].every((v) => typeof v === "number" && Number.isFinite(v));
@@ -71,11 +87,11 @@ function Masthead({ d }: { d: any }) {
       <div className="mb-2 flex items-center gap-2.5">
         <span className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">00</span>
       </div>
-      <h1 data-typography="custom" className="text-[2.1rem] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)] md:text-[2.75rem]">{d.meta?.name}</h1>
+      <h1 data-typography="custom" className="text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]">{d.meta?.name}</h1>
       <div className="mt-5 grid gap-5 md:grid-cols-[1.35fr_1fr] md:items-center">
         <div>
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <CountFig value={mi.keeps_per_100} prefix="$" className="text-[30px] leading-[0.9] text-[var(--terra-text)] md:text-[48px]" />
+            <CountFig value={mi.keeps_per_100} prefix="$" className="text-[length:var(--t-answer)] leading-[1] text-[var(--terra-text)]" />
             {/* PROSE, NOT A SUBSECTION HEADING. This is the one use of the
                 retired 18 rung, site-wide, that did not fold onto the head step
                 with the other 23. It is a sentence a reader reads, set beside
