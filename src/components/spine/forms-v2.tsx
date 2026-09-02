@@ -584,6 +584,16 @@ export function StateWord({
  *
  * DO NOT WRAP THESE INTO A GRID. DO NOT FILL THE ROWS, and do not size them by
  * value: a filled row is a bar and a sized row is a chart.
+ *
+ * THE ACCENT IS RATIONED BY THE CALLER, AND IT DEFAULTS ON, which is StepLadder's
+ * settled arrangement (A3) and LollipopColumn's (A5) arriving in the third form.
+ * The leader's figure takes terracotta because on most standings entry one IS the
+ * card's answer. Two cases turn it off, and neither is taste: a card that already
+ * spends its one accent elsewhere (step 8, a card with two accented things has no
+ * answer), and a ranking whose first entry is not a GOOD end, where marking it
+ * would assert a recommendation the data has not made (rule 28, rule 29A). The
+ * order, the numerals and the leader's semibold name still say which row is first,
+ * exactly as A3's filled-but-unaccented rung does.
  */
 export type RankedTile = {
   /** The entry's name. An entry without one is dropped. */
@@ -592,7 +602,17 @@ export type RankedTile = {
   value?: React.ReactNode;
 };
 
-export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | null | undefined> | null; ariaLabel?: string }) {
+export function RankedTiles({
+  rows,
+  ariaLabel,
+  accent = true,
+}: {
+  rows?: Array<RankedTile | null | undefined> | null;
+  ariaLabel?: string;
+  /** Terracotta on the leader's figure. Off where the card's accent belongs to
+   *  something else, or where entry one is merely first and not best. */
+  accent?: boolean;
+}) {
   const kept = (rows ?? [])
     .filter((r): r is RankedTile => r != null && !!r.name && r.value != null && r.value !== "")
     .slice(0, 6);
@@ -673,7 +693,7 @@ export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | nul
                 reading a name, and the leader's is the form's one accent. */}
             <span
               className="text-[length:var(--t-body)] leading-none"
-              style={{ flex: "none", textAlign: "right", color: leader ? "var(--terra-text)" : "var(--c-ink)" }}
+              style={{ flex: "none", textAlign: "right", color: leader && accent ? "var(--terra-text)" : "var(--c-ink)" }}
             >
               <Fig>{row.value}</Fig>
             </span>
@@ -1758,18 +1778,35 @@ export function RangeBracket({
     <div
       data-idea="I12"
       role="img"
-      aria-label={`${format(typical)} ${caption ?? "typical"}, between ${format(lo)} and ${format(hi)}`}
+      /* THE END LABELS ARE PART OF THE READING AND WERE MISSING FROM THE NAME.
+         The label said only "$38K typical, between $25K and $74K", so a screen
+         reader learned the span's ends were figures and never what either end
+         WAS. C11's card is the form's first shipping use and the drawing it
+         replaced named all three readings in its own label, so the accessible
+         name would have gone backwards. It names each figure with its own words
+         now, in the drawing's own left-to-right order, and B5's rule is why it
+         was read at all: wire a form to composed English and the aria-label is
+         part of the composition. */
+      aria-label={`${format(lo)} ${endLabels[0]}, ${format(typical)} ${caption ?? "typical"}, ${format(hi)} ${endLabels[1]}`}
     >
       {/* ONE ROW, THREE COLUMNS, TWO GRID ROWS. The figures baseline-align with
           each other and the labels baseline-align with each other, which a flex
           row cannot do: there, each cell aligns on its own first baseline and a
           30px figure drops its label four pixels below its neighbours'. */}
+      {/* THE COLUMN GAP IS THE SLOT RUNG, 8. It was 14, which sits between two
+          rungs of the spacing ladder (48 / 32 / 28-20-16 / 8) and step 7 forbids
+          outright; this form's first shipping caller (C11, the country page's
+          pay spread) is where it was measured, which is run 7's rule about a
+          shared component's gaps. THE ROW GAP STAYS AT 4 and is not the same
+          kind of value: a figure and the word naming it are ONE OBJECT KERNED,
+          which A4 settled for the 5px inside ClearanceRing's centre, while the
+          column gap separates three blocks. */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr auto 1fr",
           alignItems: "baseline",
-          columnGap: 14,
+          columnGap: 8,
           rowGap: 4,
         }}
       >
@@ -1799,7 +1836,11 @@ export function RangeBracket({
           toward the figures they enclose, and the notch dropping away under the
           middle one. Drawn in divs rather than an svg so the 2px never lands on
           a half pixel after a viewBox has been scaled to the card. */}
-      <div aria-hidden style={{ position: "relative", height: ARM + RULE + NOTCH, marginTop: 11 }}>
+      {/* 8, THE SLOT RUNG, and it was 11, the second off-ladder value this form
+          carried into its first shipping use. Tightening it also serves the
+          ARM/NOTCH note above: a brace sitting closer to the figures reads as an
+          enclosure around them rather than as a divider under them. */}
+      <div aria-hidden style={{ position: "relative", height: ARM + RULE + NOTCH, marginTop: 8 }}>
         <div style={{ position: "absolute", left: 0, right: 0, top: ARM, height: RULE, background: "var(--c-line-strong)" }} />
         <div style={{ position: "absolute", left: 0, top: 0, width: RULE, height: ARM + RULE, background: "var(--c-line-strong)" }} />
         <div style={{ position: "absolute", right: 0, top: 0, width: RULE, height: ARM + RULE, background: "var(--c-line-strong)" }} />

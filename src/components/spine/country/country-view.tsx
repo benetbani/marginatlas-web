@@ -30,6 +30,7 @@
  */
 import * as React from "react";
 import { Band, Box, Fig, Rail, SampleTag, SpectraTable, usd } from "@/components/spine/kit";
+import { RangeBracket, RankedTiles } from "@/components/spine/forms-v2";
 import { AtlasMark } from "@/components/spine/marks";
 import { CityCardsPager } from "@/components/spine/country/city-cards";
 import { SetupTiers } from "@/components/spine/country/setup-tiers";
@@ -57,6 +58,20 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+
+/* AN EXACT FIGURE, BECAUSE THE KIT'S `usd` ABBREVIATES AT A THOUSAND and rounds
+   to the nearest one. B8 found that on the legal-form fees, where 53 rows across
+   52 countries printed a published fee wrong; C11 found the SAME defect live in
+   the premises card, which reads a rent per square metre. Measured on
+   country_profile_v2.json: four of 198 countries carry a prime rent at or above
+   a thousand, Hong Kong at $1,850 printing "$2K", Monaco at $1,437 and Macao and
+   Liechtenstein at about $1,200 all printing "$1K". Beside an edge rent of $278
+   that pair says 3.6 times where the truth is 5.2, and this card now STATES the
+   ratio, so a rounded figure would put the drawing and the sentence in open
+   disagreement. This is the SECOND private copy of this formatter, after
+   setup-tiers.tsx's `fee`; the honest fix is one exact formatter in the kit, and
+   it is a queue row rather than a reach into a shared file from here. */
+const rentUsd = (v: number) => "$" + Math.round(v).toLocaleString("en-US");
 
 /** One published fact from hero.support, shaped as the adapter emits it. */
 type SupportFact = { key?: string; label?: string; value?: number; unit?: string; note?: string };
@@ -448,16 +463,34 @@ function Customers({ customers }: { customers: any }) {
       </Box>
     );
   }
-  /* The ten percent of room at each end is the round-3 scale rule kept intact:
-     an end mark sits inside the track rather than on its edge, so a tick is
-     never half-drawn against the card's own boundary. */
-  const lo = p10 * 0.9, hi = p90 * 1.1, span = Math.max(1, hi - lo);
-  const X = (v: number) => ((v - lo) / span) * 100;
-  /* An end block sits flush to the card edge rather than centred on a mark that
-     is already near it, so nothing is ever clipped. The round-3 thresholds. */
-  const place = (x: number): React.CSSProperties =>
-    x > 82 ? { right: 0 } : x < 14 ? { left: 0 } : { left: x + "%", transform: "translateX(-50%)" };
-  const xMed = X(med);
+  /* C11, 2026-09-02. WHAT WAS HERE WAS AN UNDECLARED HORIZONTAL TRACK, and it
+     was the wrong drawing rather than merely an untagged one.
+     THE FORM. A hairline with three ticks on it is I1, and I1 is reserved for a
+     POSITION BETWEEN TWO NAMED POLES. "Bottom ten percent" and "top ten percent"
+     are the BOTTOM AND TOP OF AN ORDER, which A1 settled on the trade page and
+     C10 settled again on the hood page: an order's two ends are not two poles a
+     value sits between. The page also carries exactly two legitimate tracks
+     already, the ratified character tables, so declaring this one would have put
+     the page at I1 3 of 2 and failed the gate in the same commit.
+     WHAT THE INFORMATION IS: a spread, a low, a typical and a high of ONE
+     quantity. The catalogue holds two forms for it, SpreadStrip at I1 (at cap,
+     and the wrong drawing above) and RangeBracket at I12, whose version 3 entry
+     carries the typical between its two ends. I12 is free on this page.
+     THE HIERARCHY WAS ALSO FAILING, measured on the render before this change:
+     the typical stood at head 20 against its two ends at body 14, a ratio of
+     1.43x, under step 5's floor of 1.6. The bracket sets the typical at focal
+     30 against the same two ends, 2.14x.
+     WHAT IT COSTS, and it is deliberate rather than overlooked: the old drawing
+     placed the typical at its true fraction of the span (measured 27.9 percent
+     drawn against 26.5 percent true, the difference being the end padding), so
+     the SKEW of the distribution was drawn. A brace does not place its notch by
+     value and says so in its own entry: the numbers carry the reading. That is
+     the trade version 3 made when it struck the anchored numeral, and the skew
+     survives in the figures, which any reader can subtract.
+     THE ACCENT IS UNCHANGED AND NARROWER. Register entry 2 is "the customers
+     card's Typical figure"; the old card also painted the word and the 2px tick,
+     so three things wore terracotta where the register names one. The bracket
+     colours the figure and nothing else. */
   return (
     <Box id="customers">
       {/* The range glyph, not the shopping bag: at sixteen pixels the bag reads
@@ -465,56 +498,26 @@ function Customers({ customers }: { customers: any }) {
           exactly what the range glyph depicts, a low-to-high band with the
           typical point marked. */}
       <Rail icon="spread" kicker="What customers earn" sample={tagged} />
-      {/* THE TYPICAL RIDES ABOVE ITS OWN MARK, and the reason is measured, not
-          preferred. Held under the track with the other two, its block overlaps
-          "Bottom ten percent" at every width the card is ever laid out at:
-          measured overlaps of 17px at 1536, 1280 and 768, 22px at 360, 6px at
-          430, and 0px clearance at 900. Pay leans right, so the typical mark
-          sits around 27 percent of the span while the bottom label is anchored
-          at the left edge, and no wrapping or width cap closes a gap that is
-          negative before it starts. Lifting the answer to its own row above the
-          rule leaves the two ends alone below it, where they are anchored to
-          opposite edges and cannot meet. Every mark still stands over its own
-          tick, the accent register is unchanged (the Typical word, its figure,
-          its 2px tick), and nothing scrolls sideways at any width (law M). */}
-      <div className="relative mt-1 h-[40px]">
-        <span className="absolute bottom-0 flex flex-col whitespace-nowrap" style={place(xMed)}>
-          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--terra-text)]">Typical</span>
-          <Fig className="mt-0.5 text-[length:var(--t-head)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
-        </span>
-      </div>
-      <div
-        className="relative h-[24px]"
-        role="img"
-        aria-label={"Full-time pay a year: bottom ten percent " + usd(p10) + ", typical " + usd(med) + ", top ten percent " + usd(p90)}
-      >
-        <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
-        {([[p10, false], [med, true], [p90, false]] as Array<[number, boolean]>).map(([v, accent]) => (
-          <span key={v} className="absolute bottom-0 top-0" style={{ left: X(v) + "%" }}>
-            <span
-              className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2"
-              style={{ borderLeftWidth: accent ? 2 : 1, borderLeftStyle: "solid", borderLeftColor: accent ? "var(--terra-text)" : "var(--c-line-strong)" }}
-            />
-          </span>
-        ))}
-      </div>
-      <div className="relative mt-1 h-[36px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        {([["Bottom ten percent", p10], ["Top ten percent", p90]] as Array<[string, number]>).map(([label, v]) => {
-          const x = X(v);
-          const atRight = x > 82;
-          return (
-            <span
-              key={label}
-              className={"absolute top-0 flex flex-col whitespace-nowrap " + (atRight ? "items-end text-right" : "")}
-              style={place(x)}
-            >
-              <span>{label}</span>
-              <Fig className="mt-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(v)}</Fig>
-            </span>
-          );
-        })}
-      </div>
-      <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</div>
+      <RangeBracket
+        lo={p10}
+        hi={p90}
+        typical={med}
+        format={usd}
+        caption="Typical"
+        /* "BOTTOM TENTH" AND "TOP TENTH", SHORTENED BY TWO AND A HALF PIXELS,
+           and the photograph is the only thing that found it. "Bottom ten
+           percent" measures 106px in a 103.9px column at 375, so it wrapped with
+           "percent" orphaned on a second line while the two labels beside it sat
+           on one, which is A3's own fault ("asks.", "business.") and A3's own
+           remedy. A first DOM probe reported one line and was wrong, because it
+           measured before `document.fonts.ready` and therefore measured the
+           fallback face. THE STATISTIC IS UNCHANGED, which is what the founder's
+           N9 order was actually about: he asked for the top and bottom tenths
+           instead of quartiles, and a tenth is what both labels say. */
+        endLabels={["Bottom tenth", "Top tenth"]}
+        accent
+      />
+      <div className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</div>
     </Box>
   );
 }
@@ -656,11 +659,54 @@ function Setup({ setup }: { setup: any }) {
 }
 
 /**
- * What premises cost , the bare figure list is out (founder, second batch:
- * "this is just a list of numbers, so it doesn't feel well at all"). The
- * three rent tiers draw on ONE linear scale, the settled tick form: hairline
- * baseline, 12px ticks, each label UNDER its own mark, outermost labels
- * pinned inside the box, all ink (nothing here is the answer, so no accent).
+ * What premises cost , a STANDING of the address tiers since C11 (2026-09-02).
+ *
+ * WHAT WAS HERE, AND WHY IT WAS A REPLACEMENT RATHER THAN A DECLARATION. The
+ * three rents sat as ticks on one hairline, which is an undeclared I1 horizontal
+ * track on a page already at the I1 cap of two, and the track was wrong twice
+ * over. Its two ends are the BOTTOM AND TOP OF AN ORDER, which A1 and C10 both
+ * settled is not a position between two named poles. And the axis was LOGARITHMIC
+ * with nothing in the drawing saying so: measured on the render, the middle mark
+ * stood at 41.7 percent of the way between the outer two where the true linear
+ * fraction of those same figures is 20.0 percent, so the picture published DOUBLE
+ * the distance the data holds. That is C10's invented-position fault class, in a
+ * card that had no other reading: nothing in it was larger than 14px, so there
+ * was no first thing to see and no ratio to state (C6's measurement, here again).
+ *
+ * WHAT THE INFORMATION IS: a ranking of named things, three of them, one figure
+ * each. NOT a spread, which is the customers card two bands up: "Ordinary street"
+ * is not the typical of a distribution, it is a third named place, and a tenant
+ * chooses a tier rather than landing at a percentile.
+ *
+ * EVERY DRAWN FORM WAS ELIMINATED BEFORE THE TYPOGRAPHIC ONE WAS TAKEN, which is
+ * A8's own path through step 3. I1 is at cap and is the wrong drawing, above. I2
+ * LollipopColumn refuses fewer than four entries in code, verified rather than
+ * assumed, and the card directly below this one in reading order is the hiring
+ * bar set, so an I2 here would also breach rule 25. I3 StackBar asserts a total,
+ * and three rents do not sum to a quantity. I4 is a level reached or a running
+ * total and this is neither. I5 is a count of identical marks, and the setup card
+ * beside it already draws pips. I6 OptionCards needs 478px of inner width (run 7
+ * measured it) and this card has 396, and the band cannot widen because B8
+ * measured 624 as the narrowest width its own table stays a table at. I7 has
+ * nothing to clear. I12 is spent two bands up on a different information type,
+ * and drawing three entities as a span would be the fuse this loop is forbidden.
+ * So the catalogue holds NO drawn form for a three-entry ranking on this page,
+ * and RankedTiles is the form its index names for a ranking that is few.
+ *
+ * WHICH LEAVES THE FOUNDER'S OWN OBJECTION TO ANSWER, "this is just a list of
+ * numbers, so it doesn't feel well at all" (second batch). What he rejected was
+ * figures with no reading, and the tick scale answered it with a drawing that
+ * lies. The card answers it instead with the reading itself: a computed finding
+ * at the section rung saying how many times the dearest address costs the
+ * cheapest, with the standing beneath it as its evidence. The finding is COMPUTED
+ * and never typed, which is C6's rule and matters here for C6's reason: the tiers
+ * and their spread differ in every country.
+ *
+ * NO ACCENT ANYWHERE. The accent register closed by the founder on 2026-08-30 is
+ * exhaustive and this card is not in it, so RankedTiles takes `accent={false}`;
+ * the order, the numerals and the leader's semibold name carry the rank, which is
+ * A3's own settled reading for a form whose colour is turned off.
+ *
  * The electricity rate keeps its own quiet line beneath.
  */
 function Premises({ premises }: { premises: any }) {
@@ -674,47 +720,46 @@ function Premises({ premises }: { premises: any }) {
   if (isNum(prime)) rents.push(["Prime street", prime]);
   if (rents.length === 0 && !isNum(kwh)) return null;
   const tagged = typeof premises?._meta?.confidence === "string" && premises._meta.confidence !== "measured";
-  /* LOG SCALE, and the photograph is why: prime street rents run near eight
-     times edge-of-town, so a linear scale crushed the two lower marks into
-     one unreadable overlap ("Edge oOtdiuary street", photographed
-     2026-08-30). The log form spreads a multiplicative spread evenly; the
-     city income card made the same call for the same reason. */
-  const lo = rents.length > 0 ? Math.min(...rents.map(([, v]) => v)) * 0.9 : 1;
-  const hi = rents.length > 0 ? Math.max(...rents.map(([, v]) => v)) * 1.1 : 2;
-  const span = Math.max(0.01, Math.log(hi) - Math.log(Math.max(1, lo)));
-  const X = (v: number) => ((Math.log(Math.max(1, v)) - Math.log(Math.max(1, lo))) / span) * 100;
+  /* THE FINDING, COMPUTED. Read off the two ends of whatever set this country
+     holds, so a page with two tiers and a page with three both say something
+     true, and no sentence is typed about a country nobody looked at (C6). Under
+     1.15x the ratio is not a finding and the card says so rather than printing
+     "1.1 times", which is a difference a rent survey cannot defend. */
+  const cheapest = rents[0]?.[1];
+  const dearest = rents[rents.length - 1]?.[1];
+  const ratio = rents.length >= 2 && cheapest > 0 ? dearest / cheapest : null;
+  /* THE MULTIPLE IS ROUNDED TO WHAT THE RENTS CAN CARRY, and "about" is not
+     hedging. The tier rents are published to the nearest ten dollars a square
+     metre, so on a $120 base a ten-dollar wobble at either end moves a 7.7 into
+     the range 7.0 to 8.4: a tenth of a multiple is well inside the inputs' own
+     rounding at that size, and printing one would be the false precision this
+     card was already guilty of in its drawing. A tenth still says something
+     below 3, where the same wobble is a smaller share of the reading. */
+  const times = ratio == null ? null : ratio >= 3 ? Math.round(ratio) : Math.round(ratio * 10) / 10;
+  const finding =
+    times == null
+      ? null
+      : ratio != null && ratio < 1.15
+        ? "The dearest address costs about the same as the cheapest."
+        : "The dearest address costs about " + (Number.isInteger(times) ? times : times.toFixed(1)) + " times the cheapest.";
   return (
     <Box id="premises">
       <Rail icon="commercial-rent" kicker="What premises cost to run" sample={tagged} />
       {rents.length >= 2 ? (
         <>
-          <div className="relative mt-1 h-[24px]" role="img" aria-label={"Commercial rent for a square metre, a year: " + rents.map(([l, v]) => l + " " + usd(v)).join(", ")}>
-            <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
-            {rents.map(([label, v]) => (
-              <span key={label} className="absolute bottom-0 top-0" style={{ left: X(v) + "%" }}>
-                <span className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2" style={{ borderLeftWidth: 1, borderLeftStyle: "solid", borderLeftColor: "var(--c-line-strong)" }} />
-              </span>
-            ))}
+          <p className="text-[length:var(--t-section)] font-semibold leading-snug text-[var(--c-ink)]">{finding}</p>
+          <div className="mt-4">
+            <RankedTiles
+              accent={false}
+              ariaLabel={"Commercial rent for a square metre a year, cheapest address first: " + rents.map(([l, v]) => l + " " + rentUsd(v)).join(", ")}
+              rows={rents.map(([label, v]) => ({ name: label, value: rentUsd(v) }))}
+            />
           </div>
-          <div className="relative mt-1 h-[42px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
-            {rents.map(([label, v]) => {
-              const x = X(v);
-              const pin = x > 82 ? "right" : x < 14 ? "left" : "centre";
-              const style: React.CSSProperties =
-                pin === "right" ? { right: 0 } : pin === "left" ? { left: 0 } : { left: x + "%", transform: "translateX(-50%)" };
-              return (
-                <span key={label} className={"absolute top-0 flex flex-col whitespace-nowrap " + (pin === "right" ? "items-end" : "")} style={style}>
-                  <span>{label}</span>
-                  <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(v)}</Fig>
-                </span>
-              );
-            })}
-          </div>
-          <div className="mt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">Commercial rent for a square metre, a year.</div>
+          <div className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">Commercial rent for a square metre, a year.</div>
         </>
       ) : rents.length === 1 ? (
         <div className="flex flex-wrap items-baseline gap-x-2">
-          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{usd(rents[0][1])}</Fig>
+          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{rentUsd(rents[0][1])}</Fig>
           <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{rents[0][0].toLowerCase()}, a square metre a year</span>
         </div>
       ) : null}
@@ -858,11 +903,19 @@ export function SpineCountryBody({ data }: { data?: any }) {
         <Masthead name={name} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} hero={d.hero} />
         <Cities cities={d.cities} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
         <Peers peers={d.peers} />
-        {/* The 2-1 band the second batch made: the money grid takes the wide
-            side, the customers card the narrow; the lens grid that stood here
-            is retired, every tile by his own words. */}
+        {/* The money grid takes the wide side and the customers card the narrow;
+            the lens grid that stood here is retired, every tile by his own words.
+            THE SPLIT MOVED 2-1 TO 3-2 IN C11, and a measurement decided it rather
+            than taste. At 347 the bracket's own left label, "Bottom ten percent",
+            needs 103px in a 100px column and wrapped to two lines while the two
+            beside it stayed on one, so a row of three labels went ragged. At 416
+            each column is 141px and every label sits on one line with room for a
+            wider middle figure than any country in the file holds. The money grid
+            gives up 69px and loses nothing: its name column falls 419 to 352 and
+            its longest trade name is about 140. D3 also reads better afterwards,
+            because 2-1 stood at three bands on this page and now stands at two. */}
         {Array.isArray(d.money?.list) || isNum(d.customers?.median_usd) ? (
-          <Band split="2-1">
+          <Band split="3-2">
             <Money money={d.money} />
             <Customers customers={d.customers} />
           </Band>
