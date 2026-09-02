@@ -17,8 +17,8 @@
  * replacement for a reading that was being drawn as a track and never was a
  * position between two poles.
  *
- *   BenchmarkPair  (I9)  one number against a reference. DRAWS NOTHING.
- *   StateWord      (I9)  a yes, a no, a not-applicable. DRAWS NOTHING.
+ *   BenchmarkPair  (I9)  one number, with its verdict on the same baseline.
+ *   StateWord      (I9)  a yes, a no, a not-applicable, as a marked status row.
  *   RankedTiles    (I6)  a short ranking, where the ORDER is the reading.
  *   OptionCards    (I6)  a choice among two to four comparable options.
  *   LollipopColumn (I2)  a longer ranking, where the MAGNITUDE matters too.
@@ -27,11 +27,22 @@
  *   RangeBracket   (I6)  a low, a high, and the typical held between them.
  *
  * THE ONE RULE ALL EIGHT SHARE: none of them may read as a line with a dot on
- * it. Two of the first four draw nothing at all, and that is the point rather
- * than an omission. A number beside its reference is a complete answer. A word
- * at figure size is a complete answer. The urge to add a track or a meter
- * underneath one "so it looks designed" is the exact fault this file was
- * written to end.
+ * it.
+ *
+ * WHAT VERSION 3 STRUCK, 2026-09-01, and it was written in this header as law.
+ * The two lines above used to end "DRAWS NOTHING", and the paragraph here used
+ * to argue that a number beside its reference and a word at figure size were
+ * each a complete answer. The founder saw all eight rendered and kept one:
+ * "with the exception of the lollipop form, all the other ones are completely
+ * mediocre slop... the design is very unnatural and not expected." He is right
+ * about these two, and the reason is diagnosable. A reader looking at a figure
+ * beside a sentence is not being SHOWN a relationship, only told about one, and
+ * "a word at figure size" is a fallback dressed as a principle. Neither of them
+ * carries a quantity, so neither gets a chart. Both get a COMPOSITION instead,
+ * which is the thing a stated purpose never specifies: what sits where, what
+ * shares a baseline, and which adjacency carries the meaning. The lollipop
+ * survived because it was the only one of the eight that was DRAWN, and a
+ * drawing is not the same claim as a chart.
  *
  * THE SECOND FOUR DRAW, WHICH IS WHERE THE TEMPTATION IS STRONGEST. A form that
  * draws nothing cannot become a track by accident. A form that draws a length or
@@ -90,6 +101,20 @@
 import * as React from "react";
 
 import { Fig } from "@/components/spine/kit";
+/* THE BOUGHT COMPONENT, NOT A HAND-ROLLED PILL. Founder, 2026-09-01: "always
+   try to stick with the components that we have from shadcn." BenchmarkPair's
+   verdict is a real Badge: its radius, its 12px semibold, its tracking and its
+   focus ring all come from src/components/ui/badge.tsx, and only the surface
+   colours are re-skinned to the spine's tokens through className, which is what
+   twMerge in `cn` is there for.
+   ITS PADDING IS PASSED INLINE, and that is not a style preference. The v2
+   scope carries `.av2, .av2 * {margin:0;padding:0}` (atlas-spine.css:142), a
+   descendant selector at the same specificity as any utility class and later in
+   source order, so a Badge dropped into a v2 route loses its px-2.5 py-0.5 and
+   collapses to a text-sized sliver with a border. The header above says every
+   structural space in this file is inline for exactly this reason; the bought
+   component's own padding is no exception to it. */
+import { Badge } from "@/components/ui/badge";
 
 /* ------------------------------------------------------------------ */
 /* THE DIFFERENCE, IN WORDS                                            */
@@ -153,24 +178,88 @@ export function differenceInWords(subject: number, reference: number): string {
 }
 
 /* ------------------------------------------------------------------ */
+/* THE DIRECTION, AS A SHAPE                                           */
+/* ------------------------------------------------------------------ */
+/**
+ * WHICH WAY THE GAP RUNS, on the same dead band the words use.
+ *
+ * It is a separate function from differenceInWords because the badge needs the
+ * direction as a SHAPE and the sentence needs it as a word, and deriving the
+ * shape by reading the string back out ("does it end in 'more'?") would be a
+ * parser sitting between two functions that both already have the numbers.
+ * DEAD_BAND is shared so the two can never disagree about what counts as level.
+ */
+const DEAD_BAND = 0.03;
+type Direction = "up" | "down" | "level";
+
+function directionOf(subject: number, reference: number): Direction {
+  if (reference === 0) return "level";
+  const gap = (subject - reference) / Math.abs(reference);
+  if (Math.abs(gap) < DEAD_BAND) return "level";
+  return gap > 0 ? "up" : "down";
+}
+
+/**
+ * THE MARK IN THE BADGE. A solid triangle up or down, a bar for level, drawn in
+ * currentColor so it takes whichever ink the badge is wearing and can never
+ * become a second accent by itself. It is aria-hidden: the badge's words
+ * already say "more" or "less", so a screen reader that also announced the
+ * triangle would hear the direction twice.
+ */
+function DirectionMark({ direction }: { direction: Direction }) {
+  return (
+    <svg aria-hidden width="9" height="9" viewBox="0 0 9 9" style={{ display: "block", flex: "none" }}>
+      {direction === "level" ? (
+        <rect x="0" y="3.75" width="9" height="1.5" fill="currentColor" />
+      ) : (
+        <polygon points={direction === "up" ? "4.5,0.6 9,7.6 0,7.6" : "4.5,8.4 0,1.4 9,1.4"} fill="currentColor" />
+      )}
+    </svg>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* BenchmarkPair , I9, free of every drawn budget                      */
 /* ------------------------------------------------------------------ */
 /**
- * ONE NUMBER AGAINST A REFERENCE, AND NOTHING IS DRAWN.
+ * THE FIGURE AND ITS VERDICT ON ONE BASELINE.
  *
- * "$31 here. The typical trade takes $24, so about a third more." That sentence
- * IS the form. The version-1 habit was to put those two numbers on a shared
- * track with a marker at each, which invents a scale (where is zero? where is
- * the top?) that neither figure came with, and which reads at a glance as the
- * same shape as a level, a ranking and a spread. Two figures and a sentence say
- * more, in less space, and cannot be misread as a position.
+ * Three lines, and the middle one is the form:
  *
- * DO NOT add a scale, a bar, a meter or a tick to place these on. If the reading
- * genuinely IS a position between two named poles, the form is SpectraTable and
- * the section should say which two poles.
+ *   WHAT A TABLE SPENDS            <- the label, micro caps, muted
+ *   $31  [^ about a third more]    <- ONE baseline row: figure, then verdict
+ *   against $24, the typical trade <- the basis, micro muted, named once
  *
- * IT REFUSES WITHOUT THE REFERENCE. A BenchmarkPair with nothing to compare
- * against is a lone number, and the form for a lone number is Stat.
+ * WHAT THIS REPLACES AND WHY. Version 2 set the figure at focal and then wrote
+ * the comparison out as a sentence underneath: "The typical trade in this city
+ * sits at $24. This is about a third more." Every fact was present and none of
+ * it was composed, so the founder read it as text at three sizes in a rounded
+ * rectangle, which is what it was. The gap between $31 and $24 is the whole
+ * reading, and a clause is the one place a reading can hide.
+ *
+ * SO THE COMPARISON BECOMES AN OBJECT. The verdict is a Badge, sitting on the
+ * figure's own baseline and a hand's width to its right, close enough that the
+ * eye takes the two in as one thing rather than as a number and then a remark
+ * about it. That adjacency is the entire design: number, verdict, and only then
+ * what it was measured against. It is also the best-solved shape in dashboard
+ * work, which is a reason to use it rather than a reason to avoid it.
+ *
+ * WHY THE ROW ALIGNS ON THE BASELINE AND NOT ON CENTRES. A 30px figure and a
+ * 26px pill centred against each other float: neither sits on anything, and the
+ * pair reads as two objects that happen to be side by side. Aligned on the
+ * baseline they stand on one invisible line, which is what "one object" means
+ * typographically, and it is the same claim the lollipop makes by drawing its
+ * zero line: things that share a baseline are being compared.
+ *
+ * DO NOT add a scale, a bar, a meter or a tick for these two figures to sit on.
+ * Neither of them came with a zero and neither came with a ceiling. If the
+ * reading genuinely IS a position between two named poles, the form is
+ * SpectraTable and the section should say which two poles.
+ *
+ * IT REFUSES WITHOUT THE REFERENCE, and refuses on a zero one. A BenchmarkPair
+ * with nothing to compare against is a lone number, and the form for a lone
+ * number is Stat; a reference of zero has no gap that can be put in words, and
+ * a badge reading "not comparable" is a designed object saying nothing.
  */
 export function BenchmarkPair({
   value,
@@ -190,14 +279,17 @@ export function BenchmarkPair({
   format?: (n: number) => string;
   /** Optional caption when the form stands outside a section rail. */
   label?: string | null;
-  /** Marks the subject figure, the one accentable thing here. */
+  /** Marks the VERDICT, which is the one accentable thing here: the figure is
+   *  the subject and the badge is the finding, so the colour goes on the
+   *  finding. One accent, and never on a hover. */
   accent?: boolean;
 }) {
   if (value == null || !Number.isFinite(value)) return null;
   if (reference == null || !Number.isFinite(reference)) return null;
+  if (reference === 0) return null;
   if (!referenceLabel) return null;
   const said = differenceInWords(value, reference);
-  const opener = referenceLabel.charAt(0).toUpperCase() + referenceLabel.slice(1);
+  const direction = directionOf(value, reference);
   return (
     <div data-idea="I9">
       {label ? (
@@ -205,18 +297,52 @@ export function BenchmarkPair({
           {label}
         </div>
       ) : null}
+      {/* THE ONE BASELINE ROW. It wraps rather than shrinks, because a badge
+          squeezed onto a second line still sits under its own figure, while a
+          badge crushed to two words has lost the verdict it was carrying. */}
       <div
-        className="text-[length:var(--t-focal)] leading-none"
-        style={{ marginTop: 2, color: accent ? "var(--terra-text)" : "var(--c-ink)" }}
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          flexWrap: "wrap",
+          columnGap: 10,
+          rowGap: 4,
+          marginTop: label ? 6 : 0,
+        }}
       >
-        <Fig>{format(value)}</Fig>
+        <div className="text-[length:var(--t-focal)] leading-none" style={{ color: "var(--c-ink)" }}>
+          <Fig>{format(value)}</Fig>
+        </div>
+        <Badge
+          variant="outline"
+          /* THE NEUTRAL SKIN IS THE ONE THAT HAD TO BE MEASURED, because most
+             sections will not spend their accent here. Rendered first at
+             --c-soft on the card's white with a --c-border ring, it came out a
+             shade away from the paper on both counts and read as a faint
+             outline rather than as an object, beside a terracotta twin that
+             read as one. --c-soft2 over --c-line-strong is the same pair of
+             tokens one step apart, and it holds its own at 12px. */
+          className={
+            accent
+              ? "border-[var(--terra-border)] bg-[var(--terra-soft)] text-[var(--terra-text)] hover:bg-[var(--terra-soft)]"
+              : "border-[var(--c-line-strong)] bg-[var(--c-soft2)] text-[var(--c-ink2)] hover:bg-[var(--c-soft2)]"
+          }
+          /* Inline, not px-2.5 py-0.5: see the import note. The hover classes
+             above restate the resting fill rather than dropping it, because the
+             bought variants all change colour on hover and nothing in a form is
+             interactive. */
+          style={{ padding: "4px 10px", gap: 6 }}
+        >
+          <DirectionMark direction={direction} />
+          {said}
+        </Badge>
       </div>
-      {/* THE REFERENCE LIVES IN THE SENTENCE, at the sentence's own size. It is
-          set in the figure face so a reader's eye still registers it as a
-          measurement rather than as a word, which is the only thing that has to
-          survive the drop from 30 to 12. */}
+      {/* THE BASIS, and the reference figure is named exactly once on the form.
+          It is set in the figure face so the eye still reads it as a
+          measurement at 12px, which is the one thing that has to survive the
+          drop from 30. */}
       <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" style={{ marginTop: 8 }}>
-        {opener} sits at <Fig>{format(reference)}</Fig>. This is {said}.
+        against <Fig>{format(reference)}</Fig>, {referenceLabel}
       </p>
     </div>
   );
@@ -226,26 +352,75 @@ export function BenchmarkPair({
 /* StateWord , I9, free of every drawn budget                          */
 /* ------------------------------------------------------------------ */
 /**
- * A WORD IS AN ANSWER. THIS FORM DRAWS NOTHING AT ALL.
+ * THE STATE ROW: A MARK, A TINT, A PHRASE.
  *
  * "Expected." "Not expected." "Not required here." Version 1 answered questions
  * like these with a meter reading 100 or 0, or with a dot pinned to one end of a
- * track, which is a continuous scale asserting itself over a binary fact and
- * takes a reader longer to decode than the word would have taken them to read.
+ * track, which is a continuous scale asserting itself over a binary fact. That
+ * much was right to remove. What replaced it was the word set at focal, 30px,
+ * alone in a card, and the founder read that as slop, correctly: A WORD IS NOT
+ * A QUANTITY AND SIZING IT LIKE ONE WAS THE FAULT. Thirty pixels of "Not
+ * required here" is a headline pretending to be a figure, and it leaves the
+ * form's whole top half empty while saying nothing the phrase did not.
  *
- * THE WORD IS SET IN THE SANS AT THE SECTION'S FIGURE SIZE, not in the figure
- * face: the figure face is for measurements, and this is not one. Its supporting
- * fact sits beneath at body rather than at micro, because with nothing drawn the
- * fact is the section's only evidence and should not read as fine print.
+ * SO THE STATE GETS THE TREATMENT A STATE ACTUALLY HAS, everywhere this idiom
+ * is solved well: a disc on the left carrying one mark, then the state as a
+ * phrase, then the consequence under it. The disc holds the weight the type
+ * used to hold, and it does it in 36 pixels instead of in a 30px word.
  *
- * DO NOT draw anything at all. Not a meter, not a pip, not a rule under the
- * word. If a drawing seems necessary here, the section is asking a different
- * question than the one it wrote down.
+ *   (o)  Not required here          <- 36px disc, then the phrase at lead
+ *        No council permit covers   <- the consequence at body, ink2,
+ *        tables on the pavement.       hanging on the phrase's left edge
+ *
+ * THE MARK IS A SHAPE AND THE TINT IS ONE TINT. A tick, a cross, a dash: the
+ * kind is carried by the drawing, never by a colour, because this palette is
+ * terracotta and cool neutrals with no green in it and a red or green disc
+ * would be inventing a semantic ramp the site does not own. The disc's tint is
+ * the same soft grey whichever mark it holds, unless the caller asks for the
+ * accent, and then the disc takes it and nothing else does.
+ *
+ * IT IS A ROW AND NOT A STACK, which is the part that has to survive edits: the
+ * disc is optically centred against the phrase, and the consequence hangs off
+ * the phrase's left edge rather than the form's, so the two lines of text read
+ * as one block that the disc is labelling.
+ *
+ * DO NOT set the state at answer or focal size, and DO NOT render it without
+ * the mark. Both were tried; the founder saw the result.
  */
+export type StateKind = "yes" | "no" | "na";
+
+/**
+ * THE MARKS. A tick, a cross, a bar, on a 16 box, stroked in currentColor at
+ * 2px so a 36px disc holds a mark heavy enough to read at thumbnail size. Round
+ * caps and joins, because a square-cut tick at this weight reads as a smudge.
+ */
+function StateMark({ kind }: { kind: StateKind }) {
+  const common = {
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  return (
+    <svg aria-hidden width="16" height="16" viewBox="0 0 16 16" style={{ display: "block" }}>
+      {kind === "yes" ? <polyline points="3.2,8.6 6.5,11.9 12.8,4.6" {...common} /> : null}
+      {kind === "no" ? (
+        <>
+          <line x1="4.4" y1="4.4" x2="11.6" y2="11.6" {...common} />
+          <line x1="11.6" y1="4.4" x2="4.4" y2="11.6" {...common} />
+        </>
+      ) : null}
+      {kind === "na" ? <line x1="3.6" y1="8" x2="12.4" y2="8" {...common} /> : null}
+    </svg>
+  );
+}
+
 export function StateWord({
   state,
   fact,
   label,
+  kind = "na",
   accent = false,
 }: {
   /** The state itself, already in the reader's words. Null renders nothing. */
@@ -254,10 +429,25 @@ export function StateWord({
   fact?: React.ReactNode;
   /** Optional caption when the form stands outside a section rail. */
   label?: string | null;
-  /** Marks the state word, the one accentable thing here. */
+  /** Which mark the disc holds: a tick, a cross, or a dash.
+   *  IT DEFAULTS TO "na", THE DASH, and that default is an honesty rule rather
+   *  than a convenience. The catalog forbids rendering this form without a
+   *  mark, and a caller that has not said yes or no has not asserted either, so
+   *  the neutral mark is the only one that can be drawn on its behalf. The
+   *  alternative, guessing the kind by reading the state string for the word
+   *  "not", would put a cross on "not required" and a tick on "no permit
+   *  needed", which is the same fact answered two opposite ways. */
+  kind?: StateKind;
+  /** Marks the DISC, which is the one accentable thing here: the catalog gives
+   *  the disc the weight, so it also gets the colour when a section asks. The
+   *  phrase stays in ink. One accent, and never on a hover. */
   accent?: boolean;
 }) {
   if (!state) return null;
+  /* 36 is the catalog's number, and it is the size at which a 16px mark still
+     has air around it and the disc still reads as a status rather than as a
+     button. */
+  const DISC = 36;
   return (
     <div data-idea="I9">
       {label ? (
@@ -265,17 +455,41 @@ export function StateWord({
           {label}
         </div>
       ) : null}
-      <div
-        className="text-[length:var(--t-focal)] leading-[1.1] tracking-[-0.01em]"
-        style={{ marginTop: 4, color: accent ? "var(--terra-text)" : "var(--c-ink)" }}
-      >
-        {state}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginTop: label ? 8 : 0 }}>
+        <div
+          style={{
+            flex: "none",
+            width: DISC,
+            height: DISC,
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: accent ? "var(--terra-soft)" : "var(--c-soft2)",
+            color: accent ? "var(--terra-text)" : "var(--c-ink)",
+          }}
+        >
+          <StateMark kind={kind} />
+        </div>
+        <div style={{ minWidth: 0, flex: 1 }}>
+          {/* THE PHRASE IS CENTRED AGAINST THE DISC, by giving its line the
+              disc's own height, so a one-line state and a two-line state both
+              sit level with the mark instead of hanging from its top edge. */}
+          <div style={{ minHeight: DISC, display: "flex", alignItems: "center" }}>
+            <span className="text-[length:var(--t-lead)] font-semibold leading-snug tracking-[-0.01em] text-[var(--c-ink)]">
+              {state}
+            </span>
+          </div>
+          {fact ? (
+            <p
+              className="max-w-[46ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"
+              style={{ marginTop: 4 }}
+            >
+              {fact}
+            </p>
+          ) : null}
+        </div>
       </div>
-      {fact ? (
-        <p className="max-w-[46ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]" style={{ marginTop: 8 }}>
-          {fact}
-        </p>
-      ) : null}
     </div>
   );
 }
