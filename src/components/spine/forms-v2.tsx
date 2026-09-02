@@ -115,6 +115,11 @@ import { Fig } from "@/components/spine/kit";
    structural space in this file is inline for exactly this reason; the bought
    component's own padding is no exception to it. */
 import { Badge } from "@/components/ui/badge";
+/* THE BOUGHT CARD, for the same founder instruction and with the same caveat.
+   OptionCards is built from Card / CardHeader / CardTitle / CardContent rather
+   than from a hand-rolled bordered div, and every one of their paddings is
+   re-passed inline for the reason recorded above the Badge import. */
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 /* ------------------------------------------------------------------ */
 /* THE DIFFERENCE, IN WORDS                                            */
@@ -629,8 +634,9 @@ export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | nul
 /* OptionCards , I6 tile set, shares the cap of 3                      */
 /* ------------------------------------------------------------------ */
 /**
- * A CHOICE AMONG COMPARABLE OPTIONS: legal forms, packages, tiers.
+ * THE CHOICE, ALIGNED ACROSS.
  *
+ * A choice among comparable options: legal forms, packages, licence tiers.
  * Version 1 rendered these as rows on a shared scale, which said the options
  * were points on one continuum and that the rightmost was the most of something.
  * They are not and it is not. A sole trader is not a worse limited company; it
@@ -642,14 +648,58 @@ export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | nul
  * four the reader is no longer choosing, they are searching, and the form for
  * searching is a table.
  *
- * THE USUAL CHOICE IS MARKED, once, because the single most useful thing this
- * site can say about a menu of options is which one most people in this trade
- * and this place actually take. That mark is this form's one accent.
+ * WHAT VERSION 3 STRUCK, AND IT IS THE WHOLE ENTRY. Cards side by side are only
+ * a comparison if the eye can scan ACROSS them, and version 2 broke every row's
+ * alignment, which is what made three cards read as three unrelated boxes. A
+ * two-line name pushed its own figure a line below its neighbours', the accent
+ * mark pushed it again, and the feet were rescued after the fact by an mt-auto
+ * that pinned only the last row. Nothing else in the card lined up with
+ * anything, so the set said "here are three things" where it had to say "here
+ * are three answers to one question".
+ *
+ * SO THE ROWS ARE NORMALISED BY THE GRID ITSELF, and that is the craft:
+ *
+ *   Sole trader        Limited company  [usual choice]   Partnership
+ *   ----------------   ------------------------------    ----------------
+ *   $0    a year       $310   a year                     $140   a year     <- ONE baseline
+ *   ................   ..............................    ................  <- ONE height
+ *   Nothing to file    Accounts and a fee every year,    One return each,
+ *   beyond your tax    and the business owes its debts   and the liability
+ *   return.            rather than you.                  is shared.
+ *
+ * HOW, MECHANICALLY: the set is a two-row grid, header then content, and every
+ * card takes `grid-template-rows: subgrid` across both. The tallest header in
+ * the set sets the header row for all of them, so a name that wraps to two
+ * lines lifts every card's header together instead of dropping its own figure.
+ * The figure row beneath is a single line at a fixed size, so the hairline
+ * under it lands at one height across the set for free. The alternative, a
+ * min-height guessed at two lines of a 14px name, is a number that is wrong at
+ * every width except the one it was measured at.
+ *
+ * THE BOUGHT COMPONENTS, NOT HAND-ROLLED BOXES. Founder, 2026-09-01: "always
+ * try to stick with the components that we have from shadcn." This is a real
+ * Card, CardHeader, CardTitle and CardContent from src/components/ui/card.tsx,
+ * and the usual pick's mark is a real Badge. Only three things are re-skinned
+ * through className: the title drops the display face and the 20/24px display
+ * size, because at head size it would out-shout the figure it introduces and
+ * Space Grotesk is this site's FIGURE face; the hairline moves to the spine's
+ * own --c-border; and the badge takes the accent surface. EVERY PADDING IS
+ * PASSED INLINE, which is not a preference: the v2 scope carries
+ * `.av2, .av2 * {margin:0;padding:0}`, a descendant selector at the same
+ * specificity as CardHeader's own p-6 and later in source order, so a bought
+ * card dropped into a v2 route loses its padding and collapses onto its border.
+ *
+ * ONE ACCENT, AND IT IS THE BADGE. The card frames stay identical, all of them
+ * on the same neutral hairline, because identical frames are what let the eye
+ * read the shared baseline running across them; tinting the usual card's border
+ * as well would spend the accent twice and blur the one row that matters.
  *
  * DO NOT rank them on a scale, and do not exceed four. Passing five is not
  * silently truncated, because truncation would drop an option the reader needed
  * and say nothing about it; the form refuses instead, and the section is
  * re-framed as a table.
+ *
+ * DO NOT let a name's length move a figure.
  */
 export type OptionCard = {
   /** The option's name. An option without one is dropped. */
@@ -674,8 +724,13 @@ export function OptionCards({ options, ariaLabel }: { options?: Array<OptionCard
   /* One mark, even if a caller flags two. The first flagged card keeps it. */
   const usualAt = kept.findIndex((o) => o.usual === true);
   return (
-    <ul
+    /* A DIV WITH role="list" RATHER THAN A ul, so each Card can be the grid item
+       itself and subgrid onto the set's own two rows. A ul whose children were
+       divs would be invalid, and wrapping each Card in an li would put a second
+       subgrid between the set and the card for no reading. */
+    <div
       data-idea="I6"
+      role="list"
       aria-label={ariaLabel}
       className="grid"
       /* THE WRAP POINT IS MEASURED, NOT GUESSED, and the first value was wrong.
@@ -687,62 +742,103 @@ export function OptionCards({ options, ariaLabel }: { options?: Array<OptionCard
          band and four in a row in a full one; auto-fit collapses the empty
          tracks and 1fr shares the width out, so no card ever renders AT 120,
          which is only ever the point at which wrapping is better than reading. */
-      style={{ listStyle: "none", margin: 0, padding: 0, gap: 10, gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))" }}
+      style={{
+        margin: 0,
+        padding: 0,
+        gap: 10,
+        gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+        /* THE TWO ROWS EVERY CARD SUBGRIDS ONTO. `auto` lets the tallest header
+           in the set decide the header row for all of them; `1fr` gives the
+           rest of the height to the content so the feet finish level. */
+        gridTemplateRows: "auto 1fr",
+      }}
     >
       {kept.map((option, i) => {
         const isUsual = i === usualAt;
         return (
-          <li
+          <Card
             key={`${option.name}-${i}`}
-            className="flex h-full flex-col rounded-xl border"
-            /* Outlined and unfilled, against RankedTiles' filled and unbordered
-               tiles: two forms that share an idea must not share a silhouette. */
+            role="listitem"
+            variant="band"
+            className="border-[var(--c-border)]"
             style={{
-              borderColor: isUsual ? "var(--terra-border)" : "var(--c-border)",
-              padding: "12px 13px 11px",
+              display: "grid",
+              gridTemplateRows: "subgrid",
+              gridRow: "span 2",
+              minWidth: 0,
             }}
           >
-            <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink)]">
-              {option.name}
-            </div>
-            <div className="flex items-baseline" style={{ marginTop: 6, gap: 6 }}>
-              <span className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">
-                <Fig>{option.figure}</Fig>
-              </span>
-              {option.unit ? (
-                <span className="text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">{option.unit}</span>
+            <CardHeader
+              className="space-y-0"
+              /* flex-row and the paddings both beat the component's own classes
+                 from the style attribute, which is the only place that survives
+                 the v2 reset. */
+              style={{
+                flexDirection: "row",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                columnGap: 8,
+                rowGap: 6,
+                padding: "12px 13px 0",
+              }}
+            >
+              <CardTitle className="font-sans text-[length:var(--t-body)] font-medium leading-snug tracking-normal text-[var(--c-ink)] md:text-[length:var(--t-body)]">
+                {option.name}
+              </CardTitle>
+              {/* THE ONE ACCENT. It is a real Badge on the accent surface, and
+                  it sits in the HEADER rather than under the figure, which is
+                  where version 2 had to hide it to stop it breaking the row.
+                  Subgrid makes that workaround unnecessary: a badge that wraps
+                  under its own name lifts every card's header together. */}
+              {isUsual ? (
+                <Badge
+                  variant="outline"
+                  className="border-[var(--terra-border)] bg-[var(--terra-soft)] text-[var(--terra-text)] hover:bg-[var(--terra-soft)]"
+                  style={{ padding: "3px 9px" }}
+                >
+                  Usual choice
+                </Badge>
               ) : null}
-            </div>
-            {/* THE MARK SITS UNDER THE FIGURE, WHICH A PHOTOGRAPH DECIDED. It was
-                on the name's row, opposite the name, and at three cards to a
-                half-band there is not room for both: "Limited company" pushed the
-                tag onto a second line, which pushed that card's figure a line
-                below its two neighbours' and broke the row a reader scans
-                across. Under the figure it disturbs no alignment at all, because
-                only one card in the set ever carries it. */}
-            {isUsual ? (
-              <div
-                className="text-[length:var(--t-mark)] font-semibold uppercase tracking-[0.1em] text-[var(--terra-text)]"
-                style={{ marginTop: 6 }}
-              >
-                Usual choice
+            </CardHeader>
+            <CardContent style={{ padding: "0 13px 12px" }}>
+              {/* THE SHARED BASELINE. One line, one fixed size, so this row is
+                  the same height in every card and the hairline under it needs
+                  no help to line up. */}
+              <div style={{ display: "flex", alignItems: "baseline", columnGap: 6, marginTop: 9 }}>
+                <span className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">
+                  <Fig>{option.figure}</Fig>
+                </span>
+                {option.unit ? (
+                  <span className="min-w-0 truncate text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">
+                    {option.unit}
+                  </span>
+                ) : null}
               </div>
-            ) : null}
-            {/* THE FOOT IS PUSHED DOWN so the hairlines line up across cards of
-                different prose lengths. Grid children already stretch to a
-                common height; without mt-auto the rules would stagger. */}
-            {option.means ? (
-              <p
-                className="border-t border-[var(--c-border)] text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]"
-                style={{ marginTop: "auto", paddingTop: 8 }}
-              >
-                {option.means}
-              </p>
-            ) : null}
-          </li>
+              {option.means ? (
+                <p
+                  className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"
+                  /* THREE LINES IS THE CATALOG'S CAP and it is enforced rather
+                     than trusted, because one long `means` in a set of four
+                     would otherwise decide the height of all four cards. */
+                  style={{
+                    marginTop: 10,
+                    paddingTop: 9,
+                    borderTop: "1px solid var(--c-border)",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {option.means}
+                </p>
+              ) : null}
+            </CardContent>
+          </Card>
         );
       })}
-    </ul>
+    </div>
   );
 }
 

@@ -190,20 +190,20 @@ const body = renderToStaticMarkup(
               name: "Sole trader",
               figure: "$0",
               unit: "a year to run",
-              means: "Nothing to file beyond your own tax return, and your own money is on the line.",
+              means: "Nothing to file, and your own money is on the line.",
             },
             {
               name: "Limited company",
               figure: "$310",
               unit: "a year to run",
-              means: "Accounts and a filing fee every year, and the business owes its debts rather than you.",
+              means: "Yearly accounts, and the company owes its debts.",
               usual: true,
             },
             {
               name: "Partnership",
               figure: "$140",
               unit: "a year to run",
-              means: "One return for the partnership and one each, with the liability shared between you.",
+              means: "One return each, and the liability is shared.",
             },
           ]}
         />
