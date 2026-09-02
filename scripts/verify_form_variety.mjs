@@ -91,12 +91,21 @@ for (const file of pages) {
        where its own figure ends.
        A card is the bordered box the kit draws; matching on the radius plus a
        border is how every other rendered-design gate here finds one. */
+    /* A CARD IS NOT ONE SHAPE ACROSS THIS SITE, and reading only the spine's
+       made this clause blind on three of the eight surfaces. The spine kit draws
+       a 14px radius with a border; home, the countries list and the legacy
+       country page draw `.atlas-card`, which carries its own radius and shadow.
+       Measured 2026-09-02 on the home page: four dot fields sit in ONE
+       `.atlas-card`, four of one idea in one box, and this clause could not see
+       the box at all. A selector that knows one design system is a checker for
+       one third of the site. */
+    const CARD_SEL = '[class*="rounded-[14px]"][class*="border"], .atlas-card';
     const crowded = [];
-    for (const card of document.querySelectorAll('[class*="rounded-[14px]"][class*="border"]')) {
+    for (const card of document.querySelectorAll(CARD_SEL)) {
       const inner = {};
       for (const el of card.querySelectorAll("[data-idea]")) {
         /* only the card's OWN forms, not a nested card's */
-        if (el.closest('[class*="rounded-[14px]"][class*="border"]') !== card) continue;
+        if (el.closest(CARD_SEL) !== card) continue;
         const k = el.getAttribute("data-idea");
         inner[k] = (inner[k] || 0) + 1;
       }
