@@ -325,7 +325,14 @@ export function BenchmarkPair({
       ) : null}
       {/* THE ONE BASELINE ROW. It wraps rather than shrinks, because a badge
           squeezed onto a second line still sits under its own figure, while a
-          badge crushed to two words has lost the verdict it was carrying. */}
+          badge crushed to two words has lost the verdict it was carrying.
+          ITS TOP GAP IS 8, THE LADDER'S SLOT RUNG, AND IT WAS 6. A label above a
+          row is two blocks, and step 7 forbids a value between rungs; six is
+          between nothing and eight. The column and row gaps inside the row stay
+          at 10 and 4 because those are KERNING within one object, the same
+          distinction ClearanceRing's entry drew between the 5px inside its ring
+          and the 16 under it. Fifth off-ladder value this loop has found in the
+          form library, after StepLadder's 14 and ClearanceRing's 12. */}
       <div
         style={{
           display: "flex",
@@ -333,7 +340,7 @@ export function BenchmarkPair({
           flexWrap: "wrap",
           columnGap: 10,
           rowGap: 4,
-          marginTop: label ? 6 : 0,
+          marginTop: label ? 8 : 0,
         }}
       >
         <div className="text-[length:var(--t-focal)] leading-none" style={{ color: "var(--c-ink)" }}>

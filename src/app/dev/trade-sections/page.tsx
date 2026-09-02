@@ -79,6 +79,10 @@ const RESTAURANT = {
     { item: "Dessert", price: 9 },
   ],
   typicalTicket: 31,
+  /* THE REFERENCE, B1: what a normal visit costs at the TYPICAL restaurant in
+     this city. A second measured quantity, never derived from the ticket or
+     from the three prices; the plumber below points the other way on purpose. */
+  cityTypicalTicket: 24,
   tipping: { expectation: 78, share: 12 },
   /* What the licence buys: how many tables it covers and how many more people
      they seat. Without both, the break-even line is omitted, never estimated. */
@@ -155,6 +159,8 @@ const PLUMBER = {
     { item: "Bathroom install", price: 3400 },
   ],
   typicalTicket: 190,
+  /* He charges UNDER the local norm, where the restaurant charges over it. */
+  cityTypicalTicket: 205,
   /* The fourth slot is a DURATION: it becomes the second half of the merged
      people card's answer, "Qualified plumber. Months to fill." */
   hire: [
@@ -199,6 +205,7 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
           anchorId={a("what-things-cost")}
           rows={isR ? r.prices : p.prices}
           typicalTicket={isR ? r.typicalTicket : p.typicalTicket}
+          cityTypicalTicket={isR ? r.cityTypicalTicket : p.cityTypicalTicket}
           localHourlyPay={isR ? r.localHourlyPay : p.localHourlyPay}
         />
       );

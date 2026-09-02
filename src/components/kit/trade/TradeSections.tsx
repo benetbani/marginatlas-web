@@ -105,7 +105,7 @@ import { Box, Rail, Fig, KV, Meter, SpectraTable, Expand, cap } from "@/componen
    horizontal bar with the points in between"). forms-v2.tsx holds the eight
    replacements; sections migrate onto them one at a time, each with its own
    photograph and its own commit. */
-import { RankedTiles, StepLadder } from "@/components/spine/forms-v2";
+import { BenchmarkPair, RankedTiles, StepLadder } from "@/components/spine/forms-v2";
 
 /* ------------------------------------------------------------------ */
 /* Shared                                                              */
@@ -534,6 +534,43 @@ export function TypicalSetup({ headcount, families, covers, lease, vehicles, pre
  *
  * IT RENDERS ONLY WITH ITS ANSWER, same empty state as A1. A price table with no
  * ticket above it is the exact card the founder called a shell.
+ *
+ * ============== B1, 2026-09-02: THE TICKET GAINS ITS REFERENCE =============
+ *
+ * The queue's row for this card reads "prices, each against a reference", and
+ * the card had no reference in it anywhere. Hours of local pay is a YARDSTICK,
+ * not a reference: it re-expresses one price in a second unit and says nothing
+ * about whether the price is high or low FOR THIS TRADE. So the answer was a
+ * lone number, which is the catalogue's own definition of the case BenchmarkPair
+ * exists for: "use whenever one number is only meaningful beside another".
+ *
+ * ONE PAIR, NOT THREE, and that was settled by photographing three before
+ * building one. Three BenchmarkPairs stacked in a 347px card draw three figures
+ * at focal, which is three things competing for first place and therefore no
+ * answer at all (step 5), and their badges came out in a ragged column 18px out
+ * of line because each badge starts where its own figure ends. The reading this
+ * card actually holds is ONE number against a reference (the ticket) plus an
+ * itemisation of what makes it (the table), so it takes one of each. The
+ * catalogue's own worked example for BenchmarkPair is this card's figures, to
+ * the dollar.
+ *
+ * IT DEGRADES TO THE OLD CARD RATHER THAN TO NOTHING. BenchmarkPair self-omits
+ * without a reference, verified by rendering it, so a caller holding no
+ * reference would have lost the answer entirely. The reference is nullable and
+ * the plain focal answer is the fallback, so the two pictures differ by a badge
+ * and a basis line rather than by having a card at all.
+ *
+ * WHERE THE ACCENT WENT, and it is a decision rather than a default. Terracotta
+ * marks the card's one answer. With a reference held, the answer is no longer
+ * "$31", it is "$31, about a third more than the typical restaurant here": the
+ * verdict is the new fact and the figure was always there, so the badge takes
+ * the colour and the figure stays ink, which is also the form's own rationing.
+ * Without a reference there is no verdict, so the figure takes it back.
+ *
+ * THE CONSEQUENCE STOPPED RESTATING A TABLE CELL. It read "Main course costs
+ * about an hour and a bit of local pay here", which is the first row's third
+ * column read aloud. It carries the TICKET's local-pay phrase now, which is the
+ * one money fact in this card that the table does not hold.
  */
 export interface PriceRow {
   item: string;
@@ -544,6 +581,7 @@ export interface PriceRow {
 export function WhatThingsCost({
   rows,
   typicalTicket,
+  cityTypicalTicket,
   localHourlyPay,
   currency = "$",
   next,
@@ -552,6 +590,13 @@ export function WhatThingsCost({
   rows: PriceRow[] | null;
   /** THE ANSWER: what one customer pays on a normal visit. Carried, never derived. */
   typicalTicket: number | null;
+  /** THE REFERENCE: what a normal visit costs at the typical business of this
+   *  trade in this city, in the same currency and on the same definition.
+   *  Absent, the card keeps its plain focal answer rather than losing it: the
+   *  form draws nothing without a reference, which was verified by rendering it
+   *  rather than by reading the guard. NEVER derived from the three prices
+   *  below, which are a menu and not a visit. */
+  cityTypicalTicket?: number | null;
   /** The place's median hourly pay. Absent means no yardstick anywhere in the card. */
   localHourlyPay?: number | null;
   currency?: string;
@@ -562,32 +607,73 @@ export function WhatThingsCost({
   if (typicalTicket == null) return null;
   const held = (rows ?? []).filter((r) => r.price != null);
   const ticketPhrase = localPayPhrase(typicalTicket, localHourlyPay);
-  const yard = held.length > 0 ? localPayPhrase(held[0].price, localHourlyPay) : null;
-  /* THE ITEM KEEPS ITS OWN CAPITAL AND TAKES NO ARTICLE. An article machine
-     would have to choose "a" or "an" from a letter, and it gets "an English
-     breakfast" wrong the first time a trade sells one. The item names come from
-     the trade profile as labels, and a label reads correctly as the subject of
-     a headline-style line. */
-  const consequence = yard ? `${held[0].item} costs ${yard} here.` : null;
+  /* THE ONE MONEY FACT THE TABLE DOES NOT HOLD. The three rows carry their own
+     hours of local pay in their own third column, so a consequence naming the
+     first row's was that cell read aloud. The TICKET is not in the table at
+     all, on purpose (a normal visit is a main and a drink, not the menu), so
+     its yardstick is the sentence's. */
+  const consequence = ticketPhrase ? `A normal visit is ${ticketPhrase}.` : null;
   const showYard = localPayUnit(1, localHourlyPay) != null;
+  /* THE TWO PICTURES ARE ONE PICTURE WITH AND WITHOUT ITS VERDICT, and the
+     branch is decided here rather than inside the form so the accent can move
+     with it: the form colours its badge, and there is no badge to colour when
+     no reference is held. */
+  const benchmarked =
+    cityTypicalTicket != null && Number.isFinite(cityTypicalTicket) && cityTypicalTicket !== 0;
 
   return (
     <Section
       id={anchorId}
       kicker="What people pay here"
       icon="sale-tag"
-      accent
-      answer={<Fig>{money(typicalTicket, currency)}</Fig>}
-      answerNote={
-        ticketPhrase
-          ? `What one customer pays on a normal visit. ${cap(ticketPhrase)}.`
-          : "What one customer pays on a normal visit."
-      }
+      accent={!benchmarked}
+      answer={benchmarked ? undefined : <Fig>{money(typicalTicket, currency)}</Fig>}
+      answerNote={benchmarked ? undefined : "What one customer pays on a normal visit."}
       consequence={consequence}
       next={next}
     >
+      {/* THE ANSWER, WHEN IT HAS SOMETHING TO BE MEASURED AGAINST. It sits in
+          the children rather than in the wrapper's answer slot because the form
+          IS the composed answer: a label, then the figure and its verdict on one
+          baseline, then the basis. The wrapper's slot draws a figure and a note
+          under it, which would put the badge inside a box already sized at
+          focal and hand the colour to the wrong object.
+          THIS COMMENT LIVES ABOVE THE TERNARY: a branch is one expression. */}
+      {benchmarked ? (
+        <div style={{ marginBottom: 16 }}>
+          <BenchmarkPair
+            value={typicalTicket}
+            reference={cityTypicalTicket}
+            referenceLabel="the typical one of these in this city"
+            format={(n) => money(n, currency)}
+            label="A normal visit"
+            accent
+          />
+        </div>
+      ) : null}
       {held.length > 0 ? (
-        <table className="w-full border-collapse">
+        <table data-idea="I8" className="w-full border-collapse">
+          {/* THE COLUMNS ARE DECLARED, AND THE SPLIT WAS MEASURED RATHER THAN
+              CHOSEN. Left to itself the table sized every column by its own
+              content and handed the WIDEST of the three, 132px of a 307px card,
+              to the muted yardstick, while the item name, which is the column a
+              reader looks for, got 84 and needed 99. So "Glass of wine" wrapped
+              and "Bathroom install" wrapped, and the support column had room to
+              spare.
+              THE SPLIT IS MEASURED IN THE PAGE'S OWN FONT AT 375, where the
+              table has 285px and every constraint bites at once: the longest
+              item name is 119px ("Bathroom install"), its longest single WORD is
+              71, which is what a break would split, and NO yardstick column can
+              ever hold every phrase on one line, because "three quarters of an
+              hour" is 182px by itself. So the name is given enough to stay on
+              one line and the SUPPORT column is the one that wraps, which is
+              what support is for. At 46/22/32 the name gets 141px at 1280 and
+              131 at 375, both clear of 119 with room. */}
+          <colgroup>
+            <col className={showYard ? "w-[46%]" : "w-[70%]"} />
+            <col className={showYard ? "w-[22%]" : "w-[30%]"} />
+            {showYard ? <col className="w-[32%]" /> : null}
+          </colgroup>
           <thead>
             {/* THE HEADERS BOTTOM-ALIGN, AND IT IS NOT A NICETY. Photographed at
                 the constitution's one-third width: "TYPICAL PRICE" wrapped to two
@@ -595,18 +681,32 @@ export function WhatThingsCost({
                 aligned the four half-headers interleaved into one scrambled line
                 that read "TYPICAL HOURS OF LOCAL / PRICE PAY". Bottom-aligned,
                 each header's last word sits on the shared baseline and the two
-                columns separate. The price header also stops wrapping: it is the
-                one a reader looks for. */}
+                columns separate. Both of those heads have since been shortened
+                (see the note below), so neither wraps at either width today, and
+                the rule is kept because a longer unit in another currency or
+                another language brings the wrap straight back. */}
             <tr className="border-b border-[var(--c-border)]">
               <th scope="col" className="py-1.5 align-bottom text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
                 Item
               </th>
+              {/* TWO HEADS SHORTENED, AND NEITHER COSTS A WORD OF MEANING.
+                  "TYPICAL PRICE" needs 116px and its first word alone needs 65
+                  of a 63px column at 375, which is a mid-word break one pixel
+                  away; and the answer directly above the table already names the
+                  typical twice, in "A normal visit" and in "the typical one of
+                  these in this city", so a third would be one hedge said three
+                  times in one card. "HOURS OF LOCAL PAY" needs 173px and reads
+                  as a unit the reader must convert; "OF LOCAL PAY" is 112 and
+                  makes the head and its cell one phrase, "an hour and a bit of
+                  local pay", which is the helper's own prose form. A8 made the
+                  same move on LOWEST and HIGHEST.
+                  THIS COMMENT LIVES ABOVE THE TERNARY, NOT INSIDE ITS BRANCH. */}
               <th scope="col" className="py-1.5 align-bottom text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-                Typical price
+                Price
               </th>
               {showYard ? (
                 <th scope="col" className="py-1.5 pl-2 align-bottom text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-                  Hours of local pay
+                  Of local pay
                 </th>
               ) : null}
             </tr>
@@ -614,10 +714,19 @@ export function WhatThingsCost({
           <tbody>
             {held.map((r) => (
               <tr key={r.item} className="border-b border-[var(--c-border)] last:border-0">
+                {/* THE NOTE SITS UNDER THE ITEM, NOT BESIDE IT. Photographed at
+                    347px with it inline: "Glass of wine 175ml" broke after
+                    "Glass of" and left "wine 175ml" on a second line, so the
+                    item name wrapped while its two neighbours did not and the
+                    row's own baseline went ragged. A note is support and belongs
+                    on its own line under the thing it qualifies; the row is then
+                    two lines by design instead of two lines by accident. */}
                 <td className="py-2 text-[length:var(--t-body)] text-[var(--c-ink)]">
                   {r.item}
                   {r.note ? (
-                    <span className="ml-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.note}</span>
+                    <span className="block text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">
+                      {r.note}
+                    </span>
                   ) : null}
                 </td>
                 {/* Right-aligned AND tabular. Half the rule is useless without the

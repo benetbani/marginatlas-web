@@ -101,6 +101,12 @@ const RESTAURANT = {
      only some tables take a dessert. Carried as its own field for exactly that
      reason, which is what the constitution allows for. */
   typicalTicket: 31,
+  /* THE REFERENCE, B1: what a normal visit costs at the TYPICAL restaurant in
+     this city, on the same definition. It is a second measured quantity, never
+     derived from the ticket or from the three prices, and the two trades below
+     point opposite ways on purpose so this document shows both directions of
+     the verdict rather than only the flattering one. */
+  cityTypicalTicket: 24,
   tipping: { expectation: 78, share: 12 },
   /* WHAT THE LICENCE BUYS, which the card never held: how many tables one covers
      and how many more people they seat. Without both, the break-even line is
@@ -182,6 +188,8 @@ const PLUMBER = {
     { item: "Bathroom install", price: 3400 },
   ],
   typicalTicket: 190,
+  /* He charges UNDER the local norm, where the restaurant charges over it. */
+  cityTypicalTicket: 205,
   /* THE FOURTH SLOT IS A DURATION NOW, not a description. It became the second
      half of the card's answer ("Qualified plumber. Months to fill."), and
      "the binding constraint" there would have read as a sentence explaining
@@ -236,6 +244,7 @@ function Rendered({ id, trade }: { id: TradeSectionId; trade: "restaurant" | "pl
           anchorId={a("what-things-cost")}
           rows={isR ? r.prices : p.prices}
           typicalTicket={isR ? r.typicalTicket : p.typicalTicket}
+          cityTypicalTicket={isR ? r.cityTypicalTicket : p.cityTypicalTicket}
           localHourlyPay={isR ? r.localHourlyPay : p.localHourlyPay}
         />
       );
