@@ -498,17 +498,47 @@ export function StateWord({
 /* RankedTiles , I6 tile set, shares the cap of 3                      */
 /* ------------------------------------------------------------------ */
 /**
- * A SHORT RANKING WHERE THE ORDER IS THE READING.
+ * THE STANDING: A SHORT RANKING WHERE THE ORDER IS THE READING.
  *
  * Roles by how hard they are to fill, risks by how likely they are. Version 1
  * drew each of these as its own track with a marker on it, so four rankings on
  * one page came out as four identical lines and the reader had to read the
  * labels to tell them apart.
  *
- * THE TILES ARE ALL THE SAME SIZE, and that is the honesty of the form: it
- * claims an ORDER and claims nothing about the distances between the entries.
- * The moment a tile is sized by its value the form has become a bar chart with
- * extra steps, and bar charts have their own entry and their own budget.
+ * WHAT VERSION 3 STRUCK, AND IT WAS THE WHOLE COMPOSITION. Version 2 answered
+ * that with equal chips in a wrapping grid, and the grid DESTROYED THE VERY
+ * ORDER THE FORM EXISTS TO SHOW: a reader who reaches the end of a row and
+ * wraps to the start of the next has lost the sequence, because "further right"
+ * and "further down" are two directions claiming to be one ranking. Five tiles
+ * in a three-up grid put the fourth-hardest role directly beneath the hardest,
+ * which reads as a pair. The founder saw the result and called it slop.
+ *
+ * SO IT IS A STANDING NOW, ONE ENTRY PER ROW, hairline-ruled, which is how
+ * every ranking anyone actually reads is set:
+ *
+ *   1   Chef                              14 wks
+ *   ---------------------------------------------
+ *   2   Sous chef                          6 wks
+ *   ---------------------------------------------
+ *   3   Bartender                          4 wks
+ *
+ * THE TWO ALIGNMENTS ARE THE DESIGN, and there is nothing else in the form. The
+ * rank numerals line up down the left at mark size, so the sequence is legible
+ * without counting; the figures are right-aligned in the figure face, so the
+ * digits stack into a column a reader can compare down without reading a single
+ * word. Both are tabular, which is what makes a column of digits a column
+ * rather than a ragged edge.
+ *
+ * THE RANK IS NUMBERED NOW, reversing version 1's "do not number them". That
+ * rule was written for a form whose position on the page WAS the rank; in rows,
+ * a reader arriving mid-list from a scroll has no way to know whether the row
+ * under their eye is the second or the fifth, and an ordered list's own marker
+ * is suppressed the moment `list-style` goes to none.
+ *
+ * ALL ROWS ARE THE SAME HEIGHT, and that is the honesty of the form: it claims
+ * an ORDER and claims nothing about the distances between the entries. The
+ * moment a row is sized by its value the form has become a bar chart with extra
+ * steps, and bar charts have their own entry and their own budget.
  *
  * SIX IS THE CEILING. Past six a reader stops seeing an order and starts seeing
  * a wall, and the catalog sends that case to LollipopColumn, where the magnitude
@@ -519,8 +549,8 @@ export function StateWord({
  * difficulty, cost) and a component that sorted would have to guess a direction
  * it was never told.
  *
- * DO NOT size the tiles by value, and do not number them: the position IS the
- * rank, and an ordered list carries that to a screen reader for free.
+ * DO NOT WRAP THESE INTO A GRID. DO NOT FILL THE ROWS, and do not size them by
+ * value: a filled row is a bar and a sized row is a chart.
  */
 export type RankedTile = {
   /** The entry's name. An entry without one is dropped. */
@@ -534,37 +564,63 @@ export function RankedTiles({ rows, ariaLabel }: { rows?: Array<RankedTile | nul
     .filter((r): r is RankedTile => r != null && !!r.name && r.value != null && r.value !== "")
     .slice(0, 6);
   /* A RANKING OF ONE IS NOT A RANKING. One named thing with a figure is a Stat,
-     and drawing a lone tile would imply five siblings that were withheld. */
+     and drawing a lone row would imply five siblings that were withheld. */
   if (kept.length < 2) return null;
   return (
-    <ol
-      data-idea="I6"
-      aria-label={ariaLabel}
-      className="grid"
-      style={{ listStyle: "none", margin: 0, padding: 0, gap: 8, gridTemplateColumns: "repeat(auto-fit, minmax(136px, 1fr))" }}
-    >
-      {kept.map((row, i) => (
-        <li
-          key={`${row.name}-${i}`}
-          className="rounded-[10px]"
-          /* Inline, not p-2.5: the .av2 reset outranks the utility class. */
-          style={{ background: "var(--c-soft)", padding: "9px 11px" }}
-        >
-          <div className="truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]" title={row.name ?? undefined}>
-            {row.name}
-          </div>
-          {/* THE LEADER TAKES THE ACCENT AND THE REST ARE INK, which is the
-              whole of the colour in this form. The tile GROUND stays identical
-              across all six on purpose: a warmer box would start to read as a
-              bigger box, and size is the one thing these tiles must not say. */}
-          <div
-            className="text-[length:var(--t-head)] leading-none"
-            style={{ marginTop: 2, color: i === 0 ? "var(--terra-text)" : "var(--c-ink)" }}
+    <ol data-idea="I6" aria-label={ariaLabel} style={{ listStyle: "none", margin: 0, padding: 0 }}>
+      {kept.map((row, i) => {
+        const leader = i === 0;
+        return (
+          <li
+            key={`${row.name}-${i}`}
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              /* THE RULE SITS ABOVE EVERY ROW BUT THE FIRST, so the standing
+                 never closes with a hairline of its own. A trailing rule sits a
+                 few pixels inside the card's edge and reads as a second, badly
+                 aligned card edge rather than as a division between entries. */
+              borderTop: i === 0 ? undefined : "1px solid var(--c-border)",
+              gap: 10,
+              paddingTop: i === 0 ? 0 : 8,
+              paddingBottom: 8,
+            }}
           >
-            <Fig>{row.value}</Fig>
-          </div>
-        </li>
-      ))}
+            {/* THE RANK COLUMN IS FIXED-WIDTH, not shrink-to-fit: at a set of
+                ten the two-digit row would otherwise push its name a character
+                right of the nine above it and bend the left edge of the list. */}
+            <span
+              className="text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
+              style={{ flex: "none", width: 14 }}
+            >
+              <Fig>{i + 1}</Fig>
+            </span>
+            <span
+              className="min-w-0 flex-1 truncate text-[length:var(--t-body)] leading-none"
+              title={row.name ?? undefined}
+              /* THE LEADER'S NAME IS THE ONLY SEMIBOLD ONE. Weight and colour
+                 are doing one job between them, and the row carries no fill and
+                 no chip: a warmer ground would start to read as a bigger row,
+                 and size is the one thing this form must not say. */
+              style={{
+                fontWeight: leader ? 600 : 400,
+                color: leader ? "var(--c-ink)" : "var(--c-ink2)",
+              }}
+            >
+              {row.name}
+            </span>
+            {/* THE FIGURE COLUMN IS THE SECOND ALIGNMENT. Right-aligned and
+                tabular, so a reader compares the digits down the column without
+                reading a name, and the leader's is the form's one accent. */}
+            <span
+              className="text-[length:var(--t-body)] leading-none"
+              style={{ flex: "none", textAlign: "right", color: leader ? "var(--terra-text)" : "var(--c-ink)" }}
+            >
+              <Fig>{row.value}</Fig>
+            </span>
+          </li>
+        );
+      })}
     </ol>
   );
 }
