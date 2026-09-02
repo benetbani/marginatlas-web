@@ -117,15 +117,16 @@ const body = renderToStaticMarkup(
         Every number on this page is made up.
       </div>
       <div style={{ fontSize: 14, lineHeight: 1.6, color: "#3d3935", maxWidth: "72ch" }}>
-        All eight forms the form catalog gained on 2026-09-01, built into the kit where a page can
-        import them. Each one replaces a reading that the ten trade sections drew as a horizontal
-        line with a dot on it, and none of these may read that way. The first four are on the top
-        two rows and two of them draw nothing at all: a number beside its reference, and a word at
-        the size of a figure, are complete answers, and adding a meter underneath one so that it
-        looks designed is the exact fault being corrected. The last four are on the bottom two rows
-        and those are the ones that draw, which is where the old habit pulls hardest. The only
-        question this file asks is whether the eight SHAPES are different enough to tell apart at a
-        glance.
+        Eight forms, seven of them redesigned after the first pass was rejected. Each replaces a
+        reading that the ten trade sections all drew as a horizontal line with a dot on it, and not
+        one of these may read that way. The lollipop is the only one kept unchanged, and it set the
+        bar for the rest: something actually drawn, one accent doing work, every label attached to
+        its own mark. The first pass failed because two of them were specified to draw nothing at
+        all, which is a fallback dressed as a principle: a number beside a sentence tells a reader
+        about a relationship instead of showing one. They now carry a badge on the figure's own
+        baseline and a marked disc beside the state. The only question this file asks is whether
+        the eight SHAPES are different enough to tell apart at a glance, and whether each looks as
+        considered as the lollipop.
       </div>
     </div>
 
