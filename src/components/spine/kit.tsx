@@ -767,8 +767,35 @@ export function Chip({ children }: { children: React.ReactNode }) {
     </Pill>
   );
 }
+/* KVGrid , THE SET OF LABELLED FACTS, AND THE ONLY THING HERE THAT DECLARES AN
+ * IDEA. Until 2026-09-02 the declaration sat on `KV`, one per ROW, and that was
+ * wrong twice over. A key-value row is not a table: one labelled fact is one
+ * fact, and what a reader recognises as a table is the GRID of them, with its
+ * label column and its stack of hairlines. And a per-row declaration inflates
+ * every count that reads it: the trade page's setup card declared I8 FIVE TIMES
+ * from one box, which is the form-variety gate's own per-card clause failed
+ * (three of one idea inside one bordered box is three claimants and no answer).
+ * It escaped only because that surface renders where the gate does not read.
+ * SpectraTable settled the same question the same way one run earlier: it tags
+ * its wrapper once, so a six-spectra table is ONE I1 and not six.
+ *
+ * IT IS A WRAPPER AND NOT A LAYOUT, deliberately. The two shipping call sites
+ * want two different sets: the setup card stacks its rows in named families
+ * side by side, and the pavement card sits two facts abreast with no rules at
+ * all (B3's ruling: two labelled facts are a PAIR, not a list). One imposed
+ * layout would break whichever card it was not written for, so the caller keeps
+ * its own grid and this supplies the declaration. */
+export function KVGrid({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div data-idea="I8" className={className}>{children}</div>;
+}
+/* KV , ONE labelled fact. It declares NOTHING; its set does, above.
+ * `items-baseline` is not decoration: the label at micro and the value at body
+ * have different first-baseline offsets, so under flex's default stretch the
+ * label sat about 1.6px above the value it belongs to, and the pair read as two
+ * facts rather than one. The card's own composition note claims these share a
+ * baseline; now they do. */
 export function KV({ k, v }: { k: string; v: React.ReactNode }) {
-  return <div data-idea="I8" className="flex gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</span></div>;
+  return <div className="flex items-baseline gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</span></div>;
 }
 /* S6 prevention tripwire (rulebook v2 K6): "Never hide a graphic behind a popup, expand,
  * or disclosure , graphics are always visible. Disclosures exist only to move BULLET TEXT

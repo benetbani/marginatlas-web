@@ -102,7 +102,7 @@ import * as React from "react";
    who-walks-in is three positions between two named poles, which is the one
    reading the catalogue reserves the idea for. The restaurant column runs I1 1 of
    2 as a result, where it was 3 of 2 when this migration started. */
-import { Box, Rail, Fig, KV, SpectraTable, InlineDisclosure, cap } from "@/components/spine/kit";
+import { Box, Rail, Fig, KV, KVGrid, SpectraTable, InlineDisclosure, cap } from "@/components/spine/kit";
 /* THE CATALOGUE'S OWN VOCABULARY, WHICH THIS FILE COULD NOT REACH UNTIL NOW.
    Every section below was written against a kit that exported three drawings,
    all three of them horizontal tracks, which is the whole mechanism behind the
@@ -255,10 +255,17 @@ function Section({
                 {consequence}
               </p>
             ) : null}
+            {/* `sm:ml-auto` is for the foot that carries a LINK AND NO
+                SENTENCE, which nothing reached until B7 de-duplicated this
+                card's consequence. `justify-between` with one child packs it to
+                the START, so the link would have jumped from the card's right
+                edge to its left the moment the sentence dropped out, and this
+                card would have been the only one on the page whose link sits at
+                the other end. It changes nothing when a sentence is present. */}
             {next ? (
               <a
                 href={next.href}
-                className="shrink-0 text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"
+                className="shrink-0 text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)] transition hover:text-[var(--terra-text)] sm:ml-auto"
               >
                 {next.label} &rarr;
               </a>
@@ -450,16 +457,41 @@ export function TypicalSetup({ headcount, families, covers, lease, vehicles, pre
   const one = headcount.low === headcount.high;
   const people = headcount.high === 1 ? "person" : "people";
 
+  /* A CLAUSE THE GRID ALREADY STATES IS DROPPED, B7, 2026-09-02, and it is the
+     fault the photograph made unmissable rather than a rule applied blind. This
+     card takes the same facts through TWO doors, `families` for the evidence and
+     these four props for the sentence, so a caller passing one fact through both
+     printed it twice: at 1280 the card was 693 by 298 pixels and said "48 seats"
+     and "10 years" once in a labelled row and again word for word in the line
+     underneath. B3 ruled on the identical fault in the pavement card one run
+     ago, and step 1 states it as law: one quantity is stated ONCE.
+     THE TEST IS THE VALUE, not the label, because the label is the caller's own
+     word and the value is the fact. Equality catches "48 seats" against
+     "48 seats"; the leading token catches "2 vans" against a row whose value is
+     the bare "2". A clause dropped here loses a duplicate, never a fact: the row
+     that shadowed it is still printed, in the grid, with its own name on it. */
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const stated = new Set(held.flatMap((f) => f.rows.map((r) => norm(r.value))));
+  const shadowed = (v: string | null | undefined) => {
+    if (!v) return false;
+    const n = norm(v);
+    return stated.has(n) || stated.has(n.split(" ")[0]);
+  };
+  const saysCovers = covers && !shadowed(covers) ? covers : null;
+  const saysVehicles = vehicles && !shadowed(vehicles) ? vehicles : null;
+  const saysLease = lease && !shadowed(lease) ? lease : null;
+  const saysPremises = premises && !shadowed(premises) ? premises : null;
+
   /* THE SENTENCE IS ASSEMBLED, NOT WRITTEN. One verb clause saying what the
      people are for, one tail saying what is signed behind them, and either half
      may be missing. The subject is "those people" so the headcount is referred
      to rather than repeated (rule N8: never a restatement of the figure). */
   const work: string[] = [];
-  if (covers) work.push(`fill a room of ${covers}`);
-  if (vehicles) work.push(`run ${vehicles}`);
-  const tail = lease
-    ? `on a lease of ${lease}`
-    : premises && /^(none|no)\b/i.test(premises)
+  if (saysCovers) work.push(`fill a room of ${saysCovers}`);
+  if (saysVehicles) work.push(`run ${saysVehicles}`);
+  const tail = saysLease
+    ? `on a lease of ${saysLease}`
+    : saysPremises && /^(none|no)\b/i.test(saysPremises)
       ? "with no premises to rent"
       : null;
   const consequence =
@@ -483,8 +515,15 @@ export function TypicalSetup({ headcount, families, covers, lease, vehicles, pre
       consequence={consequence}
       next={next}
     >
+      {/* THE SET DECLARES, NOT THE ROW. Five KV rows used to declare I8 five
+          times from inside this one box, which is the form-variety gate's own
+          per-card clause failed, on both trade columns, and the only card on
+          either that trips it. It escaped because that gate reads the eight
+          final pages and this surface renders elsewhere. The grid of labelled
+          facts is the object a reader recognises as a table, so the grid
+          declares once and `KV` declares nothing. */}
       {held.length > 0 ? (
-        <div className="grid gap-x-7 gap-y-4 sm:grid-cols-2">
+        <KVGrid className="grid gap-x-7 gap-y-4 sm:grid-cols-2">
           {held.map((f) => (
             <div key={f.name} className="min-w-0">
               <div className="mb-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
@@ -495,7 +534,7 @@ export function TypicalSetup({ headcount, families, covers, lease, vehicles, pre
               ))}
             </div>
           ))}
-        </div>
+        </KVGrid>
       ) : null}
     </Section>
   );
@@ -1065,10 +1104,10 @@ export function PublicSpaceCost({
           card instead: two abreast above about 464px of content box, stacked
           below it, at every viewport. */}
       {covered != null ? (
-        <div className="grid gap-x-6 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))] [&>*]:border-b-0">
+        <KVGrid className="grid gap-x-6 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))] [&>*]:border-b-0">
           <KV k="Covered" v={`${covered} ${plural}`} />
           {seats != null ? <KV k="Seats" v={`${seats} more people`} /> : null}
-        </div>
+        </KVGrid>
       ) : null}
     </Section>
   );

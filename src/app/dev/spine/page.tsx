@@ -35,7 +35,7 @@ import { industryToSlug } from "@/lib/taxonomy";
 import {
   TERRA, TRACK, usd, usdMo, cap,
   Ico, Fig, Dots, StackBar, Donut, SampleTag,
-  Movement, Box, EaseScale, Head, Chip, KV, Expand, InlineDisclosure, Bullets,
+  Movement, Box, EaseScale, Head, Chip, KV, KVGrid, Expand, InlineDisclosure, Bullets,
   Even, WideRail, CatRows,
   Rail, Stat, InfoTip, SpectraTable,
 } from "@/components/spine/kit";
@@ -428,7 +428,7 @@ function Formation({ d }: { d: any }) {
       <div className="space-y-2">{structures.map((s: any, i: number) => { const x = formationExtra(s.name); return (
         <Expand key={i} name="formation" title={s.name} open={i === 0}>
           <p className="mb-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{x.summary}</p>
-          <KV k="Liability" v={s.liability} /><KV k="Taxed as" v={s.tax} /><KV k="Paperwork" v={x.paperwork} /><KV k="Raising money" v={x.raise} /><KV k="Setup" v={x.setup} /><KV k="Best for" v={s.best_for} />
+          <KVGrid><KV k="Liability" v={s.liability} /><KV k="Taxed as" v={s.tax} /><KV k="Paperwork" v={x.paperwork} /><KV k="Raising money" v={x.raise} /><KV k="Setup" v={x.setup} /><KV k="Best for" v={s.best_for} /></KVGrid>
         </Expand>); })}
       </div>
       {d.setup?.vat_threshold_usd ? <div className="mt-3 inline-block rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-1.5 text-[length:var(--t-body)] text-[var(--c-ink2)]">Register for VAT once sales pass <Fig className="text-[var(--c-ink)]">${Math.round(d.setup.vat_threshold_usd / 1000)}K</Fig></div> : null}
@@ -711,11 +711,11 @@ function OperatingCosts({ d }: { d: any }) {
            carry the width with substance rather than dead space. */
         <div className="mt-3.5 border-t border-[var(--c-border)] pt-3">
           <div className="mb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The lease behind the rent</div>
-          <div className="divide-y divide-[var(--c-border)]">
+          <KVGrid className="divide-y divide-[var(--c-border)]">
             <KV k="Term" v={`${p.lease_years_typical} years, ${p.deposit_months} months deposit`} />
             <KV k="Break clause" v={p.break_clause} />
             <KV k="Rent-free" v={`${p.rent_free_months} months at the start`} />
-          </div>
+          </KVGrid>
         </div>
       ) : null}
     </Box>
