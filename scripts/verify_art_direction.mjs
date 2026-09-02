@@ -485,6 +485,45 @@ const collect = () => {
        The district-chip fault, seven rows carrying identical words and no number,
        is caught by H3 and does not need this rule. */
     if (!/\d/.test(own)) continue;
+    /* A DRAWING LABELLING ITS OWN MARK IS NOT THE PAGE SPEAKING TWICE, and this
+       clause is the fourth narrowing this file has needed for the same reason as
+       the three above it: the rule was counting the page working.
+
+       The comment at the head of this block already says so in as many words,
+       "evidencing an answer necessarily restates it", and the remedy it built was
+       an exemption for ONE element, the hero's largest figure. That covers a hero
+       whose own figure is echoed once. It cannot cover a card that states TWO
+       figures a drawing below must then label, which is the atlas's actual shape:
+       the city verdict card names the lightest district AND the heaviest, and the
+       ranking under it is a LollipopColumn, whose entries each print their own
+       value above their own dot because that is what makes a height readable as a
+       quantity rather than as a column of numbers.
+
+       MEASURED BEFORE THE CHANGE, on both pages that fired. City: "x3.00" in the
+       verdict card's ends-of-the-spread strip at y=484, and the same string as the
+       West End stem's own label at y=784. Hood: "x1.20" in the masthead (already
+       exempt), the same string as the cheapest stem's label at y=689, and the
+       detail panel's own answer at y=874.
+
+       AND THE PAGES CANNOT BE FIXED, WHICH IS WHAT SETTLES IT. On the hood page
+       the two answer-size figures are `design/blueprints/hood.md`'s own declared
+       pair, and verify_blueprint_conformance refused a row that tried to change
+       one of them by name. On the city page the verdict strip is what a phone
+       reader meets the far end of the ladder in, which the ranking's own entry
+       depends on. The only remaining move is to strip a form of its data labels,
+       and a finding whose only remedy is to break a ratified form has stopped
+       measuring the page.
+
+       THE LINE IS THE CATALOGUE'S, NOT MINE. Its budget table names exactly three
+       ideas that carry NO DRAWN MARKS: I8 a table, I9 a figure alone, I11 ranked
+       rows. Every other idea draws, so a figure inside one of those is a mark's
+       value. Counted across the four gated pages, the whole set this exempts in
+       the first screen is fourteen runs and every one is a bare figure: seven
+       district multiples on each lollipop, three axis marks on the cell page's
+       pay track and the margin ladder's "$100 of sales". Not one is a sentence,
+       because a card's head and foot sit OUTSIDE the form's own element. */
+    const ideaHost = e.closest("[data-idea]")?.getAttribute("data-idea");
+    if (ideaHost && !["I8", "I9", "I11"].includes(ideaHost)) continue;
     const top = rb.top + window.scrollY;
     if (top > 900) continue;
     /* A REPEAT INSIDE ONE SECTION IS THE FORM WORKING. A tier band names its two

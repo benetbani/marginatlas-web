@@ -365,9 +365,23 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
            benchmark block, which was already printing the same six of them in
            dollars, and SubtypeDrill's consumer draws the cost of the door alone.
            A note explaining a column that is not drawn is a caveat about nothing.
-           The first sentence is untouched and is still the reason this string
-           exists: the rows are peer trades, never formats inside this one. */
-        note: "Each of these is its own trade in the same sector, not a format inside this one. The cost to open is a modeled figure for a baseline economy, not a quote for any one place.",
+
+           AND SO IS THE PEER-TRADE SENTENCE, 2026-09-02, C22, WHICH IS THE OTHER
+           HALF OF C6 CATCHING UP WITH ITSELF. It read "Each of these is its own
+           trade in the same sector, not a format inside this one", and it existed
+           to correct a chapter heading that called them formats. C6 CHANGED that
+           heading in the same run and left the correction standing, so the card
+           was arguing with a label the atlas no longer prints, while its own rail
+           says "trades next door" in the reader's first three words. The card
+           carried 378 characters of prose against E1's budget of 220, more than
+           twice the next-heaviest non-editorial card on any of the four gated
+           pages, and this sentence was 78 of them.
+
+           WHAT SURVIVES IS THE HALF NOTHING ELSE SAYS. The `sample` tag on the
+           rail says the figures are modelled; only this line says WHAT they are
+           modelled for, and the opening clause went with it because the card's
+           own name already states that the figure is what the door costs. */
+        note: "Modeled for a baseline economy, not a quote for any one place.",
       };
     }
   }

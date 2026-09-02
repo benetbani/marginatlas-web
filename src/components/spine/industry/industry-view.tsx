@@ -399,9 +399,14 @@ export function SubtypeDrill({ d }: { d: any }) {
             form: the answer at the section rung, its note under it, then the
             standing. */}
         <div className="text-[length:var(--t-section)] font-semibold leading-snug text-[var(--c-ink)]">{answer}</div>
-        <div className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
-          Ranked by what it costs to open one, cheapest first. {spread}
-        </div>
+        {/* THE ORDERING CLAUSE IS GONE, C22. It read "Ranked by what it costs to
+            open one, cheapest first", which the standing states in its own rank
+            numerals and its ascending money column, and which the rail states in
+            its name. B7's rule, applied here: a clause whose value the evidence
+            already carries is dropped. What is left is the one thing neither the
+            answer nor the standing says, the size of the spread, and with the
+            answer directly above it the "it" is the dearest door. */}
+        <div className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{spread}</div>
         <div className="mt-4">
           <RankedTiles
             rows={items.map((s) => ({ name: s.name, value: money(s.capital_usd) }))}

@@ -116,7 +116,47 @@ function measure() {
       const d = e.closest("details");
       if (d && !d.open && !e.closest("summary")) continue;
       const s = getComputedStyle(e);
+      /* A DRAWING'S OWN BOX IS INK, WHICH IS THIS FILE'S OWN STATED RULE FINALLY
+         IMPLEMENTED FOR A CHART THAT STANDS UP.
+
+         The header of this file already excludes "space inside a chart's own
+         track", on the ground that "a dot plot whose scale honestly starts at zero
+         leaves its left side empty, and truncating that axis to fill the space
+         would exaggerate every difference on it. That emptiness is the scale's
+         business, governed by G6, not the layout's." And it names the mechanism it
+         relied on: "It excludes itself once hairlines are counted as ink."
+
+         THAT MECHANISM ONLY WORKS FOR A HORIZONTAL SCALE. A rail runs THROUGH the
+         empty part of a track, so the hairline inks it. A column chart's empty
+         region is ABOVE its short stems, where there is no hairline and nothing
+         else either, so the stated exclusion has never applied to a vertical
+         drawing. Run 4 ratified the same emptiness in the same words while
+         building the form: "an ascending ranking is empty above its short stems by
+         construction, and the void is PROPORTIONAL, so narrowing the card scales
+         it rather than removing it... Do not chase it, and do not invert the order
+         to fill it: that breaks rule 29A."
+
+         WHAT IT COST, MEASURED. The cell page's "What it costs to open one" was
+         reported as a 422x156 hole at 32%, at both widths, and the crop shows one
+         rectangle fused from two regions: the header row's empty right, which A5
+         measured at 456x51 and which is under this rule's own 120px height floor
+         and could never fire alone, and the plot's empty upper right, which joined
+         it into something 156px tall. The card was failing for a shape its own
+         form is drawn to have.
+
+         THE LINE IS THE CATALOGUE'S. Its budget table names exactly three ideas
+         that carry NO DRAWN MARKS: I8 a table, I9 a figure alone, I11 ranked rows.
+         Those keep being measured, because a table with a void between its columns
+         is the fault this rule was written for. Every other idea draws, and the
+         space inside its own box is the scale's business.
+
+         IT DOES NOT BLIND THE RULE TO A CARD BUILT AROUND A SMALL DRAWING: the air
+         OUTSIDE a form's box still counts, which is where the founder's own
+         complaint lives, and G6 checks the domain inside it. */
+      const idea = e.getAttribute("data-idea");
+      const drawnIdea = !!idea && !["I8", "I9", "I11"].includes(idea);
       const drawn =
+        drawnIdea ||
         [...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim()) ||
         e.tagName === "svg" || e.tagName === "IMG" ||
         s.backgroundColor !== "rgba(0, 0, 0, 0)" ||
