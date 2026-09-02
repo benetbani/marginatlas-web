@@ -55,7 +55,7 @@ export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?:
   const ex = (cx + R * Math.cos(th)).toFixed(1), ey = (cy - R * Math.sin(th)).toFixed(1);
   const nx = (cx + (R - 14) * Math.cos(th)).toFixed(1), ny = (cy - (R - 14) * Math.sin(th)).toFixed(1);
   return (
-    <div className="text-center">
+    <div data-idea="I7" className="text-center">
       <svg viewBox="0 0 200 126" style={{ width: w }} className="mx-auto" role="img" aria-label={`${v} out of 100${sub ? ", " + sub : ""}`}>
         <path d={`M ${cx - R} ${cy} A ${R} ${R} 0 0 1 ${cx + R} ${cy}`} fill="none" stroke={TRACK} strokeWidth={11} strokeLinecap="round" />
         <path d={`M ${cx - R} ${cy} A ${R} ${R} 0 0 1 ${ex} ${ey}`} fill="none" stroke={TERRA} strokeWidth={11} strokeLinecap="round" />
@@ -86,7 +86,7 @@ export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, num
   ];
   const r = 54, C = 2 * Math.PI * r; let off = 0;
   return (
-    <svg viewBox="0 0 160 160" className="w-[150px]" role="img" aria-label={`${centerBig} ${centerSub}`}>
+    <svg data-idea="I3" viewBox="0 0 160 160" className="w-[150px]" role="img" aria-label={`${centerBig} ${centerSub}`}>
       {rendered.map(([name, pct, color]) => {
         const len = (pct / 100) * C; const el = <circle key={name} cx={80} cy={80} r={r} fill="none" stroke={color} strokeWidth={24} strokeDasharray={`${len.toFixed(2)} ${(C - len).toFixed(2)}`} strokeDashoffset={(-off).toFixed(2)} transform="rotate(-90 80 80)" />; off += len; return el;
       })}
@@ -101,12 +101,12 @@ export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, num
  * `showTrack` (default true) keeps them , pass false only where an adjacent row
  * already draws the same scale and the repetition reads as noise. */
 export function Dots({ score, max = 10, accent = false, showTrack = true }: { score: number; max?: number; accent?: boolean; showTrack?: boolean }) {
-  return <div className="flex gap-[3px]" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : showTrack ? TRACK : "transparent" }} />)}</div>;
+  return <div data-idea="I5" className="flex gap-[3px]" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : showTrack ? TRACK : "transparent" }} />)}</div>;
 }
 /* single 0-100 bar. Neutral grey by default; terracotta only when `accent` marks
  * the one focal figure in the box. */
 export function MiniBar({ pct, accent = false }: { pct: number; accent?: boolean }) {
-  return <div className="h-[7px] w-full overflow-hidden rounded-full" role="img" aria-label={`${Math.round(pct)} percent`} style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${pct}%`, background: accent ? TERRA : "#bdbdbd" }} /></div>;
+  return <div data-idea="I2" className="h-[7px] w-full overflow-hidden rounded-full" role="img" aria-label={`${Math.round(pct)} percent`} style={{ background: TRACK }}><div className="h-full rounded-full" style={{ width: `${pct}%`, background: accent ? TERRA : "#bdbdbd" }} /></div>;
 }
 /* IndexBar , the shared bar for a value that is either a TRUE PERCENTAGE (0-100,
  * "%" suffix, a plain rounded-full track, no tick) or an INDEX against a top-group
@@ -127,7 +127,7 @@ export function IndexBar({ value, kind = "pct", accent = false }: { value: numbe
   const pos = (v: number) => Math.max(0, Math.min(100, (v / domainMax) * 100));
   const shape = isIndex ? "rounded-sm" : "rounded-full";
   return (
-    <span className="flex items-center gap-2.5">
+    <span data-idea="I1" className="flex items-center gap-2.5">
       <span className={`relative block h-2 flex-1 overflow-hidden ${shape}`} role="img" aria-label={isIndex ? `index ${Math.round(value)}, top group is 100` : `${Math.round(value)} percent`} style={{ background: TRACK }}>
         <span className={`absolute inset-y-0 left-0 block ${shape}`} style={{ width: `${pos(value)}%`, background: accent ? TERRA : "var(--c-line-strong)" }} />
         {isIndex ? <span className="absolute -top-[2px] -bottom-[2px] w-px" style={{ left: `${pos(100)}%`, background: "var(--c-ink2)" }} /> : null}
@@ -206,7 +206,7 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
   };
   return (
     <>
-      <div className={`flex ${h} overflow-hidden ${rounded} border border-[var(--c-border)]${className ? " " + className : ""}`} role="img" aria-label={ariaLabel}>
+      <div data-idea="I3" className={`flex ${h} overflow-hidden ${rounded} border border-[var(--c-border)]${className ? " " + className : ""}`} role="img" aria-label={ariaLabel}>
         {ordered.map((s) => {
           const pctOfBar = share(s);
           const show = onBar && (pctOfBar >= 12 || (isKept(s) && pctOfBar >= 4));
@@ -285,7 +285,7 @@ export function ShareStack({ segments }: { segments: ShareSeg[] }) {
   const inline = colored.every((s) => s.pct >= 24);
   const ariaLabel = colored.map((s) => `${s.label} ${s.pct}%`).join(", ");
   return (
-    <div>
+    <div data-idea="I3">
       <div className="flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
         {colored.map((s) => (
           <div key={s.label} className="flex h-full items-center justify-center overflow-hidden border-r border-white/70 px-1.5 last:border-0" style={{ width: `${(s.pct / sum) * 100}%`, background: s.color }}>
@@ -309,7 +309,7 @@ export function ShareStack({ segments }: { segments: ShareSeg[] }) {
 /* margin waterfall , each row a share of revenue, the kept slice terracotta. Cap 2 uses/page. */
 export function Waterfall({ rows }: { rows: Array<[string, number, boolean?]> }) {
   return (
-    <div className="space-y-2.5">{rows.map(([label, pct, kept]) => (
+    <div data-idea="I2" className="space-y-2.5">{rows.map(([label, pct, kept]) => (
       <div key={label} className="grid grid-cols-[120px_1fr_44px] items-center gap-3">
         <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</span>
         <div className="h-5 overflow-hidden rounded" style={{ background: "#f0f0f0" }}><div className="h-full rounded" style={{ width: `${Math.max(0, Math.min(100, pct))}%`, background: kept ? TERRA : "#bdbdbd" }} role="img" aria-label={`${label} ${pct}%`} /></div>
@@ -344,7 +344,7 @@ export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: n
       ? `Modelled range from ${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}.`
       : `Spread from ${fmt(p10)} at the bottom tenth to ${fmt(p90)} at the top tenth, typical ${fmt(p50)}.`;
   return (
-    <div>
+    <div data-idea="I1">
       <div className="relative h-2 rounded-full" role="img" aria-label={aria} style={{ background: TRACK }}>
         <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
       </div>
@@ -587,7 +587,7 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
        to go back up and read them again knowing what the sides meant.
        A chart's key is furniture and stays quiet, but quiet is about weight, not
        about order. */
-    <div className="space-y-3.5">
+    <div data-idea="I1" className="space-y-3.5">
       {endLabels ? (
         <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
           <span />
@@ -613,7 +613,7 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
 /* a slim labelled meter for a single 0-100 read (NOT a dial) */
 export function Meter({ value, left, right }: { value: number; left: string; right: string }) {
   return (
-    <div>
+    <div data-idea="I1">
       <div className="relative h-2 rounded-full" role="img" aria-label={`${value} out of 100`} style={{ background: "#e6e6e6" }}>
         <div className="h-full rounded-full" style={{ width: `${value}%`, background: TERRA }} />
         <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${value}%`, background: "#1a1a1a" }} />
@@ -689,7 +689,7 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink" }: 
      sit under the track's ends). Rows without a name keep the compact form. */
   const dotBg = dot === "terra" ? "var(--terra)" : "var(--c-ink)";
   return (
-    <div className="divide-y divide-[var(--c-border)]">
+    <div data-idea="I1" className="divide-y divide-[var(--c-border)]">
       {rows.map((r: any, i: number) => {
         const pos = Math.max(5, Math.min(95, Math.round((r.position_0_1 ?? 0.5) * 100)));
         const right = pos >= 50;
@@ -740,7 +740,7 @@ export function Chip({ children }: { children: React.ReactNode }) {
   );
 }
 export function KV({ k, v }: { k: string; v: React.ReactNode }) {
-  return <div className="flex gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</span></div>;
+  return <div data-idea="I8" className="flex gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</span></div>;
 }
 /* S6 prevention tripwire (rulebook v2 K6): "Never hide a graphic behind a popup, expand,
  * or disclosure , graphics are always visible. Disclosures exist only to move BULLET TEXT
@@ -844,12 +844,12 @@ export function Narrow({ children }: { children: React.ReactNode }) {
   return <div className="mx-auto w-full md:max-w-[58%]">{children}</div>;
 }
 export function Spectrum({ rows }: { rows: any[] }) {
-  return <div className="space-y-3">{rows.map((r: any, i: number) => (
+  return <div data-idea="I1" className="space-y-3">{rows.map((r: any, i: number) => (
     <div key={i}><div className="mb-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span>{r.left_label}</span><span>{r.right_label}</span></div>
       <div className="relative h-1.5 rounded-full" role="img" aria-label={`${r.left_label} to ${r.right_label}`} style={{ background: "linear-gradient(90deg,#fb8469,#d4d4d4 52%,#737373)" }}><div className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[var(--c-ink)]" style={{ left: `${Math.round((r.position_0_1 || 0) * 100)}%`, boxShadow: "0 0 0 1px #e3e3e3" }} /></div></div>))}</div>;
 }
 export function CatRows({ rows }: { rows: Array<[string, any]> }) {
-  return <div className="divide-y divide-[var(--c-border)]">{rows.map(([k, v]) => v ? <div key={k} className="hov -mx-2 flex gap-3 rounded-md px-2 py-1.5"><span className="w-28 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{v}</span></div> : null)}</div>;
+  return <div data-idea="I8" className="divide-y divide-[var(--c-border)]">{rows.map(([k, v]) => v ? <div key={k} className="hov -mx-2 flex gap-3 rounded-md px-2 py-1.5"><span className="w-28 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{v}</span></div> : null)}</div>;
 }
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
@@ -898,7 +898,7 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample }: { icon?: A
 export function Stat({ value, label, sub, size = "support", accent = false }: { value: React.ReactNode; label?: string; sub?: string; size?: "focal" | "support"; accent?: boolean }) {
   const focal = size === "focal";
   return (
-    <div>
+    <div data-idea="I9">
       {label ? <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div> : null}
       {/* THE FOCAL'S TWO SIZES ARE OFF THE LADDER BY DECLARATION, NOT BY DRIFT.
           38 at phone and 42 at md sit between the 30 focal rung and the 48
@@ -928,7 +928,7 @@ export function Spark({ values, w = 96, h = 30, markerIndex }: { values: number[
   const area = `M ${X(0).toFixed(1)},${(h - 1).toFixed(1)} L ` + pts.join(" L ") + ` L ${X(values.length - 1).toFixed(1)},${(h - 1).toFixed(1)} Z`;
   const mi = markerIndex == null ? values.length - 1 : Math.max(0, Math.min(values.length - 1, markerIndex));
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} style={{ width: w, height: h }} role="img" aria-label="trend sparkline" preserveAspectRatio="none">
+    <svg data-idea="I4" viewBox={`0 0 ${w} ${h}`} style={{ width: w, height: h }} role="img" aria-label="trend sparkline" preserveAspectRatio="none">
       <path d={area} fill={TERRA} opacity={0.12} />
       <path d={line} fill="none" stroke={TERRA} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" />
       <circle cx={X(mi)} cy={Y(values[mi])} r={2.4} fill={TERRA} stroke="#fff" strokeWidth={1} />
@@ -983,7 +983,7 @@ export function StruckLine({ points, label = "folklore", hideLabel = false }: { 
   const halfW = Math.min(30, (x1 - x0) * 0.16);
   const halfH = Math.max(6, halfW * 0.3);
   return (
-    <g aria-hidden="true">
+    <g data-idea="I4" aria-hidden="true">
       <path d={path} fill="none" stroke="var(--c-line-strong)" strokeWidth={1.3} strokeDasharray="3 3" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
       <line x1={cx - halfW} y1={cy + halfH} x2={cx + halfW} y2={cy - halfH} stroke="var(--c-ink)" strokeWidth={2} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
       {/* hideLabel: when the caller draws its own text in the DOM instead, so the
@@ -1057,7 +1057,7 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
   const legendItems = placed.filter((p) => p.legend);
 
   return (
-    <Box>
+    <Box data-idea="I4">
       {/* Desktop SVG */}
       <svg className="hidden w-full sm:block" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="milestone timeline" preserveAspectRatio="xMidYMid meet">
         {/* phase bands */}
@@ -1208,7 +1208,7 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
   const tickAnchor = tickPct < 14 ? "0%" : tickPct > 86 ? "-100%" : "-50%";
   const ariaLabel = `${segs.map((s) => `${s.label} ${wk(s.from)} to ${wk(s.to)}`).join(", ")}; break-even ${wk(breakevenWeek)}`;
   return (
-    <div>
+    <div data-idea="I4">
       <div className="relative pt-7">
         <span className="absolute top-0 whitespace-nowrap text-[length:var(--t-body)] font-semibold text-[var(--terra-text)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
         {/* THE MARKER SITS OUTSIDE THE TRACK, not inside it.
