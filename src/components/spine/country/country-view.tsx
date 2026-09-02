@@ -658,7 +658,21 @@ function Money({ money }: { money: any }) {
   const line = "flex flex-wrap items-baseline gap-x-3";
   return (
     <Box id="money">
-      <Rail icon="owner-keeps" kicker="What an owner keeps, trade by trade" sample={tagged} />
+      {/* THE KICKER IS FOUR WORDS AND THE PAGE'S OWN RAIL ALREADY CALLED IT THAT.
+          RAIL_SECTIONS at the top of this file names this section "What an owner
+          keeps"; the card said "What an owner keeps, trade by trade", so the page
+          named one section two ways, which is the fault his own "one name" order
+          is about. The dropped words were also the card's third statement of the
+          same thing: the first column is six trade names and the word "trade"
+          stood twice in a six-word title.
+          MEASURED, because it is a wrap and not only a cut. It was the ONLY
+          three-line kicker on the page at 375 and at 768, with the single word
+          "trade" alone on line three; the page's ten other kickers run to one or
+          two. It is one line at 1280 AND at 900, where it used to take two, and
+          two lines at 768 and 375 with the same one-word tail its two sample-
+          tagged siblings already carry ("earn", "state"). The card is 18px
+          shorter at 900, 768 and 375. */}
+      <Rail icon="owner-keeps" kicker="What an owner keeps" sample={tagged} />
       {/* The header takes the SAME two blocks as a row, so its labels sit over
           their own columns at every width rather than over a template only the
           wide case ever uses. */}
