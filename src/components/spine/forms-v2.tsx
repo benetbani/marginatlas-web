@@ -1456,8 +1456,13 @@ export function RangeBracket({
      out as four faint ticks. It is a drawn mark and not a card edge, so it
      takes the lollipop's stem weight rather than a border's. */
   const RULE = 2;
-  const ARM = 8;
-  const NOTCH = 7;
+  /* TEN AND NINE, WHICH THE FULL-PAGE PHOTOGRAPH DECIDED. At 8 and 7 the brace
+     read as a divider under three numbers rather than as an enclosure around
+     them: the weight was right and the TURNS were too short to register beside
+     seven other forms. Lengthening only the turns fixes it without touching the
+     rule, which is the part that must never grow into a track. */
+  const ARM = 10;
+  const NOTCH = 9;
   return (
     <div
       data-idea="I6"

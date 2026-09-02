@@ -136,9 +136,11 @@ const body = renderToStaticMarkup(
         useWhen="Use when one number only means something beside another one: a price against the typical price, a rent against the city median."
       >
         {/* THE ACCENT PROP IS ASKED FOR HERE AND NOWHERE ELSE ON THE PAGE. A
-            ticket is a price and a price is worth pointing at; of the other
-            seven specimens, four carry their accent inside the form and three
-            are left in ink so the page can be judged for shape before colour. */}
+            ticket is a price and a price is worth pointing at. RangeBracket
+            asks for it too, at the bottom of the page; of the other six
+            specimens, five carry their accent inside the form and StateWord
+            alone is left in ink, because a not-applicable is the one reading on
+            the page that nothing should be pointing at. */}
         <BenchmarkPair
           label="What a table spends"
           value={31}
@@ -280,6 +282,13 @@ const body = renderToStaticMarkup(
           format={usd}
           caption="typical fit-out"
           endLabels={["at the cheapest", "at the dearest"]}
+          /* ASKED FOR HERE, AND IT IS THE SECOND OF TWO ON THE PAGE. A fit-out
+             cost is the answer a reader came for, exactly as a ticket price is
+             in BenchmarkPair, so the form's one accent goes on the typical. It
+             was left in ink at first and photographed as the only one of the
+             eight carrying no colour at all, which read as unfinished rather
+             than as restrained. */
+          accent
         />
       </Specimen>
     </div>
