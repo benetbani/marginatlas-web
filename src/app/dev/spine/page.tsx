@@ -34,7 +34,7 @@ import { buildCityActivities } from "@/lib/scores/city_board";
 import { industryToSlug } from "@/lib/taxonomy";
 import {
   TERRA, TRACK, usd, usdMo, cap,
-  Ico, Fig, Dots, StackBar, Donut, SampleTag,
+  Ico, Fig, Dots, DotsSet, StackBar, Donut, SampleTag,
   Movement, Box, EaseScale, Head, Chip, KV, KVGrid, Expand, InlineDisclosure, Bullets,
   Even, WideRail, CatRows,
   Rail, Stat, InfoTip, SpectraTable,
@@ -251,7 +251,10 @@ function Profile({ d }: { d: any }) {
           <Stat value={<>{avg}<span className="text-[length:var(--t-lead)] text-[var(--c-muted)]">/10</span></>} size="focal" accent />
           <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">across six lenses</div>
         </div>
-        <div className="space-y-2">
+        {/* THE SET DECLARES, NOT THE ROW (C14). Six rows declared six I5 from
+            one Box, which is the form-variety gate's per-card clause failed and
+            twice the page cap of three. */}
+        <DotsSet className="space-y-2">
           {scored.map((r) => (
             <div key={r.label} className="grid grid-cols-[112px_1fr_30px] items-center gap-2.5">
               <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{r.label}</span>
@@ -259,7 +262,7 @@ function Profile({ d }: { d: any }) {
               <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{r.s}</Fig>
             </div>
           ))}
-        </div>
+        </DotsSet>
       </div>
     </Box>
   );
@@ -834,13 +837,15 @@ function RiskRegister({ d }: { d: any }) {
   return (
     <Box>
       <Rail icon="watch" kicker="What could go wrong" />
-      <div className="space-y-2.5">{risks.map((r: any, i: number) => (
+      {/* THE SET DECLARES, NOT THE ROW (C14). Five rows declared five I5 from
+          one Box, on a page cap of three. */}
+      <DotsSet className="space-y-2.5">{risks.map((r: any, i: number) => (
         <div key={r.name} className="hov -mx-2 grid grid-cols-[130px_1fr_auto] items-center gap-2.5 rounded-md px-2 py-1">
           <span className={`min-w-0 truncate text-[length:var(--t-body)] ${i === 0 ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{label[r.name] ?? r.name}</span>
           <Dots score={r.safe} max={10} />
           <Fig className="w-9 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{r.safe}/10</Fig>
         </div>))}
-      </div>
+      </DotsSet>
       {/* the axis meaning as an END-LABEL on the shared scale (rulebook v2 corrections:
           an axis explainer moves onto the scale, never back into a sentence). The list is
           sorted ascending by safety, so the terracotta row above is already the one to

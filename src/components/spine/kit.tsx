@@ -95,13 +95,52 @@ export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, num
     </svg>
   );
 }
-/* score dots 0..max. Neutral ink fill by default; terracotta only when `accent`
+/* DotsSet , THE SET OF DOT-SCORE ROWS, AND THE ONLY THING HERE THAT DECLARES AN
+ * IDEA. Until 2026-09-02 the declaration sat on `Dots`, one per ROW, which is
+ * exactly the defect B7 fixed in `KV` one run earlier and which was recorded as
+ * still standing in the kit (queue row C14). It is wrong twice over.
+ *
+ * ONE ROW IS NOT A SCORECARD. I5 is "a count of identical marks, no continuous
+ * scale", and what a reader recognises as that object is the STACK of rows read
+ * down a shared 0..max scale, not one row of seven dots. B5 settled the same
+ * question for SpectraTable (a six-spectra table is ONE I1), B7 for KV, B8 for
+ * the legal-form pip column: if a reader would call the SET one object, the set
+ * declares.
+ *
+ * AND A PER-ROW DECLARATION INFLATES EVERY COUNT THAT READS IT. The
+ * form-variety gate's per-card clause fails at three of one idea inside one
+ * bordered box, and I5's page cap is three, so a scorecard of six rows declared
+ * SIX I5 from one Box: the per-card clause failed and the page cap was passed
+ * twice over. Counted on the dev spine route, the only surface that draws this
+ * form today: six in the six-lenses card and five in the risk register, eleven
+ * against a cap of three. It escaped only because that route renders nowhere the
+ * gate reads, which is B7's own escape and is not a defence.
+ *
+ * NO LIVE PAGE DREW THREE OF THESE, verified rather than assumed: `Dots`'s own
+ * markup signature (`gap-[3px]` plus an "N out of M" accessible name) appears in
+ * ZERO of the eight rendered pages, and the one `data-idea="I5"` on the country
+ * page is the legal-form table's own pip column, which already declares on its
+ * set. So this is prevention plus two dev cards corrected, not a visible fault
+ * repaired.
+ *
+ * IT IS A WRAPPER AND NOT A LAYOUT, deliberately, for KVGrid's reason: the two
+ * call sites want two different sets, a `space-y-2` scorecard beside a focal
+ * average and a `space-y-2.5` hover list with an end-label row beneath it. One
+ * imposed layout would break whichever card it was not written for, so the
+ * caller keeps its own rows and this supplies the declaration. */
+export function DotsSet({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div data-idea="I5" className={className}>{children}</div>;
+}
+/* score dots 0..max, ONE row. It declares NOTHING; its set does, above.
+ * Neutral ink fill by default; terracotta only when `accent`
  * marks THE one focal read (one accent per box). A row of maxed dots must not be
  * a wall of orange. The empty dots ARE the visible 0..max track (the honest scale);
  * `showTrack` (default true) keeps them , pass false only where an adjacent row
- * already draws the same scale and the repetition reads as noise. */
+ * already draws the same scale and the repetition reads as noise.
+ * The row keeps its own `role="img"` and its "N out of M" name, because a screen
+ * reader reads a ROW's score and the set has no score of its own to announce. */
 export function Dots({ score, max = 10, accent = false, showTrack = true }: { score: number; max?: number; accent?: boolean; showTrack?: boolean }) {
-  return <div data-idea="I5" className="flex gap-[3px]" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : showTrack ? TRACK : "transparent" }} />)}</div>;
+  return <div className="flex gap-[3px]" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : showTrack ? TRACK : "transparent" }} />)}</div>;
 }
 /* single 0-100 bar. Neutral grey by default; terracotta only when `accent` marks
  * the one focal figure in the box. */
@@ -819,8 +858,11 @@ export function KV({ k, v }: { k: string; v: React.ReactNode }) {
  * of them is a kit graphic component. It cannot catch a graphic nested two levels deep
  * inside a caller's own wrapper, so the JSDoc rule on InlineDisclosure/Expand below remains
  * the real contract; this just catches the easy, common mistake. */
+/* DotsSet joins the list beside `Dots`, and it has to: callers wrap their rows
+   now, so a scorecard hidden behind a disclosure would arrive as a DotsSet and
+   the tripwire would wave it through on the very change that introduced it. */
 const GRAPHIC_TYPES: ReadonlySet<unknown> = new Set([
-  Gauge, Donut, StackBar, ShareStack, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, StruckLine, Dots, MiniBar, IndexBar, PhaseBar,
+  Gauge, Donut, StackBar, ShareStack, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, StruckLine, Dots, DotsSet, MiniBar, IndexBar, PhaseBar,
 ]);
 function assertNoGraphics(children: React.ReactNode, where: string) {
   if (process.env.NODE_ENV === "production") return;
