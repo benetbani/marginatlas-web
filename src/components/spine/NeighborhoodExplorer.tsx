@@ -23,8 +23,10 @@
  *     light the rent runs, terracotta = lighter than the city, ink = heavier.
  *   multiplier readout (running product, printed figures, SampleTagged): "Why the
  *     number moves" x1  , self-omits when every factor rounds to x1.00.
- *   marker-on-a-shared-scale (neutral, no fill): footfall two-marker x1 + a single
- *     walkability marker (WalkTrack) x1; price tier is a DISCRETE 4-step band.
+ *   marker-on-a-shared-scale (neutral, no fill): footfall two-marker x1. The walkability
+ *     marker is GONE, C10 of the subsection queue: it was the last undeclared track on
+ *     this page and its reading is a level on a named ladder, so it is a StepLadder (I4).
+ *     Price tier is still a DISCRETE 4-step band, undeclared, and it is its own row.
  *   editorial table, plain figures, color-marked row-best: Compare x1 (no in-cell bars).
  *   rank slope: MythChapter x1  , revenue rank -> rent rank, one line each, the myth
  *     struck on the chart as a dashed phantom line.
@@ -32,7 +34,7 @@
 "use client";
 import * as React from "react";
 import { Ico, Fig, Chip, Rail, Expand, TERRA, InfoTip, InlineDisclosure, SampleTag, CARD_SURFACE, Band } from "@/components/spine/kit";
-import { LollipopColumn } from "@/components/spine/forms-v2";
+import { LollipopColumn, StepLadder } from "@/components/spine/forms-v2";
 import { LockVeil, LockPill } from "@/components/spine/kit-index";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -51,9 +53,39 @@ type District = {
 type Myth = { claim?: string; reality?: string; stat_label?: string; tell?: string; slope_note?: string; strike_label?: string };
 type Rail2 = { kicker?: string; verdict?: string };
 
-const walkWord: Record<string, number> = { low: 30, moderate: 58, high: 90 };
 const footVal = (d: District) => d.footfall ?? { weekday: 50, weekend: 50 };
-const walkVal = (d: District) => d.walk_score ?? walkWord[d.walkability] ?? 50;
+
+/* WALKABILITY IS THREE NAMED LEVELS, AND IT WAS DRAWN AS A POSITION (C10, 2026-09-02).
+ *
+ * What stood here was `walkWord = { low: 30, moderate: 58, high: 90 }` feeding a dot on
+ * a continuous rail. The field is typed `"high" | "moderate" | "low"` in
+ * `cities/neighborhood_flavor.ts` and nothing else; `walk_score`, the only real number,
+ * is OMITTED by `adapt_hood.ts` in its own words, "no honest source". So on every real
+ * district page the marker sat at 58% because a lookup table said the word "moderate"
+ * was 58, which is a precision the data does not hold, published as a picture. The
+ * price-tier band eight lines above it carries that exact objection in its own comment,
+ * against "a made-up 28/52/78/96 position for a categorical read", and this is the same
+ * fault beside it.
+ *
+ * The rungs are DEFINITIONS of the scale, not claims about a district: they say what
+ * standing on each level means for a shop, which is what makes the two a reader is not
+ * on worth drawing.
+ *
+ * THE MEANINGS ARE SHORT BECAUSE THE PHOTOGRAPH SAID SO. The first three ran to a
+ * second line in a 282px column and each left one word orphaned there, "real.",
+ * "them.", which is the fault A3 fixed on the trade page's ladder by the same means.
+ * These sit on one line at 562px and again at 283px, which is what a phone gives. */
+export const WALK_RUNGS = [
+  { name: "Low", meaning: "People arrive on purpose, not by walking past." },
+  { name: "Moderate", meaning: "Passing trade at the busy hours, quiet between." },
+  { name: "High", meaning: "People pass on foot all day. Walk-ins are real." },
+];
+/** Which rung, counting from 1 at the lowest. Null where the word is absent, so the
+ *  block renders nothing rather than guessing a level. */
+const walkRung = (d: District): number | null => {
+  const i = ["low", "moderate", "high"].indexOf(String(d.walkability || "").toLowerCase());
+  return i < 0 ? null : i + 1;
+};
 
 /* ---- count-up-safe motion (mirrors the cell page format-picker pattern) ---- */
 function usePrefersReducedMotion() {
@@ -398,22 +430,25 @@ function PriceTierBand({ tier }: { tier: string }) {
   );
 }
 
-/* WALKABILITY , a single NEUTRAL marker on a two-end labeled track (ink marker, grey
- * track, no fill). Walkability is support context, not the box's answer, so it never
- * wears the accent (rulebook v2 §37: terracotta on the rent figure only), and it reads
- * as a marker-on-a-track, not a filled bar that fakes an answer (FORM-CATALOG Meter
- * do-not; also keeps the page's ONE fill bar, the rent strip, within the §25 budget). */
-function WalkTrack({ value }: { value: number }) {
-  const pos = Math.max(4, Math.min(96, value));
-  return (
-    <div>
-      <div className="relative h-2 rounded-full" role="img" aria-label={`walkability marker on a low to high foot-traffic scale`} style={{ background: "#e6e6e6" }}>
-        <span className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${pos}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px #e3e3e3" }} />
-      </div>
-      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>Low foot traffic</span><span>High foot traffic</span></div>
-    </div>
-  );
-}
+/* WALKABILITY , DELETED AND REPLACED BY StepLadder (C10, 2026-09-02).
+ *
+ * `WalkTrack` drew a neutral marker on a two-end labelled rail. It was the last
+ * undeclared horizontal track on this page after A7, and declaring it as it stood would
+ * have charged the I1 budget for a reading that is not a position between two named
+ * poles: "Low foot traffic" and "High foot traffic" are the BOTTOM AND TOP OF AN ORDER,
+ * which is A1's ruling on the trade page in as many words. The information is a level on
+ * a named ladder, three named states with one reached, and the catalogue index sends
+ * that to StepLadder, idea I4.
+ *
+ * TWO THINGS THE READER GAINS, both visible in the photograph rather than argued: the
+ * card now PRINTS which level this district is on, where the rail printed no word at all
+ * and left a reader to estimate a dot's position; and the other two levels are drawn, so
+ * a reader learns what "high" would have meant here.
+ *
+ * The accent is OFF. This card's one answer is the rent multiple at the answer rung in
+ * terracotta, and a section with two accented things has no answer (step 8). The reached
+ * rung still fills, in ink, and its name still goes semibold, which is what makes the
+ * level legible before a word is read. */
 
 /* ============================================================================
  * DETAIL PANEL , disciplined. The SURFACE carries ONE decision: name + character +
@@ -502,13 +537,30 @@ function DetailPanel({ d, reduced }: { d: District; reduced: boolean }) {
         ) : null}
 
         {/* walkability (categorical, real from flavor) + price tier (real from flavor);
-            each sub-block self-omits, and the whole block omits, when absent. */}
-        {d.walkability || d.walk_score != null || d.price_tier ? (
+            each sub-block self-omits, and the whole block omits, when absent.
+            THE GUARD DROPPED `walk_score` (C10): the ladder is built from the WORD, and
+            a bare 0-to-100 score is a different reading, so a district carrying only the
+            score renders nothing here rather than being bucketed into a level nobody
+            chose the thresholds for. No live district carries one; the adapter omits it.
+            THEY STACK NOW, AND THE PHOTOGRAPH DECIDED IT. Side by side, the ladder is
+            three rungs deep and the band is one row, so the card carried a 282 by 290
+            void at its bottom right: wider than a third of the card and taller than a
+            text line, which is step 7's own test failed and the biggest hole on the
+            page. `items-start` did not save it, it only moved the void's top edge.
+            Stacked, each reading takes the block's whole width and neither pays for the
+            other's height. The band does not go sparse at 562px the way the city page's
+            quick reads did at that width: that band carried two pole words at its ends
+            and nothing between, and this one labels all four of its steps, so the width
+            is filled with words rather than with empty track. */}
+        {d.walkability || d.price_tier ? (
           <div>
             <SectionLabel>Walkability and price tier</SectionLabel>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {d.walkability || d.walk_score != null ? (
-                <div><SectionLabel>Walkability</SectionLabel><WalkTrack value={walkVal(d)} /></div>
+            <div className="grid grid-cols-1 gap-4">
+              {d.walkability ? (
+                <div>
+                  <SectionLabel>Walkability</SectionLabel>
+                  <StepLadder steps={WALK_RUNGS} reached={walkRung(d)} accent={false} ariaLabel="Walkability: how much trade passes the door on foot" />
+                </div>
               ) : null}
               {d.price_tier ? (
                 <div><SectionLabel>Price tier</SectionLabel><PriceTierBand tier={d.price_tier} /></div>
@@ -1046,6 +1098,8 @@ type Metric = {
   higherIsBetter?: boolean;
   /** modeled or footfall-derived , renders a SampleTag beside the row label (§4) */
   sample?: boolean;
+  /** the cell prints a WORD, not a figure, so it does not wear the figure face (C10) */
+  word?: boolean;
 };
 
 // weekday dependence: how lopsided the week is (100 = all weekday, 0 = all weekend).
@@ -1065,7 +1119,12 @@ const FREE_METRICS: Metric[] = [
 const PRO_METRICS: Metric[] = [
   // no higherIsBetter: a weekday-led week is not better or worse, so no best crown.
   { key: "lean", label: "Weekday dependence", hint: "how lopsided the week is", get: (d) => weekdayLean(d), fmt: (d) => `${weekdayLean(d)}% weekday`, sample: true },
-  { key: "walk", label: "Walkability", hint: "low to high foot traffic", get: (d) => walkVal(d), fmt: (d) => `${walkVal(d)}`, higherIsBetter: true },
+  /* THE SAME INVENTED NUMBER REACHED THE READER TWICE, and the second place was this
+     table (C10). It printed `walkVal`, so a column that holds one of three words
+     published "58" and "90" as measured figures. It prints the WORD now; the rung index
+     is what the row is ordered by, and it never appears on the page. A district with no
+     walkability word shows nothing rather than a zero. */
+  { key: "walk", label: "Walkability", hint: "low to high foot traffic", get: (d) => walkRung(d) ?? 0, fmt: (d) => WALK_RUNGS[(walkRung(d) ?? 0) - 1]?.name ?? "", higherIsBetter: true, word: true },
   { key: "weekend", label: "Weekend footfall", hint: "trade intensity", get: (d) => footVal(d).weekend, fmt: (d) => `${footVal(d).weekend}`, higherIsBetter: true, sample: true },
 ];
 
@@ -1078,6 +1137,15 @@ const DECIDER_KEY = "rent";
 function cellClass(m: Metric, win: boolean, crowned: boolean): string {
   if (win) return m.key === DECIDER_KEY ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]";
   return crowned ? "text-[var(--c-muted)]" : "text-[var(--c-ink)]";
+}
+/* A WORD IS NOT A QUANTITY, and C10 created the one cell on this page that prints one.
+ * Walkability used to print an invented 0-to-100 number and now prints its own level,
+ * "Moderate"; left in `Fig` that word wore the figure face, tabular Space Grotesk at
+ * weight 600, in a column of rent multiples. `word` drops the face and changes nothing
+ * else, so the column still aligns and still colours its row-best. */
+function MetricCell({ m, d, className }: { m: Metric; d: District; className: string }) {
+  const cls = `text-[length:var(--t-body)] ${className}`;
+  return m.word ? <span className={cls}>{m.fmt(d)}</span> : <Fig className={cls}>{m.fmt(d)}</Fig>;
 }
 function bestFor(m: Metric, cols: District[]): string | null {
   if (m.higherIsBetter == null || cols.length < 2) return null;
@@ -1109,7 +1177,7 @@ function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) 
               const win = best === d.slug && cols.length > 1;
               return (
                 <div key={d.slug} className="min-w-0">
-                  <Fig className={`text-[length:var(--t-body)] ${cellClass(m, win, crowned)}`}>{m.fmt(d)}</Fig>
+                  <MetricCell m={m} d={d} className={cellClass(m, win, crowned)} />
                 </div>
               );
             })}
@@ -1232,7 +1300,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                   return (
                     <div key={m.key} className="flex items-center justify-between gap-2.5">
                       <span className="flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}{m.sample ? <SampleTag /> : null}</span>
-                      <Fig className={`text-right text-[length:var(--t-body)] ${cellClass(m, win, best != null)}`}>{m.fmt(d)}</Fig>
+                      <MetricCell m={m} d={d} className={`text-right ${cellClass(m, win, best != null)}`} />
                     </div>
                   );
                 })}
@@ -1254,7 +1322,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
                           return (
                             <div key={m.key} className="flex items-center justify-between gap-2.5">
                               <span className="flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{m.label}{m.sample ? <SampleTag /> : null}</span>
-                              <Fig className={`text-right text-[length:var(--t-body)] ${cellClass(m, win, best != null)}`}>{m.fmt(d)}</Fig>
+                              <MetricCell m={m} d={d} className={`text-right ${cellClass(m, win, best != null)}`} />
                             </div>
                           );
                         })}
