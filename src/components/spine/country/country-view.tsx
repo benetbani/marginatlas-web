@@ -124,15 +124,66 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
  * right side of this section in two columns and four rows, something that
  * would look nice." LEFT: identity row (mark, flag, name , once), subtitle,
  * the label and the answer with its regime clause. RIGHT: a quiet grid, two
- * columns, capacity four rows, no borders and no tiles (his tile ban stands):
- * payroll on wages, sales tax, time to register, cost to register. The four
- * remaining slots are reserved for the upkeep and decile figures when their
- * data lands; nothing fills them speculatively.
+ * columns, no borders and no tiles (his tile ban stands): payroll on wages and
+ * sales tax. The remaining slots are reserved for the upkeep and decile figures
+ * when their data lands; nothing fills them speculatively.
  *
  * Everything the first batch settled still binds: the answer is the
  * small-business effective rate labelled "Total effective tax burden", the
  * name appears once with its flag, no world-median line, and the SMB rate's
  * modeled confidence keeps the honesty tag on the block.
+ *
+ * ========= C13, 2026-09-02: THE GRID GIVES UP THE TWO REGISTRATION CELLS =====
+ *
+ * IT HELD FOUR AND IT HOLDS TWO, and the two that went were stated twice more
+ * on this same page. Read off the render: the masthead printed "Time to
+ * register 1 day" and "Cost to register Free"; the peers table's home row
+ * printed the same pair in its own two columns; the legal-form table's first
+ * row printed it a third time. Both figures come from ONE place,
+ * `data/legal/business_formation_costs_v1.json`, through
+ * `getTypicalFormationCostUsd` and `DAYS_TO_START_BY_ISO2`, and both of those
+ * pick the SOLE TRADER tier. So all three cards were printing one tier's pair.
+ *
+ * WHY THIS CARD IS THE ONE THAT YIELDS, per quantity and measured rather than
+ * argued, which is C6's and C9's own test:
+ *
+ * - THE LEGAL-FORM TABLE CANNOT YIELD EITHER COLUMN. Counted on the file: the
+ *   fee differs across tiers in 152 of 152 countries and the filing time in 149
+ *   of 152, so both columns carry facts stated nowhere else on almost every
+ *   page in the atlas. Its own warrant is what the wall costs, and the cheapest
+ *   tier is the base that reading is taken from.
+ * - THE PEERS TABLE CANNOT YIELD EITHER COLUMN EITHER, and its home row least
+ *   of all: the four peers' fees and filing times appear nowhere else, and a
+ *   comparison column with a hole where the reader's own country sits is not a
+ *   comparison. It is also the one card on this page the founder praised
+ *   unprompted.
+ * - THIS GRID HELD NEITHER FACT IN A SET. Two bare figures, no peer beside
+ *   them and no form named, which is step 1's duplicate exactly: without them
+ *   a reader has to do nothing at all, because two later cards say it better.
+ *
+ * AND THEY WERE WORSE THAN A DUPLICATE, WHICH IS WHY BOTH WENT RATHER THAN ONE.
+ * The band's answer is an ANNUAL burden, "what a small business effectively
+ * pays the state", and the two surviving cells exist to stop a reader taking
+ * 20% for the whole of it: payroll is a second burden the rate excludes, sales
+ * tax is a burden the customer carries. A one-off fee and a filing wait qualify
+ * that answer not at all. They also quietly advertise the trap the setup
+ * chapter exists to warn against, because the tier they describe is the one
+ * with NO liability wall: in Germany this grid would read "$50, 7 days" on a
+ * page whose own table shows the company that gives you the wall at $1,500 and
+ * three weeks, and the joint-stock form at $12,000 and sixty days.
+ *
+ * THE PAIR IS NOT SPLIT ACROSS TWO CARDS, and the reason is the grid's own
+ * shape as well as the data: at three cells a two-column grid orphans one, so
+ * a grid that must lose one of these loses both. The fee and the filing time
+ * are also one reading, what it takes to get in the door, and half of it in a
+ * band about annual tax is a question raised and not answered.
+ *
+ * THE SUBTITLE KEEPS ITS PROMISE and is now a POINTER rather than a
+ * restatement: it still reads "and what it costs to register one", the page
+ * still answers it in the setup chapter, and the on-this-page rail links there.
+ * The adapter still emits both support facts, which is right: the hero's
+ * confidence is composed from every fact it holds, and the subtitle branches on
+ * them. What changed is what this band DRAWS.
  */
 function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any }) {
   const eb = hero?.effective_burden;
@@ -156,8 +207,10 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
   const subtitle = promises.length > 0 ? `${promises.join(", and ").replace(/^./, (c) => c.toUpperCase())}.` : null;
 
   /* The right-side grid's cells, each guarding its own field, in his order of
-     weight: the payroll burden first (it is a burden, not trivia), then the
-     tax the customer carries, then the two registration facts. */
+     weight: the payroll burden first (it is a burden, not trivia), then the tax
+     the customer carries. Both QUALIFY the answer beside them, which is what
+     earns them a place in this band; the two registration cells that used to
+     follow did not, and were printed twice more below. See the header, C13. */
   const cells: Array<{ key: string; label: string; value: React.ReactNode; note?: string }> = [];
   if (payroll != null) {
     cells.push({
@@ -175,29 +228,9 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
       note: "carried by the customer",
     });
   }
-  if (days) {
-    cells.push({
-      key: "days",
-      label: "Time to register",
-      value: (
-        <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">
-          {days.value} {days.value === 1 ? "day" : "days"}
-        </Fig>
-      ),
-    });
-  }
-  if (cost) {
-    cells.push({
-      key: "cost",
-      label: "Cost to register",
-      value:
-        cost.value === 0 ? (
-          <span className="block text-[length:var(--t-head)] font-medium leading-none text-[var(--c-ink)]">Free</span>
-        ) : (
-          <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{usd(cost.value as number)}</Fig>
-        ),
-    });
-  }
+  /* NO REGISTRATION CELLS. `days` and `cost` are still read above, because the
+     subtitle promises whichever of them the country holds and the page keeps
+     that promise in the setup chapter. They are not printed here. */
 
   return (
     <Band hero>
