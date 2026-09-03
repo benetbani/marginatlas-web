@@ -141,6 +141,15 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
  * `getTypicalFormationCostUsd` and `DAYS_TO_START_BY_ISO2`, and both of those
  * pick the SOLE TRADER tier. So all three cards were printing one tier's pair.
  *
+ * THAT LAST SENTENCE WAS TRUE OF THE UNITED KINGDOM AND FALSE OF EIGHT OTHER
+ * COUNTRIES, and C31 (2026-09-03) is the row that found it: the two accessors
+ * held two DIFFERENT pick orders, agreeing only where a Sole Trader tier
+ * exists. On ES, MX, BE, GR, RO, AR, MA and TN the fee came off the limited
+ * company and the filing time off the freelancer. There is one order now, in
+ * `src/lib/tax/country_rates.ts` (`getTypicalFormationRow`), and the reasoning
+ * for the cut below is unaffected: it turned on the pair being stated three
+ * times, not on which tier it described.
+ *
  * WHY THIS CARD IS THE ONE THAT YIELDS, per quantity and measured rather than
  * argued, which is C6's and C9's own test:
  *
@@ -347,8 +356,11 @@ function Cities({ cities, iso2 }: { cities: any; iso2?: string }) {
  * caption is table furniture, not the banned chart-sentence.
  *
  * Units ride the values, one convention per column (N5): money as money, days
- * as days, rates as percentages, and a zero registration fee is the word Free
- * in the reading face, never $0, which reads as a missing number.
+ * as days, rates as percentages, and a zero registration fee is the word Free,
+ * never $0, which reads as a missing number. It renders in the table's own
+ * figure face at the table's own weight; the clause that used to say "in the
+ * reading face" described a font switch this card never made, and the class
+ * standing in for it broke the winner mark (see the column below).
  */
 function Peers({ peers }: { peers: any }) {
   const rows: any[] = Array.isArray(peers?.list) ? peers.list : [];
@@ -361,8 +373,19 @@ function Peers({ peers }: { peers: any }) {
     { key: "payroll_pct", head: "Payroll on staff", fmt: (v) => <>{v}%</>, best: (vs) => Math.min(...vs) },
     {
       key: "register_cost_usd",
+      /* THE WORD CARRIES NO WEIGHT OF ITS OWN (C31's photograph, 2026-09-03).
+         It used to be `<span className="font-medium">Free</span>`, and that
+         class did not do what its comment below claimed: `.fig` sets the figure
+         face and weight 600 for the whole table, and font-medium only pulled
+         this ONE cell down to 500. Measured on the shipped GB render, every
+         figure on the card is w600 and "Free" alone is w500, in the cell that
+         WINS its column. So the winner read dark and light at once, and the
+         column's convention (best = ink + weight, the rest quiet) was broken by
+         the only cell it was meant to mark. C31 made that worse before it made
+         it better: four more countries print Free in this column once the fee
+         comes off the lightest form. */
       head: "Cost to register",
-      fmt: (v) => (v === 0 ? <span className="font-medium">Free</span> : <>{usd(v)}</>),
+      fmt: (v) => (v === 0 ? <>Free</> : <>{usd(v)}</>),
       best: (vs) => Math.min(...vs),
     },
     { key: "register_days", head: "Time to register", fmt: (v) => <>{v} {v === 1 ? "day" : "days"}</>, best: (vs) => Math.min(...vs) },

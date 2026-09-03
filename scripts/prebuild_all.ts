@@ -390,6 +390,13 @@ const GATES: Gate[] = [
      unhydrated and cannot tell a working expander from a dead one (its own
      header states the blind spot). Founder order 2026-08-30, gated same day. */
   { name: "setup-expand", script: "tests/spine/setup_tiers_expand.test.ts" },
+  /* The peers table's registration fee and registration wait sit on ONE row of
+     the formation file. Two modules used to pick their own row and disagreed on
+     the 8 countries with no Sole Trader tier, so 23 of the 51 peer tables
+     printed a limited company's fee beside a freelancer's filing time. Every
+     figure was individually real, which is why nothing else here could see it.
+     C31, 2026-09-03; negative-tested against the old picker inside the file. */
+  { name: "formation-pair", script: "tests/spine/formation_pair_one_row.test.ts" },
   /* The check that would have caught a three-month outage. The service-role key
      was rotated and Vercel kept the old value; every supabaseAdmin read failed,
      every page fell back to synthesised figures, and nothing said a word.

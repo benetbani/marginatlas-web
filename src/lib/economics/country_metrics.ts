@@ -29,6 +29,9 @@ import {
   getBrainCpiByIso2,
   getBrainInformalShareByIso2,
 } from "../external/brain_data";
+// C31: the single formation-row picker. The fee and the filing time are two
+// columns of one row and are chosen once, there.
+import { getTypicalFormationRow } from "../tax/country_rates";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -43,7 +46,12 @@ export type CountryEconomicsSnapshot = {
   netWealthPerAdult: number | null;
   /** Self-employment share of total employment, percent (0-100). */
   selfEmploymentPct: number | null;
-  /** Typical days to register a sole-trader business. */
+  /**
+   * Typical filing turnaround in days for the lightest registered form the
+   * country offers, off the SAME formation row as the registration fee
+   * (`getTypicalFormationRow`). Sole Trader where present, else Freelancer,
+   * else LLC.
+   */
   daysToStart: number | null;
   /** CPI year-over-year, percent (e.g. 2.4 for 2.4%). */
   inflationPctYoy: number | null;
@@ -118,23 +126,23 @@ const SALARY_BY_ISO2: Map<string, number> = (() => {
 })();
 
 /**
- * Days-to-start lookup. Prefers Sole-Trader tier when present; falls back
- * to LLC tier; falls back to the minimum of all tiers for the country.
+ * Days-to-start lookup.
+ *
+ * C31, 2026-09-03: THIS FILE NO LONGER PICKS ITS OWN ROW. It used to hold a
+ * second, different pick order over the same formation file that
+ * `src/lib/tax/country_rates.ts` reads for the registration FEE, and the two
+ * disagreed on the 8 countries with no Sole Trader tier, so the country page's
+ * peers table printed one legal form's fee beside another's filing time. The
+ * order, its measurement and the reasoning now live in one place, beside the
+ * fee, and this map is built from it. See `getTypicalFormationRow`.
  */
 const DAYS_TO_START_BY_ISO2: Map<string, number> = (() => {
   const out = new Map<string, number>();
-  for (const [iso, tiers] of Object.entries(FORMATION.countries || {})) {
-    if (!Array.isArray(tiers) || tiers.length === 0) continue;
-    const soleTrader = tiers.find((t) => t.tier === "Sole Trader");
-    const freelancer = tiers.find((t) => t.tier === "Freelancer");
-    const llc = tiers.find((t) => t.tier === "LLC");
-    const pick =
-      (soleTrader && soleTrader.setup_days) ??
-      (freelancer && freelancer.setup_days) ??
-      (llc && llc.setup_days) ??
-      Math.min(...tiers.map((t) => t.setup_days || 999));
-    if (typeof pick === "number" && pick > 0 && pick < 999) {
-      out.set(iso.toUpperCase(), pick);
+  for (const iso of Object.keys(FORMATION.countries || {})) {
+    const pick = getTypicalFormationRow(iso);
+    const days = pick?.days;
+    if (typeof days === "number" && days > 0 && days < 999) {
+      out.set(iso.toUpperCase(), days);
     }
   }
   return out;

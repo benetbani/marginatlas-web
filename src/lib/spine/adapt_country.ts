@@ -369,7 +369,10 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
   // src/lib/tax/smb_effective_rates.ts: the sales-tax row (70 of 195).
   const vatRow = getVatRow(code);
   // data/legal/business_formation_costs_v1.json, via src/lib/tax/country_rates.ts
-  // (the Sole Trader tier where present, 152 of 195).
+  // (152 of 195). C31: the fee and `snapshot.daysToStart` above now come off
+  // ONE row of that file, picked once by `getTypicalFormationRow` , Sole Trader,
+  // else Freelancer, else LLC. Two pickers used to disagree on the 8 countries
+  // with no Sole Trader tier, and the peers table printed the pair.
   const registrationCostUsd = getTypicalFormationCostUsd(code);
   // src/lib/economic_profile/index.ts over data/economic_indicators/country_profile_v2.json.
   // The file's own anchor says the top 50 are hand anchored ("Tier A") and the
@@ -455,7 +458,8 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
     });
   }
   if (isNum(registrationCostUsd)) {
-    // data/legal/business_formation_costs_v1.json, the Sole Trader tier fee.
+    // data/legal/business_formation_costs_v1.json, the fee off the same row the
+    // filing time above comes from (C31).
     support.push({
       key: "register_cost",
       label: "Cost to register",
