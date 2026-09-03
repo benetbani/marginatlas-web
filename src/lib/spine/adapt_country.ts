@@ -121,7 +121,10 @@ import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
-import { getWageDecileConfidence } from "@/lib/economic_profile/wage_deciles";
+import {
+  getWageDecileConfidence,
+  mayPublishDecileSpread,
+} from "@/lib/economic_profile/wage_deciles";
 import { isKeepCredible } from "@/lib/finance/keep_credibility";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { getVatRow, getSmbRegime } from "@/lib/tax/smb_effective_rates";
@@ -864,10 +867,35 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
   const payP90 = prof(profile.wage_p90_usd);
   const decilesOrdered =
     medianPay != null && payP10 != null && payP90 != null && payP10 < medianPay && medianPay < payP90;
+  /* C52, 2026-09-03. THE SECOND ORDERING GUARD, AND IT LOOKS AT THE OTHER CARD.
+     The guard above orders the three marks against EACH OTHER. It cannot see the
+     fourth wage figure this same page prints thirteen hundred pixels lower, the
+     hiring card's "Wage floor", and on seven countries the bottom tenth lands
+     BELOW it: Australia states a bottom tenth of $37K above a wage floor of
+     $42K and explains nothing. The founder's ruling gives the tolerance: under
+     five percent the two are two sources rounding differently and the page
+     stands; at five percent or above the page contradicts itself in public and
+     the contradiction must stop reaching a reader. The tolerance itself lives
+     in wage_deciles.ts, stated once, and the gate reports by the same constant.
+     THE FLOOR IS READ THROUGH `prof`, the same guard the hiring block uses at
+     the other end of this file, so this test asks exactly what a reader can see
+     rather than what the profile happens to hold. A floor the page never states
+     cannot be contradicted by anything the page prints, and publishes.
+     THE SPREAD IS WITHHELD WHOLE. p10 is the doubtful figure, but it is the LOW
+     END of a brace, and a brace with no low end is a broken drawing rather than
+     a corrected one. Withheld, the card falls to the typical-alone branch it was
+     built with and that every country without decile research already renders:
+     it keeps its answer, its accent and its warrant, and prints no zero, no dash
+     and no empty frame. The floor is never the one withheld: it is a statute,
+     and it is one of two bars from one shared zero whose whole reading is the
+     gap between the legal minimum and what people are actually paid. */
+  const statedWageFloor = prof(profile.minimum_wage_annual_usd);
+  const decilesPublishable = decilesOrdered && mayPublishDecileSpread(payP10, statedWageFloor);
   /* A modeled dispersion tags the card. getWageDecileConfidence answers for the
      spread only, so a measured typical is not demoted by a country that simply
-     has no decile research yet. */
-  const decileConfidence = decilesOrdered ? getWageDecileConfidence(code) : null;
+     has no decile research yet, and a country whose spread is withheld is not
+     demoted either: the tag describes the facts the card still prints. */
+  const decileConfidence = decilesPublishable ? getWageDecileConfidence(code) : null;
   const customers =
     medianPay != null
       ? {
@@ -877,7 +905,7 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
             source: "Full-time pay for this country, read on its own terms.",
           },
           median_usd: Math.round(medianPay),
-          ...(decilesOrdered
+          ...(decilesPublishable
             ? { p10_usd: Math.round(payP10 as number), p90_usd: Math.round(payP90 as number) }
             : {}),
           basis: "Full-time pay, a year.",

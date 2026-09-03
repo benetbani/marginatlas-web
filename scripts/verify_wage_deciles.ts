@@ -65,11 +65,39 @@
  * this gate until it is struck from the list, so the list can only shrink.
  * Queue row C52 owns the data decision.
  *
+ * ===== C52 CLOSED 2026-09-03: THE RULING SPLIT THE LIST, THE LIST DID NOT ====
+ *
+ * The founder ruled a FIVE PERCENT tolerance: under it the two figures are two
+ * sources rounding differently and no reader can perceive a contradiction; at
+ * or above it the page contradicts itself in public and the contradiction must
+ * stop reaching a reader. Five of the seven cross (HR, AR, AU, LV, CA) and two
+ * do not (GB 0.9, IL 0.8), which is exactly the outcome the paragraph above was
+ * unable to choose between, since it is the United Kingdom's 0.9 percent that
+ * keeps its drawing.
+ *
+ * WHAT CHANGED IS THE RENDER, NOT THIS LIST. src/lib/spine/adapt_country.ts now
+ * withholds the decile PAIR from the customers card when the shortfall reaches
+ * the tolerance, so the card falls to the typical-alone branch it was built
+ * with. THE RATCHET IS DELIBERATELY UNMOVED AND MEASURES A DIFFERENT THING: the
+ * gate asks whether the two researched figures CONTRADICT, at any size, and the
+ * render asks whether a reader can SEE it. Slackening this list to the founder's
+ * display tolerance would blind it to a gap growing from 0.8 to 4.9 percent,
+ * which is a real deterioration in the data that no reader would notice and this
+ * file exists to notice. So an eighth country still fails, a listed gap that
+ * grows still fails, a fixed country still fails until struck, and the list
+ * still only shrinks. The tolerance is imported rather than restated, so the
+ * founder's five percent lives at one address.
+ *
  * Run: npx tsx scripts/verify_wage_deciles.ts
  * Exit 0 = pass, exit 1 = fail.
  */
 import fs from "node:fs";
 import path from "node:path";
+import {
+  WAGE_FLOOR_TOLERANCE_PCT,
+  decileShortfallBelowFloorPct,
+  mayPublishDecileSpread,
+} from "../src/lib/economic_profile/wage_deciles";
 
 const ROOT = process.cwd();
 const DECILES_PATH = path.resolve(ROOT, "data/economics/wage_deciles_v1.json");
@@ -154,6 +182,10 @@ for (const [iso, rec] of Object.entries(deciles.countries)) {
 // R4 to R8: the profile against the research, and against the page's own floor.
 let filled = 0;
 let belowFloor = 0;
+/* Which of the contradicting rows a reader can still see, split by the
+ * founder's tolerance. Reporting only; neither list gates anything. */
+const withheld: string[] = [];
+const stillPrinted: string[] = [];
 for (const [iso, profile] of Object.entries(profileFile.countries)) {
   const hasP10 = typeof profile.wage_p10_usd === "number";
   const hasP90 = typeof profile.wage_p90_usd === "number";
@@ -187,8 +219,11 @@ for (const [iso, profile] of Object.entries(profileFile.countries)) {
     const p10 = profile.wage_p10_usd!;
     const listed = P10_BELOW_FLOOR[iso];
     if (p10 < floor) {
-      const gap = Math.round(((floor - p10) / floor) * 1000) / 10;
+      const raw = decileShortfallBelowFloorPct(p10, floor)!;
+      const gap = Math.round(raw * 10) / 10;
       belowFloor++;
+      if (mayPublishDecileSpread(p10, floor)) stillPrinted.push(`${iso} ${gap}%`);
+      else withheld.push(`${iso} ${gap}%`);
       if (listed === undefined) {
         fail(
           `[${iso}] R8: the bottom tenth of full-time pay (${p10}) is ${gap}% BELOW this country's own annual wage floor (${floor}), and the country page prints both. A new one: fix the source, or add it to P10_BELOW_FLOOR with its reason and a queue row`,
@@ -210,7 +245,10 @@ console.log(
   `  ${Object.keys(deciles.countries).length} countries researched, ${filled} carrying a drawn spread.`,
 );
 console.log(
-  `  R8: ${belowFloor} of them state a bottom tenth below their own wage floor, all ${Object.keys(P10_BELOW_FLOOR).length} named in P10_BELOW_FLOOR (queue row C52 owns the data decision).`,
+  `  R8: ${belowFloor} carry a bottom tenth below their own wage floor, all ${Object.keys(P10_BELOW_FLOOR).length} named in P10_BELOW_FLOOR.`,
+);
+console.log(
+  `  C52, tolerance ${WAGE_FLOOR_TOLERANCE_PCT}%: the spread is WITHHELD on ${withheld.length} (${withheld.join(", ") || "none"}) and still drawn on ${stillPrinted.length} (${stillPrinted.join(", ") || "none"}), where no reader can perceive the gap.`,
 );
 
 if (failures > 0) {
