@@ -81,6 +81,31 @@ const PAPERWORK_2 = "Online in a day";
 const PAPERWORK_3 = "Several steps, a registered office";
 const PAPERWORK_4 = "A notary or a court";
 
+/* REACT ONLY SHIPS `act` IN ITS DEVELOPMENT BUILD, and this gate is the third
+   thing in this project to die on the difference between a build server and a
+   design machine. React's entry point reads process.env.NODE_ENV when it is
+   first evaluated and hands back react.production.js or react.development.js;
+   the production one has no `act` export at all. Vercel builds with
+   NODE_ENV=production, so on 2026-09-03 this gate crashed there with
+   "TypeError: act is not a function" while passing locally, where NODE_ENV is
+   unset. It failed the deploy of 107 commits and the whole chain read green on
+   the machine that wrote it.
+
+   The line below is set BEFORE the dynamic import on purpose: React reads the
+   variable at module-evaluation time, so assigning it after the import would
+   change nothing. The process is this gate's own `npx tsx` child, so nothing
+   else sees the value.
+
+   THE ALTERNATIVE WAS REFUSED. The Aug 27 precedent for "a gate cannot run
+   here" is to declare the dependency and skip loudly. Skipping is wrong for
+   this one: the four things it proves (only the clicked row opens, the panel
+   carries its own paperwork level, no figure hides behind the disclosure, and
+   the duplicate tier name eleven countries reach) would then be unchecked on
+   every deploy while checked on every laptop, which is the exact shape of the
+   fault that let three gates sit red for eighteen runs. Making it RUN is
+   strictly better than making it skip. */
+process.env.NODE_ENV = "development";
+
 async function main() {
   const React = (await import("react")).default;
   const { createRoot } = await import("react-dom/client");
