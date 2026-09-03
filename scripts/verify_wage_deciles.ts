@@ -29,6 +29,41 @@
  *       the anti-fabrication rule proper.
  *   R6. Every filled row is ordered: p10 < median < p90.
  *   R7. A row carries both deciles or neither. Half a spread cannot be drawn.
+ *   R8. A filled row's p10 sits at or above that country's own annual wage
+ *       floor, because the country page prints BOTH.
+ *
+ * ============ R8, ADDED 2026-09-03 WHILE REFUSING QUEUE ROW C30 ==============
+ *
+ * R6 orders the three marks against each other. It cannot see the fourth wage
+ * figure the same PAGE prints: the hiring card's "Wage floor", which is
+ * `minimum_wage_annual_usd` from the profile, drawn about thirteen hundred
+ * pixels below the customers card's bracket. Nothing in this repo joined the
+ * two files, and joining them says that on **7 of the 47 countries that render
+ * both cards, the page states a bottom tenth of FULL-TIME pay BELOW the legal
+ * annual minimum it states elsewhere.** Australia prints "Bottom tenth $37K"
+ * against "Wage floor $42K", a 10.3 percent contradiction a reader can see and
+ * the page never explains. Croatia is 11.4 percent and Argentina 11.1.
+ *
+ * IT IS A CROSS-FILE ARTIFACT AND THE DECILE FILE PREDICTED ITS CLASS. p10 is
+ * this country's own median multiplied by a measured dispersion ratio, and that
+ * file's own convention says in as many words that "a published p10 in local
+ * currency belongs to that source's own population, period and exchange rate"
+ * while the median is separately normalised. The minimum wage is a third
+ * research line again. So the ratio can be right, the median can be right and
+ * the floor can be right, and the PAIR can still print in an impossible order.
+ * The decile file's `quality_checks` are explicitly "a unit-error trap, not a
+ * plausibility opinion", and this trap is one rung below them.
+ *
+ * WHY A NAMED LIST RATHER THAN A COUNT, and why the gate does not fix the seven.
+ * Choosing which of two researched sources yields is a data decision that needs
+ * re-sourcing, not a design edit, and every alternative available inside the
+ * page is worse: clamping p10 to the floor fabricates a figure; withholding the
+ * bracket removes a founder-visible drawing from the United Kingdom over a 0.9
+ * percent gap; a sentence beside the chart is banned by rulebook 26. So the
+ * seven are named with the gap each had when they were found, an EIGHTH cannot
+ * arrive unseen, a listed gap cannot GROW, and a country that gets fixed fails
+ * this gate until it is struck from the list, so the list can only shrink.
+ * Queue row C52 owns the data decision.
  *
  * Run: npx tsx scripts/verify_wage_deciles.ts
  * Exit 0 = pass, exit 1 = fail.
@@ -53,6 +88,22 @@ type Profile = {
   median_wage_full_time_usd: number;
   wage_p10_usd?: number;
   wage_p90_usd?: number;
+  minimum_wage_annual_usd?: number;
+};
+
+/* R8's named list. The value is the shortfall as a percentage of the floor,
+ * measured on 2026-09-03 with scratchpad/loop20/c30_p10_vs_floor.mjs and stored
+ * to one decimal. NEVER RAISE A NUMBER HERE: a growing gap is a new fault in an
+ * old country and this gate exists to say so. Removing a line is the only edit
+ * that needs no argument. */
+const P10_BELOW_FLOOR: Record<string, number> = {
+  HR: 11.4,
+  AR: 11.1,
+  AU: 10.3,
+  LV: 8.5,
+  CA: 5.7,
+  GB: 0.9,
+  IL: 0.8,
 };
 
 const deciles = JSON.parse(fs.readFileSync(DECILES_PATH, "utf-8")) as DecileFile;
@@ -100,8 +151,9 @@ for (const [iso, rec] of Object.entries(deciles.countries)) {
   if (!rec._meta?.as_of) fail(`[${iso}] names no as-of period`);
 }
 
-// R4 to R7: the profile against the research.
+// R4 to R8: the profile against the research, and against the page's own floor.
 let filled = 0;
+let belowFloor = 0;
 for (const [iso, profile] of Object.entries(profileFile.countries)) {
   const hasP10 = typeof profile.wage_p10_usd === "number";
   const hasP90 = typeof profile.wage_p90_usd === "number";
@@ -128,10 +180,37 @@ for (const [iso, profile] of Object.entries(profileFile.countries)) {
   if (!(profile.wage_p10_usd! < median && median < profile.wage_p90_usd!)) {
     fail(`[${iso}] ordering fails: ${profile.wage_p10_usd} / ${median} / ${profile.wage_p90_usd}`);
   }
+
+  /* R8. The fourth wage figure, from the card thirteen hundred pixels below. */
+  const floor = profile.minimum_wage_annual_usd;
+  if (typeof floor === "number" && floor > 0) {
+    const p10 = profile.wage_p10_usd!;
+    const listed = P10_BELOW_FLOOR[iso];
+    if (p10 < floor) {
+      const gap = Math.round(((floor - p10) / floor) * 1000) / 10;
+      belowFloor++;
+      if (listed === undefined) {
+        fail(
+          `[${iso}] R8: the bottom tenth of full-time pay (${p10}) is ${gap}% BELOW this country's own annual wage floor (${floor}), and the country page prints both. A new one: fix the source, or add it to P10_BELOW_FLOOR with its reason and a queue row`,
+        );
+      } else if (gap > listed) {
+        fail(
+          `[${iso}] R8: a listed shortfall GREW, ${listed}% to ${gap}%. A baseline in this file is never raised`,
+        );
+      }
+    } else if (listed !== undefined) {
+      fail(
+        `[${iso}] R8: listed in P10_BELOW_FLOOR at ${listed}% and the figures no longer contradict. Strike the line; the list only shrinks`,
+      );
+    }
+  }
 }
 
 console.log(
   `  ${Object.keys(deciles.countries).length} countries researched, ${filled} carrying a drawn spread.`,
+);
+console.log(
+  `  R8: ${belowFloor} of them state a bottom tenth below their own wage floor, all ${Object.keys(P10_BELOW_FLOOR).length} named in P10_BELOW_FLOOR (queue row C52 owns the data decision).`,
 );
 
 if (failures > 0) {
