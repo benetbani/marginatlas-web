@@ -59,6 +59,8 @@
     "verify:cell-lattice": "node scripts/verify_cell_lattice.mjs",
     "verify:accents": "node scripts/verify_derived_accents.mjs",
     "verify:rendered": "node scripts/verify_rendered_design.mjs",
+    "verify:archetype-copy": "npx tsx scripts/verify_archetype_copy.ts",
+    "harness:archetypes": "npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs scripts/harness/render_archetypes.tsx && node scripts/harness/check_archetypes.mjs --shots",
     "verify:overflow": "node scripts/audit_overflow.mjs country city cell --width 390"
   },
   "dependencies": {

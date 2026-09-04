@@ -626,8 +626,14 @@ export function Band({
      where an uneven band is a composition instead of a gap. The attribute carries
      higher specificity than the plain only-child rule, so it wins wherever both
      apply without depending on which order the classes were written in. */
+  /* EQUAL HEIGHTS, NO MATTER WHAT (founder ruling 7, 2026-09-04): "two sections
+     that sit on the same horizontal level should always have the same height,
+     no matter what." The band stretches its children and every child fills its
+     row, so two cards on one level share one bottom edge by construction. A
+     card that cannot fill its height is a card to redesign, not a rule to
+     relax; the emptiness gate reports the hole it leaves. */
   return (
-    <div className={`mt-8 grid grid-cols-1 items-start gap-8 [&:has(>*:only-child)]:lg:grid-cols-[2fr_1fr] [&:has(>*:only-child[data-lean])]:lg:grid-cols-[1fr_2fr] ${cols}`}>
+    <div className={`mt-8 grid grid-cols-1 items-stretch gap-8 [&>*]:h-full [&:has(>*:only-child)]:lg:grid-cols-[2fr_1fr] [&:has(>*:only-child[data-lean])]:lg:grid-cols-[1fr_2fr] ${cols}`}>
       {children}
     </div>
   );

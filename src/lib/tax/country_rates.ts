@@ -30,6 +30,7 @@ export function getCountryRates(iso2: string): {
 
 type FormationRow = {
   tier?: string;
+  local_term?: string;
   setup_cost_usd?: number;
   setup_days?: number;
   complexity_score?: number;
@@ -133,6 +134,29 @@ export function getTypicalFormationRow(iso2: string): FormationPick | null {
  * row `getTypicalFormationRow` picks. Null when the country has no curated
  * formation breakdown.
  */
+/**
+ * ONE named row of the formation file, by its tier name ("LLC", "Sole Trader",
+ * "Freelancer", "Joint-Stock"). The founder's rulings of 2026-09-04 attribute
+ * the masthead's and the peers table's registration cells to the LLC, so a
+ * caller that wants the company's row asks for it by name instead of taking
+ * the typical pick. Null when the country holds no row of that tier. The fee
+ * is the file's own "mandatory government and notary fees", the days its
+ * "typical online filing turnaround"; neither is the all-in cost nor the time
+ * until the activity opens, which are a data requirement, not a field.
+ */
+export function getFormationRowByTier(iso2: string, tier: string): (FormationPick & { localTerm: string | null }) | null {
+  const rows = FORMATION[iso2.toUpperCase()];
+  if (!rows || rows.length === 0) return null;
+  const pick = rows.find((r) => r.tier === tier);
+  if (!pick || typeof pick.tier !== "string") return null;
+  return {
+    tier: pick.tier,
+    localTerm: typeof pick.local_term === "string" && pick.local_term.length > 0 ? pick.local_term : null,
+    costUsd: isNum(pick.setup_cost_usd) ? pick.setup_cost_usd : null,
+    days: isNum(pick.setup_days) ? pick.setup_days : null,
+  };
+}
+
 export function getTypicalFormationCostUsd(iso2: string): number | null {
   return getTypicalFormationRow(iso2)?.costUsd ?? null;
 }

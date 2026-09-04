@@ -31,7 +31,8 @@
 import * as React from "react";
 import { Band, Box, Fig, Rail, SampleTag, SpectraTable, usd } from "@/components/spine/kit";
 import { RangeBracket, RankedTiles } from "@/components/spine/forms-v2";
-import { AtlasMark } from "@/components/spine/marks";
+import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
+import { buildHeroFacts } from "@/lib/spine/hero_facts";
 import { CityCardsPager } from "@/components/spine/country/city-cards";
 import { SetupTiers } from "@/components/spine/country/setup-tiers";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -70,8 +71,6 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
    directly and no second name for money survives in this file. Every prime rent
    in the atlas is below $10,000, so the collapse changes no figure here. */
 
-/** One published fact from hero.support, shaped as the adapter emits it. */
-type SupportFact = { key?: string; label?: string; value?: number; unit?: string; note?: string };
 
 /**
  * The wayfinding rail, and the DEVIATION it carries is recorded rather than
@@ -192,118 +191,31 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
  * them. What changed is what this band DRAWS.
  */
 function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any }) {
+  /* THE MASTHEAD IS THE ANSWER-CARD ARCHETYPE (the reset of 2026-09-04): one
+     component drawn for every country, its facts built by hero_facts.ts from
+     the same modules the adapter reads, the law inside the component (the
+     name once, the subtitle composed from what resolved, the tag on the
+     modelled figure, the grid docked at the half, the LLC's registration
+     cells by the founder's rulings 1, 3 and 4, a state word when no regime
+     row is held). The seed's hero block is kept for the page's provenance
+     line; without a country code the facts cannot be built and the card
+     falls back to the seed's answer alone. Gated by the archetype harness
+     (scripts/harness) across nine countries at three widths. */
+  if (iso2) {
+    const facts = buildHeroFacts(iso2);
+    return <AnswerCard id="take" name={name} iso2={iso2} subtitle={facts.subtitle} answer={facts.answer} cells={facts.cells} />;
+  }
   const eb = hero?.effective_burden;
   const rate = isNum(eb?.rate_pct) ? eb.rate_pct : undefined;
-  const payroll = isNum(eb?.payroll_pct) ? eb.payroll_pct : undefined;
   const regime = typeof eb?.regime_name === "string" && eb.regime_name.length > 0 ? eb.regime_name : undefined;
-
-  const facts: SupportFact[] = Array.isArray(hero?.support) ? hero.support : [];
-  const factFor = (key: string) => facts.find((f) => f?.key === key && isNum(f.value));
-  const days = factFor("register_days");
-  const cost = factFor("register_cost");
-  const salesTax = factFor("sales_tax");
-
-  const confidence = hero?._meta?.confidence;
-  const tagged = typeof confidence === "string" && confidence !== "measured";
-
-  const promises: string[] = [];
-  if (rate != null) promises.push("what a small business effectively pays the state");
-  if (cost) promises.push("what it costs to register one");
-  else if (days) promises.push("how long it takes to register one");
-  const subtitle = promises.length > 0 ? `${promises.join(", and ").replace(/^./, (c) => c.toUpperCase())}.` : null;
-
-  /* The right-side grid's cells, each guarding its own field, in his order of
-     weight: the payroll burden first (it is a burden, not trivia), then the tax
-     the customer carries. Both QUALIFY the answer beside them, which is what
-     earns them a place in this band; the two registration cells that used to
-     follow did not, and were printed twice more below. See the header, C13. */
-  const cells: Array<{ key: string; label: string; value: React.ReactNode; note?: string }> = [];
-  if (payroll != null) {
-    cells.push({
-      key: "payroll",
-      label: "Payroll on wages",
-      value: <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{payroll}%</Fig>,
-      note: "a separate burden, never added to the rate",
-    });
-  }
-  if (salesTax) {
-    cells.push({
-      key: "sales-tax",
-      label: "Sales tax",
-      value: <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{salesTax.value}%</Fig>,
-      note: "carried by the customer",
-    });
-  }
-  /* NO REGISTRATION CELLS. `days` and `cost` are still read above, because the
-     subtitle promises whichever of them the country holds and the page keeps
-     that promise in the setup chapter. They are not printed here. */
-
   return (
-    <Band hero>
-      <Box id="take">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <AtlasMark id="alt-country" size={13} className="opacity-55" />
-          {iso2 ? <CountryFlag iso2={iso2} className="w-9 shrink-0" /> : null}
-          {/* THE NAMING h1 SITS AT --t-section, WHICH IS THE LADDER'S OWN
-              ARITHMETIC AND NOT A PREFERENCE. globals.css derives the 40 ceiling
-              in its own words: "Rule 16 wants the answer at 1.6x its supports;
-              the page title shares the masthead card with it. 40 over a 24 title
-              is 1.67x." At --t-focal this h1 stood at 30 under a 40 answer, which
-              is 1.33x at 1280 AND at 375, measured on the render, and 1.33 fails
-              step 5's floor. --t-focal is "a section's own focal figure"; a
-              country's name is not a figure. C7 settled the identical case on
-              the industry masthead. */}
-          <h1
-            id="headline"
-            data-typography="custom"
-            className="text-balance text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]"
-          >
-            {name}
-          </h1>
-          {tagged ? <SampleTag /> : null}
-        </div>
-        {/* BALANCED, BECAUSE BOTH SENTENCES IN THIS CARD BROKE TO A RUNT.
-            Measured on the render at 1280 with a Range rect: this subtitle ran
-            439px and then 79px, so its second line was 18 percent of its first,
-            and the regime clause below ran 360px and then 110px. At 375 the
-            clause was worse than ragged, it split the regime's NAME, "under
-            Trading / Allowance + Self-Assessment". Balanced, both sit as two
-            even lines at both widths and the name arrives whole on line two.
-            `text-wrap: balance` is inert where a browser does not support it,
-            so the fallback is exactly today's wrap. */}
-        {subtitle ? (
-          <p className="mt-1.5 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p>
-        ) : null}
-
-        <div className="mt-6 flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
-          {rate != null ? (
-            <div>
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Total effective tax burden</div>
-              <div className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{rate}%</div>
-              <div className="mt-2.5 max-w-[40ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">
-                on profit, for a small business
-                {regime ? (
-                  <>
-                    {" "}under <span className="text-[var(--c-ink)]">{regime}</span>
-                  </>
-                ) : null}
-              </div>
-            </div>
-          ) : null}
-          {cells.length > 0 ? (
-            <div className="grid shrink-0 grid-cols-2 gap-x-10 gap-y-4 md:w-[320px]">
-              {cells.map((c) => (
-                <div key={c.key}>
-                  <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{c.label}</div>
-                  <div className="mt-1">{c.value}</div>
-                  {c.note ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{c.note}</div> : null}
-                </div>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </Box>
-    </Band>
+    <AnswerCard
+      id="take"
+      name={name}
+      subtitle={rate != null ? "What a small business effectively pays the state." : null}
+      answer={rate != null ? { label: "Total effective tax burden", value: `${rate}%`, regime: regime ?? null, confidence: "modeled" } : null}
+      cells={[]}
+    />
   );
 }
 

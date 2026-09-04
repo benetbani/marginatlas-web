@@ -43,6 +43,12 @@ const GATES: Gate[] = [
   { name: "taxonomy", script: "scripts/verify_taxonomy.ts" },
   { name: "no-em-dashes", script: "scripts/verify_no_em_dashes.ts" },
   { name: "no-source-agencies", script: "scripts/verify_no_source_agencies.ts" },
+  /* The archetype harness's browser-free half (2026-09-04): builds the answer
+     card's facts for every country from local modules and checks the copy
+     register, the labels' length, the subtitle's promises and the tags. No
+     network, no browser. The browser half runs as `npm run harness:archetypes`
+     before a ship, by the same convention as verify:rendered. */
+  { name: "archetype-copy", script: "scripts/verify_archetype_copy.ts" },
   /* The spine2 invariants (PORT-CONTRACT M1-M9). Both are fast and browser-free.
      The rendered-design linter is deliberately NOT here: it drives a real
      browser, so it runs as `npm run verify:rendered` before a ship, not on
