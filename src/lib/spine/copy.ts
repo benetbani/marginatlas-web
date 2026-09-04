@@ -44,6 +44,27 @@ export const COPY = {
     withheldMany: "{n} trades withheld: the model returns a loss or a floor for a typical shop.",
     phoneHead: { trade: "Trade", value: "Net margin" },
   },
+  /** The tiers table (registering, by legal form). The explainers are definitional, true in every country (rule 21). */
+  tiers: {
+    kicker: "Registering, by legal form",
+    heads: { fee: "Fee", time: "Time", paperwork: "Paperwork" },
+    legend: "Dots are the paperwork: one is an online form, five is a notary and a lawyer.",
+    /** Founder ruling 8, 2026-09-04: the section leads to this page. */
+    door: "How to open a business in {country}",
+    explainers: {
+      Freelancer: "Self-employed with no separate company behind you. The income is taxed as your own and the debts are your own, and many countries offer a simplified tax regime for it. The lightest way to be paid for your own work.",
+      "Sole Trader": "One person trades under their own name. There is no wall between the owner and the business: debts are personal, and so are the profits. The fastest and cheapest way in, and the form most small shops start with.",
+      LLC: "A company that stands apart from its owner: liability stops at what the company owns. More paperwork and a public filing, in exchange for that wall. The usual step up once a shop takes on staff or signs a lease.",
+      "Joint-Stock": "A company built to carry many shareholders and outside capital: boards, audits, public accounts. The heaviest form to run, and rarely the first one a small shop needs.",
+    },
+    paperwork: {
+      1: "An online form in under an hour. No notary, no capital, nobody to visit.",
+      2: "Online in a day, with a little documentation and no notary.",
+      3: "Several steps, a registered office and a tax registration, done in a week or two.",
+      4: "A notary or a court, minimum capital and signed articles. Three to six weeks.",
+      5: "A lawyer, a notary, several offices to visit and capital to deposit. Often two months.",
+    },
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

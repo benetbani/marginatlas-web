@@ -104,13 +104,13 @@ const PAPERWORK_4 = "A notary or a court";
    every deploy while checked on every laptop, which is the exact shape of the
    fault that let three gates sit red for eighteen runs. Making it RUN is
    strictly better than making it skip. */
-process.env.NODE_ENV = "development";
+Object.assign(process.env, { NODE_ENV: "development" });
 
 async function main() {
   const React = (await import("react")).default;
   const { createRoot } = await import("react-dom/client");
   const { act } = await import("react");
-  const { SetupTiers } = await import("../../src/components/spine/country/setup-tiers");
+  const { TiersTable: SetupTiers } = await import("../../src/components/spine/archetypes/TiersTable");
 
   (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -146,7 +146,7 @@ async function main() {
     { tier: "LLC", local_term: "Private Limited Company (Ltd)", cost_usd: 15, days: 1, complexity_1_5: 2 },
   ];
   await act(async () => {
-    root.render(React.createElement(SetupTiers, { tiers }));
+    root.render(React.createElement(SetupTiers, { rows: tiers }));
   });
 
   if (rows().length !== 2) fail(`expected 2 tier rows, found ${rows().length}`);
@@ -188,7 +188,7 @@ async function main() {
     { tier: "LLC", local_term: "GmbH", cost_usd: 1500, days: 14, complexity_1_5: 4 },
   ];
   await act(async () => {
-    root.render(React.createElement(SetupTiers, { tiers: dup }));
+    root.render(React.createElement(SetupTiers, { rows: dup }));
   });
   if (rows().length !== 2) fail(`two rows sharing a tier name collapsed to ${rows().length}`);
 

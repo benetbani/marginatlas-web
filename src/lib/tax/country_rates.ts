@@ -157,6 +157,10 @@ export function getFormationRowByTier(iso2: string, tier: string): (FormationPic
   };
 }
 
+/** Every formation row the file holds for a country, in file order (lightest first). */
+export function getFormationRows(iso2: string): FormationRow[] {
+  return FORMATION[iso2.toUpperCase()] ?? [];
+}
 export function getTypicalFormationCostUsd(iso2: string): number | null {
   return getTypicalFormationRow(iso2)?.costUsd ?? null;
 }

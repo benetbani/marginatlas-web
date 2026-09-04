@@ -83,6 +83,11 @@ function inPage() {
       r.brokenImage = cards.filter((el) => { const im = el.querySelector("img"); return im && (!im.complete || im.naturalWidth === 0); }).map((el) => el.getAttribute("data-card"));
       r.imageCount = cards.length - r.noImage.length;
     }
+    if (r.kind === "tiers-table") {
+      const trs = [...card.querySelectorAll("[data-tier-row]")].filter((el) => el.getClientRects().length);
+      r.tierRows = trs.map((el) => Math.round(el.getBoundingClientRect().height));
+      r.headsCount = [...card.querySelectorAll("span")].filter((el) => el.getClientRects().length && /^(Fee|Time|Paperwork)$/.test((el.textContent || "").trim())).length;
+    }
     if (r.kind === "compare-table") {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
       r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
@@ -158,6 +163,10 @@ for (const w of WIDTHS) {
       if (r.namesCut) red(r.inst, w, "BOTCHED MOBILE", `${r.namesCut} city name(s) cut`);
       if (r.brokenImage && r.brokenImage.length) red(r.inst, w, "IMAGE BROKEN", `image did not load: ${r.brokenImage.join(", ")}`);
       if (w === WIDTHS[0] && r.noImage && r.noImage.length) data(r.inst, "IMAGE MISSING", `${r.noImage.length} card(s) without a photograph: ${r.noImage.join(", ")}`);
+    }
+    if (r.kind === "tiers-table") {
+      const hs = r.tierRows || []; if (hs.length > 1 && Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `tier rows at heights ${hs.join(", ")}`);
+      if (r.headsCount !== 3) red(r.inst, w, "REPETITION", `the three heads appear ${r.headsCount} times`);
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);

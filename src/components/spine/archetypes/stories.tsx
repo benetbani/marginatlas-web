@@ -16,6 +16,8 @@ import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
 import { CardPager } from "./CardPager";
 import { buildCityCards } from "@/lib/spine/city_cards";
+import { TiersTable } from "./TiersTable";
+import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
 
 export type Instance = { iso2: string; why: string };
 
@@ -80,6 +82,20 @@ export function pickCardPagerInstances(): Instance[] {
   return out;
 }
 
+/** The instance set for the tiers table. */
+export function pickTiersTableInstances(): Instance[] {
+  const all = codes().map((c) => ({ c, rows: buildSetupRows(c) }));
+  const out: Instance[] = [{ iso2: "GB", why: "the exemplar" }];
+  const seen = new Set(["GB"]);
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
+  const most = [...all].sort((a, b) => b.rows.length - a.rows.length)[0]; if (most) take(most.c, `most tiers: ${most.rows.length}`);
+  const longest = [...all].filter((x) => x.rows.length).sort((a, b) => Math.max(...b.rows.map((r) => (r.local_term ?? "").length)) - Math.max(...a.rows.map((r) => (r.local_term ?? "").length)))[0]; if (longest) take(longest.c, "longest local term");
+  const gap = all.find((x) => x.rows.length && x.rows.some((r) => r.cost_usd == null || r.days == null)); if (gap) take(gap.c, "a value not held");
+  const dup = all.find((x) => x.rows.length && new Set(x.rows.map((r) => r.tier)).size < x.rows.length); if (dup) take(dup.c, "one legal family, two forms");
+  const none = all.find((x) => x.rows.length === 0); if (none) take(none.c, "self-omits: no formation rows");
+  return out;
+}
+
 function Story({ iso2, why, children }: { iso2: string; why: string; children: React.ReactNode }) {
   return (
     <section data-story={iso2} className="mb-12">
@@ -136,6 +152,22 @@ export function CardPagerStories({ instances = pickCardPagerInstances() }: { ins
         const el = c ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
             <CardPager cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
+          </div>
+        ) : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+export function TiersTableStories({ instances = pickTiersTableInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="tiers-table">
+      {instances.map((i) => {
+        const rows = buildSetupRows(i.iso2);
+        const el = rows.length ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 624 }}>
+            <TiersTable rows={rows} howTo={howToOpenDoor(i.iso2)} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

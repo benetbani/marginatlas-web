@@ -35,12 +35,13 @@ import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { CardPager } from "@/components/spine/archetypes/CardPager";
+import { TiersTable } from "@/components/spine/archetypes/TiersTable";
+import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards } from "@/lib/spine/city_cards";
 import { COPY } from "@/lib/spine/copy";
 import { marginCardFromRows } from "@/lib/spine/margin_rows";
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { buildHeroFacts } from "@/lib/spine/hero_facts";
-import { SetupTiers } from "@/components/spine/country/setup-tiers";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -481,14 +482,17 @@ function Character({ character }: { character: any }) {
  * The rows, the quiet local term and the terracotta complexity dots live in
  * the SetupTiers client component; this wrapper holds the section chrome.
  */
-function Setup({ setup }: { setup: any }) {
+function Setup({ setup, iso2 }: { setup: any; iso2?: string }) {
+  /* THE TIERS-TABLE ARCHETYPE (founder rulings 8 and 9, 2026-09-04): equal
+     rows in every case, the heads said once at every width, a phone form of
+     three lines a row, and the door to "How to open a business in [country]"
+     the day that page exists. */
   const tiers: any[] = Array.isArray(setup?.tiers) ? setup.tiers : [];
   if (tiers.length === 0) return null;
-  const tagged = typeof setup?._meta?.confidence === "string" && setup._meta.confidence !== "measured";
   return (
     <Box id="setup">
-      <Rail icon="register-cost" kicker="Registering, by legal form" sample={tagged} />
-      <SetupTiers tiers={tiers} />
+      <Rail icon="register-cost" kicker={COPY.tiers.kicker} />
+      <TiersTable rows={tiers} howTo={iso2 ? howToOpenDoor(iso2) : null} />
     </Box>
   );
 }
@@ -785,7 +789,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
         <Character character={d.character} />
         {d.setup?.tiers?.length || d.premises ? (
           <Band split="3-2">
-            <Setup setup={d.setup} />
+            <Setup setup={d.setup} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
             <Premises premises={d.premises} />
           </Band>
         ) : null}
