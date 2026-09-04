@@ -13,6 +13,7 @@
  * `focal`), so the masthead always leads with one dominant figure and never a blank.
  */
 import * as React from "react";
+import { cityImageSrc } from "@/lib/cities/city_images";
 import { CountryFlag } from "@/components/CountryFlag";
 import { Fig } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
@@ -47,6 +48,14 @@ export function CityHero({ d }: { d: any }) {
       {/* identity LEFT, the one answer figure RIGHT , the band fills, nothing competes */}
       <div className="grid gap-5 md:grid-cols-[1.3fr_1fr] md:items-end">
         <div className="flex items-center gap-3.5">
+          {/* THE CITY'S PHOTOGRAPH, the same file the country page's card
+              shows for this city (founder ruling 2, 2026-09-04: "that same
+              image appears on the hero section of that city's page"); no
+              slot when none is held. */}
+          {cityImageSrc(d.meta?.slug) ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={cityImageSrc(d.meta?.slug) as string} alt="" width={80} height={60} className="h-[60px] w-20 shrink-0 rounded-lg object-cover" />
+          ) : null}
           <CountryFlag iso2={d.meta?.iso2?.toLowerCase()} className="w-[44px] shadow-sm" />
           <div>
             {/* THE TITLE RULE, applied at last. `design/blueprints/city.md` wrote

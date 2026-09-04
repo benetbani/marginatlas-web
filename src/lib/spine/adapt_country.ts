@@ -118,6 +118,7 @@
 import { COUNTRIES, industryToSlug } from "@/lib/taxonomy";
 import { getCellBySlug, withBudget, slugify } from "@/lib/cells";
 import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
+import { cityPageHref } from "@/lib/cities/city_pages";
 import { getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
@@ -134,7 +135,6 @@ import { PEER_GROUPS } from "@/lib/countries/country_view";
 import { ownerTakeHomeForCell } from "@/lib/scores/country_board";
 import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
 import coordinatesJson from "../cities/coordinates_curated.json";
-import cityListJson from "../../../data/cities/city_list_v1.json";
 import formationJson from "../../../data/legal/business_formation_costs_v1.json";
 
 /* ------------------------------------------------------------------------- */
@@ -176,37 +176,6 @@ const FORMATION =
  * gets a card with NO href rather than a dead one, because a card that does
  * nothing is better than a card that lies about where it goes.
  */
-type CityListRow = { slug: string; name: string; iso2: string };
-const CITY_PAGE_BY_ISO = (() => {
-  const out: Record<string, CityListRow[]> = {};
-  for (const c of (cityListJson as { cities: CityListRow[] }).cities) {
-    const k = String(c.iso2 || "").toUpperCase();
-    if (!out[k]) out[k] = [];
-    out[k].push(c);
-  }
-  return out;
-})();
-function normalizePlaceName(value: string): string {
-  let out = "";
-  let depth = 0;
-  for (const ch of String(value).toLowerCase()) {
-    if (ch === "(") depth += 1;
-    else if (ch === ")") depth = Math.max(0, depth - 1);
-    else if (depth === 0 && ch >= "a" && ch <= "z") out += ch;
-    else if (depth === 0 && ch >= "0" && ch <= "9") out += ch;
-  }
-  return out;
-}
-/** The metropolis-page href for a covered city, or undefined when none joins. */
-function cityPageHref(iso2: string, cityName: string): string | undefined {
-  const pool = CITY_PAGE_BY_ISO[iso2] ?? [];
-  const target = normalizePlaceName(cityName);
-  const hit =
-    pool.find((c) => normalizePlaceName(c.name) === target) ??
-    pool.find((c) => normalizePlaceName(c.slug) === target);
-  return hit ? `/cities/${hit.slug}` : undefined;
-}
-
 /* ------------------------------------------------------------------------- */
 /* Small honest helpers.                                                      */
 /* ------------------------------------------------------------------------- */

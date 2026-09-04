@@ -44,6 +44,8 @@ export const COPY = {
     withheldMany: "{n} trades withheld: the model returns a loss or a floor for a typical shop.",
     phoneHead: { trade: "Trade", value: "Net margin" },
   },
+  /** The card pager (the cities). */
+  cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
   peers: {
     kicker: "Against the peers",

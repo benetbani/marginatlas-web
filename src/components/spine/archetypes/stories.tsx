@@ -14,6 +14,8 @@ import { COPY } from "@/lib/spine/copy";
 import { AnswerCard } from "./AnswerCard";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
+import { CardPager } from "./CardPager";
+import { buildCityCards } from "@/lib/spine/city_cards";
 
 export type Instance = { iso2: string; why: string };
 
@@ -65,6 +67,19 @@ export function pickCompareTableInstances(): Instance[] {
   return out;
 }
 
+/** The instance set for the card pager. */
+export function pickCardPagerInstances(): Instance[] {
+  const all = codes().map((c) => ({ c, cards: buildCityCards(c) }));
+  const out: Instance[] = [{ iso2: "GB", why: "the exemplar" }];
+  const seen = new Set(["GB"]);
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
+  const most = [...all].filter((x) => x.cards).sort((a, b) => b.cards!.cards.length - a.cards!.cards.length)[0]; if (most && most.cards!.cards.length > 5) take(most.c, `most cities: ${most.cards!.cards.length}, so the arrows render`);
+  const one = all.find((x) => x.cards && x.cards.cards.length === 1); if (one) take(one.c, "one city");
+  const longest = [...all].filter((x) => x.cards).sort((a, b) => Math.max(...b.cards!.cards.map((k) => k.name.length)) - Math.max(...a.cards!.cards.map((k) => k.name.length)))[0]; if (longest) take(longest.c, "extreme name");
+  const none = all.find((x) => !x.cards); if (none) take(none.c, "self-omits: no covered city");
+  return out;
+}
+
 function Story({ iso2, why, children }: { iso2: string; why: string; children: React.ReactNode }) {
   return (
     <section data-story={iso2} className="mb-12">
@@ -107,6 +122,22 @@ export function CompareTableStories({ instances = pickCompareTableInstances() }:
       {instances.map((i) => {
         const t = buildPeerTable(i.iso2);
         const el = t ? <CompareTable id={`peers-${i.iso2.toLowerCase()}`} kicker={`${COPY.peers.kicker}, ${nameOf(i.iso2)}`} icon="benchmark" rows={t.rows} columns={t.columns} caveat={t.caveat} /> : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+export function CardPagerStories({ instances = pickCardPagerInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="card-pager">
+      {instances.map((i) => {
+        const c = buildCityCards(i.iso2);
+        const el = c ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
+            <CardPager cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
+          </div>
+        ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
     </div>

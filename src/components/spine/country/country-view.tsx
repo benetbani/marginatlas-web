@@ -34,11 +34,12 @@ import { RangeBracket, RankedTiles } from "@/components/spine/forms-v2";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
+import { CardPager } from "@/components/spine/archetypes/CardPager";
+import { buildCityCards } from "@/lib/spine/city_cards";
 import { COPY } from "@/lib/spine/copy";
 import { marginCardFromRows } from "@/lib/spine/margin_rows";
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { buildHeroFacts } from "@/lib/spine/hero_facts";
-import { CityCardsPager } from "@/components/spine/country/city-cards";
 import { SetupTiers } from "@/components/spine/country/setup-tiers";
 
 /**
@@ -230,53 +231,25 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
  * section of the page that has to do with the specific country"). Verdict 6
  * still binds: every card IS its link; a city without a page renders nothing.
  */
-function Cities({ cities, iso2 }: { cities: any; iso2?: string }) {
-  const list: any[] = Array.isArray(cities?.list) ? cities.list : [];
-  const linked = list.filter((c) => typeof c?.href === "string" && c.href.length > 0);
-  if (linked.length === 0) return null;
-
+function Cities({ iso2 }: { iso2?: string }) {
+  /* THE CARD-PAGER ARCHETYPE (founder ruling 2, 2026-09-04): each city card
+     carries the city's photograph on its left, the same file its own hero
+     shows, from the image manifest; a city without one draws no slot. The
+     cards are built locally by city_cards.ts from the same index the adapter
+     reads. */
+  if (!iso2) return null;
+  const c = buildCityCards(iso2);
+  if (!c) return null;
   return (
     <Band>
       <Box id="cities">
-        <Rail icon="best-areas" kicker="The cities" />
-        {/* On the country's OWN page a disambiguator like "(UK)" is redundant
-            by construction, and it truncated to "Birmingham (U..." in the card
-            (photographed 2026-08-30), so a trailing parenthetical is dropped. */}
-        <CityCardsPager
-          cities={linked.map((c) => ({ id: String(c.id), name: String(c.name).replace(/\s*\([^)]*\)\s*$/, ""), region: typeof c.region === "string" ? c.region : undefined, href: c.href }))}
-          allHref={iso2 ? `/cities#c-${iso2.toLowerCase()}` : "/cities"}
-        />
+        <Rail icon="best-areas" kicker={COPY.cities.kicker} />
+        <CardPager cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
       </Box>
     </Band>
   );
 }
 
-/**
- * The peers table , the section the founder tore apart on the legacy page and
- * the one place besides the hero and the close that may take the full width,
- * declared with data-wide-table so the gate reads a sanction and not a claim.
- *
- * FOUNDER VERDICT 4, 2026-08-27, verbatim: "the flags are very minuscule, which
- * makes it ugly, and the table is just ugly... It shows no character... the
- * lines are botched." So: flags at a size a person can recognise (28x19, the
- * component is rectangular with its own hairline, which is what the flag gate
- * now enforces site-wide), one hairline per row and nothing else, the home row
- * on the soft wash with its name at weight, and per column the BEST value in
- * ink and weight while the rest sit quiet, the same winner convention the
- * district table settled (lower is better in all four columns here, rule 29A
- * inverted burdens read by their best end).
- *
- * The caveat sentence renders visibly under the table: round 4 judged exactly
- * that sentence GOOD on the legacy page ("the honest voice"), and a table
- * caption is table furniture, not the banned chart-sentence.
- *
- * Units ride the values, one convention per column (N5): money as money, days
- * as days, rates as percentages, and a zero registration fee is the word Free,
- * never $0, which reads as a missing number. It renders in the table's own
- * figure face at the table's own weight; the clause that used to say "in the
- * reading face" described a font switch this card never made, and the class
- * standing in for it broke the winner mark (see the column below).
- */
 function Peers({ iso2 }: { iso2?: string }) {
   /* THE COMPARISON-TABLE ARCHETYPE (the reset of 2026-09-04): rows built
      locally by peer_rows.ts from the same modules the masthead reads, with
@@ -790,7 +763,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
     <>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         <Masthead name={name} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} hero={d.hero} />
-        <Cities cities={d.cities} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
+        <Cities iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
         <Peers iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
         {/* The money grid takes the wide side and the customers card the narrow;
             the lens grid that stood here is retired, every tile by his own words.

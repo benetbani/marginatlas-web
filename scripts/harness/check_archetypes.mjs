@@ -74,6 +74,15 @@ function inPage() {
       const topY = top ? top.getBoundingClientRect().top : null;
       r.bars = [...card.querySelectorAll("[data-bar]")].map((li) => { const bar = li.querySelector("div[aria-hidden]"); const b = bar.getBoundingClientRect(); return { key: li.getAttribute("data-bar"), top: Math.round(b.top), h: Math.round(b.height), ruleTop: topY == null ? null : Math.round(topY) }; });
     }
+    if (r.kind === "card-pager") {
+      const cards = [...card.querySelectorAll("[data-card]")].filter((el) => el.getClientRects().length);
+      const rowsMap = new Map(); for (const el of cards) { const b = el.getBoundingClientRect(); const k = Math.round(b.top / 4); if (!rowsMap.has(k)) rowsMap.set(k, []); rowsMap.get(k).push(Math.round(b.height)); }
+      r.cardRows = [...rowsMap.values()];
+      r.namesCut = cards.filter((el) => { const n = el.querySelector("span span"); return n && n.scrollWidth > n.clientWidth + 1; }).length;
+      r.noImage = cards.filter((el) => !el.querySelector("img")).map((el) => el.getAttribute("data-card"));
+      r.brokenImage = cards.filter((el) => { const im = el.querySelector("img"); return im && (!im.complete || im.naturalWidth === 0); }).map((el) => el.getAttribute("data-card"));
+      r.imageCount = cards.length - r.noImage.length;
+    }
     if (r.kind === "compare-table") {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
       r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
@@ -127,6 +136,9 @@ for (const w of WIDTHS) {
   const page = await ctx.newPage();
   await page.goto(pathToFileURL(file).href, { waitUntil: "load" });
   await page.evaluate(() => document.fonts && document.fonts.ready);
+  /* Lazy images never enter a headless viewport; force them so a broken path
+     is a red and a slow one is not. */
+  await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* reported by the check */ } } });
   const { out, pageScroll } = await page.evaluate(inPage);
   if (pageScroll) red("page", w, "BOTCHED MOBILE", "the page scrolls sideways");
   for (const r of out) {
@@ -140,6 +152,12 @@ for (const w of WIDTHS) {
     if (r.kind === "ranked-bars" && w === WIDTHS[0]) {
       for (const b of r.bars) if (b.ruleTop != null && b.top < b.ruleTop - 1) red(r.inst, w, "WORLD MAX", `bar ${b.key} rises above the world's-best rule`);
       if (r.accents !== 1) red(r.inst, w, "ACCENT", `${r.accents} accent texts; the leader's figure should be the one`);
+    }
+    if (r.kind === "card-pager") {
+      for (const row of r.cardRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `cards in one row at heights ${row.join(", ")}`);
+      if (r.namesCut) red(r.inst, w, "BOTCHED MOBILE", `${r.namesCut} city name(s) cut`);
+      if (r.brokenImage && r.brokenImage.length) red(r.inst, w, "IMAGE BROKEN", `image did not load: ${r.brokenImage.join(", ")}`);
+      if (w === WIDTHS[0] && r.noImage && r.noImage.length) data(r.inst, "IMAGE MISSING", `${r.noImage.length} card(s) without a photograph: ${r.noImage.join(", ")}`);
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);
