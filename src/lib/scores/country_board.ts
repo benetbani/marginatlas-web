@@ -308,7 +308,13 @@ export interface EasiestBreakInRow {
  * off the cell (a place-level destination cell carries a null band, so the floor
  * never fires, matching the masthead). Returns null when no take-home is defensible.
  */
-export function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): number | null {
+/**
+ * The cell's net-profit waterfall over its own revenue and per-firm payroll,
+ * the ONE computation both the take-home and the net margin read, so the two
+ * can never disagree about a cell (the C29 lesson). Null when the cell holds
+ * no defensible revenue.
+ */
+function waterfallForCell(cell: Cell): { revenue: number; net: ReturnType<typeof estimateNetProfit> } | null {
   const revenue = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
   if (!isNum(revenue) || revenue <= 0) return null;
 
@@ -333,6 +339,24 @@ export function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): n
     grossRevenue: revenue,
     payroll,
   });
+  return { revenue, net };
+}
+/**
+ * The cell's STRUCTURAL net margin, unfloored, with the engine's own sanity
+ * flags. The country page's net-margin card (founder ruling 6, 2026-09-04)
+ * reads this and WITHHOLDS a loss or a floored value rather than drawing it;
+ * the 2026-09-04 finding was that the take-home's 3% floor times revenue had
+ * been printed as four trades' keeps. Null when the cell holds no revenue.
+ */
+export function netMarginForCell(cell: Cell): { margin: number; revenue: number; flagged: boolean; clamped: boolean } | null {
+  const w = waterfallForCell(cell);
+  if (!w) return null;
+  return { margin: w.net.raw_net_margin ?? w.net.net_margin, revenue: w.revenue, flagged: w.net.margin_flagged, clamped: w.net.margin_clamped };
+}
+export function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): number | null {
+  const w = waterfallForCell(cell);
+  if (!w) return null;
+  const { revenue, net } = w;
   const isLargerFirm =
     !!cell.size_band && ["10-19", "20-49", "50-99", "100+"].includes(cell.size_band);
   return resolveOwnerTakeHome({

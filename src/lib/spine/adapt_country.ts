@@ -126,6 +126,7 @@ import {
   mayPublishDecileSpread,
 } from "@/lib/economic_profile/wage_deciles";
 import { isKeepCredible } from "@/lib/finance/keep_credibility";
+import { netMarginForCell } from "@/lib/scores/country_board";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { getVatRow, getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { getCountrySignature } from "@/lib/countries/country_signature";
@@ -778,12 +779,21 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
         avgYearlySalary: placeAnnualIncome,
       });
       if (!isNum(keeps) || keeps <= 0) return null;
+      /* THE STRUCTURAL NET MARGIN RIDES BESIDE THE KEEP (founder ruling 6,
+         2026-09-04: the card is the net profit margin in percent). Unfloored,
+         with the engine's own flags, so the view can WITHHOLD a loss or a
+         floor instead of drawing it; the take-home above is floored at 3% and
+         the 2026-09-04 finding was that floor times revenue printed as keeps. */
+      const nm = netMarginForCell(cell);
       return {
         name: cell.industry_name || cell.industry_description || industryId,
         slug,
         href: `/${code.toLowerCase()}/${placeGeo}/${slug}`,
         keeps_usd_year: Math.round(keeps),
         cost_to_open_usd: Math.round(costToOpen),
+        net_margin: nm ? nm.margin : null,
+        net_margin_clamped: nm ? nm.clamped : false,
+        net_margin_flagged: nm ? nm.flagged : false,
         confidence: "modeled" as SpineConfidence,
       };
     }),

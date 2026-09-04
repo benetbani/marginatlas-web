@@ -35,6 +35,21 @@ export const COPY = {
   },
   /** A zero fee is the word, never $0 (blueprint rule). */
   free: "Free",
+  /** The net-margin card (founder ruling 6, 2026-09-04: "net profit margin in %, vertical bars"). */
+  margin: {
+    kicker: "Net profit margin",
+    basis: "Of every $100 a typical shop sells here, what it keeps after all costs and tax.",
+    worldBest: "world's best",
+    withheldOne: "1 trade withheld: the model returns a loss or a floor for a typical shop.",
+    withheldMany: "{n} trades withheld: the model returns a loss or a floor for a typical shop.",
+    phoneHead: { trade: "Trade", value: "Net margin" },
+  },
+  /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
+  peers: {
+    kicker: "Against the peers",
+    cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC fee", llcDays: "LLC time" },
+    caveat: "Peers are picked for comparable size and market, not for sharing a border. Effective tax is what a small business typically pays under each country's own small-business rules. LLC fee is the government fee only and LLC time runs until the company is registered.",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register. */
   banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year"],
 } as const;

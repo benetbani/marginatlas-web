@@ -4,15 +4,21 @@
  * surface only; never linked from the site.
  */
 import * as React from "react";
-import { AnswerCardStories } from "@/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, CompareTableStories } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
+
+const h = "mb-8 mt-16 text-[length:var(--t-head)] font-semibold text-[var(--c-ink)] first:mt-0";
 
 export default function ArchetypesPage() {
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-10">
-      <h1 data-typography="custom" className="mb-8 text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">Archetypes, the answer card</h1>
+      <h1 data-typography="custom" className={h}>Archetypes, the answer card</h1>
       <AnswerCardStories />
+      <h2 data-typography="custom" className={h}>The ranked bars</h2>
+      <RankedBarsStories />
+      <h2 data-typography="custom" className={h}>The comparison table</h2>
+      <CompareTableStories />
     </main>
   );
 }

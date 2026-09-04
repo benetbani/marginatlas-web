@@ -1,0 +1,8514 @@
+{
+ "anchor": "Net profit margin per country and everyday trade from the site's own engine (estimateNetProfit on the national aggregate cell), snapshotted for the archetype harness, which must never touch the network. Refresh with scratchpad/arch/pull_margins.tsx --world --write. A margin at or below the display floor or negative is NOT credible and the card withholds it.",
+ "taken": "2026-09-04",
+ "world_max": {
+  "hairdressers_beauty": {
+   "margin": 0.2429088453803643,
+   "iso2": "XK"
+  },
+  "grocery_stores": {
+   "margin": 0.13862127091455018,
+   "iso2": "US"
+  },
+  "sports_fitness": {
+   "margin": 0.23092978294493852,
+   "iso2": "DK"
+  },
+  "cafes_coffee": {
+   "margin": 0.13631252234010033,
+   "iso2": "LA"
+  },
+  "restaurants": {
+   "margin": 0.13240662091466499,
+   "iso2": "AL"
+  },
+  "auto_repair_shops": {
+   "margin": 0.18535797822270184,
+   "iso2": "PH"
+  }
+ },
+ "countries": {
+  "AF": {
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6479716412745404,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.456221132353048,
+    "revenue": 46942,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "AL": {
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.24993950516585103,
+    "revenue": 58848,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.41676864459442586,
+    "revenue": 28676,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.46232366811149195,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.3570242779003935,
+    "revenue": 64610,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.13240662091466499,
+    "revenue": 120884,
+    "flagged": true,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.13177337889129664,
+    "revenue": 147856,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "DZ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.37866071581589533,
+    "revenue": 60684,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7589941338911854,
+    "revenue": 60040,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.44359771598419967,
+    "revenue": 20455,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6340266383786932,
+    "revenue": 33107,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.5658179098273877,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5689073263941268,
+    "revenue": 31819,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "AD": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.08377872512849256,
+    "revenue": 1446441,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.05511156917697946,
+    "revenue": 386154,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.0659680707420807,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.2828019782707063,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.9750086261141828,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 508290,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "AO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.49438570396716364,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.175701779740497,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7688457006962529,
+    "revenue": 107436,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6810559004135122,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5991028546666148,
+    "revenue": 65811,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.8084955701073857,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "AG": {
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.05209550999778286,
+    "revenue": 200152,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.047889626096976196,
+    "revenue": 748532,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.1544221257079169,
+    "revenue": 158653,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "AR": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8565019209707423,
+    "revenue": 66727,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5982693459681546,
+    "revenue": 60497,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.6780528211747028,
+    "revenue": 12978,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 284464,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.738895783413032,
+    "revenue": 29702,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 359279,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "AM": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.40380313505626886,
+    "revenue": 86414,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 148619,
+    "flagged": true,
+    "clamped": true
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.36191267552385487,
+    "revenue": 39570,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.4097174119594202,
+    "revenue": 60034,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.5090433647039239,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.06372945552201605,
+    "revenue": 74771,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "AU": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 985949,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.04808488892486801,
+    "revenue": 1836804,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.31564346617896005,
+    "revenue": 321342,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.16705431310139202,
+    "revenue": 657370,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.13883754591541578,
+    "revenue": 536413,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 712356,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "AT": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.09158295116471402,
+    "revenue": 2244403,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.12978636311782418,
+    "revenue": 600879,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3206825084133052,
+    "revenue": 281260,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.19926344081599043,
+    "revenue": 575373,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.13440021489428786,
+    "revenue": 469504,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.1340333291708039,
+    "revenue": 523317,
+    "flagged": true,
+    "clamped": false
+   }
+  },
+  "AZ": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7041473679303948,
+    "revenue": 70196,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.023795335179448977,
+    "revenue": 104876,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.7392640469876895,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7154580553372016,
+    "revenue": 43797,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7622213213799693,
+    "revenue": 25704,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5635112648195357,
+    "revenue": 53232,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BS": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 316758,
+    "flagged": true,
+    "clamped": true
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.2822037122765164,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.900141541402592,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.11837790817597928,
+    "revenue": 1185933,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.826046030695952,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 395219,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "BH": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 633889,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.09786408743226725,
+    "revenue": 520962,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.39733677691829294,
+    "revenue": 157448,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.12735529801961193,
+    "revenue": 303726,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.09522907559814248,
+    "revenue": 295960,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 335907,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "BD": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.1900062672025016,
+    "revenue": 24764,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.1690917540598365,
+    "revenue": 45618,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.2813465029924915,
+    "revenue": 9987,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.0799488046848713,
+    "revenue": 17595,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.9079761342422126,
+    "revenue": 25756,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -2.052303294886406,
+    "revenue": 9009,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BB": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.0901918417629223,
+    "revenue": 833040,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.92237226515828,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.664961806240629,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.0871904437597586,
+    "revenue": 222692,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.9614525129677352,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.010477338880763439,
+    "revenue": 171474,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 289062,
+    "flagged": true,
+    "clamped": true
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.5574126848834781,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.07916937494151298,
+    "revenue": 434284,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2539083012330096,
+    "revenue": 60467,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.04531980225049533,
+    "revenue": 118388,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 121733,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "BE": {
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.14552306529572567,
+    "revenue": 545870,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.20348977000600732,
+    "revenue": 643947,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.30959310325040673,
+    "revenue": 172441,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2043167809275539,
+    "revenue": 266838,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.2079771749935633,
+    "revenue": 445429,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 633505,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "BZ": {
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.23963554454848804,
+    "revenue": 275884,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4540270062927264,
+    "revenue": 70285,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BJ": {
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.0098684275148893,
+    "revenue": 63796,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2469061760534795,
+    "revenue": 57527,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BT": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6479716412745404,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.29370396302767526,
+    "revenue": 54765,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BO": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.45048644083080275,
+    "revenue": 168631,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7612240588902095,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.24059133211366787,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.11983039002321469,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.4479042917680803,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.28618710631873173,
+    "revenue": 67191,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BA": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.9344886912714211,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3150549648191743,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3722168115321273,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.7730420537716252,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.8557144240152625,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2554818158635353,
+    "revenue": 75485,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BW": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.23883113200504533,
+    "revenue": 276348,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4307540120035004,
+    "revenue": 95494,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.9506858490469932,
+    "revenue": 31412,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5857170969209569,
+    "revenue": 117303,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.07553201448247225,
+    "revenue": 128324,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.08686422851686415,
+    "revenue": 131090,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.013019210967476168,
+    "revenue": 147385,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.060656512605042096,
+    "revenue": 190400,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.09130496864345794,
+    "revenue": 271355,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.08282411016999562,
+    "revenue": 1015564,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 392849,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "BG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.474797900701095,
+    "revenue": 44960,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2070607068450595,
+    "revenue": 167895,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3671858056973118,
+    "revenue": 69572,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.143452942708512,
+    "revenue": 142323,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.18486137195324884,
+    "revenue": 116136,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 173390,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "BF": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.9693836401713245,
+    "revenue": 44119,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4030648942850903,
+    "revenue": 49243,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "BI": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3792996761549737,
+    "revenue": 107305,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7399708793538189,
+    "revenue": 81348,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.601987955633497,
+    "revenue": 35064,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.5485381787596887,
+    "revenue": 68959,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.36533260034268167,
+    "revenue": 59603,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.622388936745218,
+    "revenue": 40959,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KH": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.09212018912392464,
+    "revenue": 106071,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.12114622929100512,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.46662629529661076,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.07197166762062686,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.3018194583222027,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.07623784035614116,
+    "revenue": 46021,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.34324561036426926,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7075376340347701,
+    "revenue": 76833,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.9266214395959024,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3203971244908509,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5846031144983249,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4987704383028549,
+    "revenue": 61669,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CA": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 725085,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.04813160970231754,
+    "revenue": 1476476,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.21628712596278468,
+    "revenue": 166871,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.07935180837493887,
+    "revenue": 330635,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.11997746970725374,
+    "revenue": 463829,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.029536694364053817,
+    "revenue": 361314,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CV": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.4403451249136241,
+    "revenue": 194615,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5312110949282126,
+    "revenue": 65811,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CF": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.9060645126440328,
+    "revenue": 24871,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.3019632151050484,
+    "revenue": 54305,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TD": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.9922772540185187,
+    "revenue": 43300,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.490678978245634,
+    "revenue": 45561,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CL": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.46871719429091724,
+    "revenue": 154439,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.19704456610366355,
+    "revenue": 135663,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.42310242230833006,
+    "revenue": 98023,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.032508342060190716,
+    "revenue": 172285,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.6595798889949047,
+    "revenue": 29371,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4191929860220923,
+    "revenue": 81394,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 369217,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.0403612778080862,
+    "revenue": 98982,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.38500872380670054,
+    "revenue": 125469,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.4967952442204296,
+    "revenue": 61333,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7198837395430704,
+    "revenue": 102383,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.20630805155657703,
+    "revenue": 143301,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.6770987797280239,
+    "revenue": 36789,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.3848223627717526,
+    "revenue": 22429,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3871714209563298,
+    "revenue": 68955,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.311798215899689,
+    "revenue": 13078,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.9355593322456951,
+    "revenue": 22042,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -1.1560198293679778,
+    "revenue": 25740,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KM": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8902314774757595,
+    "revenue": 70542,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4237116119305654,
+    "revenue": 48322,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5870523237387271,
+    "revenue": 88850,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.0319887411172965,
+    "revenue": 53632,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.594830216470712,
+    "revenue": 30415,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.8468502618438679,
+    "revenue": 63060,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.7149356204914706,
+    "revenue": 48885,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.7962153374954879,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CI": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.0699678754958634,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.23526157988375493,
+    "revenue": 109661,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7315352893149102,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.47367464946097726,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6412320458159773,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.19796579115224974,
+    "revenue": 58907,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "HR": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2188456858800938,
+    "revenue": 223015,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4700510575835547,
+    "revenue": 59720,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.40583855780826295,
+    "revenue": 92412,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.12379971406393944,
+    "revenue": 189048,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 216583,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.20563366116926546,
+    "revenue": 154263,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CU": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.028356230562137485,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.08858847265123188,
+    "revenue": 402046,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.6693455527755824,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3951800604404014,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 119292,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5893683199385693,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4299460310217337,
+    "revenue": 107615,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.10984344371043384,
+    "revenue": 401866,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.1922372488418849,
+    "revenue": 166525,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 340660,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.0650524733778446,
+    "revenue": 277978,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 349245,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "CZ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.6232509321806162,
+    "revenue": 95493,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.17204291473637087,
+    "revenue": 356599,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.32340811368335254,
+    "revenue": 147767,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.1709838885585874,
+    "revenue": 302286,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.14933060149952693,
+    "revenue": 246665,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 330190,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "DK": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.1365460652181734,
+    "revenue": 216114,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2010309782776016,
+    "revenue": 334419,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.1120890734043126,
+    "revenue": 807039,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.23092978294493852,
+    "revenue": 684121,
+    "flagged": true,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.07751893186561268,
+    "revenue": 558242,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 751181,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "DJ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7145295613808937,
+    "revenue": 138771,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4519605421681194,
+    "revenue": 70413,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "DM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.486097351656156,
+    "revenue": 96853,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.1257267941795636,
+    "revenue": 361578,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.34306216702563896,
+    "revenue": 103668,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "DO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.005491641544318043,
+    "revenue": 105885,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.3472513091681418,
+    "revenue": 108578,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3654090998035668,
+    "revenue": 45713,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6614175243763403,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.345706455690965,
+    "revenue": 75645,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 137717,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "CD": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.5087623987694845,
+    "revenue": 30518,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.269720781581902,
+    "revenue": 56146,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "EC": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5554159164566078,
+    "revenue": 55540,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.2393118031526336,
+    "revenue": 52020,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.1396987366375122,
+    "revenue": 20580,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3919129251331499,
+    "revenue": 66513,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.20052435091503298,
+    "revenue": 78085,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6275173148641449,
+    "revenue": 37540,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "EG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.6565814767422157,
+    "revenue": 34229,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.083627322042708,
+    "revenue": 38710,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.8263252847505963,
+    "revenue": 13237,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.7873040096537598,
+    "revenue": 37837,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -1.2122703545169695,
+    "revenue": 18686,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.0398339572565138,
+    "revenue": 20829,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SV": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.24771428203309734,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7782177659678164,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.31164454162417066,
+    "revenue": 207496,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.17316821934017346,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.47091205136845243,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2608604926343364,
+    "revenue": 69624,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GQ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2986352912426877,
+    "revenue": 245721,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.3331848123361788,
+    "revenue": 104678,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "EE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5920225101394622,
+    "revenue": 98253,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.16032547250449572,
+    "revenue": 366906,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.31707503286263367,
+    "revenue": 152038,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.18753931626403314,
+    "revenue": 311024,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 327646,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.13876719947253405,
+    "revenue": 253795,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SZ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6364082991032045,
+    "revenue": 151127,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.490678978245634,
+    "revenue": 45561,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ET": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.9094274762400147,
+    "revenue": 21671,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7844168209297491,
+    "revenue": 32189,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.1939971428556868,
+    "revenue": 7848,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.03758487117953894,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.1260249093487893,
+    "revenue": 15867,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -2.2810815548283028,
+    "revenue": 7722,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "FJ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3071202081074569,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.061369643862637394,
+    "revenue": 235317,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.4859099345336116,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.8294238313743455,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.8402395396815394,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2904935371034969,
+    "revenue": 72123,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "FI": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.24924180155784076,
+    "revenue": 173673,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.1612991107123974,
+    "revenue": 648549,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3349480444435413,
+    "revenue": 268744,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.19307252757326235,
+    "revenue": 549770,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.1468859720338333,
+    "revenue": 448612,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 601654,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "FR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.6251621505673385,
+    "revenue": 141647,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.33607417904943804,
+    "revenue": 528954,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.42355539907666306,
+    "revenue": 219187,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.017355842498587234,
+    "revenue": 448391,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.38460941891718287,
+    "revenue": 365886,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.04350600577184876,
+    "revenue": 488792,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GA": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4045345786368749,
+    "revenue": 78626,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.21096904660250695,
+    "revenue": 293383,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.21020385856006493,
+    "revenue": 119117,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.1054560756996417,
+    "revenue": 39660,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.566107270533368,
+    "revenue": 63970,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.019396600247664025,
+    "revenue": 99490,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7690866695087135,
+    "revenue": 61927,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.442046933869668,
+    "revenue": 23229,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6649917088151056,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7889145673015363,
+    "revenue": 38736,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4752782854581193,
+    "revenue": 46398,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "DE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3129418833870788,
+    "revenue": 168211,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.20173331507814635,
+    "revenue": 628150,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.20007152396312408,
+    "revenue": 260292,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.2028902854354117,
+    "revenue": 434502,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.13771288240211096,
+    "revenue": 532479,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.12605362147492266,
+    "revenue": 552686,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GH": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -2.3368835787332687,
+    "revenue": 12665,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -3.271005882868899,
+    "revenue": 9166,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -3.374034390043631,
+    "revenue": 4969,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.37719130799035194,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -3.1993168007407835,
+    "revenue": 8294,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 348170,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2114595860794384,
+    "revenue": 273847,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.40820028726608026,
+    "revenue": 113476,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.1313487491095633,
+    "revenue": 232138,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.20258082017873108,
+    "revenue": 189424,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 256754,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "GD": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.37716000923428405,
+    "revenue": 107538,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.08920445018449062,
+    "revenue": 401569,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.37748998677247747,
+    "revenue": 100297,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GT": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8258356169524282,
+    "revenue": 46899,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3241204016547886,
+    "revenue": 23633,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.10380568455293245,
+    "revenue": 83779,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.5689757606941649,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5874662681299759,
+    "revenue": 39397,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6285395358192862,
+    "revenue": 42755,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8710693947007124,
+    "revenue": 71758,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.32762170112780215,
+    "revenue": 52925,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GW": {
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.9417807227741246,
+    "revenue": 45148,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.285582365151592,
+    "revenue": 55226,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.0533557390729138,
+    "revenue": 245892,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.07265785402395647,
+    "revenue": 920049,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.1298417138007739,
+    "revenue": 163461,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "HT": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6614454087165169,
+    "revenue": 88427,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.6126531523555551,
+    "revenue": 61669,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "HN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.21474445133985573,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5849181854624348,
+    "revenue": 134366,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7221746894352827,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.12587900984266362,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.4329348080113528,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.33218304369815055,
+    "revenue": 62129,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "HK": {
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": 0.199231,
+    "revenue": 1000000,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 5150000,
+    "flagged": true,
+    "clamped": true
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 5150000,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "HU": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4358688195039642,
+    "revenue": 61634,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.19327291121406004,
+    "revenue": 230159,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3262597993264372,
+    "revenue": 95373,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.1639016217781897,
+    "revenue": 159205,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 251279,
+    "flagged": true,
+    "clamped": true
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.16095731689744527,
+    "revenue": 195104,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "IS": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.18274986153790868,
+    "revenue": 264677,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 837849,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.028929525111680877,
+    "revenue": 988387,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": 0.02894383593304807,
+    "revenue": 683683,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.039574691805305526,
+    "revenue": 409566,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 892417,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "IN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -1.6352381064062491,
+    "revenue": 21585,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.4977172217672149,
+    "revenue": 82885,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0733403733953772,
+    "revenue": 19364,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.34793994119063537,
+    "revenue": 67239,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.36087219546659394,
+    "revenue": 66826,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -5.9475462072951615,
+    "revenue": 6367,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ID": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -1.51597904448268,
+    "revenue": 21080,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.8570434667647195,
+    "revenue": 9682,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6405870210078741,
+    "revenue": 50471,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2517342567822619,
+    "revenue": 121862,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.3463792486583186,
+    "revenue": 20963,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -1.01909220460265,
+    "revenue": 26385,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "IR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -1.9771484480424342,
+    "revenue": 14376,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -2.404804645824423,
+    "revenue": 14060,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.7690358250600421,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -6.3879200174698,
+    "revenue": 3540,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -4.789540182891498,
+    "revenue": 6800,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "IQ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.18307089278268673,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.02979073422347642,
+    "revenue": 223790,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.6918431318854168,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6276395175924047,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.8753528464356638,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.21288861973002263,
+    "revenue": 67767,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "IE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.22293982016911007,
+    "revenue": 347268,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.01073552256273141,
+    "revenue": 1296806,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": 0.05972104741423639,
+    "revenue": 537368,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": 0.08520731478124896,
+    "revenue": 897022,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 1099294,
+    "flagged": true,
+    "clamped": true
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 929525,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "IL": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 882817,
+    "flagged": true,
+    "clamped": true
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.2191942648810338,
+    "revenue": 568651,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.07399355356782901,
+    "revenue": 1730855,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2790118367916464,
+    "revenue": 196798,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.017771447110133665,
+    "revenue": 526774,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.10681119066908994,
+    "revenue": 438422,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "IT": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5286852663798859,
+    "revenue": 122134,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.05973460418320521,
+    "revenue": 386622,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.28860995505003867,
+    "revenue": 456088,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3434967743254388,
+    "revenue": 188993,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.31798382973293365,
+    "revenue": 315483,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.05923004206889773,
+    "revenue": 402148,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "JM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.21636806492443156,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.0046945133088224155,
+    "revenue": 278205,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7351107974234374,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6624387199302733,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7156582974521184,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.20000807687517175,
+    "revenue": 71581,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "JP": {
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.15637046209916566,
+    "revenue": 166880,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.348276820925603,
+    "revenue": 402724,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.12118890803540483,
+    "revenue": 450057,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.2745744187937525,
+    "revenue": 107844,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.39146377916942304,
+    "revenue": 278571,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.06807028524933559,
+    "revenue": 406744,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "JO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.057750163616170115,
+    "revenue": 139069,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2633546699279993,
+    "revenue": 148548,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.5274099331415739,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3056479245776202,
+    "revenue": 80677,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.4291709375392482,
+    "revenue": 78985,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.1381837346265469,
+    "revenue": 90720,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KZ": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.707110523305349,
+    "revenue": 87079,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.11509748883093937,
+    "revenue": 114036,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.5536350460562005,
+    "revenue": 14157,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.8536772257802528,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7881360682212706,
+    "revenue": 40885,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5854259912886074,
+    "revenue": 55344,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -1.2557028106801862,
+    "revenue": 25598,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.799265358711086,
+    "revenue": 23405,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.49313755435958795,
+    "revenue": 51811,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.1195686427393747,
+    "revenue": 22162,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.5363220625213245,
+    "revenue": 10463,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -1.440818084135768,
+    "revenue": 19737,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KI": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8914641660112311,
+    "revenue": 93778,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.19767205856045258,
+    "revenue": 60748,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "XK": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 433169,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.11333333333333334,
+    "revenue": 1710153,
+    "flagged": true,
+    "clamped": true
+   },
+   "hairdressers_beauty": {
+    "name": "Cleaning services",
+    "margin": 0.2429088453803643,
+    "revenue": 396658,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 433169,
+    "flagged": true,
+    "clamped": true
+   },
+   "cafes_coffee": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 433169,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Motor vehicles & parts",
+    "margin": 0.13999999999999999,
+    "revenue": 3246740,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "KW": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.36835476965207364,
+    "revenue": 96622,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.016309006270843474,
+    "revenue": 330985,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6121753392421504,
+    "revenue": 110871,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.8604221673814453,
+    "revenue": 64414,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -1.1435695670369121,
+    "revenue": 51912,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.5765584501661901,
+    "revenue": 63549,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3435991391286527,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.9230057572389647,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7839414483028069,
+    "revenue": 98567,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5594774858133996,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.24630153170260147,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.17935026109760985,
+    "revenue": 52004,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LA": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 76373,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.06428698858659865,
+    "revenue": 87741,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.10488702318381389,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2456679290393091,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.13631252234010033,
+    "revenue": 52004,
+    "flagged": true,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.13994687351874754,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LV": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5021214567631647,
+    "revenue": 77824,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.12722830664083512,
+    "revenue": 290617,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.21779739294874342,
+    "revenue": 120425,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.2147177128621668,
+    "revenue": 246354,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.08561878927030098,
+    "revenue": 201025,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 238964,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "LB": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4025598808330479,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.0756455856625268,
+    "revenue": 254371,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.34318455724189645,
+    "revenue": 75475,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.7419741428808193,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.5607947335706317,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.9678652187200054,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LS": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.9805644116908171,
+    "revenue": 43715,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4030648942850903,
+    "revenue": 49243,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.133368219576622,
+    "revenue": 38854,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2251440293701832,
+    "revenue": 58907,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.3115202024589822,
+    "revenue": 239992,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.3665944634325048,
+    "revenue": 101340,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LI": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -1.1459130294099793,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.047964947869441506,
+    "revenue": 2069158,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -3.836040509478409,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -2.2367687733261925,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -2.4784834766657786,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.0543467760921225,
+    "revenue": 613945,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LT": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3117928430827436,
+    "revenue": 87379,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.060414434709026514,
+    "revenue": 326299,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.06484080506668857,
+    "revenue": 135211,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 276601,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": 0.007456382269836412,
+    "revenue": 225706,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 281611,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "LU": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.31625627117322935,
+    "revenue": 431102,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.010714410473270257,
+    "revenue": 1609869,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": 0.0004551072682657084,
+    "revenue": 667094,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 1139209,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": 0.0466052506807728,
+    "revenue": 1113572,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 1364675,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "MO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 540740,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.13169070305904104,
+    "revenue": 2027135,
+    "flagged": true,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 809582,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "MG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.8045549506868703,
+    "revenue": 26105,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.31892765385857547,
+    "revenue": 53385,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MW": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.8825915024912898,
+    "revenue": 25146,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5663106595797925,
+    "revenue": 42800,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 218296,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.16960434870729982,
+    "revenue": 224651,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3505422970964823,
+    "revenue": 67789,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.07901443136470811,
+    "revenue": 125806,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.082928919427718,
+    "revenue": 160998,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.20035908820163426,
+    "revenue": 136334,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MV": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.2664894801621688,
+    "revenue": 121110,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.05211809388967468,
+    "revenue": 452378,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.24205847634497235,
+    "revenue": 115008,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ML": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8577357928033174,
+    "revenue": 48601,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.285582365151592,
+    "revenue": 55226,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MT": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3829784970595398,
+    "revenue": 113888,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.09329267066743732,
+    "revenue": 425294,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20568779124109127,
+    "revenue": 360519,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.14607763301410803,
+    "revenue": 176232,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.03942412940466446,
+    "revenue": 294182,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 432556,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "MH": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2371375490619699,
+    "revenue": 277327,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.21655788719716157,
+    "revenue": 88872,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6738190953928762,
+    "revenue": 87230,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.19767205856045258,
+    "revenue": 60748,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MU": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.35621143790738846,
+    "revenue": 109869,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.08218360658836257,
+    "revenue": 410292,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.3245418852808714,
+    "revenue": 105577,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MX": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -4.8386014230968355,
+    "revenue": 7354,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.2209190824999234,
+    "revenue": 27472,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -2.0705359139883672,
+    "revenue": 10445,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -8.749135170935332,
+    "revenue": 5170,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -3.3515098805190915,
+    "revenue": 9940,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.745823698356705,
+    "revenue": 15261,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "FM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5881085926069507,
+    "revenue": 159930,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5026559135654548,
+    "revenue": 45101,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MD": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.0006954217710764223,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.0588712601956459,
+    "revenue": 272519,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3945135193999096,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6010887999860393,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.2802759222469088,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.04619442445855535,
+    "revenue": 63989,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MC": {
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 5150000,
+    "flagged": true,
+    "clamped": true
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": 0.09045,
+    "revenue": 1000000,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 5150000,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "MN": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.0026089042511376268,
+    "revenue": 245891,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.16098189183769127,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.649619996806067,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.18515950638700693,
+    "revenue": 67973,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.561733127611656,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6421947135816832,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ME": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.0541667922836755,
+    "revenue": 120176,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4649159337483986,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.07728832275893135,
+    "revenue": 448881,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.33666260168890694,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.49632648038308946,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 128058,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "MA": {
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.7813098100832745,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2778510533403876,
+    "revenue": 133062,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.429413941678045,
+    "revenue": 45935,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.38313109302709847,
+    "revenue": 77466,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.044311008511931975,
+    "revenue": 126317,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.02103265023602036,
+    "revenue": 105754,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MZ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.31121852304271685,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.2880993923475668,
+    "revenue": 30828,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.8804210539239211,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3463590576119921,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5724253672621447,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.22863473232260823,
+    "revenue": 52004,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MM": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.23363098326416784,
+    "revenue": 58937,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.7277669902912621,
+    "revenue": 20600,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.2778410465938563,
+    "revenue": 10238,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.356550056744863,
+    "revenue": 12547,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.257407697989682,
+    "revenue": 6133,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.0897787149931362,
+    "revenue": 49243,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NA": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5466066000908775,
+    "revenue": 168358,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.21745205486268018,
+    "revenue": 59412,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NR": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.047703434807089,
+    "revenue": 459296,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.25331166101773933,
+    "revenue": 122958,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.05688191025568793,
+    "revenue": 179615,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NP": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -1.015388349514563,
+    "revenue": 20600,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.30235573979588976,
+    "revenue": 62336,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.4460622980626323,
+    "revenue": 11102,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.504725378302632,
+    "revenue": 13606,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.0736464879126138,
+    "revenue": 44641,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.4019457740172636,
+    "revenue": 6651,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NL": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.14423622208337517,
+    "revenue": 738499,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.19645057108631264,
+    "revenue": 626021,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.15715845721796703,
+    "revenue": 284194,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.20941848458225218,
+    "revenue": 197760,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.12439083604961537,
+    "revenue": 510832,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 736583,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "NZ": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.10231512407208611,
+    "revenue": 694286,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.08465832693144258,
+    "revenue": 481850,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.19241192289218093,
+    "revenue": 159016,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.17063995939131116,
+    "revenue": 505228,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.2223175187319739,
+    "revenue": 354554,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.007527292422024951,
+    "revenue": 343645,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NI": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.27930927864262556,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5943862986519969,
+    "revenue": 113937,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.8177492264036683,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.15054481014535148,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.48414873314690926,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4108420596922896,
+    "revenue": 62129,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NE": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.3254248022266264,
+    "revenue": 34091,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5798671643806846,
+    "revenue": 42340,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -5.996397686220693,
+    "revenue": 6219,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -7.919280686914115,
+    "revenue": 5033,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.8985580597622924,
+    "revenue": 25913,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -3.7536107105789256,
+    "revenue": 5628,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -13.373835616438356,
+    "revenue": 2920,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -2.365777692504476,
+    "revenue": 11372,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "MK": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8090511239176069,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.21577885031712582,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6253811043481299,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7312540695760372,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.719833868885868,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.09919532847539171,
+    "revenue": 80920,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "NO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.25415589953985984,
+    "revenue": 285586,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.05387292667377102,
+    "revenue": 1066466,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 904036,
+    "flagged": true,
+    "clamped": true
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.097334526424375,
+    "revenue": 441920,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": 0.0017902662432152567,
+    "revenue": 737691,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 914009,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "OM": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.07464464332504933,
+    "revenue": 491551,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.021632622767606843,
+    "revenue": 243279,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.28513886534825156,
+    "revenue": 91756,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.025846511172984546,
+    "revenue": 216922,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5745530728830943,
+    "revenue": 145853,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2604979916040208,
+    "revenue": 131392,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PK": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.15369238216819112,
+    "revenue": 51230,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.4717167132216014,
+    "revenue": 54989,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.950029760631451,
+    "revenue": 13323,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.4988288856008234,
+    "revenue": 15969,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.0358245402906612,
+    "revenue": 19983,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.7597237582787336,
+    "revenue": 27048,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PW": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6479716412745404,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.0038311474640872565,
+    "revenue": 193523,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PS": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7724572860639629,
+    "revenue": 104790,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4519605421681194,
+    "revenue": 70413,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PA": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.18649138055917716,
+    "revenue": 138060,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5593439045679371,
+    "revenue": 137480,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.408646998982706,
+    "revenue": 39320,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.9536758365615319,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6902753303964758,
+    "revenue": 90800,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.43599756690997565,
+    "revenue": 82200,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.14684074126235333,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.24581331736927725,
+    "revenue": 119596,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.6331887292062057,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.568488728968443,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6198608214173053,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5401849182300197,
+    "revenue": 40959,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.24617865507291375,
+    "revenue": 49461,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6250616900578858,
+    "revenue": 48923,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.1989863142221953,
+    "revenue": 19612,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.2007797760484371,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.9150653754168127,
+    "revenue": 26472,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.602787976819912,
+    "revenue": 37435,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.2526123730925094,
+    "revenue": 71231,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.238261243407666,
+    "revenue": 28866,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.4381406466477541,
+    "revenue": 31528,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.13577781545828482,
+    "revenue": 79436,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.6901374883248426,
+    "revenue": 31145,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7759711117835266,
+    "revenue": 38468,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PH": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.8038372853325852,
+    "revenue": 43924,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.11662081638926544,
+    "revenue": 831248,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.5325743911590906,
+    "revenue": 36051,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.0989475163143418,
+    "revenue": 39769,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": 0.18535797822270184,
+    "revenue": 350934,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.9155230404485301,
+    "revenue": 38847,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PL": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4403519186355662,
+    "revenue": 70514,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2118637353722822,
+    "revenue": 263321,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.388962136679767,
+    "revenue": 109114,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.12953297106210102,
+    "revenue": 223215,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.19806115518800516,
+    "revenue": 182143,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11905114037610055,
+    "revenue": 222263,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "PT": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.473243009359661,
+    "revenue": 82836,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2446311025967494,
+    "revenue": 309335,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.26312556976998963,
+    "revenue": 128182,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.10238680245368727,
+    "revenue": 262222,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.2524273121006226,
+    "revenue": 213972,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11891456037829738,
+    "revenue": 282827,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "QA": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 919862,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.1270788384513874,
+    "revenue": 686538,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2644092384497129,
+    "revenue": 275577,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20333333333333334,
+    "revenue": 890909,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.14984079629937197,
+    "revenue": 425109,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.056784469025432924,
+    "revenue": 410439,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "CG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8124062411243806,
+    "revenue": 100816,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5312110949282126,
+    "revenue": 65811,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "RO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5255848199642418,
+    "revenue": 56625,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.12671299616799112,
+    "revenue": 211454,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.17145193765146988,
+    "revenue": 87622,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.21510995967151886,
+    "revenue": 179248,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.06959447994720647,
+    "revenue": 146266,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 174259,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "RU": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 271948,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.06401791579812226,
+    "revenue": 338892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.04697889856032695,
+    "revenue": 146560,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.7500427414669942,
+    "revenue": 50237,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.024999239956608604,
+    "revenue": 208779,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 369410,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "RW": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -14.222262240683294,
+    "revenue": 3423,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4391896611397035,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -35.36675647350528,
+    "revenue": 1408,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.04180553504581489,
+    "revenue": 203310,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.04995882101156883,
+    "revenue": 760370,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.08608592086397346,
+    "revenue": 172781,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LC": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.42923295152266006,
+    "revenue": 127545,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.03729448548925175,
+    "revenue": 476475,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.40413936558799884,
+    "revenue": 97835,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "VC": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3927070444893197,
+    "revenue": 105872,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.09441627816917733,
+    "revenue": 395330,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.34813330804303927,
+    "revenue": 103158,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "WS": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.332082774137176,
+    "revenue": 201295,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.26996040687337436,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.24044929564352427,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.8131291878364701,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5086726944782682,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.3333896917055063,
+    "revenue": 42800,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.49759365016249496,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.11543900684138002,
+    "revenue": 2273411,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -2.130442793214092,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.1661434269076942,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.3836414267284043,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 674550,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "ST": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7296812326017023,
+    "revenue": 136605,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.466965155734616,
+    "revenue": 69492,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SA": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 654082,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.07299031801547365,
+    "revenue": 561404,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.13939097096257805,
+    "revenue": 216827,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.092178550029724,
+    "revenue": 307046,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.04337768238910797,
+    "revenue": 359512,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 394183,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "SN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.04440905519673408,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.42808746980228685,
+    "revenue": 74704,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.867163551948483,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4353405394364178,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5942538588495271,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.19184738822647876,
+    "revenue": 57067,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "RS": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3720647514904904,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6397367572313025,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7962493336992814,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.46662629529661076,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6277065637078088,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.03822037015873472,
+    "revenue": 118207,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SC": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.23656493108826632,
+    "revenue": 156559,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.010794907449125266,
+    "revenue": 585154,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.059932609120752565,
+    "revenue": 178877,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SL": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.201263433389191,
+    "revenue": 37025,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.29370396302767526,
+    "revenue": 54765,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SG": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 1278170,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.15429657348711168,
+    "revenue": 1005322,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.20781420993891409,
+    "revenue": 416583,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.1780787298868909,
+    "revenue": 852205,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 974345,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.10981355368416676,
+    "revenue": 695398,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SK": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -1.823009708737864,
+    "revenue": 20600,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.9801855887347548,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.8772629154008962,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.9469496092915741,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6260700285061086,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.10645099088964109,
+    "revenue": 219974,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SI": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -2.2589805825242717,
+    "revenue": 20600,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7451753513978213,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6192342926484952,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.2516311092361878,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 308431,
+    "flagged": true,
+    "clamped": true
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.8214434515561307,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SB": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7479061360413405,
+    "revenue": 80695,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.467479636456565,
+    "revenue": 46482,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SO": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.557848596619711,
+    "revenue": 29686,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2619922566738994,
+    "revenue": 56606,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ZA": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.17926866737846325,
+    "revenue": 117168,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8005367027792079,
+    "revenue": 58812,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.058847460694864,
+    "revenue": 19448,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.6070554558327479,
+    "revenue": 64362,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5535375540278676,
+    "revenue": 55259,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2981293425116316,
+    "revenue": 78374,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "KR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.42303788607927195,
+    "revenue": 137148,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.4562253365295962,
+    "revenue": 325380,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.9743417437978108,
+    "revenue": 47322,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.0031630877720480555,
+    "revenue": 334034,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6060756672088681,
+    "revenue": 165990,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.48557744628952065,
+    "revenue": 85272,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ES": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5105211126483078,
+    "revenue": 104519,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.27777184721240045,
+    "revenue": 390305,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.10445609475912201,
+    "revenue": 279904,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.06197843287947408,
+    "revenue": 265332,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.30450008653438176,
+    "revenue": 269980,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.09571774143086564,
+    "revenue": 365438,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "LK": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.7049422806022575,
+    "revenue": 34983,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.2611979466168295,
+    "revenue": 26711,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.267430441898527,
+    "revenue": 9776,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.5716961187955915,
+    "revenue": 40930,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.1215962644673922,
+    "revenue": 18469,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -2.0977705936896975,
+    "revenue": 10215,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SD": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.9665165450570751,
+    "revenue": 44223,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.3639839608928016,
+    "revenue": 51084,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SR": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2836639244586372,
+    "revenue": 252734,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.36229761042523434,
+    "revenue": 76461,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.358735523200321,
+    "revenue": 179387,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.21656166786872044,
+    "revenue": 669887,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.13936432915085176,
+    "revenue": 567858,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.23185313656423392,
+    "revenue": 277586,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.2262027942743912,
+    "revenue": 463371,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 626764,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "CH": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 1130427,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.016157205785093057,
+    "revenue": 1602740,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2333109976397098,
+    "revenue": 365633,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.01553245252693265,
+    "revenue": 595922,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.013288899774358163,
+    "revenue": 921106,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.02088566671497348,
+    "revenue": 621030,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "SY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6479716412745404,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2043952092601254,
+    "revenue": 60288,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TW": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -1.08576290156261,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.43624986271299654,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -1.1410259439561514,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.7248837555109175,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.1974374141467314,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 373088,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "TJ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.2938170516402871,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.4700472414284571,
+    "revenue": 58247,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.16195470662294834,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.8394433205452942,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.49774641533750574,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.19063538175266914,
+    "revenue": 47402,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TZ": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -4.80226321327265,
+    "revenue": 4876,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.15977484688282226,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -5.147362061152709,
+    "revenue": 2781,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.06921330168227309,
+    "revenue": 51084,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TH": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.48418504688995967,
+    "revenue": 96890,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.1954774460027291,
+    "revenue": 87094,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.6551313185315892,
+    "revenue": 29649,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5055059134052793,
+    "revenue": 67838,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3743674702343151,
+    "revenue": 71906,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.6011200812776368,
+    "revenue": 54675,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TL": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6814512722780596,
+    "revenue": 57890,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.39302829542964984,
+    "revenue": 49703,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TG": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.8360660511722909,
+    "revenue": 49580,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.29370396302767526,
+    "revenue": 54765,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TO": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6479716412745404,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4540960385612018,
+    "revenue": 47029,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TT": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.01929460583122694,
+    "revenue": 610625,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.16514561197404973,
+    "revenue": 163357,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0132371191687646,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.45861201504046645,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6665742747481864,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.00742800890716991,
+    "revenue": 189233,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TN": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6560650283741286,
+    "revenue": 62941,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.5807342918187032,
+    "revenue": 47291,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.6473188403178974,
+    "revenue": 16607,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.5046443684715973,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.9189448000523096,
+    "revenue": 31505,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5885122741229049,
+    "revenue": 44353,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TR": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.08762978333968492,
+    "revenue": 153348,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.31906352334523685,
+    "revenue": 134974,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.6567351799079244,
+    "revenue": 40797,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.10407098932366475,
+    "revenue": 142371,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5069151530853585,
+    "revenue": 73104,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.27526189440705956,
+    "revenue": 78546,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.3390687334813685,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.2636452263877412,
+    "revenue": 249330,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.9198319916145417,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.29245171538995535,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.2541779644922839,
+    "revenue": 134144,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5724253672621447,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "TV": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6479716412745404,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.5091788710528519,
+    "revenue": 67028,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "UG": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -4.78891726593274,
+    "revenue": 5248,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -2.38964895250584,
+    "revenue": 8808,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -5.162027299051056,
+    "revenue": 2774,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.16018725277960286,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -3.6374534846215796,
+    "revenue": 6114,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "UA": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7745954438334642,
+    "revenue": 60595,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.026481315228369464,
+    "revenue": 96952,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.4676270508203282,
+    "revenue": 47481,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.644233945343815,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.25821599274676865,
+    "revenue": 81486,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.29458580036428833,
+    "revenue": 63082,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "AE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 757511,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.012110580319521972,
+    "revenue": 1162406,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.3545504055034336,
+    "revenue": 191148,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.19648033037038573,
+    "revenue": 544715,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.1937240233760655,
+    "revenue": 395365,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11044793043228861,
+    "revenue": 457992,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "GB": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.23164597988893312,
+    "revenue": 586448,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.43958475928389584,
+    "revenue": 157043,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.20959241281372648,
+    "revenue": 655376,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.2317453605758248,
+    "revenue": 405656,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.2854088160595551,
+    "revenue": 225681,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.1335490086594719,
+    "revenue": 548051,
+    "flagged": true,
+    "clamped": false
+   }
+  },
+  "US": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.11333333333333334,
+    "revenue": 502948,
+    "flagged": true,
+    "clamped": true
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": 0.13862127091455018,
+    "revenue": 4383840,
+    "flagged": true,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": 0.11603709680027435,
+    "revenue": 352441,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": 0.03759974463507059,
+    "revenue": 491282,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": 0.16977213339398836,
+    "revenue": 299646,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": 0.11333333333333334,
+    "revenue": 623588,
+    "flagged": true,
+    "clamped": true
+   }
+  },
+  "UY": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.07505041019133894,
+    "revenue": 238791,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.15113253012048192,
+    "revenue": 311250,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.10807706349875024,
+    "revenue": 56971,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4326304435432881,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.4008522980812138,
+    "revenue": 112050,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.14724024540457395,
+    "revenue": 118449,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "UZ": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5740599134695001,
+    "revenue": 58248,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.28580702623761217,
+    "revenue": 52948,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.3400355005280228,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -2.080107204288171,
+    "revenue": 13899,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -2.0896773446695445,
+    "revenue": 16499,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -1.1949972348100275,
+    "revenue": 25199,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "VU": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7498919014828757,
+    "revenue": 133819,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.467479636456565,
+    "revenue": 46482,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "VE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": 0.0038662420382165608,
+    "revenue": 51810,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.4571032632990612,
+    "revenue": 44740,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.24436592652513545,
+    "revenue": 35644,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.4462025316455696,
+    "revenue": 15800,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.6749608763693271,
+    "revenue": 25560,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.24996402877697851,
+    "revenue": 33360,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "VN": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4915278237522528,
+    "revenue": 54378,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.7332228719948017,
+    "revenue": 61560,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.854903256593946,
+    "revenue": 44442,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0237076486366832,
+    "revenue": 15360,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -1.0407973252375096,
+    "revenue": 30567,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.4651858935128519,
+    "revenue": 52288,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "YE": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.4344691252331392,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6479716412745404,
+    "revenue": 60070,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.4862432101247673,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -1.0775159166254342,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.7020726486085932,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.3364682755421004,
+    "revenue": 52464,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ZM": {
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.2579535225422772,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.5828513765707326,
+    "revenue": 52244,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.23243683822035816,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.793042063631261,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.49803521566721753,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.09230581468400598,
+    "revenue": 55686,
+    "flagged": false,
+    "clamped": false
+   }
+  },
+  "ZW": {
+   "grocery_stores": {
+    "name": "Grocery stores",
+    "margin": -0.6725828238360018,
+    "revenue": 101357,
+    "flagged": false,
+    "clamped": false
+   },
+   "restaurants": {
+    "name": "Restaurants",
+    "margin": -0.28415393208047285,
+    "revenue": 76373,
+    "flagged": false,
+    "clamped": false
+   },
+   "hairdressers_beauty": {
+    "name": "Hairdressers & beauty",
+    "margin": -0.8307656828886438,
+    "revenue": 24892,
+    "flagged": false,
+    "clamped": false
+   },
+   "sports_fitness": {
+    "name": "Sports & fitness",
+    "margin": -0.2532535168197603,
+    "revenue": 50921,
+    "flagged": false,
+    "clamped": false
+   },
+   "auto_repair_shops": {
+    "name": "Auto repair shops",
+    "margin": -0.5225110436102912,
+    "revenue": 41551,
+    "flagged": false,
+    "clamped": false
+   },
+   "cafes_coffee": {
+    "name": "Cafés & coffee shops",
+    "margin": -0.21375851046277303,
+    "revenue": 49243,
+    "flagged": false,
+    "clamped": false
+   }
+  }
+ }
+}

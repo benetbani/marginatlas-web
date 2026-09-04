@@ -29,7 +29,8 @@ const LADDER = new Set([10, 12, 14, 16, 20, 24, 30, 40]);
 const WIDTHS = [1280, 768, 375];
 const shots = process.argv.includes("--shots");
 const file = "scratchpad/harness/archetypes.html";
-const instances = JSON.parse(readFileSync("scratchpad/harness/instances.json", "utf8"));
+const instancesByKind = JSON.parse(readFileSync("scratchpad/harness/instances.json", "utf8"));
+const instances = Object.values(instancesByKind).flat();
 const reds = [];
 const datas = [];
 const red = (inst, w, rule, msg) => reds.push({ inst, w, rule, msg });
@@ -40,11 +41,12 @@ function inPage() {
   const out = [];
   const accentRgb = (() => { const d = document.createElement("div"); d.style.color = "var(--terra-text)"; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; })();
   for (const story of document.querySelectorAll("[data-story]")) {
-    const inst = story.getAttribute("data-story");
-    const card = story.querySelector("[data-archetype='answer-card']");
-    const r = { inst, overflow: [], sizes: [], accents: 0, answerSizes: [], rows: [], labels: [], hole: null, subtitle: "", cells: [], state: "" };
+    const inst = story.closest("[data-stories]")?.getAttribute("data-stories") + ":" + story.getAttribute("data-story");
+    const card = story.querySelector("[data-archetype]");
+    const r = { inst, kind: card?.getAttribute("data-archetype") || "", overflow: [], sizes: [], accents: 0, answerSizes: [], rows: [], labels: [], hole: null, subtitle: "", cells: [], state: "", bars: [], tableRows: [], selfOmit: !!story.querySelector("[data-self-omit]") };
     if (!card) { out.push(r); continue; }
     for (const el of card.querySelectorAll("*")) {
+      if (el.getClientRects().length === 0) continue; // display:none at this width
       const cs = getComputedStyle(el);
       if (el.scrollWidth > el.clientWidth + 1 && cs.overflowX !== "hidden" && cs.display !== "inline") r.overflow.push(el.className.toString().slice(0, 40));
       const txt = (el.textContent || "").trim();
@@ -66,15 +68,37 @@ function inPage() {
       r.rows = [...rows.values()];
       r.labels = cells.map((c) => c.querySelector("div div")?.textContent?.trim() || "");
     }
-    r.subtitle = card.querySelector("p")?.textContent || "";
+    r.subtitle = r.kind === "answer-card" ? (card.querySelector("p")?.textContent || "") : "";
+    if (r.kind === "ranked-bars") {
+      const top = card.querySelector("[data-idea='I2'] > div:first-child");
+      const topY = top ? top.getBoundingClientRect().top : null;
+      r.bars = [...card.querySelectorAll("[data-bar]")].map((li) => { const bar = li.querySelector("div[aria-hidden]"); const b = bar.getBoundingClientRect(); return { key: li.getAttribute("data-bar"), top: Math.round(b.top), h: Math.round(b.height), ruleTop: topY == null ? null : Math.round(topY) }; });
+    }
+    if (r.kind === "compare-table") {
+      const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
+      r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
+    }
     // the largest empty rectangle inside the card (E6), on a 6px grid
     const cb = card.getBoundingClientRect(); const cs = getComputedStyle(card);
     const x0 = cb.left + parseFloat(cs.paddingLeft), x1 = cb.right - parseFloat(cs.paddingRight), y0 = cb.top + parseFloat(cs.paddingTop), y1 = cb.bottom - parseFloat(cs.paddingBottom);
     const W = x1 - x0, H = y1 - y0, COLS = 48, ROW = 6; const nRows = Math.max(1, Math.round(H / ROW));
     const grid2 = Array.from({ length: nRows }, () => new Uint8Array(COLS));
+    const mark = (b) => {
+      const c0 = Math.max(0, Math.floor((b.left - x0) / W * COLS)), c1 = Math.min(COLS - 1, Math.ceil((b.right - x0) / W * COLS) - 1);
+      const r0 = Math.max(0, Math.floor((b.top - y0) / ROW)), r1 = Math.min(nRows - 1, Math.ceil((b.bottom - y0) / ROW) - 1);
+      for (let rr = r0; rr <= r1; rr++) for (let cc = c0; cc <= c1; cc++) grid2[rr][cc] = 1;
+    };
     for (const el of card.querySelectorAll("*")) {
+      if (el.getClientRects().length === 0) continue;
+      const es = getComputedStyle(el);
+      /* A HAIRLINE IS INK: a table's row rules and a list's dividers break the
+         emptiness the eye would otherwise read as a hole, which is the same
+         rule the site's own emptiness gate states. */
+      const b0 = el.getBoundingClientRect();
+      if (parseFloat(es.borderBottomWidth) > 0 && !/rgba\(0, 0, 0, 0\)/.test(es.borderBottomColor)) mark({ left: b0.left, right: b0.right, top: b0.bottom - 2, bottom: b0.bottom + 2 });
+      if (parseFloat(es.borderTopWidth) > 0 && !/rgba\(0, 0, 0, 0\)/.test(es.borderTopColor)) mark({ left: b0.left, right: b0.right, top: b0.top - 2, bottom: b0.top + 2 });
       const txt = (el.textContent || "").trim(); const isLeaf = el.children.length === 0 || el.tagName === "svg" || el.tagName === "IMG";
-      if (!isLeaf || (!txt && el.tagName !== "svg" && el.tagName !== "IMG" && !getComputedStyle(el).backgroundColor.match(/rgba?\((?!0, 0, 0, 0)/))) continue;
+      if (!isLeaf || (!txt && el.tagName !== "svg" && el.tagName !== "IMG" && !es.backgroundColor.match(/rgba?\((?!0, 0, 0, 0)/))) continue;
       const b = el.getBoundingClientRect(); if (b.width === 0 || b.height === 0) continue;
       const c0 = Math.max(0, Math.floor((b.left - x0) / W * COLS)), c1 = Math.min(COLS - 1, Math.ceil((b.right - x0) / W * COLS) - 1);
       const r0 = Math.max(0, Math.floor((b.top - y0) / ROW)), r1 = Math.min(nRows - 1, Math.ceil((b.bottom - y0) / ROW) - 1);
@@ -108,14 +132,23 @@ for (const w of WIDTHS) {
   for (const r of out) {
     if (r.overflow.length) red(r.inst, w, "BOTCHED MOBILE", `overflowing: ${r.overflow.join(" | ")}`);
     for (const s of new Set(r.sizes)) if (!LADDER.has(Math.round(s))) red(r.inst, w, "LADDER", `font size ${s}px is not on the ladder`);
-    if (r.state === "no-answer") { if (w === WIDTHS[0]) data(r.inst, "NO ANSWER", "no small-business regime row is on file; the card shows the state word"); }
-    else if (r.answerSizes.length !== 1) red(r.inst, w, "NO HIERARCHY", `${r.answerSizes.length} answer figures`);
-    else { const next = Math.max(...r.sizes.filter((s) => s < r.answerSizes[0] - 0.5)); if (r.answerSizes[0] / next < 1.6) red(r.inst, w, "NO HIERARCHY", `answer ${r.answerSizes[0]} against ${next}, under 1.6x`); }
-    if (r.accents > 1) red(r.inst, w, "ACCENT", `${r.accents} accent texts in one card`);
+    if (r.kind === "answer-card") {
+      if (r.state === "no-answer") { if (w === WIDTHS[0]) data(r.inst, "NO ANSWER", "no small-business regime row is on file; the card shows the state word"); }
+      else if (r.answerSizes.length !== 1) red(r.inst, w, "NO HIERARCHY", `${r.answerSizes.length} answer figures`);
+      else { const next = Math.max(...r.sizes.filter((s) => s < r.answerSizes[0] - 0.5)); if (r.answerSizes[0] / next < 1.6) red(r.inst, w, "NO HIERARCHY", `answer ${r.answerSizes[0]} against ${next}, under 1.6x`); }
+    }
+    if (r.kind === "ranked-bars" && w === WIDTHS[0]) {
+      for (const b of r.bars) if (b.ruleTop != null && b.top < b.ruleTop - 1) red(r.inst, w, "WORLD MAX", `bar ${b.key} rises above the world's-best rule`);
+      if (r.accents !== 1) red(r.inst, w, "ACCENT", `${r.accents} accent texts; the leader's figure should be the one`);
+    }
+    if (r.kind === "compare-table" && r.tableRows.length > 1) {
+      const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);
+    }
+    if (r.kind !== "ranked-bars" && r.accents > 1) red(r.inst, w, "ACCENT", `${r.accents} accent texts in one card`);
     for (const row of r.rows) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `figures in one grid row at tops ${row.join(", ")}`);
     const dup = r.labels.filter((l, i) => l && r.labels.indexOf(l) !== i); if (dup.length) red(r.inst, w, "REPETITION", `label repeated: ${[...new Set(dup)].join(", ")}`);
     const promisesRegister = /register/i.test(r.subtitle); const hasRegister = r.cells.includes("llc-cost");
-    if (promisesRegister && !hasRegister) red(r.inst, w, "PROMISE", `the subtitle promises registration and no registration cell renders`);
+    if (r.kind === "answer-card" && promisesRegister && !hasRegister) red(r.inst, w, "PROMISE", `the subtitle promises registration and no registration cell renders`);
     if (r.hole && r.hole.wPx >= Math.max(120, r.hole.cardW / 4) && r.hole.hPx >= Math.max(120, r.hole.cardH / 4)) red(r.inst, w, "LONE STAT", `a blank rectangle ${r.hole.wPx}x${r.hole.hPx} inside a ${r.hole.cardW}x${r.hole.cardH} card`);
   }
   if (shots) {

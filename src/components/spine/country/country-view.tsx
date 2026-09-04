@@ -32,11 +32,14 @@ import * as React from "react";
 import { Band, Box, Fig, Rail, SampleTag, SpectraTable, usd } from "@/components/spine/kit";
 import { RangeBracket, RankedTiles } from "@/components/spine/forms-v2";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
+import { RankedBars } from "@/components/spine/archetypes/RankedBars";
+import { CompareTable } from "@/components/spine/archetypes/CompareTable";
+import { COPY } from "@/lib/spine/copy";
+import { marginCardFromRows } from "@/lib/spine/margin_rows";
+import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { buildHeroFacts } from "@/lib/spine/hero_facts";
 import { CityCardsPager } from "@/components/spine/country/city-cards";
 import { SetupTiers } from "@/components/spine/country/setup-tiers";
-import { CountryFlag } from "@/components/CountryFlag";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -49,7 +52,7 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The tax burden" },
   { id: "cities", label: "The cities" },
   { id: "peers", label: "Against the peers" },
-  { id: "money", label: "What an owner keeps" },
+  { id: "money", label: "Net profit margin" },
   { id: "customers", label: "What customers earn" },
   { id: "character", label: "The character" },
   { id: "setup", label: "Registering, by legal form" },
@@ -274,142 +277,15 @@ function Cities({ cities, iso2 }: { cities: any; iso2?: string }) {
  * reading face" described a font switch this card never made, and the class
  * standing in for it broke the winner mark (see the column below).
  */
-function Peers({ peers }: { peers: any }) {
-  const rows: any[] = Array.isArray(peers?.list) ? peers.list : [];
-  if (rows.length < 2) return null;
-  const cols: Array<{ key: string; head: string; fmt: (v: number) => React.ReactNode; best: (vs: number[]) => number }> = [
-    /* One basis across the whole table (founder 2026-08-30, "apply the
-       procedure to the countries"): the same small-business effective rate
-       the masthead answer states, from the same module, per peer. */
-    { key: "effective_tax_pct", head: "Effective tax", fmt: (v) => <>{v}%</>, best: (vs) => Math.min(...vs) },
-    { key: "payroll_pct", head: "Payroll on staff", fmt: (v) => <>{v}%</>, best: (vs) => Math.min(...vs) },
-    {
-      key: "register_cost_usd",
-      /* THE WORD CARRIES NO WEIGHT OF ITS OWN (C31's photograph, 2026-09-03).
-         It used to be `<span className="font-medium">Free</span>`, and that
-         class did not do what its comment below claimed: `.fig` sets the figure
-         face and weight 600 for the whole table, and font-medium only pulled
-         this ONE cell down to 500. Measured on the shipped GB render, every
-         figure on the card is w600 and "Free" alone is w500, in the cell that
-         WINS its column. So the winner read dark and light at once, and the
-         column's convention (best = ink + weight, the rest quiet) was broken by
-         the only cell it was meant to mark. C31 made that worse before it made
-         it better: four more countries print Free in this column once the fee
-         comes off the lightest form. */
-      head: "Cost to register",
-      fmt: (v) => (v === 0 ? <>Free</> : <>{usd(v)}</>),
-      best: (vs) => Math.min(...vs),
-    },
-    { key: "register_days", head: "Time to register", fmt: (v) => <>{v} {v === 1 ? "day" : "days"}</>, best: (vs) => Math.min(...vs) },
-  ];
-  const bestOf: Record<string, number | undefined> = {};
-  for (const c of cols) {
-    const vs = rows.map((r) => r[c.key]).filter((v: unknown): v is number => isNum(v));
-    bestOf[c.key] = vs.length >= 2 ? c.best(vs) : undefined;
-  }
-  return (
-    /* The sanctioned wide-table band: the same bare full-width wrapper the hero
-       uses, carrying the attribute the width gate reads. Not a Band split, since
-       the table IS the whole band. */
-    <div data-wide-table className="mt-8">
-      <Box id="peers">
-        <Rail icon="benchmark" kicker="Against the peers" />
-        {/* LAW M, founder 2026-08-30 verbatim: "no scrolling left and right"
-            on a phone. Five columns do not fit 343 pixels and must not
-            pretend to, and a sideways swipe is now banned too, so BELOW md
-            the table reconfigures to one stacked card per country (rendered
-            after the table below); the real table renders from md up. */}
-        <div className="hidden md:block">
-        <Table className="text-[length:var(--t-micro)]">
-          <caption className="sr-only">The same four set-up facts for each country, side by side.</caption>
-          <TableHeader>
-            <TableRow className="border-[var(--c-border)] hover:bg-transparent">
-              <TableHead scope="col" className="h-auto px-0 pb-2 text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-                Country
-              </TableHead>
-              {cols.map((c) => (
-                <TableHead key={c.key} scope="col" className="h-auto px-2 pb-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-                  {c.head}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows.map((r) => (
-              <TableRow
-                key={r.iso2}
-                className={`border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}
-              >
-                <TableCell className="px-0 py-2.5">
-                  <span className="flex items-center gap-2.5">
-                    <CountryFlag iso2={r.iso2} className="w-7 shrink-0" />
-                    <span className={`text-[length:var(--t-body)] ${r.home ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{r.name}</span>
-                  </span>
-                </TableCell>
-                {cols.map((c) => {
-                  const v = r[c.key];
-                  const isBest = isNum(v) && bestOf[c.key] != null && v === bestOf[c.key];
-                  return (
-                    <TableCell key={c.key} className="px-2 py-2.5 text-right">
-                      {isNum(v) ? (
-                        <Fig className={`text-[length:var(--t-body)] ${isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{c.fmt(v)}</Fig>
-                      ) : (
-                        <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>
-                      )}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        </div>
-        {/* The phone form: the same rows, the same winner convention, no
-            sideways motion. One card per country, figures as label-over-value
-            pairs in a two-column grid. */}
-        <div className="space-y-2 md:hidden">
-          {rows.map((r) => (
-            <div
-              key={r.iso2}
-              className={`rounded-[14px] border border-[var(--c-border)] px-3.5 py-3 ${r.home ? "bg-[var(--c-soft)]" : ""}`}
-            >
-              <span className="flex items-center gap-2.5">
-                <CountryFlag iso2={r.iso2} className="w-7 shrink-0" />
-                <span className={`text-[length:var(--t-body)] ${r.home ? "font-semibold" : ""} text-[var(--c-ink)]`}>{r.name}</span>
-              </span>
-              <div className="mt-2.5 grid grid-cols-2 gap-x-4 gap-y-2">
-                {cols.map((c) => {
-                  const v = r[c.key];
-                  const isBest = isNum(v) && bestOf[c.key] != null && v === bestOf[c.key];
-                  return (
-                    <div key={c.key}>
-                      <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{c.head}</div>
-                      {isNum(v) ? (
-                        <Fig className={`text-[length:var(--t-body)] ${isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{c.fmt(v)}</Fig>
-                      ) : (
-                        <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* THE ONE CHANGE THIS CARD TAKES, AND IT IS SAID OUT LOUD BECAUSE THE
-            FOUNDER PRAISED THIS TABLE UNPROMPTED ("this seems like, wow, this is
-            one of the best versions that I've seen so far", 2026-08-30). Nothing
-            structural moves: no column, no flag, no winner mark, no figure. Only
-            where the caption's lines break. Measured: at 1280 it ran 527px, 538px
-            and then 93px, and at 375 it ran to a FIVE-line block whose last line
-            was the single word "terms." at 34px. Balanced it is three even lines
-            at 1280 and five at 375 with no orphan at either. */}
-        {peers?.caveat ? (
-          <p className="mt-2.5 text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]">{peers.caveat}</p>
-        ) : null}
-      </Box>
-    </div>
-  );
+function Peers({ iso2 }: { iso2?: string }) {
+  /* THE COMPARISON-TABLE ARCHETYPE (the reset of 2026-09-04): rows built
+     locally by peer_rows.ts from the same modules the masthead reads, with
+     the LLC columns the founder ruled (3 and 4); the desktop table he praised
+     kept whole, the phone form rebuilt with the heads said once (ruling 5). */
+  if (!iso2) return null;
+  const t = buildPeerTable(iso2);
+  if (!t) return null;
+  return <CompareTable id="peers" kicker={COPY.peers.kicker} icon="benchmark" rows={t.rows} columns={t.columns} caveat={t.caveat} />;
 }
 
 /**
@@ -524,119 +400,28 @@ function Customers({ customers }: { customers: any }) {
  * and without a lot of character."
  */
 function Money({ money }: { money: any }) {
-  const rows: any[] = (Array.isArray(money?.list) ? [...money.list] : []).sort((x, y) => (y?.keeps_usd_year ?? 0) - (x?.keeps_usd_year ?? 0));
-  if (rows.length < 2) return null;
+  /* THE RANKED-BARS ARCHETYPE (founder ruling 6, 2026-09-04): the net profit
+     margin in percent as vertical bars, the track's top at the world's
+     highest credible margin (ruling 13). A loss or a floored margin is
+     withheld with its reason, never drawn; fewer than two credible rows and
+     the card self-omits. The keep figures the old card printed are gone with
+     it: four of the six were the 3% floor times revenue. */
+  const list: any[] = Array.isArray(money?.list) ? money.list : [];
+  const card = marginCardFromRows(list);
   const tagged = typeof money?._meta?.confidence === "string" && money._meta.confidence !== "measured";
-  /* ===== C43, 2026-09-02: THE ROW IS TWO BLOCKS, AND THE CARD'S OWN WIDTH SAYS
-     WHETHER THEY SHARE A LINE. ================================================
-
-     WHAT WAS WRONG, measured with a Range rect after `document.fonts.ready`
-     (`scratchpad/loop18_c43.mjs`), because a name's own element box IS its
-     column's width and can never tell you the name was cut. The row was ONE
-     four-column grid whose name track was `minmax(0,1fr)`, so the name got
-     whatever the two fixed figure columns left. Against the six names' true
-     widths, "Restaurants" 79.6, "Grocery stores" 96.2, "Sports & fitness"
-     104.5, "Auto repair shops" 115.6, "Cafes & coffee shops" 138 and
-     "Hairdressers & beauty" 144.3:
-
-       viewport   card   name track   names cut
-       1280       624    350          0
-       1024       566    292          0
-       900        410    136          2
-       768        344    70           SIX OF SIX
-       640        608    334          0
-       480        448    174          0
-       375        343    69           SIX OF SIX
-
-     TWO WINDOWS, NOT ONE, and the queue's row had found only the outer pair: the
-     phone, and the WHOLE TABLET RANGE, 768 to 1023, where `Band` gives every band
-     equal halves under its own ratified D4 rule and this card is 344px, one pixel
-     wider than the same card at 375.
-
-     TWO FIXES WERE WEIGHED AND REFUSED.
-     TRUNCATION IS ALREADY RULED OUT, twice this loop and both times on a
-     photograph: C6 made RankedTiles wrap rather than cut, and C19 found the
-     countries list cutting a name at every width on a page whose whole job is
-     finding the country you came for. A row named by a trade cannot cut the
-     trade. SMALLER TYPE IS NOT AVAILABLE either: step 5 makes the ladder the only
-     source of sizes and body 14 is where a table's names sit everywhere else.
-     AND WRAPPING THE NAME INSIDE ITS OWN TRACK DOES NOT FINISH IT, which is
-     C19's hardest-won finding: a word has nowhere to break, and "Hairdressers"
-     alone measures 82.9 against a 69px track, so wrapping there buys a split
-     mid-word, which A5 photographed as "Equipmen / t" and rejected.
-
-     SO THE READINGS LEAVE THE LINE, and this is not a new shape: it is the idiom
-     `setup-tiers.tsx` already ships on THIS PAGE, ratified with a photograph in
-     run 9, for the identical problem of a name plus several readings in a card
-     too narrow to hold both. A name block and a readings block in a wrapping flex
-     row, so a break can only ever happen BETWEEN them and never inside either,
-     driven by the CARD's own width rather than by a viewport breakpoint. That is
-     run 7's ruling and it is the only rule that can work here: this card is 343px
-     at 375, 448 at 480, 608 at 640, 344 at 768 and 624 at 1280, so its width is
-     NOT monotonic in the viewport and no breakpoint ladder can name the narrow
-     cases.
-
-     THE ARITHMETIC, so the basis is a measurement and not a taste. The readings
-     block is 5.5rem + 5.5rem + 1.25rem + three 12px gaps = 232px, and it does not
-     shrink. The name's basis is 10rem, 160px, the longest name in the fixed six
-     (144.3) rounded up. A flex line breaks when 160 + 12 + 232 = 404 exceeds the
-     card's inner width, and whenever it does NOT break the name's share is at
-     least 160, which holds every name on one line. The two thresholds coincide by
-     construction, which is why the basis is that number.
-     THE LEADING 1fr SPACER inside the readings block keeps the figures packed to
-     the card's own right edge on BOTH lines: the block grows and the spacer eats
-     the growth, so the two figure columns and the arrow land in the same place
-     whether they sit beside a name or beneath one. Taken from setup-tiers, which
-     records the 375 measurement that made it necessary. */
-  const nameSlot = "min-w-0 flex-[1_1_10rem]";
-  const readings = "grid flex-[1_0_auto] grid-cols-[minmax(0,1fr)_5.5rem_5.5rem_1.25rem] items-baseline gap-x-3";
-  const line = "flex flex-wrap items-baseline gap-x-3";
   return (
-    <Box id="money">
-      {/* THE KICKER IS FOUR WORDS AND THE PAGE'S OWN RAIL ALREADY CALLED IT THAT.
-          RAIL_SECTIONS at the top of this file names this section "What an owner
-          keeps"; the card said "What an owner keeps, trade by trade", so the page
-          named one section two ways, which is the fault his own "one name" order
-          is about. The dropped words were also the card's third statement of the
-          same thing: the first column is six trade names and the word "trade"
-          stood twice in a six-word title.
-          MEASURED, because it is a wrap and not only a cut. It was the ONLY
-          three-line kicker on the page at 375 and at 768, with the single word
-          "trade" alone on line three; the page's ten other kickers run to one or
-          two. It is one line at 1280 AND at 900, where it used to take two, and
-          two lines at 768 and 375 with the same one-word tail its two sample-
-          tagged siblings already carry ("earn", "state"). The card is 18px
-          shorter at 900, 768 and 375. */}
-      <Rail icon="owner-keeps" kicker="What an owner keeps" sample={tagged} />
-      {/* The header takes the SAME two blocks as a row, so its labels sit over
-          their own columns at every width rather than over a template only the
-          wide case ever uses. */}
-      <div className={line + " pb-2"}>
-        <span aria-hidden className={nameSlot} />
-        <span className={readings}>
-          <span aria-hidden />
-          <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Kept a year</span>
-          <span className="text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To open</span>
-          <span aria-hidden />
-        </span>
-      </div>
-      <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
-        {rows.map((r: any) => (
-          <a key={r.slug} href={r.href} className={"group " + line + " py-2.5"}>
-            <span className={nameSlot + " text-[length:var(--t-body)] font-medium text-[var(--c-ink)] transition-colors group-hover:text-[var(--c-ink2)]"}>{r.name}</span>
-            <span className={readings}>
-              <span aria-hidden />
-              <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(r.keeps_usd_year)}</Fig>
-              <Fig className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">{usd(r.cost_to_open_usd)}</Fig>
-              <span aria-hidden className="text-right text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
-            </span>
-          </a>
-        ))}
-      </div>
-      {money?.withheld?.reason ? (
-        <p className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{money.withheld.reason}</p>
-      ) : null}
-    </Box>
+    <RankedBars
+      id="money"
+      kicker={COPY.margin.kicker}
+      icon="owner-keeps"
+      tagged={tagged}
+      basis={COPY.margin.basis}
+      withheldLine={card.withheldLine}
+      rows={card.rows.map((r) => ({ key: r.key, name: r.name, href: r.href, value: r.margin, flagged: r.flagged }))}
+      worldMax={card.worldMax}
+      fmt={(v) => `${Math.round(v * 100)}%`}
+      phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }}
+    />
   );
 }
 
@@ -1006,7 +791,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         <Masthead name={name} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} hero={d.hero} />
         <Cities cities={d.cities} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
-        <Peers peers={d.peers} />
+        <Peers iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
         {/* The money grid takes the wide side and the customers card the narrow;
             the lens grid that stood here is retired, every tile by his own words.
             THE SPLIT MOVED 2-1 TO 3-2 IN C11, and a measurement decided it rather
