@@ -75,7 +75,7 @@
  * not keep a dev server alive. Written down instead.
  */
 import * as React from "react";
-import { Box, Rail, InfoTip, InlineDisclosure } from "@/components/spine/kit";
+import { Box, Rail, InfoTip } from "@/components/spine/kit";
 import { LollipopColumn } from "@/components/spine/forms-v2";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 
@@ -193,17 +193,24 @@ export function WhereToTrade({ d }: { d: any }) {
               ONE LINK, NOT SEVEN: every district row used to be an anchor and all
               seven pointed at the same page, so the card offered one destination
               dressed as seven choices. Navigation is chrome and stays ink. */}
-          <div className="mt-3 flex items-baseline justify-between gap-3">
-            <InlineDisclosure name="districts" summary="What each district is" className="group min-w-0">
+          <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+            {/* OPEN, NOT BEHIND A CLICK, since the build loop's run 9 (2026-09-06):
+                the page filter measured this card stretched to the quick reads
+                beside it with a 490x276 blank under the chart at 1280 (founder
+                ruling 16, no massive white space). The card owns the content
+                to fill it, one line per district, so the list shows; a hole is
+                fixed by pairing or by content, never by unstretching. */}
+            <div data-districts-list className="min-w-0 flex-1">
+              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">What each district is</div>
               <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
                 {rows.map((r) => (
                   <div key={r.slug} className="flex items-baseline justify-between gap-3 py-1.5">
                     <span className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{r.name}</span>
-                    <span className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.character}</span>
+                    <span className="text-right text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.character}</span>
                   </div>
                 ))}
               </div>
-            </InlineDisclosure>
+            </div>
             {hoodHref ? (
               <a href={hoodHref} className="hov shrink-0 -mr-2 rounded-md px-2 py-1 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">
                 The districts &#8594;

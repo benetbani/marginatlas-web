@@ -915,7 +915,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
               The quick reads gain by the same move rather than paying for it: six
               two-pole tracks at 478px are a dot on a long empty rail, and at 307px the
               same six read as a profile. */}
-          <Band split="2-1"><WhereToTrade d={d} /><CityLenses d={d} /></Band>
+          <Band split="2-1" stack="lg"><WhereToTrade d={d} /><CityLenses d={d} /></Band>
         </>
       ) : null}
 
@@ -942,7 +942,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
               goes 347 to 416, where its three log-scale labels stop crowding, and the
               peers table gives up 69px it was not using, five columns being the widest
               thing in it. */}
-          <Band split="3-2"><CityPeers d={d} /><IncomeCurve d={d} /></Band>
+          <Band split="3-2" stack="lg"><CityPeers d={d} /><IncomeCurve d={d} /></Band>
           {/* THE EARNINGS CHART PAIRS WITH THE DEMAND ROW, NOT WITH THE RENT
               RATIO. Measured across fifteen cities on 2026-08-25, the rent ratio
               renders for NONE of them, and neither do the owner runway, the risk
