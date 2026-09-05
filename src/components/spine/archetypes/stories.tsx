@@ -27,6 +27,8 @@ import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "./Terminus";
 import { buildCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
+import { PayBars } from "./PayBars";
+import { buildPayBars } from "@/lib/spine/pay_rows";
 import { usd } from "@/components/spine/kit";
 
 export type Instance = { iso2: string; why: string };
@@ -309,6 +311,38 @@ export function TerminusStories({ instances = pickTerminusInstances() }: { insta
         const el = doors.length ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
             <Terminus kicker={`${COPY.close.kicker}, ${nameOf(i.iso2)}`} doors={doors} />
+          </div>
+        ) : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+/** The instance set for the pay bars: the exemplar, the country at the world's edge, the lowest average, and every withheld pair. */
+export function pickPayBarsInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
+  const all = codes().map((c) => ({ c, d: buildPayBars(c) })).filter((x) => x.d);
+  take("GB", "the exemplar");
+  const edge = all.find((x) => x.d!.worldMax && x.c === x.d!.worldMax.iso2); if (edge) take(edge.c, "the world's highest average, the bar touches the edge");
+  const avg = (x: any) => x.d.rows.find((r: any) => r.key === "average")?.value ?? Infinity;
+  const lowest = [...all].filter((x) => !x.d!.withheld).sort((a, b) => avg(a) - avg(b))[0]; if (lowest) take(lowest.c, "the lowest average, a sliver against the edge");
+  for (const x of all.filter((x) => x.d!.withheld)) take(x.c, "a pair under ten percent apart, withheld");
+  const one = all.find((x) => x.d!.rows.length === 1); if (one) take(one.c, "one figure, the figure form");
+  return out;
+}
+
+export function PayBarsStories({ instances = pickPayBarsInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="pay-bars">
+      {instances.map((i) => {
+        const d = buildPayBars(i.iso2);
+        const el = d ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 347 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.pay.kicker}, {nameOf(i.iso2)}</div>
+            <PayBars rows={d.rows} worldMax={d.worldMax} withheld={d.withheld} fmt={usd} edgeLabel={(name, figure) => COPY.pay.edge.replace("{name}", name).replace("{figure}", figure)} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

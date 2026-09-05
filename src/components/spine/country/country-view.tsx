@@ -42,6 +42,8 @@ import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildLocalsNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCloseDoors } from "@/lib/spine/close_rows";
+import { PayBars } from "@/components/spine/archetypes/PayBars";
+import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards } from "@/lib/spine/city_cards";
@@ -483,66 +485,20 @@ function Premises({ iso2 }: { iso2?: string }) {
  * SECTION is cut here under rule 41, credibility ground: hand-written verdict
  * prose presented as a read is the patronizing class the founder condemned.
  */
-function Hiring({ hiring }: { hiring: any }) {
-  const floor = hiring?.wage_floor_usd_year;
-  const typical = hiring?.typical_pay_usd_year;
-  const canDraw = isNum(floor) || isNum(typical);
-  if (!canDraw) return null;
-  const tagged = typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured";
-  const max = Math.max(isNum(floor) ? floor : 0, isNum(typical) ? typical : 0) * 1.05;
-  const bars: Array<[string, number, string]> = [];
-  /* Terracotta, the founder's second-batch order ("there is a problem that
-     you are removing the terracotta color from the bars"): the typical bar in
-     the full accent fill, the floor in the lighter border tone so the two
-     stay tellable apart at a glance. Accent register 5. */
-  if (isNum(floor)) bars.push(["Wage floor", floor, "var(--terra-border)"]);
-  if (isNum(typical)) bars.push(["Typical pay", typical, "var(--terra)"]);
-  const addPct = hiring?.payroll_only_multiplier != null && isNum(hiring?.employer_payroll_pct)
-    ? hiring.employer_payroll_pct
-    : undefined;
+function Hiring({ hiring, iso2 }: { hiring: any; iso2?: string }) {
+  const pay = iso2 ? buildPayBars(iso2) : null;
+  const addPct = hiring?.payroll_only_multiplier != null && isNum(hiring?.employer_payroll_pct) ? hiring.employer_payroll_pct : undefined;
   const labour = hiring?.labour_force_pct;
   const informal = hiring?.informal_share_pct;
+  if (!pay && !isNum(addPct) && !isNum(labour) && !isNum(informal)) return null;
+  const tagged = (pay && pay.confidence !== "measured") || (typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured");
   return (
     <Box id="hiring">
-      <Rail icon="hiring" kicker="What staff cost" sample={tagged} />
-      {/* C12, 2026-09-02. THE DECLARATION IS THE WHOLE FIX HERE, and saying so
-          plainly is the point: two fills measured by length from ONE shared zero
-          is what the catalogue calls a BAR SET in its own words, "rectangles
-          compared by length from a common baseline", and the addendum already
-          classified this exact markup, a fill inside a track from one common
-          left edge, as I2 when it re-read the kit's Waterfall. Nothing about the
-          drawing was wrong, so nothing about the drawing changed.
-          IT IS TAGGED ON THE SET AND NOT ON EACH BAR, which is the rule B5, B7
-          and B8 each settled in a different component: if a reader would call the
-          SET one object, the set declares. Two tags here would have been two bar
-          sets in one card, which is the arithmetic that binds a card.
-          THE BUDGET, counted on the render: the page was I2 0 of 3 and is now 1
-          of 3, and this is the page's only bar set. The blueprint's own condition
-          holds too, that the hiring bars be "non-adjacent to any other bar user":
-          the band above is the setup pips (I5) and the rent standing (I11), the
-          card beside it draws nothing, and nothing else on the page is an I2.
-          THE ACCENT IS UNTOUCHED. Register entry 5 names these bars and the
-          founder's 2026-08-30 order put the colour back on them.
-          THE ROW GAP GOES 10 TO 8, the slot rung, because ten sits between two
-          rungs of the spacing ladder and step 7 forbids that outright. It is the
-          twelfth off-ladder value this loop has found. The 12 INSIDE each row
-          stays and the distinction is A4's: a label, its own bar and its own
-          figure on one baseline are ONE object kerned, while the gap between the
-          rows separates two of them. */}
-      <div data-idea="I2" className="space-y-2">
-        {bars.map(([label, v, fill]) => (
-          <div key={label} className="grid grid-cols-[6.5rem_1fr_auto] items-center gap-3">
-            <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{label}</span>
-            <span className="relative block h-3 overflow-hidden rounded-full" style={{ background: "var(--c-soft)" }} role="img" aria-label={label + " " + usd(v) + " a year"}>
-              <span aria-hidden className="absolute inset-y-0 left-0 rounded-full" style={{ width: ((v / max) * 100).toFixed(1) + "%", background: fill }} />
-            </span>
-            <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{usd(v)}</Fig>
-          </div>
-        ))}
-      </div>
-      {/* 16, THE CARD-PADDING RUNG, on both blocks below. Both were 12, which is
-          between two rungs, and so was the 12 of padding above the last block's
-          own rule. Thirteenth, fourteenth and fifteenth off-ladder values. */}
+      <Rail icon="hiring" kicker={COPY.pay.kicker} sample={tagged} />
+      {/* THE PAY BARS through the archetype (founder rulings 13 and 14, 2026-09-04):
+          minimum and average salary on one track that ends at the world's
+          highest average, named; a pair under ten percent apart withheld. */}
+      {pay ? <PayBars rows={pay.rows} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} edgeLabel={(name, figure) => COPY.pay.edge.replace("{name}", name).replace("{figure}", figure)} /> : null}
       {isNum(addPct) ? (
         <div className="mt-4 flex flex-wrap items-baseline gap-x-1.5">
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">On top of gross pay, employers add</span>
@@ -655,7 +611,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
             side in two columns and the two come close to one height. */}
         {d.hiring || d.locals_know ? (
           <Band split="1-2" stack="lg">
-            <Hiring hiring={d.hiring} />
+            <Hiring hiring={d.hiring} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
             <LocalsKnow iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
           </Band>
         ) : null}

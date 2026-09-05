@@ -4,7 +4,7 @@
  * surface only; never linked from the site.
  */
 import * as React from "react";
-import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories } from "@/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
 
@@ -28,6 +28,7 @@ export default function ArchetypesPage() {
       <SpectraTableStories />
       <NoteListStories />
       <TerminusStories />
+      <PayBarsStories />
     </main>
   );
 }

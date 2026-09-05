@@ -118,6 +118,14 @@ export const COPY = {
     tradesDoor: "See every trade measured here",
     proDoor: "Get notified when Pro opens",
   },
+  /** The pay bars (what staff cost), founder rulings 13 and 14 of 2026-09-04: the words "minimum salary" and "average salary", the edge at the world's highest, a pair under ten percent apart withheld. */
+  pay: {
+    kicker: "What staff cost",
+    minimum: "Minimum salary",
+    average: "Average salary",
+    edge: "World's highest: {name}, {figure}",
+    withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

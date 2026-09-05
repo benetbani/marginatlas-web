@@ -12,6 +12,9 @@
  *    cell resolves; it names the answer only when the answer resolves.
  *  NO EMPTY SLOT: no cell carries an empty value.
  *  TAG: a modelled answer is marked modelled, so the card tags it.
+ *  PAY: every country's pay pair is withheld exactly when the average is
+ *    under 110 percent of the minimum, the words are the founder's, and no
+ *    figure exceeds the world's highest.
  *  DOORS: every country's terminus holds at most three doors, one pill,
  *    distinct first words, no "with Pro", and every href resolves to a route
  *    in the app folder (route groups dropped, [params] matched).
@@ -26,6 +29,7 @@ import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_rows";
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
 import { buildCloseDoors } from "@/lib/spine/close_rows";
+import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -114,6 +118,17 @@ for (const iso2 of codes) {
     for (const b of COPY.banned) if (d.label.toLowerCase().includes(b)) reds.push(`${iso2}: banned word "${b}" in a door`);
   }
 }
-console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${reds.length} red(s)`);
+let payCards = 0, payWithheld = 0;
+for (const iso2 of codes) {
+  const d = buildPayBars(iso2);
+  if (!d) continue;
+  payCards++;
+  const f = d.rows.find((r) => r.key === "minimum")?.value, a = d.rows.find((r) => r.key === "average")?.value;
+  const shouldWithhold = f != null && a != null && a < f * PAY_RATIO_FLOOR;
+  if (shouldWithhold !== !!d.withheld) reds.push(`${iso2}: withholding disagrees with the ratio (${f}, ${a})`);
+  if (d.withheld) payWithheld++;
+  for (const r of d.rows) { if (!/^(Minimum salary|Average salary)$/.test(r.label)) reds.push(`${iso2}: a pay label is not the founder's word ("${r.label}")`); if (d.worldMax && r.value > d.worldMax.value) reds.push(`${iso2}: ${r.label} ${r.value} exceeds the world's highest ${d.worldMax.value}`); }
+}
+console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);
