@@ -61,6 +61,8 @@
     "verify:rendered": "node scripts/verify_rendered_design.mjs",
     "verify:archetype-copy": "npx tsx scripts/verify_archetype_copy.ts",
     "harness:archetypes": "npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs scripts/harness/render_archetypes.tsx && node scripts/harness/check_archetypes.mjs --shots",
+    "harness:page": "npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/harness/env.cjs --require ./scripts/spikes/stub_next_font.cjs scripts/harness/render_page.tsx country GB && node scripts/harness/check_page_holes.mjs scratchpad/harness/pages/country-GB.html --shots",
+    "harness": "npm run harness:archetypes && npm run harness:page",
     "verify:overflow": "node scripts/audit_overflow.mjs country city cell --width 390"
   },
   "dependencies": {

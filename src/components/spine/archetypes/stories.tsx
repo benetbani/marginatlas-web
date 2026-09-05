@@ -260,7 +260,7 @@ export function pickNoteListInstances(): Instance[] {
   const out: Instance[] = [];
   const seen = new Set<string>();
   const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
-  for (const c of countriesWithNotes()) take(c, c === "GB" ? "the exemplar" : "authored notes");
+  for (const c of countriesWithNotes()) { take(c, c === "GB" ? "the exemplar, the narrow card" : "authored notes"); take(`${c}:wide`, "the wide card, two columns from lg"); }
   const none = codes().find((c) => !buildLocalsNotes(c)); if (none) take(none, "no notes on file, self-omits");
   return out;
 }
@@ -269,11 +269,13 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
   return (
     <div data-stories="note-list">
       {instances.map((i) => {
-        const d = buildLocalsNotes(i.iso2);
+        const [iso2, form] = i.iso2.split(":");
+        const wide = form === "wide";
+        const d = buildLocalsNotes(iso2);
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 305 }}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.locals.kicker}, {nameOf(i.iso2)}</div>
-            <NoteList notes={d.notes} />
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: wide ? 693 : 305 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.locals.kicker}, {nameOf(iso2)}</div>
+            <NoteList notes={d.notes} columns={wide ? 2 : 1} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

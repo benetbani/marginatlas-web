@@ -75,6 +75,10 @@ const GATES: Gate[] = [
   /* E6, the other half of "a lot of whitespace". The ink gate measures HEIGHT,
      so a card with a dead strip down its right passed as full. */
   { name: "gathered-emptiness", script: "scripts/verify_gathered_emptiness.mjs" },
+  /* The same rule on a LIVE render of the country page, which the four static
+     artefacts above never include, runs as `npm run harness:page` before a
+     ship (scripts/harness/check_page_holes.mjs): the render needs the database
+     for the money card, and this chain must not. Founder, 2026-09-05. */
   /* D1 read across every surface a visitor can walk, not only the four rebuilt
      spine pages `section-bands` already holds the line for. 2026-08-27: "the ban
      is site-wide, every live surface, not only the four reformed page types."

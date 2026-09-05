@@ -540,6 +540,7 @@ export function Band({
   children,
   split = "1-1",
   hero = false,
+  stack,
 }: {
   children: React.ReactNode;
   /** How the row divides. Founder, 2026-08-25: "not all divides in width should
@@ -547,6 +548,13 @@ export function Band({
    *  The set is closed on purpose: four ratios is a rhythm, an open number is the
    *  fourteen-white-alphas problem again. */
   split?: "1-1" | "1-2" | "2-1" | "2-3" | "3-2";
+  /** ONE COLUMN UNTIL lg, for an uneven band whose short card would sit three
+   *  fifths blank in a tablet's equal halves. Founder, 2026-09-05, on the
+   *  staff-cost card beside the note list: "massive white space". At 768 the
+   *  two stack at full width, the tall card's list flows into two columns
+   *  there, and the ratio takes over at 1024 as for every band. Used by one
+   *  band; the equal-halves rule below still holds for the rest. */
+  stack?: "lg";
   /** A CHROME band, and the only kind that may run the full width: the hero and
    *  the closing hand-off. Founder, same day: "for every subsection that
    *  stretches left to right full width, I think we should ban it except hero
@@ -598,10 +606,10 @@ export function Band({
      which is the sliver this whole rule exists to prevent. */
   const cols = {
     "1-1": "md:grid-cols-2",
-    "1-2": "md:grid-cols-2 lg:grid-cols-[1fr_2fr]",
-    "2-1": "md:grid-cols-2 lg:grid-cols-[2fr_1fr]",
-    "2-3": "md:grid-cols-2 lg:grid-cols-[2fr_3fr]",
-    "3-2": "md:grid-cols-2 lg:grid-cols-[3fr_2fr]",
+    "1-2": stack === "lg" ? "lg:grid-cols-[1fr_2fr]" : "md:grid-cols-2 lg:grid-cols-[1fr_2fr]",
+    "2-1": stack === "lg" ? "lg:grid-cols-[2fr_1fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_1fr]",
+    "2-3": stack === "lg" ? "lg:grid-cols-[2fr_3fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_3fr]",
+    "3-2": stack === "lg" ? "lg:grid-cols-[3fr_2fr]" : "md:grid-cols-2 lg:grid-cols-[3fr_2fr]",
   }[split];
   /* A BAND LEFT HOLDING ONE CARD TAKES A DELIBERATE TWO THIRDS. Several sections
      have a partner that renders for some cities and trades and not others, and

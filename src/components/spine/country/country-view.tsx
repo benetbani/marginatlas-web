@@ -582,7 +582,7 @@ function LocalsKnow({ iso2 }: { iso2?: string }) {
     <Box>
       <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
       <div id="locals">
-        <NoteList notes={d.notes} />
+        <NoteList notes={d.notes} columns={2} />
       </div>
     </Box>
   );
@@ -645,8 +645,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <Premises iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
           </Band>
         ) : null}
+        {/* 1-2, not 2-1, since 2026-09-05: the staff-cost card is short and the
+            note list tall, and the equal-heights rule left the wide salaries card
+            three fifths blank ("massive white space"). The notes take the wide
+            side in two columns and the two come close to one height. */}
         {d.hiring || d.locals_know ? (
-          <Band split="2-1">
+          <Band split="1-2" stack="lg">
             <Hiring hiring={d.hiring} />
             <LocalsKnow iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
           </Band>
