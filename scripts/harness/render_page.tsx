@@ -7,6 +7,7 @@
    read was the country page.
    usage, from E:/atlas/website:
      npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs        scripts/harness/render_page.tsx <surface> <slug...>
+     ... render_page.tsx --list [scripts/harness/pages.json]   (every page in the list, one process; a page that does not render is a red)
      surfaces: country <iso2> | city <slug> | cell <country> <geo> <industry> | industry <slug> | hood <city>
    Writes scratchpad/harness/pages/<surface>-<slugs>.html. No environment file is
    loaded: an adapter that needs a secret to render does not belong in a gate.
@@ -63,12 +64,7 @@ ${body}
 </html>`;
 }
 
-async function main() {
-  const [surface, ...slugs] = process.argv.slice(2);
-  if (!surface || !slugs.length) {
-    console.error("usage: render_page.tsx <surface> <slug...>");
-    process.exit(2);
-  }
+async function renderOne(surface: string, slugs: string[]): Promise<string | null> {
   let C: any;
   let data: any;
   let selfShelled = false;
@@ -81,7 +77,7 @@ async function main() {
     case "howto": C = HowToBody; data = { iso2: slugs[0].toUpperCase() }; break;
     default: console.error("unknown surface", surface); process.exit(2);
   }
-  if (!data) { console.log(`  ${surface} ${slugs.join("/")}: NO DATA (the adapter returned nothing; this instance does not render)`); return; }
+  if (!data) { console.log(`  ${surface} ${slugs.join("/")}: NO DATA (the adapter returned nothing; this instance does not render)`); return null; }
   /* The how-to page carries its main landmark in the page file, so the harness
      render wraps the body the same way; without it the filter would find no
      section card under main and pass on nothing. */
@@ -93,5 +89,36 @@ async function main() {
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}.html`;
   writeFileSync(out, mapAssets(page(`${surface} ${slugs.join(" ")}`, body)), "utf8");
   console.log(`  ${out}  ${Math.round(body.length / 1024)}KB`);
+  return out;
+}
+
+/* THE LIST (sys:page-filter-list, the build loop's run 12, 2026-09-06): every
+   page whose sections have landed on an archetype is in scripts/harness/pages.json,
+   and `--list` renders each in this one process, so the npm script stops
+   growing a hand-typed chain of renders (three by run 11). A listed page that
+   does not render is a red, because the list says it should. */
+const LIST = "scripts/harness/pages.json";
+type Listed = { surface: string; slugs: string[]; since?: string };
+async function main() {
+  const argv = process.argv.slice(2);
+  if (argv[0] === "--list") {
+    const path = argv[1] ?? LIST;
+    const list = JSON.parse(readFileSync(path, "utf8")) as { pages: Listed[] };
+    let missing = 0;
+    for (const p of list.pages) {
+      let out: string | null = null;
+      try { out = await renderOne(p.surface, p.slugs); } catch (e: any) { console.log(`  x ${p.surface} ${p.slugs.join(" ")}: ${String(e?.message ?? e)}`); }
+      if (!out) { missing++; console.log(`  x NO RENDER: ${p.surface} ${p.slugs.join(" ")} is in ${path} and did not render`); }
+    }
+    console.log(`render_page --list: ${list.pages.length - missing} of ${list.pages.length} page(s) rendered from ${path}`);
+    process.exit(missing ? 1 : 0);
+  }
+  const [surface, ...slugs] = argv;
+  if (!surface || !slugs.length) {
+    console.error("usage: render_page.tsx <surface> <slug...> | --list [pages.json]");
+    process.exit(2);
+  }
+  const out = await renderOne(surface, slugs);
+  if (!out) process.exit(1);
 }
 void main();

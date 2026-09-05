@@ -22,17 +22,25 @@
  * names its section.
  *
  * usage: node scripts/harness/check_page_holes.mjs <rendered.html ...> [--shots]
+ *        node scripts/harness/check_page_holes.mjs --list[=scripts/harness/pages.json] [--shots]
+ *        (--list reads every page in the list and expects its render under
+ *        scratchpad/harness/pages/; a listed page with no render is a red, NO RENDER)
  */
 import { chromium } from "playwright";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, existsSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 
 const WIDTHS = [1280, 768, 375];
 const args = process.argv.slice(2);
 const shots = args.includes("--shots");
-const files = args.filter((a) => !a.startsWith("--"));
-if (files.length === 0) { console.error("usage: node scripts/harness/check_page_holes.mjs <rendered.html ...> [--shots]"); process.exit(2); }
+/* THE LIST (sys:page-filter-list, run 12): the pages the filter reads every run
+   live in scripts/harness/pages.json, one entry per page on an archetype. */
+const listArg = args.find((a) => a === "--list" || a.startsWith("--list="));
+const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : "scripts/harness/pages.json";
+const listed = listArg ? JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) => `scratchpad/harness/pages/${p.surface}-${p.slugs.join("-")}.html`) : [];
+const files = [...args.filter((a) => !a.startsWith("--")), ...listed];
+if (files.length === 0) { console.error("usage: node scripts/harness/check_page_holes.mjs <rendered.html ...> [--shots] | --list[=pages.json] [--shots]"); process.exit(2); }
 
 function inPage() {
   const out = [];
@@ -84,6 +92,7 @@ const red = (page, w, id, msg) => reds.push({ page, w, id, msg });
 const browser = await chromium.launch();
 for (const file of files) {
   const name = basename(file).replace(/\.html$/, "");
+  if (!existsSync(file)) { reds.push({ page: name, w: "all", id: "-", msg: "NO RENDER: the list names this page and no render exists under scratchpad/harness/pages" }); continue; }
   for (const w of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 1200 }, deviceScaleFactor: 1 });
     const page = await ctx.newPage();

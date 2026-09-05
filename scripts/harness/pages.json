@@ -1,0 +1,26 @@
+{
+  "why": "The page filter's list (the build loop's run 12, 2026-09-06). Every page whose sections have landed on an archetype is here, added the run its first section lands; `npm run harness:page` renders each entry with scripts/harness/render_page.tsx --list and checks every render with scripts/harness/check_page_holes.mjs --list. surface is the renderer's surface (country, howto, city, cell, industry, hood), slugs its arguments, since the run that added the page. The coverage gate reds when a page folder has a section on an archetype and no entry here names its surface.",
+  "pages": [
+    {
+      "surface": "country",
+      "slugs": [
+        "GB"
+      ],
+      "since": "run 1, the country page's terminus"
+    },
+    {
+      "surface": "howto",
+      "slugs": [
+        "GB"
+      ],
+      "since": "run 5, the how-to page"
+    },
+    {
+      "surface": "city",
+      "slugs": [
+        "london"
+      ],
+      "since": "run 8, the city masthead"
+    }
+  ]
+}

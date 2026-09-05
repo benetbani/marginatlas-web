@@ -84,6 +84,18 @@ const uncovered = sections.filter((s) => !s.covered);
 const missing = uncovered.filter((s) => !excepted.has(s.key));
 const stale = exceptions.filter((e) => { const s = sections.find((x) => x.key === e.section); return !s || s.covered; });
 
+/* THE FILTER'S LIST (sys:page-filter-list, the build loop's run 12, 2026-09-06):
+   a page with a section on an archetype is in scripts/harness/pages.json, so the
+   page filter renders and reads it every run. The surface is the page folder's
+   name; the how-to view, which lives in the country folder, is its own surface.
+   `--pages=<path>` points the check at another list, for proving it. */
+const PAGES_PATH = process.argv.find((a) => a.startsWith("--pages="))?.slice("--pages=".length) ?? "scripts/harness/pages.json";
+const surfaceOf = (file: string) => (file.split("/").pop() ?? "").startsWith("how-to") ? "howto" : file.split("/")[3];
+const listedSurfaces = new Set<string>(existsSync(PAGES_PATH) ? (JSON.parse(readFileSync(PAGES_PATH, "utf8")) as { pages: Array<{ surface: string }> }).pages.map((p) => p.surface) : []);
+const onArchetypes = new Map<string, number>();
+for (const s of sections.filter((x) => x.covered)) onArchetypes.set(surfaceOf(s.file), (onArchetypes.get(surfaceOf(s.file)) ?? 0) + 1);
+const unlisted = [...onArchetypes].filter(([surface]) => !listedSurfaces.has(surface));
+
 if (INIT) {
   const added = missing.map((s) => ({ section: s.key, reason: "not yet on an archetype; a build loop queue row" }));
   const next = { why: "Sections of the spine pages not yet rendered through an archetype, each with a reason. The set only shrinks: delete an entry the run its section lands on an archetype; never add one to clear a red without a written reason.", exceptions: [...exceptions.filter((e) => !stale.includes(e)), ...added] };
@@ -96,8 +108,9 @@ const covered = sections.filter((s) => s.covered).length;
 console.log(`archetype-coverage: ${sections.length} sections in ${files.length} files; ${covered} on an archetype, ${uncovered.length} excepted or missing (${excepted.size} exceptions)`);
 for (const s of missing) console.log(`  x NEW SECTION ON THE OLD KIT: ${s.key} has no archetype inside its Box and no exception`);
 for (const e of stale) console.log(`  x STALE EXCEPTION: ${e.section} is now on an archetype or gone; delete its entry`);
-if (missing.length || stale.length) {
-  console.log(`${NEWLINE}  Point the section at an archetype, or name it in ${EXCEPTIONS_PATH} with a reason; delete entries whose sections are done.`);
+for (const [surface, n] of unlisted) console.log(`  x PAGE NOT IN THE FILTER'S LIST: ${surface} has ${n} section(s) on archetypes and ${PAGES_PATH} names no page of it`);
+if (missing.length || stale.length || unlisted.length) {
+  console.log(`${NEWLINE}  Point the section at an archetype, or name it in ${EXCEPTIONS_PATH} with a reason; delete entries whose sections are done; add a page to ${PAGES_PATH} the run its first section lands.`);
   process.exit(1);
 }
 console.log("PASS verify_archetype_coverage.");
