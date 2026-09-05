@@ -73,7 +73,10 @@ function inPage() {
     const band = card.parentElement; const bb = band ? band.getBoundingClientRect() : null;
     out.push({ id, cardW: Math.round(W), cardH: Math.round(H), holeW: Math.round(best.w / COLS * W), holeH: best.h * ROW, bandW: bb ? Math.round(bb.width) : null, siblings: band ? band.children.length : 1, x: Math.round(cb.left), y: Math.round(cb.top + scrollY) });
   }
-  return { out, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };
+  /* ROWS CUT: a chart that declares how many rows it holds must draw them all
+     at this width (the district ranking drew five of seven on a phone). */
+  const cut = [...document.querySelectorAll("[data-expect-rows]")].filter((el) => el.getClientRects().length).map((el) => { const expect = Number(el.getAttribute("data-expect-rows")); const drawn = [...el.querySelectorAll("[data-row]")].filter((r) => r.getClientRects().length).length; const card = el.closest('[class*="rounded-[14px]"]'); return { id: card?.id || card?.querySelector("[id]")?.id || "chart", expect, drawn }; }).filter((c) => c.drawn < c.expect);
+  return { out, cut, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };
 }
 
 const reds = [];
@@ -87,7 +90,8 @@ for (const file of files) {
     await page.goto(pathToFileURL(file).href, { waitUntil: "load" });
     await page.evaluate(() => document.fonts && document.fonts.ready);
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
-    const { out, pageScroll } = await page.evaluate(inPage);
+    const { out, cut, pageScroll } = await page.evaluate(inPage);
+    for (const c of cut) red(name, w, c.id, `ROWS CUT: the chart declares ${c.expect} rows and draws ${c.drawn}`);
     if (pageScroll) red(name, w, "page", "BOTCHED MOBILE: the page scrolls sideways");
     /* A PAGE WITH NO SECTION CARD UNDER MAIN IS NOT A PASS: a render that lost
        its landmark or its cards would otherwise sail through with zero holes. */

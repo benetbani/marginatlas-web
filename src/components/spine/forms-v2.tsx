@@ -1118,7 +1118,7 @@ export function LollipopColumn({
   const DOT = 9;
   const HEAD = STEM + DOT + 18;
   return (
-    <div data-idea="I2" style={{ position: "relative" }}>
+    <div data-idea="I2" data-expect-rows={kept.length} style={{ position: "relative" }}>
       {/* THE ZERO LINE: one element spanning the set, sitting exactly at the
           foot of every stem. Not a border on each column, because the column
           gap would cut it into dashes. */}
@@ -1230,6 +1230,7 @@ export function LollipopColumn({
               /* Below `lg` the tail is removed from the layout entirely, so the
                  survivors' columns widen instead of the whole set squeezing. */
               className={i < narrowKept ? undefined : "hidden lg:list-item"}
+              data-row={row.name}
               style={{ minWidth: 0 }}
             >
               {/* A PICKER ONLY WHERE ONE WAS ASKED FOR. With no onSelect the

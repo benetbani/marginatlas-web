@@ -75,11 +75,33 @@
  * not keep a dev server alive. Written down instead.
  */
 import * as React from "react";
-import { Box, Rail, InfoTip } from "@/components/spine/kit";
+import { Box, Rail, InfoTip, Fig } from "@/components/spine/kit";
 import { LollipopColumn } from "@/components/spine/forms-v2";
 import { SpineMap, type SpinePoint } from "@/components/spine/SpineMap";
 
 type District = { name: string; slug: string; character: string; rev_vs_city_pct: number; rent_mult: number; lat: number; lng: number };
+
+/* THE PHONE FORM OF THE DISTRICT RANKING: one row per district, the name,
+   a dot on a track at its multiple, the figure; the lightest in the accent as
+   the column form has it. Below sm only; the columns take over above. */
+function DistrictRows({ entries, format }: { entries: Array<{ name: string; value: number } | null | undefined>; format: (n: number) => string }) {
+  const kept = entries.filter((e): e is { name: string; value: number } => e != null && Number.isFinite(e.value) && e.value >= 0);
+  if (kept.length === 0) return null;
+  const max = Math.max(...kept.map((e) => e.value));
+  return (
+    <ol className="sm:hidden divide-y divide-[var(--c-border)]" data-expect-rows={kept.length} aria-label="Districts ranked by commercial rent, lightest first">
+      {kept.map((e, i) => (
+        <li key={e.name} data-row={e.name} className="grid grid-cols-[minmax(0,7rem)_1fr_auto] items-center gap-3 py-1.5">
+          <span className="truncate text-[length:var(--t-micro)] text-[var(--c-ink)]">{e.name}</span>
+          <span aria-hidden className="relative block h-px bg-[var(--c-line-strong)]">
+            <span className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ left: `calc(4px + (100% - 8px) * ${max > 0 ? e.value / max : 0})`, background: i === 0 ? "var(--terra)" : "var(--c-ink)" }} />
+          </span>
+          <Fig className={`text-[length:var(--t-micro)] ${i === 0 ? "text-[var(--terra-text)]" : "text-[var(--c-ink2)]"}`}>{format(e.value)}</Fig>
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 export function WhereToTrade({ d }: { d: any }) {
   const w = d.where_to_trade ?? {};
@@ -173,12 +195,23 @@ export function WhereToTrade({ d }: { d: any }) {
               district and its multiple as one of its three figures, so a reader
               scrolling a phone meets x3.00 in the West End immediately before this
               drawing rather than not at all. */}
-          <LollipopColumn
-            rows={entries}
-            format={asMult}
-            narrowCount={5}
-            ariaLabel="Districts ranked by commercial rent, lightest first"
-          />
+          {/* EVERY DISTRICT AT EVERY WIDTH, since the build loop's run 10
+              (2026-09-06). The five-column phone form lost the two heaviest
+              districts, and once the list of what each district is opened
+              beneath it (run 9) the chart read as a chart that had lost two.
+              From sm up every column draws (the band stacks until lg, so the
+              card is wide there); below sm the same seven rows draw as a list,
+              name, a dot on a track, the multiple, which fits any phone. The
+              page filter counts drawn rows against the declared count. */}
+          <div className="hidden sm:block">
+            <LollipopColumn
+              rows={entries}
+              format={asMult}
+              narrowCount={entries.length}
+              ariaLabel="Districts ranked by commercial rent, lightest first"
+            />
+          </div>
+          <DistrictRows entries={entries} format={asMult} />
           {/* THE CARD'S FOOT IS ONE ROW, NOT TWO, and a photograph is why. Stacked,
               the disclosure and the link left about 290px of nothing to their right
               across two lines, which is an empty rectangle wider than a third of a
