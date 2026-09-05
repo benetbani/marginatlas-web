@@ -50,6 +50,10 @@ const GATES: Gate[] = [
      network, no browser. The browser half runs as `npm run harness:archetypes`
      before a ship, by the same convention as verify:rendered. */
   { name: "archetype-copy", script: "scripts/verify_archetype_copy.ts" },
+  /* Every spine section is on an archetype or named in
+     data/archetypes/coverage_exceptions.json with a reason; the set only
+     shrinks. The build loop's ratchet (run 9, 2026-09-06). Browser-free. */
+  { name: "archetype-coverage", script: "scripts/verify_archetype_coverage.ts" },
   /* The spine2 invariants (PORT-CONTRACT M1-M9). Both are fast and browser-free.
      The rendered-design linter is deliberately NOT here: it drives a real
      browser, so it runs as `npm run verify:rendered` before a ship, not on

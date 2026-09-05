@@ -1,0 +1,209 @@
+{
+  "why": "Sections of the spine pages not yet rendered through an archetype, each with a reason. The set only shrinks: delete an entry the run its section lands on an archetype; never add one to clear a red without a written reason.",
+  "exceptions": [
+    {
+      "section": "src/components/spine/atlas-index.tsx#1",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/atlas-index.tsx#2",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#split",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#2",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#3",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#4",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#5",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#ramp",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#myth",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#8",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/cell-view.tsx#close",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/format-picker.tsx#1",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/interactive.tsx#peers",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/interactive.tsx#wages",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/interactive.tsx#risks",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/money-chapter.tsx#keeps",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/money-chapter.tsx#breakeven",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/cell/money-chapter.tsx#opening",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/chapters.tsx#earnings",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/chapters.tsx#2",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/chapters.tsx#3",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#verdict",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#space",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#4",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#seasonal",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#trades",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#7",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#8",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#9",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#11",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#pick",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/where-to-trade.tsx#districts",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/hood/hood-view.tsx#funnel",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#ladder",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#kept",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#spend",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#neighbours",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#split",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#6",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#7",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#open",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#9",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#survival",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#suits",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#12",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#myths",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/industry-view.tsx#close",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/industry/where-pays.tsx#1",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#lenses",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#10",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/city/city-view.tsx#peers",
+      "reason": "not yet on an archetype; a build loop queue row"
+    }
+  ]
+}
