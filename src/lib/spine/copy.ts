@@ -136,6 +136,8 @@ export const COPY = {
     dotLabels: ["One dot", "Two dots", "Three dots", "Four dots", "Five dots"],
     back: "Back to {country}",
   },
+  /** The city masthead through the answer card. */
+  cityHero: { subtitle: "Opening a business in {country}", allCities: "All cities" },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

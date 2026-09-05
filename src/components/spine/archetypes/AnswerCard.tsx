@@ -27,12 +27,19 @@ export type AnswerCardProps = {
   id?: string;
   name: string;
   iso2?: string;
+  /** A photograph beside the flag (a city's, the same file its card shows). */
+  image?: { src: string; alt: string } | null;
   subtitle: string | null;
-  answer: { label: string; value: string; regime?: string | null; confidence: "measured" | "modeled" | "placeholder" } | null;
+  /** `basis` replaces the country's composed basis line when the caller has its own (a city's "of the workforce"). */
+  answer: { label: string; value: string; regime?: string | null; basis?: string | null; confidence: "measured" | "modeled" | "placeholder" } | null;
   cells: KvCell[];
+  /** The answer wears the accent unless the page keeps its one accent elsewhere (the city blueprint: the verdict card's). */
+  tone?: "accent" | "ink";
+  /** One provenance line under the grid, with the modelled mark when the figures are modelled. */
+  foot?: { text: string; modeled: boolean } | null;
 };
 
-export function AnswerCard({ id = "take", name, iso2, subtitle, answer, cells }: AnswerCardProps) {
+export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot }: AnswerCardProps) {
   const tagged = answer != null && answer.confidence !== "measured";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   return (
@@ -40,6 +47,10 @@ export function AnswerCard({ id = "take", name, iso2, subtitle, answer, cells }:
       <Box id={id} data-archetype="answer-card">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <AtlasMark id="alt-country" size={13} className="opacity-55" />
+          {image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image.src} alt={image.alt} width={80} height={60} className="h-[60px] w-20 shrink-0 rounded-lg object-cover" data-hero-image />
+          ) : null}
           {iso2 ? <CountryFlag iso2={iso2} className="w-9 shrink-0" /> : null}
           <h1 id="headline" data-typography="custom" className="text-balance text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]">
             {name}
@@ -60,9 +71,9 @@ export function AnswerCard({ id = "take", name, iso2, subtitle, answer, cells }:
                 <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{answer.label}</div>
                 {tagged ? <SampleTag /> : null}
               </div>
-              <div className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{answer.value}</div>
+              <div className={`fig text-[length:var(--t-answer)] leading-none ${tone === "ink" ? "text-[var(--c-ink)]" : "text-[var(--terra-text)]"}`}>{answer.value}</div>
               <div className="mt-2.5 max-w-[40ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">
-                {COPY.answer.basis}
+                {answer.basis != null ? answer.basis : COPY.answer.basis}
                 {answer.regime ? (
                   <>
                     {" "}{COPY.answer.basisUnder} <span className="text-[var(--c-ink)]">{answer.regime}</span>
@@ -82,6 +93,12 @@ export function AnswerCard({ id = "take", name, iso2, subtitle, answer, cells }:
           )}
           {live.length > 0 ? <KvGrid cells={live} /> : null}
         </div>
+        {foot ? (
+          <div data-foot className="mt-4 flex items-start gap-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+            {foot.modeled ? <AtlasMark id="modeled" size={14} className="mt-px shrink-0" /> : null}
+            <span className="max-w-[56ch]">{foot.text}</span>
+          </div>
+        ) : null}
       </Box>
     </Band>
   );

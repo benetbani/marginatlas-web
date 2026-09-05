@@ -13,6 +13,7 @@ import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { COPY } from "@/lib/spine/copy";
 import { AnswerCard } from "./AnswerCard";
 import { KvGrid } from "./KvGrid";
+import { cityHeroFacts, type CityHeroInstance } from "@/lib/spine/city_hero_facts";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
 import { CardPager } from "./CardPager";
@@ -377,6 +378,19 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+/** The city masthead stories take their seeds from `loadCityHeroInstances()` (async, the renderer and the stories page await it). */
+export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }) {
+  return (
+    <div data-stories="city-hero">
+      {instances.map((i) => {
+        const f = cityHeroFacts(i.seed);
+        const el = f ? <AnswerCard id={`city-${i.slug}`} name={f.name} iso2={f.iso2} image={f.image} subtitle={f.subtitle} answer={f.answer} cells={f.cells} tone="ink" foot={f.foot} /> : null;
+        return <Story key={i.slug} iso2={i.slug} why={i.why}>{el}</Story>;
       })}
     </div>
   );
