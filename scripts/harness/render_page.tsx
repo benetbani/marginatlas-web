@@ -31,6 +31,7 @@ import { SpineCellBody } from "../../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../../src/components/spine/industry/industry-view";
 import { SpineHoodBody } from "../../src/components/spine/hood/hood-view";
 import { SpineShell } from "../../src/components/spine/shell";
+import { HowToBody } from "../../src/components/spine/country/how-to-view";
 
 const CSS_PATH = "scratchpad/pages/site.css";
 try {
@@ -77,10 +78,11 @@ async function main() {
     case "cell": C = SpineCellBody; data = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); break;
     case "industry": C = SpineIndustryBody; data = await buildSpineIndustrySeed(slugs[0]); break;
     case "hood": C = SpineHoodBody; data = await buildSpineHoodSeed(slugs[0]); selfShelled = true; break;
+    case "howto": C = HowToBody; data = { iso2: slugs[0].toUpperCase() }; break;
     default: console.error("unknown surface", surface); process.exit(2);
   }
   if (!data) { console.log(`  ${surface} ${slugs.join("/")}: NO DATA (the adapter returned nothing; this instance does not render)`); return; }
-  const inner = React.createElement(C, { data });
+  const inner = React.createElement(C, surface === "howto" ? data : { data });
   const body = renderToStaticMarkup(selfShelled ? inner : React.createElement(SpineShell as any, null, inner));
   mkdirSync("scratchpad/harness/pages", { recursive: true });
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}.html`;

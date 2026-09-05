@@ -30,6 +30,7 @@ import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_ro
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
 import { buildCloseDoors } from "@/lib/spine/close_rows";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
+import { buildHowTo } from "@/lib/spine/howto_rows";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -103,6 +104,25 @@ function routePatterns(): RegExp[] {
 }
 const ROUTES = routePatterns();
 const resolves = (href: string) => ROUTES.some((re) => re.test(href.split("?")[0].split("#")[0]));
+function checkDoors(iso2: string, doors: ReturnType<typeof buildCloseDoors>, page: string) {
+  if (doors.length > DOOR_CAP) reds.push(`${iso2} ${page}: ${doors.length} doors, over ${DOOR_CAP}`);
+  if (doors.filter((d) => d.kind === "pill").length > 1) reds.push(`${iso2} ${page}: more than one pill door`);
+  const firsts = doors.map((d) => d.label.split(/\s+/)[0].toLowerCase());
+  if (new Set(firsts).size !== firsts.length) reds.push(`${iso2} ${page}: doors share a first word (${firsts.join(", ")})`);
+  for (const d of doors) {
+    if (!resolves(d.href)) reds.push(`${iso2} ${page}: door "${d.label}" points at ${d.href}, which is not a route`);
+    if (/with pro/i.test(d.label)) reds.push(`${iso2} ${page}: a door promises "with Pro"`);
+    for (const b of COPY.banned) if (d.label.toLowerCase().includes(b)) reds.push(`${iso2} ${page}: banned word "${b}" in a door`);
+  }
+}
+let howtos = 0;
+for (const iso2 of codes) {
+  const h = buildHowTo(iso2);
+  if (!h) continue;
+  howtos++;
+  checkDoors(iso2, h.doors, "how-to");
+  for (const n of [...h.forms, ...h.dots]) for (const b of COPY.banned) if (`${n.label} ${n.fact}`.toLowerCase().includes(b)) reds.push(`${iso2} how-to: banned word "${b}" in a note`);
+}
 let termini = 0;
 for (const iso2 of codes) {
   const doors = buildCloseDoors(iso2);
@@ -129,6 +149,6 @@ for (const iso2 of codes) {
   if (d.withheld) payWithheld++;
   for (const r of d.rows) { if (!/^(Minimum salary|Average salary)$/.test(r.label)) reds.push(`${iso2}: a pay label is not the founder's word ("${r.label}")`); if (d.worldMax && r.value > d.worldMax.value) reds.push(`${iso2}: ${r.label} ${r.value} exceeds the world's highest ${d.worldMax.value}`); }
 }
-console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${reds.length} red(s)`);
+console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);

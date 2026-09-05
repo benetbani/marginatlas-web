@@ -8,6 +8,7 @@
 import { getFormationRows } from "@/lib/tax/country_rates";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { COPY } from "@/lib/spine/copy";
+import { inSentence } from "@/lib/spine/place_names";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -37,6 +38,8 @@ export function buildSetupRows(iso2In: string): SetupRow[] {
 export function howToOpenDoor(iso2: string): { href: string; label: string } | null {
   const name = (COUNTRIES as Array<{ code: string; name: string }>).find((c) => c.code === iso2.toUpperCase())?.name;
   if (!name) return null;
-  const HOW_TO_PAGE_EXISTS = false;
-  return HOW_TO_PAGE_EXISTS ? { href: `/${iso2.toLowerCase()}/how-to-open`, label: COPY.tiers.door.replace("{country}", name) } : null;
+  const HOW_TO_PAGE_EXISTS = true; // src/app/[country]/how-to-open/page.tsx, built run 5 (2026-09-05)
+  // The page answers 404 for a country with no legal form on file, so the door is not drawn there either.
+  if (buildSetupRows(iso2).length === 0) return null;
+  return HOW_TO_PAGE_EXISTS ? { href: `/${iso2.toLowerCase()}/how-to-open`, label: COPY.tiers.door.replace("{country}", inSentence(name)) } : null;
 }

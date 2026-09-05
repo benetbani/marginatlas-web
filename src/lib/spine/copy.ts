@@ -126,6 +126,16 @@ export const COPY = {
     edge: "World's highest: {name}, {figure}",
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
   },
+  /** The how-to page, "How to open a business in [country name]" (founder ruling 8, 2026-09-04). */
+  howto: {
+    title: "How to open a business in {country}",
+    lead: "The legal forms on offer, what each costs and takes to register, what each one is in plain words, and what the paperwork dots mean.",
+    cells: "What a business pays",
+    forms: "What each form is",
+    dots: "What the paperwork dots mean",
+    dotLabels: ["One dot", "Two dots", "Three dots", "Four dots", "Five dots"],
+    back: "Back to {country}",
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

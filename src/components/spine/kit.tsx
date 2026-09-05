@@ -605,7 +605,7 @@ export function Band({
      nothing to add at 768, and firing it there would give a lean survivor 229px,
      which is the sliver this whole rule exists to prevent. */
   const cols = {
-    "1-1": "md:grid-cols-2",
+    "1-1": stack === "lg" ? "lg:grid-cols-2" : "md:grid-cols-2",
     "1-2": stack === "lg" ? "lg:grid-cols-[1fr_2fr]" : "md:grid-cols-2 lg:grid-cols-[1fr_2fr]",
     "2-1": stack === "lg" ? "lg:grid-cols-[2fr_1fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_1fr]",
     "2-3": stack === "lg" ? "lg:grid-cols-[2fr_3fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_3fr]",

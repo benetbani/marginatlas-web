@@ -16,6 +16,8 @@
  *    the salaries card beside it). The list decides by ITS OWN width, a
  *    container query at 600px, below which a column could not hold a fact
  *    inside four lines; the caller only says whether columns are allowed.
+ *    An odd last note spans both columns, so a row is never half empty (seen
+ *    on the how-to page at 768: three forms, the third alone beside a blank).
  *  - Nothing drawn, no figure required: the note list is words by design.
  *  - No notes, nothing drawn.
  */
@@ -29,7 +31,7 @@ export function NoteList({ notes, columns = 1 }: { notes: LocalNote[]; columns?:
     <div data-archetype="note-list" data-editorial data-notes={String(live.length)} data-columns={String(columns)} className="[container-type:inline-size]">
       <ol className={columns === 2 ? "grid [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6" : "grid"}>
         {live.map((n, i) => (
-          <li key={i} data-note={i} className={"border-t border-[var(--c-border)] py-2.5 first:border-t-0 first:pt-0 last:pb-0" + (columns === 2 ? " [@container(min-width:600px)]:[&:nth-child(2)]:border-t-0 [@container(min-width:600px)]:[&:nth-child(2)]:pt-0" : "")}>
+          <li key={i} data-note={i} className={"border-t border-[var(--c-border)] py-2.5 first:border-t-0 first:pt-0 last:pb-0" + (columns === 2 ? " [@container(min-width:600px)]:[&:nth-child(2)]:border-t-0 [@container(min-width:600px)]:[&:nth-child(2)]:pt-0 [@container(min-width:600px)]:[&:nth-child(odd):last-child]:col-span-2" : "")}>
             <div data-note-label className="text-[length:var(--t-micro)] font-semibold leading-tight text-[var(--c-ink)]">{n.label}</div>
             <p data-note-fact className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{n.fact}</p>
           </li>
