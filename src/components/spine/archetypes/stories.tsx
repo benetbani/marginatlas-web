@@ -12,6 +12,7 @@ import { marginCardFromSnapshot, snapshotCountries, SNAPSHOT_TAKEN } from "@/lib
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { COPY } from "@/lib/spine/copy";
 import { AnswerCard } from "./AnswerCard";
+import { KvGrid } from "./KvGrid";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
 import { CardPager } from "./CardPager";
@@ -343,6 +344,36 @@ export function PayBarsStories({ instances = pickPayBarsInstances() }: { instanc
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 347 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.pay.kicker}, {nameOf(i.iso2)}</div>
             <PayBars rows={d.rows} worldMax={d.worldMax} withheld={d.withheld} fmt={usd} edgeLabel={(name, figure) => COPY.pay.edge.replace("{name}", name).replace("{figure}", figure)} />
+          </div>
+        ) : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+/** The instance set for the key-value grid on its own: the exemplar's cells in a wide card ("GB:wide") and a narrow one ("GB"), plus the country with the fewest cells, so the grid's columns are measured by its own width. */
+export function pickKvGridInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (key: string, why: string) => { if (!seen.has(key)) { seen.add(key); out.push({ iso2: key, why }); } };
+  take("GB:wide", "the exemplar's cells in a wide card, the groups side by side");
+  take("GB", "the same cells in a narrow card, the groups stacked");
+  const facts = codes().map((c) => ({ c, f: buildHeroFacts(c) })).filter((x) => x.f.cells.length > 0);
+  const fewest = [...facts].sort((a, b) => a.f.cells.length - b.f.cells.length)[0]; if (fewest) take(`${fewest.c}:wide`, `the fewest cells, ${fewest.f.cells.length}, in a wide card`);
+  return out;
+}
+
+export function KvGridStories({ instances = pickKvGridInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="kv-grid">
+      {instances.map((i) => {
+        const [iso2, form] = i.iso2.split(":");
+        const f = buildHeroFacts(iso2);
+        const el = f.cells.length ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: form === "wide" ? 1072 : 520 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.howto.cells}, {nameOf(iso2)}</div>
+            <KvGrid cells={f.cells} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

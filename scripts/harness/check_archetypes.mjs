@@ -22,6 +22,8 @@
  *    one line from 768 up and within two on a phone.
  *  PAY BARS: every fill inside its track, the edge label inside the card, the
  *    two words present, a withheld pair drawing no bar.
+ *  KV GRID: when its groups sit side by side, their first figures share one
+ *    top (the reserved heading line), and no group is left alone in a row.
  *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
  *    at the ends, never clamped), pole words on one line, one dot colour a table.
  * BLIND SPOT: it measures a static render with web fonts loaded from the
@@ -137,6 +139,13 @@ function inPage() {
       r.payEdgeOut = edge ? (edge.getBoundingClientRect().right > cb2.right + 1 || edge.scrollWidth > edge.clientWidth + 1 ? 1 : 0) : 0;
       const txt = card.textContent || ""; r.payWords = (/Minimum salary/.test(txt) ? 1 : 0) + (/Average salary/.test(txt) ? 1 : 0);
     }
+    if (r.kind === "kv-grid") {
+      const gs = [...card.querySelectorAll("[data-kv-group]")].filter((g) => g.getClientRects().length);
+      const tops = gs.map((g) => Math.round(g.getBoundingClientRect().top));
+      const sideBySide = gs.length > 1 && Math.max(...tops) - Math.min(...tops) <= 2;
+      r.kvSide = sideBySide;
+      r.kvFirstFigTops = sideBySide ? gs.map((g) => { const f = g.querySelector("[data-kv-cell] .fig"); return f ? Math.round(f.getBoundingClientRect().top) : null; }).filter((t) => t != null) : [];
+    }
     if (r.kind === "compare-table") {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
       r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
@@ -243,6 +252,9 @@ for (const w of WIDTHS) {
       if (r.payEdgeOut) red(r.inst, w, "BOTCHED MOBILE", "the edge label is cut or outside the card");
       if (r.payWithheld && r.payBars) red(r.inst, w, "PROMISE", "a withheld pair draws a bar");
       if (!r.payWithheld && r.payBars === 2 && r.payWords !== 2) red(r.inst, w, "REPETITION", `the two words appear ${r.payWords} times, not twice`);
+    }
+    if (r.kind === "kv-grid" && r.kvSide) {
+      const t = r.kvFirstFigTops || []; if (t.length > 1 && Math.max(...t) - Math.min(...t) > 2) red(r.inst, w, "UNEQUAL", `groups side by side with first figures at tops ${t.join(", ")}`);
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);
