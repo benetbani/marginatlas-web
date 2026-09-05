@@ -22,6 +22,8 @@ import { RangeStrip } from "./RangeStrip";
 import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
 import { SpectraTable } from "./SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
+import { NoteList } from "./NoteList";
+import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { usd } from "@/components/spine/kit";
 
 export type Instance = { iso2: string; why: string };
@@ -245,6 +247,33 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances() }:
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{side === "people" ? COPY.character.people.kicker : COPY.character.state.kicker}, {nameOf(iso2)}</div>
             <SpectraTable rows={d.rows} dot={d.dot} foot={d.foot} />
+          </div>
+        ) : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+/** The instance set for the note list: every country holding authored notes, then one without, which self-omits. */
+export function pickNoteListInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
+  for (const c of countriesWithNotes()) take(c, c === "GB" ? "the exemplar" : "authored notes");
+  const none = codes().find((c) => !buildLocalsNotes(c)); if (none) take(none, "no notes on file, self-omits");
+  return out;
+}
+
+export function NoteListStories({ instances = pickNoteListInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="note-list">
+      {instances.map((i) => {
+        const d = buildLocalsNotes(i.iso2);
+        const el = d ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 305 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.locals.kicker}, {nameOf(i.iso2)}</div>
+            <NoteList notes={d.notes} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

@@ -16,6 +16,8 @@
  *  PROMISE: a subtitle naming registration only when a registration cell
  *    renders.
  *  REPETITION: no micro label repeated inside one card.
+ *  NOTES: a label on one line, a fact within four lines, at most five notes
+ *    (the founder's wall-of-text verdict, 2026-08-27).
  *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
  *    at the ends, never clamped), pole words on one line, one dot colour a table.
  * BLIND SPOT: it measures a static render with web fonts loaded from the
@@ -109,6 +111,12 @@ function inPage() {
       }
       r.dotColors = dotColors.size;
     }
+    if (r.kind === "note-list") {
+      const lineOf = (el) => { const cs = getComputedStyle(el); return parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.3; };
+      r.noteCount = card.querySelectorAll("[data-note]").length;
+      r.labelWraps = [...card.querySelectorAll("[data-note-label]")].filter((el) => el.getBoundingClientRect().height > lineOf(el) * 1.5).length;
+      r.factLines = [...card.querySelectorAll("[data-note-fact]")].map((el) => Math.round(el.getBoundingClientRect().height / lineOf(el)));
+    }
     if (r.kind === "compare-table") {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
       r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
@@ -198,6 +206,11 @@ for (const w of WIDTHS) {
       if (r.dotsOut) red(r.inst, w, "OFF TRACK", `${r.dotsOut} dot(s) outside the track`);
       if (r.poleWraps) red(r.inst, w, "BOTCHED MOBILE", `${r.poleWraps} pole word(s) wrap to a second line`);
       if (r.dotColors > 1) red(r.inst, w, "ACCENT", `${r.dotColors} dot colours in one table`);
+    }
+    if (r.kind === "note-list") {
+      if (r.labelWraps) red(r.inst, w, "WALL OF TEXT", `${r.labelWraps} label(s) wrap: a label that wraps is a sentence`);
+      const walls = (r.factLines || []).filter((n) => n > 4).length; if (walls) red(r.inst, w, "WALL OF TEXT", `${walls} fact(s) run past four lines`);
+      if (r.noteCount > 5) red(r.inst, w, "OVERLOAD", `${r.noteCount} notes, over five`);
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);

@@ -108,6 +108,8 @@ export const COPY = {
       foot: "born abroad",
     },
   },
+  /** The note list (what locals know): authored notes, the page's one editorial section. */
+  locals: { kicker: "What locals know" },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

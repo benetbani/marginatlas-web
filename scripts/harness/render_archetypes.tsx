@@ -12,7 +12,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances } from "../../src/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickNoteListInstances } from "../../src/components/spine/archetypes/stories";
 
 const CSS_PATH = "scratchpad/pages/site.css";
 try {
@@ -21,7 +21,7 @@ try {
   /* a stale stylesheet still renders */
 }
 const css = readFileSync(CSS_PATH, "utf8");
-const instances = { "answer-card": pickAnswerCardInstances(), "ranked-bars": pickRankedBarsInstances(), "compare-table": pickCompareTableInstances(), "card-pager": pickCardPagerInstances(), "tiers-table": pickTiersTableInstances(), "range-strip": pickRangeStripInstances(), "spectra-table": pickSpectraTableInstances() };
+const instances = { "answer-card": pickAnswerCardInstances(), "ranked-bars": pickRankedBarsInstances(), "compare-table": pickCompareTableInstances(), "card-pager": pickCardPagerInstances(), "tiers-table": pickTiersTableInstances(), "range-strip": pickRangeStripInstances(), "spectra-table": pickSpectraTableInstances(), "note-list": pickNoteListInstances() };
 const body = renderToStaticMarkup(
   <main className="mx-auto max-w-[1120px] px-4 py-10">
     <AnswerCardStories instances={instances["answer-card"]} />
@@ -31,6 +31,7 @@ const body = renderToStaticMarkup(
     <TiersTableStories instances={instances["tiers-table"]} />
     <RangeStripStories instances={instances["range-strip"]} />
     <SpectraTableStories instances={instances["spectra-table"]} />
+    <NoteListStories instances={instances["note-list"]} />
   </main>,
 );
 const html = `<!doctype html><html lang="en" style="--font-sans: Geist, ui-sans-serif, system-ui, sans-serif; --font-serif: Space Grotesk, ui-sans-serif, system-ui, sans-serif;"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Archetype stories</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap"><style>${css}</style></head><body class="bg-[var(--c-bg)] text-[var(--c-ink)]">${body}</body></html>`;

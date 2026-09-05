@@ -12,6 +12,8 @@
  *    cell resolves; it names the answer only when the answer resolves.
  *  NO EMPTY SLOT: no cell carries an empty value.
  *  TAG: a modelled answer is marked modelled, so the card tags it.
+ *  NOTES: every authored note list holds at most five notes, a label of at
+ *    most seven words and a fact of at most 140 characters, no banned word.
  * BLIND SPOT: it cannot see a wrap or a hole; the browser half does that.
  */
 import { COUNTRIES } from "@/lib/taxonomy";
@@ -19,6 +21,7 @@ import { buildHeroFacts } from "@/lib/spine/hero_facts";
 import { COPY } from "@/lib/spine/copy";
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_rows";
+import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
 
 const reds: string[] = [];
 const codes = (COUNTRIES as any[]).map((c) => String(c.code ?? c.iso2 ?? "").toUpperCase()).filter((c) => c.length === 2);
@@ -60,6 +63,19 @@ for (const iso2 of snapshotCountries()) {
   for (const r of card.rows) if (!(r.margin > 0.03)) reds.push(`${iso2}: a floored or negative margin reached the card (${r.name})`);
   if (card.withheld > 0 && !card.withheldLine) reds.push(`${iso2}: rows withheld without a line`);
 }
-console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${reds.length} red(s)`);
+let noteLists = 0;
+for (const iso2 of countriesWithNotes()) {
+  const d = buildLocalsNotes(iso2);
+  if (!d) continue;
+  noteLists++;
+  if (d.notes.length > NOTE_CAP) reds.push(`${iso2}: ${d.notes.length} notes, over ${NOTE_CAP}`);
+  for (const n of d.notes) {
+    if (n.label.split(/\s+/).length > LABEL_WORDS_CAP) reds.push(`${iso2}: a note label over ${LABEL_WORDS_CAP} words: "${n.label}"`);
+    if (n.fact.length > FACT_CHARS_CAP) reds.push(`${iso2}: a note fact over ${FACT_CHARS_CAP} characters: "${n.fact.slice(0, 40)}"`);
+    for (const b of COPY.banned) if (`${n.label} ${n.fact}`.toLowerCase().includes(b)) reds.push(`${iso2}: banned word "${b}" in a note`);
+    if (/\u2014/.test(n.label + n.fact)) reds.push(`${iso2}: an em dash in a note`);
+  }
+}
+console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);

@@ -38,6 +38,8 @@ import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
+import { NoteList } from "@/components/spine/archetypes/NoteList";
+import { buildLocalsNotes } from "@/lib/spine/locals_rows";
 import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards } from "@/lib/spine/city_cards";
@@ -566,19 +568,21 @@ function Hiring({ hiring }: { hiring: any }) {
   );
 }
 
-function LocalsKnow({ locals }: { locals: any }) {
-  const items: any[] = Array.isArray(locals?.items) ? locals.items.slice(0, 5) : [];
-  if (items.length === 0) return null;
+/**
+ * What locals know, through the note-list archetype: authored notes from one
+ * data file, a label over one fact, at most five, always sample-tagged
+ * because they are written by hand and not derived from a dataset. A
+ * country without notes draws nothing.
+ */
+function LocalsKnow({ iso2 }: { iso2?: string }) {
+  if (!iso2) return null;
+  const d = buildLocalsNotes(iso2);
+  if (!d) return null;
   return (
     <Box>
-      <Rail icon="locals-know" kicker="What locals know" sample />
-      <div id="locals" className="divide-y divide-[var(--c-border)]">
-        {items.map((it: any, i: number) => (
-          <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-            <div className="text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">{it.label}</div>
-            <div className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{it.fact}</div>
-          </div>
-        ))}
+      <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
+      <div id="locals">
+        <NoteList notes={d.notes} />
       </div>
     </Box>
   );
@@ -644,7 +648,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
         {d.hiring || d.locals_know ? (
           <Band split="2-1">
             <Hiring hiring={d.hiring} />
-            <LocalsKnow locals={d.locals_know} />
+            <LocalsKnow iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
           </Band>
         ) : null}
         <Close meta={d.meta} />

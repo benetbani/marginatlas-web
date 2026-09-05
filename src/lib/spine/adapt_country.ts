@@ -116,6 +116,7 @@
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
 import { COUNTRIES, industryToSlug } from "@/lib/taxonomy";
+import { buildLocalsNotes } from "@/lib/spine/locals_rows";
 import { getCellBySlug, withBudget, slugify } from "@/lib/cells";
 import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { cityPageHref } from "@/lib/cities/city_pages";
@@ -1142,37 +1143,16 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
      TAGGED "placeholder", which is the honest word: nothing here is derived from
      a dataset. It is authored editorial standing where a sourced local-knowledge
      table does not exist yet. */
-  const LOCALS_KNOW: Record<string, Array<{ label: string; fact: string }>> = {
-    GB: [
-      {
-        label: "Registering is fast, payroll is not",
-        fact: "A sole trader can register online in an afternoon. Setting up an employer scheme to run payroll is the step that actually takes time.",
-      },
-      {
-        label: "The headline rent is not the rent",
-        fact: "On a strong high street, rates and service charge can add a third again on top of the quoted figure.",
-      },
-      {
-        label: "Small premises often pay less",
-        fact: "Most counties hold a rate relief for small premises, so the same shop can cost very different amounts a few miles apart.",
-      },
-      {
-        label: "The first hire triggers a pension",
-        fact: "Hiring a first employee triggers pension auto-enrolment, so budget for the on-cost from the first payslip, not later.",
-      },
-    ],
-  };
-  const localsItems = LOCALS_KNOW[code];
-  const locals_know =
-    localsItems && localsItems.length > 0
-      ? {
-          _meta: {
-            confidence: "placeholder" as SpineConfidence,
-            source: "Written by hand for this country, not derived from a dataset.",
-          },
-          items: localsItems,
-        }
-      : undefined;
+  /* The notes live in data/archetypes/locals_notes.json and are read through
+     the note list's own builder, so the adapter and the archetype never hold
+     two copies of one authored sentence. */
+  const localsBuilt = buildLocalsNotes(code);
+  const locals_know = localsBuilt
+    ? {
+        _meta: { confidence: "placeholder" as SpineConfidence, source: localsBuilt.source },
+        items: localsBuilt.notes,
+      }
+    : undefined;
 
   /* ===================== THE HONEST TAKE ================================ */
   /* Task 18's close. The three ticked checks the panel judged the right closing
