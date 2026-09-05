@@ -81,6 +81,33 @@ export const COPY = {
     marks: { bottom: "Bottom tenth", typical: "Typical", top: "Top tenth" },
     noSpread: "bottom and top tenth not researched yet for this country",
   },
+  /** The spectra tables (the character): the founder's personal keep since 2026-06-18, two six-spectra tables, his six orders of 2026-08-30 (explanatory poles, best on the right, ink dots for the state and terracotta for people, a foot figure under each). The words are his kept build's. */
+  character: {
+    state: {
+      kicker: "Dealing with the state",
+      rows: {
+        tax: { name: "Tax predictability", left: "Rules change yearly", right: "Set for years" },
+        bribery: { name: "Clean dealing", left: "Bribes expected", right: "By the book" },
+        tasks: { name: "Getting things done", left: "Weeks of stamps", right: "Same-week answers" },
+        time: { name: "Waiting time", left: "Queues for months", right: "Days, not months" },
+        courts: { name: "Courts", left: "Connections decide", right: "Contracts hold" },
+        new: { name: "Openness to the new", left: "New ways resisted", right: "New ways welcomed" },
+      },
+      foot: "of firms are foreign-owned",
+    },
+    people: {
+      kicker: "Dealing with people",
+      rows: {
+        open: { name: "Openness", left: "Keep to themselves", right: "Quick to include you" },
+        innovation: { name: "Innovation", left: "The old way rules", right: "New ideas land" },
+        direct: { name: "Directness", left: "Read between the lines", right: "Said to your face" },
+        punctual: { name: "Timekeeping", left: "Schedules drift", right: "Clocks are kept" },
+        straight: { name: "Straight dealing", left: "Corners get cut", right: "A word is kept" },
+        ambition: { name: "Ambition", left: "Kept quiet", right: "Worn openly" },
+      },
+      foot: "born abroad",
+    },
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

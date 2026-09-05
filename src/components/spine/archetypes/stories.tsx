@@ -20,6 +20,8 @@ import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
 import { RangeStrip } from "./RangeStrip";
 import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
+import { SpectraTable } from "./SpectraTable";
+import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { usd } from "@/components/spine/kit";
 
 export type Instance = { iso2: string; why: string };
@@ -207,6 +209,42 @@ export function RangeStripStories({ instances = pickRangeStripInstances() }: { i
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: kind === "premises" ? 347 : 536 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kind === "premises" ? COPY.premises.kicker : COPY.customers.kicker}, {nameOf(iso2)}</div>
             <RangeStrip marks={d.marks} scale={kind === "premises" ? "log" : "linear"} fmt={usd} basis={kind === "premises" ? COPY.premises.basis : COPY.customers.basis} note={d.note} extra={d.extra} />
+          </div>
+        ) : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+/** The instance set for the spectra tables, keyed "XX:state" / "XX:people": the exemplar, the highest and lowest reads (a dot at either end of the track), and a country with no reads on file. */
+export function pickSpectraTableInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (key: string, why: string) => { if (!seen.has(key)) { seen.add(key); out.push({ iso2: key, why }); } };
+  const all = codes().map((c) => ({ c, t: buildCharacterTables(c) }));
+  const held = all.filter((x) => x.t.state && x.t.people);
+  take("GB:state", "the exemplar");
+  take("GB:people", "the exemplar");
+  const mean = (d: { rows: Array<{ position: number }> } | null) => (d ? d.rows.reduce((a, r) => a + r.position, 0) / d.rows.length : 0);
+  const hiState = [...held].sort((a, b) => mean(b.t.state) - mean(a.t.state))[0]; if (hiState) take(`${hiState.c}:state`, "the highest reads, a dot at the track's end");
+  const loPeople = [...held].sort((a, b) => mean(a.t.people) - mean(b.t.people))[0]; if (loPeople) take(`${loPeople.c}:people`, "the lowest reads, a dot at the track's start");
+  const loState = [...held].sort((a, b) => mean(a.t.state) - mean(b.t.state))[0]; if (loState) take(`${loState.c}:state`, "the lowest state reads");
+  const none = all.find((x) => !x.t.state && !x.t.people); if (none) take(`${none.c}:state`, "no reads on file, self-omits");
+  return out;
+}
+
+export function SpectraTableStories({ instances = pickSpectraTableInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="spectra-table">
+      {instances.map((i) => {
+        const [iso2, side] = i.iso2.split(":");
+        const t = buildCharacterTables(iso2);
+        const d = side === "people" ? t.people : t.state;
+        const el = d ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{side === "people" ? COPY.character.people.kicker : COPY.character.state.kicker}, {nameOf(iso2)}</div>
+            <SpectraTable rows={d.rows} dot={d.dot} foot={d.foot} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

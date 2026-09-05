@@ -16,6 +16,8 @@
  *  PROMISE: a subtitle naming registration only when a registration cell
  *    renders.
  *  REPETITION: no micro label repeated inside one card.
+ *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
+ *    at the ends, never clamped), pole words on one line, one dot colour a table.
  * BLIND SPOT: it measures a static render with web fonts loaded from the
  * network if reachable and the fallback stack if not; a wrap that depends on
  * the exact font can differ by a line. It cannot judge taste.
@@ -95,6 +97,17 @@ function inPage() {
       const trs = [...card.querySelectorAll("[data-tier-row]")].filter((el) => el.getClientRects().length);
       r.tierRows = trs.map((el) => Math.round(el.getBoundingClientRect().height));
       r.headsCount = [...card.querySelectorAll("span")].filter((el) => el.getClientRects().length && /^(Fee|Time|Paperwork)$/.test((el.textContent || "").trim())).length;
+    }
+    if (r.kind === "spectra-table") {
+      const trs = [...card.querySelectorAll("[data-spectrum-row]")].filter((el) => el.getClientRects().length);
+      r.spectraRows = trs.map((el) => Math.round(el.getBoundingClientRect().height));
+      r.dotsOut = 0; r.poleWraps = 0; const dotColors = new Set();
+      for (const tr of trs) {
+        const track = tr.querySelector("[data-track]"); const dot = tr.querySelector("[data-dot]");
+        if (track && dot) { const t = track.getBoundingClientRect(), d = dot.getBoundingClientRect(); if (d.left < t.left - 0.5 || d.right > t.right + 0.5) r.dotsOut++; dotColors.add(getComputedStyle(dot).backgroundColor); }
+        for (const p of tr.querySelectorAll("[data-pole]")) { const ps = getComputedStyle(p); const lh = parseFloat(ps.lineHeight) || parseFloat(ps.fontSize) * 1.25; if (p.getBoundingClientRect().height > lh * 1.5) r.poleWraps++; }
+      }
+      r.dotColors = dotColors.size;
     }
     if (r.kind === "compare-table") {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
@@ -179,6 +192,12 @@ for (const w of WIDTHS) {
     if (r.kind === "tiers-table") {
       const hs = r.tierRows || []; if (hs.length > 1 && Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `tier rows at heights ${hs.join(", ")}`);
       if (r.headsCount !== 3) red(r.inst, w, "REPETITION", `the three heads appear ${r.headsCount} times`);
+    }
+    if (r.kind === "spectra-table") {
+      const hs = r.spectraRows || []; if (hs.length > 1 && Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `spectrum rows at heights ${hs.join(", ")}`);
+      if (r.dotsOut) red(r.inst, w, "OFF TRACK", `${r.dotsOut} dot(s) outside the track`);
+      if (r.poleWraps) red(r.inst, w, "BOTCHED MOBILE", `${r.poleWraps} pole word(s) wrap to a second line`);
+      if (r.dotColors > 1) red(r.inst, w, "ACCENT", `${r.dotColors} dot colours in one table`);
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);

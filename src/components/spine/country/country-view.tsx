@@ -29,13 +29,15 @@
  * exemption that recorded the gap is gone with the gap.
  */
 import * as React from "react";
-import { Band, Box, Fig, Rail, SampleTag, SpectraTable, usd } from "@/components/spine/kit";
+import { Band, Box, Fig, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { CardPager } from "@/components/spine/archetypes/CardPager";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
+import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
+import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards } from "@/lib/spine/city_cards";
@@ -339,76 +341,29 @@ function Money({ money }: { money: any }) {
 }
 
 /**
- * The character , the two ratified tables, rebuilt to the founder's second
- * 2026-08-30 batch: every row carries its TRAIT NAME again (the previous
- * build had dropped them, leaving generic pole words , half the fault he
- * named); the pole words are EXPLANATORY of their category ("you should make
- * the two words explanatory to the category that they are referring to");
- * best on the right, worst on the left, every row; the STATE table's dots are
- * INK and the PEOPLE table's dots TERRACOTTA ("that's the feeling"); the
- * state's icon is an institution (the bank glyph); foreign-owned firms sits
- * at the bottom of the state table and born abroad at the bottom of the
- * people table. The positions are the same published-index-anchored reads,
- * normalised exactly as before (government 0 to 10, culture 1 to 10).
+ * The character , the founder's two six-spectra tables (his personal keep
+ * since 2026-06-18, his six orders of 2026-08-30 photographed in place on
+ * 2026-09-03), through the spectra archetype: rows from character_rows, the
+ * state's dots ink and the people's terracotta, a foot figure under each,
+ * the sample tag because the reads are anchored to published indices and
+ * not measured. A table with fewer than two reads is not drawn.
  */
-function Character({ character }: { character: any }) {
-  const gov = character?.government;
-  const cu = character?.culture;
-  if (!gov && !cu) return null;
-  const tagged = typeof character?._meta?.confidence === "string" && character._meta.confidence !== "measured";
-  const norm10 = (v: unknown) => (isNum(v) ? Math.max(0, Math.min(1, v / 10)) : null);
-  const norm1to10 = (v: unknown) => (isNum(v) ? Math.max(0, Math.min(1, (v - 1) / 9)) : null);
-  const row = (pos: number | null, spectrum: string, rowName: string, left: string, right: string) =>
-    pos == null ? null : { spectrum, name: rowName, left_label: left, right_label: right, position_0_1: pos };
-  const govRows = gov
-    ? [
-        row(norm10(gov.tax_predictability), "tax", "Tax predictability", "Rules change yearly", "Set for years"),
-        row(norm10(gov.low_bribery), "bribery", "Clean dealing", "Bribes expected", "By the book"),
-        row(norm10(gov.task_efficiency), "tasks", "Getting things done", "Weeks of stamps", "Same-week answers"),
-        row(norm10(gov.time_efficiency), "time", "Waiting time", "Queues for months", "Days, not months"),
-        row(norm10(gov.judicial_impartiality), "courts", "Courts", "Connections decide", "Contracts hold"),
-        row(norm10(gov.innovation_capacity), "new", "Openness to the new", "New ways resisted", "New ways welcomed"),
-      ].filter(Boolean)
-    : [];
-  const cuRows = cu
-    ? [
-        row(norm1to10(cu.openness_to_foreigners), "open", "Openness", "Keep to themselves", "Quick to include you"),
-        row(norm1to10(cu.innovation), "innovation", "Innovation", "The old way rules", "New ideas land"),
-        row(norm1to10(cu.communication_directness), "direct", "Directness", "Read between the lines", "Said to your face"),
-        row(norm1to10(cu.punctuality), "punctual", "Timekeeping", "Schedules drift", "Clocks are kept"),
-        row(norm1to10(cu.corruption_rejection), "straight", "Straight dealing", "Corners get cut", "A word is kept"),
-        row(norm1to10(cu.ambition_chest_beating), "ambition", "Ambition", "Kept quiet", "Worn openly"),
-      ].filter(Boolean)
-    : [];
-  if (govRows.length === 0 && cuRows.length === 0) return null;
+function Character({ iso2 }: { iso2?: string }) {
+  if (!iso2) return null;
+  const t = buildCharacterTables(iso2);
+  if (!t.state && !t.people) return null;
   return (
     <Band split="1-1">
-      {govRows.length > 0 ? (
+      {t.state ? (
         <Box id="character">
-          <Rail icon="bank" kicker="Dealing with the state" sample={tagged} />
-          <SpectraTable rows={govRows} />
-          {isNum(character?.foreign_owned_pct) ? (
-            <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-3">
-              <span className="flex items-baseline gap-1.5">
-                <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{character.foreign_owned_pct}%</Fig>
-                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of firms are foreign-owned</span>
-              </span>
-            </div>
-          ) : null}
+          <Rail icon="bank" kicker={COPY.character.state.kicker} sample />
+          <SpectraTable rows={t.state.rows} dot={t.state.dot} foot={t.state.foot} />
         </Box>
       ) : null}
-      {cuRows.length > 0 ? (
-        <Box {...(govRows.length === 0 ? { id: "character" } : {})}>
-          <Rail icon="who-for" kicker="Dealing with people" sample={tagged} />
-          <SpectraTable rows={cuRows} dot="terra" />
-          {isNum(character?.foreign_born_pct) ? (
-            <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-3">
-              <span className="flex items-baseline gap-1.5">
-                <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{character.foreign_born_pct}%</Fig>
-                <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">born abroad</span>
-              </span>
-            </div>
-          ) : null}
+      {t.people ? (
+        <Box {...(t.state ? {} : { id: "character" })}>
+          <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
+          <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} />
         </Box>
       ) : null}
     </Band>
@@ -679,7 +634,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <Customers iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
           </Band>
         ) : null}
-        <Character character={d.character} />
+        <Character iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
         {d.setup?.tiers?.length || d.premises ? (
           <Band split="3-2">
             <Setup setup={d.setup} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
