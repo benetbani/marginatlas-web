@@ -24,6 +24,9 @@ import { SpectraTable } from "./SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
+import { Terminus } from "./Terminus";
+import { buildCloseDoors } from "@/lib/spine/close_rows";
+import { coveredCities } from "@/lib/cities/city_pages";
 import { usd } from "@/components/spine/kit";
 
 export type Instance = { iso2: string; why: string };
@@ -276,6 +279,36 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: wide ? 693 : 305 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.locals.kicker}, {nameOf(iso2)}</div>
             <NoteList notes={d.notes} columns={wide ? 2 : 1} />
+          </div>
+        ) : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+/** The instance set for the terminus: the exemplar, the country with the most covered cities, one with a single city, one with none, and the longest city name. */
+export function pickTerminusInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
+  const all = codes().map((c) => ({ c, n: coveredCities(c).length, longest: Math.max(0, ...coveredCities(c).map((x) => x.name.length)) }));
+  take("GB", "the exemplar");
+  const most = [...all].sort((a, b) => b.n - a.n)[0]; if (most) take(most.c, `the most covered cities, ${most.n}`);
+  const one = all.find((x) => x.n === 1); if (one) take(one.c, "one covered city, the door without a count");
+  const none = all.find((x) => x.n === 0); if (none) take(none.c, "no covered city, two doors");
+  const long = [...all].filter((x) => x.n > 0).sort((a, b) => b.longest - a.longest)[0]; if (long) take(long.c, "the longest city name");
+  return out;
+}
+
+export function TerminusStories({ instances = pickTerminusInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="terminus">
+      {instances.map((i) => {
+        const doors = buildCloseDoors(i.iso2);
+        const el = doors.length ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
+            <Terminus kicker={`${COPY.close.kicker}, ${nameOf(i.iso2)}`} doors={doors} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

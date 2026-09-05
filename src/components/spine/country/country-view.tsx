@@ -40,6 +40,8 @@ import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildLocalsNotes } from "@/lib/spine/locals_rows";
+import { Terminus } from "@/components/spine/archetypes/Terminus";
+import { buildCloseDoors } from "@/lib/spine/close_rows";
 import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards } from "@/lib/spine/city_cards";
@@ -588,19 +590,21 @@ function LocalsKnow({ iso2 }: { iso2?: string }) {
   );
 }
 
+/**
+ * Where to next, through the terminus archetype: the doors from close_rows
+ * (the largest covered city, the country's trades, the pricing page with the
+ * promise it keeps today), the wrapper keeping data-terminus so the
+ * full-width and blueprint gates read the sanction. No doors, no card.
+ */
 function Close({ meta }: { meta: any }) {
-  const iso = typeof meta?.iso2 === "string" ? meta.iso2.toLowerCase() : undefined;
+  const iso2 = typeof meta?.iso2 === "string" ? meta.iso2 : undefined;
+  if (!iso2) return null;
+  const doors = buildCloseDoors(iso2);
+  if (doors.length === 0) return null;
   return (
     <div data-terminus className="mt-8">
       <Box id="close">
-        <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</h3>
-        <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
-          {iso === "gb" ? (
-            <a href="/cities/london" className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">Start in London, the deepest city &#8594;</a>
-          ) : null}
-          <a href="/industries" className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">See every trade measured here &#8594;</a>
-          <a href="/pricing" className="rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)]">Compare this country with Pro &#8594;</a>
-        </div>
+        <Terminus kicker={COPY.close.kicker} doors={doors} />
       </Box>
     </div>
   );

@@ -110,6 +110,14 @@ export const COPY = {
   },
   /** The note list (what locals know): authored notes, the page's one editorial section. */
   locals: { kicker: "What locals know" },
+  /** The terminus (where to next): doors that leave the page. Run 4 of the architecture loop refused "with Pro" while Pro cannot be bought and "the deepest city" as jargon; the city door says a figure the list holds. */
+  close: {
+    kicker: "Where to next",
+    cityDoor: "Start in {city}",
+    cityDoorMany: "Start in {city}, the largest of {n} cities here",
+    tradesDoor: "See every trade measured here",
+    proDoor: "Get notified when Pro opens",
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

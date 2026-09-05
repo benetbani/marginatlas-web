@@ -7,7 +7,7 @@
  * card can never point at a city page that does not exist.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
-type CityListRow = { slug: string; name: string; iso2: string };
+type CityListRow = { slug: string; name: string; iso2: string; pop_m?: number };
 const CITY_PAGE_BY_ISO = (() => {
   const out: Record<string, CityListRow[]> = {};
   for (const c of (cityListJson as { cities: CityListRow[] }).cities) {
@@ -35,6 +35,10 @@ export function cityPageSlug(iso2: string, cityName: string): string | undefined
   const target = normalizePlaceName(cityName);
   const hit = pool.find((c) => normalizePlaceName(c.name) === target) ?? pool.find((c) => normalizePlaceName(c.slug) === target);
   return hit?.slug;
+}
+/** Every covered city of a country, with its population in millions where the list holds it. */
+export function coveredCities(iso2: string): Array<{ slug: string; name: string; pop_m?: number }> {
+  return (CITY_PAGE_BY_ISO[iso2.toUpperCase()] ?? []).map((c) => ({ slug: c.slug, name: c.name, pop_m: typeof c.pop_m === "number" ? c.pop_m : undefined }));
 }
 /** The metropolis-page href for a covered city, or undefined when none joins. */
 export function cityPageHref(iso2: string, cityName: string): string | undefined {

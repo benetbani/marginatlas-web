@@ -18,6 +18,8 @@
  *  REPETITION: no micro label repeated inside one card.
  *  NOTES: a label on one line, a fact within four lines, at most five notes
  *    (the founder's wall-of-text verdict, 2026-08-27).
+ *  TERMINUS: at most three doors, one pill, distinct first words, a door on
+ *    one line from 768 up and within two on a phone.
  *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
  *    at the ends, never clamped), pole words on one line, one dot colour a table.
  * BLIND SPOT: it measures a static render with web fonts loaded from the
@@ -117,6 +119,13 @@ function inPage() {
       r.labelWraps = [...card.querySelectorAll("[data-note-label]")].filter((el) => el.getBoundingClientRect().height > lineOf(el) * 1.5).length;
       r.factLines = [...card.querySelectorAll("[data-note-fact]")].map((el) => Math.round(el.getBoundingClientRect().height / lineOf(el)));
     }
+    if (r.kind === "terminus") {
+      const doors = [...card.querySelectorAll("[data-door]")];
+      r.doorCount = doors.length;
+      r.pillCount = doors.filter((d) => d.getAttribute("data-door-kind") === "pill").length;
+      r.doorFirstWords = doors.map((d) => (d.textContent || "").trim().split(/\s+/)[0].toLowerCase());
+      r.doorLines = doors.map((d) => { const cs = getComputedStyle(d); const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5; const inner = d.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom); return Math.round(inner / lh); });
+    }
     if (r.kind === "compare-table") {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
       r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
@@ -211,6 +220,12 @@ for (const w of WIDTHS) {
       if (r.labelWraps) red(r.inst, w, "WALL OF TEXT", `${r.labelWraps} label(s) wrap: a label that wraps is a sentence`);
       const walls = (r.factLines || []).filter((n) => n > 4).length; if (walls) red(r.inst, w, "WALL OF TEXT", `${walls} fact(s) run past four lines`);
       if (r.noteCount > 5) red(r.inst, w, "OVERLOAD", `${r.noteCount} notes, over five`);
+    }
+    if (r.kind === "terminus") {
+      if (r.doorCount > 3) red(r.inst, w, "OVERLOAD", `${r.doorCount} doors, over three`);
+      if (r.pillCount > 1) red(r.inst, w, "NO HIERARCHY", `${r.pillCount} pills; one door is the heavy one`);
+      const fw = r.doorFirstWords || []; if (new Set(fw).size !== fw.length) red(r.inst, w, "REPETITION", `doors share a first word: ${fw.join(", ")}`);
+      const cap = w >= 768 ? 1 : 2; const wrapped = (r.doorLines || []).filter((n) => n > cap).length; if (wrapped) red(r.inst, w, "BOTCHED MOBILE", `${wrapped} door(s) run past ${cap} line(s)`);
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);

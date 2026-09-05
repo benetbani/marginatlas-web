@@ -12,6 +12,9 @@
  *    cell resolves; it names the answer only when the answer resolves.
  *  NO EMPTY SLOT: no cell carries an empty value.
  *  TAG: a modelled answer is marked modelled, so the card tags it.
+ *  DOORS: every country's terminus holds at most three doors, one pill,
+ *    distinct first words, no "with Pro", and every href resolves to a route
+ *    in the app folder (route groups dropped, [params] matched).
  *  NOTES: every authored note list holds at most five notes, a label of at
  *    most seven words and a fact of at most 140 characters, no banned word.
  * BLIND SPOT: it cannot see a wrap or a hole; the browser half does that.
@@ -22,6 +25,10 @@ import { COPY } from "@/lib/spine/copy";
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_rows";
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
+import { buildCloseDoors } from "@/lib/spine/close_rows";
+import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
+import { readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 
 const reds: string[] = [];
 const codes = (COUNTRIES as any[]).map((c) => String(c.code ?? c.iso2 ?? "").toUpperCase()).filter((c) => c.length === 2);
@@ -76,6 +83,37 @@ for (const iso2 of countriesWithNotes()) {
     if (/\u2014/.test(n.label + n.fact)) reds.push(`${iso2}: an em dash in a note`);
   }
 }
-console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${reds.length} red(s)`);
+/* THE ROUTES, read from the app folder: every page.tsx becomes a pattern with
+   route groups "(site)" dropped and "[param]" as one path segment. */
+function routePatterns(): RegExp[] {
+  const out: RegExp[] = [];
+  const walk = (dir: string, segs: string[]) => {
+    for (const name of readdirSync(dir)) {
+      const full = join(dir, name);
+      if (statSync(full).isDirectory()) { walk(full, name.startsWith("(") ? segs : [...segs, name]); continue; }
+      if (name === "page.tsx") out.push(new RegExp("^/" + segs.map((sg) => (sg.startsWith("[") ? "[^/]+" : sg.replace(/[.*+?^${}()|\\]/g, "\\$&"))).join("/") + "/?$"));
+    }
+  };
+  walk("src/app", []);
+  return out;
+}
+const ROUTES = routePatterns();
+const resolves = (href: string) => ROUTES.some((re) => re.test(href.split("?")[0].split("#")[0]));
+let termini = 0;
+for (const iso2 of codes) {
+  const doors = buildCloseDoors(iso2);
+  if (doors.length === 0) continue;
+  termini++;
+  if (doors.length > DOOR_CAP) reds.push(`${iso2}: ${doors.length} doors, over ${DOOR_CAP}`);
+  if (doors.filter((d) => d.kind === "pill").length > 1) reds.push(`${iso2}: more than one pill door`);
+  const firsts = doors.map((d) => d.label.split(/\s+/)[0].toLowerCase());
+  if (new Set(firsts).size !== firsts.length) reds.push(`${iso2}: doors share a first word (${firsts.join(", ")})`);
+  for (const d of doors) {
+    if (!resolves(d.href)) reds.push(`${iso2}: door "${d.label}" points at ${d.href}, which is not a route`);
+    if (/with pro/i.test(d.label)) reds.push(`${iso2}: a door promises "with Pro"`);
+    for (const b of COPY.banned) if (d.label.toLowerCase().includes(b)) reds.push(`${iso2}: banned word "${b}" in a door`);
+  }
+}
+console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);
