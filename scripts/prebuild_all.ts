@@ -23,8 +23,9 @@
  *
  * Run: npx tsx scripts/prebuild_all.ts
  */
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import path from "node:path";
+import os from "node:os";
 
 type Gate = {
   /** Display name (shown in the log). */
@@ -547,6 +548,21 @@ const concurrencyArg = argv.find((a) => a.startsWith("--concurrency="));
 const CONCURRENCY = concurrencyArg ? Math.max(1, parseInt(concurrencyArg.split("=")[1], 10)) : 4;
 const BAIL = !argv.includes("--no-bail");
 const QUIET = argv.includes("--quiet");
+/* A PER-GATE TIMEOUT, because a gate that hangs wedged a whole serial run on
+   2026-09-05 (a browser gate on a machine with under 400 MB free sat for
+   twenty-three minutes and nothing said so). A gate past the limit is killed
+   with its process tree and reported as a red that says TIMEOUT, which is a
+   finding about the machine or the gate, never a pass. `--timeout=<seconds>`,
+   default 120; 0 disables. */
+const timeoutArg = argv.find((a) => a.startsWith("--timeout="));
+const TIMEOUT_MS = (timeoutArg ? Math.max(0, parseInt(timeoutArg.split("=")[1], 10)) : 120) * 1000;
+/* A SUBSET, `--only=<name,name>`: exact gate names, so a crashed or timed-out
+   gate can be rerun alone by the same runner instead of by hand. The GATES
+   array is untouched, so the counts and the single-chain gate read the same
+   list; only what runs is narrowed, and the summary says so. */
+const onlyArg = argv.find((a) => a.startsWith("--only="));
+const ONLY = onlyArg ? new Set(onlyArg.split("=")[1].split(",").map((x) => x.trim()).filter(Boolean)) : null;
+const freeMb = () => Math.round(os.freemem() / 1048576);
 
 type GateResult = {
   name: string;
@@ -571,15 +587,25 @@ function runGate(gate: Gate): Promise<GateResult> {
     });
     const stdoutBuf: string[] = [];
     const stderrBuf: string[] = [];
+    let timedOut = false;
+    const timer = TIMEOUT_MS > 0
+      ? setTimeout(() => {
+          timedOut = true;
+          // The shell wrapper on Windows leaves the real process as a grandchild; kill the tree.
+          if (process.platform === "win32" && child.pid) spawnSync("taskkill", ["/pid", String(child.pid), "/T", "/F"], { stdio: "ignore" });
+          else child.kill("SIGKILL");
+        }, TIMEOUT_MS)
+      : null;
     child.stdout.on("data", (b: Buffer) => stdoutBuf.push(b.toString()));
     child.stderr.on("data", (b: Buffer) => stderrBuf.push(b.toString()));
     child.on("close", (code) => {
+      if (timer) clearTimeout(timer);
       resolve({
         name: gate.name,
-        exitCode: code ?? 1,
+        exitCode: timedOut ? 124 : code ?? 1,
         durationMs: Date.now() - started,
         stdoutTail: stdoutBuf.join("").split("\n").slice(-20).join("\n"),
-        stderrTail: stderrBuf.join("").split("\n").slice(-20).join("\n"),
+        stderrTail: (timedOut ? `TIMEOUT after ${TIMEOUT_MS / 1000}s: the gate was killed with its process tree (free memory ${freeMb()} MB)\n` : "") + stderrBuf.join("").split("\n").slice(-20).join("\n"),
       });
     });
     child.on("error", (err) => {
@@ -611,7 +637,7 @@ async function runAll(gates: Gate[]): Promise<GateResult[]> {
       if (!QUIET) {
         const sym = r.exitCode === 0 ? "✓" : "✗";
         const secs = (r.durationMs / 1000).toFixed(1);
-        console.log(`  ${sym} ${gate.name.padEnd(28)} ${secs}s`);
+        console.log(`  ${sym} ${gate.name.padEnd(28)} ${secs}s${r.exitCode === 124 ? "  TIMEOUT" : ""}`);
       }
       if (r.exitCode !== 0 && BAIL) bailed = true;
     });
@@ -636,17 +662,23 @@ async function runAll(gates: Gate[]): Promise<GateResult[]> {
 
 async function main() {
   const started = Date.now();
-  console.log(`=== prebuild_all  (${GATES.length} gates, concurrency=${CONCURRENCY}) ===`);
+  const selected = ONLY ? GATES.filter((g) => ONLY.has(g.name)) : GATES;
+  if (ONLY) {
+    const missing = [...ONLY].filter((n) => !GATES.some((g) => g.name === n));
+    if (missing.length) { console.error(`--only names no gate: ${missing.join(", ")}`); process.exit(2); }
+  }
+  console.log(`=== prebuild_all  (${GATES.length} gates${ONLY ? `, running ${selected.length} by --only` : ""}, concurrency=${CONCURRENCY}, timeout=${TIMEOUT_MS / 1000}s, free memory ${freeMb()} MB) ===`);
   console.log("");
-  const results = await runAll(GATES);
+  const results = await runAll(selected);
   const wall = ((Date.now() - started) / 1000).toFixed(1);
   const fails = results.filter((r) => r.exitCode !== 0);
   console.log("");
   console.log(`=== Summary ===`);
-  console.log(`  Ran: ${results.length} / ${GATES.length} gates`);
-  console.log(`  Wall-clock: ${wall}s`);
+  const timeouts = fails.filter((r) => r.exitCode === 124).length;
+  console.log(`  Ran: ${results.length} / ${GATES.length} gates${ONLY ? " (a subset by --only; not the chain)" : ""}`);
+  console.log(`  Wall-clock: ${wall}s, free memory now ${freeMb()} MB`);
   console.log(`  Passed: ${results.length - fails.length}`);
-  console.log(`  Failed: ${fails.length}`);
+  console.log(`  Failed: ${fails.length}${timeouts ? ` (${timeouts} by TIMEOUT)` : ""}`);
 
   /* DEFERRED CHECKS, surfaced at the summary.
 
@@ -688,7 +720,7 @@ async function main() {
     }
     process.exit(1);
   }
-  console.log("\n  GATE: PASS");
+  console.log(ONLY ? "\n  SUBSET: PASS (not the chain; run without --only for the gate)" : "\n  GATE: PASS");
 }
 
 void path; // reserved for future absolute-path resolution if needed
