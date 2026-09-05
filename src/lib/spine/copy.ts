@@ -65,6 +65,22 @@ export const COPY = {
       5: "A lawyer, a notary, several offices to visit and capital to deposit. Often two months.",
     },
   },
+  /** The range strips. Founder ruling 12 (2026-09-04): premises "in five metrics"; the four he named and the fifth reserved. */
+  premises: {
+    kicker: "What premises cost to run",
+    basis: "Rent for a square metre of shop, a year.",
+    electricity: "a kilowatt hour, the commercial rate",
+    /** The marks the profile holds today: three national tiers. */
+    marks: { edge: "Edge of town", ordinary: "Ordinary street", prime: "Prime street" },
+    /** The founder's five metrics, held for the day the data carries them. */
+    target: ["Prime street, metropolis", "Secondary street, metropolis", "Prime street, city", "Secondary street, city", "Edge of town"],
+  },
+  customers: {
+    kicker: "What customers earn",
+    basis: "Full-time pay, a year.",
+    marks: { bottom: "Bottom tenth", typical: "Typical", top: "Top tenth" },
+    noSpread: "bottom and top tenth not researched yet for this country",
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */

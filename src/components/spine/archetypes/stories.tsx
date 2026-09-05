@@ -18,6 +18,9 @@ import { CardPager } from "./CardPager";
 import { buildCityCards } from "@/lib/spine/city_cards";
 import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
+import { RangeStrip } from "./RangeStrip";
+import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
+import { usd } from "@/components/spine/kit";
 
 export type Instance = { iso2: string; why: string };
 
@@ -96,6 +99,24 @@ export function pickTiersTableInstances(): Instance[] {
   return out;
 }
 
+/** The instance set for the range strips: premises then customers, keyed "XX:premises" / "XX:customers". */
+export function pickRangeStripInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
+  const prem = codes().map((c) => ({ c, d: buildPremisesStrip(c) })).filter((x) => x.d);
+  take("GB:premises", "the exemplar");
+  const ratio = (x: any) => { const v = x.d.marks.map((m: any) => m.value); return v.length >= 2 ? Math.max(...v) / Math.min(...v) : 0; };
+  const widest = [...prem].sort((a, b) => ratio(b) - ratio(a))[0]; if (widest) take(`${widest.c}:premises`, `widest spread, ${ratio(widest).toFixed(1)} times`);
+  const tightest = [...prem].filter((x) => x.d!.marks.length >= 2).sort((a, b) => ratio(a) - ratio(b))[0]; if (tightest) take(`${tightest.c}:premises`, `tightest spread, ${ratio(tightest).toFixed(2)} times, so the labels step`);
+  const one = prem.find((x) => x.d!.marks.length === 1); if (one) take(`${one.c}:premises`, "one mark, the figure form");
+  const cust = codes().map((c) => ({ c, d: buildCustomersStrip(c) })).filter((x) => x.d);
+  take("GB:customers", "the exemplar");
+  const withSpread = cust.find((x) => x.d!.marks.length === 3); if (withSpread) take(`${withSpread.c}:customers`, "deciles researched, the spread drawn");
+  const noSpread = cust.find((x) => x.d!.marks.length === 1 && x.c !== "GB"); if (noSpread) take(`${noSpread.c}:customers`, "the typical alone, deciles not researched");
+  return out;
+}
+
 function Story({ iso2, why, children }: { iso2: string; why: string; children: React.ReactNode }) {
   return (
     <section data-story={iso2} className="mb-12">
@@ -168,6 +189,24 @@ export function TiersTableStories({ instances = pickTiersTableInstances() }: { i
         const el = rows.length ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 624 }}>
             <TiersTable rows={rows} howTo={howToOpenDoor(i.iso2)} />
+          </div>
+        ) : null;
+        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
+export function RangeStripStories({ instances = pickRangeStripInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="range-strip">
+      {instances.map((i) => {
+        const [iso2, kind] = i.iso2.split(":");
+        const d = kind === "premises" ? buildPremisesStrip(iso2) : buildCustomersStrip(iso2);
+        const el = d ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: kind === "premises" ? 347 : 536 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kind === "premises" ? COPY.premises.kicker : COPY.customers.kicker}, {nameOf(iso2)}</div>
+            <RangeStrip marks={d.marks} scale={kind === "premises" ? "log" : "linear"} fmt={usd} basis={kind === "premises" ? COPY.premises.basis : COPY.customers.basis} note={d.note} extra={d.extra} />
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

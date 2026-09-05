@@ -83,6 +83,14 @@ function inPage() {
       r.brokenImage = cards.filter((el) => { const im = el.querySelector("img"); return im && (!im.complete || im.naturalWidth === 0); }).map((el) => el.getAttribute("data-card"));
       r.imageCount = cards.length - r.noImage.length;
     }
+    if (r.kind === "range-strip") {
+      const labels = [...card.querySelectorAll("[data-mark-label]")].map((el) => el.getBoundingClientRect());
+      const figs = [...card.querySelectorAll("[data-mark]")].map((el) => el.getBoundingClientRect());
+      const overlaps = (rs) => { let n = 0; for (let a = 0; a < rs.length; a++) for (let b = a + 1; b < rs.length; b++) { const A = rs[a], B = rs[b]; if (A.left < B.right - 1 && B.left < A.right - 1 && A.top < B.bottom - 1 && B.top < A.bottom - 1) n++; } return n; };
+      r.stripOverlaps = overlaps(labels) + overlaps(figs);
+      const cb = card.getBoundingClientRect();
+      r.stripOut = [...labels, ...figs].filter((b) => b.left < cb.left - 1 || b.right > cb.right + 1).length;
+    }
     if (r.kind === "tiers-table") {
       const trs = [...card.querySelectorAll("[data-tier-row]")].filter((el) => el.getClientRects().length);
       r.tierRows = trs.map((el) => Math.round(el.getBoundingClientRect().height));
@@ -163,6 +171,10 @@ for (const w of WIDTHS) {
       if (r.namesCut) red(r.inst, w, "BOTCHED MOBILE", `${r.namesCut} city name(s) cut`);
       if (r.brokenImage && r.brokenImage.length) red(r.inst, w, "IMAGE BROKEN", `image did not load: ${r.brokenImage.join(", ")}`);
       if (w === WIDTHS[0] && r.noImage && r.noImage.length) data(r.inst, "IMAGE MISSING", `${r.noImage.length} card(s) without a photograph: ${r.noImage.join(", ")}`);
+    }
+    if (r.kind === "range-strip") {
+      if (r.stripOverlaps) red(r.inst, w, "NO HIERARCHY", `${r.stripOverlaps} overlapping label(s) on the strip`);
+      if (r.stripOut) red(r.inst, w, "BOTCHED MOBILE", `${r.stripOut} strip label(s) outside the card`);
     }
     if (r.kind === "tiers-table") {
       const hs = r.tierRows || []; if (hs.length > 1 && Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `tier rows at heights ${hs.join(", ")}`);

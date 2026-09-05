@@ -30,12 +30,13 @@
  */
 import * as React from "react";
 import { Band, Box, Fig, Rail, SampleTag, SpectraTable, usd } from "@/components/spine/kit";
-import { RangeBracket, RankedTiles } from "@/components/spine/forms-v2";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { CardPager } from "@/components/spine/archetypes/CardPager";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
+import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
+import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards } from "@/lib/spine/city_cards";
 import { COPY } from "@/lib/spine/copy";
@@ -286,79 +287,17 @@ function Peers({ iso2 }: { iso2?: string }) {
  * 390 alike, with no invented breakpoint and nothing scrolling sideways (law
  * M).
  */
-function Customers({ customers }: { customers: any }) {
-  if (!isNum(customers?.median_usd)) return null;
-  const med = customers.median_usd;
-  const p10 = customers?.p10_usd, p90 = customers?.p90_usd;
-  const spread = isNum(p10) && isNum(p90) && p10 < med && med < p90;
-  const tagged = typeof customers?._meta?.confidence === "string" && customers._meta.confidence !== "measured";
-  const basis = customers.basis ?? "Full-time pay, a year.";
-  if (!spread) {
-    return (
-      <Box id="customers">
-        <Rail icon="spread" kicker="What customers earn" sample={tagged} />
-        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Typical pay</div>
-        {/* Accent register entry 2: the customers card's answer. */}
-        <Fig className="mt-1 block text-[length:var(--t-head)] font-semibold leading-none text-[var(--terra-text)]">{usd(med)}</Fig>
-        <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</div>
-      </Box>
-    );
-  }
-  /* C11, 2026-09-02. WHAT WAS HERE WAS AN UNDECLARED HORIZONTAL TRACK, and it
-     was the wrong drawing rather than merely an untagged one.
-     THE FORM. A hairline with three ticks on it is I1, and I1 is reserved for a
-     POSITION BETWEEN TWO NAMED POLES. "Bottom ten percent" and "top ten percent"
-     are the BOTTOM AND TOP OF AN ORDER, which A1 settled on the trade page and
-     C10 settled again on the hood page: an order's two ends are not two poles a
-     value sits between. The page also carries exactly two legitimate tracks
-     already, the ratified character tables, so declaring this one would have put
-     the page at I1 3 of 2 and failed the gate in the same commit.
-     WHAT THE INFORMATION IS: a spread, a low, a typical and a high of ONE
-     quantity. The catalogue holds two forms for it, SpreadStrip at I1 (at cap,
-     and the wrong drawing above) and RangeBracket at I12, whose version 3 entry
-     carries the typical between its two ends. I12 is free on this page.
-     THE HIERARCHY WAS ALSO FAILING, measured on the render before this change:
-     the typical stood at head 20 against its two ends at body 14, a ratio of
-     1.43x, under step 5's floor of 1.6. The bracket sets the typical at focal
-     30 against the same two ends, 2.14x.
-     WHAT IT COSTS, and it is deliberate rather than overlooked: the old drawing
-     placed the typical at its true fraction of the span (measured 27.9 percent
-     drawn against 26.5 percent true, the difference being the end padding), so
-     the SKEW of the distribution was drawn. A brace does not place its notch by
-     value and says so in its own entry: the numbers carry the reading. That is
-     the trade version 3 made when it struck the anchored numeral, and the skew
-     survives in the figures, which any reader can subtract.
-     THE ACCENT IS UNCHANGED AND NARROWER. Register entry 2 is "the customers
-     card's Typical figure"; the old card also painted the word and the 2px tick,
-     so three things wore terracotta where the register names one. The bracket
-     colours the figure and nothing else. */
+function Customers({ iso2 }: { iso2?: string }) {
+  /* THE RANGE-STRIP ARCHETYPE (customers): the typical full-time pay with
+     the bottom and top tenth where the deciles are researched; the typical
+     alone, with the reason, where they are not. */
+  if (!iso2) return null;
+  const d = buildCustomersStrip(iso2);
+  if (!d) return null;
   return (
     <Box id="customers">
-      {/* The range glyph, not the shopping bag: at sixteen pixels the bag reads
-          as a bin, the city page paid for that in round 3, and this card draws
-          exactly what the range glyph depicts, a low-to-high band with the
-          typical point marked. */}
-      <Rail icon="spread" kicker="What customers earn" sample={tagged} />
-      <RangeBracket
-        lo={p10}
-        hi={p90}
-        typical={med}
-        format={usd}
-        caption="Typical"
-        /* "BOTTOM TENTH" AND "TOP TENTH", SHORTENED BY TWO AND A HALF PIXELS,
-           and the photograph is the only thing that found it. "Bottom ten
-           percent" measures 106px in a 103.9px column at 375, so it wrapped with
-           "percent" orphaned on a second line while the two labels beside it sat
-           on one, which is A3's own fault ("asks.", "business.") and A3's own
-           remedy. A first DOM probe reported one line and was wrong, because it
-           measured before `document.fonts.ready` and therefore measured the
-           fallback face. THE STATISTIC IS UNCHANGED, which is what the founder's
-           N9 order was actually about: he asked for the top and bottom tenths
-           instead of quartiles, and a tenth is what both labels say. */
-        endLabels={["Bottom tenth", "Top tenth"]}
-        accent
-      />
-      <div className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</div>
+      <Rail icon="spread" kicker={COPY.customers.kicker} sample={d.confidence !== "measured"} />
+      <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={COPY.customers.basis} note={d.note} />
     </Box>
   );
 }
@@ -548,66 +487,20 @@ function Setup({ setup, iso2 }: { setup: any; iso2?: string }) {
  *
  * The electricity rate keeps its own quiet line beneath.
  */
-function Premises({ premises }: { premises: any }) {
-  const prime = premises?.rent_prime_usd_sqm_year;
-  const mid = premises?.rent_mid_usd_sqm_year;
-  const edge = premises?.rent_edge_usd_sqm_year;
-  const kwh = premises?.electricity_usd_per_kwh;
-  const rents: Array<[string, number]> = [];
-  if (isNum(edge)) rents.push(["Edge of town", edge]);
-  if (isNum(mid)) rents.push(["Ordinary street", mid]);
-  if (isNum(prime)) rents.push(["Prime street", prime]);
-  if (rents.length === 0 && !isNum(kwh)) return null;
-  const tagged = typeof premises?._meta?.confidence === "string" && premises._meta.confidence !== "measured";
-  /* THE FINDING, COMPUTED. Read off the two ends of whatever set this country
-     holds, so a page with two tiers and a page with three both say something
-     true, and no sentence is typed about a country nobody looked at (C6). Under
-     1.15x the ratio is not a finding and the card says so rather than printing
-     "1.1 times", which is a difference a rent survey cannot defend. */
-  const cheapest = rents[0]?.[1];
-  const dearest = rents[rents.length - 1]?.[1];
-  const ratio = rents.length >= 2 && cheapest > 0 ? dearest / cheapest : null;
-  /* THE MULTIPLE IS ROUNDED TO WHAT THE RENTS CAN CARRY, and "about" is not
-     hedging. The tier rents are published to the nearest ten dollars a square
-     metre, so on a $120 base a ten-dollar wobble at either end moves a 7.7 into
-     the range 7.0 to 8.4: a tenth of a multiple is well inside the inputs' own
-     rounding at that size, and printing one would be the false precision this
-     card was already guilty of in its drawing. A tenth still says something
-     below 3, where the same wobble is a smaller share of the reading. */
-  const times = ratio == null ? null : ratio >= 3 ? Math.round(ratio) : Math.round(ratio * 10) / 10;
-  const finding =
-    times == null
-      ? null
-      : ratio != null && ratio < 1.15
-        ? "The dearest address costs about the same as the cheapest."
-        : "The dearest address costs about " + (Number.isInteger(times) ? times : times.toFixed(1)) + " times the cheapest.";
+function Premises({ iso2 }: { iso2?: string }) {
+  /* THE RANGE-STRIP ARCHETYPE (premises, founder rulings 10 to 12 of
+     2026-09-04): rent for a square metre of shop a year, by address, on one
+     log scale with the figure over each mark and the name under it, in
+     practical words, no conclusion sentence; the electricity rate under a
+     hairline. The profile holds three national tiers today; the five metrics
+     he named are a data requirement the strip is built to hold. */
+  if (!iso2) return null;
+  const d = buildPremisesStrip(iso2);
+  if (!d) return null;
   return (
     <Box id="premises">
-      <Rail icon="commercial-rent" kicker="What premises cost to run" sample={tagged} />
-      {rents.length >= 2 ? (
-        <>
-          <p className="text-[length:var(--t-section)] font-semibold leading-snug text-[var(--c-ink)]">{finding}</p>
-          <div className="mt-4">
-            <RankedTiles
-              accent={false}
-              ariaLabel={"Commercial rent for a square metre a year, cheapest address first: " + rents.map(([l, v]) => l + " " + usd(v)).join(", ")}
-              rows={rents.map(([label, v]) => ({ name: label, value: usd(v) }))}
-            />
-          </div>
-          <div className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">Commercial rent for a square metre, a year.</div>
-        </>
-      ) : rents.length === 1 ? (
-        <div className="flex flex-wrap items-baseline gap-x-2">
-          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{usd(rents[0][1])}</Fig>
-          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{rents[0][0].toLowerCase()}, a square metre a year</span>
-        </div>
-      ) : null}
-      {isNum(kwh) ? (
-        <div className={"flex flex-wrap items-baseline gap-x-2 " + (rents.length > 0 ? "mt-3 border-t border-[var(--c-border)] pt-3" : "")}>
-          <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{"$" + kwh}</Fig>
-          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a kilowatt hour, the commercial electricity rate</span>
-        </div>
-      ) : null}
+      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={d.confidence !== "measured"} />
+      <RangeStrip marks={d.marks} scale="log" fmt={usd} basis={COPY.premises.basis} extra={d.extra} />
     </Box>
   );
 }
@@ -783,14 +676,14 @@ export function SpineCountryBody({ data }: { data?: any }) {
         {Array.isArray(d.money?.list) || isNum(d.customers?.median_usd) ? (
           <Band split="3-2">
             <Money money={d.money} />
-            <Customers customers={d.customers} />
+            <Customers iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
           </Band>
         ) : null}
         <Character character={d.character} />
         {d.setup?.tiers?.length || d.premises ? (
           <Band split="3-2">
             <Setup setup={d.setup} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
-            <Premises premises={d.premises} />
+            <Premises iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
           </Band>
         ) : null}
         {d.hiring || d.locals_know ? (
