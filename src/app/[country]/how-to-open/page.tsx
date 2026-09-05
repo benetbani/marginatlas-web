@@ -38,7 +38,10 @@ export default async function HowToOpenPage({ params }: { params: Promise<Params
   if (!buildHowTo(iso2)) notFound();
   return (
     <SpineShell>
-      <HowToBody iso2={iso2} />
+      {/* The main landmark lives in the page file, where the landmark gate reads it. */}
+      <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+        <HowToBody iso2={iso2} />
+      </main>
     </SpineShell>
   );
 }

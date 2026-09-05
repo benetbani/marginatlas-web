@@ -17,6 +17,7 @@ import { buildLocalsNotes, type LocalNote } from "@/lib/spine/locals_rows";
 import { buildCloseDoors } from "@/lib/spine/close_rows";
 import { COPY } from "@/lib/spine/copy";
 import { inSentence } from "@/lib/spine/place_names";
+import { countryPageTarget } from "@/lib/geo/page_targets";
 import type { Door } from "@/components/spine/archetypes/Terminus";
 import type { TierRow } from "@/components/spine/archetypes/TiersTable";
 
@@ -50,8 +51,11 @@ export function buildHowTo(iso2: string): HowToData | null {
     .filter((n) => n.fact.length > 0);
   const dots: LocalNote[] = ([1, 2, 3, 4, 5] as const).map((n) => ({ label: COPY.howto.dotLabels[n - 1], fact: COPY.tiers.paperwork[n] }));
   const localsBuilt = buildLocalsNotes(code);
+  /* THE COUNTRY ADDRESS COMES FROM THE RESOLVER, never assembled here: the
+     geo-link gate's rule, and Greece's dead /el links are why. */
+  const back = countryPageTarget(code);
   const doors: Door[] = [
-    { key: "back", label: fill(COPY.howto.back, { country: inSentence(name) }), href: `/${code.toLowerCase()}`, kind: "link" },
+    ...(back ? [{ key: "back", label: fill(COPY.howto.back, { country: inSentence(name) }), href: back.href, kind: "link" as const }] : []),
     ...buildCloseDoors(code).filter((d) => d.key !== "pro"),
   ];
   return {

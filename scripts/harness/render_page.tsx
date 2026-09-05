@@ -82,7 +82,12 @@ async function main() {
     default: console.error("unknown surface", surface); process.exit(2);
   }
   if (!data) { console.log(`  ${surface} ${slugs.join("/")}: NO DATA (the adapter returned nothing; this instance does not render)`); return; }
-  const inner = React.createElement(C, surface === "howto" ? data : { data });
+  /* The how-to page carries its main landmark in the page file, so the harness
+     render wraps the body the same way; without it the filter would find no
+     section card under main and pass on nothing. */
+  const inner = surface === "howto"
+    ? React.createElement("main", { className: "mx-auto max-w-[1120px] px-4 py-2 md:px-6" }, React.createElement(C, data))
+    : React.createElement(C, { data });
   const body = renderToStaticMarkup(selfShelled ? inner : React.createElement(SpineShell as any, null, inner));
   mkdirSync("scratchpad/harness/pages", { recursive: true });
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}.html`;

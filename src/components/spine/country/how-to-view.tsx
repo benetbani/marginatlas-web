@@ -20,10 +20,10 @@ export function HowToBody({ iso2 }: { iso2: string }) {
   const d = buildHowTo(iso2);
   if (!d) return null;
   return (
-    <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+    <div>
       <Band hero>
         <Box id="howto">
-          <h1 className="text-[length:var(--t-head)] font-semibold leading-tight tracking-tight text-[var(--c-ink)]">{d.title}</h1>
+          <h1 data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-tight tracking-tight text-[var(--c-ink)]">{d.title}</h1>
           <p className="mt-2 max-w-[60ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.lead}</p>
           {d.cells.length > 0 ? (
             <div className="mt-5 border-t border-[var(--c-border)] pt-4">
@@ -66,6 +66,6 @@ export function HowToBody({ iso2 }: { iso2: string }) {
           <Terminus kicker={COPY.close.kicker} doors={d.doors} />
         </Box>
       </div>
-    </main>
+    </div>
   );
 }

@@ -89,6 +89,9 @@ for (const file of files) {
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
     const { out, pageScroll } = await page.evaluate(inPage);
     if (pageScroll) red(name, w, "page", "BOTCHED MOBILE: the page scrolls sideways");
+    /* A PAGE WITH NO SECTION CARD UNDER MAIN IS NOT A PASS: a render that lost
+       its landmark or its cards would otherwise sail through with zero holes. */
+    if (out.length === 0) red(name, w, "page", "NO SECTIONS: no section card found under main; the render or the landmark is broken");
     for (const c of out) {
       const minW = Math.max(120, c.cardW / 4), minH = Math.max(120, c.cardH / 4);
       if (c.holeW >= minW && c.holeH >= minH) red(name, w, c.id, `WHITE SPACE: a blank rectangle ${c.holeW}x${c.holeH} inside a ${c.cardW}x${c.cardH} card${c.siblings > 1 ? ` (one of ${c.siblings} in its band)` : ""}`);
