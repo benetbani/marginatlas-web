@@ -287,6 +287,10 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     spread && isNum(spread.p50) && isNum(spread.p90)
       ? {
           median_income_usd: Math.round(spread.p50),
+          // THE BOTTOM TENTH, carried since the build loop's run 11 (2026-09-06): the
+          // range strip draws bottom tenth, typical, top tenth, the three marks the
+          // country page's customers strip draws, so the two pages rhyme.
+          bottom10_income_usd: Math.round(spread.p10),
           top10_income_usd: Math.round(spread.p90),
           // top1 is not carried in the spread; approximate the visible top tick from
           // the p90 tail only when the spread exists. The curve needs a top-1 x-tick;
@@ -298,6 +302,10 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
           // not read as exact either: this was printing $358,754.
           top1_income_usd: Math.round((spread.p90 * (spread.p90 / spread.p50)) / 1000) * 1000,
           read: view.customer?.note ?? undefined,
+          // THE SPREAD IS MULTIPLIERS ON A MEAN, NOT A MEASUREMENT (city_view says
+          // so), and the section wore no sample mark for it until run 11. Modelled,
+          // and the card's note says so.
+          _meta: { confidence: "modeled", source: "multipliers on the city's average gross pay" },
           // tiers OMITTED (authored spend shares).
         }
       : undefined;

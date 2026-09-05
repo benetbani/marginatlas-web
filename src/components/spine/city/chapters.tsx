@@ -20,163 +20,34 @@
  * All prose from the seed. Terracotta rationed to one decision figure per Box.
  */
 import * as React from "react";
-import { Box, Head, Fig, InlineDisclosure, TERRA, usd } from "@/components/spine/kit";
-import { CountFig, useReducedMotion, useInView } from "./motion";
+import { Box, Head, Fig, InlineDisclosure, usd } from "@/components/spine/kit";
+import { CountFig } from "./motion";
+import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
+import { buildCityCustomersStrip } from "@/lib/spine/range_rows";
+import { COPY } from "@/lib/spine/copy";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
-/* ---- income distribution curve ----
- * Null-guards (real-data promotion): the whole card omits when no real median is held,
- * so a city without the sanctioned London income spread renders nothing rather than a
- * curve drawn from zeros. The 60/30/10 spend-share tiers are gone (rulebook v1 §7). */
+/* ---- what customers earn here, on the range strip ----
+ * THE RANGE-STRIP ARCHETYPE, since the build loop's run 11 (2026-09-06). The
+ * card was a bespoke log-scale marker plot drawn in this file, median, top 10%,
+ * top 1%, with a spread word beneath it. The country page's customers section
+ * had already landed on the strip with bottom tenth, typical, top tenth, and
+ * the city now draws the same three marks from its own spread, so the two pages
+ * rhyme. The top 1% figure is gone: it was derived twice over from the top
+ * tenth and has no mark on the strip. London's spread is multipliers on the
+ * city's average pay, so the head wears the sample mark and the note says
+ * modelled. A city with no spread of its own draws the country's typical pay,
+ * the basis line naming the country and saying the city is not researched on
+ * its own yet; a city with neither self-omits. The builder is
+ * buildCityCustomersStrip; the spread word rides the strip's extra slot. */
 export function IncomeCurve({ d }: { d: any }) {
-  const o = d.income ?? {};
-  if (o.median_income_usd == null) return null;
-  const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
-  const med = o.median_income_usd ?? 0, t10 = o.top10_income_usd ?? 0, t1 = o.top1_income_usd ?? 0;
-  const reduced = useReducedMotion();
-  const { ref, seen } = useInView<HTMLDivElement>();
-
-  // only the three real figures are known (median/top10/top1); a log-x scale plots
-  // them without the top-1% tail crushing the median, but NO curve is drawn between
-  // them , the shape of the distribution in between is not data we hold (S11/D1).
-  // H tightened (was 118): the markers only rise 44px off the baseline, so a taller box
-  // left a dead band above the plot (rule 17, one-sided white space). The box now hugs the
-  // marker stems, and the chart is the wide leg of a WideRail beside the rent-ratio rail.
-  /* POSITION IN PER CENT, SIZE IN PIXELS. This was a fixed 320x84 drawing stretched
-     to the width of its card, so every part of it grew with the container: measured
-     in a browser, the marker dots went from a 2.5px radius at phone width to 6.9px at
-     reading width, the stems from 35px to 95px, and the box from 67px tall to 182px
-     for three ticks. The scale is the only thing here that should stretch, so the
-     x positions are a percentage and everything else is a fixed size. */
-  const xmin = Math.log(med * 0.28), xmax = Math.log(t1 * 1.12), span = xmax - xmin || 1;
-  const X = (v: number) => ((Math.log(v) - xmin) / span) * 100;
-  // ticks are static; `seen`/`reduced` are reserved for a future reveal but the
-  // resting render is always the true figures (SSR-safe, never blank).
-  void seen; void reduced;
-
-  /* THREE FIGURES, AND THE CARD LETS ITSELF IN ON ONE. The guard above asks only for
-     a median; the two tail figures fall back to zero when absent, and this scale is
-     logarithmic, so a zero is not a position at all, it is negative infinity, and the
-     mark would be placed outside any possible box. The scale also reads left to
-     right, so figures out of order would draw a picture that contradicts its own
-     labels. Neither is reached today, checked across ten cities, of which exactly
-     ONE draws this card at all. Unreached is not the same as impossible: the card
-     draws nothing rather than draw either. */
-  if (!(med > 0) || !(t10 >= med) || !(t1 >= t10)) return null;
-
-  // the MEDIAN is the terracotta reference , the everyday customer is the page's
-  // stated base; the tail ticks stay grey (the extreme is context, not the answer).
-  const ticks: Array<[string, number, boolean]> = [["Median", med, true], ["Top 10%", t10, false], ["Top 1%", t1, false]];
-
-  /* THE SPREAD WORD LIVES HERE NOW, ON THE CHART THAT SHOWS THE SPREAD.
-     It had its own card 650px up the page: 356x147px holding one adjective,
-     "Somewhat uneven", and a caption. No figure, no visual. Art direction E5, a
-     section that is prose with nothing drawn is not a section, and A2, a section
-     needs a figure. The chart below it says the same thing properly, three marks
-     on a log scale showing how far the top pulls away from the middle.
-
-     So the word joins the chart it describes rather than competing with it from
-     another band. Nothing is lost: the reader still gets the word AND the shape,
-     and now they are in the same place, which is where a read belongs. */
-  const spreadWord = d.demand?.spread_word ?? null;
-
+  const s = buildCityCustomersStrip(d);
+  if (!s) return null;
   return (
     <Box id="earnings">
-      {/* THE GLYPH WAS A SHOPPING BAG, ON A CARD ABOUT WHAT PEOPLE EARN. Spending
-          power is what a reader does with income, not the income itself, and at
-          twenty-eight pixels the bag reads as a bin: a tapered body, a lid line and
-          a mark inside it. The column test run on this icon set put it in a
-          collision group with a second bag.
-          The set already holds the exact drawing this card makes , a low-to-high
-          band with the typical point marked , and nothing else on this page uses
-          it. The card s own closing line says "is how the money is spread here". */}
-      <Head icon="spread" sample={sample}>What customers earn here</Head>
-      <div ref={ref} className="grid gap-4">
-        <div className="min-w-0">
-          {/* The plot. Four raw colours lived in the drawing this replaces; every one
-              of them is a token now. */}
-          {/* THE STEMS WERE 44px TALL AND ALL THE SAME HEIGHT, so the vertical
-              dimension of this plot encoded nothing: position on the scale already
-              carries the value, and three equal stems beside it read as three bars
-              whose heights a reader tries to compare and cannot. Most of the card's
-              height was that false encoding.
-
-              A short tick is different from a bar. It connects a mark to the label
-              beneath it and claims nothing, which is what these were always for. */}
-          {/* DECLARED I1, WAVE C ROW C9, 2026-09-02. Three real figures as marks on one
-              shared log axis is the catalogue's "shared-axis marker plot", and under
-              the version-2 idea budget a line with marks positioned along it is a
-              HORIZONTAL TRACK. It was drawn here with no idea on it, which is the
-              catalogue addendum's "where the sameness actually lives": bespoke inline
-              markup in a view file, where no budget could reach it. The shape is right
-              for the information (a spread of one quantity, index row "a spread: low,
-              typical, high"), so this row is a declaration and not a replacement.
-              The page's other track is the six-spectra quick reads, so the city page
-              is now AT the cap of two and nothing else on it may be a track. */}
-          <div data-idea="I1" className="relative h-[24px]" role="img" aria-label="Median, top 10 percent, and top 1 percent income marked on a scale">
-            <span className="absolute inset-x-0 bottom-0 h-px bg-[var(--c-border)]" />
-            {ticks.map(([label, v, accent]) => (
-              <span key={label} className="absolute bottom-0 top-0" style={{ left: `${X(v)}%` }}>
-                <span
-                  className="absolute bottom-0 h-[12px] w-0 -translate-x-1/2"
-                  style={{
-                    borderLeftWidth: accent ? 2 : 1,
-                    borderLeftStyle: accent ? "solid" : "dashed",
-                    borderLeftColor: accent ? TERRA : "var(--c-line-strong)",
-                  }}
-                />
-                <span
-                  className="absolute bottom-[9px] h-[7px] w-[7px] -translate-x-1/2 rounded-full border border-[var(--c-card)]"
-                  style={{ background: accent ? TERRA : "var(--c-muted)" }}
-                />
-              </span>
-            ))}
-          </div>
-          {/* THE LABELS SIT UNDER THEIR OWN MARKS. They used to be spread evenly across
-              the row while the marks sat at their real positions on a log scale, so the
-              two drifted apart as the card got wider: measured, the median label was 82
-              pixels from its mark at phone width and 258 at reading width, which is more
-              than a third of the card. Each label now takes its mark's position. A label
-              centred on a mark near either end would hang off the edge, the fault this
-              loop has now found on four different scales, so the outermost ones are
-              pinned inside the box instead of centred. */}
-          <div /* THE FIGURES LEAD, NOT THE ADJECTIVE. The verdict word sat at lead size,
-              the largest thing on the card, while the three figures it summarises sat
-              at micro, the smallest. A card about what customers earn was led by a
-              word, and the earnings were a footnote to it. */
-          className="relative mt-1 h-[42px] text-[length:var(--t-micro)] text-[var(--c-muted)]">
-            {ticks.map(([label, v, accent]) => {
-              const x = X(v);
-              const edge = x > 88 ? "right" : x < 12 ? "left" : "centre";
-              const style: React.CSSProperties =
-                edge === "right"
-                  ? { right: 0 }
-                  : edge === "left"
-                    ? { left: 0 }
-                    : { left: `${x}%`, transform: "translateX(-50%)" };
-              return (
-                <span key={label} className={`absolute top-0 flex flex-col whitespace-nowrap ${edge === "right" ? "items-end" : ""}`} style={style}>
-                  <span className={accent ? "font-semibold text-[var(--terra-text)]" : ""}>{label}</span>
-                  {/* THE MEDIAN IS THE ANSWER, THE TAILS ARE THE CONTEXT, and until now all
-                      three were printed at one size while the adjective below them and the
-                      card title above them were both larger. The card was asking a reader to
-                      find the finding. The median steps up a rung; the two tail figures do
-                      not, because a reader looking for "what do customers here earn" wants
-                      one number and gets a shape for free. */}
-                  <Fig className={`font-semibold ${accent ? "text-[length:var(--t-head)] text-[var(--terra-text)]" : "text-[length:var(--t-body)] text-[var(--c-ink)]"}`}>{money(v)}</Fig>
-                </span>
-              );
-            })}
-          </div>
-        </div>
-        {spreadWord ? (
-          <div className="flex flex-wrap items-baseline gap-x-2.5 border-t border-[var(--c-border)] pt-3">
-            <span className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{spreadWord}</span>
-            <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">is how the money is spread here</span>
-          </div>
-        ) : null}
-      </div>
+      <Head icon="spread" sample={s.sample}>{COPY.cityCustomers.kicker}</Head>
+      <RangeStrip marks={s.marks} scale="linear" fmt={usd} basis={s.basis} note={s.note} extra={s.extra} />
     </Box>
   );
 }

@@ -21,7 +21,7 @@ import { buildCityCards } from "@/lib/spine/city_cards";
 import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
 import { RangeStrip } from "./RangeStrip";
-import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
+import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip } from "@/lib/spine/range_rows";
 import { SpectraTable } from "./SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { NoteList } from "./NoteList";
@@ -208,7 +208,16 @@ export function TiersTableStories({ instances = pickTiersTableInstances() }: { i
   );
 }
 
-export function RangeStripStories({ instances = pickRangeStripInstances() }: { instances?: Instance[] }) {
+/** The city instances for the strip, from the loaded city seeds: one drawing its own spread and one drawing the country's figure, each saying which (city:earnings, run 11). */
+export function pickCityStripInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
+  const out: CityHeroInstance[] = [];
+  const own = cities.find((c) => buildCityCustomersStrip(c.seed)?.from === "city");
+  if (own) out.push({ ...own, why: "the city's own spread, modelled on its average pay" });
+  const country = cities.find((c) => buildCityCustomersStrip(c.seed)?.from === "country");
+  if (country) out.push({ ...country, why: "no figure of its own, the country's typical pay, said so" });
+  return out;
+}
+export function RangeStripStories({ instances = pickRangeStripInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
   return (
     <div data-stories="range-strip">
       {instances.map((i) => {
@@ -221,6 +230,16 @@ export function RangeStripStories({ instances = pickRangeStripInstances() }: { i
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+      {city.map((c) => {
+        const d = buildCityCustomersStrip(c.seed);
+        const el = d ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 536 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.cityCustomers.kicker}, {String(c.seed?.meta?.city ?? c.slug)}</div>
+            <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={d.basis} note={d.note} extra={d.extra} />
+          </div>
+        ) : null;
+        return <Story key={`${c.slug}:city`} iso2={`${c.slug}:city`} why={c.why}>{el}</Story>;
       })}
     </div>
   );

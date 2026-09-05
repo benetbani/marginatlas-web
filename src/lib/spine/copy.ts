@@ -138,6 +138,14 @@ export const COPY = {
   },
   /** The city masthead through the answer card. */
   cityHero: { subtitle: "Opening a business in {country}", allCities: "All cities" },
+  /** The city's customers strip (city:earnings, run 11): the city's own spread where held, the country's typical pay where not, the basis line saying which. */
+  cityCustomers: {
+    kicker: "What customers earn here",
+    basis: "Pay a year across the city, before tax.",
+    modelled: "the spread is modelled on the city's average pay, not measured",
+    spreadWord: "is how the money is spread here",
+    countryBasis: "Full-time pay a year across {country}; {city} not researched on its own yet.",
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
