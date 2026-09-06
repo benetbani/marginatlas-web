@@ -39,6 +39,9 @@ import { isReviewBuild } from "@/lib/feature_flags";
 import { CityHero } from "./masthead";
 import { IncomeCurve, OwnerRunway, RentAffordability } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
+import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
+import { buildCityPremisesStrip } from "@/lib/spine/range_rows";
+import { COPY } from "@/lib/spine/copy";
 
 /* A FIFTH PRIVATE FORMATTER, GONE (C29, 2026-09-02). It rounded a cost to open to
    the nearest thousand and printed a K whatever the magnitude, which is the same
@@ -233,56 +236,25 @@ function CityLenses({ d }: { d: any }) {
 }
 
 /* ================= CH2 , WHAT IT COSTS HERE ================= */
-/* CommercialSpace , WHAT IS LEFT AFTER THE PEER STRIP WAS CUT AS A DUPLICATE.
- *
- * Wave C, row C9 (2026-09-02). This card carried a four-city dot plot of the cost of
- * living against the home city, an undeclared horizontal track, and it was cut rather
- * than declared. Three findings, in the order they decided it.
- *
- * IT WAS THE SAME QUANTITY AS THE PEERS TABLE ONE BAND ABOVE, WITH THE SIGN INVERTED.
- * `CityPeers` builds its first row as `home.rent_index - r.rent_index` and this strip
- * built `r.rent_index - home.rent_index`, off the same field, for the same four
- * cities, both free of any lock. Rendered, the table printed "Cheaper to live: Paris
- * +2" and this strip printed "Paris -2", seven hundred pixels apart. That is step 1's
- * duplicate test failed: without this drawing a reader loses nothing, because the card
- * above states every figure it stated. The file's own comment already said so, "the
- * plot is a subset of the table's first row", and treated that as a banding problem.
- *
- * ITS FORM WAS WRONG FOR ITS INFORMATION ANYWAY. Four named entities compared on ONE
- * metric is the index's "a ranking of named things", which points at a standing or a
- * column chart, never at a track: a horizontal track is for a position between two
- * NAMED POLES and this axis had none, only a home city at zero.
- *
- * AND THE PAGE HAD NO ROOM FOR IT. The city page's two horizontal tracks are now the
- * six-spectra quick reads and the earnings marker plot, which is the cap.
- *
- * WHAT SURVIVES: the lease terms, the only reading here that is this card's alone. It
- * renders for a city carrying all three fields and nothing today does, so this
- * component is dark on every real page. The card that remains is not a heading over
- * nothing, because it omits when its own figures are absent, exactly as every other
- * card in this file does.
- *
- * THE CHAPTER HEADING WAS ALREADY THE ODD ONE OUT and it is still not changed here.
- * "What it costs, and who buys" now holds the peers table, the earnings plot and the
- * seasonal split. Chapter headings are ratified copy; the mismatch is recorded for the
- * founder rather than rewritten. */
-export function CommercialSpace({ d }: { d: any }) {
-  const s = d.space;
-  if (!s || !s.read) return null;
-  const spaceSample = s._meta?.confidence === "placeholder" || s._meta?.confidence === "modeled";
-  const hasTerms = s.deposit_months != null && s.lease_years_typical != null && s.rent_free_months != null;
-  if (!hasTerms) return null;
-  const terms: Array<[string, string]> = [
-    [`${s.deposit_months} mo`, "deposit up front"],
-    [`${s.lease_years_typical}`, "typical lease, years"],
-    [`${s.rent_free_months} mo`, "rent-free fit-out"],
-  ];
+/* CityPremises: WHAT PREMISES COST TO RUN, on the range-strip archetype (the
+   build loop's run 13, 2026-09-06; founder ruling 11, premises on city pages
+   too). No city holds a rent figure of its own (0 of 252 on 2026-09-06). The
+   country profile holds three rents by CITY SIZE (the tier-1, tier-2 and
+   tier-3 city averages, as the cost engine and the v29 plan read them), so the
+   card draws those three with the city's own size class in the accent, and the
+   basis line says whose average it is and where the city sits. The five
+   metrics the founder named (prime and secondary street, in the metropolis and
+   in a city, and a fifth) are the street axis the data does not hold: a data
+   requirement, not a drawing. This replaced "The lease terms", a card whose
+   three figures (deposit, lease length, rent-free months) the adapter omits for
+   every city, so it never drew. */
+export function CityPremises({ d }: { d: any }) {
+  const s = buildCityPremisesStrip(d);
+  if (!s) return null;
   return (
-    <Box id="space">
-      <Rail icon="red-tape" kicker="The lease terms" sample={spaceSample} />
-      <div className="divide-y divide-[var(--c-border)]">{terms.map(([v, l]) => (
-        <div key={l} className="flex items-baseline justify-between gap-3 py-2"><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{l}</span><Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">{v}</Fig></div>
-      ))}</div>
+    <Box id="premises">
+      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={s.sample} />
+      <RangeStrip marks={s.marks} scale="log" fmt={usd} basis={s.basis} extra={s.extra} />
     </Box>
   );
 }
@@ -867,7 +839,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const hasWhereCh = !!(d.where_to_trade?.list?.length);
   // IncomeCurve + RentAffordability live in the Customers chapter (earnings data
   // belongs under "who buys"); OwnerRunway lives beside the risk material (C4).
-  const hasCostCh = !!(d.space?.read);
+  const hasCostCh = !!(d.space?.read) || buildCityPremisesStrip(d) != null;
   const hasCustomersCh = !!(d.demand && (d.demand.resident_pct != null || d.demand.spend_per_capita_usd != null)) || !!(d.income?.median_income_usd != null);
   const tradeList = d.trades?.list ?? [];
   // The owner-keeps net-margin block (MarginKept) is DELETED (§5 banned metric + the
@@ -942,17 +914,19 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
               goes 347 to 416, where its three log-scale labels stop crowding, and the
               peers table gives up 69px it was not using, five columns being the widest
               thing in it. */}
-          <Band split="3-2" stack="lg"><CityPeers d={d} /><IncomeCurve d={d} /></Band>
-          {/* THE EARNINGS CHART PAIRS WITH THE DEMAND ROW, NOT WITH THE RENT
-              RATIO. Measured across fifteen cities on 2026-08-25, the rent ratio
-              renders for NONE of them, and neither do the owner runway, the risk
-              list, the character read or the locals note. Five sections that
-              never draw. They stay in the code, because they will render the day
-              their data arrives, but the page's rhythm cannot be built on them:
-              a band whose partner never appears leaves its survivor in a half
-              with a hole beside it, which is the one-sided white space the
-              splitting exists to prevent. */}
-          <Band split="3-2"><DemandSize d={d} /><CommercialSpace d={d} /></Band>
+          {/* THE PEERS TABLE ALONE, THEN THE TWO STRIPS SIDE BY SIDE, THEN THE
+              DEMAND ROW ALONE (the build loop's run 13, 2026-09-06). The premises
+              card arrived at 286px of natural height, and the only partner near
+              it is the earnings card at 265: two range strips, what customers earn
+              beside what premises cost, one form, one height. The peers table
+              (277) stood beside the earnings card before and now stands alone in
+              the lone-child column, as the demand row already did; the demand
+              row's card is 128px tall and beside either strip it would stretch
+              over a hole the filter reds. The lease-terms card that used to share
+              the demand row's band never drew: its figures are omitted upstream. */}
+          <Band><CityPeers d={d} /></Band>
+          <Band split="1-1"><IncomeCurve d={d} /><CityPremises d={d} /></Band>
+          <Band split="3-2"><DemandSize d={d} /></Band>
           <RentAffordability d={d} />
         </>
       ) : null}

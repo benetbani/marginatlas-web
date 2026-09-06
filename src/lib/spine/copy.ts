@@ -68,10 +68,10 @@ export const COPY = {
   /** The range strips. Founder ruling 12 (2026-09-04): premises "in five metrics"; the four he named and the fifth reserved. */
   premises: {
     kicker: "What premises cost to run",
-    basis: "Rent for a square metre of shop, a year.",
+    basis: "Rent for a square metre of shop a year, the country's average by city size.",
     electricity: "a kilowatt hour, the commercial rate",
-    /** The marks the profile holds today: three national tiers. */
-    marks: { edge: "Edge of town", ordinary: "Ordinary street", prime: "Prime street" },
+    /** THE MARKS ARE RENT BY CITY SIZE, NOT BY STREET (the build loop's run 13, 2026-09-06). The profile's three rent fields are defined as the tier-1 city, tier-2 city and tier-3 or smaller city averages (the v29 cost-engine plan defines them so, the cost engine picks one by the city's tier, and the research cards call the single figure "a Tier-1 average"); until run 13 they were labelled Prime street, Ordinary street and Edge of town, which is the street axis the data does not hold. */
+    marks: { t1: "Biggest cities", t2: "Major cities", t3: "Smaller cities" },
     /** The founder's five metrics, held for the day the data carries them. */
     target: ["Prime street, metropolis", "Secondary street, metropolis", "Prime street, city", "Secondary street, city", "Edge of town"],
   },
@@ -138,6 +138,11 @@ export const COPY = {
   },
   /** The city masthead through the answer card. */
   cityHero: { subtitle: "Opening a business in {country}", allCities: "All cities" },
+  /** The city's premises strip (city:premises, run 13): the country's three averages by city size, the city's own size class in the accent, the basis line saying so. */
+  cityPremises: {
+    basis: "Rent for a square metre of shop a year, the average across {country} by city size; {city} counts among the {tier}.",
+    basisNoTier: "Rent for a square metre of shop a year, the average across {country} by city size.",
+  },
   /** The city's customers strip (city:earnings, run 11): the city's own spread where held, the country's typical pay where not, the basis line saying which. */
   cityCustomers: {
     kicker: "What customers earn here",

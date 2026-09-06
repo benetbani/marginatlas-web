@@ -472,6 +472,8 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     city: city.name,
     slug: city.slug,
     country_name: countryName,
+    // The city's size class (1 to 3), carried since run 13 so the premises strip can accent the country's average for cities of this size.
+    tier: city.tier,
     provenance_line:
       "Modeled from local business demography; the district and per-trade figures are real per-trade measurements.",
   };

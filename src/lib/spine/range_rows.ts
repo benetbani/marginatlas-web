@@ -35,9 +35,9 @@ export function buildPremisesStrip(iso2: string): StripData | null {
   const { p, held, conf } = profileOf(iso2);
   if (!held) return null;
   const marks: StripData["marks"] = [];
-  if (isNum(p.commercial_rent_t3_usd_per_sqm_year) && p.commercial_rent_t3_usd_per_sqm_year > 0) marks.push({ key: "edge", label: COPY.premises.marks.edge, value: Math.round(p.commercial_rent_t3_usd_per_sqm_year) });
-  if (isNum(p.commercial_rent_t2_usd_per_sqm_year) && p.commercial_rent_t2_usd_per_sqm_year > 0) marks.push({ key: "ordinary", label: COPY.premises.marks.ordinary, value: Math.round(p.commercial_rent_t2_usd_per_sqm_year) });
-  if (isNum(p.commercial_rent_t1_usd_per_sqm_year) && p.commercial_rent_t1_usd_per_sqm_year > 0) marks.push({ key: "prime", label: COPY.premises.marks.prime, value: Math.round(p.commercial_rent_t1_usd_per_sqm_year) });
+  if (isNum(p.commercial_rent_t3_usd_per_sqm_year) && p.commercial_rent_t3_usd_per_sqm_year > 0) marks.push({ key: "t3", label: COPY.premises.marks.t3, value: Math.round(p.commercial_rent_t3_usd_per_sqm_year) });
+  if (isNum(p.commercial_rent_t2_usd_per_sqm_year) && p.commercial_rent_t2_usd_per_sqm_year > 0) marks.push({ key: "t2", label: COPY.premises.marks.t2, value: Math.round(p.commercial_rent_t2_usd_per_sqm_year) });
+  if (isNum(p.commercial_rent_t1_usd_per_sqm_year) && p.commercial_rent_t1_usd_per_sqm_year > 0) marks.push({ key: "t1", label: COPY.premises.marks.t1, value: Math.round(p.commercial_rent_t1_usd_per_sqm_year) });
   const kwh = isNum(p.electricity_usd_per_kwh_commercial) && p.electricity_usd_per_kwh_commercial > 0 ? p.electricity_usd_per_kwh_commercial : null;
   if (marks.length === 0 && kwh == null) return null;
   return { marks, confidence: conf, note: null, extra: kwh != null ? { value: `$${kwh}`, label: COPY.premises.electricity } : null };
@@ -87,4 +87,30 @@ export function buildCityCustomersStrip(seed: any): CityStripData | null {
   const c = buildCustomersStrip(iso2);
   if (!c) return null;
   return { ...c, basis: COPY.cityCustomers.countryBasis.replace("{country}", inSentence(country)).replace("{city}", city), sample: c.confidence !== "measured", from: "country" };
+}
+
+/** THE CITY'S PREMISES STRIP (city:premises, the build loop's run 13, 2026-09-06;
+ *  founder ruling 11, premises on city pages too). No city holds a rent figure
+ *  of its own (0 of 252 on 2026-09-06). The country profile holds three rents by
+ *  city size, so the city draws its country's three with its own size class in
+ *  the accent (the seed's meta.tier, 1 to 3, the same hierarchy the profile's
+ *  tiers follow), and the basis line says whose average it is and where the
+ *  city sits. The street axis the founder named (prime and secondary street) is
+ *  a data requirement. Null when the country holds no rent or the seed no country. */
+export type CityPremisesStrip = StripData & { basis: string; sample: boolean };
+export function buildCityPremisesStrip(seed: any): CityPremisesStrip | null {
+  const iso2 = String(seed?.meta?.iso2 ?? "").toUpperCase();
+  const city = String(seed?.meta?.city ?? "").trim();
+  const country = String(seed?.meta?.country_name ?? "").trim();
+  if (iso2.length !== 2 || !city || !country) return null;
+  const c = buildPremisesStrip(iso2);
+  if (!c || c.marks.length === 0) return null;
+  const tier = seed?.meta?.tier;
+  const key: "t1" | "t2" | "t3" | null = tier === 1 ? "t1" : tier === 2 ? "t2" : tier === 3 ? "t3" : null;
+  const marks = c.marks.map((m) => ({ ...m, accent: key != null && m.key === key }));
+  const own = key != null && marks.some((m) => m.key === key) ? COPY.premises.marks[key] : null;
+  const basis = own
+    ? COPY.cityPremises.basis.replace("{country}", inSentence(country)).replace("{city}", city).replace("{tier}", own.toLowerCase())
+    : COPY.cityPremises.basisNoTier.replace("{country}", inSentence(country));
+  return { ...c, marks, basis, sample: c.confidence !== "measured" };
 }

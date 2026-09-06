@@ -86,10 +86,6 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/city/city-view.tsx#space",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/city/city-view.tsx#4",
       "reason": "not yet on an archetype; a build loop queue row"
     },
