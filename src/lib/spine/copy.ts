@@ -163,6 +163,13 @@ export const COPY = {
     cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC fee", llcDays: "LLC time" },
     caveat: "Peers are picked for comparable size and market, not for sharing a border. Effective tax is what a small business typically pays under each country's own small-business rules. LLC fee is the government fee only and LLC time runs until the company is registered.",
   },
+  /** The city's peers table (city:peers, run 22): cities as rows, three measures as columns, every figure read beside the home city; no unit word a reader has to know. */
+  cityPeers: {
+    kicker: "Peer cities, side by side",
+    cols: { city: "City", cheaper: "Cheaper to live", income: "Customer income", visitors: "Visitors" },
+    same: "same",
+    caveat: "Each column is read beside {city}: cost of living in index points, where higher is cheaper; average pay in percent; visitors a year as a multiple. Higher is better in every column. Peers are picked for comparable size and market, not for sharing a border.",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register. */
   banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year"],
 } as const;

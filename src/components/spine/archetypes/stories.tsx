@@ -9,7 +9,7 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { getCountryProfile } from "@/lib/economic_profile";
 import { buildHeroFacts, type HeroFacts } from "@/lib/spine/hero_facts";
 import { marginCardFromSnapshot, snapshotCountries, SNAPSHOT_TAKEN } from "@/lib/spine/margin_rows";
-import { buildPeerTable } from "@/lib/spine/peer_rows";
+import { buildPeerTable, buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { COPY } from "@/lib/spine/copy";
 import { AnswerCard } from "./AnswerCard";
 import { KvGrid } from "./KvGrid";
@@ -167,13 +167,22 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances() }: { i
   );
 }
 
-export function CompareTableStories({ instances = pickCompareTableInstances() }: { instances?: Instance[] }) {
+/** The city peers tables (run 22): every loaded city seed that holds one, keyed <slug>:peers, with its column count. */
+export function pickCityPeerInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
+  return cities.filter((c) => buildCityPeerTable(c.seed)).map((c) => ({ ...c, why: `the city and its peers, ${buildCityPeerTable(c.seed)!.columns.length} of 3 columns held` }));
+}
+export function CompareTableStories({ instances = pickCompareTableInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
   return (
     <div data-stories="compare-table">
       {instances.map((i) => {
         const t = buildPeerTable(i.iso2);
         const el = t ? <CompareTable id={`peers-${i.iso2.toLowerCase()}`} kicker={`${COPY.peers.kicker}, ${nameOf(i.iso2)}`} icon="benchmark" rows={t.rows} columns={t.columns} caveat={t.caveat} /> : null;
         return <Story kind="compare-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+      {city.map((c) => {
+        const t = buildCityPeerTable(c.seed);
+        const el = t ? <CompareTable id={`peers-${c.slug}`} kicker={`${COPY.cityPeers.kicker}, ${String(c.seed?.meta?.city ?? c.slug)}`} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} /> : null;
+        return <Story kind="compare-table" key={`${c.slug}:peers`} iso2={`${c.slug}:peers`} why={c.why}>{el}</Story>;
       })}
     </div>
   );
@@ -483,7 +492,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
   return {
     "answer-card": pickAnswerCardInstances(),
     "ranked-bars": pickRankedBarsInstances(),
-    "compare-table": pickCompareTableInstances(),
+    "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why }))],
     "card-pager": pickCardPagerInstances(),
     "tiers-table": pickTiersTableInstances(),
     "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why }))],

@@ -38,7 +38,8 @@ import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCityCharacterTables } from "@/lib/spine/character_rows";
 import { buildCityQuickReads } from "@/lib/spine/reads_rows";
-import { CompareTable, type CompareEntity, type CompareRow } from "@/components/spine/kit-index";
+import { CompareTable } from "@/components/spine/archetypes/CompareTable";
+import { buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { AtlasMark } from "@/components/spine/marks";
 import { CityHero } from "./masthead";
 import { IncomeCurve, OwnerRunway, RentAffordability } from "./chapters";
@@ -571,112 +572,21 @@ function Locals({ d }: { d: any }) {
 }
 
 /* ================= CH6 , THE CLOSE ================= */
-/* CityPeers. Null-guards: the whole card omits below two peer rows; each metric row is
- * dropped when NO entity carries it. EVERY row is a home-relative index/delta (§10: no
- * raw cross-geo USD, income and visitors included), oriented so higher = better on all
- * four (§29A: rent is inverted to a cost advantage); one skim rule, no direction flip
- * (§22/G11). The modeled peer set carries a SampleTag (§4). */
+/* CityPeers: THE PEERS TABLE ON THE COMPARISON ARCHETYPE (city:peers, the build
+   loop's run 22, 2026-09-06). The country page's form, the one the founder
+   called one of the best versions he had seen (2026-08-30): the places as rows
+   with a flag each, the measures as columns, the home row marked, the phone form
+   stacked and never scrolling sideways. The city and up to four peers, three
+   columns: cheaper to live (index points, higher is cheaper), customer income
+   (percent of the home city's average pay), visitors (a multiple). The old kit
+   table had the cities as columns and the measures as rows, and printed "pp", a
+   word the doctrine bans, on the income row; the units are now in the caption
+   in plain words. Full width by the wide-table sanction, as on the country page,
+   so it no longer stands alone at two thirds. */
 function CityPeers({ d }: { d: any }) {
-  const rows: any[] = d.peers?.list ?? [];
-  if (rows.length < 2) return null;
-  const home = rows.find((r) => r.home) ?? rows[0];
-  const homeName = home?.name ?? d.meta?.city ?? "the city";
-  const sample = d.peers?._meta?.confidence === "placeholder" || d.peers?._meta?.confidence === "modeled";
-  const entities: CompareEntity[] = rows.map((r) => ({ id: r.name, name: r.name, home: !!r.home }));
-  const has = (key: string) => rows.some((r) => r[key] != null);
-  const num = (v: any): v is number => typeof v === "number" && Number.isFinite(v);
-  const signed = (v: number) => (v === 0 ? "0" : `${v > 0 ? "+" : ""}${v}`);
-  // EVERY row is a like-for-like index/delta against the home city (§10: never raw
-  // cross-geo USD), oriented so HIGHER = BETTER on all four (§29A: a cost is inverted;
-  // no two rows flip direction, so one skim rule applies). All deltas are home-relative
-  // (home = 0), so the table is honest on the seed AND on real data.
-  const compareRows: CompareRow[] = [];
-  /* THE FIELD NAME, NOT THE ROW'S NAME. `has` asks whether any peer carries a
-     field, and every call below passed the row's DISPLAY key instead: "rent" for
-     rent_index, "vis" for visitors_m. So the check never found anything, no row
-     was ever added, and this table returned null before it drew, for every input
-     including the bundled sample. Reproduced in isolation
-     (scripts/probe_city_peers_table.mjs): four rows, four measures, and it had
-     never once appeared on a page. */
-  const row = (
-    key: string,
-    field: string,
-    label: string,
-    valOf: (r: any) => number | null,
-    unit?: string,
-    fmt?: (v: number) => string,
-  ) => {
-    if (!has(field)) return;
-    const values = Object.fromEntries(rows.map((r) => [r.name, valOf(r)]));
-    compareRows.push({
-      key, label, unit, higherIsBetter: true,
-      values,
-      /* A PEER LEVEL WITH HOME READS "same", NOT "0". Zero in a column of signed
-         differences reads as a measurement taken and found to be nil. It is not:
-         the cost-of-living index carries 65 distinct values across 252 cities, so
-         two cities sharing one sit in the same BAND rather than being identical.
-         Munich and London share 75, and share a salary figure too, so this table
-         was telling a reader that Munich costs exactly what London costs. Home
-         keeps 0, because on the home row zero is the anchor, not a finding. */
-      display: Object.fromEntries(
-        rows.map((r) => {
-          const v = values[r.name];
-          if (!num(v)) return [r.name, null];
-          if (fmt) return [r.name, fmt(v as number)];
-          return [r.name, v === 0 && !r.home ? "same" : signed(v as number)];
-        }),
-      ),
-    });
-  };
-  /* THE FIELD IS NOT RENT, AND THIS IS THE THIRD PLACE ON THIS PAGE THAT SAID IT
-     WAS. The slot is named rent_index and what fills it is the city's
-     Cost-of-Living Plus Rent Index, which the adapter states in its own comment.
-     The peer strip and the six-reads card were both renamed off "rent" earlier
-     today; this row was missed, so the page called one measurement two different
-     things two chapters apart. Rulebook v2 §13.
-
-     NO UNIT. CompareRow's own note: index rows carry bare figures and the base is
-     named once in the caption. This is an index difference, so "pp" was claiming
-     percentage points for something that has none. The two rows below really are
-     percentage differences and keep it.
-
-     Still INVERTED, so higher stays better on every row (§29A): a peer at +22 is
-     22 index points cheaper to live in than home. */
-  if (num(home?.rent_index)) row("rent", "rent_index", "Cheaper to live", (r) => (num(r.rent_index) ? (home.rent_index as number) - r.rent_index : null));
-  if (num(home?.spend_index)) row("spend", "spend_index", "Consumer spend", (r) => (num(r.spend_index) ? r.spend_index - (home.spend_index as number) : null), "pp");
-  // income + visitors as home-relative INDEX rows, never raw USD or a raw count (§10).
-  if (num(home?.median_income_usd) && (home.median_income_usd as number) > 0)
-    row("income", "median_income_usd", "Customer income", (r) => (num(r.median_income_usd) ? Math.round((r.median_income_usd / (home.median_income_usd as number)) * 100) - 100 : null), "pp");
-  /* VISITORS ARE A MULTIPLE, NOT A PERCENTAGE-POINT DIFFERENCE, and the reason is
-     universality (§21) rather than taste. Visitor counts run across orders of
-     magnitude: London 16 million, Cairo 4.5, Lagos 0.1. As a percentage-point
-     difference that produced "+4400" on the Lagos page, which is arithmetically
-     correct and unreadable, and it only ever looked sane on London because
-     London's peers happen to sit within a factor of two. A difference form needs
-     a bounded quantity. A multiple carries any spread and reads the same
-     everywhere: 0.4x, 1.2x, 45x.
-
-     A ZERO IS WITHHELD, NOT DRAWN. Five cities carry exactly 0 in this field, and
-     a city with literally no visitors is an absent measurement rather than a
-     measured nil. It rendered "-100", which told a reader that Dhaka has a
-     hundred percentage points fewer visitors than Lagos. Art direction F6: an
-     unknown is a dash. */
-  if (num(home?.visitors_m) && (home.visitors_m as number) > 0)
-    row(
-      "vis",
-      "visitors_m",
-      "Visitors",
-      (r) => (num(r.visitors_m) && r.visitors_m > 0 ? r.visitors_m / (home.visitors_m as number) : null),
-      "x",
-      (v) => `x${v.toFixed(2)}`,
-    );
-  if (compareRows.length === 0) return null;
-  return (
-    <Box id="peers">
-      <Rail icon="compare" kicker="Peer cities, side by side" sample={sample} />
-      <CompareTable entities={entities} rows={compareRows} caption={`Each row is shown against ${homeName}. Higher is better.`} />
-    </Box>
-  );
+  const t = buildCityPeerTable(d);
+  if (!t) return null;
+  return <CompareTable id="peers" kicker={COPY.cityPeers.kicker} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} />;
 }
 
 /* CityClose: THE TERMINUS (city:close, the build loop's run 19, 2026-09-06).
@@ -816,13 +726,10 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
               row's card is 128px tall and beside either strip it would stretch
               over a hole the filter reds. The lease-terms card that used to share
               the demand row's band never drew: its figures are omitted upstream. */}
-          {/* A LONE CARD STACKS UNTIL LG (the page row, run 20): photographed at 768,
-              the peers table, the demand row and the trades card each took one of
-              the two tablet columns and left the other half empty, the one-sided
-              white space the splitting exists to prevent; the band's lone-child
-              rule reaches only lg, so below it a lone card takes the full width, as
-              the character table has since run 14. */}
-          <Band stack="lg"><CityPeers d={d} /></Band>
+          {/* THE PEERS TABLE TAKES THE WIDE-TABLE SANCTION (run 22), the same as on
+              the country page, so it no longer stands alone at two thirds. The
+              demand row and the trades card below still stack until lg (run 20). */}
+          <CityPeers d={d} />
           <Band split="1-1"><IncomeCurve d={d} /><CityPremises d={d} /></Band>
           <Band split="3-2" stack="lg"><DemandSize d={d} /></Band>
           <RentAffordability d={d} />

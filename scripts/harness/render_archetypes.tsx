@@ -12,7 +12,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickNoteListInstances, pickTerminusInstances, pickPayBarsInstances, pickKvGridInstances, pickCityStripInstances, cityStripKey, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex } from "../../src/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickNoteListInstances, pickTerminusInstances, pickPayBarsInstances, pickKvGridInstances, pickCityStripInstances, cityStripKey, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 
 const CSS_PATH = "scratchpad/pages/site.css";
 try {
@@ -34,7 +34,7 @@ const body = renderToStaticMarkup(
     <StoriesIndex instances={instances} />
     <AnswerCardStories instances={instances["answer-card"]} />
     <RankedBarsStories instances={instances["ranked-bars"]} />
-    <CompareTableStories instances={instances["compare-table"]} />
+    <CompareTableStories instances={pickCompareTableInstances()} city={pickCityPeerInstances(cityHero)} />
     <CardPagerStories instances={instances["card-pager"]} />
     <TiersTableStories instances={instances["tiers-table"]} />
     <RangeStripStories instances={pickRangeStripInstances()} city={cityStrips} />

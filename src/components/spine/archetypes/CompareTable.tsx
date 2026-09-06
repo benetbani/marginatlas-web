@@ -21,19 +21,27 @@ import { CountryFlag } from "@/components/CountryFlag";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "./copy";
 
-export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days"; best: "min" | "max" };
-export type CompareRow = { iso2: string; name: string; home?: boolean; values: Record<string, number | null> };
-export type CompareTableProps = { id: string; kicker: string; icon?: AtlasIconId; rows: CompareRow[]; columns: CompareColumn[]; caveat?: string };
+/** THE UNITS (city:peers, the build loop's run 22, 2026-09-06): "pct", "usd" and "days" are the country table's figures; "index" is a signed difference in index points, "pctdiff" a signed difference in percent, "x" a multiple. On a difference column the home row prints 0 and a peer at exactly 0 prints "same", because two places sharing an index band are not identical (the kit's table said so first). */
+export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "index" | "pctdiff" | "x"; best: "min" | "max" };
+/** `iso2` draws the flag; `key` names the row when two rows share a flag (two cities in one country). */
+export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null> };
+export type CompareTableProps = { id: string; kicker: string; icon?: AtlasIconId; rows: CompareRow[]; columns: CompareColumn[]; caveat?: string; entityHead?: string };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-function fmt(unit: CompareColumn["unit"], v: number): string {
+const signed = (v: number) => (v > 0 ? `+${v}` : `${v}`);
+function fmt(unit: CompareColumn["unit"], v: number, home?: boolean): string {
   if (unit === "pct") return `${v}%`;
   if (unit === "usd") return v === 0 ? COPY.free : usd(v);
+  if (unit === "index") return v === 0 ? (home ? "0" : COPY.cityPeers.same) : signed(v);
+  if (unit === "pctdiff") return v === 0 ? (home ? "0" : COPY.cityPeers.same) : `${signed(v)}%`;
+  if (unit === "x") return `x${v.toFixed(2)}`;
   return `${v} ${v === 1 ? "day" : "days"}`;
 }
+const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
 
-export function CompareTable({ id, kicker, icon, rows, columns, caveat }: CompareTableProps) {
+export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead }: CompareTableProps) {
+  const phoneCols = PHONE_COLS[Math.min(4, Math.max(1, columns.length))];
   if (rows.length < 2) return null;
   const bestOf: Record<string, number | undefined> = {};
   for (const c of columns) {
@@ -54,7 +62,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat }: Compar
             <caption className="sr-only">{caveat ?? kicker}</caption>
             <TableHeader>
               <TableRow className="border-[var(--c-border)] hover:bg-transparent">
-                <TableHead scope="col" className={`h-auto px-0 pb-2 text-left ${head}`}>{COPY.peers.cols.country}</TableHead>
+                <TableHead scope="col" className={`h-auto px-0 pb-2 text-left ${head}`}>{entityHead ?? COPY.peers.cols.country}</TableHead>
                 {columns.map((c) => (
                   <TableHead key={c.key} scope="col" className={`h-auto px-2 pb-2 text-right ${head}`}>{c.head}</TableHead>
                 ))}
@@ -62,7 +70,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat }: Compar
             </TableHeader>
             <TableBody>
               {rows.map((r) => (
-                <TableRow key={r.iso2} data-row={r.iso2} className={`h-12 border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
+                <TableRow key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`h-12 border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
                   <TableCell className="px-0 py-0 align-middle">
                     <span className="flex items-center gap-2.5 whitespace-nowrap">
                       <CountryFlag iso2={r.iso2} className="w-7 shrink-0" />
@@ -73,7 +81,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat }: Compar
                     const v = r.values[c.key];
                     return (
                       <TableCell key={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
-                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
+                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v, r.home)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
                       </TableCell>
                     );
                   })}
@@ -83,24 +91,24 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat }: Compar
           </Table>
         </div>
         <div className="md:hidden" data-phone-table="1">
-          <div className="grid grid-cols-4 gap-x-2 border-b border-[var(--c-border)] pb-2">
+          <div className={`grid ${phoneCols} gap-x-2 border-b border-[var(--c-border)] pb-2`}>
             {columns.map((c) => (
               <span key={c.key} className={`text-right ${head}`} style={{ fontSize: "var(--t-mark)" }}>{c.head}</span>
             ))}
           </div>
           <div className="divide-y divide-[var(--c-border)]">
             {rows.map((r) => (
-              <div key={r.iso2} data-row={r.iso2} className={`py-2.5 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
+              <div key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`py-2.5 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
                 <span className="flex items-center gap-2.5">
                   <CountryFlag iso2={r.iso2} className="w-6 shrink-0" />
                   <span className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
                 </span>
-                <div className="mt-1 grid grid-cols-4 gap-x-2">
+                <div className={`mt-1 grid ${phoneCols} gap-x-2`}>
                   {columns.map((c) => {
                     const v = r.values[c.key];
                     return (
                       <span key={c.key} className="text-right whitespace-nowrap">
-                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
+                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v, r.home)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
                       </span>
                     );
                   })}

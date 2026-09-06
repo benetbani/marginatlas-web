@@ -24,6 +24,7 @@ for (const w of widthsArg.split(",").map(Number)) {
   const p = await ctx.newPage();
   await p.goto(url, { waitUntil: "load", timeout: 60000 });
   await p.evaluate(() => (document.fonts ? document.fonts.ready : null));
+  await p.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* the capture goes on */ } } });
   await p.waitForTimeout(250);
   const box = await p.evaluate((key) => {
     const [kind, k] = key.split("/");

@@ -435,6 +435,9 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   // 64,800 and 57,000, and the gap between them is real.
   const homeRow = {
     name: city.name,
+    // The slug and the country code, carried since run 22 for the peers table's row key and flag.
+    slug: city.slug,
+    iso2: city.iso2,
     home: true,
     rent_index: isNum(city.cost_of_living_index) ? Math.round(city.cost_of_living_index) : undefined,
     median_income_usd: isNum(income) ? Math.round(income) : undefined,
@@ -447,6 +450,8 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       if (!rec) return null;
       return {
         name: p.name,
+        slug: p.slug,
+        iso2: p.iso2,
         home: false,
         rent_index: isNum(rec.cost_of_living_index) ? Math.round(rec.cost_of_living_index) : undefined,
         median_income_usd: isNum(rec.avg_gross_salary_usd_year)
