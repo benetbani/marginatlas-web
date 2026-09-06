@@ -816,9 +816,15 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
               row's card is 128px tall and beside either strip it would stretch
               over a hole the filter reds. The lease-terms card that used to share
               the demand row's band never drew: its figures are omitted upstream. */}
-          <Band><CityPeers d={d} /></Band>
+          {/* A LONE CARD STACKS UNTIL LG (the page row, run 20): photographed at 768,
+              the peers table, the demand row and the trades card each took one of
+              the two tablet columns and left the other half empty, the one-sided
+              white space the splitting exists to prevent; the band's lone-child
+              rule reaches only lg, so below it a lone card takes the full width, as
+              the character table has since run 14. */}
+          <Band stack="lg"><CityPeers d={d} /></Band>
           <Band split="1-1"><IncomeCurve d={d} /><CityPremises d={d} /></Band>
-          <Band split="3-2"><DemandSize d={d} /></Band>
+          <Band split="3-2" stack="lg"><DemandSize d={d} /></Band>
           <RentAffordability d={d} />
         </>
       ) : null}
@@ -850,7 +856,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           {/* THE TRADES ALONE IN THEIR BAND since run 19: the close left the band for
               the terminus below, the page's last full-width band, as on the country
               page; the chapter draws only when the trades do. */}
-          <Band><TradesHere d={d} /></Band>
+          <Band stack="lg"><TradesHere d={d} /></Band>
         </>
       ) : null}
       <CityClose d={d} />
