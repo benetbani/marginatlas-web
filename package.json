@@ -60,7 +60,7 @@
     "verify:accents": "node scripts/verify_derived_accents.mjs",
     "verify:rendered": "node scripts/verify_rendered_design.mjs",
     "verify:archetype-copy": "npx tsx scripts/verify_archetype_copy.ts",
-    "harness:archetypes": "npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/harness/env.cjs --require ./scripts/spikes/stub_next_font.cjs scripts/harness/render_archetypes.tsx && node scripts/harness/check_archetypes.mjs --shots && node scripts/harness/check_index_links.mjs",
+    "harness:archetypes": "npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/harness/env.cjs --require ./scripts/spikes/stub_next_font.cjs scripts/harness/render_archetypes.tsx && node scripts/harness/check_archetypes.mjs --shots",
     "harness:page": "npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/harness/env.cjs --require ./scripts/spikes/stub_next_font.cjs scripts/harness/render_page.tsx --list && node scripts/harness/check_page_holes.mjs --list --shots",
     "harness": "npm run harness:archetypes && npm run harness:page",
     "shoot:page": "node scripts/harness/shoot_page.mjs",

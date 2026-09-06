@@ -273,6 +273,19 @@ for (const w of WIDTHS) {
   await ctx.close();
 }
 await browser.close();
+/* INDEX (sys:stories-index, run 21): every link in the stories index points at a
+   story the sheet holds, and every story is listed. Read from the sheet's text,
+   no browser needed; a rule here rather than a second script, because the chain's
+   single-gate-chain gate forbids an npm script that names two gate scripts. */
+{
+  const html = readFileSync(file, "utf8");
+  const links = [...html.matchAll(/href="#(story-[^"]+)"/g)].map((m) => m[1]);
+  const ids = new Set([...html.matchAll(/<section id="(story-[^"]+)"/g)].map((m) => m[1]));
+  const linked = new Set(links);
+  for (const l of links) if (!ids.has(l)) red("index", "all", "INDEX", `a link to #${l} and no story with that id`);
+  for (const id of ids) if (!linked.has(id)) red("index", "all", "INDEX", `the story ${id} is not in the index`);
+  console.log(`index links: ${links.length} links, ${ids.size} stories; ${links.filter((l) => !ids.has(l)).length} dangling, ${[...ids].filter((id) => !linked.has(id)).length} unlisted`);
+}
 const byInst = {};
 for (const r of reds) (byInst[`${r.inst}@${w(r)}`] ??= []).push(`${r.rule}: ${r.msg}`);
 function w(r) { return r.w; }
