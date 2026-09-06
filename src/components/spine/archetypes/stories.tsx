@@ -129,9 +129,11 @@ export function pickRangeStripInstances(): Instance[] {
   return out;
 }
 
-function Story({ iso2, why, children }: { iso2: string; why: string; children: React.ReactNode }) {
+/** A story's id on the page, from its kind and its key, so the index can link to it (sys:stories-index, run 21). */
+export const storyId = (kind: string, key: string) => `story-${kind}-${key.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+function Story({ kind, iso2, why, children }: { kind: string; iso2: string; why: string; children: React.ReactNode }) {
   return (
-    <section data-story={iso2} className="mb-12">
+    <section id={storyId(kind, iso2)} data-story={iso2} className="mb-12">
       <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{iso2}, {why}</div>
       {children ?? <div data-self-omit="1" className="text-[length:var(--t-body)] text-[var(--c-muted)]">self-omits</div>}
     </section>
@@ -140,7 +142,7 @@ function Story({ iso2, why, children }: { iso2: string; why: string; children: R
 
 export function AnswerCardStory({ facts, why }: { facts: HeroFacts; why: string }) {
   return (
-    <Story iso2={facts.iso2} why={why}>
+    <Story kind="answer-card" iso2={facts.iso2} why={why}>
       <AnswerCard id={`take-${facts.iso2.toLowerCase()}`} name={facts.name} iso2={facts.iso2} subtitle={facts.subtitle} answer={facts.answer} cells={facts.cells} />
     </Story>
   );
@@ -159,7 +161,7 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances() }: { i
         const el = card && card.rows.length >= 2 ? (
           <RankedBars id={`money-${i.iso2.toLowerCase()}`} kicker={`${COPY.margin.kicker}, ${nameOf(i.iso2)}`} icon="owner-keeps" tagged basis={COPY.margin.basis} withheldLine={card.withheldLine} rows={card.rows.map((r) => ({ key: r.key, name: r.name, value: r.margin, flagged: r.flagged }))} worldMax={card.worldMax} fmt={(v) => `${Math.round(v * 100)}%`} phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }} />
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el ? <div style={{ maxWidth: 624 }}>{el}</div> : null}</Story>;
+        return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{el ? <div style={{ maxWidth: 624 }}>{el}</div> : null}</Story>;
       })}
     </div>
   );
@@ -171,7 +173,7 @@ export function CompareTableStories({ instances = pickCompareTableInstances() }:
       {instances.map((i) => {
         const t = buildPeerTable(i.iso2);
         const el = t ? <CompareTable id={`peers-${i.iso2.toLowerCase()}`} kicker={`${COPY.peers.kicker}, ${nameOf(i.iso2)}`} icon="benchmark" rows={t.rows} columns={t.columns} caveat={t.caveat} /> : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="compare-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
     </div>
   );
@@ -187,7 +189,7 @@ export function CardPagerStories({ instances = pickCardPagerInstances() }: { ins
             <CardPager cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="card-pager" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
     </div>
   );
@@ -203,7 +205,7 @@ export function TiersTableStories({ instances = pickTiersTableInstances() }: { i
             <TiersTable rows={rows} howTo={howToOpenDoor(i.iso2)} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="tiers-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
     </div>
   );
@@ -240,7 +242,7 @@ export function RangeStripStories({ instances = pickRangeStripInstances(), city 
             <RangeStrip marks={d.marks} scale={kind === "premises" ? "log" : "linear"} fmt={usd} basis={kind === "premises" ? COPY.premises.basis : COPY.customers.basis} note={d.note} extra={d.extra} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="range-strip" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
       {city.map((c) => {
         const premises = c.kind === "premises";
@@ -251,7 +253,7 @@ export function RangeStripStories({ instances = pickRangeStripInstances(), city 
             <RangeStrip marks={d.marks} scale={premises ? "log" : "linear"} fmt={usd} basis={d.basis} note={d.note} extra={d.extra} />
           </div>
         ) : null;
-        return <Story key={cityStripKey(c)} iso2={cityStripKey(c)} why={c.why}>{el}</Story>;
+        return <Story kind="range-strip" key={cityStripKey(c)} iso2={cityStripKey(c)} why={c.why}>{el}</Story>;
       })}
     </div>
   );
@@ -300,7 +302,7 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances(), c
             <SpectraTable rows={d.rows} dot={d.dot} foot={d.foot} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="spectra-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
       {city.map((c) => {
         const r = buildCityQuickReads(c.seed);
@@ -310,7 +312,7 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances(), c
             <SpectraTable rows={r.rows} scale="body" foot={r.foot} />
           </div>
         ) : null;
-        return <Story key={`${c.slug}:reads`} iso2={`${c.slug}:reads`} why={c.why}>{el}</Story>;
+        return <Story kind="spectra-table" key={`${c.slug}:reads`} iso2={`${c.slug}:reads`} why={c.why}>{el}</Story>;
       })}
     </div>
   );
@@ -339,7 +341,7 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
             <NoteList notes={d.notes} columns={wide ? 2 : 1} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="note-list" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
     </div>
   );
@@ -378,7 +380,7 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
             <Terminus kicker={`${COPY.close.kicker}, ${nameOf(i.iso2)}`} doors={doors} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="terminus" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
       {city.map((c) => {
         const doors = buildCityCloseDoors(c.seed);
@@ -387,7 +389,7 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
             <Terminus kicker={`${COPY.close.kicker}, ${String(c.seed?.meta?.city ?? c.slug)}`} doors={doors} />
           </div>
         ) : null;
-        return <Story key={`${c.slug}:close`} iso2={`${c.slug}:close`} why={c.why}>{el}</Story>;
+        return <Story kind="terminus" key={`${c.slug}:close`} iso2={`${c.slug}:close`} why={c.why}>{el}</Story>;
       })}
     </div>
   );
@@ -419,7 +421,7 @@ export function PayBarsStories({ instances = pickPayBarsInstances() }: { instanc
             <PayBars rows={d.rows} worldMax={d.worldMax} withheld={d.withheld} fmt={usd} edgeLabel={(name, figure) => COPY.pay.edge.replace("{name}", name).replace("{figure}", figure)} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="pay-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
     </div>
   );
@@ -449,7 +451,7 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
             <KvGrid cells={f.cells} />
           </div>
         ) : null;
-        return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
     </div>
   );
@@ -462,8 +464,57 @@ export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }
       {instances.map((i) => {
         const f = cityHeroFacts(i.seed);
         const el = f ? <AnswerCard id={`city-${i.slug}`} name={f.name} iso2={f.iso2} image={f.image} subtitle={f.subtitle} answer={f.answer} cells={f.cells} tone="ink" foot={f.foot} /> : null;
-        return <Story key={i.slug} iso2={i.slug} why={i.why}>{el}</Story>;
+        return <Story kind="city-hero" key={i.slug} iso2={i.slug} why={i.why}>{el}</Story>;
       })}
     </div>
+  );
+}
+
+/* THE INDEX (sys:stories-index, the build loop's run 21, 2026-09-06): one
+   picker for every archetype's instance set, shared by the harness sheet and
+   the dev page so the two never differ, and a table at the top of both that
+   lists every archetype, its instance keys and the reason each was picked,
+   each key a link to its story's section by id. Outside any stories wrapper,
+   so the checker does not read it as a story. */
+export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, Instance[]> {
+  const cityStrips = pickCityStripInstances(cityHero);
+  const cityReads = pickCityReadsInstances(cityHero);
+  const cityCloses = pickCityCloseInstances(cityHero);
+  return {
+    "answer-card": pickAnswerCardInstances(),
+    "ranked-bars": pickRankedBarsInstances(),
+    "compare-table": pickCompareTableInstances(),
+    "card-pager": pickCardPagerInstances(),
+    "tiers-table": pickTiersTableInstances(),
+    "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why }))],
+    "spectra-table": [...pickSpectraTableInstances(), ...cityReads.map((c) => ({ iso2: `${c.slug}:reads`, why: c.why }))],
+    "note-list": pickNoteListInstances(),
+    "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))],
+    "pay-bars": pickPayBarsInstances(),
+    "kv-grid": pickKvGridInstances(),
+    "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
+  };
+}
+
+export function StoriesIndex({ instances }: { instances: Record<string, Instance[]> }) {
+  const kinds = Object.keys(instances);
+  const total = kinds.reduce((n, k) => n + instances[k].length, 0);
+  return (
+    <nav id="stories-index" data-stories-index aria-label="Every archetype and its instances" className="mb-12 rounded-[14px] border border-[var(--c-border)] p-5">
+      <div className="mb-3 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kinds.length} archetypes, {total} instances, each picked from the data for a reason</div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-[length:var(--t-micro)] leading-snug">
+          <tbody>
+            {kinds.map((k) => instances[k].map((i, n) => (
+              <tr key={`${k}:${i.iso2}`} data-index-row className="border-t border-[var(--c-border)] align-top">
+                <td className="whitespace-nowrap py-1.5 pr-4 font-semibold text-[var(--c-ink)]">{n === 0 ? `${k} (${instances[k].length})` : ""}</td>
+                <td className="whitespace-nowrap py-1.5 pr-4"><a href={`#${storyId(k, i.iso2)}`} className="text-[var(--c-ink2)] underline decoration-[var(--c-border)] underline-offset-2 hover:text-[var(--c-ink)]">{i.iso2}</a></td>
+                <td className="py-1.5 text-[var(--c-muted)]">{i.why}</td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </nav>
   );
 }

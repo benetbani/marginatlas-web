@@ -12,7 +12,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickNoteListInstances, pickTerminusInstances, pickPayBarsInstances, pickKvGridInstances, pickCityStripInstances, cityStripKey, pickCityReadsInstances, pickCityCloseInstances } from "../../src/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickNoteListInstances, pickTerminusInstances, pickPayBarsInstances, pickKvGridInstances, pickCityStripInstances, cityStripKey, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex } from "../../src/components/spine/archetypes/stories";
 
 const CSS_PATH = "scratchpad/pages/site.css";
 try {
@@ -28,9 +28,10 @@ const cityHero = await loadCityHeroInstances();
 const cityStrips = pickCityStripInstances(cityHero);
 const cityReads = pickCityReadsInstances(cityHero);
 const cityCloses = pickCityCloseInstances(cityHero);
-const instances = { "answer-card": pickAnswerCardInstances(), "ranked-bars": pickRankedBarsInstances(), "compare-table": pickCompareTableInstances(), "card-pager": pickCardPagerInstances(), "tiers-table": pickTiersTableInstances(), "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why }))], "spectra-table": [...pickSpectraTableInstances(), ...cityReads.map((c) => ({ iso2: `${c.slug}:reads`, why: c.why }))], "note-list": pickNoteListInstances(), "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))], "pay-bars": pickPayBarsInstances(), "kv-grid": pickKvGridInstances(), "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })) };
+const instances = pickAllInstances(cityHero);
 const body = renderToStaticMarkup(
   <main className="mx-auto max-w-[1120px] px-4 py-10">
+    <StoriesIndex instances={instances} />
     <AnswerCardStories instances={instances["answer-card"]} />
     <RankedBarsStories instances={instances["ranked-bars"]} />
     <CompareTableStories instances={instances["compare-table"]} />
