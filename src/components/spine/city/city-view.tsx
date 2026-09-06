@@ -32,13 +32,14 @@ import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
 /* TERRA is gone from this import with the peer cost strip (C9): it was the strip's one
    accent, the home city's dot, and nothing else in this file paints with it. */
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SampleTag, Bullets, Band, usd } from "@/components/spine/kit";
+import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
+import { Terminus } from "@/components/spine/archetypes/Terminus";
+import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCityCharacterTables } from "@/lib/spine/character_rows";
 import { buildCityQuickReads } from "@/lib/spine/reads_rows";
-import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
+import { CompareTable, type CompareEntity, type CompareRow } from "@/components/spine/kit-index";
 import { AtlasMark } from "@/components/spine/marks";
-import { isReviewBuild } from "@/lib/feature_flags";
 import { CityHero } from "./masthead";
 import { IncomeCurve, OwnerRunway, RentAffordability } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
@@ -678,96 +679,26 @@ function CityPeers({ d }: { d: any }) {
   );
 }
 
-/* Close. The pick is the page's held answer after the margin-rank purge (rulebook v1
- * §5): the easiest trade to enter, placed in the lightest-rent district , both figures
- * the seed holds. Null-guards: the whole card omits with no ease-ranked trade AND no
- * district set. The Pro teaser omits when no teaser is held; in review builds the veil
- * renders unlocked (rulebook v1 §45). */
-function Close({ d }: { d: any }) {
-  /* THE PICK WAS CHOSEN BY A BANNED SCORE, which is worse than displaying one: it
-     silently decided what the whole page recommends. It sorted trades by the
-     break-in score, and reading the module that produces that score shows it
-     blends payback, built on per-city trade take-home, with a term its own
-     comment labels "ROOM (crowding)". §5 bans both at city altitude. It also
-     surfaced dental practices, which §32 names as the example of an
-     out-of-context trade, because dental happened to score highest.
-
-     §41 prescribes the remedy: reframe to the defensible neighbour before
-     deleting. The defensible half was always the second one. The lightest-rent
-     district is a real measurement from the district engine, it is the question
-     the page spent six chapters building toward, and it needs no ranking of
-     trades. The trades themselves sit one section above, as a funnel with no
-     ranking (§24). */
-  const list: any[] = d.where_to_trade?.list ?? [];
-  const lightest = list.length > 0 ? list.slice().sort((a, b) => a.rent_mult - b.rent_mult)[0] : null;
-  if (!lightest) return null;
-  const teaser: string[] = d.where_to_trade?.pro_teaser ?? [];
-  const title = lightest.name;
-  /* NO SampleTag now, and that is a change a reader sees. The tag was keyed to the
-     TRADES block, whose confidence is "mixed", and the trades are gone from this
-     card. What is left is the district rent multiple, from the real district
-     engine, so §4A does not ask for a tag on it. */
-  // ONE accent: terracotta rides ONLY the $60K cost answer (§37). The kicker, the link,
-  // and the card frame drop to neutral; the hand-holding prose ("Start there, then...")
-  // is DELETED (§19). The two figures + the link carry the pick; the cost is tagged (§4).
+/* CityClose: THE TERMINUS (city:close, the build loop's run 19, 2026-09-06).
+   Up to three doors out of the page on the terminus archetype, the country
+   page's own close: the lightest-rent district by name where the districts are
+   ranked (the pick the old card named), else every district; the country page;
+   and the compare page as the pill, since it puts the same business in up to
+   three cities side by side. The old card reprinted the pick's name and its
+   character, both already on the page (the verdict card names the district, the
+   districts card its character), and hung a workbook veil no city ever filled.
+   A closing card names the pick and opens a door; it does not recite the page.
+   Every city has doors now, where the old card drew only for a city with
+   ranked districts. */
+function CityClose({ d }: { d: any }) {
+  const doors = buildCityCloseDoors(d);
+  if (doors.length === 0) return null;
   return (
-    <Box id="pick">
-      <Head icon="bookmark">The pick, and where to take it</Head>
-      {/* ONE CARD, ONE BORDER, ONE PADDING (art direction A5). This was a bordered,
-          tinted panel INSIDE the card holding the pick, with a sentence and a button
-          in a column beside it. Two faults came out of that shape and both were
-          visible in the picture before any of them was measured.
-
-          The card is a box inside a box, which is the thing he named in as many
-          words: "you have just boxed it". The panel's tint was doing the marking
-          and its border was doing the nesting, so the border goes and nothing that
-          marks the answer is lost.
-
-          And a sentence plus a button cannot fill a column set against a taller
-          panel: measured at 1280 and again at 1440, 256 by 162 of this card was
-          empty, the largest hole left on any of the four pages (E6). The hand-off
-          is not a second column of content, it is a way out of the page, so it sits
-          on a footer row with the district link where a way out belongs.
-
-          The grid also stretched its two children to equal height, which D7 forbids
-          outright. Removing the grid removes that too. */}
-      <div className="mt-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where to start looking in {d.meta?.city}</div>
-      <div className="mt-1 text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">{title}</div>
-      <div className="mt-3 flex flex-wrap gap-x-10 gap-y-4 border-t border-[var(--c-border)] pt-3">
-        {/* THE RENT MULTIPLE IS NOT REPRINTED HERE. It is the answer of the card that
-            opens this page, where it is set at forty-eight pixels beside the same
-            district name and the same words, "the lightest rent load". Printing it
-            again at the foot of the page, in the same notation under a label two
-            words different, told a reader nothing they had not been told at the top
-            and made this card read as a summary of a page they had just finished.
-            WHAT IS LEFT IS WHAT ONLY THIS CARD HAS: which district to start in, what
-            kind of place it is, and the two ways out. A closing card names the pick
-            and opens a door. It does not recite the page. */}
-        {lightest.character ? <div><div className="text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">{lightest.character}</div><div className="text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">the district character</div></div> : null}
-      </div>
-      {/* The two ways out, on one row. The destination of the first is the district
-          set, not a trade page. Hover is INK on both: §37 says the accent never
-          appears on hover, and the link this replaces turned terracotta.
-          The compare line lost ", side by side", which said the same thing "beside"
-          had already said. */}
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-[var(--c-border)] pt-4">
-        <a href={`/cities/${d.meta?.slug}/neighborhoods`} className="inline-flex items-center gap-1.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--c-ink)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See every district &#8594;</a>
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">Set {d.meta?.city} beside up to three cities.</span>
-          <a href="/compare" className="inline-flex cursor-pointer rounded-full bg-[var(--c-ink)] px-4 py-2 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">Open Compare</a>
-        </div>
-      </div>
-      {/* the workbook preview , a tight SCHEMATIC bullet list, not floating prose
-          lines force-spread with min-h/justify-evenly (rule 19 schematic content;
-          rule 17 no crater). Bullets is the sanctioned neutral-dot list form. */}
-      {teaser.length > 0 ? (
-        <div className="mt-4">
-          <LockVeil unlocked={isReviewBuild()} headline={`The full ${d.meta?.city} workbook`} note="Every district by every trade, the real cost stack, and the owner-runway calculator." cta="Unlock with Pro">
-            <div className="py-1"><Bullets items={teaser} /></div>
-          </LockVeil>
-        </div>
-      ) : null}
-    </Box>
+    <div data-terminus className="mt-8">
+      <Box id="close">
+        <Terminus kicker={COPY.close.kicker} doors={doors} />
+      </Box>
+    </div>
   );
 }
 
@@ -913,17 +844,16 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           heading with nothing under it. Caught by the blast-radius sweep across
           all fifteen real pages, which is what that sweep is for. Each condition
           below is the section's own. */}
-      {(hasTradesCh || (d.where_to_trade?.list?.length ?? 0) > 0) ? (
+      {hasTradesCh ? (
         <>
-          <Movement index={cn()} eyebrow="The close" heading="What you can open, and where to take it" icon="startup-cost" />
-          {/* 2-3, NOT 3-2, AND THE REASON IS RHYTHM (D3). The band before this one
-              is already 3-2, and two neighbouring bands with the same split is the
-              monotony the rule exists to stop. It also suits the content better
-              (D4): the chip row is a list of links and the pick card carries a
-              figure, a district and two actions. */}
-          <Band split="2-3"><TradesHere d={d} /><Close d={d} /></Band>
+          <Movement index={cn()} eyebrow="The close" heading="What you can open" icon="startup-cost" />
+          {/* THE TRADES ALONE IN THEIR BAND since run 19: the close left the band for
+              the terminus below, the page's last full-width band, as on the country
+              page; the chapter draws only when the trades do. */}
+          <Band><TradesHere d={d} /></Band>
         </>
       ) : null}
+      <CityClose d={d} />
     </main>
   );
 }

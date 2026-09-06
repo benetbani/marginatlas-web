@@ -28,7 +28,7 @@ import { buildCityQuickReads } from "@/lib/spine/reads_rows";
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "./Terminus";
-import { buildCloseDoors } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
@@ -359,7 +359,16 @@ export function pickTerminusInstances(): Instance[] {
   return out;
 }
 
-export function TerminusStories({ instances = pickTerminusInstances() }: { instances?: Instance[] }) {
+/** The city termini (run 19): one city with ranked districts (the district named as the first door) and one without (every district), from the loaded seeds. */
+export function pickCityCloseInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
+  const out: CityHeroInstance[] = [];
+  const ranked = cities.find((c) => (c.seed?.where_to_trade?.list?.length ?? 0) > 0 && buildCityCloseDoors(c.seed).length > 0);
+  if (ranked) out.push({ ...ranked, why: "the lightest-rent district named as the first door" });
+  const plain = cities.find((c) => c !== ranked && buildCityCloseDoors(c.seed).length > 0);
+  if (plain) out.push({ ...plain, why: "no districts ranked, the door to every district" });
+  return out;
+}
+export function TerminusStories({ instances = pickTerminusInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
   return (
     <div data-stories="terminus">
       {instances.map((i) => {
@@ -370,6 +379,15 @@ export function TerminusStories({ instances = pickTerminusInstances() }: { insta
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+      {city.map((c) => {
+        const doors = buildCityCloseDoors(c.seed);
+        const el = doors.length ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
+            <Terminus kicker={`${COPY.close.kicker}, ${String(c.seed?.meta?.city ?? c.slug)}`} doors={doors} />
+          </div>
+        ) : null;
+        return <Story key={`${c.slug}:close`} iso2={`${c.slug}:close`} why={c.why}>{el}</Story>;
       })}
     </div>
   );

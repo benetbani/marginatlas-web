@@ -28,12 +28,13 @@ import { COPY } from "@/lib/spine/copy";
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_rows";
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
-import { buildCloseDoors } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import cityListJson from "../data/cities/city_list_v1.json";
 
 const reds: string[] = [];
 const codes = (COUNTRIES as any[]).map((c) => String(c.code ?? c.iso2 ?? "").toUpperCase()).filter((c) => c.length === 2);
@@ -149,6 +150,18 @@ for (const iso2 of codes) {
   if (d.withheld) payWithheld++;
   for (const r of d.rows) { if (!/^(Minimum salary|Average salary)$/.test(r.label)) reds.push(`${iso2}: a pay label is not the founder's word ("${r.label}")`); if (d.worldMax && r.value > d.worldMax.value) reds.push(`${iso2}: ${r.label} ${r.value} exceeds the world's highest ${d.worldMax.value}`); }
 }
-console.log(`archetype copy: ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
+/* THE CITY TERMINI (city:close, run 19): every city in the list gets its doors
+   from its meta alone (no adapter, so no district is ranked here and the door
+   reads "Every district of ..."; London's district form is on the harness
+   sheet), and each door is held to the same rules as a country's. */
+let cityTermini = 0;
+for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; iso2: string }> }).cities) {
+  const country = (COUNTRIES as any[]).find((x) => String(x.code ?? x.iso2 ?? "").toUpperCase() === String(c.iso2).toUpperCase());
+  const doors = buildCityCloseDoors({ meta: { slug: c.slug, city: c.name, iso2: c.iso2, country_name: country?.name } });
+  if (doors.length === 0) { reds.push(`${c.slug}: a city with no door out`); continue; }
+  cityTermini++;
+  checkDoors(c.slug, doors, "city");
+}
+console.log(`archetype copy: ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);

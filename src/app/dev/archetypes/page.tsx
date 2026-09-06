@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 import { loadCityHeroInstances } from "@/lib/spine/city_hero_facts";
-import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, pickCityStripInstances, pickCityReadsInstances } from "@/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
 
@@ -29,7 +29,7 @@ export default async function ArchetypesPage() {
       <RangeStripStories city={pickCityStripInstances(cityHero)} />
       <SpectraTableStories city={pickCityReadsInstances(cityHero)} />
       <NoteListStories />
-      <TerminusStories />
+      <TerminusStories city={pickCityCloseInstances(cityHero)} />
       <PayBarsStories />
       <KvGridStories />
       <CityHeroStories instances={cityHero} />

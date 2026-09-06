@@ -140,6 +140,8 @@ export const COPY = {
   cityHero: { subtitle: "Opening a business in {country}", allCities: "All cities" },
   /** The city's quick reads (city:quick-reads, run 16): the kicker and the foot's words; the reads' own words are composed by the adapter that ranks them. */
   cityReads: { kicker: "Quick reads", daysOne: "day of paperwork to register a business", daysMany: "days of paperwork to register a business" },
+  /** The city's terminus (city:close, run 19): the doors out of a city page; the kicker is the close's. */
+  cityClose: { districtDoor: "Start in {district}", districtsDoor: "Every district of {city}", countryDoor: "Open a business in {country}", compareDoor: "Compare {city} with other cities" },
   /** The city's premises strip (city:premises, run 13): the country's three averages by city size, the city's own size class in the accent, the basis line saying so. */
   cityPremises: {
     basis: "Rent for a square metre of shop a year, the average across {country} by city size; {city} counts among the {tier}.",

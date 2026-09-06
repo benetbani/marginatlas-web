@@ -11,6 +11,8 @@
 import { coveredCities } from "@/lib/cities/city_pages";
 import { COPY } from "@/lib/spine/copy";
 import type { Door } from "@/components/spine/archetypes/Terminus";
+import { countryPageTarget } from "@/lib/geo/page_targets";
+import { inSentence } from "@/lib/spine/place_names";
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
 
@@ -25,5 +27,28 @@ export function buildCloseDoors(iso2: string): Door[] {
   }
   doors.push({ key: "trades", label: COPY.close.tradesDoor, href: `/${code.toLowerCase()}/industries`, kind: "link" });
   doors.push({ key: "pro", label: COPY.close.proDoor, href: "/pricing", kind: "pill" });
+  return doors;
+}
+
+/** THE CITY'S DOORS (city:close, the build loop's run 19, 2026-09-06): the
+ *  lightest-rent district by name where the districts are ranked (the pick the
+ *  old card named), else every district, to the city's neighbourhoods page; the
+ *  country page, through the country address resolver; and the compare page as
+ *  the pill, since it puts the same business in up to three cities side by side.
+ *  Built from the seed's meta alone where no districts are held, so the copy
+ *  gate can prove every city's doors from the city list without the adapter. */
+export function buildCityCloseDoors(seed: any): Door[] {
+  const meta = seed?.meta ?? {};
+  const slug = String(meta.slug ?? "").trim();
+  const city = String(meta.city ?? "").trim();
+  const iso2 = String(meta.iso2 ?? "").toUpperCase();
+  if (!slug || !city) return [];
+  const doors: Door[] = [];
+  const list: any[] = Array.isArray(seed?.where_to_trade?.list) ? seed.where_to_trade.list : [];
+  const lightest = list.filter((r) => r && typeof r.rent_mult === "number" && r.name).sort((a, b) => a.rent_mult - b.rent_mult)[0];
+  doors.push({ key: "districts", label: lightest ? fill(COPY.cityClose.districtDoor, { district: String(lightest.name) }) : fill(COPY.cityClose.districtsDoor, { city }), href: `/cities/${slug}/neighborhoods`, kind: "link" });
+  const country = iso2.length === 2 ? countryPageTarget(iso2) : null;
+  if (country) doors.push({ key: "country", label: fill(COPY.cityClose.countryDoor, { country: inSentence(String(meta.country_name ?? country.label)) }), href: country.href, kind: "link" });
+  doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city }), href: "/compare", kind: "pill" });
   return doors;
 }
