@@ -186,10 +186,6 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/city/city-view.tsx#lenses",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/city/city-view.tsx#peers",
       "reason": "not yet on an archetype; a build loop queue row"
     }

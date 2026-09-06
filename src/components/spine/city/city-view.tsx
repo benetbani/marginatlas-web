@@ -32,9 +32,10 @@ import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
 /* TERRA is gone from this import with the peer cost strip (C9): it was the strip's one
    accent, the home city's dot, and nothing else in this file paints with it. */
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SpectraTable as KitSpectraTable, SampleTag, Bullets, Band, usd } from "@/components/spine/kit";
+import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SampleTag, Bullets, Band, usd } from "@/components/spine/kit";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCityCharacterTables } from "@/lib/spine/character_rows";
+import { buildCityQuickReads } from "@/lib/spine/reads_rows";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
 import { AtlasMark } from "@/components/spine/marks";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -159,80 +160,22 @@ export function CityVerdict({ d }: { d: any }) {
   );
 }
 
-/* CityLenses , SIX POSITIONS BETWEEN TWO NAMED POLES, WHICH IS ONE OBJECT AND NOT SIX.
- *
- * Wave C, row C9 (2026-09-02). This card drew SIX hand-rolled four-step tier bands,
- * one per read, each an undeclared drawing in a view file. Declaring them as they
- * stood would have been six of one idea inside one bordered box, and the
- * form-variety gate's per-card clause fails at three: three of one shape in one card
- * is three claimants and no answer. So the set becomes ONE drawing, exactly as A6 did
- * for this page's district rents and A9 did for the industry page's eight rails.
- *
- * THE FORM IS THE CATALOGUE'S OWN ANSWER TO THIS INFORMATION. Every read here names
- * two poles ("Thin to Deep", "Costly to Cheap", "Local to Visited"), which is the
- * index's row "a position between two named poles" six times over, and SpectraTable is
- * the form it points at. It tags its wrapper ONCE, so a six-spectra table is one I1
- * (ratified in B5), and the catalogue's own entry says the country/city character
- * standard is a 6-spectra table. It renders the NAMED row form because these rows
- * carry a name, which is the founder's 2026-08-30 order: the trait name leads and the
- * explanatory poles sit under the track's ends.
- *
- * THE FALSE-PRECISION ARGUMENT THAT PUT THE TIER BANDS HERE DOES NOT SURVIVE READING
- * THE ADAPTER. Their comment said a marker at a precise position fakes a precision the
- * category does not hold. `adapt_city.ts` builds every `pos` as `rankPct`, a
- * percentile rank of this city among every other city carried on one MEASURED field,
- * and marks the block `confidence: "measured"`; the four words are then a quartile
- * BUCKET of that rank. So the precision is held and the band was throwing it away, and
- * the drawing that publishes a dot at the rank is the more honest of the two.
- *
- * ONE COLUMN, NOT TWO, AND THAT IS THE READING RATHER THAN A LAYOUT PREFERENCE. The
- * 2x3 grid put three reads on one x-axis and three on another, so no two dots in
- * different columns could be compared. On one shared width the six dots are one
- * profile of the city, read down: five hard right and one hard left on London.
- *
- * THE WORD IS GONE and it is a real loss, recorded rather than hidden. It was computed
- * from `pos` by the same quartile cut the band drew, so it stated the dot twice; the
- * card already suppressed it whenever it matched a pole, which is six of six here.
- * Where a read lands mid-scale a reader now takes the direction off the dot's position
- * between its two named poles instead of off a bucket word.
- *
- * Null-guards on d.lenses.scales unchanged. No accent: the dot stays ink, because
- * these are conditions and not the box's one answer (rule 37). */
+/* CityLenses: THE QUICK READS on the spectra-table archetype at body size (the
+   build loop's run 16, 2026-09-06). Six ranks among the cities carried, each a
+   position between two named poles, the founder's approved metric; his
+   correction of 2026-07-11 (rule 34, "text too small", one-sided white space)
+   is the reason the archetype has a body scale at all, and this is the card
+   that wears it. The kit's table drew this card until run 16 with the same
+   correction as an opt-in; the archetype carries it now, and the kit's table
+   has no caller left in this view. The registration days sit in the foot as a
+   figure with its words, the paperwork alone. */
 function CityLenses({ d }: { d: any }) {
-  const o = d.lenses;
-  if (!o || !(o.scales?.length)) return null;
-  const scales: any[] = o.scales ?? [];
-  const days: number | undefined = o.days_to_register;
-  const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
-  /* SpectraTable's own row shape: it clamps the dot to 5..95 itself, so a rank of 0
-     or 100 still renders inside the track rather than on its edge. */
-  const rows = scales.map((s: any) => ({
-    spectrum: s.key ?? s.label,
-    name: s.label,
-    left_label: s.left,
-    right_label: s.right,
-    position_0_1: Math.max(0, Math.min(1, Number(s.pos ?? 50) / 100)),
-  }));
+  const r = buildCityQuickReads(d);
+  if (!r) return null;
   return (
     <Box id="lenses">
-      <Head icon="scorecard" sample={sample}>Quick reads</Head>
-      {/* `scale="body"` because this card carries a founder correction the form's own
-          default would undo: its pole words read at body size, not the micro
-          low-contrast gray he rejected (rule 34, "text too small"). Opt-in, so the
-          character tables that already wear this form do not move. */}
-      <KitSpectraTable rows={rows} scale="body" />
-      {/* HOW FAST YOU CAN OPEN. The knowable half of what the lease-terms card asked
-          (§3, design/replacements/lease-terms.md). Shown as itself: no scale, no
-          position, nothing to invert (§29A). A long registration is a fact about a
-          place, not a judgement of it (§21). */}
-      {days != null ? (
-        <div className="mt-5 flex flex-wrap items-baseline gap-x-3 border-t border-[var(--c-border)] pt-4">
-          <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{days}</Fig>
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
-            {days === 1 ? "day" : "days"} to register a business here<InfoTip gloss="The typical time to complete the paperwork for a one-person business in this country. It does not include finding a site, fitting it out, or any licence a particular trade needs." />
-          </span>
-        </div>
-      ) : null}
+      <Head icon="scorecard" sample={r.sample}>{COPY.cityReads.kicker}</Head>
+      <SpectraTable rows={r.rows} scale="body" foot={r.foot} />
     </Box>
   );
 }

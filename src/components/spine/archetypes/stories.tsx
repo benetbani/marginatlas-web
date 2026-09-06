@@ -24,6 +24,7 @@ import { RangeStrip } from "./RangeStrip";
 import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip, buildCityPremisesStrip } from "@/lib/spine/range_rows";
 import { SpectraTable } from "./SpectraTable";
 import { buildCharacterTables, buildCityCharacterTables, citiesWithSignature } from "@/lib/spine/character_rows";
+import { buildCityQuickReads } from "@/lib/spine/reads_rows";
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "./Terminus";
@@ -279,7 +280,11 @@ export function pickSpectraTableInstances(): Instance[] {
   return out;
 }
 
-export function SpectraTableStories({ instances = pickSpectraTableInstances() }: { instances?: Instance[] }) {
+/** The quick reads (run 16): every loaded city seed that holds them, keyed <slug>:reads, at body size. */
+export function pickCityReadsInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
+  return cities.filter((c) => buildCityQuickReads(c.seed)).map((c) => ({ ...c, why: `the quick reads at body size, ${buildCityQuickReads(c.seed)!.rows.length} of six` }));
+}
+export function SpectraTableStories({ instances = pickSpectraTableInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
   return (
     <div data-stories="spectra-table">
       {instances.map((i) => {
@@ -296,6 +301,16 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances() }:
           </div>
         ) : null;
         return <Story key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+      {city.map((c) => {
+        const r = buildCityQuickReads(c.seed);
+        const el = r ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 347 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.cityReads.kicker}, {String(c.seed?.meta?.city ?? c.slug)}</div>
+            <SpectraTable rows={r.rows} scale="body" foot={r.foot} />
+          </div>
+        ) : null;
+        return <Story key={`${c.slug}:reads`} iso2={`${c.slug}:reads`} why={c.why}>{el}</Story>;
       })}
     </div>
   );
