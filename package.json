@@ -68,6 +68,7 @@
     "probe:page": "node scripts/harness/probe_page.mjs",
     "probe:overlap": "node scripts/harness/probe_overlap.mjs",
     "photo:diff": "node scripts/harness/photo_diff.mjs",
+    "census": "npx tsx scripts/harness/census.ts",
     "verify:overflow": "node scripts/audit_overflow.mjs country city cell --width 390"
   },
   "dependencies": {
