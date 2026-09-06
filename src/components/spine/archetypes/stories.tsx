@@ -23,7 +23,7 @@ import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
 import { RangeStrip } from "./RangeStrip";
 import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip, buildCityPremisesStrip } from "@/lib/spine/range_rows";
 import { SpectraTable } from "./SpectraTable";
-import { buildCharacterTables } from "@/lib/spine/character_rows";
+import { buildCharacterTables, buildCityCharacterTables, citiesWithSignature } from "@/lib/spine/character_rows";
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "./Terminus";
@@ -270,6 +270,12 @@ export function pickSpectraTableInstances(): Instance[] {
   const loPeople = [...held].sort((a, b) => mean(a.t.people) - mean(b.t.people))[0]; if (loPeople) take(`${loPeople.c}:people`, "the lowest reads, a dot at the track's start");
   const loState = [...held].sort((a, b) => mean(a.t.state) - mean(b.t.state))[0]; if (loState) take(`${loState.c}:state`, "the lowest state reads");
   const none = all.find((x) => !x.t.state && !x.t.people); if (none) take(`${none.c}:state`, "no reads on file, self-omits");
+  /* The cities (run 14): keyed city:<slug>:<side>, from the city signature file; the exemplar, the city with most reads on each side, and one with none. */
+  const cities = citiesWithSignature().map((slug) => ({ slug, t: buildCityCharacterTables(slug) }));
+  const london = cities.find((x) => x.slug === "london"); if (london?.t?.people) take("city:london:people", "the exemplar city, its own reads"); if (london?.t?.state) take("city:london:state", "the exemplar city, its own reads");
+  const mostState = [...cities].filter((x) => x.t?.state).sort((a, b) => b.t!.state!.rows.length - a.t!.state!.rows.length)[0]; if (mostState) take(`city:${mostState.slug}:state`, `the most state reads a city holds, ${mostState.t!.state!.rows.length}`);
+  const mostPeople = [...cities].filter((x) => x.t?.people).sort((a, b) => b.t!.people!.rows.length - a.t!.people!.rows.length)[0]; if (mostPeople) take(`city:${mostPeople.slug}:people`, `the most people reads a city holds, ${mostPeople.t!.people!.rows.length}`);
+  const noCity = cities.find((x) => !x.t); if (noCity) take(`city:${noCity.slug}:state`, "a city in the file with no reads, self-omits");
   return out;
 }
 
@@ -277,12 +283,15 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances() }:
   return (
     <div data-stories="spectra-table">
       {instances.map((i) => {
-        const [iso2, side] = i.iso2.split(":");
-        const t = buildCharacterTables(iso2);
+        const parts = i.iso2.split(":");
+        const isCity = parts[0] === "city";
+        const [iso2, side] = isCity ? [parts[1], parts[2]] : parts;
+        const cityT = isCity ? buildCityCharacterTables(iso2) : null;
+        const t = isCity ? (cityT ?? { state: null, people: null }) : buildCharacterTables(iso2);
         const d = side === "people" ? t.people : t.state;
         const el = d ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{side === "people" ? COPY.character.people.kicker : COPY.character.state.kicker}, {nameOf(iso2)}</div>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{side === "people" ? COPY.character.people.kicker : COPY.character.state.kicker}, {isCity ? cityT?.name ?? iso2 : nameOf(iso2)}</div>
             <SpectraTable rows={d.rows} dot={d.dot} foot={d.foot} />
           </div>
         ) : null;

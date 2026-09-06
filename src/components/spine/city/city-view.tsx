@@ -32,7 +32,9 @@ import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
 /* TERRA is gone from this import with the peer cost strip (C9): it was the strip's one
    accent, the home city's dot, and nothing else in this file paints with it. */
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SpectraTable, SampleTag, Bullets, Band, usd } from "@/components/spine/kit";
+import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SpectraTable as KitSpectraTable, SampleTag, Bullets, Band, usd } from "@/components/spine/kit";
+import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
+import { buildCityCharacterTables } from "@/lib/spine/character_rows";
 import { CompareTable, type CompareEntity, type CompareRow, LockVeil } from "@/components/spine/kit-index";
 import { AtlasMark } from "@/components/spine/marks";
 import { isReviewBuild } from "@/lib/feature_flags";
@@ -218,7 +220,7 @@ function CityLenses({ d }: { d: any }) {
           default would undo: its pole words read at body size, not the micro
           low-contrast gray he rejected (rule 34, "text too small"). Opt-in, so the
           character tables that already wear this form do not move. */}
-      <SpectraTable rows={rows} scale="body" />
+      <KitSpectraTable rows={rows} scale="body" />
       {/* HOW FAST YOU CAN OPEN. The knowable half of what the lease-terms card asked
           (§3, design/replacements/lease-terms.md). Shown as itself: no scale, no
           position, nothing to invert (§29A). A long registration is a fact about a
@@ -571,25 +573,41 @@ function CityRisks({ d }: { d: any }) {
   );
 }
 
-/* CityCharacter. Null-guards on c.texture (omitted on real-data promotion). The spectra
- * render through the kit SpectraTable (the same idiom the country character wears): a
- * NEUTRAL track with a centre tick, both poles equal weight, each row's takeaway beneath. */
+/* CityCharacter: THE CITY'S OWN CHARACTER TABLES on the spectra-table archetype
+   (the build loop's run 14, 2026-09-06). Dealing with the state and dealing with
+   people, the founder's kept form (ruling 14: named traits, explanatory poles,
+   the better end on the right, ink dots for the state and terracotta for people,
+   a foot figure under each, side by side on desktop). The reads are the city's
+   own, from the per-city signature file, and never the country's under a city
+   heading: a city with no reads of its own draws nothing here, and a city with
+   one side's reads draws that one table alone. London holds three people reads
+   and no state reads on 2026-09-06. The old card drew authored "texture" rows
+   the adapter had omitted for every city, so it never drew. */
 function CityCharacter({ d }: { d: any }) {
-  const c = d.character;
-  if (!c || !(c.texture?.length)) return null;
-  const rows: any[] = c.texture ?? [];
-  const sample = c._meta?.confidence === "placeholder" || c._meta?.confidence === "modeled";
-  // Plain title (§13, "texture" is a metaphor a non-native cannot parse). The per-row
-  // advice takeaways are DELETED (§19/§40); the marker position on each spectrum IS the
-  // read. The kit SpectraTable renders all four at once (the shared country/city idiom).
+  const t = buildCityCharacterTables(d?.meta?.slug);
+  if (!t) return null;
+  /* ONE TABLE ALONE STACKS UNTIL LG: photographed at 768 on run 14, a lone
+     table took one of the two tablet columns and left the other half empty,
+     the one-sided white space the splitting exists to prevent; the lone-child
+     rule of the band reaches only lg. Two tables keep the tablet halves. */
+  const lone = !(t.state && t.people);
   return (
-    <Box>
-      <Head icon="ease-of-business" sample={sample}>How business runs here</Head>
-      <SpectraTable rows={rows} />
-    </Box>
+    <Band split="1-1" stack={lone ? "lg" : undefined}>
+      {t.state ? (
+        <Box id="character">
+          <Rail icon="bank" kicker={COPY.character.state.kicker} sample />
+          <SpectraTable rows={t.state.rows} dot={t.state.dot} foot={t.state.foot} />
+        </Box>
+      ) : null}
+      {t.people ? (
+        <Box {...(t.state ? {} : { id: "character" })}>
+          <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
+          <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} />
+        </Box>
+      ) : null}
+    </Band>
   );
 }
-
 /* Locals. Null-guards on d.locals_intel (omitted on real-data promotion). */
 function Locals({ d }: { d: any }) {
   const items = d.locals_intel ?? [];
@@ -597,7 +615,7 @@ function Locals({ d }: { d: any }) {
   // The place-specific bullets move into a disclosure (§18/§19: invented prose out of the
   // first view; these are London-specific and fail the universality test in the open).
   return (
-    <Box>
+    <Box id="locals">
       <Head icon="locals-know">What locals know</Head>
       <InlineDisclosure name="locals" summary={`${items.length} things worth knowing before you sign`}>
         <div className="mt-2 space-y-3 border-t border-[var(--c-border)] pt-2.5">{items.map((it: any, i: number) => (
@@ -849,7 +867,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
      for a break-in score and a cost to open together, and no city has ever carried
      both, so this chapter has been dark since the real-data promotion. */
   const hasTradesCh = (d.trades_here?.list?.length ?? 0) >= 4;
-  const hasRunningCh = !!(d.risks?.list?.length) || !!(d.character?.texture?.length) || !!(d.locals_intel?.length) || !!(d.owner_runway?.rent_1bed_usd_mo != null);
+  const hasRunningCh = !!(d.risks?.list?.length) || buildCityCharacterTables(d?.meta?.slug) != null || !!(d.locals_intel?.length) || !!(d.owner_runway?.rent_1bed_usd_mo != null);
   const hasCloseCh = (d.peers?.list?.length ?? 0) >= 2 || tradeList.some((t: any) => t.break_in_0_100 != null) || !!(d.where_to_trade?.list?.length);
 
   return (
@@ -934,8 +952,13 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
       {hasRunningCh ? (
         <>
           <Movement index={cn()} eyebrow="Running it" heading="What to watch" icon="watch" />
-          <Band><CityRisks d={d} /><CityCharacter d={d} /></Band>
-          <Band split="2-1"><OwnerRunway d={d} /><Locals d={d} /></Band>
+          {/* EACH BAND ONLY WHEN SOMETHING DRAWS IN IT (run 14): the character
+              tables return their own band; the risks, the runway and the locals
+              are omitted upstream for every city today, and an empty band is a
+              blank the filter cannot see because it is not inside a card. */}
+          {d.risks?.list?.length ? <Band><CityRisks d={d} /></Band> : null}
+          <CityCharacter d={d} />
+          {d.owner_runway?.rent_1bed_usd_mo != null || d.locals_intel?.length ? <Band split="2-1"><OwnerRunway d={d} /><Locals d={d} /></Band> : null}
         </>
       ) : null}
 

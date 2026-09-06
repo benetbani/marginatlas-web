@@ -8,8 +8,17 @@
  * abroad). Local and synchronous; the reads are the signature file's, anchored
  * to published indices, so the section is tagged modelled. A table with fewer
  * than two reads is not drawn.
+ *
+ * THE CITY'S TABLES (city:character, the build loop's run 14, 2026-09-06) come
+ * from the per-city signature file, curated one city at a time on the same two
+ * scales, and never from the country's reads: a city with no reads of its own
+ * draws nothing under a city heading. On 2026-09-06 the file holds 59 cities,
+ * one with a state table (New York, six and six), nineteen with a people table,
+ * forty with neither; London holds three people reads.
  */
 import { getCountrySignature } from "@/lib/countries/country_signature";
+import citySignatureJson from "../../../data/cities/city_signature_v1.json";
+import cityListJson from "../../../data/cities/city_list_v1.json";
 import { COPY } from "@/lib/spine/copy";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -43,29 +52,57 @@ const PEOPLE_KEYS: Array<[keyof typeof COPY.character.people.rows, string]> = [
 const clamp01 = (t: number) => Math.max(0, Math.min(1, t));
 const foot = (pct: unknown, label: string) => (isNum(pct) && pct >= 0 ? { value: `${Math.round(pct)}%`, label } : null);
 
-export function buildCharacterTables(iso2: string): CharacterTables {
-  const s = getCountrySignature(iso2);
-  if (!s) return { state: null, people: null };
+type Reads = Record<string, unknown> | undefined | null;
+function tablesFrom(government: Reads, culture: Reads, foreignOwnedPct: unknown, foreignBornPct: unknown): CharacterTables {
   const stateRows: SpectrumRow[] = [];
-  if (s.government) {
+  if (government) {
     for (const [key, field] of STATE_KEYS) {
-      const v = (s.government as unknown as Record<string, unknown>)[field];
+      const v = government[field];
       if (!isNum(v)) continue;
       const w = COPY.character.state.rows[key];
       stateRows.push({ key, name: w.name, left: w.left, right: w.right, position: clamp01(v / 10) });
     }
   }
   const peopleRows: SpectrumRow[] = [];
-  if (s.culture) {
+  if (culture) {
     for (const [key, field] of PEOPLE_KEYS) {
-      const v = (s.culture as unknown as Record<string, unknown>)[field];
+      const v = culture[field];
       if (!isNum(v)) continue;
       const w = COPY.character.people.rows[key];
       peopleRows.push({ key, name: w.name, left: w.left, right: w.right, position: clamp01((v - 1) / 9) });
     }
   }
   return {
-    state: stateRows.length >= 2 ? { rows: stateRows, dot: "ink", foot: foot(s.foreign_owned_pct, COPY.character.state.foot), confidence: "modeled" } : null,
-    people: peopleRows.length >= 2 ? { rows: peopleRows, dot: "terra", foot: foot(s.foreign_born_pct, COPY.character.people.foot), confidence: "modeled" } : null,
+    state: stateRows.length >= 2 ? { rows: stateRows, dot: "ink", foot: foot(foreignOwnedPct, COPY.character.state.foot), confidence: "modeled" } : null,
+    people: peopleRows.length >= 2 ? { rows: peopleRows, dot: "terra", foot: foot(foreignBornPct, COPY.character.people.foot), confidence: "modeled" } : null,
   };
 }
+
+export function buildCharacterTables(iso2: string): CharacterTables {
+  const s = getCountrySignature(iso2);
+  if (!s) return { state: null, people: null };
+  return tablesFrom(s.government as unknown as Reads, s.culture as unknown as Reads, s.foreign_owned_pct, s.foreign_born_pct);
+}
+
+/* The city signature file: an object of cities keyed by slug, or a list with a slug on each. */
+type CitySig = { slug?: string; government?: Reads; culture?: Reads; foreign_owned_pct?: unknown; foreign_born_pct?: unknown };
+const CITY_SIGS: Record<string, CitySig> = (() => {
+  const raw = (citySignatureJson as { cities: Record<string, CitySig> | CitySig[] }).cities;
+  if (Array.isArray(raw)) return Object.fromEntries(raw.filter((c) => typeof c.slug === "string").map((c) => [c.slug as string, c]));
+  return raw;
+})();
+const CITY_NAMES: Record<string, string> = Object.fromEntries(((cityListJson as { cities: Array<{ slug: string; name: string }> }).cities).map((c) => [c.slug, c.name]));
+
+export type CityCharacterTables = CharacterTables & { name: string };
+/** The city's own two tables, from the city signature file; null when the city has no entry or fewer than two reads on both sides. */
+export function buildCityCharacterTables(slug: string | null | undefined): CityCharacterTables | null {
+  const key = String(slug ?? "").trim().toLowerCase();
+  if (!key) return null;
+  const c = CITY_SIGS[key];
+  if (!c) return null;
+  const t = tablesFrom(c.government, c.culture, c.foreign_owned_pct, c.foreign_born_pct);
+  if (!t.state && !t.people) return null;
+  return { ...t, name: CITY_NAMES[key] ?? key };
+}
+/** The slugs the signature file holds, for the stories. */
+export function citiesWithSignature(): string[] { return Object.keys(CITY_SIGS); }
