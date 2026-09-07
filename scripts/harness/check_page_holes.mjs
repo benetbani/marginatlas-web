@@ -30,6 +30,10 @@ import { chromium } from "playwright";
 import { mkdirSync, existsSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ browser: true, name: "check_page_holes" });
 
 const WIDTHS = [1280, 768, 375];
 const args = process.argv.slice(2);

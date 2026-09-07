@@ -13,6 +13,10 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ browser: true, name: "crop_story" });
 
 const [, , key, out = "scratchpad/harness/shots/story", widthsArg = "1280"] = process.argv;
 if (!key || !key.includes("/")) { console.error('usage: crop_story.mjs "<kind>/<key>" <out-prefix> [widths]'); process.exit(2); }

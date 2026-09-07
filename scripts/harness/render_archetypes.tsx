@@ -22,6 +22,10 @@ try {
 }
 const css = readFileSync(CSS_PATH, "utf8");
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ name: "render_archetypes" });
 
 async function main() {
 const cityHero = await loadCityHeroInstances();

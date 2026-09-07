@@ -24,6 +24,10 @@ import { readdirSync, readFileSync, statSync, writeFileSync, existsSync } from "
 import { join, basename, resolve } from "node:path";
 import { stripCommentLines } from "../lib/strip_comments";
 import { COPY } from "../../src/lib/spine/copy";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ name: "census" });
 
 const ROOT = "src/components/spine";
 const SKIP_DIRS = new Set(["archetypes"]);

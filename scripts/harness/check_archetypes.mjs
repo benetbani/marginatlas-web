@@ -37,6 +37,10 @@
 import { chromium } from "playwright";
 import { readFileSync, mkdirSync } from "node:fs";
 import { pathToFileURL } from "node:url";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ browser: true, name: "check_archetypes" });
 
 const LADDER = new Set([10, 12, 14, 16, 20, 24, 30, 40]);
 const WIDTHS = [1280, 768, 375];

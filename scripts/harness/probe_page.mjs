@@ -9,6 +9,10 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ browser: true, name: "probe_page" });
 
 const [, , file, widthsArg = "1280,768,375"] = process.argv;
 if (!file) { console.error("usage: probe_page.mjs <rendered.html> [widths]"); process.exit(2); }

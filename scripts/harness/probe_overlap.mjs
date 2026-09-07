@@ -9,6 +9,10 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ browser: true, name: "probe_overlap" });
 
 const [, , file, id, w = "768"] = process.argv;
 if (!file || !id) { console.error("usage: probe_overlap.mjs <rendered.html> <id> [width]"); process.exit(2); }

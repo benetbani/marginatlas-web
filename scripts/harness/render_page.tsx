@@ -33,6 +33,10 @@ import { SpineIndustryBody } from "../../src/components/spine/industry/industry-
 import { SpineHoodBody } from "../../src/components/spine/hood/hood-view";
 import { SpineShell } from "../../src/components/spine/shell";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
+import { preflight } from "./preflight.mjs";
+
+/* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, free memory printed; a wrong ground stops here with the remedy. */
+preflight({ name: "render_page" });
 
 const CSS_PATH = "scratchpad/pages/site.css";
 try {
