@@ -15,6 +15,7 @@ import { AnswerCard } from "./AnswerCard";
 import { KvGrid } from "./KvGrid";
 import { cityHeroFacts, type CityHeroInstance } from "@/lib/spine/city_hero_facts";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
+import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
 import { CardPager } from "./CardPager";
@@ -153,7 +154,16 @@ export function AnswerCardStories({ instances = pickAnswerCardInstances() }: { i
   return <div data-stories="answer-card">{instances.map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}</div>;
 }
 
-export function RankedBarsStories({ instances = pickRankedBarsInstances() }: { instances?: Instance[] }) {
+/** The city district rankings (city:districts, run 25): the city with ranked districts, and one with none, which self-omits. */
+export function pickCityDistrictInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
+  const out: CityHeroInstance[] = [];
+  const ranked = cities.find((c) => buildCityDistrictBars(c.seed));
+  if (ranked) out.push({ ...ranked, why: `${buildCityDistrictBars(ranked.seed)!.districts} districts ranked by rent load, the lightest leading` });
+  const none = cities.find((c) => c !== ranked && !buildCityDistrictBars(c.seed));
+  if (none) out.push({ ...none, why: "self-omits: no ranked districts" });
+  return out;
+}
+export function RankedBarsStories({ instances = pickRankedBarsInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
   return (
     <div data-stories="ranked-bars">
       <p className="mb-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">Margins from the engine snapshot of {SNAPSHOT_TAKEN}.</p>
@@ -163,6 +173,11 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances() }: { i
           <RankedBars id={`money-${i.iso2.toLowerCase()}`} kicker={`${COPY.margin.kicker}, ${nameOf(i.iso2)}`} icon="owner-keeps" tagged basis={COPY.margin.basis} withheldLine={card.withheldLine} rows={card.rows.map((r) => ({ key: r.key, name: r.name, value: r.margin, flagged: r.flagged }))} worldMax={card.worldMax} fmt={(v) => `${Math.round(v * 100)}%`} phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }} />
         ) : null;
         return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{el ? <div style={{ maxWidth: 624 }}>{el}</div> : null}</Story>;
+      })}
+      {city.map((c) => {
+        const b = buildCityDistrictBars(c.seed);
+        const el = b ? <RankedBars id={`districts-${c.slug}`} kicker={COPY.cityDistricts.kicker} icon="best-areas" tagged={b.tagged} basis={COPY.cityDistricts.basis} rows={b.rows} worldMax={b.worldMax} best="min" topLabel={COPY.cityDistricts.heaviest} notesHead={COPY.cityDistricts.notesHead} fmt={rentMult} phoneHead={COPY.cityDistricts.phoneHead} /> : null;
+        return <Story kind="ranked-bars" key={`${c.slug}:districts`} iso2={`${c.slug}:districts`} why={c.why}>{el ? <div style={{ maxWidth: 693 }}>{el}</div> : null}</Story>;
       })}
     </div>
   );
@@ -513,7 +528,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
     "answer-card": pickAnswerCardInstances(),
-    "ranked-bars": pickRankedBarsInstances(),
+    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why }))],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why }))],
     "card-pager": pickCardPagerInstances(),
     "tiers-table": pickTiersTableInstances(),

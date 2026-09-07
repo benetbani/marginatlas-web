@@ -13,6 +13,9 @@
  *    least 1.6x the next size (rule 16).
  *  LADDER: every font size on the ladder.
  *  ACCENT: at most one accent-coloured text element per card.
+ *  ROWS CUT: a drawing that declares its row count draws every row at every
+ *    width (the sheet's copy of the page filter's rule; ranked bars declare
+ *    both their forms since run 25).
  *  HEADLINE: an answer card at page level draws exactly one h1; at section
  *    level (a page's second answer, the city's verdict) none, so a page keeps
  *    one headline (city:verdict, run 23).
@@ -198,7 +201,8 @@ function inPage() {
     r.hole = { wPx: Math.round(best.w / COLS * W), hPx: best.h * ROW, cardW: Math.round(W), cardH: Math.round(H) };
     out.push(r);
   }
-  return { out, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };
+  const cut = [...document.querySelectorAll("[data-stories] [data-expect-rows]")].filter((el) => el.getClientRects().length).map((el) => { const expect = Number(el.getAttribute("data-expect-rows")); const drawn = [...el.querySelectorAll("[data-row]")].filter((r) => r.getClientRects().length).length; const story = el.closest("[data-story]"); const inst = story?.closest("[data-stories]")?.getAttribute("data-stories") + ":" + story?.getAttribute("data-story"); return { inst, expect, drawn }; }).filter((c) => c.drawn < c.expect);
+  return { out, cut, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };
 }
 
 const browser = await chromium.launch();
@@ -210,7 +214,8 @@ for (const w of WIDTHS) {
   /* Lazy images never enter a headless viewport; force them so a broken path
      is a red and a slow one is not. */
   await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* reported by the check */ } } });
-  const { out, pageScroll } = await page.evaluate(inPage);
+  const { out, cut, pageScroll } = await page.evaluate(inPage);
+  for (const c of cut) red(c.inst, w, "ROWS CUT", `the drawing declares ${c.expect} rows and draws ${c.drawn}`);
   if (pageScroll) red("page", w, "BOTCHED MOBILE", "the page scrolls sideways");
   for (const r of out) {
     if (r.overflow.length) red(r.inst, w, "BOTCHED MOBILE", `overflowing: ${r.overflow.join(" | ")}`);

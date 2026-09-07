@@ -177,6 +177,14 @@ export const COPY = {
     basis: "in {district}",
     cells: { average: "City average", averageNote: "the baseline", heaviest: "Heaviest" },
   },
+  /** The city's district ranking (city:districts, run 25): a rent load is the district's shop rent as a multiple of the city average; the lightest leads. */
+  cityDistricts: {
+    kicker: "By district",
+    basis: "Each district's shop rent as a multiple of the city average; x1.00 is the average.",
+    heaviest: "heaviest in the city",
+    notesHead: "What each district is",
+    phoneHead: { name: "District", value: "Rent load" },
+  },
   /** Words that must never appear in an archetype's copy: the corporate register. */
   banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year"],
 } as const;

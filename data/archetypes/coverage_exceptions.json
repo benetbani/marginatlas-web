@@ -110,10 +110,6 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/city/where-to-trade.tsx#districts",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/hood/hood-view.tsx#funnel",
       "reason": "not yet on an archetype; a build loop queue row"
     },

@@ -32,6 +32,7 @@ import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
+import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -187,6 +188,22 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (cityVerdictFacts({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("verdict: one district draws a card");
   if (cityVerdictFacts({})) reds.push("verdict: no districts draw a card");
 }
-console.log(`archetype copy: the verdict card's law held on the fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
+/* THE DISTRICT RANKING (city:districts, run 25): the builder's law on the same
+   kind of synthetic fixture, lettered, never a place. */
+{
+  const fixture = { where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.2, character: "Q" }, { name: "A", slug: "a", rent_mult: 0.9, character: "R" }, { name: "C", slug: "c", rent_mult: 3, character: "S" }] } };
+  const b = buildCityDistrictBars(fixture);
+  if (!b) reds.push("districts: three ranked districts draw nothing");
+  else {
+    if (b.rows.length !== 3 || b.worldMax !== 3) reds.push(`districts: ${b.rows.length} rows, top rule ${b.worldMax}`);
+    if (!b.tagged) reds.push("districts: the multiples are composed from tag constants and are not marked modelled");
+    if (b.rows.some((r) => !r.note)) reds.push("districts: a row lost its character note");
+    if (rentMult(0.9) !== "x0.90") reds.push(`districts: the multiple prints as ${rentMult(0.9)}`);
+    for (const t of [COPY.cityDistricts.kicker, COPY.cityDistricts.basis, COPY.cityDistricts.heaviest, COPY.cityDistricts.notesHead, COPY.cityDistricts.phoneHead.name, COPY.cityDistricts.phoneHead.value]) for (const bw of COPY.banned) if (t.toLowerCase().includes(bw)) reds.push(`districts: banned word "${bw}" in "${t}"`);
+  }
+  if (buildCityDistrictBars({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("districts: one district draws a card");
+  if (buildCityDistrictBars({})) reds.push("districts: no districts draw a card");
+}
+console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);
