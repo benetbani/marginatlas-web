@@ -166,14 +166,14 @@ export function isSpineReformEnabled(): boolean {
  *   1. The page's own NEXT_PUBLIC_SPINE_REFORM_<PAGE> var, when set, always wins
  *      (either polarity). This is the production go-live control: set a finished
  *      page to "1" in Vercel to serve its real spine, or "0" to force it off.
- *   2. Otherwise a page whose adapter has SHIPPED follows the global master
- *      (isSpineReformEnabled). A page that still renders an illustrative seed does
- *      NOT: the master cannot enable it, so a stray global flag in production stays
- *      honest, and only that page's explicit per-page var (local preview) turns it on.
+ *   2. Otherwise a page whose adapter has SHIPPED is ON. A page that still renders
+ *      an illustrative seed is OFF however the master is set, so a stray global
+ *      flag in production can never put sample numbers on a live URL, and only
+ *      that page's explicit per-page var (local preview) turns it on.
  *
  * The real vs illustrative split is the boolean at each case below. Keep it in lockstep
  * with the shipped adapters: when a new adapter lands, flip its case to true in the
- * same commit (cell / industry / city / hood are real; region / country are not yet).
+ * same commit (cell / industry / city / hood / country are real; region is not).
  */
 export function isSpineReformEnabledFor(page: SpinePage): boolean {
   switch (page) {
@@ -192,8 +192,11 @@ export function isSpineReformEnabledFor(page: SpinePage): boolean {
       // for preview only). Master never enables it.
       return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_REGION, false);
     case "country":
-      // Illustrative hero has no honest country-level source. Master never enables it.
-      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_COUNTRY, false);
+      // Real since 2026-09-07: the build loop rebuilt all nine sections on the
+      // archetypes from the country adapter (runs 1 to 5), and the answer card
+      // prints a state word where no small-business regime row is on file
+      // rather than a figure, so a country with no data says so.
+      return resolveSpinePage(process.env.NEXT_PUBLIC_SPINE_REFORM_COUNTRY, true);
   }
 }
 
@@ -202,11 +205,18 @@ export function isSpineReformEnabledFor(page: SpinePage): boolean {
  * the global master applies only when this page's adapter has shipped (masterEnables),
  * so the master can never turn on an illustrative page.
  */
-function resolveSpinePage(perPageValue: string | undefined, masterEnables: boolean): boolean {
+function resolveSpinePage(perPageValue: string | undefined, shipped: boolean): boolean {
   if (perPageValue != null && perPageValue.trim() !== "") {
     return parseFlag(perPageValue, false);
   }
-  return masterEnables ? isSpineReformEnabled() : false;
+  /* A SHIPPED PAGE IS ON. Until 2026-09-07 a shipped page still waited on the
+     global master, which is unset in production, so 43 commits of rebuilt pages
+     deployed and every one of them rendered the old surface: the switch that
+     decided what readers saw lived in a dashboard nobody could read from the
+     repo. The repo now decides, exactly as the build command does. A page can
+     still be forced off with its own variable set to "0", and a page whose
+     adapter has not shipped stays off however the master is set. */
+  return shipped;
 }
 
 /* REMOVED 2026-08-09: snapshotFlags().
