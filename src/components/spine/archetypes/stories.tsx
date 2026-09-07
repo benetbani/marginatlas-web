@@ -14,6 +14,7 @@ import { COPY } from "@/lib/spine/copy";
 import { AnswerCard } from "./AnswerCard";
 import { KvGrid } from "./KvGrid";
 import { cityHeroFacts, type CityHeroInstance } from "@/lib/spine/city_hero_facts";
+import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
 import { CardPager } from "./CardPager";
@@ -479,6 +480,27 @@ export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }
   );
 }
 
+/** The city verdict card's instances (city:verdict, run 23): the city with ranked districts, and one with none, which self-omits. */
+export function pickCityVerdictInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
+  const out: CityHeroInstance[] = [];
+  const ranked = cities.find((c) => cityVerdictFacts(c.seed));
+  if (ranked) out.push({ ...ranked, why: `the lightest rent load among ${cityVerdictFacts(ranked.seed)!.districts} ranked districts` });
+  const none = cities.find((c) => c !== ranked && !cityVerdictFacts(c.seed));
+  if (none) out.push({ ...none, why: "self-omits: no ranked districts" });
+  return out;
+}
+export function CityVerdictStories({ instances }: { instances: CityHeroInstance[] }) {
+  return (
+    <div data-stories="city-verdict">
+      {instances.map((i) => {
+        const f = cityVerdictFacts(i.seed);
+        const el = f ? <AnswerCard id={`verdict-${i.slug}`} level="section" icon={f.icon} name={f.kicker} subtitle={null} answer={f.answer} cells={f.cells} tone="accent" /> : null;
+        return <Story kind="city-verdict" key={i.slug} iso2={i.slug} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
 /* THE INDEX (sys:stories-index, the build loop's run 21, 2026-09-06): one
    picker for every archetype's instance set, shared by the harness sheet and
    the dev page so the two never differ, and a table at the top of both that
@@ -502,6 +524,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "pay-bars": pickPayBarsInstances(),
     "kv-grid": pickKvGridInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
+    "city-verdict": pickCityVerdictInstances(cityHero).map((c) => ({ iso2: c.slug, why: c.why })),
   };
 }
 

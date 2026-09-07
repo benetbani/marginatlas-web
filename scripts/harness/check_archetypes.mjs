@@ -13,6 +13,9 @@
  *    least 1.6x the next size (rule 16).
  *  LADDER: every font size on the ladder.
  *  ACCENT: at most one accent-coloured text element per card.
+ *  HEADLINE: an answer card at page level draws exactly one h1; at section
+ *    level (a page's second answer, the city's verdict) none, so a page keeps
+ *    one headline (city:verdict, run 23).
  *  PROMISE: a subtitle naming registration only when a registration cell
  *    renders.
  *  REPETITION: no micro label repeated inside one card.
@@ -66,6 +69,7 @@ function inPage() {
       }
     }
     r.state = card.querySelector("[data-state]")?.getAttribute("data-state") || "";
+    r.level = card.getAttribute("data-level") || ""; r.h1 = card.querySelectorAll("h1").length;
     const ans = card.querySelector("[data-answer] .fig");
     if (ans) r.answerSizes.push(parseFloat(getComputedStyle(ans).fontSize));
     const grid = card.querySelector("[data-archetype='kv-grid']");
@@ -208,6 +212,8 @@ for (const w of WIDTHS) {
     if (r.overflow.length) red(r.inst, w, "BOTCHED MOBILE", `overflowing: ${r.overflow.join(" | ")}`);
     for (const s of new Set(r.sizes)) if (!LADDER.has(Math.round(s))) red(r.inst, w, "LADDER", `font size ${s}px is not on the ladder`);
     if (r.kind === "answer-card") {
+      if (r.level === "section" && r.h1 > 0) red(r.inst, w, "HEADLINE", `a section-level answer card draws ${r.h1} h1`);
+      if (r.level === "page" && r.h1 !== 1) red(r.inst, w, "HEADLINE", `${r.h1} h1 on a page-level answer card`);
       if (r.state === "no-answer") { if (w === WIDTHS[0]) data(r.inst, "NO ANSWER", "no small-business regime row is on file; the card shows the state word"); }
       else if (r.answerSizes.length !== 1) red(r.inst, w, "NO HIERARCHY", `${r.answerSizes.length} answer figures`);
       else { const next = Math.max(...r.sizes.filter((s) => s < r.answerSizes[0] - 0.5)); if (r.answerSizes[0] / next < 1.6) red(r.inst, w, "NO HIERARCHY", `answer ${r.answerSizes[0]} against ${next}, under 1.6x`); }

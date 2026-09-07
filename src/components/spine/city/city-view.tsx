@@ -32,8 +32,10 @@ import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
 /* TERRA is gone from this import with the peer cost strip (C9): it was the strip's one
    accent, the home city's dot, and nothing else in this file paints with it. */
-import { Fig, Stat, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
+import { Fig, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
+import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
+import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCityCharacterTables } from "@/lib/spine/character_rows";
@@ -88,78 +90,21 @@ function TierBand({ steps = 4, pos, word, leftPole, rightPole }: { steps?: numbe
 }
 
 /* ================= CH1 , THE VERDICT ================= */
-/* CityVerdict , the rent-spread answer card. ONE focal figure (the lightest district
- * rent load, the founder's D1 metric) beside a clean neutral spread strip (lightest /
- * baseline / heaviest). The invented "The catch" prose box and the decorative
- * terracotta frame are DELETED (2026-07-12); the "district keep spread" focal and its
- * derived keep index were retired earlier (§5 + §13). Null-guards on the district set. */
+/* CityVerdict: THE HERO VERDICT CARD on the answer-card archetype at section
+   level (the build loop's run 23, 2026-09-07). The lightest rent load among
+   the ranked districts is the answer, in the accent: the city blueprint
+   reserves the page's one accent for this figure, which is why the masthead
+   above it is ink. The city average and the heaviest district are the two
+   cells at the card's half, what the answer cannot say (the founder's
+   2026-08-25 "you are repeating the front part" is why there is no third
+   cell). The multiples are modelled and marked so. The archetype wraps
+   itself in the hero band, the page's full-width band; the facts come from
+   city_verdict_facts, so the stories draw the same card. Draws nothing for a
+   city without two ranked districts. */
 export function CityVerdict({ d }: { d: any }) {
-  const list: any[] = d.where_to_trade?.list ?? [];
-  if (list.length === 0) return null;
-  const byRent = list.slice().sort((a: any, b: any) => a.rent_mult - b.rent_mult);
-  const lightest = byRent[0];
-  const heaviest = byRent[byRent.length - 1];
-  const sample = d.where_to_trade?._meta?.confidence === "placeholder" || d.where_to_trade?._meta?.confidence === "modeled";
-  // the rent spread across districts , lightest, the city baseline, heaviest.
-  /* THE STRIP CARRIES WHAT THE FOCAL DOES NOT. It opened with a "lightest" tile
-     holding the same multiple and the same district name as the focal figure two
-     inches to its left, so this card stated its own answer twice: measured, "x1.2"
-     appeared at 473px and again at 487px, inside one card. The founder's words on
-     2026-08-25 were "you are repeating the front part", and this is the front part
-     repeating itself rather than a section below it.
-
-     The other two ends are what the focal cannot say: the baseline it is measured
-     against, and the far end of the same spread. Art direction H4, and the same
-     correction already made to the neighbourhood hero.
-
-     The focal's caption stops naming the baseline for the same reason: it read
-     "in South London, against the city-average x1" while the tile beside it read
-     "CITY AVERAGE x1 the baseline". One card, one statement of each thing. */
-  const facts: Array<[string, string, string]> = [
-    ["city average", "x1.00", "the baseline"],
-    ["heaviest", `x${Number(heaviest.rent_mult).toFixed(2)}`, heaviest.name],
-  ];
-  // Neutral card + Head with the modeled tag (the multiples are placeholder, §4). The
-  // invented "The catch" prose box and the decorative terracotta frame are DELETED
-  // (§14/§19 verdict-in-a-box; §37/§38 accent decorates chrome). The finding lives on
-  // the focal figure and the spread strip; terracotta rides ONLY the answer (§37).
-  return (
-    <Box id="verdict">
-      {/* THE RENT GLYPH APPEARED THREE TIMES ON THIS PAGE: on this card, on the
-          rent-against-income card, and on the chapter opener above them both. An
-          icon that marks three different things marks none of them, and a reader
-          scanning the page for the district read has the same picture pointing at
-          two cards.
-          THIS card is the one that is about districts rather than about rent, so it
-          takes the districts glyph and the rent glyph stays with the ratio card and
-          its chapter. */}
-      <Head icon="district-mix" sample={sample}>The rent, district by district</Head>
-      <div className="grid gap-5 md:grid-cols-[1fr_1.5fr] md:items-center">
-        <Stat size="focal" accent value={`x${Number(lightest.rent_mult).toFixed(2)}`} label="the lightest rent load" sub={`in ${lightest.name}`} />
-        {/* the spread , a clean neutral three-cell strip, the answer already on the focal */}
-        {/* A WRAPPING ROW OF CELLS SIZED BY THEIR CONTENTS, not three fixed
-            columns. Photographed at 320: three columns in a phone card leave each
-            cell about fifty pixels, so "the baseline" printed as "the bas..."
-            with nothing to recover it from, and the middle tag wrapped onto two
-            lines while its neighbours did not, dropping that cell's figure and
-            name below the other two. A three-cell strip that will not fit three
-            across is not a three-cell strip.
-            Sized to their contents they wrap exactly when they must, nothing is
-            cut, and the hairlines come from the gap rather than from a divider
-            rule, which is what stops a wrapped line starting with one. The same
-            shape the masthead scorecard now uses, and for the same reason. */}
-        <div className="flex flex-wrap gap-px overflow-hidden rounded-lg border border-[var(--c-border)]" style={{ background: "var(--c-border)" }}>
-          {facts.map(([tag, fig, name]) => (
-            <div key={tag} className="flex-[1_1_auto] whitespace-nowrap bg-[var(--c-card)] px-3 py-2.5">
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{tag}</div>
-              <Fig className="mt-0.5 block text-[length:var(--t-lead)] text-[var(--c-ink)]">{fig}</Fig>
-              <div className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">{name}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </Box>
-  );
+  const f = cityVerdictFacts(d);
+  if (!f) return null;
+  return <AnswerCard id="verdict" level="section" icon={f.icon} name={f.kicker} subtitle={null} answer={f.answer} cells={f.cells} tone="accent" />;
 }
 
 /* CityLenses: THE QUICK READS on the spectra-table archetype at body size (the
@@ -660,10 +605,11 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
 
       {/* THE HERO, AND THE ONLY FULL-WIDTH BAND ON THE PAGE. Founder, 2026-08-25:
           "for every subsection that stretches left to right full width, I think we
-          should ban it except hero section." Art direction D1. It declares itself
-          with the hero prop, which sets the attribute the gate reads, because
-          looking like a hero is how twenty-eight sections got the whole column. */}
-      {d.where_to_trade?.list?.length ? <Band hero><CityVerdict d={d} /></Band> : null}
+          should ban it except hero section." Art direction D1. The archetype's own
+          band declares it with the hero prop, which sets the attribute the gate
+          reads, because looking like a hero is how twenty-eight sections got the
+          whole column. */}
+      <CityVerdict d={d} />
 
       {/* FOUR CHAPTERS, NOT SIX, AND NOT ONE SECTION WAS CUT TO GET THERE.
           Measured 2026-08-25: four of this page's six chapters held exactly ONE

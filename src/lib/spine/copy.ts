@@ -170,6 +170,13 @@ export const COPY = {
     same: "same",
     caveat: "Each column is read beside {city}: cost of living in index points, where higher is cheaper; average pay in percent; visitors a year as a multiple. Higher is better in every column. Peers are picked for comparable size and market, not for sharing a border.",
   },
+  /** The city's verdict card (city:verdict, run 23): the lightest rent load as the answer, the city average and the heaviest district as cells. A rent load is the district's rent as a multiple of the city's average. */
+  cityVerdict: {
+    kicker: "The rent, district by district",
+    answerLabel: "The lightest rent load",
+    basis: "in {district}",
+    cells: { average: "City average", averageNote: "the baseline", heaviest: "Heaviest" },
+  },
   /** Words that must never appear in an archetype's copy: the corporate register. */
   banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year"],
 } as const;

@@ -82,11 +82,7 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/city/city-view.tsx#verdict",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/city/city-view.tsx#4",
+      "section": "src/components/spine/city/city-view.tsx#3",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
@@ -98,15 +94,15 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
+      "section": "src/components/spine/city/city-view.tsx#6",
+      "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
       "section": "src/components/spine/city/city-view.tsx#7",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
       "section": "src/components/spine/city/city-view.tsx#8",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/city/city-view.tsx#9",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {

@@ -15,9 +15,16 @@
  *    label, and fills row by row; with no cells the answer stands alone and
  *    nothing empty is drawn.
  *  - Words come from the copy table, in the practical register.
+ *  - THE LEVEL (city:verdict, the build loop's run 23): at page level the
+ *    opener is the identity row and the page's only h1; at section level (a
+ *    page's second answer, the city's verdict card) the opener is the section
+ *    rail, an icon tile and a kicker, and no h1 is drawn, so a page keeps one
+ *    headline whatever its answer cards number. The harness reads the level
+ *    and counts the h1s.
  */
 import * as React from "react";
-import { Band, Box, SampleTag } from "@/components/spine/kit";
+import { Band, Box, Rail, SampleTag } from "@/components/spine/kit";
+import type { AtlasIconId } from "@/components/brand/icons";
 import { AtlasMark } from "@/components/spine/marks";
 import { CountryFlag } from "@/components/CountryFlag";
 import { KvGrid, type KvCell } from "./KvGrid";
@@ -37,14 +44,21 @@ export type AnswerCardProps = {
   tone?: "accent" | "ink";
   /** One provenance line under the grid, with the modelled mark when the figures are modelled. */
   foot?: { text: string; modeled: boolean } | null;
+  /** "page": the identity row and the h1 (a masthead). "section": the rail opener, no h1 (a verdict card below a masthead). */
+  level?: "page" | "section";
+  /** The rail's icon tile at section level. */
+  icon?: AtlasIconId;
 };
 
-export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot }: AnswerCardProps) {
+export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon }: AnswerCardProps) {
   const tagged = answer != null && answer.confidence !== "measured";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   return (
     <Band hero>
-      <Box id={id} data-archetype="answer-card">
+      <Box id={id} data-archetype="answer-card" data-level={level}>
+        {level === "section" ? (
+          <Rail icon={icon} kicker={name} />
+        ) : (
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <AtlasMark id="alt-country" size={13} className="opacity-55" />
           {image ? (
@@ -56,6 +70,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
             {name}
           </h1>
         </div>
+        )}
         {subtitle ? <p className="mt-1.5 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p> : null}
         {/* THE SPLIT ONLY WHEN THERE ARE CELLS. Measured by the harness at 768:
             a 1-1 split put a 130px answer beside a 250px grid and left a

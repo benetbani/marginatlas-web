@@ -31,6 +31,7 @@ import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_C
 import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
+import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -162,6 +163,30 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   cityTermini++;
   checkDoors(c.slug, doors, "city");
 }
-console.log(`archetype copy: ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
+/* THE CITY VERDICT CARD (city:verdict, run 23): the builder's law on a synthetic
+   fixture, since the ranked districts come from the async adapter and the gate
+   is browser-free and offline. Letters, never a place: the gate fabricates no
+   district. The law: the lightest rent load is the answer and names its
+   district; the cells are the city average and the heaviest; the multiples are
+   modelled and marked so; one district draws nothing; the words sit under the
+   caps of the key-value grid's cells and hold no banned word. */
+{
+  const fixture = { where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }, { name: "C", rent_mult: 3 }] } };
+  const v = cityVerdictFacts(fixture);
+  if (!v) reds.push("verdict: three ranked districts draw nothing");
+  else {
+    if (v.answer.value !== "x0.90" || !v.answer.basis.includes("A")) reds.push(`verdict: the answer is not the lightest district (${v.answer.value}, ${v.answer.basis})`);
+    if (v.answer.confidence === "measured") reds.push("verdict: the multiples are composed from tag constants and are marked measured");
+    if (v.cells.length !== 2 || v.cells[0].value !== "x1.00" || v.cells[1].value !== "x3.00" || v.cells[1].note !== "C") reds.push(`verdict: the cells are not the average and the heaviest (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
+    for (const c of v.cells) {
+      if (c.label.split(/\s+/).length > 4) reds.push(`verdict: label over four words: "${c.label}"`);
+      if (c.note && c.note.length > 48) reds.push(`verdict: note over 48 characters: "${c.note}"`);
+    }
+    for (const t of [v.kicker, v.answer.label, v.answer.basis, ...v.cells.flatMap((c) => [c.label, c.note ?? ""])]) for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`verdict: banned word "${b}" in "${t}"`);
+  }
+  if (cityVerdictFacts({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("verdict: one district draws a card");
+  if (cityVerdictFacts({})) reds.push("verdict: no districts draw a card");
+}
+console.log(`archetype copy: the verdict card's law held on the fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);
