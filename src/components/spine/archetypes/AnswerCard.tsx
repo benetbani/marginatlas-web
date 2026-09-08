@@ -65,7 +65,15 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
             // eslint-disable-next-line @next/next/no-img-element
             <img src={image.src} alt={image.alt} width={80} height={60} className="h-[60px] w-20 shrink-0 rounded-lg object-cover" data-hero-image />
           ) : null}
-          {iso2 ? <CountryFlag iso2={iso2} className="w-9 shrink-0" /> : null}
+          {/* size="hero" (2026-09-08, fix wave Finding 4): this identity row IS
+              the masthead CountryFlag.tsx's own doc comment names as the one
+              call site that should pass it explicitly (PART 3). Left at the
+              default "row", it rendered the page's one true masthead flag at
+              20px, the same size as a table row's inline mark. `w-9` is
+              dropped rather than kept alongside it: CountryFlag's inline
+              height/width always overrides a caller's width class, so it was
+              already inert, just misleading to read next to a real size. */}
+          {iso2 ? <CountryFlag iso2={iso2} size="hero" className="shrink-0" /> : null}
           <h1 id="headline" data-typography="custom" className="text-balance text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]">
             {name}
           </h1>
