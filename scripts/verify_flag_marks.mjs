@@ -32,7 +32,9 @@
  * too, since that is where an inline SVG usually carries its accessible name
  * instead of an `aria-label`.
  *
- * THE VIOLATION TEST. Two independent reasons, either one is enough:
+ * THE VIOLATION TEST. Four independent reasons, any one is enough; the first
+ * two are the original test and the last two are the 2026-09-07 floor raise
+ * described below:
  *   - border-radius > 0, read as the MAX of the four computed corners so a
  *     flag rounded on only two corners still counts, checked on the flag
  *     element itself AND on a direct parent that is actually the flag's FRAME
@@ -40,8 +42,11 @@
  *     actual rounding via `overflow: hidden`, and a check that only reads the
  *     `img`'s own style would clear every one of those while the rendered
  *     shape is still rounded).
- *   - rendered height < 14px, the floor below which a flag's own detail
- *     (stripes, a small emblem) stops being legible rather than merely small.
+ *   - rendered height not one of `--flag-hero` / `--flag-row`, the two rungs
+ *     `CountryFlag.tsx` sizes from; a legibility floor alone could not tell a
+ *     flag obeying that law from one merely tall enough.
+ *   - rendered width/height ratio off the flag's own natural ratio, which is
+ *     what a fixed width does the moment it sits beside a fixed height.
  *
  * WHAT COUNTS AS A FRAME, narrowed 2026-09-02 against the two real cases on
  * this site rather than by argument. The original clause read the radius of
@@ -60,6 +65,24 @@
  * frame the original clause was written for; neither describes a card that
  * merely contains a flag among other content. Verified with --pages against a
  * scratch page carrying one of each.
+ *
+ * THE FLOOR RAISED 2026-09-07, from "at least 14px" to "one of the two rungs",
+ * because a component-side fix landed the same day: `CountryFlag.tsx` now
+ * sizes every flag from `--flag-hero` (40px) or `--flag-row` (20px), width
+ * auto, `object-contain`, never a third height. A 14px floor could not tell a
+ * flag obeying that law from one sitting at 27px on its way to somewhere else,
+ * so a rendered height is now checked against the two tokens exactly (read
+ * live from `:root`, not retyped here, so the gate cannot drift from the
+ * values `globals.css` actually ships) rather than against a minimum.
+ *
+ * A SECOND, INDEPENDENT REASON NOW FAILS A FLAG TOO: an explicit width. The
+ * distortion this whole file exists for, `aspect-[3/2] object-cover` forcing
+ * a flag into a box its own shape does not fit, is exactly what a fixed width
+ * ALONGSIDE a fixed height reintroduces the moment anything ever sets one; the
+ * component fixes this by leaving width `auto`, so this checks the RENDERED
+ * result against the flag's own natural ratio (an `<img>`'s `naturalWidth` /
+ * `naturalHeight`, the shape the SVG actually is) rather than re-deriving from
+ * markup, which is what the height check above already does for CSS.
  *
  * Usage: node scripts/verify_flag_marks.mjs [--write-baseline] [--pages name=path,...]
  */
@@ -106,7 +129,16 @@ const PAGES = readPagesArg();
 
 /* Runs inside the page. Nothing from this scope is visible to it. */
 function measure() {
-  const MIN_HEIGHT = 14;
+  /* THE TWO RUNGS, READ LIVE FROM :root RATHER THAN RETYPED, so this gate
+     cannot drift from the values globals.css actually ships (MODEL.md PART 3:
+     `--flag-hero` 40px, `--flag-row` 20px, and no third rung). A page that
+     has not been rebuilt against these tokens yet defines neither variable;
+     that resolves to NaN, and NaN fails every comparison below, which is the
+     correct verdict for a page still carrying the old fixed-aspect flag. */
+  const rootStyle = getComputedStyle(document.documentElement);
+  const tokenPx = (name) => parseFloat(rootStyle.getPropertyValue(name));
+  const ALLOWED_HEIGHTS = [tokenPx("--flag-hero"), tokenPx("--flag-row")];
+  const HEIGHT_TOLERANCE = 1; // subpixel rounding, never a third rung
 
   function isVisible(el) {
     const r = el.getBoundingClientRect();
@@ -165,7 +197,24 @@ function measure() {
     const reasons = [];
     if (ownR > 0) reasons.push(`radius ${ownR}px on the flag itself`);
     if (wrapperR > 0) reasons.push(`radius ${wrapperR}px on its frame (<${wrapper.tagName.toLowerCase()}>)`);
-    if (h < MIN_HEIGHT) reasons.push(`height ${h}px, below the ${MIN_HEIGHT}px legibility floor`);
+    if (!ALLOWED_HEIGHTS.some((allowed) => Number.isFinite(allowed) && Math.abs(h - allowed) <= HEIGHT_TOLERANCE)) {
+      reasons.push(`height ${h}px, not one of the two flag tokens (--flag-hero 40px, --flag-row 20px)`);
+    }
+    /* WIDTH-SET: the box no longer matches the flag's own shape, which is
+       what a fixed width alongside a fixed height does the moment either is
+       set, the retired `aspect-[3/2] object-cover` included. Checked against
+       the image's OWN intrinsic ratio, not a hardcoded 3:2, since the true
+       ratio differs by country. Only measurable once an <img>'s natural size
+       has resolved. */
+    if (el.tagName === "IMG" && el.naturalWidth > 0 && el.naturalHeight > 0) {
+      const naturalRatio = el.naturalWidth / el.naturalHeight;
+      const renderedRatio = r.width / r.height;
+      if (Math.abs(renderedRatio - naturalRatio) / naturalRatio > 0.03) {
+        reasons.push(
+          `width set: rendered ${Math.round(r.width)}x${h}px does not match the flag's own ${el.naturalWidth}x${el.naturalHeight} ratio`
+        );
+      }
+    }
     const label = el.getAttribute("alt") || el.getAttribute("aria-label") || el.getAttribute("title")
       || (el.tagName === "SVG" ? el.querySelector("title")?.textContent : "")
       || el.getAttribute("src") || "(unlabeled flag mark)";
