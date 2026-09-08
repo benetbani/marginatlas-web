@@ -71,9 +71,21 @@ redesigned; the rule is not widened to admit it.
 7. Task 5, harmony, and Task 6, the form consult.
 8. Task 8, the prompt, last, so it names only things that exist.
 
-**BLOCKED, and named so they are not silently attempted:** the entry bill,
-easiest to break in, net profit margin, locals, city living costs, the runway,
-the season, and city trades beyond London. Each is blocked on data the project
+**ANSWERED 2026-09-08, four decisions that change what follows.** Net profit
+margin is NOT blocked: it ships at full form from the global industry table,
+labelled sample, with the accent moved off it. Full width stays at THREE, so
+MODEL.md Part 1 is unchanged and the older hero-only ban is superseded. The
+twenty-four spectra poles are recut and approved as one sheet. And every
+section appears on every page, marked sample where it is not measured, so no
+page falls below its floor: where the content would have to be AUTHORED rather
+than derived from a figure we hold, the section still ships and still counts,
+drawn with its real structure, and states plainly that it is not gathered for
+that place, because inventing it would break his own rule against fabricated
+place detail.
+
+**STILL BLOCKED ON DATA, and named so they are not silently attempted:** the
+entry bill, easiest to break in, city living costs, the runway, the season, and
+city trades beyond London. Each is blocked on data the project
 does not hold, listed in the critic's inventory: street-level rent (two of his
 five metrics exist on no axis), per-district measured rent (none), credible
 per-country margin, the all-in opening cost (5 countries of 195), wage spread
