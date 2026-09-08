@@ -128,11 +128,14 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         {/* `relative` IS LOAD-BEARING, and its absence was a site-wide paint
             bug rather than a style preference.
 
-            AtlasFrame, four elements above, paints two `position: fixed`
-            layers at `z-index: 0`, the first an OPAQUE white base. CSS paints
-            positioned z-index-0 descendants AFTER in-flow non-positioned ones,
-            backgrounds and inline text alike, so anything static inside a
-            static <main> is painted over by the frame and is simply not drawn.
+            AtlasFrame, four elements above, paints one `position: fixed`
+            layer at `z-index: 0`, an OPAQUE white base (a second layer, the
+            founder's skyline photograph, was removed 2026-09-08: the ground
+            is now the grey the shell paints, not a photograph, and this
+            base layer is not it). CSS paints positioned z-index-0
+            descendants AFTER in-flow non-positioned ones, backgrounds and
+            inline text alike, so anything static inside a static <main> is
+            painted over by the frame and is simply not drawn.
 
             The site got away with it by accident. Every homepage band is
             wrapped in ToneBand, which happens to be `relative`, and every

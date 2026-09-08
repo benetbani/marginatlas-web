@@ -100,10 +100,31 @@
  * stylesheet edit, nothing for a call site to remember.
  */
 
-import { colors } from "@/lib/design-tokens";
+/**
+ * PHOTOGRAPH REMOVED, 2026-09-08, fix wave Finding 1. The founder's ruling of
+ * 2026-09-07 was that the skyline photograph and the glass card surface it
+ * was designed to be seen through are both gone: the page ground is now a
+ * flat grey, `--c-ground`, painted by the shell on every route, and cards are
+ * opaque white. This file's own TWO-SURFACE RULE above, the photograph
+ * whispering through a translucent card, is the mechanism that ruling ends.
+ * There is no more photograph for a card to carry, translucent or not.
+ *
+ * What is deleted here: the `BG` constant (`/spine/_skyline.jpeg`), the
+ * second fixed layer that painted it as a `backgroundImage` at `zIndex: 0`,
+ * and the `bgPosition` prop that only ever positioned that image. Nothing
+ * else. The first fixed layer below (`BASE`, an opaque white full-viewport
+ * backdrop) is not a photograph and stays, unchanged. It is still needed:
+ * `SiteChrome`'s own comments above its `<main>` and `<footer>` explain that
+ * layer is why those elements need `position:relative` to paint above it,
+ * and that reasoning does not depend on a second, image-carrying layer
+ * behind it.
+ *
+ * The long comment above this one is the historical record of why the
+ * photograph existed and how its bands were keyed to the layout. It is left
+ * in place as a record, not as a description of what this file renders now.
+ */
 
-/** The founder's photograph. One image, whole site. */
-const BG = "/spine/_skyline.jpeg";
+import { colors } from "@/lib/design-tokens";
 
 /**
  * The white base, from the token rather than the literal the original used.
@@ -114,7 +135,7 @@ const BG = "/spine/_skyline.jpeg";
  */
 const BASE = colors.white;
 
-export function AtlasFrame({ bgPosition = "center 16%" }: { bgPosition?: string }) {
+export function AtlasFrame() {
   return (
     <>
       <div
@@ -125,20 +146,6 @@ export function AtlasFrame({ bgPosition = "center 16%" }: { bgPosition?: string 
           zIndex: 0,
           background: BASE,
           pointerEvents: "none",
-        }}
-      />
-      <div
-        aria-hidden
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: "none",
-          backgroundImage: `url('${BG}')`,
-          backgroundSize: "cover",
-          backgroundPosition: bgPosition,
-          opacity: 0.32,
-          filter: "saturate(0.85) contrast(1.02)",
         }}
       />
       <style>{`
