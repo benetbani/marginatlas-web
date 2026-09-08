@@ -65,10 +65,21 @@
  * here on. This gate's first run found the twelve above, all real, none
  * fixed by this task (task 4's subject is the instrument). The same
  * convention already used for `verify_full_width_sitewide.mjs` and the flag
- * gate applies here: `scripts/model_laws_copy_baseline.json` holds the
- * count, `--write-baseline` seeds or lowers it, and this gate fails only
- * when the live count rises ABOVE that number, never for holding it. The
- * baseline may only come down.
+ * gate applies here, taken further (IMPORTANT 4, review fix wave 2026-09-08):
+ * the baseline used to be a single `{total, date}` number, which let one
+ * fixed pole and one new banned cell net to the same total and pass
+ * silently, the exact blind spot `fullwidth_baseline.json` already avoids by
+ * being a per-key map. `scripts/model_laws_copy_baseline.json` is now a
+ * per-rule map, `{"BANNED WORDS": n, "ROW SENTENCE": n,
+ * "DISTRICT ADJECTIVE": n}`, compared key by key; a rule's count rising
+ * above its own stored number fails even if the total held or fell. No date
+ * field: `--write-baseline` used to hardcode a literal date string, which
+ * would have recorded a false date on every later re-seed; the other
+ * per-key baselines (`fullwidth_baseline.json`, `flags_baseline.json`) carry
+ * no date either, so this file now matches that shape rather than inventing
+ * one. `--write-baseline` also refuses to WRITE a baseline that raises any
+ * rule's stored count: the baseline may only come down, and that is now
+ * enforced at the point where it could be broken, not just stated in prose.
  */
 import { COPY } from "@/lib/spine/copy";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
@@ -76,13 +87,16 @@ import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
-const reds: string[] = [];
+type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE";
+const reds: { rule: Rule; text: string }[] = [];
+const pushRed = (rule: Rule, text: string) => reds.push({ rule, text });
+
 const BANNED = ["same", "baseline", "x1.00", "world's highest"];
 const stripArticle = (s: string) => s.toLowerCase().replace(/^(the|a)\s+/, "");
 function checkBannedCell(where: string, text: string | null | undefined) {
   if (text == null) return;
   const norm = stripArticle(text.trim());
-  if (BANNED.includes(norm)) reds.push(`${where}: a whole cell reading "${text}", banned`);
+  if (BANNED.includes(norm)) pushRed("BANNED WORDS", `${where}: a whole cell reading "${text}", banned`);
 }
 
 /* BANNED WORDS, on static COPY strings that print as a whole cell or note. */
@@ -104,7 +118,7 @@ checkBannedCell("COPY.cityVerdict.cells.averageNote", COPY.cityVerdict.cells.ave
 {
   const fixture = { where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.2, character: "Q" }, { name: "A", slug: "a", rent_mult: 0.9, character: "R" }, { name: "C", slug: "c", rent_mult: 3, character: "S" }] } };
   const b = buildCityDistrictBars(fixture);
-  if (b) for (const r of b.rows) if (r.note) reds.push(`buildCityDistrictBars: district "${r.name}" carries the free-text note "${r.note}"`);
+  if (b) for (const r of b.rows) if (r.note) pushRed("DISTRICT ADJECTIVE", `buildCityDistrictBars: district "${r.name}" carries the free-text note "${r.note}"`);
 }
 
 /* BANNED WORDS, a reachability proof on the shipped city-peers builder: a
@@ -123,7 +137,7 @@ checkBannedCell("COPY.cityVerdict.cells.averageNote", COPY.cityVerdict.cells.ave
     },
   };
   const t = buildCityPeerTable(seed);
-  if (t) for (const c of t.columns) if (c.unit === "index" || c.unit === "pctdiff") for (const r of t.rows) if (!r.home && r.values[c.key] === 0) reds.push(`buildCityPeerTable: non-home row "${r.name}" ties the home row exactly on "${c.head}", which CompareTable.tsx renders as "${COPY.cityPeers.same}"`);
+  if (t) for (const c of t.columns) if (c.unit === "index" || c.unit === "pctdiff") for (const r of t.rows) if (!r.home && r.values[c.key] === 0) pushRed("BANNED WORDS", `buildCityPeerTable: non-home row "${r.name}" ties the home row exactly on "${c.head}", which CompareTable.tsx renders as "${COPY.cityPeers.same}"`);
 }
 
 /* ROW SENTENCE, on the spectra poles: "a spectra pole over three words or 24
@@ -137,7 +151,7 @@ for (const table of [COPY.character.state.rows, COPY.character.people.rows]) {
       const t = (row as { left: string; right: string })[side];
       poleCount++;
       const words = t.trim().split(/\s+/).filter(Boolean);
-      if (words.length > 3 || t.length > 24) reds.push(`COPY pole ${key}.${side}: "${t}" is ${words.length} words, ${t.length} characters, over the 3-word/24-character cap`);
+      if (words.length > 3 || t.length > 24) pushRed("ROW SENTENCE", `COPY pole ${key}.${side}: "${t}" is ${words.length} words, ${t.length} characters, over the 3-word/24-character cap`);
     }
   }
 }
@@ -155,27 +169,67 @@ const rowLabels: Array<[string, string]> = [
 ];
 for (const [where, t] of rowLabels) {
   const words = t.trim().split(/\s+/).filter(Boolean);
-  if (words.length > 3) reds.push(`${where}: "${t}" is a label of ${words.length} words, over three`);
+  if (words.length > 3) pushRed("ROW SENTENCE", `${where}: "${t}" is a label of ${words.length} words, over three`);
 }
 
 console.log(`model laws (copy): ${reds.length} red(s) across ${poleCount} spectra poles, ${rowLabels.length} row labels, the city-verdict and city-district builders on a synthetic fixture, and the city-peers "same" reachability proof`);
-for (const r of reds.slice(0, 60)) console.log("  " + r);
+for (const r of reds.slice(0, 60)) console.log(`  ${r.text}`);
 
-/* THE RATCHET. See the header comment: a baseline, never a blocker, and it
-   may only come down. */
+/* THE RATCHET (IMPORTANT 4 fix, review fix wave 2026-09-08). Per-rule counts,
+   compared per key, the same shape `fullwidth_baseline.json` and
+   `flags_baseline.json` already use for `verify_full_width_sitewide.mjs`: a
+   single total let one fixed pole and one new banned cell net to the same
+   number and pass silently, which a per-key comparison cannot do. No date
+   field, matching those two files: a hardcoded literal date would go false
+   the moment this is re-seeded on a later day. */
+const RULES: Rule[] = ["BANNED WORDS", "ROW SENTENCE", "DISTRICT ADJECTIVE"];
+const counts: Record<Rule, number> = { "BANNED WORDS": 0, "ROW SENTENCE": 0, "DISTRICT ADJECTIVE": 0 };
+for (const r of reds) counts[r.rule]++;
 const BASELINE_PATH = "scripts/model_laws_copy_baseline.json";
+/* A pre-migration file (`{total, date}`, the shape this gate used before the
+   review fix wave) carries none of the three rule keys; read as a per-rule
+   map it would silently default every rule to 0, which would score the
+   one-time migration to per-rule counts as a raise from zero rather than as
+   the same backlog re-shaped. Treated as absent instead, so the first
+   `--write-baseline` after this change seeds the new shape rather than being
+   refused. */
+const readBaseline = (): Partial<Record<Rule, number>> | null => {
+  if (!existsSync(BASELINE_PATH)) return null;
+  let parsed: unknown;
+  try { parsed = JSON.parse(readFileSync(BASELINE_PATH, "utf8")); } catch { return null; }
+  if (!parsed || typeof parsed !== "object") return null;
+  const obj = parsed as Record<string, unknown>;
+  if (!RULES.some((r) => typeof obj[r] === "number")) return null;
+  return obj as Partial<Record<Rule, number>>;
+};
 if (process.argv.includes("--write-baseline")) {
-  writeFileSync(BASELINE_PATH, JSON.stringify({ total: reds.length, date: "2026-09-08" }, null, 2) + "\n");
-  console.log(`  wrote ${BASELINE_PATH}: total ${reds.length}`);
+  const existing = readBaseline();
+  /* REFUSE TO WRITE A BASELINE HIGHER THAN THE STORED ONE. The old code
+     wrote whatever the live run counted, in either direction, which is what
+     let "the baseline may only come down" be true in prose and false in
+     code. */
+  if (existing) {
+    const raised = RULES.filter((r) => counts[r] > (existing[r] ?? 0));
+    if (raised.length) {
+      console.error(`x model-laws-copy: refusing to write a baseline that RAISES a rule's count above what is already stored. A baseline may only come down.`);
+      for (const r of raised) console.error(`     ${r}: ${existing[r] ?? 0} -> ${counts[r]}`);
+      process.exit(1);
+    }
+  }
+  writeFileSync(BASELINE_PATH, JSON.stringify(counts, null, 2) + "\n");
+  console.log(`  wrote ${BASELINE_PATH}: ${JSON.stringify(counts)}`);
   process.exit(0);
 }
-if (!existsSync(BASELINE_PATH)) {
+const baseline = readBaseline();
+if (!baseline) {
   console.error(`x model-laws-copy: no baseline at ${BASELINE_PATH}. Seed it once with --write-baseline.`);
   process.exit(1);
 }
-const baseline = (JSON.parse(readFileSync(BASELINE_PATH, "utf8")) as { total: number }).total;
-if (reds.length > baseline) {
-  console.log(`x model-laws-copy: ${reds.length} red(s), above the baseline of ${baseline}. A baseline may only come down, never up.`);
+const grew = RULES.filter((r) => counts[r] > (baseline[r] ?? 0));
+if (grew.length) {
+  console.log(`x model-laws-copy: a rule's count GREW above its own baseline (per-key, not a single total, so one fix cannot mask one new fault).`);
+  for (const r of grew) console.log(`     ${r}: ${baseline[r] ?? 0} -> ${counts[r]}`);
   process.exit(1);
 }
-console.log(`PASS model-laws-copy (ratchet): ${reds.length} of a ${baseline}-red baseline; the findings above are a work queue for a later run, not a build blocker.`);
+const total = RULES.reduce((a, r) => a + counts[r], 0);
+console.log(`PASS model-laws-copy (ratchet): ${total} red(s) (${RULES.map((r) => `${r} ${counts[r]}`).join(", ")}); the findings above are a work queue for a later run, not a build blocker.`);
