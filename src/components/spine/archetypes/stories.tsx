@@ -485,7 +485,9 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
 
 /** THE FOUNDER'S PLUS (2026-09-08), restored as an archetype: `DetailPanel`
  * takes rows, never children, so a drawing cannot be smuggled behind it (the
- * kit's assertNoGraphics is the same law, enforced twice). Its three stories
+ * type is the only enforcement on this path, review finding 8: the kit's
+ * assertNoGraphics walks direct children only and never sees past the `dl`
+ * wrapper this component hands it, so it does not reach here). Its stories
  * are read off the same files every other archetype reads, never typed:
  *  - GB:setup, the exemplar. GB's own LLC row of
  *    `data/legal/business_formation_costs_v1.json` holds a real fee and a
@@ -498,12 +500,20 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
  *  - AF:customers, the self-omit. `buildCustomersStrip` holds one mark for
  *    Afghanistan (its deciles are not researched), so the panel gets one row
  *    and draws nothing, exactly the law's floor.
+ *  - GB:nested, the proof (review finding 2): the panel exactly as it is
+ *    designed to be used, nested at the FOOT of a real AnswerCard rather than
+ *    standing alone, so the harness's own "card" for this story is
+ *    `data-archetype="answer-card"`, not "detail-panel". Built from GB's own
+ *    real answer-card facts (the exemplar `AnswerCardStories` already draws
+ *    cleanly) plus GB's own real setup rows, through the new optional
+ *    `detail` slot on `AnswerCard`; no production page passes that slot yet.
  */
 export function pickDetailPanelInstances(): Instance[] {
   return [
     { iso2: "GB:setup", why: "the exemplar" },
     { iso2: "DE:pay", why: "the two-row minimum" },
     { iso2: "AF:customers", why: "self-omits: one row" },
+    { iso2: "GB:nested", why: "nested at the foot of an answer card, the way a page will actually use it" },
   ];
 }
 
@@ -521,7 +531,12 @@ function detailPanelRows(key: string): { summary: string; rows: DetailRow[] } | 
   }
   if (kind === "pay") {
     const d = buildPayBars(iso2);
-    if (!d) return null;
+    /* THE WITHHELD GUARD (review finding 5): `d.withheld` is the same ruling
+       the sibling PayBars story already honours, an average under 110 percent
+       of the minimum is not a credible pair and is not drawn. Without this,
+       picking a withheld country here would print the exact pair the site
+       refuses to draw as a bar, in plain text, behind the plus. */
+    if (!d || d.withheld) return null;
     const out: DetailRow[] = d.rows.map((r) => ({
       label: r.label,
       value: usd(r.value),
@@ -532,7 +547,11 @@ function detailPanelRows(key: string): { summary: string; rows: DetailRow[] } | 
   if (kind === "customers") {
     const d = buildCustomersStrip(iso2);
     if (!d) return null;
-    const out: DetailRow[] = d.marks.map((m) => ({ label: m.label, value: usd(m.value), note: d.note ?? undefined }));
+    /* ONE NOTE PER PANEL (review finding 7): `d.note` describes the strip as a
+       whole (the deciles not researched), not each individual mark, so it is
+       attached to the first row only, the way a caption sits under a figure
+       once and not under each of its numbers. */
+    const out: DetailRow[] = d.marks.map((m, idx) => ({ label: m.label, value: usd(m.value), note: idx === 0 ? d.note ?? undefined : undefined }));
     return { summary: COPY.detail.customers, rows: out };
   }
   return null;
@@ -542,6 +561,36 @@ export function DetailPanelStories({ instances = pickDetailPanelInstances() }: {
   return (
     <div data-stories="detail-panel">
       {instances.map((i) => {
+        const [iso2, kind] = i.iso2.split(":");
+        if (kind === "nested") {
+          const facts = buildHeroFacts(iso2);
+          const d = detailPanelRows(`${iso2}:setup`);
+          const el = facts && d && d.rows.length >= 2 ? (
+            /* THE PROOF IS THE NESTING, NOT THE MASTHEAD'S OWN COMPOSITION:
+               this story exists to show the harness's detail-panel rules keep
+               firing once the outer card is an answer-card, not to also
+               exercise the KvGrid's side-by-side law at a width nothing else
+               tests it at. So the companion cells stay off (a bare
+               "answer stands alone" card, AnswerCard's own documented shape
+               for zero cells) and the card sits at the same width a
+               SECTION-level card actually gets paired in a page (Band's
+               1-1/2-1 split), not the hero's full-width exception (D1). */
+            <div style={{ maxWidth: 480 }}>
+              <AnswerCard
+                id={`detail-nested-${iso2.toLowerCase()}`}
+                level="section"
+                icon="register-cost"
+                name={facts.name}
+                iso2={facts.iso2}
+                subtitle={null}
+                answer={facts.answer}
+                cells={[]}
+                detail={<DetailPanel name={`detail-${iso2.toLowerCase()}-nested`} summary={d.summary} rows={d.rows} />}
+              />
+            </div>
+          ) : null;
+          return <Story kind="detail-panel" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         const d = detailPanelRows(i.iso2);
         const el = d && d.rows.length >= 2 ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 416 }}>

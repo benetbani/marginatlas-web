@@ -10,6 +10,10 @@
  * its own; it takes it from here, so a ruling changes one line and every
  * instance follows. Constraint-safe: no em-dashes, no source-agency names.
  */
+/** The customers strip's own kicker, held once so the detail panel's summary
+ * below can REFERENCE it rather than retype it (review finding 6): a second
+ * literal of the same string drifts silently on the next edit to either one. */
+const CUSTOMERS_KICKER = "What customers earn";
 export const COPY = {
   answer: {
     /** Founder verbatim, 2026-08-30: "the total effective tax burden". */
@@ -76,7 +80,7 @@ export const COPY = {
     target: ["Prime street, metropolis", "Secondary street, metropolis", "Prime street, city", "Secondary street, city", "Edge of town"],
   },
   customers: {
-    kicker: "What customers earn",
+    kicker: CUSTOMERS_KICKER,
     basis: "Full-time pay, a year.",
     marks: { bottom: "Bottom tenth", typical: "Typical", top: "Top tenth" },
     noSpread: "bottom and top tenth not researched yet for this country",
@@ -195,13 +199,15 @@ export const COPY = {
   /** THE FOUNDER'S PLUS (2026-09-08): the detail panel's summary lines, one for
    * each query a reader clicks open. Reused, not invented per instance: the
    * setup summary answers what a registration fee covers, the pay summary
-   * answers what moves the figure a bar just drew, and the customers summary
-   * shares the strip's own kicker so the plus never contradicts the drawing
-   * it sits under. */
+   * answers what moves the figure a bar just drew. The customers summary
+   * REFERENCES the strip's own kicker (review finding 6: a byte-identical
+   * retyped copy drifts silently on the next edit to either string) and adds
+   * what actually opens, the bottom-to-top spread, so the plus does not just
+   * repeat the heading printed directly above it. */
   detail: {
     setup: "What the fee covers",
     pay: "What moves this figure",
-    customers: "What customers earn",
+    customers: `${CUSTOMERS_KICKER}, by tenth`,
   },
   /** Words that must never appear in an archetype's copy: the corporate register. */
   banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year"],

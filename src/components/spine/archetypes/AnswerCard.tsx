@@ -48,9 +48,16 @@ export type AnswerCardProps = {
   level?: "page" | "section";
   /** The rail's icon tile at section level. */
   icon?: AtlasIconId;
+  /** THE FOUNDER'S PLUS, at the card's actual foot (review finding 2, 2026-09-08):
+   * a `DetailPanel` (or any disclosure) rendered under the grid and the
+   * provenance line, exactly where DetailPanel's own doc comment says it
+   * lives. Optional and undefined everywhere today; no current page passes
+   * it, so no existing render changes. It exists so a section can nest the
+   * plus at a real card's foot, the same way `cells` already nests a KvGrid. */
+  detail?: React.ReactNode;
 };
 
-export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon }: AnswerCardProps) {
+export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail }: AnswerCardProps) {
   const tagged = answer != null && answer.confidence !== "measured";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   return (
@@ -122,6 +129,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
             <span className="max-w-[56ch]">{foot.text}</span>
           </div>
         ) : null}
+        {detail}
       </Box>
     </Band>
   );
