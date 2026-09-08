@@ -38,10 +38,15 @@ import { eachPageAtWidths } from "./lib/measure_pages.mjs";
 function collect() {
   const out = [];
 
+  /* Card definition repointed 2026-09-08, fix wave Finding 2. The glass is
+     gone (CARD_SURFACE in kit.tsx no longer sets a backdrop-filter), so
+     walking up until `backdropFilter !== "none"` never terminated and this
+     always returned null: every chart's card was silently unknown. Repointed
+     at the harness's own single definition of a card
+     (scripts/harness/check_page_holes.mjs): the nearest ancestor carrying
+     `class*="rounded-[14px]"`. */
   function cardOf(el) {
-    let c = el.parentElement;
-    while (c && getComputedStyle(c).backdropFilter === "none") c = c.parentElement;
-    return c;
+    return el.parentElement ? el.parentElement.closest('[class*="rounded-[14px]"]') : null;
   }
   function labelOf(card, el) {
     const rail = card ? card.querySelector("h2, h3, [class*=rail]") : null;
@@ -104,9 +109,17 @@ function collect() {
   /* Div-drawn marks: this site builds several charts out of positioned spans
      rather than SVG, and those obey the same rule. A mark is a small element with
      a background that sits inside a card. */
+  /* Card definition repointed 2026-09-08, fix wave Finding 2 (see the note
+     above `cardOf`). This loop wants the innermost self-contained card, not
+     the harness's outermost one, so the two backdrop-filter tests below are
+     repointed to the same class-based marker but keep their original
+     self-and-no-nested-card shape rather than the harness's own
+     not-nested-in-a-card shape: those ask two different questions of the
+     same nesting chain, and only the primitive that answers "is this
+     element a card" needed to change. */
   for (const card of document.querySelectorAll("div")) {
-    if (getComputedStyle(card).backdropFilter === "none") continue;
-    if ([...card.querySelectorAll("div")].some((d) => getComputedStyle(d).backdropFilter !== "none")) continue;
+    if (!card.matches('[class*="rounded-[14px]"]')) continue;
+    if ([...card.querySelectorAll("div")].some((d) => d.matches('[class*="rounded-[14px]"]'))) continue;
     if (card.querySelector("svg")) continue;
     const marks = [];
     for (const e of card.querySelectorAll("span, div")) {

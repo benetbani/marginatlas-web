@@ -10,11 +10,14 @@
  * magnifications. Writes one dossier the critique sheet renders and the round
  * record is scored against.
  *
- * THE LEGACY THREE HAVE NO SPINE MARKUP. The four rebuilt pages carry glass
- * cards (backdrop-filter) as their section unit, and subsections fall out of a
- * card's direct children. Home, the countries list and the GB country page were
- * never rebuilt to that kit: their sections are plain `<section>`/`<article>`/
- * `<nav>` landmarks with backdrop-filter computing to none, so the card query
+ * THE LEGACY THREE HAVE NO SPINE MARKUP. The four rebuilt pages carry cards
+ * (`main [class*="rounded-[14px]"]`, the harness's own definition, in
+ * scripts/harness/check_page_holes.mjs; carried as a `backdrop-filter` before
+ * the glass was removed 2026-09-08, see the note beside the card query below)
+ * as their section unit, and subsections fall out of a card's direct
+ * children. Home, the countries list and the GB country page were never
+ * rebuilt to that kit: their sections are plain `<section>`/`<article>`/
+ * `<nav>` landmarks with no such card markup at all, so the card query
  * returns zero and harvest() falls back to walking those landmarks instead. See
  * the LEGACY PAGE FALLBACK block below for how a band is chosen and why
  * subsections are not attempted for these three.
@@ -309,8 +312,19 @@ function harvest() {
     return out;
   }
 
-  const cards = [...document.querySelectorAll("div")].filter((e) => getComputedStyle(e).backdropFilter !== "none");
-  const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+  /* Card definition repointed 2026-09-08, fix wave Finding 2. The glass is
+     gone from every rebuilt page (CARD_SURFACE in kit.tsx no longer sets a
+     backdrop-filter), so `backdropFilter !== "none"` had gone permanently
+     false here too, not only on the legacy three the comment above already
+     names, and this branch was finding zero cards on every non-legacy page
+     while reporting success. Repointed at the harness's own single
+     definition of a card (scripts/harness/check_page_holes.mjs): a
+     `main [class*="rounded-[14px]"]` element with client rects, not nested
+     inside another one. */
+  const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
+    (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+  );
+  const outer = cards;
 
   outer.forEach((card, i) => {
     const sec = measure(card, "section", `${i}`);

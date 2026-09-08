@@ -274,8 +274,17 @@ function measure() {
     sectionCandidates = bands;
     extraCandidates = divBands;
   } else {
-    const cards = [...document.querySelectorAll("div")].filter((e) => getComputedStyle(e).backdropFilter !== "none");
-    sectionCandidates = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+    /* Card definition repointed 2026-09-08, fix wave Finding 2. The glass is
+       gone, so `backdropFilter !== "none"` was false for every element and
+       this branch used to find zero cards on every reformed page while
+       reporting success. Repointed at the harness's own single definition of
+       a card (scripts/harness/check_page_holes.mjs): a
+       `main [class*="rounded-[14px]"]` element with client rects, not nested
+       inside another one. */
+    const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
+      (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+    );
+    sectionCandidates = cards;
   }
 
   /* CONSENSUS WIDTH: the widest candidate width that at least one other

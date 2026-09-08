@@ -24,10 +24,20 @@
  * WHAT COUNTS AS A CANDIDATE. Any element wider than 120px that either (a)
  * carries a visible border on at least one side (computed border-width > 0
  * AND border-style not "none", checked on all four sides so a `border-t`-only
- * strip is still a candidate) or (b) carries a `backdrop-filter` (the spine
- * glass card, which has no border at all). This is deliberately not scoped to
- * elements that "look like a card" by class name: the whole point is to catch
- * every box built the old way alongside every box built the new way.
+ * strip is still a candidate) or (b) is a spine card. This is deliberately
+ * not scoped ENTIRELY to class name: (a) still catches every box built the
+ * old way, legacy Tailwind radii included, by its border alone.
+ *
+ * (b) USED TO READ `backdrop-filter`, 2026-09-08, fix wave Finding 2. The
+ * glass card the comment above named is gone (CARD_SURFACE in kit.tsx no
+ * longer sets a backdrop-filter), so that test had gone permanently false and
+ * this candidate path was silently finding nothing, on a page where (a) still
+ * caught spine cards anyway because `Box`'s outer border survived the glass
+ * removal. (b) now reads the harness's own single definition of a card
+ * (scripts/harness/check_page_holes.mjs): does the element itself carry
+ * `class*="rounded-[14px]"`. This is the one intentional exception to "not
+ * scoped to class name" in the sentence above, named directly because it is
+ * the harness's own card marker, not an invented tenth one.
  *
  * THE SANCTIONED SET. Three shapes, and nothing else:
  *   - 14px, the spine card radius.
@@ -133,8 +143,9 @@ function measure() {
     if (r.width <= 120) continue;
     if (!isVisible(el)) continue;
     const s = getComputedStyle(el);
-    const hasBackdrop = !!s.backdropFilter && s.backdropFilter !== "none";
-    if (!hasVisibleBorder(s) && !hasBackdrop) continue;
+    /* Repointed 2026-09-08, fix wave Finding 2: see the header comment. */
+    const isSpineCard = el.matches('[class*="rounded-[14px]"]');
+    if (!hasVisibleBorder(s) && !isSpineCard) continue;
     candidates.push(el);
   }
 

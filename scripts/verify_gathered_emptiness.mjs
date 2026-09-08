@@ -73,10 +73,16 @@ function measure() {
   const COLS = 48;
   const ROW_PX = 6;
 
-  const cards = [...document.querySelectorAll("div")].filter(
-    (e) => getComputedStyle(e).backdropFilter !== "none",
+  /* Card definition repointed 2026-09-08, fix wave Finding 2. The glass is
+     gone, so `backdropFilter !== "none"` was false everywhere and this gate
+     used to find zero cards while reporting success. Repointed at the
+     harness's own single definition of a card
+     (scripts/harness/check_page_holes.mjs): a `main [class*="rounded-[14px]"]`
+     element with client rects, not nested inside another one. */
+  const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
+    (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
   );
-  const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+  const outer = cards;
 
   const out = [];
   for (const c of outer) {

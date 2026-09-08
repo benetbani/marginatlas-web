@@ -176,10 +176,17 @@ const run = async () => {
     await p.evaluate(() => document.fonts.ready);
     await p.waitForTimeout(200);
     const t = await p.evaluate(() => {
-      const cards = [...document.querySelectorAll("div")].filter(
-        (e) => getComputedStyle(e).backdropFilter !== "none",
+      /* Card definition repointed 2026-09-08, fix wave Finding 2. The glass
+         is gone, so `backdropFilter !== "none"` was false everywhere and this
+         gate used to find zero cards while reporting success. Repointed at
+         the harness's own single definition of a card
+         (scripts/harness/check_page_holes.mjs): a
+         `main [class*="rounded-[14px]"]` element with client rects, not
+         nested inside another one. */
+      const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
+        (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
       );
-      const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+      const outer = cards;
       return {
         over: document.documentElement.scrollWidth > document.documentElement.clientWidth,
         cramped: outer
@@ -237,10 +244,12 @@ const run = async () => {
          Both found something the first time they ran here: a Sao Paulo trade page
          whose partner card does not render took the whole column. */
       {
-        const cards = [...document.querySelectorAll("div")].filter(
-          (e) => getComputedStyle(e).backdropFilter !== "none",
+        /* Card definition repointed 2026-09-08, fix wave Finding 2 (see the
+           note above, in this same file, on the 768px pass). */
+        const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
+          (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
         );
-        const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+        const outer = cards;
         for (const c of outer) {
           const cb = c.getBoundingClientRect();
           if (cb.width > 1000 && !c.closest("[data-hero='1']")) {

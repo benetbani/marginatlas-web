@@ -47,9 +47,15 @@ function collect() {
     if (rect.width < 40) continue;
 
     /* The card this table sits in, so its width can be judged against the space
-       it was given rather than against the viewport. */
-    let card = t.parentElement;
-    while (card && getComputedStyle(card).backdropFilter === "none") card = card.parentElement;
+       it was given rather than against the viewport.
+       Card definition repointed 2026-09-08, fix wave Finding 2. The glass is
+       gone (CARD_SURFACE in kit.tsx no longer sets a backdrop-filter), so
+       walking up until `backdropFilter !== "none"` never terminated and this
+       always returned null: every table's card was silently unknown.
+       Repointed at the harness's own single definition of a card
+       (scripts/harness/check_page_holes.mjs): the nearest ancestor carrying
+       `class*="rounded-[14px]"`. */
+    const card = t.parentElement ? t.parentElement.closest('[class*="rounded-[14px]"]') : null;
     const cardW = card ? card.getBoundingClientRect().width : 0;
 
     const rail = card ? card.querySelector("h2, h3, [class*=rail]") : null;

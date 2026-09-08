@@ -49,10 +49,17 @@ const collect = () => {
     const d = e.closest("details");
     return !!d && !d.open && !e.closest("summary");
   };
-  const cards = [...document.querySelectorAll("div")].filter(
-    (e) => getComputedStyle(e).backdropFilter !== "none",
+  /* Card definition repointed 2026-09-08, fix wave Finding 2. The glass is
+     gone (CARD_SURFACE in kit.tsx no longer sets a backdrop-filter), so
+     `backdropFilter !== "none"` is false for every element on every page and
+     this gate used to find zero cards while reporting success. Repointed at
+     the harness's own single definition of a card
+     (scripts/harness/check_page_holes.mjs): a `main [class*="rounded-[14px]"]`
+     element that has client rects and is not nested inside another one. */
+  const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
+    (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
   );
-  const outer = cards.filter((c) => !cards.some((o) => o !== c && o.contains(c)));
+  const outer = cards;
 
   const sections = outer.map((c) => {
     const cb = c.getBoundingClientRect();
@@ -365,10 +372,12 @@ const collect = () => {
       /^mt-8 grid grid-cols-1 items-start gap-8/.test(String(e.className)),
     );
     const bandGap = Math.max(0, ...bandEls.map((e) => px(getComputedStyle(e).marginTop)));
-    const cardsAll = [...document.querySelectorAll("div")].filter(
-      (e) => getComputedStyle(e).backdropFilter !== "none",
+    /* Card definition repointed 2026-09-08, fix wave Finding 2 (see the note
+       above `collect`'s own `cards` for the reason). */
+    const cardsAll = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
+      (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
     );
-    const outerCards = cardsAll.filter((c) => !cardsAll.some((o) => o !== c && o.contains(c)));
+    const outerCards = cardsAll;
     const maxPad = Math.max(0, ...outerCards.map((e) => px(getComputedStyle(e).paddingTop)));
     let chapterGap = 0;
     for (const e of document.querySelectorAll("h2, h3, [data-movement]")) {
