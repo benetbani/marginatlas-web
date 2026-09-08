@@ -163,12 +163,19 @@ export const COPY = {
     cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC fee", llcDays: "LLC time" },
     caveat: "Peers are picked for comparable size and market, not for sharing a border. Effective tax is what a small business typically pays under each country's own small-business rules. LLC fee is the government fee only and LLC time runs until the company is registered.",
   },
-  /** The city's peers table (city:peers, run 22): cities as rows, three measures as columns, every figure read beside the home city; no unit word a reader has to know. */
+  /** The city's peers table (city:peers, run 22): cities as rows, three measures as columns, every figure read beside the home city; no unit word a reader has to know.
+   *  CAVEAT TRIMMED 2026-09-08 (E1, found once the card-detection repoint could finally see this
+   *  card at all): the sentence carried the same facts in 255 characters, over the page's 220-char
+   *  prose budget by itself, and was ALSO being counted twice, once from a visible paragraph and
+   *  once from a screen-reader-only caption saying the same words for assistive tech; that double
+   *  count is now excluded at the instrument (verify_art_direction.mjs). The facts kept: what each
+   *  column measures, that higher reads better throughout, and that peers match on size and market
+   *  rather than sharing a border. */
   cityPeers: {
     kicker: "Peer cities, side by side",
     cols: { city: "City", cheaper: "Cheaper to live", income: "Customer income", visitors: "Visitors" },
     same: "same",
-    caveat: "Each column is read beside {city}: cost of living in index points, where higher is cheaper; average pay in percent; visitors a year as a multiple. Higher is better in every column. Peers are picked for comparable size and market, not for sharing a border.",
+    caveat: "Read beside {city}: cost of living in index points, pay in percent, visitors as a multiple, higher is better throughout. Peers match on size and market, not on sharing a border.",
   },
   /** The city's verdict card (city:verdict, run 23): the lightest rent load as the answer, the city average and the heaviest district as cells. A rent load is the district's rent as a multiple of the city's average. */
   cityVerdict: {

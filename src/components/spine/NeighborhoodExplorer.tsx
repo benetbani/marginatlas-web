@@ -841,23 +841,30 @@ export function NeighborhoodExplorer({ districts, defaultSlug, rail, mapNote, pl
             not empty Southeast England) + the under-map card that makes the sticky
             column carry data. Selecting a pin drives the strip + panel. */}
         <div className="lg:sticky lg:top-6">
-          <div className="overflow-hidden rounded-[14px]">
-            <SpineMap
-              points={points}
-              fitPadding={36}
-              ariaLabel="District map"
-              onSelect={(p) => p.slug && setSelected(p.slug)}
-              /* THE LEGEND ONLY NAMES A COLOUR THAT IS ON THE MAP. Terracotta
-                 marks a district below the city rate, and no London district is,
-                 so the legend promised a colour a reader could never find. It is
-                 built from the points rather than typed. */
-              legendLabel={
-                points.some((p) => p.tone === "terra")
-                  ? "Dot size = how light the rent runs; terracotta = lighter than the city"
-                  : "Dot size = how light the rent runs; the biggest dot is the lightest lease"
-              }
-            />
-          </div>
+          {/* THE DOUBLE WRAPPER IS GONE. This div used to be
+              `<div className="overflow-hidden rounded-[14px]">` around SpineMap,
+              which already renders its OWN root at `overflow-hidden rounded-[14px]`
+              (SpineMap.tsx): two nested boxes doing the same clip. The outer one,
+              having no border and no fill of its own, is what frost-reads found as
+              a "card" (the harness's card test is any un-nested rounded-[14px] box)
+              whose own background is transparent, alpha 0 , not glass, but not the
+              opaque law either. Removing the redundant box promotes SpineMap's own
+              root to the page's actual map card, which now carries CARD_SURFACE. */}
+          <SpineMap
+            points={points}
+            fitPadding={36}
+            ariaLabel="District map"
+            onSelect={(p) => p.slug && setSelected(p.slug)}
+            /* THE LEGEND ONLY NAMES A COLOUR THAT IS ON THE MAP. Terracotta
+               marks a district below the city rate, and no London district is,
+               so the legend promised a colour a reader could never find. It is
+               built from the points rather than typed. */
+            legendLabel={
+              points.some((p) => p.tone === "terra")
+                ? "Dot size = how light the rent runs; terracotta = lighter than the city"
+                : "Dot size = how light the rent runs; the biggest dot is the lightest lease"
+            }
+          />
           {mapNote ? <p className="max-w-[56ch] px-1 pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mapNote}</p> : null}
         </div>
         <DetailPanel d={current} reduced={reduced} />

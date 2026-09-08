@@ -65,10 +65,27 @@ const collect = () => {
     const cb = c.getBoundingClientRect();
 
     /* E1, prose budget. Runs of 30+ characters carrying a space are sentences;
-       a label, a figure and a unit are not. */
+       a label, a figure and a unit are not.
+
+       NOT WHAT NOBODY SEES. Found 2026-09-08: the neighbourhood page's map
+       (SpineMap.tsx) injects a scoped stylesheet with a plain `<style>` tag, and
+       a `<style>` element's CSS text is an ordinary text-node CHILD in the DOM,
+       so it was being summed as 1437 characters of "prose" on a page with none ,
+       CSS syntax, not a sentence a reader meets. The same walk also double-counted
+       a table's screen-reader-only caption (Tailwind `sr-only`: a real 1x1px
+       element, present for assistive tech, invisible to a sighted reader) once
+       for itself and once for the visible paragraph carrying the same words,
+       reading a single sentence as two. Both are "nobody sees this row of
+       characters", which is what a rendered-size guard tests directly rather than
+       enumerating every way markup can hide text: `<style>`/`<script>` compute a
+       zero rect (UA default `display:none`), and a clip-based sr-only technique
+       computes 1x1. A 220-character BUDGET has to be a budget over what is
+       actually on the page. */
     let prose = 0;
     for (const e of c.querySelectorAll("*")) {
       if (inDeadDetails(e)) continue;
+      const eb = e.getBoundingClientRect();
+      if (eb.width < 2 || eb.height < 2) continue;
       const own = [...e.childNodes]
         .filter((x) => x.nodeType === 3 && x.textContent.trim())
         .map((x) => x.textContent.trim())
@@ -117,8 +134,17 @@ const collect = () => {
       /* A COMPARED SET MARKS ONE BEST PER ROW BY DESIGN. C1 requires it, so
          counting table cells against a two-per-section budget put the rule in
          conflict with itself: a three-row comparison is correct and read as three
-         violations. Cells are exempt; loose marks are not. */
-      if (e.closest("td, th")) continue;
+         violations. Cells are exempt; loose marks are not.
+
+         THE SPECTRA TABLE IS THE SAME SHAPE IN DIVS, found 2026-09-08. It draws
+         one dot per named trait (SpectraTable.tsx), each row its own `<div
+         data-spectrum-row>` rather than a `<tr>`, so the td/th exemption above
+         never saw it: three London "dealing with people" reads, one terracotta
+         dot each, counted as three loose marks on one card. It is the identical
+         compared set C1 already requires and this file already exempts, drawn
+         with the archetype's own markup instead of a literal table, so it gets
+         the identical exemption rather than a second rule that happens to agree. */
+      if (e.closest("td, th, [data-archetype='spectra-table']")) continue;
       const own = [...e.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim());
       const eb = e.getBoundingClientRect();
       if (eb.width < 1 || eb.height < 1) continue;

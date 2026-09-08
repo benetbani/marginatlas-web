@@ -419,8 +419,15 @@ export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: n
       </div>
       {/* THE THREE FIGURES WRAP RATHER THAN COLLIDE. Pushed to the two ends with
           the typical in the middle, they had nothing stopping them meeting on a
-          narrow masthead. */}
-      <div className="mt-1 flex flex-wrap justify-between gap-x-3 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{fmt(p10)}</span><span className="font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span>{fmt(p90)}</span></div>
+          narrow masthead.
+          TABULAR (F1, found 2026-09-08): p10 and p90 render alone in their span,
+          which is exactly the numeral-only text the art-direction gate scans for,
+          and neither carried the `fig` class, so neither got tabular-nums. p50
+          keeps its trailing " typical" word rather than a bare figure, which is
+          why the gate never flagged it, but it is given the same class for the
+          same reason its neighbours now carry it: three figures reading down (or
+          across) a strip like this are exactly what tabular numerals are for. */}
+      <div className="mt-1 flex flex-wrap justify-between gap-x-3 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span className="fig">{fmt(p10)}</span><span className="fig font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span className="fig">{fmt(p90)}</span></div>
     </div>
   );
 }

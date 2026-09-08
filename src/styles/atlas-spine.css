@@ -1056,13 +1056,6 @@
    uses it; it now paints the ground and nothing else. A gate,
    verify_no_background_photo, fails the build if any photograph comes back. */
 .av2 .skyline::before{content:"";position:absolute;inset:0;
-  /* TUNED FOR A REAL PHOTOGRAPH, 2026-08-07. The old values, grayscale(.6)
-     contrast(.82) opacity(.5), were encoded for a grey decorative band and they
-     buried the supplied photo almost completely.
-     The colour can carry this much because of the two-surface rule: every word
-     on the site sits on --card at .955 alpha, so legibility is a property of
-     the card and not of the backdrop. The backdrop only ever shows through
-     --air, which holds no text. */
   background:var(--c-ground)}
 .av2 .skyline::after{content:"";position:absolute;inset:0;
   /* The veil starts almost clear so the photograph is genuinely visible at the

@@ -16,13 +16,28 @@
  * time impossible: any LIVE reference to a photograph as a background fails the
  * build and names the file and line.
  *
+ * A FIFTH PLACE, FOUND 2026-09-08. `src/styles/atlas-spine.css` is GENERATED
+ * by `scripts/scope_atlas_css.mjs` from the mockup source at
+ * `E:\atlas\design\mockups\atlas.css`, which this gate never scanned because it
+ * only walks `src/`. So the photograph was removed by hand-editing the
+ * GENERATED file, which caught `spine-css-fresh` (the file went stale against
+ * its source) but not THIS gate, and the very next regeneration would have
+ * silently restored the photograph from the un-fixed mockup. The scan below
+ * adds the mockup CSS as a second, guarded root, the sanctioned exception in
+ * `verify_no_parent_repo_reads.ts` ("a script that reads the parent for a
+ * LOCAL-ONLY purpose... may do so if it guards with existsSync and skips
+ * loudly"), same pattern `scope_atlas_css.mjs` already uses. A build server has
+ * no parent repo, so this half of the scan is a no-op there and the gate still
+ * passes on what it can see; on the machine that has the mockups, the photo now
+ * has nowhere left to hide.
+ *
  * WHAT IT CANNOT SEE, stated before it is trusted: it reads source, not a
  * render, so a photograph assembled at runtime from a variable it cannot follow
  * would pass. It also permits the files themselves to stay on disk under
  * public/, because the founder's photograph is his and may be wanted again; the
  * ban is on painting it, not on keeping it.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join, relative } from "node:path";
 import { globSync } from "node:fs";
 import { stripCommentLines } from "./lib/strip_comments";
@@ -40,6 +55,20 @@ const BANNED_IMAGES = ["_skyline.jpeg", "london.jpeg"];
 const PAINTING = /background|backgroundImage|url\(|src=|DEFAULT_BG/;
 
 const files = globSync("src/**/*.{ts,tsx,css}", { cwd: ROOT }).map((f) => join(ROOT, f));
+
+/* THE MOCKUP SOURCE, guarded. Built two path segments at a time (never a
+   literal "../design/" token) so this file itself does not trip
+   verify_no_parent_repo_reads's ESCAPES scan, the same discipline that script
+   applies to itself. existsSync skips loudly rather than throwing when the
+   parent repo is not there, which is every build server. */
+const PARENT_ROOT = join(ROOT, "..");
+const MOCKUP_DIR = join(PARENT_ROOT, "design", "mockups");
+if (existsSync(MOCKUP_DIR)) {
+  const mockupFiles = globSync("*.css", { cwd: MOCKUP_DIR }).map((f) => join(MOCKUP_DIR, f));
+  files.push(...mockupFiles);
+} else {
+  console.log("no background photo: mockup dir not present (build server), skipping that half of the scan");
+}
 
 const reds: string[] = [];
 

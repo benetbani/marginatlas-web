@@ -408,9 +408,13 @@ export function SurvivalCurve({ curve, note }: { curve: Array<{ yr: number; pct:
             </React.Fragment>
           );
         })}
+        {/* TABULAR (F1, found 2026-09-08): the 0/50/100 gridline labels above
+            already carry `fig` with the measured reason it belongs on figures
+            that stack in one column; this terracotta end reading is the same
+            chart's fourth figure and was missing the same class. */}
         <span
           aria-hidden
-          className="absolute whitespace-nowrap text-[length:var(--t-micro)] font-semibold leading-none text-[var(--terra-text)]"
+          className="fig absolute whitespace-nowrap text-[length:var(--t-micro)] font-semibold leading-none text-[var(--terra-text)]"
           style={{ left: `${leftPct(endYr)}%`, top: `${Y(curve[lastVisibleIdx].pct) - 18}px`, transform: endAnchor }}
         >
           {curve[lastVisibleIdx].pct}%

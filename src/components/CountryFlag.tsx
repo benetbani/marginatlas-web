@@ -41,7 +41,21 @@
  * `className` is stripped here rather than merged. Order in the class
  * attribute would not have decided it anyway: two radius utilities at equal
  * specificity are settled by their order in the stylesheet, not the markup.
- */
+ *
+ * THE HAIRLINE MOVED FROM `border` TO `outline`, 2026-09-08 (flag-marks'
+ * width-ratio check, found once its own floor was raised from 14px to the two
+ * tokens exactly). `border` is part of the box a browser sizes `width:auto`
+ * against, and every element on this site is `box-sizing:border-box`
+ * (Tailwind's preflight), so the border was being carved OUT of the specified
+ * height before the intrinsic ratio ran: at `--flag-row` (20px) a 1px+1px
+ * border left an 18px content box, `auto` computed a width for THAT box, and
+ * the border added back on afterward, landing the rendered box a full 5% off
+ * the flag's true ratio at every site on the property, all from one shared
+ * component. `outline` paints the identical hairline (same colour, same 1px,
+ * flush against the edge at the default zero offset) without ever entering
+ * the box a replaced element sizes itself against, so `width:auto` now runs
+ * on the full, unaltered height and the rendered box matches the SVG's own
+ * ratio exactly. */
 import { iso2ToName } from "@/lib/countries";
 
 type Props = {
@@ -75,7 +89,7 @@ export function CountryFlag({ iso2, className = "", label, size = "row" }: Props
     <img
       src={`https://flagcdn.com/${code}.svg`}
       alt={alt}
-      className={`inline-block object-contain rounded-none border border-[var(--c-border)] align-middle ${withoutRadius(className)}`}
+      className={`inline-block object-contain rounded-none outline outline-1 outline-[var(--c-border)] align-middle ${withoutRadius(className)}`}
       style={{ height, width: "auto" }}
       loading="lazy"
     />

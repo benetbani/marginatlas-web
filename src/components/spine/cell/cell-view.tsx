@@ -791,18 +791,25 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
         <>
           <Movement index={cn()} eyebrow="Running it" heading="The first year" icon="first-year" />
           <div className="space-y-4">
-            {/* THE RISK SCALES PAIR WITH THE RAMP. The seasonality card that used
-                to sit beside the risks does not render for this trade, so the
-                risks took the whole column by default. The ramp is a single phase
-                bar and takes the small side. */}
+            {/* THE RISK SCALES NO LONGER PAIR WITH THE RAMP (reverted 2026-09-08,
+                E2, found once the card-detection repoint could finally see this
+                card). The seasonality card that used to sit beside the risks does
+                not render for this trade, so the two were squeezed into one 2-1
+                band: risks the wide side, ramp , a single phase bar , the small
+                side. EQUAL HEIGHTS, NO MATTER WHAT (founder ruling 7, 2026-09-04)
+                then stretched the ramp's card to the risks list's height, and a
+                single bar with a two-line legend fills 56% of a card sized for a
+                multi-row list, the exact hole ruling 7 calls a card to redesign,
+                not a rule to relax. The ramp already had its OWN band for the
+                sibling case three lines down (hasSeasonality, no risks pairing at
+                all); this gives it the same treatment here, so it is never
+                stretched against a list built for a different amount of content.
+                A lone card re-templates to two thirds and one third (Band's own
+                rule) rather than a gap, which is the sanctioned asymmetry the
+                hasSeasonality branch already uses below. */}
             {hasSeasonality ? <Band split="2-1"><Risks d={d} /><Seasonality d={d} /></Band> : null}
-            {!hasSeasonality && (hasRisks || hasRamp) ? (
-              <Band split="2-1">
-                {hasRisks ? <Risks d={d} /> : null}
-                {hasRamp ? <Ramp d={d} /> : null}
-              </Band>
-            ) : null}
-            {hasSeasonality && hasRamp ? <Band split="3-2"><Ramp d={d} /></Band> : null}
+            {!hasSeasonality && hasRisks ? <Band split="2-1"><Risks d={d} /></Band> : null}
+            {hasRamp ? <Band split="3-2"><Ramp d={d} /></Band> : null}
           </div>
         </>
       ) : null}
