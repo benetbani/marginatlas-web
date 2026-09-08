@@ -12,7 +12,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickNoteListInstances, pickTerminusInstances, pickPayBarsInstances, pickKvGridInstances, pickCityStripInstances, cityStripKey, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickAnswerCardInstances, pickRankedBarsInstances, pickCompareTableInstances, pickCardPagerInstances, pickTiersTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickNoteListInstances, pickTerminusInstances, pickPayBarsInstances, pickKvGridInstances, pickDetailPanelInstances, pickCityStripInstances, cityStripKey, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 
 const CSS_PATH = "scratchpad/pages/site.css";
 try {
@@ -47,6 +47,7 @@ const body = renderToStaticMarkup(
     <TerminusStories instances={pickTerminusInstances()} city={cityCloses} />
     <PayBarsStories instances={instances["pay-bars"]} />
     <KvGridStories instances={instances["kv-grid"]} />
+    <DetailPanelStories instances={instances["detail-panel"]} />
     <CityHeroStories instances={cityHero} />
     <CityVerdictStories instances={pickCityVerdictInstances(cityHero)} />
   </main>,

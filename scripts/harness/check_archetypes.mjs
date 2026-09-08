@@ -161,6 +161,14 @@ function inPage() {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
       r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
     }
+    if (r.kind === "detail-panel") {
+      const det = card.querySelector("details");
+      r.openOnLoad = !!det && det.hasAttribute("open");
+      const sum = det && det.querySelector("summary");
+      r.summaryHit = sum ? Math.round(sum.getBoundingClientRect().height) : 0;
+      r.summaryLines = sum ? Math.max(1, Math.round(sum.getBoundingClientRect().height / parseFloat(getComputedStyle(sum).lineHeight || "20"))) : 1;
+      r.panelGraphics = det ? det.querySelectorAll("svg, canvas, img, [data-archetype]").length : 0;
+    }
     // the largest empty rectangle inside the card (E6), on a 6px grid
     const cb = card.getBoundingClientRect(); const cs = getComputedStyle(card);
     const x0 = cb.left + parseFloat(cs.paddingLeft), x1 = cb.right - parseFloat(cs.paddingRight), y0 = cb.top + parseFloat(cs.paddingTop), y1 = cb.bottom - parseFloat(cs.paddingBottom);
@@ -273,6 +281,16 @@ for (const w of WIDTHS) {
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);
+    }
+    if (r.kind === "detail-panel") {
+      /* THE FOUNDER'S PLUS (2026-09-08): a panel is closed on arrival, its summary
+         is one line of ink2 that says what opens, and what opens is rows of text.
+         A drawing never hides behind a plus: the kit's assertNoGraphics is the
+         construction, this is the measurement. */
+      if (r.openOnLoad) red(r.inst, w, "OPEN ON LOAD", "a detail panel is open before anyone clicks it");
+      if (r.summaryLines > 1) red(r.inst, w, "SUMMARY WRAP", `the summary takes ${r.summaryLines} lines; it is one line at every width`);
+      if (r.panelGraphics) red(r.inst, w, "HIDDEN GRAPHIC", `${r.panelGraphics} drawing(s) inside a disclosure`);
+      if (w === WIDTHS[2] && r.summaryHit < 44) red(r.inst, w, "BOTCHED MOBILE", `the plus target is ${r.summaryHit}px tall, under 44`);
     }
     if (r.kind !== "ranked-bars" && r.accents > 1) red(r.inst, w, "ACCENT", `${r.accents} accent texts in one card`);
     for (const row of r.rows) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `figures in one grid row at tops ${row.join(", ")}`);

@@ -35,6 +35,7 @@ import { coveredCities } from "@/lib/cities/city_pages";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { usd } from "@/components/spine/kit";
+import { DetailPanel, type DetailRow } from "./DetailPanel";
 
 export type Instance = { iso2: string; why: string };
 
@@ -482,6 +483,77 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
   );
 }
 
+/** THE FOUNDER'S PLUS (2026-09-08), restored as an archetype: `DetailPanel`
+ * takes rows, never children, so a drawing cannot be smuggled behind it (the
+ * kit's assertNoGraphics is the same law, enforced twice). Its three stories
+ * are read off the same files every other archetype reads, never typed:
+ *  - GB:setup, the exemplar. GB's own LLC row of
+ *    `data/legal/business_formation_costs_v1.json` holds a real fee and a
+ *    real wait; the third row states an honest gap (founder ruling 2026-09-04
+ *    named "time until opening" as wanted and not yet measured) rather than a
+ *    number nobody has.
+ *  - DE:pay, the two-row minimum. `buildPayBars` never returns fewer than two
+ *    rows once it returns any (every held country carries both salary
+ *    figures), so this is the floor the panel draws at, not a chosen gap.
+ *  - AF:customers, the self-omit. `buildCustomersStrip` holds one mark for
+ *    Afghanistan (its deciles are not researched), so the panel gets one row
+ *    and draws nothing, exactly the law's floor.
+ */
+export function pickDetailPanelInstances(): Instance[] {
+  return [
+    { iso2: "GB:setup", why: "the exemplar" },
+    { iso2: "DE:pay", why: "the two-row minimum" },
+    { iso2: "AF:customers", why: "self-omits: one row" },
+  ];
+}
+
+function detailPanelRows(key: string): { summary: string; rows: DetailRow[] } | null {
+  const [iso2, kind] = key.split(":");
+  if (kind === "setup") {
+    const rows = buildSetupRows(iso2);
+    const row = rows.find((r) => r.tier === "LLC") ?? rows[0];
+    if (!row) return null;
+    const out: DetailRow[] = [];
+    if (row.cost_usd != null) out.push({ label: "Registration fee", value: usd(row.cost_usd) });
+    if (row.days != null) out.push({ label: "Time until registered", value: `${row.days} day${row.days === 1 ? "" : "s"}` });
+    out.push({ label: "Time until the doors open", value: "not measured yet" });
+    return { summary: COPY.detail.setup, rows: out };
+  }
+  if (kind === "pay") {
+    const d = buildPayBars(iso2);
+    if (!d) return null;
+    const out: DetailRow[] = d.rows.map((r) => ({
+      label: r.label,
+      value: usd(r.value),
+      note: r.key === "average" && d.worldMax ? `world's highest average: ${d.worldMax.name}, ${usd(d.worldMax.value)}` : undefined,
+    }));
+    return { summary: COPY.detail.pay, rows: out };
+  }
+  if (kind === "customers") {
+    const d = buildCustomersStrip(iso2);
+    if (!d) return null;
+    const out: DetailRow[] = d.marks.map((m) => ({ label: m.label, value: usd(m.value), note: d.note ?? undefined }));
+    return { summary: COPY.detail.customers, rows: out };
+  }
+  return null;
+}
+
+export function DetailPanelStories({ instances = pickDetailPanelInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="detail-panel">
+      {instances.map((i) => {
+        const d = detailPanelRows(i.iso2);
+        const el = d && d.rows.length >= 2 ? (
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 416 }}>
+            <DetailPanel name={`detail-${i.iso2.replace(":", "-")}`} summary={d.summary} rows={d.rows} />
+          </div>
+        ) : null;
+        return <Story kind="detail-panel" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
 /** The city masthead stories take their seeds from `loadCityHeroInstances()` (async, the renderer and the stories page await it). */
 export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }) {
   return (
@@ -538,6 +610,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))],
     "pay-bars": pickPayBarsInstances(),
     "kv-grid": pickKvGridInstances(),
+    "detail-panel": pickDetailPanelInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
     "city-verdict": pickCityVerdictInstances(cityHero).map((c) => ({ iso2: c.slug, why: c.why })),
   };

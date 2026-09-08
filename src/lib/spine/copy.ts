@@ -192,6 +192,17 @@ export const COPY = {
     notesHead: "What each district is",
     phoneHead: { name: "District", value: "Rent load" },
   },
+  /** THE FOUNDER'S PLUS (2026-09-08): the detail panel's summary lines, one for
+   * each query a reader clicks open. Reused, not invented per instance: the
+   * setup summary answers what a registration fee covers, the pay summary
+   * answers what moves the figure a bar just drew, and the customers summary
+   * shares the strip's own kicker so the plus never contradicts the drawing
+   * it sits under. */
+  detail: {
+    setup: "What the fee covers",
+    pay: "What moves this figure",
+    customers: "What customers earn",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register. */
   banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year"],
 } as const;
