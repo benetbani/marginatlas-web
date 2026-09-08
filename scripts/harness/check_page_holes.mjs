@@ -65,6 +65,13 @@ if (files.length === 0) { console.error("usage: node scripts/harness/check_page_
    1280 on 2026-09-07: every one of these draws a single text size, and every
    other form draws at least one ladder step above its median. */
 function inPage() {
+  /* THIS SET IS FROZEN AT FOUR (task 4, 2026-09-08). When eighteen section
+     briefs were reviewed, seven asked to be added to it, which is a card
+     asking to be excused from having a hierarchy. It does not grow: a
+     section that cannot pass NO LEAD (or, since PART 8.5, FOCAL, its sibling
+     rule in check_model_laws.mjs, which hand-keeps this same four names
+     because it cannot import this file's function once Playwright has
+     serialised it into the page) is redesigned, never exempted. */
   const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus"]);
   const out = [];
   const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));

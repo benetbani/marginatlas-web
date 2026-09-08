@@ -50,6 +50,15 @@ const GATES: Gate[] = [
      network, no browser. The browser half runs as `npm run harness:archetypes`
      before a ship, by the same convention as verify:rendered. */
   { name: "archetype-copy", script: "scripts/verify_archetype_copy.ts" },
+  /* The model's twelve laws (MODEL.md PART 8.5, task 4, 2026-09-08), the
+     browser-free, database-free third: BANNED WORDS, ROW SENTENCE and
+     DISTRICT ADJECTIVE, checked as pure copy/data facts (static COPY
+     strings, and the city-level builders run against a synthetic, lettered
+     fixture rather than a live per-city seed, since that seed needs the
+     database). The other nine of the twelve need a rendered page and stay
+     in `npm run harness:laws`, by the same convention as harness:page and
+     harness:readability: never in this chain. */
+  { name: "model-laws-copy", script: "scripts/verify_model_laws_copy.ts" },
   /* Every spine section is on an archetype or named in
      data/archetypes/coverage_exceptions.json with a reason; the set only
      shrinks. The build loop's ratchet (run 9, 2026-09-06). Browser-free. */

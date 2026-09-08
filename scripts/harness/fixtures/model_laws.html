@@ -1,0 +1,110 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+:root {
+  /* Distinct from --c-border on purpose: EDGE's whole job is to tell these two
+     apart, so every card but #edge must actually have them differ. */
+  --c-ink: rgb(20,20,20); --c-muted: rgb(150,145,140); --c-card: rgb(255,255,255);
+  --c-border: rgb(231,226,223); --c-line-strong: rgb(216,208,203);
+  --terra-text: rgb(180,70,40);
+  --flag-hero: 40px; --flag-row: 20px;
+}
+body { margin: 0; font: 14px/1.4 sans-serif; color: var(--c-ink); }
+main { max-width: 1120px; margin: 0 auto; background: #efebe8; padding: 8px; }
+.card { border-radius: 14px; border: 1px solid var(--c-line-strong); background: var(--c-card); padding: 20px; margin: 16px 0; }
+.fig { font-family: monospace; }
+</style></head><body><main>
+
+<!-- BLOCK FLOOR: "count the page's blocks against its floor, 21 and 17."
+     Three [data-block] markers total in this whole document, held to the
+     weaker of the model's two named floors (17, this file's own convention
+     for a page whose surface a filename cannot name), so the count is well
+     under either real floor and the rule reds without needing to invent one. -->
+<section id="floor" class="rounded-[14px] card">
+  <p>Three blocks on this page.</p>
+  <div data-block>Block A</div>
+  <div data-block>Block B</div>
+  <div data-block>Block C</div>
+</section>
+
+<!-- LONE CARD: "a band with one child fails." Wrapped alone in its own
+     data-band, the only element in this file that is. -->
+<div data-band class="band" style="display:block">
+  <section id="lone" class="rounded-[14px] card">
+    <p>A single card fills this row alone.</p>
+  </section>
+</div>
+
+<!-- FLAG: "true ratio, radius 0, height from --flag-hero or --flag-row, never
+     set by width." The source is a self-contained 3:1 SVG (no network); the
+     box is forced to 3:2 by CSS, so the rendered ratio (1.5) reads far from
+     the true one (3.0), past the 0.02 tolerance. -->
+<section id="flag" class="rounded-[14px] card">
+  <img data-flag alt="a test flag" style="height:var(--flag-hero);aspect-ratio:3/2;object-fit:cover;border-radius:0"
+       src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='100'%3E%3Crect width='300' height='100' fill='%23888'/%3E%3C/svg%3E">
+</section>
+
+<!-- LABEL GAP: "no justify-between row on a card wider than 420px." The card
+     is 600px; the row inside it is justify-between. No other card in this
+     fixture uses justify-content:space-between, so only this one reads as a
+     LABEL GAP row. -->
+<section id="gap" class="rounded-[14px] card" style="width:600px">
+  <div class="row" style="display:flex;justify-content:space-between">
+    <span>Rent</span><span class="fig">$1,200</span>
+  </div>
+</section>
+
+<!-- UNIT MIX: "one unit per column, no word where a column holds figures." -->
+<section id="unit" class="rounded-[14px] card">
+  <div data-col style="display:flex;flex-direction:column;gap:4px">
+    <span class="fig">12%</span>
+    <span class="fig">$450</span>
+  </div>
+</section>
+
+<!-- BANNED WORDS: "same", as a whole cell. -->
+<section id="banned" class="rounded-[14px] card">
+  <span class="fig">same</span>
+</section>
+
+<!-- DISTRICT ADJECTIVE: "a district row carries no free-text descriptor."
+     Laid out with a gap, not justify-content:space-between, so this card
+     tests only its own rule and does not also read as a LABEL GAP row. -->
+<section id="adjective" class="rounded-[14px] card">
+  <div data-district-row style="display:flex;gap:24px">
+    <span>Shoreditch</span><span data-note>gentrifying</span>
+  </div>
+</section>
+
+<!-- ROW SENTENCE: "a label over three words ... is a copy fault." Nine words. -->
+<section id="sentence" class="rounded-[14px] card">
+  <span data-label>This label has way too many words to read</span>
+</section>
+
+<!-- FOCAL: "exactly one figure at 30 per card." Two, deliberately. -->
+<section id="focal" class="rounded-[14px] card">
+  <span class="fig" style="font-size:30px">$41</span>
+  <span class="fig" style="font-size:30px">$52</span>
+</section>
+
+<!-- PLACEMENT: "a figure drawn on a world track without its placement line
+     fails." A track with no [data-placement] sibling. -->
+<section id="placement" class="rounded-[14px] card">
+  <span>Average salary</span>
+  <div data-track style="height:8px;background:#ccc;border-radius:4px">
+    <div style="width:40%;height:100%;background:#888;border-radius:4px"></div>
+  </div>
+</section>
+
+<!-- EDGE: "the card border is --c-line-strong and every line inside it is
+     --c-border." Here both are set to the same literal colour, on purpose. -->
+<section id="edge" class="rounded-[14px] card" style="border-color:rgb(153,153,153)">
+  <div style="border-bottom:1px solid rgb(153,153,153);padding-bottom:8px">a hairline the same weight as the edge</div>
+</section>
+
+<!-- TWO-LINE CELL: "a hero fact cell with more than two lines fails." The
+     figure is a long unbroken run forced to wrap well past two lines. -->
+<section id="twoline" class="rounded-[14px] card" data-fact-cell style="width:90px">
+  <div style="text-transform:uppercase;font-size:11px;color:var(--c-muted)">Time until opening</div>
+  <span class="fig" style="display:inline-block;width:80px;word-break:break-all;font-size:16px;line-height:1.2">ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKL</span>
+</section>
+
+</main></body></html>
