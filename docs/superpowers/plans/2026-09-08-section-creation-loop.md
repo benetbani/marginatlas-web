@@ -124,9 +124,14 @@ In that `:root` block, beside the existing spine tokens, add:
 
 ```css
   /* THE GROUND (his answer, 2026-09-07: "some sort of a gray and the cards
-     becoming white"). One step below --c-soft2 on the same warm ramp. The
-     page and nothing else: never inside a card. */
-  --c-ground: #efebe8;
+     becoming white"). The page and nothing else: never inside a card.
+     It sits one clear step BELOW every card surface AND below --c-border,
+     not between them, because the band from --c-soft2 (#efebe8) to
+     --c-border (#e7e2df) is too narrow to hold a fourth distinguishable
+     grey. Warm neutral, R>G>B, on the palette ramp. White cards float on it
+     by about eleven points of lightness, which is what carries the edge now
+     that the photograph is gone. */
+  --c-ground: #e3ded8;
   /* THE FLAG, sized by HEIGHT so a true ratio is never cropped (2026-09-07:
      "the flag which is distorted"). Two rungs, and no third. */
   --flag-hero: 40px;
