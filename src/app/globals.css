@@ -2391,7 +2391,15 @@
   --c-line-strong: #d8d0cb;
   --c-ink: #1b1b1a;
   --c-ink2: #565654;
-  --c-muted: #6f6f6d;
+  /* DARKENED, review 2026-09-08, FINDING B: #6f6f6d read 3.77:1 against
+     --c-ground (#e3ded8), under the 4.5 WCAG AA floor this repo claims to
+     hold; it passed on white (5.03:1) which is why nobody caught it. #5f5f5d
+     reads 4.79:1 against --c-ground and 6.40:1 against --c-card white,
+     computed with the same relative-luminance formula check_readability.mjs
+     uses, both comfortably clear of 4.5. Same warm-neutral ramp as its
+     neighbours (R=G>B, one step darker than the old value, still lighter
+     than --c-ink2 so the ink -> ink2 -> muted order holds). */
+  --c-muted: #5f5f5d;
   --terra: #fb8469;
   --terra-text: #c2410c;
   --terra-soft: #fff1ed;
