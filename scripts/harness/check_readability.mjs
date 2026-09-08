@@ -19,6 +19,25 @@
  * sees. Every page ground is now a flat token, so this holds today and would
  * stop holding the day an image returns.
  *
+ * SKIPPED ON PURPOSE (added 2026-09-08, fix wave): any element whose own box,
+ * or an ancestor's box, is collapsed to the standard screen-reader-only
+ * shape, position absolute, width and height at or under 1px, overflow
+ * hidden. That is how this repo removes text from sight while keeping it in
+ * the accessibility tree: Tailwind's `sr-only` utility, found in this repo on
+ * `<caption className="sr-only">` in the peers tables
+ * (src/components/spine/archetypes/CompareTable.tsx,
+ * src/components/spine/cell/interactive.tsx,
+ * src/components/spine/industry/where-pays.tsx) and on assorted labels and
+ * status spans elsewhere. A reader never sees that text wrap, never reads its
+ * contrast against a background, never experiences its line height, so a
+ * card-width rule measuring it is measuring nothing anyone can see; before
+ * this fix it produced a duplicate red for every visible caption that had an
+ * sr-only twin. This is a shape check on computed style, not a name check on
+ * the class string, so a renamed utility class still gets caught; it will
+ * NOT catch a future hiding technique that keeps the box full-size (for
+ * example text pushed off-screen with a large negative offset), which is a
+ * real remaining blind spot, not a solved one.
+ *
  * usage: node scripts/harness/check_readability.mjs <rendered.html ...>
  *        node scripts/harness/check_readability.mjs --list[=pages.json]
  */
@@ -54,6 +73,15 @@ function inPage() {
     }
     return "rgb(255, 255, 255)";
   };
+  const hiddenFromSight = (el) => {
+    let n = el;
+    while (n && n !== document.documentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.position === "absolute" && parseFloat(cs.width) <= 1 && parseFloat(cs.height) <= 1 && cs.overflow === "hidden") return true;
+      n = n.parentElement;
+    }
+    return false;
+  };
   const out = [];
   const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));
   for (const card of cards) {
@@ -62,6 +90,7 @@ function inPage() {
       if (el.children.length || !el.getClientRects().length) continue;
       const text = (el.textContent || "").trim();
       if (text.length < 25) continue;
+      if (hiddenFromSight(el)) continue;
       const cs = getComputedStyle(el);
       const size = parseFloat(cs.fontSize);
       const lh = parseFloat(cs.lineHeight) || size * 1.2;
