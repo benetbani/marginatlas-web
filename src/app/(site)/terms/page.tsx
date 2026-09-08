@@ -13,7 +13,6 @@
  * disclaimer, and it is what the product actually does.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
-import { NoPlacePhoto } from "@/components/kit/frame/NoPlacePhoto";
 
 export const revalidate = 86400;
 
@@ -27,9 +26,6 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <>
-    {/* See the note on /privacy: the place photography is global except here,
-        terms and cookies. */}
-    <NoPlacePhoto />
     <LegalPage
       title="Terms"
       standfirst="What you can do with what you find here, and what we do and do not promise."

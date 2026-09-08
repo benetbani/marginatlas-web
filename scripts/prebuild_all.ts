@@ -55,6 +55,7 @@ const GATES: Gate[] = [
      shrinks. The build loop's ratchet (run 9, 2026-09-06). Browser-free. */
   { name: "archetype-coverage", script: "scripts/verify_archetype_coverage.ts" },
   { name: "harness-preflight", script: "scripts/verify_harness_preflight.ts" },
+  { name: "no-background-photo", script: "scripts/verify_no_background_photo.ts" },
   /* The spine2 invariants (PORT-CONTRACT M1-M9). Both are fast and browser-free.
      The rendered-design linter is deliberately NOT here: it drives a real
      browser, so it runs as `npm run verify:rendered` before a ship, not on

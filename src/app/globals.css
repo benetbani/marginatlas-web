@@ -719,8 +719,8 @@
   /* The place wash: a warm cartographic ground that bleeds the full width; the
      veil below carves the centre back to cream. A calm cocoa/parchment tone,
      category-neutral (the per-page tint is the hero wash's job, not the
-     gutters'). The atlas-placephoto hook (last layer) is where real curated
-     photography drops in later by overriding background-image. */
+     gutters'). This is the only layer now: the photograph that used to sit
+     over it (.atlas-placephoto) was removed 2026-09-08, see below. */
   /* THE GREEN AT THE BOTTOM OF EVERY PAGE, REMOVED 2026-08-09.
      The third stop was rgba(74, 96, 24, .10), which is moss-700 #4a6018,
      positioned at 50% 120%: the foot of the page, on every route, since this
@@ -768,38 +768,33 @@
   );
 }
 
-/* THE PHOTOGRAPH, FINALLY WIRED, 2026-08-09.
-   This hook has said "curated photography drops in later" since it was written,
-   and later never came: it rendered an empty div and the gutters showed a flat
-   wash. Meanwhile the founder's supplied photograph has been sitting in
-   public/spine/_skyline.jpeg since 7 August, used by the v2 cell page and
-   nowhere else. The 2026-08-07 note recording it as BLOCKED, "pasted into chat
-   and I cannot write it to disk", was true when written and was never updated
-   once the file landed.
+/* THE PHOTOGRAPH, REMOVED, 2026-09-08. This was the third live painter of it:
+   the other two (AtlasFrame.tsx's second fixed layer, and the card-alpha
+   value this file computed from the same image) were already killed in an
+   earlier pass the same day ("fix wave: kill AtlasFrame's second photograph
+   painter"). This one sat in the page gutters, on every route, and was the
+   one actually visible in the founder's screenshots.
 
-   His instruction, 2026-08-09: "the home page should have the same picture ...
-   and it should also have those left and right parts with that same effect.
-   This is a unique global effect that we're going to keep in our page, except
-   privacy policy and pages that get very few visits."
+   The founder, 2026-09-07: "the background photograph dies everywhere and
+   the page becomes a neutral grey ground with white cards," confirmed by
+   picking the option labelled "Kill the photo everywhere." That RULING
+   SUPERSEDES the 2026-08-09 instruction quoted below, which is why the
+   quote stays: it records a real decision this file carried out honestly
+   for a month, not a mistake.
 
-   So it is the SAME file the v2 page uses, not a second copy to drift from.
-   london.jpeg stays as the fallback layer exactly as it does there.
+   His 2026-08-09 instruction, superseded: "the home page should have the
+   same picture ... and it should also have those left and right parts with
+   that same effect. This is a unique global effect that we're going to keep
+   in our page, except privacy policy and pages that get very few visits."
 
-   Treatment differs from the v2 skyline on purpose. That one is a hero band a
-   reader looks AT, so it runs at opacity .92. This is a fixed margin layer a
-   reader reads PAST for the whole scroll, and the veil already carves the
-   centre column to paper, so it sits quieter: strong enough to read as a place,
-   never loud enough to compete with a column of figures beside it. */
-.atlas-frame-gutters .atlas-placephoto {
-  position: absolute;
-  inset: 0;
-  background-image: url("/spine/_skyline.jpeg"), url("/spine/london.jpeg");
-  background-position: center 38%, center top;
-  background-size: cover, cover;
-  background-repeat: no-repeat, no-repeat;
-  opacity: 0.5;
-  filter: saturate(0.82);
-}
+   Removed: the .atlas-placephoto rule below (background-image of
+   _skyline.jpeg and its london.jpeg fallback, its opacity and its saturate
+   filter), and the empty <div className="atlas-placephoto" /> in
+   AtlasGutters.tsx that only ever carried it. NOT removed: the wash above
+   (this selector's own `background`), the engraved grid (::before) and the
+   cream veil (::after). None of the three exist only to make a photograph
+   readable; they painted this exact layer before the photograph was wired
+   in and they still do the same job with it gone, so they stay. */
 
 /* Collapse: below the column + comfortable gutters, drop the side imagery to a
    flat warm top-ground so phones and laptops get a calm cream page, no scroll. */
@@ -808,8 +803,7 @@
     background: linear-gradient(180deg, rgba(230, 34, 0, 0.05), var(--atlas-surface-paper) 280px);
   }
   .atlas-frame-gutters::before,
-  .atlas-frame-gutters::after,
-  .atlas-frame-gutters .atlas-placephoto {
+  .atlas-frame-gutters::after {
     display: none;
   }
 }

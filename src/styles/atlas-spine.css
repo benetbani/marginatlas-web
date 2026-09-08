@@ -1045,15 +1045,17 @@
    is standing in, still finite so it ends rather than following the scroll. */
 .av2 .skyline{position:absolute;top:0;left:0;right:0;height:1200px;z-index:0;pointer-events:none;
   overflow:hidden}
+/* THE PHOTOGRAPH IS GONE, 2026-09-08. It was the fourth place the same
+   _skyline.jpeg was painted, after the shell's default background, the frame
+   component and the gutters rule, and it is the one that reached the trade
+   page, because CellPage and Place both render <div className="skyline" />.
+   The founder, 2026-09-07: "this image standing on the background makes the
+   whole thing less readable. And I don't really like that. It gives a feeling
+   of being cheap." Asked, he chose "Kill the photo everywhere". The element
+   stays because it is the top-of-page atmosphere slot and the veil below still
+   uses it; it now paints the ground and nothing else. A gate,
+   verify_no_background_photo, fails the build if any photograph comes back. */
 .av2 .skyline::before{content:"";position:absolute;inset:0;
-  /* london.jpeg is the FALLBACK layer, and it is a decorative band rendered at
-     opacity .5 under grayscale(.6) contrast(.82) and a paper veil, so it is
-     encoded for what is actually shown: grayscale, 1100px, q52 = 110KB against
-     the 3.0MB source PNG. 97% lighter, visually identical through the veil.
-     The real photograph (_skyline.jpeg) still takes over the moment it lands
-     and will need its own pass. */
-  background-image:url(/spine/_skyline.jpeg),url(/spine/london.jpeg);
-  background-size:cover,cover;background-position:center 42%,center top;background-repeat:no-repeat,no-repeat;
   /* TUNED FOR A REAL PHOTOGRAPH, 2026-08-07. The old values, grayscale(.6)
      contrast(.82) opacity(.5), were encoded for a grey decorative band and they
      buried the supplied photo almost completely.
@@ -1061,7 +1063,7 @@
      on the site sits on --card at .955 alpha, so legibility is a property of
      the card and not of the backdrop. The backdrop only ever shows through
      --air, which holds no text. */
-  filter:grayscale(.12) contrast(.94) saturate(1.05);opacity:.92}
+  background:var(--c-ground)}
 .av2 .skyline::after{content:"";position:absolute;inset:0;
   /* The veil starts almost clear so the photograph is genuinely visible at the
      top of the page, then closes to paper so the content below it is never
