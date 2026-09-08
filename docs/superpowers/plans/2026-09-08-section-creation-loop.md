@@ -83,6 +83,17 @@ drawn with its real structure, and states plainly that it is not gathered for
 that place, because inventing it would break his own rule against fabricated
 place detail.
 
+**A COLLISION THE TASK 3 REVIEW FOUND, settled here.** The prompt says layer
+three must be zero reds and that a red is a run's first job, never built on
+top of. But the checks are built before the cards on purpose, so each one ships
+with a standing backlog the moment it can see: the accent budget reds twice,
+readability eight times. Read literally, the loop would be blocked forever by
+findings it was designed to produce. THE RULE, and it goes in the prompt: a
+check's FIRST run establishes a baseline, recorded in DEBUG.md with its count
+and its date. A run is blocked by a NEW red, meaning a count above its
+baseline, or by any red in a card the run itself touched. The baseline itself
+is the work queue and it shrinks as rows land. A baseline may never be raised.
+
 **STILL BLOCKED ON DATA, and named so they are not silently attempted:** the
 entry bill, easiest to break in, city living costs, the runway, the season, and
 city trades beyond London. Each is blocked on data the project
