@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+:root { --c-ink: rgb(20,20,20); --c-muted: rgb(150,145,140); --c-card: rgb(255,255,255); }
+main { max-width: 1120px; margin: 0 auto; background: #efebe8; }
+.card { border-radius: 14px; background: var(--c-card); padding: 20px; margin: 32px 0; }
+p { font-size: 14px; line-height: 1.5; color: var(--c-ink); }
+</style></head><body><main>
+<section id="ok" class="rounded-[14px] card"><p style="max-width:60ch">A short measure, dark ink on white, comfortable leading, and a label close to its figure.</p></section>
+<section id="toolong" class="rounded-[14px] card"><p style="max-width:none">This line is deliberately far longer than any comfortable measure so that the characters per line count passes the ceiling and the rule fires, and it keeps going well past the point where a reader loses the start of the line before reaching its end, which is exactly the failure being measured here today.</p></section>
+<section id="toopale" class="rounded-[14px] card"><p style="color:rgb(205,202,199)">Pale text on white, under the contrast floor.</p></section>
+<section id="tootight" class="rounded-[14px] card"><p style="line-height:1.05">Leading crushed to almost nothing so the lines collide with each other and the rule fires.</p></section>
+<section id="toosmall" class="rounded-[14px] card"><p style="font-size:10px">A ten pixel paragraph a reader is expected to actually read.</p></section>
+</main></body></html>
