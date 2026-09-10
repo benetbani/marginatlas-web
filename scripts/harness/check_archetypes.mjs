@@ -197,7 +197,14 @@ function inPage() {
       if (det) {
         const wasOpen = det.open;
         det.open = true;
-        const body = det.querySelector("dl");
+        /* NOT KEYED TO A dl (re-review, 2026-09-08). The panel's body is a
+           definition list today, but the law this component serves is that a
+           disclosure moves BULLET TEXT, so a future body could be a list. If
+           this selector missed, the opened pass would walk nothing AND leave
+           the row fields undefined, so ROWS CUT would stop too, and the whole
+           finding it exists to close would return invisibly. Fall back to the
+           details element itself, which always exists here. */
+        const body = det.querySelector("dl") ?? det;
         if (body) {
           for (const el of [body, ...body.querySelectorAll("*")]) {
             if (el.getClientRects().length === 0) continue;
