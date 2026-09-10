@@ -1280,6 +1280,118 @@ cd /e/atlas/website && git add src/components/spine/archetypes/IncomeBreakdown.t
 
 ---
 
+### Task 12: The emphasis system, his black pill and his hatch
+
+Third in the founder's own build order for his references, and the one the rest
+depends on. Mechanics **M1** and **M2** in
+`design/references/founder-2026-09-10.md`, which he mapped to the horizontal
+bars (causes of failure, owner concerns) and the vertical bars (customer
+demographics).
+
+**The mechanic, seen in three of his fifteen references and identical in each:**
+every member of a set pale or hatched, EXACTLY ONE saturated, and that one
+member's value printed in a BLACK PILL with white text. The other values are
+plain text, unpilled, beside their bars.
+
+**Why it beats what we do now.** Our emphasis is a terracotta figure among ink
+figures: a difference of HUE at the same size and weight. His is a difference of
+FORM: one value sits in a container and the rest do not. It survives greyscale,
+it survives a colourblind reader, and a second pill on one card looks so
+obviously wrong that the one-loud-moment rule becomes close to self-enforcing.
+
+**A consequence worth stating before the work, because it should be measured
+rather than assumed:** the page's ACCENT BUDGET check counts accent-coloured
+TEXT. An ink pill is not accent text. So moving the leader's figure from
+terracotta text into an ink pill should REDUCE the accent count on every page
+carrying ranked bars, and both the country and the city page currently sit at
+four against a budget of three. This task may therefore close two standing reds.
+It may also not, if those pages' accents live elsewhere. MEASURE IT, both
+before and after, and report the numbers rather than the hope.
+
+**Files:**
+- Modify: `src/components/spine/archetypes/RankedBars.tsx` (lines 84 and 130 hold the terracotta figures)
+- Modify: `scripts/harness/check_archetypes.mjs` (its ranked-bars ACCENT rule)
+- Modify: `src/components/spine/archetypes/stories.tsx` if a story needs the new state
+
+- [ ] **Step 1: Measure the accent count BEFORE, so the change is falsifiable**
+
+```bash
+cd /e/atlas/website && npm run harness:page > scratchpad/accents-before-t12.txt 2>&1; echo "exit $?"
+```
+
+Read the file and record the ACCENT BUDGET line for every page, with the named
+figures. That list is what you compare against at the end.
+
+- [ ] **Step 2: The pill replaces the terracotta figure, and the bar keeps the hue**
+
+In `RankedBars.tsx` the leader's figure is `var(--terra-text)` in two places: the
+figure above the bar at line 84 and the phone table's figure at line 130. Both
+become an INK pill: `--c-ink` ground, white text, fully rounded, tight padding,
+the figure at the same size as its siblings so only the container distinguishes
+it. The bar's own fill stays terracotta for the leader: a filled bar is a mark,
+not a figure, and the budget counts figures.
+
+The pill must not change the row's height. Reserve its space on every row, the
+way `TiersTable` reserves its local-term line, or the rows go unequal and break
+ruling 8. This exact fault cost a fix wave two days ago on the comparison
+table's tick, and there were three distinct heights rather than two because two
+causes stacked. Measure the row heights, do not eyeball them.
+
+- [ ] **Step 3: The hatch for everything that is not the answer**
+
+Non-leader bars become a hatch in `--c-border` rather than a flat light tint.
+His reference's point is that the unselected members stay countable and
+comparable while being unmistakably not the answer, instead of becoming grey
+ghosts. Reuse the hatch the income breakdown already draws rather than inventing
+a second one: `IncomeBreakdown.tsx` landed one this week and two hatch systems
+would drift.
+
+**Test the hatch at 375 before trusting it.** A fine hatch moires on a phone and
+the mechanic is worthless if it does. If it moires, coarsen it until it does
+not, and say what you changed.
+
+- [ ] **Step 4: The harness rule must follow the law, honestly**
+
+`check_archetypes.mjs` currently reds a ranked-bars card whose accent-text count
+is not exactly one. After this change the leader's figure is ink in a pill, so
+the count becomes zero and every ranked-bars story reds. That rule is now wrong
+and must be rewritten to the new law, NOT deleted and not loosened to admit
+anything: exactly one pill per card, the pill on the leader, and no accent text
+at all. Prove the new rule by planting each fault it should catch (a second
+pill, a pill on a non-leader, a leftover accent figure), watching it red, then
+removing the fault. A rule that has only run on clean input is unproven.
+
+- [ ] **Step 5: Verify**
+
+```bash
+cd /e/atlas/website && npx tsc --noEmit > scratchpad/tsc-t12.txt 2>&1; echo "exit $?"
+```
+
+```bash
+cd /e/atlas/website && npm run harness > scratchpad/harness-t12.txt 2>&1; echo "exit $?"
+```
+
+Zero design reds on the sheet. Then compare the page filter's ACCENT BUDGET
+lines against Step 1's and report the before and after counts per page.
+
+- [ ] **Step 6: Crop and LOOK, at both widths**
+
+```bash
+cd /e/atlas/website && npm run crop:story -- "ranked-bars/london:districts" scratchpad/photos/t12 "1280,375"
+```
+
+Open both with the Read tool. Answer in your own words: does the pill read as
+the answer at a glance, do the hatched bars stay countable rather than becoming
+grey mush, does the hatch moire at 375, and are the rows visibly one height.
+
+- [ ] **Step 7: Commit**
+
+```bash
+cd /e/atlas/website && git add src/components/spine/archetypes/RankedBars.tsx scripts/harness/check_archetypes.mjs src/components/spine/archetypes/stories.tsx && git commit -m "archetypes: his black pill and hatch, emphasis by form rather than by hue"
+```
+
+---
+
 ## Self-review
 
 **Spec coverage.** His message maps to tasks as follows. "creating all the sections for all main page types" is Task 1 (the catalogue, which is the list of everything to create, including four SPINE rows for the page types the model never spined) and Task 7 (the queue seeded from it). "think about all aspects, space, rhythm, hierarchy, readability" is Task 3 (readability measured, four rules), Task 4 (the model's twelve laws, which cover hierarchy, spacing, the edge, the focal figure and the label gap) and Task 5 (rhythm and space at page level). "the click and show button was removed, I hoped that you would keep it" is Task 2, restored as an archetype with the no-hidden-graphics law inside it. "quality checks of different kinds in place" is the four layers named in the prompt, built by Tasks 2, 3 and 4 and already-existing checks. "a final review in terms of harmony, and how well sections fit together" is Task 5, wired as stage S9 so it fires once per page rather than once per card. "the immense wealth of shadcn components" is Task 6, ordered so what already exists is consulted before the registry, and adopted for structure and not skin. "create a prompt to kickstart a loop that would run consecutively every 20 minutes, all its goals written in detail" is Task 8, with the twelve numbered steps, the hard rules and an explicit definition of done for the phase.
