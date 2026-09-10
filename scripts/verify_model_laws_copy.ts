@@ -45,6 +45,11 @@
  *    LIVE data for any real city actually holds one is unknowable without
  *    the database this gate must not touch, which is stated rather than
  *    guessed at.
+ *    RETIRED task 9 (2026-09-10): his ruling of 2026-09-07 ("you just say you
+ *    mention the word same. That's a major mistake") deleted the index/pctdiff
+ *    units themselves (peer_rows.ts, CompareTable.tsx) along with
+ *    COPY.cityPeers.same, so this finding no longer exists to find; see the
+ *    retirement comment lower in this file where the proof used to sit.
  *
  * NOT CHECKED HERE, stated rather than silently skipped:
  *  - Hero fact cell labels (buildHeroFacts): PART 9 rule 9 caps THOSE at
@@ -84,7 +89,6 @@
 import { COPY } from "@/lib/spine/copy";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
-import { buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE";
@@ -121,24 +125,17 @@ checkBannedCell("COPY.cityVerdict.cells.averageNote", COPY.cityVerdict.cells.ave
   if (b) for (const r of b.rows) if (r.note) pushRed("DISTRICT ADJECTIVE", `buildCityDistrictBars: district "${r.name}" carries the free-text note "${r.note}"`);
 }
 
-/* BANNED WORDS, a reachability proof on the shipped city-peers builder: a
-   non-home row tied exactly to the home row on an index/pctdiff column
-   prints "same". The seed is synthetic and lettered; whether a real city's
-   LIVE data holds such a tie today is unknowable without the database this
-   gate must not touch. */
-{
-  const seed = {
-    peers: {
-      list: [
-        { name: "Home", home: true, rent_index: 50, median_income_usd: 1000, visitors_m: 1 },
-        { name: "Tied", iso2: "AA", rent_index: 50, median_income_usd: 1000, visitors_m: 1 },
-        { name: "Third", iso2: "BB", rent_index: 30, median_income_usd: 1500, visitors_m: 2 },
-      ],
-    },
-  };
-  const t = buildCityPeerTable(seed);
-  if (t) for (const c of t.columns) if (c.unit === "index" || c.unit === "pctdiff") for (const r of t.rows) if (!r.home && r.values[c.key] === 0) pushRed("BANNED WORDS", `buildCityPeerTable: non-home row "${r.name}" ties the home row exactly on "${c.head}", which CompareTable.tsx renders as "${COPY.cityPeers.same}"`);
-}
+/* BANNED WORDS, a reachability proof on the shipped city-peers builder,
+   RETIRED task 9 (2026-09-10), not left in place to reference deleted
+   symbols. It used to prove that a non-home row tied exactly to the home row
+   on an index/pctdiff column printed the word "same" (CompareTable.tsx's old
+   fmt()). His ruling of 2026-09-07 removed the mechanism this watched: the
+   index/pctdiff units are gone from PeerColumn and CompareColumn
+   (peer_rows.ts, CompareTable.tsx now type only "pct" | "usd" | "days" | "m"),
+   and COPY.cityPeers.same is gone with them, so a tied peer now prints its
+   own absolute figure like any other row and there is no branch left that
+   can print a bare word. Kept as history in the header comment above, not
+   as running code that would fail tsc against types that no longer exist. */
 
 /* ROW SENTENCE, on the spectra poles: "a spectra pole over three words or 24
    characters is a copy fault" (PART 8.5); "three words and 24 characters
