@@ -19,6 +19,7 @@ import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
 import { CardPager } from "./CardPager";
+import { CityCards, type CityCardsLook } from "./CityCards";
 import { buildCityCards } from "@/lib/spine/city_cards";
 import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
@@ -34,7 +35,7 @@ import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
-import { usd, Box, Rail } from "@/components/spine/kit";
+import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
 import { DetailPanel, type DetailRow } from "./DetailPanel";
 import { IncomeBreakdown } from "./IncomeBreakdown";
 import { buildIncomeBreakdown } from "@/lib/spine/income_rows";
@@ -102,6 +103,43 @@ export function pickCardPagerInstances(): Instance[] {
   const longest = [...all].filter((x) => x.cards).sort((a, b) => Math.max(...b.cards!.cards.map((k) => k.name.length)) - Math.max(...a.cards!.cards.map((k) => k.name.length)))[0]; if (longest) take(longest.c, "extreme name");
   const none = all.find((x) => !x.cards); if (none) take(none.c, "self-omits: no covered city");
   return out;
+}
+
+/* THE CITY CARDS, B11, 2026-09-10. Three looks of one card, built as
+   ALTERNATIVES for the founder to choose between, so the instance key is
+   "<iso2>:<look>" and the same countries are drawn in each look: the exemplar,
+   the longest city name in the whole set, and a country holding exactly one
+   covered city (where neither the tint nor the mark has a set to scale within,
+   so both must draw nothing rather than an empty track). */
+export const CITY_CARD_LOOKS: CityCardsLook[] = ["field", "plate", "column"];
+export function pickCityCardsInstances(): Instance[] {
+  const all = codes().map((c) => ({ c, cards: buildCityCards(c) })).filter((x) => x.cards);
+  const seeds: Instance[] = [{ iso2: "GB", why: "the exemplar" }];
+  const seen = new Set(["GB"]);
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); seeds.push({ iso2, why }); } };
+  const longest = [...all].sort((a, b) => Math.max(...b.cards!.cards.map((k) => k.name.length)) - Math.max(...a.cards!.cards.map((k) => k.name.length)))[0];
+  if (longest) take(longest.c, `extreme name: ${longest.cards!.cards.reduce((m, k) => (k.name.length > m.length ? k.name : m), "")}`);
+  const one = all.find((x) => x.cards!.cards.length === 1);
+  if (one) take(one.c, "one city, so nothing is drawn against a set");
+  return CITY_CARD_LOOKS.flatMap((look) => seeds.map((s) => ({ iso2: `${s.iso2}:${look}`, why: `${look}, ${s.why}` })));
+}
+
+export function CityCardsStories({ instances = pickCityCardsInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="city-cards">
+      {instances.map((i) => {
+        const [iso2, look] = i.iso2.split(":") as [string, CityCardsLook];
+        const c = buildCityCards(iso2);
+        const el = c ? (
+          <div className="rounded-[14px] border border-[var(--c-line-strong)] p-5" style={{ maxWidth: 693, ...CARD_SURFACE }}>
+            <Rail icon="best-areas" kicker={COPY.cities.kicker} />
+            <CityCards cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} basis={COPY.cityCards.plain.basis} basisDrawn={COPY.cityCards[look].basis} look={look} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
+          </div>
+        ) : null;
+        return <Story kind="city-cards" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
 }
 
 /** The instance set for the tiers table. */
@@ -889,6 +927,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why }))],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why }))],
     "card-pager": pickCardPagerInstances(),
+    "city-cards": pickCityCardsInstances(),
     "tiers-table": pickTiersTableInstances(),
     "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why }))],
     "spectra-table": [...pickSpectraTableInstances(), ...cityReads.map((c) => ({ iso2: `${c.slug}:reads`, why: c.why }))],

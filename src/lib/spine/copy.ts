@@ -200,6 +200,19 @@ export const COPY = {
   },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
+  /** The city cards in their three looks (B11, 2026-09-10). The unit is said
+   *  ONCE for the whole row, never in a card (PART 5). `plain` says what the
+   *  figure is and nothing else, and it is what prints when the look draws no
+   *  tint and no mark, which happens for a country holding one covered city:
+   *  a sentence reading the drawing when there is no drawing is a promise the
+   *  card does not keep. The three looks add the clause that reads theirs. It
+   *  never says what any of it means. */
+  cityCards: {
+    plain: { basis: "What an average customer earns in a year." },
+    field: { basis: "What an average customer earns in a year. The darker the card, the more." },
+    plate: { basis: "What an average customer earns in a year." },
+    column: { basis: "What an average customer earns in a year. The taller the mark, the more." },
+  },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
   peers: {
     kicker: "Against the peers",

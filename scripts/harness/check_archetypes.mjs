@@ -54,6 +54,14 @@
  *    top (the reserved heading line), and no group is left alone in a row.
  *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
  *    at the ends, never clamped), pole words on one line, one dot colour a table.
+ *  CITY CARDS (B11, 2026-09-10): UNEQUAL (cards in one row share a height,
+ *    ruling 7, and by construction rather than by content luck), BOTCHED
+ *    MOBILE (no city name clipped in either direction, measured off
+ *    `data-city-name` so it survives a change of markup), NOT TALL (every card
+ *    is drawn taller than it is wide by a clear margin, which is the whole
+ *    point of the form he pointed at), NO HIERARCHY (nothing on a card is
+ *    drawn larger than that city's own name), IMAGE (no card carries a
+ *    photograph, his ruling of 2026-09-08).
  *  BENTO BAND (2026-09-10): CELL COUNT (three or four drawn, and the same
  *    number the cluster declares, at every width); TILING (the drawn cells
  *    cover their rectangle with no gap and no overlap, measured from the
@@ -183,6 +191,35 @@ function inPage() {
       r.noImage = cards.filter((el) => !el.querySelector("img")).map((el) => el.getAttribute("data-card"));
       r.brokenImage = cards.filter((el) => { const im = el.querySelector("img"); return im && (!im.complete || im.naturalWidth === 0); }).map((el) => el.getAttribute("data-card"));
       r.imageCount = cards.length - r.noImage.length;
+    }
+    /* THE CITY CARDS (B11, 2026-09-10). Its own block and not the pager's,
+       because the two laws differ where it matters: a pager card is a row and
+       a city card is a TALL card whose name is the loudest thing on it, and
+       neither of those is measurable from the pager's rules. */
+    if (r.kind === "city-cards") {
+      const cards = [...card.querySelectorAll("[data-card]")].filter((el) => el.getClientRects().length);
+      const rowsMap = new Map(); for (const el of cards) { const b = el.getBoundingClientRect(); const k = Math.round(b.top / 4); if (!rowsMap.has(k)) rowsMap.set(k, []); rowsMap.get(k).push(Math.round(b.height)); }
+      r.cityRows = [...rowsMap.values()];
+      r.cityNamesCut = cards.filter((el) => { const n = el.querySelector("[data-city-name]"); return n && (n.scrollWidth > n.clientWidth + 1 || n.scrollHeight > n.clientHeight + 1); }).length;
+      /* NOT TALL is asked of the GRID form only, and the component declares
+         which form it drew. A country holding one or two covered cities cannot
+         fill a row of tall cards without leaving the unfilled right edge he
+         raised against this very section, so below three the component draws
+         the model's own full-width rows; a row is not a card that failed to be
+         tall. The declaration is checked in both directions below, so the wide
+         form cannot creep onto a set that could have filled its row. */
+      r.cityForm = card.getAttribute("data-form") || "";
+      r.cityCount = Number(card.getAttribute("data-count"));
+      r.cityFlat = r.cityForm === "rows" ? [] : cards.map((el) => Math.round((el.getBoundingClientRect().height / el.getBoundingClientRect().width) * 100) / 100).filter((ratio) => ratio < 1.15);
+      r.cityImages = cards.filter((el) => el.querySelector("img")).map((el) => el.getAttribute("data-card"));
+      /* THE NAME IS THE LOUDEST THING, measured and not asserted: nothing on a
+         card may be drawn larger than its own name. */
+      r.cityNameLoud = cards.filter((el) => {
+        const n = el.querySelector("[data-city-name]");
+        if (!n) return true;
+        const size = parseFloat(getComputedStyle(n).fontSize);
+        return [...el.querySelectorAll("*")].some((e) => e !== n && e.getClientRects().length && e.children.length === 0 && (e.textContent || "").trim() && parseFloat(getComputedStyle(e).fontSize) > size + 0.5);
+      }).length;
     }
     if (r.kind === "range-strip") {
       const labels = [...card.querySelectorAll("[data-mark-label]")].map((el) => el.getBoundingClientRect());
@@ -509,6 +546,15 @@ for (const w of WIDTHS) {
       if (r.namesCut) red(r.inst, w, "BOTCHED MOBILE", `${r.namesCut} city name(s) cut`);
       if (r.brokenImage && r.brokenImage.length) red(r.inst, w, "IMAGE BROKEN", `image did not load: ${r.brokenImage.join(", ")}`);
       if (w === WIDTHS[0] && r.noImage && r.noImage.length) data(r.inst, "IMAGE MISSING", `${r.noImage.length} card(s) without a photograph: ${r.noImage.join(", ")}`);
+    }
+    if (r.kind === "city-cards") {
+      for (const row of r.cityRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `city cards in one row at heights ${row.join(", ")}`);
+      if (r.cityNamesCut) red(r.inst, w, "BOTCHED MOBILE", `${r.cityNamesCut} city name(s) cut`);
+      if (r.cityFlat && r.cityFlat.length) red(r.inst, w, "NOT TALL", `${r.cityFlat.length} card(s) drawn wider than tall enough to read as a vertical card: ratios ${r.cityFlat.join(", ")}`);
+      if (r.cityForm === "rows" && r.cityCount >= 3) red(r.inst, w, "WRONG FORM", `${r.cityCount} cities drawn as wide rows; three or more fill a row of tall cards and must take it`);
+      if (r.cityForm === "grid" && r.cityCount < 3) red(r.inst, w, "WRONG FORM", `${r.cityCount} city card(s) in the tall grid; below three they leave the unfilled right edge`);
+      if (r.cityNameLoud) red(r.inst, w, "NO HIERARCHY", `${r.cityNameLoud} card(s) draw something larger than the city's own name`);
+      if (r.cityImages && r.cityImages.length) red(r.inst, w, "IMAGE", `${r.cityImages.length} city card(s) carry an image; no page and no card on this site carries a photograph`);
     }
     if (r.kind === "range-strip") {
       if (r.stripOverlaps) red(r.inst, w, "NO HIERARCHY", `${r.stripOverlaps} overlapping label(s) on the strip`);

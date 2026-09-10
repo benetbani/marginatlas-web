@@ -23,6 +23,7 @@ type CityEntry = {
   tier?: number;
   pop_m?: number;
   cost_of_living_index?: number;
+  avg_gross_salary_usd_year?: number;
 };
 
 const CITIES = (cityListJson as { cities: CityEntry[] }).cities;
@@ -82,6 +83,27 @@ const COL_BY_SLUG: Map<string, number> = (() => {
   return m;
 })();
 
+// What an average earner in the metro takes home in a year, gross, in USD, by
+// city slug. It is the figure the city page's own masthead answers with
+// ("Customer income, $65K, average earner, a year", adapt_city.ts), and the
+// city list carries it for all 252 covered cities with a per-field source. It
+// is indexed here so a surface OUTSIDE the city page can print the same number
+// the city page opens with, rather than inventing a second one.
+const PAY_BY_SLUG: Map<string, number> = (() => {
+  const m = new Map<string, number>();
+  for (const c of CITIES) {
+    if (!c.slug) continue;
+    if (
+      typeof c.avg_gross_salary_usd_year === "number" &&
+      Number.isFinite(c.avg_gross_salary_usd_year) &&
+      c.avg_gross_salary_usd_year > 0
+    ) {
+      m.set(c.slug.toLowerCase(), c.avg_gross_salary_usd_year);
+    }
+  }
+  return m;
+})();
+
 /**
  * Resolve a geo slug to its city tier (1/2/3) when it's a known city.
  * Returns null when the slug isn't in the city list — typically a
@@ -115,6 +137,18 @@ export function getCityCostOfLivingIndex(
 ): number | null {
   if (!geoSlug) return null;
   return COL_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
+}
+
+/**
+ * Resolve a geo slug to what an average earner there takes home in a year,
+ * gross, in USD. Null when the slug is not a covered city or carries no pay
+ * figure; a caller must read null as "not held" and print nothing, never zero.
+ */
+export function getCityAveragePayUsd(
+  geoSlug: string | null | undefined,
+): number | null {
+  if (!geoSlug) return null;
+  return PAY_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
 }
 
 /**

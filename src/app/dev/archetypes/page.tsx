@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 import { loadCityHeroInstances } from "@/lib/spine/city_hero_facts";
-import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, BentoBandStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, BentoBandStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
 
@@ -26,6 +26,8 @@ export default async function ArchetypesPage() {
       <CompareTableStories city={pickCityPeerInstances(cityHero)} />
       <h2 data-typography="custom" className={h}>The card pager</h2>
       <CardPagerStories />
+      <h2 data-typography="custom" className={h}>The city cards, three looks to choose between</h2>
+      <CityCardsStories />
       <h2 data-typography="custom" className={h}>The tiers table</h2>
       <TiersTableStories />
       <h2 data-typography="custom" className={h}>The range strip</h2>
