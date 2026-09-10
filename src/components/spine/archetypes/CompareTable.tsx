@@ -13,9 +13,36 @@
  * 327px at body size; nothing scrolls sideways (law M); the hierarchy holds
  * because the name is the only medium-weight text in a row and the best
  * figures the only semibold.
+ *
+ * THE CHECK IS THE MECHANIC, finished 2026-09-10 (M3,
+ * design/references/founder-2026-09-10.md). Ink and weight alone on the
+ * winning cell proved too quiet to read at a glance in the rendered
+ * photograph, so a small tick now sits beside the figure, reused from
+ * forms-v2's StateMark("yes") rather than a second glyph drawn for this
+ * table. Ink only, never terracotta: the accent budget is three figures a
+ * page and this table can carry a winning tick in every column, so a hue on
+ * each would spend the whole page's emphasis on one card. The name column
+ * also gives back what it was wasting: a colgroup now holds it to 1.2 of a
+ * 1.2-plus-columns share, the same ratio kit-index.tsx's own compare table
+ * already draws, and the value columns split what is left evenly instead of
+ * however auto layout happened to leave them.
+ *
+ * THE TICK'S HEIGHT IS RESERVED ON EVERY CELL, the same day, once the phone
+ * width read three row heights instead of one (69, 70 and 72, not the two a
+ * plain tick-or-not split would give): every row already carried the 1px
+ * divide-y border its neighbours above it draw and the first row does not,
+ * and now some rows also carried a 16px tick beside a 14px figure that had
+ * never needed the room. The two stack, so a first row with no tick, a
+ * later row with no tick, and a later row with a tick read as three heights,
+ * not two. Every cell now floors at the tick's own height, drawn or not
+ * (min-h-4 on the one wrapper every branch returns through), the same idea
+ * as TiersTable's name block reserving its local-term line whether or not a
+ * term exists, so a row's height stops depending on which of its columns
+ * happens to hold a winner (ruling 8, 2026-09-04, equal rows in every case).
  */
 import * as React from "react";
 import { Box, Rail, Fig, usd } from "@/components/spine/kit";
+import { StateMark } from "@/components/spine/forms-v2";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CountryFlag } from "@/components/CountryFlag";
 import type { AtlasIconId } from "@/components/brand/icons";
@@ -58,9 +85,38 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
     const vs = rows.map((r) => r.values[c.key]).filter(isNum);
     bestOf[c.key] = vs.length >= 2 ? (c.best === "min" ? Math.min(...vs) : Math.max(...vs)) : undefined;
   }
-  const cellClass = (c: CompareColumn, v: number | null) => {
-    const isBest = isNum(v) && bestOf[c.key] != null && v === bestOf[c.key];
-    return isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]";
+  const isBestVal = (c: CompareColumn, v: number | null): boolean => isNum(v) && bestOf[c.key] != null && v === bestOf[c.key];
+  const cellClass = (c: CompareColumn, v: number | null) => (isBestVal(c, v) ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]");
+  /** Desktop colgroup shares only; the phone form stacks the name above its
+   *  own figures and never shares this row, so it needs no share at all. */
+  const nameColPct = (1.2 / (1.2 + columns.length)) * 100;
+  const valueColPct = (1 / (1.2 + columns.length)) * 100;
+  /** The winning cell keeps the ink and weight cellClass always gave it, and
+   *  now also carries the tick beside the figure, right-aligned as one group
+   *  so the group, not just the figure, sits flush with the column above it.
+   *
+   *  THE TICK'S HEIGHT IS RESERVED ON EVERY CELL, held or not, winner or
+   *  not, in the one wrapper every branch now returns through: min-h-4 (the
+   *  icon's own 16 box, a step on the spacing scale rather than an arbitrary
+   *  pixel) floors every cell at the height a tick would need, so a cell
+   *  that draws no tick still stands as tall as one that does. This is
+   *  height only, never width: a losing cell draws no icon and spends no
+   *  gap on one, which is what keeps four figures inside 327px on a phone
+   *  (a first attempt that always drew the icon, ink or none, reserved the
+   *  gap too and overflowed the four-column table before this one). */
+  const renderCell = (c: CompareColumn, v: number | null) => {
+    const best = isBestVal(c, v);
+    const inner = !isNum(v) ? (
+      <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>
+    ) : best ? (
+      <span className="inline-flex items-center gap-1 text-[var(--c-ink)]">
+        <StateMark kind="yes" />
+        <Fig className="text-[length:var(--t-body)] font-semibold">{fmt(c.unit, v)}</Fig>
+      </span>
+    ) : (
+      <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig>
+    );
+    return <span className="inline-flex min-h-4 items-center justify-end align-middle">{inner}</span>;
   };
   const head = "text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]";
   return (
@@ -68,8 +124,14 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
       <Box id={id} data-archetype="compare-table">
         <Rail icon={icon} kicker={kicker} />
         <div className="hidden md:block">
-          <Table className="text-[length:var(--t-micro)]">
+          <Table className="table-fixed text-[length:var(--t-micro)]">
             <caption className="sr-only">{caveat ?? kicker}</caption>
+            <colgroup>
+              <col style={{ width: `${nameColPct}%` }} />
+              {columns.map((c) => (
+                <col key={c.key} style={{ width: `${valueColPct}%` }} />
+              ))}
+            </colgroup>
             <TableHeader>
               <TableRow className="border-[var(--c-border)] hover:bg-transparent">
                 <TableHead scope="col" className={`h-auto px-0 pb-2 text-left ${head}`}>{entityHead ?? COPY.peers.cols.country}</TableHead>
@@ -82,16 +144,16 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
               {rows.map((r) => (
                 <TableRow key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`h-12 border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
                   <TableCell className="px-0 py-0 align-middle">
-                    <span className="flex items-center gap-2.5 whitespace-nowrap">
+                    <span className="flex min-w-0 items-center gap-2.5">
                       <CountryFlag iso2={r.iso2} className="w-7 shrink-0" />
-                      <span className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+                      <span className={`truncate text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
                     </span>
                   </TableCell>
                   {columns.map((c) => {
                     const v = r.values[c.key];
                     return (
                       <TableCell key={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
-                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
+                        {renderCell(c, v)}
                       </TableCell>
                     );
                   })}
@@ -118,7 +180,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
                     const v = r.values[c.key];
                     return (
                       <span key={c.key} className="text-right whitespace-nowrap">
-                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
+                        {renderCell(c, v)}
                       </span>
                     );
                   })}

@@ -426,8 +426,13 @@ export type StateKind = "yes" | "no" | "na";
  * THE MARKS. A tick, a cross, a bar, on a 16 box, stroked in currentColor at
  * 2px so a 36px disc holds a mark heavy enough to read at thumbnail size. Round
  * caps and joins, because a square-cut tick at this weight reads as a smudge.
+ *
+ * EXPORTED 2026-09-10 so CompareTable's winning-cell tick (M3,
+ * design/references/founder-2026-09-10.md) reuses this exact glyph instead of
+ * a second check drawn for that table. Nothing about StateWord's own use of
+ * it changes; this only makes the "yes" tick reachable on its own.
  */
-function StateMark({ kind }: { kind: StateKind }) {
+export function StateMark({ kind }: { kind: StateKind }) {
   const common = {
     fill: "none",
     stroke: "currentColor",
