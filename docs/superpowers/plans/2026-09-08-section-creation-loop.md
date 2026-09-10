@@ -1152,6 +1152,134 @@ cd /e/atlas/website && git add src/lib/spine/placement.ts src/lib/spine/copy.ts 
 
 ---
 
+### Task 11: The income breakdown, his most literal instruction
+
+He sent design references on 2026-09-10 and then said what each is for. Of the
+fifteen, this is the least ambiguous: "the income breakdown is used exactly for
+income brekdown with the main figure being the net income percentage."
+
+It is also the fix for the section he called **totally broken**: "for the net
+profit margin, this section that you have created, it's totally broken."
+
+**The form, ported from his reference (mechanic B6 in
+`design/references/founder-2026-09-10.md`):** one headline percentage, a single
+horizontal bar split into segments beneath it, and a legend under that naming
+each segment with its share. His reference pairs the headline with a small
+delta pill and prints the segments hatched in different tones.
+
+**Files:**
+- Create: `src/components/spine/archetypes/IncomeBreakdown.tsx`
+- Create: `src/lib/spine/income_rows.ts`
+- Modify: `src/lib/spine/copy.ts`, `src/components/spine/archetypes/stories.tsx`,
+  `scripts/harness/render_archetypes.tsx`, `src/app/dev/archetypes/page.tsx`
+- Modify: `scripts/harness/check_archetypes.mjs` (its own checks)
+
+**Interfaces:**
+- Produces: `buildIncomeBreakdown(sector)` returning
+  `{ netPct: number; segments: Array<{ key: string; label: string; share: number }>; modelled: true } | null`,
+  null under an honest minimum. `IncomeBreakdown({ id, kicker, netPct, segments, basis })`.
+
+- [ ] **Step 1: Read the data before designing against it**
+
+`data/finance/industry_cost_profile_v1.json` holds 25 sectors, each with
+`cogs_share`, `labor_share`, `rent_share`, `energy_share`, `marketing_share`,
+`software_share`, `insurance_share`, `other_overhead_share`, and
+`net_margin_typical_low` / `net_margin_typical_high`.
+
+Run: `cd /e/atlas/website && python -c "import json,io;d=json.load(io.open('data/finance/industry_cost_profile_v1.json',encoding='utf-8'));s=d['sectors'];print(type(s),len(s));print(json.dumps(s[0] if isinstance(s,list) else s[list(s.keys())[0]])[:600])" > scratchpad/icp-shape.txt 2>&1; echo "exit $?"`
+
+Read the file's own `anchor` and `convention` fields and report what they say
+about where these shares come from. They are a GLOBAL BASELINE flexed by a
+country modifier, which means every figure this card prints is MODELLED, not
+measured. That governs Step 4.
+
+- [ ] **Step 2: The builder, with its honest minimum and its arithmetic stated**
+
+`buildIncomeBreakdown` reads a sector and returns the net percentage plus the
+segments. Two rules the component cannot violate:
+- The segments and the net percentage must SUM TO ONE HUNDRED. If the file's
+  shares plus the net figure do not, the difference is a real residual and it
+  is named as its own segment, never silently absorbed into another line and
+  never hidden. A breakdown that does not add up is worse than no breakdown.
+- Below a stated minimum of segments the builder returns null and the section
+  self-omits, the same law every archetype here follows.
+
+Cap the drawn segments so the bar stays readable: the largest few by share are
+named individually and the remainder is one clearly labelled segment. Choose the
+cap, state it as a named constant with its reason, and never let the remainder
+be the largest segment.
+
+- [ ] **Step 3: The component, with the law inside it**
+
+The headline is the net percentage at the focal rung. The bar is ONE bar, full
+width, its segments in descending share, each segment carrying a data attribute
+with its key and share so the harness can measure it. The legend beneath names
+each segment and prints its share, one per line or in a tight grid.
+
+Segments are distinguished by TONE and HATCH, not by hue: this palette is
+terracotta and warm neutrals and the page's accent budget is three figures. The
+net segment may take the terracotta; every cost line is neutral.
+
+**This card counts as ONE of the page's three bar-family drawings.** Say so in
+the component's own comment so the next person counting does not miss it.
+
+- [ ] **Step 4: Marked sample, and quiet, both by his own rulings**
+
+His decision of 2026-09-08 on this exact section: ship it "labelled sample, and
+quiet", with the accent moved off it, because it prints the same figures for
+every country until per-country margin data exists. So: the card wears the
+sample mark, and it is NOT one of the page's three loud moments. The basis line
+says plainly that the split is typical for the trade rather than measured for
+this place, in the practical register, naming no source agency.
+
+- [ ] **Step 5: Stories picked from the data, never invented**
+
+The exemplar (a sector with a full split), the extreme (the sector with the
+largest single cost line), the thin case (fewest segments), and the self-omit.
+Read each from the file. Never write a plausible number.
+
+- [ ] **Step 6: The harness checks, written BEFORE the component and proved by failing**
+
+Do not repeat the mistake of the detail panel, where the check was written first
+but measured the wrong thing, so the component was reshaped to satisfy a bad
+measurement. Write each rule, then PLANT the fault it catches and watch it red,
+then remove the fault. A rule that has only ever run on clean input is unproven.
+At minimum: the segments sum to one hundred within a stated tolerance; the
+drawn segment count matches the declared count at every width; no segment is so
+thin it renders as a sliver with an unreadable label; the legend names every
+drawn segment and no more.
+
+- [ ] **Step 7: Verify, each to its own file, each exit code read**
+
+```bash
+cd /e/atlas/website && npx tsc --noEmit > scratchpad/tsc-t11.txt 2>&1; echo "exit $?"
+```
+
+```bash
+cd /e/atlas/website && npm run harness > scratchpad/harness-t11.txt 2>&1; echo "exit $?"
+```
+
+The harness exits 1 on the two known standing accent reds and nothing else.
+
+- [ ] **Step 8: Crop the stories and LOOK, then judge against his reference**
+
+```bash
+cd /e/atlas/website && npm run crop:story -- "income-breakdown/exemplar" scratchpad/photos/t11 "1280,375"
+```
+
+Open both with the Read tool. Answer in your own words: is the net percentage
+unmistakably the headline, can a reader tell the segments apart without a
+colour key, does the legend agree with the bar, and does it survive 375 without
+a sliver. If any answer is no, fix it before committing.
+
+- [ ] **Step 9: Commit**
+
+```bash
+cd /e/atlas/website && git add src/components/spine/archetypes/IncomeBreakdown.tsx src/lib/spine/income_rows.ts src/lib/spine/copy.ts src/components/spine/archetypes/stories.tsx scripts/harness/render_archetypes.tsx src/app/dev/archetypes/page.tsx scripts/harness/check_archetypes.mjs && git commit -m "archetypes: the income breakdown, his form for the section he called broken"
+```
+
+---
+
 ## Self-review
 
 **Spec coverage.** His message maps to tasks as follows. "creating all the sections for all main page types" is Task 1 (the catalogue, which is the list of everything to create, including four SPINE rows for the page types the model never spined) and Task 7 (the queue seeded from it). "think about all aspects, space, rhythm, hierarchy, readability" is Task 3 (readability measured, four rules), Task 4 (the model's twelve laws, which cover hierarchy, spacing, the edge, the focal figure and the label gap) and Task 5 (rhythm and space at page level). "the click and show button was removed, I hoped that you would keep it" is Task 2, restored as an archetype with the no-hidden-graphics law inside it. "quality checks of different kinds in place" is the four layers named in the prompt, built by Tasks 2, 3 and 4 and already-existing checks. "a final review in terms of harmony, and how well sections fit together" is Task 5, wired as stage S9 so it fires once per page rather than once per card. "the immense wealth of shadcn components" is Task 6, ordered so what already exists is consulted before the registry, and adopted for structure and not skin. "create a prompt to kickstart a loop that would run consecutively every 20 minutes, all its goals written in detail" is Task 8, with the twelve numbered steps, the hard rules and an explicit definition of done for the phase.
