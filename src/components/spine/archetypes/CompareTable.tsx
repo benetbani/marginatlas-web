@@ -21,21 +21,31 @@ import { CountryFlag } from "@/components/CountryFlag";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "./copy";
 
-/** THE UNITS (city:peers, the build loop's run 22, 2026-09-06): "pct", "usd" and "days" are the country table's figures; "index" is a signed difference in index points, "pctdiff" a signed difference in percent, "x" a multiple. On a difference column the home row prints 0 and a peer at exactly 0 prints "same", because two places sharing an index band are not identical (the kit's table said so first). */
-export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "index" | "pctdiff" | "x"; best: "min" | "max" };
+/** THE UNITS: "pct", "usd" and "days" are the country table's figures, each
+ *  column an absolute, never a difference. "m" joined 2026-09-08 (task 9) for
+ *  the city peers table's visitor counts (millions a year), the one absolute
+ *  the other three units cannot honestly hold (it is neither a currency, a
+ *  percentage nor a day count). EVERY CELL IS AN ABSOLUTE FIGURE IN ITS OWN
+ *  COLUMN'S UNIT (his words, 2026-09-07, on the old signed-difference columns:
+ *  "for Los Angeles you say minus 14, for Paris you say plus 2, for customer
+ *  income you say minus 10%, and for Los Angeles you say plus 3%. So you have
+ *  made a mishmash of all of these things."): "index", "pctdiff" and "x" were
+ *  signed differences against the home row and are deleted with this comment,
+ *  not renamed, so a stale reference cannot silently keep compiling. */
+export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m"; best: "min" | "max" };
 /** `iso2` draws the flag; `key` names the row when two rows share a flag (two cities in one country). */
 export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null> };
 export type CompareTableProps = { id: string; kicker: string; icon?: AtlasIconId; rows: CompareRow[]; columns: CompareColumn[]; caveat?: string; entityHead?: string };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-const signed = (v: number) => (v > 0 ? `+${v}` : `${v}`);
-function fmt(unit: CompareColumn["unit"], v: number, home?: boolean): string {
+/** Every branch prints the absolute figure the row holds; none carries a
+ *  home-row special case anymore, because the home row is a row like any
+ *  other now, not a zero this function used to manufacture. */
+function fmt(unit: CompareColumn["unit"], v: number): string {
   if (unit === "pct") return `${v}%`;
   if (unit === "usd") return v === 0 ? COPY.free : usd(v);
-  if (unit === "index") return v === 0 ? (home ? "0" : COPY.cityPeers.same) : signed(v);
-  if (unit === "pctdiff") return v === 0 ? (home ? "0" : COPY.cityPeers.same) : `${signed(v)}%`;
-  if (unit === "x") return `x${v.toFixed(2)}`;
+  if (unit === "m") return `${v.toFixed(1)}M`;
   return `${v} ${v === 1 ? "day" : "days"}`;
 }
 const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
@@ -81,7 +91,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
                     const v = r.values[c.key];
                     return (
                       <TableCell key={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
-                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v, r.home)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
+                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
                       </TableCell>
                     );
                   })}
@@ -108,7 +118,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
                     const v = r.values[c.key];
                     return (
                       <span key={c.key} className="text-right whitespace-nowrap">
-                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v, r.home)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
+                        {isNum(v) ? <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig> : <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
                       </span>
                     );
                   })}

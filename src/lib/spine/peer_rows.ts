@@ -22,7 +22,7 @@ import { COPY } from "@/lib/spine/copy";
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
 export type PeerRow = { iso2: string; key?: string; name: string; home: boolean; values: Record<string, number | null> };
-export type PeerColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "index" | "pctdiff" | "x"; best: "min" | "max" };
+export type PeerColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m"; best: "min" | "max" };
 
 export const PEER_COLUMNS: PeerColumn[] = [
   { key: "effective_tax_pct", head: COPY.peers.cols.tax, unit: "pct", best: "min" },
@@ -66,14 +66,39 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
   return { rows, columns: PEER_COLUMNS, caveat: COPY.peers.caveat };
 }
 
-/** THE CITY'S PEERS TABLE (city:peers, the build loop's run 22, 2026-09-06): the
- *  city and up to four peers as rows, the country's flag on each, three measures
- *  as columns, every figure read beside the home city: cost of living as a
- *  difference in index points (higher is cheaper; the index is the adapter's
- *  cost-of-living figure, London 75), average pay as a difference in percent,
- *  visitors a year as a multiple (a city with none is a dash, not a nil). A
- *  column with fewer than two held figures is dropped; a table with fewer than
- *  two rows or no column is not drawn. Higher is better in every column. */
+/** THE CITY'S PEERS TABLE (city:peers, the build loop's run 22, 2026-09-06;
+ *  UNITS REWORKED task 9, 2026-09-08): the city and up to four peers as rows,
+ *  the country's flag on each, three measures as columns, EVERY CELL THE
+ *  ABSOLUTE FIGURE THAT ROW HOLDS, never a difference against the home row.
+ *
+ *  His words, 2026-09-07, are why the diff is gone: "for Los Angeles you say
+ *  minus 14, for Paris you say plus 2, for customer income you say minus 10%,
+ *  and for Los Angeles you say plus 3%. So you have made a mishmash of all of
+ *  these things." A signed index-point diff in one column and a signed
+ *  percent diff in another, both against a home row that itself printed a
+ *  bare zero, was the mishmash; a peer tied to the home row exactly used to
+ *  print the word "same" (his other complaint, the same run), which a column
+ *  of figures cannot hold either.
+ *
+ *  THE ABSOLUTE EXISTS FOR ALL THREE, checked against adapt_city.ts before
+ *  this rewrite (its own comment: "Each peer's rent_index <- cost_of_living_
+ *  index (real, London = 75, NOT indexed to 100), median_income_usd <- avg_
+ *  gross_salary_usd_year (real), visitors_m <- tourist_arrivals_m (real)"):
+ *   - cheaper: `rent_index` is the source cost-of-living index itself, "a
+ *     leading metro = 100" (cities/[slug]/page.tsx's own field comment), so a
+ *     value IS honestly a percent of that leading metro; LOWER reads cheaper,
+ *     so `best` is "min" here, unlike the other two.
+ *   - income: `median_income_usd` is already a dollar figure (a mean, not
+ *     really a median; see adapt_city.ts's own warning on the field name),
+ *     printed through the unit the country table already uses for money.
+ *   - visitors: `visitors_m` is millions of arrivals a year, an absolute no
+ *     existing unit could honestly carry (not a currency, a percentage or a
+ *     day count), hence CompareColumn's new "m" unit.
+ *  No fallback branch was needed: this is not a data requirement, every peer
+ *  row already carries all three absolutes, home row included.
+ *
+ *  A column with fewer than two held figures is dropped; a table with fewer
+ *  than two rows or no column is not drawn. */
 export type CityPeerTable = PeerTable & { entityHead: string };
 const fillWords = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
 export function buildCityPeerTable(seed: any): CityPeerTable | null {
@@ -87,15 +112,15 @@ export function buildCityPeerTable(seed: any): CityPeerTable | null {
     name: String(r.name),
     home: !!r.home,
     values: {
-      cheaper: isNum(home.rent_index) && isNum(r.rent_index) ? Math.round(home.rent_index - r.rent_index) : null,
-      income: isNum(home.median_income_usd) && home.median_income_usd > 0 && isNum(r.median_income_usd) ? Math.round((r.median_income_usd / home.median_income_usd) * 100) - 100 : null,
-      visitors: isNum(home.visitors_m) && home.visitors_m > 0 && isNum(r.visitors_m) && r.visitors_m > 0 ? Math.round((r.visitors_m / home.visitors_m) * 100) / 100 : null,
+      cheaper: isNum(r.rent_index) ? Math.round(r.rent_index) : null,
+      income: isNum(r.median_income_usd) && r.median_income_usd > 0 ? Math.round(r.median_income_usd) : null,
+      visitors: isNum(r.visitors_m) && r.visitors_m > 0 ? Math.round(r.visitors_m * 10) / 10 : null,
     },
   }));
   const all: PeerColumn[] = [
-    { key: "cheaper", head: COPY.cityPeers.cols.cheaper, unit: "index", best: "max" },
-    { key: "income", head: COPY.cityPeers.cols.income, unit: "pctdiff", best: "max" },
-    { key: "visitors", head: COPY.cityPeers.cols.visitors, unit: "x", best: "max" },
+    { key: "cheaper", head: COPY.cityPeers.cols.cheaper, unit: "pct", best: "min" },
+    { key: "income", head: COPY.cityPeers.cols.income, unit: "usd", best: "max" },
+    { key: "visitors", head: COPY.cityPeers.cols.visitors, unit: "m", best: "max" },
   ];
   const columns = all.filter((c) => rows.filter((r) => isNum(r.values[c.key])).length >= 2);
   if (columns.length === 0) return null;

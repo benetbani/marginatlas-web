@@ -1,19 +1,25 @@
 /**
  * PayBars , THE PAY-BARS ARCHETYPE (what staff cost). Two horizontal bars,
  * "Minimum salary" and "Average salary", on ONE track whose right edge is the
- * WORLD'S HIGHEST average salary, named at the edge. The founder's rulings of
- * 2026-09-04: (13) "what staff costs should have its edge on the level of the
- * highest level of the world for that metric, so if Switzerland has the
- * highest then only it touches the right side"; (14) "typical pay should
- * always be at least 10% ahead of the wage floor, replace words with minimum
- * salary and average salary". The builder decides withholding; this draws.
+ * WORLD'S HIGHEST average salary. The founder's rulings of 2026-09-04: (13)
+ * "what staff costs should have its edge on the level of the highest level of
+ * the world for that metric, so if Switzerland has the highest then only it
+ * touches the right side"; (14) "typical pay should always be at least 10%
+ * ahead of the wage floor, replace words with minimum salary and average
+ * salary". The builder decides withholding; this draws.
+ *
+ * THE EDGE IS NO LONGER NAMED (his words, 2026-09-07): "you point the thing
+ * which says the world's highest, which is Switzerland. That's very bad. You
+ * should never put the limit out there." Keep the track, drop the label: the
+ * bar still ends at the world maximum (ruling 13 stands, unrelated to this),
+ * and the country holding it is never printed. Nothing replaces the deleted
+ * label at the edge; the country's own placement on the scale is a separate
+ * sentence, a separate task, on purpose.
  *
  * THE LAW INSIDE IT:
  *  - One scale for both bars, the world's highest average, so a country's
  *    minimum never draws longer than its average and only the world's
  *    highest touches the edge. A fill is clamped to the track.
- *  - The edge is named: the country that holds it and its figure, in the
- *    micro line over the track's right end.
  *  - The average carries the accent; the minimum the lighter tone.
  *  - A pair the builder withholds (the average under 110 percent of the
  *    minimum) draws no bar: one line says why, and the figures stay unsaid
@@ -29,10 +35,9 @@ export type PayBarsProps = {
   worldMax: { value: number; name: string } | null;
   withheld?: string | null;
   fmt: (v: number) => string;
-  edgeLabel: (name: string, figure: string) => string;
 };
 
-export function PayBars({ rows, worldMax, withheld, fmt, edgeLabel }: PayBarsProps) {
+export function PayBars({ rows, worldMax, withheld, fmt }: PayBarsProps) {
   const live = rows.filter((r) => Number.isFinite(r.value) && r.value > 0);
   if (withheld) {
     return (
@@ -58,8 +63,6 @@ export function PayBars({ rows, worldMax, withheld, fmt, edgeLabel }: PayBarsPro
   return (
     <div data-archetype="pay-bars" data-bars={String(live.length)} data-idea="I2">
       <div className="grid grid-cols-[6.5rem_1fr_auto] items-center gap-x-3 gap-y-2">
-        {/* THE EDGE, NAMED, across the card's width so it never cuts in the track's column (measured: cut at every width in a 347px card). */}
-        <span data-edge className="col-span-3 text-right text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{edgeLabel(worldMax.name, fmt(max))}</span>
         {live.map((r) => {
           const share = Math.max(0, Math.min(1, r.value / max));
           const accent = r.key === "average";

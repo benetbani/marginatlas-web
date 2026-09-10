@@ -50,7 +50,19 @@ export function cityVerdictFacts(seed: any): CityVerdictFacts | null {
     icon: "district-mix",
     answer: { label: COPY.cityVerdict.answerLabel, value: mult(lightest.rent_mult), basis: COPY.cityVerdict.basis.replace("{district}", String(lightest.name)), confidence: "modeled" },
     cells: [
-      { key: "average", label: COPY.cityVerdict.cells.average, value: mult(1), note: COPY.cityVerdict.cells.averageNote },
+      /* THE AVERAGE CELL NO LONGER PRINTS "x1.00" (his words, 2026-09-04, on
+         this exact cell: "then you say the city average times one which is
+         the baseline. You don't seem to have an idea on how the information
+         should be actually given"), and this changed because of his ruling,
+         not because verify_model_laws_copy.ts's BANNED WORDS rule made
+         "x1.00" inconvenient to keep: a rent load is a district's rent AS A
+         MULTIPLE OF the city average, so the average's own multiple of
+         itself is 1 for every city, forever, by definition, not a measured
+         fact worth two decimal places of false precision. The heaviest
+         cell's multiple stays in the `mult()` notation because IT varies and
+         IS a real reading; this one does not vary, so it no longer wears the
+         same "x0.00" clothing. */
+      { key: "average", label: COPY.cityVerdict.cells.average, value: "1", note: COPY.cityVerdict.cells.averageNote },
       { key: "heaviest", label: COPY.cityVerdict.cells.heaviest, value: mult(heaviest.rent_mult), note: String(heaviest.name), confidence: "modeled" },
     ],
     districts: list.length,

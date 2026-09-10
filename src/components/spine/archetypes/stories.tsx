@@ -444,7 +444,7 @@ export function PayBarsStories({ instances = pickPayBarsInstances() }: { instanc
         const el = d ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 347 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.pay.kicker}, {nameOf(i.iso2)}</div>
-            <PayBars rows={d.rows} worldMax={d.worldMax} withheld={d.withheld} fmt={usd} edgeLabel={(name, figure) => COPY.pay.edge.replace("{name}", name).replace("{figure}", figure)} />
+            <PayBars rows={d.rows} worldMax={d.worldMax} withheld={d.withheld} fmt={usd} />
           </div>
         ) : null;
         return <Story kind="pay-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

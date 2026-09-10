@@ -497,8 +497,9 @@ function Hiring({ hiring, iso2 }: { hiring: any; iso2?: string }) {
       <Rail icon="hiring" kicker={COPY.pay.kicker} sample={tagged} />
       {/* THE PAY BARS through the archetype (founder rulings 13 and 14, 2026-09-04):
           minimum and average salary on one track that ends at the world's
-          highest average, named; a pair under ten percent apart withheld. */}
-      {pay ? <PayBars rows={pay.rows} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} edgeLabel={(name, figure) => COPY.pay.edge.replace("{name}", name).replace("{figure}", figure)} /> : null}
+          highest average, unnamed since his 2026-09-07 ruling; a pair under
+          ten percent apart withheld. */}
+      {pay ? <PayBars rows={pay.rows} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
       {isNum(addPct) ? (
         <div className="mt-4 flex flex-wrap items-baseline gap-x-1.5">
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">On top of gross pay, employers add</span>

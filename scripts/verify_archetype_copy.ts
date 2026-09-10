@@ -178,7 +178,15 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   else {
     if (v.answer.value !== "x0.90" || !v.answer.basis.includes("A")) reds.push(`verdict: the answer is not the lightest district (${v.answer.value}, ${v.answer.basis})`);
     if (v.answer.confidence === "measured") reds.push("verdict: the multiples are composed from tag constants and are marked measured");
-    if (v.cells.length !== 2 || v.cells[0].value !== "x1.00" || v.cells[1].value !== "x3.00" || v.cells[1].note !== "C") reds.push(`verdict: the cells are not the average and the heaviest (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
+    /* THE AVERAGE CELL'S ASSERTION CHANGED FROM "x1.00" TO "1" because of his
+       ruling of 2026-09-04 ("then you say the city average times one which
+       is the baseline. You don't seem to have an idea on how the information
+       should be actually given"), not because the old literal collided with
+       model-laws-copy's BANNED WORDS rule (it did, but that collision is the
+       symptom, not the reason for this line): the banned-word gate is
+       correct that "x1.00" is not information, and this assertion no longer
+       requires the builder to keep printing it. */
+    if (v.cells.length !== 2 || v.cells[0].value !== "1" || v.cells[1].value !== "x3.00" || v.cells[1].note !== "C") reds.push(`verdict: the cells are not the average and the heaviest (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
     for (const c of v.cells) {
       if (c.label.split(/\s+/).length > 4) reds.push(`verdict: label over four words: "${c.label}"`);
       if (c.note && c.note.length > 48) reds.push(`verdict: note over 48 characters: "${c.note}"`);

@@ -122,12 +122,17 @@ export const COPY = {
     tradesDoor: "See every trade measured here",
     proDoor: "Get notified when Pro opens",
   },
-  /** The pay bars (what staff cost), founder rulings 13 and 14 of 2026-09-04: the words "minimum salary" and "average salary", the edge at the world's highest, a pair under ten percent apart withheld. */
+  /** The pay bars (what staff cost), founder rulings 13 and 14 of 2026-09-04: the words "minimum salary" and "average salary", the edge at the world's highest, a pair under ten percent apart withheld.
+   *  THE EDGE LOST ITS NAME (his words, 2026-09-07): "you point the thing which
+   *  says the world's highest, which is Switzerland. That's very bad. You
+   *  should never put the limit out there." The track still ends at the
+   *  world's highest (worldMax still sets it, ruling 13 stands); only the
+   *  label naming the country and figure at that edge is gone, so `edge` is
+   *  deleted rather than reworded. */
   pay: {
     kicker: "What staff cost",
     minimum: "Minimum salary",
     average: "Average salary",
-    edge: "World's highest: {name}, {figure}",
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
   },
   /** The how-to page, "How to open a business in [country name]" (founder ruling 8, 2026-09-04). */
@@ -178,8 +183,13 @@ export const COPY = {
   cityPeers: {
     kicker: "Peer cities, side by side",
     cols: { city: "City", cheaper: "Cheaper to live", income: "Customer income", visitors: "Visitors" },
-    same: "same",
-    caveat: "Read beside {city}: cost of living in index points, pay in percent, visitors as a multiple, higher is better throughout. Peers match on size and market, not on sharing a border.",
+    /** THE BARE WORD IS GONE (his words, 2026-09-07): "for the table, you say
+     *  cheaper to live, customer income, visitors, and then you just say you
+     *  mention the word same. That's a major mistake." `same` printed for any
+     *  peer that tied the home row on a signed-difference column; the column
+     *  is now the absolute figure itself (peer_rows.ts), so every row reads a
+     *  real number and the home row needs no special case at all. */
+    caveat: "Read beside {city}: cost of living against a leading metro, lower is cheaper; income and visitors a year, higher is better on both. Peers match on size and market, not on sharing a border.",
   },
   /** The city's verdict card (city:verdict, run 23): the lightest rent load as the answer, the city average and the heaviest district as cells. A rent load is the district's rent as a multiple of the city's average. */
   cityVerdict: {
@@ -209,6 +219,10 @@ export const COPY = {
     pay: "What moves this figure",
     customers: `${CUSTOMERS_KICKER}, by tenth`,
   },
-  /** Words that must never appear in an archetype's copy: the corporate register. */
-  banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year"],
+  /** Words that must never appear in an archetype's copy: the corporate register.
+   *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
+   *  pay bars' edge must never name the country and figure that hold it: a
+   *  machine guard against the phrase returning in any future card's text, not
+   *  just the one label it was found in. */
+  banned: ["leverage", "utilise", "utilize", "synerg", "stakeholder", "ecosystem", "framework", "robust", "holistic", "streamline", "empower", "solution", "optimis", "optimiz", "against the", "a square metre a year", "world's highest"],
 } as const;
