@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 import { loadCityHeroInstances } from "@/lib/spine/city_hero_facts";
-import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, BentoBandStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
 
@@ -37,6 +37,8 @@ export default async function ArchetypesPage() {
       <KvGridStories />
       <h2 data-typography="custom" className={h}>The income breakdown</h2>
       <IncomeBreakdownStories />
+      <h2 data-typography="custom" className={h}>The bento band</h2>
+      <BentoBandStories city={cityHero} />
       <CityHeroStories instances={cityHero} />
       <CityVerdictStories instances={pickCityVerdictInstances(cityHero)} />
     </main>

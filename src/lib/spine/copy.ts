@@ -309,6 +309,51 @@ export const COPY = {
     pay: "What moves this figure",
     customers: `${CUSTOMERS_KICKER}, by tenth`,
   },
+  /** THE BENTO BAND'S TWO CELL TYPES (2026-09-10, his A2 and B4). Every string
+   *  here was read aloud before it shipped, which is the only check that would
+   *  have caught "Times the cheapest". A kicker names the thing; a label says
+   *  what the figure is in the words a person would use; a basis says what is
+   *  measured and never what it means. */
+  bento: {
+    /** The cost to register, from the country's own formation file. The cell
+     *  carries no label under its figure: the opener already says what the
+     *  figure is, and saying it twice costs a line the composition needs. */
+    registerCost: {
+      kicker: "What it costs to register",
+      basis: "Government fees for a private limited company.",
+    },
+    /** The paperwork score, the same 1 to 5 the tiers table draws as dots; the
+     *  two ends are said here rather than left as an unexplained scale. */
+    paperwork: {
+      kicker: "Paperwork to register",
+      basis: "One is an online form, five is a notary and a lawyer.",
+    },
+    /** The everyday set drawn whole, with the trades this city holds a local
+     *  measurement for read against it. */
+    everydayTrades: {
+      kicker: "Trades with local figures",
+      basis: "Eight everyday trades, and how many have local figures.",
+    },
+    /** The city's typical customer pay, the strip's own middle mark. */
+    cityPay: {
+      kicker: "What customers earn",
+      basis: "The typical earner, a year, before tax.",
+    },
+    /** The effective burden, the country page's own answer figure. */
+    burden: {
+      kicker: "Total effective tax burden",
+      basis: "On profit, for a small business, from the published rates.",
+    },
+    /** What an employer pays on top of a wage. */
+    payroll: {
+      kicker: "Payroll on wages",
+      basis: "Charged on wages, on top of the rate on profit.",
+    },
+    /** The sales tax, which the customer carries and the owner collects. */
+    salesTax: {
+      basis: "The customer carries it, so it is not the owner's burden.",
+    },
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

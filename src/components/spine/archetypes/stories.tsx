@@ -34,10 +34,12 @@ import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
-import { usd } from "@/components/spine/kit";
+import { usd, Box, Rail } from "@/components/spine/kit";
 import { DetailPanel, type DetailRow } from "./DetailPanel";
 import { IncomeBreakdown } from "./IncomeBreakdown";
 import { buildIncomeBreakdown } from "@/lib/spine/income_rows";
+import { BentoBand, BentoMetric, BentoCount, type BentoCell } from "./BentoBand";
+import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 
 export type Instance = { iso2: string; why: string };
 
@@ -638,6 +640,206 @@ export function IncomeBreakdownStories({ instances = pickIncomeBreakdownInstance
   );
 }
 
+/* =============================== THE BENTO BAND ===============================
+ * A2 and B4 of design/references/founder-2026-09-10.md: a band may hold three
+ * or four cells of differing footprint instead of two equal cards. Three
+ * clusters, each a different shape, so the packer, the collapse and both named
+ * cell types are drawn rather than described:
+ *
+ *   exemplar       2 columns, 2 rows, 3 cells. The classic bento and his own
+ *                  B4 shape: one tall cell beside two small ones stacked, and a
+ *                  city dashboard, which is what his own reference is. The
+ *                  small pair are the two cell types he named.
+ *   four-cells     2 columns, 3 rows, 4 cells, the upper cap. A tall cell, two
+ *                  small ones beside it, and a wide cell running under both.
+ *   three-columns  3 columns, 2 rows, 3 cells. This one exists to be COLLAPSED:
+ *                  at 768 its two-column-wide cell caps at two, the cluster
+ *                  repacks onto a 2 by 3 grid, and the harness measures whether
+ *                  it still tiles there. A three-column bento that nobody ever
+ *                  narrowed is the fault this instance is for.
+ *
+ * EVERY FIGURE IS REAL AND COMES THROUGH A BUILDER. London's pay is the
+ * customers strip's own middle mark (`buildCityCustomersStrip`); the trade
+ * count is the everyday set (`EVERYDAY_TRADES`, the fixed eight) read against
+ * the trades this city holds a local measurement for; the registering figures
+ * are the formation file's (`buildSetupRows`, `buildHeroFacts`); the rent strip
+ * is the country's three rents by city size. Nothing here is typed.
+ *
+ * AND NO CELL REPEATS ITS NEIGHBOUR. The first version put the paperwork count
+ * and the registration fee beside the registering table, and the table already
+ * drew both: the same 1-to-5 score as dots in its own column, the same fee in
+ * its LLC row, and the same sentence under it. A bento's cells are three
+ * readings of a subject, never three views of one reading; that is what makes
+ * the differing footprints mean anything.
+ *
+ * WHAT IS NOT DRAWN, AND WHY IT IS NOT INVENTED: his B4 names the count cell's
+ * subject as WEEKS OF PAID LEAVE PER YEAR, and this repo holds no leave data
+ * for any country. The cell is drawn against counts the data does have; the
+ * leave figure is a data requirement (DATA-REQUIREMENTS.md 16), not a number to
+ * make up.
+ *
+ * NO MALFORMED STORY. A cluster that does not tile THROWS by design, so it
+ * cannot be a story: it would take the whole sheet down rather than draw a
+ * marked instance. That half of the law is proved by the harness, which
+ * measures the drawn boxes and was watched going red with a fault planted in
+ * this file. */
+export function pickBentoBandInstances(): Instance[] {
+  return [
+    { iso2: "exemplar", why: "three cells, two columns: one tall beside two small, his B4 shape" },
+    { iso2: "four-cells", why: "four cells, the cap: a tall one, two small ones, and a wide one under both" },
+    { iso2: "three-columns", why: "three columns at 1280, which must repack onto two at 768 and still tile" },
+  ];
+}
+
+export function BentoBandStories({ instances = pickBentoBandInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
+  const london = city.find((c) => c.slug === "london") ?? city[0];
+  const setup = buildSetupRows("GB");
+  const lightest = [...setup].sort((a, b) => (a.complexity_1_5 ?? 9) - (b.complexity_1_5 ?? 9))[0];
+  const heroCells = buildHeroFacts("GB").cells;
+  const answer = buildHeroFacts("GB").answer;
+  const salesTax = heroCells.find((c) => c.key === "sales-tax");
+  const payroll = heroCells.find((c) => c.key === "payroll");
+  const notes = buildLocalsNotes("GB");
+  const premises = buildPremisesStrip("GB");
+  const people = london ? buildCityCharacterTables(london.slug)?.people : null;
+  const typical = london ? buildCityCustomersStrip(london.seed)?.marks.find((m) => m.key === "typical") : null;
+  const tradesPart = london ? (london.seed?.trades_here?.list?.length ?? 0) : 0;
+
+  const cluster = (key: string): { cols: 2 | 3; cells: BentoCell[] } | null => {
+    /* THE EXEMPLAR IS A CITY DASHBOARD, which is what his reference is: the
+       fitness bento sets a ring, a count and a chart side by side because they
+       are three different readings of one subject, not three views of one
+       reading. Every cell here says something the other two do not. */
+    if (key === "exemplar") {
+      if (!london || !people || !typical || tradesPart < 1) return null;
+      return {
+        cols: 2,
+        cells: [
+          {
+            key: "reads",
+            cols: 1,
+            rows: 2,
+            node: (
+              <Box className="h-full">
+                <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
+                <SpectraTable rows={people.rows} dot={people.dot} foot={people.foot} />
+              </Box>
+            ),
+          },
+          {
+            key: "pay",
+            cols: 1,
+            rows: 1,
+            node: <BentoMetric icon="spending-power" kicker={COPY.bento.cityPay.kicker} figure={usd(typical.value)} basis={COPY.bento.cityPay.basis} sample />,
+          },
+          {
+            key: "trades",
+            cols: 1,
+            rows: 1,
+            /* THE CLUSTER'S ONE LOUD CELL, and the only one: PART 6 allows one
+               loud card per band and this cluster is the band. */
+            node: <BentoCount icon="honest-take" kicker={COPY.bento.everydayTrades.kicker} part={tradesPart} whole={EVERYDAY_TRADES.size} basis={COPY.bento.everydayTrades.basis} />,
+          },
+        ],
+      };
+    }
+    if (key === "four-cells") {
+      if (!notes || !answer || !premises || lightest?.complexity_1_5 == null) return null;
+      return {
+        cols: 2,
+        cells: [
+          {
+            key: "notes",
+            cols: 1,
+            rows: 2,
+            node: (
+              <Box className="h-full">
+                <Rail icon="locals-know" kicker={`${COPY.locals.kicker}, ${nameOf("GB")}`} sample />
+                <NoteList notes={notes.notes} columns={1} />
+              </Box>
+            ),
+          },
+          {
+            key: "burden",
+            cols: 1,
+            rows: 1,
+            node: <BentoMetric icon="taxes" kicker={COPY.bento.burden.kicker} figure={answer.value} basis={COPY.bento.burden.basis} sample />,
+          },
+          {
+            key: "paperwork",
+            cols: 1,
+            rows: 1,
+            /* THE PAPERWORK COUNT LIVES HERE AND NOT BESIDE THE REGISTERING
+               TABLE, which is where it was first put and where it was wrong:
+               that table already draws the same 1-to-5 score as dots in its own
+               column and prints the same sentence under it, so the band said
+               one thing twice. A bento cell has to earn its footprint with a
+               reading its neighbours do not already carry. */
+            node: <BentoCount icon="calculator" kicker={COPY.bento.paperwork.kicker} part={lightest.complexity_1_5} whole={5} basis={COPY.bento.paperwork.basis} accent={false} />,
+          },
+          {
+            key: "premises",
+            cols: 2,
+            rows: 1,
+            node: (
+              <Box className="h-full">
+                <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={premises.confidence !== "measured"} />
+                <RangeStrip marks={premises.marks} scale="log" fmt={usd} basis={COPY.premises.basis} note={premises.note} extra={premises.extra} />
+              </Box>
+            ),
+          },
+        ],
+      };
+    }
+    if (key === "three-columns") {
+      if (!setup.length || !salesTax || !payroll) return null;
+      return {
+        cols: 3,
+        cells: [
+          {
+            key: "forms",
+            cols: 2,
+            rows: 2,
+            node: (
+              <Box className="h-full">
+                <Rail icon="red-tape" kicker={`${COPY.tiers.kicker}, ${nameOf("GB")}`} />
+                <TiersTable rows={setup} howTo={howToOpenDoor("GB")} />
+              </Box>
+            ),
+          },
+          {
+            key: "sales-tax",
+            cols: 1,
+            rows: 1,
+            node: <BentoMetric icon="taxes" kicker={COPY.cells.salesTax.label} figure={salesTax.value} basis={COPY.bento.salesTax.basis} />,
+          },
+          {
+            key: "payroll",
+            cols: 1,
+            rows: 1,
+            node: <BentoMetric icon="wages" kicker={COPY.bento.payroll.kicker} figure={payroll.value} basis={COPY.bento.payroll.basis} />,
+          },
+        ],
+      };
+    }
+    return null;
+  };
+
+  return (
+    <div data-stories="bento-band">
+      {instances.map((i) => {
+        const c = cluster(i.iso2);
+        const el = c ? (
+          <div style={{ maxWidth: 1072 }}>
+            <BentoBand cols={c.cols} cells={c.cells} />
+          </div>
+        ) : null;
+        return <Story kind="bento-band" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
 /** The city masthead stories take their seeds from `loadCityHeroInstances()` (async, the renderer and the stories page await it). */
 export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }) {
   return (
@@ -696,6 +898,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "kv-grid": pickKvGridInstances(),
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": pickIncomeBreakdownInstances(),
+    "bento-band": pickBentoBandInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
     "city-verdict": pickCityVerdictInstances(cityHero).map((c) => ({ iso2: c.slug, why: c.why })),
   };

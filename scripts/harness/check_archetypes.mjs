@@ -54,6 +54,13 @@
  *    top (the reserved heading line), and no group is left alone in a row.
  *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
  *    at the ends, never clamped), pole words on one line, one dot colour a table.
+ *  BENTO BAND (2026-09-10): CELL COUNT (three or four drawn, and the same
+ *    number the cluster declares, at every width); TILING (the drawn cells
+ *    cover their rectangle with no gap and no overlap, measured from the
+ *    rendered boxes and never from the declared spans, because the
+ *    declaration is what is under test); NO HOLE ON COLLAPSE (at each width
+ *    the cells' areas add up to the rectangle they occupy, so a cluster that
+ *    reflows into a ragged L is named as a collapse fault).
  *  INCOME BREAKDOWN: every drawn segment's share plus net sums to a hundred
  *    within a stated tolerance (task 11); no segment renders under six
  *    pixels wide (a sliver no hatch or swatch could carry); the legend names
@@ -241,6 +248,62 @@ function inPage() {
         widthPx: el.getBoundingClientRect().width,
       }));
       r.incomeLegendKeys = [...card.querySelectorAll("[data-legend-key]")].map((el) => el.getAttribute("data-legend-key"));
+    }
+    /* THE BENTO CLUSTER, MEASURED FROM THE BOXES THE BROWSER DREW (2026-09-10).
+       BentoBand.tsx proves its own DECLARED spans tile before it renders a
+       thing, and that proof is worth nothing here: the declaration is the
+       thing under test. Everything below is read off `getBoundingClientRect`,
+       at every width, so a class that never reached the stylesheet, a
+       breakpoint that fires at the wrong place, or a cell that stops drawing
+       on a phone is caught by the geometry rather than by the intent.
+
+       THE GUTTER IS NOT A HOLE. Cells sit 32px apart, the band's own rung of
+       the spacing ladder, so the drawn boxes never touch and a naive coverage
+       test would call every gutter a gap. The gutter is INFERRED from the
+       drawing itself , the smallest positive distance from one cell's right
+       edge to another's left, and the same vertically , and every rect is
+       grown by half of it. A correct tiling then meets exactly; a real hole
+       does not close. Inferring it rather than hardcoding 32 means the rule
+       still holds the day the ladder changes. */
+    if (r.kind === "bento-band") {
+      const cellEls = [...card.querySelectorAll("[data-bento-cell]")].filter((el) => el.getClientRects().length);
+      r.bentoDeclared = Number(card.getAttribute("data-bento-cells") || "0");
+      r.bentoDrawn = cellEls.length;
+      const raw = cellEls.map((el) => { const b = el.getBoundingClientRect(); return { key: el.getAttribute("data-bento-cell"), left: b.left, right: b.right, top: b.top, bottom: b.bottom }; });
+      const minPositive = (vals) => { const p = vals.filter((v) => v > 0.5); return p.length ? Math.min(...p) : 0; };
+      const gaps = [];
+      const vgaps = [];
+      for (const a of raw) for (const b of raw) { if (a === b) continue; gaps.push(b.left - a.right); vgaps.push(b.top - a.bottom); }
+      const gx = minPositive(gaps) / 2;
+      const gy = minPositive(vgaps) / 2;
+      const grown = raw.map((b) => ({ key: b.key, left: b.left - gx, right: b.right + gx, top: b.top - gy, bottom: b.bottom + gy }));
+      const uniq = (xs) => [...new Set(xs.map((x) => Math.round(x * 100) / 100))].sort((a, b) => a - b);
+      const xs = uniq(grown.flatMap((g) => [g.left, g.right]));
+      const ys = uniq(grown.flatMap((g) => [g.top, g.bottom]));
+      const gapPatches = [];
+      const overlapPatches = [];
+      for (let i = 0; i < xs.length - 1; i++) {
+        for (let j = 0; j < ys.length - 1; j++) {
+          const w2 = xs[i + 1] - xs[i], h2 = ys[j + 1] - ys[j];
+          if (w2 <= 1 || h2 <= 1) continue; // a sliver from subpixel rounding, not a patch
+          const cx = (xs[i] + xs[i + 1]) / 2, cy = (ys[j] + ys[j + 1]) / 2;
+          const hits = grown.filter((g) => cx > g.left && cx < g.right && cy > g.top && cy < g.bottom);
+          if (hits.length === 0) gapPatches.push(`${Math.round(w2)}x${Math.round(h2)} at ${Math.round(cx)},${Math.round(cy)}`);
+          if (hits.length > 1) overlapPatches.push(`${hits.map((h3) => h3.key).join(" and ")} share ${Math.round(w2)}x${Math.round(h2)}`);
+        }
+      }
+      r.bentoGaps = gapPatches;
+      r.bentoOverlaps = overlapPatches;
+      /* THE OUTER EDGE, a second and different measurement of the same law: the
+         cells' own areas must add up to the rectangle they occupy. The lattice
+         test above finds a hole INSIDE the cluster; this finds a RAGGED one,
+         a cluster whose union is an L because a row lost a cell when it
+         reflowed. Both are needed: a shape can be locally sound and still not
+         be a rectangle. */
+      const union = grown.length ? { left: Math.min(...grown.map((g) => g.left)), right: Math.max(...grown.map((g) => g.right)), top: Math.min(...grown.map((g) => g.top)), bottom: Math.max(...grown.map((g) => g.bottom)) } : null;
+      r.bentoArea = grown.reduce((a, g) => a + (g.right - g.left) * (g.bottom - g.top), 0);
+      r.bentoUnionArea = union ? (union.right - union.left) * (union.bottom - union.top) : 0;
+      r.bentoUnion = union ? `${Math.round(union.right - union.left)}x${Math.round(union.bottom - union.top)}` : "";
     }
     /* THE FOUNDER'S PLUS lives at the FOOT of another archetype's card once a
        real section adopts it (review finding 2, 2026-09-08): the outer card's
@@ -508,6 +571,60 @@ for (const w of WIDTHS) {
       const extra = legKeys.filter((k) => !segKeys.includes(k));
       if (missing.length) red(r.inst, w, "LEGEND MISMATCH", `drawn but not named in the legend: ${missing.join(", ")}`);
       if (extra.length) red(r.inst, w, "LEGEND MISMATCH", `named in the legend but not drawn: ${extra.join(", ")}`);
+    }
+    /* THE BENTO'S THREE RULES (2026-09-10), every one of them run at EVERY
+       width and every one of them proved by planting the fault it catches and
+       watching it red with the cluster named.
+
+       CELL COUNT , three or four, and the same three or four at every width.
+         The count is compared BOTH against the law's bounds and against the
+         cluster's own declaration, so a cell that stops drawing when the grid
+         reflows is a fault even though three is still a legal number.
+       TILING , no gap and no overlap between the drawn cells.
+       NO HOLE ON COLLAPSE , the cells' areas add up to the rectangle they
+         occupy, so a cluster that reflows into an L is named as a collapse
+         fault rather than as a generic gap. */
+    /* EVERY ONE OF THE THREE WAS PLANTED AND WATCHED GO RED, 2026-09-10, then
+       removed; a rule nobody has seen fire is a rule nobody knows is wired.
+         TILING, a hole: the component's own tiling proof was commented out and
+           the exemplar's tall cell dropped from two rows to one. Red at 1280
+           and 768, `bento-band:exemplar`, "1 hole(s): 552x193". Silent at 375,
+           correctly: one column, every cell 1x1, nothing to hole.
+         TILING, an overlap: every cell forced to `lg:row-start-1`. Red on all
+           three clusters at 1280, naming the pair, "cost and paperwork share
+           552x161".
+         CELL COUNT: the component's 3-to-4 guard temporarily widened to 5 and
+           a fifth cell added to a cluster that STILL TILES (2+1+1+1+1 on a 3
+           by 2 grid). Red at all three widths, "5 cells drawn", with TILING
+           silent, which is what makes it an isolated proof of this rule rather
+           than a second reading of the one below it.
+         NO HOLE ON COLLAPSE: the `md:` placement classes dropped, so the
+           cluster auto-flowed at tablet. Red at 768 ONLY, on the two clusters
+           whose shape actually changes there, with 1280 and 375 clean: the
+           fault this rule is named for, a cluster that tiles at the width it
+           was designed at and goes ragged when it is narrowed. The component's
+           own validator stayed silent through it, which is the point of
+           measuring the drawn boxes.
+       ONE THING STATED PLAINLY: on a fault that is both, TILING and NO HOLE ON
+       COLLAPSE fire together, and they cannot be fully separated, because
+       uncovered area and an uncovered patch are the same fact counted two
+       ways. The area check earns its place as the checksum: the lattice test
+       discards patches under a pixel to survive subpixel rounding, and the
+       area does not. */
+    if (r.kind === "bento-band") {
+      const MIN = 3, MAX = 4;
+      if (r.bentoDrawn < MIN || r.bentoDrawn > MAX) red(r.inst, w, "CELL COUNT", `${r.bentoDrawn} cells drawn; a cluster holds ${MIN} or ${MAX} (two is a band, five is a list)`);
+      else if (r.bentoDeclared && r.bentoDrawn !== r.bentoDeclared) red(r.inst, w, "CELL COUNT", `${r.bentoDrawn} cells drawn against ${r.bentoDeclared} declared; a cell stopped drawing at this width`);
+      if (r.bentoGaps && r.bentoGaps.length) red(r.inst, w, "TILING", `${r.bentoGaps.length} hole(s) between the drawn cells: ${r.bentoGaps.slice(0, 3).join("; ")}`);
+      if (r.bentoOverlaps && r.bentoOverlaps.length) red(r.inst, w, "TILING", `${r.bentoOverlaps.length} overlap(s): ${r.bentoOverlaps.slice(0, 3).join("; ")}`);
+      /* 1% of the union, which is about eight pixels of edge on a 1072 by 400
+         cluster: looser than a device pixel because eight rects each grown by
+         half an inferred gutter carry eight roundings, and far tighter than
+         the smallest cell any legal cluster can hold (a quarter of the
+         rectangle, 25%). */
+      if (r.bentoUnionArea > 0 && Math.abs(r.bentoArea - r.bentoUnionArea) / r.bentoUnionArea > 0.01) {
+        red(r.inst, w, "NO HOLE ON COLLAPSE", `the drawn cells cover ${Math.round(r.bentoArea).toLocaleString()} square pixels of the ${r.bentoUnion} rectangle they occupy (${Math.round(r.bentoUnionArea).toLocaleString()}); the cluster is not a rectangle at this width`);
+      }
     }
     if (r.hasDetailPanel) {
       /* THE FOUNDER'S PLUS (2026-09-08): a panel is closed on arrival, its summary

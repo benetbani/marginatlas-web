@@ -111,6 +111,28 @@ const LONDON_DISTRICTS: Array<{ slug: string; name: string }> = [
 /* Small honest helpers.                                                     */
 /* ------------------------------------------------------------------------- */
 
+/**
+ * THE EVERYDAY SET, §32: the eight trades a street actually carries, with the
+ * named synonym collapses. Anything outside it is dropped rather than shown,
+ * including dental practices, which §32 names as an example of an
+ * out-of-context trade.
+ *
+ * HOISTED TO MODULE SCOPE AND EXPORTED, 2026-09-10 (the bento band). It was a
+ * `const` inside `buildSpineCitySeed`, which made the WHOLE invisible: the seed
+ * carried the part (`trades_here.list`, the trades this city holds a local
+ * measurement for) and nothing anywhere could say what it was a part OF. A
+ * count you can see needs both, and the whole has to be read from the same
+ * place the filter reads it or the two drift.
+ *
+ * The slugs are HYPHENATED here, and the first version of this filter guessed
+ * underscores from a sibling module's naming and matched nothing at all. Read
+ * off the real data, not inferred.
+ */
+export const EVERYDAY_TRADES: ReadonlySet<string> = new Set([
+  "restaurants", "grocery-stores", "pharmacies", "hairdressers-beauty",
+  "sports-fitness", "auto-repair-shops", "cafes-coffee-shops", "bars-nightclubs",
+]);
+
 function isNum(v: number | null | undefined): v is number {
   return v != null && Number.isFinite(v);
 }
@@ -629,16 +651,11 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
      §32, the fixed everyday set: restaurant, grocery, pharmacy, salon, gym, auto
      repair, cafe, bar, with the named synonym collapses. Anything outside it is
      dropped rather than shown, including dental practices, which §32 names as an
-     example of an out-of-context trade. */
-  /* The slugs are HYPHENATED here, and the first version of this filter guessed
-     underscores from a sibling module's naming and matched nothing at all. Read
-     off the real data, not inferred. */
-  const EVERYDAY = new Set([
-    "restaurants", "grocery-stores", "pharmacies", "hairdressers-beauty",
-    "sports-fitness", "auto-repair-shops", "cafes-coffee-shops", "bars-nightclubs",
-  ]);
+     example of an out-of-context trade. The set itself is `EVERYDAY_TRADES` at
+     the top of this file, exported so a card can draw the WHOLE beside the
+     part; the note on the slugs' shape lives with it. */
   const tradesHere = (trades?.list ?? [])
-    .filter((t: any) => t.local && t.slug && EVERYDAY.has(String(t.slug)))
+    .filter((t: any) => t.local && t.slug && EVERYDAY_TRADES.has(String(t.slug)))
     .map((t: any) => ({
       name: t.name,
       slug: t.slug,
