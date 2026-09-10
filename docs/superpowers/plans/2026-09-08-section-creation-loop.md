@@ -934,6 +934,224 @@ cd /e/atlas && git add design/loop/build/CREATE-PROMPT.md && git commit -m "buil
 
 ---
 
+### Task 9: The words and the units, no layout
+
+Stage 4 of the order. It had no numbered task, which was a gap in this plan,
+and it is written here before it is executed. It closes THREE of the founder's
+named complaints at once and touches no layout, which is why it comes before
+any card is redesigned.
+
+His words, 2026-09-07:
+- "you point the thing which says the world's highest, which is Switzerland.
+  That's very bad. You should never put the limit out there."
+- "for the table, you say cheaper to live, customer income, visitors, and then
+  you just say you mention the word same. That's a major mistake."
+- "for Los Angeles you say minus 14, for Paris you say plus 2, for customer
+  income you say minus 10%, and for Los Angeles you say plus 3%. So you have
+  made a mishmash of all of these things."
+
+**Files:**
+- Modify: `src/lib/spine/copy.ts` (`COPY.pay.edge`, `COPY.cityPeers.same`)
+- Modify: `src/components/spine/archetypes/PayBars.tsx` (the `edgeLabel` prop and its render)
+- Modify: `src/components/spine/archetypes/stories.tsx` and `src/components/spine/country/country-view.tsx` (the two `edgeLabel` call sites)
+- Modify: `src/components/spine/archetypes/CompareTable.tsx` (the `index`, `pctdiff` and `x` units)
+- Modify: `src/lib/spine/peer_rows.ts` (`buildCityPeerTable`)
+- Modify: `scripts/verify_archetype_copy.ts` (the banned-phrase list, and the `x1.00` assertion that collides with `model-laws-copy`)
+
+**Interfaces:**
+- Produces: a `CompareColumn["unit"]` of `"pct" | "usd" | "days"` only. Every consumer
+  of the removed three must supply an absolute in its column's own unit.
+
+- [ ] **Step 1: The world's highest loses its name, and the track keeps its edge**
+
+His decision of 2026-09-08 was "Keep the track, drop the label": the bar still
+ends at the world maximum, and the country holding it is never named. So delete
+`COPY.pay.edge` ("World's highest: {name}, {figure}"), delete the `edgeLabel`
+prop from `PayBarsProps` and its `<span data-edge>` render, and delete both call
+sites. Do NOT change the track's domain: `worldMax` still sets where the bar
+ends, which is ruling 13 and still stands. Replace nothing at the edge; the
+placement sentence of Task 10 is what tells the reader where the country sits,
+and it is a separate task on purpose.
+
+- [ ] **Step 2: Read what the peers table actually has before deleting its units**
+
+The city peers table is the only consumer of `index`, `pctdiff` and `x`, so
+deleting those three units breaks it unless its builder can supply absolutes.
+Do not assume it can.
+
+Run: `cd /e/atlas/website && grep -n 'index\|pctdiff\|x\b\|unit' src/lib/spine/peer_rows.ts > scratchpad/peers-units.txt 2>&1; echo "exit $?"; cat scratchpad/peers-units.txt`
+
+Then read the data the builder reads. Establish, and write into your report,
+whether an ABSOLUTE exists for each of the three columns (cheaper to live,
+customer income, visitors) for a peer city, or whether only a relative figure
+is held.
+
+- If absolutes exist: the table prints them, each column in its own unit, one
+  decimal count per column, and the home row is shaded rather than printing a
+  zero or the word "same".
+- If only relatives exist: this is a DATA requirement, not a design choice.
+  Record it in `E:\atlas\design\loop\build\DATA-REQUIREMENTS.md`, and for this
+  pass keep the column but print the absolute the site DOES hold for the home
+  city with the peer's own figure beside it, so a reader compares two numbers
+  rather than reading a signed difference with no anchor. Never print a bare
+  word where a column holds figures, and never mix a signed count with a signed
+  percentage in one table.
+
+The column COUNT is not touched in this task. He asked for two more metrics and
+the model says that table moves once, after the unit law is proven on cards he
+has not praised. Note it and leave it.
+
+- [ ] **Step 3: Delete the bare word**
+
+`COPY.cityPeers.same` and both branches that print it
+(`CompareTable.tsx` `unit === "index"` and `unit === "pctdiff"`) go. A cell in a
+column of figures holds a figure.
+
+- [ ] **Step 4: Settle the collision between two gates, which is already recorded**
+
+`scripts/verify_archetype_copy.ts` asserts a cell equals the exact string
+`x1.00`, and `model-laws-copy` bans it as a banned word. They cannot both be
+right. The founder's words settle it: "then you say the city average times one
+which is the baseline. You don't seem to have an idea on how the information
+should be actually given." The banned-word gate is correct and the assertion is
+the stale one. Change the assertion to require what the cell should now print,
+and say in its comment that it was changed because of his ruling, not because it
+was inconvenient.
+
+- [ ] **Step 5: Verify, each to its own file, each exit code read**
+
+```bash
+cd /e/atlas/website && npx tsc --noEmit > scratchpad/tsc-t9.txt 2>&1; echo "exit $?"
+```
+
+```bash
+cd /e/atlas/website && npm run harness > scratchpad/harness-t9.txt 2>&1; echo "exit $?"
+```
+
+```bash
+cd /e/atlas/website && npx tsx scripts/prebuild_all.ts --concurrency=1 --only=archetype-copy,model-laws-copy > scratchpad/gate-t9.txt 2>&1; echo "exit $?"
+```
+
+Both gates must pass together, which is the proof the collision is settled. The
+harness exits 1 on the two known standing accent reds and nothing else.
+
+- [ ] **Step 6: Photograph the peers table and the staff bars, and look**
+
+```bash
+cd /e/atlas/website && npm run shoot:page -- scratchpad/harness/pages/city-london.html "#peers" scratchpad/photos/t9-peers "1280,375"
+```
+
+Open both with the Read tool. Every cell in a column carries the same kind of
+figure, no cell is a word, and the staff card names no country at its edge.
+
+- [ ] **Step 7: Commit**
+
+```bash
+cd /e/atlas/website && git add src/lib/spine/copy.ts src/components/spine/archetypes/PayBars.tsx src/components/spine/archetypes/CompareTable.tsx src/components/spine/archetypes/stories.tsx src/components/spine/country/country-view.tsx src/lib/spine/peer_rows.ts scripts/verify_archetype_copy.ts && git commit -m "copy: the world's highest loses its name, the peers table loses its bare word and its mixed units"
+```
+
+---
+
+### Task 10: The placement sentence
+
+Stage 5 of the order, and the other half of his staff-cost complaint. It is a
+separate task from Task 9 because Task 9 REMOVES the thing that misled a reader
+and this one ADDS the thing that informs him, and stacking a fix behind a fix
+makes neither falsifiable.
+
+His words, 2026-09-07: "you have made the minimum salary of 25k a year appear
+like it is small for the world. So you have made the mistake in terms of
+understanding how does the United Kingdom fit relating to the whole world.
+That's a very bad thing, because the minimum salary of 25k for the world is
+quite a high one. So your thing should reflect that."
+
+The model, PART 9, forbids "a figure on a world track without its placement line
+beside it. A high wage may never read as small", and forbids "placement written
+in coined tier words. One fixed sentence, one direction, the same words meaning
+the same rank on every page." The `PLACEMENT` rule already fires on every track
+on every page, so this task's success is that rule going quiet honestly.
+
+**Files:**
+- Create: `src/lib/spine/placement.ts`
+- Modify: `src/lib/spine/copy.ts` (the one wording)
+- Modify: the five callers: the staff bars, the premises strip, the world seat, the running costs and the customers strip
+- Modify: `src/components/spine/archetypes/stories.tsx`
+
+**Interfaces:**
+- Produces: `placementOf(value: number, all: number[]): { share: number; words: string } | null`,
+  returning null under an honest minimum of comparable places, and one fixed
+  sentence otherwise. Every caller renders it in an element carrying
+  `data-placement` so the harness rule can see it.
+
+- [ ] **Step 1: One wording, one direction, decided once and written down**
+
+In `copy.ts`, one string, and only one, with its direction fixed: higher is
+always more. It says where the figure sits among the places that hold the same
+figure, in plain words a reader needs no key for, and it never names another
+country. It is the same sentence on every page and every card, so a reader who
+learns it once reads it everywhere. No coined tier words: the model bans a word
+placement that comes out the same for most countries, which is the failure he
+named himself.
+
+- [ ] **Step 2: The helper, with its honest minimum**
+
+`placementOf` computes the share of comparable places at or below the value, and
+returns null when fewer than a stated minimum of places hold the figure, because
+a placement among six countries is not a placement among the world. Write the
+minimum as a named constant with the reason beside it. Never fabricate: the
+comparison set is the file's own, read at call time.
+
+- [ ] **Step 3: Prove it differentiates before wiring it anywhere**
+
+This is the step that stops the failure the model names. Run the helper across
+every country the file holds and count the distinct sentences it produces.
+
+```bash
+cd /e/atlas/website && npx tsx scratchpad/arch/placement_spread.ts > scratchpad/placement-spread.txt 2>&1; echo "exit $?"
+```
+
+If the wording collapses most countries onto one or two sentences, it is a tier
+word wearing a sentence's clothes and it fails. Report the distribution. Adjust
+the wording, not the data, until a reader in a median country and a reader in a
+top-decile country are told different things.
+
+- [ ] **Step 4: Wire the five callers**
+
+Each renders the sentence beside its figure in an element carrying
+`data-placement`. The United Kingdom's minimum wage must now read as high,
+which is the acceptance test he gave: check it by eye on the photograph, not by
+assertion.
+
+- [ ] **Step 5: Verify**
+
+```bash
+cd /e/atlas/website && npx tsc --noEmit > scratchpad/tsc-t10.txt 2>&1; echo "exit $?"
+```
+
+```bash
+cd /e/atlas/website && npm run harness:laws -- --list > scratchpad/laws-t10.txt 2>&1; echo "exit $?"
+```
+
+The `PLACEMENT` count must fall to zero on every page, and the fall is the proof.
+Report the before and after counts.
+
+- [ ] **Step 6: Photograph the staff card and read the sentence as a stranger**
+
+```bash
+cd /e/atlas/website && npm run shoot:page -- scratchpad/harness/pages/country-GB.html "#hiring" scratchpad/photos/t10-hiring "1280,375"
+```
+
+Open it. Ask the one question that matters: does 25,000 now read as a high wage
+or a low one. Say what you actually see, not what you intended.
+
+- [ ] **Step 7: Commit**
+
+```bash
+cd /e/atlas/website && git add src/lib/spine/placement.ts src/lib/spine/copy.ts src/components/spine/archetypes/stories.tsx && git commit -m "placement: one sentence, one direction, so a high figure never reads as low"
+```
+
+---
+
 ## Self-review
 
 **Spec coverage.** His message maps to tasks as follows. "creating all the sections for all main page types" is Task 1 (the catalogue, which is the list of everything to create, including four SPINE rows for the page types the model never spined) and Task 7 (the queue seeded from it). "think about all aspects, space, rhythm, hierarchy, readability" is Task 3 (readability measured, four rules), Task 4 (the model's twelve laws, which cover hierarchy, spacing, the edge, the focal figure and the label gap) and Task 5 (rhythm and space at page level). "the click and show button was removed, I hoped that you would keep it" is Task 2, restored as an archetype with the no-hidden-graphics law inside it. "quality checks of different kinds in place" is the four layers named in the prompt, built by Tasks 2, 3 and 4 and already-existing checks. "a final review in terms of harmony, and how well sections fit together" is Task 5, wired as stage S9 so it fires once per page rather than once per card. "the immense wealth of shadcn components" is Task 6, ordered so what already exists is consulted before the registry, and adopted for structure and not skin. "create a prompt to kickstart a loop that would run consecutively every 20 minutes, all its goals written in detail" is Task 8, with the twelve numbered steps, the hard rules and an explicit definition of done for the phase.
