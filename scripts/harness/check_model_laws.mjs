@@ -51,8 +51,10 @@
  *            feature returns. `#districts [data-row] > span:first-child >
  *            span` read a note riding beside a phone row's name, and later
  *            also caught a regression where the district pill nested a span
- *            inside the name instead of sitting on it directly (fixed; see
- *            `PILL_NAME` in RankedBars.tsx); this half stays LIVE as a guard
+ *            inside the name instead of sitting on it directly (that pill,
+ *            and the whole name-marking branch it rode on, were deleted by
+ *            task 14, 2026-09-10, so a district name is a bare text node
+ *            again); this half stays LIVE as a guard
  *            against either fault returning, and finds nothing today. Both
  *            halves read zero elements on every real page today, so
  *            DISTRICT ADJECTIVE below is UNMEASURED there, not a clean

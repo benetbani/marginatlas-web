@@ -2,11 +2,26 @@
  * src/lib/spine/district_rows.ts
  *
  * THE CITY'S DISTRICT RANKING (city:districts, the build loop's run 25,
- * 2026-09-07, rebased task 13, 2026-09-10), for the RankedBars archetype with
- * the burden direction: every ranked district as a row, its shop rent as the
- * value; the set's heaviest as the top rule, since a world's best for a
- * burden would be a rule at the floor. The founder's D1 (2026-07-11): rank by
- * rent load, lightest first; the archetype marks the lightest.
+ * 2026-09-07, rebased task 13, unfeatured and reworded task 14, 2026-09-10),
+ * for the RankedBars archetype with the burden direction: every ranked
+ * district as a row, its shop rent as the value; the set's dearest as the top
+ * rule, since a world's best for a burden would be a rule at the floor. The
+ * founder's D1 (2026-07-11): rank by rent, cheapest first.
+ *
+ * NO DISTRICT IS FEATURED, AND THE CARD SAYS SO BY MARKING NONE (his ruling,
+ * 2026-09-10: "there is the featuring aspect of one neighborhood compared to
+ * the other neighborhoods with no reason at all, just for the fact that it's
+ * cheaper. It is not justifiable, so please rethink it"). Marking one member
+ * of a set is an editorial claim, and the claim this card could make , "this
+ * one is the cheapest" , is not an answer to the question the reader arrived
+ * with, which is where to open. The cheapest district is still the REFERENCE
+ * every figure is measured against, because the arithmetic needs a base and
+ * an honest one has to be drawn on the card; being the base is not being
+ * recommended, and it buys no pill, no colour and no rung of its own. The day
+ * the engine can name a district as genuinely the best place to trade in
+ * (DATA-REQUIREMENTS.md 15, and the revenue side of the model, which returns
+ * exactly 1.000 per district today), the card gets a leader again and it will
+ * be that district, not this one. `cheapestKey` left with the pill it fed.
  *
  * THE REFERENCE POINT IS A DISTRICT ON THE CARD, NOT AN INVISIBLE AVERAGE,
  * and this is the whole of the change. His words on the old card: "then you
@@ -16,15 +31,23 @@
  * the city average, and the city average was drawn NOWHERE: a reader met
  * x1.20 and x3.00 with no way to turn either into anything, because the one
  * quantity they were both measured against never appeared on the page. The
- * rows are now measured against the CHEAPEST DISTRICT, which is drawn, named,
- * ranked and marked two inches away, so "West End, two and a half times South
- * London" is a claim the eye can check against the card it is printed on. The
- * string "x1.00" leaves with the old basis, and so does the word that briefly
- * replaced it: the reference district prints NO figure at all and wears the
- * card's one pill on its name instead (`cheapestKey`, RankedBars'
- * `referenceKey`). A cell has to hold a figure or hold nothing; a bare word
- * standing where a figure belongs is PART 5's own ban, and a row saying it is
- * the baseline is rule 17's.
+ * rows are now measured against the CHEAPEST DISTRICT, which is drawn, named
+ * and ranked two inches away, so "West End, two and a half times South
+ * London" is a claim the eye can check against the card it is printed on.
+ *
+ * EVERY ROW PRINTS ITS OWN FIGURE, THE REFERENCE INCLUDED (task 14,
+ * 2026-09-10, his "furthermore, the label replaces the number, which is
+ * totally an idiotic thing out there"). For one day this file answered the
+ * reference district with the word "cheapest", and for one day after that the
+ * card printed nothing at all in that cell and moved a black pill onto its
+ * name. Both were the same mistake in two costumes: a reader scanning a
+ * column of seven figures met one row with no figure, which reads as data
+ * this page does not hold rather than as the one district the others are
+ * measured against. It reads 1.00x now, against itself, which is self-evident
+ * rather than misleading precisely because the district is named on the row
+ * and named again in the basis line. What is NOT back is the old "x1.00" of
+ * the city average: that figure was a multiple of something invisible, and no
+ * amount of notation makes an invisible base checkable.
  *
  * WHY REBASING IS HONEST HERE, stated plainly because dividing one modelled
  * number by another usually is not. The multiples are composed from a per-tag
@@ -56,10 +79,9 @@ export type CityDistrictBars = {
   worldMax: number;
   tagged: boolean;
   districts: number;
-  /** The reference district: cheapest of the set, and what every row is measured against. */
+  /** The reference district: cheapest of the set, and what every row is measured
+   *  against. NOT a recommendation and NOT a marked row: see the header. */
   cheapest: string;
-  /** The same district as `cheapest`, by ROW KEY, for the card that has to mark it. */
-  cheapestKey: string;
   /** The far end, and the card's own ceiling. */
   dearest: { name: string; value: number };
   /** The middle of the ranking, the thing the two ends cannot say. Null below
@@ -67,21 +89,35 @@ export type CityDistrictBars = {
   middle: { name: string; value: number } | null;
   /** The composed basis line, naming the reference so it is said as well as drawn. */
   basis: string;
+  /** The card's two column heads, composed here so the head that names the
+   *  reference district is filled from the data and never typed into COPY. */
+  phoneHead: { name: string; value: string };
 };
 
+/** The count of districts, in words, for a basis line a person reads rather
+ *  than parses ("the seven districts we cover"). Digits are what a figure cell
+ *  is for; a sentence takes the word. Falls back to the digits above twelve,
+ *  where the word is longer than the number it saves. */
+const COUNT_WORDS = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+const countWord = (n: number) => COUNT_WORDS[n] ?? String(n);
+
 /** The rent figure's one notation, shared by every card that prints it, and
- *  NOTHING ELSE: two decimals, always, for whatever it is handed.
- *  It used to answer the reference district's own multiple of itself with the
- *  word "cheapest", which PART 5 bans twice over ("any bare word standing where
- *  a figure belongs", and rule 17's "a baseline row written out"); printing
- *  "x1.00" instead would put back the exact string he struck out. Neither is
- *  this formatter's business: the reference row draws NO figure at all, and
- *  which row that is belongs to the card, not to a number's formatter, which
- *  cannot tell 1.00-because-it-is-the-reference from 1.00-because-a-second
- *  district ties it. RankedBars takes `referenceKey` and reserves that one
- *  cell empty; see its header. The guard is gone rather than hidden, so no
- *  future caller handing this a sub-1 multiple gets a word back. */
-export const rentMult = (v: number) => `x${v.toFixed(2)}`;
+ *  NOTHING ELSE: two decimals, always, for whatever it is handed. No branch,
+ *  no word, no special case for the reference district , a formatter cannot
+ *  tell 1.00-because-it-is-the-reference from 1.00-because-a-second district
+ *  ties it, and both of those are a figure.
+ *
+ *  THE MULTIPLIER TRAILS THE NUMBER (task 14, 2026-09-10): "2.50x", not
+ *  "x2.50". It is the order the words come in when the row is read out , "two
+ *  and a half times South London" , and the head above the column now says
+ *  "Rent, against South London", so the figure is the number and the unit,
+ *  in that order, like every other figure on the site.
+ *
+ *  TWO DECIMALS, NOT ONE, and the reason is data rather than taste: London's
+ *  City of London and West End sit at 2.47 and 2.50 of South London. At one
+ *  decimal they print the same figure beside two visibly different bars,
+ *  which is the card contradicting itself in the width of one row. */
+export const rentMult = (v: number) => `${v.toFixed(2)}x`;
 
 /** THE MIDDLE OF A RANKING NEEDS THREE MEMBERS. With two, every member is an
  *  end: the "middle" would be one of the two districts the basis line already
@@ -97,8 +133,7 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
   const ascending = list.slice().sort((a, b) => a.rent_mult - b.rent_mult);
   const base = ascending[0].rent_mult;
   const at = (r: any) => +(r.rent_mult / base).toFixed(2);
-  /* ONE KEY FUNCTION, so the row the card marks as the reference and the row it
-     draws can never be keyed two different ways. */
+  /* ONE KEY FUNCTION, so every row is keyed the same way wherever it is read. */
   const keyOf = (r: any) => String(r.slug ?? r.name).toLowerCase();
   const rows: BarRow[] = list.map((r) => ({
     key: keyOf(r),
@@ -117,9 +152,14 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
     tagged: true,
     districts: rows.length,
     cheapest: String(ascending[0].name),
-    cheapestKey: keyOf(ascending[0]),
     dearest: { name: String(dear.name), value: at(dear) },
     middle: mid ? { name: String(mid.name), value: at(mid) } : null,
-    basis: COPY.cityDistricts.basis.replace("{district}", String(ascending[0].name)),
+    basis: COPY.cityDistricts.basis
+      .replace("{district}", String(ascending[0].name))
+      .replace("{count}", countWord(rows.length)),
+    phoneHead: {
+      name: COPY.cityDistricts.phoneHead.name,
+      value: COPY.cityDistricts.phoneHead.value.replace("{district}", String(ascending[0].name)),
+    },
   };
 }

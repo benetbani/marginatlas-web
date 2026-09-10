@@ -161,7 +161,7 @@ export function AnswerCardStories({ instances = pickAnswerCardInstances() }: { i
 export function pickCityDistrictInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
   const out: CityHeroInstance[] = [];
   const ranked = cities.find((c) => buildCityDistrictBars(c.seed));
-  if (ranked) out.push({ ...ranked, why: `${buildCityDistrictBars(ranked.seed)!.districts} districts ranked by rent load, the lightest leading` });
+  if (ranked) out.push({ ...ranked, why: `${buildCityDistrictBars(ranked.seed)!.districts} districts ranked by rent, the cheapest leading and none featured` });
   const none = cities.find((c) => c !== ranked && !buildCityDistrictBars(c.seed));
   if (none) out.push({ ...none, why: "self-omits: no ranked districts" });
   return out;
@@ -179,7 +179,7 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances(), city 
       })}
       {city.map((c) => {
         const b = buildCityDistrictBars(c.seed);
-        const el = b ? <RankedBars id={`districts-${c.slug}`} kicker={COPY.cityDistricts.kicker} icon="best-areas" tagged={b.tagged} basis={b.basis} rows={b.rows} worldMax={b.worldMax} ceiling="set" referenceKey={b.cheapestKey} best="min" topLabel={COPY.cityDistricts.heaviest} fmt={rentMult} phoneHead={COPY.cityDistricts.phoneHead} /> : null;
+        const el = b ? <RankedBars id={`districts-${c.slug}`} kicker={COPY.cityDistricts.kicker} icon="best-areas" tagged={b.tagged} basis={b.basis} rows={b.rows} worldMax={b.worldMax} ceiling="set" feature="none" best="min" topLabel={COPY.cityDistricts.dearest} fmt={rentMult} phoneHead={b.phoneHead} /> : null;
         return <Story kind="ranked-bars" key={`${c.slug}:districts`} iso2={`${c.slug}:districts`} why={c.why}>{el ? <div style={{ maxWidth: 693 }}>{el}</div> : null}</Story>;
       })}
     </div>

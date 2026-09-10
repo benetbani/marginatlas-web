@@ -1,14 +1,22 @@
 /**
  * WhereToTrade: THE DISTRICT RANKING on the ranked-bars archetype (city:districts,
- * the build loop's run 25, 2026-09-07, rebased and rowed by task 13,
- * 2026-09-10). Seven ranked districts, so the archetype draws them as a TABLE
- * read top to bottom, not as columns (PART 5's district rows: six or more is a
- * table); each row is a district's name, its rent against the cheapest
+ * the build loop's run 25, 2026-09-07, rebased and rowed by task 13, unfeatured
+ * by task 14, 2026-09-10). Seven ranked districts, so the archetype draws them
+ * as a TABLE read top to bottom, not as columns (PART 5's district rows: six or
+ * more is a table); each row is a district's name, its rent against the cheapest
  * district in the very next column, then a track. The cheapest leads
- * (the founder's D1, 2026-07-11: rank by rent load, lightest first, and rule
- * 29A), and it is the row every figure is measured against, so it wears the
- * card's one pill on its NAME and prints no figure of its own. The set's
- * heaviest is the ceiling, named once at the head of the track column. The
+ * (the founder's D1, 2026-07-11: rank by rent, cheapest first, and rule 29A)
+ * and is the row every figure is measured against, INCLUDING ITS OWN, which
+ * reads 1.00x against itself.
+ *
+ * NO DISTRICT IS MARKED (`feature="none"`, his ruling of 2026-09-10: "there is
+ * the featuring aspect of one neighborhood compared to the other neighborhoods
+ * with no reason at all, just for the fact that it's cheaper. It is not
+ * justifiable"). Being the base of the arithmetic is not being recommended,
+ * and this card has no other claim to make until the engine can name a
+ * district as genuinely the best place to trade in; district_rows.ts carries
+ * the whole reasoning and what happens the day it can. The set's
+ * dearest is the ceiling, named once at the head of the track column. The
  * multiples are marked modelled. The founder ratified vertical ranked bars
  * (ruling 5, 2026-09-04) and named horizontal bars the page's defect (G2,
  * 2026-07-11); the kit's lollipop this card drew until run 25 counted as the
@@ -44,11 +52,11 @@ export function WhereToTrade({ d }: { d: any }) {
       rows={b.rows}
       worldMax={b.worldMax}
       ceiling="set"
-      referenceKey={b.cheapestKey}
+      feature="none"
       best="min"
-      topLabel={COPY.cityDistricts.heaviest}
+      topLabel={COPY.cityDistricts.dearest}
       fmt={rentMult}
-      phoneHead={COPY.cityDistricts.phoneHead}
+      phoneHead={b.phoneHead}
     />
   );
 }

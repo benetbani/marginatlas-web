@@ -15,13 +15,20 @@
  *  ACCENT: at most one accent-coloured text element per card. A ranked-bars
  *    card carries none , its one loud moment is a BLACK PILL on the row the
  *    card declares as the leader (`data-leader-key`), not a colour (task 12,
- *    2026-09-10), so its own law is stricter: zero accent text, exactly one
- *    pill, on the leader's row, whether that pill sits on the NAME or on the
- *    FIGURE (widened, task 13 fix wave; on the districts card the reference
- *    is always the leader, so its pill always sits on the NAME). Checked at
- *    every width because the pill is drawn in three forms (the bar figure,
- *    the wide table, the phone table) and only one of the three shows at a
- *    time.
+ *    2026-09-10), so its own law is stricter: zero accent text, AT MOST one
+ *    pill, and if there is one it sits on the leader's row. Whether that one
+ *    exists is the card's own declaration, `data-feature`, read both ways: a
+ *    card declaring "leader" must carry exactly one, so a mark cannot go
+ *    missing by accident on a card that has an answer to give, and a card
+ *    declaring "none" must carry none, so a mark cannot creep back onto a
+ *    card deliberately left unfeatured. A ranking is not always an answer,
+ *    and marking one member of a set is an editorial claim (widened, task 14,
+ *    2026-09-10, the founder on the districts card: featuring one district
+ *    "just for the fact that it's cheaper ... is not justifiable"). A card
+ *    that declares nothing is read as "leader", the component's own default.
+ *    Checked at every width because the pill is drawn in three forms (the bar
+ *    figure, the wide table, the phone table) and only one of the three shows
+ *    at a time.
  *  TRACKS ADRIFT / OUT OF ORDER: on a ranked card every track begins at one
  *    left edge and runs one length within a pixel, and the bars drawn in them
  *    rise in the order their values do. Both halves of one law, and one
@@ -122,8 +129,15 @@ function inPage() {
          (task 13 fix wave). Only the VISIBLE pill counts , at any width all
          but one of the three forms (bar figure, wide table, phone table) is
          display:none, exactly the same getClientRects() test the rest of this
-         walk uses. */
+         walk uses.
+         THE CARD ALSO DECLARES WHETHER IT FEATURES ANYONE (task 14),
+         `data-feature`, so "no pill" can be read as the card's stated
+         intention on one card and as a mark that went missing on another.
+         A card that declares nothing is read as "leader", matching the
+         component's own default, so an older card cannot lose its mark by
+         saying nothing. */
       r.leaderKey = card.getAttribute("data-leader-key") || "";
+      r.feature = card.getAttribute("data-feature") || "leader";
       const pills = [...card.querySelectorAll("[data-pill]")].filter((el) => el.getClientRects().length > 0);
       r.pillCount = pills.length;
       r.pillKey = pills.length ? (pills[0].closest("[data-row]")?.getAttribute("data-row") || "") : "";
@@ -407,8 +421,25 @@ for (const w of WIDTHS) {
       for (const a of rr) for (const b of rr) if (a.value > b.value && a.drawn < b.drawn - RANK_TOL) inverted.push(`${a.key} (${a.value}) draws ${a.drawn}px against ${b.key} (${b.value}) at ${b.drawn}px`);
       if (inverted.length) red(r.inst, w, "OUT OF ORDER", `${inverted.length} bar(s) drawn out of the order of their values: ${inverted[0]}`);
       if (r.accents > 0) red(r.inst, w, "ACCENT", `${r.accents} accent-coloured text(s); the card's one mark is a pill now, not a colour`);
-      if (r.pillCount !== 1) red(r.inst, w, "ACCENT", `${r.pillCount} pill(s) on the card; exactly one, on the reference member`);
-      else if (r.pillKey !== r.leaderKey) red(r.inst, w, "ACCENT", `the pill sits on "${r.pillKey}", not the reference member "${r.leaderKey}"`);
+      /* AT MOST ONE PILL, ON THE ROW THE CARD DECLARES (widened, task 14).
+         Four clauses, in the order a fault is worth naming:
+           a second pill is always a fault, whatever the card features , two
+             marks are two answers;
+           a pill on a row that is not the declared leader is always a fault,
+             on either kind of card;
+           a pill on a card that declares it features NOBODY is a fault, or
+             the declaration would buy silence in one direction only;
+           NO pill on a card that declares it features its leader is a fault.
+         The loosening stops exactly there. "At most one" ALONE would let a
+         card that has an answer quietly stop marking it, and would let a mark
+         creep back onto a card that was deliberately unfeatured; the
+         `data-feature` declaration is what makes both of those provable,
+         and it is checked in BOTH directions so it cannot be used as an
+         exemption. */
+      if (r.pillCount > 1) red(r.inst, w, "ACCENT", `${r.pillCount} pills on the card; at most one, on the row it declares as its leader`);
+      else if (r.pillCount === 1 && r.pillKey !== r.leaderKey) red(r.inst, w, "ACCENT", `the pill sits on "${r.pillKey}", not on the declared leader "${r.leaderKey}"`);
+      else if (r.pillCount === 1 && r.feature === "none") red(r.inst, w, "ACCENT", `a pill on "${r.pillKey}" on a card that declares it features nobody; featuring one member of a set is a claim, and this card declares it has none to make`);
+      else if (r.pillCount === 0 && r.feature === "leader") red(r.inst, w, "ACCENT", `no pill on a card that declares it features its leader ("${r.leaderKey}"); a card with no member to feature must say so (data-feature="none")`);
     }
     if (r.kind === "card-pager") {
       for (const row of r.cardRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `cards in one row at heights ${row.join(", ")}`);

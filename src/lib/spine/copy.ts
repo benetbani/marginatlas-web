@@ -245,7 +245,13 @@ export const COPY = {
   cityVerdict: {
     kicker: "The rent, district by district",
     answerLabel: "The rent gap",
-    basis: "{dearest} against {cheapest}",
+    /* THE SUBJECT IS SAID, NOT ASSUMED (2026-09-10, his "the language ... should
+       be quite natural language for this kind of pages"). This line read
+       "{dearest} against {cheapest}", two place names either side of a
+       comparator and nothing saying WHAT was set against what: a reader met
+       "West End against South London" under a figure and had to guess it meant
+       rent. One word fixes it, and it is the word the card is about. */
+    basis: "{dearest} rent, against {cheapest}",
     /* TWO WORDS EACH, AND NEAR THE SAME LENGTH ON PURPOSE. The cell label
        reserves 2.6em below the wide layout and then grows, so a label that
        wraps to three lines while its neighbour wraps to two pushes one figure
@@ -254,21 +260,41 @@ export const COPY = {
        what). "The middle district" did exactly that at 375. */
     cells: { middle: "Middle district", ranked: "Districts ranked" },
   },
-  /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13).
-   *  Every district's shop rent measured against the cheapest district, which is
-   *  drawn and named on the same card. `{district}` is that reference; the basis
-   *  is composed in district_rows.ts so both cards say it the same way. */
+  /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13,
+   *  reworded and unfeatured task 14, 2026-09-10). Every district's shop rent
+   *  measured against the cheapest district, which is drawn and named on the
+   *  same card. `{district}` is that reference and `{count}` the size of the
+   *  set; both are composed in district_rows.ts, so the two cards on this page
+   *  say the same thing the same way and neither hardcodes a place.
+   *
+   *  READ EVERY ONE OF THESE ALOUD BEFORE CHANGING IT. Three of the four
+   *  strings here were struck out by the founder on 2026-09-10, and the one he
+   *  quoted back was the column head: "like you say districts and time's the
+   *  cheapest. What the fuck is time's the cheapest? What, what, what's that
+   *  sort of wording? It's unnatural." A head is not a formula written in
+   *  words. It names the thing measured and what it is measured against, in
+   *  the order a person would say them. */
   cityDistricts: {
     kicker: "By district",
-    basis: "Each district's shop rent set against {district}, the cheapest here. Modelled, not read off leases.",
-    /* THERE IS NO WORD FOR THE REFERENCE ROW'S FIGURE, and there must not be
-       (task 13 fix wave, 2026-09-10): `cheapest: "cheapest"` lived here for one
-       day and printed a bare word where a figure belongs, which PART 5 bans
-       outright. The reference district's figure cell is EMPTY now and its name
-       wears the card's pill; the basis line above is where the reference is
-       said in words, once. */
-    heaviest: "heaviest in the city",
-    phoneHead: { name: "District", value: "Times the cheapest" },
+    /* WHAT THE OLD BASIS DID WRONG: "Each district's shop rent set against
+       {district}, the cheapest here" made the reader carry a clause inside a
+       clause to learn one fact, and "the cheapest here" left "here" doing work
+       no word should do on a page that covers seven districts of one city out
+       of dozens. Two plain sentences instead, the first naming the reference
+       and the size of the set it is cheapest OF, the second saying where the
+       figures come from. */
+    basis: "{district} is the cheapest of the {count} districts we cover. Rents are modelled, not read off leases.",
+    /* THE FAR END OF EVERY TRACK, in the words a person would use for it. It
+       read "heaviest in the city", from an internal phrase for a burden ("rent
+       load") that no shopkeeper has ever said out loud; and it was measured
+       against this card's own set, not the city, so it also overclaimed. */
+    dearest: "Dearest district",
+    /* THE COLUMN HEAD, HIS RULING OF 2026-09-10. Four words when composed, one
+       over the model's three-word cap for a label: a head that names its
+       reference district cannot be shorter, and the model records the
+       exception rather than this file quietly keeping a shorter, worse head.
+       The reference district is filled in from the data, never typed. */
+    phoneHead: { name: "District", value: "Rent, against {district}" },
   },
   /** THE FOUNDER'S PLUS (2026-09-08): the detail panel's summary lines, one for
    * each query a reader clicks open. Reused, not invented per instance: the

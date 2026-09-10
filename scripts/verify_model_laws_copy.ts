@@ -165,7 +165,20 @@ for (const table of [COPY.character.state.rows, COPY.character.people.rows]) {
 
 /* ROW SENTENCE, on row labels outside the hero (PayBars, the two RankedBars
    phone heads): "a label over three words ... is a copy fault." Hero fact
-   cell labels are deliberately excluded; see the header comment. */
+   cell labels are deliberately excluded; see the header comment.
+
+   THIS INSTRUMENT'S BLIND SPOT, and it is load-bearing for one entry:
+   it counts the words of the STATIC string, so a `{placeholder}` counts as
+   one word whatever it is filled with. `COPY.cityDistricts.phoneHead.value`
+   is "Rent, against {district}", three words here and FOUR on the page
+   ("Rent, against South London"), or five for a district whose name is three
+   words. That is not the check failing to notice: it is THE MODEL'S ONE
+   RECORDED EXCEPTION to the three-word cap (MODEL.md PART 5, district rows),
+   because a head that names the district its figures are measured against
+   cannot be shorter than the name, and the alternative the founder struck out
+   on 2026-09-10 was the short head that named nothing ("Times the cheapest").
+   The cap still binds everything around the placeholder: put a fourth word of
+   your own in this string and it reds here, today. */
 const rowLabels: Array<[string, string]> = [
   ["COPY.pay.minimum", COPY.pay.minimum],
   ["COPY.pay.average", COPY.pay.average],
@@ -311,7 +324,16 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
   const v = cityVerdictFacts(fixture);
   if (v) heads.push(["cityVerdictFacts.kicker", v.kicker], ["cityVerdictFacts.answer.label", v.answer.label], ["cityVerdictFacts.answer.basis", v.answer.basis]);
   const bars = buildCityDistrictBars(fixture);
-  if (bars) heads.push(["buildCityDistrictBars.basis", bars.basis]);
+  /* THE COLUMN HEAD IS COMPOSED NOW, AND THIS RULE EXISTS BECAUSE OF IT.
+     "Times the cheapest" was a STATIC `COPY.cityDistricts.phoneHead.value`
+     when the founder struck it out, so the static sweep above saw it. Task 14
+     (2026-09-10) rewrote it as "Rent, against {district}", filled from the
+     data so no place name is ever typed, and a string carrying a placeholder
+     is skipped by `collectCopyHeads` by design. Pushed here in its composed
+     form, or this rule would go quiet about the exact string it was written
+     for , the failure mode of every gate that watches a shape instead of a
+     location. */
+  if (bars) heads.push(["buildCityDistrictBars.basis", bars.basis], ["buildCityDistrictBars.phoneHead.value", bars.phoneHead.value], ["buildCityDistrictBars.phoneHead.name", bars.phoneHead.name]);
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);

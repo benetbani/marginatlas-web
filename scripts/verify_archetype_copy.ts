@@ -192,8 +192,10 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        On this fixture the cheapest is A at 0.9, so C at 3 rebases to 3.33 and
        the basis has to name BOTH ends: an answer of "x3.33" with only one
        district beside it is a number measured against something the reader
-       cannot see, the exact fault this task was opened for. */
-    if (v.answer.value !== "x3.33" || !v.answer.basis.includes("C") || !v.answer.basis.includes("A")) reds.push(`verdict: the answer is not the spread between the two ends (${v.answer.value}, ${v.answer.basis})`);
+       cannot see, the exact fault this task was opened for. THE NOTATION FLIPPED
+       to a trailing "x" with task 14 (see rentMult): the same figure, read in
+       the order it is said out loud. */
+    if (v.answer.value !== "3.33x" || !v.answer.basis.includes("C") || !v.answer.basis.includes("A")) reds.push(`verdict: the answer is not the spread between the two ends (${v.answer.value}, ${v.answer.basis})`);
     if (v.answer.confidence === "measured") reds.push("verdict: the multiples are composed from tag constants and are marked measured");
     /* THE AVERAGE CELL'S ASSERTION CHANGED FROM "x1.00" TO "1" because of his
        ruling of 2026-09-04 ("then you say the city average times one which
@@ -210,7 +212,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        be the "repeating the front part" fault he named on 2026-08-25. What is
        left is what the spread cannot say. Three districts rebased on A put B
        in the middle at 1.33. */
-    if (v.cells.length !== 2 || v.cells[0].value !== "x1.33" || v.cells[0].note !== "B" || v.cells[1].value !== "3") reds.push(`verdict: the cells are not the middle district and the count (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
+    if (v.cells.length !== 2 || v.cells[0].value !== "1.33x" || v.cells[0].note !== "B" || v.cells[1].value !== "3") reds.push(`verdict: the cells are not the middle district and the count (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
     for (const c of v.cells) {
       if (c.label.split(/\s+/).length > 4) reds.push(`verdict: label over four words: "${c.label}"`);
       if (c.note && c.note.length > 48) reds.push(`verdict: note over 48 characters: "${c.note}"`);
@@ -224,7 +226,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const two = cityVerdictFacts({ where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }] } });
   if (!two) reds.push("verdict: two ranked districts draw nothing");
   else {
-    if (two.answer.value !== "x1.33" || !two.answer.basis.includes("B") || !two.answer.basis.includes("A")) reds.push(`verdict: two districts, the answer is not the spread (${two.answer.value}, ${two.answer.basis})`);
+    if (two.answer.value !== "1.33x" || !two.answer.basis.includes("B") || !two.answer.basis.includes("A")) reds.push(`verdict: two districts, the answer is not the spread (${two.answer.value}, ${two.answer.basis})`);
     if (two.cells.some((c) => c.key === "middle")) reds.push(`verdict: two districts, and a middle cell reading "${String(two.cells.find((c) => c.key === "middle")?.value)}" beside "${String(two.cells.find((c) => c.key === "middle")?.note)}"`);
     if (two.cells.length !== 1 || two.cells[0].key !== "ranked" || two.cells[0].value !== "2") reds.push(`verdict: two districts, the cells are ${two.cells.map((c) => `${c.label} ${c.value}`).join("; ")}`);
     /* NO CELL IS A BARE WORD. The middle cell's old value was one; this holds
@@ -246,11 +248,25 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        the basis the rows no longer use. */
     if (b.rows.length !== 3 || b.worldMax !== 3.33) reds.push(`districts: ${b.rows.length} rows, top rule ${b.worldMax}`);
     if (b.cheapest !== "A" || b.dearest.name !== "C" || b.middle?.name !== "B") reds.push(`districts: the ends and the middle are ${b.cheapest} / ${b.middle?.name} / ${b.dearest.name}`);
-    /* THE CARD MARKS A ROW, NOT A NAME: the reference key has to be a key the
-       rows actually carry, or the pill lands on nothing and the reference row
-       keeps printing a figure of itself. */
-    if (b.cheapestKey !== "a" || !b.rows.some((r) => r.key === b.cheapestKey)) reds.push(`districts: the reference key is "${b.cheapestKey}", which is not the cheapest row's key`);
+    /* THE REFERENCE IS SAID, NOT MARKED (task 14, 2026-09-10). `cheapestKey`
+       is gone with the pill it fed, so what has to hold now is that the
+       reference district is NAMED in both places a reader meets it , the
+       basis line and the column head , and that it is the district the rows
+       are actually rebased on. The old assertion proved a key pointed at a
+       drawn row; this proves the words point at the right district, which is
+       the only thing left carrying the reference. */
     if (!b.basis.includes("A")) reds.push(`districts: the basis line does not name the district every figure is measured against ("${b.basis}")`);
+    if (!b.phoneHead.value.includes("A")) reds.push(`districts: the column head does not name the district the figures are against ("${b.phoneHead.value}")`);
+    if (/[{}]/.test(b.basis + b.phoneHead.value + b.phoneHead.name)) reds.push(`districts: a placeholder was never filled ("${b.basis}" / "${b.phoneHead.value}")`);
+    /* EVERY ROW CARRIES A FIGURE, THE REFERENCE'S INCLUDED, and the
+       reference's is a multiple of itself: 1.00x, formatted like every other
+       row rather than blanked or worded. His two rulings of 2026-09-10 in one
+       assertion ("the label replaces the number, which is totally an idiotic
+       thing out there"), on the shipped builder rather than on the card. */
+    const refRow = b.rows.find((r) => r.key === "a");
+    if (!refRow) reds.push("districts: the cheapest district draws no row of its own");
+    else if (rentMult(refRow.value) !== "1.00x") reds.push(`districts: the reference row's figure is "${rentMult(refRow.value)}", not its own multiple of itself`);
+    for (const r of b.rows) if (!/\d/.test(rentMult(r.value))) reds.push(`districts: row "${r.name}" prints no figure ("${rentMult(r.value)}")`);
     if (!b.tagged) reds.push("districts: the multiples are composed from tag constants and are not marked modelled");
     /* THE ASSERTION IS INVERTED, task 13 (2026-09-10). It used to demand that
        every row CARRY its character note; his ruling on this exact card
@@ -261,28 +277,30 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        asserting it is dropped is the point: asserting on a fixture with no
        `character` would pass on a builder that still copies it. */
     if (b.rows.some((r) => r.note)) reds.push("districts: a row carries a one-word summary of a place");
-    /* TWO DECIMALS ALWAYS, AND NEVER A WORD (task 13 fix wave, 2026-09-10).
-       The formatter formats and does nothing else: it used to answer 1 with
-       the word "cheapest", which PART 5 bans ("any bare word standing where a
-       figure belongs"), and any sub-1 multiple from any future caller got the
-       same word by accident. The reference row draws NO figure at all now,
-       which is the card's business (RankedBars' `referenceKey`), not this
-       function's. Three halves asserted: the notation, the absence of a word
-       at 1, and the absence of one below 1. */
-    if (rentMult(2.5) !== "x2.50") reds.push(`districts: the multiple prints as ${rentMult(2.5)}`);
-    if (rentMult(1) !== "x1.00") reds.push(`districts: the formatter answers 1 with "${rentMult(1)}", not a formatted multiple`);
-    if (rentMult(0.5) !== "x0.50") reds.push(`districts: the formatter answers a sub-1 multiple with "${rentMult(0.5)}"`);
-    for (const t of [COPY.cityDistricts.kicker, COPY.cityDistricts.basis, COPY.cityDistricts.heaviest, COPY.cityDistricts.phoneHead.name, COPY.cityDistricts.phoneHead.value]) for (const bw of COPY.banned) if (t.toLowerCase().includes(bw)) reds.push(`districts: banned word "${bw}" in "${t}"`);
+    /* TWO DECIMALS ALWAYS, A TRAILING x, AND NEVER A WORD (task 13 fix wave,
+       reversed notation task 14, 2026-09-10). The formatter formats and does
+       nothing else: it used to answer 1 with the word "cheapest", which PART 5
+       bans ("any bare word standing where a figure belongs"), and any sub-1
+       multiple from any future caller got the same word by accident. The
+       multiplier now TRAILS the number, the order the row is read out in.
+       Three halves asserted: the notation, that 1 is a formatted figure and
+       not a word or a blank, and that a sub-1 multiple is one too. */
+    if (rentMult(2.5) !== "2.50x") reds.push(`districts: the multiple prints as ${rentMult(2.5)}`);
+    if (rentMult(1) !== "1.00x") reds.push(`districts: the formatter answers 1 with "${rentMult(1)}", not a formatted multiple`);
+    if (rentMult(0.5) !== "0.50x") reds.push(`districts: the formatter answers a sub-1 multiple with "${rentMult(0.5)}"`);
+    for (const t of [COPY.cityDistricts.kicker, COPY.cityDistricts.basis, COPY.cityDistricts.dearest, COPY.cityDistricts.phoneHead.name, COPY.cityDistricts.phoneHead.value, b.basis, b.phoneHead.value]) for (const bw of COPY.banned) if (t.toLowerCase().includes(bw)) reds.push(`districts: banned word "${bw}" in "${t}"`);
   }
-  /* TWO DISTRICTS, the case nothing renders today: the card still draws, the
-     reference key still points at a drawn row, and there is no middle to
-     name. The three-district fixture above cannot prove any of that. */
+  /* TWO DISTRICTS, the case nothing renders today: the card still draws, both
+     rows still carry a figure, and there is no middle to name. The
+     three-district fixture above cannot prove any of that. */
   const b2 = buildCityDistrictBars({ where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.2, character: "Q" }, { name: "A", slug: "a", rent_mult: 0.9, character: "R" }] } });
   if (!b2) reds.push("districts: two ranked districts draw nothing");
   else {
     if (b2.rows.length !== 2 || b2.worldMax !== 1.33) reds.push(`districts: two districts, ${b2.rows.length} rows, top rule ${b2.worldMax}`);
     if (b2.middle !== null) reds.push(`districts: two districts, and a middle of "${b2.middle.name}", which is one of the two ends`);
-    if (b2.cheapestKey !== "a" || !b2.rows.some((r) => r.key === b2.cheapestKey)) reds.push(`districts: two districts, the reference key is "${b2.cheapestKey}"`);
+    if (b2.cheapest !== "A" || !b2.rows.some((r) => r.key === "a")) reds.push(`districts: two districts, the reference is "${b2.cheapest}" and it draws no row`);
+    if (b2.rows.some((r) => !/\d/.test(rentMult(r.value)))) reds.push("districts: two districts, and a row prints no figure");
+    if (!b2.phoneHead.value.includes("A")) reds.push(`districts: two districts, the column head does not name the reference ("${b2.phoneHead.value}")`);
     if (b2.rows.some((r) => r.note)) reds.push("districts: two districts, and a row carries a one-word summary of a place");
   }
   if (buildCityDistrictBars({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("districts: one district draws a card");
