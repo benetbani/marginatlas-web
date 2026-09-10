@@ -402,11 +402,22 @@ function inPage(ctx) {
   if (!any30) unmeasured.push("FOCAL: no element on this page sits at 30px; the rule is unmeasured, not passed");
 
   /* PLACEMENT: "a figure drawn on a world track without its placement line
-     fails." */
+     fails." (PART 9 rule 5.) RankedBars.tsx's table form stamps every track
+     with what its own far end IS: `data-track="world"` when it is a true
+     world maximum, `data-track="set"` when it is only the heaviest member
+     drawn on the same card (its own header comment). A "set" track is never
+     a world track, so PART 9 rule 5 does not apply to it and it is skipped
+     below. DECLARE, OR BE MEASURED: a track that says "set" is taken at its
+     word; a track that declares nothing at all, `data-track`'s shape before
+     this stamp existed, is still read exactly as before, because silence
+     must never buy an exemption a real declaration has to earn, the same
+     reasoning this file already applies elsewhere by reporting UNMEASURED
+     rather than a false zero. */
   for (const track of document.querySelectorAll("[data-track]")) {
     if (!track.getClientRects().length || hiddenFromSight(track)) continue;
+    if (track.getAttribute("data-track") === "set") continue; // declared: the set's own heaviest member, not the world's
     const hasPlacement = track.parentElement && track.parentElement.querySelector("[data-placement]");
-    if (!hasPlacement) push(cardIdOf(track), "PLACEMENT", "a world track with no placement line beside it");
+    if (!hasPlacement) push(cardIdOf(track), "PLACEMENT", "a track with no placement line beside it");
   }
 
   /* EDGE: "the card border is --c-line-strong and every line inside it is
