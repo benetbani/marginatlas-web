@@ -428,11 +428,13 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   // which is a MEAN. The other median_income_usd on this seed, the one on the
   // income curve above, really is a median (spread.p50), so the same name
   // carries two different statistics in one payload. It is safe TODAY only
-  // because the table renders it as "Customer income" and as a percentage of
-  // the home city, so a mean is compared against a mean on both sides and no
-  // reader ever sees the word median. Do NOT print this slot as a median, and
-  // do not reconcile it against the income curve's figure: for London they are
-  // 64,800 and 57,000, and the gap between them is real.
+  // because the table renders it as "Customer income", its own absolute
+  // dollar figure in the column's own unit (task 9, 2026-09-08, replaced the
+  // old reading as a percentage of the home city), so every row is a mean
+  // printed beside another mean and no reader ever sees the word median.
+  // Do NOT print this slot as a median, and do not reconcile it against the
+  // income curve's figure: for London they are 64,800 and 57,000, and the
+  // gap between them is real.
   const homeRow = {
     name: city.name,
     // The slug and the country code, carried since run 22 for the peers table's row key and flag.
