@@ -39,9 +39,14 @@
  * on the ground of MODEL.md PART 5's DISTRICT ROWS ruling, in its words:
  * "Six or more ranked members is a table read top to bottom, not left-to-right
  * columns, which is why the order read as confusing." The district card was
- * seven columns. It is now seven rows read top to bottom, each row PART 5's
- * own grid, `[minmax(0,22ch) auto 1fr]`, name then the figure in the very
- * next column then a track that absorbs the leftover width , which is PART
+ * seven columns. It is now seven rows read top to bottom on PART 5's grid,
+ * `[minmax(0,22ch) <the widest figure> minmax(0,1fr)]`, name then the figure
+ * in the very next column then a track that absorbs the leftover width. ONE
+ * SET OF COLUMNS FOR THE WHOLE CARD, head included, computed once (see
+ * `wideColumns` below): while each row carried the template separately, the
+ * middle column was `auto` and sized to that row's own figure, which put the
+ * reference row's track 40px left of its siblings' and made the cheapest
+ * district draw the longer bar. The grid itself is PART
  * 5's GEOMETRY clause, the clause MODEL.md itself calls "the mechanism that
  * ends 'the distance between the category and the word is very big'": a row is
  * NEVER justify-between across a card wider than 420px, and at 768 the old
@@ -194,7 +199,46 @@ const WIDE_ROWS = 6;
    its rules in, not by the order they are written in the attribute. The
    head row baselines its two words; a data row centres, because a 12px
    track has no baseline worth aligning text to. */
-const ROW = "grid grid-cols-[minmax(0,22ch)_auto_1fr] gap-x-3";
+const ROW = "grid gap-x-3";
+/* THE COLUMNS ARE THE CARD'S, NOT EACH ROW'S (task 13 alignment fix,
+   2026-09-10). ROW above used to carry `grid-cols-[minmax(0,22ch)_auto_1fr]`,
+   and because the class is on every row SEPARATELY, every row was its own
+   grid: the `auto` middle column sized to THAT row's own figure. The
+   reference row prints a reserved `&nbsp;` and nothing else, so its middle
+   column collapsed to 20px against its siblings' 60px, the `1fr` track column
+   swallowed the slack, and that row's track began 40px left of theirs and ran
+   40px longer. Measured at 1280 on the rendered city page, not eyeballed: the
+   CHEAPEST district drew a 150px bar and the next-cheapest, which costs more,
+   drew 144px , the card's one purpose, comparing rents by eye, inverted. Rows
+   two through seven agreed with each other only by the accident that "x1.08"
+   and "x2.50" are the same number of characters; a formatter whose strings
+   differ in length (the country money card's percentages) would have splayed
+   all seven.
+
+   `display:contents` on the rows would also share one geometry and is
+   FORBIDDEN here: several harness rules call getBoundingClientRect() on
+   `[data-row]` and measure row heights against founder ruling 8, and a
+   contents-display row has no box for them to measure. This project has been
+   burned six times by a check that cannot see the thing it checks.
+
+   So the template is computed ONCE for the card and set identically on every
+   row and on the head. The middle column is `figChars` characters wide plus
+   the pill's own horizontal padding (`px-2` twice, which is exactly 1rem), so
+   it is derived from the widest figure THIS card draws rather than a constant
+   that happens to fit "x2.50". `ch` is the unit because it is the advance of
+   "0" in the row's own font at the row's own size, and the figure is drawn in
+   that same font at that same size (measured on this page: row 16px, figure
+   16px), so n characters of figure occupy at most n ch whenever no glyph in
+   the string is wider than a digit. THE BLIND SPOT, stated rather than
+   assumed: this cannot distinguish a formatter whose glyphs are all digit
+   width or narrower from one carrying a wider glyph (a "%" is wider than "0"
+   in some faces). An overrun of a few pixels is absorbed by the 12px column
+   gap before it reaches the track, and a real one is reported by the
+   harness's own overflow rule, which reds a figure cell whose content is
+   wider than its box. */
+const wideColumns = (figChars: number): React.CSSProperties => ({
+  gridTemplateColumns: `minmax(0,22ch) calc(${figChars}ch + 1rem) minmax(0,1fr)`,
+});
 /* THE PILL ON A NAME, the same shape as the pill on a figure so the card
    carries one mark and not two ideas of a mark. It goes ON the name element
    itself and NEVER in a span inside it: a district row with a second element
@@ -251,6 +295,12 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
      this is not another breakpoint: the columns are wrong at 1280 as well. */
   const drawWide = sorted.length >= WIDE_ROWS;
   const ranked = [...sorted].reverse();
+  /* THE WIDEST FIGURE THE CARD ACTUALLY DRAWS, counted once, in characters:
+     the reference row contributes 1 for its reserved `&nbsp;`, every other row
+     the length of its own formatted figure. See wideColumns above for why the
+     count becomes a `ch` width and what that unit cannot see. */
+  const figChars = Math.max(1, ...sorted.map((r) => (r.key === refKey ? 1 : fmt(r.value).length)));
+  const GEO = wideColumns(figChars);
   return (
     <Box id={id} className={drawWide ? "flex flex-col" : ""} data-archetype="ranked-bars" data-leader-key={leader.key}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
@@ -296,7 +346,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
               </>
             );
             return (
-              <li key={r.key} style={{ minWidth: 0 }} data-bar={r.key} data-row={r.key}>
+              <li key={r.key} style={{ minWidth: 0 }} data-bar={r.key} data-row={r.key} data-value={r.value}>
                 {r.href ? <a href={r.href} className="block no-underline">{inner}</a> : inner}
               </li>
             );
@@ -305,15 +355,39 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
       </div> : null}
       {drawWide ? (
         <div className="mt-2.5 hidden flex-1 flex-col sm:flex" data-idea="I2">
-          <div className={`${ROW} items-baseline pb-2`}>
+          {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS (task 13
+              alignment fix): same `GEO`, so its first two cells begin exactly
+              where every name and every figure below them begins. Its own two
+              remaining words then SPAN columns two and three, because the
+              figure column is a figure wide and "Times the cheapest" is not: a
+              head cell held inside that column would overflow it, which is
+              what the old per-row `auto` column was hiding by growing the head
+              instead: the ceiling's own column then began 72px right of the
+              tracks it names (measured at 1280: cell at 514, tracks at 442),
+              though its printed words were right-aligned to the card's edge
+              either way, so the photograph showed nothing. The BOX lied, not
+              the ink, which is why this half of the fault needed measuring
+              rather than looking. Spanning is the honest way to say a label is
+              wider than its column. Inside the span the pair sits at the two ends, so the
+              value head lands over the figures and the ceiling's right edge
+              lands on the far end of every track, which is what the ceiling
+              IS. This is not the justify-between PART 5 bans: that clause is
+              about a label and its figure held apart across a wide card, and
+              `check_model_laws.mjs` reads it as such (a row draws a `.fig` or
+              carries `[data-row]`); these are two column names and the head
+              carries neither. Put a figure in this head and the rule fires,
+              correctly. */}
+          <div className={`${ROW} items-baseline pb-2`} style={GEO}>
             <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.name}</span>
-            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
-            {/* THE CEILING, NAMED ONCE, over the column whose far end it is
-                (ruling 13). Not a column head: it is the same micro muted line
-                the bars form prints beside its hairline, in the same words, so
-                the two forms say the ceiling identically. Right aligned,
-                because the ceiling is the right end of every track below. */}
-            <span className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{topLabel ?? COPY.margin.worldBest} {fmt(top)}</span>
+            <div className="col-span-2 flex items-baseline justify-between gap-x-3">
+              <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
+              {/* THE CEILING, NAMED ONCE, over the column whose far end it is
+                  (ruling 13). Not a column head: it is the same micro muted line
+                  the bars form prints beside its hairline, in the same words, so
+                  the two forms say the ceiling identically. Right aligned,
+                  because the ceiling is the right end of every track below. */}
+              <span className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{topLabel ?? COPY.margin.worldBest} {fmt(top)}</span>
+            </div>
           </div>
           <div className="grid flex-1 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length} style={{ gridAutoRows: "minmax(2.5rem,1fr)" }}>
             {ranked.map((r) => {
@@ -349,7 +423,15 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                 </>
               );
               const cls = `${ROW} items-center`;
-              return r.href ? <a key={r.key} href={r.href} className={cls} data-row={r.key}>{row}</a> : <div key={r.key} className={cls} data-row={r.key}>{row}</div>;
+              /* THE ROW DECLARES THE VALUE ITS BAR DRAWS (task 13 alignment
+                 fix): `check_archetypes.mjs` compares the drawn length against
+                 this number, row by row, so a bar that contradicts its own
+                 figure is a red instead of a photograph nobody re-measured.
+                 The attribute is the component's own declaration, which is the
+                 rule's blind spot and is stated where the rule is written. */
+              return r.href
+                ? <a key={r.key} href={r.href} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</a>
+                : <div key={r.key} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</div>;
             })}
           </div>
         </div>
@@ -385,7 +467,12 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
               </>
             );
             const cls = "flex items-baseline justify-between gap-x-3 py-2.5";
-            return r.href ? <a key={r.key} href={r.href} className={cls} data-row={r.key}>{row}</a> : <div key={r.key} className={cls} data-row={r.key}>{row}</div>;
+            /* The phone row draws no bar and still declares its value, so the
+               rule that reads drawn length against value keeps working the day
+               this form grows one. */
+            return r.href
+              ? <a key={r.key} href={r.href} className={cls} data-row={r.key} data-value={r.value}>{row}</a>
+              : <div key={r.key} className={cls} data-row={r.key} data-value={r.value}>{row}</div>;
           })}
         </div>
       </div>

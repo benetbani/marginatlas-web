@@ -19,6 +19,12 @@
  *    itself declares as the leader (`data-leader-key`), checked at every
  *    width because the pill is drawn twice (the bar figure, the phone table)
  *    and only one of the two shows at a time.
+ *  TRACKS ADRIFT / OUT OF ORDER: on a ranked card every track begins at one
+ *    left edge and runs one length within a pixel, and the bars drawn in them
+ *    rise in the order their values do. Both halves of one law, and one
+ *    fault: a per-row column template let the reference row's track begin
+ *    40px left of its siblings', so the cheapest district drew the longer bar
+ *    (task 13 alignment fix, 2026-09-10).
  *  ROWS CUT: a drawing that declares its row count draws every row at every
  *    width (the sheet's copy of the page filter's rule; ranked bars declare
  *    both their forms since run 25).
@@ -118,6 +124,32 @@ function inPage() {
       const pills = [...card.querySelectorAll("[data-pill]")].filter((el) => el.getClientRects().length > 0);
       r.pillCount = pills.length;
       r.pillKey = pills.length ? (pills[0].closest("[data-row]")?.getAttribute("data-row") || "") : "";
+      /* THE DRAWN LENGTH BESIDE THE DECLARED VALUE (task 13 alignment fix,
+         2026-09-10), for whichever of the three forms is visible at this
+         width. A row's mark is the fill inside its `[data-track]` in the table
+         form (a width) and the standing column in the bars form (a height);
+         the phone form draws no mark and is dropped by the null below rather
+         than counted as a zero-length bar. Only visible rows: at any width two
+         of the three forms are display:none, the same getClientRects() test
+         the rest of this walk uses. */
+      r.ranked = [...card.querySelectorAll("[data-row][data-value]")]
+        .filter((el) => el.getClientRects().length > 0)
+        .map((el) => {
+          const track = el.querySelector("[data-track]");
+          const fill = track ? track.firstElementChild : null;
+          const column = el.querySelector("div[aria-hidden]");
+          const tb = track ? track.getBoundingClientRect() : null;
+          const fb = fill ? fill.getBoundingClientRect() : null;
+          const cb3 = column ? column.getBoundingClientRect() : null;
+          return {
+            key: el.getAttribute("data-row"),
+            value: Number(el.getAttribute("data-value")),
+            trackLeft: tb ? +tb.left.toFixed(2) : null,
+            trackW: tb ? +tb.width.toFixed(2) : null,
+            drawn: fb ? +fb.width.toFixed(2) : cb3 ? +cb3.height.toFixed(2) : null,
+          };
+        })
+        .filter((x) => x.drawn != null && Number.isFinite(x.value));
     }
     if (r.kind === "card-pager") {
       const cards = [...card.querySelectorAll("[data-card]")].filter((el) => el.getClientRects().length);
@@ -337,7 +369,40 @@ for (const w of WIDTHS) {
        every form (bar figure, wide table, phone table) and only one form is
        ever visible, so a fix that lands on one and forgets another must be
        caught at whichever width shows the broken one. */
+    /* THE BARS AGREE WITH THEIR OWN NUMBERS (task 13 alignment fix,
+       2026-09-10). Two halves of one law, because on this card they were one
+       fault: every track on a ranked card starts at one left edge and runs one
+       length, and the bars drawn in them rise in the order the values do. It
+       is the check that was missing when each row carried the column template
+       separately: the reference row's empty figure cell collapsed its middle
+       column, its track began 40px left of its siblings' and ran 40px longer,
+       and the CHEAPEST district drew a 150px bar against the 144px of a
+       district that costs more , inverted, on a card that exists to be read by
+       eye. Measured on the rendered page, not from the photograph.
+       TOLERANCE: 1px, one device pixel. Every row is laid out from one
+       template against one container width, so a genuine geometry difference
+       is a whole column wide, tens of pixels (the fault above was 40), while
+       the browser's own subpixel rounding of that one template is under a
+       pixel; and an inversion under a pixel is not visible to the eye this
+       rule protects. A tolerance loose enough to swallow a column would have
+       let this defect through, which is the failure being closed.
+       BLIND SPOT: `data-value` is the component's own declaration of what the
+       bar draws, so this proves the DRAWING against the number the component
+       holds, not against the figure the reader sees. A row whose declared
+       value and printed figure disagreed would pass here; that is a data
+       fault, and this is the geometry rule. */
     if (r.kind === "ranked-bars") {
+      const RANK_TOL = 1;
+      const rr = r.ranked || [];
+      const tracked = rr.filter((x) => x.trackW != null);
+      if (tracked.length > 1) {
+        const lefts = tracked.map((x) => x.trackLeft), widths = tracked.map((x) => x.trackW);
+        const dl = Math.max(...lefts) - Math.min(...lefts), dw = Math.max(...widths) - Math.min(...widths);
+        if (dl > RANK_TOL || dw > RANK_TOL) red(r.inst, w, "TRACKS ADRIFT", `${tracked.length} tracks on one card at lefts ${Math.min(...lefts)}..${Math.max(...lefts)} and widths ${Math.min(...widths)}..${Math.max(...widths)}; one origin and one length, within ${RANK_TOL}px`);
+      }
+      const inverted = [];
+      for (const a of rr) for (const b of rr) if (a.value > b.value && a.drawn < b.drawn - RANK_TOL) inverted.push(`${a.key} (${a.value}) draws ${a.drawn}px against ${b.key} (${b.value}) at ${b.drawn}px`);
+      if (inverted.length) red(r.inst, w, "OUT OF ORDER", `${inverted.length} bar(s) drawn out of the order of their values: ${inverted[0]}`);
       if (r.accents > 0) red(r.inst, w, "ACCENT", `${r.accents} accent-coloured text(s); the card's one mark is a pill now, not a colour`);
       if (r.pillCount !== 1) red(r.inst, w, "ACCENT", `${r.pillCount} pill(s) on the card; exactly one, on the reference member`);
       else if (r.pillKey !== r.leaderKey) red(r.inst, w, "ACCENT", `the pill sits on "${r.pillKey}", not the reference member "${r.leaderKey}"`);
