@@ -505,7 +505,13 @@ const collect = () => {
     /* THE HONESTY TAG IS NOT REPETITION. "sample" marks every section whose
        figures are modelled, and it is REQUIRED to appear on each of them. H4 is
        about the page telling a reader the same THING twice, not about a chrome
-       marker doing its job. */
+       marker doing its job.
+       KEPT DELIBERATELY WHILE THE MARK IS HIDDEN (2026-09-11): the word draws
+       nowhere today because `areSampleMarksVisible()` is off, so this clause
+       currently matches nothing. It stays because the switch is a switch: the day
+       the marks come back, a page carrying eight of them must not be read as a
+       page repeating itself eight times, and rediscovering that would cost the
+       same afternoon it cost the first time. */
     if (/^sample$/i.test(own)) continue;
     if (e === exemptEl) continue;
     /* A REPEATED LABEL IS THE SITE OBEYING H8, NOT THE PAGE REPEATING ITSELF.

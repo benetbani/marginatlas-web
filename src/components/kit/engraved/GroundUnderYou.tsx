@@ -20,6 +20,7 @@
  */
 import * as React from "react";
 import { meaningStep, Glyph, SampleState, type GlyphName } from "./primitives";
+import { areSampleMarksVisible } from "@/lib/feature_flags";
 
 /* ------------------------------------------------------------------ */
 /* Types.                                                              */
@@ -258,7 +259,7 @@ function FactorBar({ factor }: { factor: GroundFactor }) {
         >
           {factor.label}
         </span>
-        {isSample ? (
+        {isSample && areSampleMarksVisible() ? (
           /* typography-ok: 0.6875rem is 11px, the engraved family's micro label
              size (eng-score__label, and the "Thin"/"Deep" ends in Compare).
              IT WAS 0.5625rem, WHICH IS 9px, and measured off the rendered page

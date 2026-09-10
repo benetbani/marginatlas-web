@@ -68,21 +68,30 @@
  *
  * 5. `CountryFlag` IS REUSED, NEVER REIMPLEMENTED, and this file does not
  *    import it: a caller passes the flag in as the mark. That component holds
- *    the whole flag law (height from `--flag-row` or `--flag-hero`, width
- *    auto, `object-contain`, radius stripped, a hairline as an outline rather
- *    than a border) and one line of border arithmetic inside it once put 215
- *    flag violations on the site at once. THE MARK COLUMN IS 2.5rem, which is
- *    exactly what a 2:1 flag occupies at the row rung, and the widest shape in
- *    common use (11:28) does not fit it: that is a loud failure, not a silent
- *    one, because the mark sits in a box the harness's own overflow rule
- *    measures. The column is NOT sized to the widest mark at runtime, because
- *    one shared column is the whole point: a per-row `auto` column sizes to
- *    that row's own mark and lands every name at a different left edge, which
- *    is the exact fault RankedBars.tsx records as its alignment bug. And the
- *    harness compares mark HEIGHTS, never widths: a correct flag set has
- *    deliberately unequal widths (Switzerland is square, Qatar is a ribbon),
- *    so a width rule would red the component for obeying its own law, which is
- *    the measurement trap this project has already paid for once.
+ *    the whole flag law (height from `--flag-row` or `--flag-hero`, width from
+ *    `--flag-row-w` or `--flag-hero-w`, `object-contain` so the flag is fitted
+ *    into that box rather than stretched to it, radius stripped, a hairline as
+ *    an outline rather than a border) and one line of border arithmetic inside
+ *    it once put 215 flag violations on the site at once. THE MARK COLUMN IS
+ *    2.5rem, and it is NOT sized to the widest mark at runtime, because one
+ *    shared column is the whole point: a per-row `auto` column sizes to that
+ *    row's own mark and lands every name at a different left edge, which is the
+ *    exact fault RankedBars.tsx records as its alignment bug. 2.5rem is not
+ *    tied to the flag token either, and deliberately: nothing in this file may
+ *    know what a flag is, so the column is sized to hold the widest mark KIND
+ *    this card will ever carry, with the 30px flag box sitting inside it and
+ *    10px to spare on every row alike.
+ *
+ *    THE HARNESS NOW COMPARES MARK WIDTHS AS WELL AS HEIGHTS (2026-09-11), and
+ *    this clause used to say the opposite: "a correct flag set has deliberately
+ *    unequal widths (Switzerland is square, Qatar is a ribbon), so a width rule
+ *    would red the component for obeying its own law." True of the old law,
+ *    false of this one. The founder ruled
+ *    "all-flags-same-width-please-madatory-always", so every mark occupies one
+ *    box and the shape inside it is letterboxed, never stretched; unequal
+ *    widths are the fault now. A consequence worth noting here because it
+ *    deleted a hazard: no mark can overflow the 2.5rem column any more, so the
+ *    widest shape in common use (11:28) no longer has to fail loudly in it.
  *
  * WHAT IT COUNTS AGAINST. Nothing in the bar family: this card draws no bar,
  * no track and no fill, so PART 6's ledger of three bar drawings a page is
@@ -136,7 +145,9 @@ export type MarkListProps = {
 
 /* THE MARK COLUMN, and why it is a constant. See clause 5 of the header: one
    column shared by every row is what lands every name at one left edge, and
-   2.5rem is a 2:1 flag's width at `--flag-row`. */
+   2.5rem holds the widest mark kind this card carries with room to spare,
+   including the 30px flag box of `--flag-row-w`. Not derived from that token:
+   this file must not know what a flag is. */
 const MARK_COL = "2.5rem";
 /* No `align-items` in this class, deliberately: the head baselines its two
    words and a data row centres its three cells, and two class names both

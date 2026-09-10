@@ -213,7 +213,12 @@ export const COPY = {
    *  never says what any of it means. */
   cityCards: {
     plain: { basis: "What an average customer earns in a year." },
-    field: { basis: "What an average customer earns in a year. The darker the card, the more." },
+    /* THE FIELD LOOK STOPPED DESCRIBING A DRAWING, 2026-09-11. It read "The
+       darker the card, the more", which was true while the tint's depth was the
+       figure. The photograph now sits under that tint and the tint is one fixed
+       wash (CityCards.tsx), so the sentence would be describing a veil. The
+       figure is printed on every card instead. */
+    field: { basis: "What an average customer earns in a year." },
     plate: { basis: "What an average customer earns in a year." },
     column: { basis: "What an average customer earns in a year. The taller the mark, the more." },
   },

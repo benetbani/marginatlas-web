@@ -49,6 +49,21 @@
  * spirit but is intentionally out of scope here; widen SAMPLE_CONFIDENCES
  * below if the founder wants it included.
  *
+ * THE MARK IS HIDDEN SITE-WIDE SINCE 2026-09-11 AND THIS GATE IS UNCHANGED,
+ * which is the point of hiding it with a switch rather than deleting it. The
+ * founder asked for the word off the page ("the site is only being viewed by
+ * me"), so `SampleTag` now returns null unless `areSampleMarksVisible()` is on
+ * (src/lib/feature_flags.ts). What this gate asserts is that the render group
+ * for a modelled seed REFERENCES SampleTag, which is a fact about the source and
+ * about the mechanism, and the mechanism is exactly what must not rot while the
+ * drawing is off: flipping NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1 has to put the marks
+ * back on every modelled section, and that is only true if every such section is
+ * still wired to the component. So this gate is now the thing that keeps the
+ * switch honest, and it would be wrong to relax it because the marks are
+ * invisible today. Its blind spot is unchanged and worth restating next to that
+ * claim: it proves the reference exists, never that the rendered mark appears,
+ * so it cannot tell an armed section from one whose `sample` prop is false.
+ *
  * Run: npx tsx scripts/verify_sample_tags.ts
  */
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";

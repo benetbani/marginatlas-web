@@ -2485,6 +2485,19 @@
      "the flag which is distorted"). Two rungs, and no third. */
   --flag-hero: 40px;
   --flag-row: 20px;
+  /* EVERY FLAG IS THE SAME WIDTH (founder, 2026-09-11, verbatim:
+     "all-flags-same-width-please-madatory-always"). A flag at its own ratio
+     gives a column of them a ragged edge, because Switzerland is square and
+     the United States is wide. So the BOX is one size per rung and the flag is
+     fitted inside it, never stretched to fill it: `object-fit: contain` in
+     CountryFlag.tsx, which letterboxes a shape that does not match.
+     1.5x the rung, because 3:2 is the commonest flag shape in the set and it
+     then fills its box exactly, leaving the air to the two extremes (a square
+     flag takes 5px of air each side at the row rung, the widest ribbon in
+     common use about 4px top and bottom). Written as px rather than calc() so
+     the harness can read the number straight off :root. */
+  --flag-hero-w: 60px;
+  --flag-row-w: 30px;
 }
 
 /* ================== THE WORDS ARE NARROW, THE PICTURES ARE WIDE ==========

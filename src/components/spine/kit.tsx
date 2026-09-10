@@ -26,6 +26,7 @@ import * as React from "react";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import { Pill } from "@/components/ui/pill";
 import { AtlasMark } from "./marks";
+import { areSampleMarksVisible } from "@/lib/feature_flags";
 
 export const TERRA = "#fb8469"; // atlas-300 soft terracotta , the only fill color
 export const TRACK = "#e6e6e6";
@@ -734,8 +735,22 @@ export function Meter({ value, left, right }: { value: number; left: string; rig
  * unsourced sections ship FILLED with sample data, clearly labeled, never shown as real).
  * Honest, unmissable, calm: the dashed "sample" AtlasMark + the word, in a dashed pill on
  * the soft wash , visibly different from every real chip, but quiet enough not to shout.
- * `note` renders as VISIBLE text when set (never title-only; mobile must see it too). */
+ * `note` renders as VISIBLE text when set (never title-only; mobile must see it too).
+ *
+ * HIDDEN SITE-WIDE SINCE 2026-09-11, BY ONE SWITCH, AND NOT DELETED. Founder:
+ * "please remove the label sample from everything because the site is only being
+ * viewed by me, okay? Remove the word sample." The switch and the reason it is a
+ * switch live in `areSampleMarksVisible()` (src/lib/feature_flags.ts), which is
+ * also where the one env var that brings the marks back is named.
+ *
+ * THE GUARD IS HERE, AT THE ONE COMPONENT, and not at the roughly thirty call
+ * sites that render it. Every caller keeps passing `sample` / `confidence` /
+ * `note` exactly as before, so the question "is this figure modelled?" is still
+ * asked and still answered everywhere in the codebase; only the drawing stops.
+ * A caller-side fix would have had to be found thirty times and undone thirty
+ * times, and the first one missed would put the word back on one page only. */
 export function SampleTag({ note }: { note?: string }) {
+  if (!areSampleMarksVisible()) return null;
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-[var(--c-line-strong)] bg-[var(--c-soft)] px-2.5 py-0.5">
       <AtlasMark id="sample" size={12} />

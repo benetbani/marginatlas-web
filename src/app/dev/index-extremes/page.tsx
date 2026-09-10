@@ -25,6 +25,7 @@ import { Movement, Box, Ico } from "@/components/spine/kit";
 import { RankBars, type RankDatum } from "@/components/spine/kit-index";
 import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import { SPINE_COUNTRIES } from "@/lib/spine-seeds";
+import { areSampleMarksVisible } from "@/lib/feature_flags";
 
 export const dynamic = "force-static";
 
@@ -207,7 +208,10 @@ export default function IndexExtremesPage() {
   const boards = BOARDS.map((board) => ({ board, data: boardRows(rows, board) })).filter(
     (b): b is { board: Board; data: RankDatum[] } => b.data != null,
   );
-  const anySample = boards.some((b) => b.board.sample);
+  /* THE "MODELED, NOT FILED" LEGEND FOLLOWS THE ONE SWITCH (2026-09-11,
+     founder: "remove the word sample"). The boards' own `sample` flags are
+     untouched, so the legend returns with the marks. */
+  const anySample = boards.some((b) => b.board.sample) && areSampleMarksVisible();
 
   return (
     <SpineShell bg={BG} bgPosition="center 30%">

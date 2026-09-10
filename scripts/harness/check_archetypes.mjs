@@ -73,8 +73,9 @@
  *    card declares at every width; every drawn row prints a figure and every
  *    member holding none is accounted for by the withheld line; the rows are
  *    one height AND no row's content runs past it; and where marks are drawn,
- *    every row carries one and every one of them is the same HEIGHT (never the
- *    same width, which a correct flag set is not).
+ *    every row carries one and every one of them is the same height AND the
+ *    same WIDTH (the width half added 2026-09-11, reversing what this file used
+ *    to assert; see the MARK SIZE note at the rule itself).
  *  INCOME BREAKDOWN: every drawn segment's share plus net sums to a hundred
  *    within a stated tolerance (task 11); no segment renders under six
  *    pixels wide (a sliver no hatch or swatch could carry); the legend names
@@ -223,9 +224,59 @@ function inPage() {
          tall. The declaration is checked in both directions below, so the wide
          form cannot creep onto a set that could have filled its row. */
       r.cityForm = card.getAttribute("data-form") || "";
+      /* WHICH LOOK THIS STORY IS, read off the card rather than parsed out of
+         the instance key: the photograph rule below differs by look. */
+      r.cityLook = card.getAttribute("data-look") || "";
       r.cityCount = Number(card.getAttribute("data-count"));
       r.cityFlat = r.cityForm === "rows" ? [] : cards.map((el) => Math.round((el.getBoundingClientRect().height / el.getBoundingClientRect().width) * 100) / 100).filter((ratio) => ratio < 1.15);
-      r.cityImages = cards.filter((el) => el.querySelector("img")).map((el) => el.getAttribute("data-card"));
+      /* THE PHOTOGRAPH, 2026-09-11, and the rule inverted with the ruling: the
+         "field" look must carry one on EVERY card, the other two looks on none.
+         Read from the DOM, so "every card" is a count and not an assumption. */
+      r.cityPhotos = cards.filter((el) => el.querySelector("img[data-photo]")).map((el) => el.getAttribute("data-card"));
+      r.cityPhotoPlaceholders = cards.filter((el) => el.querySelector('img[data-photo="placeholder"]')).length;
+      /* STRAY IMAGES: an `img` that is not the declared photograph. The old
+         IMAGE rule banned every image on the card and so needed no such
+         distinction; now that one image is sanctioned, anything else arriving
+         on this card has to be named rather than absorbed. */
+      r.cityStrayImages = cards.filter((el) => [...el.querySelectorAll("img")].some((i) => !i.hasAttribute("data-photo"))).map((el) => el.getAttribute("data-card"));
+      /* THE NAME OVER THE PICTURE, MEASURED (WCAG AA, the 4.5 floor this repo
+         holds). check_readability.mjs cannot do this one: its `behind()` walk
+         composites ANCESTOR background-colours, and a full-bleed photograph
+         plus two absolutely-positioned sibling overlays are none of those, so it
+         reads the name's backdrop as the white card and reports a ratio that is
+         not what a reader sees. So the stack is read here from the rendered
+         layers (each overlay's own computed colour and opacity, in document
+         order) and composited over the photograph's WORST pixel.
+         THE ONE CONSTANT AND ITS PROVENANCE: the darkest pixel in
+         /spine/_skyline.jpeg is rgb(0,0,0), measured 2026-09-11 by decoding the
+         file into a canvas and walking all 1,116,717 pixels. Compositing over
+         black bounds every region of the picture at once, which sampling a
+         screenshot could not promise. IT IS A PROPERTY OF THE PICTURE, NOT OF
+         THE MATHS: swap the photograph and this bound needs re-measuring, which
+         is why the number is named here rather than buried. */
+      const firstCard = cards[0];
+      r.cityNameRatio = null;
+      if (firstCard && firstCard.querySelector("img[data-photo]")) {
+        const chan = (v) => { const s = v / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
+        const lum = ([r1, g1, b1]) => 0.2126 * chan(r1) + 0.7152 * chan(g1) + 0.0722 * chan(b1);
+        const rgbOf = (s) => { const m = String(s).match(/-?[\d.]+/g); return m ? m.slice(0, 3).map(Number) : null; };
+        const over = (fg, bg, a) => fg.map((v, i) => v * a + bg[i] * (1 - a));
+        let backdrop = [0, 0, 0]; // the photograph's darkest pixel; see above
+        for (const el of firstCard.querySelectorAll("[data-veil],[data-tint]")) {
+          const cs = getComputedStyle(el);
+          const c = rgbOf(cs.backgroundColor);
+          const a = parseFloat(cs.opacity);
+          if (c && Number.isFinite(a)) backdrop = over(c, backdrop, a);
+        }
+        const nameEl = firstCard.querySelector("[data-city-name]");
+        const ink = nameEl ? rgbOf(getComputedStyle(nameEl).color) : null;
+        if (ink) {
+          const l1 = lum(ink);
+          const l2 = lum(backdrop);
+          r.cityNameRatio = Math.round(((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)) * 100) / 100;
+          r.cityBackdrop = backdrop.map((v) => Math.round(v));
+        }
+      }
       /* THE NAME IS THE LOUDEST THING, measured and not asserted: nothing on a
          card may be drawn larger than its own name. */
       r.cityNameLoud = cards.filter((el) => {
@@ -330,6 +381,9 @@ function inPage() {
              item stretched to the track and to the row, so measuring it would
              compare a constant against itself. */
           markH: markEl ? Math.round(markEl.getBoundingClientRect().height * 100) / 100 : null,
+          /* AND ITS WIDTH, since 2026-09-11. This used to be deliberately
+             unmeasured; see the MARK SIZE note below for why that reversed. */
+          markW: markEl ? Math.round(markEl.getBoundingClientRect().width * 100) / 100 : null,
         };
       });
     }
@@ -601,7 +655,23 @@ for (const w of WIDTHS) {
       if (r.cityForm === "rows" && r.cityCount >= 3) red(r.inst, w, "WRONG FORM", `${r.cityCount} cities drawn as wide rows; three or more fill a row of tall cards and must take it`);
       if (r.cityForm === "grid" && r.cityCount < 3) red(r.inst, w, "WRONG FORM", `${r.cityCount} city card(s) in the tall grid; below three they leave the unfilled right edge`);
       if (r.cityNameLoud) red(r.inst, w, "NO HIERARCHY", `${r.cityNameLoud} card(s) draw something larger than the city's own name`);
-      if (r.cityImages && r.cityImages.length) red(r.inst, w, "IMAGE", `${r.cityImages.length} city card(s) carry an image; no page and no card on this site carries a photograph`);
+      /* IMAGE, INVERTED 2026-09-11. This rule read: "no city card carries an
+         image; no page and no card on this site carries a photograph", his
+         ruling of 2026-09-08. He reversed it for this card and this card only
+         ("the cities should have their placeholder image ... blast the London in
+         all of them"), so the rule now checks the same fact from the other side:
+         the look he chose must carry one on EVERY card, and the two looks he did
+         not choose must carry none, because a photograph behind the plate and
+         the column would collapse three different questions into one. */
+      const look = r.cityLook || "";
+      const photos = r.cityPhotos || [];
+      if (look === "field" && photos.length !== r.cityCount) red(r.inst, w, "IMAGE", `${photos.length} of ${r.cityCount} city card(s) carry a photograph; the field look carries one on every card (his ruling of 2026-09-11)`);
+      if (look !== "field" && photos.length) red(r.inst, w, "IMAGE", `${photos.length} city card(s) carry a photograph in the "${look}" look; the photograph belongs to the field look alone`);
+      if (r.cityStrayImages && r.cityStrayImages.length) red(r.inst, w, "IMAGE", `${r.cityStrayImages.length} city card(s) carry an image that is not the declared photograph: ${r.cityStrayImages.join(", ")}`);
+      if (r.cityNameRatio != null && r.cityNameRatio < 4.5) red(r.inst, w, "CONTRAST", `the city name reads ${r.cityNameRatio} to 1 over the photograph's darkest region (backdrop rgb(${(r.cityBackdrop || []).join(", ")})), under the 4.5 floor; the veil and the wash over the picture are what set this`);
+      /* FOR THE DATA TRACK, NOT THE DRAWING: the placeholder closes the hole on
+         the page and must not close the open question. Counted at one width. */
+      if (w === WIDTHS[0] && r.cityPhotoPlaceholders > 0) data(r.inst, "IMAGE MISSING", `${r.cityPhotoPlaceholders} of ${r.cityCount} card(s) show the stand-in photograph, not that city's own`);
     }
     if (r.kind === "range-strip") {
       if (r.stripOverlaps) red(r.inst, w, "NO HIERARCHY", `${r.stripOverlaps} overlapping label(s) on the strip`);
@@ -681,13 +751,27 @@ for (const w of WIDTHS) {
            is declared (`h-11`), so the first half is nearly always true by
            construction and a row spilling over its divider would pass it.
          MARK MISSING / MARK SIZE , if any row carries a mark then every row
-           does, and every mark is drawn at one HEIGHT. Height and never
-           width: a correct flag set has deliberately unequal widths (a square
-           Swiss flag beside a 2:1 British one) because CountryFlag.tsx sizes
-           by height and lets width follow the flag's own ratio, so a width
-           rule would red the component for obeying its own law. BLIND SPOT: a
-           mark of the right height that failed to load draws at zero width and
-           passes here; a broken image is the IMAGE BROKEN rule's job. */
+           does, and every mark is drawn at one height AND one WIDTH.
+           THE WIDTH HALF IS NEW, 2026-09-11, AND IT REVERSES WHAT THIS NOTE
+           USED TO SAY. It read: "height and never width, a correct flag set
+           has deliberately unequal widths (a square Swiss flag beside a 2:1
+           British one) because CountryFlag.tsx sizes by height and lets width
+           follow the flag's own ratio, so a width rule would red the component
+           for obeying its own law." That was a faithful description of the law
+           as it stood. The founder then changed the law:
+           "all-flags-same-width-please-madatory-always". Width now comes from
+           a token exactly as height does, the flag is fitted inside that box
+           with `object-fit: contain` so nothing is stretched, and unequal
+           widths became the fault rather than the proof of correctness. So the
+           rule is inverted rather than dropped, and it runs at all three
+           widths, which is where the page-level gate (verify_flag_marks,
+           1280 only) cannot reach. BLIND SPOT, unchanged: a mark of the right
+           box that failed to load draws an empty box of exactly the right
+           size and passes here; a broken image is the IMAGE BROKEN rule's
+           job. This measures the mark's BOX, which under `contain` is the
+           uniform frame and not the painted flag inside it, so it proves one
+           width and cannot prove the flag within it is undistorted , that is
+           verify_flag_marks' `object-fit` clause. */
     if (r.kind === "mark-list") {
       const rr = r.mlRows || [];
       if (rr.length !== r.mlDeclared) red(r.inst, w, "ROWS CUT", `the card declares ${r.mlDeclared} rows and draws ${rr.length}`);
@@ -705,6 +789,8 @@ for (const w of WIDTHS) {
       if (marked.length > 1) {
         const mh = marked.map((x) => x.markH);
         if (Math.max(...mh) - Math.min(...mh) > 0.5) red(r.inst, w, "MARK SIZE", `marks drawn at heights ${[...new Set(mh)].join(", ")}; every mark on a card is one height`);
+        const mw = marked.map((x) => x.markW);
+        if (Math.max(...mw) - Math.min(...mw) > 0.5) red(r.inst, w, "MARK SIZE", `marks drawn at widths ${[...new Set(mw)].join(", ")}; every mark on a card is one width too (his ruling of 2026-09-11), fitted into that box with air rather than stretched to it`);
       }
     }
     /* THE BENTO'S THREE RULES (2026-09-10), every one of them run at EVERY

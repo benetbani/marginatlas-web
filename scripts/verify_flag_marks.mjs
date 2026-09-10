@@ -32,9 +32,9 @@
  * too, since that is where an inline SVG usually carries its accessible name
  * instead of an `aria-label`.
  *
- * THE VIOLATION TEST. Four independent reasons, any one is enough; the first
- * two are the original test and the last two are the 2026-09-07 floor raise
- * described below:
+ * THE VIOLATION TEST. Five independent reasons, any one is enough; the first
+ * two are the original test, the next is the 2026-09-07 floor raise described
+ * below, and the last two are the 2026-09-11 same-width law:
  *   - border-radius > 0, read as the MAX of the four computed corners so a
  *     flag rounded on only two corners still counts, checked on the flag
  *     element itself AND on a direct parent that is actually the flag's FRAME
@@ -45,8 +45,10 @@
  *   - rendered height not one of `--flag-hero` / `--flag-row`, the two rungs
  *     `CountryFlag.tsx` sizes from; a legibility floor alone could not tell a
  *     flag obeying that law from one merely tall enough.
- *   - rendered width/height ratio off the flag's own natural ratio, which is
- *     what a fixed width does the moment it sits beside a fixed height.
+ *   - rendered width not one of `--flag-hero-w` / `--flag-row-w`, the two width
+ *     rungs, read sideways exactly as the height is read.
+ *   - `object-fit` not `contain` (or `scale-down`), which is what proves the
+ *     flag is FITTED into that one box rather than stretched or cropped to it.
  *
  * WHAT COUNTS AS A FRAME, narrowed 2026-09-02 against the two real cases on
  * this site rather than by argument. The original clause read the radius of
@@ -75,14 +77,29 @@
  * live from `:root`, not retyped here, so the gate cannot drift from the
  * values `globals.css` actually ships) rather than against a minimum.
  *
- * A SECOND, INDEPENDENT REASON NOW FAILS A FLAG TOO: an explicit width. The
- * distortion this whole file exists for, `aspect-[3/2] object-cover` forcing
- * a flag into a box its own shape does not fit, is exactly what a fixed width
- * ALONGSIDE a fixed height reintroduces the moment anything ever sets one; the
- * component fixes this by leaving width `auto`, so this checks the RENDERED
- * result against the flag's own natural ratio (an `<img>`'s `naturalWidth` /
- * `naturalHeight`, the shape the SVG actually is) rather than re-deriving from
- * markup, which is what the height check above already does for CSS.
+ * THE RATIO CLAUSE BECAME THE WRONG LAW, 2026-09-11, and is replaced rather
+ * than relaxed. It read: "a flag's rendered box must match its own natural
+ * ratio", which is exactly right while width is `auto`, and it caught the
+ * `aspect-[3/2] object-cover` distortion this file exists for. The founder then
+ * ruled the opposite of its premise: "all-flags-same-width-please-madatory-
+ * always". Every flag now renders in a box 1.5x its rung wide, so a square flag
+ * and a ribbon both sit in a 3:2 box on purpose, and the old clause would have
+ * failed every flag in the world that is not 3:2, at every site on the
+ * property, for obeying the law. Its two jobs are now done by two clauses that
+ * can both be true at once: the WIDTH is a token (one width, everywhere, which
+ * is the ruling), and `object-fit` is `contain` (the flag is fitted into that
+ * box with air, never stretched or cropped into it, which is the distortion
+ * protection the ratio clause was really providing). Distortion is therefore
+ * still impossible, and it is now impossible structurally rather than
+ * measured after the fact.
+ *
+ * WHAT THIS PAIR CANNOT SEE, said before it is trusted: `contain` plus one
+ * width guarantees the flag's proportions and the box's uniformity, and says
+ * nothing about how much air is in the box. A rung set to 10:1 would pass both
+ * clauses and draw every flag as a hairline in a wide empty frame. The 1.5x
+ * ratio that keeps the air sane lives in globals.css next to the tokens, and is
+ * a LOOK judgement the founder makes from a photograph, not a number a gate can
+ * derive.
  *
  * Usage: node scripts/verify_flag_marks.mjs [--write-baseline] [--pages name=path,...]
  */
@@ -138,6 +155,20 @@ function measure() {
   const rootStyle = getComputedStyle(document.documentElement);
   const tokenPx = (name) => parseFloat(rootStyle.getPropertyValue(name));
   const ALLOWED_HEIGHTS = [tokenPx("--flag-hero"), tokenPx("--flag-row")];
+  /* THE SAME TWO RUNGS, READ SIDEWAYS (2026-09-11). See the header note: the
+     ratio clause this replaces is now the wrong law.
+     A PAGE THAT DEFINES NEITHER TOKEN PREDATES THE LAW, and is reported as
+     UNMEASURED rather than failed. That is the opposite of how the HEIGHT
+     clause treats a missing token, and the difference is deliberate: these are
+     PRE-BUILT snapshots with their stylesheet inlined at capture time, so a
+     missing width token says "this file was rendered before the law existed",
+     which is a fact about the snapshot. A missing HEIGHT token means something
+     else entirely, since that law predates every snapshot here, so its absence
+     really does mean a page carrying the old fixed-aspect flag. The skip is
+     printed by name below, never silent, and it disappears the moment the
+     artifacts are regenerated. */
+  const ALLOWED_WIDTHS = [tokenPx("--flag-hero-w"), tokenPx("--flag-row-w")];
+  const WIDTH_LAW_KNOWN = ALLOWED_WIDTHS.some((v) => Number.isFinite(v));
   const HEIGHT_TOLERANCE = 1; // subpixel rounding, never a third rung
 
   function isVisible(el) {
@@ -200,28 +231,42 @@ function measure() {
     if (!ALLOWED_HEIGHTS.some((allowed) => Number.isFinite(allowed) && Math.abs(h - allowed) <= HEIGHT_TOLERANCE)) {
       reasons.push(`height ${h}px, not one of the two flag tokens (--flag-hero 40px, --flag-row 20px)`);
     }
-    /* WIDTH-SET: the box no longer matches the flag's own shape, which is
-       what a fixed width alongside a fixed height does the moment either is
-       set, the retired `aspect-[3/2] object-cover` included. Checked against
-       the image's OWN intrinsic ratio, not a hardcoded 3:2, since the true
-       ratio differs by country. Only measurable once an <img>'s natural size
-       has resolved. */
-    if (el.tagName === "IMG" && el.naturalWidth > 0 && el.naturalHeight > 0) {
-      const naturalRatio = el.naturalWidth / el.naturalHeight;
-      const renderedRatio = r.width / r.height;
-      if (Math.abs(renderedRatio - naturalRatio) / naturalRatio > 0.03) {
-        reasons.push(
-          `width set: rendered ${Math.round(r.width)}x${h}px does not match the flag's own ${el.naturalWidth}x${el.naturalHeight} ratio`
-        );
+    /* SAME WIDTH: the rendered width is one of the two width tokens, exactly
+       as the height above is one of the two height tokens. This clause REPLACED
+       a ratio check on 2026-09-11 and the replacement is the whole point, so
+       the old rule is written down rather than quietly dropped: it failed any
+       flag whose rendered box did not match its own natural ratio, which was
+       the right law while width was `auto` and is the wrong one now that the
+       founder has ruled every flag the same width
+       ("all-flags-same-width-please-madatory-always"). Under the new law a
+       non-3:2 flag's box does NOT match its ratio by design, so the old clause
+       would have failed about 40% of the world's flags for obeying the law. */
+    const w = Math.round(r.width);
+    if (WIDTH_LAW_KNOWN && !ALLOWED_WIDTHS.some((allowed) => Number.isFinite(allowed) && Math.abs(w - allowed) <= HEIGHT_TOLERANCE)) {
+      reasons.push(`width ${w}px, not one of the two flag tokens (--flag-hero-w 60px, --flag-row-w 30px)`);
+    }
+    /* NOT DISTORTED, which the ratio clause used to prove as a side effect and
+       something still has to. A fixed box can hold a flag two ways: fitted
+       inside it with air (`contain`), or filled and cropped (`cover`), or
+       stretched to the box (`fill`, the default). Only the first keeps the
+       flag's own proportions, so the fitting mode is read directly from the
+       computed style rather than inferred from the rendered box, which under
+       `contain` reports the BOX and tells you nothing about the pixels inside
+       it. `scale-down` is accepted: it is `contain` for anything larger than
+       the box, which every flag SVG is. */
+    if (el.tagName === "IMG") {
+      const fit = s.objectFit;
+      if (fit !== "contain" && fit !== "scale-down") {
+        reasons.push(`object-fit: ${fit}; a flag in a fixed box is fitted with air (contain), never stretched or cropped to fill it`);
       }
     }
     const label = el.getAttribute("alt") || el.getAttribute("aria-label") || el.getAttribute("title")
       || (el.tagName === "SVG" ? el.querySelector("title")?.textContent : "")
       || el.getAttribute("src") || "(unlabeled flag mark)";
-    return { tag: el.tagName.toLowerCase(), w: Math.round(r.width), h, reasons, label: String(label).trim().slice(0, 48) };
+    return { tag: el.tagName.toLowerCase(), w, h, reasons, label: String(label).trim().slice(0, 48) };
   });
 
-  return { total: results.length, offenders: results.filter((r) => r.reasons.length > 0) };
+  return { total: results.length, offenders: results.filter((r) => r.reasons.length > 0), widthLawKnown: WIDTH_LAW_KNOWN };
 }
 
 const { chromium } = await import("playwright");
@@ -236,19 +281,36 @@ for (const [name, relPath] of PAGES) {
     await page.goto(pathToFileURL(resolve(relPath)).href);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(350);
-    const { total: totalMarks, offenders } = await page.evaluate(measure);
+    const { total: totalMarks, offenders, widthLawKnown } = await page.evaluate(measure);
     now[name] = offenders.length;
     total += offenders.length;
-    report.push({ name, totalMarks, offenders });
+    report.push({ name, totalMarks, offenders, widthLawKnown });
   } finally {
     await page.close();
   }
 }
 await browser.close();
 
-for (const { name, totalMarks, offenders } of report) {
+let unmeasured = 0;
+for (const { name, totalMarks, offenders, widthLawKnown } of report) {
   console.log(`\n  ${name}  ${totalMarks} flag mark(s) found, ${offenders.length} violation(s)`);
   offenders.forEach((o) => console.log(`     <${o.tag}>  ${o.w}x${o.h}px  ${o.reasons.join("; ")}  "${o.label}"`));
+  /* NAMED, NEVER SILENT. A snapshot rendered before the same-width law has no
+     width token in its inlined stylesheet, so that half of the test cannot run
+     on it, and the zero above must never be read as a clean bill for a rule
+     that did not execute. */
+  if (totalMarks > 0 && !widthLawKnown) {
+    unmeasured += 1;
+    console.log("     WIDTH UNMEASURED HERE: this snapshot's inlined stylesheet predates --flag-row-w / --flag-hero-w.");
+  }
+}
+if (unmeasured > 0) {
+  console.log(`\n  ! the same-width law was UNMEASURED on ${unmeasured} of ${PAGES.length} page(s), not passed.`);
+  console.log("    Those artifacts predate it. Regenerate them to measure it here:");
+  console.log("      npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs scripts/build_final_pages.tsx");
+  console.log("    (it fetches live data, so it needs the Supabase env vars set.)");
+  console.log("    The law IS measured live at three widths meanwhile, by the harness:");
+  console.log("      check_archetypes.mjs MARK SIZE, and check_model_laws.mjs FLAG.");
 }
 console.log(`\n  ${total} flag violation(s) across ${PAGES.length} page(s).\n`);
 

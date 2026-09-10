@@ -9,6 +9,17 @@
  * the same file the city's own hero shows. A city without a photograph draws
  * no slot, never a placeholder.
  *
+ * THE 2026-09-11 PLACEHOLDER RULING DOES NOT REACH THIS CARD, AND THAT IS
+ * MEASURED RATHER THAN ASSUMED. The founder put a placeholder photograph behind
+ * the city card that day ("blast the London in all of them"). Filling this
+ * component's slot on every card was tried first: the harness measured three
+ * city names clipped at 1280 and 768 and a hole in the single-city form, 12
+ * design reds, because the left-hand image only ever fitted a 155px track while
+ * three cards in four had no image to show. His ruling is live on the CityCards
+ * archetype; bringing it here means re-proportioning a section he already ruled
+ * on (2026-09-04, "an image on its left or right"), which is his call and not a
+ * side effect of this one. See `CityCard.photo` in lib/spine/city_cards.ts.
+ *
  * THE LAW INSIDE IT: cards in one row share one height (the grid stretches and
  * every card fills its cell; ruling 7); the name never truncates mid-word (it
  * wraps to two lines and the card grows, the row with it); hover is ink, never

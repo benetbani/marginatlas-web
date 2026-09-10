@@ -28,6 +28,7 @@
  */
 import * as React from "react";
 import { meaningStep, CompassRosette, Glyph, SampleState, type GlyphName } from "./primitives";
+import { areSampleMarksVisible } from "@/lib/feature_flags";
 
 /* ------------------------------------------------------------------ */
 /* The six judgment lenses, in fixed clockwise order from the top.     */
@@ -369,7 +370,7 @@ export function CountryShape({ lenses, sample, className }: CountryShapeProps) {
                 <span className="eng-shape__rim-read" style={{ color: t ? t.fg : "var(--text-faint)" }}>
                   <span className="eng-shape__rim-dot" style={{ background: t ? t.dot : "var(--text-faint)" }} />
                   {l.read}
-                  {isSample ? <span className="eng-shape__rim-tag">sample</span> : null}
+                  {isSample && areSampleMarksVisible() ? <span className="eng-shape__rim-tag">sample</span> : null}
                 </span>
               ) : (
                 <span className="eng-shape__rim-read" style={{ color: "var(--text-faint)" }}>

@@ -31,11 +31,32 @@
  * passes on what it can see; on the machine that has the mockups, the photo now
  * has nowhere left to hide.
  *
+ * ONE EXCEPTION, AND ONLY ONE, SINCE 2026-09-11: THE CITY CARD. The founder
+ * reversed himself for that card and stated the scope in the same breath: "the
+ * cities should have their placeholder image ... just keep a placeholder image,
+ * you can just blast the London in all of them, the London image with the bridge
+ * that we have, you know, not the map." So a photograph is now sanctioned behind
+ * a city card and nowhere else, and the ban below is NARROWED rather than
+ * deleted: the gate still fails a photograph painted anywhere on a page, in any
+ * hero, in any frame, in any gutter, in any mockup stylesheet.
+ *
+ * THE EXCEPTION IS A FILE, NOT A FLAG, and that is deliberate. It names
+ * `src/lib/spine/city_cards.ts`, the one module allowed to say which file the
+ * card shows, and it names nothing else. The two components that paint it
+ * (CardPager, CityCards) receive the path as data and never spell a filename,
+ * so they stay fully covered by this gate: a second photograph appearing in
+ * either of them still fails. A reviewer reading the exception can therefore see
+ * the whole of the sanctioned surface in one file of about fifty lines, which is
+ * the property a blanket allow-comment on each offending line would have
+ * destroyed.
+ *
  * WHAT IT CANNOT SEE, stated before it is trusted: it reads source, not a
  * render, so a photograph assembled at runtime from a variable it cannot follow
- * would pass. It also permits the files themselves to stay on disk under
- * public/, because the founder's photograph is his and may be wanted again; the
- * ban is on painting it, not on keeping it.
+ * would pass , and the city card's placeholder reaches both card components by
+ * exactly that route, which is WHY the exception has to be a named file rather
+ * than something this scan could have discovered. It also permits the files
+ * themselves to stay on disk under public/, because the founder's photograph is
+ * his and may be wanted again; the ban is on painting it, not on keeping it.
  */
 import { readFileSync, existsSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -48,11 +69,31 @@ const ROOT = process.cwd();
    day another photograph lands in public/ and the rule extends itself. */
 const BANNED_IMAGES = ["_skyline.jpeg", "london.jpeg"];
 
-/* A reference is live when the stripped line both names a banned image and is
-   doing something with it: a CSS background, a CSS url(), or a JS/TSX property
-   that ends up as one. A bare mention in a string that is not a background
-   (an alt text, a manifest key) is not this gate's business. */
+/* A reference used to count only when the stripped line ALSO did something
+   visibly painterly with it: a CSS background, a CSS url(), or a JS/TSX property
+   that ends up as one. That was too narrow, and the proof is this very change.
+   The city card's placeholder is declared as
+     export const CITY_CARD_PLACEHOLDER_IMAGE = "/spine/_skyline.jpeg";
+   and then handed to an `<img src={...}>` in two components that never spell a
+   filename. Under the old pattern NEITHER line matched: the declaration carries
+   no painting token and the paint carries no filename. So a photograph could be
+   reintroduced site-wide, through any module that exports a path, and this gate
+   would print PASS , which is the gate's own documented blind spot, reached for
+   real on the first attempt after it was written down.
+   So the test is now simply: a live (non-comment) line that NAMES a banned image
+   is a red. A path in source exists to be used; there is no innocent reason to
+   write one of these filenames in live code. The narrower pattern is kept only
+   to LABEL the finding, so the message still says how it is being painted when
+   that is visible from the line. */
 const PAINTING = /background|backgroundImage|url\(|src=|DEFAULT_BG/;
+
+/* THE ONE SANCTIONED SURFACE. See the header: the founder's 2026-09-11 ruling
+   put a placeholder photograph behind the city card and nothing else, and this
+   is the single module permitted to name the file it shows. Paths are compared
+   from the repo root with forward slashes, the same form `relative()` produces
+   for the report lines below. Adding a path here is a design decision about what
+   the site paints, so it needs his words beside it, as this one has. */
+const ALLOWED_TO_NAME_A_PHOTOGRAPH = new Set(["src/lib/spine/city_cards.ts"]);
 
 const files = globSync("src/**/*.{ts,tsx,css}", { cwd: ROOT }).map((f) => join(ROOT, f));
 
@@ -72,20 +113,24 @@ if (existsSync(MOCKUP_DIR)) {
 
 const reds: string[] = [];
 
+let exempt = 0;
 for (const file of files) {
+  const rel = relative(ROOT, file).split("\\").join("/");
+  /* THE CITY CARD'S OWN MODULE, counted rather than silently skipped, so the
+     exception is visible in the gate's own output every time it runs. */
+  if (ALLOWED_TO_NAME_A_PHOTOGRAPH.has(rel)) { exempt += 1; continue; }
   const raw = readFileSync(file, "utf8").split("\n");
   const stripped = stripCommentLines(raw);
   stripped.forEach((line, i) => {
-    if (!PAINTING.test(line)) return;
     for (const img of BANNED_IMAGES) {
-      if (line.includes(img)) {
-        reds.push(`${relative(ROOT, file)}:${i + 1}: a background photograph is painted here (${img}): ${line.trim().slice(0, 90)}`);
-      }
+      if (!line.includes(img)) continue;
+      const how = PAINTING.test(line) ? "is painted here" : "is named in live code here, which is how one gets painted";
+      reds.push(`${rel}:${i + 1}: a photograph ${how} (${img}): ${line.trim().slice(0, 90)}`);
     }
   });
 }
 
-console.log(`no background photo: ${files.length} source file(s) scanned, ${reds.length} red(s)`);
+console.log(`no background photo: ${files.length} source file(s) scanned, ${exempt} exempt (the city card's placeholder, his ruling of 2026-09-11), ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r}`);
 if (reds.length) {
   console.log("");

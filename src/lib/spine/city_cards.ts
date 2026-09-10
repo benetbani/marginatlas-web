@@ -33,6 +33,56 @@ import { cityPageHref, cityPageSlug } from "@/lib/cities/city_pages";
 import { cityImageSrc } from "@/lib/cities/city_images";
 import { getCityAveragePayUsd } from "@/lib/cities/city_tier";
 
+/**
+ * THE PLACEHOLDER PHOTOGRAPH, AND IT IS NOT A PHOTOGRAPH OF ANY CITY WE COVER.
+ *
+ * Founder, 2026-09-11, reversing "no photographs anywhere" (2026-09-07) for the
+ * city card and for nothing else: "the cities should have their placeholder
+ * image ... just keep a placeholder image, you can just blast the London in all
+ * of them, the London image with the bridge that we have, you know, not the
+ * map."
+ *
+ * THE FILE HE NAMED DOES NOT EXIST. The site ships four raster images in total
+ * and that was checked by listing them, not assumed: `/cities/london.jpeg` and
+ * `/spine/london.jpeg` are the same grey STREET MAP, which is the thing he ruled
+ * out by name; `/london-cities.png` is that map in terracotta; and
+ * `/spine/_skyline.jpeg` is the only real photograph in the repository. It is
+ * POSITANO, ITALY, the shot that used to sit behind the page hero. There is no
+ * London bridge photograph to blast, so the only honest placeholder is the one
+ * photograph that exists, named here for exactly what it is so that nobody
+ * downstream reads it as a city's own picture.
+ *
+ * IT IS SCOPED TO THE CARD, not to `cityImageSrc`. The city page's own masthead
+ * reads that helper directly and must keep getting null for a city with no
+ * photograph, or a single placeholder would spread to 252 page mastheads and
+ * reverse the 2026-09-07 ruling everywhere instead of on the one card he named.
+ *
+ * A REAL FILE REPLACES IT WITH NO CODE CHANGE: drop `<slug>.jpeg` into
+ * `public/cities/`, run `scripts/build_city_images_manifest.ts`, and that city's
+ * own photograph wins the `??` below.
+ */
+export const CITY_CARD_PLACEHOLDER_IMAGE = "/spine/_skyline.jpeg";
+
+/**
+ * THE STREET MAP IS NOT A PHOTOGRAPH, and it is the one image he ruled out by
+ * name ("not the map"). It is the only file in the manifest today, so without
+ * this London alone would carry the map while its four siblings carried the
+ * placeholder, which is the opposite of "blast the same one in all of them".
+ * Listed by path rather than by city so the day a real London photograph lands
+ * at the same path, nothing here needs editing: the map will simply have been
+ * replaced.
+ */
+const NOT_A_PHOTOGRAPH = new Set(["/cities/london.jpeg", "/spine/london.jpeg"]);
+
+/** The card's photograph: the city's own when one is held and it is a
+ *  photograph, the single placeholder otherwise. Never null, since 2026-09-11:
+ *  a card with no image is the hole he was pointing at. */
+export function cityCardImage(slug: string | null | undefined): { src: string; placeholder: boolean } {
+  const own = cityImageSrc(slug);
+  if (own && !NOT_A_PHOTOGRAPH.has(own)) return { src: own, placeholder: false };
+  return { src: CITY_CARD_PLACEHOLDER_IMAGE, placeholder: true };
+}
+
 export type CityCard = {
   id: string;
   name: string;
@@ -43,7 +93,26 @@ export type CityCard = {
    *  another by accident. */
   region?: string;
   href: string;
+  /** The city's OWN photograph, or null. Read by the live card pager, which
+   *  draws no slot for a null and must keep doing so: see `photo` below. */
   image: string | null;
+  /** THE CITY CARD'S PHOTOGRAPH, NEVER NULL, and a SECOND field rather than a
+   *  widening of `image` on purpose.
+   *
+   *  The founder's 2026-09-11 placeholder ruling lands on the city CARD. The
+   *  country page still renders the older `CardPager`, which was built around
+   *  "a city without a photograph draws no slot" and puts its image to the LEFT
+   *  of the name inside a 155px track. Filling that slot on every card was tried
+   *  first and the harness measured the result: three city names clipped at 1280
+   *  and 768, and a hole in the single-city form, 12 design reds on a shipped
+   *  section. Re-proportioning that section is its own piece of work and needs
+   *  his eye, so the two fields stay separate and the pager is untouched.
+   *
+   *  `placeholder` is true when this is the stand-in rather than the city's own
+   *  picture. The card marks it in the DOM so the harness keeps counting how
+   *  many REAL city photographs are held: the stand-in closes the hole on the
+   *  page without quietly closing the data track's open question. */
+  photo: { src: string; placeholder: boolean };
   /** What an average customer there earns in a year, gross, USD. */
   payUsd?: number;
   /** 0 to 1, ordinal: where that pay sits between the lowest and highest here. */
@@ -75,6 +144,7 @@ export function buildCityCards(iso2In: string): CityCards | null {
     const slug = cityPageSlug(iso2, c.name);
     const pay = getCityAveragePayUsd(slug);
     const name = String(c.name).replace(/\s*\([^)]*\)\s*$/, "");
+    const photo = cityCardImage(slug);
     cards.push({
       id: c.id,
       name,
@@ -87,6 +157,7 @@ export function buildCityCards(iso2In: string): CityCards | null {
       region: keepRegion(name, c.region_name) ?? undefined,
       href,
       image: cityImageSrc(slug),
+      photo,
       payUsd: pay ?? undefined,
       // filled below, once the whole set is known
     });

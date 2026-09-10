@@ -55,7 +55,47 @@
  * flush against the edge at the default zero offset) without ever entering
  * the box a replaced element sizes itself against, so `width:auto` now runs
  * on the full, unaltered height and the rendered box matches the SVG's own
- * ratio exactly. */
+ * ratio exactly.
+ *
+ * EVERY FLAG IS THE SAME WIDTH, 2026-09-11. Founder, verbatim and in full:
+ * "all-flags-same-width-please-madatory-always". `width:auto` gave each flag
+ * its own true width, which is right about the flag and wrong about the column:
+ * Switzerland is square, the United States is wide, Qatar is a ribbon, so a
+ * list of them has a ragged edge and no two of them occupy the same slot. Width
+ * is a token now too, `--flag-row-w` / `--flag-hero-w`, each 1.5x its own rung,
+ * because 3:2 is the commonest shape in the set and therefore the one that
+ * should fill its box exactly.
+ *
+ * AIR, NOT A CROP, AND THAT IS THE WHOLE DECISION. There are two ways to put a
+ * square flag in a 3:2 box: fill it, or fit inside it and leave the leftover
+ * space empty. `object-fit: cover` would fill it perfectly and amputate a third
+ * of the Swiss cross, clip the United States' canton, and make nonsense of
+ * Nepal, which is not even a rectangle. A flag is data, which is the same
+ * reason its corners are not rounded; cropping it edits the data to tidy the
+ * layout. `object-fit: contain` keeps every flag's true proportions, scales it
+ * to the one box and leaves air: about 5px either side of a square flag at the
+ * row rung, about 4px above and below the widest ribbon in common use. The
+ * hairline frames the BOX rather than the flag, which is what makes one width
+ * visible rather than merely true, so a letterboxed flag reads as deliberately
+ * mounted rather than accidentally narrow.
+ *
+ * NOTHING HERE STRETCHES A FLAG, so the distortion fix of 2026-09-07 is intact:
+ * height still comes from its own token, `contain` still never crops, and all
+ * that changed is that the box around the flag stopped varying. The gate moved
+ * with the law rather than being deleted by it: `verify_flag_marks.mjs` used to
+ * fail a flag whose rendered box did not match its own natural ratio, which is
+ * now the normal case for every flag that is not 3:2. It fails one whose
+ * rendered WIDTH is not a token, and reads `object-fit` to prove that the
+ * fitting is air rather than a stretch.
+ *
+ * THE WIDTH TOKENS CARRY A LITERAL FALLBACK, `var(--flag-row-w, 30px)`, and the
+ * height tokens deliberately do not. An undefined height token yields an
+ * invalid declaration and the flag renders at its intrinsic size, which is
+ * enormous and unmissable. An undefined WIDTH token would fall back to the
+ * initial value, `auto`, which is precisely the old ragged behaviour this
+ * change removes and would look entirely normal while doing it. A law whose
+ * failure mode is invisible is not enforceable, so the one that fails quietly
+ * gets the fallback. */
 import { iso2ToName } from "@/lib/countries";
 
 type Props = {
@@ -66,9 +106,10 @@ type Props = {
   className?: string;
   /** Optional accessible label override; otherwise derived from ISO-2. */
   label?: string;
-  /** The flag's height rung: `--flag-hero` (40px, a country or city masthead)
-   *  or `--flag-row` (20px, a table row or a city card). Two tokens, no
-   *  third. Defaults to "row", the shape of nearly every call site today. */
+  /** The flag's rung: `--flag-hero` (40 by 60, a country or city masthead) or
+   *  `--flag-row` (20 by 30, a table row or a city card). Height AND width come
+   *  from the rung, two of each, no third. Defaults to "row", the shape of
+   *  nearly every call site today. */
   size?: "hero" | "row";
 };
 
@@ -85,12 +126,13 @@ export function CountryFlag({ iso2, className = "", label, size = "row" }: Props
   if (code.length !== 2) return null;
   const alt = `${label ?? iso2ToName(iso2.toUpperCase()) ?? iso2.toUpperCase()} flag`;
   const height = size === "row" ? "var(--flag-row)" : "var(--flag-hero)";
+  const width = size === "row" ? "var(--flag-row-w, 30px)" : "var(--flag-hero-w, 60px)";
   return (
     <img
       src={`https://flagcdn.com/${code}.svg`}
       alt={alt}
       className={`inline-block object-contain rounded-none outline outline-1 outline-[var(--c-border)] align-middle ${withoutRadius(className)}`}
-      style={{ height, width: "auto" }}
+      style={{ height, width }}
       loading="lazy"
     />
   );

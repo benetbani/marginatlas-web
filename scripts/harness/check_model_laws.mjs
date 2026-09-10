@@ -43,9 +43,13 @@
  *            reading this repo has already paid for once (check_page_holes'
  *            own EVEN_BY_RULING exists for the same reason, one level up).
  *   FLAG   = `img[data-flag]` UNION `img[src*="flagcdn.com"]`, the real
- *            source CountryFlag.tsx renders. Needs the network to decode a
- *            real flag's natural size; the fixture ships its own data-URI
- *            SVG so it needs none.
+ *            source CountryFlag.tsx renders. It no longer needs the network:
+ *            the ratio clause that had to decode a real flag's natural size
+ *            was replaced on 2026-09-11 by a token-width clause and an
+ *            `object-fit` clause, both of which read only the rendered box and
+ *            the computed style. So a broken flag image is now measured as
+ *            correctly as a loaded one, which is a gain: the old clause was
+ *            silently unmeasured whenever flagcdn.com was unreachable.
  *   TRACK  = `[data-track]`, real, unchanged: PayBars.tsx already stamps it.
  *   DISTRICT ROW = `[data-district-row] [data-note]` (fixture) UNION two
  *            real selectors, not equally alive today. `#districts
@@ -271,21 +275,36 @@ function inPage(ctx) {
     }
   }
 
-  /* FLAG: "true ratio, radius 0, height from --flag-hero or --flag-row,
-     never set by width." */
+  /* FLAG: "one width and one height from the tokens, the flag FITTED inside
+     that box rather than stretched to it, radius 0."
+     THE RATIO CLAUSE WAS REPLACED 2026-09-11, and the replacement is the point.
+     This rule used to read "true ratio ... never set by width", the same law
+     verify_flag_marks.mjs carried, and it was right while width was `auto`. The
+     founder then ruled the opposite of its premise:
+     "all-flags-same-width-please-madatory-always". A flag's box is now 1.5x its
+     rung wide whatever the flag's own shape, so the old clause failed every
+     non-3:2 flag in the world for obeying the law , which it did, immediately,
+     seven times across the country and city pages the moment the component
+     changed. The ratio is replaced by the two clauses that together say the same
+     thing under the new law: the WIDTH is a token (one width everywhere), and
+     `object-fit` is `contain` (fitted with air, never stretched or cropped, so
+     no flag is distorted). */
   if (wide) {
-    const flagHero = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--flag-hero"));
-    const flagRow = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--flag-row"));
+    const rootCs = getComputedStyle(document.documentElement);
+    const flagHero = parseFloat(rootCs.getPropertyValue("--flag-hero"));
+    const flagRow = parseFloat(rootCs.getPropertyValue("--flag-row"));
+    const flagHeroW = parseFloat(rootCs.getPropertyValue("--flag-hero-w"));
+    const flagRowW = parseFloat(rootCs.getPropertyValue("--flag-row-w"));
     const flags = [...document.querySelectorAll('img[data-flag], img[src*="flagcdn.com"]')].filter((im) => im.getClientRects().length && !hiddenFromSight(im));
     for (const im of flags) {
       const b = im.getBoundingClientRect();
       const id = cardIdOf(im);
-      if (im.naturalWidth && im.naturalHeight) {
-        const rendered = b.width / b.height, real = im.naturalWidth / im.naturalHeight;
-        if (Math.abs(rendered - real) > 0.02) push(id, "FLAG", `rendered ratio ${rendered.toFixed(2)} against its true ${real.toFixed(2)} (${Math.round(b.width)}x${Math.round(b.height)})`);
-      }
       const okHeight = (Number.isFinite(flagHero) && Math.abs(b.height - flagHero) < 1) || (Number.isFinite(flagRow) && Math.abs(b.height - flagRow) < 1);
       if (!okHeight) push(id, "FLAG", `rendered height ${Math.round(b.height)}px is neither --flag-hero (${flagHero}px) nor --flag-row (${flagRow}px)`);
+      const okWidth = (Number.isFinite(flagHeroW) && Math.abs(b.width - flagHeroW) < 1) || (Number.isFinite(flagRowW) && Math.abs(b.width - flagRowW) < 1);
+      if (!okWidth) push(id, "FLAG", `rendered width ${Math.round(b.width)}px is neither --flag-hero-w (${flagHeroW}px) nor --flag-row-w (${flagRowW}px); every flag is one width (his ruling of 2026-09-11)`);
+      const fit = getComputedStyle(im).objectFit;
+      if (fit !== "contain" && fit !== "scale-down") push(id, "FLAG", `object-fit: ${fit}; a flag in a fixed box is fitted with air, never stretched or cropped to fill it`);
     }
   }
 

@@ -128,6 +128,29 @@ export function isHomeReformEnabled(): boolean {
 }
 
 /**
+ * SHOW THE SAMPLE MARK. Default OFF since 2026-09-11, founder: "please remove
+ * the label sample from everything because the site is only being viewed by me,
+ * okay? Remove the word sample."
+ *
+ * WHY THIS IS A SWITCH AND NOT A DELETION, which is the whole point of it. His
+ * reason is that he is the only reader. That is true today and false the day one
+ * other person opens the site, and this mark is the only thing standing between a
+ * figure the model produced and a reader who assumes it was measured. So the
+ * WORD is hidden and the machinery that decides which figures are modelled is
+ * untouched: every `confidence` field, every `sample` prop, every `provenance`
+ * line still flows exactly as before, and `SampleTag` still receives its call,
+ * it simply draws nothing. Nothing has to be rediscovered to put the marks back.
+ *
+ * WHAT TURNS IT BACK ON: set NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1 (in Vercel, or in
+ * .env.local for a local check). That must happen BEFORE the site is shown to
+ * anyone but him, or the site asserts modelled figures as measured ones, which
+ * the honesty rail has forbidden since 2026-07-07.
+ */
+export function areSampleMarksVisible(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_SHOW_SAMPLE_MARKS, false);
+}
+
+/**
  * Founder-review transparency (rulebook v1 §G8, 2026-07-11): "things have to be
  * transparent for me to see." When true, every LockVeil/blur renders its content
  * unveiled so review renders and dev routes never hide a graphic or figure from

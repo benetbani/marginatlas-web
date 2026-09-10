@@ -19,6 +19,7 @@
  * source-agency names.
  */
 import * as React from "react";
+import { areSampleMarksVisible } from "@/lib/feature_flags";
 
 /* ------------------------------------------------------------------ */
 /* THE MEANING SCALE, terracotta by intensity since 2026-08-17.        */
@@ -532,7 +533,11 @@ export function SampleState({ what, reason, glyph = "doc", minH = 0 }: SampleSta
         <div className="eng-sample__what">{what}</div>
         {reason ? <div className="eng-sample__why">{reason}</div> : null}
       </div>
-      <span className="eng-sample__tag">sample</span>
+      {/* THE WORD, BEHIND THE ONE SWITCH (2026-09-11, founder: "remove the
+          word sample"). Only the tag goes: the "what" and "why" lines above it
+          say which figure is not held and why, which is honest copy about the
+          data rather than the label he ruled out. */}
+      {areSampleMarksVisible() ? <span className="eng-sample__tag">sample</span> : null}
     </div>
   );
 }

@@ -10,18 +10,37 @@
  * and bland, and the photograph of them says he is right: a name, a region, an
  * arrow, and on one of 252 cities a grey map.
  *
- * THE PROBLEM HE HAS NOT SEEN, WHICH THIS FILE EXISTS TO ANSWER. His reference
- * gets its beauty from a full-bleed photograph, and he killed photographs on
- * 2026-09-07 and confirmed it when asked ("No photographs anywhere"), partly
- * because only one covered city holds an image at all. His reference is also
- * blue, teal and purple, and this palette is terracotta and warm neutrals with
- * green banned outright. So the card has to find its beauty without a picture
- * and inside one accent hue, and there is no single right answer to that. Three
- * are built, they differ in KIND rather than in degree, and he chooses:
+ * THE PHOTOGRAPH CAME BACK FOR THIS CARD AND THIS CARD ONLY, 2026-09-11.
+ * Founder, reversing his own "no photographs anywhere" of 2026-09-07 with the
+ * scope stated in the same breath: "the cities should have their placeholder
+ * image ... just keep a placeholder image, you can just blast the London in all
+ * of them, the London image with the bridge that we have, you know, not the
+ * map." Nothing else on the site gains a photograph. Which file, and why it is
+ * a stand-in rather than a city's own picture, is settled in `city_cards.ts`
+ * (CITY_CARD_PLACEHOLDER_IMAGE): the bridge photograph he remembers does not
+ * exist, the only real photograph in the repository is Positano, and the one
+ * London file we hold is the street map he ruled out by name.
  *
- *   "field"   COLOUR. A terracotta field whose strength is what a customer
- *             there earns, measured across the cities on the card. The tint is
- *             the figure drawn, the way the district card's bars are; no card
+ * WHAT THAT COST THE FIELD LOOK, AND IT IS THE REAL DESIGN DECISION HERE. The
+ * tint used to BE the figure: deeper card, higher pay, read across the cities on
+ * the card. A tint of varying depth laid over a photograph is no longer a
+ * reading of anything, because the reader cannot separate the tint's depth from
+ * the picture's own light. Today every card carries the SAME stand-in, so the
+ * comparison would survive by accident; the day a real photograph lands for one
+ * city, two cards on the same figure would look different and a card on a lower
+ * figure could look deeper. A drawing that becomes a lie when the data improves
+ * is worse than no drawing. So the tint STOPPED encoding the figure and became a
+ * fixed veil with one job, legibility, and the figure is carried by the number
+ * every card already prints in its own column. `payShare` is still built and
+ * still drawn by the "column" look, where the mark sits on the card's own edge
+ * and no photograph touches it.
+ *
+ * HIS REFERENCE WAS ALSO BLUE, TEAL AND PURPLE, and this palette is terracotta
+ * and warm neutrals with green banned outright. So three looks were built to
+ * differ in KIND rather than in degree, and he chooses:
+ *
+ *   "field"   A DUOTONE. The stand-in photograph full-bleed and desaturated, a
+ *             white veil to lift it, a fixed terracotta wash over that. No card
  *             is crowned and no card carries a pill.
  *   "plate"   TYPE, and nothing else. No colour, no mark: white, a hairline,
  *             and the name set large in the display face over a quiet foot.
@@ -55,17 +74,17 @@
  *    card is `h-full`, and the name block RESERVES its second line on every
  *    card, so a one-word city and a two-line city are the same object. Never by
  *    content luck.
- *  - NO PHOTOGRAPH, no per-city art, nothing that would have to be drawn 252
- *    times.
+ *  - ONE PHOTOGRAPH FOR ALL OF THEM, never per-city art that would have to be
+ *    found 252 times. The "field" look paints it; "plate" and "column" do not,
+ *    because each of those finds its beauty in the absence of a picture and
+ *    putting one behind them would make all three looks the same question.
  *
- * WHAT THE SHARE MAY CLAIM. `payShare` is ordinal, and the field look uses it
- * for tint depth: the claim is only "this one is more than that one", and the
- * whole set it is measured within is drawn beside it with every absolute figure
- * printed. `payOfTop` is zero-based, and the column look uses it for a mark
- * whose length reads as a proportion, which is the one thing a bar may not
- * lie about. Where there is no set to scale within (one city, or every city on
- * the same figure), neither look draws: an empty track reads as zero, and zero
- * is not what "not held" means.
+ * WHAT THE SHARE MAY CLAIM. `payOfTop` is zero-based, and the column look uses
+ * it for a mark whose length reads as a proportion, which is the one thing a bar
+ * may not lie about. `payShare` is ordinal and is no longer drawn by any look
+ * (see the photograph note above). Where there is no set to scale within (one
+ * city, or every city on the same figure), the column look draws nothing: an
+ * empty track reads as zero, and zero is not what "not held" means.
  */
 import * as React from "react";
 import type { CityCard } from "@/lib/spine/city_cards";
@@ -78,13 +97,44 @@ export type CityCardsLook = "field" | "plate" | "column";
    "five cities maximum" of 2026-08-30 and it fills the row. */
 const PER_PAGE = 4;
 
-/* THE TINT RANGE. The lightest card still has to read as a colour, or the row
-   looks like one coloured card and three that failed to load; the deepest has
-   to stay a field under black ink, not a block of paint. 0.30 to 0.88 of
-   `--terra` over the white card, drawn as an opacity on a token so the ramp
-   needs neither a new token nor a hex nor color-mix. */
-const TINT_LOW = 0.3;
-const TINT_HIGH = 0.88;
+/* THE PHOTOGRAPH STACK: a DUOTONE, three layers, each with exactly one job.
+
+   1. THE PICTURE, `object-cover`, full-bleed, and DESATURATED. That last word
+      is the design decision and it was made from a photograph, not from an
+      argument. Built first in full colour, the terracotta wash over a blue sky
+      and green cliffs produced a pink-mauve cast that reads as a filter someone
+      forgot to turn off , which is the exact quality the founder named when he
+      killed the hero photograph on 2026-09-07 ("it gives a feeling of being
+      cheap"). Desaturated first, the same wash reads as one deliberate
+      terracotta monotone: the picture survives as texture, the row belongs to
+      the palette, and green (banned outright) cannot appear. Both were
+      photographed side by side before this was chosen.
+      IT IS ALSO THE HONEST FORM FOR A STAND-IN. This is a coastline in Italy
+      standing behind Birmingham and Manchester. Nobody mistakes a terracotta
+      duotone for a document of a place; a full-colour photograph invites
+      exactly that mistake, and would be a fabricated place detail the day a
+      reader looked closely.
+   2. THE VEIL, white, whose only job is to lift the photograph's darkest
+      regions so near-black ink clears the contrast floor everywhere on the
+      card and not just over the sky. A scrim behind the name alone was the
+      alternative and was rejected: it reads as a label stuck on a picture, and
+      the name is meant to be the card, not a caption.
+   3. THE WASH, `--terra` at ONE fixed opacity. Fixed, not per-card: it is no
+      longer a figure (see the header note).
+
+   THE TWO NUMBERS ARE SET BY A MEASUREMENT, NOT BY EYE. Composited over the
+   photograph's darkest pixel, which is rgb(0,0,0) (measured 2026-09-11 by
+   decoding the file and walking all 1,116,717 pixels), this stack lands a
+   backdrop of rgb(190,137,124), and `--c-ink` on it reads 5.78 to 1 , over the
+   4.5 WCAG AA floor this repo holds, and 11.6 to 1 over the picture's brightest
+   region. Lowering the veil to 0.42 to let more of the picture through was
+   computed and rejected at 4.57 to 1: clearing the floor by seven hundredths is
+   not a margin, it is a coincidence waiting for a different photograph. The
+   harness re-measures this from the rendered layers at every run
+   (check_archetypes.mjs, the city-cards CONTRAST rule), so changing either
+   number here fails the build rather than the reader. */
+const PHOTO_VEIL = 0.55;
+const PHOTO_WASH = 0.45;
 
 /* ONE GRAMMAR FOR THE WHOLE COLUMN, decided by the set and not by each figure
    (PART 5: every figure in a column shares one font, one size, one weight and
@@ -126,7 +176,11 @@ export function CityCards({
   const rows = cards.length < 3;
   const pays = cards.map((c) => c.payUsd).filter((v): v is number => typeof v === "number");
   const fmt = moneyFor(pays);
-  const drawn = look !== "plate" && cards.some((c) => typeof c.payShare === "number");
+  /* ONLY THE COLUMN LOOK DRAWS THE FIGURE NOW. The field look's tint stopped
+     being a reading of anything when the photograph went under it, so it must
+     not print the sentence that describes a drawing ("the darker the card, the
+     more"): that sentence would be describing a veil. */
+  const drawn = look === "column" && cards.some((c) => typeof c.payOfTop === "number");
   const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
   const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
@@ -163,9 +217,31 @@ export function CityCards({
   );
 }
 
+/** THE PICTURE AND THE TWO LAYERS OVER IT, drawn once and used by both forms so
+ *  a tall card and a wide row can never drift into two different recipes. */
+function Photo({ card }: { card: CityCard }) {
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={card.photo.src}
+        alt=""
+        loading="lazy"
+        aria-hidden
+        data-photo={card.photo.placeholder ? "placeholder" : "own"}
+        className="absolute inset-0 h-full w-full object-cover"
+        /* DESATURATED, so the wash above it reads as a duotone rather than as a
+           filter left on by accident. See the stack note. */
+        style={{ filter: "grayscale(1)" }}
+      />
+      <span aria-hidden data-veil className="absolute inset-0 bg-white" style={{ opacity: PHOTO_VEIL }} />
+      <span aria-hidden data-tint className="absolute inset-0" style={{ background: "var(--terra)", opacity: PHOTO_WASH }} />
+    </>
+  );
+}
+
 function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v: number) => string }) {
   const field = look === "field";
-  const tint = field && typeof card.payShare === "number" ? TINT_LOW + (TINT_HIGH - TINT_LOW) * card.payShare : null;
   /* On a terracotta field every line goes to `--c-ink`: `--c-muted` reads about
      3.3 to 1 on the deepest step, under the floor this repo holds, and the
      hierarchy is carried by size (20 over 12), never by greying a line out. */
@@ -181,7 +257,7 @@ function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (
       data-card={card.id}
       className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[14px] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
     >
-      {tint != null ? <span aria-hidden data-tint className="absolute inset-0" style={{ background: "var(--terra)", opacity: tint }} /> : null}
+      {field ? <Photo card={card} /> : null}
       {look === "column" ? <Mark part={card.payOfTop} /> : null}
       <span className="relative flex h-full flex-col">
         {/* THE PLATE PUTS ITS AIR AT THE TOP AND STANDS THE NAME ON THE FOOT
@@ -248,7 +324,6 @@ function Mark({ part }: { part?: number }) {
  *  is the fault that puts a label at one end and its figure at the other. */
 function Row({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v: number) => string }) {
   const field = look === "field";
-  const tint = field && typeof card.payShare === "number" ? TINT_LOW + (TINT_HIGH - TINT_LOW) * card.payShare : null;
   const quiet = field ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]";
   return (
     <a
@@ -256,7 +331,7 @@ function Row({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v
       data-card={card.id}
       className={`group relative grid h-full items-center gap-3 overflow-hidden rounded-[14px] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto] ${field ? "border border-transparent" : "border border-[var(--c-border)]"}`}
     >
-      {tint != null ? <span aria-hidden data-tint className="absolute inset-0" style={{ background: "var(--terra)", opacity: tint }} /> : null}
+      {field ? <Photo card={card} /> : null}
       {look === "column" ? <Mark part={card.payOfTop} /> : null}
       <span className="relative min-w-0">
         <span data-city-name className={`block text-[length:var(--t-head)] leading-[1.15] tracking-tight text-[var(--c-ink)] ${field ? "font-semibold" : "font-serif font-semibold"}`} style={{ overflowWrap: "normal" }}>{card.name}</span>
