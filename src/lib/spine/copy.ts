@@ -314,14 +314,13 @@ export const COPY = {
    *  have caught "Times the cheapest". A kicker names the thing; a label says
    *  what the figure is in the words a person would use; a basis says what is
    *  measured and never what it means. */
+  /* NO CELL CARRIES A LABEL UNDER ITS FIGURE. Every opener here already says
+     what its figure is, so a label would be the same sentence twice, and the
+     extra line makes the cell about 40px taller, which stretches the tall cell
+     beside it past its own content and opens a hole in it. Measured on this
+     archetype's own stories. `BentoMetric` and `BentoCount` still take a label
+     for the case where an opener genuinely cannot say it. */
   bento: {
-    /** The cost to register, from the country's own formation file. The cell
-     *  carries no label under its figure: the opener already says what the
-     *  figure is, and saying it twice costs a line the composition needs. */
-    registerCost: {
-      kicker: "What it costs to register",
-      basis: "Government fees for a private limited company.",
-    },
     /** The paperwork score, the same 1 to 5 the tiers table draws as dots; the
      *  two ends are said here rather than left as an unexplained scale. */
     paperwork: {
