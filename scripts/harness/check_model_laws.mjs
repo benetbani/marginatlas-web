@@ -43,14 +43,20 @@
  *            real flag's natural size; the fixture ships its own data-URI
  *            SVG so it needs none.
  *   TRACK  = `[data-track]`, real, unchanged: PayBars.tsx already stamps it.
- *   DISTRICT ROW = `[data-district-row] [data-note]` (fixture) UNION the
- *            real WhereToTrade markup's two note positions, `#districts
- *            [data-notes] > div:last-child > div > span:last-child` (the
- *            wide notes list) and `#districts [data-row] > span:first-child
- *            > span` (the phone row). Both already exist in RankedBars.tsx;
- *            this is a structural-position selector, not a named marker, and
- *            it is this rule's own fragility beyond the fixture: a reorder
- *            inside RankedBars breaks it silently, not loudly.
+ *   DISTRICT ROW = `[data-district-row] [data-note]` (fixture) UNION two
+ *            real selectors, not equally alive today. `#districts
+ *            [data-notes] > div:last-child > div > span:last-child` read
+ *            the wide notes list; commit `f21d511f` deleted that markup
+ *            entirely, so this half can never match again unless that
+ *            feature returns. `#districts [data-row] > span:first-child >
+ *            span` read a note riding beside a phone row's name, and later
+ *            also caught a regression where the district pill nested a span
+ *            inside the name instead of sitting on it directly (fixed; see
+ *            `PILL_NAME` in RankedBars.tsx); this half stays LIVE as a guard
+ *            against either fault returning, and finds nothing today. Both
+ *            halves read zero elements on every real page today, so
+ *            DISTRICT ADJECTIVE below is UNMEASURED there, not a clean
+ *            pass; only the fixture still exercises it.
  *   FACT CELL = `[data-fact-cell]` (fixture) UNION `[data-kv-cell]`, the
  *            real attribute KvGrid.tsx stamps on every cell it draws, hero
  *            and otherwise. Reading every kv-cell rather than only the
@@ -341,8 +347,13 @@ function inPage(ctx) {
     if (BANNED.includes(norm)) push(cardIdOf(el), "BANNED WORDS", `a cell reading exactly "${raw}"`);
   }
 
-  /* DISTRICT ADJECTIVE: "a district row carries no free-text descriptor." */
+  /* DISTRICT ADJECTIVE: "a district row carries no free-text descriptor."
+     Both real-page halves of districtNoteSel read zero elements on every
+     page today (see the header comment: the notes-list half was deleted
+     outright, the phone-row half stays live but idle): UNMEASURED, once,
+     rather than a silent zero. */
   const districtNoteSel = "[data-district-row] [data-note], #districts [data-notes] > div:last-child > div > span:last-child, #districts [data-row] > span:first-child > span";
+  if (document.querySelectorAll(districtNoteSel).length === 0) unmeasured.push("DISTRICT ADJECTIVE: no district-row free-text markup on this page; unmeasured, not zero");
   for (const el of document.querySelectorAll(districtNoteSel)) {
     if (!el.getClientRects().length || hiddenFromSight(el)) continue;
     const t = (el.textContent || "").trim();

@@ -27,13 +27,15 @@
  * harness can see the track at all: it drew no attribute before the task 13
  * fix wave, and `check_model_laws.mjs`'s PLACEMENT rule iterates `[data-track]`,
  * so the whole form was invisible to it. PART 9 rule 5 (a figure on a WORLD
- * track needs its placement line beside it) is in play for `ceiling="world"`
- * and not for `"set"`; the RULE does not read the value yet and reports both,
- * so the districts card now shows a PLACEMENT finding that is a false positive
- * of the same kind the spectra tracks already produce, recorded as such in
- * DEBUG.md section 7 rather than silenced here. The default is "world", the
- * noisier of the two on purpose: a caller who forgets the prop gets a gate
- * finding rather than silence.
+ * track needs its placement line beside it) reads that stamp now
+ * (`check_model_laws.mjs`, commit `2c0af1bf`): a track declared
+ * `data-track="set"` is skipped, since a set's own heaviest member is never
+ * a world maximum; an undeclared track is still read exactly as before,
+ * because silence must never buy an exemption a real declaration has to
+ * earn. The districts card declares `"set"` and shows no PLACEMENT finding;
+ * the tracks that still report one are the ones that declare nothing at
+ * all. The default is "world", the noisier of the two on purpose: a caller
+ * who forgets the prop gets a gate finding rather than silence.
  *
  * SIX OR MORE RANKED MEMBERS ARE A TABLE, NOT COLUMNS (task 13, 2026-09-10),
  * on the ground of MODEL.md PART 5's DISTRICT ROWS ruling, in its words:

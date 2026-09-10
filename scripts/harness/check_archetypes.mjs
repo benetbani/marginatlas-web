@@ -13,12 +13,15 @@
  *    least 1.6x the next size (rule 16).
  *  LADDER: every font size on the ladder.
  *  ACCENT: at most one accent-coloured text element per card. A ranked-bars
- *    card carries none , its one loud moment is a BLACK PILL on the leader's
- *    figure, not a colour (task 12, 2026-09-10), so its own law is stricter:
- *    zero accent text, exactly one pill, and the pill on the row the card
- *    itself declares as the leader (`data-leader-key`), checked at every
- *    width because the pill is drawn twice (the bar figure, the phone table)
- *    and only one of the two shows at a time.
+ *    card carries none , its one loud moment is a BLACK PILL on the row the
+ *    card declares as the leader (`data-leader-key`), not a colour (task 12,
+ *    2026-09-10), so its own law is stricter: zero accent text, exactly one
+ *    pill, on the leader's row, whether that pill sits on the NAME or on the
+ *    FIGURE (widened, task 13 fix wave; on the districts card the reference
+ *    is always the leader, so its pill always sits on the NAME). Checked at
+ *    every width because the pill is drawn in three forms (the bar figure,
+ *    the wide table, the phone table) and only one of the three shows at a
+ *    time.
  *  TRACKS ADRIFT / OUT OF ORDER: on a ranked card every track begins at one
  *    left edge and runs one length within a pixel, and the bars drawn in them
  *    rise in the order their values do. Both halves of one law, and one
