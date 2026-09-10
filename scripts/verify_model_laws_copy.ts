@@ -91,7 +91,7 @@ import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
-type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE";
+type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE" | "BANNED CONSTRUCTION";
 const reds: { rule: Rule; text: string }[] = [];
 const pushRed = (rule: Rule, text: string) => reds.push({ rule, text });
 
@@ -179,6 +179,146 @@ for (const [where, t] of rowLabels) {
   if (words.length > 3) pushRed("ROW SENTENCE", `${where}: "${t}" is a label of ${words.length} words, over three`);
 }
 
+/* ------------------------------------------------------------------ *
+ * BANNED CONSTRUCTION, added 2026-09-10 after the district card's column
+ * head "Times the cheapest" passed every one of this repo's 140 gates and
+ * was then struck out by the founder in four words: "What the fuck is
+ * time's the cheapest? What, what, what's that sort of wording? It's
+ * unnatural."
+ *
+ * THE BLIND SPOT, DECLARED, because it is the whole reason that string got
+ * through: THIS CANNOT TEST WHETHER A PHRASE IS NATURAL ENGLISH, ONLY
+ * WHETHER IT MATCHES A KNOWN-BAD SHAPE, SO IT IS A FLOOR AND NOT A
+ * SUBSTITUTE FOR READING THE CARD ALOUD.
+ *
+ * Why the existing instruments could not catch it. `COPY.banned` is a list
+ * of literal substrings ("against the", "leverage", ...) and it is applied
+ * by verify_archetype_copy.ts to caveats, column heads, notes and doors,
+ * never to a kicker; and the two strings this rule finds slip the list
+ * anyway, because "Times the cheapest" contains no banned substring and
+ * "{dearest} against {cheapest}" carries no "the" between its placeholders.
+ * A word list cannot see a SHAPE. These three entries watch shapes.
+ *
+ * Applied to every kicker, column head and basis line that ships: the
+ * static ones walked out of COPY by key, and the composed ones taken from
+ * the shipped builders on the same lettered fixtures the rest of this file
+ * uses. A static string carrying a `{placeholder}` is SKIPPED here and
+ * proven in its composed form instead, so no string is counted twice and
+ * what is tested is what a reader actually meets.
+ *
+ * EACH ENTRY WAS PLANTED INTO COPY AND WATCHED GO RED, 2026-09-10, then
+ * removed; a rule nobody has seen fire is a rule nobody knows is wired:
+ *   (1) "Against the average"        -> bare comparative
+ *   (2) "Rent index" / "London vs Paris rent" / "Rent per capita" /
+ *       "Rent multiple by district" / "Rent against the baseline"
+ *                                    -> banned term, all five
+ *   (3) "Per square metre a year" / "Percent"
+ *                                    -> unit without a subject
+ * Live, it finds two, both on the district/verdict pair and both real; the
+ * baseline records them as the work queue for the rebuild that is blocked
+ * on data, not as strings anyone thinks are fine.
+ * ------------------------------------------------------------------ */
+
+/** A comparator: the word that sets one thing against another. "per" is
+ *  deliberately NOT here: "rent per square metre" is a unit construction, not
+ *  a comparison, and entry (3) is the rule that judges it. "per capita" is a
+ *  banned term in its own right under entry (2). */
+const COMPARATORS = ["times", "against", "versus", "vs", "compared", "relative"];
+
+/** Words that NAME what is being measured, or who is on the other side of a
+ *  comparison. A comparator with none of these anywhere in the phrase is a
+ *  comparison with nothing to compare: the reader is told the operation and
+ *  never the subject. Extend this list when a card names a subject it does
+ *  not yet hold; do NOT extend it to quiet a red on a phrase that genuinely
+ *  names no subject. */
+const SUBJECTS = [
+  "rent", "rents", "pay", "wage", "wages", "salary", "salaries", "cost", "costs", "price", "prices",
+  "fee", "fees", "tax", "taxes", "margin", "margins", "profit", "revenue", "income", "earnings",
+  "spend", "spending", "sales", "takings", "keep", "keeps", "time", "days", "share", "shares",
+  "staff", "payroll", "customers", "visitors", "people", "peers", "cities", "city", "districts",
+  "district", "countries", "country", "trades", "trade", "shop", "shops", "business", "businesses",
+  "premises", "paperwork", "population", "money", "capital", "hours", "week", "living",
+];
+
+/** Units and measurement furniture: how a thing is counted, never what. */
+const UNITS = [
+  "times", "multiple", "multiples", "percent", "pct", "%", "index", "baseline", "score", "points",
+  "rate", "ratio", "metre", "metres", "meter", "meters", "square", "sqm", "m2", "usd", "dollars",
+  "pounds", "euros", "year", "years", "month", "months", "week", "weeks", "day", "days", "capita",
+];
+
+/** Grammar, not content: dropped before asking whether anything is left. */
+const FUNCTION_WORDS = ["the", "a", "an", "of", "per", "in", "at", "by", "on", "for", "to", "and", "each", "every", "its"];
+
+/** Literal terms the model bans outright in a head: jargon that names the
+ *  machinery instead of the thing (his "furthermore, the label replaces the
+ *  number" is the same complaint one step further on). */
+const BANNED_TERMS = ["index", "multiple", "multiples", "baseline", "vs", "per capita"];
+
+const words = (s: string) => s.toLowerCase().replace(/[^a-z0-9%\s]/g, " ").split(/\s+/).filter(Boolean);
+
+/** Returns the entry a string trips, or null. First match wins, so one bad
+ *  string is one red and the per-rule count stays a count of strings. */
+function bannedConstruction(text: string): string | null {
+  const w = words(text);
+  if (!w.length) return null;
+  const lower = text.toLowerCase();
+
+  // (2) BANNED TERM, checked first because it is the most literal.
+  for (const term of BANNED_TERMS) {
+    const hit = term.includes(" ") ? lower.includes(term) : w.includes(term);
+    if (hit) return `a head carrying the banned term "${term}"`;
+  }
+
+  // (1) BARE COMPARATIVE: a comparison whose subject never arrives.
+  const comparator = w.find((t) => COMPARATORS.includes(t));
+  if (comparator && !w.some((t) => SUBJECTS.includes(t))) {
+    return `a bare comparative: it sets something "${comparator}" something else and never names what is being compared`;
+  }
+
+  // (3) UNIT WITHOUT A SUBJECT: it says how it is counted, never what.
+  const content = w.filter((t) => !FUNCTION_WORDS.includes(t));
+  if (content.length && content.every((t) => UNITS.includes(t))) {
+    return `a head made only of units (${content.join(", ")}); it names how the figure is counted and never what is being counted`;
+  }
+  return null;
+}
+
+/** Every static kicker, column head and basis line in COPY, found by KEY so a
+ *  card added later is covered without this list being edited. */
+function collectCopyHeads(node: unknown, path: string, out: Array<[string, string]>): void {
+  if (typeof node === "string") {
+    const leaf = path.split(".").pop() ?? "";
+    const parent = path.split(".").slice(-2, -1)[0] ?? "";
+    const isHead =
+      ["kicker", "basis", "answerLabel", "basisNoTier", "countryBasis"].includes(leaf) ||
+      ["phoneHead", "heads", "head", "cols", "columns"].includes(parent);
+    if (isHead && !node.includes("{")) out.push([path, node]);
+    return;
+  }
+  if (node && typeof node === "object" && !Array.isArray(node)) {
+    for (const [k, v] of Object.entries(node as Record<string, unknown>)) collectCopyHeads(v, path ? `${path}.${k}` : k, out);
+  }
+}
+{
+  const heads: Array<[string, string]> = [];
+  collectCopyHeads(COPY, "COPY", heads);
+
+  /* The composed heads: the same lettered fixtures used above, so the strings
+     that only exist after a placeholder is filled are tested in the form a
+     reader meets them. */
+  const fixture = { where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.2 }, { name: "A", slug: "a", rent_mult: 0.9 }, { name: "C", slug: "c", rent_mult: 3 }] } };
+  const v = cityVerdictFacts(fixture);
+  if (v) heads.push(["cityVerdictFacts.kicker", v.kicker], ["cityVerdictFacts.answer.label", v.answer.label], ["cityVerdictFacts.answer.basis", v.answer.basis]);
+  const bars = buildCityDistrictBars(fixture);
+  if (bars) heads.push(["buildCityDistrictBars.basis", bars.basis]);
+
+  for (const [where, text] of heads) {
+    const why = bannedConstruction(text);
+    if (why) pushRed("BANNED CONSTRUCTION", `${where}: "${text}" is ${why}`);
+  }
+}
+
 console.log(`model laws (copy): ${reds.length} red(s) across ${poleCount} spectra poles, ${rowLabels.length} row labels, the city-verdict and city-district builders on a synthetic fixture, and the city-peers "same" reachability proof`);
 for (const r of reds.slice(0, 60)) console.log(`  ${r.text}`);
 
@@ -189,8 +329,8 @@ for (const r of reds.slice(0, 60)) console.log(`  ${r.text}`);
    number and pass silently, which a per-key comparison cannot do. No date
    field, matching those two files: a hardcoded literal date would go false
    the moment this is re-seeded on a later day. */
-const RULES: Rule[] = ["BANNED WORDS", "ROW SENTENCE", "DISTRICT ADJECTIVE"];
-const counts: Record<Rule, number> = { "BANNED WORDS": 0, "ROW SENTENCE": 0, "DISTRICT ADJECTIVE": 0 };
+const RULES: Rule[] = ["BANNED WORDS", "ROW SENTENCE", "DISTRICT ADJECTIVE", "BANNED CONSTRUCTION"];
+const counts: Record<Rule, number> = { "BANNED WORDS": 0, "ROW SENTENCE": 0, "DISTRICT ADJECTIVE": 0, "BANNED CONSTRUCTION": 0 };
 for (const r of reds) counts[r.rule]++;
 const BASELINE_PATH = "scripts/model_laws_copy_baseline.json";
 /* A pre-migration file (`{total, date}`, the shape this gate used before the
@@ -216,7 +356,18 @@ if (process.argv.includes("--write-baseline")) {
      let "the baseline may only come down" be true in prose and false in
      code. */
   if (existing) {
-    const raised = RULES.filter((r) => counts[r] > (existing[r] ?? 0));
+    /* A RULE WITH NO STORED ENTRY IS BEING SEEDED, NOT RAISED (2026-09-10).
+       `existing[r] ?? 0` read a brand-new rule key as a stored zero, so
+       adding BANNED CONSTRUCTION to this gate was refused as an attempt to
+       raise a baseline from 0 to 2, and there was no way to add a fourth
+       rule to this file at all. The guard's purpose is that a rule ALREADY
+       ON THE BOOKS may only come down; a rule that has never been counted
+       has nothing to come down from. The two are distinguished explicitly
+       now rather than collapsed by a nullish default, and the seeding of a
+       new rule is announced rather than done quietly. */
+    const seeded = RULES.filter((r) => existing[r] === undefined);
+    for (const r of seeded) console.log(`  seeding a rule never counted before: ${r} = ${counts[r]}`);
+    const raised = RULES.filter((r) => existing[r] !== undefined && counts[r] > (existing[r] as number));
     if (raised.length) {
       console.error(`x model-laws-copy: refusing to write a baseline that RAISES a rule's count above what is already stored. A baseline may only come down.`);
       for (const r of raised) console.error(`     ${r}: ${existing[r] ?? 0} -> ${counts[r]}`);
