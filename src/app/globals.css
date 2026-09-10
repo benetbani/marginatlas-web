@@ -12,10 +12,12 @@
 /* Brand Design Constitution (2026-06-16) section 3: type law. Tabular, lining
    figures on all data numerals (tables, stats, the calculator) so columns align
    and numbers do not jitter as they change. Apply `.tabular-figures` or
-   `data-numeric="true"` to any scanned numeric run. The serif slot
-   (--font-display, Newsreader) is the almanac voice (mastheads, openers,
-   verdicts, the one big number); the sans (--font-sans, Inter) is everything
-   scanned, including every numeral outside the masthead anchor. */
+   `data-numeric="true"` to any scanned numeric run. The display slot
+   (--font-serif, Space Grotesk) is the almanac voice: mastheads, openers,
+   verdicts, and, since 2026-09-11, EVERY FIGURE (--font-num, and the `.fig`
+   rule far below that reads it). The sans (--font-sans, Geist) is the prose.
+   The two sentences this paragraph used to carry, naming Newsreader and Inter
+   and handing every numeral to the sans, were both stale. */
 @layer utilities {
   .tabular-figures,
   [data-numeric="true"] {
@@ -1050,9 +1052,75 @@
      would have dropped every heading on the site to a SERIF, silently, which is
      the one outcome the face change exists to end. */
   --font-display: var(--font-serif), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  /* the tabular figure font: the body sans carries tabular-nums; no separate
-     numeric cut is shipped, so --font-num aliases the body font. */
-  --font-num: var(--font-sans), Geist, ui-sans-serif, system-ui, sans-serif;
+  /* THE FIGURE FACE, and it is the display face, not the body sans (2026-09-11).
+     This token used to alias --font-sans, with the note "no separate numeric cut
+     is shipped", while src/components/spine/shell.tsx declared the opposite in an
+     inline <style>: `.fig{font-family:var(--font-grotesk)...}`. Two contradictory
+     answers to one question, and neither reached a page. `--font-grotesk` is set
+     by next/font INSIDE SpineShell and nowhere else, so on every renderer that
+     does not mount that shell it computed to the empty string, which makes the
+     whole font-family declaration invalid at computed-value time and drops it:
+     the figure inherited the body sans. Measured 2026-09-11 on the rendered city
+     and country pages: 40 and 46 elements carrying `.fig`, every one of them
+     drawing in Geist. The chain below is the same shape --font-display already
+     uses, and for the same reason: the slot FIRST, then the face by name, so a
+     next/font slot that never arrives still lands on the right typeface instead
+     of silently falling back to the body sans. */
+  --font-num: var(--font-serif), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ==================== THE FIGURE, AND THE SPINE FRAME ======================
+   These five rules lived in an inline <style> inside SpineShell until
+   2026-09-11. That is why the archetype story sheet and the real page drew
+   differently: scripts/harness/render_page.tsx wraps its output in SpineShell
+   and scripts/harness/render_archetypes.tsx did not, so `.fig`, `.focal` and
+   the two hover rules simply did not exist on the sheet. Here they are loaded
+   by the root layout, which every renderer already imports, so no renderer can
+   diverge from another on what a figure is.
+
+   ONE DEFINITION OF A FIGURE. `Fig` in src/components/spine/kit.tsx is the only
+   thing that should ever write this class (117 call sites); this is the only
+   place that should ever style it. A component that hand-rolls its own numeric
+   font-family is the bug this pair exists to prevent.
+
+   UNLAYERED, AND ON PURPOSE. `.fig` and Tailwind's `font-medium` / `font-serif`
+   have the same specificity, so the later one wins. Sitting after `@tailwind
+   utilities` keeps the winner exactly what it was when this rule was an inline
+   <style>: the figure's weight and face are the system's to set, not a call
+   site's. Moving this block above the Tailwind directives would silently hand
+   `<Fig className="font-medium">` a different weight. */
+.fig {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+.focal {
+  background: linear-gradient(180deg, #ffffff 0%, #fffaf8 100%);
+  border-radius: 10px;
+}
+.hov {
+  transition: background-color 0.15s ease-out, transform 0.15s ease-out, border-color 0.15s ease-out;
+}
+.hov:hover {
+  background: var(--c-soft);
+}
+.cityhov {
+  transition: transform 0.15s ease-out, border-color 0.15s ease-out;
+}
+.cityhov:hover {
+  transform: translateY(-2px);
+  border-color: var(--terra-border);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hov,
+  .cityhov,
+  details summary span {
+    transition: none !important;
+  }
+  .cityhov:hover {
+    transform: none;
+  }
 }
 
 /* ---- atlas-eyebrow — the small tracked uppercase label ------------------- */

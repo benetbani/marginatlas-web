@@ -22,6 +22,7 @@ try {
 }
 const css = readFileSync(CSS_PATH, "utf8");
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
+import { SpineShell } from "../../src/components/spine/shell";
 import { preflight } from "./preflight.mjs";
 
 /* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, free memory printed; a wrong ground stops here with the remedy. */
@@ -33,7 +34,17 @@ const cityStrips = pickCityStripInstances(cityHero);
 const cityReads = pickCityReadsInstances(cityHero);
 const cityCloses = pickCityCloseInstances(cityHero);
 const instances = pickAllInstances(cityHero);
+/* THE SHEET MOUNTS THE SAME SHELL THE PAGE DOES (sys:sheet-mounts-shell,
+   2026-09-11). render_page.tsx has always wrapped its output in SpineShell and
+   this file did not, so a story and the card it stands for rendered under
+   different stylesheets: everything the shell owned , the grey ground, the
+   `.spine-scope` icon accent , was missing here, and a story could be judged
+   clean while the real card drew differently. The figure face was the loudest
+   case and is now fixed at the root (globals.css owns `.fig`), which is what
+   makes this wrap safe rather than a second place to keep in sync: the shell
+   carries no stylesheet of its own any more, only the scope and the ground. */
 const body = renderToStaticMarkup(
+  <SpineShell>
   <main className="mx-auto max-w-[1120px] px-4 py-10">
     <StoriesIndex instances={instances} />
     <AnswerCardStories instances={instances["answer-card"]} />
@@ -54,7 +65,8 @@ const body = renderToStaticMarkup(
     <MarkListStories instances={instances["mark-list"]} />
     <CityHeroStories instances={cityHero} />
     <CityVerdictStories instances={pickCityVerdictInstances(cityHero)} />
-  </main>,
+  </main>
+  </SpineShell>,
 );
 const html = `<!doctype html><html lang="en" style="--font-sans: Geist, ui-sans-serif, system-ui, sans-serif; --font-serif: Space Grotesk, ui-sans-serif, system-ui, sans-serif;"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Archetype stories</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap"><style>${css}</style></head><body class="bg-[var(--c-bg)] text-[var(--c-ink)]">${body}</body></html>`;
 mkdirSync("scratchpad/harness", { recursive: true });

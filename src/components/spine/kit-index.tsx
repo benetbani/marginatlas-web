@@ -645,7 +645,7 @@ export function MarginIndexBadge({ score, size = 62, label = "Margin Index", sub
         <circle cx="32" cy="32" r={r} fill="none" stroke="var(--terra)" strokeWidth="3.5" strokeLinecap="round" strokeDasharray={`${arc.toFixed(1)} ${(C - arc).toFixed(1)}`} transform="rotate(-90 32 32)" />
         {/* the compass tick, the brand nod: a small ink needle at due north */}
         <path d="M32 2.6l2.3 4.6h-4.6z" fill="var(--c-ink)" />
-        <text x="32" y="37.5" textAnchor="middle" fontSize="17.5" fontWeight="600" fill="var(--c-ink)" style={{ fontFamily: "var(--font-grotesk)", fontVariantNumeric: "tabular-nums" }}>{s}</text>
+        <text x="32" y="37.5" textAnchor="middle" fontSize="17.5" fontWeight="600" fill="var(--c-ink)" style={{ fontFamily: "var(--font-num)", fontVariantNumeric: "tabular-nums" }}>{s}</text>
       </svg>
       {showLabel ? (
         <span className="leading-tight">

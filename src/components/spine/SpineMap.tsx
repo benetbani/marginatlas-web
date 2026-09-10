@@ -106,7 +106,7 @@ function popupHTML(p: SpinePoint): string {
     s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const fig =
     p.signalLabel
-      ? `<div style="font-family:var(--font-grotesk),system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:12.5px;color:${TERRA_ACCENT};margin-top:2px;letter-spacing:.01em;">${esc(
+      ? `<div style="font-family:var(--font-num),system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:12.5px;color:${TERRA_ACCENT};margin-top:2px;letter-spacing:.01em;">${esc(
           p.signalLabel
         )}</div>`
       : "";
@@ -116,7 +116,7 @@ function popupHTML(p: SpinePoint): string {
       )}</div>`
     : "";
   return (
-    `<div style="font-family:var(--font-grotesk),system-ui,sans-serif;">` +
+    `<div style="font-family:var(--font-num),system-ui,sans-serif;">` +
     `<div style="font-size:12.5px;font-weight:700;color:${INK};letter-spacing:.01em;">${esc(
       p.name
     )}</div>` +
@@ -165,7 +165,7 @@ function buildMarkerEl(
   const label = document.createElement("span");
   label.textContent = p.name;
   label.style.cssText =
-    "font-family:var(--font-grotesk),system-ui,sans-serif;font-size:11.5px;font-weight:600;" +
+    "font-family:var(--font-num),system-ui,sans-serif;font-size:11.5px;font-weight:600;" +
     "color:#1b1b1a;white-space:nowrap;letter-spacing:.01em;" +
     // paint-order style white halo so the label reads over any tile
     "paint-order:stroke fill;-webkit-text-stroke:3px rgba(255,255,255,0.92);" +

@@ -95,7 +95,7 @@ export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?:
           <text x={20} y={101} textAnchor="start" fill="#8c8c8a" fontSize={8.5} style={{ textTransform: "uppercase", letterSpacing: ".04em" }}>{endLabels[0]}</text>
           <text x={180} y={101} textAnchor="end" fill="#8c8c8a" fontSize={8.5} style={{ textTransform: "uppercase", letterSpacing: ".04em" }}>{endLabels[1]}</text>
         </>) : null}
-        <text x={cx} y={118} textAnchor="middle" fill="#1a1a1a" fontSize={24} style={{ fontFamily: "var(--font-grotesk)", fontWeight: 600 }}>{v}</text>
+        <text x={cx} y={118} textAnchor="middle" fill="#1a1a1a" fontSize={24} style={{ fontFamily: "var(--font-num)", fontWeight: 600 }}>{v}</text>
       </svg>
       {sub ? <div className="-mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">{sub}</div> : null}
     </div>
@@ -120,7 +120,7 @@ export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, num
       {rendered.map(([name, pct, color]) => {
         const len = (pct / 100) * C; const el = <circle key={name} cx={80} cy={80} r={r} fill="none" stroke={color} strokeWidth={24} strokeDasharray={`${len.toFixed(2)} ${(C - len).toFixed(2)}`} strokeDashoffset={(-off).toFixed(2)} transform="rotate(-90 80 80)" />; off += len; return el;
       })}
-      <text x={80} y={76} textAnchor="middle" fill="#1a1a1a" fontSize={30} style={{ fontFamily: "var(--font-grotesk)", fontWeight: 600 }}>{centerBig}</text>
+      <text x={80} y={76} textAnchor="middle" fill="#1a1a1a" fontSize={30} style={{ fontFamily: "var(--font-num)", fontWeight: 600 }}>{centerBig}</text>
       <text x={80} y={95} textAnchor="middle" fill="#8c8c8a" fontSize={9} style={{ textTransform: "uppercase", letterSpacing: ".05em" }}>{centerSub}</text>
     </svg>
   );

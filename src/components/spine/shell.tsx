@@ -1,6 +1,9 @@
 /**
- * SpineShell , the shared frame for every spine page type. Geist Sans (text) +
- * Space Grotesk (.fig figures).
+ * SpineShell , the shared frame for every spine page type. Geist Sans is the
+ * text face it anchors. The FIGURE face is no longer this file's business:
+ * it is globals.css's `--font-num`, read by the one `.fig` rule that lives
+ * there, so every renderer gets the same answer whether it mounts this shell
+ * or not.
  *
  * THE GROUND IS GREY, THE CARDS ARE WHITE (MODEL.md PART 2; founder ruling
  * 2026-09-07, on the skyline photograph that used to sit behind every page:
@@ -19,31 +22,37 @@
  * `elevation` prop already uses below.
  */
 import * as React from "react";
-import { Geist, Space_Grotesk } from "next/font/google";
+import { Geist } from "next/font/google";
 
 const geist = Geist({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-geist", display: "swap" });
-const grotesk = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-grotesk", display: "swap" });
 
 export function SpineShell({ children }: { children: React.ReactNode; bg?: string; bgPosition?: string }) {
   return (
-    <div className={`spine-scope ${geist.variable} ${grotesk.variable}`} style={{ fontFamily: "var(--font-geist), ui-sans-serif, system-ui, sans-serif", background: "var(--c-ground)" }}>
-      {/* THE TWELVE COLOUR TOKENS THAT USED TO OPEN THIS BLOCK NOW LIVE IN
-          globals.css, and the reason is that they were never scoped to anything.
-          They were declared at `:root` from inside a component, so they existed
-          on a page that mounted this shell and nowhere else, while four surfaces
-          outside the spine tree already read them. Moved, not copied: globals.css
-          is imported by the root layout, so every route inherits them and this
-          page computes what it always computed. The rules below stay, because
-          each depends on something this shell owns: `.fig` on --font-grotesk,
-          which only the spine loads, and the hover rules on the frame. */}
-      <style>{`.fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
-.focal{background:linear-gradient(180deg,#ffffff 0%,#fffaf8 100%);border-radius:10px}
-.hov{transition:background-color .15s ease-out,transform .15s ease-out,border-color .15s ease-out}
-.hov:hover{background:var(--c-soft)}
-.cityhov{transition:transform .15s ease-out,border-color .15s ease-out}
-.cityhov:hover{transform:translateY(-2px);border-color:var(--terra-border)}
-/* AtlasIcon accent rides terracotta via .spine-scope .ma-glyph in globals.css; ink rides currentColor from the Ico tile. */
-@media (prefers-reduced-motion: reduce){.hov,.cityhov,details summary span{transition:none !important}.cityhov:hover{transform:none}}`}</style>
+    <div className={`spine-scope ${geist.variable}`} style={{ fontFamily: "var(--font-geist), ui-sans-serif, system-ui, sans-serif", background: "var(--c-ground)" }}>
+      {/* THIS SHELL NO LONGER CARRIES A STYLESHEET, and that is the point.
+          The twelve colour tokens left in an earlier change for the same
+          reason: declared from inside a component, they existed on a page that
+          mounted this shell and nowhere else. `.fig`, `.focal` and the two
+          hover rules have now followed them into globals.css (see "THE FIGURE,
+          AND THE SPINE FRAME" there), because the same fault was costing more
+          than tokens ever did:
+
+          `.fig` read `var(--font-grotesk)`, a next/font slot THIS FILE
+          defined. Every renderer that does not mount this shell , the
+          archetype story sheet (scripts/harness/render_archetypes.tsx), the
+          dev catalogue, any surface outside the spine tree that draws a `Fig`
+          , had no such rule at all; and every renderer that mounts it without
+          a real next/font transform got the slot as the EMPTY STRING, which
+          makes `font-family: , ui-sans-serif, sans-serif` invalid and drops
+          the declaration whole. Either way the figure inherited the body sans.
+          Measured 2026-09-11: 86 elements carrying `.fig` across the rendered
+          city and country pages, all of them Geist.
+
+          The Space Grotesk next/font instance that used to sit beside `geist`
+          above went with it. It was a SECOND load of a face the root layout
+          already loads into `--font-serif`; nothing reads `--font-grotesk` in
+          this tree any more, because every figure, in markup and in SVG, now
+          reads the one token `--font-num`. */}
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </div>
   );

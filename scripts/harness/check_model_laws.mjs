@@ -1,17 +1,21 @@
 /**
- * THE MODEL'S TWELVE LAWS, MEASURED (task 4, 2026-09-08). MODEL.md PART 8.5
+ * THE MODEL'S THIRTEEN LAWS, MEASURED (task 4, 2026-09-08; FIGURE FACE added
+ * 2026-09-11). MODEL.md PART 8.5
  * names twelve new checks "so the model is defended and not merely stated."
+ * The thirteenth, FIGURE FACE, is not from PART 8.5: it defends the type law
+ * in PART 3, which said figures carry the display face and had never once
+ * been true on a rendered page until the day the rule was written.
  * This file is check_readability.mjs's sibling, built the same way: the same
  * preflight, the same `--list` handling over scripts/harness/pages.json, the
  * same red shape (page, width, card, rule), the same exit contract, and the
  * same practice of stating this instrument's blind spot before its numbers
  * are trusted.
  *
- * THE TWELVE, each a comment above its own block in `inPage()`, quoting
+ * THE THIRTEEN, each a comment above its own block in `inPage()`, quoting
  * PART 8.5's clause. Two, MEASURED ONCE (BANNED WORDS at the copy level, on
  * COUNTRY-only static data with no browser and no database) also live as the
  * gate `model-laws-copy` in scripts/verify_model_laws_copy.ts, alongside ROW
- * SENTENCE and DISTRICT ADJECTIVE; this file is the full twelve, which needs
+ * SENTENCE and DISTRICT ADJECTIVE; this file is the full thirteen, which needs
  * a browser and is run by hand (`npm run harness:laws`), never in the chain.
  *
  * REAL MARKUP, NAMED HONESTLY. The brief names five markers as if the real
@@ -94,8 +98,8 @@
  * of the same rule on the same card and kept only its width). The fold key
  * is (card id, rule, detail text): the exact same (id, rule, detail) seen at
  * more than one width becomes one row naming every width it held at, so
- * this file's own fixture (no responsive rule at all) still reports twelve,
- * not thirty-six. Two DIFFERENT findings under the same rule in the same
+ * this file's own fixture (no responsive rule at all) still reports one row
+ * per law, not one per law per width. Two DIFFERENT findings under the same rule in the same
  * card, distinguished by their own detail text (two different BANNED WORDS
  * cells, two different DISTRICT ADJECTIVE notes), are never folded into each
  * other, at any width: they stay two rows, and if their measured figure
@@ -112,6 +116,10 @@
  * three lines with the other eleven discarded.
  *
  * BLIND SPOTS, stated before this is trusted:
+ *   FIGURE FACE SEES ONLY HTML TEXT CARRYING `.fig`. A number painted in an
+ *   SVG `<text>`, in a canvas, inside a map popup built after load, or inside
+ *   a leaf that simply never got the class can be in the wrong face and this
+ *   rule will call the page clean.
  *   UNMEASURED IS NOT PASSED. BLOCK, LABEL and COL read zero elements on
  *   every real page today, because no component stamps their marker. That
  *   is printed as UNMEASURED, not silently absorbed as zero violations; a
@@ -474,6 +482,69 @@ function inPage(ctx) {
     const fig = cell.querySelector(".fig") || cell;
     const lines = lineCountOf(fig);
     if (lines > 2) push(cardIdOf(cell), "TWO-LINE CELL", `a hero fact cell's figure wraps to ${lines} lines`);
+  }
+
+  /* FIGURE FACE: "the numbers are the product, and they carry the display
+     face, never the body sans" (MODEL.md, the type law). Added 2026-09-11,
+     after measuring that the design system had said this since the spine was
+     built and had never once been true: `.fig` lived in an inline <style>
+     inside SpineShell and read `var(--font-grotesk)`, a next/font slot that
+     shell defined, so on every renderer that did not mount it the rule was
+     absent, and on every renderer that mounted it without a real next/font
+     transform the slot was the EMPTY STRING, which makes the whole
+     font-family declaration invalid and drops it. 86 figures across the
+     rendered city and country pages, every one of them Geist.
+
+     THIS READS THE COMPUTED FONT, NEVER THE PRESENCE OF A CLASS, and that is
+     the whole point: a `.fig` that is present and unstyled is exactly the
+     fault being checked for, and a class-counting rule would have called the
+     broken state clean for as long as it existed.
+
+     Three findings, in this order, because the later ones are meaningless
+     without the earlier ones:
+       1. NO FACE DECLARED , `--font-num` does not resolve to anything other
+          than the body face. One red for the page; the per-figure pass is
+          skipped, because with no face to draw in every figure would red and
+          the report would be noise rather than a finding.
+       2. FACE DID NOT LOAD , the token names a different family from the
+          body's, and a ten-digit probe in each measures the SAME width, so
+          the named face is not actually on this machine and every figure is
+          silently drawing a fallback. Also one red, also skips the pass.
+       3. Per figure , any visible `.fig` whose computed first family is not
+          the declared figure face, named by its card.
+
+     THE BLIND SPOT, in one sentence: this sees only figures drawn as HTML
+     text carrying `.fig`, so a number painted in an SVG `<text>`, in a canvas,
+     inside a maplibre popup built after load, or inside a leaf that simply
+     never got the class can be in the wrong face and this rule will call the
+     page clean. */
+  {
+    const probe = document.createElement("span");
+    probe.setAttribute("style", "position:absolute;left:-9999px;top:0;font-size:100px;font-weight:600;white-space:pre;font-variant-numeric:tabular-nums lining-nums");
+    probe.textContent = "0000000000";
+    document.body.appendChild(probe);
+    const first = (list) => (list || "").split(",")[0].replace(/^\s*["']|["']\s*$/g, "").trim();
+    probe.style.fontFamily = "var(--font-num)";
+    const figFace = first(getComputedStyle(probe).fontFamily);
+    const figW = probe.getBoundingClientRect().width;
+    probe.style.fontFamily = getComputedStyle(document.body).fontFamily;
+    const bodyFace = first(getComputedStyle(probe).fontFamily);
+    const bodyW = probe.getBoundingClientRect().width;
+    probe.remove();
+
+    const figs = [...document.querySelectorAll(".fig")].filter((f) => f.getClientRects().length && !hiddenFromSight(f));
+    if (!figFace || figFace === bodyFace) {
+      push("page", "FIGURE FACE", `--font-num resolves to the body face (${bodyFace || "nothing"}); no figure on this page can carry the display face`);
+    } else if (Math.abs(figW - bodyW) < 0.5) {
+      push("page", "FIGURE FACE", `${figFace} is declared as the figure face and renders at the body face's exact width; it did not load, and every figure is drawing a fallback`);
+    } else if (figs.length === 0) {
+      unmeasured.push("FIGURE FACE: no .fig elements on this page; the face is unmeasured, not passed");
+    } else {
+      for (const f of figs) {
+        const drawn = first(getComputedStyle(f).fontFamily);
+        if (drawn !== figFace) push(cardIdOf(f), "FIGURE FACE", `a figure drawn in ${drawn}, not the figure face ${figFace}: "${(f.textContent || "").trim().slice(0, 24)}"`);
+      }
+    }
   }
 
   return { found: out, unmeasured };

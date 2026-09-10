@@ -245,17 +245,27 @@ const ROW = "grid gap-x-3";
    row and on the head. The middle column is `figChars` characters wide plus
    the pill's own horizontal padding (`px-2` twice, which is exactly 1rem), so
    it is derived from the widest figure THIS card draws rather than a constant
-   that happens to fit "x2.50". `ch` is the unit because it is the advance of
-   "0" in the row's own font at the row's own size, and the figure is drawn in
-   that same font at that same size (measured on this page: row 16px, figure
-   16px), so n characters of figure occupy at most n ch whenever no glyph in
-   the string is wider than a digit. THE BLIND SPOT, stated rather than
-   assumed: this cannot distinguish a formatter whose glyphs are all digit
-   width or narrower from one carrying a wider glyph (a "%" is wider than "0"
-   in some faces). An overrun of a few pixels is absorbed by the 12px column
-   gap before it reaches the track, and a real one is reported by the
-   harness's own overflow rule, which reds a figure cell whose content is
-   wider than its box. */
+   that happens to fit "x2.50".
+
+   `ch` IS THE ROW'S UNIT, NOT THE FIGURE'S, AND SINCE 2026-09-11 THOSE ARE TWO
+   DIFFERENT FACES. `ch` is the advance of "0" in THIS GRID ELEMENT'S font,
+   which is the body sans; the figure inside is drawn in the display face
+   (globals.css `--font-num`, via `.fig`). The sentence that stood here said
+   they were the same font and that is no longer true, so here is the measured
+   relation instead: Geist's tabular "0" is 0.600em, Space Grotesk's is
+   0.620em, so a figure of n characters occupies at most n x 1.034 ch, a 3.4%
+   overrun on the digits alone. The `+ 1rem` is the pill's own `px-2` padding
+   and covers it with room left at every figure length this card draws (widest
+   measured: 69px of figure in a 69px column, no overflow at 375, 768 or 1280
+   on the city and country pages).
+
+   THE BLIND SPOT, stated rather than assumed: this cannot distinguish a
+   formatter whose glyphs are all digit width or narrower from one carrying a
+   wider glyph (a "%" is wider than "0" in some faces), and it does not
+   re-measure when the face changes. An overrun of a few pixels is absorbed by
+   the 12px column gap before it reaches the track, and a real one is reported
+   by the harness's own overflow rule (check_archetypes.mjs BOTCHED MOBILE),
+   which reds a figure cell whose content is wider than its box. */
 const wideColumns = (figChars: number): React.CSSProperties => ({
   gridTemplateColumns: `minmax(0,22ch) calc(${figChars}ch + 1rem) minmax(0,1fr)`,
 });

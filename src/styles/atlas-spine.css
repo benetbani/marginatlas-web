@@ -102,7 +102,11 @@
   --n1:#57575b; --n2:#6f6f74; --n3:#9a9a9e; --n4:#c0c0c4; --n5:#dededf;
 
   --sans:var(--font-geist,'Geist'),'Geist','Geist Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --fig:var(--font-grotesk,'Space Grotesk'),'Space Grotesk',ui-monospace,'SF Mono',monospace;
+  /* ONE FIGURE FACE FOR THE WHOLE SITE, 2026-09-11. This slot used to name its
+     own chain, ending in a MONOSPACE no other surface would ever fall to. It
+     now reads globals.css's --font-num, so the legacy .av2 dev surfaces and the
+     shipped spine cannot drift apart on what a figure is drawn in. */
+  --fig:var(--font-num);
 
   /* THE TYPE LADDER, 2026-08-21. Ten steps, declared identically in
      website/src/app/globals.css so the v2 spine and the rest of the site stop

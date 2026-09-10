@@ -27,7 +27,20 @@ for (const w of widthsArg.split(",").map(Number)) {
   const ctx = await b.newContext({ viewport: { width: w, height: 1400 }, deviceScaleFactor: 2 });
   const p = await ctx.newPage();
   await p.goto(url, { waitUntil: "load", timeout: 60000 });
-  await p.evaluate(() => (document.fonts ? document.fonts.ready : null));
+  /* BOTH FACES, ASKED FOR BY NAME, BEFORE THE SHUTTER. `document.fonts.ready`
+     alone resolves as soon as the faces the page has ALREADY USED have
+     arrived; a webfont nothing has drawn yet is still "loading" at that
+     moment, so a capture could print the figure face's fallback and look
+     like a finished page. Measured on 2026-09-11, before the figure face was
+     wired: Space Grotesk sat at `loading` while `fonts.ready` had resolved.
+     This file's own rule is that a photograph which lies is worse than none. */
+  await p.evaluate(async () => {
+    if (!document.fonts) return;
+    for (const w of [400, 500, 600, 700]) {
+      await Promise.allSettled([document.fonts.load(`${w} 16px Geist`), document.fonts.load(`${w} 16px 'Space Grotesk'`)]);
+    }
+    await document.fonts.ready;
+  });
   await p.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* the capture goes on */ } } });
   await p.waitForTimeout(250);
   const box = await p.evaluate((key) => {

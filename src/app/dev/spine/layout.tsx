@@ -30,7 +30,7 @@ export default function SpineLayout({ children }: { children: React.ReactNode })
       {/* Layer 4: READABLE BAND , centered, feathers to the untouched photo in the gutters. */}
       <div aria-hidden className="spine-band" style={{ position: "fixed", insetBlock: 0, left: "50%", transform: "translateX(-50%)", width: "min(1480px, 100%)", zIndex: 0, pointerEvents: "none" }} />
       <style>{`:root{--c-card:#ffffff;--c-soft:#f6f4f2;--c-soft2:#efebe8;--c-border:#e7e2df;--c-line-strong:#d8d0cb;--c-ink:#1b1b1a;--c-ink2:#565654;--c-muted:#6f6f6d;--terra:#fb8469;--terra-text:#c2410c;--terra-soft:#fff1ed;--terra-border:#ffc7ba;}
-.fig{font-family:var(--font-grotesk),ui-sans-serif,sans-serif;font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;font-weight:600}
+/* .fig IS NOT REDECLARED HERE (2026-09-11). It lives once, in globals.css, reading --font-num. A copy in this dev layout would win by source order and quietly give this one route a different figure face from the site it is meant to preview. */
 /* Two-level passe-partout: EXACTLY two flat opacity plateaus with ONE hard step ~1cm outside the content edge. Content zone .82, no-content margins .16 (step at 9.61% / 90.39%). Keep in sync with shell.tsx. */
 .spine-band{background:linear-gradient(to right,rgba(255,255,255,.16) 0%,rgba(255,255,255,.16) 9.61%,rgba(255,255,255,.82) 9.61%,rgba(255,255,255,.82) 90.39%,rgba(255,255,255,.16) 90.39%,rgba(255,255,255,.16) 100%)}
 @media (max-width:767px){.spine-band{background:rgba(255,255,255,.82)}}

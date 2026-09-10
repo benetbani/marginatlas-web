@@ -150,14 +150,20 @@ const NAME_CLS = "min-w-0 py-0.5 text-[length:var(--t-body)] font-medium text-[v
 
 /* ONE TEMPLATE FOR THE WHOLE CARD, computed once and set identically on the
    head and on every row. The figure column is the widest figure THIS card
-   draws, in characters, plus a little slack; `ch` is the advance of "0" in the
-   row's own font at the row's own size and the figure is drawn in that same
-   font at that size, so n characters occupy at most n ch whenever no glyph in
-   the string is wider than a digit. THE BLIND SPOT, stated rather than
-   assumed: this cannot tell a formatter whose glyphs are all digit-width or
-   narrower from one carrying a wider glyph (a "%" is wider than "0" in some
-   faces). A few pixels are absorbed by the 12px column gap, and a real
-   overrun is reported by the harness's own overflow rule. */
+   draws, in characters, plus a little slack.
+
+   `ch` IS THE ROW'S UNIT, NOT THE FIGURE'S (2026-09-11). It is the advance of
+   "0" in THIS GRID ELEMENT'S font, the body sans; the figure inside is drawn
+   in the display face (globals.css `--font-num`, via `.fig`). Measured: Geist's
+   tabular "0" is 0.600em, Space Grotesk's 0.620em, so n characters occupy at
+   most n x 1.034 ch. The `+ 0.5rem` slack covers that 3.4% for every figure
+   length this card draws, and it is a smaller cushion than RankedBars' 1rem,
+   so this is the call site to re-measure first if the figure face ever changes
+   again. THE BLIND SPOT, stated rather than assumed: this cannot tell a
+   formatter whose glyphs are all digit-width or narrower from one carrying a
+   wider glyph (a "%" is wider than "0" in some faces). A few pixels are
+   absorbed by the 12px column gap, and a real overrun is reported by the
+   harness's own overflow rule (check_archetypes.mjs BOTCHED MOBILE). */
 function geometry(figChars: number, marks: boolean): React.CSSProperties {
   const fig = `calc(${figChars}ch + 0.5rem)`;
   return { gridTemplateColumns: marks ? `${MARK_COL} minmax(0,1fr) ${fig}` : `minmax(0,1fr) ${fig}` };

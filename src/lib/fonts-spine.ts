@@ -5,12 +5,18 @@
  * (the mockups load them from Google Fonts links; the app must not).
  *
  *   Geist          -> --font-geist    (the --sans slot: labels, prose, chrome)
- *   Space Grotesk  -> --font-grotesk  (the --fig slot: every figure, tabular)
+ *   Space Grotesk  -> --font-grotesk  (loaded for the .av2 tree; see below)
  *
  * The scoped stylesheet (src/styles/atlas-spine.css, generated) defines
  *   --sans: var(--font-geist,'Geist'), <mockup stack>
- *   --fig:  var(--font-grotesk,'Space Grotesk'), <mockup stack>
- * so these variables must be attached ON the .av2 wrapper of any v2 page tree:
+ *   --fig:  var(--font-num)
+ * so the --sans variable must be attached ON the .av2 wrapper of any v2 page
+ * tree. THE FIGURE SLOT NO LONGER READS --font-grotesk (2026-09-11): the site
+ * has ONE definition of the figure face, `--font-num` in globals.css, and
+ * `--fig` aliases it so a legacy .av2 surface cannot draw figures in a
+ * different typeface from the page it is a draft of. The Space Grotesk
+ * instance below stays because it is what actually LOADS the face for a
+ * standalone .av2 route; it just no longer decides what a figure is drawn in.
  *
  *   <div className={`av2 ${spineFontVariables}`}> ... </div>
  *
