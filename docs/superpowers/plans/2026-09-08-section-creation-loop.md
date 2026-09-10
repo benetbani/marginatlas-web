@@ -1392,6 +1392,124 @@ cd /e/atlas/website && git add src/components/spine/archetypes/RankedBars.tsx sc
 
 ---
 
+### Task 13: The districts card, the three faults he named on it
+
+The emphasis work made this card good everywhere except in the three places he
+complained about by name on 2026-09-07. All three are already found by the
+checks and sitting in the baseline; none is a surprise; all three are on one
+card. His words:
+
+1. "on the part of the section which says what each district is, for example for
+   South London you have written gentrifying. And that's a major problem. You
+   should never do it for city districts, to just summarize them in one or two
+   words. It should never happen."
+2. "then you say the city average times one which is the baseline. You don't
+   seem to have an idea on how the information should be actually given."
+3. "the distance between the category and the word is very big, which is a major
+   mistake that you should have never done, because it makes it unreadable."
+
+**Files:**
+- Modify: `src/components/spine/city/where-to-trade.tsx`
+- Modify: `src/lib/spine/district_rows.ts`
+- Modify: `src/lib/spine/copy.ts`
+- Possibly: `src/lib/spine/city_verdict_facts.ts` (the verdict card prints the same figure)
+- Modify: `src/components/spine/archetypes/stories.tsx`
+
+- [ ] **Step 1: Kill the one-word district summaries, and replace them with nothing**
+
+The words come from `tagLabel()`, a constant table keyed by tag, not from any
+real knowledge of a district. "Gentrifying", "Nightlife", "Tech corridor",
+"Luxury district", "Financial CBD", "Tourist zone" twice. They are closer to
+fabricated place detail than to data: nobody wrote them about London.
+
+MODEL.md PART 9 rule 19 already decided this: `tagLabel()` stops feeding
+district notes and NOTHING REPLACES IT. Delete the "what each district is" list
+and its head. Do not substitute longer invented sentences; do not keep the words
+behind a disclosure. If a city ever holds authored district notes, that is a
+separate section built from a real file, and it goes in
+`DATA-REQUIREMENTS.md` as a requirement rather than being faked now.
+
+**Expect this to fix fault 3 as well**, because that list is the wide
+`justify-between` row putting a name at one edge of a 1300px card and its word
+at the other. Verify it rather than assuming: run the model-laws check before
+and after and report whether LABEL GAP falls on this card.
+
+- [ ] **Step 2: Give the rent information a reference point the reader can SEE**
+
+This is the design decision in the task and it needs stating plainly. Today
+every bar is labelled as a multiple of "the city average", and the basis line
+says "x1.00 is the average". The reference point is INVISIBLE: a reader cannot
+see the average anywhere on the card, so x1.20 and x3.00 mean nothing without
+arithmetic they have no inputs for. That is what he means by not knowing how the
+information should be given.
+
+**The fix: make the reference point something on the chart.** The cheapest
+district is drawn, named and pilled. Express every other district against IT.
+Then "West End" reads as two and a half times South London, and South London is
+visible three inches away, so the claim is checkable by eye. The string `x1.00`
+disappears because no bar is the baseline any more: the cheapest is simply the
+cheapest.
+
+Before building it, CHECK THE ARITHMETIC IS HONEST. The multiples are composed
+from tag constants with square-root damping in `neighborhood_multipliers.ts`,
+so they are modelled. Re-basing a modelled ratio onto another modelled member of
+the same set is fine, because the two share their basis and the ratio between
+them is the thing the model actually claims. Say so in the builder's comment.
+Do NOT convert these into money by multiplying by the premises figure: that
+figure is a rent by city SIZE, not London's own average, so the product would
+compound two different modelled numbers into one false-looking absolute. The
+model warns about exactly that compounding in PART 11.
+
+**The verdict card prints the same figure.** Find it, and make the two agree:
+one number, one basis, one wording, or the page contradicts itself two inches
+apart, which is the repetition fault it was already corrected for once.
+
+- [ ] **Step 3: Rewrite the basis line to say what a reader needs and nothing more**
+
+It currently reads "Each district's shop rent as a multiple of the city average;
+x1.00 is the average." After Step 2 that is both wrong and redundant. One line,
+practical register, naming no source agency, saying what the figures compare and
+that they are modelled rather than measured for this city.
+
+- [ ] **Step 4: Verify, each to its own file, each exit code read**
+
+```bash
+cd /e/atlas/website && npx tsc --noEmit > scratchpad/tsc-t13.txt 2>&1; echo "exit $?"
+```
+
+```bash
+cd /e/atlas/website && npm run harness > scratchpad/harness-t13.txt 2>&1; echo "exit $?"
+```
+
+```bash
+cd /e/atlas/website && npm run harness:laws -- --list > scratchpad/laws-t13.txt 2>&1; echo "exit $?"
+```
+
+The harness must stay at ZERO design reds and the page filter at zero. The laws
+check should show DISTRICT ADJECTIVE and BANNED WORDS falling on the city page,
+and probably LABEL GAP too. Report the counts before and after per rule, and
+lower the baseline in `E:\atlas\design\loop\build\DEBUG.md` section 7 to match,
+since a baseline may fall but never rise.
+
+- [ ] **Step 5: Photograph and LOOK, at both widths**
+
+```bash
+cd /e/atlas/website && npm run shoot:page -- scratchpad/harness/pages/city-london.html "#districts" scratchpad/photos/t13 "1280,375"
+```
+
+Open both with the Read tool and answer in your own words: can a reader tell
+what the numbers mean without doing arithmetic, is anything left on the card
+that summarises a district in one or two words, and is any label still stranded
+at the opposite edge of the card from its value.
+
+- [ ] **Step 6: Commit**
+
+```bash
+cd /e/atlas/website && git add src/components/spine/city/where-to-trade.tsx src/lib/spine/district_rows.ts src/lib/spine/copy.ts src/components/spine/archetypes/stories.tsx && git commit -m "city: the districts card loses its invented district words and its invisible baseline"
+```
+
+---
+
 ## Self-review
 
 **Spec coverage.** His message maps to tasks as follows. "creating all the sections for all main page types" is Task 1 (the catalogue, which is the list of everything to create, including four SPINE rows for the page types the model never spined) and Task 7 (the queue seeded from it). "think about all aspects, space, rhythm, hierarchy, readability" is Task 3 (readability measured, four rules), Task 4 (the model's twelve laws, which cover hierarchy, spacing, the edge, the focal figure and the label gap) and Task 5 (rhythm and space at page level). "the click and show button was removed, I hoped that you would keep it" is Task 2, restored as an archetype with the no-hidden-graphics law inside it. "quality checks of different kinds in place" is the four layers named in the prompt, built by Tasks 2, 3 and 4 and already-existing checks. "a final review in terms of harmony, and how well sections fit together" is Task 5, wired as stage S9 so it fires once per page rather than once per card. "the immense wealth of shadcn components" is Task 6, ordered so what already exists is consulted before the registry, and adopted for structure and not skin. "create a prompt to kickstart a loop that would run consecutively every 20 minutes, all its goals written in detail" is Task 8, with the twelve numbered steps, the hard rules and an explicit definition of done for the phase.
