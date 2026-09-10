@@ -179,7 +179,7 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances(), city 
       })}
       {city.map((c) => {
         const b = buildCityDistrictBars(c.seed);
-        const el = b ? <RankedBars id={`districts-${c.slug}`} kicker={COPY.cityDistricts.kicker} icon="best-areas" tagged={b.tagged} basis={COPY.cityDistricts.basis} rows={b.rows} worldMax={b.worldMax} best="min" topLabel={COPY.cityDistricts.heaviest} notesHead={COPY.cityDistricts.notesHead} fmt={rentMult} phoneHead={COPY.cityDistricts.phoneHead} /> : null;
+        const el = b ? <RankedBars id={`districts-${c.slug}`} kicker={COPY.cityDistricts.kicker} icon="best-areas" tagged={b.tagged} basis={b.basis} rows={b.rows} worldMax={b.worldMax} best="min" topLabel={COPY.cityDistricts.heaviest} fmt={rentMult} phoneHead={COPY.cityDistricts.phoneHead} /> : null;
         return <Story kind="ranked-bars" key={`${c.slug}:districts`} iso2={`${c.slug}:districts`} why={c.why}>{el ? <div style={{ maxWidth: 693 }}>{el}</div> : null}</Story>;
       })}
     </div>

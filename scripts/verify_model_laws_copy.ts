@@ -103,8 +103,15 @@ function checkBannedCell(where: string, text: string | null | undefined) {
   if (BANNED.includes(norm)) pushRed("BANNED WORDS", `${where}: a whole cell reading "${text}", banned`);
 }
 
-/* BANNED WORDS, on static COPY strings that print as a whole cell or note. */
-checkBannedCell("COPY.cityVerdict.cells.averageNote", COPY.cityVerdict.cells.averageNote);
+/* BANNED WORDS, on static COPY strings that print as a whole cell or note.
+   `COPY.cityVerdict.cells.averageNote` used to be read here and was this
+   gate's one direct finding: it read "the baseline", the note under a cell
+   whose value was the number 1. Task 13 (2026-09-10) deleted the cell and the
+   note with it, on his ruling, so there is no static string left on this card
+   that prints as a whole cell; every cell's text is composed now and is
+   proven clean by the fixture sweep directly below, which is the stronger
+   check of the two anyway. */
+for (const [key, text] of Object.entries(COPY.cityVerdict.cells)) checkBannedCell(`COPY.cityVerdict.cells.${key}`, text);
 
 /* BANNED WORDS, on the shipped city-verdict builder against a synthetic,
    lettered fixture, the same one verify_archetype_copy.ts's own "THE CITY
@@ -112,7 +119,10 @@ checkBannedCell("COPY.cityVerdict.cells.averageNote", COPY.cityVerdict.cells.ave
 {
   const fixture = { where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }, { name: "C", rent_mult: 3 }] } };
   const v = cityVerdictFacts(fixture);
-  if (v) for (const c of v.cells) checkBannedCell(`cityVerdictFacts.cells[${c.label}]`, String(c.value));
+  if (v) {
+    for (const c of v.cells) { checkBannedCell(`cityVerdictFacts.cells[${c.label}]`, String(c.value)); checkBannedCell(`cityVerdictFacts.cells[${c.label}].note`, c.note); }
+    checkBannedCell("cityVerdictFacts.answer", v.answer.value);
+  }
 }
 
 /* DISTRICT ADJECTIVE, on the shipped district-ranking builder against a

@@ -176,7 +176,15 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const v = cityVerdictFacts(fixture);
   if (!v) reds.push("verdict: three ranked districts draw nothing");
   else {
-    if (v.answer.value !== "x0.90" || !v.answer.basis.includes("A")) reds.push(`verdict: the answer is not the lightest district (${v.answer.value}, ${v.answer.basis})`);
+    /* THE ANSWER IS THE SPREAD NOW, task 13 (2026-09-10), not the lightest
+       district. Under a basis where the cheapest district IS the reference,
+       "the lightest rent load" is a multiple of one and says nothing, which
+       is his complaint about the old average cell arriving one column over.
+       On this fixture the cheapest is A at 0.9, so C at 3 rebases to 3.33 and
+       the basis has to name BOTH ends: an answer of "x3.33" with only one
+       district beside it is a number measured against something the reader
+       cannot see, the exact fault this task was opened for. */
+    if (v.answer.value !== "x3.33" || !v.answer.basis.includes("C") || !v.answer.basis.includes("A")) reds.push(`verdict: the answer is not the spread between the two ends (${v.answer.value}, ${v.answer.basis})`);
     if (v.answer.confidence === "measured") reds.push("verdict: the multiples are composed from tag constants and are marked measured");
     /* THE AVERAGE CELL'S ASSERTION CHANGED FROM "x1.00" TO "1" because of his
        ruling of 2026-09-04 ("then you say the city average times one which
@@ -186,7 +194,14 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        symptom, not the reason for this line): the banned-word gate is
        correct that "x1.00" is not information, and this assertion no longer
        requires the builder to keep printing it. */
-    if (v.cells.length !== 2 || v.cells[0].value !== "1" || v.cells[1].value !== "x3.00" || v.cells[1].note !== "C") reds.push(`verdict: the cells are not the average and the heaviest (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
+    /* THE CELLS ARE THE MIDDLE AND THE COUNT. The average cell is gone with
+       the basis that made it ("City average / 1 / the baseline", a value that
+       was 1 for every city on earth by definition), and the heaviest cell is
+       gone because the answer is now the heaviest: a cell repeating it would
+       be the "repeating the front part" fault he named on 2026-08-25. What is
+       left is what the spread cannot say. Three districts rebased on A put B
+       in the middle at 1.33. */
+    if (v.cells.length !== 2 || v.cells[0].value !== "x1.33" || v.cells[0].note !== "B" || v.cells[1].value !== "3") reds.push(`verdict: the cells are not the middle district and the count (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
     for (const c of v.cells) {
       if (c.label.split(/\s+/).length > 4) reds.push(`verdict: label over four words: "${c.label}"`);
       if (c.note && c.note.length > 48) reds.push(`verdict: note over 48 characters: "${c.note}"`);
@@ -203,11 +218,30 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const b = buildCityDistrictBars(fixture);
   if (!b) reds.push("districts: three ranked districts draw nothing");
   else {
-    if (b.rows.length !== 3 || b.worldMax !== 3) reds.push(`districts: ${b.rows.length} rows, top rule ${b.worldMax}`);
+    /* THE TOP OF THE SET IS REBASED TOO: 3 against a cheapest of 0.9 is 3.33,
+       and a top rule still reading 3 would be measuring the card's ceiling on
+       the basis the rows no longer use. */
+    if (b.rows.length !== 3 || b.worldMax !== 3.33) reds.push(`districts: ${b.rows.length} rows, top rule ${b.worldMax}`);
+    if (b.cheapest !== "A" || b.dearest.name !== "C" || b.middle.name !== "B") reds.push(`districts: the ends and the middle are ${b.cheapest} / ${b.middle.name} / ${b.dearest.name}`);
+    if (!b.basis.includes("A")) reds.push(`districts: the basis line does not name the district every figure is measured against ("${b.basis}")`);
     if (!b.tagged) reds.push("districts: the multiples are composed from tag constants and are not marked modelled");
-    if (b.rows.some((r) => !r.note)) reds.push("districts: a row lost its character note");
-    if (rentMult(0.9) !== "x0.90") reds.push(`districts: the multiple prints as ${rentMult(0.9)}`);
-    for (const t of [COPY.cityDistricts.kicker, COPY.cityDistricts.basis, COPY.cityDistricts.heaviest, COPY.cityDistricts.notesHead, COPY.cityDistricts.phoneHead.name, COPY.cityDistricts.phoneHead.value]) for (const bw of COPY.banned) if (t.toLowerCase().includes(bw)) reds.push(`districts: banned word "${bw}" in "${t}"`);
+    /* THE ASSERTION IS INVERTED, task 13 (2026-09-10). It used to demand that
+       every row CARRY its character note; his ruling on this exact card
+       ("you should never do it for city districts, to just summarize them in
+       one or two words. It should never happen") makes a carried note the
+       fault, so the fixture now feeds a `character` on all three rows and the
+       gate proves the builder drops every one of them. Feeding the field and
+       asserting it is dropped is the point: asserting on a fixture with no
+       `character` would pass on a builder that still copies it. */
+    if (b.rows.some((r) => r.note)) reds.push("districts: a row carries a one-word summary of a place");
+    /* TWO DECIMALS ALWAYS for a real multiple, and A WORD, NOT "x1.00", for
+       the reference row. Both halves are asserted: a formatter that printed
+       the reference as x1.00 would put back the exact string his ruling
+       struck out, and one that dropped the second decimal would break the
+       column's one notation. */
+    if (rentMult(2.5) !== "x2.50") reds.push(`districts: the multiple prints as ${rentMult(2.5)}`);
+    if (rentMult(1) !== COPY.cityDistricts.cheapest || /x[\d.]/.test(rentMult(1))) reds.push(`districts: the reference row prints "${rentMult(1)}", not a word`);
+    for (const t of [COPY.cityDistricts.kicker, COPY.cityDistricts.basis, COPY.cityDistricts.cheapest, COPY.cityDistricts.heaviest, COPY.cityDistricts.phoneHead.name, COPY.cityDistricts.phoneHead.value]) for (const bw of COPY.banned) if (t.toLowerCase().includes(bw)) reds.push(`districts: banned word "${bw}" in "${t}"`);
   }
   if (buildCityDistrictBars({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("districts: one district draws a card");
   if (buildCityDistrictBars({})) reds.push("districts: no districts draw a card");

@@ -231,20 +231,40 @@ export const COPY = {
      *  real number and the home row needs no special case at all. */
     caveat: "Cost of living against a leading metro; income and visitors a year.",
   },
-  /** The city's verdict card (city:verdict, run 23): the lightest rent load as the answer, the city average and the heaviest district as cells. A rent load is the district's rent as a multiple of the city's average. */
+  /** THE CITY'S VERDICT CARD (city:verdict, run 23, rebased task 13 2026-09-10).
+   *  It printed the same figures as the district card below it, so it moves with
+   *  them: the two ends of the ranking are one answer, "the dearest district
+   *  costs this many times the cheapest", and the two cells are the things that
+   *  answer cannot carry, the middle of the ranking and how many districts stand
+   *  behind the claim. WHAT WENT WITH THE OLD BASIS: the answer "the lightest
+   *  rent load, x1.20", which under a basis where the lightest IS the reference
+   *  would read x1.00 and say nothing; and the "City average / 1 / the baseline"
+   *  cell, his exact complaint ("then you say the city average times one which is
+   *  the baseline"), a cell whose value was 1 for every city on earth by
+   *  definition. */
   cityVerdict: {
     kicker: "The rent, district by district",
-    answerLabel: "The lightest rent load",
-    basis: "in {district}",
-    cells: { average: "City average", averageNote: "the baseline", heaviest: "Heaviest" },
+    answerLabel: "The rent gap",
+    basis: "{dearest} against {cheapest}",
+    /* TWO WORDS EACH, AND NEAR THE SAME LENGTH ON PURPOSE. The cell label
+       reserves 2.6em below the wide layout and then grows, so a label that
+       wraps to three lines while its neighbour wraps to two pushes one figure
+       5px below the other, which the archetype harness reports as UNEQUAL
+       (his ruling 7: equivalent elements are the same height, no matter
+       what). "The middle district" did exactly that at 375. */
+    cells: { middle: "Middle district", ranked: "Districts ranked" },
   },
-  /** The city's district ranking (city:districts, run 25): a rent load is the district's shop rent as a multiple of the city average; the lightest leads. */
+  /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13).
+   *  Every district's shop rent measured against the cheapest district, which is
+   *  drawn and named on the same card. `{district}` is that reference; the basis
+   *  is composed in district_rows.ts so both cards say it the same way. */
   cityDistricts: {
     kicker: "By district",
-    basis: "Each district's shop rent as a multiple of the city average; x1.00 is the average.",
+    basis: "Each district's shop rent set against {district}, the cheapest here. Modelled, not read off leases.",
+    /** What the reference district prints instead of a multiple of itself. */
+    cheapest: "cheapest",
     heaviest: "heaviest in the city",
-    notesHead: "What each district is",
-    phoneHead: { name: "District", value: "Rent load" },
+    phoneHead: { name: "District", value: "Times the cheapest" },
   },
   /** THE FOUNDER'S PLUS (2026-09-08): the detail panel's summary lines, one for
    * each query a reader clicks open. Reused, not invented per instance: the

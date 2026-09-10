@@ -32,12 +32,11 @@ export function WhereToTrade({ d }: { d: any }) {
       kicker={COPY.cityDistricts.kicker}
       icon="best-areas"
       tagged={b.tagged}
-      basis={COPY.cityDistricts.basis}
+      basis={b.basis}
       rows={b.rows}
       worldMax={b.worldMax}
       best="min"
       topLabel={COPY.cityDistricts.heaviest}
-      notesHead={COPY.cityDistricts.notesHead}
       fmt={rentMult}
       phoneHead={COPY.cityDistricts.phoneHead}
     />
