@@ -32,6 +32,10 @@
  *    top (the reserved heading line), and no group is left alone in a row.
  *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
  *    at the ends, never clamped), pole words on one line, one dot colour a table.
+ *  INCOME BREAKDOWN: every drawn segment's share plus net sums to a hundred
+ *    within a stated tolerance (task 11); no segment renders under six
+ *    pixels wide (a sliver no hatch or swatch could carry); the legend names
+ *    exactly the drawn segments, no fewer and no more.
  * BLIND SPOT: it measures a static render with web fonts loaded from the
  * network if reachable and the fallback stack if not; a wrap that depends on
  * the exact font can differ by a line. It cannot judge taste.
@@ -160,6 +164,14 @@ function inPage() {
     if (r.kind === "compare-table") {
       const visible = [...card.querySelectorAll("[data-row]")].filter((el) => el.getBoundingClientRect().height > 0);
       r.tableRows = visible.map((el) => Math.round(el.getBoundingClientRect().height));
+    }
+    if (r.kind === "income-breakdown") {
+      r.incomeSegs = [...card.querySelectorAll("[data-seg-key]")].map((el) => ({
+        key: el.getAttribute("data-seg-key"),
+        share: parseFloat(el.getAttribute("data-seg-share")),
+        widthPx: el.getBoundingClientRect().width,
+      }));
+      r.incomeLegendKeys = [...card.querySelectorAll("[data-legend-key]")].map((el) => el.getAttribute("data-legend-key"));
     }
     /* THE FOUNDER'S PLUS lives at the FOOT of another archetype's card once a
        real section adopts it (review finding 2, 2026-09-08): the outer card's
@@ -334,6 +346,31 @@ for (const w of WIDTHS) {
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);
+    }
+    if (r.kind === "income-breakdown") {
+      const segs = r.incomeSegs || [];
+      // RULE 1, PLANTED FAULT PROVED (task-11-report.md): a segment set
+      // summing to 130 was fed through a temporary story and reded here
+      // before this line was trusted.
+      const sum = segs.reduce((a, s) => a + (Number.isFinite(s.share) ? s.share : 0), 0);
+      if (segs.length && Math.abs(sum - 100) > 0.5) red(r.inst, w, "DOES NOT ADD UP", `segments plus net sum to ${sum.toFixed(2)}, not 100`);
+      // RULE 2 (the drawn count matching the declared count at every width)
+      // is the shared ROWS CUT mechanism above, fed by this card's own
+      // data-expect-rows/data-row pair; no separate rule needed here.
+      // RULE 3, PLANTED FAULT PROVED: a segment forced to a 0.4-percent
+      // share rendered under six pixels wide and reded here before this
+      // line was trusted.
+      const widths = segs.map((s) => s.widthPx).filter((n) => Number.isFinite(n));
+      if (widths.length) { const thinnest = Math.min(...widths); if (thinnest < 6) red(r.inst, w, "SLIVER", `a segment renders ${thinnest.toFixed(1)}px wide, under 6`); }
+      // RULE 4, PLANTED FAULT PROVED: a legend entry deleted by hand, and a
+      // bar segment added with no legend entry, each reded here in turn
+      // before this line was trusted.
+      const segKeys = segs.map((s) => s.key).sort();
+      const legKeys = (r.incomeLegendKeys || []).slice().sort();
+      const missing = segKeys.filter((k) => !legKeys.includes(k));
+      const extra = legKeys.filter((k) => !segKeys.includes(k));
+      if (missing.length) red(r.inst, w, "LEGEND MISMATCH", `drawn but not named in the legend: ${missing.join(", ")}`);
+      if (extra.length) red(r.inst, w, "LEGEND MISMATCH", `named in the legend but not drawn: ${extra.join(", ")}`);
     }
     if (r.hasDetailPanel) {
       /* THE FOUNDER'S PLUS (2026-09-08): a panel is closed on arrival, its summary

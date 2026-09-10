@@ -36,6 +36,8 @@ import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { usd } from "@/components/spine/kit";
 import { DetailPanel, type DetailRow } from "./DetailPanel";
+import { IncomeBreakdown } from "./IncomeBreakdown";
+import { buildIncomeBreakdown } from "@/lib/spine/income_rows";
 
 export type Instance = { iso2: string; why: string };
 
@@ -603,6 +605,39 @@ export function DetailPanelStories({ instances = pickDetailPanelInstances() }: {
   );
 }
 
+/** The instance set for the income breakdown, picked from the sectors
+ *  data/finance/industry_cost_profile_v1.json actually holds: the exemplar
+ *  (a full four-line split), the extreme (the largest single cost line in
+ *  the file, and its thinnest net margin), the thin case (the naming floor
+ *  cuts a sector to three lines instead of four), and a key the file does
+ *  not hold at all, which is what an honest self-omit looks like here (no
+ *  sector has too few segments to draw one; every one of the 25 clears the
+ *  floor, checked). */
+export function pickIncomeBreakdownInstances(): Instance[] {
+  return [
+    { iso2: "hospitality", why: "the exemplar, a full four-line split" },
+    { iso2: "heavy_industry", why: "the extreme: cost of goods over half the bar, the thinnest net margin on file" },
+    { iso2: "food_drink", why: "the thin case: the fourth line just misses the naming floor" },
+    { iso2: "unlisted_sector", why: "self-omits: not a sector this file holds" },
+  ];
+}
+
+export function IncomeBreakdownStories({ instances = pickIncomeBreakdownInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="income-breakdown">
+      {instances.map((i) => {
+        const d = buildIncomeBreakdown(i.iso2);
+        const el = d ? (
+          <div style={{ maxWidth: 416 }}>
+            <IncomeBreakdown id={`income-${i.iso2.replace(/_/g, "-")}`} kicker={COPY.incomeBreakdown.kicker} netPct={d.netPct} segments={d.segments} basis={COPY.incomeBreakdown.basis} />
+          </div>
+        ) : null;
+        return <Story kind="income-breakdown" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
 /** The city masthead stories take their seeds from `loadCityHeroInstances()` (async, the renderer and the stories page await it). */
 export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }) {
   return (
@@ -660,6 +695,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "pay-bars": pickPayBarsInstances(),
     "kv-grid": pickKvGridInstances(),
     "detail-panel": pickDetailPanelInstances(),
+    "income-breakdown": pickIncomeBreakdownInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
     "city-verdict": pickCityVerdictInstances(cityHero).map((c) => ({ iso2: c.slug, why: c.why })),
   };

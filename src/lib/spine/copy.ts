@@ -135,6 +135,40 @@ export const COPY = {
     average: "Average salary",
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
   },
+  /** The income breakdown (task 11, his most literal instruction, 2026-09-10):
+   *  "the income breakdown is used exactly for income breakdown with the main
+   *  figure being the net income percentage." It replaces the section he
+   *  called totally broken ("for the net profit margin, this section that
+   *  you have created, it's totally broken") with his own form: a headline
+   *  percentage, one segmented bar, a legend beneath. The nine cost lines
+   *  are a GLOBAL BASELINE (data/finance/industry_cost_profile_v1.json's own
+   *  `anchor` field), flexed by country elsewhere in the product but not
+   *  here, so every figure this card prints is modelled rather than measured
+   *  for any one place: his ruling of 2026-09-08 on this exact section ships
+   *  it "labelled sample, and quiet", the accent moved off it. */
+  incomeBreakdown: {
+    kicker: "Income breakdown",
+    netLabel: "Net income",
+    basis: "A typical split of revenue for this trade, modelled worldwide rather than measured for this place.",
+    otherLabel: "Smaller costs",
+    residualLabel: "Unallocated",
+    /** One word per cost line the source file can name, in the practical
+     *  register. `otherLabel` above is a different concept (the builder's
+     *  own aggregate of the lines too small to name) and stays distinct from
+     *  "Overhead" here, which is one specific line, so a reader never sees
+     *  the two side by side and mistakes one for the other. */
+    lines: {
+      cogs_share: "Cost of goods",
+      labor_share: "Labor",
+      rent_share: "Rent",
+      energy_share: "Energy",
+      marketing_share: "Marketing",
+      software_share: "Software",
+      insurance_share: "Insurance",
+      motor_vehicle_share: "Vehicles",
+      other_overhead_share: "Overhead",
+    },
+  },
   /** The how-to page, "How to open a business in [country name]" (founder ruling 8, 2026-09-04). */
   howto: {
     title: "How to open a business in {country}",
@@ -179,7 +213,13 @@ export const COPY = {
    *  once from a screen-reader-only caption saying the same words for assistive tech; that double
    *  count is now excluded at the instrument (verify_art_direction.mjs). The facts kept: what each
    *  column measures, that higher reads better throughout, and that peers match on size and market
-   *  rather than sharing a border. */
+   *  rather than sharing a border.
+   *  CAVEAT TRIMMED AGAIN 2026-09-10 (M3, design/references/founder-2026-09-10.md): the table now
+   *  marks the winning cell in every column with a tick (CompareTable.tsx), so the direction
+   *  sentence ("lower is cheaper", "higher is better on both") is no longer the only way a reader
+   *  can tell which value won, and is gone, along with the peer-matching sentence that went with
+   *  it under the same rule: what a tick cannot say is only what the figures are and over what
+   *  period, so that is all that is left. */
   cityPeers: {
     kicker: "Peer cities, side by side",
     cols: { city: "City", cheaper: "Cheaper to live", income: "Customer income", visitors: "Visitors" },
@@ -189,7 +229,7 @@ export const COPY = {
      *  peer that tied the home row on a signed-difference column; the column
      *  is now the absolute figure itself (peer_rows.ts), so every row reads a
      *  real number and the home row needs no special case at all. */
-    caveat: "Read beside {city}: cost of living against a leading metro, lower is cheaper; income and visitors a year, higher is better on both. Peers match on size and market, not on sharing a border.",
+    caveat: "Cost of living against a leading metro; income and visitors a year.",
   },
   /** The city's verdict card (city:verdict, run 23): the lightest rent load as the answer, the city average and the heaviest district as cells. A rent load is the district's rent as a multiple of the city's average. */
   cityVerdict: {

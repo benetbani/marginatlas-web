@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 import { loadCityHeroInstances } from "@/lib/spine/city_hero_facts";
-import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
 
@@ -35,6 +35,8 @@ export default async function ArchetypesPage() {
       <TerminusStories city={pickCityCloseInstances(cityHero)} />
       <PayBarsStories />
       <KvGridStories />
+      <h2 data-typography="custom" className={h}>The income breakdown</h2>
+      <IncomeBreakdownStories />
       <CityHeroStories instances={cityHero} />
       <CityVerdictStories instances={pickCityVerdictInstances(cityHero)} />
     </main>
