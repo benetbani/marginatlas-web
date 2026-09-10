@@ -20,7 +20,9 @@
  * and a half tells you nothing about whether the middle is near the floor or
  * near the ceiling), and how many districts stand behind the claim. His
  * 2026-08-25 "you are repeating the front part" is why there is no third cell
- * and why neither end is printed twice.
+ * and why neither end is printed twice , and it is why the middle cell drops
+ * below three districts (MIDDLE_MIN_DISTRICTS), where the middle of the
+ * ranking is one of the two ends the basis line has already named.
  *
  * WHAT WENT, 2026-09-10: the answer "the lightest rent load, x1.20", which
  * under a basis where the lightest district IS the reference would read as a
@@ -66,7 +68,15 @@ export function cityVerdictFacts(seed: any): CityVerdictFacts | null {
       confidence: "modeled",
     },
     cells: [
-      { key: "middle", label: COPY.cityVerdict.cells.middle, value: rentMult(b.middle.value), note: b.middle.name, confidence: "modeled" },
+      /* THE MIDDLE CELL NEEDS A MIDDLE TO NAME (task 13 fix wave, 2026-09-10).
+         With two ranked districts the middle of the ranking IS the cheapest,
+         so this cell printed the reference district a second time, under a
+         label calling it the middle, with a bare word where its figure
+         belongs. It drops instead, and the grid gives its one remaining cell
+         the width (KvGrid's own lone-cell rule). Only London holds districts
+         today, so nothing renders this yet; the gate proves it on a
+         two-district fixture rather than waiting for the second city. */
+      ...(b.middle ? [{ key: "middle", label: COPY.cityVerdict.cells.middle, value: rentMult(b.middle.value), note: b.middle.name, confidence: "modeled" as const }] : []),
       { key: "ranked", label: COPY.cityVerdict.cells.ranked, value: String(b.districts) },
     ],
     districts: b.districts,

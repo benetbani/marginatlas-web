@@ -108,9 +108,12 @@ function inPage() {
          leader once, on the root (`data-leader-key`), independently of
          wherever the pill itself renders; comparing the two is what makes
          "a pill on a non-leader" a provable fault rather than a tautology.
-         Only the VISIBLE pill counts , at any width one of the two forms
-         (bar figure, phone table) is display:none, exactly the same
-         getClientRects() test the rest of this walk uses. */
+         The pill's ROW comes from its `[data-row]` ancestor, so the check
+         holds wherever inside that row the pill sits, its figure or its name
+         (task 13 fix wave). Only the VISIBLE pill counts , at any width all
+         but one of the three forms (bar figure, wide table, phone table) is
+         display:none, exactly the same getClientRects() test the rest of this
+         walk uses. */
       r.leaderKey = card.getAttribute("data-leader-key") || "";
       const pills = [...card.querySelectorAll("[data-pill]")].filter((el) => el.getClientRects().length > 0);
       r.pillCount = pills.length;
@@ -321,16 +324,23 @@ for (const w of WIDTHS) {
       for (const b of r.bars) if (b.ruleTop != null && b.top < b.ruleTop - 1) red(r.inst, w, "WORLD MAX", `bar ${b.key} rises above the world's-best rule`);
     }
     /* THE PILL LAW (task 12, 2026-09-10), replacing the old "exactly one
-       accent text" rule: the leader's figure is a BLACK PILL now, not a
-       colour, so a clean card carries ZERO accent text. Checked at every
-       width, not just 1280 like WORLD MAX above , the pill is drawn twice
-       (the bar figure and the phone table) and only one of the two is ever
-       visible, so a fix that lands on one form and forgets the other must
-       be caught at whichever width shows the broken one. */
+       accent text" rule: the card's one mark is a BLACK PILL now, not a
+       colour, so a clean card carries ZERO accent text. EXACTLY ONE PILL PER
+       CARD, ON THE REFERENCE MEMBER, WHETHER THAT PILL SITS ON THE NAME OR ON
+       THE FIGURE (widened, task 13 fix wave): a set rebased onto one of its
+       own members prints no figure for that member, so its pill moves to the
+       name, and the rule follows the law rather than the reverse. It is not
+       loosened by the move: both halves still hold, the count and the row it
+       lands on, because the row is read from the pill's own `[data-row]`
+       ancestor and compared against the card's declared leader. Checked at
+       every width, not just 1280 like WORLD MAX above , the pill is drawn in
+       every form (bar figure, wide table, phone table) and only one form is
+       ever visible, so a fix that lands on one and forgets another must be
+       caught at whichever width shows the broken one. */
     if (r.kind === "ranked-bars") {
-      if (r.accents > 0) red(r.inst, w, "ACCENT", `${r.accents} accent-coloured text(s); the leader's figure is a pill now, not a colour`);
-      if (r.pillCount !== 1) red(r.inst, w, "ACCENT", `${r.pillCount} pill(s) on the card; exactly one, on the leader`);
-      else if (r.pillKey !== r.leaderKey) red(r.inst, w, "ACCENT", `the pill sits on "${r.pillKey}", not the leader "${r.leaderKey}"`);
+      if (r.accents > 0) red(r.inst, w, "ACCENT", `${r.accents} accent-coloured text(s); the card's one mark is a pill now, not a colour`);
+      if (r.pillCount !== 1) red(r.inst, w, "ACCENT", `${r.pillCount} pill(s) on the card; exactly one, on the reference member`);
+      else if (r.pillKey !== r.leaderKey) red(r.inst, w, "ACCENT", `the pill sits on "${r.pillKey}", not the reference member "${r.leaderKey}"`);
     }
     if (r.kind === "card-pager") {
       for (const row of r.cardRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `cards in one row at heights ${row.join(", ")}`);

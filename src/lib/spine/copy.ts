@@ -261,8 +261,12 @@ export const COPY = {
   cityDistricts: {
     kicker: "By district",
     basis: "Each district's shop rent set against {district}, the cheapest here. Modelled, not read off leases.",
-    /** What the reference district prints instead of a multiple of itself. */
-    cheapest: "cheapest",
+    /* THERE IS NO WORD FOR THE REFERENCE ROW'S FIGURE, and there must not be
+       (task 13 fix wave, 2026-09-10): `cheapest: "cheapest"` lived here for one
+       day and printed a bare word where a figure belongs, which PART 5 bans
+       outright. The reference district's figure cell is EMPTY now and its name
+       wears the card's pill; the basis line above is where the reference is
+       said in words, once. */
     heaviest: "heaviest in the city",
     phoneHead: { name: "District", value: "Times the cheapest" },
   },

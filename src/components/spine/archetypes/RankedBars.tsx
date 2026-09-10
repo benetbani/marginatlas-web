@@ -1,39 +1,87 @@
 /**
- * RankedBars , THE RANKED-BARS ARCHETYPE. Vertical bars from a zero baseline,
- * sorted low to high so the best stands high and right (rule 29A); the
- * figure at the lead rung above each bar, the name beneath as the link; a
- * hairline top rule at the WORLD'S HIGHEST value for the metric, so only the
- * world leader touches it (founder ruling 13, 2026-09-04); a basis line and
- * a withheld line in the practical register. Below 768 the phone gets a
- * two-column table, because six names cannot stand under six bars at 327px
- * without cutting.
+ * RankedBars , THE RANKED-BARS ARCHETYPE. Under six members it is vertical
+ * bars from a zero baseline, sorted low to high so the best stands high and
+ * right (rule 29A), the figure at the lead rung above each bar and the name
+ * beneath as the link; six or more it is a table read top to bottom (the
+ * paragraph after next); a basis line and a withheld line in the practical
+ * register in both. Below 768 the phone gets a two-column table, because six
+ * names cannot stand under six bars at 327px without cutting.
  *
- * SIX OR MORE RANKED MEMBERS ARE A TABLE, NOT COLUMNS (task 13, 2026-09-10).
- * PART 5's district rows and PART 9 rule 20 both say it, in his words: a
- * ranking of six or more read left to right "is why the order read as
- * confusing". The district card was seven columns. It is now seven rows read
- * top to bottom, each row PART 5's own grid, `[minmax(0,22ch) auto 1fr]`,
- * name then the figure in the very next column then a track that absorbs the
- * leftover width. Two faults close with it. The first is his: at 768 the old
- * two-column table put a name at one edge of a 720px card and its figure at
- * the other ("the distance between the category and the word is very big,
- * which is a major mistake that you should have never done, because it makes
- * it unreadable"); the figure now sits against its name at every width over
- * 420px, and under 420 PART 5 prescribes the two-column form the phone table
- * already draws. The second is a hole: deleting the invented notes list left
+ * THE CEILING IS DRAWN AND NAMED IN BOTH FORMS (founder ruling 13,
+ * 2026-09-04). The bars form rules it with a hairline across the top of the
+ * chart, so only a member standing at the ceiling touches it, and names it at
+ * the right. The table form draws the same ceiling as the far end of every
+ * row's track, once per row, and names it once at the head of the track
+ * column; `topLabel` is that name in both forms, and it was a dead prop in
+ * the table form until the task 13 fix wave (2026-09-10) put it there.
+ *
+ * WHAT THE CEILING IS, THE CALLER DECLARES, because this file cannot tell
+ * from the number. `top` is `Math.max(worldMax, the largest row)`: whatever
+ * the caller passed, raised only if a row overshoots it. The country money
+ * card passes a true world maximum (`worldMaxMargin()`,
+ * src/lib/spine/margin_rows.ts) and its track IS a world track; the city
+ * districts card passes the set's own heaviest district
+ * (src/lib/spine/district_rows.ts), so there the track measures a district
+ * against a district drawn a few rows above it. `ceiling` says which of the
+ * two it is, and the table form stamps that word as `data-track`, so the
+ * harness can see the track at all: it drew no attribute before the task 13
+ * fix wave, and `check_model_laws.mjs`'s PLACEMENT rule iterates `[data-track]`,
+ * so the whole form was invisible to it. PART 9 rule 5 (a figure on a WORLD
+ * track needs its placement line beside it) is in play for `ceiling="world"`
+ * and not for `"set"`; the RULE does not read the value yet and reports both,
+ * so the districts card now shows a PLACEMENT finding that is a false positive
+ * of the same kind the spectra tracks already produce, recorded as such in
+ * DEBUG.md section 7 rather than silenced here. The default is "world", the
+ * noisier of the two on purpose: a caller who forgets the prop gets a gate
+ * finding rather than silence.
+ *
+ * SIX OR MORE RANKED MEMBERS ARE A TABLE, NOT COLUMNS (task 13, 2026-09-10),
+ * on the ground of MODEL.md PART 5's DISTRICT ROWS ruling, in its words:
+ * "Six or more ranked members is a table read top to bottom, not left-to-right
+ * columns, which is why the order read as confusing." The district card was
+ * seven columns. It is now seven rows read top to bottom, each row PART 5's
+ * own grid, `[minmax(0,22ch) auto 1fr]`, name then the figure in the very
+ * next column then a track that absorbs the leftover width , which is PART
+ * 5's GEOMETRY clause, the clause MODEL.md itself calls "the mechanism that
+ * ends 'the distance between the category and the word is very big'": a row is
+ * NEVER justify-between across a card wider than 420px, and at 768 the old
+ * two-column table was exactly that on a 720px card. HIS WORDS WERE "the
+ * category and the word", not the category and the figure, and this file does
+ * not claim to know which word he meant: he said it in the same breath as the
+ * invented one-word district summaries, which went in the same task (below).
+ * The two grounds above hold whichever he meant, which is why they are the
+ * grounds given here. Under 420 PART 5 prescribes the two-column form the
+ * phone table already draws. A second fault closes with the change, a hole:
+ * deleting the invented notes list left
  * the card 222px short of the tall card beside it, and a bar chart cannot
  * fill that, because a taller chart grows its own blank triangle over the
  * short bars (measured: 299x138 at 1280). Rows on `auto-rows-fr` share
  * whatever height the band hands them, which is PART 5's height law solving
  * the hole rather than a size tuned to one page.
  *
- * THE TRACK IS THE SET'S OWN, AND CARRIES NO `data-track`. It measures a
- * district against the heaviest district drawn three rows above it, not
- * against a world maximum, so PART 9 rule 5 (a figure on a WORLD track needs
- * its placement line beside it) is not in play and marking it as a world
- * track would be a false claim about what it compares. The short table keeps
- * two columns and no track for exactly this reason: there `top` can be a
- * world maximum the card never draws.
+ * THE REFERENCE ROW WEARS THE PILL ON ITS NAME AND PRINTS NO FIGURE (task 13
+ * fix wave, 2026-09-10). A set rebased onto one of its own members holds one
+ * row whose figure is a multiple of ITSELF: 1, for every such set, forever, by
+ * definition. PART 5 bans printing that in either shape , "any bare word
+ * standing where a figure belongs" rules out the word "cheapest", rule 17
+ * rules out "a baseline row written out", and "x1.00" is the string he struck
+ * out to begin with ("then you say the city average times one which is the
+ * baseline"). So `referenceKey` names that row: its figure cell renders a
+ * reserved, empty slot, and the card's ONE pill moves onto its NAME, where an
+ * ink pill reads as a reference marker instead of asserting a figure that is
+ * not one. Every other row keeps its figure, and the card still carries
+ * exactly one pill, which is what the archetype harness proves. A
+ * `referenceKey` that is not the leading row is IGNORED on purpose: a row that
+ * lost its figure without gaining the pill would read as missing data, and no
+ * caller can cause that by accident. A second member tied exactly at the
+ * reference prints its true "x1.00", which under a basis whose reference is
+ * drawn, named and a few rows away is a claim the eye can check on the card
+ * itself, not the invisible average he struck out.
+ *
+ * THE SHORT TABLE (fewer than four rows, and every phone) keeps two columns
+ * and draws no track at all: there is no third column to absorb the leftover
+ * width at 375, and `top` is the caller's ceiling whether or not the card
+ * draws it.
  *
  * THE BLACK PILL, NOT THE ACCENT (task 12, 2026-09-10). Ported from mechanic
  * M2 (B2) of design/references/founder-2026-09-10.md: every member of a set
@@ -45,7 +93,8 @@
  * and it spends nothing from the page's accent budget (an ink pill is not
  * accent text). EVERY row, leader or not, renders the same pill-shaped slot
  * (`px-*.py-*` and `rounded-full`, background and colour the only things
- * that change); the leader alone gets `data-pill` and the ink fill, so which
+ * that change); the leader alone gets `data-pill` and the ink fill, on its
+ * figure, or on its NAME when it is also the reference row above, so which
  * row happens to lead never changes the row's height (ruling 8). The bar
  * itself still carries the hue: full terracotta for the leader (a filled bar
  * is a mark, not a figure), and for the rest a hatch in --c-border , reusing
@@ -104,7 +153,9 @@ export type RankedBarsProps = {
   basis: string;
   withheldLine?: string | null;
   rows: BarRow[];
-  /** The world's highest value for this metric, as the same unit as `value`. */
+  /** The track's far end, in the same unit as `value`: the world's highest value
+   *  for this metric when `ceiling` is "world", this set's own heaviest member
+   *  when it is "set". A row above it raises it (see `top`). */
   worldMax: number;
   fmt: (v: number) => string;
   phoneHead: { name: string; value: string };
@@ -112,6 +163,15 @@ export type RankedBarsProps = {
   best?: "max" | "min";
   /** The words at the top rule; the world's best by default, the set's heaviest for a burden. */
   topLabel?: string;
+  /** WHAT THE CEILING IS, and the caller alone knows: "world" when `worldMax` is
+   *  the world's highest value for the metric, "set" when it is this set's own
+   *  heaviest member. The table form stamps it as `data-track`. Defaults to
+   *  "world" so a caller who forgets it gets a gate finding, never silence. */
+  ceiling?: "world" | "set";
+  /** The row every other figure is measured against, when the set is rebased on
+   *  one of its own members: its figure cell prints nothing and the card's one
+   *  pill moves to its name. Ignored unless it is the leading row (header). */
+  referenceKey?: string;
 };
 
 /* The bar band's MINIMUM height, and the figure rung reserved above the
@@ -135,13 +195,52 @@ const WIDE_ROWS = 6;
    head row baselines its two words; a data row centres, because a 12px
    track has no baseline worth aligning text to. */
 const ROW = "grid grid-cols-[minmax(0,22ch)_auto_1fr] gap-x-3";
+/* THE PILL ON A NAME, the same shape as the pill on a figure so the card
+   carries one mark and not two ideas of a mark. It goes ON the name element
+   itself and NEVER in a span inside it: a district row with a second element
+   inside its name cell is what an invented one-word descriptor looked like,
+   and `check_model_laws.mjs`'s DISTRICT ADJECTIVE rule reads exactly that
+   shape ("#districts [data-row] > span:first-child > span"). Measured, not
+   assumed: the first cut of this pill nested a span and the rule reported the
+   district's own NAME as free text on the row. `w-fit` keeps a stretched grid
+   item hugging its name instead of pilling the whole column, and the two
+   branches never both set a text colour, because which of two colour classes
+   wins is decided by the order Tailwind emits them, not by this file. */
+const PILL_NAME = "w-fit rounded-full bg-[var(--c-ink)] px-2 py-0.5 text-white";
+/* EVERY NAME RESERVES THE PILL'S HEIGHT, exactly as every figure already
+   reserves its own: `py-0.5` on all of them, the fill and the colour the only
+   things that change, so which row happens to wear the pill can never decide
+   how tall a row is (ruling 8). Only the HORIZONTAL padding belongs to the
+   pill, which is why it is not in the base: the pill's left edge lands on the
+   same column edge every other name starts at, and the name inside it is
+   inset, which is what a pill looks like. Measured after the change, at all
+   three widths: every row's CONTENT box is one height (55/40/45), and the
+   border-box of the first row is 1px under its siblings' at 375 for a reason
+   that has nothing to do with this , `divide-y` hangs its hairline on
+   `> * + *`, so the first row's line is drawn by the container's own
+   `border-t` instead. Positional, universal to every divided list in the kit,
+   and there before any of this. */
+const NAME_BASE = "min-w-0 py-0.5 text-[length:var(--t-body)] font-medium";
+const nameCls = (isRef: boolean) => (isRef ? `${NAME_BASE} ${PILL_NAME}` : `${NAME_BASE} text-[var(--c-ink)]`);
 
-export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel }: RankedBarsProps) {
+/* THE RESERVED EMPTY SLOT (task 13 fix wave): the reference row's figure cell
+   renders the same padded, rounded box as every other figure, holding a
+   non-breaking space, so the row is exactly as tall as its siblings (ruling 8)
+   and nothing prints where a figure would assert something untrue. `&nbsp;`
+   as an entity, not a literal character, is how KvGrid already reserves a
+   heading line, and it stays visible to whoever reads this file next; it also
+   trims to "" for every gate that walks text, so no rule reads it as a word. */
+const BLANK = <>&nbsp;</>;
+
+export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", referenceKey }: RankedBarsProps) {
   if (rows.length < 2) return null;
   const ascending = [...rows].sort((a, b) => a.value - b.value);
   /* THE LEADER IS ALWAYS THE RIGHT-MOST BAR: the highest for a margin, the lowest for a burden. */
   const sorted = best === "min" ? ascending.slice().reverse() : ascending;
   const leader = sorted[sorted.length - 1];
+  /* A REFERENCE THAT IS NOT THE LEADER IS IGNORED (see the header): no row ever
+     loses its figure without gaining the card's pill in the same move. */
+  const refKey = referenceKey && referenceKey === leader.key ? referenceKey : undefined;
   const top = Math.max(worldMax, ascending[ascending.length - 1].value);
   /* FEWER THAN FOUR ROWS RECONFIGURE TO THE TABLE AT EVERY WIDTH. Measured by
      the harness: two bars across a card leave a 480x144 hole (E6), the
@@ -163,7 +262,13 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-line-strong)]" style={{ top: H + PILL }} />
         <ol className="grid" data-expect-rows={sorted.length} style={{ listStyle: "none", margin: 0, padding: 0, gridAutoFlow: "column", gridAutoColumns: "minmax(0,1fr)", columnGap: 8 }}>
           {sorted.map((r) => {
+            const isRef = r.key === refKey;
             const isLeader = r.key === leader.key;
+            /* THE PILL IS THE CARD'S ONE MARK, and it sits on the leader's
+               FIGURE unless that row is also the reference: there is no figure
+               to sit on then, so it moves to the name. The bar keeps the
+               leader's hue either way. */
+            const figPill = isLeader && !isRef;
             const h = Math.max(2, Math.round((H * r.value) / top));
             const inner = (
               <>
@@ -175,10 +280,11 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                         never add height a plain row lacks , only `data-pill`
                         and the two colours change. */}
                     <span
-                      data-pill={isLeader ? "1" : undefined}
-                      className={`inline-flex items-center justify-center rounded-full px-1.5 py-0.5 ${isLeader ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
+                      data-pill={figPill ? "1" : undefined}
+                      aria-hidden={isRef ? true : undefined}
+                      className={`inline-flex items-center justify-center rounded-full px-1.5 py-0.5 ${figPill ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
                     >
-                      <Fig className="font-medium">{fmt(r.value)}</Fig>
+                      <Fig className="font-medium">{isRef ? BLANK : fmt(r.value)}</Fig>
                     </span>
                   </div>
                   <div aria-hidden="true" style={{ width: 28, height: h, background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0], borderRadius: "2px 2px 0 0" }} />
@@ -186,7 +292,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                 {/* THE UNDERLINE IS A LINK'S, so a name with no door wears none (the
                     district photograph of run 25 showed seven underlined names and
                     no destination, a promise the card could not keep). */}
-                <div className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
+                <div className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{isRef ? <span data-pill="1" className={`inline-block ${PILL_NAME}`}>{r.name}</span> : r.name}</div>
               </>
             );
             return (
@@ -202,14 +308,21 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           <div className={`${ROW} items-baseline pb-2`}>
             <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.name}</span>
             <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
-            <span aria-hidden="true" />
+            {/* THE CEILING, NAMED ONCE, over the column whose far end it is
+                (ruling 13). Not a column head: it is the same micro muted line
+                the bars form prints beside its hairline, in the same words, so
+                the two forms say the ceiling identically. Right aligned,
+                because the ceiling is the right end of every track below. */}
+            <span className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{topLabel ?? COPY.margin.worldBest} {fmt(top)}</span>
           </div>
           <div className="grid flex-1 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length} style={{ gridAutoRows: "minmax(2.5rem,1fr)" }}>
             {ranked.map((r) => {
+              const isRef = r.key === refKey;
               const isLeader = r.key === leader.key;
+              const figPill = isLeader && !isRef;
               const row = (
                 <>
-                  <span className="min-w-0 text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{r.name}</span>
+                  <span data-pill={isRef ? "1" : undefined} className={nameCls(isRef)}>{r.name}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share
@@ -220,13 +333,17 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                       drew its figures at the same 16. */}
                   <Fig className="text-[length:var(--t-lead)] font-semibold">
                     <span
-                      data-pill={isLeader ? "1" : undefined}
-                      className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${isLeader ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
+                      data-pill={figPill ? "1" : undefined}
+                      aria-hidden={isRef ? true : undefined}
+                      className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${figPill ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
                     >
-                      {fmt(r.value)}
+                      {isRef ? BLANK : fmt(r.value)}
                     </span>
                   </Fig>
-                  <span aria-hidden="true" className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]">
+                  {/* THE TRACK DECLARES ITS CEILING (task 13 fix wave): the
+                      attribute is what the harness iterates, and its value is
+                      whether the far end is the world's or this set's own. */}
+                  <span aria-hidden="true" data-track={ceiling} className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]">
                     <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(Math.max(0, Math.min(1, r.value / top)) * 100).toFixed(1)}%`, background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }} />
                   </span>
                 </>
@@ -244,20 +361,25 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
         </div>
         <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length}>
           {[...sorted].reverse().map((r) => {
+            const isRef = r.key === refKey;
             const isLeader = r.key === leader.key;
+            const figPill = isLeader && !isRef;
             const row = (
               <>
-                <span className="min-w-0 text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{r.name}</span>
+                <span data-pill={isRef ? "1" : undefined} className={nameCls(isRef)}>{r.name}</span>
                 <Fig className="text-right text-[length:var(--t-body)] font-semibold" >
                   {/* THE SAME RESERVED SLOT AS THE BAR FIGURE, above: every
                       row gets the rounded, padded span, only the leader's
                       gets the ink fill and `data-pill`, so a phone row is
-                      never taller for being the one that leads. */}
+                      never taller for being the one that leads, and the
+                      reference row's holds a non-breaking space so it is
+                      never SHORTER for having no figure to print. */}
                   <span
-                    data-pill={isLeader ? "1" : undefined}
-                    className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${isLeader ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
+                    data-pill={figPill ? "1" : undefined}
+                    aria-hidden={isRef ? true : undefined}
+                    className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${figPill ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
                   >
-                    {fmt(r.value)}
+                    {isRef ? BLANK : fmt(r.value)}
                   </span>
                 </Fig>
               </>

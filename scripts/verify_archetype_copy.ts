@@ -167,10 +167,19 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
 /* THE CITY VERDICT CARD (city:verdict, run 23): the builder's law on a synthetic
    fixture, since the ranked districts come from the async adapter and the gate
    is browser-free and offline. Letters, never a place: the gate fabricates no
-   district. The law: the lightest rent load is the answer and names its
-   district; the cells are the city average and the heaviest; the multiples are
-   modelled and marked so; one district draws nothing; the words sit under the
-   caps of the key-value grid's cells and hold no banned word. */
+   district. The law: the answer is the spread between the two ends and names
+   both; the cells are the middle of the ranking and the count; the multiples
+   are modelled and marked so; one district draws nothing; the words sit under
+   the caps of the key-value grid's cells and hold no banned word.
+
+   THREE DISTRICTS AND TWO, both proven (task 13 fix wave, 2026-09-10). The
+   three-district fixture is the comfortable input: it has a middle. TWO is the
+   case the middle cell was wrong for, because the same expression that finds
+   the middle of a ranking returns the CHEAPEST when there are only two, so the
+   card printed the reference district twice, once in the basis line naming it
+   and once in a cell labelled "Middle district". London is the only city with
+   districts today, so nothing renders two; a rule proven only on the input
+   that suits it is not proven. */
 {
   const fixture = { where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }, { name: "C", rent_mult: 3 }] } };
   const v = cityVerdictFacts(fixture);
@@ -208,6 +217,20 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
     for (const t of [v.kicker, v.answer.label, v.answer.basis, ...v.cells.flatMap((c) => [c.label, c.note ?? ""])]) for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`verdict: banned word "${b}" in "${t}"`);
   }
+  /* TWO DISTRICTS: the answer still stands (a spread between two ends is
+     exactly what two districts hold), the middle cell is GONE, and the one
+     surviving cell is the count. Asserted by shape, not by index, so a future
+     reordering of the cells cannot make this pass by accident. */
+  const two = cityVerdictFacts({ where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }] } });
+  if (!two) reds.push("verdict: two ranked districts draw nothing");
+  else {
+    if (two.answer.value !== "x1.33" || !two.answer.basis.includes("B") || !two.answer.basis.includes("A")) reds.push(`verdict: two districts, the answer is not the spread (${two.answer.value}, ${two.answer.basis})`);
+    if (two.cells.some((c) => c.key === "middle")) reds.push(`verdict: two districts, and a middle cell reading "${String(two.cells.find((c) => c.key === "middle")?.value)}" beside "${String(two.cells.find((c) => c.key === "middle")?.note)}"`);
+    if (two.cells.length !== 1 || two.cells[0].key !== "ranked" || two.cells[0].value !== "2") reds.push(`verdict: two districts, the cells are ${two.cells.map((c) => `${c.label} ${c.value}`).join("; ")}`);
+    /* NO CELL IS A BARE WORD. The middle cell's old value was one; this holds
+       for every cell the card may ever grow, not just that one. */
+    for (const c of two.cells) if (!/\d/.test(String(c.value))) reds.push(`verdict: two districts, a cell with no figure in it ("${c.label}": "${String(c.value)}")`);
+  }
   if (cityVerdictFacts({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("verdict: one district draws a card");
   if (cityVerdictFacts({})) reds.push("verdict: no districts draw a card");
 }
@@ -222,7 +245,11 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        and a top rule still reading 3 would be measuring the card's ceiling on
        the basis the rows no longer use. */
     if (b.rows.length !== 3 || b.worldMax !== 3.33) reds.push(`districts: ${b.rows.length} rows, top rule ${b.worldMax}`);
-    if (b.cheapest !== "A" || b.dearest.name !== "C" || b.middle.name !== "B") reds.push(`districts: the ends and the middle are ${b.cheapest} / ${b.middle.name} / ${b.dearest.name}`);
+    if (b.cheapest !== "A" || b.dearest.name !== "C" || b.middle?.name !== "B") reds.push(`districts: the ends and the middle are ${b.cheapest} / ${b.middle?.name} / ${b.dearest.name}`);
+    /* THE CARD MARKS A ROW, NOT A NAME: the reference key has to be a key the
+       rows actually carry, or the pill lands on nothing and the reference row
+       keeps printing a figure of itself. */
+    if (b.cheapestKey !== "a" || !b.rows.some((r) => r.key === b.cheapestKey)) reds.push(`districts: the reference key is "${b.cheapestKey}", which is not the cheapest row's key`);
     if (!b.basis.includes("A")) reds.push(`districts: the basis line does not name the district every figure is measured against ("${b.basis}")`);
     if (!b.tagged) reds.push("districts: the multiples are composed from tag constants and are not marked modelled");
     /* THE ASSERTION IS INVERTED, task 13 (2026-09-10). It used to demand that
@@ -234,14 +261,29 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        asserting it is dropped is the point: asserting on a fixture with no
        `character` would pass on a builder that still copies it. */
     if (b.rows.some((r) => r.note)) reds.push("districts: a row carries a one-word summary of a place");
-    /* TWO DECIMALS ALWAYS for a real multiple, and A WORD, NOT "x1.00", for
-       the reference row. Both halves are asserted: a formatter that printed
-       the reference as x1.00 would put back the exact string his ruling
-       struck out, and one that dropped the second decimal would break the
-       column's one notation. */
+    /* TWO DECIMALS ALWAYS, AND NEVER A WORD (task 13 fix wave, 2026-09-10).
+       The formatter formats and does nothing else: it used to answer 1 with
+       the word "cheapest", which PART 5 bans ("any bare word standing where a
+       figure belongs"), and any sub-1 multiple from any future caller got the
+       same word by accident. The reference row draws NO figure at all now,
+       which is the card's business (RankedBars' `referenceKey`), not this
+       function's. Three halves asserted: the notation, the absence of a word
+       at 1, and the absence of one below 1. */
     if (rentMult(2.5) !== "x2.50") reds.push(`districts: the multiple prints as ${rentMult(2.5)}`);
-    if (rentMult(1) !== COPY.cityDistricts.cheapest || /x[\d.]/.test(rentMult(1))) reds.push(`districts: the reference row prints "${rentMult(1)}", not a word`);
-    for (const t of [COPY.cityDistricts.kicker, COPY.cityDistricts.basis, COPY.cityDistricts.cheapest, COPY.cityDistricts.heaviest, COPY.cityDistricts.phoneHead.name, COPY.cityDistricts.phoneHead.value]) for (const bw of COPY.banned) if (t.toLowerCase().includes(bw)) reds.push(`districts: banned word "${bw}" in "${t}"`);
+    if (rentMult(1) !== "x1.00") reds.push(`districts: the formatter answers 1 with "${rentMult(1)}", not a formatted multiple`);
+    if (rentMult(0.5) !== "x0.50") reds.push(`districts: the formatter answers a sub-1 multiple with "${rentMult(0.5)}"`);
+    for (const t of [COPY.cityDistricts.kicker, COPY.cityDistricts.basis, COPY.cityDistricts.heaviest, COPY.cityDistricts.phoneHead.name, COPY.cityDistricts.phoneHead.value]) for (const bw of COPY.banned) if (t.toLowerCase().includes(bw)) reds.push(`districts: banned word "${bw}" in "${t}"`);
+  }
+  /* TWO DISTRICTS, the case nothing renders today: the card still draws, the
+     reference key still points at a drawn row, and there is no middle to
+     name. The three-district fixture above cannot prove any of that. */
+  const b2 = buildCityDistrictBars({ where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.2, character: "Q" }, { name: "A", slug: "a", rent_mult: 0.9, character: "R" }] } });
+  if (!b2) reds.push("districts: two ranked districts draw nothing");
+  else {
+    if (b2.rows.length !== 2 || b2.worldMax !== 1.33) reds.push(`districts: two districts, ${b2.rows.length} rows, top rule ${b2.worldMax}`);
+    if (b2.middle !== null) reds.push(`districts: two districts, and a middle of "${b2.middle.name}", which is one of the two ends`);
+    if (b2.cheapestKey !== "a" || !b2.rows.some((r) => r.key === b2.cheapestKey)) reds.push(`districts: two districts, the reference key is "${b2.cheapestKey}"`);
+    if (b2.rows.some((r) => r.note)) reds.push("districts: two districts, and a row carries a one-word summary of a place");
   }
   if (buildCityDistrictBars({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("districts: one district draws a card");
   if (buildCityDistrictBars({})) reds.push("districts: no districts draw a card");
