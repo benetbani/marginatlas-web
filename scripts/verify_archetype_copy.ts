@@ -34,6 +34,8 @@ import { buildHowTo } from "@/lib/spine/howto_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
+import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
+import { buildMarkList, MARK_LIST_CAP } from "@/lib/spine/mark_list_rows";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
@@ -305,6 +307,62 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   }
   if (buildCityDistrictBars({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("districts: one district draws a card");
   if (buildCityDistrictBars({})) reds.push("districts: no districts draw a card");
+}
+/* THE MARK LIST (B3, 2026-09-10): the builder's law on the REAL files, not on
+   a fixture, because both of the files behind it are local and static
+   (`data/cities/city_list_v1.json` and the margin snapshot), so nothing here
+   needs a browser or the database. What is proved: every drawn row carries a
+   figure that prints as a figure, the rows fall in order, the withheld count
+   and the withheld line agree in both directions, the set adds up, no
+   placeholder survives into a printed string, no head runs past three words,
+   and the floor holds from the low side on a real country rather than only
+   from the high side on a comfortable one. */
+{
+  const markListKeys = ["cities:pay", "cities:visitors", "trade:auto_repair_shops"];
+  let markLists = 0;
+  for (const key of markListKeys) {
+    const d = buildMarkList(key);
+    if (!d) { reds.push(`mark list ${key}: draws nothing, and this key is one the files hold`); continue; }
+    markLists++;
+    if (d.rows.length < MARK_LIST_FLOOR) reds.push(`mark list ${key}: ${d.rows.length} rows, under the floor of ${MARK_LIST_FLOOR}`);
+    if (d.rows.length > MARK_LIST_CAP) reds.push(`mark list ${key}: ${d.rows.length} rows, over the cap of ${MARK_LIST_CAP}`);
+    for (const r of d.rows) {
+      if (!Number.isFinite(r.value)) reds.push(`mark list ${key}: row "${r.name}" carries no figure`);
+      else if (!/\d/.test(d.fmt(r.value))) reds.push(`mark list ${key}: row "${r.name}" prints no figure ("${d.fmt(r.value)}")`);
+    }
+    for (let i = 1; i < d.rows.length; i++) {
+      if (d.rows[i].value > d.rows[i - 1].value) reds.push(`mark list ${key}: "${d.rows[i].name}" ranks below "${d.rows[i - 1].name}" and holds the larger figure`);
+    }
+    /* BOTH DIRECTIONS: a withheld member with no line is a silent drop, and a
+       line with nothing withheld is a card apologising for nothing. */
+    if ((d.withheld > 0) !== (d.withheldLine != null)) reds.push(`mark list ${key}: ${d.withheld} withheld and the line is ${d.withheldLine ? "printed" : "absent"}`);
+    if (d.withheldLine && !/\d/.test(d.withheldLine)) reds.push(`mark list ${key}: the withheld line counts nothing ("${d.withheldLine}")`);
+    if (d.rows.length + d.withheld > d.universe) reds.push(`mark list ${key}: ${d.rows.length} rows and ${d.withheld} withheld out of a set of ${d.universe}`);
+    /* THE HEADLINE IS THE SET'S MIDDLE, so it can never sit above the highest
+       row the card draws; if it does, it is being measured over some other
+       set than the one the rows come from. */
+    if (d.middle > d.rows[0].value) reds.push(`mark list ${key}: the middle (${d.fmt(d.middle)}) stands above the highest row (${d.fmt(d.rows[0].value)})`);
+    const texts = [d.kicker, d.basis, d.middleLabel, d.head.name, d.head.value, d.withheldLine ?? ""];
+    if (texts.some((t) => /[{}]/.test(t))) reds.push(`mark list ${key}: a placeholder was never filled ("${texts.find((t) => /[{}]/.test(t))}")`);
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`mark list ${key}: banned word "${b}" in "${t}"`);
+      if (/—/.test(t)) reds.push(`mark list ${key}: an em dash in "${t}"`);
+    }
+    /* THE HEADS ARE ROW GRAMMAR, three words (PART 5). THE HEADLINE LABEL IS
+       ANSWER GRAMMAR, four, the cap the hero's own "Total effective tax
+       burden" already sits at: it names the card's one figure, not a column. */
+    for (const [where, t] of [["the name head", d.head.name], ["the value head", d.head.value]] as Array<[string, string]>) {
+      if (t.trim().split(/\s+/).length > 3) reds.push(`mark list ${key}: ${where} is ${t.trim().split(/\s+/).length} words, over three ("${t}")`);
+    }
+    if (d.middleLabel.trim().split(/\s+/).length > 4) reds.push(`mark list ${key}: the headline label is ${d.middleLabel.trim().split(/\s+/).length} words, over four ("${d.middleLabel}")`);
+  }
+  /* THE FLOOR FROM THE LOW SIDE, on a real country: New Zealand holds three
+     covered cities, one under the floor, so it must draw nothing. Proving the
+     floor only on sets that clear it is proving nothing. */
+  if (buildMarkList("cities:pay:NZ")) reds.push("mark list: a country with three covered cities draws a card, under the floor of four");
+  if (buildMarkList("trade:unlisted_sector")) reds.push("mark list: a trade the taxonomy does not hold draws a card");
+  if (buildMarkList("cities:pay:ZZ")) reds.push("mark list: a country with no covered city draws a card");
+  console.log(`mark list: ${markLists} of ${markListKeys.length} subjects build; the floor holds from the low side`);
 }
 console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

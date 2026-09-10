@@ -88,6 +88,7 @@
  */
 import { COPY } from "@/lib/spine/copy";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
+import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
@@ -186,6 +187,17 @@ const rowLabels: Array<[string, string]> = [
   ["COPY.margin.phoneHead.value", COPY.margin.phoneHead.value],
   ["COPY.cityDistricts.phoneHead.name", COPY.cityDistricts.phoneHead.name],
   ["COPY.cityDistricts.phoneHead.value", COPY.cityDistricts.phoneHead.value],
+  /* THE MARK LIST'S COLUMN HEADS (B3, 2026-09-10). Its unit is said once, in
+     the value head, so these are the strings a reader meets over its figures,
+     and the three-word cap binds them exactly as it binds the pay bars' and
+     the money card's. None of them carries a placeholder, so unlike the
+     district head there is no exception to record here. */
+  ["COPY.markList.pay.head.name", COPY.markList.pay.head.name],
+  ["COPY.markList.pay.head.value", COPY.markList.pay.head.value],
+  ["COPY.markList.visitors.head.name", COPY.markList.visitors.head.name],
+  ["COPY.markList.visitors.head.value", COPY.markList.visitors.head.value],
+  ["COPY.markList.trade.head.name", COPY.markList.trade.head.name],
+  ["COPY.markList.trade.head.value", COPY.markList.trade.head.value],
 ];
 for (const [where, t] of rowLabels) {
   const words = t.trim().split(/\s+/).filter(Boolean);
@@ -334,6 +346,21 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      for , the failure mode of every gate that watches a shape instead of a
      location. */
   if (bars) heads.push(["buildCityDistrictBars.basis", bars.basis], ["buildCityDistrictBars.phoneHead.value", bars.phoneHead.value], ["buildCityDistrictBars.phoneHead.name", bars.phoneHead.name]);
+
+  /* THE MARK LIST'S COMPOSED STRINGS (B3, 2026-09-10), pushed for the same
+     reason the district head above is: its basis line counts its own rows and
+     names the size of its set, so it carries a `{n}` and a `{universe}` and is
+     SKIPPED by the static sweep by design, and the trade card's kicker names
+     the trade beside the metric, so that one is composed too. A rule that
+     watches a shape has to be handed the string a reader actually meets or it
+     goes quiet about exactly the strings it was written for. These come off
+     the shipped builder reading the real, local files, no browser and no
+     database, the same way this gate already reads the district builder. */
+  for (const key of ["cities:pay", "cities:visitors", "trade:auto_repair_shops"]) {
+    const d = buildMarkList(key);
+    if (!d) continue;
+    heads.push([`buildMarkList(${key}).kicker`, d.kicker], [`buildMarkList(${key}).basis`, d.basis], [`buildMarkList(${key}).middleLabel`, d.middleLabel]);
+  }
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);

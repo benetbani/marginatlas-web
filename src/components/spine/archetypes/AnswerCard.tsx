@@ -86,7 +86,17 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
           </h1>
         </div>
         )}
-        {subtitle ? <p className="mt-1.5 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p> : null}
+        {/* `data-subtitle` IS THE HARNESS'S HOOK, and it exists because the
+            PROMISE rule used to find this line with `card.querySelector("p")`
+            , the first paragraph anywhere inside the card. That held only
+            while an answer-card contained no other paragraph. The moment
+            DetailPanel nested at the foot of one carried a withheld line (a
+            `p`, and this component's `detail` slot is built for exactly that
+            nesting), the first `p` in the card became the panel's, and a rule
+            about a SUBTITLE promising registration started reading a sentence
+            it had never seen. The hook names the one element the rule is
+            about, so nothing added below this line can be mistaken for it. */}
+        {subtitle ? <p data-subtitle className="mt-1.5 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p> : null}
         {/* THE SPLIT ONLY WHEN THERE ARE CELLS. Measured by the harness at 768:
             a 1-1 split put a 130px answer beside a 250px grid and left a
             363x120 hole under the answer (E6). At tablet the answer takes a

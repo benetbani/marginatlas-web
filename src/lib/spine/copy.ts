@@ -14,6 +14,10 @@
  * below can REFERENCE it rather than retype it (review finding 6): a second
  * literal of the same string drifts silently on the next edit to either one. */
 const CUSTOMERS_KICKER = "What customers earn";
+/** The net-margin metric's one name, held once for the same reason: the money
+ *  card and the mark list both open with it, and a second literal would drift
+ *  the day either one is reworded. */
+const MARGIN_KICKER = "Net profit margin";
 export const COPY = {
   answer: {
     /** Founder verbatim, 2026-08-30: "the total effective tax burden". */
@@ -41,7 +45,7 @@ export const COPY = {
   free: "Free",
   /** The net-margin card (founder ruling 6, 2026-09-04: "net profit margin in %, vertical bars"). */
   margin: {
-    kicker: "Net profit margin",
+    kicker: MARGIN_KICKER,
     basis: "Of every $100 a typical shop sells here, what it keeps after all costs and tax.",
     worldBest: "world's best",
     withheldOne: "1 trade withheld: the model returns a loss or a floor for a typical shop.",
@@ -319,6 +323,18 @@ export const COPY = {
    * repeat the heading printed directly above it. */
   detail: {
     setup: "What the fee covers",
+    /* THE WITHHELD ROW (2026-09-10). Founder ruling 8 of 2026-09-04 named
+       "time until opening" as wanted beside the registration fee and the
+       registration wait, and nothing on file measures it. PART 5 is explicit
+       about what that means: "A LABEL NEVER STANDS WHERE A NUMBER GOES ... a
+       cell that cannot hold an honest figure is WITHHELD with a stated line
+       saying which rows are missing and why, the way the country money card
+       withholds its four trades." So the row is not drawn holding the words
+       "not measured yet" , a word standing in the figure column is the exact
+       shape he struck out , and this line says which row is missing and why.
+       It goes the day the wait between registering and trading lands in
+       data/legal/business_formation_costs_v1.json, and the row returns. */
+    setupWithheld: "Time until the doors open is withheld: nothing on file measures the wait between registering and trading.",
     pay: "What moves this figure",
     customers: `${CUSTOMERS_KICKER}, by tenth`,
   },
@@ -364,6 +380,79 @@ export const COPY = {
     /** The sales tax, which the customer carries and the owner collects. */
     salesTax: {
       basis: "The customer carries it, so it is not the owner's burden.",
+    },
+  },
+  /** THE MARK LIST (B3, 2026-09-10, his "pretty universal but the use can be
+   *  beyond the use of flags itself, universal format"). One headline figure
+   *  for a whole set, then its highest few members as rows. One block per
+   *  subject the card serves, because every subject needs its own words and
+   *  none of them needs its own component.
+   *
+   *  EVERY STRING HERE WAS READ ALOUD BEFORE IT SHIPPED, which is the only
+   *  check that catches what the gates cannot: his "like you say districts and
+   *  time's the cheapest. What the fuck is time's the cheapest? What's that
+   *  sort of wording? It's unnatural."
+   *
+   *  THE UNIT IS SAID ONCE, IN THE COLUMN HEAD (PART 5), so no basis line here
+   *  repeats it: the pay basis qualifies the figure ("before tax") and the
+   *  visitors basis says nothing about the unit at all, because "Visitors a
+   *  year" is already standing over the column. A basis that says what the
+   *  head says is the same sentence twice. */
+  markList: {
+    /** THE HEADLINE'S WORDS WHEN THE LIST IS THE WHOLE SET, and it is an
+     *  honesty fix rather than a flourish (found by looking at the thin card's
+     *  photograph, 2026-09-10). The headline is the middle of the members that
+     *  HOLD a figure. On the city cards that is 246 or 252 of the 252 the basis
+     *  names, so "Middle city" is true of the set a reader thinks it is true
+     *  of. On the trade card only FOUR of 188 countries hold a credible
+     *  margin, and "Middle country" over a card whose basis says 188 claims a
+     *  world middle that nobody measured. So when every member holding a
+     *  figure is drawn on the card, the label says which four it is the middle
+     *  of, and the reader can see all of them. */
+    middleOfDrawn: "Middle of the {n}",
+    /** The covered cities by what a customer earns there, which is the figure
+     *  the city pages themselves open with. The kicker is the customers
+     *  strip's own, referenced rather than retyped. */
+    pay: {
+      kicker: CUSTOMERS_KICKER,
+      middle: "Middle city",
+      head: { name: "City", value: "Pay a year" },
+      basis: "The {n} highest-paying of the {universe} cities we cover. Pay before tax.",
+      basisIn: "The {n} highest-paying of the {universe} cities we cover in {country}. Pay before tax.",
+      withheldOne: "1 city withheld: no pay figure above zero is on file.",
+      withheldMany: "{n} cities withheld: no pay figure above zero is on file.",
+    },
+    /** The covered cities by visitors in a year, the one city field with real
+     *  gaps in it, which is why the withheld line here is a line a reader
+     *  actually meets rather than a branch nothing reaches.
+     *
+     *  THE REASON SAYS "ABOVE ZERO" BECAUSE THE GAP HAS TWO SHAPES AND ONE
+     *  SENTENCE HAS TO COVER BOTH HONESTLY: six of the 252 cities carry no
+     *  visitor field at all, and five more carry a literal 0 left behind by an
+     *  extrapolation that rounded down (Dhaka and Kyiv among them, which
+     *  plainly do have visitors). "No visitor figure is on file" would be
+     *  false for those five, and drawing 0.0M for Dhaka would be a visibly
+     *  wrong number, which is the one thing this site does not ship. */
+    visitors: {
+      kicker: "Where visitors go",
+      middle: "Middle city",
+      head: { name: "City", value: "Visitors a year" },
+      basis: "The {n} most visited of the {universe} cities we cover.",
+      basisIn: "The {n} most visited of the {universe} cities we cover in {country}.",
+      withheldOne: "1 city withheld: no visitor figure above zero is on file.",
+      withheldMany: "{n} cities withheld: no visitor figure above zero is on file.",
+    },
+    /** One trade across every country the margin model measures. The kicker is
+     *  the money card's own, and the withheld sentence is the money card's own
+     *  reason with countries in place of trades, because it is the same engine
+     *  and the same floor doing the withholding. */
+    trade: {
+      kicker: MARGIN_KICKER,
+      middle: "Middle country",
+      head: { name: "Country", value: "Net margin" },
+      basis: "The {n} highest of the {universe} countries measured. What a shop keeps after costs and tax.",
+      withheldOne: "1 country withheld: the model returns a loss or a floor for a typical shop.",
+      withheldMany: "{n} countries withheld: the model returns a loss or a floor for a typical shop.",
     },
   },
   /** Words that must never appear in an archetype's copy: the corporate register.

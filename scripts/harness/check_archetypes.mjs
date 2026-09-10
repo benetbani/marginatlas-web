@@ -69,6 +69,12 @@
  *    declaration is what is under test); NO HOLE ON COLLAPSE (at each width
  *    the cells' areas add up to the rectangle they occupy, so a cluster that
  *    reflows into a ragged L is named as a collapse fault).
+ *  MARK LIST (B3, 2026-09-10): the drawn row count matches the count the
+ *    card declares at every width; every drawn row prints a figure and every
+ *    member holding none is accounted for by the withheld line; the rows are
+ *    one height AND no row's content runs past it; and where marks are drawn,
+ *    every row carries one and every one of them is the same HEIGHT (never the
+ *    same width, which a correct flag set is not).
  *  INCOME BREAKDOWN: every drawn segment's share plus net sums to a hundred
  *    within a stated tolerance (task 11); no segment renders under six
  *    pixels wide (a sliver no hatch or swatch could carry); the legend names
@@ -130,7 +136,15 @@ function inPage() {
       r.rows = [...rows.values()];
       r.labels = cells.map((c) => c.querySelector("div div")?.textContent?.trim() || "");
     }
-    r.subtitle = r.kind === "answer-card" ? (card.querySelector("p")?.textContent || "") : "";
+    /* THE SUBTITLE, BY ITS OWN HOOK, NOT BY "the first p in the card". The
+       old selector was `card.querySelector("p")`, which is the subtitle only
+       while the card holds no other paragraph; a DetailPanel nested at the
+       foot of an answer-card (the `detail` slot, built for that) put its
+       withheld line , a `p` , earlier in document order than nothing at all,
+       and PROMISE below started judging a sentence about registering as a
+       subtitle promising registration. Planted and watched go red at all
+       three widths on detail-panel:GB:nested, 2026-09-10. */
+    r.subtitle = r.kind === "answer-card" ? (card.querySelector("[data-subtitle]")?.textContent || "") : "";
     if (r.kind === "ranked-bars") {
       const top = card.querySelector("[data-idea='I2'] > div:first-child");
       const topY = top ? top.getBoundingClientRect().top : null;
@@ -285,6 +299,39 @@ function inPage() {
         widthPx: el.getBoundingClientRect().width,
       }));
       r.incomeLegendKeys = [...card.querySelectorAll("[data-legend-key]")].map((el) => el.getAttribute("data-legend-key"));
+    }
+    /* THE MARK LIST (B3, 2026-09-10). Read off the DRAWN boxes, except where
+       the drawing is deliberately compared against the card's own declaration
+       (the row count, the marks flag): a fault that only shows as "it stopped
+       drawing at this width" cannot be named at all without both halves. */
+    if (r.kind === "mark-list") {
+      r.mlDeclared = Number(card.getAttribute("data-rows") || "0");
+      r.mlMarksDeclared = card.getAttribute("data-marks") === "1";
+      r.mlWithheld = Number(card.getAttribute("data-withheld") || "0");
+      r.mlWithheldLine = !!card.querySelector("[data-withheld-line]");
+      r.mlRows = [...card.querySelectorAll("[data-row]")].filter((el) => el.getClientRects().length).map((el) => {
+        const b = el.getBoundingClientRect();
+        const figEl = el.querySelector(".fig");
+        /* ONLY A VISIBLE MARK COUNTS, the same getClientRects() test the rest
+           of this walk uses. Found by planting: a mark hidden with
+           `display:none` still answers querySelector and still has a (zero)
+           rect, so an unfiltered read counted ten marks of height zero, called
+           them all the same height and reported nothing. */
+        const markEl = [...el.querySelectorAll("[data-mark]")].find((m) => m.getClientRects().length > 0) || null;
+        return {
+          key: el.getAttribute("data-row"),
+          h: Math.round(b.height * 100) / 100,
+          /* A DECLARED ROW HEIGHT MAKES EQUAL HEIGHTS TRIVIALLY TRUE, so this
+             is the half of the law that can still fail: how far the row's own
+             content runs past the box it was given. */
+          spill: Math.max(0, el.scrollHeight - el.clientHeight),
+          fig: figEl ? (figEl.textContent || "").trim() : "",
+          /* THE MARK'S OWN BOX, never the cell holding it: that cell is a grid
+             item stretched to the track and to the row, so measuring it would
+             compare a constant against itself. */
+          markH: markEl ? Math.round(markEl.getBoundingClientRect().height * 100) / 100 : null,
+        };
+      });
     }
     /* THE BENTO CLUSTER, MEASURED FROM THE BOXES THE BROWSER DREW (2026-09-10).
        BentoBand.tsx proves its own DECLARED spans tile before it renders a
@@ -617,6 +664,48 @@ for (const w of WIDTHS) {
       const extra = legKeys.filter((k) => !segKeys.includes(k));
       if (missing.length) red(r.inst, w, "LEGEND MISMATCH", `drawn but not named in the legend: ${missing.join(", ")}`);
       if (extra.length) red(r.inst, w, "LEGEND MISMATCH", `named in the legend but not drawn: ${extra.join(", ")}`);
+    }
+    /* THE MARK LIST'S FOUR RULES (B3, 2026-09-10). Each was written, then
+       PLANTED with the fault it catches and watched go red with the card
+       named, then the fault removed; the plantings are recorded in the task
+       report. What is recorded here is what each one measures and what it
+       cannot see.
+         ROWS CUT , the drawn count against the count the card declares, in
+           both directions, at every width.
+         NO FIGURE , every drawn row prints one, and any member of the set
+           that holds none is accounted for by the withheld line. Checked both
+           ways, because a withheld member with no line is a silent drop and a
+           line with nothing withheld is a card apologising for nothing.
+         UNEQUAL , the rows are one height, AND no row's content runs past the
+           height it was given. The second half is not decoration: the height
+           is declared (`h-11`), so the first half is nearly always true by
+           construction and a row spilling over its divider would pass it.
+         MARK MISSING / MARK SIZE , if any row carries a mark then every row
+           does, and every mark is drawn at one HEIGHT. Height and never
+           width: a correct flag set has deliberately unequal widths (a square
+           Swiss flag beside a 2:1 British one) because CountryFlag.tsx sizes
+           by height and lets width follow the flag's own ratio, so a width
+           rule would red the component for obeying its own law. BLIND SPOT: a
+           mark of the right height that failed to load draws at zero width and
+           passes here; a broken image is the IMAGE BROKEN rule's job. */
+    if (r.kind === "mark-list") {
+      const rr = r.mlRows || [];
+      if (rr.length !== r.mlDeclared) red(r.inst, w, "ROWS CUT", `the card declares ${r.mlDeclared} rows and draws ${rr.length}`);
+      const blank = rr.filter((x) => !x.fig);
+      if (blank.length) red(r.inst, w, "NO FIGURE", `${blank.length} row(s) print no figure (${blank.slice(0, 3).map((x) => x.key).join(", ")}); a row that cannot hold one is withheld with a line, never drawn blank`);
+      if (r.mlWithheld > 0 && !r.mlWithheldLine) red(r.inst, w, "NO FIGURE", `${r.mlWithheld} member(s) of the set hold no figure and no line says so`);
+      if (r.mlWithheld === 0 && r.mlWithheldLine) red(r.inst, w, "NO FIGURE", "a withheld line on a card that withheld nothing");
+      const hs = rr.map((x) => x.h);
+      if (hs.length > 1 && Math.max(...hs) - Math.min(...hs) > 1) red(r.inst, w, "UNEQUAL", `rows at heights ${[...new Set(hs)].join(", ")}`);
+      const spilled = rr.filter((x) => x.spill > 1);
+      if (spilled.length) red(r.inst, w, "UNEQUAL", `${spilled.length} row(s) hold content taller than the row: ${spilled.slice(0, 3).map((x) => `${x.key} by ${x.spill}px`).join(", ")}`);
+      const marked = rr.filter((x) => x.markH != null);
+      if (marked.length && marked.length !== rr.length) red(r.inst, w, "MARK MISSING", `${marked.length} mark(s) on ${rr.length} rows; a card that marks one row marks them all`);
+      if (r.mlMarksDeclared !== (marked.length > 0)) red(r.inst, w, "MARK MISSING", `the card declares ${r.mlMarksDeclared ? "marks" : "no marks"} and draws ${marked.length}`);
+      if (marked.length > 1) {
+        const mh = marked.map((x) => x.markH);
+        if (Math.max(...mh) - Math.min(...mh) > 0.5) red(r.inst, w, "MARK SIZE", `marks drawn at heights ${[...new Set(mh)].join(", ")}; every mark on a card is one height`);
+      }
     }
     /* THE BENTO'S THREE RULES (2026-09-10), every one of them run at EVERY
        width and every one of them proved by planting the fault it catches and

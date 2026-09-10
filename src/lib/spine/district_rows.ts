@@ -97,9 +97,14 @@ export type CityDistrictBars = {
 /** The count of districts, in words, for a basis line a person reads rather
  *  than parses ("the seven districts we cover"). Digits are what a figure cell
  *  is for; a sentence takes the word. Falls back to the digits above twelve,
- *  where the word is longer than the number it saves. */
+ *  where the word is longer than the number it saves.
+ *
+ *  EXPORTED for mark_list_rows.ts (2026-09-10): that card's basis line counts
+ *  its rows in the same sentence grammar ("the ten highest-paying of the 252
+ *  cities we cover"), and a second copy of this table in a second file is how
+ *  two cards start spelling the same number two different ways. */
 const COUNT_WORDS = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
-const countWord = (n: number) => COUNT_WORDS[n] ?? String(n);
+export const countWord = (n: number) => COUNT_WORDS[n] ?? String(n);
 
 /** The rent figure's one notation, shared by every card that prints it, and
  *  NOTHING ELSE: two decimals, always, for whatever it is handed. No branch,

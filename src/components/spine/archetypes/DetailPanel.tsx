@@ -22,6 +22,18 @@ import { InlineDisclosure } from "@/components/spine/kit";
  *    answer, for the reader who wants that one query.
  *  - Under two rows it draws nothing. One row behind a plus is worse than one
  *    row printed.
+ *  - A ROW THAT CANNOT HOLD AN HONEST FIGURE IS NOT DRAWN AT ALL, and
+ *    `withheldLine` says which row is missing and why (PART 5, "A LABEL
+ *    NEVER STANDS WHERE A NUMBER GOES"). This is the same instrument
+ *    RankedBars and PayBars already carry, and the country money card is its
+ *    precedent: a count and a reason, never a word parked in the figure
+ *    column. A panel that falls under two rows once its unmeasured rows are
+ *    dropped draws NOTHING, the withheld line included: the plus is an
+ *    affordance on a set, and there is no set left to open behind it.
+ *    The line sits after the rows, not before them like RankedBars' , there
+ *    the withheld line joins a basis line in a caption block above a
+ *    drawing; here the caption IS the summary the reader clicked, and a
+ *    panel that opens on what it does not hold opens on an apology.
  *  - The summary is one line at every width. The harness measures it.
  *  - THE PLUS IS COMFORTABLE TO HIT AT 375 (the harness's BOTCHED MOBILE
  *    floor of 44px), AND STILL ONE LINE. `InlineDisclosure`'s own summary is
@@ -48,7 +60,7 @@ export type DetailRow = { label: string; value: string; note?: string };
  * accident; two panels are meant to open independently unless a caller wants
  * the accordion behaviour on purpose.
  */
-export function DetailPanel({ name, summary, rows }: { name: string; summary: string; rows: DetailRow[] }) {
+export function DetailPanel({ name, summary, rows, withheldLine }: { name: string; summary: string; rows: DetailRow[]; withheldLine?: string | null }) {
   if (!rows || rows.length < 2) return null;
   return (
     <div data-archetype="detail-panel" data-rows={rows.length}>
@@ -66,6 +78,17 @@ export function DetailPanel({ name, summary, rows }: { name: string; summary: st
             </div>
           ))}
         </dl>
+        {/* OUTSIDE THE dl, AND IT HAS TO BE: a `p` is not a permitted child of
+            a definition list (the same rule that made the row note a second
+            `dd` above), and it is not a row , it is what the list does not
+            hold. Its one consequence, declared: check_archetypes.mjs walks
+            the opened panel from `det.querySelector("dl")`, so this line is
+            outside that walk. Nothing is lost by it, because the line is
+            --t-micro (already on the ladder every row in here uses) and
+            --c-muted (never the accent the walk counts), and a `p` wraps
+            rather than overflowing. A line that ever needs measuring belongs
+            inside the walk, and that is a harness change, not a class here. */}
+        {withheldLine ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{withheldLine}</p> : null}
       </InlineDisclosure>
     </div>
   );

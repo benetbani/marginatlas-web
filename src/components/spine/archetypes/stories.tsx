@@ -40,6 +40,9 @@ import { DetailPanel, type DetailRow } from "./DetailPanel";
 import { IncomeBreakdown } from "./IncomeBreakdown";
 import { buildIncomeBreakdown } from "@/lib/spine/income_rows";
 import { BentoBand, BentoMetric, BentoCount, type BentoCell } from "./BentoBand";
+import { MarkList } from "./MarkList";
+import { buildMarkList } from "@/lib/spine/mark_list_rows";
+import { CountryFlag } from "@/components/CountryFlag";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 
 export type Instance = { iso2: string; why: string };
@@ -531,17 +534,31 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
  * assertNoGraphics walks direct children only and never sees past the `dl`
  * wrapper this component hands it, so it does not reach here). Its stories
  * are read off the same files every other archetype reads, never typed:
- *  - GB:setup, the exemplar. GB's own LLC row of
- *    `data/legal/business_formation_costs_v1.json` holds a real fee and a
- *    real wait; the third row states an honest gap (founder ruling 2026-09-04
- *    named "time until opening" as wanted and not yet measured) rather than a
- *    number nobody has.
+ *  - GB:setup, the exemplar, and the panel's WITHHELD case. GB's own LLC row
+ *    of `data/legal/business_formation_costs_v1.json` holds a real fee and a
+ *    real wait, so two rows draw. Founder ruling 8 of 2026-09-04 also named
+ *    "time until opening", and nothing on file measures it. For two days that
+ *    row was drawn anyway, carrying the words "not measured yet" where its
+ *    figure goes; that is a label standing where a number goes (PART 5), it
+ *    is what `find_useless_tiles.ts` reds as a tile whose value is internal
+ *    vocabulary rather than a figure, and it is the shape he struck out on
+ *    2026-09-10: "the label replaces the number, which is totally an idiotic
+ *    thing out there." The row is WITHHELD now and the panel says which row
+ *    is missing and why, the way the country money card withholds its four
+ *    trades.
  *  - DE:pay, the two-row minimum. `buildPayBars` never returns fewer than two
  *    rows once it returns any (every held country carries both salary
  *    figures), so this is the floor the panel draws at, not a chosen gap.
  *  - AF:customers, the self-omit. `buildCustomersStrip` holds one mark for
  *    Afghanistan (its deciles are not researched), so the panel gets one row
  *    and draws nothing, exactly the law's floor.
+ *  - GB:customers, THREE ROWS, and it is here because withholding the setup
+ *    row took the last panel above two away: setup now draws two, pay never
+ *    returns more than two, and AF draws none, so without this instance no
+ *    story would exercise a panel deeper than its own floor and the harness's
+ *    ROWS CUT check would have nothing to count. `buildCustomersStrip` holds
+ *    three marks for 47 countries and one for the other 148; GB is one of the
+ *    47, and it is the same exemplar every other archetype here is read on.
  *  - GB:nested, the proof (review finding 2): the panel exactly as it is
  *    designed to be used, nested at the FOOT of a real AnswerCard rather than
  *    standing alone, so the harness's own "card" for this story is
@@ -552,14 +569,15 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
  */
 export function pickDetailPanelInstances(): Instance[] {
   return [
-    { iso2: "GB:setup", why: "the exemplar" },
+    { iso2: "GB:setup", why: "the exemplar, and the row it withholds" },
     { iso2: "DE:pay", why: "the two-row minimum" },
     { iso2: "AF:customers", why: "self-omits: one row" },
+    { iso2: "GB:customers", why: "three rows, the deepest panel the data holds" },
     { iso2: "GB:nested", why: "nested at the foot of an answer card, the way a page will actually use it" },
   ];
 }
 
-function detailPanelRows(key: string): { summary: string; rows: DetailRow[] } | null {
+function detailPanelRows(key: string): { summary: string; rows: DetailRow[]; withheldLine?: string } | null {
   const [iso2, kind] = key.split(":");
   if (kind === "setup") {
     const rows = buildSetupRows(iso2);
@@ -568,8 +586,14 @@ function detailPanelRows(key: string): { summary: string; rows: DetailRow[] } | 
     const out: DetailRow[] = [];
     if (row.cost_usd != null) out.push({ label: "Registration fee", value: usd(row.cost_usd) });
     if (row.days != null) out.push({ label: "Time until registered", value: `${row.days} day${row.days === 1 ? "" : "s"}` });
-    out.push({ label: "Time until the doors open", value: "not measured yet" });
-    return { summary: COPY.detail.setup, rows: out };
+    /* THE THIRD ROW IS WITHHELD, NOT WRITTEN (2026-09-10). "Time until the
+       doors open" is wanted (founder ruling 8, 2026-09-04) and unmeasured, so
+       it does not appear as a row reading "not measured yet": every row
+       carries its own figure, and a cell that cannot hold an honest one is
+       withheld with a line saying which row is missing and why. Both rows
+       above already push only when their data resolves, which is the same
+       rule; this row was the one exception and it is gone. */
+    return { summary: COPY.detail.setup, rows: out, withheldLine: COPY.detail.setupWithheld };
   }
   if (kind === "pay") {
     const d = buildPayBars(iso2);
@@ -627,7 +651,7 @@ export function DetailPanelStories({ instances = pickDetailPanelInstances() }: {
                 subtitle={null}
                 answer={facts.answer}
                 cells={[]}
-                detail={<DetailPanel name={`detail-${iso2.toLowerCase()}-nested`} summary={d.summary} rows={d.rows} />}
+                detail={<DetailPanel name={`detail-${iso2.toLowerCase()}-nested`} summary={d.summary} rows={d.rows} withheldLine={d.withheldLine} />}
               />
             </div>
           ) : null;
@@ -636,7 +660,7 @@ export function DetailPanelStories({ instances = pickDetailPanelInstances() }: {
         const d = detailPanelRows(i.iso2);
         const el = d && d.rows.length >= 2 ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 416 }}>
-            <DetailPanel name={`detail-${i.iso2.replace(":", "-")}`} summary={d.summary} rows={d.rows} />
+            <DetailPanel name={`detail-${i.iso2.replace(":", "-")}`} summary={d.summary} rows={d.rows} withheldLine={d.withheldLine} />
           </div>
         ) : null;
         return <Story kind="detail-panel" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
@@ -878,6 +902,106 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
   );
 }
 
+/* ============================ THE MARK LIST ============================
+ * B3 of design/references/founder-2026-09-10.md, and the reason it is built
+ * before the three that follow it: "the one with flags is pretty universal but
+ * the use can be beyond the use of flags itself, universal format."
+ *
+ * FIVE INSTANCES, EACH PICKED FROM A FILE THAT WAS READ FIRST, never typed.
+ *
+ *   exemplar    the ten highest-paying of the 252 covered cities, each with
+ *               its country's flag as the mark. Picked because
+ *               `avg_gross_salary_usd_year` is the one field in
+ *               `data/cities/city_list_v1.json` held for all 252, and because
+ *               it is the figure the city pages themselves open with, so the
+ *               list promises what the pages behind it deliver. It is also
+ *               the sharpest test of clause 1: the rows are CITIES and the
+ *               flag says which country each is in, so the mark carries
+ *               something real and is plainly not the row's identity.
+ *   no-marks    the same card on the same data with the marks dropped. Not a
+ *               different subject, on purpose: the point is to see the same
+ *               ten rows hold their shape when the leading slot is gone.
+ *   thin        one trade across every country the margin snapshot measures.
+ *               `auto_repair_shops` was picked by counting: of the six trades
+ *               in `data/archetypes/net_margin_snapshot.json` it is the one
+ *               whose credible countries come to exactly FOUR (against 32, 20,
+ *               18, 13 and 5 for the others), which is the model's own floor
+ *               for a ranked comparison. The thin case is therefore the data's
+ *               choice and not a set trimmed to make a point. Its rows are
+ *               COUNTRIES, so here the flag is the row's own identity, which
+ *               is the reference's original use.
+ *   withheld    the ten most visited of the same 252 cities.
+ *               `tourist_arrivals_m` is the city field with real gaps, six of
+ *               them (Abidjan, Algiers, Kaohsiung, Kuwait City, Taipei,
+ *               Tunis), so the withheld line here is a line a reader actually
+ *               meets rather than a branch nothing reaches.
+ *   self-omit   the covered cities of New Zealand. Three of them, one under
+ *               the floor of four, so the card draws nothing at all: the
+ *               honest minimum proved from the low side by a real country
+ *               rather than by an unheld key.
+ *
+ * WHY THE TRADE CARD IS HERE AT ALL, said plainly: the engine behind it is a
+ * known data problem (`data:margin-engine` on the queue, and the country money
+ * card draws the same snapshot with the same withholding). This instance
+ * proves the SHAPE at the floor; it is not a claim that four countries are
+ * where an auto repair shop should open.
+ */
+const MARK_LIST_STORIES: Record<string, { key: string; marks: boolean }> = {
+  exemplar: { key: "cities:pay", marks: true },
+  "no-marks": { key: "cities:pay", marks: false },
+  thin: { key: "trade:auto_repair_shops", marks: true },
+  withheld: { key: "cities:visitors", marks: true },
+  "self-omit": { key: "cities:pay:NZ", marks: true },
+};
+export function pickMarkListInstances(): Instance[] {
+  return [
+    { iso2: "exemplar", why: "the ten highest-paying of the 252 covered cities, the mark a country flag" },
+    { iso2: "no-marks", why: "the same card and the same data with no marks at all" },
+    { iso2: "withheld", why: "the ten most visited of the same cities; six hold no visitor figure and are withheld" },
+    { iso2: "thin", why: "one trade across every country measured: four clear the floor, which is the honest minimum" },
+    { iso2: "self-omit", why: "self-omits: three covered cities, one under the floor of four" },
+  ];
+}
+
+export function MarkListStories({ instances = pickMarkListInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="mark-list">
+      {instances.map((i) => {
+        const cfg = MARK_LIST_STORIES[i.iso2];
+        const d = cfg ? buildMarkList(cfg.key) : null;
+        /* THE FLAG COMES FROM `CountryFlag` AND NOWHERE ELSE (its own law:
+           height from a token, width auto, no radius, a hairline outline).
+           The builder hands over an iso2, which is data; turning that into a
+           drawing is the caller's job, which is exactly what makes the mark
+           slot universal. */
+        const el = d ? (
+          <div style={{ maxWidth: 416 }}>
+            <MarkList
+              id={`marks-${i.iso2}`}
+              kicker={d.kicker}
+              icon={d.icon}
+              tagged={d.tagged}
+              headline={{ label: d.middleLabel, value: d.middle }}
+              basis={d.basis}
+              head={d.head}
+              rows={d.rows.map((r) => ({
+                key: r.key,
+                name: r.name,
+                value: r.value,
+                mark: cfg && cfg.marks && r.iso2 ? <CountryFlag iso2={r.iso2} /> : undefined,
+              }))}
+              fmt={d.fmt}
+              withheld={d.withheld}
+              withheldLine={d.withheldLine}
+            />
+          </div>
+        ) : null;
+        return <Story kind="mark-list" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
 /** The city masthead stories take their seeds from `loadCityHeroInstances()` (async, the renderer and the stories page await it). */
 export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }) {
   return (
@@ -938,6 +1062,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": pickIncomeBreakdownInstances(),
     "bento-band": pickBentoBandInstances(),
+    "mark-list": pickMarkListInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
     "city-verdict": pickCityVerdictInstances(cityHero).map((c) => ({ iso2: c.slug, why: c.why })),
   };
