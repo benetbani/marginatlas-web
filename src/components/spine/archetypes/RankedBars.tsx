@@ -1,13 +1,30 @@
 /**
  * RankedBars , THE RANKED-BARS ARCHETYPE. Vertical bars from a zero baseline,
- * sorted low to high so the best stands high and right (rule 29A), the
- * leader in the full terracotta with its figure in the accent, the rest in
- * the lighter terracotta; the figure at the lead rung above each bar, the
- * name beneath as the link; a hairline top rule at the WORLD'S HIGHEST value
- * for the metric, so only the world leader touches it (founder ruling 13,
- * 2026-09-04); a basis line and a withheld line in the practical register.
- * Below the wide layouts the phone gets a two-column table, because six
- * names cannot stand under six bars at 327px without cutting.
+ * sorted low to high so the best stands high and right (rule 29A); the
+ * figure at the lead rung above each bar, the name beneath as the link; a
+ * hairline top rule at the WORLD'S HIGHEST value for the metric, so only the
+ * world leader touches it (founder ruling 13, 2026-09-04); a basis line and
+ * a withheld line in the practical register. Below the wide layouts the
+ * phone gets a two-column table, because six names cannot stand under six
+ * bars at 327px without cutting.
+ *
+ * THE BLACK PILL, NOT THE ACCENT (task 12, 2026-09-10). Ported from mechanic
+ * M2 (B2) of design/references/founder-2026-09-10.md: every member of a set
+ * pale or hatched, exactly ONE saturated, that one member's value in a black
+ * pill with white text. The leader's figure used to be terracotta TEXT , a
+ * difference of hue at the same size and weight; it is now an ink pill , a
+ * difference of FORM, the same size as every sibling figure so only the
+ * container marks it out. It survives greyscale and a colourblind reader,
+ * and it spends nothing from the page's accent budget (an ink pill is not
+ * accent text). EVERY row, leader or not, renders the same pill-shaped slot
+ * (`px-*.py-*` and `rounded-full`, background and colour the only things
+ * that change); the leader alone gets `data-pill` and the ink fill, so which
+ * row happens to lead never changes the row's height (ruling 8). The bar
+ * itself still carries the hue: full terracotta for the leader (a filled bar
+ * is a mark, not a figure), and for the rest a hatch in --c-border , reusing
+ * the exact pattern IncomeBreakdown.tsx already draws rather than a second
+ * hatch system , over a flat tint, so the non-leaders stay countable instead
+ * of becoming grey ghosts.
  *
  * Self-omits below two rows. Never draws a value the caller marks withheld:
  * losses and floors arrive as a count and a sentence, never as a bar.
@@ -28,6 +45,12 @@ import * as React from "react";
 import { Box, Rail, Fig } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "./copy";
+/* THE HATCH IS SHARED, NOT REINVENTED (task 12): IncomeBreakdown.tsx drew
+ * the one repeating-line pattern this site uses for "not the answer, still
+ * countable"; importing it here rather than writing a second one is the
+ * whole point , two hatch systems would drift apart the first time either
+ * one changed. */
+import { HATCH } from "./IncomeBreakdown";
 
 export type BarRow = { key: string; name: string; href?: string; value: number; flagged?: boolean; /** One word or phrase about the row (a district's character), listed under the chart at the wide layout and beside the name below it. */ note?: string };
 export type RankedBarsProps = {
@@ -66,7 +89,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
      rows as honestly as six. The constitution recorded this rule in run 10. */
   const drawBars = sorted.length >= 4;
   return (
-    <Box id={id} data-archetype="ranked-bars">
+    <Box id={id} data-archetype="ranked-bars" data-leader-key={leader.key}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
       <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
       {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{withheldLine}</p> : null}
@@ -81,10 +104,20 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
             const inner = (
               <>
                 <div style={{ height: H + 26, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center" }}>
-                  <div className="relative bg-[var(--c-card)] px-1 text-[length:var(--t-lead)] leading-none" style={{ marginBottom: 6, color: isLeader ? "var(--terra-text)" : "var(--c-ink)" }}>
-                    <Fig className="font-medium">{fmt(r.value)}</Fig>
+                  <div className="relative bg-[var(--c-card)] px-1 text-[length:var(--t-lead)] leading-none" style={{ marginBottom: 6 }}>
+                    {/* THE PILL'S SLOT IS RESERVED ON EVERY ROW (task 12): the
+                        same rounded, padded span renders whether this row
+                        leads or not, so the leader's ink fill and white text
+                        never add height a plain row lacks , only `data-pill`
+                        and the two colours change. */}
+                    <span
+                      data-pill={isLeader ? "1" : undefined}
+                      className={`inline-flex items-center justify-center rounded-full px-1.5 py-0.5 ${isLeader ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
+                    >
+                      <Fig className="font-medium">{fmt(r.value)}</Fig>
+                    </span>
                   </div>
-                  <div aria-hidden="true" style={{ width: 28, height: h, background: isLeader ? "var(--terra)" : "var(--terra-border)", borderRadius: "2px 2px 0 0" }} />
+                  <div aria-hidden="true" style={{ width: 28, height: h, background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0], borderRadius: "2px 2px 0 0" }} />
                 </div>
                 {/* THE UNDERLINE IS A LINK'S, so a name with no door wears none (the
                     district photograph of run 25 showed seven underlined names and
@@ -127,7 +160,16 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
               <>
                 <span className="min-w-0 text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{r.name}{r.note ? <span className="block text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{r.note}</span> : null}</span>
                 <Fig className="text-right text-[length:var(--t-body)] font-semibold" >
-                  <span style={{ color: isLeader ? "var(--terra-text)" : "var(--c-ink)" }}>{fmt(r.value)}</span>
+                  {/* THE SAME RESERVED SLOT AS THE BAR FIGURE, above: every
+                      row gets the rounded, padded span, only the leader's
+                      gets the ink fill and `data-pill`, so a phone row is
+                      never taller for being the one that leads. */}
+                  <span
+                    data-pill={isLeader ? "1" : undefined}
+                    className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${isLeader ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
+                  >
+                    {fmt(r.value)}
+                  </span>
                 </Fig>
               </>
             );

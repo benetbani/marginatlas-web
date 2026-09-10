@@ -78,7 +78,11 @@ const NET_KEY = "net";
  *  the ramp nor a hatch, which is what makes "flat and dark" its own
  *  unambiguous signal rather than a seventh pattern to keep straight. */
 const HATCH_PERIOD_PX = [6, 6, 5, 5, 4, 8];
-const HATCH: string[] = [
+/* EXPORTED for RankedBars.tsx (task 12, 2026-09-10): its non-leader bars
+ * take the plain 45-degree entry, HATCH[0], as the site's one hatch system
+ * rather than a second one drawn independently. Nothing here changes for
+ * this card , the export is additive. */
+export const HATCH: string[] = [
   `repeating-linear-gradient(45deg, var(--c-card) 0, var(--c-card) 1px, transparent 1px, transparent ${HATCH_PERIOD_PX[0]}px)`,
   `repeating-linear-gradient(-45deg, var(--c-card) 0, var(--c-card) 1px, transparent 1px, transparent ${HATCH_PERIOD_PX[1]}px)`,
   `repeating-linear-gradient(90deg, var(--c-card) 0, var(--c-card) 1px, transparent 1px, transparent ${HATCH_PERIOD_PX[2]}px)`,

@@ -12,7 +12,13 @@
  *  NO HIERARCHY: each card has exactly one element at the answer size, at
  *    least 1.6x the next size (rule 16).
  *  LADDER: every font size on the ladder.
- *  ACCENT: at most one accent-coloured text element per card.
+ *  ACCENT: at most one accent-coloured text element per card. A ranked-bars
+ *    card carries none , its one loud moment is a BLACK PILL on the leader's
+ *    figure, not a colour (task 12, 2026-09-10), so its own law is stricter:
+ *    zero accent text, exactly one pill, and the pill on the row the card
+ *    itself declares as the leader (`data-leader-key`), checked at every
+ *    width because the pill is drawn twice (the bar figure, the phone table)
+ *    and only one of the two shows at a time.
  *  ROWS CUT: a drawing that declares its row count draws every row at every
  *    width (the sheet's copy of the page filter's rule; ranked bars declare
  *    both their forms since run 25).
@@ -98,6 +104,17 @@ function inPage() {
       const top = card.querySelector("[data-idea='I2'] > div:first-child");
       const topY = top ? top.getBoundingClientRect().top : null;
       r.bars = [...card.querySelectorAll("[data-bar]")].map((li) => { const bar = li.querySelector("div[aria-hidden]"); const b = bar.getBoundingClientRect(); return { key: li.getAttribute("data-bar"), top: Math.round(b.top), h: Math.round(b.height), ruleTop: topY == null ? null : Math.round(topY) }; });
+      /* THE PILL LAW'S GROUND TRUTH (task 12): the card declares its own
+         leader once, on the root (`data-leader-key`), independently of
+         wherever the pill itself renders; comparing the two is what makes
+         "a pill on a non-leader" a provable fault rather than a tautology.
+         Only the VISIBLE pill counts , at any width one of the two forms
+         (bar figure, phone table) is display:none, exactly the same
+         getClientRects() test the rest of this walk uses. */
+      r.leaderKey = card.getAttribute("data-leader-key") || "";
+      const pills = [...card.querySelectorAll("[data-pill]")].filter((el) => el.getClientRects().length > 0);
+      r.pillCount = pills.length;
+      r.pillKey = pills.length ? (pills[0].closest("[data-row]")?.getAttribute("data-row") || "") : "";
     }
     if (r.kind === "card-pager") {
       const cards = [...card.querySelectorAll("[data-card]")].filter((el) => el.getClientRects().length);
@@ -302,7 +319,18 @@ for (const w of WIDTHS) {
     }
     if (r.kind === "ranked-bars" && w === WIDTHS[0]) {
       for (const b of r.bars) if (b.ruleTop != null && b.top < b.ruleTop - 1) red(r.inst, w, "WORLD MAX", `bar ${b.key} rises above the world's-best rule`);
-      if (r.accents !== 1) red(r.inst, w, "ACCENT", `${r.accents} accent texts; the leader's figure should be the one`);
+    }
+    /* THE PILL LAW (task 12, 2026-09-10), replacing the old "exactly one
+       accent text" rule: the leader's figure is a BLACK PILL now, not a
+       colour, so a clean card carries ZERO accent text. Checked at every
+       width, not just 1280 like WORLD MAX above , the pill is drawn twice
+       (the bar figure and the phone table) and only one of the two is ever
+       visible, so a fix that lands on one form and forgets the other must
+       be caught at whichever width shows the broken one. */
+    if (r.kind === "ranked-bars") {
+      if (r.accents > 0) red(r.inst, w, "ACCENT", `${r.accents} accent-coloured text(s); the leader's figure is a pill now, not a colour`);
+      if (r.pillCount !== 1) red(r.inst, w, "ACCENT", `${r.pillCount} pill(s) on the card; exactly one, on the leader`);
+      else if (r.pillKey !== r.leaderKey) red(r.inst, w, "ACCENT", `the pill sits on "${r.pillKey}", not the leader "${r.leaderKey}"`);
     }
     if (r.kind === "card-pager") {
       for (const row of r.cardRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `cards in one row at heights ${row.join(", ")}`);
