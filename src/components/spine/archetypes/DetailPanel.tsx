@@ -1,5 +1,5 @@
 import * as React from "react";
-import { InlineDisclosure } from "@/components/spine/kit";
+import { Fig, InlineDisclosure } from "@/components/spine/kit";
 
 /**
  * THE FOUNDER'S PLUS (2026-09-08, his words): "the click and show button was
@@ -69,7 +69,15 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
           {rows.map((r, i) => (
             <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
               <dt className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.label}</dt>
-              <dd className="text-[length:var(--t-micro)] font-medium text-[var(--c-ink)] tabular-nums">{r.value}</dd>
+              {/* A FIGURE IS A `Fig`, NOT A HAND-ROLLED CELL (2026-09-11).
+                  This `dd` carried `font-medium tabular-nums` and no `.fig`,
+                  which is how it stayed in the body sans on the day every
+                  other archetype's figures moved to the display face: measured
+                  on the story sheet, seven `<dd>` figures in Geist while the
+                  card beside them drew Space Grotesk. `Fig` carries the face,
+                  the tabular lining numerals and the weight, so both utilities
+                  it used to spell out are redundant and gone with it. */}
+              <dd className="text-[length:var(--t-micro)] text-[var(--c-ink)]"><Fig>{r.value}</Fig></dd>
               {/* THE dl'S OWN LAW (review finding 4): a div directly inside a
                   dl may hold only dt/dd, so the note is a second dd , a `p`
                   here rendered live, invalid HTML, since one story's row
