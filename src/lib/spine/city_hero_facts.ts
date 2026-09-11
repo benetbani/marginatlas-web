@@ -56,7 +56,7 @@ export function cityHeroFacts(seed: any): CityHeroFacts | null {
 
 export type CityHeroInstance = { slug: string; why: string; seed: any };
 
-/** The instance set for the city masthead, from the data: London, a city with one tile, the longest name, a city with no photograph. Async because the seeds are. */
+/** The instance set for the city masthead, from the data: London, a city with one tile, the longest name, a second city with the same empty image slot (no covered city holds a photograph since the map left the folder on 2026-09-11). Async because the seeds are. */
 export async function loadCityHeroInstances(): Promise<CityHeroInstance[]> {
   const { buildSpineCitySeed } = await import("@/lib/spine/adapt_city");
   const list = (await import("../../../data/cities/city_list_v1.json")).default as { cities: Array<{ slug: string; name: string }> };
@@ -69,7 +69,7 @@ export async function loadCityHeroInstances(): Promise<CityHeroInstance[]> {
       if (seed) { seen.add(slug); out.push({ slug, why, seed }); }
     } catch { /* a city the adapter cannot build self-omits from the stories */ }
   };
-  await take("london", "the exemplar, the one city with a photograph");
+  await take("london", "the exemplar");
   const byName = [...list.cities].sort((a, b) => b.name.length - a.name.length);
   if (byName[0]) await take(byName[0].slug, `the longest name, ${byName[0].name}`);
   // A city with a single tile: the scan stops at the first one found, and at 40 cities, so the sheet stays quick.
@@ -78,6 +78,6 @@ export async function loadCityHeroInstances(): Promise<CityHeroInstance[]> {
     try { const seed = await buildSpineCitySeed(c.slug); if (seed?.headline?.scorecard?.length === 1) { seen.add(c.slug); out.push({ slug: c.slug, why: "one tile, the answer without a cell", seed }); break; } } catch { /* skip */ }
   }
   const noImage = list.cities.find((c) => c.slug !== "london" && !seen.has(c.slug));
-  if (noImage) await take(noImage.slug, "no photograph on file");
+  if (noImage) await take(noImage.slug, "another city, no photograph on file either");
   return out;
 }

@@ -1,0 +1,1 @@
+The city photographs, one per covered city slug as <slug>.jpeg, read into data/cities/images_manifest.json by scripts/build_city_images_manifest.ts. A real photograph only: the grey street map that sat here until 2026-09-11 was ruled out by name ("not the map") and reached the city masthead through this folder.

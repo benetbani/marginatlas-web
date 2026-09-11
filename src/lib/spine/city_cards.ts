@@ -42,15 +42,27 @@ import { getCityAveragePayUsd } from "@/lib/cities/city_tier";
  * of them, the London image with the bridge that we have, you know, not the
  * map."
  *
- * THE FILE HE NAMED DOES NOT EXIST. The site ships four raster images in total
- * and that was checked by listing them, not assumed: `/cities/london.jpeg` and
- * `/spine/london.jpeg` are the same grey STREET MAP, which is the thing he ruled
- * out by name; `/london-cities.png` is that map in terracotta; and
- * `/spine/_skyline.jpeg` is the only real photograph in the repository. It is
- * POSITANO, ITALY, the shot that used to sit behind the page hero. There is no
- * London bridge photograph to blast, so the only honest placeholder is the one
- * photograph that exists, named here for exactly what it is so that nobody
- * downstream reads it as a city's own picture.
+ * THE FILE HE NAMED DOES NOT EXIST. The site ships three raster images in total
+ * and that was checked by listing them, not assumed: `/spine/london.jpeg` is a
+ * grey STREET MAP, which is the thing he ruled out by name; `/london-cities.png`
+ * is that map in terracotta; and `/spine/_skyline.jpeg` is the only real
+ * photograph in the repository. It is POSITANO, ITALY, the shot that used to sit
+ * behind the page hero. There is no London bridge photograph to blast, so the
+ * only honest placeholder is the one photograph that exists, named here for
+ * exactly what it is so that nobody downstream reads it as a city's own picture.
+ *
+ * THE MAP LEFT THE PHOTOGRAPH FOLDER ON 2026-09-11. Until then a second copy of
+ * it sat at `public/cities/london.jpeg`, which is the folder the image manifest
+ * is generated from, so the manifest said London held a photograph and the CITY
+ * MASTHEAD painted the map he had ruled out as an 80 by 60 thumbnail on the
+ * page hero. The manifest's own contract is "a real photograph the atlas has the
+ * right to show"; the map broke it. It was deleted from that folder (the same
+ * bytes stay at `/spine/london.jpeg`, which nothing paints), the manifest was
+ * regenerated to empty, and the masthead now draws London the way it draws the
+ * other 251 cities: no picture until a real one lands. A denylist of the map's
+ * paths stood here for one commit and is gone with it: it claimed a real
+ * photograph dropped at the same path would replace the map with no edit, and
+ * the opposite was true, because the list would have kept denying the path.
  *
  * IT IS SCOPED TO THE CARD, not to `cityImageSrc`. The city page's own masthead
  * reads that helper directly and must keep getting null for a city with no
@@ -59,27 +71,16 @@ import { getCityAveragePayUsd } from "@/lib/cities/city_tier";
  *
  * A REAL FILE REPLACES IT WITH NO CODE CHANGE: drop `<slug>.jpeg` into
  * `public/cities/`, run `scripts/build_city_images_manifest.ts`, and that city's
- * own photograph wins the `??` below.
+ * own photograph wins below.
  */
 export const CITY_CARD_PLACEHOLDER_IMAGE = "/spine/_skyline.jpeg";
 
-/**
- * THE STREET MAP IS NOT A PHOTOGRAPH, and it is the one image he ruled out by
- * name ("not the map"). It is the only file in the manifest today, so without
- * this London alone would carry the map while its four siblings carried the
- * placeholder, which is the opposite of "blast the same one in all of them".
- * Listed by path rather than by city so the day a real London photograph lands
- * at the same path, nothing here needs editing: the map will simply have been
- * replaced.
- */
-const NOT_A_PHOTOGRAPH = new Set(["/cities/london.jpeg", "/spine/london.jpeg"]);
-
-/** The card's photograph: the city's own when one is held and it is a
- *  photograph, the single placeholder otherwise. Never null, since 2026-09-11:
- *  a card with no image is the hole he was pointing at. */
+/** The card's photograph: the city's own when the manifest holds one, the
+ *  single placeholder otherwise. Never null, since 2026-09-11: a card with no
+ *  image is the hole he was pointing at. */
 export function cityCardImage(slug: string | null | undefined): { src: string; placeholder: boolean } {
   const own = cityImageSrc(slug);
-  if (own && !NOT_A_PHOTOGRAPH.has(own)) return { src: own, placeholder: false };
+  if (own) return { src: own, placeholder: false };
   return { src: CITY_CARD_PLACEHOLDER_IMAGE, placeholder: true };
 }
 

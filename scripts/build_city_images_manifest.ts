@@ -9,11 +9,15 @@
  * photograph the atlas has the right to show; the credit belongs in
  * data/cities/images_credits.json beside it (kept by hand).
  */
-import { readdirSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 const dir = "public/cities";
 const out: Record<string, { file: string; bytes: number }> = {};
-for (const f of readdirSync(dir)) {
+/* A folder with no photograph in it is an empty manifest, not a crash: since
+   2026-09-11 no covered city holds one (the London file was the street map he
+   ruled out by name, and it left this folder), and a fresh clone may not carry
+   the folder at all. */
+for (const f of existsSync(dir) ? readdirSync(dir) : []) {
   const m = /^([a-z0-9-]+)\.(jpe?g)$/i.exec(f);
   if (!m) continue;
   out[m[1]] = { file: `/cities/${f}`, bytes: statSync(path.join(dir, f)).size };
