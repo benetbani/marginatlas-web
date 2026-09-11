@@ -32,7 +32,7 @@ preflight({ name: "census" });
 const ROOT = "src/components/spine";
 const SKIP_DIRS = new Set(["archetypes"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx", "motion.tsx"]);
-const ARCHETYPES = ["AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars"];
+const ARCHETYPES = ["AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel"];
 const PAGE_ORDER = ["country", "howto", "city", "hood", "cell", "industry"];
 const START = "<!-- census:start -->";
 const END = "<!-- census:end -->";

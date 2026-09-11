@@ -30,7 +30,7 @@ import { stripCommentLines } from "./lib/strip_comments";
 const ROOT = "src/components/spine";
 const SKIP_DIRS = new Set(["archetypes"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx"]);
-const ARCHETYPES = ["AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars"];
+const ARCHETYPES = ["AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel"];
 const EXCEPTIONS_PATH = "data/archetypes/coverage_exceptions.json";
 const INIT = process.argv.includes("--init");
 

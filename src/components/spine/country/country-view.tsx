@@ -33,7 +33,7 @@ import { Band, Box, Fig, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
-import { CardPager } from "@/components/spine/archetypes/CardPager";
+import { CityCards } from "@/components/spine/archetypes/CityCards";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
@@ -234,19 +234,35 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
 }
 
 /**
- * The cities as a card pager (the map removed by the first 2026-08-30 batch).
- * Second batch: TWO CARDS PER ROW on phones ("on phones we should have two
- * cities in a row instead of one"), and the terminal link deep-links to this
- * country's own cities ("the redirection should put him immediately at the
- * section of the page that has to do with the specific country"). Verdict 6
- * still binds: every card IS its link; a city without a page renders nothing.
+ * THE CITIES, through the city-cards archetype in its "field" look, since
+ * 2026-09-11. The card pager that stood here from 2026-08-30 to 2026-09-11 drew
+ * a 48px thumbnail slot on the left of a 155px track, and on this country three
+ * cards in four had nothing to put in it: the photograph he ruled in on
+ * 2026-09-11 was tried in that slot first and the harness measured three city
+ * names clipped at 1280 and 768 plus a hole in the single-city form, twelve
+ * design reds. The pager was the wrong vessel for a photograph, so it is
+ * replaced rather than patched.
+ *
+ * TWO OF HIS RULINGS COLLIDE ON THIS CARD AND THE NEWER ONE IS FOLLOWED.
+ * Ruling 2 of 2026-09-04 said a city card carries the city's own hero image,
+ * "on its left or right", the same file the city's page shows. His reference
+ * B11 of 2026-09-10 ("those coloured beautiful vertical cards of cities should
+ * be used by us for cities too") is a tall card with the picture as the whole
+ * field, and his word of 2026-09-11 ("the cities should have their placeholder
+ * image ... blast the London in all of them ... not the map") put one
+ * placeholder behind every card. A full-bleed field is what B11 is; a picture
+ * beside the name is what he had on 2026-09-04 and called stale. The newest
+ * ruling wins by his own standing rule, and it is the form he pointed at. The
+ * "same image the city's hero shows" half of ruling 2 cannot hold today either
+ * way: no covered city has a photograph on file, the stand-in is one picture for
+ * all of them (city_cards.ts says which and why), and the city masthead draws no
+ * picture until a real one lands.
+ *
+ * Two cards a row on phones ("on phones we should have two cities in a row
+ * instead of one", 2026-08-30) and every card its own door (verdict 6) are the
+ * archetype's own law and survive the swap. The unit is said once under the row.
  */
 function Cities({ iso2 }: { iso2?: string }) {
-  /* THE CARD-PAGER ARCHETYPE (founder ruling 2, 2026-09-04): each city card
-     carries the city's photograph on its left, the same file its own hero
-     shows, from the image manifest; a city without one draws no slot. The
-     cards are built locally by city_cards.ts from the same index the adapter
-     reads. */
   if (!iso2) return null;
   const c = buildCityCards(iso2);
   if (!c) return null;
@@ -254,7 +270,16 @@ function Cities({ iso2 }: { iso2?: string }) {
     <Band>
       <Box id="cities">
         <Rail icon="best-areas" kicker={COPY.cities.kicker} />
-        <CardPager cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
+        <CityCards
+          cards={c.cards}
+          allHref={c.allHref}
+          allLabel={COPY.cities.allLabel}
+          basis={COPY.cityCards.plain.basis}
+          basisDrawn={COPY.cityCards.field.basis}
+          look="field"
+          prevLabel={COPY.cities.prev}
+          nextLabel={COPY.cities.next}
+        />
       </Box>
     </Band>
   );
