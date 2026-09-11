@@ -1095,8 +1095,15 @@
   letter-spacing: 0;
   font-weight: 600;
 }
+/* THE FOCAL PANEL IS THE CARD COLOUR, NOT A CREAM GRADIENT (2026-09-11).
+   This rule came out of the shell's inline style carrying
+   `linear-gradient(#ffffff, #fffaf8)`, and #fffaf8 is cream, which he banned
+   outright ("remove completely this creamy color from the page"). Inside a
+   TSX string the cream ratchet never saw it; the day it became CSS the gate
+   grew 5 to 6 and failed the deploy at 54 seconds. Only the old /dev/spine
+   route uses the class. The token is the fix, not the baseline. */
 .focal {
-  background: linear-gradient(180deg, #ffffff 0%, #fffaf8 100%);
+  background: var(--c-card);
   border-radius: 10px;
 }
 .hov {
