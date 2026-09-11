@@ -67,6 +67,7 @@
     "harness:laws": "node scripts/harness/check_model_laws.mjs",
     "harness": "npm run harness:archetypes && npm run harness:page",
     "shoot:page": "node scripts/harness/shoot_page.mjs",
+    "strip:page": "node scripts/harness/strip_page.mjs",
     "crop:story": "node scripts/harness/crop_story.mjs",
     "probe:page": "node scripts/harness/probe_page.mjs",
     "probe:overlap": "node scripts/harness/probe_overlap.mjs",
