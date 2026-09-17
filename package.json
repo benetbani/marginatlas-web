@@ -66,6 +66,7 @@
     "harness:readability": "node scripts/harness/check_readability.mjs",
     "harness:laws": "node scripts/harness/check_model_laws.mjs",
     "verify:deploy": "node scripts/verify_deploy.mjs",
+    "deploy:watch": "node scripts/deploy_watch.mjs",
     "verify:quick": "node scripts/verify_quick.mjs",
     "harness": "node scripts/harness/harness.mjs",
     "status": "node scripts/status.mjs",
