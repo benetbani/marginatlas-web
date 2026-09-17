@@ -346,6 +346,17 @@ export const COPY = {
     average: "Average salary",
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
   },
+  /** THE PLACEMENT SENTENCE (MODEL.md PART 6, decision 2; PART 9 clause 37,
+   *  R2): one fixed wording, one direction, on every page of the site, beside
+   *  every figure drawn on a world track. `{n}` is a tenth in words, one to
+   *  nine; `{noun}` is "countries" or "cities" (the singular for one). The
+   *  bottom tenth has its own sentence rather than a second direction. Filled
+   *  by ONE builder, src/lib/spine/placement.ts, and by nothing else; the copy
+   *  gate reads the filled sentences off that builder. */
+  placement: {
+    higher: "Higher than {n} {noun} in ten.",
+    lowest: "Among the lowest tenth.",
+  },
   /** The income breakdown (task 11, his most literal instruction, 2026-09-10):
    *  "the income breakdown is used exactly for income breakdown with the main
    *  figure being the net income percentage." It replaces the section he

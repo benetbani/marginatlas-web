@@ -542,8 +542,14 @@ export function PayBarsStories({ instances = pickPayBarsInstances() }: { instanc
     <div data-stories="pay-bars">
       {instances.map((i) => {
         const d = buildPayBars(i.iso2);
+        /* DRAWN AT 520, the half of the 1-1 band the card shares with the
+           workforce seat (MODEL.md 8.2, `07 workforce | 08 hiring`; plan step
+           31's sixth dispatch, 2026-09-18), the same width the KvGrid seats
+           are drawn at. It stood at 347, the lean third the card kept while it
+           stood alone; the placement lines and PART 5's row geometry are what
+           fill the wider card, so the story is drawn where they are judged. */
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 347 }}>
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.pay.kicker}, {nameOf(i.iso2)}</div>
             <PayBars rows={d.rows} worldMax={d.worldMax} withheld={d.withheld} fmt={usd} />
           </div>

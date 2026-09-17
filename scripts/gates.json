@@ -1675,6 +1675,17 @@
       "claims": []
     },
     {
+      "name": "placement-sentence",
+      "script": "tests/spine/placement.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The placement sentence is one wording, one direction, one builder (MODEL.md PART 6, decision 2; PART 9 clause 37, R2; plan step 31's sixth dispatch, 2026-09-18).",
+      "reads": [
+        "src/lib/spine/placement.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "db-credential",
       "script": "scripts/verify_db_credential.mjs",
       "args": [],

@@ -532,6 +532,15 @@ const GATES: Gate[] = [
      file) so they fall and never rise. Planted twice on 2026-09-17 (the bill
      unchecked; the verdict ignored) and seen red both times. */
   { name: "entry-bill-guard", script: "tests/spine/entry_bill_guard.test.ts" },
+  /* The placement sentence is one wording, one direction, one builder (MODEL.md
+     PART 6 decision 2, PART 9 clause 37, R2; plan step 31's sixth dispatch,
+     2026-09-18). "Higher than {n} countries in ten", n one to nine in words,
+     "Among the lowest tenth" for the bottom, the singular for one, a tie not
+     lower, a share on a boundary on its tenth, no line without a set; every
+     sentence the builder can produce over every pair up to 200 members is
+     checked against the one shape. Planted once (the clamp raised to ten) and
+     seen red by name. */
+  { name: "placement-sentence", script: "tests/spine/placement.test.ts" },
   /* The check that would have caught a three-month outage. The service-role key
      was rotated and Vercel kept the old value; every supabaseAdmin read failed,
      every page fell back to synthesised figures, and nothing said a word.

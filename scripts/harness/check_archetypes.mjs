@@ -49,7 +49,10 @@
  *  TERMINUS: at most three doors, one pill, distinct first words, a door on
  *    one line from 768 up and within two on a phone.
  *  PAY BARS: every fill inside its track, the edge label inside the card, the
- *    two words present, a withheld pair drawing no bar.
+ *    two words present, a withheld pair drawing no bar; and PLACEMENT (plan
+ *    step 31's sixth dispatch, 2026-09-18): a placement line beside every
+ *    drawn bar in the bar's own column, none on a withheld pair or the
+ *    one-figure form, every line in the one shape.
  *  KV GRID: when its groups sit side by side, their first figures share one
  *    top (the reserved heading line), and no group is left alone in a row.
  *  SPECTRA: rows one height, every dot inside its track (a read of 0 or 1
@@ -369,6 +372,14 @@ function inPage(storySelector) {
       const edge = card.querySelector("[data-edge]"); const cb2 = card.getBoundingClientRect();
       r.payEdgeOut = edge ? (edge.getBoundingClientRect().right > cb2.right + 1 || edge.scrollWidth > edge.clientWidth + 1 ? 1 : 0) : 0;
       const txt = card.textContent || ""; r.payWords = (/Minimum salary/.test(txt) ? 1 : 0) + (/Average salary/.test(txt) ? 1 : 0);
+      /* THE PLACEMENT LINES (plan step 31's sixth dispatch, 2026-09-18): every
+         line on the card, how many drawn bars have one in their own column
+         (the track's parent, the same element the PLACEMENT law in
+         check_model_laws.mjs reads), and every line's text for the shape. */
+      const lines = [...card.querySelectorAll("[data-placement]")].filter((el) => el.getClientRects().length);
+      r.payPlacements = lines.length;
+      r.payPlacementTexts = lines.map((el) => (el.textContent || "").trim());
+      r.payBarsWithLine = [...card.querySelectorAll("[data-track]")].filter((t) => t.querySelector("[data-bar]") && t.parentElement && t.parentElement.querySelector("[data-placement]")).length;
     }
     if (r.kind === "kv-grid") {
       const gs = [...card.querySelectorAll("[data-kv-group]")].filter((g) => g.getClientRects().length);
@@ -764,6 +775,19 @@ for (const w of WIDTHS) {
       if (r.payEdgeOut) red(r.inst, w, "BOTCHED MOBILE", "the edge label is cut or outside the card");
       if (r.payWithheld && r.payBars) red(r.inst, w, "PROMISE", "a withheld pair draws a bar");
       if (!r.payWithheld && r.payBars === 2 && r.payWords !== 2) red(r.inst, w, "REPETITION", `the two words appear ${r.payWords} times, not twice`);
+      /* PLACEMENT (MODEL.md PART 6 decision 2, PART 9 clauses 5 and 37; plan
+         step 31's sixth dispatch, 2026-09-18): a placement line beside every
+         drawn bar, in the bar's own column; none on a withheld pair and none
+         on the one-figure form, which draw no track to place a figure on;
+         and every line in the one shape, the same pattern
+         tests/spine/placement.test.ts holds the builder to (nine tenths in
+         words, the singular for one, the lowest tenth its own sentence).
+         Planted once (the average's line withheld in PayBars.tsx) and seen
+         red at all three widths before this was trusted. */
+      const SHAPE = /^(Higher than (one (country|city)|(two|three|four|five|six|seven|eight|nine) (countries|cities)) in ten\.|Among the lowest tenth\.)$/;
+      if (r.payBars > 0 && r.payBarsWithLine !== r.payBars) red(r.inst, w, "PLACEMENT", `a placement line beside ${r.payBarsWithLine} of ${r.payBars} drawn bars; every bar on a world track carries one in its own column`);
+      if (r.payBars === 0 && r.payPlacements > 0) red(r.inst, w, "PLACEMENT", `${r.payPlacements} placement line(s) with no bar to sit beside${r.payWithheld ? " (a withheld pair)" : " (the one-figure form)"}`);
+      for (const t of r.payPlacementTexts || []) if (!SHAPE.test(t)) red(r.inst, w, "PLACEMENT", `a placement line off the one shape: "${t}"`);
     }
     if (r.kind === "kv-grid" && r.kvSide) {
       const t = r.kvFirstFigTops || []; if (t.length > 1 && Math.max(...t) - Math.min(...t) > 2) red(r.inst, w, "UNEQUAL", `groups side by side with first figures at tops ${t.join(", ")}`);

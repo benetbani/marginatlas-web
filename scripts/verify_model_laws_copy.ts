@@ -95,6 +95,7 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
+import { placementSentence } from "@/lib/spine/placement";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE" | "BANNED CONSTRUCTION";
@@ -451,6 +452,19 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      `basis`), so they are pushed by name; the kickers of `18` and `19` the
      sweep already takes by key. */
   heads.push(["COPY.checks.basis.three", COPY.checks.basis.three], ["COPY.checks.basis.two", COPY.checks.basis.two]);
+
+  /* THE PLACEMENT SENTENCE (MODEL.md PART 6 decision 2, PART 9 clause 37, R2;
+     plan step 31's sixth dispatch, 2026-09-18), pushed composed: its two
+     templates carry `{n}` and `{noun}` and are skipped by the static sweep by
+     design, and the one builder in placement.ts fills them. Every sentence the
+     builder can produce is pushed, nineteen strings: nine tenths for each
+     noun and the one lowest-tenth sentence. */
+  for (const noun of ["countries", "cities"] as const) {
+    for (let lower = 0; lower < 10; lower++) {
+      const s = placementSentence(lower, 10, noun);
+      if (s) heads.push([`placementSentence(${lower}, 10, ${noun})`, s]);
+    }
+  }
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);
