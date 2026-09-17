@@ -18,6 +18,10 @@ const CUSTOMERS_KICKER = "What customers earn";
  *  card and the mark list both open with it, and a second literal would drift
  *  the day either one is reworded. */
 const MARGIN_KICKER = "Net profit margin";
+/** "Clean dealing" is the state table's bribery row AND the footing card's
+ *  first cell (MODEL.md 8.2, `17 footing`: "reused from copy.ts line 98"); one
+ *  literal, so the two never drift. */
+const CLEAN_DEALING = "Clean dealing";
 export const COPY = {
   answer: {
     /** Founder verbatim, 2026-08-30: "the total effective tax burden". */
@@ -95,7 +99,7 @@ export const COPY = {
       kicker: "Dealing with the state",
       rows: {
         tax: { name: "Tax predictability", left: "Rules change yearly", right: "Set for years" },
-        bribery: { name: "Clean dealing", left: "Bribes expected", right: "By the book" },
+        bribery: { name: CLEAN_DEALING, left: "Bribes expected", right: "By the book" },
         tasks: { name: "Getting things done", left: "Weeks of stamps", right: "Same-week answers" },
         time: { name: "Waiting time", left: "Queues for months", right: "Days, not months" },
         courts: { name: "Courts", left: "Connections decide", right: "Contracts hold" },
@@ -118,6 +122,37 @@ export const COPY = {
   },
   /** The note list (what locals know): authored notes, the page's one editorial section. */
   locals: { kicker: "What locals know" },
+  /** THE TWO DRAWN BLOCKED SEATS on the country page (MODEL.md 8.2, `07
+   *  workforce` and `11 easiest`; plan step 31, 2026-09-17). Each is an
+   *  opener, ONE stated line under fifteen words in the site's idiom ("Not
+   *  gathered yet: ..."), and a foot naming the requirement it waits on in
+   *  E:/atlas/design/loop/build/DATA-REQUIREMENTS.md. The lines are 8.2's own,
+   *  verbatim, read aloud: fourteen words on 07 (at the cap), thirteen on 11.
+   *  The kicker on 11 is the shipped one; "easiest to start" is his ban. */
+  blocked: {
+    workforce: {
+      kicker: "Who you can hire",
+      line: "Not gathered yet: how many are looking for work, and paid leave a year.",
+      foot: "Waits on DATA-REQUIREMENTS items 40 and 17.",
+    },
+    easiest: {
+      kicker: "Easiest to break in",
+      line: "Not gathered yet: the payback, in years, for each of the six trades.",
+      foot: "Waits on DATA-REQUIREMENTS item 8's addendum.",
+    },
+  },
+  /** THE FOOTING SEAT (MODEL.md 8.2, `17 footing`): the calibrated meter is a
+   *  form he has not clicked, so the catalogued form nearest it, KvGrid, holds
+   *  the seat with the two readings as whole numbers, 0 to 100. "Clean
+   *  dealing" is the state table's own row name, shared above; the basis says
+   *  what the two figures are and that most countries' rows are interpolated
+   *  (50 of 197 measured), because the sample mark is switched off site-wide
+   *  and the basis is the only line left that can say it. */
+  footing: {
+    kicker: "The ground under you",
+    cells: { clean: CLEAN_DEALING, admin: "Admin ease" },
+    basis: "Two published indices, 0 to 100; interpolated for most countries.",
+  },
   /** The terminus (where to next): doors that leave the page. Run 4 of the architecture loop refused "with Pro" while Pro cannot be bought and "the deepest city" as jargon; the city door says a figure the list holds. */
   close: {
     kicker: "Where to next",

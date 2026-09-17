@@ -94,8 +94,21 @@ function inPage() {
      row), and PART 4 already exempts its siblings because "the figures are
      siblings and making one bigger than another breaks a different rule".
      Nothing enters this set that the model does not name in so many words;
-     check_model_laws.mjs asserts the two literals equal at startup. */
-  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table"]);
+     check_model_laws.mjs asserts the two literals equal at startup.
+     THE SECOND ADDITION, `blocked-seat` (plan step 31, 2026-09-17), on the
+     controller's dispatch with the citation "8.2: a seat holds no figure by
+     its law": the drawn blocked seat (MODEL.md 8.2, `07 workforce` and `11
+     easiest`) is "opener, one stated line, no figure", the same ground on
+     which PART 4 already excuses the prose form ("holds no figure by its own
+     law"). A card that CANNOT carry a 30 is not a card that could and does
+     not, so NO LEAD and FOCAL have nothing to find on it; the BLOCK FLOOR row
+     and the seat's own `data-blocked="1"` are what record that the page is
+     short of its composition. Named here rather than hidden: PART 4's
+     sentence "a DATA-BLOCKED card is not exempt either, its withheld line
+     stands at 16 where the focal would and the finding stays until the data
+     lands" (plan step 11) reads against this, and the dispatch is the newer
+     word; the model's sentence is the controller's to amend. */
+  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat"]);
   const out = [];
   const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));
   for (const card of cards) {

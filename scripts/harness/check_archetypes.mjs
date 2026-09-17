@@ -80,6 +80,12 @@
  *    within a stated tolerance (task 11); no segment renders under six
  *    pixels wide (a sliver no hatch or swatch could carry); the legend names
  *    exactly the drawn segments, no fewer and no more.
+ *  BLOCKED SEAT (MODEL.md 8.2, `07 workforce` and `11 easiest`; plan step 31,
+ *    2026-09-17): exactly one stated line, under fifteen words; no `.fig` on
+ *    the card and nothing drawn at 30 or 40, because a seat holds no figure
+ *    by its law; and a foot naming the requirement it waits on. Planted by
+ *    hand once (a Fig at the focal rung put on the seat) and watched go red
+ *    at all three widths before the rule was trusted.
  * BLIND SPOT: it measures a static render with web fonts loaded from the
  * network if reachable and the fallback stack if not; a wrap that depends on
  * the exact font can differ by a line. It cannot judge taste.
@@ -419,6 +425,18 @@ function inPage(storySelector) {
         };
       });
     }
+    /* THE DRAWN BLOCKED SEAT (8.2; plan step 31). Read off the card: the
+       stated lines it draws (one, by its law), the words on the first, every
+       visible `.fig` (none, by its law; the 30/40 clause reads r.sizes, which
+       the walk above already holds), and whether the foot that names the
+       requirement is there. */
+    if (r.kind === "blocked-seat") {
+      const lines = [...card.querySelectorAll("[data-seat-line]")].filter((el) => el.getClientRects().length);
+      r.seatLines = lines.length;
+      r.seatWords = lines.length ? (lines[0].textContent || "").trim().split(/\s+/).filter(Boolean).length : 0;
+      r.seatFigs = [...card.querySelectorAll(".fig")].filter((f) => f.getClientRects().length).length;
+      r.seatFoot = [...card.querySelectorAll("[data-foot]")].some((f) => f.getClientRects().length && (f.textContent || "").trim());
+    }
     /* THE BENTO CLUSTER, MEASURED FROM THE BOXES THE BROWSER DREW (2026-09-10).
        BentoBand.tsx proves its own DECLARED spans tile before it renders a
        thing, and that proof is worth nothing here: the declaration is the
@@ -752,6 +770,20 @@ for (const w of WIDTHS) {
     }
     if (r.kind === "compare-table" && r.tableRows.length > 1) {
       const hs = r.tableRows; if (Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `table rows at heights ${hs.join(", ")}`);
+    }
+    if (r.kind === "blocked-seat") {
+      /* One rule, its clauses the seat's own law (BlockedSeat.tsx's header):
+         a seat states one line, under fifteen words, prints no figure at any
+         rung, and names in its foot what it waits on. The 30/40 clause is
+         what makes "no figure" measurable when a future edit reaches for a
+         Fig-less loud number: a size on the focal or answer rung is a figure
+         whatever the class says. */
+      if (r.seatLines !== 1) red(r.inst, w, "BLOCKED SEAT", `${r.seatLines} stated lines; a seat states exactly one`);
+      if (r.seatWords >= 15) red(r.inst, w, "BLOCKED SEAT", `the stated line runs ${r.seatWords} words; it is under fifteen`);
+      if (r.seatFigs) red(r.inst, w, "BLOCKED SEAT", `${r.seatFigs} figure(s) on a seat whose law is no figure`);
+      const loud = r.sizes.filter((s) => Math.abs(s - 30) < 0.5 || Math.abs(s - 40) < 0.5).length;
+      if (loud) red(r.inst, w, "BLOCKED SEAT", `${loud} element(s) at 30 or 40 on a seat that holds no figure`);
+      if (!r.seatFoot) red(r.inst, w, "BLOCKED SEAT", "no foot naming the requirement the seat waits on");
     }
     if (r.kind === "income-breakdown") {
       const segs = r.incomeSegs || [];

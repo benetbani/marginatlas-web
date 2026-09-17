@@ -200,6 +200,10 @@
  *   rule now judges every top-level `[data-block]` card that is not in
  *   EVEN_BY_RULING as 0, 1 or more. It always measures; the only UNMEASURED
  *   it can still print is a page with no block marker and no 30px element.
+ *   `blocked-seat` joined the set on plan step 31 (2026-09-17) by the
+ *   controller's dispatch, "8.2: a seat holds no figure by its law"; the
+ *   reasoning, and PART 4's sentence that reads against it, are written
+ *   once at the literal in check_page_holes.mjs and not repeated here.
  *   LABEL GAP'S MEASURED HALF STOPS AT 420px, BY THE MODEL'S OWN CLAUSE.
  *   PART 5: "Below 420px, and only there, the row is `[1fr auto]` and the
  *   gap is the card's own inner width." Read without that clause the half
@@ -223,10 +227,11 @@
  *   that shape changes.
  *   FOCAL'S EVEN_BY_RULING IS A COPY, NOT AN IMPORT. Playwright serialises
  *   `inPage()` into the page itself, so it cannot import
- *   check_page_holes.mjs's set; the same five names are hand-kept here
- *   (compare-table, card-pager, pay-bars, terminus, and since step 11
+ *   check_page_holes.mjs's set; the same six names are hand-kept here
+ *   (compare-table, card-pager, pay-bars, terminus, since step 11
  *   tiers-table, which MODEL.md 8.6 names "table-family, exempt from the
- *   focal rung by its own law") and can drift from that file's set if one
+ *   focal rung by its own law", and since step 31 blocked-seat, "8.2: a seat
+ *   holds no figure by its law") and can drift from that file's set if one
  *   changes without the other; the assertion at the top of this file stops
  *   either running when they differ.
  *   EDGE ASSUMES A UNIFORM BORDER. It reads `borderTopColor` for the card's
@@ -613,7 +618,9 @@ function inPage(ctx) {
      and the assertion at the top of this file that keeps the two literals
      from drifting): the four frozen on 2026-09-08, and `tiers-table` since
      plan step 11 because MODEL.md 8.6 names the form "table-family, exempt
-     from the focal rung by its own law" (the `06 team` row); nothing else
+     from the focal rung by its own law" (the `06 team` row), and
+     `blocked-seat` since plan step 31 (8.2: a seat holds no figure by its
+     law; the note at check_page_holes.mjs's literal); nothing else
      the model does not name in so many words. CRITICAL 2 FIX (review fix
      wave, 2026-09-08): both branches below only ever fire on a card that
      already holds a 30px element; a page with NO 30px element anywhere
@@ -628,7 +635,7 @@ function inPage(ctx) {
      only for a page with no block marker and no 30px element, where there
      is truly nothing to judge. The two older halves still run over every
      rounded card as before, block or not, so nothing they caught is lost. */
-  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table"]);
+  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat"]);
   const formOf = (card) => card.getAttribute("data-archetype") || card.querySelector("[data-archetype]")?.getAttribute("data-archetype") || "kit";
   const sizesOf = (card) => [...card.querySelectorAll("*")]
     .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el))

@@ -42,6 +42,7 @@ import { buildIncomeBreakdown } from "@/lib/spine/income_rows";
 import { BentoBand, BentoMetric, BentoCount, type BentoCell } from "./BentoBand";
 import { MarkList } from "./MarkList";
 import { buildMarkList } from "@/lib/spine/mark_list_rows";
+import { BlockedSeat } from "./BlockedSeat";
 import { CountryFlag } from "@/components/CountryFlag";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 
@@ -1002,6 +1003,39 @@ export function MarkListStories({ instances = pickMarkListInstances() }: { insta
   );
 }
 
+/* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce` and `11 easiest`;
+   plan step 31, 2026-09-17). Two stories, both on GB, keyed "GB:workforce" and
+   "GB:easiest", because the seat's words are the same on every country (a seat
+   holds no figure, so there is no data-poor case and no extreme name): what
+   varies is only which block it holds. Drawn at the width its seat takes on
+   the page (520 for 07's half of a 1-1, 347 for 11's third of a 2-1), so the
+   line's wrap is the page's. */
+const BLOCKED_SEAT_STORIES: Record<string, { icon: "staffing-rota" | "where-it-pays"; kicker: string; line: string; foot: string; maxWidth: number }> = {
+  "GB:workforce": { icon: "staffing-rota", ...COPY.blocked.workforce, maxWidth: 520 },
+  "GB:easiest": { icon: "where-it-pays", ...COPY.blocked.easiest, maxWidth: 347 },
+};
+export function pickBlockedSeatInstances(): Instance[] {
+  return [
+    { iso2: "GB:workforce", why: "block 07, the seat beside what staff cost; items 40 and 17 not gathered" },
+    { iso2: "GB:easiest", why: "block 11, the seat beside the footing; item 8's addendum not gathered" },
+  ];
+}
+export function BlockedSeatStories({ instances = pickBlockedSeatInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="blocked-seat">
+      {instances.map((i) => {
+        const cfg = BLOCKED_SEAT_STORIES[i.iso2];
+        const el = cfg ? (
+          <div style={{ maxWidth: cfg.maxWidth }}>
+            <BlockedSeat id={`seat-${i.iso2.split(":")[1]}`} icon={cfg.icon} kicker={cfg.kicker} line={cfg.line} foot={cfg.foot} />
+          </div>
+        ) : null;
+        return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
 /** The city masthead stories take their seeds from `loadCityHeroInstances()` (async, the renderer and the stories page await it). */
 export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }) {
   return (
@@ -1063,6 +1097,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "income-breakdown": pickIncomeBreakdownInstances(),
     "bento-band": pickBentoBandInstances(),
     "mark-list": pickMarkListInstances(),
+    "blocked-seat": pickBlockedSeatInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
     "city-verdict": pickCityVerdictInstances(cityHero).map((c) => ({ iso2: c.slug, why: c.why })),
   };
