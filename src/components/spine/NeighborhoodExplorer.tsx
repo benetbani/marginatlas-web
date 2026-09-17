@@ -168,13 +168,21 @@ function SectionLabel({ children, sample, as: Tag = "div" }: { children: React.R
  * stopped matching the first time Box changed: measured 2026-08-24, the city page
  * held ONE card surface and this page had drifted to SEVEN. A comment cannot keep
  * two constants equal, so the surface is imported from the kit. Rulebook v2 §36. */
+/* THE BLOCK MARKER, the same rule as the kit's Box (plan step 11, 2026-09-17):
+   a card with an id is a section card and stamps its id as `data-block` for
+   BLOCK FLOOR in check_model_laws.mjs; a caller may pass `data-block` and that
+   wins (the compare table below has no id of its own, the id sits on the
+   section around it). */
 const HoodCard = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(function HoodCard({ className = "", style, ...rest }, ref) {
+  const rawBlock = (rest as Record<string, unknown>)["data-block"];
+  const block = rawBlock != null && rawBlock !== "" ? String(rawBlock) : rest.id;
   return (
     <div
       ref={ref}
       className={`rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] ${className}`}
       style={{ ...CARD_SURFACE, ...style }}
       {...rest}
+      data-block={block}
     />
   );
 });
@@ -1067,7 +1075,7 @@ export function MythChapter({ myth, loudest, districts = [] }: { myth: Myth; lou
   const lightest = byRent[0];
   const strikeLabel = myth.strike_label ?? "the loudest is the best place";
   return (
-    <div id="ranks" className="overflow-hidden rounded-[14px] border border-[var(--c-border)]" style={CARD_SURFACE}>
+    <div id="ranks" data-block="ranks" className="overflow-hidden rounded-[14px] border border-[var(--c-border)]" style={CARD_SURFACE}>
       <div className="p-5 md:p-6">
         <Rail icon="myth-reality" kicker="Revenue rank vs rent rank" sample />
         {/* THE STATS SIT UNDER THE CHART, NOT BESIDE IT. This card used to hold the
@@ -1185,18 +1193,22 @@ function MetricRows({ metrics, cols }: { metrics: Metric[]; cols: District[] }) 
         const best = bestFor(m, cols);
         const crowned = best != null;
         return (
-          <div key={m.key} className="grid items-center gap-3 border-b border-[var(--c-border)] px-4 py-2.5 last:border-0" style={{ gridTemplateColumns: `minmax(0,1.3fr) repeat(${cols.length}, minmax(0,1fr))` }}>
+          <div key={m.key} data-row={m.key} className="grid items-center gap-3 border-b border-[var(--c-border)] px-4 py-2.5 last:border-0" style={{ gridTemplateColumns: `minmax(0,1.3fr) repeat(${cols.length}, minmax(0,1fr))` }}>
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{m.label}</span>
+                <span data-label className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{m.label}</span>
                 {m.sample ? <SampleTag /> : null}
               </div>
               <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{m.hint}</div>
             </div>
             {cols.map((d) => {
               const win = best === d.slug && cols.length > 1;
+              /* `data-col` names the MEASURE, not the district: this table is
+                 transposed (metrics down the side, districts across), so the set
+                 of cells sharing one unit is a metric's row, and UNIT MIX in
+                 check_model_laws.mjs groups by that key (plan step 11). */
               return (
-                <div key={d.slug} className="min-w-0">
+                <div key={d.slug} className="min-w-0" data-col={m.key}>
                   <MetricCell m={m} d={d} className={cellClass(m, win, crowned)} />
                 </div>
               );
@@ -1265,7 +1277,7 @@ export function NeighborhoodCompare({ districts, compare, defaultSlugs }: { dist
         <span className="ml-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">two to three, rent load shown</span>
       </div>
 
-      <HoodCard className="overflow-hidden">
+      <HoodCard data-block="compare" className="overflow-hidden">
         {/* A CARD WITH NO TITLE. This opened straight onto its own column header,
             so the page outline skipped it and a reader scrolling past had nothing
             to name it by. It is not an invented title: the city page carries the

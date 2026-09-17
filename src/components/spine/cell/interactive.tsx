@@ -122,7 +122,7 @@ export function Nearby({ d }: { d: any }) {
                 scope="row"
                 className="col-span-2 h-auto px-0 py-0 text-left text-[length:var(--t-body)] font-medium text-[var(--c-ink)] sm:table-cell sm:py-2.5 sm:align-middle"
               >
-                <span className="block min-w-0 truncate">
+                <span data-label className="block min-w-0 truncate">
                   {r.name}
                   {r.home ? <span className="ml-1.5 text-[length:var(--t-mark)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}
                 </span>
@@ -132,7 +132,7 @@ export function Nearby({ d }: { d: any }) {
                 const isBest = v === best[c.key];
                 const crowned = c.key === "rate" && isBest; // the ONE terracotta accent in this card
                 return (
-                  <TableCell key={c.key} className="min-w-0 px-0 py-0 align-middle sm:table-cell sm:py-2.5 sm:text-right">
+                  <TableCell key={c.key} data-col={c.key} className="min-w-0 px-0 py-0 align-middle sm:table-cell sm:py-2.5 sm:text-right">
                     <span className="block text-[length:var(--t-mark)] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
                     <Fig className={`text-[length:var(--t-micro)] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
                   </TableCell>

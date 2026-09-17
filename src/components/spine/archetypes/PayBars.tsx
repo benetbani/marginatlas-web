@@ -53,7 +53,7 @@ export function PayBars({ rows, worldMax, withheld, fmt }: PayBarsProps) {
         {live.map((r) => (
           <span key={r.key} data-pay={r.key} className="flex items-baseline gap-1.5">
             <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{fmt(r.value)}</Fig>
-            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.label}</span>
+            <span data-label className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.label}</span>
           </span>
         ))}
       </div>
@@ -68,7 +68,7 @@ export function PayBars({ rows, worldMax, withheld, fmt }: PayBarsProps) {
           const accent = r.key === "average";
           return (
             <React.Fragment key={r.key}>
-              <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.label}</span>
+              <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.label}</span>
               <span data-track className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]" role="img" aria-label={`${r.label} ${fmt(r.value)} a year, against the world's highest ${fmt(max)}`}>
                 <span data-bar={r.key} aria-hidden className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(share * 100).toFixed(1)}%`, background: accent ? "var(--terra)" : "var(--terra-border)" }} />
               </span>

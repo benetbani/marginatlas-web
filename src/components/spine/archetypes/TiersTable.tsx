@@ -86,17 +86,17 @@ export function TiersTable({ rows, howTo }: { rows: TierRow[]; howTo?: { href: s
                   height; the chevron rides at its right edge. */}
               <span className="col-span-4 flex min-w-0 items-center gap-2 md:col-span-1">
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{t.tier}</span>
+                  <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{t.tier}</span>
                   <span className="block min-h-[1.3em] truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{localTerm ?? " "}</span>
                 </span>
                 <span aria-hidden className={`shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform md:hidden ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
               </span>
               {/* On a phone the readings sit on their own row under the heads; a spacer keeps them in their columns. */}
               <span aria-hidden className="md:hidden" />
-              <span className="text-right">
+              <span className="text-right" data-col="fee">
                 {t.cost_usd === 0 ? <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{COPY.free}</span> : isNum(t.cost_usd) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig> : <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
               </span>
-              <span className="text-right">
+              <span className="text-right" data-col="time">
                 {isNum(t.days) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.days} {t.days === 1 ? "day" : "days"}</Fig> : <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>}
               </span>
               <span className="flex items-center justify-end gap-2">

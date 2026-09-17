@@ -218,7 +218,7 @@ export function DemandSize({ d }: { d: any }) {
     ["Visitors", o.visitor_pct, "var(--c-soft2)", "seasonal"],
   ];
   const sizeBox = hasSize ? (
-    <Box>
+    <Box data-block="demand">
       <Head icon="market-size" sample={spendSample}>{COPY.cityDemand.kicker}</Head>
       {hasMagnitude ? (
         <div className="flex flex-wrap items-baseline gap-x-3">
@@ -396,7 +396,7 @@ function LowestBar({ d }: { d: any }) {
   // No prose myth-sentence, no "gentlest way in" caption (§19/§26); the two figures ARE
   // the read. Terracotta rides ONLY the cost focal; the link is a neutral affordance (§37).
   const featured = (
-    <Box>
+    <Box data-block="easiest">
       <Head icon="startup-cost" sample={sample}>Lowest bar to entry</Head>
       <div className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{lead.name}</div>
       <div className="mt-3 flex flex-wrap items-end gap-x-6 gap-y-3 border-t border-[var(--c-border)] pt-3">
@@ -422,7 +422,7 @@ function LowestBar({ d }: { d: any }) {
   return (
     <WideRail>
       {featured}
-      <Box>
+      <Box data-block="easiest-rest">
         <Head icon="ranking" sample={sample}>Next-easiest, and the cost to open</Head>
         <div className="-mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 px-2 pb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
           <span>Trade</span><span className="text-right">Ease /100</span><span className="text-right">To open</span>
@@ -466,7 +466,7 @@ function CityRisks({ d }: { d: any }) {
   // only). The "honest read" verdict box is DELETED (§14). The counterweights move into
   // a disclosure (bullet text out of the first view, §18); no verdict prose in view.
   return (
-    <Box>
+    <Box data-block="risks">
       <Head icon="watch" sample={sample}>Where the risks sit</Head>
       <div className="divide-y divide-[var(--c-border)]">
         {sorted.map((x: any) => {
@@ -524,7 +524,9 @@ function CityCharacter({ d }: { d: any }) {
         </Box>
       ) : null}
       {t.people ? (
-        <Box {...(t.state ? {} : { id: "character" })}>
+        /* A section card of its own (MODEL.md 8.3, `12 character-people`),
+           unnamed while the first table holds "character": named for BLOCK FLOOR. */
+        <Box {...(t.state ? {} : { id: "character" })} data-block="character-people">
           <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
           <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} />
         </Box>

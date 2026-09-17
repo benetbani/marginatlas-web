@@ -235,7 +235,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
                 {r.mark != null ? <span data-mark className="inline-flex items-center">{r.mark}</span> : null}
               </span>
             ) : null}
-            <span className={NAME_CLS}>{r.name}</span>
+            <span data-label className={NAME_CLS}>{r.name}</span>
             <Fig className="py-0.5 text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{fmt(r.value)}</Fig>
           </div>
         ))}

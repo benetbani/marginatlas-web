@@ -162,13 +162,13 @@ export function IncomeBreakdown({ id, kicker, netPct, segments, basis }: IncomeB
         {live.map((s, i) => (
           <span key={s.key} data-legend-key={s.key} className="inline-flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
             <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
-            <span className="truncate">{s.label}</span>
+            <span data-label className="truncate">{s.label}</span>
             <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
           </span>
         ))}
         <span data-legend-key={NET_KEY} className="inline-flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
           <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
-          <span className="truncate">{COPY.incomeBreakdown.netLabel}</span>
+          <span data-label className="truncate">{COPY.incomeBreakdown.netLabel}</span>
           <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>
         </span>
       </div>

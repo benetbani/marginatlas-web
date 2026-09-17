@@ -126,7 +126,7 @@ export function HoodMasthead({ d }: { d: any }) {
           design/blueprints/hood.md. The blueprint gate reads the ids out of the
           rendered page and fails when the page and the table disagree, so this
           attribute is the binding and not a convenience anchor. */}
-      <div id="head" className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:w-fit md:px-6 md:py-6" style={CARD_SURFACE}>
+      <div id="head" data-block="head" className="mt-5 rounded-[14px] border border-[var(--c-border)] px-5 py-5 md:w-fit md:px-6 md:py-6" style={CARD_SURFACE}>
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">Rent runs lightest</h3>
         <div className="mt-1.5 flex flex-wrap items-end gap-x-3.5 gap-y-1">
           {/* 48 was eight pixels above the ladder's ceiling, whose comment reads

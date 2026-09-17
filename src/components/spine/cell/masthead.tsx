@@ -36,7 +36,10 @@ export function Masthead({ d }: { d: any }) {
 
   return (
     <section id="take" className="overflow-hidden py-6 md:py-8">
-      <div className="rounded-[14px] border border-[var(--c-border)] p-5 md:p-6" style={CARD_SURFACE}>
+      {/* THE HERO IS A BLOCK (MODEL.md 8.6, `00 take`, one of the sixteen), drawn
+          here as a bare card and not a Box, so it stamps `data-block` itself for
+          BLOCK FLOOR (plan step 11). */}
+      <div data-block="take" className="rounded-[14px] border border-[var(--c-border)] p-5 md:p-6" style={CARD_SURFACE}>
         {/* crumb , real wayfinding: each segment carries its altitude mark, kept quiet (muted ink) */}
         {/* a trade/city/country wayfinding crumb, not a restated title; panel-approved (cell-00 passed) */}
         <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--c-ink2)]">{/* allow-eyebrow */}

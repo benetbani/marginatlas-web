@@ -1222,6 +1222,7 @@ export function LollipopColumn({
                 The real guard is still the entry COUNT, which the caller sets
                 from the narrowest width it renders at. */}
             <div
+              data-label
               className={`text-center text-[length:var(--t-micro)] leading-snug ${picked ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}
               style={{ paddingTop: 7, overflowWrap: "break-word" }}
             >

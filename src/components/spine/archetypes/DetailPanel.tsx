@@ -68,7 +68,7 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
         <dl className="mt-2 grid gap-2">
           {rows.map((r, i) => (
             <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
-              <dt className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.label}</dt>
+              <dt data-label className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.label}</dt>
               {/* A FIGURE IS A `Fig`, NOT A HAND-ROLLED CELL (2026-09-11).
                   This `dd` carried `font-medium tabular-nums` and no `.fig`,
                   which is how it stayed in the body sans on the day every

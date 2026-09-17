@@ -128,7 +128,7 @@ function WhoSuits({ d }: { d: any }) {
   const rows: Array<{ label: string; tier: number; sub?: string }> = (w.scales ?? []).map((s: any) => ({ label: s.label, tier: tierOf(s.pos), sub: s.sub }));
   if (rows.length === 0) return null; // omitted on promotion: no honest tier read
   return (
-    <Box>
+    <Box data-block="suits">
       <Rail icon="who-for" kicker="Who this suits" sample />
       <div className="mt-1 space-y-3">
         {rows.map((r) => (
@@ -176,7 +176,7 @@ function Demand({ d }: { d: any }) {
   const dpSegs: Array<[string, number, string]> = dayparts.map((p, i) => [p.name, p.pct, i === peakIdx ? TERRA : DP_GREYS[i % DP_GREYS.length]]);
   return (
     <WideRail>
-      <Box className="flex flex-col">
+      <Box data-block="week" className="flex flex-col">
         <Rail icon="daily-takings" kicker="When the week fills up" sample />
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <Donut segs={dpSegs} centerBig={(dm.covers_per_week ?? 0).toLocaleString()} centerSub="covers a week" />
@@ -203,7 +203,7 @@ function Demand({ d }: { d: any }) {
           </div>
         </div>
       </Box>
-      <Box>
+      <Box data-block="catchment">
         <Rail icon="catchment" kicker="Who comes in, and how" sample />
         {/* channel mix , the one share bar the founder blessed; the leading channel
             carries the accent (ShareStack pins terracotta on the largest slice). */}
@@ -247,7 +247,7 @@ function Seasonality({ d }: { d: any }) {
   const MONTHS_ROW = 15; // the baseline rule plus the month initials beneath it, at the ladder floor
   const RULE = (100 / top) * PLOT + MONTHS_ROW; // the index-100 line, measured from the block bottom
   return (
-    <Box className="md:flex-[2]">
+    <Box data-block="seasonality" className="md:flex-[2]">
       <Rail icon="seasonality" kicker="Busy months and quiet months" sample />
       {/* DRAWN IN LAYOUT, NOT IN A STRETCHED PICTURE.
           This was a 300-unit wide drawing stretched to whatever width the card
@@ -534,7 +534,7 @@ function Related({ d }: { d: any }) {
   const placePrefix =
     iso2 && geo ? `/${String(iso2).toLowerCase()}/${String(geo).toLowerCase()}` : null;
   return (
-    <Box className="md:flex-[3]">
+    <Box data-block="related" className="md:flex-[3]">
       {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
       <Rail icon="subtype" kicker="Related trades in this place" sample />
       {/* the explanatory subtitle is DELETED (rulebook 14: most subtitles should not

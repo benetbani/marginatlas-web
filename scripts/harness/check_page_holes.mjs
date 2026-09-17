@@ -75,16 +75,27 @@ if (files.length === 0) { console.error("usage: node scripts/harness/check_page_
    the two pay bars sharing one track (ruling 13), and the closing doors, which
    are chrome and not an answer. Measured on the country and city pages at
    1280 on 2026-09-07: every one of these draws a single text size, and every
-   other form draws at least one ladder step above its median. */
+   other form draws at least one ladder step above its median. The tiers
+   table joined on 2026-09-17 by the model's own word (MODEL.md 8.6, "exempt
+   from the focal rung by its own law"); its name block already draws the
+   16px lead over 14px figures, so NO LEAD never fired on it and the entry
+   changes nothing it measured. */
 function inPage() {
-  /* THIS SET IS FROZEN AT FOUR (task 4, 2026-09-08). When eighteen section
+  /* THIS SET WAS FROZEN AT FOUR (task 4, 2026-09-08). When eighteen section
      briefs were reviewed, seven asked to be added to it, which is a card
-     asking to be excused from having a hierarchy. It does not grow: a
-     section that cannot pass NO LEAD (or, since PART 8.5, FOCAL, its sibling
-     rule in check_model_laws.mjs, which hand-keeps this same four names
-     because it cannot import this file's function once Playwright has
-     serialised it into the page) is redesigned, never exempted. */
-  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus"]);
+     asking to be excused from having a hierarchy. It does not grow by
+     asking: a section that cannot pass NO LEAD (or, since PART 8.5, FOCAL,
+     its sibling rule in check_model_laws.mjs, which hand-keeps this same
+     set because it cannot import this file's function once Playwright has
+     serialised it into the page) is redesigned, never exempted. THE ONE
+     ADDITION SINCE, `tiers-table` (plan step 11, 2026-09-17), is the model's
+     own word and not a brief's request: MODEL.md 8.6 names the form
+     "table-family, exempt from the focal rung by its own law" (the `06 team`
+     row), and PART 4 already exempts its siblings because "the figures are
+     siblings and making one bigger than another breaks a different rule".
+     Nothing enters this set that the model does not name in so many words;
+     check_model_laws.mjs asserts the two literals equal at startup. */
+  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table"]);
   const out = [];
   const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));
   for (const card of cards) {

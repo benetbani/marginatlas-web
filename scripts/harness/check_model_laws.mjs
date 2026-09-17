@@ -21,18 +21,31 @@
  * REAL MARKUP, NAMED HONESTLY. The brief names five markers as if the real
  * pages already carried them (`data-band`, `data-block`, `data-fact-cell`,
  * `data-track`, `data-district-row`). Reading the actual components before
- * writing a single rule (this repo's own first law): only `data-track` and
- * `data-row`/`data-pole` exist today; `data-band`, `data-block`,
- * `data-fact-cell`, `data-district-row` do not. Modifying a component is out
- * of this task's scope, so every rule below is written to run on BOTH the
- * fixture (which carries the literal marker, by instruction) AND, wherever a
- * true structural equivalent already exists in the shipped kit, the real
- * thing:
- *   BLOCK  = `[data-block]`, literal only. No component stamps it; a real
- *            page reports UNMEASURED, never a fabricated zero (this repo's
- *            own working-method rule 1: a check that cannot observe the
- *            thing it counts must not report it absent with a figure
- *            attached).
+ * writing a single rule (this repo's own first law): on 2026-09-08 only
+ * `data-track` and `data-row`/`data-pole` existed; `data-band`,
+ * `data-block`, `data-fact-cell`, `data-district-row` did not, and this file
+ * printed UNMEASURED for the three markers nothing stamped rather than a
+ * fabricated zero. PLAN STEP 11 (2026-09-17) STAMPED THREE OF THEM, so the
+ * sentence "no component stamps it" below each was true for nine days and is
+ * false now; each entry says what stamps it today. Every rule still runs on
+ * BOTH the fixture (which carries the literal marker) AND the real thing:
+ *   BLOCK  = `[data-block]`, REAL since step 11: kit.tsx's `Box` stamps its
+ *            `id` as its block name whenever it has one (a caller may pass
+ *            `data-block` and that wins), NeighborhoodExplorer's `HoodCard`
+ *            does the same, and the cards that are neither (the cell
+ *            masthead's hero card, the hood masthead's `#head`, MythChapter's
+ *            `#ranks`) and the Boxes drawn without an id (the country's
+ *            locals and second character table, the city's demand, risks,
+ *            living, runway and second character table, the cell's suits,
+ *            week, catchment, seasonality, related and format cards, the
+ *            industry's breakeven, ramp, payback, seasonality and
+ *            where-pays) name their block explicitly. What is NOT stamped,
+ *            on purpose: the hood page's map (`SpineMap`, a drawing in a
+ *            frame, and PART 8.8 counts "0 maps" among its blocks), the
+ *            city cards and pager cards docked inside a card, and any
+ *            rounded box that is chrome inside a section. BLOCK FLOOR counts
+ *            only a `[data-block]` that is not inside another `[data-block]`,
+ *            so a card docked inside a card is one block, never two.
  *   BAND   = `[data-band]` UNION the parent of any matched block, excluding
  *            the three known real singleton wrappers that are not a
  *            two-up section at all: `[data-hero]`, `[data-wide-table]`,
@@ -73,14 +86,46 @@
  *            hero's four is a wider net than the model's letter, stated
  *            here rather than left implicit: a two-line cell is a two-line
  *            cell wherever KvGrid draws it.
- *   LABEL  = `[data-label]`, literal only (ROW SENTENCE's word-count half,
- *            and LABEL GAP's measured-gap half). No component stamps it;
- *            UNMEASURED on a real page, exactly like BLOCK.
+ *   LABEL  = `[data-label]`, REAL since step 11 (ROW SENTENCE's word-count
+ *            half, and LABEL GAP's measured-gap half): the label cell of
+ *            every row form stamps it, which is the element holding the
+ *            row's name text and nothing wider. RankedBars (the name under
+ *            each bar, the name cell of the table form, the name of the
+ *            phone row), CompareTable (the name in both forms), MarkList
+ *            (the name cell), PayBars (the label in both of its forms),
+ *            IncomeBreakdown (each legend name; its `data-row` sits on the
+ *            bar's segments, which hold no text), DetailPanel (the `dt`,
+ *            unmeasured while the panel is closed, which is its law),
+ *            SpectraTable (the trait name, never a pole, which carries
+ *            `data-pole`), TiersTable (the tier name) and forms-v2's
+ *            LollipopColumn (the name under each stem). The brief's
+ *            call-site list said PayBars, DetailPanel and SpectraTable
+ *            "already stamp `data-row`"; they do not (PayBars stamps
+ *            `data-pay`, the other two `data-rows`, a count on the root), and
+ *            the stamp went on anyway because the rule reads the page. The
+ *            three bespoke tables that took `data-col` (below) carry it on
+ *            their row names too: the cell page's peers table, the industry
+ *            page's rent table and the hood page's district comparison,
+ *            whose metric rows also took `data-row` so the gap pairs a
+ *            metric's name with its own first figure.
  *   POLE   = `[data-pole]`, real: SpectraTable.tsx already stamps it.
- *   COL    = `[data-col]`, literal only (UNIT MIX). CompareTable.tsx's
- *            columns are parameterised per unit by construction and could
- *            not mix one even if this rule could see them; no other
- *            component marks a column at all. UNMEASURED on a real page.
+ *   COL    = `[data-col]`, REAL since step 11 (UNIT MIX): CompareTable.tsx
+ *            stamps `data-col={c.key}` on every VALUE cell in both of its
+ *            forms and on no head. A per-cell stamp means one element can
+ *            never show a column's mix on its own, so the rule GROUPS the
+ *            cells by (closest card, key) and reads the units across the
+ *            group; the fixture's `#unit` is written the same way, two
+ *            cells sharing one key. The brief named CompareTable alone, and
+ *            with that alone four of the six pages (how-to, cell, industry,
+ *            hood) still printed UNMEASURED because they mount no
+ *            CompareTable; PART 5's unit law binds every table, so the four
+ *            other figure tables stamp their value cells too: TiersTable
+ *            (`fee`, `time`; the country and the how-to), the cell page's
+ *            peers table (interactive.tsx, per column key), the industry
+ *            page's rent table (where-pays.tsx, `rent-load`) and the hood
+ *            page's district comparison (NeighborhoodExplorer.tsx, keyed by
+ *            the METRIC, because that table is transposed and a metric's
+ *            row is the set of cells sharing one unit).
  *
  * BANNED WORDS and EDGE and FOCAL and PLACEMENT need no new marker: they
  * read every leaf's own text, every card's own border colour, every card's
@@ -124,28 +169,66 @@
  *   SVG `<text>`, in a canvas, inside a map popup built after load, or inside
  *   a leaf that simply never got the class can be in the wrong face and this
  *   rule will call the page clean.
- *   UNMEASURED IS NOT PASSED. BLOCK, LABEL and COL read zero elements on
- *   every real page today, because no component stamps their marker. That
- *   is printed as UNMEASURED, not silently absorbed as zero violations; a
- *   rule with zero live candidates has proven nothing about the real page,
- *   only about the fixture. FOCAL is the same failure by a different route
- *   (fixed in the review fix wave, 2026-09-08): it only ever fires on a card
- *   holding an element at 30px, and no shipped page carries one today, so
- *   both its branches were unreachable and it returned a silent passing
- *   zero, the exact "reports the thing absent, confidently, with a figure
- *   attached" failure this file's own working method exists to stop. A page
- *   with no 30px figure anywhere now prints FOCAL as UNMEASURED, not passed;
- *   PART 6 of the page model says every section card should HAVE a focal
- *   figure at 30, so a page with none is itself a finding, which is a later
- *   task's work, not this file's.
+ *   UNMEASURED IS NOT PASSED. Until plan step 11 BLOCK, LABEL and COL read
+ *   zero elements on every real page, because no component stamped their
+ *   marker, and that was printed as UNMEASURED, not silently absorbed as
+ *   zero violations: a rule with zero live candidates has proven nothing
+ *   about the real page, only about the fixture. The three UNMEASURED lines
+ *   are kept for a page that mounts no row form, no table or no card, and
+ *   on the six listed pages exactly one still prints: UNIT MIX on the
+ *   industry page, which draws no table at all for restaurants (its rent
+ *   table self-omits without rent-load rows), so there is no column to
+ *   read; the composition's `06` table (8.7) ends that the day it lands.
+ *   The line is not reworded to "nothing to measure", because a future
+ *   bespoke table drawn without the marker would then pass in silence,
+ *   which is the blind spot the line exists to name. FOCAL was the same
+ *   failure by a different route (fixed in the review fix wave, 2026-09-08):
+ *   it only ever fired on a card holding an element at 30px, and three of
+ *   the six pages carry none, so both its branches were unreachable there
+ *   and it returned a silent passing zero. STEP 11 SETTLED WHY, by measuring
+ *   the six renders at 1280 (scratchpad/step11-focal-probe.txt): `--t-focal`
+ *   resolves to 30px on every page; the country, the how-to and the hood
+ *   page hold ZERO leaves at 30px and zero `t-focal` uses, visible or
+ *   hidden; the city holds two (Tailwind's `text-3xl`, which is 30px, on
+ *   the demand card's spend and the runway card's ratio, neither through
+ *   the token), the cell two (`#opening`'s total through the token and
+ *   `#breakeven`'s figure) and the industry page two (`#spend`, `#open`,
+ *   through the token). So it is not an instrument fault: the pages predate
+ *   MODEL.md PART 4 (its own words, "the built country page uses 30 zero
+ *   times"), and the rule was not unmeasured but INCOMPLETE: PART 4 says "every section card takes exactly
+ *   one focal at 30", which makes zero as much a finding as two, and the
+ *   rule now judges every top-level `[data-block]` card that is not in
+ *   EVEN_BY_RULING as 0, 1 or more. It always measures; the only UNMEASURED
+ *   it can still print is a page with no block marker and no 30px element.
+ *   LABEL GAP'S MEASURED HALF STOPS AT 420px, BY THE MODEL'S OWN CLAUSE.
+ *   PART 5: "Below 420px, and only there, the row is `[1fr auto]` and the
+ *   gap is the card's own inner width." Read without that clause the half
+ *   would red every phone row on every page for obeying the model, so it
+ *   applies exactly where its sibling clause ("no justify-between row on a
+ *   card wider than 420px") applies: a card wider than 420px, at every
+ *   width the page draws one. The row it measures is the label's own row
+ *   (`[data-row]`, `[data-spectrum-row]`, `[data-detail-row]`, else the
+ *   nearest flex or grid box), and the figure is the first `.fig` AFTER the
+ *   label inside that row, so PayBars' flat grid (label, track, figure as
+ *   three siblings, no row element) pairs each label with its own figure
+ *   and never the first row's, and SpectraTable's rows, which hold no
+ *   figure, are skipped rather than paired with the card's foot.
+ *   THE LABEL BOX IS THE CELL, NOT THE INK. `getBoundingClientRect()` on a
+ *   grid cell is the column's width, so a short name in a 22ch column
+ *   measures the gap from the column's edge, not from the last letter; the
+ *   model's own geometry sets that column, so the wider reading would red
+ *   the model's own law.
  *   THE DISTRICT-ROW SELECTOR IS POSITIONAL. See above: it reads
  *   RankedBars.tsx's current DOM shape, not a name, and breaks silently if
  *   that shape changes.
  *   FOCAL'S EVEN_BY_RULING IS A COPY, NOT AN IMPORT. Playwright serialises
  *   `inPage()` into the page itself, so it cannot import
- *   check_page_holes.mjs's set; the same four names are hand-kept here
- *   (compare-table, card-pager, pay-bars, terminus) and can drift from that
- *   file's frozen set if one changes without the other.
+ *   check_page_holes.mjs's set; the same five names are hand-kept here
+ *   (compare-table, card-pager, pay-bars, terminus, and since step 11
+ *   tiers-table, which MODEL.md 8.6 names "table-family, exempt from the
+ *   focal rung by its own law") and can drift from that file's set if one
+ *   changes without the other; the assertion at the top of this file stops
+ *   either running when they differ.
  *   EDGE ASSUMES A UNIFORM BORDER. It reads `borderTopColor` for the card's
  *   own edge, which is what `Box`'s single `border` utility always paints on
  *   all four sides; a future card with four different border colours would
@@ -243,9 +326,12 @@ function inPage(ctx) {
   };
   const CARD = 'main [class*="rounded-[14px]"]';
   const cards = [...document.querySelectorAll(CARD)].filter((c) => c.getClientRects().length && !c.parentElement.closest(CARD));
+  /* A card is addressed by its id, else by its block name (plan step 11: a
+     Box drawn without an id now names its block, so "demand" or "living"
+     prints where "card" did), else by the first id inside it. */
   const cardIdOf = (el) => {
     const c = el.closest(CARD);
-    if (c) return c.id || c.querySelector("[id]")?.id || "card";
+    if (c) return c.id || c.getAttribute("data-block") || c.querySelector("[id]")?.id || "card";
     return el.closest("[id]")?.id || "page";
   };
 
@@ -253,16 +339,24 @@ function inPage(ctx) {
      surface with no named floor (how-to) used to fall through this `if`
      silently, no push and no unmeasured line, so the report could claim
      UNMEASURED for a page that in truth ran no check at all (MINOR 7, review
-     fix wave 2026-09-08); it now says so explicitly. */
+     fix wave 2026-09-08); it now says so explicitly.
+     TOP-LEVEL BLOCKS ONLY (plan step 11): a `[data-block]` inside another
+     `[data-block]` is a card docked in a card and is one block with it, the
+     way the fixture's `#floor` holds its three and the way a future docked
+     grid would sit inside its answer card; counting it would let a page
+     reach its floor by nesting. The finding names the page, not a card: it
+     is the whole page's count, and `blocks[0]`'s id was a misleading address
+     for it. THE HOW-TO SURFACE: PART 8 names no floor for it, so the count is
+     printed and the comparison is left unmeasured, in one honest line. */
+  const topBlocks = [...document.querySelectorAll("[data-block]")].filter((b) => !b.parentElement?.closest("[data-block]"));
   if (wide && floor != null) {
-    const blocks = [...document.querySelectorAll("[data-block]")];
-    if (blocks.length === 0) {
+    if (topBlocks.length === 0) {
       unmeasured.push("BLOCK FLOOR: no [data-block] elements on this page; the count is unmeasured, not zero");
-    } else if (blocks.length < floor) {
-      push(cardIdOf(blocks[0]), "BLOCK FLOOR", `${blocks.length} blocks against a floor of ${floor}`);
+    } else if (topBlocks.length < floor) {
+      push("page", "BLOCK FLOOR", `${topBlocks.length} blocks against a floor of ${floor}`);
     }
   } else if (wide && floor == null) {
-    unmeasured.push("BLOCK FLOOR: no floor is named for this surface; the count is unmeasured, not zero");
+    unmeasured.push(`BLOCK FLOOR: ${topBlocks.length} blocks counted, and no floor is named for this surface in MODEL.md PART 8; the floor is unmeasured, not passed`);
   }
 
   /* LONE CARD: "a band with one child fails." */
@@ -314,18 +408,48 @@ function inPage(ctx) {
 
   /* LABEL GAP: "no label-to-figure gap over the row grid's third column at
      any width, and no justify-between row on a card wider than 420px." The
-     measured-gap half reads [data-label], which no component stamps today
-     (see the header comment); UNMEASURED, once, rather than a silent zero. */
+     measured-gap half reads [data-label], stamped on every row form's label
+     cell since plan step 11 (see the header comment); the UNMEASURED line
+     stays for a page that mounts no row form at all.
+     THE ROW IS THE LABEL'S OWN ROW, checked against every stamped component
+     (step 11): the row marker first (`[data-row]` on RankedBars, CompareTable,
+     MarkList, IncomeBreakdown and forms-v2; `[data-spectrum-row]` on
+     SpectraTable; `[data-detail-row]` on DetailPanel; `[data-tier-row]` on
+     TiersTable), then the nearest flex or grid box, then the parent. Without
+     the marker first, CompareTable's name sits in its own flex span (flag
+     and name) and the search stopped there, finding no figure and measuring
+     nothing; TiersTable's name sits in its `flex-1` name block, the same
+     dead end (measured on the country page's `#setup`: no figure found);
+     SpectraTable's name climbed to the card's grid and paired with the
+     card's FOOT figure.
+     THE FIGURE IS THE FIRST `.fig` AFTER THE LABEL inside that row, in
+     document order: PayBars draws label, track and figure as three sibling
+     grid cells with no row element, so "the first .fig in the row" was the
+     first ROW's figure for every label below it. A row whose only figure
+     PRECEDES its label (the bars form, name under the bar; PayBars' flat
+     form, figure then label) falls back to that figure, and its gap is
+     negative, which is what a stacked or adjacent pair measures.
+     A CARD OF 420px OR LESS IS THE MODEL'S OWN PHONE FORM (PART 5: "Below
+     420px, and only there, the row is [1fr auto] and the gap is the card's
+     own inner width"), the same clause the justify-between half already
+     reads at 420; the measured half shares it, or it would red every phone
+     row on every page for obeying the model. It still runs at every width,
+     because a card can be wider than 420px at 768 (a stacked band) and the
+     grid geometry must hold there too ("at any width"). */
   if (wide && document.querySelectorAll("[data-label]").length === 0) unmeasured.push("LABEL GAP (measured-gap half): no [data-label] elements on this page; unmeasured, not zero");
+  const ROW_MARKERS = "[data-row], [data-spectrum-row], [data-detail-row], [data-tier-row]";
   for (const label of document.querySelectorAll("[data-label]")) {
     if (!label.getClientRects().length || hiddenFromSight(label)) continue;
     const card = label.closest(CARD);
     if (!card) continue;
-    const row = label.closest('[style*="flex"], [class*="flex"], [class*="grid"]') || label.parentElement;
-    const fig = row?.querySelector(".fig");
-    if (!fig || fig === label) continue;
-    const lb = label.getBoundingClientRect(), fb = fig.getBoundingClientRect();
     const cardW = card.getBoundingClientRect().width;
+    if (cardW <= 420) continue; // the phone form, licensed by PART 5
+    const row = label.closest(ROW_MARKERS) || label.closest('[style*="flex"], [class*="flex"], [class*="grid"]') || label.parentElement;
+    if (!row) continue;
+    const figs = [...row.querySelectorAll(".fig")].filter((f) => f !== label && !label.contains(f) && f.getClientRects().length && !hiddenFromSight(f));
+    const fig = figs.find((f) => label.compareDocumentPosition(f) & Node.DOCUMENT_POSITION_FOLLOWING) || figs[0];
+    if (!fig) continue;
+    const lb = label.getBoundingClientRect(), fb = fig.getBoundingClientRect();
     const gap = fb.left - lb.right;
     if (gap > cardW / 3) push(cardIdOf(label), "LABEL GAP", `${Math.round(gap)}px between the label and its figure, over a third of the card's ${Math.round(cardW)}px`);
   }
@@ -351,21 +475,66 @@ function inPage(ctx) {
   }
 
   /* UNIT MIX: "one unit per column, no word where a column holds figures."
-     No component marks a column with [data-col] today (see the header
-     comment); UNMEASURED, once, rather than a silent zero. */
+     CompareTable stamps `data-col={key}` on every value cell since plan
+     step 11 (see the header comment); the UNMEASURED line stays for a page
+     with no table.
+     A COLUMN IS A GROUP OF CELLS, NOT ONE ELEMENT (step 11): the stamp is
+     per cell, so the rule gathers every visible `[data-col]` under one card
+     that shares one key, and reads the units across the whole group; read
+     one cell at a time, a per-cell stamp could never show a mix. A cell's
+     unit is read from its own leaves: a trailing %, a leading currency
+     sign, a multiple, a day count, a millions count.
+     THE SECOND HALF, the model's own words ("no word where a column holds
+     figures", PART 8.5; "any bare word standing where a figure belongs",
+     PART 5; "a label never stands where a number goes", his ruling of
+     2026-09-10): in a group that holds at least one figure, a cell whose
+     text has letters and no digit is a finding, except a bare dash or an
+     empty cell, which is the withheld cell clause 18 licenses. A cell
+     reading "Free" for a zero fee, or "n/a", is exactly the fault; "3 days"
+     is a figure with its unit and passes. Planted once on a story
+     (compare-table, a usd cell set to 0 so it printed "Free") and seen red
+     by name before the plant was removed; the fixture's `#word` keeps the
+     fault on file. */
   if (wide && document.querySelectorAll("[data-col]").length === 0) unmeasured.push("UNIT MIX: no [data-col] elements on this page; unmeasured, not zero");
-  for (const col of document.querySelectorAll("[data-col]")) {
-    if (!col.getClientRects().length) continue;
-    const units = new Set();
-    for (const el of col.querySelectorAll("*")) {
-      if (el.children.length || !el.getClientRects().length || hiddenFromSight(el)) continue;
-      const t = (el.textContent || "").trim();
-      if (!t) continue;
-      if (/%$/.test(t)) units.add("%");
-      else if (/^[$£€]/.test(t)) units.add("currency");
-      else if (/^x[\d.]+$/i.test(t)) units.add("multiple");
+  {
+    const unitOf = (t) => {
+      if (/%$/.test(t)) return "%";
+      if (/^[$£€]/.test(t)) return "currency";
+      if (/^x[\d.]+$/i.test(t) || /^[\d.]+x$/i.test(t)) return "multiple";
+      if (/\bdays?$/i.test(t)) return "days";
+      if (/^[\d.,]+M$/.test(t)) return "millions";
+      if (/^[\d.,]+$/.test(t)) return "count"; // a bare number is a unit of its own beside a % or a $
+      return null;
+    };
+    const groups = new Map();
+    for (const col of document.querySelectorAll("[data-col]")) {
+      if (!col.getClientRects().length || hiddenFromSight(col)) continue;
+      const key = `${cardIdOf(col)}␟${col.getAttribute("data-col") ?? ""}`;
+      if (!groups.has(key)) groups.set(key, { cells: [] });
+      groups.get(key).cells.push(col);
     }
-    if (units.size > 1) push(cardIdOf(col), "UNIT MIX", `mixed units in one column (${[...units].join(", ")})`);
+    for (const [key, g] of groups) {
+      const units = new Set();
+      const words = [];
+      let figures = 0;
+      for (const cell of g.cells) {
+        /* THE WORD TEST READS THE WHOLE CELL, THE UNIT EACH FIGURE LEAF: a phone
+           cell that prints its column's head beside its figure ("Turnover
+           $340K", the cell page's peers table under 640px) is a figure, not a
+           word, and its unit comes from the leaf that holds the digits. */
+        const leaves = [...cell.querySelectorAll("*")].filter((el) => !el.children.length && el.getClientRects().length && !hiddenFromSight(el) && (el.textContent || "").trim());
+        const texts = leaves.length ? leaves.map((el) => (el.textContent || "").trim()) : [(cell.textContent || "").trim()];
+        const whole = texts.join(" ").trim();
+        if (!whole || /^[–—-]$/.test(whole)) continue; // withheld: an en dash, clause 18
+        if (/\d/.test(whole)) {
+          figures++;
+          for (const t of texts) { if (/\d/.test(t)) { const u = unitOf(t); if (u) units.add(u); } }
+        } else if (/\p{L}/u.test(whole)) words.push(whole);
+      }
+      const colName = key.split("␟")[1];
+      if (units.size > 1) push(cardIdOf(g.cells[0]), "UNIT MIX", `mixed units in one column${colName ? ` (${colName})` : ""} (${[...units].join(", ")})`);
+      if (figures > 0) for (const w of words) push(cardIdOf(g.cells[0]), "UNIT MIX", `a word where a figure goes: "${w}" in a column${colName ? ` (${colName})` : ""} that holds figures`);
+    }
   }
 
   /* BANNED WORDS: "same", "baseline", "x1.00", "world's highest", as a whole
@@ -416,34 +585,52 @@ function inPage(ctx) {
   }
 
   /* FOCAL: "exactly one figure at 30 per card, and nothing between 16 and 30
-     in that card." Exempt: EVEN_BY_RULING, check_page_holes.mjs's own
-     frozen four, hand-kept here (see the header comment on why it cannot be
-     imported, and the assertion at the top of this file that keeps the two
-     literals from drifting). CRITICAL 2 FIX (review fix wave, 2026-09-08):
-     both branches below only ever fire on a card that already holds a 30px
-     element; a page with NO 30px element anywhere reds nothing and used to
-     report nothing at all, which reads as a clean pass rather than as the
-     rule never having had anything to measure. `any30` tracks whether any
-     non-exempt card on this page holds one; if none do, the rule pushes
-     UNMEASURED instead of silence, the same shape as BLOCK FLOOR above. */
-  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus"]);
+     in that card." Exempt: EVEN_BY_RULING, check_page_holes.mjs's own set,
+     hand-kept here (see the header comment on why it cannot be imported,
+     and the assertion at the top of this file that keeps the two literals
+     from drifting): the four frozen on 2026-09-08, and `tiers-table` since
+     plan step 11 because MODEL.md 8.6 names the form "table-family, exempt
+     from the focal rung by its own law" (the `06 team` row); nothing else
+     the model does not name in so many words. CRITICAL 2 FIX (review fix
+     wave, 2026-09-08): both branches below only ever fire on a card that
+     already holds a 30px element; a page with NO 30px element anywhere
+     redded nothing and used to report nothing at all, which reads as a
+     clean pass rather than as the rule never having had anything to measure.
+     THE THIRD OUTCOME (plan step 11): PART 4, "every section card now takes
+     exactly one focal at 30", makes ZERO a finding as much as two, and the
+     header comment records the measurement that settled it (three of the
+     six pages hold no 30px leaf at all, and the token resolves everywhere).
+     So every top-level `[data-block]` card that is not exempt is judged 0,
+     1 or more, and the rule always measures; the old `any30` line survives
+     only for a page with no block marker and no 30px element, where there
+     is truly nothing to judge. The two older halves still run over every
+     rounded card as before, block or not, so nothing they caught is lost. */
+  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table"]);
+  const formOf = (card) => card.getAttribute("data-archetype") || card.querySelector("[data-archetype]")?.getAttribute("data-archetype") || "kit";
+  const sizesOf = (card) => [...card.querySelectorAll("*")]
+    .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el))
+    .map((el) => parseFloat(getComputedStyle(el).fontSize));
+  const idOfCard = (card) => card.id || card.getAttribute("data-block") || card.querySelector("[id]")?.id || "card";
   let any30 = false;
   for (const card of cards) {
-    const form = card.getAttribute("data-archetype") || card.querySelector("[data-archetype]")?.getAttribute("data-archetype") || "kit";
-    if (EVEN_BY_RULING.has(form)) continue;
-    const sizes = [...card.querySelectorAll("*")]
-      .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el))
-      .map((el) => parseFloat(getComputedStyle(el).fontSize));
+    if (EVEN_BY_RULING.has(formOf(card))) continue;
+    const sizes = sizesOf(card);
     const at30 = sizes.filter((s) => Math.abs(s - 30) < 0.5).length;
     if (at30 > 0) any30 = true;
-    const id = card.id || card.querySelector("[id]")?.id || "card";
+    const id = idOfCard(card);
     if (at30 > 1) push(id, "FOCAL", `${at30} figures at 30px in one card`);
     if (at30 >= 1) {
       const between = sizes.find((s) => s > 16 && s < 30 && Math.abs(s - 30) >= 0.5);
       if (between != null) push(id, "FOCAL", `a size of ${between}px between 16 and 30 in a card that already has a 30px figure`);
     }
   }
-  if (!any30) unmeasured.push("FOCAL: no element on this page sits at 30px; the rule is unmeasured, not passed");
+  for (const block of topBlocks) {
+    if (!block.getClientRects().length || EVEN_BY_RULING.has(formOf(block))) continue;
+    const at30 = sizesOf(block).filter((s) => Math.abs(s - 30) < 0.5).length;
+    if (at30 > 0) any30 = true;
+    if (at30 === 0) push(idOfCard(block), "FOCAL", "no focal figure at 30 in this card (PART 4: every section card takes exactly one)");
+  }
+  if (!any30 && topBlocks.length === 0) unmeasured.push("FOCAL: no [data-block] card and no element at 30px on this page; the rule is unmeasured, not passed");
 
   /* PLACEMENT: "a figure drawn on a world track without its placement line
      fails." (PART 9 rule 5.) RankedBars.tsx's table form stamps every track

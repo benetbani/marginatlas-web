@@ -49,7 +49,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro" }: Spect
           const lean = pct < 50 ? r.left : pct > 50 ? r.right : null;
           return (
             <div key={r.key} data-spectrum-row={r.key} className="py-2.5">
-              <div className={scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
+              <div data-label className={scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
               <div
                 data-track
                 role="img"

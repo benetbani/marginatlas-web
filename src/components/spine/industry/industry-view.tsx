@@ -560,7 +560,7 @@ function BreakEven({ d }: { d: any }) {
   const be: number | null = typeof cs.breakeven_utilization_pct === "number" ? cs.breakeven_utilization_pct : null;
   if (be == null) return null;
   return (
-    <Box>
+    <Box data-block="breakeven">
       {/* plain-words kicker (rulebook v1 §13: no jargon in titles; "utilisation" lives in the InfoTip) */}
       <Rail icon="break-even" kicker="When a day starts paying" verdict="Below this share of a typical day's trade, the day loses money." />
       <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><InfoTip gloss={GLOSS_UTILISATION} /></div>
@@ -593,7 +593,7 @@ function Ramp({ d }: { d: any }) {
   return (
     <Full>
       <Rail icon="first-year" kicker="Getting to break-even" sample />
-      <Box>
+      <Box data-block="ramp">
         <PhaseBar openWeek={openWeek} breakevenWeek={breakevenWeek} />
       </Box>
     </Full>
@@ -665,7 +665,7 @@ function CapitalPayback({ d }: { d: any }) {
   const lo = p.low_months ?? 0, hi = p.high_months ?? 1, mid = p.payback_months ?? 0;
   const hasGearing = typeof p.unlevered_keep_pct === "number" && typeof p.levered_keep_pct === "number";
   return (
-    <Box className="flex flex-col justify-center">
+    <Box data-block="payback" className="flex flex-col justify-center">
       <Rail icon="startup-cost" kicker="Payback window" verdict={p.verdict} sample />
       <div className="mb-1 flex items-baseline gap-2.5"><CountFig value={mid} className="text-[40px] leading-none text-[var(--terra-text)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">months to return the <Fig className="text-[var(--c-ink)]">{money(p.capital_usd ?? 0)}</Fig> opening cost.</span></div>
       <RangeBracket lo={lo} hi={hi} mid={mid} unit="mo" midLabel={`${mid} mo`} accent={false} />
@@ -773,7 +773,7 @@ function Seasonality({ d }: { d: any }) {
   const months: number[] = se.months ?? [];
   if (!months.length) return null;
   return (
-    <Box>
+    <Box data-block="seasonality">
       <Rail icon="seasonality" kicker="Across the year" verdict="The year breathes: the high season pays for the quiet months." />
       <SeasonRibbon months={months} />
     </Box>

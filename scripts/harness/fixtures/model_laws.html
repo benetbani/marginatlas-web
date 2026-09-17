@@ -14,15 +14,22 @@ main { max-width: 1120px; margin: 0 auto; background: #efebe8; padding: 8px; }
 </style></head><body><main>
 
 <!-- BLOCK FLOOR: "count the page's blocks against its floor, 21 and 17."
-     Three [data-block] markers total in this whole document, held to the
-     weaker of the model's two named floors (17, this file's own convention
-     for a page whose surface a filename cannot name), so the count is well
-     under either real floor and the rule reds without needing to invent one. -->
-<section id="floor" class="rounded-[14px] card">
+     Four top-level [data-block] markers in this whole document (three here,
+     one on #nofocal), held to the weaker of the model's two named floors
+     (17, this file's own convention for a page whose surface a filename
+     cannot name), so the count is well under either real floor and the rule
+     reds without needing to invent one. Since plan step 11 the rule counts
+     only blocks not inside another block, so the nested marker inside
+     Block A is one block with it, and the count is four, never five. Each
+     block also draws exactly one 30px figure, so FOCAL's zero case (which
+     judges every block) has nothing to say here and #nofocal alone carries
+     that fault; the section is not a rounded card, so FOCAL's card pass
+     does not read the three figures as three in one card. -->
+<section id="floor">
   <p>Three blocks on this page.</p>
-  <div data-block>Block A</div>
-  <div data-block>Block B</div>
-  <div data-block>Block C</div>
+  <div data-block>Block A <span class="fig" style="font-size:30px">$1</span><div data-block>docked inside A, one block with it</div></div>
+  <div data-block>Block B <span class="fig" style="font-size:30px">$2</span></div>
+  <div data-block>Block C <span class="fig" style="font-size:30px">$3</span></div>
 </section>
 
 <!-- LONE CARD: "a band with one child fails." Wrapped alone in its own
@@ -52,12 +59,26 @@ main { max-width: 1120px; margin: 0 auto; background: #efebe8; padding: 8px; }
   </div>
 </section>
 
-<!-- UNIT MIX: "one unit per column, no word where a column holds figures." -->
+<!-- UNIT MIX, first half: "one unit per column." The column is a GROUP of
+     cells sharing one key under one card, the way CompareTable stamps it
+     since plan step 11 (one data-col per value cell); read one cell at a
+     time, a per-cell stamp could never show a mix. -->
 <section id="unit" class="rounded-[14px] card">
-  <div data-col style="display:flex;flex-direction:column;gap:4px">
+  <div data-col="rent" style="display:flex;flex-direction:column;gap:4px">
     <span class="fig">12%</span>
+  </div>
+  <div data-col="rent" style="display:flex;flex-direction:column;gap:4px">
     <span class="fig">$450</span>
   </div>
+</section>
+
+<!-- UNIT MIX, second half: "no word where a column holds figures." One
+     column of figures with a word in it; the dash is a withheld cell under
+     clause 18 and is not a word. -->
+<section id="word" class="rounded-[14px] card">
+  <div data-col="fee"><span class="fig">$1,200</span></div>
+  <div data-col="fee"><span>Free</span></div>
+  <div data-col="fee"><span aria-label="not held">&ndash;</span></div>
 </section>
 
 <!-- BANNED WORDS: "same", as a whole cell. -->
@@ -83,6 +104,12 @@ main { max-width: 1120px; margin: 0 auto; background: #efebe8; padding: 8px; }
 <section id="focal" class="rounded-[14px] card">
   <span class="fig" style="font-size:30px">$41</span>
   <span class="fig" style="font-size:30px">$52</span>
+</section>
+
+<!-- FOCAL, the zero case (plan step 11): a section card, marked as a block,
+     with no figure at 30 at all. PART 4 makes zero a finding as much as two. -->
+<section id="nofocal" class="rounded-[14px] card" data-block>
+  <span class="fig" style="font-size:16px">$41</span>
 </section>
 
 <!-- PLACEMENT: "a figure drawn on a world track without its placement line

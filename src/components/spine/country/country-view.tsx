@@ -392,7 +392,10 @@ function Character({ iso2 }: { iso2?: string }) {
         </Box>
       ) : null}
       {t.people ? (
-        <Box {...(t.state ? {} : { id: "character" })}>
+        /* The second table is a section card of its own (MODEL.md 8.2, `15
+           character-people`) and carries no id while the first holds
+           "character", so it names its block explicitly for BLOCK FLOOR. */
+        <Box {...(t.state ? {} : { id: "character" })} data-block="character-people">
           <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
           <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} />
         </Box>
@@ -563,7 +566,10 @@ function LocalsKnow({ iso2 }: { iso2?: string }) {
   const d = buildLocalsNotes(iso2);
   if (!d) return null;
   return (
-    <Box>
+    /* The id sits on the inner div, so the Box names its block explicitly
+       (MODEL.md 8.2, `16 locals`); moving the id would change what `#locals`
+       selects for every crop and gate that reads it. */
+    <Box data-block="locals">
       <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
       <div id="locals">
         <NoteList notes={d.notes} columns={2} />

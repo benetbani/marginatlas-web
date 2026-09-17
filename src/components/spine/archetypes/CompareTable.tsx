@@ -39,6 +39,13 @@
  * as TiersTable's name block reserving its local-term line whether or not a
  * term exists, so a row's height stops depending on which of its columns
  * happens to hold a winner (ruling 8, 2026-09-04, equal rows in every case).
+ *
+ * TWO MARKERS FOR THE HARNESS (plan step 11, 2026-09-17). `data-label` on the
+ * name cell of every row, in both forms, so LABEL GAP and ROW SENTENCE in
+ * check_model_laws.mjs can read a label at all; `data-col={c.key}` on every
+ * VALUE cell, in both forms, never on a head (heads are words by design), so
+ * UNIT MIX can group a column's cells by their key and read the units across
+ * them. Until then both rules printed UNMEASURED on every page.
  */
 import * as React from "react";
 import { Box, Rail, Fig, usd } from "@/components/spine/kit";
@@ -146,13 +153,13 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
                   <TableCell className="px-0 py-0 align-middle">
                     <span className="flex min-w-0 items-center gap-2.5">
                       <CountryFlag iso2={r.iso2} className="w-7 shrink-0" />
-                      <span className={`truncate text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+                      <span data-label className={`truncate text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
                     </span>
                   </TableCell>
                   {columns.map((c) => {
                     const v = r.values[c.key];
                     return (
-                      <TableCell key={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
+                      <TableCell key={c.key} data-col={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
                         {renderCell(c, v)}
                       </TableCell>
                     );
@@ -173,13 +180,13 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
               <div key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`py-2.5 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
                 <span className="flex items-center gap-2.5">
                   <CountryFlag iso2={r.iso2} className="w-6 shrink-0" />
-                  <span className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+                  <span data-label className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
                 </span>
                 <div className={`mt-1 grid ${phoneCols} gap-x-2`}>
                   {columns.map((c) => {
                     const v = r.values[c.key];
                     return (
-                      <span key={c.key} className="text-right whitespace-nowrap">
+                      <span key={c.key} data-col={c.key} className="text-right whitespace-nowrap">
                         {renderCell(c, v)}
                       </span>
                     );

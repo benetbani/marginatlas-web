@@ -362,7 +362,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                 {/* THE UNDERLINE IS A LINK'S, so a name with no door wears none (the
                     district photograph of run 25 showed seven underlined names and
                     no destination, a promise the card could not keep). */}
-                <div className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
+                <div data-label className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
               </>
             );
             return (
@@ -415,7 +415,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
               const figPill = isLeader && marks;
               const row = (
                 <>
-                  <span className={NAME_CLS}>{r.name}</span>
+                  <span data-label className={NAME_CLS}>{r.name}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share
@@ -465,7 +465,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
             const figPill = isLeader && marks;
             const row = (
               <>
-                <span className={NAME_CLS}>{r.name}</span>
+                <span data-label className={NAME_CLS}>{r.name}</span>
                 <Fig className="text-right text-[length:var(--t-body)] font-semibold" >
                   {/* THE SAME RESERVED SLOT AS THE BAR FIGURE, above: every
                       row gets the rounded, padded span, only the leader's

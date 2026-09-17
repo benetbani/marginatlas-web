@@ -126,7 +126,7 @@ export function OwnerRunway({ d }: { d: any }) {
     ...(coffee != null ? [[cup(coffee), COPY.cityLiving.items.coffee] as [string, string]] : []),
   ];
   return (
-    <Box>
+    <Box data-block="living">
       <Head icon="cost-breakdown" sample={sample}>{COPY.cityLiving.kicker}</Head>
       <div className="grid grid-cols-[1fr_auto] items-center gap-4">
         <div>
@@ -192,7 +192,7 @@ export function RentAffordability({ d }: { d: any }) {
   // repealed). The two sides of the ratio render as a schematic breakdown (rule 19) that
   // fills the card; no glued caption, the figures carry the read.
   return (
-    <Box>
+    <Box data-block="runway">
       {/* fill the stretched WideRail height (the chart beside it is taller): the two
           sides of the ratio anchor to the bottom (mt-auto), so no bottom crater (rule 17). */}
       <div className="flex h-full flex-col">

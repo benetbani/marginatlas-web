@@ -660,9 +660,22 @@ export function Box({ children, className = "", elevation = "card", density = "d
   /* rest carries the data attributes a section uses to declare itself: the
      editorial exemption (art direction E1). Declaring is the point, so it has to
      reach the DOM where the gate can read it. */
+  /* THE BLOCK MARKER (plan step 11, 2026-09-17). A section card is a block in
+     MODEL.md PART 8's sense (the country's twenty-one, the city's seventeen),
+     and BLOCK FLOOR in scripts/harness/check_model_laws.mjs counts
+     `[data-block]`; until this line nothing stamped it and the rule printed
+     UNMEASURED on every page. A Box that carries an `id` is a section card by
+     construction (the id is the section's), so it stamps its id as its block
+     name; a caller with a card that has no id, or a block name that is not its
+     id, passes `data-block` and that wins. A Box with neither is chrome inside
+     a card and stays unstamped. The rule counts only blocks that are not inside
+     another block, so a card docked in a card is never two. */
+  const rawBlock = (rest as Record<string, unknown>)["data-block"];
+  const block = rawBlock != null && rawBlock !== "" ? String(rawBlock) : rest.id;
   return (
     <div
       {...rest}
+      data-block={block}
       className={`rounded-[14px] border border-[var(--c-line-strong)] ${DENSITY_PAD[density]} ${className}`}
       style={{
         ...CARD_SURFACE,

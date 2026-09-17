@@ -119,7 +119,7 @@ export function FormatPicker({ d }: { d: any }) {
   const keep = useCountUp(sel.keeps_pct, reduced, 420);
 
   return (
-    <Box className="relative overflow-hidden">
+    <Box data-block="format" className="relative overflow-hidden">
       {/* faint control-room wash so the centerpiece reads warmer/heavier than ordinary cards */}
       <span aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(255,241,237,0.5), rgba(255,255,255,0) 40%)" }} />
       <div className="relative">

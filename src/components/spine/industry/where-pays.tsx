@@ -32,7 +32,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
 
   return (
     <div className="w-full">
-      <Box>
+      <Box data-block="where-pays">
         <Rail icon="where-it-pays" kicker="The rent, city by city" sample />
         {/* A REAL TABLE. Places down the side, one measure across the top, and a
             header row drawn to look like one with NOTHING underneath it: zero
@@ -69,6 +69,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
                 <TableRow key={r.name} className={`${r.href ? "hov " : ""}border-0 hover:bg-transparent`}>
                   <TableHead
                     scope="row"
+                    data-label
                     className={`h-auto min-w-0 px-2 py-2 text-left align-middle text-[length:var(--t-micro)] ${isLightest ? "font-semibold text-[var(--c-ink)]" : "font-normal text-[var(--c-ink2)]"}`}
                   >
                     {/* Real links only: a row is a link solely when its place carries
@@ -83,7 +84,7 @@ export function WherePaysExplorer({ d }: { d: any }) {
                       r.name
                     )}
                   </TableHead>
-                  <TableCell className="w-px whitespace-nowrap px-2 py-2 text-right align-middle">
+                  <TableCell data-col="rent-load" className="w-px whitespace-nowrap px-2 py-2 text-right align-middle">
                     <Fig className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{r.rent_load_pct}%</Fig>
                   </TableCell>
                 </TableRow>
