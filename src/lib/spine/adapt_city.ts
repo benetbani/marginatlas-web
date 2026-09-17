@@ -28,12 +28,29 @@
  * docs/superpowers/specs/2026-07-03-city-field-provenance-map.md):
  *   - CityLenses (five word-anchored dot scales) , per-axis positions authored
  *   - CommercialSpace numeric rent-pressure + the peer rent STRIP + the lease-terms card
- *   - OwnerRunway (founder cost-of-living placeholders)
- *   - DemandSize $-magnitude + the trend Spark; DemandCalendar (monthly index)
+ *   - DemandSize's trend Spark and growth; DemandCalendar (monthly index)
  *   - FirstYear timeline; CityRisks; CityCharacter
  *   - IncomeCurve spend-share tiers (the curve itself is real, from the London spread)
  *   - locals_intel; the WhereToTrade map (no district lat/lng held)
  *   - trades cost_to_open + saturation columns; peers spend_index
+ *
+ * WHAT THE CITY FACT BANK FILLS SINCE 2026-09-17 (CITY-PROGRAMME step 1a,
+ * research item 21). Three cards sat in the OMITTED list above as "founder
+ * cost-of-living placeholders" and "$-magnitude, no source" while
+ * data/facts/city/<ISO2>-<slug>.json held the figures for 252 cities and
+ * nothing read it. The builders in src/lib/spine/fact_rows.ts read it now:
+ *   - owner_runway   the living costs, a one-bed flat, groceries, a transport
+ *                    pass and a coffee, a month (251 cities held or modelled;
+ *                    London on placeholders, filled and marked, item 22)
+ *   - rent_ratio     a year of one-bed rent over a year of typical pay, the
+ *                    denominator chosen once in the builder (item 24)
+ *   - demand.spend_per_capita_usd   what a resident spends in a year
+ * Every one carries the bank's tag into _meta.confidence and a basis line
+ * that says "modelled" or "placeholder" where the tag is not held, since the
+ * sample mark is switched off site-wide. trades and demand carry a
+ * _meta.confidence of their own now too (item 27): the trade figures are the
+ * engine's model over trusted cells, and the resident/visitor split is a
+ * slope over arrivals for every city, London's included.
  *
  * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
  * Classified 2026-08-18. verify_take_home_identity flags it because the seed
@@ -65,6 +82,9 @@ import {
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
+import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
+import { weakerTag } from "@/lib/facts/city_shard";
+import { COPY } from "@/lib/spine/copy";
 
 /* ------------------------------------------------------------------------- */
 /* City record shape (the subset the adapter reads from city_list_v1.json).  */
@@ -250,6 +270,12 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
             : undefined,
           easiest_read: undefined, // EasiestTrades reads cost_to_open, which is omitted.
           list: tradeRows,
+          /* MARKED MODELLED (research item 27, 2026-09-17). The rows' take-home
+             and net margin are the cell engine's model run over trusted local
+             cells: the cell is a measurement, the money on top of it is not.
+             This object carried no _meta at all, so a card reading it could
+             not have marked a figure even where the ruling allowed one. */
+          _meta: { confidence: "modeled", source: "the cell engine's take-home and net margin over trusted local cells" },
         }
       : undefined;
 
@@ -343,10 +369,12 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       }
     : undefined;
 
-  /* -- demand (only the resident/visitor split is real; magnitude OMITTED) - */
-  // The 72/28 split is real (view.visitorSplit.items), RECONCILING the seed's 80/20.
-  // The $196B consumer-spend magnitude, per-capita, growth, and the trend Spark are
-  // OMITTED (no source). The DemandCalendar is omitted (authored monthly index).
+  /* -- demand (the resident/visitor split, and the spend per resident) ---- */
+  // The 72/28 split (view.visitorSplit.items) RECONCILES the seed's 80/20. The
+  // $196B consumer-spend total is CUT by design, growth and the trend Spark are
+  // OMITTED (no source), and the DemandCalendar is omitted (authored monthly index).
+  // The spend per resident is READ FROM THE CITY FACT BANK since 2026-09-17
+  // (research item 25 revised item 18: it existed for 252 of 252 and 0 rendered).
   const vs = view.visitorSplit;
   const resItem = vs.items?.find((it) => it.kept);
   const visItem = vs.items?.find((it) => !it.kept);
@@ -373,14 +401,34 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     return g < q(0.25) ? "Evenly spread" : g < q(0.5) ? "Fairly even" : g < q(0.75) ? "Somewhat uneven" : "Very uneven";
   })();
 
+  /* THE SPLIT IS A SLOPE, NOT A COUNT, FOR EVERY CITY (research item 28): a
+     visitor share of arrivals over residents times fourteen, clamped, and for
+     London a typed 72/28. So the split's own tag is modelled wherever it
+     draws, and until item 27 it carried no tag at all: DemandSize's sample
+     check read undefined for every city and 245 modelled splits shipped
+     unmarked. The spend per resident carries the bank's tag per city. The
+     object's _meta.confidence is the weaker of the two, and each card reads
+     its own figure's tag beside it. */
+  const spendRow = buildCityDemand(city.iso2, city.slug, city.name);
+  const hasSplit = !!(resItem && visItem);
+  const splitConfidence: "modeled" | undefined = hasSplit ? "modeled" : undefined;
   const demand =
-    resItem && visItem
+    hasSplit || spendRow
       ? {
-          resident_pct: Math.round(resItem.perHundred),
-          visitor_pct: Math.round(visItem.perHundred),
+          resident_pct: hasSplit ? Math.round(resItem!.perHundred) : undefined,
+          visitor_pct: hasSplit ? Math.round(visItem!.perHundred) : undefined,
           spread_word: spreadWord,
-          read: vs.body ?? vs.headline,
-          // consumer_spend_usd_bn / spend_per_capita_usd / growth_pct_yoy / trend_* OMITTED.
+          read: hasSplit ? (vs.body ?? vs.headline) : undefined,
+          split_confidence: splitConfidence,
+          split_basis: hasSplit ? COPY.cityDemand.seasonBasis : undefined,
+          spend_per_capita_usd: spendRow ? Math.round(spendRow.spend.value) : undefined,
+          spend_confidence: spendRow ? spendRow.tag : undefined,
+          spend_basis: spendRow ? spendRow.basis : undefined,
+          // consumer_spend_usd_bn (cut by design) / growth_pct_yoy / trend_* OMITTED.
+          _meta: {
+            confidence: weakerTag(splitConfidence ?? "held", spendRow?.tag ?? "held"),
+            source: "the visitor share is a slope over arrivals and residents; the spend per resident is the city fact bank's",
+          },
         }
       : undefined;
 
@@ -700,6 +748,33 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       ? { list: tradesHere }
       : undefined;
 
+  /* ============ THE LIVING COSTS AND THE RENT RATIO, FROM THE BANK ==========
+     owner_runway keeps its seed key, since the chapter reads it by that name
+     and the illustrative seed carries it under that name too; what fills it
+     is the fact bank's four figures with their tags (buildCityLiving), no
+     longer the founder placeholders the OMITTED note above named for two
+     months. The runway multiplication the card used to draw (a monthly burn
+     times weeks to break-even) is gone with it: a city-level weeks-to-
+     break-even has no honest anchor, a first-year ramp being a trade-level
+     figure (city-view.tsx's header), and London's 38 was a placeholder.
+     rent_ratio is the builder's output whole, so the card prints the
+     denominator the builder chose and never recomputes one from the London-
+     only income spread. */
+  const living = buildCityLiving(city.iso2, city.slug, city.name);
+  const owner_runway = living
+    ? {
+        rent_1bed_usd_mo: Math.round(living.rent.value),
+        groceries_usd_mo: Math.round(living.groceries.value),
+        transport_usd_mo: Math.round(living.transit.value),
+        coffee_usd: living.coffee ? +living.coffee.value.toFixed(2) : undefined,
+        monthly_usd: living.monthly,
+        basis: living.basis,
+        from: living.from,
+        _meta: { confidence: living.tag, source: `the city fact bank, ${living.from} keys` },
+      }
+    : undefined;
+  const rent_ratio = buildCityRunway(city.iso2, city.slug, city.name) ?? undefined;
+
   return {
     meta,
     verdict,
@@ -712,8 +787,10 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     demand,
     where_to_trade,
     peers: peers_out,
-    // OMITTED entirely (no honest source): owner_runway,
-    // demand_calendar, first_year, risks, character, locals_intel. Leaving them
-    // undefined makes the spine body render nothing there (null-guarded).
+    owner_runway,
+    rent_ratio,
+    // OMITTED entirely (no honest source): demand_calendar, first_year, risks,
+    // character, locals_intel. Leaving them undefined makes the spine body
+    // render nothing there (null-guarded).
   };
 }

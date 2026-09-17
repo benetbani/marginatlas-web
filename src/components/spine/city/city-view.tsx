@@ -156,13 +156,31 @@ export function CityPremises({ d }: { d: any }) {
  * per-resident spend is the focal NUMBER (§26, C6); the $196B metro total is CUT (a
  * vague big total, §7). A second box carries the seasonal read as the resident/visitor
  * mix (the ONLY honest seasonal signal, C7); the invented month-by-month prose box is
- * DELETED (§4/§21). Both boxes carry the modeled tag. */
+ * DELETED (§4/§21). Each box carries its own figure's tag.
+ *
+ * THE SPEND PER RESIDENT IS READ FROM THE CITY FACT BANK SINCE 2026-09-17
+ * (CITY-PROGRAMME step 1a, research items 21 and 25; buildCityDemand in
+ * src/lib/spine/fact_rows.ts, run in the adapter). The figure existed for 252
+ * of 252 cities and rendered for none, so the spending pool was a heading
+ * over nothing and the season card stood alone in its band on London.
+ *
+ * THREE SMALL THINGS CHANGED IN THE FORM, each the smallest that lets the
+ * bank's figure print honestly. The focal used to be a private formatter,
+ * "$" + round(v / 1000) + "K", which is the exact shape the money grammar
+ * ruling (C29) routed out of five other places: Abidjan's $2,860 would have
+ * read "$3K". It prints through the shared usd now. Each box reads its OWN
+ * figure's tag (spend_confidence, split_confidence) rather than one tag for
+ * both, because a held spend beside a modelled split is two different truths.
+ * And each box carries a basis line, since the sample mark is off site-wide
+ * and the basis is the only place the word "modelled" can reach a reader: the
+ * split is a slope over arrivals for every city (research item 28) and had
+ * shipped unmarked on 245 of them (item 27). */
 export function DemandSize({ d }: { d: any }) {
   const o = d.demand;
   const hasSplit = o && o.resident_pct != null && o.visitor_pct != null;
   // the decision read is the per-resident figure (§7/§16, founder C6: the $196B metro
   // total is a vague big total, twice corrected, so it is CUT here, not just demoted).
-  const hasMagnitude = o && o.spend_per_capita_usd != null;
+  const hasMagnitude = o && typeof o.spend_per_capita_usd === "number" && Number.isFinite(o.spend_per_capita_usd) && o.spend_per_capita_usd > 0;
   const hasMillionaires = o?.millionaires_count != null;
   /* A HEADING IS NOT CONTENT. Both figures on this card are omitted upstream for a
      real city, neither has a source, and the card was built anyway: a reader got a
@@ -184,7 +202,9 @@ export function DemandSize({ d }: { d: any }) {
   const hasSize = hasMagnitude || hasMillionaires;
   if (!o || (!hasSplit && !hasSize)) return null;
   const growth = o?.growth_pct_yoy;
-  const sample = o._meta?.confidence === "placeholder" || o._meta?.confidence === "modeled";
+  const notHeld = (t: unknown) => t === "placeholder" || t === "modeled" || t === "extrapolated";
+  const spendSample = notHeld(o.spend_confidence ?? o._meta?.confidence);
+  const splitSample = notHeld(o.split_confidence ?? o._meta?.confidence);
   // residents = the steady base; visitors = the seasonal, tourism-led slice (founder C7:
   // city seasonality reads as the tourism / commuter mix, never an invented month index).
   /* THE TWO SEGMENTS WERE NEARLY THE SAME COLOUR. A line-strong against a
@@ -199,16 +219,20 @@ export function DemandSize({ d }: { d: any }) {
   ];
   const sizeBox = hasSize ? (
     <Box>
-      <Head icon="market-size" sample={sample}>The spending pool</Head>
+      <Head icon="market-size" sample={spendSample}>{COPY.cityDemand.kicker}</Head>
       {hasMagnitude ? (
         <div className="flex flex-wrap items-baseline gap-x-3">
-          <Fig className="text-3xl text-[var(--terra-text)]">${Math.round((o.spend_per_capita_usd || 0) / 1000)}K</Fig>
+          {/* INK, NOT TERRACOTTA: the demand brief (08-demand) rules this card quiet,
+              the page's three accents being named elsewhere (MODEL PART 6), and
+              the page filter counted the terracotta the moment the card drew. */}
+          <Fig className="text-3xl text-[var(--c-ink)]">{usd(o.spend_per_capita_usd)}</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
-            spent per resident a year
+            {COPY.cityDemand.focalSub}
             {growth != null ? <>, {growth >= 0 ? "up" : "down"} <Fig className="text-[var(--c-ink)]">{Math.abs(growth)}%</Fig> on the year</> : null}.
           </span>
         </div>
       ) : null}
+      {hasMagnitude && o.spend_basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{o.spend_basis}</p> : null}
       {/* THE WORD IS THE VALUE. No bar and no position: a precise marker on a rough
           measure fakes precision, which FORM-CATALOG names as the meter do-not, and
           §26 permits a lone value to stay a value. It is also a different form from
@@ -254,7 +278,7 @@ export function DemandSize({ d }: { d: any }) {
   const splitCloses = Math.abs(100 - splitTotal) <= 1 && splitTotal > 0;
   const tourismBox = hasSplit && splitCloses ? (
     <Box id="seasonal">
-      <Head icon="seasonality" sample={sample}>How seasonal it is</Head>
+      <Head icon="seasonality" sample={splitSample}>{COPY.cityDemand.seasonKicker}</Head>
       {/* DECLARED I3, WAVE C ROW C9, 2026-09-02. One bar divided into two named parts
           that sum to a whole is the catalogue's STACKED WHOLE, and this drew it with
           no idea on it. The shape is already right for the information, so this is a
@@ -290,9 +314,19 @@ export function DemandSize({ d }: { d: any }) {
           <span key={n} className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: bg }} /><span className="font-semibold text-[var(--c-ink)]">{n}</span>, {tag}</span>
         ))}
       </div>
+      {o.split_basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{o.split_basis}</p> : null}
     </Box>
   ) : null;
-  if (sizeBox && tourismBox) return <WideRail>{sizeBox}{tourismBox}</WideRail>;
+  /* THE TWO BOXES ARE THE BAND'S OWN CHILDREN, not a rail inside it. The band
+     around this section declares split="3-2" for exactly these two cards, and
+     until the spend figure landed it had only ever held one of them, so the
+     declared split never applied. Wrapped in the WideRail they would have
+     reached the band as ONE child, taken its lone-child two thirds, and been
+     squeezed 3:2 inside that; and the rail sets its cards' heights ragged
+     (items-start), which founder ruling 7 of 2026-09-04 overrules for two cards
+     on one level. As siblings they take the band's 3-2 at its full width and
+     its equal heights. A lone survivor still takes the band's lone-child rule. */
+  if (sizeBox && tourismBox) return <>{sizeBox}{tourismBox}</>;
   return sizeBox ?? tourismBox;
 }
 
@@ -587,7 +621,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   // IncomeCurve + RentAffordability live in the Customers chapter (earnings data
   // belongs under "who buys"); OwnerRunway lives beside the risk material (C4).
   const hasCostCh = !!(d.space?.read) || buildCityPremisesStrip(d) != null;
-  const hasCustomersCh = !!(d.demand && (d.demand.resident_pct != null || d.demand.spend_per_capita_usd != null)) || !!(d.income?.median_income_usd != null);
+  const hasCustomersCh = !!(d.demand && (d.demand.resident_pct != null || d.demand.spend_per_capita_usd != null)) || !!(d.income?.median_income_usd != null) || d.rent_ratio != null;
   const tradeList = d.trades?.list ?? [];
   // The owner-keeps net-margin block (MarginKept) is DELETED (§5 banned metric + the
   // "fundamentally wrong" horizontal-bar money split, founder C9); the chapter is now
@@ -677,8 +711,22 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
               demand row and the trades card below still stack until lg (run 20). */}
           <CityPeers d={d} />
           <Band split="1-1"><IncomeCurve d={d} /><CityPremises d={d} /></Band>
+          {/* THE SPENDING POOL AND THE SEASON CARD, 3-2, both drawn since the
+              bank's spend figure landed (2026-09-17); DemandSize returns them as
+              this band's two children so the declared split finally applies. */}
           <Band split="3-2" stack="lg"><DemandSize d={d} /></Band>
-          <RentAffordability d={d} />
+          {/* THE RENT RATIO IN A BAND OF ITS OWN. It stood here outside any band,
+              which is the full width D1 bans for anything carrying a finding, and
+              nobody saw it because the card had never drawn for a real city: it
+              read the London-only income spread. It draws for every city now, off
+              the fact bank, so it takes a band and the lone-child rule gives it
+              the two thirds every other lone card on the page gets. A 2-3 here,
+              not the 3-2 above it (D3), though as a lone child the declared
+              split never applies; the declaration records the intent for the
+              day a partner card lands. THE BAND ONLY WHEN THE CARD DRAWS (run
+              14's rule): the builder withholds the ratio for thirty cities, and
+              an empty band is a 32px blank the filter cannot see. */}
+          {d.rent_ratio != null ? <Band split="2-3" stack="lg"><RentAffordability d={d} /></Band> : null}
         </>
       ) : null}
 
@@ -686,11 +734,15 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
         <>
           <Movement index={cn()} eyebrow="Running it" heading="What to watch" icon="watch" />
           {/* EACH BAND ONLY WHEN SOMETHING DRAWS IN IT (run 14): the character
-              tables return their own band; the risks, the runway and the locals
-              are omitted upstream for every city today, and an empty band is a
-              blank the filter cannot see because it is not inside a card. */}
+              tables return their own band; the risks and the locals are omitted
+              upstream for every city today (the living costs draw since
+              2026-09-17), and an empty band is a blank the filter cannot see
+              because it is not inside a card. */}
           {d.risks?.list?.length ? <Band><CityRisks d={d} /></Band> : null}
           <CityCharacter d={d} />
+          {/* THE LIVING COSTS DRAW FOR EVERY CITY since the fact bank was wired
+              (2026-09-17); the locals notes are still omitted upstream for all,
+              so the card is this band's lone child and takes its two thirds. */}
           {d.owner_runway?.rent_1bed_usd_mo != null || d.locals_intel?.length ? <Band split="2-1"><OwnerRunway d={d} /><Locals d={d} /></Band> : null}
         </>
       ) : null}

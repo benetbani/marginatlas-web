@@ -202,6 +202,58 @@ export const COPY = {
     spreadWord: "is how the money is spread here",
     countryBasis: "Full-time pay a year across {country}; {city} not researched on its own yet.",
   },
+  /** THE THREE CARDS THE CITY FACT BANK FEEDS (2026-09-17, CITY-PROGRAMME step
+   *  1a, research item 21): one person's living costs, a year of rent over a
+   *  year of pay, and what a resident spends. The builders are in
+   *  src/lib/spine/fact_rows.ts; every string here was read aloud first.
+   *
+   *  THE BASIS CARRIES THE WORD "MODELLED" OR "PLACEHOLDER" WHERE THE FIGURE
+   *  IS NOT HELD, because the sample mark is switched off site-wide
+   *  (areSampleMarksVisible, 2026-09-11) and the basis line is the only place
+   *  left that can say it, the way the districts card says "Rents are
+   *  modelled, not read off leases." A card on a modelled figure that said
+   *  nothing would be asserting a measurement. The weak clauses name WHICH
+   *  figure is weak, so a held rent over a modelled pay does not tar the rent. */
+  cityLiving: {
+    kicker: "Your own living costs",
+    /** Over the focal figure: what the sum is made of, in the words a person would use. */
+    focal: "Rent, food and transport, a month",
+    /** Under the figure: the flat's share of it, and the coffee for the everyday texture. */
+    sub: "One-bed rent is {rent} of that; a coffee is {coffee}.",
+    subNoCoffee: "One-bed rent is {rent} of that.",
+    items: { rent: "one-bed rent, a month", groceries: "groceries, a month", transit: "transport pass, a month", coffee: "a coffee" },
+    disclosure: "See what goes into it",
+    /** Personal prices, never the shop's (founder C4, 2026-07-11): the basis says which. */
+    basis: "Prices for one person living here, not for the shop.",
+    modelled: "Modelled, not read off local prices.",
+    placeholder: "Placeholders until {city} is researched, not local prices.",
+  },
+  cityRunway: {
+    kicker: "Rent against income",
+    /** "Typical", never "median" (research item 24): the income is modelled for 202 of 252 cities, and one word serves every city. "Income" because the kicker says income and the brief (06-runway) read the pair aloud; the figure behind it is the held monthly salary times twelve for 251 cities. */
+    focalSub: "of a typical income goes to a year of one-bed rent.",
+    rows: { rent: "One-bed rent", pay: "Typical income" },
+    units: { month: "a month", year: "a year" },
+    basis: "Twelve months of one-bed rent, over what a typical worker here earns in a year.",
+    /** Which side is weak, said by name, so the reader knows what to doubt. */
+    weak: {
+      modeled: "{what} is modelled, not measured.",
+      extrapolated: "{what} is extrapolated, not measured.",
+      placeholder: "{what} is a placeholder until {city} is researched.",
+    },
+    whatRent: "The rent",
+    whatPay: "The income",
+  },
+  cityDemand: {
+    kicker: "The spending pool",
+    focalSub: "spent per resident a year",
+    basis: "What one resident spends in a year, on everything.",
+    modelled: "Modelled, not measured.",
+    placeholder: "A placeholder until {city} is researched.",
+    /** The season card (item 27): the split is a slope over arrivals for every city, and now says so. */
+    seasonKicker: "How seasonal it is",
+    seasonBasis: "The visitor share is modelled from a year's arrivals and the resident count, not counted at the till.",
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** The city cards in their three looks (B11, 2026-09-10). The unit is said

@@ -90,6 +90,7 @@ import { COPY } from "@/lib/spine/copy";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
+import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE" | "BANNED CONSTRUCTION";
@@ -361,6 +362,23 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     if (!d) continue;
     heads.push([`buildMarkList(${key}).kicker`, d.kicker], [`buildMarkList(${key}).basis`, d.basis], [`buildMarkList(${key}).middleLabel`, d.middleLabel]);
   }
+
+  /* THE CITY FACT BANK'S THREE CARDS (2026-09-17, CITY-PROGRAMME step 1a),
+     pushed composed for the same reason: their basis lines gain a clause
+     naming the city where a figure is a placeholder, so the static sweep
+     skips them by design. London is the placeholder city (every clause
+     fires), Frankfurt is held (the bare basis), and both come off the
+     shipped builders reading the local bank files, no browser, no database.
+     A city the bank does not hold simply pushes nothing. */
+  for (const [iso2, slug, name] of [["GB", "london", "London"], ["DE", "frankfurt", "Frankfurt am Main"]] as const) {
+    const living = buildCityLiving(iso2, slug, name);
+    if (living) heads.push([`buildCityLiving(${slug}).basis`, living.basis]);
+    const ratio = buildCityRunway(iso2, slug, name);
+    if (ratio) heads.push([`buildCityRunway(${slug}).basis`, ratio.basis]);
+    const spend = buildCityDemand(iso2, slug, name);
+    if (spend) heads.push([`buildCityDemand(${slug}).basis`, spend.basis]);
+  }
+  heads.push(["COPY.cityLiving.focal", COPY.cityLiving.focal], ["COPY.cityRunway.focalSub", COPY.cityRunway.focalSub], ["COPY.cityDemand.focalSub", COPY.cityDemand.focalSub], ["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);

@@ -10,8 +10,12 @@
  * The deletion test: removing this module does not move complexity, it
  * reappears in every caller. That is what earns its keep.
  *
- * NOTHING CONSUMES IT YET, deliberately. It is a seam put in place before the
- * consumers exist, so the first consumer does not get to invent its own shape.
+ * It was put in place before any consumer existed, deliberately, so the first
+ * consumer would not get to invent its own shape. THE FIRST CONSUMER ARRIVED
+ * on 2026-09-17: src/lib/facts/city_shard.ts reads one city's shard into this
+ * store on demand, and src/lib/spine/fact_rows.ts asks it, through factValue,
+ * for the living costs, the rent-to-pay ratio and the spend per resident the
+ * city page draws. Nothing else reads it yet.
  */
 import type { Fact, FactQuery } from "./types";
 
