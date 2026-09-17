@@ -530,6 +530,59 @@ function clip(x: number, lo: number, hi: number): number {
  *   MARGIN_CLIP_*:  the district net margin (decimal) out of getNeighborhoodNetMargin.
  * The component multipliers (commuter, tourism) clip at 0.5 to 2.0 and the
  * tag product at 0.3 to 2.5; those stay inline where they are applied.
+ *
+ * THE REVENUE PAIR, MEASURED (plan step 45, DATA-REQUIREMENTS 21, 2026-09-17).
+ * Until this date the pair rested on one sentence ("Manhattan-vs-Bronx for
+ * pharmacies should be ~2.5x"), which nobody had measured. The ground now:
+ *
+ *   Source: ONS, UK Business Counts, enterprises by industry (5-digit SIC
+ *   2007) and turnover size band, NOMIS dataset NM_199_1, 2025 edition
+ *   (IDBR snapshot 14 March 2025; turnover is VAT-return turnover for the
+ *   financial year 2023 to 2024), London's 33 local authorities and its 1,002
+ *   2021 MSOAs. Pulled 2026-09-17; the CSVs and the scripts sit in
+ *   website/scratchpad/step45/ (nomis_ratio.mjs, nomis_msoa.mjs,
+ *   measured_districts.mjs, rows.ts).
+ *   Arithmetic: per area, the median enterprise turnover interpolated
+ *   log-uniformly inside its band, and as a check the mean of enterprises
+ *   under 1,000 thousand at band midpoints; the multiplier is the area's
+ *   figure over London's, on areas with at least 40 enterprises (counts are
+ *   published rounded to the nearest 5).
+ *   What this measurement cannot distinguish: an enterprise is counted once,
+ *   at its main site or head office, with its whole turnover, so a chain's
+ *   head office is one large enterprise where it is registered and a shop
+ *   registered at its accountant's address is counted there; firms under the
+ *   VAT threshold with no PAYE scheme are absent. The median is used because
+ *   it is moved by neither.
+ *
+ *   The quietest area with 40 enterprises, by the median, food service:
+ *     Woolwich South 0.47x London (restaurants, SIC 5610); food service as a
+ *     whole (SIC 56) 0.53x; at borough grain 0.54x to 0.83x across six trades.
+ *   The loudest, by the median: cafes (56102) Strand, St James and Mayfair
+ *     2.85x; hairdressing (96020) Bryanston and Dorset Square 2.88x; licensed
+ *     and other restaurants (5610) Marylebone and Park Lane 4.83x, and the
+ *     engine's whole West End (three MSOAs, 1,035 enterprises) 4.28x.
+ *   The engine's own seven London districts, three trades, 21 rows (dental
+ *     86230, cafes 56102, hairdressing 96020): every measured multiplier sits
+ *     between 0.83x and 2.59x, inside this pair with room on both sides.
+ *
+ * So the floor 0.4 sits under every measured minimum (0.47x) and stays. The
+ * ceiling 3.0 sits at the measured maximum for cafes and hairdressing and
+ * UNDER the one for restaurants (4.28x to 4.83x), where the composition
+ * itself reads 3.9 to 4.5 for the West End and the clip turns a reading that
+ * agrees with the measurement into "at least +200%". It stays at 3.0 all the
+ * same, and the reason is the 21 rows: the six that sit on a bound are not
+ * readings the bound hides. Their raw products are 0.18 and 0.26 (dental in
+ * the City and the West End, measured 1.3x and 1.06x) and 7.7, 5.8, 4.7 and
+ * 3.0 (cafes in the City, the West End, the South Bank and East London,
+ * measured 1.61x, 2.59x, 1.49x and 0.96x). Widening to 5.0 takes two rows
+ * off the ceiling and prints them at 3.1 times the measurement; removing the
+ * clip entirely leaves the composition within 30 percent of the measurement
+ * in 4 rows of 21. No pair of bounds gets the table under three rows on a
+ * clip without printing figures the measurement contradicts; what does is
+ * calibrating the coefficients above against this dataset, or, for London,
+ * reading the measured multiplier in place of the composition
+ * (scratchpad/step45/measured-districts.json, 19 of 21 rows on 40 or more
+ * enterprises). Both are the controller's call, not this file's.
  */
 export const REVENUE_CLIP_LO = 0.4;
 export const REVENUE_CLIP_HI = 3.0;
@@ -688,10 +741,10 @@ export type NeighborhoodMultiplierBreakdown = {
  *
  * SO: NO for a card that prints a figure in every row for the winner trade
  * (two of its seven rows are the same floor) and NO for the cafe (four of
- * seven are the same ceiling), until the 0.4 to 3.0 range is justified or
- * widened by the data track. The range is asserted in the comment below
- * ("Manhattan-vs-Bronx for pharmacies should be ~2.5x"), not derived from
- * any measured district. YES, marked modelled, for rows off every clip:
+ * seven are the same ceiling). The range was measured on 2026-09-17 (see
+ * the note above the constants): it holds, and the rows on it are the
+ * composition overshooting, not the bound hiding a reading, so they do not
+ * come off by moving the bound. YES, marked modelled, for rows off every clip:
  * dental would lead with South London 14.6%, North London 11.3%, East London
  * 6.9%; barbershops with South London 10.1%, North London 7.3% (all seven
  * barbershop revenue rows read). Not a card change here: that decision is
@@ -722,9 +775,10 @@ export function getNeighborhoodMultiplier(
     const gm = tagMultiplier(id, row.tags);
     // Final clip: REVENUE_CLIP_LO to REVENUE_CLIP_HI (0.4 to 3.0). Bigger range
     // than individual components (which clip at 0.5-2.0) so a clear premium
-    // neighborhood can land at ~2.5x and a depressed one at ~0.6x.
-    // Manhattan-vs-Bronx for pharmacies should be ~2.5x in this model,
-    // matching reality.
+    // neighborhood can land at ~2.5x and a depressed one at ~0.6x. The pair's
+    // ground (measured London turnover per enterprise by area, ONS via NOMIS
+    // NM_199_1, 2025) is written above the constants; the old "Manhattan-vs-
+    // Bronx ~2.5x" line here was an assertion and is gone.
     const raw = cm * tm * gm;
     const final = clip(raw, REVENUE_CLIP_LO, REVENUE_CLIP_HI);
     return {
