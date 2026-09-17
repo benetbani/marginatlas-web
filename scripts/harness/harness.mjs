@@ -69,6 +69,10 @@ const CHECK_PAGE = [process.execPath, "scripts/harness/check_page_holes.mjs"];
 if (only == null) {
   if (mode === "all" || mode === "archetypes") { run(RENDER_ARCHETYPES); run([...CHECK_ARCHETYPES, "--shots"]); }
   if (mode === "all" || mode === "page") { run([...RENDER_PAGE, "--list"]); run([...CHECK_PAGE, "--list", "--shots"]); }
+  /* Last, the two renderers compared on one card (plan step 25): the sheet and
+     the page drew the same card under different stylesheets for weeks and no
+     photograph showed it. Full runs only; it needs both renders present. */
+  if (mode === "all") run([process.execPath, "scripts/harness/check_renderers_agree.mjs"]);
 } else if (mode === "page") {
   /* THE PAGE, FROM THE LIST: by surface or by file stem, every entry that matches. */
   const list = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages;
