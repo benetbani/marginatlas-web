@@ -1,10 +1,17 @@
 /* =============================================================================
-   GENERATED FILE , DO NOT EDIT.
-   Source:    design/mockups/atlas.css (the frozen visual spec)
-   Generator: scripts/scope_atlas_css.mjs   (re-run to re-sync)
-   Every selector is scoped under .av2 so the v2 system cannot leak into
-   existing pages. The .av2 wrapper must carry the font variables from
-   src/lib/fonts-spine.ts and must never gain a transform or filter.
+   THE SITE'S OWN FILE since 2026-09-17 (plan step 14). Edit it here.
+   Until then it was GENERATED from design/mockups/atlas.css in the parent
+   repository by scripts/scope_atlas_css.mjs; that stylesheet was retired on
+   2026-09-17 (plan step 5, the July glass-and-map system) and the generator
+   is deleted, so there is no source to regenerate from and nothing to keep
+   fresh against. What the generator guaranteed, the gate `spine-css-scoped`
+   (scripts/verify_spine_css_scoped.mjs) now asserts by reading this file:
+   every selector is scoped under .av2 so the v2 system cannot leak into
+   pages that do not opt in, and .av2 itself never gains a transform or
+   filter, because the jump rail, the jump sheet and the grain layer are
+   viewport-fixed. The .av2 wrapper carries the font variables from
+   src/lib/fonts-spine.ts. Live routes that import it: src/app/industries,
+   src/app/world, src/app/[country]/[geo]/[industry] and the dev pages.
 ============================================================================= */
 /* =============================================================================
    MARGIN ATLAS , VISUAL SYSTEM v2  (2026-07-20)

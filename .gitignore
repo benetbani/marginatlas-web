@@ -73,3 +73,7 @@ scratch/
 
 # Output of scripts/loop/gate.mjs. A run result, not source.
 data/loop/
+# the static a11y gate's report, a run's output (plan step 14)
+scratchpad/audit/
+# the harness's compiled stylesheet, rebuilt from src/app/globals.css on every render (plan step 14)
+scratchpad/pages/site.css

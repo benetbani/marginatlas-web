@@ -118,13 +118,12 @@ older tokens only for a surgical fix to a page that has not migrated.
 
 ## 1. Where it comes from, and the rule governing edits
 
-`src/styles/atlas-spine.css` is **GENERATED** from `design/mockups/atlas.css` in
-the parent repository, by `node scripts/scope_atlas_css.mjs`, which scopes every
-rule under `.av2`.
-
-**Never edit the generated file.** A gate fails the build when the source has
-moved and the copy has not been regenerated. It has already caught that, on the
-person who wrote it.
+`src/styles/atlas-spine.css` was generated from `design/mockups/atlas.css` in
+the parent repository until 2026-09-17. That mockup stylesheet is retired (plan
+step 5) and the generator is deleted (plan step 14); the stylesheet is the
+site's own file now, edited by hand, and the gate `spine-css-scoped` keeps every
+rule under `.av2` and keeps `.av2` free of a transform or filter. The spines
+themselves are law in `E:/atlas/design/loop/build/briefs/MODEL.md` PART 8.
 
 The mockups are the founder's design. **The loop ports and proposes; it does not
 invent.** A new visual is a review artifact in `design/loop4/reviews/` awaiting

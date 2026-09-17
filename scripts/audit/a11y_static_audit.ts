@@ -17,8 +17,8 @@
  *   4. <input> without an associated <label> or aria-label.
  *
  * Output:
- *   data/audit/a11y_static_v1.json
- *   data/audit/a11y_static_REPORT.md
+ *   scratchpad/audit/a11y_static_v1.json
+ *   scratchpad/audit/a11y_static_REPORT.md (ignored; a run's output, never tracked)
  *
  * Run: `npx tsx scripts/audit/a11y_static_audit.ts`
  */
@@ -35,7 +35,13 @@ import { stripCommentLines } from "../lib/strip_comments";
 
 const ROOT = process.cwd();
 const SRC = resolve(ROOT, "src");
-const AUDIT_DIR = resolve(ROOT, "data", "audit");
+/* THE REPORT IS A RUN'S OUTPUT, NOT A TRACKED FILE (plan step 14, 2026-09-17).
+   This gate wrote data/audit/a11y_static_REPORT.md and a11y_static_v1.json on
+   every chain run, and the file count on the report's first line moved with
+   every component added, so the tree was dirty after every green run and two
+   commits exist whose whole content is "731 to 732". Nothing reads the report.
+   It goes under scratchpad/audit/ (ignored) and the pass line carries the count. */
+const AUDIT_DIR = resolve(ROOT, "scratchpad", "audit");
 
 type FindingType =
   | "img-missing-alt"

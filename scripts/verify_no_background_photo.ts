@@ -16,20 +16,15 @@
  * time impossible: any LIVE reference to a photograph as a background fails the
  * build and names the file and line.
  *
- * A FIFTH PLACE, FOUND 2026-09-08. `src/styles/atlas-spine.css` is GENERATED
- * by `scripts/scope_atlas_css.mjs` from the mockup source at
- * `E:\atlas\design\mockups\atlas.css`, which this gate never scanned because it
- * only walks `src/`. So the photograph was removed by hand-editing the
- * GENERATED file, which caught `spine-css-fresh` (the file went stale against
- * its source) but not THIS gate, and the very next regeneration would have
- * silently restored the photograph from the un-fixed mockup. The scan below
- * adds the mockup CSS as a second, guarded root, the sanctioned exception in
- * `verify_no_parent_repo_reads.ts` ("a script that reads the parent for a
- * LOCAL-ONLY purpose... may do so if it guards with existsSync and skips
- * loudly"), same pattern `scope_atlas_css.mjs` already uses. A build server has
- * no parent repo, so this half of the scan is a no-op there and the gate still
- * passes on what it can see; on the machine that has the mockups, the photo now
- * has nowhere left to hide.
+ * A FIFTH PLACE, FOUND 2026-09-08, AND CLOSED FOR GOOD ON 2026-09-17. Until plan
+ * step 14, `src/styles/atlas-spine.css` was GENERATED from the parent repo's
+ * mockup stylesheet, so a photograph removed by hand from the generated file
+ * could return with the next regeneration, and this gate scanned the mockup
+ * folder as a guarded second root to stop that. The mockup stylesheet is
+ * retired (plan step 5) and the generator is deleted; the stylesheet is the
+ * site's own file under src/, which the scan below already walks. Nothing can
+ * bring a photograph back from outside this repository any more, and a gate
+ * reads only the site's own inputs, so the second root is gone.
  *
  * ONE EXCEPTION, AND ONLY ONE, SINCE 2026-09-11: THE CITY CARD. The founder
  * reversed himself for that card and stated the scope in the same breath: "the
@@ -58,7 +53,7 @@
  * themselves to stay on disk under public/, because the founder's photograph is
  * his and may be wanted again; the ban is on painting it, not on keeping it.
  */
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { globSync } from "node:fs";
 import { stripCommentLines } from "./lib/strip_comments";
@@ -96,20 +91,6 @@ const PAINTING = /background|backgroundImage|url\(|src=|DEFAULT_BG/;
 const ALLOWED_TO_NAME_A_PHOTOGRAPH = new Set(["src/lib/spine/city_cards.ts"]);
 
 const files = globSync("src/**/*.{ts,tsx,css}", { cwd: ROOT }).map((f) => join(ROOT, f));
-
-/* THE MOCKUP SOURCE, guarded. Built two path segments at a time (never a
-   literal "../design/" token) so this file itself does not trip
-   verify_no_parent_repo_reads's ESCAPES scan, the same discipline that script
-   applies to itself. existsSync skips loudly rather than throwing when the
-   parent repo is not there, which is every build server. */
-const PARENT_ROOT = join(ROOT, "..");
-const MOCKUP_DIR = join(PARENT_ROOT, "design", "mockups");
-if (existsSync(MOCKUP_DIR)) {
-  const mockupFiles = globSync("*.css", { cwd: MOCKUP_DIR }).map((f) => join(MOCKUP_DIR, f));
-  files.push(...mockupFiles);
-} else {
-  console.log("no background photo: mockup dir not present (build server), skipping that half of the scan");
-}
 
 const reds: string[] = [];
 

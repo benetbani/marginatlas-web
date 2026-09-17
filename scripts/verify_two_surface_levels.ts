@@ -22,20 +22,19 @@
  * gate with legitimate hits and teach everyone to ignore it, which this
  * project has already paid for once.
  *
- * FILES. The generated stylesheet is always checked. The mockup SOURCE lives
- * in the parent repository, which a build server never has, so it is checked
- * when present and skipped with a loud message when not, exactly the pattern
- * scope_atlas_css.mjs uses. The skip is not a pass.
+ * FILES. The spine stylesheet, src/styles/atlas-spine.css, the site's own
+ * file since plan step 14 (2026-09-17; it was generated from the parent
+ * repository's mockup stylesheet until then, and this gate read that source
+ * too when present). A gate reads only the site's own inputs now.
  *
  * Usage: npx tsx scripts/verify_two_surface_levels.ts
  */
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const GENERATED = resolve(ROOT, "src/styles/atlas-spine.css");
-const SOURCE = resolve(ROOT, "../design/mockups/atlas.css");
+const SPINE_CSS = resolve(ROOT, "src/styles/atlas-spine.css");
 
 /** background / background-color / background-image declarations only. A
  * declaration runs to the next ; or }, so a shadow list after it is never
@@ -62,17 +61,7 @@ function check(path: string, label: string): string[] {
 }
 
 const failures: string[] = [];
-failures.push(...check(GENERATED, "src/styles/atlas-spine.css"));
-
-if (existsSync(SOURCE)) {
-  failures.push(...check(SOURCE, "../design/mockups/atlas.css"));
-} else {
-  console.log(
-    "verify_two_surface_levels: mockup source not in this repository (build\n" +
-      "  server), checked the generated stylesheet only. This is not a pass on\n" +
-      "  the source.",
-  );
-}
+failures.push(...check(SPINE_CSS, "src/styles/atlas-spine.css"));
 
 if (failures.length > 0) {
   console.error(
