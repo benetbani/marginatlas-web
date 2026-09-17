@@ -69,7 +69,16 @@ export function PayBars({ rows, worldMax, withheld, fmt }: PayBarsProps) {
           return (
             <React.Fragment key={r.key}>
               <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.label}</span>
-              <span data-track className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]" role="img" aria-label={`${r.label} ${fmt(r.value)} a year, against the world's highest ${fmt(max)}`}>
+              {/* THE TRACK DECLARES WHAT ITS FAR END IS (plan step 12, 2026-09-17):
+                  the world's highest average on file (`worldMaxAverage()`), so
+                  `data-track="world"`, truthfully. PART 6 then owes each bar its
+                  placement line ("Higher than {n} countries in ten", one
+                  builder for every page), which this card does not draw yet;
+                  the PLACEMENT finding on it is real work, recorded in
+                  DEBUG.md section 7 and owed to the country page's rebuild
+                  (MODEL.md 8.2, row `08 hiring`: "the placement sentence
+                  beside each"). */}
+              <span data-track="world" className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]" role="img" aria-label={`${r.label} ${fmt(r.value)} a year, against the world's highest ${fmt(max)}`}>
                 <span data-bar={r.key} aria-hidden className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(share * 100).toFixed(1)}%`, background: accent ? "var(--terra)" : "var(--terra-border)" }} />
               </span>
               <Fig className={`text-[length:var(--t-body)] font-semibold ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(r.value)}</Fig>

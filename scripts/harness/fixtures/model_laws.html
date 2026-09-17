@@ -116,8 +116,17 @@ main { max-width: 1120px; margin: 0 auto; background: #efebe8; padding: 8px; }
      fails." A track with no [data-placement] sibling. -->
 <section id="placement" class="rounded-[14px] card">
   <span>Average salary</span>
-  <div data-track style="height:8px;background:#ccc;border-radius:4px">
+  <div data-track="world" style="height:8px;background:#ccc;border-radius:4px">
     <div style="width:40%;height:100%;background:#888;border-radius:4px"></div>
+  </div>
+</section>
+
+<!-- PLACEMENT, the bare case (plan step 12): a track that declares no ceiling
+     at all. Every data-track says world, set or scale; silence is a finding. -->
+<section id="bare-track" class="rounded-[14px] card">
+  <span>Minimum salary</span>
+  <div data-track style="height:8px;background:#ccc;border-radius:4px">
+    <div style="width:20%;height:100%;background:#888;border-radius:4px"></div>
   </div>
 </section>
 

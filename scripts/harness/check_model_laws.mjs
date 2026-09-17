@@ -283,7 +283,28 @@ const listArg = args.find((a) => a === "--list" || a.startsWith("--list="));
 const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : "scripts/harness/pages.json";
 const listed = listArg ? JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) => `scratchpad/harness/pages/${p.surface}-${p.slugs.join("-")}.html`) : [];
 const files = [...args.filter((a) => !a.startsWith("--")), ...listed];
-if (files.length === 0) { console.error("usage: node scripts/harness/check_model_laws.mjs <rendered.html ...> | --list"); process.exit(2); }
+if (files.length === 0) { console.error("usage: node scripts/harness/check_model_laws.mjs <rendered.html ...> | --list [--render]"); process.exit(2); }
+
+/* THE RENDER'S AGE IS PRINTED, AND --render MAKES A FRESH ONE (plan step 12,
+   2026-09-17). This script reads whatever `render_page.tsx` last wrote under
+   scratchpad/harness/pages; on its own it renders nothing. The trap it sets:
+   an edit to a component, then `harness:laws --list`, then a reading of a
+   page that predates the edit, believed. It happened the hour this comment
+   was written (a track declared "scale" in the source, the list still
+   reading the old bare stamp from a render twenty minutes older). So the
+   head line names the oldest render's age, and `--render` runs the page
+   renderer over the list first, the same command harness.mjs uses. */
+if (listArg && args.includes("--render")) {
+  const { spawnSync: spawnRender } = await import("node:child_process");
+  const cmd = [process.execPath, "node_modules/tsx/dist/cli.mjs", "--tsconfig", "scripts/tsconfig.harness.json", "--require", "./scripts/harness/env.cjs", "--require", "./scripts/spikes/stub_next_font.cjs", "scripts/harness/render_page.tsx", "--list", LIST];
+  const r = spawnRender(cmd[0], cmd.slice(1), { stdio: "inherit" });
+  if (r.status !== 0) { console.error(`check_model_laws: the render exited ${r.status}; nothing measured`); process.exit(r.status ?? 1); }
+}
+{
+  const { statSync: statRender } = await import("node:fs");
+  const ages = files.filter((f) => existsSync(f)).map((f) => (Date.now() - statRender(f).mtimeMs) / 60000);
+  if (ages.length) console.log(`renders read from scratchpad/harness/pages, the oldest ${Math.round(Math.max(...ages))} min old (npm run harness:laws -- --list --render for fresh ones)`);
+}
 
 /* THE BLOCK FLOOR (PART 8.2, 8.3, 8.6, 8.7, 8.8): five floors, below. A page
    this file cannot name (the fixture, or a future third surface) is held to
@@ -660,7 +681,13 @@ function inPage(ctx) {
      rather than a false zero. */
   for (const track of document.querySelectorAll("[data-track]")) {
     if (!track.getClientRects().length || hiddenFromSight(track)) continue;
-    if (track.getAttribute("data-track") === "set") continue; // declared: the set's own heaviest member, not the world's
+    const ceiling = track.getAttribute("data-track");
+    if (ceiling === "set") continue; // declared: the set's own heaviest member, not the world's
+    /* "scale" (plan step 12): a spectrum between two poles has no maximum at
+       either end; MODEL.md 8.2 says of a fixed-ended track "not a world
+       track ... clause 5 and the PLACEMENT check do not reach it". */
+    if (ceiling === "scale") continue;
+    if (ceiling === "" || ceiling == null) push(cardIdOf(track), "PLACEMENT", "a track that declares no ceiling (every data-track says world, set or scale; plan step 12)");
     const hasPlacement = track.parentElement && track.parentElement.querySelector("[data-placement]");
     if (!hasPlacement) push(cardIdOf(track), "PLACEMENT", "a track with no placement line beside it");
   }

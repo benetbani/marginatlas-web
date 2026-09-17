@@ -50,8 +50,18 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro" }: Spect
           return (
             <div key={r.key} data-spectrum-row={r.key} className="py-2.5">
               <div data-label className={scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
+              {/* THE TRACK DECLARES WHAT ITS FAR END IS (plan step 12, 2026-09-17).
+                  A spectrum runs between two poles; neither end is a maximum,
+                  so it is neither a world track nor a set's own heaviest
+                  member, and `data-track="scale"` says so. PART 6's placement
+                  line binds a figure drawn against a WORLD track; MODEL.md 8.2
+                  says of the fixed-ended footing meter "not a world track: its
+                  ends are fixed, so clause 5 and the PLACEMENT check do not
+                  reach it", and the same words hold here. The bare stamp used
+                  to be read as a world track, which put fifteen tracks on the
+                  laws list for a placement line no spectrum could carry. */}
               <div
-                data-track
+                data-track="scale"
                 role="img"
                 aria-label={`${r.name}: ${r.left} to ${r.right}: ${lean ? `leans ${lean}` : "in the middle"}`}
                 className="relative mt-1.5 block h-[6px] rounded-full bg-[var(--c-soft2)]"
