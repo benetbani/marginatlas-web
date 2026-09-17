@@ -63,13 +63,31 @@ type Gate = {
       floor, and a memory death of it is retried once, alone. Nine today (ten
      before blueprint-conformance was retired in plan step 14). */
   browser?: true;
+  /** `first`: the gate runs to completion, serially, before the pool starts,
+      because other gates read what it writes (plan step 14b: `pages-fresh`
+      renders the six spine pages the nine browser gates then open). A red
+      among the first-phase gates is reported like any other; under --bail it
+      stops the run before the pool, under --no-bail the pool still runs and
+      the readers say the age of whatever renders exist. */
+  phase?: "first";
 };
 
 /**
- * The full gate chain. Order is informational only: gates run in
- * parallel. Keep this list in sync with package.json `prebuild`.
+ * The full gate chain. Gates marked `phase: "first"` run serially, in array
+ * order, before the pool; for every other gate the order is informational
+ * only, they run in parallel. Keep this list in sync with package.json
+ * `prebuild`.
  */
 const GATES: Gate[] = [
+  /* THE CHAIN SEES THE LIVE PAGES (plan step 14b, 2026-09-17). Renders the six
+     pages of scripts/harness/pages.json from the real adapters and views into
+     scratchpad/harness/pages/ and asserts each is fresh and whole. FIRST and
+     alone, because the nine browser gates below read those renders through
+     scripts/lib/page_renders.mjs instead of the snapshots frozen in
+     docs/loop/artifacts/final-pages on 2026-09-08. Not a browser gate: the
+     render is React. It needs NEXT_PUBLIC_SUPABASE_URL to start (the client
+     is built at import) and says in its output whether it had one. */
+  { name: "pages-fresh", script: "scripts/verify_pages_fresh.mjs", phase: "first" },
   { name: "taxonomy", script: "scripts/verify_taxonomy.ts" },
   { name: "no-em-dashes", script: "scripts/verify_no_em_dashes.ts" },
   { name: "no-source-agencies", script: "scripts/verify_no_source_agencies.ts" },
@@ -828,14 +846,30 @@ function logLine(gate: Gate, r: GateResult) {
   console.log(`  ${sym} ${gate.name.padEnd(28)} ${secs}s${note}`);
 }
 
-/** Worker-pool runner: caps concurrency, optionally bails on a real failure,
-    and retries each browser gate's memory death once, alone, after the pool
-    has drained. */
-async function runAll(gates: Gate[]): Promise<{ results: GateResult[]; bailed: boolean }> {
+/** Worker-pool runner: runs the `phase: "first"` gates serially and to
+    completion before anything else, then caps concurrency over the rest,
+    optionally bails on a real failure, and retries each browser gate's memory
+    death once, alone, after the pool has drained. */
+async function runAll(selected: Gate[]): Promise<{ results: GateResult[]; bailed: boolean }> {
   const results: GateResult[] = [];
   let nextIdx = 0;
   let bailed = false;
   const inFlight = new Set<Promise<void>>();
+
+  /* THE FIRST PHASE (plan step 14b): one at a time, in array order, nothing
+     else in flight, because the pool's gates read what these write. A real
+     failure here bails exactly as one in the pool does; a memory death is
+     reported apart and, since none of these is a browser gate, not retried. */
+  const firstPhase = selected.filter((g) => g.phase === "first");
+  const gates = selected.filter((g) => g.phase !== "first");
+  for (const gate of firstPhase) {
+    if (bailed) break;
+    const r = await runGate(gate);
+    results.push(r);
+    logLine(gate, r);
+    if ((r.kind === "fail" || r.kind === "timeout") && BAIL) bailed = true;
+  }
+  if (firstPhase.length && gates.length && !QUIET) console.log(`  (${firstPhase.length} first-phase gate${firstPhase.length === 1 ? "" : "s"} done${bailed ? ", bailed" : `; the pool of ${gates.length} starts`})`);
 
   function maybeStart(): void {
     if (bailed) return;

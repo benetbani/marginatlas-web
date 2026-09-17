@@ -77,3 +77,5 @@ data/loop/
 scratchpad/audit/
 # the harness's compiled stylesheet, rebuilt from src/app/globals.css on every render (plan step 14)
 scratchpad/pages/site.css
+# the six spine renders the pages-fresh gate writes at the head of the chain, a run's output (plan step 14b)
+scratchpad/harness/pages/

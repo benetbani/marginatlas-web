@@ -36,7 +36,8 @@
  * 15). The fourth thing this script generates, and the first that is a whole
  * file rather than a block: one entry per gate in the GATES array, in the
  * array's order, with the gate's name, script, args, whether it opens a
- * browser, what it ASSERTS (the first sentence of its header), what it READS
+ * browser, its phase when it declares one (`first`: run serially before the
+ * pool, plan step 14b), what it ASSERTS (the first sentence of its header), what it READS
  * (every repo path literal in its code) and what it CLAIMS (the literals it
  * bans or requires). `--write` regenerates it and `--check` reds when it no
  * longer matches the scripts, so the `counts-fresh` gate fails the chain on a
@@ -118,8 +119,10 @@ type Counts = {
   scripts: number;
 };
 
-/** One GATES entry as written in prebuild_all.ts. */
-type GateEntry = { name: string; script: string; args: string[]; browser: boolean };
+/** One GATES entry as written in prebuild_all.ts. `phase` is present only when
+ *  the entry declares it (`phase: "first"`: run serially before the pool, plan
+ *  step 14b), so the other entries' registry rows do not grow a field. */
+type GateEntry = { name: string; script: string; args: string[]; browser: boolean; phase?: "first" };
 
 type Claim = {
   kind: "bans" | "requires";
@@ -195,11 +198,13 @@ function parseGates(): GateEntry[] {
       throw new Error(`[counts] ${THE_LIST}:${i + 1}: a GATES entry without a name or a script: ${text.trim()}`);
     }
     const argsText = /args:\s*\[([^\]]*)\]/.exec(text)?.[1] ?? "";
+    const phase = /\bphase:\s*"first"/.test(text) ? ("first" as const) : undefined;
     entries.push({
       name: unescape(name),
       script: unescape(script),
       args: literalsIn(argsText),
       browser: /\bbrowser:\s*true\b/.test(text),
+      ...(phase ? { phase } : {}),
     });
   }
   return entries;

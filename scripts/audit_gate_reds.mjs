@@ -107,7 +107,10 @@ function parseGates(text) {
     const m = l.match(/^\s*\{\s*name:\s*"([^"]+)"\s*,\s*script:\s*"([^"]+)"(.*)\}\s*,?\s*$/);
     if (!m) continue;
     const rest = m[3];
-    const args = [...rest.matchAll(/"([^"]*)"/g)].map((x) => x[1]);
+    /* The args are the literals inside `args: [...]` only: an entry's other
+       string fields (`phase: "first"`, plan step 14b) are not arguments. */
+    const argsText = /args:\s*\[([^\]]*)\]/.exec(rest)?.[1] ?? "";
+    const args = [...argsText.matchAll(/"([^"]*)"/g)].map((x) => x[1]);
     gates.push({ name: m[1], script: m[2], args, browser: /browser:\s*true/.test(rest), line: i + 1 });
   }
   return gates;
