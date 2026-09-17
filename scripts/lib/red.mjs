@@ -73,7 +73,7 @@ export function repoRelative(file) {
 /** Em and en dashes become a comma; a trailing full stop or space goes. */
 function clause(s) {
   return String(s ?? "")
-    .replace(/\s*[–—]\s*/g, ", ")
+    .replace(/\s*[\u2013\u2014]\s*/g, ", ")
     .replace(/\s+/g, " ")
     .trim()
     .replace(/[.\s]+$/, "");
