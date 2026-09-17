@@ -1,3 +1,5 @@
+> **SUPERSEDED 2026-09-17 (plan step 5).** This document describes the June Sonnet data-fill loop; data requirements live in E:/atlas/design/loop/build/DATA-REQUIREMENTS.md. It is kept for history and is not to be built from: it predates the archetypes (2026-09-04), the death of the photograph, the glass and the cream (2026-09-07), the type law (2026-09-11) and every composition (2026-09-16). The authorities are MODEL.md, DOCTRINE.md and FOUNDER-VERDICTS.md under E:/atlas.
+
 # Pipeline 2: Sonnet Data-Fill Loop (2026-06-12)
 
 > The machine that turns Fable's blank templates into filled, trustworthy pages at scale.

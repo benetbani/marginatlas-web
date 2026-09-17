@@ -1,3 +1,5 @@
+> **SUPERSEDED 2026-09-17 (plan step 5).** This document describes the June Fable page-reformation pipeline; pages are composed from MODEL.md PART 8 and built as archetypes. It is kept for history and is not to be built from: it predates the archetypes (2026-09-04), the death of the photograph, the glass and the cream (2026-09-07), the type law (2026-09-11) and every composition (2026-09-16). The authorities are MODEL.md, DOCTRINE.md and FOUNDER-VERDICTS.md under E:/atlas.
+
 # PIPELINE 1: The Fable Page Reformation (2026-06-12)
 
 > The elite pipeline. A frontier model (Fable) reforms the real Next.js pages of

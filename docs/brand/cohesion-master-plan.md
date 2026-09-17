@@ -1,3 +1,5 @@
+> **SUPERSEDED 2026-09-17 (plan step 5).** This document describes the engraved frame and warm-frame cohesion plan of June; the visual language is the tokens in src/app/globals.css and the laws in MODEL.md PART 4 to 6. It is kept for history and is not to be built from: it predates the archetypes (2026-09-04), the death of the photograph, the glass and the cream (2026-09-07), the type law (2026-09-11) and every composition (2026-09-16). The authorities are MODEL.md, DOCTRINE.md and FOUNDER-VERDICTS.md under E:/atlas.
+
 # Cohesion Master Plan (R7)
 
 A site-wide design/architecture audit and the plan to make every page type read as

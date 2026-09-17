@@ -1,3 +1,5 @@
+> **SUPERSEDED 2026-09-17 (plan step 5).** This document describes the June improvement pipeline; the loop is E:/atlas/design/loop/build/DOCTRINE.md and the plan of 2026-09-17. It is kept for history and is not to be built from: it predates the archetypes (2026-09-04), the death of the photograph, the glass and the cream (2026-09-07), the type law (2026-09-11) and every composition (2026-09-16). The authorities are MODEL.md, DOCTRINE.md and FOUNDER-VERDICTS.md under E:/atlas.
+
 # The design-improvement pipeline
 
 How the Margin Atlas design keeps getting better after a build round, and the
