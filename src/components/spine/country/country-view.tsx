@@ -57,6 +57,7 @@ import { buildGlance, type GlanceData } from "@/lib/spine/glance_rows";
 import { buildWorldSeat, type WorldSeatData } from "@/lib/spine/world_seat_rows";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { buildEntryBill, type EntryBillData } from "@/lib/spine/entry_bill_rows";
+import { buildRunningCosts, type RunningCostsData } from "@/lib/spine/running_costs_rows";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -79,6 +80,7 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "setup", label: "Registering, by legal form" },
   { id: "entry-bill", label: "The bill to register" },
   { id: "premises", label: "What premises cost" },
+  { id: "running-costs", label: "What else the month costs" },
   { id: "workforce", label: "Who you can hire" },
   { id: "hiring", label: "What staff cost" },
   { id: "peers", label: "Against the peers" },
@@ -597,21 +599,79 @@ function EntryBill({ bill }: { bill: EntryBillData | null }) {
  * the order, the numerals and the leader's semibold name carry the rank, which is
  * A3's own settled reading for a form whose colour is turned off.
  *
- * The electricity rate keeps its own quiet line beneath.
+ * THE ELECTRICITY LINE CAME OFF THIS CARD on plan step 31's fourth dispatch
+ * (2026-09-18): MODEL.md 8.2's row for `05` says its `extra` comes off
+ * because `06 running-costs` carries the reading, and PART 5's bento clause
+ * names the fault of a band saying one thing twice. The builder still
+ * returns `extra` for the city's premises strip, which draws it until the
+ * city's own `04 premises` bento retires that strip (8.3); this card does
+ * not pass it.
  */
 function Premises({ strip }: { strip: StripData | null }) {
   /* THE RANGE-STRIP ARCHETYPE (premises, founder rulings 10 to 12 of
      2026-09-04): rent for a square metre of shop a year, by address, on one
      log scale with the figure over each mark and the name under it, in
-     practical words, no conclusion sentence; the electricity rate under a
-     hairline. The profile holds three national tiers today; the five metrics
-     he named are a data requirement the strip is built to hold. The strip
-     comes from the body, built once, so its band is drawn only when it is. */
-  if (!strip) return null;
+     practical words, no conclusion sentence. The profile holds three
+     national tiers today; the five metrics he named are a data requirement
+     the strip is built to hold. The strip comes from the body, built once,
+     so its band is drawn only when it is. */
+  if (!strip || strip.marks.length === 0) return null;
   return (
     <Box id="premises">
       <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={strip.confidence !== "measured"} />
-      <RangeStrip marks={strip.marks} scale="log" fmt={usd} basis={COPY.premises.basis} extra={strip.extra} />
+      <RangeStrip marks={strip.marks} scale="log" fmt={usd} basis={COPY.premises.basis} />
+    </Box>
+  );
+}
+
+/**
+ * Power and living costs, `06 running-costs` (MODEL.md 8.2; plan step 31,
+ * fourth dispatch, 2026-09-18). THE SEAT IS HELD BY KvGrid AS CATALOGUED,
+ * exactly as `01 glance` holds its own: the fact card with a focal (the
+ * electricity cell at 30 taking the card's width) is candidate 1 of
+ * FORM-CATALOG's CANDIDATES AWAITING HIS CLICK, and a form not in the
+ * catalogue is a candidate awaiting his click; so the two cells draw at the
+ * head rung, nothing at 30, and the FOCAL finding on this card stands until
+ * he clicks. The composition's `data-placement` slot is owed too: the one
+ * site-wide placement builder (R2) does not exist, so no cell carries
+ * "Higher than {n} countries in ten" and nothing is stamped. The census
+ * reads this Box as KvGrid, which is the truth of it today.
+ *
+ * The rows come from running_costs_rows.ts, pure over the files, every
+ * figure's file and field in its header: the profile's commercial
+ * electricity rate at two places (the kit's `usdCents`, the composition's
+ * fourth missing law), WITHHELD wherever the row holds the file's fill value
+ * 0.13 (52 countries, the seven tier A rows among them, R11; gated by
+ * verify_electricity_not_fill), and the cost of living as the covered
+ * cities' population-weighted reading, whole, modelled always, withheld on
+ * the 90 countries with no covered city. The basis names a unit for each
+ * printed cell; the foot names what is modelled and how many cities the
+ * living figure stands on, in words, because the sample mark is off.
+ *
+ * WHERE NOTHING PRINTS (38 countries: the fill and no covered city), the
+ * card still draws, opener and stated lines and no figure (PART 5:
+ * withheld, never dropped), each line at the lead rung in ink2 where a
+ * figure would stand, the drawn seat's and the bill's own idiom; beside a
+ * printed cell the lines sit under the grid at the micro rung, the glance's.
+ */
+function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
+  if (!costs) return null;
+  const bare = costs.cells.length === 0;
+  return (
+    <Box id="running-costs">
+      <Rail icon="cost-breakdown" kicker={COPY.runningCosts.kicker} sample={costs.confidence !== "measured"} />
+      {bare ? (
+        costs.withheld.map((line) => (
+          <p key={line} data-withheld-line="cell" className="mt-2 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{line}</p>
+        ))
+      ) : (
+        <>
+          <KvGrid cells={costs.cells} />
+          {costs.withheld.length > 0 ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.withheld.join(" ")}</p> : null}
+        </>
+      )}
+      {costs.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.basis}</p> : null}
+      {costs.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.foot}</p> : null}
     </Box>
   );
 }
@@ -794,13 +854,15 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const glance = iso2 ? buildGlance(iso2) : null;
   const seat = iso2 ? buildWorldSeat(iso2) : null;
   const bill = iso2 ? buildEntryBill(iso2) : null;
+  const costs = iso2 ? buildRunningCosts(iso2) : null;
+  const hasPremises = premises != null && premises.marks.length > 0;
 
   /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
      first of six dispatches), with the twelve blocks that exist today seated
      where the composition puts them: the opening full width; turn one,
      registering beside the bill to register (seated by the third dispatch
-     the same day), premises (its partner `06 running-costs` not built yet),
-     the workforce seat beside what
+     the same day), premises beside power and living costs (seated by the
+     fourth dispatch, 2026-09-18), the workforce seat beside what
      staff cost, then the peers table full width; turn two, the cities beside
      what customers earn, the margin beside what locals know; turn three, the
      two character tables, the footing beside the easiest seat; the close full
@@ -854,10 +916,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <EntryBill bill={bill} />
           </Band>
         ) : null}
-        {/* `05 premises`, 1-1 beside `06` the day it lands; alone until then. */}
-        {premises ? (
+        {/* `05 premises | 06 running-costs`, 1-1 (8.2; plan step 31, fourth
+            dispatch, 2026-09-18). MEASURED BEFORE IT WAS PAIRED. */}
+        {hasPremises || costs ? (
           <Band split="1-1">
             <Premises strip={premises} />
+            <RunningCosts costs={costs} />
           </Band>
         ) : null}
         {/* `07 workforce | 08 hiring`, 1-1 in 8.2, the seat on the left and the
