@@ -65,6 +65,7 @@
     "harness:page": "node scripts/harness/harness.mjs page",
     "harness:readability": "node scripts/harness/check_readability.mjs",
     "harness:laws": "node scripts/harness/check_model_laws.mjs",
+    "verify:quick": "node scripts/verify_quick.mjs",
     "harness": "node scripts/harness/harness.mjs",
     "shoot:page": "node scripts/harness/shoot_page.mjs",
     "strip:page": "node scripts/harness/strip_page.mjs",
