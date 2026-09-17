@@ -41,7 +41,8 @@ import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildLocalsNotes, type LocalsNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
-import { buildCloseDoors } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCompareDoor } from "@/lib/spine/close_rows";
+import { buildChecks, type ChecksData } from "@/lib/spine/checks_rows";
 import { PayBars } from "@/components/spine/archetypes/PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildPremisesStrip, buildCustomersStrip, type StripData } from "@/lib/spine/range_rows";
@@ -91,6 +92,8 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "character", label: "The character" },
   { id: "footing", label: "The ground under you" },
   { id: "easiest", label: "Easiest to break in" },
+  { id: "checks", label: "Before you commit" },
+  { id: "compare", label: "Compare countries" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -808,6 +811,64 @@ function Footing({ ground }: { ground: any }) {
 }
 
 /**
+ * Before you commit, `18 checks` (MODEL.md 8.2; plan step 31, fifth dispatch,
+ * 2026-09-18). THE QUESTION LIST on NoteList's law (a label over one line,
+ * hairlines between, no figure, no paragraph, no tap state) WITHOUT the
+ * editorial exemption: `16 locals` is the page's one prose section (PART 9
+ * clause 44, R9), so this card passes `editorial={false}` and stands under
+ * the art-direction gate's 220-character ceiling by its own arithmetic
+ * (worst case 176, checks_rows.ts). It prints ZERO figures by design: the
+ * subject is the reader's own plan, and the two held figures behind it, the
+ * hero's regime lookup and the hero's LLC registration time through
+ * buildHeroFacts(), only steer which pre-written question appears and are
+ * never printed (checks_rows.ts says which file and field each is). The
+ * third row self-omits where the page holds no registration time (R10), and
+ * the basis says "Two questions" there. Quiet, zero accent, nothing from the
+ * bar ledger; a NoteList holds no figure by its law, so FOCAL and NO LEAD
+ * have nothing to find on it. The old engraved GutCheck (tap-to-answer, a
+ * control the page never scored) retired in this dispatch. The census reads
+ * this Box as NoteList, which is the truth of it.
+ */
+function Checks({ checks }: { checks: ChecksData | null }) {
+  if (!checks || checks.rows.length === 0) return null;
+  return (
+    <Box id="checks">
+      <Rail icon="gut-check" kicker={COPY.checks.kicker} />
+      <NoteList notes={checks.rows} editorial={false} />
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{checks.basis}</p>
+    </Box>
+  );
+}
+
+/**
+ * Compare countries, `19 compare` (MODEL.md 8.2; the same dispatch). ONE
+ * PILL DOOR on the terminus archetype, built by buildCompareDoor exactly as
+ * the city's compare door is built, the name through inSentence(); the
+ * opener is the kit's Rail with the `compare` tile the cell and neighbourhood
+ * pages already ship, so Terminus draws no kicker of its own (its optional
+ * kicker, this dispatch). No figure by design (`terminus` is in
+ * EVEN_BY_RULING, so FOCAL and NO LEAD do not judge it), no basis line (the
+ * card measures nothing), no accent. `data-form="door"` says what the card
+ * IS to the census and to any adjacency check: a door card standing on
+ * Terminus, not a second terminus; the full-width sanction `data-terminus`
+ * stays on `20 close` alone. Measured on every country in checks_rows'
+ * dispatch: the door holds one line at 1280 on 194 of 195 (the longest name
+ * wraps by one pixel) and on 193 at 1024; the band declares stack="lg"
+ * because at 768's equal halves 148 of 195 would wrap (8.4: a card that
+ * cannot survive 344px declares it), and stacked at 768 none does.
+ */
+function Compare({ name }: { name: string }) {
+  const doors = buildCompareDoor(name);
+  if (doors.length === 0) return null;
+  return (
+    <Box id="compare" data-form="door">
+      <Rail icon="compare" kicker={COPY.compare.kicker} />
+      <Terminus doors={doors} />
+    </Box>
+  );
+}
+
+/**
  * Where to next, through the terminus archetype: the doors from close_rows
  * (the largest covered city, the country's trades, the pricing page with the
  * promise it keeps today), the wrapper keeping data-terminus so the
@@ -856,6 +917,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const bill = iso2 ? buildEntryBill(iso2) : null;
   const costs = iso2 ? buildRunningCosts(iso2) : null;
   const hasPremises = premises != null && premises.marks.length > 0;
+  const checks = iso2 ? buildChecks(iso2) : null;
 
   /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
      first of six dispatches), with the twelve blocks that exist today seated
@@ -867,8 +929,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
      what customers earn, the margin beside what locals know; turn three, the
      two character tables, the footing beside the easiest seat; the close full
      width. Blocks 01 and 02 were seated by the second dispatch the same day;
-     18 and 19 and the three chapter breaks come in later dispatches and are
-     not seated here. A band whose partner is not built yet
+     18 and 19, the exit's pair, by the fifth (2026-09-18); the three chapter
+     breaks come in a later dispatch and are not seated here. A band whose
+     partner is not built yet
      holds its one card in its own Band, unpadded: the LONE CARD finding on it
      is expected and temporary, and the kit's only-child rule gives the
      survivor two thirds so the composition reads as a choice meanwhile.
@@ -987,6 +1050,33 @@ export function SpineCountryBody({ data }: { data?: any }) {
         <Band split="2-1">
           <Footing ground={d.ground} />
           <BlockedSeat id="easiest" icon="where-it-pays" kicker={COPY.blocked.easiest.kicker} line={COPY.blocked.easiest.line} foot={COPY.blocked.easiest.foot} />
+        </Band>
+        {/* `18 checks | 19 compare`, 1-1 in 8.2, the exit's one paired band
+            before the close: THE PAIR CANNOT BE SEATED TODAY, measured on
+            2026-09-18 (plan step 31, fifth dispatch) with the page filter on
+            GB at every width. At 1-1 and 1280 the checks card's three rows
+            stand 217px tall inside and the compare card's whole content is
+            about 85 (opener, hairline, one pill), so the card stretched to its
+            partner carries a 480 by 132 blank under the pill, over the
+            filter's floor. No other split in the closed set holds: the pill
+            needs 430px of card (350 of text in its rendered font plus 80 of
+            padding), so every narrow side wraps it past one line, and every
+            wide side deepens the hole; the checks rows are one-liners at 376
+            and up and do not shorten. So each stands in its own band, in 8.2's
+            order, unpadded, the way 07|08 and 10|13 stand this week: the
+            checks at the survivor's two thirds at their own height, and the
+            compare at two thirds too (a lean card's narrow third, 347, wraps
+            the pill), its band stacked until lg because at 768's equal halves
+            148 of 195 door strings wrap and stacked none does (8.4: a card
+            that cannot survive 344px declares stack="lg"). The filter reports
+            LONE CARD on both, expected; the pair seats the day the compare
+            card holds something honest under its door or the composition
+            re-decides the split. Both cards draw for every country. */}
+        <Band split="1-1">
+          <Checks checks={checks} />
+        </Band>
+        <Band split="1-1" stack="lg">
+          <Compare name={name} />
         </Band>
         <Close meta={d.meta} />
       </main>
