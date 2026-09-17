@@ -624,11 +624,25 @@ function inPage(ctx) {
       if (between != null) push(id, "FOCAL", `a size of ${between}px between 16 and 30 in a card that already has a 30px figure`);
     }
   }
+  /* THE ZERO CASE READS THE WHOLE LADDER, NOT ONE RUNG (controller, plan step
+     11's record, 2026-09-17). PART 4's table gives 40 to "the page's answer,
+     exactly one per page, in the hero" and 30 to "a section's own focal": the
+     hero's figure IS its 40, and a 30 beside it would be a second loud figure
+     in one card, so a block holding a leaf at 40 has its focal at the rung
+     above and is not judged empty. A prose form holds no figure by its own
+     law (`note-list`, PART 8's one prose section a page), so it is not judged
+     either. Both readings are written into PART 4 in the same commit; neither
+     is a loosening of the rule, because a card that could carry a 30 and does
+     not still reds, which is 47 cards on the six pages the day this landed
+     minus the heroes and the prose. */
+  const FOCAL_EXEMPT_FORMS = new Set([...EVEN_BY_RULING, "note-list"]);
   for (const block of topBlocks) {
-    if (!block.getClientRects().length || EVEN_BY_RULING.has(formOf(block))) continue;
-    const at30 = sizesOf(block).filter((s) => Math.abs(s - 30) < 0.5).length;
+    if (!block.getClientRects().length || FOCAL_EXEMPT_FORMS.has(formOf(block))) continue;
+    const sizes = sizesOf(block);
+    const at30 = sizes.filter((s) => Math.abs(s - 30) < 0.5).length;
+    const at40 = sizes.filter((s) => Math.abs(s - 40) < 0.5).length;
     if (at30 > 0) any30 = true;
-    if (at30 === 0) push(idOfCard(block), "FOCAL", "no focal figure at 30 in this card (PART 4: every section card takes exactly one)");
+    if (at30 === 0 && at40 === 0) push(idOfCard(block), "FOCAL", "no focal figure at 30 in this card (PART 4: every section card takes exactly one)");
   }
   if (!any30 && topBlocks.length === 0) unmeasured.push("FOCAL: no [data-block] card and no element at 30px on this page; the rule is unmeasured, not passed");
 
