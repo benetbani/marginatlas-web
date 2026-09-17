@@ -58,7 +58,14 @@ function run(cmd) {
   const [bin, ...rest] = cmd;
   const r = spawnSync(bin, rest, { stdio: "inherit" });
   if (r.error) { console.error(`harness: could not run ${rest.join(" ")}: ${r.error.message}`); process.exit(2); }
-  if (r.status !== 0) process.exit(r.status ?? 1);
+  if (r.status !== 0) {
+    /* The child named the card, the rule and the width above; this driver is a
+       chain gate too (harness-archetypes, plan step 14b), so its last line
+       carries the remedy the way every gate's red must (step 16). */
+    const script = rest.find((a) => a.startsWith("scripts/")) ?? rest.join(" ");
+    console.error(`x harness ${script}: exit ${r.status}; the red(s) above name the card, the rule and the width. Remedy: fix that card, rerun one story with npm run harness -- --only=<kind>/<key> (or one page with npm run harness:page -- --only=<page> --section=<id>), and never lower a rule to pass.`);
+    process.exit(r.status ?? 1);
+  }
 }
 
 const RENDER_ARCHETYPES = [...TSX, "scripts/harness/render_archetypes.tsx"];

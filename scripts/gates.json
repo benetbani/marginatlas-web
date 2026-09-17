@@ -24,6 +24,7 @@
       "asserts": "THE HARNESS DRIVER (plan step 21, 2026-09-17).",
       "reads": [
         "scratchpad/harness/pages/${stem(p)}.html",
+        "scripts/",
         "scripts/harness/check_archetypes.mjs",
         "scripts/harness/check_page_holes.mjs",
         "scripts/harness/check_renderers_agree.mjs",
