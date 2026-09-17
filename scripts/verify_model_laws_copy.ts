@@ -91,6 +91,8 @@ import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
+import { buildGlance } from "@/lib/spine/glance_rows";
+import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE" | "BANNED CONSTRUCTION";
@@ -379,6 +381,26 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     if (spend) heads.push([`buildCityDemand(${slug}).basis`, spend.basis]);
   }
   heads.push(["COPY.cityLiving.focal", COPY.cityLiving.focal], ["COPY.cityRunway.focalSub", COPY.cityRunway.focalSub], ["COPY.cityDemand.focalSub", COPY.cityDemand.focalSub], ["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
+
+  /* THE COUNTRY'S TWO KvGrid SEATS (MODEL.md 8.2 `01 glance` and `02
+     world-seat`, plan step 31's second dispatch, 2026-09-17), pushed composed
+     for the same reason: the glance's basis is joined from the units of the
+     cells it prints, its foot carries the snapshot's year and a list of the
+     modelled cells, and its withheld line a count and joined reasons, so all
+     three are skipped by the static sweep by design. Three countries cover
+     the shapes: the exemplar (every cell), Yemen (the GDP from the profile,
+     the two-name modelled foot, two withheld) and Cuba (the GDP alone, four
+     withheld, no basis). Both builders read local files only. */
+  for (const iso2 of ["GB", "YE", "CU"]) {
+    const g = buildGlance(iso2);
+    if (g) {
+      if (g.basis) heads.push([`buildGlance(${iso2}).basis`, g.basis]);
+      if (g.foot) heads.push([`buildGlance(${iso2}).foot`, g.foot]);
+      if (g.withheld) heads.push([`buildGlance(${iso2}).withheld`, g.withheld]);
+    }
+    const s = buildWorldSeat(iso2);
+    if (s) heads.push([`buildWorldSeat(${iso2}).basis`, s.basis], [`buildWorldSeat(${iso2}).foot`, s.foot], [`buildWorldSeat(${iso2}).withheld`, s.withheld]);
+  }
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);

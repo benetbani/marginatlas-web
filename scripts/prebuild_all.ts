@@ -564,6 +564,12 @@ const GATES: Gate[] = [
      isolated to that one block) and a scratch copy with a rival import added
      (caught). */
   { name: "country-seed-confidence", script: "scripts/verify_country_seed_confidence.mjs" },
+  /* Plan step 43 (2026-09-17): the profile's minimum wage is 0.45 times the
+     median to the dollar on 148 of 197 rows, a fill's fingerprint; the
+     at-a-glance card withholds those and every non-tier-A row, and this
+     rebuilds every row through the builder and reds a printed one at the
+     fingerprint. Planted on the US row and seen red before it was trusted. */
+  { name: "min-wage-not-fill", script: "scripts/verify_min_wage_not_fill.ts" },
   { name: "no-parent-repo-reads", script: "scripts/verify_no_parent_repo_reads.ts" },
   { name: "two-surface-levels", script: "scripts/verify_two_surface_levels.ts" },
   /* A route with no metadata export has no title of its own. 101 page.tsx

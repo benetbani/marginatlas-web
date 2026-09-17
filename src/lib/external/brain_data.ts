@@ -121,16 +121,35 @@ export function getBrainPopulationByIso2(): Map<string, number> {
 // ---------------------------------------------------------------------------
 
 let _gdpPerCapita: Map<string, number> | null = null;
+let _gdpPerCapitaWithYear: Map<string, { value: number; year: number }> | null = null;
+
+/**
+ * GDP per capita WITH THE YEAR IT WAS PUBLISHED FOR (plan step 42,
+ * 2026-09-17). The plain accessor below drops the year the CSV holds, and a
+ * card that prints the figure has to say the year or it cannot say
+ * "measured" (DATA-REQUIREMENTS item 36: 183 rows on 2024, 8 on 2023, one
+ * each on 2022 and 2020, over the 195 in the taxonomy). One read of the
+ * file: the plain map is derived from this one, so the two can never
+ * disagree on a value.
+ */
+export function getBrainGdpPerCapitaWithYearByIso2(): Map<string, { value: number; year: number }> {
+  if (_gdpPerCapitaWithYear) return _gdpPerCapitaWithYear;
+  const rows = readCsv("world_bank_gdp_per_capita.csv");
+  const latest = latestByIso2(rows);
+  const m = new Map<string, { value: number; year: number }>();
+  for (const [iso2, r] of latest) {
+    const n = parseFloat(r.gdp_per_capita_usd || "");
+    const year = parseInt(r.year || "", 10);
+    if (isFinite(n) && n > 0) m.set(iso2, { value: n, year: Number.isFinite(year) ? year : 0 });
+  }
+  _gdpPerCapitaWithYear = m;
+  return m;
+}
 
 export function getBrainGdpPerCapitaByIso2(): Map<string, number> {
   if (_gdpPerCapita) return _gdpPerCapita;
-  const rows = readCsv("world_bank_gdp_per_capita.csv");
-  const latest = latestByIso2(rows);
   const m = new Map<string, number>();
-  for (const [iso2, r] of latest) {
-    const n = parseFloat(r.gdp_per_capita_usd || "");
-    if (isFinite(n) && n > 0) m.set(iso2, n);
-  }
+  for (const [iso2, r] of getBrainGdpPerCapitaWithYearByIso2()) m.set(iso2, r.value);
   _gdpPerCapita = m;
   return m;
 }

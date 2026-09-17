@@ -10,6 +10,16 @@
  *    is off. Figures in one row share a baseline by construction.
  *  - NO EMPTY SLOT, EVER: a cell without a value is not rendered; a grid
  *    without cells renders nothing. Rows appear as data lands.
+ *  - COMPLETE ROWS (PART 9 clause 10, "three cells in a four-cell grid with
+ *    a hole"; plan step 31's second dispatch, 2026-09-17, the first card to
+ *    hand this grid five cells in one group): a group of an odd count above
+ *    one never leaves a slot open in its last row. Its FIRST cell takes the
+ *    width, the lone-cell law below applied inside a group, and the rest
+ *    pair off beneath it. So five cells are one wide and two rows of two,
+ *    three are one wide and one row of two, and no row is short. Which cell
+ *    leads is the caller's order; the width marks nothing (same rung, same
+ *    ink) and it is the silhouette the focal-cell candidate would take the
+ *    day he clicks it, so only the rung would change then.
  *  - ONE ACCENT, NEVER HERE: cells are ink; the accent belongs to the answer.
  *  - A MODELLED CELL CARRIES ITS OWN TAG (rule 4A), beside its label.
  *  - THE COLUMNS FOLLOW THE GRID'S OWN WIDTH (build loop run 7, 2026-09-05):
@@ -67,9 +77,21 @@ export function KvGrid({ cells, className = "" }: { cells: KvCell[]; className?:
                 cell left its second column as a 232x144 hole at 768 and 170x132
                 at 375. The column count follows the cells, never the other way. */}
             <div className={`grid ${g.cells.length > 1 ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
-              {g.cells.map((c) => (
-                <div key={c.key} data-kv-cell={c.key}>
-                  <div className="min-h-[2.6em] text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] lg:min-h-0">{c.label}</div>
+              {g.cells.map((c, ci) => (
+                /* COMPLETE ROWS: in an odd group above one, the first cell spans both columns. */
+                <div key={c.key} data-kv-cell={c.key} className={g.cells.length > 1 && g.cells.length % 2 === 1 && ci === 0 ? "col-span-2" : undefined}>
+                  {/* THE RESERVE IS EXACTLY TWO LINES BY CONSTRUCTION (plan step 31's
+                      second dispatch, 2026-09-17, the first cards whose labels wrap at
+                      375 and 768, "Net wealth per adult" and "Shop rent, major cities").
+                      It read min-h 2.6em over an INHERITED line height of 1.5, so it
+                      held 1.73 lines and a wrapped label pushed its figure 5px under
+                      its neighbour's, measured on the rendered page; every earlier
+                      caller had one-line labels, so the gap never showed. The label
+                      now declares its line height, 1.3, and 2.6em is twice it. The
+                      reserve itself is unchanged in size on purpose: raising it to
+                      2.75em grew every one-line label by 1.8px and tipped a 118px
+                      blank on the answer card's Fiji story at 768 over the 120 floor. */}
+                  <div className="min-h-[2.6em] text-[length:var(--t-micro)] font-semibold uppercase leading-[1.3] tracking-wide text-[var(--c-muted)] lg:min-h-0">{c.label}</div>
                   <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
                     <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{c.value}</Fig>
                     {c.confidence && c.confidence !== "measured" ? <SampleTag /> : null}

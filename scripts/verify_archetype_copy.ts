@@ -30,6 +30,8 @@ import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_ro
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
 import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
+import { buildGlance } from "@/lib/spine/glance_rows";
+import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
@@ -363,6 +365,58 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (buildMarkList("trade:unlisted_sector")) reds.push("mark list: a trade the taxonomy does not hold draws a card");
   if (buildMarkList("cities:pay:ZZ")) reds.push("mark list: a country with no covered city draws a card");
   console.log(`mark list: ${markLists} of ${markListKeys.length} subjects build; the floor holds from the low side`);
+}
+
+/* THE TWO COUNTRY SEATS KvGrid HOLDS (MODEL.md 8.2 `01 glance` and `02
+   world-seat`; plan step 31's second dispatch, 2026-09-17), on every
+   country: a label of four words or fewer (a fact cell's cap, PART 9 clause
+   9), no banned word or placeholder in any string, no empty cell, and the
+   withheld line agreeing with the cells BOTH WAYS (a missing cell with no
+   line is a silent drop; a line with nothing missing apologises for nothing):
+   the glance's count is five minus its cells, the seat's payroll sentence
+   prints exactly when its payroll cell does not, and its lending sentence
+   always, because the lending rate is withheld on every country (item 38).
+   The 0.45 fingerprint on the minimum salary has its own gate,
+   verify_min_wage_not_fill.ts, and is not repeated here. */
+{
+  let glances = 0;
+  let seats = 0;
+  for (const iso2 of codes) {
+    const g = buildGlance(iso2);
+    if (g) {
+      glances++;
+      const texts = [...g.cells.map((c) => c.label), g.basis ?? "", g.foot ?? "", g.withheld ?? ""];
+      for (const t of texts) {
+        for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`glance ${iso2}: banned word "${b}" in "${t}"`);
+        if (/[{}]/.test(t)) reds.push(`glance ${iso2}: a placeholder was never filled ("${t}")`);
+      }
+      for (const c of g.cells) {
+        if (c.label.split(/\s+/).length > 4) reds.push(`glance ${iso2}: label over four words: "${c.label}"`);
+        if (c.value === "" || c.value == null) reds.push(`glance ${iso2}: empty cell ${c.key}`);
+      }
+      const missing = 5 - g.cells.length;
+      if ((missing > 0) !== (g.withheld != null)) reds.push(`glance ${iso2}: ${missing} cell(s) missing and the withheld line is ${g.withheld ? "printed" : "absent"}`);
+      if (g.withheld && !g.withheld.startsWith(`${missing} of 5`)) reds.push(`glance ${iso2}: ${missing} cell(s) missing but the line reads "${g.withheld}"`);
+      if (g.gdpYear != null && !(g.foot ?? "").includes(String(g.gdpYear))) reds.push(`glance ${iso2}: the snapshot year ${g.gdpYear} is held and the foot does not say it`);
+    }
+    const s = buildWorldSeat(iso2);
+    if (s) {
+      seats++;
+      const texts = [...s.cells.map((c) => c.label), s.basis, s.foot, s.withheld];
+      for (const t of texts) {
+        for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`world-seat ${iso2}: banned word "${b}" in "${t}"`);
+        if (/[{}]/.test(t)) reds.push(`world-seat ${iso2}: a placeholder was never filled ("${t}")`);
+      }
+      for (const c of s.cells) {
+        if (c.label.split(/\s+/).length > 4) reds.push(`world-seat ${iso2}: label over four words: "${c.label}"`);
+        if (c.value === "" || c.value == null) reds.push(`world-seat ${iso2}: empty cell ${c.key}`);
+      }
+      const hasPayroll = s.cells.some((c) => c.key === "payroll");
+      if (hasPayroll === s.withheld.includes(COPY.worldSeat.withheld.payroll)) reds.push(`world-seat ${iso2}: the payroll cell is ${hasPayroll ? "drawn" : "absent"} and its withheld sentence is ${hasPayroll ? "printed" : "missing"}`);
+      if (!s.withheld.includes(COPY.worldSeat.withheld.lending)) reds.push(`world-seat ${iso2}: the lending rate is withheld on every country and the line does not say so`);
+    }
+  }
+  console.log(`country seats: ${glances} glance cards and ${seats} world-seat cards build; labels, withheld lines and the year in the foot held`);
 }
 console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

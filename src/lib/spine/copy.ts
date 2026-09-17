@@ -153,6 +153,62 @@ export const COPY = {
     cells: { clean: CLEAN_DEALING, admin: "Admin ease" },
     basis: "Two published indices, 0 to 100; interpolated for most countries.",
   },
+  /** AT A GLANCE (MODEL.md 8.2, `01 glance`; plan step 31, second dispatch,
+   *  2026-09-17): the country's own figures, each in its own unit, no rank
+   *  and no verdict. The pay cells take the pay bars' own words above
+   *  (`pay.average`, `pay.minimum`, his ruling 14 of 2026-09-04: "replace
+   *  words with minimum salary and average salary"; "typical pay" is the
+   *  word he replaced), referenced and never retyped, so one figure has one
+   *  name on the page. The foot carries the year of the published GDP figure
+   *  and names the cells that are modelled, because the sample mark is
+   *  switched off and the foot is the only line left that can say it. The
+   *  withheld line names each cell the card does not hold and why (PART 5).
+   *  Every string here was read aloud first. */
+  glance: {
+    kicker: "At a glance",
+    cells: { gdp: "GDP per person", wealth: "Net wealth per adult", time: "Time to register" },
+    /** The basis is composed from the cells the card prints, one unit clause
+     *  each, joined with "; " (on the exemplar: "Salary a year; wealth per
+     *  adult after debts; registration time for an LLC."), so a withheld cell
+     *  never has a unit said for it. */
+    units: { salary: "salary a year", wealth: "wealth per adult after debts", time: "registration time for an LLC" },
+    /** `{year}` is the snapshot's own year, read from the file, never typed. */
+    footYear: "GDP per person is the published {year} figure.",
+    /** `{what}` is a list of cell names; `{verb}` is "is" or "are". */
+    footModelled: "{what} {verb} modelled for this country.",
+    /** `{n}` of the five cells, `{reasons}` the joined reasons below. */
+    withheld: "{n} of 5 withheld: {reasons}.",
+    reasons: {
+      salary: "the average salary is not on file",
+      /** The staff-cost card's own verdict (`pay.withheld`), two cells at once. */
+      payDisagree: "the average and minimum salary on file disagree",
+      wealth: "net wealth per adult is not curated for this country",
+      minimum: "the minimum salary on file is not the legal floor",
+      time: "the registration time is not on file",
+    },
+  },
+  /** AMONG THE COUNTRIES (MODEL.md 8.2, `02 world-seat`; the same dispatch).
+   *  The placed-figures form he has not clicked would carry a placement
+   *  sentence under each figure; until then KvGrid holds the seat with the
+   *  figures alone, and the foot says the placement is not drawn. The rent
+   *  is the major-cities tier, the premises strip's own word for it
+   *  (`premises.marks.t2`); the payroll label is the hero's (`cells.payroll`).
+   *  The lending rate is withheld by DATA-REQUIREMENTS item 38: the field has
+   *  no published definition. */
+  worldSeat: {
+    kicker: "Among the countries",
+    cells: { rent: "Shop rent, major cities" },
+    /** The units, one clause per cell the card prints: both cells, or the rent alone where payroll is withheld. */
+    basis: "Rent for a square metre of shop a year; payroll on gross wages.",
+    basisRentOnly: "Rent for a square metre of shop a year.",
+    /** The foot's pronoun follows the count: "each" over two figures, "it" over one. */
+    foot: "Typical for the country; where each sits among the countries is not shown yet.",
+    footOne: "Typical for the country; where it sits among the countries is not shown yet.",
+    withheld: {
+      payroll: "Payroll on wages is not on file for this country.",
+      lending: "A lending rate is held but its definition is not.",
+    },
+  },
   /** The terminus (where to next): doors that leave the page. Run 4 of the architecture loop refused "with Pro" while Pro cannot be bought and "the deepest city" as jargon; the city door says a figure the list holds. */
   close: {
     kicker: "Where to next",

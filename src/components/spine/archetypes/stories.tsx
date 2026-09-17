@@ -35,6 +35,8 @@ import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
+import { buildGlance } from "@/lib/spine/glance_rows";
+import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
 import { DetailPanel, type DetailRow } from "./DetailPanel";
 import { IncomeBreakdown } from "./IncomeBreakdown";
@@ -499,7 +501,14 @@ export function PayBarsStories({ instances = pickPayBarsInstances() }: { instanc
   );
 }
 
-/** The instance set for the key-value grid on its own: the exemplar's cells in a wide card ("GB:wide") and a narrow one ("GB"), plus the country with the fewest cells, so the grid's columns are measured by its own width. */
+/** The instance set for the key-value grid on its own: the exemplar's cells in a wide card ("GB:wide") and a narrow one ("GB"), plus the country with the fewest cells, so the grid's columns are measured by its own width.
+ *  THE TWO COUNTRY SEATS KvGrid HOLDS SINCE PLAN STEP 31's SECOND DISPATCH
+ *  (2026-09-17), `01 glance` and `02 world-seat`, keyed "XX:glance" and
+ *  "XX:world-seat": the exemplar, and for each the thinnest country read off
+ *  the builders (the glance whose GDP falls to the profile and holds the
+ *  fewest cells, so the modelled foot and the withheld line both draw; the
+ *  seat whose payroll is not held, so it draws one cell and two withheld
+ *  sentences). Drawn at 520, the half of the 1-1 band they share. */
 export function pickKvGridInstances(): Instance[] {
   const out: Instance[] = [];
   const seen = new Set<string>();
@@ -508,7 +517,30 @@ export function pickKvGridInstances(): Instance[] {
   take("GB", "the same cells in a narrow card, the groups stacked");
   const facts = codes().map((c) => ({ c, f: buildHeroFacts(c) })).filter((x) => x.f.cells.length > 0);
   const fewest = [...facts].sort((a, b) => a.f.cells.length - b.f.cells.length)[0]; if (fewest) take(`${fewest.c}:wide`, `the fewest cells, ${fewest.f.cells.length}, in a wide card`);
+  take("GB:glance", "block 01 on the exemplar: five cells, the published year in the foot");
+  const glances = codes().map((c) => ({ c, g: buildGlance(c) })).filter((x) => x.g);
+  const thinGlance = [...glances].filter((x) => x.g!.gdpYear == null).sort((a, b) => a.g!.cells.length - b.g!.cells.length || a.c.localeCompare(b.c))[0];
+  if (thinGlance) take(`${thinGlance.c}:glance`, `block 01 thin: ${thinGlance.g!.cells.length} cells, the GDP from the profile, the modelled foot and the withheld line`);
+  take("GB:world-seat", "block 02 on the exemplar: rent and payroll, the lending rate withheld");
+  const seats = codes().map((c) => ({ c, s: buildWorldSeat(c) })).filter((x) => x.s);
+  const thinSeat = [...seats].filter((x) => x.s!.figures.payroll == null).sort((a, b) => a.c.localeCompare(b.c))[0];
+  if (thinSeat) take(`${thinSeat.c}:world-seat`, "block 02 thin: the rent alone, payroll and the lending rate withheld");
   return out;
+}
+
+/** The two country seats as the page draws them (country-view.tsx `Glance` and `WorldSeat`): opener, grid, the withheld line, the basis, the foot. The same markup, so the story measures the card a reader meets. */
+function KvSeatStory({ id, icon, kicker, sample, cells, withheld, basis, foot }: { id: string; icon: "scorecard" | "vs-world"; kicker: string; sample: boolean; cells: React.ComponentProps<typeof KvGrid>["cells"]; withheld: string | null; basis: string | null; foot: string | null }) {
+  return (
+    <div style={{ maxWidth: 520 }}>
+      <Box id={id}>
+        <Rail icon={icon} kicker={kicker} sample={sample} />
+        <KvGrid cells={cells} />
+        {withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{withheld}</p> : null}
+        {basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
+        {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+      </Box>
+    </div>
+  );
 }
 
 export function KvGridStories({ instances = pickKvGridInstances() }: { instances?: Instance[] }) {
@@ -516,6 +548,16 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
     <div data-stories="kv-grid">
       {instances.map((i) => {
         const [iso2, form] = i.iso2.split(":");
+        if (form === "glance") {
+          const g = buildGlance(iso2);
+          const el = g ? <KvSeatStory id={`glance-${iso2.toLowerCase()}`} icon="scorecard" kicker={`${COPY.glance.kicker}, ${nameOf(iso2)}`} sample={g.confidence !== "measured"} cells={g.cells} withheld={g.withheld} basis={g.basis} foot={g.foot} /> : null;
+          return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        if (form === "world-seat") {
+          const s = buildWorldSeat(iso2);
+          const el = s ? <KvSeatStory id={`world-seat-${iso2.toLowerCase()}`} icon="vs-world" kicker={`${COPY.worldSeat.kicker}, ${nameOf(iso2)}`} sample={s.confidence !== "measured"} cells={s.cells} withheld={s.withheld} basis={s.basis} foot={s.foot} /> : null;
+          return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         const f = buildHeroFacts(iso2);
         const el = f.cells.length ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: form === "wide" ? 1072 : 520 }}>

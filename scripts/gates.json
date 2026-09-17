@@ -1999,6 +1999,18 @@
       "claims": []
     },
     {
+      "name": "min-wage-not-fill",
+      "script": "scripts/verify_min_wage_not_fill.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_min_wage_not_fill , no printed minimum salary is the 0.45 fill.",
+      "reads": [
+        "data/economic_indicators/country_profile_v2.json",
+        "src/lib/spine/glance_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-parent-repo-reads",
       "script": "scripts/verify_no_parent_repo_reads.ts",
       "args": [],
