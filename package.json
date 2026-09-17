@@ -69,6 +69,7 @@
     "verify:quick": "node scripts/verify_quick.mjs",
     "harness": "node scripts/harness/harness.mjs",
     "status": "node scripts/status.mjs",
+    "query:outcomes": "npx tsx --env-file=.env.local scripts/query_outcomes.ts",
     "look": "node scripts/harness/look.mjs",
     "shoot:page": "node scripts/harness/shoot_page.mjs",
     "strip:page": "node scripts/harness/strip_page.mjs",

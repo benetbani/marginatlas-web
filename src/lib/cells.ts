@@ -5,6 +5,7 @@
  * from v1.5). Applies the friendly sector + industry taxonomy at query time
  * via the local taxonomy.ts module — no DB migration required.
  */
+import { logQueryOutcome } from "./query_log";
 import { cache } from "react";
 import { supabaseAdmin } from "./supabase";
 import { applyCurrencyCorrection, CURRENCY_FX_CORRECTIONS } from "./qa/currency_corrections";
@@ -508,8 +509,7 @@ async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T | null> {
  */
 export function dbFailed(where: string, error: { message?: string } | null | undefined): boolean {
   if (!error) return false;
-  // eslint-disable-next-line no-console
-  console.warn(`[cells] ${where} failed, falling back: ${error.message ?? "unknown error"}`);
+  logQueryOutcome(where, "error", { detail: error.message ?? "unknown error" });
   return true;
 }
 
@@ -519,12 +519,16 @@ export async function withBudget<T>(
   ms = SECONDARY_BUDGET_MS,
   label = "secondary-fetch",
 ): Promise<T> {
+  const started = Date.now();
   const result = await withTimeout(p, ms);
   if (result === null) {
-    // eslint-disable-next-line no-console
-    console.warn(`[cells] ${label} exceeded ${ms}ms budget, falling back`);
+    logQueryOutcome(label, "timeout", { ms });
     return defaultValue;
   }
+  /* The ok line is the half that was missing (plan step 18): a fast fallback
+     inside `p` has already logged its error through dbFailed, so an ok here
+     means the promise resolved, not that the table held rows. */
+  logQueryOutcome(label, "ok", { ms: Date.now() - started });
   return result;
 }
 
