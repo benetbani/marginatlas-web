@@ -36,6 +36,14 @@
  *        node scripts/harness/check_page_holes.mjs --list[=scripts/harness/pages.json] [--shots]
  *        (--list reads every page in the list and expects its render under
  *        scratchpad/harness/pages/; a listed page with no render is a red, NO RENDER)
+ *        node scripts/harness/check_page_holes.mjs <rendered.html> --section=<id> [--shots]
+ *   THE TARGETED FORM (plan step 21, 2026-09-17): the card rules (WHITE SPACE,
+ *   ROWS CUT, NO LEAD, WALL) run on the one section card whose id is named, at
+ *   the same three widths. The PAGE rules are about the whole page and still
+ *   run on it, unfiltered, because they cannot be asked of one card: ACCENT
+ *   BUDGET counts every accent on the page, ACCENT UNREADABLE is the token,
+ *   BOTCHED MOBILE's sideways scroll and NO SECTIONS are the page. An id no
+ *   card carries stops with exit 2 and the ids the page holds.
  */
 import { chromium } from "playwright";
 import { mkdirSync, existsSync, readFileSync } from "node:fs";
@@ -55,6 +63,10 @@ const listArg = args.find((a) => a === "--list" || a.startsWith("--list="));
 const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : "scripts/harness/pages.json";
 const listed = listArg ? JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) => `scratchpad/harness/pages/${p.surface}-${p.slugs.join("-")}.html`) : [];
 const files = [...args.filter((a) => !a.startsWith("--")), ...listed];
+/* THE ONE CARD, when asked for: its id as the walk reports it (the card's own
+   id, else the first id inside it, else its heading's text). */
+const SECTION = args.find((a) => a.startsWith("--section="))?.slice("--section=".length) ?? null;
+if (SECTION === "") { console.error("usage: --section=<id> names a section card; the id is empty"); process.exit(2); }
 if (files.length === 0) { console.error("usage: node scripts/harness/check_page_holes.mjs <rendered.html ...> [--shots] | --list[=pages.json] [--shots]"); process.exit(2); }
 
 /* THE FORMS THAT ARE EVEN BY A RULING, so NO LEAD never fires on them: the
@@ -156,7 +168,18 @@ for (const file of files) {
     await page.goto(pathToFileURL(file).href, { waitUntil: "load" });
     await page.evaluate(() => document.fonts && document.fonts.ready);
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
-    const { out, cut, accents, accentReadable, hierarchy, pageScroll } = await page.evaluate(inPage);
+    const walk = await page.evaluate(inPage);
+    /* THE FILTER, at the point the walk hands its cards back: the card rules
+       read only the named card; the page rules below read the page. */
+    if (SECTION != null && !walk.out.some((c) => c.id === SECTION)) {
+      console.error(`check_page_holes --section=${SECTION}: no section card with that id on ${name} at ${w}; the cards are: ${walk.out.map((c) => c.id).join(", ") || "(none)"}`);
+      await browser.close();
+      process.exit(2);
+    }
+    const out = SECTION == null ? walk.out : walk.out.filter((c) => c.id === SECTION);
+    const cut = SECTION == null ? walk.cut : walk.cut.filter((c) => c.id === SECTION);
+    const hierarchy = SECTION == null ? walk.hierarchy : walk.hierarchy.filter((h) => h.id === SECTION);
+    const { accents, accentReadable, pageScroll } = walk;
     for (const c of cut) red(name, w, c.id, `ROWS CUT: the chart declares ${c.expect} rows and draws ${c.drawn}`);
     const BUDGET = 3;
     if (w === WIDTHS[0] && !accentReadable) red(name, w, "page", "ACCENT UNREADABLE: the accent token does not resolve in this render, so the page's accents were not counted");
@@ -165,20 +188,20 @@ for (const file of files) {
     if (pageScroll) red(name, w, "page", "BOTCHED MOBILE: the page scrolls sideways");
     /* A PAGE WITH NO SECTION CARD UNDER MAIN IS NOT A PASS: a render that lost
        its landmark or its cards would otherwise sail through with zero holes. */
-    if (out.length === 0) red(name, w, "page", "NO SECTIONS: no section card found under main; the render or the landmark is broken");
+    if (walk.out.length === 0) red(name, w, "page", "NO SECTIONS: no section card found under main; the render or the landmark is broken");
     for (const c of out) {
       const minW = Math.max(120, c.cardW / 4), minH = Math.max(120, c.cardH / 4);
       if (c.holeW >= minW && c.holeH >= minH) red(name, w, c.id, `WHITE SPACE: a blank rectangle ${c.holeW}x${c.holeH} inside a ${c.cardW}x${c.cardH} card${c.siblings > 1 ? ` (one of ${c.siblings} in its band)` : ""}`);
     }
     if (shots) {
       mkdirSync("scratchpad/harness/shots", { recursive: true });
-      await page.screenshot({ path: `scratchpad/harness/shots/page-${name}-${w}.jpeg`, type: "jpeg", quality: 80, fullPage: true });
+      await page.screenshot({ path: `scratchpad/harness/shots/page-${name}${SECTION == null ? "" : `-only-${SECTION}`}-${w}.jpeg`, type: "jpeg", quality: 80, fullPage: true });
     }
-    console.log(`${name}@${w}: ${out.length} section cards, ${out.filter((c) => c.holeW >= Math.max(120, c.cardW / 4) && c.holeH >= Math.max(120, c.cardH / 4)).length} with a hole`);
+    console.log(`${name}@${w}${SECTION == null ? "" : ` #${SECTION}`}: ${out.length} section card${out.length === 1 ? "" : "s"}, ${out.filter((c) => c.holeW >= Math.max(120, c.cardW / 4) && c.holeH >= Math.max(120, c.cardH / 4)).length} with a hole`);
     await ctx.close();
   }
 }
 await browser.close();
-console.log(`page holes: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
+console.log(`page holes${SECTION == null ? "" : ` (--section=${SECTION}, page rules on the whole page)`}: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r.page}@${r.w} #${r.id}: ${r.msg}`);
 process.exit(reds.length ? 1 : 0);

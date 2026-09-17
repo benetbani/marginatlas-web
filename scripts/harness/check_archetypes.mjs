@@ -84,6 +84,17 @@
  * network if reachable and the fallback stack if not; a wrap that depends on
  * the exact font can differ by a line. It cannot judge taste.
  * usage: node scripts/harness/check_archetypes.mjs [--shots]
+ *        node scripts/harness/check_archetypes.mjs --only=<kind>[/<key>] [--shots]
+ *   THE TARGETED FORM (plan step 21, 2026-09-17) reads the one-kind render that
+ *   render_archetypes.tsx --only wrote (archetypes-only.html, instances-only.json)
+ *   and iterates only the stories the target names, so every rule above runs on
+ *   them exactly as the full run runs it, at the same three widths. Two rules
+ *   are about the sheet rather than a story and are handled thus: BOTCHED
+ *   MOBILE's sideways-scroll clause still runs, on the one-kind page; INDEX is
+ *   skipped and says so, because no index is rendered. Shots go to
+ *   scratchpad/harness/shots/only-<kind>-<key>-<width>.jpeg, never over the
+ *   sheet's own. A target the census does not hold stops with exit 2 and the
+ *   census; the full sheet and its reds are untouched.
  */
 import { chromium } from "playwright";
 import { readFileSync, mkdirSync } from "node:fs";
@@ -96,19 +107,40 @@ preflight({ browser: true, name: "check_archetypes" });
 const LADDER = new Set([10, 12, 14, 16, 20, 24, 30, 40]);
 const WIDTHS = [1280, 768, 375];
 const shots = process.argv.includes("--shots");
-const file = "scratchpad/harness/archetypes.html";
-const instancesByKind = JSON.parse(readFileSync("scratchpad/harness/instances.json", "utf8"));
-const instances = Object.values(instancesByKind).flat();
+/* THE TARGET, when there is one: "<kind>" or "<kind>/<key>", read against the
+   census the targeted render wrote beside its page. */
+const ONLY = process.argv.find((a) => a.startsWith("--only="))?.slice("--only=".length) ?? null;
+const onlyKind = ONLY == null ? null : ONLY.includes("/") ? ONLY.slice(0, ONLY.indexOf("/")) : ONLY;
+const onlyKey = ONLY == null || !ONLY.includes("/") ? null : ONLY.slice(ONLY.indexOf("/") + 1);
+const file = ONLY == null ? "scratchpad/harness/archetypes.html" : "scratchpad/harness/archetypes-only.html";
+const censusFile = ONLY == null ? "scratchpad/harness/instances.json" : "scratchpad/harness/instances-only.json";
+const instancesByKind = JSON.parse(readFileSync(censusFile, "utf8"));
+if (ONLY != null) {
+  const held = (instancesByKind[onlyKind] ?? []).map((i) => i.iso2);
+  const hit = onlyKey == null ? held.length > 0 : held.includes(onlyKey);
+  if (!hit) {
+    console.error(`check_archetypes --only=${ONLY}: the targeted render's census (${censusFile}) holds ${Object.keys(instancesByKind).join(", ") || "nothing"}${held.length ? `, keys ${held.join(", ")}` : ""}; render the target first (render_archetypes.tsx --only=${ONLY}).`);
+    process.exit(2);
+  }
+}
+const instances = Object.values(instancesByKind).flat().filter((i) => onlyKey == null || i.iso2 === onlyKey);
+/* WHERE THE ITERATION STARTS: the stories the page walk reads. Every story on
+   the sheet, or, targeted, the stories of one kind or the one story keyed. The
+   attribute selector is built here and handed into the page, so a key with a
+   colon in it ("london:districts") is quoted rather than parsed. */
+const STORY_SELECTOR = ONLY == null ? "[data-story]" : `[data-stories="${onlyKind}"] [data-story${onlyKey == null ? "" : `="${onlyKey.replace(/"/g, '\\"')}"`}]`;
 const reds = [];
 const datas = [];
 const red = (inst, w, rule, msg) => reds.push({ inst, w, rule, msg });
 const data = (inst, rule, msg) => datas.push({ inst, rule, msg });
 
-function inPage() {
+function inPage(storySelector) {
   const ladder = [10, 12, 14, 16, 20, 24, 30, 40];
   const out = [];
   const accentRgb = (() => { const d = document.createElement("div"); d.style.color = "var(--terra-text)"; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; })();
-  for (const story of document.querySelectorAll("[data-story]")) {
+  /* THE STORIES THIS RUN READS: all of them, or the target's (the selector is built by the caller, see STORY_SELECTOR). */
+  const stories = [...document.querySelectorAll(storySelector)];
+  for (const story of stories) {
     const inst = story.closest("[data-stories]")?.getAttribute("data-stories") + ":" + story.getAttribute("data-story");
     const card = story.querySelector("[data-archetype]");
     const r = { inst, kind: card?.getAttribute("data-archetype") || "", overflow: [], sizes: [], accents: 0, answerSizes: [], rows: [], labels: [], hole: null, subtitle: "", cells: [], state: "", bars: [], tableRows: [], selfOmit: !!story.querySelector("[data-self-omit]") };
@@ -544,7 +576,7 @@ function inPage() {
     r.hole = { wPx: Math.round(best.w / COLS * W), hPx: best.h * ROW, cardW: Math.round(W), cardH: Math.round(H) };
     out.push(r);
   }
-  const cut = [...document.querySelectorAll("[data-stories] [data-expect-rows]")].filter((el) => el.getClientRects().length).map((el) => { const expect = Number(el.getAttribute("data-expect-rows")); const drawn = [...el.querySelectorAll("[data-row]")].filter((r) => r.getClientRects().length).length; const story = el.closest("[data-story]"); const inst = story?.closest("[data-stories]")?.getAttribute("data-stories") + ":" + story?.getAttribute("data-story"); return { inst, expect, drawn }; }).filter((c) => c.drawn < c.expect);
+  const cut = [...document.querySelectorAll("[data-stories] [data-expect-rows]")].filter((el) => el.getClientRects().length && stories.includes(el.closest("[data-story]"))).map((el) => { const expect = Number(el.getAttribute("data-expect-rows")); const drawn = [...el.querySelectorAll("[data-row]")].filter((r) => r.getClientRects().length).length; const story = el.closest("[data-story]"); const inst = story?.closest("[data-stories]")?.getAttribute("data-stories") + ":" + story?.getAttribute("data-story"); return { inst, expect, drawn }; }).filter((c) => c.drawn < c.expect);
   return { out, cut, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };
 }
 
@@ -557,7 +589,18 @@ for (const w of WIDTHS) {
   /* Lazy images never enter a headless viewport; force them so a broken path
      is a red and a slow one is not. */
   await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* reported by the check */ } } });
-  const { out, cut, pageScroll } = await page.evaluate(inPage);
+  const { out, cut, pageScroll } = await page.evaluate(inPage, STORY_SELECTOR);
+  /* A TARGETED RUN PROVES IT WALKED THE STORY. Zero reds on one story is
+     also what a selector that matched nothing would report, so the walk must
+     have found exactly the stories the census names, and says so per width. */
+  if (ONLY != null) {
+    if (out.length !== instances.length) {
+      console.error(`check_archetypes --only=${ONLY}: the page holds ${out.length} stor${out.length === 1 ? "y" : "ies"} matching ${STORY_SELECTOR} and the census names ${instances.length}; the render and the census disagree, so nothing was judged.`);
+      await browser.close();
+      process.exit(2);
+    }
+    for (const r of out) console.log(`  ${r.inst}@${w}: measured, ${r.kind ? `card ${r.kind}, ${r.sizes.length} text leaves` : r.selfOmit ? "self-omits, no card" : "no card"}`);
+  }
   for (const c of cut) red(c.inst, w, "ROWS CUT", `the drawing declares ${c.expect} rows and draws ${c.drawn}`);
   if (pageScroll) red("page", w, "BOTCHED MOBILE", "the page scrolls sideways");
   for (const r of out) {
@@ -870,7 +913,8 @@ for (const w of WIDTHS) {
   }
   if (shots) {
     mkdirSync("scratchpad/harness/shots", { recursive: true });
-    await page.screenshot({ path: `scratchpad/harness/shots/archetypes-${w}.jpeg`, type: "jpeg", quality: 85, fullPage: true });
+    const shotName = ONLY == null ? "archetypes" : `only-${onlyKind}${onlyKey == null ? "" : `-${onlyKey.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}`;
+    await page.screenshot({ path: `scratchpad/harness/shots/${shotName}-${w}.jpeg`, type: "jpeg", quality: 85, fullPage: true });
   }
   await ctx.close();
 }
@@ -879,7 +923,9 @@ await browser.close();
    story the sheet holds, and every story is listed. Read from the sheet's text,
    no browser needed; a rule here rather than a second script, because the chain's
    single-gate-chain gate forbids an npm script that names two gate scripts. */
-{
+if (ONLY != null) {
+  console.log("index links: not checked in a targeted run; the index is drawn by the full sheet only");
+} else {
   const html = readFileSync(file, "utf8");
   const links = [...html.matchAll(/href="#(story-[^"]+)"/g)].map((m) => m[1]);
   const ids = new Set([...html.matchAll(/<section id="(story-[^"]+)"/g)].map((m) => m[1]));
@@ -891,7 +937,7 @@ await browser.close();
 const byInst = {};
 for (const r of reds) (byInst[`${r.inst}@${w(r)}`] ??= []).push(`${r.rule}: ${r.msg}`);
 function w(r) { return r.w; }
-console.log(`archetype harness: ${instances.length} instances x ${WIDTHS.length} widths, ${reds.length} design red(s), ${datas.length} data red(s)`);
+console.log(`archetype harness${ONLY == null ? "" : ` (--only=${ONLY})`}: ${instances.length} instances x ${WIDTHS.length} widths, ${reds.length} design red(s), ${datas.length} data red(s)`);
 for (const [k, v] of Object.entries(byInst)) console.log(`  ${k}\n    ${v.join("\n    ")}`);
 if (datas.length) { console.log("  DATA, for the data track, not the drawing:"); for (const d of datas) console.log(`    ${d.inst}: ${d.rule}, ${d.msg}`); }
 process.exit(reds.length ? 1 : 0);
