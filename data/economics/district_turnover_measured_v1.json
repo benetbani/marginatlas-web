@@ -1,0 +1,229 @@
+{
+  "version": "1.0.0",
+  "what": "Median enterprise turnover per London district relative to London, by trade, MEASURED; the first measured per-district revenue multiplier on the site (plan step 45, 2026-09-17). Produced by website scratchpad/step45/measured_districts.mjs from its own CSV pulls of the statistics service's business-counts API (the pulls sit beside it); rerun there by hand, never in the chain, and copy the result here.",
+  "caveats": [
+    "counts are rounded to the nearest 5; an area under 40 enterprises is marked thin",
+    "turnover is VAT-return turnover for the registered address, so a district with many registered offices (Hatton Garden and Theobalds Road for hairdressing, 65 enterprises, median 22k) carries the registered-address artefact",
+    "the district to MSOA mapping is the file's own, stated per district",
+    "this is revenue per enterprise, not per shop, and says nothing about rent: a keep ranking on it is measured revenue over modelled rent until DATA-REQUIREMENTS 15 lands"
+  ],
+  "source": "ONS UK Business Counts, enterprises by industry and turnover size band (NOMIS NM_199_1), IDBR snapshot March 2025, turnover = VAT-return turnover FY2023/24; counts rounded to the nearest 5; pulled 2026-09-17",
+  "trades": {
+    "dental-practices": {
+      "sic": "86230",
+      "label": "Dental practice activities",
+      "londonN": 2675,
+      "londonMedian": 191.28213200761297,
+      "londonMeanSmall": 271.81558935361215,
+      "districts": {
+        "city-of-london": {
+          "n": 20,
+          "median": 249.9999999999999,
+          "medianX": 1.3069699578110618,
+          "meanSmall": 250,
+          "meanSmallX": 0.9197412134988635,
+          "mapping": "MSOA City of London 001 (= the borough)",
+          "thin": true
+        },
+        "west-end": {
+          "n": 135,
+          "median": 203.00143018321538,
+          "medianX": 1.0612670825685693,
+          "meanSmall": 275.96153846153845,
+          "meanSmallX": 1.0152528010545148,
+          "mapping": "MSOAs Westminster 013 Fitzrovia West & Soho + 018 Strand, St James & Mayfair + 011 Marylebone & Park Lane",
+          "thin": false
+        },
+        "south-bank": {
+          "n": 5,
+          "median": 158.11388300841898,
+          "medianX": 0.8266003800194265,
+          "meanSmall": 175,
+          "meanSmallX": 0.6438188494492044,
+          "mapping": "MSOAs Lambeth 036 Lambeth North, Waterloo & South Bank + Southwark 002 Borough & Southwark Street",
+          "thin": true
+        },
+        "north-london": {
+          "n": 195,
+          "median": 198.81768219176254,
+          "medianX": 1.0393949508250444,
+          "meanSmall": 276.9736842105263,
+          "meanSmallX": 1.0189764496921618,
+          "mapping": "boroughs Islington + Camden",
+          "thin": false
+        },
+        "south-london": {
+          "n": 250,
+          "median": 232.98568534954944,
+          "medianX": 1.2180211654075284,
+          "meanSmall": 294.2708333333333,
+          "meanSmallX": 1.0826120533892871,
+          "mapping": "boroughs Lambeth + Southwark + Lewisham + Wandsworth (mapping is mine; the district carries no note)",
+          "thin": false
+        },
+        "east-london": {
+          "n": 165,
+          "median": 165.5262989969582,
+          "medianX": 0.865351600066703,
+          "meanSmall": 256.25,
+          "meanSmallX": 0.942734743836335,
+          "mapping": "boroughs Hackney + Tower Hamlets + Newham",
+          "thin": false
+        },
+        "west-london": {
+          "n": 60,
+          "median": 173.28621078878658,
+          "medianX": 0.9059194864154371,
+          "meanSmall": 247.91666666666666,
+          "meanSmallX": 0.9120767033863729,
+          "mapping": "borough Kensington and Chelsea",
+          "thin": false
+        }
+      }
+    },
+    "cafes-coffee-shops": {
+      "sic": "56102",
+      "label": "Unlicensed restaurants and cafes",
+      "londonN": 6120,
+      "londonMedian": 143.65644657556848,
+      "londonMeanSmall": 214.01547721410145,
+      "districts": {
+        "city-of-london": {
+          "n": 85,
+          "median": 231.62121811976732,
+          "medianX": 1.6123273521033823,
+          "meanSmall": 281.6666666666667,
+          "meanSmallX": 1.316104191777153,
+          "mapping": "MSOA City of London 001 (= the borough)",
+          "thin": false
+        },
+        "west-end": {
+          "n": 150,
+          "median": 371.49857228423684,
+          "medianX": 2.586020893178749,
+          "meanSmall": 368,
+          "meanSmallX": 1.7195018079550022,
+          "mapping": "MSOAs Westminster 013 Fitzrovia West & Soho + 018 Strand, St James & Mayfair + 011 Marylebone & Park Lane",
+          "thin": false
+        },
+        "south-bank": {
+          "n": 45,
+          "median": 214.5935547331392,
+          "medianX": 1.4937969012080168,
+          "meanSmall": 303.57142857142856,
+          "meanSmallX": 1.4184554898697124,
+          "mapping": "MSOAs Lambeth 036 Lambeth North, Waterloo & South Bank + Southwark 002 Borough & Southwark Street",
+          "thin": false
+        },
+        "north-london": {
+          "n": 550,
+          "median": 152.63868623306135,
+          "medianX": 1.0625258376606712,
+          "meanSmall": 217.96116504854368,
+          "meanSmallX": 1.018436460230841,
+          "mapping": "boroughs Islington + Camden",
+          "thin": false
+        },
+        "south-london": {
+          "n": 765,
+          "median": 151.77660194262648,
+          "medianX": 1.0565248240550522,
+          "meanSmall": 231.67808219178082,
+          "meanSmallX": 1.0825295684573768,
+          "mapping": "boroughs Lambeth + Southwark + Lewisham + Wandsworth (mapping is mine; the district carries no note)",
+          "thin": false
+        },
+        "east-london": {
+          "n": 825,
+          "median": 138.12030987990067,
+          "medianX": 0.9614626643799407,
+          "meanSmall": 205.0632911392405,
+          "meanSmallX": 0.9581703800519755,
+          "mapping": "boroughs Hackney + Tower Hamlets + Newham",
+          "thin": false
+        },
+        "west-london": {
+          "n": 115,
+          "median": 267.9433656340732,
+          "medianX": 1.865167711030116,
+          "meanSmall": 322.5,
+          "meanSmallX": 1.5069003615910004,
+          "mapping": "borough Kensington and Chelsea",
+          "thin": false
+        }
+      }
+    },
+    "barbershops": {
+      "sic": "96020",
+      "label": "Hairdressing and other beauty treatment",
+      "londonN": 9210,
+      "londonMedian": 77.69201045917302,
+      "londonMeanSmall": 124.67105263157895,
+      "districts": {
+        "city-of-london": {
+          "n": 70,
+          "median": 75.78582832551993,
+          "medianX": 0.9754648885723612,
+          "meanSmall": 110.71428571428571,
+          "meanSmallX": 0.8880512627214474,
+          "mapping": "MSOA City of London 001 (= the borough)",
+          "thin": false
+        },
+        "west-end": {
+          "n": 265,
+          "median": 131.63822043342375,
+          "medianX": 1.6943598145474605,
+          "meanSmall": 205.10204081632654,
+          "meanSmallX": 1.645145657207474,
+          "mapping": "MSOAs Westminster 013 Fitzrovia West & Soho + 018 Strand, St James & Mayfair + 011 Marylebone & Park Lane",
+          "thin": false
+        },
+        "south-bank": {
+          "n": 45,
+          "median": 198.81768219176254,
+          "medianX": 2.559049264096992,
+          "meanSmall": 308.3333333333333,
+          "meanSmallX": 2.4731750219876867,
+          "mapping": "MSOAs Lambeth 036 Lambeth North, Waterloo & South Bank + Southwark 002 Borough & Southwark Street",
+          "thin": false
+        },
+        "north-london": {
+          "n": 750,
+          "median": 73.841307296975,
+          "medianX": 0.9504363043324571,
+          "meanSmall": 130.74324324324326,
+          "meanSmallX": 1.0487056977822151,
+          "mapping": "boroughs Islington + Camden",
+          "thin": false
+        },
+        "south-london": {
+          "n": 1115,
+          "median": 77.69008898154273,
+          "medianX": 0.9999752680150902,
+          "meanSmall": 132.9185520361991,
+          "meanSmallX": 1.0661540849341562,
+          "mapping": "boroughs Lambeth + Southwark + Lewisham + Wandsworth (mapping is mine; the district carries no note)",
+          "thin": false
+        },
+        "east-london": {
+          "n": 845,
+          "median": 73.08357171124037,
+          "medianX": 0.9406832347277926,
+          "meanSmall": 115.23668639053254,
+          "meanSmallX": 0.9243259277763033,
+          "mapping": "boroughs Hackney + Tower Hamlets + Newham",
+          "thin": false
+        },
+        "west-london": {
+          "n": 285,
+          "median": 138.71436293753987,
+          "medianX": 1.7854392249307793,
+          "meanSmall": 193.05555555555554,
+          "meanSmallX": 1.5485194957490471,
+          "mapping": "borough Kensington and Chelsea",
+          "thin": false
+        }
+      }
+    }
+  }
+}
