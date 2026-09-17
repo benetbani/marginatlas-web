@@ -1,29 +1,54 @@
 /**
  * scripts/prebuild_all.ts
  *
- * Architecture-audit strategy E (2026-05-27).
+ * THE GATE CHAIN. Vercel runs it through npm's prebuild hook before every
+ * build; locally it is `npm run prebuild` (parallel, --no-bail) or
+ * `npm run verify:deploy` (serial, to a file). One process spawns every gate
+ * in the GATES array below as its own `npx tsx` subprocess through a worker
+ * pool (`--concurrency=<n>`, default 4: 6 hit Windows resource limits and
+ * segfaulted gates on a loaded machine) and aggregates the exit codes.
+ * Architecture-audit strategy E (2026-05-27): serial wall-clock was the SUM
+ * of the gates, parallel approaches the slowest few.
  *
- * Parallel runner for the prebuild quality-gate chain. Replaces the
- * 25-script `&&`-chained `prebuild` script in package.json with a
- * single process that spawns the gates in parallel via Node's
- * `child_process.spawn`, then aggregates exit codes.
+ * Three things it tells apart, because a chain that reported them as one red
+ * cost whole sessions (plan-2026-09-17/02-ERRORS.md, step 13):
  *
- * Why: serial wall-clock was ~60s (sum of all gates). Each gate is
- * a self-contained subprocess reading its own files; nothing depends
- * on another gate's output. Parallel wall-clock approaches the MAX
- * gate time (typically the slowest 3-4 gates) instead of the SUM.
- * Expected drop: ~60s → ~15s for warm cache.
+ * 1. THE PREFLIGHT. Before any gate starts it reads free memory and refuses
+ *    under the floor with exit 2 (the ground exit, never 1, so a refusal is
+ *    never read as a red): CHAIN_FLOOR_MB when more than one browser gate can
+ *    be open at once, BROWSER_FLOOR_MB when at most one can (concurrency 1,
+ *    or a --only subset holding one browser gate), no floor when no browser
+ *    gate is selected. The floors are scripts/harness/preflight.mjs's. The
+ *    refusal names what to close from a real reading of the process table
+ *    (win32: tasklist grouped by image name, the top three). `--floor=<MB>`
+ *    overrides for a proof; PREFLIGHT_FORCE=1 runs anyway; under VERCEL or CI
+ *    the floor is skipped and the header line says so, because a refused
+ *    deploy is worse than a memory death on a machine we do not control.
  *
- * Concurrency cap: `--concurrency=<n>` (default 6). Avoids spawning
- * 25 simultaneous tsx processes on a small developer machine.
+ * 2. A MEMORY DEATH is not a failure. A non-zero exit with no output at all,
+ *    or with a death signature in it (heap limit, ENOMEM, a closed browser
+ *    target, browserType.launch, spawn UNKNOWN, exit 134, 0xC0000005,
+ *    0xC0000409), is classified `memory`. A browser gate (`browser: true`)
+ *    that died this way is retried ONCE after the whole pool has drained, so
+ *    the retry runs with nothing else in flight, and the retry's real result
+ *    replaces the first. A non-browser gate is not retried but is reported
+ *    apart all the same. The per-gate log line says MEMORY the way it says
+ *    TIMEOUT.
  *
- * Honors --bail (default true): on first failure, kill the rest and
- * exit non-zero immediately so CI doesn't waste cycles. Pass
- * --no-bail to run all gates and aggregate the full failure list.
+ * 3. THE SUMMARY carries `Died on memory: N` on its own line, apart from
+ *    `Failed: N` (real failures and timeouts only), and a `=== Died on
+ *    memory ===` block beside `=== Failures ===` names each gate, the free
+ *    memory at the time and the remedy. The exit code is 1 for either.
+ *
+ * Also: --bail (default on; `prebuild` passes --no-bail) stops on the first
+ * real failure; --timeout=<s> (default 120) kills a wedged gate with its
+ * tree; --only=<name,name> runs a subset by exact gate name; --quiet mutes
+ * the per-gate lines.
  *
  * Run: npx tsx scripts/prebuild_all.ts
  */
 import { spawn, spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import os from "node:os";
 
@@ -34,10 +59,13 @@ type Gate = {
   script: string;
   /** Optional CLI args appended after the script path. */
   args?: string[];
+  /** The script launches a Playwright browser: it counts against the memory
+      floor, and a memory death of it is retried once, alone. Ten today. */
+  browser?: true;
 };
 
 /**
- * The full gate chain. Order is informational only — gates run in
+ * The full gate chain. Order is informational only: gates run in
  * parallel. Keep this list in sync with package.json `prebuild`.
  */
 const GATES: Gate[] = [
@@ -85,12 +113,12 @@ const GATES: Gate[] = [
      has never found a fault, so it has not earned a place. All four stay manual. */
   { name: "no-scaling-drawings", script: "scripts/verify_no_scaling_drawings.mjs" },
   { name: "scale-end-clamps", script: "scripts/verify_scale_end_clamps.mjs" },
-  { name: "frost-reads", script: "scripts/verify_frost_reads.mjs" },
-  { name: "section-bands", script: "scripts/verify_section_bands.mjs" },
-  { name: "art-direction", script: "scripts/verify_art_direction.mjs" },
+  { name: "frost-reads", script: "scripts/verify_frost_reads.mjs", browser: true },
+  { name: "section-bands", script: "scripts/verify_section_bands.mjs", browser: true },
+  { name: "art-direction", script: "scripts/verify_art_direction.mjs", browser: true },
   /* E6, the other half of "a lot of whitespace". The ink gate measures HEIGHT,
      so a card with a dead strip down its right passed as full. */
-  { name: "gathered-emptiness", script: "scripts/verify_gathered_emptiness.mjs" },
+  { name: "gathered-emptiness", script: "scripts/verify_gathered_emptiness.mjs", browser: true },
   /* The same rule on a LIVE render of the country page, which the four static
      artefacts above never include, runs as `npm run harness:page` before a
      ship (scripts/harness/check_page_holes.mjs): the render needs the database
@@ -99,7 +127,7 @@ const GATES: Gate[] = [
      spine pages `section-bands` already holds the line for. 2026-08-27: "the ban
      is site-wide, every live surface, not only the four reformed page types."
      Ratchet, negative-tested; the legacy three carry real counts today. */
-  { name: "fullwidth-sitewide", script: "scripts/verify_full_width_sitewide.mjs" },
+  { name: "fullwidth-sitewide", script: "scripts/verify_full_width_sitewide.mjs", browser: true },
   /* Task 6, 2026-08-27 verdicts 2, 4, 7: one card radius, and country flags
      that are always rectangles and always legible, read across the same
      seven pages `fullwidth-sitewide` reads. The task brief called the flags
@@ -110,14 +138,14 @@ const GATES: Gate[] = [
      later tasks, and a hard gate would fail the whole chain from today until
      then. `country-gb`'s flags baseline MUST reach 0 once its peers table is
      rebuilt. Both negative-tested against a scratch copy of a real page. */
-  { name: "radius-uniform", script: "scripts/verify_radius_uniform.mjs" },
-  { name: "flag-marks", script: "scripts/verify_flag_marks.mjs" },
+  { name: "radius-uniform", script: "scripts/verify_radius_uniform.mjs", browser: true },
+  { name: "flag-marks", script: "scripts/verify_flag_marks.mjs", browser: true },
   /* The 2026-08-30 verdicts, each a gate the same day (working method rule 4):
      law M, nothing scrolls sideways at phone width on the rebuilt surfaces
      (the peers table paid first); N9, quartile words never reach a reader ,
      deciles or the typical alone. Both scoped to the rebuilt spine with the
      legacy remainder named loudly, not silently passed. */
-  { name: "no-phone-sideways", script: "scripts/verify_no_phone_sideways.mjs" },
+  { name: "no-phone-sideways", script: "scripts/verify_no_phone_sideways.mjs", browser: true },
   { name: "no-quartile-words", script: "scripts/verify_no_quartile_words.mjs" },
   /* THE CHECK THAT WOULD HAVE CAUGHT THE SLOP, 2026-09-01. Every other gate
      here tests a rule; none tested sameness, so ten sections drawn as the same
@@ -125,13 +153,13 @@ const GATES: Gate[] = [
      each page's declared visual ideas against the caps parsed out of
      FORM-CATALOG v2. Negative-tested by planting three I1 declarations on a
      page whose cap is two and watching it fail. */
-  { name: "form-variety", script: "scripts/verify_form_variety.mjs" },
+  { name: "form-variety", script: "scripts/verify_form_variety.mjs", browser: true },
   /* The blueprint reform, 2026-08-29: each page's constitution lives in
      design/blueprints/<page>.md, written before the code, and this gate fails
      the build when a rendered page disagrees with its own SPINE table. It
      caught a real drift in its first minute (the terminus missing its declared
      id). Negative-tested both directions with a planted lie. */
-  { name: "blueprint-conformance", script: "scripts/verify_blueprint_conformance.mjs" },
+  { name: "blueprint-conformance", script: "scripts/verify_blueprint_conformance.mjs", browser: true },
   /* Two display utilities on one element compile to two declarations and the
      stylesheet picks the winner. Nothing warns and a typecheck cannot see it.
      The tooltip marker carried inline-flex AND grid for months. */
@@ -595,13 +623,120 @@ const onlyArg = argv.find((a) => a.startsWith("--only="));
 const ONLY = onlyArg ? new Set(onlyArg.split("=")[1].split(",").map((x) => x.trim()).filter(Boolean)) : null;
 const freeMb = () => Math.round(os.freemem() / 1048576);
 
+/* THE MEMORY FLOOR (plan step 13, 2026-09-17). The chain used to start on a
+   starved machine and die a minute later inside a browser gate, and the death
+   read as a failure: ten of eleven reds in one run were that. Now it refuses
+   first, with exit 2, the harness preflight's ground exit: a finding is 1, a
+   wrong ground is 2, and the two are never confused.
+
+   The floors are the harness preflight's own (scripts/harness/preflight.mjs,
+   plan step 26, measured: browser deaths at 266 to 624 MB free, passes from
+   about 1036 up). That module is not imported here: it imports playwright at
+   module load and exits 2 on a wrong cwd, and this chain must depend on
+   neither. The two numbers are read out of its source text instead, so the
+   files cannot drift; the literals are the fallback for an unreadable file and
+   are the values of 2026-09-17. The floor for a run follows how many browsers
+   can be open at once: the chain floor above one, the browser floor at one,
+   none when no selected gate launches one. `--floor=<MB>` overrides for a
+   proof (0 disables), PREFLIGHT_FORCE=1 runs anyway, and VERCEL or CI skips
+   the floor: a refused deploy is worse than a memory death on a machine we
+   do not control. */
+const GROUND_EXIT = 2;
+const PREFLIGHT_SOURCE = "scripts/harness/preflight.mjs";
+const FLOOR_LITERALS = { BROWSER_FLOOR_MB: 620, CHAIN_FLOOR_MB: 1100 };
+function readFloors(): { BROWSER_FLOOR_MB: number; CHAIN_FLOOR_MB: number; literal: boolean } {
+  try {
+    const src = readFileSync(PREFLIGHT_SOURCE, "utf8");
+    const b = /export const BROWSER_FLOOR_MB\s*=\s*(\d+)/.exec(src);
+    const c = /export const CHAIN_FLOOR_MB\s*=\s*(\d+)/.exec(src);
+    if (b && c) return { BROWSER_FLOOR_MB: Number(b[1]), CHAIN_FLOOR_MB: Number(c[1]), literal: false };
+  } catch { /* unreadable: the literals */ }
+  return { ...FLOOR_LITERALS, literal: true };
+}
+const floorArg = argv.find((a) => a.startsWith("--floor="));
+const FLOOR_OVERRIDE = floorArg ? Math.max(0, parseInt(floorArg.split("=")[1], 10) || 0) : null;
+const CI_SKIP = process.env.VERCEL ? "VERCEL" : process.env.CI ? "CI" : null;
+
+/** The floor this run is held to, and the reason in words for the header. */
+function floorFor(selected: Gate[]): { mb: number; why: string } {
+  if (FLOOR_OVERRIDE !== null) return { mb: FLOOR_OVERRIDE, why: "by --floor" };
+  const floors = readFloors();
+  const source = floors.literal ? "; preflight.mjs unreadable, the literal" : "";
+  const browsersAtOnce = Math.min(CONCURRENCY, selected.filter((g) => g.browser).length);
+  if (browsersAtOnce > 1) return { mb: floors.CHAIN_FLOOR_MB, why: `up to ${browsersAtOnce} browser gates at once${source}` };
+  if (browsersAtOnce === 1) return { mb: floors.BROWSER_FLOOR_MB, why: `one browser gate at a time${source}` };
+  return { mb: 0, why: "no browser gate selected" };
+}
+
+/** win32 only: the top three image names by working set, read from tasklist, so
+    the refusal names what to close instead of saying "close something". */
+function heaviestProcesses(): string[] {
+  if (process.platform !== "win32") return [];
+  const r = spawnSync("tasklist", ["/FO", "CSV", "/NH"], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+  if (r.status !== 0 || !r.stdout) return [];
+  const groups = new Map<string, { mb: number; count: number }>();
+  for (const line of r.stdout.split(/\r?\n/)) {
+    /* "Image Name","PID","Session Name","Session#","Mem Usage": five quoted
+       cells; the memory reads "123,456 K" in the machine's locale, so keep the
+       digits only. */
+    const cells = [...line.matchAll(/"([^"]*)"/g)].map((m) => m[1]);
+    if (cells.length < 5) continue;
+    const kb = Number(cells[4].replace(/\D/g, ""));
+    if (!kb) continue;
+    const g = groups.get(cells[0]) ?? { mb: 0, count: 0 };
+    g.mb += kb / 1024;
+    g.count += 1;
+    groups.set(cells[0], g);
+  }
+  return [...groups.entries()]
+    .sort((a, b) => b[1].mb - a[1].mb)
+    .slice(0, 3)
+    .map(([name, g]) => `${name}: ${Math.round(g.mb)} MB across ${g.count} process${g.count === 1 ? "" : "es"}`);
+}
+
+type Kind = "pass" | "fail" | "timeout" | "memory";
+
 type GateResult = {
   name: string;
   exitCode: number;
+  kind: Kind;
   durationMs: number;
+  /** node's free physical memory when the gate ended, in MB. */
+  freeMbAtEnd: number;
   stdoutTail: string;
   stderrTail: string;
+  /** Set on a retry's result: the free memory at the first run, the one that died. */
+  firstDeathAt?: number;
 };
+
+/* WHAT A MEMORY DEATH LOOKS LIKE, from this chain's own history: a V8 heap
+   limit, a failed allocation, ENOMEM, Playwright losing its browser or never
+   getting one, the shell's "spawn UNKNOWN", and three exit codes: 134
+   (SIGABRT), 0xC0000005 (an access violation, the Windows segfault) and
+   0xC0000409 (a fail-fast). Plus the quietest one: a non-zero exit that
+   printed nothing at all, which is what a process the machine killed looks
+   like from here. The signatures are matched on the whole output, not only
+   on the twenty-line tail kept for the report, because a heap death prints
+   its stack for twenty lines after the one line that names it. A timeout
+   stays a timeout: it was this runner that killed it. */
+const DEATH_EXIT_CODES = new Set([134, 3221225477, 3221226505]);
+const DEATH_SIGNATURES = [
+  /FATAL ERROR: Reached heap limit/,
+  /Allocation failed/,
+  /ENOMEM/,
+  /Target page, context or browser has been closed/,
+  /browserType\.launch/,
+  /spawn UNKNOWN/,
+];
+function classify(exitCode: number, output: string): Kind {
+  if (exitCode === 0) return "pass";
+  if (exitCode === 124) return "timeout";
+  if (DEATH_EXIT_CODES.has(exitCode)) return "memory";
+  const text = output.trim();
+  if (text === "" || DEATH_SIGNATURES.some((re) => re.test(text))) return "memory";
+  return "fail";
+}
+const tail20 = (s: string) => s.split("\n").slice(-20).join("\n");
 
 function runGate(gate: Gate): Promise<GateResult> {
   return new Promise((resolve) => {
@@ -611,7 +746,7 @@ function runGate(gate: Gate): Promise<GateResult> {
     // resolves to `npx.cmd`); Node 22+ refuses to spawn .cmd files
     // directly with EINVAL. The DEP0190 deprecation warning this
     // triggers is acceptable here because every arg is a hardcoded
-    // literal from the GATES array — no caller-controlled input.
+    // literal from the GATES array: no caller-controlled input.
     const child = spawn("npx", args, {
       shell: process.platform === "win32",
       env: process.env,
@@ -627,68 +762,99 @@ function runGate(gate: Gate): Promise<GateResult> {
           else child.kill("SIGKILL");
         }, TIMEOUT_MS)
       : null;
+    const finish = (exitCode: number, stdout: string, stderr: string, prefix = "") => {
+      resolve({
+        name: gate.name,
+        exitCode,
+        kind: classify(exitCode, stdout + stderr),
+        durationMs: Date.now() - started,
+        freeMbAtEnd: freeMb(),
+        stdoutTail: tail20(stdout),
+        stderrTail: prefix + tail20(stderr),
+      });
+    };
     child.stdout.on("data", (b: Buffer) => stdoutBuf.push(b.toString()));
     child.stderr.on("data", (b: Buffer) => stderrBuf.push(b.toString()));
     child.on("close", (code) => {
       if (timer) clearTimeout(timer);
-      resolve({
-        name: gate.name,
-        exitCode: timedOut ? 124 : code ?? 1,
-        durationMs: Date.now() - started,
-        stdoutTail: stdoutBuf.join("").split("\n").slice(-20).join("\n"),
-        stderrTail: (timedOut ? `TIMEOUT after ${TIMEOUT_MS / 1000}s: the gate was killed with its process tree (free memory ${freeMb()} MB)\n` : "") + stderrBuf.join("").split("\n").slice(-20).join("\n"),
-      });
+      finish(
+        timedOut ? 124 : code ?? 1,
+        stdoutBuf.join(""),
+        stderrBuf.join(""),
+        timedOut ? `TIMEOUT after ${TIMEOUT_MS / 1000}s: the gate was killed with its process tree (free memory ${freeMb()} MB)\n` : "",
+      );
     });
-    child.on("error", (err) => {
-      resolve({
-        name: gate.name,
-        exitCode: 1,
-        durationMs: Date.now() - started,
-        stdoutTail: "",
-        stderrTail: `spawn error: ${err.message}`,
-      });
-    });
+    child.on("error", (err) => finish(1, "", `spawn error: ${err.message}`));
   });
 }
 
-/** Worker-pool runner: caps concurrency, optionally bails on failure. */
-async function runAll(gates: Gate[]): Promise<GateResult[]> {
+/** The per-gate log line: the tick, the name, the seconds, and MEMORY or
+    TIMEOUT when it was that; a retry's line says what the retry found. */
+function logLine(gate: Gate, r: GateResult) {
+  if (QUIET) return;
+  const sym = r.kind === "pass" ? "✓" : "✗";
+  const secs = (r.durationMs / 1000).toFixed(1);
+  let note = "";
+  if (r.firstDeathAt !== undefined) {
+    note = r.kind === "pass" ? `  passed on retry after a memory death at ${r.firstDeathAt} MB free`
+      : r.kind === "memory" ? `  MEMORY again on the retry, alone (exit ${r.exitCode}, ${r.freeMbAtEnd} MB free)`
+      : `  ${r.kind === "timeout" ? "TIMEOUT" : "failed"} on retry after a memory death at ${r.firstDeathAt} MB free: a real result`;
+  } else if (r.kind === "timeout") {
+    note = "  TIMEOUT";
+  } else if (r.kind === "memory") {
+    note = `  MEMORY (exit ${r.exitCode}, ${r.freeMbAtEnd} MB free${gate.browser ? "; retried alone once the pool drains" : "; not a browser gate, not retried"})`;
+  }
+  console.log(`  ${sym} ${gate.name.padEnd(28)} ${secs}s${note}`);
+}
+
+/** Worker-pool runner: caps concurrency, optionally bails on a real failure,
+    and retries each browser gate's memory death once, alone, after the pool
+    has drained. */
+async function runAll(gates: Gate[]): Promise<{ results: GateResult[]; bailed: boolean }> {
   const results: GateResult[] = [];
   let nextIdx = 0;
   let bailed = false;
   const inFlight = new Set<Promise<void>>();
-  const workers: Promise<void>[] = [];
 
-  function maybeStart(): Promise<void> | null {
-    if (bailed) return null;
-    if (nextIdx >= gates.length) return null;
+  function maybeStart(): void {
+    if (bailed) return;
+    if (nextIdx >= gates.length) return;
     const gate = gates[nextIdx++];
     const p = runGate(gate).then((r) => {
       results.push(r);
-      if (!QUIET) {
-        const sym = r.exitCode === 0 ? "✓" : "✗";
-        const secs = (r.durationMs / 1000).toFixed(1);
-        console.log(`  ${sym} ${gate.name.padEnd(28)} ${secs}s${r.exitCode === 124 ? "  TIMEOUT" : ""}`);
-      }
-      if (r.exitCode !== 0 && BAIL) bailed = true;
+      logLine(gate, r);
+      /* A memory death never bails: it is a finding about the machine, not
+         about the gate, and for a browser gate the retry below may overturn it. */
+      if ((r.kind === "fail" || r.kind === "timeout") && BAIL) bailed = true;
     });
     inFlight.add(p);
     p.finally(() => inFlight.delete(p));
-    return p;
   }
 
-  // Prime the pool.
-  for (let i = 0; i < CONCURRENCY; i++) {
-    const p = maybeStart();
-    if (p) workers.push(p);
-  }
-  // Keep replenishing until done.
+  // Prime the pool, then keep replenishing until done.
+  for (let i = 0; i < CONCURRENCY; i++) maybeStart();
   while (inFlight.size > 0) {
     await Promise.race(inFlight);
-    const p = maybeStart();
-    if (p) workers.push(p);
+    maybeStart();
   }
-  return results;
+
+  /* THE RETRY, one at a time with nothing else in flight, so the second reading
+     is of the gate and not of the pool. Its result replaces the first: a pass
+     is a pass, a failure is a real failure with its output, a second death is
+     reported under memory. Not after a bail: the chain promised to stop. */
+  if (!bailed) {
+    for (let i = 0; i < results.length; i++) {
+      const first = results[i];
+      const gate = gates.find((g) => g.name === first.name);
+      if (!gate || !gate.browser || first.kind !== "memory" || first.firstDeathAt !== undefined) continue;
+      if (!QUIET) console.log(`  ↻ ${gate.name.padEnd(28)} retrying alone after a memory death at ${first.freeMbAtEnd} MB free (${freeMb()} MB free now)`);
+      const again = await runGate(gate);
+      again.firstDeathAt = first.freeMbAtEnd;
+      results[i] = again;
+      logLine(gate, again);
+    }
+  }
+  return { results, bailed };
 }
 
 async function main() {
@@ -696,20 +862,43 @@ async function main() {
   const selected = ONLY ? GATES.filter((g) => ONLY.has(g.name)) : GATES;
   if (ONLY) {
     const missing = [...ONLY].filter((n) => !GATES.some((g) => g.name === n));
-    if (missing.length) { console.error(`--only names no gate: ${missing.join(", ")}`); process.exit(2); }
+    if (missing.length) { console.error(`--only names no gate: ${missing.join(", ")}`); process.exit(GROUND_EXIT); }
   }
-  console.log(`=== prebuild_all  (${GATES.length} gates${ONLY ? `, running ${selected.length} by --only` : ""}, concurrency=${CONCURRENCY}, timeout=${TIMEOUT_MS / 1000}s, free memory ${freeMb()} MB) ===`);
+
+  /* THE PREFLIGHT. The header always prints the free memory it read and the
+     floor it was held to; under the floor it refuses, names what to close, and
+     exits 2 before a single gate has started. */
+  const free = freeMb();
+  const floor = floorFor(selected);
+  const forced = Boolean(process.env.PREFLIGHT_FORCE);
+  const under = !CI_SKIP && floor.mb > 0 && free < floor.mb;
+  const floorClause = CI_SKIP
+    ? `floor skipped: ${CI_SKIP}`
+    : floor.mb > 0
+      ? `floor ${floor.mb} MB (${floor.why})${under && forced ? ", under it, PREFLIGHT_FORCE=1 runs anyway" : ""}`
+      : `floor none (${floor.why})`;
+  console.log(`=== prebuild_all  (${GATES.length} gates${ONLY ? `, running ${selected.length} by --only` : ""}, concurrency=${CONCURRENCY}, timeout=${TIMEOUT_MS / 1000}s, free memory ${free} MB, ${floorClause}) ===`);
+  if (under && !forced) {
+    console.error(`refused: free memory ${free} MB is below the chain's floor ${floor.mb} MB (${floor.mb - free} MB short)`);
+    for (const line of heaviestProcesses()) console.error(`  ${line}`);
+    console.error(`  close Edge windows (or whatever holds the most) until ${floor.mb} MB is free, then run again; PREFLIGHT_FORCE=1 runs anyway`);
+    process.exit(GROUND_EXIT);
+  }
   console.log("");
-  const results = await runAll(selected);
+  const { results, bailed } = await runAll(selected);
   const wall = ((Date.now() - started) / 1000).toFixed(1);
-  const fails = results.filter((r) => r.exitCode !== 0);
+  const passes = results.filter((r) => r.kind === "pass");
+  const fails = results.filter((r) => r.kind === "fail" || r.kind === "timeout");
+  const deaths = results.filter((r) => r.kind === "memory");
+  const timeouts = fails.filter((r) => r.kind === "timeout").length;
+  const retriedPasses = passes.filter((r) => r.firstDeathAt !== undefined).length;
   console.log("");
   console.log(`=== Summary ===`);
-  const timeouts = fails.filter((r) => r.exitCode === 124).length;
   console.log(`  Ran: ${results.length} / ${GATES.length} gates${ONLY ? " (a subset by --only; not the chain)" : ""}`);
   console.log(`  Wall-clock: ${wall}s, free memory now ${freeMb()} MB`);
-  console.log(`  Passed: ${results.length - fails.length}`);
+  console.log(`  Passed: ${passes.length}${retriedPasses ? ` (${retriedPasses} on a retry after a memory death)` : ""}`);
   console.log(`  Failed: ${fails.length}${timeouts ? ` (${timeouts} by TIMEOUT)` : ""}`);
+  console.log(`  Died on memory: ${deaths.length}`);
 
   /* DEFERRED CHECKS, surfaced at the summary.
 
@@ -745,12 +934,32 @@ async function main() {
     console.log("");
     console.log("=== Failures ===");
     for (const f of fails) {
-      console.log(`\n--- ${f.name} (exit ${f.exitCode}) ---`);
+      const after = f.firstDeathAt !== undefined ? `; the retry's real result, after a memory death at ${f.firstDeathAt} MB free` : "";
+      console.log(`\n--- ${f.name} (exit ${f.exitCode}${after}) ---`);
       if (f.stdoutTail.trim()) console.log(f.stdoutTail);
       if (f.stderrTail.trim()) console.log(f.stderrTail);
     }
-    process.exit(1);
   }
+
+  /* THE MEMORY BLOCK, apart from the failures: the gate, the free memory when it
+     died, whether it was retried, and the one remedy. What it printed, if
+     anything, sits under it, because the signature is the evidence. */
+  if (deaths.length > 0) {
+    console.log("");
+    console.log("=== Died on memory ===");
+    for (const d of deaths) {
+      const gate = GATES.find((g) => g.name === d.name);
+      const what = d.firstDeathAt !== undefined
+        ? `died on memory twice: at ${d.firstDeathAt} MB free in the pool and at ${d.freeMbAtEnd} MB free alone (exit ${d.exitCode})`
+        : `died on memory at ${d.freeMbAtEnd} MB free (exit ${d.exitCode}); ${gate?.browser ? (bailed ? "not retried because the chain bailed on a real failure" : "not retried") : "not a browser gate, not retried"}`;
+      console.log(`  ${d.name}: ${what}`);
+      const printed = [d.stdoutTail, d.stderrTail].filter((t) => t.trim()).join("\n");
+      if (printed) console.log(printed.split("\n").map((l) => `      ${l}`).join("\n"));
+    }
+    console.log(`  Free memory (close Edge windows, or whatever holds the most), then run these alone: npm run prebuild -- --only=${deaths.map((d) => d.name).join(",")}`);
+  }
+
+  if (fails.length > 0 || deaths.length > 0) process.exit(1);
   console.log(ONLY ? "\n  SUBSET: PASS (not the chain; run without --only for the gate)" : "\n  GATE: PASS");
 }
 
