@@ -10,6 +10,15 @@
       "new": 2,
       "date": "2026-09-08",
       "reason": "Not a regression. verify_section_bands names the peer cities table and the closing Where to next block as the two full-width sections. Both are full width by deliberate design: peers took the data-wide-table sanction in build loop run 22 and close is the terminus built in run 19 (design/loop/build/LEDGER.md). The founder ruled on the same day, asked how many full-width blocks a page should carry: 'Three, as the model says' (rules/FOUNDER-VERDICTS.md, FULL WIDTH, asked 2026-09-08), naming the opening card, the peers table and the exit. design/loop/build/briefs/MODEL.md PART 1 states the same law: THREE FULL-WIDTH BLOCKS PER PAGE AND NO MORE, the opening card, the comparison table, the exit. The baseline of 0 predates that ruling; this re-seed brings it to the true current count under the ruling, not a waved-through regression."
+    },
+    {
+      "page": "country-gb-new and howto-GB",
+      "old": 0,
+      "new": "2 and 1",
+      "date": "2026-09-17",
+      "reason": "Not a regression: a first measurement. Until plan step 14b this gate read renders frozen on 2026-09-08, in which neither page existed under these keys, so 0 was the count of an absence, not of the page. On the live render the country page's two full-width sections with no wide form are the peers table and the exit, the same two the city-london re-seed of 2026-09-08 names, under the same ruling (three full widths stand: the opening, the comparison table, the exit; MODEL.md PART 9 clause 36, R1); the how-to page's one is its exit. The count may fall and never rise."
     }
-  ]
+  ],
+  "country-gb-new": 2,
+  "howto-GB": 1
 }

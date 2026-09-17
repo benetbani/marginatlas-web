@@ -1,5 +1,5 @@
 {
-  "city-london:prose": 0,
+  "city-london:prose": 1,
   "city-london:ink": 0,
   "city-london:accents": 0,
   "city-london:nested": 0,
@@ -46,5 +46,36 @@
   "hood-london:ladder": 0,
   "hood-london:rhythm": 0,
   "hood-london:numerals": 0,
-  "hood-london:frontRepeat": 0
+  "hood-london:frontRepeat": 0,
+  "country-gb-new:prose": 2,
+  "country-gb-new:ink": 0,
+  "country-gb-new:accents": 1,
+  "country-gb-new:nested": 0,
+  "country-gb-new:pageAccents": 0,
+  "country-gb-new:wideDomain": 0,
+  "country-gb-new:falseLegend": 0,
+  "country-gb-new:sameForAll": 0,
+  "country-gb-new:ladder": 0,
+  "country-gb-new:rhythm": 0,
+  "country-gb-new:numerals": 0,
+  "country-gb-new:frontRepeat": 2,
+  "howto-GB:prose": 4,
+  "howto-GB:ink": 0,
+  "howto-GB:accents": 1,
+  "howto-GB:nested": 0,
+  "howto-GB:pageAccents": 0,
+  "howto-GB:wideDomain": 0,
+  "howto-GB:falseLegend": 0,
+  "howto-GB:sameForAll": 0,
+  "howto-GB:ladder": 0,
+  "howto-GB:rhythm": 0,
+  "howto-GB:numerals": 0,
+  "howto-GB:frontRepeat": 0,
+  "_reseed_history": [
+    {
+      "page": "country-gb-new, howto-GB, city-london:prose",
+      "date": "2026-09-17",
+      "reason": "First measurement of the live source, not a regression. Until plan step 14b this gate read renders frozen on 2026-09-08 in which the country and how-to pages were absent under these keys (a missing key read as 0) and the city page's runway card carried a shorter sentence. Live: country prose 2 (two cards over 220 characters), accents 1 (three accent marks on the registering card), frontRepeat 2 (13.8 percent and 1 day twice in the first screen); how-to prose 4, accents 1; city prose 1 (Rent against income, 222 characters). Every one is a real finding against the source and is file 04's work: the country page's rebuild to MODEL.md 8.2 (plan step 31) and the city page's to 8.3 (step 32, which replaces the runway card). Recorded in DEBUG.md section 7. Each may fall and never rise."
+    }
+  ]
 }

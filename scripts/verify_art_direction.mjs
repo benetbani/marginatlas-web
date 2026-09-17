@@ -669,7 +669,11 @@ console.log(`\n  ${total} art-direction finding(s) across ${pages.length} page(s
 for (const m of missing) console.log(missingLine(RULE, m));
 
 if (process.argv.includes("--write-baseline")) {
-  writeFileSync(BASELINE, JSON.stringify(now, null, 2) + "\n");
+  /* The re-seed history is the record of every baseline raised with its
+     reason (plan step 14b, 2026-09-17); a write keeps it, or the reasons vanish. */
+  let history = null;
+  try { history = JSON.parse(readFileSync(BASELINE, "utf8"))._reseed_history ?? null; } catch { /* first write */ }
+  writeFileSync(BASELINE, JSON.stringify(history ? { ...now, _reseed_history: history } : now, null, 2) + "\n");
   console.log(`  wrote ${BASELINE}\n`);
   process.exit(0);
 }
