@@ -9,6 +9,13 @@
       "since": "run 1, the country page's terminus"
     },
     {
+      "surface": "country",
+      "slugs": [
+        "AF"
+      ],
+      "since": "plan step 31, 2026-09-18: the thin-country exemplar (no legal form, no regime, no covered city), so the composition is measured where the data is thinnest, never on GB alone"
+    },
+    {
       "surface": "howto",
       "slugs": [
         "GB"
