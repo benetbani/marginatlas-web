@@ -154,12 +154,12 @@ const GATES: Gate[] = [
      FORM-CATALOG v2. Negative-tested by planting three I1 declarations on a
      page whose cap is two and watching it fail. */
   { name: "form-variety", script: "scripts/verify_form_variety.mjs", browser: true },
-  /* The blueprint reform, 2026-08-29: each page's constitution lives in
-     design/blueprints/<page>.md, written before the code, and this gate fails
-     the build when a rendered page disagrees with its own SPINE table. It
-     caught a real drift in its first minute (the terminus missing its declared
-     id). Negative-tested both directions with a planted lie. */
-  { name: "blueprint-conformance", script: "scripts/verify_blueprint_conformance.mjs", browser: true },
+  /* The blueprint-conformance gate (2026-08-29 to 2026-09-17) stood here. It
+     compared design/blueprints/*.md in the parent repo against renders frozen
+     in docs/loop/artifacts/final-pages on 2026-09-08, so it could never see
+     the live site, and MODEL.md PART 8 has been the one source of every spine
+     since plan step 2. Retired with plan step 14; the blueprints carry a
+     SUPERSEDED line naming their PART 8 section. */
   /* Two display utilities on one element compile to two declarations and the
      stylesheet picks the winner. Nothing warns and a typecheck cannot see it.
      The tooltip marker carried inline-flex AND grid for months. */
@@ -178,7 +178,12 @@ const GATES: Gate[] = [
      happened on 2026-07-26 , six edits to the mockup stylesheet sat
      unpropagated for eleven hours while the React kit rendered the old design.
      Both checks were negative-tested against a real induced drift. */
-  { name: "spine-css-fresh", script: "scripts/scope_atlas_css.mjs", args: ["--check"] },
+  /* Plan step 14 (2026-09-17): `spine-css-fresh` compared src/styles/atlas-spine.css
+     with the parent repo's mockup stylesheet, retired in plan step 5, so it was
+     red against a file that no longer means anything. The stylesheet is the
+     site's own now; this reads it alone and asserts what the generator used to
+     guarantee (every rule under .av2, .av2 free of transform and filter). */
+  { name: "spine-css-scoped", script: "scripts/verify_spine_css_scoped.mjs" },
   { name: "glyphs-fresh", script: "scripts/sync_glyphs.mjs", args: ["--check"] },
   /* The section census (plan step 24, 2026-09-17): docs/loop/CENSUS.md is
      generated from src/components/spine and this reds when it is stale, so
