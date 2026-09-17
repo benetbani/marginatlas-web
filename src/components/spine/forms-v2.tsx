@@ -427,7 +427,7 @@ export type StateKind = "yes" | "no" | "na";
  * 2px so a 36px disc holds a mark heavy enough to read at thumbnail size. Round
  * caps and joins, because a square-cut tick at this weight reads as a smudge.
  *
- * EXPORTED 2026-09-10 so CompareTable's winning-cell tick (M3,
+ * EXPORTED 2026-09-10 so CompareTable's winning-cell tick (his B7, the comparison; the old "M3" label was a slip,
  * design/references/founder-2026-09-10.md) reuses this exact glyph instead of
  * a second check drawn for that table. Nothing about StateWord's own use of
  * it changes; this only makes the "yes" tick reachable on its own.
