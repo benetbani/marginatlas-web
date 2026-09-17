@@ -960,6 +960,19 @@
       "claims": []
     },
     {
+      "name": "gate-reds-ratchet",
+      "script": "scripts/audit_gate_reds.mjs",
+      "args": [],
+      "browser": false,
+      "asserts": "scripts/audit_gate_reds.mjs , does every gate's red name a file, a rule and a remedy?",
+      "reads": [
+        "scripts/gate_reds_baseline.json",
+        "scripts/prebuild_all.ts",
+        "tests/"
+      ],
+      "claims": []
+    },
+    {
       "name": "strip-comments",
       "script": "tests/lib/strip_comments.test.ts",
       "args": [],

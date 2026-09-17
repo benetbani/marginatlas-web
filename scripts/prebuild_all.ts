@@ -60,7 +60,8 @@ type Gate = {
   /** Optional CLI args appended after the script path. */
   args?: string[];
   /** The script launches a Playwright browser: it counts against the memory
-      floor, and a memory death of it is retried once, alone. Ten today. */
+      floor, and a memory death of it is retried once, alone. Nine today (ten
+     before blueprint-conformance was retired in plan step 14). */
   browser?: true;
 };
 
@@ -383,6 +384,13 @@ const GATES: Gate[] = [
      model-laws-copy bans and a page could satisfy only one of them. Proved by
      planting a scratch gate declaring `requires "x1.00"`. */
   { name: "gate-conflicts", script: "scripts/verify_gate_conflicts.ts" },
+  /* EVERY RED NAMES A FILE, A LINE, A RULE AND A REMEDY, ratcheted. Plan step
+     16, 2026-09-17: a static census of each gate's failure text (a path, the
+     rule's name, a remedy phrase) against scripts/gate_reds_baseline.json,
+     which falls and never rises. "cream grew 5 to 6" cost a deploy and a
+     search; the same red now reads globals.css:2534 with the literal and
+     "use var(--c-card) or another token". */
+  { name: "gate-reds-ratchet", script: "scripts/audit_gate_reds.mjs" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "build-compare", script: "tests/scripts/build_compare.test.ts" },
   { name: "scope-rules", script: "tests/taxonomy/scope_rules.test.ts" },
