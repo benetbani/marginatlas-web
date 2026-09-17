@@ -208,13 +208,26 @@ function failureText(code) {
 
 /** The one script a wrapper spawns under tsx, if any (one level). */
 function spawnedChild(code) {
-  const m = code.match(/["']tsx["']\s*,\s*["']([\w./-]+\.(?:ts|mjs))["']/) || code.match(/npx tsx\s+([\w./-]+\.(?:ts|mjs))/);
-  return m ? m[1] : null;
+  /* Only a real spawn counts: the `["tsx", "<path>"]` argument form, or an
+     `npx tsx <path>` string on a line that calls spawn or exec. A remedy that
+     SAYS "run npx tsx scripts/x.ts" is advice to the reader, not a child. */
+  const arr = code.match(/["']tsx["']\s*,\s*["']([\w./-]+\.(?:ts|mjs))["']/);
+  if (arr) return arr[1];
+  for (const line of code.split("\n")) {
+    if (!/\b(?:spawn|spawnSync|exec|execSync|execFileSync)\b/.test(line)) continue;
+    const m = line.match(/npx tsx\s+([\w./-]+\.(?:ts|mjs))/);
+    if (m) return m[1];
+  }
+  return null;
 }
 
 /* ------------------------------------------------------- CLASSIFICATION */
 
-const PATHISH = /\$\{[^}]*\b(?:file|files|rel|relPath|relpath|abs|absPath|path|paths|fname|filename|loc|location|where|target|carrier|src|source|display|list|self|baseline|f|p|route|page|entry|module|mod|spec|selfRef|SELF|TARGET|LIST|DISPLAY|CARRIER)\b[^}]*\}/;
+/* An interpolation whose expression names a file: a bare `${file}`, `${rel}`,
+   `${f}`, a member like `${h.file}`, or an identifier ending in File or Path
+   (`${r.seedFile}`, `${BASELINE_PATH}`). Credit is by the NAME of the variable,
+   which the header says plainly. */
+const PATHISH = /\$\{[^}]*\b(?:\w*(?:file|files|path|paths)|rel|relpath|abs|fname|filename|loc|location|where|target|carrier|src|source|display|list|self|baseline|f|p|route|page|entry|module|mod|spec)\b[^}]*\}/i;
 const LITERAL_PATH = /(?:^|[^\w/.-])((?:src|scripts|data|docs|tests|public|db|content|design)(?:\/[\w.\-[\]()]+)+|[\w.-]+\.(?:tsx?|mjs|cjs|css|json|md|html))(?=$|[^\w/])/g;
 
 const CAPS_STOP = new Set([
@@ -261,7 +274,10 @@ function classify(gate, code, extra, meta) {
   const ev = { path: null, line: null, rule: null, remedy: null };
 
   /* path: a red() call with a file field is a path by construction. */
-  const redCall = (code + (extra?.code ?? "")).match(/\b(?:red|formatRed)\(\s*\{([^}]*)\}/s);
+  /* A call to scripts/lib/red: `red({ ... })`, an aliased `redLine({ ... })`
+     or `formatRed({ ... })`. The object literal may hold `${...}` inside its
+     strings, so one level of nested braces is allowed before the closing one. */
+  const redCall = (code + (extra?.code ?? "")).match(/\b(?:red\w*|formatRed)\(\s*\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}/s);
   if (redCall && /\bfile\b/.test(redCall[1])) {
     ev.path = "red({file})";
     if (/\bline\b/.test(redCall[1])) ev.line = "red({line})";

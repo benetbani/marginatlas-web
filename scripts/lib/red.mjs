@@ -37,6 +37,7 @@
  * gate's lines stay in order) and RETURN the line. `formatRed` and
  * `formatRedSummary` only return it, for a gate that writes to stdout.
  */
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -68,6 +69,27 @@ export function repoRelative(file) {
   if (path.isAbsolute(s)) s = path.relative(ROOT, s);
   s = s.replace(/\\/g, "/").replace(/^\.\//, "");
   return s;
+}
+
+/**
+ * The line on which a JSON key is first declared, for a gate whose finding is
+ * about one entry of a data file: `"GB":` or `"restaurants":`. Undefined when
+ * the file or the key is absent, so the red prints the file with no line
+ * rather than a wrong one. A first occurrence, which is the right one for a
+ * file keyed once per entry and a guess for any other; the gate that knows its
+ * file's shape can pass its own line instead.
+ * @param {string} file  absolute or repo-relative
+ * @param {string | null | undefined} key
+ * @returns {number | undefined}
+ */
+export function lineOfKey(file, key) {
+  if (!key) return undefined;
+  const abs = path.isAbsolute(String(file)) ? String(file) : path.resolve(ROOT, String(file));
+  if (!existsSync(abs)) return undefined;
+  const escaped = String(key).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const decl = new RegExp(`^\\s*"${escaped}"\\s*:`);
+  const i = readFileSync(abs, "utf8").split("\n").findIndex((l) => decl.test(l));
+  return i === -1 ? undefined : i + 1;
 }
 
 /** Em and en dashes become a comma; a trailing full stop or space goes. */

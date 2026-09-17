@@ -10,6 +10,7 @@
 import {
   formatRed as formatRedJs,
   formatRedSummary as formatRedSummaryJs,
+  lineOfKey as lineOfKeyJs,
   red as redJs,
   redSummary as redSummaryJs,
   repoRelative as repoRelativeJs,
@@ -52,4 +53,9 @@ export function formatRedSummary(rule: string, count: number | string, remedy: s
 /** The repo-relative, forward-slash spelling of a path. */
 export function repoRelative(file: string | null | undefined): string {
   return repoRelativeJs(file);
+}
+
+/** The line on which `"key":` is first declared in a JSON file, or undefined. */
+export function lineOfKey(file: string, key: string | null | undefined): number | undefined {
+  return lineOfKeyJs(file, key);
 }
