@@ -43,7 +43,7 @@ website/
 1. `docs/handoff/<latest>-session-handoff.md` — current state, pending tasks, gotchas, what shipped
 2. `docs/design-system/GUIDELINES.md` — authority for any UI work
 3. `docs/architecture/README.md` — domain/layer boundaries, the file map
-4. `E:tlas\design\loopuildriefs\MODEL.md` PART 8 (the per-page spine, from the 2026-09-16 compositions) and PART 9 (what the model forbids); `docs/brand/section-constitution.md` and `cohesion-master-plan.md` are superseded pointers
+4. `E:/atlas/design/loop/build/briefs/MODEL.md` PART 8 (the per-page spine, from the 2026-09-16 compositions) and PART 9 (what the model forbids); `docs/brand/section-constitution.md` and `cohesion-master-plan.md` are superseded pointers
 
 ## Canonical patterns (do not invent variations)
 
