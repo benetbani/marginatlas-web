@@ -28,7 +28,10 @@ import { COPY } from "@/lib/spine/copy";
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_rows";
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
-import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor } from "@/lib/spine/close_rows";
+import { buildChecks, CHECKS_BANK, WAIT_DAYS_THRESHOLD } from "@/lib/spine/checks_rows";
+import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
+import { getFormationRowByTier } from "@/lib/tax/country_rates";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
@@ -487,6 +490,53 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (modelled !== /modelled/.test(r.foot ?? "")) reds.push(`running-costs ${iso2}: ${modelled ? "a printed cell is modelled and the foot does not say so" : "nothing printed is modelled and the foot says modelled"}`);
   }
   console.log(`running costs: ${cards} cards build; no banned word, the kicker and basis within their caps, two slots each a cell or a line, modelled said in the foot`);
+}
+/* BEFORE YOU COMMIT (MODEL.md 8.2 `18 checks`; plan step 31's fifth dispatch,
+   2026-09-18), on every country: two or three rows and the basis that counts
+   them; every row a bank row word for word (the bank is the composition's
+   section 9, and a rewritten question is a different check on the trade page,
+   M20); the second row on the hero's own regime lookup and the third present
+   exactly when the formation file holds an LLC row with a filing time, on the
+   over-21 side exactly when that time is over 21 (R10: the row self-omits
+   where the page holds no registration time, never a verdict); no banned
+   word, the kicker within four words, the basis within fourteen, a label of
+   three words or fewer (PART 5); and the E1 arithmetic held in copy, the
+   questions plus the basis under 220 characters, so the render gate has
+   nothing to find. The compare door beside it (`19 compare`): one pill,
+   the name through inSentence(), an href the app folder holds, no banned
+   word, held to the same door law as every terminus. */
+{
+  let cards = 0, three = 0, two = 0, over = 0;
+  const bankFacts = new Set(Object.values(CHECKS_BANK).flatMap((r) => Object.values(r).map((n) => n!.fact)));
+  for (const iso2 of codes) {
+    const c = buildChecks(iso2);
+    cards++;
+    if (c.rows.length === 3) three++; else if (c.rows.length === 2) two++; else reds.push(`checks ${iso2}: ${c.rows.length} rows; two or three`);
+    if (c.basis !== (c.rows.length === 3 ? COPY.checks.basis.three : COPY.checks.basis.two)) reds.push(`checks ${iso2}: the basis "${c.basis}" does not count ${c.rows.length} rows`);
+    const llc = getFormationRowByTier(iso2, "LLC");
+    const days = llc && typeof llc.days === "number" && llc.days > 0 ? llc.days : null;
+    const wait = c.rows.find((r) => r.key === "wait");
+    if ((wait != null) !== (days != null)) reds.push(`checks ${iso2}: the wait row is ${wait ? "drawn" : "omitted"} and the LLC filing time is ${days == null ? "not on file" : String(days)}`);
+    if (wait && days != null && (wait.branch === "over") !== (days > WAIT_DAYS_THRESHOLD)) reds.push(`checks ${iso2}: the wait row reads "${wait.fact}" against ${days} days`);
+    if (wait?.branch === "over") over++;
+    const margin = c.rows.find((r) => r.key === "margin");
+    if (!margin || (margin.branch === "held") !== (getSmbRegime(iso2) != null)) reds.push(`checks ${iso2}: the margin row's branch disagrees with the regime lookup`);
+    if (c.rows[0]?.key !== "price") reds.push(`checks ${iso2}: the first row is not the price`);
+    for (const r of c.rows) {
+      if (!bankFacts.has(r.fact)) reds.push(`checks ${iso2}: a question not in the bank: "${r.fact}"`);
+      if (r.label.split(/\s+/).length > 3) reds.push(`checks ${iso2}: a label over three words: "${r.label}"`);
+      if (!/\?$/.test(r.fact)) reds.push(`checks ${iso2}: a check that is not a question: "${r.fact}"`);
+    }
+    const texts = [COPY.checks.kicker, c.basis, ...c.rows.flatMap((r) => [r.label, r.fact])];
+    for (const t of texts) for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`checks ${iso2}: banned word "${b}" in "${t}"`);
+    const prose = c.rows.map((r) => r.fact).concat(c.basis).filter((t) => t.length >= 30 && /\s/.test(t)).reduce((n, t) => n + t.length, 0);
+    if (prose > 220) reds.push(`checks ${iso2}: ${prose} characters of prose, over the 220 ceiling`);
+    checkDoors(iso2, buildCompareDoor(String((COUNTRIES as any[]).find((x) => x.code === iso2)?.name ?? "")), "compare");
+  }
+  if (COPY.checks.kicker.split(/\s+/).length > 4) reds.push(`checks: the kicker runs over four words: "${COPY.checks.kicker}"`);
+  if (COPY.compare.kicker.split(/\s+/).length > 4) reds.push(`compare: the kicker runs over four words: "${COPY.compare.kicker}"`);
+  for (const b of [COPY.checks.basis.three, COPY.checks.basis.two]) if (b.split(/\s+/).filter(Boolean).length > 14) reds.push(`checks: the basis runs over fourteen words: "${b}"`);
+  console.log(`checks: ${cards} cards build, ${three} with three rows and ${two} with two, ${over} on the over-21 wait; every row a bank row, the compare door on every country against the routes`);
 }
 console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

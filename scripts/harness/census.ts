@@ -10,7 +10,12 @@
  * order, the coverage gate's own key), the enclosing component, the kicker
  * (a Rail's `kicker`, a Head's or WideRail's text; `COPY.x.y` resolved through
  * the copy table), the archetype inside it (a tag imported from the archetypes
- * folder) or "kit", and the first builder the enclosing component calls.
+ * folder) or "kit", with the form the Box DECLARES in brackets where it
+ * declares one (`data-form="door"` on the country's `19 compare`, which
+ * stands on Terminus and is a door card, not a second terminus; MODEL.md 8.2's
+ * rhythm line counts "two forms in the census because 19 declares
+ * data-form"; plan step 31's fifth dispatch, 2026-09-18), and the first
+ * builder the enclosing component calls.
  *
  * usage: npx tsx scripts/harness/census.ts            prints the census and exits 1 when PAGES.md's block is stale
  *        npx tsx scripts/harness/census.ts --check    the chain gate: exits 1 when docs/loop/CENSUS.md (in-repo) is stale; never reads the other repo
@@ -119,7 +124,12 @@ function sectionsOf(file: string): Section[] {
     const block = end === -1 ? src.slice(m.index) : src.slice(m.index, end);
     const fn = [...fns].reverse().find((f) => f.at < m!.index);
     const scope = src.slice(fn ? fn.at : 0, end === -1 ? src.length : end);
-    const archetype = ARCHETYPES.find((a) => imported.has(a) && new RegExp(`<${a}\\b`).test(block)) ?? "kit";
+    const tag = ARCHETYPES.find((a) => imported.has(a) && new RegExp(`<${a}\\b`).test(block)) ?? "kit";
+    /* A Box that DECLARES its form (`data-form="door"`) prints the declaration
+       beside the tag it stands on, so the census tells a door card from the
+       terminus it is built on (MODEL.md 8.2, `19 compare`). */
+    const declared = /\bdata-form="([^"]+)"/.exec(m[1])?.[1];
+    const archetype = declared ? `${tag} (${declared})` : tag;
     const builder = /\b(build[A-Z]\w*)\s*\(/.exec(scope)?.[1] ?? "";
     out.push({ page: pageOf(file), file: basename(file), id, component: fn?.name ?? "", kicker: kickerOf(block), archetype, builder });
   }

@@ -2059,82 +2059,6 @@
   color: var(--accent-text);
 }
 
-/* ============================ 12 GUT CHECK ============================ */
-/* Three tight yes / no prompts as an engraved triptych, each a checkbox
-   glyph. Tap to answer; a sense-check, not a score. */
-.eng-gut {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-.eng-gutcard {
-  padding: 16px 15px;
-  text-align: center;
-  background: var(--surface-card);
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--radius-md);
-}
-.eng-gutcard__box {
-  margin: 0 auto 12px;
-  width: 30px;
-  height: 30px;
-}
-.eng-gutcard__q {
-  font-family: var(--font-body);
-  font-size: 12.5px;
-  line-height: 1.4;
-  min-height: 52px;
-  color: var(--text-body);
-}
-.eng-gutcard__ans {
-  margin-top: 12px;
-  display: inline-flex;
-  gap: 4px;
-}
-.eng-gutpill {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 11px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--hairline-strong);
-  background: none;
-  color: var(--text-faint);
-  cursor: pointer;
-  transition:
-    background var(--dur-fast) var(--ease-out),
-    color var(--dur-fast) var(--ease-out),
-    border-color var(--dur-fast) var(--ease-out);
-}
-/* THE GUT CHECK WAS A TRAFFIC LIGHT: green for yes, amber for no, the two
-   banned hues in one pair of pills, rendering on every country page.
-
-   It is the same good-versus-bad axis the rest of the site converted this
-   session, and the replacement is the same one, prescribed by
-   verify_palette_membership's own header: "Show good-versus-bad with intensity
-   and position instead of hue." src/lib/scores/band_tone.ts is where that
-   ladder lives for the React side, and it resolves the favourable end to
-   atlas tint on atlas text and the unfavourable end to parchment on ink. These
-   are the CSS mirrors of exactly those two steps.
-
-   The signal is NOT weakened by dropping the hue: each pill still prints the
-   word yes or no, and only one of the pair is ever `.is-on`, so position and
-   state carry the reading. Colour was decoration on top of a label. */
-.eng-gutpill.is-on.yes {
-  background: var(--accent-subtle);
-  color: var(--accent-text);
-  border-color: transparent;
-}
-.eng-gutpill.is-on.no {
-  /* var(--parchment), not var(--cream-300). Both are #e3e3e3, byte for byte,
-     and the cream gate counts NAMES on purpose: a token still called cream is
-     how the ramp repopulates after a purge. Writing the neutral under its
-     neutral name is the difference between removing cream and moving it. */
-  background: var(--parchment);
-  color: var(--text-strong);
-  border-color: transparent;
-}
-
 /* ============================ 13 ONE THING =========================== */
 /* The page-closing band: a compass-rosette mark, one warm display sentence,
    and a quiet last-checked + flag-it sign-off over a faint contour field. */
@@ -2247,8 +2171,7 @@
 @media (max-width: 540px) {
   .eng-hiring,
   .eng-char,
-  .eng-cities,
-  .eng-gut {
+  .eng-cities {
     grid-template-columns: 1fr;
   }
   .eng-stepper__cards {

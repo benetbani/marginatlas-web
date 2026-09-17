@@ -30,6 +30,24 @@ export function buildCloseDoors(iso2: string): Door[] {
   return doors;
 }
 
+/** THE COUNTRY'S COMPARE DOOR (MODEL.md 8.2, `19 compare`; plan step 31,
+ *  fifth dispatch, 2026-09-18): one pill to the compare tool, built exactly
+ *  as the city's compare door below is built, on the other noun, the name
+ *  through `inSentence()` so "the United Kingdom" and "France" both read.
+ *  It stands on its own card beside the checks, not in the terminus: the
+ *  terminus already holds its three (DOOR_CAP), and the pill is the compare
+ *  tool's by M21. The route is `/compare` (src/app/(site)/compare/page.tsx);
+ *  the copy gate proves it against the app folder, and Terminus draws no
+ *  door whose href it does not hold. Clause 11 bans naming the place twice on
+ *  a page; this door names it after the h1 the way the built city door
+ *  "Compare {city} with other cities" already does, and 8.2's row records
+ *  the clash as the built pattern. */
+export function buildCompareDoor(countryName: string): Door[] {
+  const name = countryName.trim();
+  if (!name) return [];
+  return [{ key: "compare", label: fill(COPY.compare.door, { country: inSentence(name) }), href: "/compare", kind: "pill" }];
+}
+
 /** THE CITY'S DOORS (city:close, the build loop's run 19, 2026-09-06): the
  *  lightest-rent district by name where the districts are ranked (the pick the
  *  old card named), else every district, to the city's neighbourhoods page; the

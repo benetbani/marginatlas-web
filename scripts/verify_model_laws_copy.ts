@@ -203,6 +203,14 @@ const rowLabels: Array<[string, string]> = [
   ["COPY.markList.visitors.head.value", COPY.markList.visitors.head.value],
   ["COPY.markList.trade.head.name", COPY.markList.trade.head.name],
   ["COPY.markList.trade.head.value", COPY.markList.trade.head.value],
+  /* THE QUESTION LIST'S LABELS (MODEL.md 8.2 `18 checks`, plan step 31's
+     fifth dispatch, 2026-09-18): the three labels a reader meets over the
+     questions, on NoteList's law, held to the same three words as every row
+     label (PART 5). The questions under them are not labels and are held by
+     verify_archetype_copy.ts to the bank and the 220 ceiling. */
+  ["COPY.checks.rows.price.label", COPY.checks.rows.price.label],
+  ["COPY.checks.rows.margin.label", COPY.checks.rows.margin.label],
+  ["COPY.checks.rows.wait.label", COPY.checks.rows.wait.label],
 ];
 for (const [where, t] of rowLabels) {
   const words = t.trim().split(/\s+/).filter(Boolean);
@@ -436,6 +444,13 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     if (r.foot) heads.push([`buildRunningCosts(${iso2}).foot`, r.foot]);
     for (const line of r.withheld) heads.push([`buildRunningCosts(${iso2}).withheld`, line]);
   }
+
+  /* BEFORE YOU COMMIT (MODEL.md 8.2 `18 checks`, plan step 31's fifth
+     dispatch, 2026-09-18): the two basis lines sit under `basis.three` and
+     `basis.two`, leaves the static sweep does not read (it reads a leaf named
+     `basis`), so they are pushed by name; the kickers of `18` and `19` the
+     sweep already takes by key. */
+  heads.push(["COPY.checks.basis.three", COPY.checks.basis.three], ["COPY.checks.basis.two", COPY.checks.basis.two]);
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);

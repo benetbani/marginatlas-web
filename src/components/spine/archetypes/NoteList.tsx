@@ -20,15 +20,31 @@
  *    on the how-to page at 768: three forms, the third alone beside a blank).
  *  - Nothing drawn, no figure required: the note list is words by design.
  *  - No notes, nothing drawn.
+ *  - THE EDITORIAL EXEMPTION IS A SWITCH, ON BY DEFAULT (plan step 31, fifth
+ *    dispatch, 2026-09-18). A page carries ONE prose section (MODEL.md PART 9
+ *    clause 44, R9), and on the country page it is `16 locals`; the question
+ *    list `18 checks` draws on this same law (a label over one line,
+ *    hairlines between, no figure, no paragraph, no tap state) and passes
+ *    `editorial={false}`, so it carries no exemption and stands under the
+ *    art-direction gate's 220-character prose ceiling by its own arithmetic
+ *    (COMPOSITION.md section 9: worst case 176). The stamp is
+ *    `data-editorial="1"`, the value scripts/verify_art_direction.mjs reads
+ *    (`[data-editorial='1']`, the same value industry-view.tsx and
+ *    NeighborhoodExplorer.tsx stamp); the bare attribute this file carried
+ *    until this dispatch rendered as `data-editorial="true"`, which that
+ *    selector never matched, so the exemption the model grants the locals
+ *    card had never been in effect (measured 2026-09-18: the country page's
+ *    locals card red under E1 at 588 characters, the how-to page's forms
+ *    card at 589).
  */
 import * as React from "react";
 import { NOTE_CAP, type LocalNote } from "@/lib/spine/locals_rows";
 
-export function NoteList({ notes, columns = 1 }: { notes: LocalNote[]; columns?: 1 | 2 }) {
+export function NoteList({ notes, columns = 1, editorial = true }: { notes: LocalNote[]; columns?: 1 | 2; editorial?: boolean }) {
   const live = notes.filter((n) => n.label && n.fact).slice(0, NOTE_CAP);
   if (live.length === 0) return null;
   return (
-    <div data-archetype="note-list" data-editorial data-notes={String(live.length)} data-columns={String(columns)} className="[container-type:inline-size]">
+    <div data-archetype="note-list" {...(editorial ? { "data-editorial": "1" } : {})} data-notes={String(live.length)} data-columns={String(columns)} className="[container-type:inline-size]">
       <ol className={columns === 2 ? "grid [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6" : "grid"}>
         {live.map((n, i) => (
           <li key={i} data-note={i} className={"border-t border-[var(--c-border)] py-2.5 first:border-t-0 first:pt-0 last:pb-0" + (columns === 2 ? " [@container(min-width:600px)]:[&:nth-child(2)]:border-t-0 [@container(min-width:600px)]:[&:nth-child(2)]:pt-0 [@container(min-width:600px)]:[&:nth-child(odd):last-child]:col-span-2" : "")}>

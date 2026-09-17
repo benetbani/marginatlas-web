@@ -98,9 +98,6 @@ export {
   type AtlasDividerVariant,
 } from "./Editorial";
 
-// The interactive gut-check triptych (a small client island for the toggles).
-export { GutCheck, type GutCheckProps } from "./GutCheck";
-
 // The nine new judgment-lens sections (R6.5, built on the foundation): the
 // country-shape radar, the opportunity quadrant, same-business-here-vs-abroad,
 // special zones, the ground-under-you risk read, who-has-money, how-far-you-

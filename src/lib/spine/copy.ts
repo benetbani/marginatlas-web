@@ -290,6 +290,49 @@ export const COPY = {
     tradesDoor: "See every trade measured here",
     proDoor: "Get notified when Pro opens",
   },
+  /** BEFORE YOU COMMIT (MODEL.md 8.2, `18 checks`; plan step 31, fifth
+   *  dispatch, 2026-09-18): THE SITE'S ONE QUESTION BANK, the strings of the
+   *  composition's section 9 verbatim (research/2026-09-11/country/
+   *  COMPOSITION.md), read aloud there and not rewritten here. A check is a
+   *  QUESTION, never a verdict (PART 9 clause 45, R10: "Registering is the easy
+   *  part" was a verdict asserted on 43 pages holding no registration time,
+   *  and it is gone with "is not instant"). The country is not named in any
+   *  row: the h1 names the place once and clause 11 bans naming it twice.
+   *  Each question with its character count, the E1 gate's arithmetic (runs of
+   *  30 or more characters carrying a space, summed, red over 220 on a card
+   *  without the editorial exemption, which this card does not carry):
+   *  price 42; margin held 50, not held 43; wait over 21 days 52, 21 or under
+   *  51; the basis 32. Worst case 42 + 50 + 52 + 32 = 176 of 220, best 117.
+   *  The trade page's `02 suits` (plan step 33) reads the same rows from
+   *  checks_rows.ts where its subject matches, so a check is the same words
+   *  on both pages (M20). The basis says in four words that nothing is
+   *  scored, saved or tapped, so a reader does not look for a control that is
+   *  not there; "Two questions" where the third row self-omits. */
+  checks: {
+    kicker: "Before you commit",
+    basis: { three: "Three questions, nothing scored.", two: "Two questions, nothing scored." },
+    rows: {
+      price: { label: "Your price", question: "Can customers here pay the price you need?" },
+      margin: {
+        label: "The margin",
+        held: "Is there a real margin left after tax and payroll?",
+        notHeld: "Do you know what tax and payroll will take?",
+      },
+      wait: {
+        label: "The wait",
+        over: "Have you planned for the weeks before you can trade?",
+        under: "Have you tested the demand before you sign a lease?",
+      },
+    },
+  },
+  /** COMPARE COUNTRIES (MODEL.md 8.2, `19 compare`; the same dispatch): one
+   *  pill door to the compare tool, the same construction as the city's
+   *  `cityClose.compareDoor` on the other noun, the name through
+   *  `inSentence()` ("the United Kingdom", "France"). The kicker is two words
+   *  and descriptive; the old eyebrow "Next move" is clause 11's ban. No basis
+   *  line: the card measures nothing, and the old sentence naming the three
+   *  things compared was a paragraph (PART 7). */
+  compare: { kicker: "Compare countries", door: "Compare {country} with other countries" },
   /** The pay bars (what staff cost), founder rulings 13 and 14 of 2026-09-04: the words "minimum salary" and "average salary", the edge at the world's highest, a pair under ten percent apart withheld.
    *  THE EDGE LOST ITS NAME (his words, 2026-09-07): "you point the thing which
    *  says the world's highest, which is Switzerland. That's very bad. You

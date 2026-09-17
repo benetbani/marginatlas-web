@@ -246,10 +246,11 @@ export {
   type ScorecardMetric,
   // Wave-2 engraved section assets. Only the names that do NOT clash with the
   // earlier non-engraved kit blocks are re-exported here; the engraved VsWorld,
-  // OneThing, GutCheck and HonestTake stay exclusive to "@/components/kit/
-  // engraved" (the top barrel already exports the non-engraved VsWorld / OneThing
-  // / GutCheck), so the country page imports the full engraved family from the
-  // sub-barrel directly.
+  // OneThing and HonestTake stay exclusive to "@/components/kit/engraved" (the
+  // top barrel already exports the non-engraved VsWorld / OneThing / GutCheck),
+  // so the country page imports the full engraved family from the sub-barrel
+  // directly. The engraved GutCheck retired on 2026-09-18 (plan step 31): the
+  // spine's `18 checks` draws the questions on NoteList's law.
   SetupStepper,
   type SetupStepperProps,
   type SetupStep,

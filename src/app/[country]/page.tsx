@@ -47,11 +47,10 @@ import { BusinessFormationCosts } from "@/components/cities/BusinessFormationCos
 import {
   getCountryEconomicsSnapshot,
   getCountryCostOfLivingIndex,
-  type CountryEconomicsSnapshot,
 } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
 import { getBrainGdpPerCapitaByIso2, getBrainPopulationByIso2 } from "@/lib/external/brain_data";
-import { getSmbRegime, getVatRow, type SmbRegime } from "@/lib/tax/smb_effective_rates";
+import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
 import { buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
 import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
@@ -93,7 +92,6 @@ import {
   type LifeDimension,
   VsWorld,
   HonestTake,
-  GutCheck,
   OneThing,
   AtlasDivider,
 } from "@/components/kit/engraved";
@@ -286,45 +284,6 @@ function wordFromScore(score: number | null): string | null {
   if (score == null) return null;
   const i = Math.max(0, Math.min(4, Math.round(score * 4)));
   return ["Weak", "Modest", "Fair", "Strong", "Excellent"][i];
-}
-
-/**
- * Three plain questions before committing, derived from the country's own held
- * facts. Each question is generic-but-true (about the market, the customer, and
- * the setup speed), never a fabricated specific. Always returns three.
- */
-function buildCountryGutCheck(
-  countryName: string,
-  snapshot: CountryEconomicsSnapshot,
-  regime: SmbRegime | null,
-): string[] {
-  const qs: string[] = [];
-  qs.push(
-    `Can the local customer in ${countryName} actually pay the price your numbers need, week in and week out?`,
-  );
-  if (regime != null) {
-    qs.push(
-      "After the business tax and the payroll on every wage, is there still a real margin left, or only one at hobby scale?",
-    );
-  } else {
-    qs.push(
-      "Do you know what the business tax and the payroll on-cost will take before you have signed anything?",
-    );
-  }
-  if (
-    snapshot.daysToStart != null &&
-    Number.isFinite(snapshot.daysToStart) &&
-    snapshot.daysToStart > 21
-  ) {
-    qs.push(
-      "Registering here is not instant, so have you planned for the weeks of paperwork before you can legally trade?",
-    );
-  } else {
-    qs.push(
-      "Registering is the easy part; have you tested whether the demand is there before you commit a lease?",
-    );
-  }
-  return qs;
 }
 
 /**
@@ -570,9 +529,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
   const hasCities = cityCards.length > 0;
 
   const globalMedianGdpPerCapita = getGlobalMedianGdpPerCapita();
-
-  // Gut check: three plain, country-derived questions before committing.
-  const gutCheckQuestions = buildCountryGutCheck(countryName, snapshot, smbRegime);
 
   // The watch item for this country. A country rides the "city" kind (the tray
   // labels it "Place"); the iso2-keyed slug keeps it distinct from a real city.
@@ -1471,15 +1427,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
               ticks={view.honestTake?.points && view.honestTake.points.length > 0 ? view.honestTake.points : null}
               sample={view.honestTake == null}
             />
-          </EngravedSection>
-
-          {/* 21. Gut check: three plain questions as a small visual. */}
-          <EngravedSection
-            id="gut-check"
-            eyebrow="Gut check"
-            heading={`Three questions before you start in ${countryName}`}
-          >
-            <GutCheck prompts={gutCheckQuestions} />
           </EngravedSection>
 
           {/* 22. One thing to remember: the page's last word + freshness.

@@ -21,24 +21,35 @@
  *    the card's right side is never a blank (measured by the harness: two
  *    short links stacked left a 207 by 120 hole in a 301 by 150 card).
  *  - No doors, nothing drawn; the view then draws no card.
+ *  - THE KICKER IS OPTIONAL (MODEL.md 8.2, `19 compare`; plan step 31, fifth
+ *    dispatch, 2026-09-18). The bare `<h3>` here is not PART 7's opener (no
+ *    28px icon tile); a caller that opens with the kit's `Rail`, which
+ *    carries the tile, passes no kicker and the `<h3>` is not drawn, so the
+ *    card never prints two kicker lines stacked. The country page's compare
+ *    door is the first such caller, with the `compare` tile the cell and
+ *    neighbourhood pages already ship; the close still passes its own.
+ *  - THE PILL'S HOVER IS INK, NOT TERRACOTTA (PART 6: terracotta never on a
+ *    hover state, a control or a pill; this file was the named offender).
+ *    The rest state is `--c-ink` and the hover lifts to `--c-ink2`, the same
+ *    ink pair the link doors already use the other way round.
  */
 import * as React from "react";
 
 export type Door = { key: string; label: string; href: string; kind: "link" | "pill" };
 export const DOOR_CAP = 3;
 
-export function Terminus({ kicker, doors }: { kicker: string; doors: Door[] }) {
+export function Terminus({ kicker, doors }: { kicker?: string; doors: Door[] }) {
   const live = doors.filter((d) => d.label && d.href && !d.href.startsWith("#")).slice(0, DOOR_CAP);
   if (live.length === 0) return null;
   const pillIndex = live.findIndex((d) => d.kind === "pill");
   const ordered = pillIndex >= 0 ? [...live.filter((d) => d.kind !== "pill"), live[pillIndex]] : live;
   return (
     <div data-archetype="terminus" data-doors={String(ordered.length)}>
-      <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">{kicker}</h3>
+      {kicker ? <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">{kicker}</h3> : null}
       <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
         {ordered.map((d) =>
           d.kind === "pill" ? (
-            <a key={d.key} data-door={d.key} data-door-kind="pill" href={d.href} className="w-full rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)] sm:w-auto">
+            <a key={d.key} data-door={d.key} data-door-kind="pill" href={d.href} className="w-full rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--c-ink2)] sm:w-auto">
               {d.label} <span aria-hidden>&#8594;</span>
             </a>
           ) : (

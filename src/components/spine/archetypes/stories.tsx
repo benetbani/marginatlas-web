@@ -30,8 +30,9 @@ import { buildCharacterTables, buildCityCharacterTables, citiesWithSignature } f
 import { buildCityQuickReads } from "@/lib/spine/reads_rows";
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
+import { buildChecks } from "@/lib/spine/checks_rows";
 import { Terminus } from "./Terminus";
-import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
@@ -401,6 +402,16 @@ export function pickNoteListInstances(): Instance[] {
   const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2, why }); } };
   for (const c of countriesWithNotes()) { take(c, c === "GB" ? "the exemplar, the narrow card" : "authored notes"); take(`${c}:wide`, "the wide card, two columns from lg"); }
   const none = codes().find((c) => !buildLocalsNotes(c)); if (none) take(none, "no notes on file, self-omits");
+  /* THE QUESTION LIST, `18 checks` (MODEL.md 8.2; plan step 31, fifth
+     dispatch, 2026-09-18), on the same law without the editorial exemption,
+     keyed "XX:checks": the exemplar (regime held, one day, three rows); the
+     worst case under the 220 ceiling (regime held and the wait over 21 days,
+     176 characters, the composition's own arithmetic); and the omission (no
+     regime, no LLC row on file, two rows and the "Two questions" basis), so
+     every string of the bank is on the sheet. */
+  take("GB:checks", "the question list, three rows, the exemplar");
+  const worst = codes().find((c) => { const d = buildChecks(c); return d.regimeHeld && d.days != null && d.days > 21; }); if (worst) take(`${worst}:checks`, "the question list at its longest: the regime held, the wait over 21 days");
+  const omit = codes().find((c) => { const d = buildChecks(c); return !d.regimeHeld && d.days == null; }); if (omit) take(`${omit}:checks`, "the question list with no regime and no registration time: two rows, the third omitted");
   return out;
 }
 
@@ -410,6 +421,19 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
       {instances.map((i) => {
         const [iso2, form] = i.iso2.split(":");
         const wide = form === "wide";
+        if (form === "checks") {
+          /* The checks card at the 1-1 card's width (520 at 1280): the opener's
+             kicker, the rows on NoteList's law with no exemption, the basis. */
+          const c = buildChecks(iso2);
+          const el = (
+            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+              <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.checks.kicker}, {nameOf(iso2)}</div>
+              <NoteList notes={c.rows} editorial={false} />
+              <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{c.basis}</p>
+            </div>
+          );
+          return <Story kind="note-list" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         const d = buildLocalsNotes(iso2);
         const el = d ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: wide ? 693 : 305 }}>
@@ -434,6 +458,22 @@ export function pickTerminusInstances(): Instance[] {
   const one = all.find((x) => x.n === 1); if (one) take(one.c, "one covered city, the door without a count");
   const none = all.find((x) => x.n === 0); if (none) take(none.c, "no covered city, two doors");
   const long = [...all].filter((x) => x.n > 0).sort((a, b) => b.longest - a.longest)[0]; if (long) take(long.c, "the longest city name");
+  /* THE COMPARE DOOR, `19 compare` (MODEL.md 8.2; plan step 31, fifth
+     dispatch, 2026-09-18), keyed "XX:compare": one pill on Terminus with no
+     kicker of its own, at the 1-1 card's width (520 at 1280), the name
+     through inSentence(), so the exemplar takes "the". MEASURED, every one of
+     the 195 door strings in the pill's rendered font (Geist 600 14px) against
+     the pill's room, the card's inner width less the pill's own padding: the
+     exemplar is 350px; at 1280 (440px of room) one name wraps, Saint Vincent
+     and the Grenadines at 441; at 1024 (392) two, with the Central African
+     Republic; at 768's equal halves (264) 148 of 195, which is why the band
+     declares stack="lg", and stacked at 768 (640) none; at 375 (263) 151 take
+     two lines and none three, within the phone's cap. The longest name is not
+     a story because it reds the sheet by one pixel at 1280 on purpose, and a
+     permanently red story blocks the chain; the clash between the
+     composition's string and the 1-1 width on those two names is recorded
+     for the controller, not hidden by a shorter string typed here. */
+  take("GB:compare", "the compare door, one pill, the name with its article");
   return out;
 }
 
@@ -450,10 +490,21 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
   return (
     <div data-stories="terminus">
       {instances.map((i) => {
-        const doors = buildCloseDoors(i.iso2);
+        const [iso2, form] = i.iso2.split(":");
+        if (form === "compare") {
+          const doors = buildCompareDoor(nameOf(iso2));
+          const el = doors.length ? (
+            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+              <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.compare.kicker}, {nameOf(iso2)}</div>
+              <Terminus doors={doors} />
+            </div>
+          ) : null;
+          return <Story kind="terminus" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        const doors = buildCloseDoors(iso2);
         const el = doors.length ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
-            <Terminus kicker={`${COPY.close.kicker}, ${nameOf(i.iso2)}`} doors={doors} />
+            <Terminus kicker={`${COPY.close.kicker}, ${nameOf(iso2)}`} doors={doors} />
           </div>
         ) : null;
         return <Story kind="terminus" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

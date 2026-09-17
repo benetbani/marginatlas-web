@@ -442,7 +442,9 @@ export function countryViewNav(
   // the scorecard, then the decisive setup read, hiring, the peer facts and
   // licences, the uniform city cards, the break-in panel (when held), the
   // character panel, and the lower editorial beats (what-locals, vs-world, the
-  // small low honest take, the gut check) closing on the compare CTA. Anchors
+  // small low honest take) closing on the compare CTA. The gut check retired
+  // on 2026-09-18 (plan step 31, fifth dispatch): the spine's `18 checks`
+  // carries the questions on NoteList's law, with the verdicts struck. Anchors
   // with no mounted section are dropped by StickySectionNav, so an absent
   // flourish never leaves a dead link.
   const nav: Array<{ id: string; label: string }> = [
@@ -462,7 +464,6 @@ export function countryViewNav(
   if (view.whatLocals) nav.push({ id: "locals", label: "What locals know" });
   nav.push({ id: "vs-world", label: "Vs the world" });
   nav.push({ id: "honest-take", label: "The honest take" });
-  nav.push({ id: "gut-check", label: "Gut check" });
   nav.push({ id: "related", label: "Compare" });
   return nav;
 }

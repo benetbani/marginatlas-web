@@ -11,8 +11,8 @@
  * These compose from the Wave-1 foundation (Glyph, CompassRosette, ContourField,
  * RouteLine, SampleState) and read color only through the engraved CSS vars.
  * LocalsKnow takes structured ReactNode text rather than raw HTML, so emphasis
- * is composed with JSX <b>, not injected. The interactive GutCheck triptych is a
- * separate client island (./GutCheck); these stay server-renderable. Props are
+ * is composed with JSX <b>, not injected. These stay server-renderable (the
+ * interactive GutCheck island retired on 2026-09-18, plan step 31). Props are
  * nullable; missing or empty input renders the honest SampleState. SVG geometry
  * is inline. No em-dashes, no source-agency names.
  */
