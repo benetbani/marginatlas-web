@@ -24,7 +24,9 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { lineOfKey, red, redSummary, repoRelative } from "./lib/red";
 
+const RULE = "industry-medians";
 const ROOT = process.cwd();
 const MEDIANS_PATH = path.resolve(ROOT, "data/quality/industry_medians_v1.json");
 const TAXONOMY_PATH = path.resolve(ROOT, "src/lib/taxonomy/industries.json");
@@ -111,8 +113,24 @@ for (const [indId, e] of Object.entries(medians.industries)) {
 console.log(`  ${industries.length} industries checked.  ${warnings} taxonomy warnings.`);
 
 if (failures > 0) {
+  /* Each message opens with the industry id in brackets, the entry's key in the
+     medians file, so the red names the file and the line that declares the key
+     (plan-2026-09-17/02-ERRORS.md, step 16). The taxonomy warnings are not
+     failures and stay as they were. */
+  const MEDIANS_FILE = repoRelative(MEDIANS_PATH);
   console.log(`\n  GATE: FAIL  (${failures} violations)`);
-  for (const m of messages.slice(0, 30)) console.log("  - " + m);
+  for (const m of messages.slice(0, 30)) {
+    if (/not in taxonomy/.test(m)) continue; /* a warning, printed below on pass; not a failure */
+    const key = m.match(/^\[([^\]]+)\]/)?.[1];
+    red({
+      rule: RULE,
+      file: MEDIANS_FILE,
+      line: lineOfKey(MEDIANS_FILE, key),
+      detail: m,
+      remedy: `fix the industry's entry in ${MEDIANS_FILE}: a positive global_median under the ceiling and country_medians that are positive numbers`,
+    });
+  }
+  redSummary(RULE, failures, `fix each entry named above in ${MEDIANS_FILE}`, `${industries.length} industries checked`);
   process.exit(1);
 }
 if (warnings > 0) {

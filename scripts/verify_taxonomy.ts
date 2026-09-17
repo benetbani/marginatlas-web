@@ -26,28 +26,63 @@ import {
   visibleIndustriesInSector,
   LEGACY_SECTOR_ALIAS,
 } from "../src/lib/taxonomy";
+import { readFileSync } from "node:fs";
+import { red, redSummary } from "./lib/red";
 
-type Issue = { code: string; level: "error" | "warn"; message: string };
+/**
+ * THE RED NAMES THE JSON LINE (2026-09-17, plan-2026-09-17/02-ERRORS.md step
+ * 16). The taxonomy is two data files, and every error is about one entry in
+ * one of them, so each error carries the file and the id of the entry it is
+ * about; the line is the line that declares that id, found when the report
+ * prints. What is checked did not change; what a failure prints did.
+ */
+const SECTORS_FILE = "src/lib/taxonomy/sectors.json";
+const INDUSTRIES_FILE = "src/lib/taxonomy/industries.json";
+const RULE = "taxonomy";
+
+type Where = { file: string; id?: string };
+type Issue = { code: string; level: "error" | "warn"; message: string; where: Where; remedy: string };
 const issues: Issue[] = [];
 
-function err(code: string, msg: string) {
-  issues.push({ code, level: "error", message: msg });
+function err(code: string, msg: string, where: Where, remedy: string) {
+  issues.push({ code, level: "error", message: msg, where, remedy });
 }
 function warn(code: string, msg: string) {
-  issues.push({ code, level: "warn", message: msg });
+  issues.push({ code, level: "warn", message: msg, where: { file: SECTORS_FILE }, remedy: "" });
 }
+
+/** The line on which the entry with this id is declared, or undefined. */
+const idLine = (() => {
+  const cache = new Map<string, string[]>();
+  return (file: string, id: string | undefined): number | undefined => {
+    if (!id) return undefined;
+    if (!cache.has(file)) cache.set(file, readFileSync(file, "utf8").split("\n"));
+    const i = cache.get(file)!.findIndex((l) => l.includes(`"id": "${id}"`));
+    return i === -1 ? undefined : i + 1;
+  };
+})();
 
 // (1)
 for (const ind of INDUSTRIES) {
   if (!SECTOR_BY_ID[ind.sector_id]) {
-    err("ORPHAN_INDUSTRY", `Industry "${ind.id}" → unknown sector "${ind.sector_id}"`);
+    err(
+      "ORPHAN_INDUSTRY",
+      `industry "${ind.id}" points at sector "${ind.sector_id}", which ${SECTORS_FILE} does not hold`,
+      { file: INDUSTRIES_FILE, id: ind.id },
+      `set sector_id to a sector in ${SECTORS_FILE}, or add the sector there`,
+    );
   }
 }
 
 // (2)
 for (const ind of INDUSTRIES) {
   if (ind.parent_id && !INDUSTRY_BY_ID[ind.parent_id]) {
-    err("ORPHAN_PARENT", `Industry "${ind.id}" has parent_id "${ind.parent_id}" which does not exist`);
+    err(
+      "ORPHAN_PARENT",
+      `industry "${ind.id}" has parent_id "${ind.parent_id}", which no industry declares`,
+      { file: INDUSTRIES_FILE, id: ind.id },
+      "set parent_id to an existing industry id, or remove it",
+    );
   }
 }
 
@@ -66,7 +101,12 @@ for (const s of defaultSectors) {
   const lower = s.name.toLowerCase();
   for (const word of FORBIDDEN_WORDS) {
     if (lower.includes(word)) {
-      err("FORBIDDEN_WORD", `Default-visible sector "${s.id}" has forbidden word "${word}" in name: "${s.name}"`);
+      err(
+        "FORBIDDEN_WORD",
+        `default-visible sector "${s.id}" has the forbidden word "${word}" in its name "${s.name}"`,
+        { file: SECTORS_FILE, id: s.id },
+        `rename the sector without "${word}", or set its audience_default to hidden`,
+      );
     }
   }
 }
@@ -83,7 +123,12 @@ for (const v3 of v3Sectors) {
   if (!target) {
     warn("MISSING_LEGACY_ALIAS", `Legacy sector "${v3}" has no alias in any v4 sector's legacy_aliases — old URLs may 404`);
   } else if (!SECTOR_BY_ID[target]) {
-    err("BROKEN_LEGACY_ALIAS", `Legacy "${v3}" maps to non-existent v4 sector "${target}"`);
+    err(
+      "BROKEN_LEGACY_ALIAS",
+      `legacy sector "${v3}" is aliased to "${target}", which is not a v4 sector`,
+      { file: SECTORS_FILE, id: target },
+      `move "${v3}" into the legacy_aliases of a sector that exists`,
+    );
   }
 }
 
@@ -97,7 +142,12 @@ for (const s of SECTORS) {
 }
 for (const [order, ids] of orderMap.entries()) {
   if (ids.length > 1) {
-    err("DUPLICATE_ORDER", `display_order ${order} is shared by ${ids.length} sectors: ${ids.join(", ")}`);
+    err(
+      "DUPLICATE_ORDER",
+      `display_order ${order} is shared by ${ids.length} sectors: ${ids.join(", ")}`,
+      { file: SECTORS_FILE, id: ids[0] },
+      `give each of ${ids.join(", ")} its own display_order`,
+    );
   }
 }
 
@@ -106,9 +156,12 @@ const expectedAnchors = ["food_drink", "retail_shops", "beauty_wellness"];
 const firstThree = defaultSectors.slice(0, 3).map((s) => s.id);
 for (let i = 0; i < expectedAnchors.length; i++) {
   if (firstThree[i] !== expectedAnchors[i]) {
-    err("MISORDERED_ANCHORS",
-      `Position ${i + 1} should be "${expectedAnchors[i]}", got "${firstThree[i] || "(missing)"}". ` +
-      `First three visible sectors are currently: ${firstThree.join(", ")}`);
+    err(
+      "MISORDERED_ANCHORS",
+      `position ${i + 1} of the visible sectors should be "${expectedAnchors[i]}" and is "${firstThree[i] || "(missing)"}"; the first three are ${firstThree.join(", ")}`,
+      { file: SECTORS_FILE, id: expectedAnchors[i] },
+      `set display_order so that ${expectedAnchors.join(", ")} come first and are visible`,
+    );
   }
 }
 
@@ -133,9 +186,17 @@ if (warnings.length) {
 }
 
 if (errors.length) {
-  console.log(`\n  errors (${errors.length}):`);
-  for (const e of errors) console.log(`    ✗ ${e.code}: ${e.message}`);
-  console.log("\n  ✗ Taxonomy verification FAILED\n");
+  console.log("");
+  for (const e of errors) {
+    red({
+      rule: RULE,
+      file: e.where.file,
+      line: idLine(e.where.file, e.where.id),
+      detail: `${e.code}: ${e.message}`,
+      remedy: e.remedy,
+    });
+  }
+  redSummary(RULE, errors.length, `fix each entry named above in ${SECTORS_FILE} or ${INDUSTRIES_FILE}`, `${warnings.length} warnings besides`);
   process.exit(1);
 }
 

@@ -54,11 +54,25 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "
 import { join, resolve } from "node:path";
 
 import { newCommentState, stripComments } from "./lib/strip_comments";
+import { red, redSummary } from "./lib/red";
 
 const PROJECT_ROOT = process.cwd();
 const ROOTS = ["src"];
-const BASELINE = resolve(PROJECT_ROOT, "scripts/cream_baseline.json");
+const BASELINE_REL = "scripts/cream_baseline.json";
+const BASELINE = resolve(PROJECT_ROOT, BASELINE_REL);
 const SELF = "scripts/verify_no_cream.ts";
+
+/**
+ * THE RED, since 2026-09-17. A chain run printed "cream grew 5 to 6" and that
+ * line cost a deploy and a search (plan-2026-09-17/02-ERRORS.md, step 16). So
+ * every finding now prints through scripts/lib/red as one line naming the
+ * rule, the file, the line, the literal and the remedy, and the count line at
+ * the foot carries the rule and the remedy as well, because a twenty-line tail
+ * is sure to keep the foot and not the head. What the gate ASSERTS is exactly
+ * what it asserted before; only what it prints on failure changed.
+ */
+const RULE = "no-cream";
+const REMEDY = "use var(--c-card) or another token";
 
 /** Any Tailwind utility family, present or future, ending in a cream step. */
 const CREAM_TOKEN = /-cream-\d+\b/g;
@@ -203,9 +217,19 @@ const TOKEN_FILES = [
   "src/styles/homepage-visual-tokens.css",
 ];
 
+/** A token holding a warm cream value under a name that does not say cream. */
+type Alias = { file: string; line: number; name: string; value: string; form: string };
+
+/** The 1-based line that character offset `at` of `code` falls on. */
+function lineAt(code: string, at: number): number {
+  let n = 1;
+  for (let i = 0; i < at; i++) if (code.charCodeAt(i) === 10) n++;
+  return n;
+}
+
 /** Any token assignment: `name: "#hex"` in TS, `--name: #hex` in CSS. */
-function aliasedCream(): string[] {
-  const hits: string[] = [];
+function aliasedCream(): Alias[] {
+  const hits: Alias[] = [];
   for (const rel of TOKEN_FILES) {
     const abs = resolve(PROJECT_ROOT, rel);
     if (!existsSync(abs)) continue;
@@ -224,7 +248,7 @@ function aliasedCream(): string[] {
         const name = m[1];
         const value = m[2].toLowerCase();
         if (WARM_CREAM.has(value) && !/cream/i.test(name)) {
-          hits.push(`${rel}: ${name} = ${value}`);
+          hits.push({ file: rel, line: lineAt(code, m.index ?? 0), name, value, form: value });
         }
       }
     }
@@ -267,7 +291,7 @@ function aliasedCream(): string[] {
       const value = step[2].toLowerCase();
       const name = `${ramp ?? "?"}-${step[1]}`;
       if (WARM_CREAM.has(value) && !/cream/i.test(name)) {
-        hits.push(`${rel}:${i + 1}: ${name} = ${value}`);
+        hits.push({ file: rel, line: i + 1, name, value, form: value });
       }
     });
 
@@ -293,7 +317,13 @@ function aliasedCream(): string[] {
           .map((v) => Number(v).toString(16).padStart(2, "0"))
           .join("");
       if (WARM_CREAM.has(hex) && !/cream/i.test(name)) {
-        hits.push(`${rel}: ${name} = ${m[2]} ${m[3]} ${m[4]} (= ${hex}, decimal form)`);
+        hits.push({
+          file: rel,
+          line: lineAt(code, m.index ?? 0),
+          name,
+          value: hex,
+          form: `${m[2]} ${m[3]} ${m[4]} (= ${hex}, decimal form)`,
+        });
       }
     }
   }
@@ -301,6 +331,9 @@ function aliasedCream(): string[] {
 }
 
 type Counts = Record<string, number>;
+
+/** One cream reference: where it is, what was written, and what encloses it. */
+type Hit = { line: number; col: number; literal: string; context: string };
 
 function walk(dir: string, acc: string[] = []): string[] {
   if (!existsSync(dir)) return acc;
@@ -313,30 +346,58 @@ function walk(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
-function countCream(src: string): number {
+/**
+ * Every cream reference in one file, with its line, so the red can name it.
+ *
+ * SAME RULE, READ PER LINE. Until 2026-09-17 this was `countCream`, which
+ * joined the stripped file and counted matches over the whole text, so the
+ * gate knew HOW MANY and not WHERE: "cream grew 5 to 6" was all it could say.
+ * The three pattern families are matched line by line here and the count is
+ * the length of the list, which is the same number on every file in the tree
+ * (checked on the day of the change: every per-file count equal, both ways),
+ * with one stated difference: an `rgb(` literal broken across two lines would
+ * have counted before and does not now, because `\s` in RGB_LITERALS could
+ * cross a newline in joined text. No such literal exists in src/ and one
+ * would be a strange thing to write; a hex or a `-cream-N` token cannot span
+ * lines at all.
+ *
+ * The context is the enclosing CSS selector when the file is a stylesheet
+ * (the last line that opened a block), otherwise the line's own code,
+ * trimmed, so the red reads "#fbfaf7 in .plant" for CSS and shows the
+ * expression for TSX.
+ */
+function locateCream(src: string, isCss: boolean): Hit[] {
   const state = newCommentState();
-  const code = src
-    .split("\n")
-    .map((l) => stripComments(l, state))
-    .join("\n");
-
-  let n = (code.match(CREAM_TOKEN) || []).length;
-  const lower = code.toLowerCase();
-  for (const lit of CREAM_LITERALS) {
-    let i = 0;
-    for (;;) {
-      const at = lower.indexOf(lit, i);
-      if (at === -1) break;
-      n++;
-      i = at + lit.length;
+  const hits: Hit[] = [];
+  let selector: string | null = null;
+  src.split("\n").forEach((raw, i) => {
+    const code = stripComments(raw, state);
+    const line = i + 1;
+    if (isCss) {
+      const open = code.match(/^\s*([^{}]+?)\s*\{/);
+      if (open) selector = open[1].trim();
+      if (/\}/.test(code) && !/\{/.test(code)) selector = null;
     }
-  }
-  for (const re of RGB_LITERALS) n += (code.match(re) || []).length;
-  return n;
+    const context = isCss && selector ? selector : code.trim().slice(0, 60);
+    const push = (col: number, literal: string) => hits.push({ line, col, literal, context });
+
+    for (const m of code.matchAll(CREAM_TOKEN)) push(m.index ?? 0, m[0]);
+    const lower = code.toLowerCase();
+    for (const lit of CREAM_LITERALS) {
+      let at = lower.indexOf(lit);
+      while (at !== -1) {
+        push(at, code.slice(at, at + lit.length));
+        at = lower.indexOf(lit, at + lit.length);
+      }
+    }
+    for (const re of RGB_LITERALS) for (const m of code.matchAll(re)) push(m.index ?? 0, m[0]);
+  });
+  return hits.sort((a, b) => a.line - b.line || a.col - b.col);
 }
 
-function scan(): Counts {
+function scan(): { counts: Counts; hits: Record<string, Hit[]> } {
   const counts: Counts = {};
+  const hits: Record<string, Hit[]> = {};
   for (const root of ROOTS) {
     for (const file of walk(resolve(PROJECT_ROOT, root))) {
       const rel = file.replace(PROJECT_ROOT, "").replace(/^[\\/]/, "").replace(/\\/g, "/");
@@ -347,16 +408,29 @@ function scan(): Counts {
       } catch {
         continue;
       }
-      const n = countCream(src);
-      if (n > 0) counts[rel] = n;
+      const found = locateCream(src, /\.css$/.test(rel));
+      if (found.length > 0) {
+        counts[rel] = found.length;
+        hits[rel] = found;
+      }
     }
   }
-  return counts;
+  return { counts, hits };
 }
 
+/** The line of `"<file>":` in the baseline, so a stale entry's red can name it. */
+function baselineLineOf(file: string): number | undefined {
+  const lines = readFileSync(BASELINE, "utf-8").split("\n");
+  const i = lines.findIndex((l) => l.includes(`"${file}"`));
+  return i === -1 ? undefined : i + 1;
+}
+
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
 function main(): void {
-  const counts = scan();
+  const { counts, hits } = scan();
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  const nFiles = Object.keys(counts).length;
 
   /* --init REFUSES TO RAISE, added 2026-08-17.
      It used to overwrite unconditionally, which made the ratchet only as strong
@@ -373,27 +447,43 @@ function main(): void {
       const rising = Object.entries(counts).filter(([f, n]) => (prev[f] ?? 0) < n);
       if (total > prevTotal || rising.length > 0) {
         console.error(
-          `[verify_no_cream] refusing to raise the baseline: ${prevTotal} -> ${total}.`,
+          "[verify_no_cream] refusing to raise the baseline. The founder banned cream\n" +
+            "outright; this ratchet counts DOWN only. Remove the cream instead of recording it.",
         );
         for (const [f, n] of rising) {
-          console.error(`  ${f}: ${prev[f] ?? 0} -> ${n}`);
+          for (const h of hits[f] ?? []) {
+            red({ rule: RULE, file: f, line: h.line, detail: `${h.literal} in ${h.context}`, remedy: REMEDY });
+          }
+          red({
+            rule: RULE,
+            file: f,
+            detail: `${plural(n, "cream reference", "cream references")}, baseline ${prev[f] ?? 0}`,
+            remedy: "remove the cream instead of recording it; --init never raises a count",
+          });
         }
-        console.error(
-          "\nThe founder banned cream outright. This ratchet counts DOWN only.\n" +
-            "Remove the cream instead of recording it.",
+        redSummary(
+          RULE,
+          `${total} cream references in ${nFiles} files`,
+          `remove the cream in the ${plural(rising.length, "file", "files")} above, then run --init`,
+          `baseline ${prevTotal}, --init refused`,
         );
         process.exit(1);
       }
     }
     writeFileSync(BASELINE, JSON.stringify({ files: counts }, null, 2) + "\n");
     console.log(
-      `[verify_no_cream] baseline written: ${total} cream reference(s) in ${Object.keys(counts).length} file(s)`,
+      `[verify_no_cream] baseline written: ${total} cream reference(s) in ${nFiles} file(s)`,
     );
     return;
   }
 
   if (!existsSync(BASELINE)) {
-    console.error("[verify_no_cream] no baseline. Run with --init once, then commit it.");
+    red({
+      rule: RULE,
+      file: BASELINE_REL,
+      detail: "no baseline",
+      remedy: "run npx tsx scripts/verify_no_cream.ts --init once, then commit the file",
+    });
     process.exit(1);
   }
 
@@ -402,14 +492,14 @@ function main(): void {
 
   const aliases = aliasedCream();
 
-  const grown: string[] = [];
-  const added: string[] = [];
+  const grown: { file: string; n: number; was: number }[] = [];
+  const added: { file: string; n: number }[] = [];
   const stale: string[] = [];
 
   for (const [file, n] of Object.entries(counts)) {
     const was = base[file];
-    if (was == null) added.push(`${file}: ${n} new`);
-    else if (n > was) grown.push(`${file}: ${was} -> ${n}`);
+    if (was == null) added.push({ file, n });
+    else if (n > was) grown.push({ file, n, was });
   }
   for (const file of Object.keys(base)) {
     if (!counts[file]) stale.push(file);
@@ -417,15 +507,24 @@ function main(): void {
 
   if (aliases.length > 0) {
     console.error(
-      "[verify_no_cream] FAIL: a token holds a warm cream value under a name" +
-        "\nthat does not say cream. This is how the ban is evaded without" +
-        "\nanything in this ratchet moving:\n",
+      "[verify_no_cream] FAIL: a token holds a warm cream value under a name that does\n" +
+        "not say cream. This is how the ban is evaded without anything in this ratchet\n" +
+        "moving: on 2026-08-17 `parchment` WAS cream-300, exactly, across 419 call sites,\n" +
+        "while only 35 usages had the word cream in them.",
     );
-    for (const a of aliases) console.error(`  ${a}`);
-    console.error(
-      "\nOn 2026-08-17 `parchment` WAS cream-300, exactly, across 419 call" +
-        "\nsites, while only 35 usages had the word cream in them. Retone the" +
-        "\nvalue to a true neutral; do not rename the token.",
+    for (const a of aliases) {
+      red({
+        rule: RULE,
+        file: a.file,
+        line: a.line,
+        detail: `${a.name} = ${a.form}, a warm cream value under a name that does not say cream`,
+        remedy: "retone the value to a true neutral; do not rename the token",
+      });
+    }
+    redSummary(
+      RULE,
+      `${aliases.length} ${aliases.length === 1 ? "token holds" : "tokens hold"} a warm cream value under another name`,
+      "retone each value above to a true neutral; do not rename the token",
     );
     process.exit(1);
   }
@@ -433,35 +532,66 @@ function main(): void {
   if (grown.length === 0 && added.length === 0 && stale.length === 0) {
     console.log(
       `[verify_no_cream] PASS: ${total} cream reference(s) in ` +
-        `${Object.keys(counts).length} file(s), baseline ${baseTotal}. Ratchet holding.`,
+        `${nFiles} file(s), baseline ${baseTotal}. Ratchet holding.`,
     );
     return;
   }
 
+  /* THE RED. The explanation goes first and the canonical lines last, because
+     the chain keeps the last twenty lines of a failed gate: every offending
+     file:line with the literal it holds, then the file's count against its
+     baseline, then one count line for the whole gate. A reader who sees only
+     the foot still gets the rule, the file and the remedy. */
   if (grown.length || added.length) {
-    console.error("[verify_no_cream] FAIL: cream grew.\n");
-    for (const g of grown) console.error(`  grew   ${g}`);
-    for (const a of added) console.error(`  new    ${a}`);
     console.error(
-      "\nThe founder banned cream outright: \"remove completely this creamy\n" +
-        "color from the page. That's totally not allowed.\" This ratchet only\n" +
-        "counts down. Do NOT regenerate the baseline to clear this.\n" +
-        "Note verify_palette_membership cannot help you here: it returns legal\n" +
+      "[verify_no_cream] FAIL: cream grew. The founder banned cream outright:\n" +
+        "\"remove completely this creamy color from the page. That's totally not\n" +
+        "allowed.\" This ratchet only counts down. Do NOT regenerate the baseline to\n" +
+        "clear this. verify_palette_membership cannot help you here: it returns legal\n" +
         "for anything above 93% lightness, and cream is 97.6%.",
     );
+    for (const g of grown) {
+      for (const h of hits[g.file] ?? []) {
+        red({ rule: RULE, file: g.file, line: h.line, detail: `${h.literal} in ${h.context}`, remedy: REMEDY });
+      }
+      red({
+        rule: RULE,
+        file: g.file,
+        detail: `${plural(g.n, "cream reference", "cream references")}, baseline ${g.was}`,
+        remedy: REMEDY,
+      });
+    }
+    for (const a of added) {
+      for (const h of hits[a.file] ?? []) {
+        red({ rule: RULE, file: a.file, line: h.line, detail: `${h.literal} in ${h.context}`, remedy: REMEDY });
+      }
+      red({
+        rule: RULE,
+        file: a.file,
+        detail: `${plural(a.n, "cream reference", "cream references")} in a file the baseline does not hold`,
+        remedy: REMEDY,
+      });
+    }
   }
 
   if (stale.length) {
-    console.error(
-      `\n[verify_no_cream] ${stale.length} baseline entr(y/ies) reached zero:\n`,
-    );
-    for (const f of stale) console.error(`  ${f}`);
-    console.error(
-      "\nGood. Delete them from scripts/cream_baseline.json in the same change,\n" +
-        "so the ratchet keeps counting down and cannot silently re-fill.",
-    );
+    for (const f of stale) {
+      red({
+        rule: RULE,
+        file: BASELINE_REL,
+        line: baselineLineOf(f),
+        detail: `the entry for ${f} reached zero; good`,
+        remedy: `delete the entry from ${BASELINE_REL} in the same change, so the ratchet keeps counting down and cannot silently re-fill`,
+      });
+    }
   }
 
+  redSummary(
+    RULE,
+    `${total} cream references in ${nFiles} files`,
+    grown.length || added.length ? REMEDY : `delete the zero entries from ${BASELINE_REL}`,
+    `baseline ${baseTotal}; ${plural(grown.length, "file", "files")} grew, ${added.length} new, ${plural(stale.length, "baseline entry", "baseline entries")} at zero`,
+  );
   process.exit(1);
 }
 

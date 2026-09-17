@@ -201,11 +201,12 @@ function gateA_default(
   return pending("Phase C has not yet wired this page");
 }
 
-function stub(pageId: string, pagePattern: string, pageSource: string | null = null): PageCheckResult {
+function stub(pageId: string, pagePattern: string, pageSource: string | null = null, sourceFile?: string): PageCheckResult {
   const gateA = gateA_default(pageSource, pageId);
   return {
     pageId,
     pagePattern,
+    sourceFile,
     gates: {
       A_lock_primitives: gateA,
       B_trust_copy: gateB_default(),
@@ -225,58 +226,58 @@ export function checkHome(): PageCheckResult {
   // Homepage stays editorial / inviting; no inline locks required.
   // Gate A flips GREEN if primitives exist on disk (homepage doesn't
   // need to import them, per v34 Part 5.1).
-  const src = readIfExists("app/page.tsx");
-  return stub("home", "/", src);
+  const rel = "app/page.tsx";
+  return stub("home", "/", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkCell(): PageCheckResult {
-  const src = readIfExists("app/[country]/[geo]/[industry]/page.tsx");
-  return stub("cell", "/{country}/{geo}/{industry}", src);
+  const rel = "app/[country]/[geo]/[industry]/page.tsx";
+  return stub("cell", "/{country}/{geo}/{industry}", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkIndustry(): PageCheckResult {
-  const src = readIfExists("app/(site)/industries/[industry]/page.tsx");
-  return stub("industry", "/industries/{industry}", src);
+  const rel = "app/(site)/industries/[industry]/page.tsx";
+  return stub("industry", "/industries/{industry}", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkCity(): PageCheckResult {
-  const src = readIfExists("app/(site)/cities/[slug]/page.tsx");
-  return stub("city", "/cities/{slug}", src);
+  const rel = "app/(site)/cities/[slug]/page.tsx";
+  return stub("city", "/cities/{slug}", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkWorld(): PageCheckResult {
-  const src = readIfExists("app/(site)/world/page.tsx");
-  return stub("world", "/world", src);
+  const rel = "app/(site)/world/page.tsx";
+  return stub("world", "/world", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkCalculator(): PageCheckResult {
-  const src = readIfExists("app/(site)/calculator/page.tsx");
-  return stub("calculator", "/calculator", src);
+  const rel = "app/(site)/calculator/page.tsx";
+  return stub("calculator", "/calculator", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkCompare(): PageCheckResult {
-  const src = readIfExists("app/(site)/compare/page.tsx");
-  return stub("compare", "/compare", src);
+  const rel = "app/(site)/compare/page.tsx";
+  return stub("compare", "/compare", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkPricing(): PageCheckResult {
-  const src = readIfExists("app/(site)/pricing/page.tsx");
-  return stub("pricing", "/pricing", src);
+  const rel = "app/(site)/pricing/page.tsx";
+  return stub("pricing", "/pricing", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkAboutData(): PageCheckResult {
-  const src = readIfExists("app/(site)/about-data/page.tsx");
-  return stub("about-data", "/about-data", src);
+  const rel = "app/(site)/about-data/page.tsx";
+  return stub("about-data", "/about-data", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkBlog(): PageCheckResult {
-  const src = readIfExists("app/(site)/blog/[slug]/page.tsx");
-  return stub("blog", "/blog/{slug}", src);
+  const rel = "app/(site)/blog/[slug]/page.tsx";
+  return stub("blog", "/blog/{slug}", readIfExists(rel), `src/${rel}`);
 }
 
 export function checkSector(): PageCheckResult {
-  const src = readIfExists("app/sectors/[sector]/page.tsx");
-  return stub("sector", "/sectors/{sector}", src);
+  const rel = "app/sectors/[sector]/page.tsx";
+  return stub("sector", "/sectors/{sector}", readIfExists(rel), `src/${rel}`);
 }
 
 export const ALL_CHECKS = [

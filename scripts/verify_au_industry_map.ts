@@ -16,7 +16,9 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { red, redSummary, repoRelative } from "./lib/red";
 
+const RULE = "au-industry-map";
 const ROOT = process.cwd();
 const JSON_PATH = path.resolve(ROOT, "data/finance/au_primary_benchmarks_v1.json");
 const MAP_PATH = path.resolve(ROOT, "src/lib/economic_profile/au_industry_map.ts");
@@ -102,8 +104,36 @@ const mappedCount = mapEntries.length - nullCount;
 console.log(`  Mapped to MA: ${mappedCount},  null (no MA equivalent): ${nullCount}`);
 
 if (failures > 0) {
+  /* Every message is about one slug. A slug that is in the map names the map
+     file and the line that declares it; a parsed slug the map lacks names the
+     map file with no line, since the fix is to add a line there
+     (plan-2026-09-17/02-ERRORS.md, step 16). */
+  const MAP_FILE = repoRelative(MAP_PATH);
+  const JSON_FILE = repoRelative(JSON_PATH);
+  const mapLines = mapSrc.split("\n");
+  const slugLine = (slug: string): number | undefined => {
+    const i = mapLines.findIndex((l) => new RegExp(`^\\s+${slug}:\\s*\\{`).test(l));
+    return i === -1 ? undefined : i + 1;
+  };
   console.log(`\n  GATE: FAIL  (${failures} violations)`);
-  for (const msg of messages.slice(0, 30)) console.log("  - " + msg);
+  for (const msg of messages.slice(0, 30)) {
+    const slug = msg.match(/^\[([^\]]+)\]/)?.[1] ?? msg.match(/slug "([^"]+)"/)?.[1];
+    const parsedOnly = /parsed but not mapped/.test(msg);
+    red({
+      rule: RULE,
+      file: MAP_FILE,
+      line: parsedOnly ? undefined : slugLine(slug ?? ""),
+      detail: msg,
+      remedy: parsedOnly
+        ? `add an entry for ${slug} to AU_TO_MA_INDUSTRY_MAP in ${MAP_FILE}, with ma_id (or null) and a confidence`
+        : /stale entry/.test(msg)
+          ? `remove the entry, or restore ${slug} to ${JSON_FILE}`
+          : /confidence/.test(msg)
+            ? `give the entry a confidence of exact, close, approximate or none`
+            : `set ma_id to an id in src/lib/taxonomy/industries.json, or null`,
+    });
+  }
+  redSummary(RULE, failures, `fix each entry named above in ${MAP_FILE}`, messages.length > 30 ? `first 30 of ${messages.length} shown` : undefined);
   process.exit(1);
 }
 if (warnings > 0) console.log(`  ${warnings} warnings.`);

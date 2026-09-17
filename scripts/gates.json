@@ -7,7 +7,10 @@
       "args": [],
       "browser": false,
       "asserts": "verify_taxonomy.ts — Plan v4.0 Step 10. Run via `npm run verify:taxonomy` or implicitly via `prebuild`.",
-      "reads": [],
+      "reads": [
+        "src/lib/taxonomy/industries.json",
+        "src/lib/taxonomy/sectors.json"
+      ],
       "claims": [
         {
           "kind": "bans",
@@ -727,8 +730,10 @@
       "script": "scripts/verify_monetization_coverage.ts",
       "args": [],
       "browser": false,
-      "asserts": "verify_monetization_coverage — prebuild gate for v34 Phase 0Q.",
-      "reads": [],
+      "asserts": "verify_monetization_coverage , prebuild gate for v34 Phase 0Q.",
+      "reads": [
+        "scripts/audit/monetization/page_checks.ts"
+      ],
       "claims": []
     },
     {
@@ -1661,7 +1666,10 @@
       "args": [],
       "browser": false,
       "asserts": "Phase 1d gate.",
-      "reads": [],
+      "reads": [
+        "data/finance/au_primary_benchmarks_v1.json",
+        "src/lib/economic_profile/au_industry_map.ts"
+      ],
       "claims": []
     },
     {
@@ -2033,6 +2041,8 @@
       "asserts": "ONE NUMBER CANNOT BE THE ANSWER FOR SEVEN CITIES.",
       "reads": [
         "data/coverage/regional_coverage_v1.json",
+        "src/components/CoverageIndicator.tsx",
+        "src/lib/cells/fill_defaults.ts",
         "src/lib/taxonomy/industries.json"
       ],
       "claims": []

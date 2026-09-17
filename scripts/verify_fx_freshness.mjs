@@ -42,7 +42,10 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { red } from "./lib/red.mjs";
+
 const ROOT = resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
+const RULE = "fx-freshness";
 const DISPLAY = "src/lib/currency.ts";
 const WARN_DAYS = 92;
 const FAIL_DAYS = 183;
@@ -50,14 +53,18 @@ const FAIL_DAYS = 183;
 const src = readFileSync(resolve(ROOT, DISPLAY), "utf8");
 
 /* The refresh stamp. Kept as a comment beside the rates rather than as an
-   exported constant, because it documents an edit rather than feeding one. */
+   exported constant, because it documents an edit rather than feeding one.
+   Every red below names the stamp's own line (plan-2026-09-17/02-ERRORS.md,
+   step 16), which is the line the remedy moves. */
 const m = src.match(/Refreshed\s+(\d{4})-(\d{2})-(\d{2})/);
+const stampLine = m ? src.slice(0, m.index).split("\n").length : undefined;
 if (!m) {
-  console.error(
-    `x verify_fx_freshness: no "Refreshed YYYY-MM-DD" stamp found in ${DISPLAY}.\n` +
-      `  The rate table must carry the date it was last checked, or nothing can\n` +
-      `  tell a fresh rate from a forgotten one.`,
-  );
+  red({
+    rule: RULE,
+    file: DISPLAY,
+    detail: `no "Refreshed YYYY-MM-DD" stamp in the file, so nothing can tell a fresh rate from a forgotten one`,
+    remedy: `write a "Refreshed YYYY-MM-DD" comment beside the USD_TO table with the date the rates were last checked`,
+  });
   process.exit(1);
 }
 
@@ -67,20 +74,28 @@ const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()
 const days = Math.floor((today - stamped) / 86_400_000);
 
 if (days < 0) {
-  console.error(`x verify_fx_freshness: ${DISPLAY} is stamped ${m[0]}, which is in the future.`);
+  red({
+    rule: RULE,
+    file: DISPLAY,
+    line: stampLine,
+    detail: `stamped ${m[0]}, which is in the future`,
+    remedy: `set the "Refreshed" stamp to the date the rates were actually checked`,
+  });
   process.exit(1);
 }
 
 const head = `verify_fx_freshness: display rates stamped ${m[1]}-${m[2]}-${m[3]}, ${days} day(s) old.`;
 
 if (days >= FAIL_DAYS) {
-  console.error(
-    `x ${head}\n` +
-      `  Past the ${FAIL_DAYS}-day limit. Refresh the USD_TO table in ${DISPLAY}\n` +
-      `  against mid-market rates and move the "Refreshed" stamp with it.\n` +
-      `  Do NOT touch src/lib/finance/fx.ts: its rate is pinned at parse time on\n` +
-      `  purpose and refreshing it would restate every Australian figure.`,
-  );
+  red({
+    rule: RULE,
+    file: DISPLAY,
+    line: stampLine,
+    detail: `display rates stamped ${m[1]}-${m[2]}-${m[3]}, ${days} days old, past the ${FAIL_DAYS}-day limit`,
+    remedy:
+      `refresh the USD_TO table in ${DISPLAY} against mid-market rates and move the "Refreshed" stamp with it; ` +
+      `do not touch src/lib/finance/fx.ts, whose rate is pinned at parse time on purpose`,
+  });
   process.exit(1);
 }
 

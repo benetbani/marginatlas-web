@@ -42,6 +42,8 @@ export type GateResult = {
 export type PageCheckResult = {
   pageId: string;
   pagePattern: string;
+  /** The page's source file, repo-relative, when the check read one; the red names it. */
+  sourceFile?: string;
   gates: Record<GateName, GateResult>;
 };
 

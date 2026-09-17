@@ -1,7 +1,7 @@
 {
-  "no_path": 40,
-  "no_rule": 18,
-  "no_remedy": 49,
+  "no_path": 28,
+  "no_rule": 16,
+  "no_remedy": 41,
   "gates": 142,
   "tests": {
     "no_path": 24,

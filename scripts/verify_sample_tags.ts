@@ -68,6 +68,9 @@
  */
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { red, redSummary } from "./lib/red";
+
+const RULE = "sample-tags";
 
 const ROOT = process.cwd();
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");
@@ -220,13 +223,24 @@ console.log(`verify_sample_tags: ${results.length} seed file(s) carry placeholde
 for (const r of passes) console.log(`  PASS   ${r.seedFile} , ${r.detail}`);
 for (const r of exempt) console.log(`  EXEMPT ${r.seedFile} , ${r.detail}`);
 for (const r of warns) console.log(`  WARN   ${r.seedFile} , ${r.detail}`);
-for (const r of fails) console.error(`  FAIL   ${r.seedFile} -> ${r.detail}`);
-
 if (fails.length > 0) {
-  console.error(`\n✗ ${fails.length} seed file(s) with modeled/placeholder data render through a`);
-  console.error("  component that never mentions SampleTag. Rulebook v1 rule 4: a modeled");
-  console.error("  figure presented as real is the worst defect in the system. Either wire");
-  console.error("  SampleTag into the render group, or add // allow-unmarked: <reason>.");
+  /* One canonical line per seed (plan-2026-09-17/02-ERRORS.md, step 16): the
+     seed file is the finding's file, since it is the seed that carries the
+     modeled data; the render group that never mentions SampleTag is in the
+     detail, and the remedy names both edits that clear it. */
+  console.error(
+    "verify_sample_tags: rulebook v1 rule 4, a modeled figure presented as real is the\n" +
+      "  worst defect in the system.",
+  );
+  for (const r of fails) {
+    red({
+      rule: RULE,
+      file: r.seedFile,
+      detail: `carries modeled/placeholder data and renders through ${r.detail}`,
+      remedy: "wire SampleTag into a file of that render group, or add // allow-unmarked: <reason> to one",
+    });
+  }
+  redSummary(RULE, fails.length, "wire SampleTag into each render group named above, or exempt it with a reason", `${results.length} seed files carry modeled data`);
   process.exit(1);
 }
 

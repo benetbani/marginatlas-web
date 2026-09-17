@@ -23,8 +23,11 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { red, redSummary } from "./lib/red.mjs";
+
 const APP = "src/app";
 const LIST = "src/lib/routing/top_level_segments.ts";
+const RULE = "top-level-segments";
 
 function topSegments(dir, out = new Set()) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -52,13 +55,36 @@ if (missing.length === 0 && stale.length === 0) {
   process.exit(0);
 }
 
-if (missing.length) {
-  console.error(`\nx ${missing.length} route folder(s) missing from the list: ${missing.join(", ")}`);
-  console.error(`  MIDDLEWARE WILL 404 THESE. A first segment that is neither a country nor`);
-  console.error(`  in the list is treated as a place we do not hold. Add them to ${LIST}.`);
+/* THE RED, one canonical line per name (plan-2026-09-17/02-ERRORS.md, step
+   16). A missing folder's line is the line of the set's `new Set([` opener,
+   which is where the name has to be added; a stale name's line is the line
+   that declares it, which is the line to delete. */
+const lines = src.split("\n");
+const setLine = lines.findIndex((l) => l.includes("new Set([")) + 1 || undefined;
+const lineOf = (name) => lines.findIndex((l) => l.includes(`"${name}"`)) + 1 || undefined;
+
+for (const s of missing) {
+  red({
+    rule: RULE,
+    file: LIST,
+    line: setLine,
+    detail: `route folder ${APP}/${s} is on disk and not in the list, so middleware will 404 it as a place we do not hold`,
+    remedy: `add "${s}" to the set in ${LIST}`,
+  });
 }
-if (stale.length) {
-  console.error(`\nx ${stale.length} name(s) in the list with no folder: ${stale.join(", ")}`);
-  console.error(`  A permission nobody revoked. Remove them from ${LIST}.`);
+for (const s of stale) {
+  red({
+    rule: RULE,
+    file: LIST,
+    line: lineOf(s),
+    detail: `"${s}" is in the list and ${APP}/${s} does not exist, a permission nobody revoked`,
+    remedy: `remove "${s}" from the set in ${LIST}`,
+  });
 }
+redSummary(
+  RULE,
+  missing.length + stale.length,
+  `edit the set in ${LIST} so it matches the folders under ${APP}`,
+  `${missing.length} missing, ${stale.length} stale`,
+);
 process.exit(1);

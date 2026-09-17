@@ -28,8 +28,20 @@
  * nothing to test and must not block. In CI and on Vercel the variable is
  * present and the check is real.
  *
+ * THE FILE THE RED NAMES (2026-09-17, plan-2026-09-17/02-ERRORS.md step 16).
+ * The finding is about an environment variable, which is not a file in this
+ * repo: on Vercel it lives in the project's settings and locally in
+ * `.env.local`, which is untracked. `.env.local` is the one place an editor
+ * can reach, so the red names it, with no line, and says in the detail where
+ * the other copy is. The repo-relative rule of scripts/lib/red is kept: the
+ * path is real, it is just not committed.
+ *
  * Run: node scripts/verify_db_credential.mjs
  */
+import { red } from "./lib/red.mjs";
+
+const RULE = "db-credential";
+const ENV_FILE = ".env.local";
 const URL_VAR = "NEXT_PUBLIC_SUPABASE_URL";
 const KEY_VAR = "SUPABASE_SERVICE_ROLE_KEY";
 const TIMEOUT_MS = 15_000;
@@ -83,14 +95,19 @@ if (res.status === 401 || res.status === 403) {
     detail = body.slice(0, 300).replace(/\s+/g, " ").trim();
   } catch { /* body is optional; the status is the finding */ }
   console.error(
-    `x verify_db_credential: ${KEY_VAR} was REJECTED (HTTP ${res.status}).\n` +
-      (detail ? `  ${detail}\n` : "") +
-      `\n  This is the failure that hid for three months. Every supabaseAdmin read returns\n` +
-      `  empty, the sitemap cell shards ship 110 bytes, and every page falls back to\n` +
-      `  synthesised figures while still rendering perfectly.\n\n` +
-      `  Rotate it: Supabase dashboard, Settings, API, copy the service_role key, then\n` +
-      `  update ${KEY_VAR} in Vercel AND in .env.local, and redeploy.`,
+    `verify_db_credential: this is the failure that hid for three months. Every supabaseAdmin\n` +
+      `  read returns empty, the sitemap cell shards ship 110 bytes, and every page falls\n` +
+      `  back to synthesised figures while still rendering perfectly.`,
   );
+  red({
+    rule: RULE,
+    file: ENV_FILE,
+    detail:
+      `${KEY_VAR} was rejected by ${new URL(endpoint).host} with HTTP ${res.status}` +
+      (detail ? ` (${detail})` : "") +
+      `; the same variable is set in Vercel's project settings`,
+    remedy: `copy the service_role key from the Supabase dashboard (Settings, API) into ${KEY_VAR} in Vercel and in ${ENV_FILE}, then redeploy`,
+  });
   process.exit(1);
 }
 

@@ -37,6 +37,10 @@
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { red, redSummary } from "./lib/red";
+
+const RULE = "export-columns";
+const ROUTE_REL = "src/app/api/export-csv/route.ts";
 
 const ROUTE = resolve(process.cwd(), "src/app/api/export-csv/route.ts");
 
@@ -72,7 +76,15 @@ const ALLOWED = new Set([
 const FORBIDDEN_FIELDS = ["coverage_source", "\\.sources\\b", "\\.notes\\b"];
 
 const src = readFileSync(ROUTE, "utf8");
-const failures: string[] = [];
+/* Every failure names the route file and the line of the column or the field it
+   is about (plan-2026-09-17/02-ERRORS.md, step 16); a failure about the whole
+   file names it with no line. */
+type Failure = { line?: number; detail: string; remedy: string };
+const failures: Failure[] = [];
+const lineOf = (needle: RegExp | string): number | undefined => {
+  const at = typeof needle === "string" ? src.indexOf(needle) : src.search(needle);
+  return at === -1 ? undefined : src.slice(0, at).split("\n").length;
+};
 
 /* 1. Collect the column names the file emits. Two shapes are used: an array
       literal joined with commas, and a literal comma-separated header string. */
@@ -86,19 +98,19 @@ for (const m of src.matchAll(/"([a-z0-9_]+(?:,[a-z0-9_]+)+)"/g)) {
 }
 
 if (columns.size === 0) {
-  failures.push(
-    "Found no columns at all. The export's shape changed and this gate can no\n" +
-      "      longer see it, which is a failure: a gate that cannot find its subject\n" +
-      "      passes forever.",
-  );
+  failures.push({
+    detail: "no columns found at all; the export's shape changed and this gate can no longer see it, and a gate that cannot find its subject passes forever",
+    remedy: "emit the header as an array literal joined with commas or as one literal comma-separated string, the two shapes this gate reads",
+  });
 }
 
 for (const c of [...columns].sort()) {
   if (!ALLOWED.has(c)) {
-    failures.push(
-      `Column "${c}" is emitted but not on the allowlist.\n` +
-        `      If it is safe to publish, add it to ALLOWED in this file and say why.`,
-    );
+    failures.push({
+      line: lineOf(`"${c}"`),
+      detail: `column "${c}" is emitted and is not on the allowlist`,
+      remedy: "drop the column, or if it is safe to publish add it to ALLOWED in scripts/verify_export_columns.ts and say why",
+    });
   }
 }
 
@@ -106,21 +118,21 @@ for (const c of [...columns].sort()) {
 for (const pat of FORBIDDEN_FIELDS) {
   const re = new RegExp(pat);
   if (re.test(src)) {
-    failures.push(
-      `The export references a forbidden provenance field matching /${pat}/.\n` +
-        `      Emit the derived tier via deriveCoverageTier() instead. A raw string\n` +
-        `      can carry a source-agency name that no gate here has vetted.`,
-    );
+    failures.push({
+      line: lineOf(re),
+      detail: `references a forbidden provenance field matching /${pat}/; a raw string can carry a source-agency name no gate has vetted`,
+      remedy: "emit the derived tier via deriveCoverageTier() instead",
+    });
   }
 }
 
 if (failures.length) {
-  console.error(`x verify_export_columns: ${failures.length} problem(s) in the public CSV export.\n`);
-  for (const f of failures) console.error("   " + f);
   console.error(
-    "\n   /api/export-csv is public and unauthenticated. Its column list is a\n" +
-      "   publishing decision, not an implementation detail.",
+    "verify_export_columns: /api/export-csv is public and unauthenticated. Its column\n" +
+      "   list is a publishing decision, not an implementation detail.",
   );
+  for (const f of failures) red({ rule: RULE, file: ROUTE_REL, line: f.line, detail: f.detail, remedy: f.remedy });
+  redSummary(RULE, failures.length, `fix each line named above in ${ROUTE_REL}`, "in the public CSV export");
   process.exit(1);
 }
 

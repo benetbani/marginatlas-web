@@ -72,6 +72,11 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fillMissingFields, enforceSanity } from "../src/lib/cells/fill_defaults";
 import { deriveCoverageTier } from "../src/components/CoverageIndicator";
+import { red, redSummary } from "./lib/red";
+
+const RULE = "shared-revenue";
+const FILL_FILE = "src/lib/cells/fill_defaults.ts";
+const TIER_FILE = "src/components/CoverageIndicator.tsx";
 
 const ROOT = process.cwd();
 const COVERAGE_PATH = resolve(ROOT, "data/coverage/regional_coverage_v1.json");
@@ -221,12 +226,26 @@ if (clusters.length) {
 // live, and leaving one behind on a repaired gate is how a returning defect
 // gets to look normal.
 if (totalCombinations > 0) {
+  /* THE FILE A RED NAMES (plan-2026-09-17/02-ERRORS.md, step 16). A shared
+     figure is not written anywhere: it is what fillMissingFields produces for
+     two countries and what deriveCoverageTier then labels measured. So the
+     finding names the fill module, with no line, and each cluster prints as
+     one line carrying the figure, its countries and its industries; the label
+     half of the remedy names the tier module. */
   console.error(
-    `\nx verify_shared_revenue_across_countries: ${totalCombinations} combination(s) publish a figure that is\n` +
-      `   also published for a different country, under a label that asserts a direct observation.\n` +
-      `   Repair the fill, dash the figure, or stop calling a filled cell measured.\n` +
-      `   Do not relax this gate. It was at 7281 once and reached zero without any figure moving.`,
+    `verify_shared_revenue_across_countries: a filled cell that repeats another country's\n` +
+      `   figure under a label asserting a direct observation. Do not relax this gate: it\n` +
+      `   was at 7281 once and reached zero without any figure moving.`,
   );
+  for (const c of clusters.slice(0, 30)) {
+    red({
+      rule: RULE,
+      file: FILL_FILE,
+      detail: `$${c.figure} is published for ${c.countries.length} countries (${c.countries.join(", ")}) across ${c.combinations} combinations, industries ${c.industries.slice(0, 3).join(", ")}${c.industries.length > 3 ? ` +${c.industries.length - 3} more` : ""}`,
+      remedy: `repair the fill in ${FILL_FILE} so the figure is not copied across countries, dash it, or stop labelling a filled cell measured in ${TIER_FILE}`,
+    });
+  }
+  redSummary(RULE, totalCombinations, `repair the fill in ${FILL_FILE}, dash the figure, or fix the label in ${TIER_FILE}`, `${clusters.length} distinct shared figures${clusters.length > 30 ? ", first 30 shown" : ""}`);
   process.exit(1);
 }
 

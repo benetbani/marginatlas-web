@@ -14,7 +14,24 @@
  * Run: npx tsx scripts/verify_au_primary_anchor_render.ts
  * Exit 0 = pass, exit 1 = fail.
  */
+import { readFileSync } from "node:fs";
 import { getAuPrimaryAnchor, classifyAuTurnoverBand } from "../src/lib/economic_profile/au_primary_loader";
+import { red, redSummary } from "./lib/red";
+
+/* THE FILE A RED NAMES (plan-2026-09-17/02-ERRORS.md, step 16). A sample is a
+   MarginAtlas industry id and a revenue; the loader reaches the benchmark
+   through src/lib/economic_profile/au_industry_map.ts, whose entry
+   `<ato_slug>: { ma_id: "<industry id>" }` is the one line in the repo that
+   joins the two, so the red names that line. An industry with no map entry
+   names the map file with no line, since adding one is the fix. */
+const RULE = "au-anchor-render";
+const MAP_FILE = "src/lib/economic_profile/au_industry_map.ts";
+const BENCHMARKS_FILE = "data/finance/au_primary_benchmarks_v1.json";
+const mapLines = readFileSync(MAP_FILE, "utf-8").split("\n");
+const mapLineOf = (industryId: string): number | undefined => {
+  const i = mapLines.findIndex((l) => l.includes(`ma_id: "${industryId}"`));
+  return i === -1 ? undefined : i + 1;
+};
 
 const SAMPLES: Array<{ industryId: string; revenueUsd: number; label: string }> = [
   // Small bakery, small band.
@@ -33,43 +50,43 @@ const SAMPLES: Array<{ industryId: string; revenueUsd: number; label: string }> 
 ];
 
 let failures = 0;
-const messages: string[] = [];
+const messages: { industryId: string; text: string }[] = [];
 
 console.log("=== verify_au_primary_anchor_render ===");
 
 for (const s of SAMPLES) {
   const anchor = getAuPrimaryAnchor(s.industryId, s.revenueUsd);
   if (!anchor) {
-    messages.push(`[${s.label}] no anchor returned for industry=${s.industryId} revenue=${s.revenueUsd}`);
+    messages.push({ industryId: s.industryId, text: `[${s.label}] no anchor returned for industry=${s.industryId} revenue=${s.revenueUsd}` });
     failures++;
     continue;
   }
   // R3: band classification matches revenue.
   const bandCheck = classifyAuTurnoverBand(s.industryId, s.revenueUsd);
   if (bandCheck !== anchor.band_index) {
-    messages.push(`[${s.label}] band mismatch: anchor=${anchor.band_index} classify=${bandCheck}`);
+    messages.push({ industryId: s.industryId, text: `[${s.label}] band mismatch: anchor=${anchor.band_index} classify=${bandCheck}` });
     failures++;
   }
   // R2 + R4: ratios within plausible bounds and key benchmark non-zero.
   const ratioCount = Object.keys(anchor.ratios).length;
   if (ratioCount === 0) {
-    messages.push(`[${s.label}] anchor has no ratios`);
+    messages.push({ industryId: s.industryId, text: `[${s.label}] anchor has no ratios` });
     failures++;
     continue;
   }
   for (const [key, r] of Object.entries(anchor.ratios)) {
     if (r.low < 0 || r.high > 1 || r.low > r.high) {
-      messages.push(`[${s.label}] ratio ${key} out of bounds: low=${r.low} high=${r.high}`);
+      messages.push({ industryId: s.industryId, text: `[${s.label}] ratio ${key} out of bounds: low=${r.low} high=${r.high}` });
       failures++;
     }
   }
   // R4: key benchmark resolves.
   if (anchor.key_benchmark === "cost_of_sales" && !anchor.ratios.cost_of_sales) {
-    messages.push(`[${s.label}] key_benchmark=cost_of_sales but ratio missing`);
+    messages.push({ industryId: s.industryId, text: `[${s.label}] key_benchmark=cost_of_sales but ratio missing` });
     failures++;
   }
   if (anchor.key_benchmark === "total_expenses" && !anchor.ratios.total_expenses) {
-    messages.push(`[${s.label}] key_benchmark=total_expenses but ratio missing`);
+    messages.push({ industryId: s.industryId, text: `[${s.label}] key_benchmark=total_expenses but ratio missing` });
     failures++;
   }
 }
@@ -78,7 +95,19 @@ console.log(`  ${SAMPLES.length} sample cells exercised.`);
 
 if (failures > 0) {
   console.log(`\n  GATE: FAIL  (${failures} violations)`);
-  for (const m of messages.slice(0, 30)) console.log("  - " + m);
+  for (const m of messages.slice(0, 30)) {
+    const line = mapLineOf(m.industryId);
+    red({
+      rule: RULE,
+      file: MAP_FILE,
+      line,
+      detail: `${m.text}; the anchor is read from ${BENCHMARKS_FILE} through this map entry`,
+      remedy: line
+        ? `check the entry's ma_id and the slug's band ratios in ${BENCHMARKS_FILE}; re-parse the source if a ratio is out of bounds`
+        : `add an entry mapping an ATO slug to ma_id "${m.industryId}" in ${MAP_FILE}`,
+    });
+  }
+  redSummary(RULE, failures, `fix each map entry or benchmark named above`, `${SAMPLES.length} sample cells exercised`);
   process.exit(1);
 }
 console.log("\n  GATE: PASS");

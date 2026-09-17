@@ -98,7 +98,9 @@ import {
   decileShortfallBelowFloorPct,
   mayPublishDecileSpread,
 } from "../src/lib/economic_profile/wage_deciles";
+import { lineOfKey, red, redSummary, repoRelative } from "./lib/red";
 
+const RULE = "wage-deciles";
 const ROOT = process.cwd();
 const DECILES_PATH = path.resolve(ROOT, "data/economics/wage_deciles_v1.json");
 const PROFILE_PATH = path.resolve(ROOT, "data/economic_indicators/country_profile_v2.json");
@@ -252,8 +254,30 @@ console.log(
 );
 
 if (failures > 0) {
+  /* Each message opens with the ISO code in brackets, the entry's key in both
+     files. A message about a profile row (wage_p10_usd, wage_p90_usd, the
+     ordering, what a row carries) names the profile; the rest name the
+     research file (plan-2026-09-17/02-ERRORS.md, step 16). */
+  const DECILES_FILE = repoRelative(DECILES_PATH);
+  const PROFILE_FILE = repoRelative(PROFILE_PATH);
   console.log(`\n  GATE: FAIL  (${failures} violations)`);
-  for (const m of messages.slice(0, 30)) console.log("  - " + m);
+  for (const m of messages.slice(0, 30)) {
+    const key = m.match(/^\[([^\]]+)\]/)?.[1];
+    const onProfile = /wage_p(10|90)_usd|ordering|carries/.test(m);
+    const file = onProfile ? PROFILE_FILE : DECILES_FILE;
+    red({
+      rule: RULE,
+      file,
+      line: lineOfKey(file, key),
+      detail: m,
+      remedy: /rerun apply_wage_deciles/.test(m)
+        ? "run npx tsx scripts/data/apply_wage_deciles.ts so the profile's deciles reproduce from the research"
+        : onProfile
+          ? `fix the row in ${PROFILE_FILE}: both deciles from research or neither`
+          : `fix the entry in ${DECILES_FILE}: ratios within bounds, a source, an as-of period, confidence held or modeled`,
+    });
+  }
+  redSummary(RULE, failures, `fix each entry named above in ${DECILES_FILE} or ${PROFILE_FILE}`, messages.length > 30 ? `first 30 of ${messages.length} shown` : undefined);
   process.exit(1);
 }
 console.log("  Every decile on the profile reproduces from a sourced ratio and its own median.");

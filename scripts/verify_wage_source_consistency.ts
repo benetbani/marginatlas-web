@@ -27,7 +27,9 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { lineOfKey, red, redSummary, repoRelative } from "./lib/red";
 
+const RULE = "wage-source";
 const ROOT = process.cwd();
 const JSON_PATH = path.resolve(ROOT, "data/economics/median_monthly_wage_usd_v1.json");
 
@@ -120,8 +122,23 @@ for (const [iso, c] of Object.entries(wageFile.countries)) {
 console.log(`  ${countryCount} countries checked.`);
 
 if (failures > 0) {
+  /* Each message opens with the country's ISO code in brackets, which is the
+     entry's key in the wage file, so the red names the file and the line that
+     declares the key (plan-2026-09-17/02-ERRORS.md, step 16). A message about
+     the file as a whole names it with no line. */
+  const WAGE_FILE = repoRelative(JSON_PATH);
   console.log(`\n  GATE: FAIL  (${failures} violations)`);
-  for (const m of messages.slice(0, 30)) console.log("  - " + m);
+  for (const m of messages.slice(0, 30)) {
+    const key = m.match(/^\[([^\]]+)\]/)?.[1];
+    red({
+      rule: RULE,
+      file: WAGE_FILE,
+      line: lineOfKey(WAGE_FILE, key),
+      detail: m,
+      remedy: `correct the entry in ${WAGE_FILE} from its source: a monthly wage within [$${MIN_MONTHLY_USD}, $${MAX_MONTHLY_USD}] and a valid quality grade`,
+    });
+  }
+  redSummary(RULE, failures, `fix each entry named above in ${WAGE_FILE}`, messages.length > 30 ? `first 30 of ${messages.length} shown` : `${countryCount} countries checked`);
   process.exit(1);
 }
 console.log(
