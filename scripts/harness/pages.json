@@ -21,6 +21,29 @@
         "london"
       ],
       "since": "run 8, the city masthead"
+    },
+    {
+      "surface": "cell",
+      "slugs": [
+        "gb",
+        "london",
+        "restaurants"
+      ],
+      "since": "plan step 3, 2026-09-17: the trade page joins the filter with its spine (MODEL.md 8.6, floor 16); its sections are ad-hoc until file 04"
+    },
+    {
+      "surface": "industry",
+      "slugs": [
+        "restaurants"
+      ],
+      "since": "plan step 3, 2026-09-17: the industry page joins the filter with its spine (8.7, floor 12); ad-hoc until file 04"
+    },
+    {
+      "surface": "hood",
+      "slugs": [
+        "london"
+      ],
+      "since": "plan step 3, 2026-09-17: the neighbourhood page joins the filter with its provisional spine (8.8, floor 7); ad-hoc until file 04"
     }
   ]
 }

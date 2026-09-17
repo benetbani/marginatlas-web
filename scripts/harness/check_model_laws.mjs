@@ -202,14 +202,18 @@ const listed = listArg ? JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) =>
 const files = [...args.filter((a) => !a.startsWith("--")), ...listed];
 if (files.length === 0) { console.error("usage: node scripts/harness/check_model_laws.mjs <rendered.html ...> | --list"); process.exit(2); }
 
-/* THE BLOCK FLOOR (PART 8.2/8.3): 21 for a country, 17 for a city. A page
+/* THE BLOCK FLOOR (PART 8.2, 8.3, 8.6, 8.7, 8.8): five floors, below. A page
    this file cannot name (the fixture, or a future third surface) is held to
    the WEAKER of the two named floors, 17, stated here rather than invented
    silently: it is a real blind spot for a surface with its own true floor
    the model has not yet stated (how-to holds none today), and it is exactly
    what lets the fixture's three-block page prove the rule without inventing
    a name for itself. */
-const FLOOR_BY_SURFACE = { country: 21, city: 17 };
+/* Five floors since 2026-09-17 (plan step 3), each as MODEL.md PART 8 states it:
+   8.2 country 21, 8.3 city 17, 8.6 trade (the cell surface) 16, 8.7 industry 12,
+   8.8 neighbourhood 7 and provisional. The renderer names the trade surface
+   "cell" and the neighbourhood "hood"; the keys follow the renderer's stems. */
+const FLOOR_BY_SURFACE = { country: 21, city: 17, cell: 16, industry: 12, hood: 7 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

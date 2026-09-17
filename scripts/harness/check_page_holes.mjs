@@ -46,7 +46,7 @@
  *   card carries stops with exit 2 and the ids the page holds.
  */
 import { chromium } from "playwright";
-import { mkdirSync, existsSync, readFileSync } from "node:fs";
+import { mkdirSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
@@ -204,4 +204,42 @@ for (const file of files) {
 await browser.close();
 console.log(`page holes${SECTION == null ? "" : ` (--section=${SECTION}, page rules on the whole page)`}: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r.page}@${r.w} #${r.id}: ${r.msg}`);
-process.exit(reds.length ? 1 : 0);
+
+/* THE PER-PAGE RATCHET (plan step 3, 2026-09-17). Three pages that had never
+   been measured joined the list with their spines (the trade, industry and
+   neighbourhood pages) and the filter found 34 reds on them and none on the
+   three that were already clean. Those are file 04's work, one page at a
+   time. Until then a page's count is held in scripts/harness/page_holes_baseline.json
+   the way the copy gate and the cream gate hold theirs: a page with no entry
+   must have zero; a page with an entry may not EXCEED it; a page that comes
+   in under its entry lowers it in the same commit (run with --write-baseline
+   after reading the reds) and the file can never be raised by hand. The exit
+   is red when any page exceeds, so a new fault on the country page still
+   fails, and a fault on a page that was already red is still printed above
+   and counted here, never hidden. A --section run is one card and is not
+   ratcheted. */
+const BASELINE = "scripts/harness/page_holes_baseline.json";
+const WRITE_BASELINE = process.argv.includes("--write-baseline");
+let exit = 0;
+if (SECTION == null) {
+  const byPage = {};
+  for (const r of reds) byPage[r.page] = (byPage[r.page] ?? 0) + 1;
+  let base = {};
+  try { base = JSON.parse(readFileSync(BASELINE, "utf8")); } catch { base = {}; }
+  const over = [], under = [];
+  for (const name of files.map((f) => basename(f, ".html"))) {
+    const have = byPage[name] ?? 0, allowed = base[name] ?? 0;
+    if (have > allowed) over.push(`${name}: ${have} against a baseline of ${allowed}`);
+    else if (have < allowed) under.push(`${name}: ${have}, baseline ${allowed} can fall`);
+  }
+  if (over.length) { console.log(`page holes RATCHET: ${over.length} page(s) over their baseline: ${over.join("; ")}`); exit = 1; }
+  if (under.length && WRITE_BASELINE) {
+    for (const name of files.map((f) => basename(f, ".html"))) { const have = byPage[name] ?? 0; if (have < (base[name] ?? 0)) base[name] = have; if (!(name in base) && have === 0) delete base[name]; }
+    for (const k of Object.keys(base)) if (base[k] === 0) delete base[k];
+    writeFileSync(BASELINE, JSON.stringify(base, null, 2) + String.fromCharCode(10));
+    console.log(`page holes RATCHET: baseline lowered and written: ${under.join("; ")}`);
+  } else if (under.length) console.log(`page holes RATCHET: ${under.join("; ")} (run with --write-baseline to lower it)`);
+  const held = Object.entries(base).filter(([k]) => byPage[k]).map(([k, v]) => `${k} ${byPage[k]} of ${v}`);
+  if (held.length && !exit) console.log(`page holes RATCHET: holding at baseline on ${held.join(", ")}; these are file 04's work and not a pass`);
+} else if (reds.length) exit = 1;
+process.exit(exit);
