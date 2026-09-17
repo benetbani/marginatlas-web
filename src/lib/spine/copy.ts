@@ -245,6 +245,43 @@ export const COPY = {
       daysNotOnFile: "The days are not on file for this country yet.",
     },
   },
+  /** POWER AND LIVING COSTS (MODEL.md 8.2, `06 running-costs`; plan step 31,
+   *  fourth dispatch, 2026-09-18). The kicker is the brief's, four words, and
+   *  promises only what the card holds (the block's own name, "What else the
+   *  month costs", stays in the rail and the skeleton). The two labels are
+   *  the brief's: four words and three, the fact-cell cap. The basis is
+   *  composed from the cells the card prints, one clause each (the glance's
+   *  rule): "The commercial rate, 2024; living costs with rent, where New York
+   *  is 100." on the 91 countries where both print, thirteen words, the
+   *  brief's own line; the year is the profile file's stated convention, and
+   *  New York is the published scale's reference, named because PART 5 says
+   *  a base has to be named and never a coined word. The foot names in words
+   *  what is modelled, because the sample mark is switched off: the
+   *  electricity rate where the profile row is interpolated (tier B or C),
+   *  and the cost of living always, since the country figure is the covered
+   *  cities' readings weighted by population, a weighting this repo chose,
+   *  and the foot says how many cities it stands on so a reader knows when
+   *  it is one city's number. The two withheld lines stand in PART 5's shape:
+   *  the electricity rate wherever the file holds the fill value (R11, clause
+   *  46; `{n}` is the number of countries sharing it, counted off the file,
+   *  never typed), and living costs where no covered city holds a reading.
+   *  Every string here was read aloud first. */
+  runningCosts: {
+    kicker: "Power and living costs",
+    cells: { electricity: "Electricity per kilowatt hour", living: "Cost of living" },
+    /** The basis clauses, joined with "; " where both cells print, each alone otherwise. */
+    basisElectricity: "the commercial rate, 2024",
+    basisLiving: "living costs with rent, where New York is 100",
+    footElectricityModelled: "The electricity rate is modelled for this country.",
+    /** `{n}` is the count of covered cities the figure is weighted from, spelled out to ten. */
+    footLivingModelled: "The cost of living is modelled from {n} cities here, weighted by population.",
+    footLivingOneCity: "The cost of living is modelled from one city here.",
+    withheld: {
+      /** `{n}` is the number of countries whose file row holds the fill value, counted at build. */
+      electricityFill: "The electricity rate is withheld: the figure on file cannot be told from the placeholder {n} countries share.",
+      livingNotOnFile: "Living costs are not on file for this country yet; no city here is covered.",
+    },
+  },
   /** The terminus (where to next): doors that leave the page. Run 4 of the architecture loop refused "with Pro" while Pro cannot be bought and "the deepest city" as jargon; the city door says a figure the list holds. */
   close: {
     kicker: "Where to next",

@@ -581,6 +581,14 @@ const GATES: Gate[] = [
      rebuilds every row through the builder and reds a printed one at the
      fingerprint. Planted on the US row and seen red before it was trusted. */
   { name: "min-wage-not-fill", script: "scripts/verify_min_wage_not_fill.ts" },
+  /* MODEL.md 8.2 `06 running-costs`, clause 46 (2026-09-18): the profile's
+     commercial electricity rate is exactly 0.13 on 52 rows, the engine's own
+     reference constant, a fill's fingerprint; the power-and-living-costs card
+     withholds those, tier A included, and this rebuilds every row through
+     the builder and reds a printed rate within a tenth of a cent of it, or an
+     interpolated one not marked modelled. Planted on the fill rows and seen
+     red 52 times before it was trusted. */
+  { name: "electricity-not-fill", script: "scripts/verify_electricity_not_fill.ts" },
   { name: "no-parent-repo-reads", script: "scripts/verify_no_parent_repo_reads.ts" },
   { name: "two-surface-levels", script: "scripts/verify_two_surface_levels.ts" },
   /* A route with no metadata export has no title of its own. 101 page.tsx

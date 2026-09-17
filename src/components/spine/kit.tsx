@@ -64,6 +64,18 @@ export const usd = (v: number) =>
  * divides and then prints in the one grammar rather than carrying a second.
  * Before, it printed "K" at every magnitude, so $200 a month read "$0.2K". */
 export const usdMo = (vYr: number) => usd(vYr / 12);
+/* A PRICE UNDER A DOLLAR PRINTS TWO PLACES, ALWAYS (MODEL.md 8.2, `06
+ * running-costs`, the fourth of KvGrid's missing laws; plan step 31's fourth
+ * dispatch, 2026-09-18). `usd` rounds to the whole dollar, so `usd(0.27)` is
+ * "$0", and the premises strip sidestepped it by printing the raw number,
+ * which gave "$0.0739" for Kuwait and "$0.2198" for Monaco beside "$0.27" for
+ * the United Kingdom: four places, four, two, in one column, the mixed
+ * decimal count PART 5 bans. Two places every time, so 0.073 and 0.0739
+ * both print "$0.07" (two places holding the same value print the same
+ * value) and a page never shows the interpolation's four-digit signature as
+ * if it were precision. For a kilowatt-hour rate and nothing else today;
+ * a figure at or above ten dollars belongs to `usd`. */
+export const usdCents = (v: number) => "$" + v.toFixed(2);
 export const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : "");
 
 export function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "terra" }) {

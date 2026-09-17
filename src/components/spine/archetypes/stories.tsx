@@ -38,6 +38,7 @@ import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
+import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
 import { DetailPanel, type DetailRow } from "./DetailPanel";
 import { IncomeBreakdown } from "./IncomeBreakdown";
@@ -526,11 +527,20 @@ export function pickKvGridInstances(): Instance[] {
   const seats = codes().map((c) => ({ c, s: buildWorldSeat(c) })).filter((x) => x.s);
   const thinSeat = [...seats].filter((x) => x.s!.figures.payroll == null).sort((a, b) => a.c.localeCompare(b.c))[0];
   if (thinSeat) take(`${thinSeat.c}:world-seat`, "block 02 thin: the rent alone, payroll and the lending rate withheld");
+  /* THE THIRD SEAT, `06 running-costs` (plan step 31's fourth dispatch,
+     2026-09-18), keyed "XX:running-costs": the exemplar, both cells with the
+     two-place rate; and the first country by code whose electricity rate is
+     withheld for the fill while its cost of living prints, so the withheld
+     line is drawn beside a real cell. Both read off the builder. */
+  take("GB:running-costs", "block 06 on the exemplar: the rate at two places and the cost of living, the cities in the foot");
+  const costs = codes().map((c) => ({ c, r: buildRunningCosts(c) })).filter((x) => x.r);
+  const fillCase = [...costs].filter((x) => x.r!.figures.electricity == null && x.r!.figures.living != null).sort((a, b) => a.c.localeCompare(b.c))[0];
+  if (fillCase) take(`${fillCase.c}:running-costs`, "block 06 on the fill: the electricity rate withheld with its line, the cost of living alone");
   return out;
 }
 
-/** The two country seats as the page draws them (country-view.tsx `Glance` and `WorldSeat`): opener, grid, the withheld line, the basis, the foot. The same markup, so the story measures the card a reader meets. */
-function KvSeatStory({ id, icon, kicker, sample, cells, withheld, basis, foot }: { id: string; icon: "scorecard" | "vs-world"; kicker: string; sample: boolean; cells: React.ComponentProps<typeof KvGrid>["cells"]; withheld: string | null; basis: string | null; foot: string | null }) {
+/** The country seats as the page draws them (country-view.tsx `Glance`, `WorldSeat` and `RunningCosts` with a cell to draw): opener, grid, the withheld line, the basis, the foot. The same markup, so the story measures the card a reader meets. */
+function KvSeatStory({ id, icon, kicker, sample, cells, withheld, basis, foot }: { id: string; icon: "scorecard" | "vs-world" | "cost-breakdown"; kicker: string; sample: boolean; cells: React.ComponentProps<typeof KvGrid>["cells"]; withheld: string | null; basis: string | null; foot: string | null }) {
   return (
     <div style={{ maxWidth: 520 }}>
       <Box id={id}>
@@ -557,6 +567,11 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
         if (form === "world-seat") {
           const s = buildWorldSeat(iso2);
           const el = s ? <KvSeatStory id={`world-seat-${iso2.toLowerCase()}`} icon="vs-world" kicker={`${COPY.worldSeat.kicker}, ${nameOf(iso2)}`} sample={s.confidence !== "measured"} cells={s.cells} withheld={s.withheld} basis={s.basis} foot={s.foot} /> : null;
+          return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        if (form === "running-costs") {
+          const r = buildRunningCosts(iso2);
+          const el = r && r.cells.length > 0 ? <KvSeatStory id={`running-costs-${iso2.toLowerCase()}`} icon="cost-breakdown" kicker={`${COPY.runningCosts.kicker}, ${nameOf(iso2)}`} sample={r.confidence !== "measured"} cells={r.cells} withheld={r.withheld.length ? r.withheld.join(" ") : null} basis={r.basis} foot={r.foot} /> : null;
           return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
         }
         const f = buildHeroFacts(iso2);

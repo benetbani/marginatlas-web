@@ -33,6 +33,7 @@ import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
+import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
@@ -448,6 +449,44 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (d.sample !== /modelled/.test(d.foot ?? "")) reds.push(`entry-bill ${iso2}: ${d.sample ? "a printed figure is modelled and the foot does not say so" : "nothing printed is modelled and the foot says modelled"}`);
   }
   console.log(`entry bill: ${bills} cards build; no banned word, the kicker and basis within their caps, every slot a figure or a line, modelled said in the foot`);
+}
+
+/* POWER AND LIVING COSTS (MODEL.md 8.2 `06 running-costs`; plan step 31's
+   fourth dispatch, 2026-09-18), on every country: no banned word or unfilled
+   placeholder in any string the card prints, a label of four words or fewer
+   (the fact cell's cap), the kicker within PART 7's four words, the composed
+   basis within its fourteen (the both-cells line is thirteen), each of the two
+   slots holding a cell OR a stated line and never neither (a missing cell
+   with no line is a silent drop; a line beside a printed cell apologises for
+   nothing), the foot saying "modelled" exactly when a printed cell is
+   modelled (the sample mark is behind the switch, so the foot is the only
+   line that can), and the cost of living always marked modelled when it
+   prints. The fill on the electricity rate has its own gate,
+   verify_electricity_not_fill.ts, and is not repeated here. */
+{
+  let cards = 0;
+  for (const iso2 of codes) {
+    const r = buildRunningCosts(iso2);
+    if (!r) continue;
+    cards++;
+    const texts = [COPY.runningCosts.kicker, ...r.cells.map((c) => c.label), ...r.withheld, r.basis ?? "", r.foot ?? ""];
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`running-costs ${iso2}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`running-costs ${iso2}: a placeholder was never filled ("${t}")`);
+    }
+    for (const c of r.cells) {
+      if (c.label.split(/\s+/).length > 4) reds.push(`running-costs ${iso2}: label over four words: "${c.label}"`);
+      if (c.value === "" || c.value == null) reds.push(`running-costs ${iso2}: empty cell ${c.key}`);
+    }
+    if (COPY.runningCosts.kicker.split(/\s+/).length > 4) reds.push(`running-costs: the kicker runs over four words: "${COPY.runningCosts.kicker}"`);
+    if (r.basis && r.basis.split(/\s+/).filter(Boolean).length > 14) reds.push(`running-costs ${iso2}: the basis runs over fourteen words: "${r.basis}"`);
+    if (r.cells.length + r.withheld.length !== 2) reds.push(`running-costs ${iso2}: ${r.cells.length} cell(s) and ${r.withheld.length} withheld line(s); two slots, each a cell or a line`);
+    const living = r.cells.find((c) => c.key === "living");
+    if (living && living.confidence !== "modeled") reds.push(`running-costs ${iso2}: the cost of living is a weighting and is not marked modelled`);
+    const modelled = r.cells.some((c) => c.confidence === "modeled");
+    if (modelled !== /modelled/.test(r.foot ?? "")) reds.push(`running-costs ${iso2}: ${modelled ? "a printed cell is modelled and the foot does not say so" : "nothing printed is modelled and the foot says modelled"}`);
+  }
+  console.log(`running costs: ${cards} cards build; no banned word, the kicker and basis within their caps, two slots each a cell or a line, modelled said in the foot`);
 }
 console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

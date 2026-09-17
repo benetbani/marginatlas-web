@@ -94,6 +94,7 @@ import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/f
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
+import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE" | "BANNED CONSTRUCTION";
@@ -418,6 +419,22 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     if (b.foot) heads.push([`buildEntryBill(${iso2}).foot`, b.foot]);
     if (b.withheld) heads.push([`buildEntryBill(${iso2}).withheld`, b.withheld]);
     heads.push([`buildEntryBill(${iso2}).second`, "figure" in b.second ? `${b.second.figure} ${b.second.words}` : b.second.withheld]);
+  }
+
+  /* POWER AND LIVING COSTS (MODEL.md 8.2 `06 running-costs`, plan step 31's
+     fourth dispatch, 2026-09-18), pushed composed: its basis is joined from
+     the clauses of the cells it prints, its foot names the modelled cells and
+     counts the cities the living figure stands on, and its withheld lines
+     count the countries sharing the fill. Four countries cover the shapes:
+     the exemplar (both cells, seven cities), Angola (the rate withheld for
+     the fill, one city), Afghanistan (the rate alone, living costs not on
+     file) and Benin (neither; two lines, no basis, no foot). */
+  for (const iso2 of ["GB", "AO", "AF", "BJ"]) {
+    const r = buildRunningCosts(iso2);
+    if (!r) continue;
+    if (r.basis) heads.push([`buildRunningCosts(${iso2}).basis`, r.basis]);
+    if (r.foot) heads.push([`buildRunningCosts(${iso2}).foot`, r.foot]);
+    for (const line of r.withheld) heads.push([`buildRunningCosts(${iso2}).withheld`, line]);
   }
 
   for (const [where, text] of heads) {

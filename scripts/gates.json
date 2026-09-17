@@ -2024,6 +2024,18 @@
       "claims": []
     },
     {
+      "name": "electricity-not-fill",
+      "script": "scripts/verify_electricity_not_fill.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_electricity_not_fill , no printed electricity rate is the file's fill.",
+      "reads": [
+        "data/economic_indicators/country_profile_v2.json",
+        "src/lib/spine/running_costs_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-parent-repo-reads",
       "script": "scripts/verify_no_parent_repo_reads.ts",
       "args": [],
