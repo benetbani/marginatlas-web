@@ -26,9 +26,11 @@
  *    would assert a figure the card does not print.
  *  - THE FOOT: one line at `--t-micro` under a hairline, naming the
  *    requirement the seat waits on (DATA-REQUIREMENTS.md, by item). It sits
- *    at the card's base: the card is stretched to its partner's height by
- *    ruling 7, and a foot belongs on the bottom edge, not floating up under
- *    the line with the card's air beneath it.
+ *    directly under the line, the way every foot on the site sits under its
+ *    content (RangeStrip's extra figure, the spectra tables' foot); the card
+ *    is stretched to its partner's height by ruling 7, and the air that
+ *    forces falls below everything the seat has, where a person reads it as
+ *    a short card in a tall frame and not as a line missing from the middle.
  *  - `data-blocked="1"` on the Box, the marker 8.5's BLOCK FLOOR names, and
  *    `data-block` through Box's own id rule, so the page's count reads it.
  *
@@ -50,10 +52,10 @@ export const SEAT_LINE_WORDS_CAP = 14;
 
 export function BlockedSeat({ id, icon, kicker, line, foot }: { id: string; icon: AtlasIconId; kicker: string; line: string; foot: string }) {
   return (
-    <Box id={id} data-archetype="blocked-seat" data-blocked="1" className="flex flex-col">
+    <Box id={id} data-archetype="blocked-seat" data-blocked="1">
       <Rail icon={icon} kicker={kicker} />
-      <p data-seat-line className="mb-5 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{line}</p>
-      <div data-foot className="mt-auto border-t border-[var(--c-border)] pt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</div>
+      <p data-seat-line className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{line}</p>
+      <div data-foot className="mt-5 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</div>
     </Box>
   );
 }
