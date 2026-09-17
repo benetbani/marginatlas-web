@@ -97,7 +97,7 @@
  *   census; the full sheet and its reds are untouched.
  */
 import { chromium } from "playwright";
-import { readFileSync, mkdirSync } from "node:fs";
+import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { preflight } from "./preflight.mjs";
 
@@ -940,4 +940,46 @@ function w(r) { return r.w; }
 console.log(`archetype harness${ONLY == null ? "" : ` (--only=${ONLY})`}: ${instances.length} instances x ${WIDTHS.length} widths, ${reds.length} design red(s), ${datas.length} data red(s)`);
 for (const [k, v] of Object.entries(byInst)) console.log(`  ${k}\n    ${v.join("\n    ")}`);
 if (datas.length) { console.log("  DATA, for the data track, not the drawing:"); for (const d of datas) console.log(`    ${d.inst}: ${d.rule}, ${d.msg}`); }
+
+/* THE DATA SECTION IS WRITTEN TO THE DATA TRACK'S OWN FILE (plan step 17,
+   2026-09-17). A data red never touches the exit code (the line above exits
+   on design reds alone, since the fold of 2026-09-08), and it never affected
+   anything else either: eleven standing lines printed under every run and
+   were re-read by nobody. They are the data track's queue, so they go where
+   that queue lives, E:/atlas/design/loop/build/DATA-REQUIREMENTS.md, in a
+   block between two markers, rewritten only when the list changes and
+   dated when it is. The parent repository is never present on a build
+   server; the write is guarded by existsSync and skips with one line, the
+   same discipline census.ts uses for PAGES.md. A full run only: a targeted
+   run sees one story and must not overwrite the whole list with it. */
+if (ONLY == null) {
+  const DATA_REQ = "E:/atlas/design/loop/build/DATA-REQUIREMENTS.md";
+  const START = "<!-- harness-data-reds:start -->", END = "<!-- harness-data-reds:end -->";
+  const NL = String.fromCharCode(10);
+  const lines = datas.map((d) => `- \`${d.inst}\`: ${d.rule}, ${d.msg}`).sort();
+  const body = lines.length ? lines.join(NL) : "- none: every story holds its data";
+  if (!existsSync(DATA_REQ)) {
+    console.log(`  data section: ${DATA_REQ} is not on this machine (a build server); the list above is not written anywhere`);
+  } else {
+    const doc = readFileSync(DATA_REQ, "utf8");
+    const i = doc.indexOf(START), j = doc.indexOf(END);
+    const current = i !== -1 && j !== -1 ? doc.slice(i + START.length, j).split(NL).filter((l) => l.startsWith("- ")).join(NL) : null;
+    if (current === body) {
+      console.log(`  data section: unchanged, ${datas.length} standing data red(s) already in DATA-REQUIREMENTS.md`);
+    } else {
+      const stamp = new Date().toISOString().slice(0, 10);
+      const head = [
+        START,
+        `## The archetype harness's standing data reds, written by check_archetypes.mjs on ${stamp}`,
+        "",
+        "One line per story whose data is missing, not its drawing (the harness exits on design reds alone). Rewritten by `npm run harness` whenever the list changes; do not edit between the markers.",
+        "",
+      ].join(NL);
+      const block = head + NL + body + NL + END;
+      const next = i !== -1 && j !== -1 ? doc.slice(0, i) + block + doc.slice(j + END.length) : doc.replace(/\s*$/, NL + NL) + block + NL;
+      writeFileSync(DATA_REQ, next);
+      console.log(`  data section: DATA-REQUIREMENTS.md rewritten, ${datas.length} standing data red(s) (was ${current == null ? "absent" : current.split(NL).filter(Boolean).length})`);
+    }
+  }
+}
 process.exit(reds.length ? 1 : 0);
