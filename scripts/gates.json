@@ -352,14 +352,6 @@
       "browser": true,
       "asserts": "verify_full_width_sitewide , D1, EVERY SURFACE A READER CAN WALK, NOT ONLY THE FOUR REFORMED PAGE TYPES.",
       "reads": [
-        "docs/loop/artifacts/final-pages/cell-london-restaurants.html",
-        "docs/loop/artifacts/final-pages/city-london.html",
-        "docs/loop/artifacts/final-pages/countries-list.html",
-        "docs/loop/artifacts/final-pages/country-gb-new.html",
-        "docs/loop/artifacts/final-pages/country-gb.html",
-        "docs/loop/artifacts/final-pages/home.html",
-        "docs/loop/artifacts/final-pages/hood-london.html",
-        "docs/loop/artifacts/final-pages/industry-restaurants.html",
         "scripts/fullwidth_baseline.json"
       ],
       "claims": []
@@ -371,14 +363,6 @@
       "browser": true,
       "asserts": "verify_radius_uniform.mjs , ONE CARD RADIUS ACROSS THE SITE.",
       "reads": [
-        "docs/loop/artifacts/final-pages/cell-london-restaurants.html",
-        "docs/loop/artifacts/final-pages/city-london.html",
-        "docs/loop/artifacts/final-pages/countries-list.html",
-        "docs/loop/artifacts/final-pages/country-gb-new.html",
-        "docs/loop/artifacts/final-pages/country-gb.html",
-        "docs/loop/artifacts/final-pages/home.html",
-        "docs/loop/artifacts/final-pages/hood-london.html",
-        "docs/loop/artifacts/final-pages/industry-restaurants.html",
         "scripts/radius_baseline.json"
       ],
       "claims": []
@@ -390,14 +374,6 @@
       "browser": true,
       "asserts": "verify_flag_marks.mjs , COUNTRY FLAGS ARE RECTANGLES, NEVER ROUNDED, ALWAYS LEGIBLE.",
       "reads": [
-        "docs/loop/artifacts/final-pages/cell-london-restaurants.html",
-        "docs/loop/artifacts/final-pages/city-london.html",
-        "docs/loop/artifacts/final-pages/countries-list.html",
-        "docs/loop/artifacts/final-pages/country-gb-new.html",
-        "docs/loop/artifacts/final-pages/country-gb.html",
-        "docs/loop/artifacts/final-pages/home.html",
-        "docs/loop/artifacts/final-pages/hood-london.html",
-        "docs/loop/artifacts/final-pages/industry-restaurants.html",
         "scripts/flags_baseline.json"
       ],
       "claims": []
@@ -408,13 +384,7 @@
       "args": [],
       "browser": true,
       "asserts": "verify_no_phone_sideways , LAW M, MACHINE-CHECKED THE DAY IT WAS RULED.",
-      "reads": [
-        "docs/loop/artifacts/final-pages/cell-london-restaurants.html",
-        "docs/loop/artifacts/final-pages/city-london.html",
-        "docs/loop/artifacts/final-pages/country-gb-new.html",
-        "docs/loop/artifacts/final-pages/hood-london.html",
-        "docs/loop/artifacts/final-pages/industry-restaurants.html"
-      ],
+      "reads": [],
       "claims": []
     },
     {
@@ -437,7 +407,6 @@
       "asserts": "verify_form_variety , THE CHECK THAT WOULD HAVE CAUGHT THE SLOP.",
       "reads": [
         "E:/atlas/rules/FORM-CATALOG.md",
-        "docs/loop/artifacts/final-pages",
         "parent repo"
       ],
       "claims": []

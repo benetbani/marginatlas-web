@@ -16,41 +16,44 @@
  *      scrollWidth > clientWidth + 1 is a live sideways scroller and fails.
  *      An overflow-x:auto that does not actually overflow is dormant, legal.
  *
- * SCOPE, said loudly: the five REBUILT surfaces. The three legacy pages
- * (home, countries-list, country-gb) predate the law and their blueprints are
- * TARGETs; they take this law when their rebuilds land, and until then they
- * are NOT CHECKED here rather than silently passed.
+ * SCOPE, said loudly: the REBUILT surfaces, which since plan step 14b
+ * (2026-09-17) are the six fresh spine renders of scripts/lib/page_renders.mjs
+ * (country, how-to, city, cell, industry, hood), written by the pages-fresh
+ * gate at the head of the chain from the real adapters and views; before that,
+ * four snapshots frozen on 2026-09-08 plus the country-gb-new fixture, both
+ * retired. The two legacy pages (home, countries-list) predate the law and
+ * their blueprints are TARGETs; they take this law when their rebuilds land,
+ * and until then they are NOT CHECKED here rather than silently passed. The
+ * first line printed says what was read and how old it was.
  *
  * Usage: node scripts/verify_no_phone_sideways.mjs [--pages name=path,...]
  */
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { pageRenders, givenRenders, describeRenders, missingLine } from "./lib/page_renders.mjs";
 
 await requireBrowser("no-phone-sideways", "whether anything on the rebuilt pages scrolls sideways at phone width");
 const { chromium } = await import("playwright");
 
+const RULE = "no-phone-sideways";
 const argv = process.argv.slice(2);
-const DEFAULT_PAGES = [
-  ["city-london", "docs/loop/artifacts/final-pages/city-london.html"],
-  ["hood-london", "docs/loop/artifacts/final-pages/hood-london.html"],
-  ["cell-london-restaurants", "docs/loop/artifacts/final-pages/cell-london-restaurants.html"],
-  ["industry-restaurants", "docs/loop/artifacts/final-pages/industry-restaurants.html"],
-  ["country-gb-new", "docs/loop/artifacts/final-pages/country-gb-new.html"],
-];
 function readPagesArg() {
   const i = argv.indexOf("--pages");
-  if (i < 0) return DEFAULT_PAGES;
-  return argv[i + 1].split(",").map((pair) => {
+  if (i < 0) return pageRenders({ kinds: ["fresh"] });
+  return givenRenders(argv[i + 1].split(",").map((pair) => {
     const eq = pair.indexOf("=");
     return [pair.slice(0, eq), pair.slice(eq + 1)];
-  });
+  }));
 }
-const PAGES = readPagesArg();
+const ENTRIES = readPagesArg();
+console.log(`  ${describeRenders(ENTRIES, RULE)}`);
+const PAGES = ENTRIES.filter((e) => e.exists);
+const MISSING = ENTRIES.filter((e) => !e.exists);
 
 const browser = await chromium.launch();
 const failures = [];
-for (const [name, path] of PAGES) {
+for (const { name, path } of PAGES) {
   const page = await browser.newPage({ viewport: { width: 375, height: 800 } });
   await page.goto(pathToFileURL(resolve(path)).href, { waitUntil: "load" });
   /* Charts that draw on rAF settle first; the same wait the dossier uses. */
@@ -77,11 +80,16 @@ for (const [name, path] of PAGES) {
 }
 await browser.close();
 
-console.log("  NOT CHECKED here, loudly: home, countries-list, country-gb (legacy; law M binds their rebuilds).");
+console.log("  NOT CHECKED here, loudly: home, countries-list (legacy, frozen 2026-09-08; law M binds their rebuilds).");
+for (const m of MISSING) console.log(missingLine(RULE, m));
 if (failures.length) {
   console.log("x verify_no_phone_sideways: something slides left-right at 375 (law M bans it).");
   failures.forEach((f) => console.log("     " + f));
   console.log("  A wide thing reconfigures at phone width; it never scrolls sideways.");
+  process.exit(1);
+}
+if (MISSING.length) {
+  console.log(`x verify_no_phone_sideways: ${MISSING.length} listed render(s) could not be read, so only the pages above were checked.`);
   process.exit(1);
 }
 console.log(`PASS verify_no_phone_sideways. ${PAGES.length} rebuilt pages, nothing scrolls sideways at 375.`);

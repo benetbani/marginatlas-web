@@ -45,10 +45,19 @@
  * BLIND SPOT: it cannot tell a hole that is waiting for data from a hole in the
  * design, which is why every finding names its section rather than a count.
  *
+ * WHAT IT READS (plan step 14b, 2026-09-17): the six fresh spine renders of
+ * scripts/lib/page_renders.mjs, written by the pages-fresh gate at the head of
+ * the chain; before that, four snapshots frozen on 2026-09-08. The baseline's
+ * keys keep the old page names (`<width>:cell-london-restaurants:holes` for
+ * the harness's cell-gb-london-restaurants, country-gb-new for country-GB),
+ * which the module maps; the first line printed says what was read.
+ *
  * Usage: node scripts/verify_gathered_emptiness.mjs [--width N] [--crops] [--write-baseline]
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { eachPageAtWidths } from "./lib/measure_pages.mjs";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+import { eachPageAtWidths, renderEntries, describeRenders, nameWithKey, missingLine } from "./lib/measure_pages.mjs";
 import { requireBrowser } from "./lib/local_only.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
@@ -57,7 +66,12 @@ import { requireBrowser } from "./lib/local_only.mjs";
 await requireBrowser("gathered-emptiness", "whether any section carries a gathered hole");
 
 const BASELINE = "scripts/gathered_emptiness_baseline.json";
+const RULE = "gathered-emptiness";
 const argv = process.argv.slice(2);
+
+const entries = renderEntries();
+console.log(`  ${describeRenders(entries, RULE)}`);
+const missing = entries.filter((e) => !e.exists);
 
 /* BOTH WIDTHS, and the baseline is keyed by width. A layout sound at 1280 can
    open a hole at 1440 where the same content has more room to rattle around, and
@@ -262,7 +276,10 @@ let measured = 0;
    files twice. */
 for (const { width, result: pages } of await eachPageAtWidths(WIDTHS, measure)) {
   runs.push({ width, pages });
-  for (const { name, result } of pages) {
+  for (const entry of pages) {
+    /* The baseline key carries the page's OLD name (`key`); the lines print the harness's name with it beside. */
+    const { key, result } = entry;
+    const name = nameWithKey(entry);
     let holes = 0;
     for (const s of result) {
       measured++;
@@ -282,7 +299,7 @@ for (const { width, result: pages } of await eachPageAtWidths(WIDTHS, measure)) 
         `  E6  ${width}px  ${String(s.pct).padStart(3)}%  ${String(s.w).padStart(4)}x${String(s.h).padEnd(4)} ${s.side.padEnd(7)} ${name} "${s.label}"`,
       );
     }
-    now[`${width}:${name}:holes`] = holes;
+    now[`${width}:${key}:holes`] = holes;
   }
 }
 
@@ -290,11 +307,11 @@ if (argv.includes("--crops")) {
   const { chromium } = await import("playwright");
   const browser = await chromium.launch();
   for (const { width, pages } of runs) {
-    for (const { name, result } of pages) {
+    for (const { name, path, result } of pages) {
       const found = result.filter((s) => !s.blank && s.hole);
       if (!found.length) continue;
       const page = await browser.newPage({ viewport: { width, height: 1200 } });
-      await page.goto(`file:///E:/atlas/website/docs/loop/artifacts/final-pages/${name}.html`);
+      await page.goto(pathToFileURL(resolve(path)).href);
       await page.evaluate(() => document.fonts.ready);
       await page.waitForTimeout(400);
       for (const s of found) {
@@ -335,9 +352,14 @@ if (argv.includes("--write-baseline")) {
 const base = JSON.parse(readFileSync(BASELINE, "utf8"));
 const grew = Object.entries(now).filter(([k, v]) => v > (base[k] ?? 0));
 lines.forEach((l) => console.log(l));
+for (const m of missing) console.log(missingLine(RULE, m));
 if (grew.length) {
   console.log("x verify_gathered_emptiness: gathered holes GREW. This baseline may only come DOWN.");
   grew.forEach(([k, v]) => console.log(`     ${k}: ${base[k] ?? 0} -> ${v}`));
+  process.exit(1);
+}
+if (missing.length) {
+  console.log(`x verify_gathered_emptiness: ${missing.length} listed render(s) could not be read, so the holes above are of the pages that were.`);
   process.exit(1);
 }
 const total = Object.values(now).reduce((a, b) => a + b, 0);

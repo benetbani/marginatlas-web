@@ -90,12 +90,25 @@
  * a property of measuring a continuous quantity against a hard cutoff, not a
  * bug; a ratchet absorbs a flip of one in either direction without drama.
  *
+ * WHAT IT READS (plan step 14b, 2026-09-17): the shared list in
+ * scripts/lib/page_renders.mjs. The six spine surfaces are FRESH renders from
+ * the real adapters and views, written by the pages-fresh gate at the head of
+ * the chain; home and the countries list are the renders frozen on 2026-09-08,
+ * which the harness cannot draw. The legacy country-gb fixture and the
+ * country-gb-new fixture are retired: production serves the spine country
+ * page and the fresh country-GB render is that page. The baseline keeps the
+ * keys it was written under (country-gb-new for country-GB, which held no
+ * allowance: budget 0 from its first render, never the legacy page's 13;
+ * cell-london-restaurants for cell-gb-london-restaurants), and the first line
+ * printed says what was read and how old it was.
+ *
  * Usage: node scripts/verify_full_width_sitewide.mjs [--write-baseline] [--pages name=path,...]
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { pageRenders, givenRenders, describeRenders, nameWithKey, missingLine } from "./lib/page_renders.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
    run where chromium is not installed, and trying killed a production deploy on
@@ -103,36 +116,24 @@ import { requireBrowser } from "./lib/local_only.mjs";
 await requireBrowser("full-width-sitewide", "whether any single reading spans the whole content column");
 
 const BASELINE = "scripts/fullwidth_baseline.json";
+const RULE = "full-width-sitewide";
 const argv = process.argv.slice(2);
-
-const DEFAULT_PAGES = [
-  ["home", "docs/loop/artifacts/final-pages/home.html"],
-  ["countries-list", "docs/loop/artifacts/final-pages/countries-list.html"],
-  ["country-gb", "docs/loop/artifacts/final-pages/country-gb.html"],
-  ["city-london", "docs/loop/artifacts/final-pages/city-london.html"],
-  ["hood-london", "docs/loop/artifacts/final-pages/hood-london.html"],
-  ["cell-london-restaurants", "docs/loop/artifacts/final-pages/cell-london-restaurants.html"],
-  ["industry-restaurants", "docs/loop/artifacts/final-pages/industry-restaurants.html"],
-  /* The country page being rebuilt behind a shut flag. It holds NO baseline
-     entry and is not getting one: `base[page] ?? 0` makes its budget zero, so
-     the rebuilt page has to be clean from its first render rather than
-     inheriting a legacy page's allowance. That is the whole point of reading it
-     here from the first section onward instead of after the last. */
-  ["country-gb-new", "docs/loop/artifacts/final-pages/country-gb-new.html"],
-];
 
 /* --pages name=path,name2=path2 REPLACES the default set entirely. This is how
    the negative test points the gate at a scratch copy of one page without
-   touching the seven-page default anywhere else in the file. */
+   touching the shared list anywhere else in the file. */
 function readPagesArg() {
   const i = argv.indexOf("--pages");
-  if (i < 0) return DEFAULT_PAGES;
-  return argv[i + 1].split(",").map((pair) => {
+  if (i < 0) return pageRenders();
+  return givenRenders(argv[i + 1].split(",").map((pair) => {
     const eq = pair.indexOf("=");
     return [pair.slice(0, eq), pair.slice(eq + 1)];
-  });
+  }));
 }
-const PAGES = readPagesArg();
+const ENTRIES = readPagesArg();
+console.log(`  ${describeRenders(ENTRIES, RULE)}`);
+const PAGES = ENTRIES.filter((e) => e.exists);
+const MISSING = ENTRIES.filter((e) => !e.exists);
 
 /* Runs inside the page. Nothing from this scope is visible to it. */
 function measure() {
@@ -351,17 +352,18 @@ const now = {};
 const report = [];
 let total = 0;
 
-for (const [name, relPath] of PAGES) {
+for (const entry of PAGES) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
   try {
-    await page.goto(pathToFileURL(resolve(relPath)).href);
+    await page.goto(pathToFileURL(resolve(entry.path)).href);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(350);
     const { colW, sections } = await page.evaluate(measure);
     const offenders = sections.filter((s) => s.fail);
-    now[name] = offenders.length;
+    /* The baseline is keyed by the page's OLD name (entry.key); the report prints the harness's name with it beside. */
+    now[entry.key] = offenders.length;
     total += offenders.length;
-    report.push({ name, colW, offenders });
+    report.push({ name: nameWithKey(entry), colW, offenders });
   } finally {
     await page.close();
   }
@@ -373,6 +375,7 @@ for (const { name, colW, offenders } of report) {
   offenders.forEach((o) => console.log(`     ${o.pct}%  ${String(o.w).padStart(4)}px  <${o.tag}>  "${o.label}"`));
 }
 console.log(`\n  ${total} full-width violation(s) across ${PAGES.length} page(s).\n`);
+for (const m of MISSING) console.log(missingLine(RULE, m));
 
 if (argv.includes("--write-baseline")) {
   writeFileSync(BASELINE, JSON.stringify(now, null, 2) + "\n");
@@ -393,6 +396,10 @@ if (grew.length) {
   console.log("x verify_full_width_sitewide: full-width violations GREW.");
   console.log("This baseline may only come DOWN. Do not raise it to make this pass.\n");
   grew.forEach(([k, v]) => console.log(`     ${k}: ${base[k] ?? 0} -> ${v}`));
+  process.exit(1);
+}
+if (MISSING.length) {
+  console.log(`x verify_full_width_sitewide: ${MISSING.length} listed render(s) could not be read, so the counts above are of the pages that were.`);
   process.exit(1);
 }
 console.log(`PASS verify_full_width_sitewide. ${total} full-width violation(s), may only come DOWN from here.\n`);

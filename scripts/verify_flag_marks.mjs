@@ -101,12 +101,25 @@
  * a LOOK judgement the founder makes from a photograph, not a number a gate can
  * derive.
  *
+ * WHAT IT READS (plan step 14b, 2026-09-17): the shared list in
+ * scripts/lib/page_renders.mjs. The six spine surfaces are FRESH renders from
+ * the real adapters and views, written by the pages-fresh gate at the head of
+ * the chain; home and the countries list are the renders frozen on 2026-09-08,
+ * which the harness cannot draw. The legacy country-gb fixture (the peers
+ * table the header above says "must reach 0") and the country-gb-new fixture
+ * are retired: production serves the spine country page and the fresh
+ * country-GB render is that page. The baseline keeps the keys it was written
+ * under (country-gb-new for country-GB, cell-london-restaurants for
+ * cell-gb-london-restaurants), and the first line printed says what was read
+ * and how old it was.
+ *
  * Usage: node scripts/verify_flag_marks.mjs [--write-baseline] [--pages name=path,...]
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { pageRenders, givenRenders, describeRenders, nameWithKey, missingLine } from "./lib/page_renders.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. Same guard as every other rendered-design
    gate in this chain: skip loudly where chromium is not installed, run
@@ -114,35 +127,24 @@ import { requireBrowser } from "./lib/local_only.mjs";
 await requireBrowser("flag-marks", "whether every country flag on the built pages is a rectangle and legible");
 
 const BASELINE = "scripts/flags_baseline.json";
+const RULE = "flag-marks";
 const argv = process.argv.slice(2);
-
-const DEFAULT_PAGES = [
-  ["home", "docs/loop/artifacts/final-pages/home.html"],
-  ["countries-list", "docs/loop/artifacts/final-pages/countries-list.html"],
-  ["country-gb", "docs/loop/artifacts/final-pages/country-gb.html"],
-  ["city-london", "docs/loop/artifacts/final-pages/city-london.html"],
-  ["hood-london", "docs/loop/artifacts/final-pages/hood-london.html"],
-  ["cell-london-restaurants", "docs/loop/artifacts/final-pages/cell-london-restaurants.html"],
-  ["industry-restaurants", "docs/loop/artifacts/final-pages/industry-restaurants.html"],
-  /* The country page being rebuilt behind a shut flag, with no baseline entry
-     and none coming: `base[page] ?? 0` holds it at zero from its first render.
-     The legacy country page carries 6 violations in its peers table and must
-     reach 0; the page replacing it may never start above 0. */
-  ["country-gb-new", "docs/loop/artifacts/final-pages/country-gb-new.html"],
-];
 
 /* --pages name=path,name2=path2 REPLACES the default set entirely. This is how
    the negative test points the gate at a scratch copy of one page without
-   touching the seven-page default anywhere else in the file. */
+   touching the shared list anywhere else in the file. */
 function readPagesArg() {
   const i = argv.indexOf("--pages");
-  if (i < 0) return DEFAULT_PAGES;
-  return argv[i + 1].split(",").map((pair) => {
+  if (i < 0) return pageRenders();
+  return givenRenders(argv[i + 1].split(",").map((pair) => {
     const eq = pair.indexOf("=");
     return [pair.slice(0, eq), pair.slice(eq + 1)];
-  });
+  }));
 }
-const PAGES = readPagesArg();
+const ENTRIES = readPagesArg();
+console.log(`  ${describeRenders(ENTRIES, RULE)}`);
+const PAGES = ENTRIES.filter((e) => e.exists);
+const MISSING = ENTRIES.filter((e) => !e.exists);
 
 /* Runs inside the page. Nothing from this scope is visible to it. */
 function measure() {
@@ -275,16 +277,17 @@ const now = {};
 const report = [];
 let total = 0;
 
-for (const [name, relPath] of PAGES) {
+for (const entry of PAGES) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
   try {
-    await page.goto(pathToFileURL(resolve(relPath)).href);
+    await page.goto(pathToFileURL(resolve(entry.path)).href);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(350);
     const { total: totalMarks, offenders, widthLawKnown } = await page.evaluate(measure);
-    now[name] = offenders.length;
+    /* The baseline is keyed by the page's OLD name (entry.key); the report prints the harness's name with it beside. */
+    now[entry.key] = offenders.length;
     total += offenders.length;
-    report.push({ name, totalMarks, offenders, widthLawKnown });
+    report.push({ name: nameWithKey(entry), kind: entry.kind, totalMarks, offenders, widthLawKnown });
   } finally {
     await page.close();
   }
@@ -292,7 +295,7 @@ for (const [name, relPath] of PAGES) {
 await browser.close();
 
 let unmeasured = 0;
-for (const { name, totalMarks, offenders, widthLawKnown } of report) {
+for (const { name, kind, totalMarks, offenders, widthLawKnown } of report) {
   console.log(`\n  ${name}  ${totalMarks} flag mark(s) found, ${offenders.length} violation(s)`);
   offenders.forEach((o) => console.log(`     <${o.tag}>  ${o.w}x${o.h}px  ${o.reasons.join("; ")}  "${o.label}"`));
   /* NAMED, NEVER SILENT. A snapshot rendered before the same-width law has no
@@ -301,18 +304,18 @@ for (const { name, totalMarks, offenders, widthLawKnown } of report) {
      that did not execute. */
   if (totalMarks > 0 && !widthLawKnown) {
     unmeasured += 1;
-    console.log("     WIDTH UNMEASURED HERE: this snapshot's inlined stylesheet predates --flag-row-w / --flag-hero-w.");
+    console.log(`     WIDTH UNMEASURED HERE: this ${kind === "fresh" ? "render's" : "snapshot's inlined"} stylesheet has no --flag-row-w / --flag-hero-w.`);
   }
 }
 if (unmeasured > 0) {
   console.log(`\n  ! the same-width law was UNMEASURED on ${unmeasured} of ${PAGES.length} page(s), not passed.`);
-  console.log("    Those artifacts predate it. Regenerate them to measure it here:");
-  console.log("      npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs scripts/build_final_pages.tsx");
-  console.log("    (it fetches live data, so it needs the Supabase env vars set.)");
-  console.log("    The law IS measured live at three widths meanwhile, by the harness:");
-  console.log("      check_archetypes.mjs MARK SIZE, and check_model_laws.mjs FLAG.");
+  console.log("    A frozen render (home, countries-list: legacy pages the harness cannot draw, frozen 2026-09-08)");
+  console.log("    predates the law; a fresh render is drawn over src/app/globals.css by the pages-fresh gate, so");
+  console.log("    a missing token there is a fact about the stylesheet. The law IS measured live at three");
+  console.log("    widths meanwhile, by the harness: check_archetypes.mjs MARK SIZE, and check_model_laws.mjs FLAG.");
 }
 console.log(`\n  ${total} flag violation(s) across ${PAGES.length} page(s).\n`);
+for (const m of MISSING) console.log(missingLine(RULE, m));
 
 if (argv.includes("--write-baseline")) {
   writeFileSync(BASELINE, JSON.stringify(now, null, 2) + "\n");
@@ -333,6 +336,10 @@ if (grew.length) {
   console.log("x verify_flag_marks: flag violations GREW.");
   console.log("This baseline may only come DOWN. Do not raise it to make this pass.\n");
   grew.forEach(([k, v]) => console.log(`     ${k}: ${base[k] ?? 0} -> ${v}`));
+  process.exit(1);
+}
+if (MISSING.length) {
+  console.log(`x verify_flag_marks: ${MISSING.length} listed render(s) could not be read, so the counts above are of the pages that were.`);
   process.exit(1);
 }
 console.log(`PASS verify_flag_marks. ${total} flag violation(s), may only come DOWN from here.\n`);

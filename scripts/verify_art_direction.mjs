@@ -12,8 +12,13 @@
  *
  * BLIND SPOTS, all of them, stated before any number here is quoted:
  *
- *   - It reads the four BUILT London pages, not the live routes. A section that
- *     only renders for a different city is invisible to it.
+ *   - It reads the six spine pages as the harness renders them (the fresh
+ *     entries of scripts/lib/page_renders.mjs, written by the pages-fresh gate
+ *     at the head of the chain since plan step 14b, 2026-09-17; before that,
+ *     four London snapshots frozen on 2026-09-08), not the live routes. A
+ *     section that only renders for a different city is invisible to it. The
+ *     baseline keeps its old keys (cell-london-restaurants, country-gb-new),
+ *     which the module maps; the first line printed says what was read.
  *   - Chrome reports a laid-out rect for content inside a CLOSED <details> that
  *     it never paints. Everything here skips collapsed disclosures, because a
  *     first version of this measurement counted fourteen overlaps and twelve
@@ -29,7 +34,7 @@
  * Usage: node scripts/verify_art_direction.mjs [--write-baseline]
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { eachPage } from "./lib/measure_pages.mjs";
+import { eachPage, renderEntries, describeRenders, nameWithKey, missingLine } from "./lib/measure_pages.mjs";
 import { requireBrowser } from "./lib/local_only.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
@@ -38,6 +43,11 @@ import { requireBrowser } from "./lib/local_only.mjs";
 await requireBrowser("art-direction", "the measured art-direction counters");
 
 const BASELINE = "scripts/art_direction_baseline.json";
+const RULE = "art-direction";
+
+const entries = renderEntries();
+console.log(`  ${describeRenders(entries, RULE)}`);
+const missing = entries.filter((e) => !e.exists);
 
 const collect = () => {
   /* The accent, as the tokens define it. Counted by computed colour rather than
@@ -600,7 +610,10 @@ const pages = await eachPage(1440, collect);
 const now = {};
 let total = 0;
 
-for (const { name, result } of pages) {
+for (const entry of pages) {
+  /* The baseline is keyed by the page's OLD name (`key`); the line below prints
+     the harness's name with the key beside it when they differ. */
+  const { key: name, result } = entry;
   const lines = [];
   /* ONE EDITORIAL SECTION PER PAGE. A page that declares two does not have an
      editorial section, it has a habit, so every one after the first is counted. */
@@ -648,11 +661,12 @@ for (const { name, result } of pages) {
   total += result.frontRepeats.length;
   for (const f of result.frontRepeats) lines.push(`  H4  repeated in the first screen         ${f}`);
 
-  console.log(`\n  ${name}   ${lines.length} finding(s)`);
+  console.log(`\n  ${nameWithKey(entry)}   ${lines.length} finding(s)`);
   lines.forEach((l) => console.log("   " + l));
 }
 
-console.log(`\n  ${total} art-direction finding(s) across the four pages.\n`);
+console.log(`\n  ${total} art-direction finding(s) across ${pages.length} page(s).\n`);
+for (const m of missing) console.log(missingLine(RULE, m));
 
 if (process.argv.includes("--write-baseline")) {
   writeFileSync(BASELINE, JSON.stringify(now, null, 2) + "\n");
@@ -665,6 +679,10 @@ if (grew.length) {
   console.log("x verify_art_direction: findings GREW. This baseline may only come DOWN.");
   grew.forEach(([k, v]) => console.log(`     ${k}: ${base[k] ?? 0} -> ${v}`));
   console.log("\n  The rules are in E:\\atlas\\design\\ART-DIRECTION.md, sections A, C, E and H.\n");
+  process.exit(1);
+}
+if (missing.length) {
+  console.log(`x verify_art_direction: ${missing.length} listed render(s) could not be read, so the findings above are of the pages that were.`);
   process.exit(1);
 }
 console.log("PASS verify_art_direction.\n");

@@ -28,13 +28,22 @@
  * every run rather than hidden, and it is a debt, not a pass. This check cannot
  * distinguish "no forms on this page" from "no forms tagged on this page",
  * which is why the tagged total is always reported beside the caps.
+ *
+ * WHAT IT READS (plan step 14b, 2026-09-17): the shared list in
+ * scripts/lib/page_renders.mjs, the six spine surfaces as FRESH renders from
+ * the real adapters and views (written by the pages-fresh gate at the head of
+ * the chain) and home and the countries list as the renders frozen on
+ * 2026-09-08. Until then it read every .html in docs/loop/artifacts/final-pages,
+ * the two retired country fixtures included. The first line printed says what
+ * was read and how old it was.
  */
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { pageRenders, describeRenders, missingLine } from "./lib/page_renders.mjs";
 
-const PAGES_DIR = "docs/loop/artifacts/final-pages";
+const RULE = "form-variety";
 const CATALOG = "E:/atlas/rules/FORM-CATALOG.md";
 
 /* The caps come from the catalogue, PARSED, never retyped: a cap that lives in
@@ -61,20 +70,17 @@ if (!caps) {
 await requireBrowser("form-variety", "whether any page repeats one visual idea past its cap");
 const { chromium } = await import("playwright");
 
-const pages = existsSync(PAGES_DIR)
-  ? readdirSync(PAGES_DIR).filter((f) => f.endsWith(".html"))
-  : [];
-if (pages.length === 0) {
-  console.log("SKIPPED form-variety: no rendered pages to read.");
-  process.exit(0);
-}
+const ENTRIES = pageRenders();
+console.log(`  ${describeRenders(ENTRIES, RULE)}`);
+const pages = ENTRIES.filter((e) => e.exists);
+const MISSING = ENTRIES.filter((e) => !e.exists);
 
 const browser = await chromium.launch();
 const failures = [];
 let totalTagged = 0;
-for (const file of pages) {
+for (const { name: file, path } of pages) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 1200 } });
-    await page.goto(pathToFileURL(resolve(PAGES_DIR, file)).href);
+    await page.goto(pathToFileURL(resolve(path)).href);
   const measured = await page.evaluate(() => {
     const out = {};
     for (const el of document.querySelectorAll("[data-idea]")) {
@@ -141,9 +147,14 @@ await browser.close();
 
 console.log(`  ${totalTagged} tagged form(s) across ${pages.length} page(s).`);
 console.log("  NOT CHECKED, loudly: any drawing without a data-idea attribute is invisible here.");
+for (const m of MISSING) console.log(missingLine(RULE, m));
 if (failures.length) {
   console.log("x verify_form_variety: a page repeats one visual idea past its cap.");
   failures.forEach((f) => console.log("     " + f));
+  process.exit(1);
+}
+if (MISSING.length) {
+  console.log(`x verify_form_variety: ${MISSING.length} listed render(s) could not be read, so only the ${pages.length} page(s) above were checked.`);
   process.exit(1);
 }
 console.log("PASS verify_form_variety. No page exceeds a visual-idea cap.");

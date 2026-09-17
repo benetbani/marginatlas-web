@@ -29,39 +29,46 @@
  * `backdropFilter` can no longer be used to FIND a card, only to judge one
  * once found some other way.
  *
- * BLIND SPOT, stated because this number will be quoted: this only sees the
- * four static pages below, hand-rendered snapshots
- * (docs/loop/artifacts/final-pages) that this chain does not regenerate.
- * A snapshot that predates a source change reads as whatever the snapshot
- * shows, not as what the site currently renders; running
- * `scripts/build_final_pages.tsx` first keeps this current, and this file
- * cannot tell the difference between "the glass came back" and "this
- * snapshot is simply old" on its own. It also cannot see a card built the
- * old way outside these four pages, or a hand-rolled card wrapper that
- * spreads CARD_SURFACE directly without going through `Box` (this fix wave's
- * own report names three such wrappers, still carrying the old --c-border
- * edge, that render on pages this file does not open).
+ * BLIND SPOT, stated because this number will be quoted: this sees the six
+ * spine pages as the harness renders them (the fresh entries of
+ * scripts/lib/page_renders.mjs, written into scratchpad/harness/pages/ by the
+ * pages-fresh gate at the head of the chain since plan step 14b, 2026-09-17;
+ * until then, four snapshots frozen in docs/loop/artifacts/final-pages on
+ * 2026-09-08 that nothing regenerated, so "the glass came back" and "this
+ * snapshot is simply old" read the same here). The first line printed says
+ * what was read and how old it was. It still cannot see a card built the old
+ * way outside these six pages, or a hand-rolled card wrapper that spreads
+ * CARD_SURFACE directly without going through `Box` (this fix wave's own
+ * report names three such wrappers, still carrying the old --c-border edge,
+ * that render on pages this file does not open).
  *
  * Usage: node scripts/verify_frost_reads.mjs
  */
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { pageRenders, describeRenders, missingLine } from "./lib/page_renders.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
    run where chromium is not installed, and trying killed a production deploy on
    2026-08-27. It skips loudly there and runs unchanged on the design machine. */
 await requireBrowser("frost-reads", "whether any card surface has quietly become glass again");
 
-const PAGES = ["city-london", "cell-london-restaurants", "industry-restaurants", "hood-london"];
+const RULE = "frost-reads";
+const ENTRIES = pageRenders({ kinds: ["fresh"] });
+console.log(`  ${describeRenders(ENTRIES, RULE)}`);
+const PAGES = ENTRIES.filter((e) => e.exists);
+const MISSING = ENTRIES.filter((e) => !e.exists);
 const MIN_ALPHA = 0.999; // a card's own background must be fully opaque, not merely close to it
 
 const run = async () => {
   const b = await chromium.launch();
   const fails = [];
   let totalCards = 0;
-  for (const name of PAGES) {
+  for (const { name, path } of PAGES) {
     const p = await b.newPage({ viewport: { width: 1440, height: 2600 } });
-    await p.goto(`file:///E:/atlas/website/docs/loop/artifacts/final-pages/${name}.html`);
+    await p.goto(pathToFileURL(resolve(path)).href);
     await p.evaluate(() => document.fonts.ready);
     await p.waitForTimeout(300);
     const result = await p.evaluate(() => {
@@ -91,10 +98,15 @@ const run = async () => {
     await p.close();
   }
   await b.close();
+  for (const m of MISSING) console.log(missingLine(RULE, m));
   if (fails.length) {
     console.log(`\nx verify_frost_reads: ${fails.length} card(s), of ${totalCards} checked, still (or again) carry glass.`);
     fails.forEach((f) => console.log("     " + f));
     console.log("\n  The founder's ruling of 2026-09-07 removed the photograph and the glass\n  card together. A backdrop-filter or a translucent card fill is that\n  surface coming back, on a page whose ground is now flat grey.\n");
+    process.exit(1);
+  }
+  if (MISSING.length) {
+    console.log(`x verify_frost_reads: ${MISSING.length} listed render(s) could not be read, so only the ${PAGES.length} page(s) above were checked.`);
     process.exit(1);
   }
   console.log(`\nPASS verify_frost_reads , ${totalCards} card(s) across ${PAGES.length} pages, none carrying a backdrop-filter or a translucent fill.\n`);

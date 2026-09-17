@@ -25,10 +25,17 @@
  * full width by design from one that is full width by neglect. That is what the
  * allowlist below is for, and every entry in it names its form.
  *
+ * WHAT IT READS (plan step 14b, 2026-09-17): the six fresh spine renders of
+ * scripts/lib/page_renders.mjs, written by the pages-fresh gate at the head of
+ * the chain; before that, four snapshots frozen on 2026-09-08. The baseline
+ * keeps its old keys (cell-london-restaurants for the harness's
+ * cell-gb-london-restaurants, country-gb-new for country-GB), which the module
+ * maps; the line printed first says what was read and how old it was.
+ *
  * Usage: node scripts/verify_section_bands.mjs [--write-baseline]
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { eachPage } from "./lib/measure_pages.mjs";
+import { eachPage, renderEntries, describeRenders, nameWithKey, missingLine } from "./lib/measure_pages.mjs";
 import { requireBrowser } from "./lib/local_only.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
@@ -37,6 +44,11 @@ import { requireBrowser } from "./lib/local_only.mjs";
 await requireBrowser("section-bands", "whether every section sits in a declared band");
 
 const BASELINE = "scripts/section_bands_baseline.json";
+const RULE = "section-bands";
+
+const entries = renderEntries();
+console.log(`  ${describeRenders(entries, RULE)}`);
+const missing = entries.filter((e) => !e.exists);
 
 const counts = await eachPage(1440, () => {
   /* Card definition repointed 2026-09-08, fix wave Finding 2. The glass is
@@ -59,16 +71,17 @@ const counts = await eachPage(1440, () => {
 
 const now = {};
 let total = 0;
-for (const { name, result } of counts) {
-  const bad = result.filter((s) => !s.hero);
-  now[name] = bad.length;
+for (const entry of counts) {
+  const bad = entry.result.filter((s) => !s.hero);
+  now[entry.key] = bad.length;
   total += bad.length;
   if (bad.length) {
-    console.log(`\n  ${name}: ${bad.length} full-width section(s) with no wide form`);
+    console.log(`\n  ${nameWithKey(entry)}: ${bad.length} full-width section(s) with no wide form`);
     bad.forEach((s) => console.log(`     "${s.label}"`));
   }
 }
 console.log(`\n  ${total} full-width sections that could be paired.\n`);
+for (const m of missing) console.log(missingLine(RULE, m));
 
 if (process.argv.includes("--write-baseline")) {
   writeFileSync(BASELINE, JSON.stringify(now, null, 2) + "\n");
@@ -80,6 +93,10 @@ const grew = Object.entries(now).filter(([k, v]) => v > (base[k] ?? 0));
 if (grew.length) {
   console.log("x verify_section_bands: full-width sections GREW. This baseline may only come DOWN.");
   grew.forEach(([k, v]) => console.log(`     ${k}: ${base[k] ?? 0} -> ${v}`));
+  process.exit(1);
+}
+if (missing.length) {
+  console.log(`x verify_section_bands: ${missing.length} listed render(s) could not be read, so the count above is of the pages that were.`);
   process.exit(1);
 }
 console.log("PASS verify_section_bands.\n");
