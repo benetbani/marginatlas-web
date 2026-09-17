@@ -466,6 +466,12 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     }
   }
 
+  /* THE COUNTRY PAGE'S THREE CHAPTER HEADINGS (MODEL.md 8.2, the same
+     dispatch): leaves named `costs`, `where` and `place`, which the static
+     sweep does not read (it reads a leaf named `kicker` or `basis`), so they
+     are pushed by name; a heading is read aloud like a kicker. */
+  for (const [key, text] of Object.entries(COPY.chapters)) heads.push([`COPY.chapters.${key}`, text]);
+
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);
     if (why) pushRed("BANNED CONSTRUCTION", `${where}: "${text}" is ${why}`);

@@ -357,6 +357,15 @@ export const COPY = {
     higher: "Higher than {n} {noun} in ten.",
     lowest: "Among the lowest tenth.",
   },
+  /** THE COUNTRY PAGE'S THREE CHAPTER TURNS (MODEL.md 8.2, verbatim; PART 1:
+   *  only the three turns carry a chapter break, "a spread does not number its
+   *  cover or its back page"). Drawn by the kit's Movement, the index and one
+   *  plain heading, no eyebrow, no icon (8.4). */
+  chapters: {
+    costs: "What it costs to open, and to run",
+    where: "Where to open it, and what to open",
+    place: "What the place is like",
+  },
   /** The income breakdown (task 11, his most literal instruction, 2026-09-10):
    *  "the income breakdown is used exactly for income breakdown with the main
    *  figure being the net income percentage." It replaces the section he

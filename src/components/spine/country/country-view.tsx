@@ -29,7 +29,7 @@
  * exemption that recorded the gap is gone with the gap.
  */
 import * as React from "react";
-import { Band, Box, Fig, Rail, SampleTag, usd } from "@/components/spine/kit";
+import { Band, Box, Fig, Movement, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
@@ -705,11 +705,18 @@ function Hiring({ hiring, iso2 }: { hiring: any; iso2?: string }) {
   const informal = hiring?.informal_share_pct;
   if (!pay && !isNum(addPct) && !isNum(labour) && !isNum(informal)) return null;
   const tagged = (pay && pay.confidence !== "measured") || (typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured");
-  /* LEAN WHILE IT STANDS ALONE (plan step 31, 2026-09-17): the kit seats a lone
-     card at two thirds, and at 693 this card's world track runs on empty past
-     its two short fills, the void the page filter names; at the narrow third,
-     347, the card is exactly what it has been since 2026-09-05 and carries no
-     void. The declaration is inert the day the card has a partner again. */
+  /* LEAN WHILE IT STANDS ALONE (plan step 31, 2026-09-17; kept by the sixth
+     dispatch, 2026-09-18): the kit seats a lone card at two thirds, and at 693
+     this card's world track ran on empty past its two short fills, the void
+     the page filter names; at the narrow third, 347, the card carries none.
+     The placement lines closed the staff card's own void at 520 (a 190 by 60
+     blank there now), but the pair with the workforce seat still waits on the
+     plus, because the seat stretched to this card's height is 57 percent ink
+     against the art-direction gate's 60 (the band's comment in the body has
+     the numbers). Under 420 the card draws PART 5's phone row: label and
+     figure, the track at the card's full width under them, the placement
+     line under the track. The declaration is inert the day the card has a
+     partner again. */
   return (
     <Box id="hiring" data-lean="1">
       <Rail icon="hiring" kicker={COPY.pay.kicker} sample={tagged} />
@@ -930,8 +937,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
      two character tables, the footing beside the easiest seat; the close full
      width. Blocks 01 and 02 were seated by the second dispatch the same day;
      18 and 19, the exit's pair, by the fifth (2026-09-18); the three chapter
-     breaks come in a later dispatch and are not seated here. A band whose
-     partner is not built yet
+     breaks by the sixth (2026-09-18), which also re-measured `07 | 08` and
+     left it unseated on the seat's ink share (its band's comment). A band
+     whose partner is not built yet
      holds its one card in its own Band, unpadded: the LONE CARD finding on it
      is expected and temporary, and the kit's only-child rule gives the
      survivor two thirds so the composition reads as a choice meanwhile.
@@ -953,6 +961,16 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <WorldSeat seat={seat} />
           </Band>
         ) : null}
+        {/* CHAPTER TURN ONE (8.2, "What it costs to open, and to run"; plan step
+            31's sixth dispatch, 2026-09-18): the kit's Movement, the muted index
+            and one plain heading, no eyebrow and no icon (8.4; the cell page
+            passes both and the kit draws neither). It spaces itself: 48 above
+            (the chapter rung) and 12 below, which the next Band's own 32
+            absorbs by margin collapse, so the heading sits 32 over its first
+            band. The opening above carries no break (PART 1). The rail does
+            not list the turns: the cell page, the other page on Movement,
+            carries no rail at all, so there is no idiom for it. */}
+        <Movement index="01" heading={COPY.chapters.costs} />
         {/* `03 setup | 04 entry-bill`, 3-2, the registering table wide and the
             bill narrow (8.2; plan step 31, third dispatch). MEASURED BEFORE IT
             WAS PAIRED, on GB with the page filter at every width: 1280, the
@@ -990,22 +1008,30 @@ export function SpineCountryBody({ data }: { data?: any }) {
         {/* `07 workforce | 08 hiring`, 1-1 in 8.2, the seat on the left and the
             loud staff card on the right (its order list, its rhythm line
             "blocked-seat · pay-bars", its ledger "08, band 4, right"). THE PAIR
-            CANNOT BE SEATED TODAY, measured on 2026-09-17 (plan step 31) at
-            every split in the closed set, with the two cards as they are:
-            at 1-1 the staff card is 520 wide and the page filter finds a 150
-            by 156 void on it, the long empty world track past two short fills
-            and the on-cost sentence stopping short (the same numbers the
-            2026-09-11 stash recorded at that width; the 08 dispatch's
-            placement sentences and plus are what fill it); with the seat on
-            the wide side (3-2 or 2-1) the staff card at 416 or 347 is clean
-            and the seat, stretched to its 264, is half air, 48 percent ink to
-            the art-direction gate's floor of 60, or a blank of exactly 120 to
-            the filter's floor of 120 with the foot pinned to the base. The set
-            cannot give the seat 520 and the staff card 416 at once. So each
+            STILL CANNOT BE SEATED, re-measured on 2026-09-18 (plan step 31's
+            sixth dispatch) the day 08's placement lines landed, which is the
+            day the first dispatch named. That dispatch had measured a 150 by
+            156 void on the staff card at 520 and left each card in its own
+            band, the staff card lean at 347. WITH THE LINES the staff card's
+            void is gone: at 1-1 and 1280 the card at 520 (480 inside) carries
+            a 190 by 60 blank, under the page filter's 120 floor, and the seat
+            stretched to the staff card's 232 a 480 by 102 one, also under it;
+            at 768's equal halves the staff card takes PART 5's phone row and
+            runs 301 tall and the seat stretched to it opens a 304 by 168
+            blank, which stack="lg" would close. What does not hold is the
+            art-direction gate's E2 on the seat: 133 of ink in a card
+            stretched to 232 is 57 percent against its floor of 60, a baseline
+            of 0 that never rises. The seat cannot gain ink (its law is one
+            line and a foot), and the staff card cannot lose the 11px that
+            would lift the seat to 60 except by 8.2's own next move for `08`:
+            the on-cost sentence and the informal line (91px of the card's
+            face) go behind the plus, closed on arrival, and the card falls to
+            about 177 inside, where the seat's 133 is 75 percent. So each still
             stands in its own band in 8.2's order: the seat at the survivor's
-            two thirds at its own height, the staff card declared lean so it
-            keeps the 347 it has held since 2026-09-05, where it has no void.
-            One Band at 1-1 again the day 08's placement lines land. */}
+            two thirds at its own height, the staff card lean at 347, where it
+            draws PART 5's phone row (the card is under 420) with the
+            placement line under each full-width track and carries an 89 by
+            102 blank, under the floor. One Band at 1-1 the day the plus lands. */}
         <Band split="1-1">
           <BlockedSeat id="workforce" icon="staffing-rota" kicker={COPY.blocked.workforce.kicker} line={COPY.blocked.workforce.line} foot={COPY.blocked.workforce.foot} />
         </Band>
@@ -1013,6 +1039,10 @@ export function SpineCountryBody({ data }: { data?: any }) {
           <Hiring hiring={d.hiring} iso2={iso2} />
         </Band>
         <Peers iso2={iso2} />
+        {/* CHAPTER TURN TWO (8.2, "Where to open it, and what to open"): the
+            page's biggest volume jump, the break and the area band in one
+            breath. */}
+        <Movement index="02" heading={COPY.chapters.where} />
         {/* `10 cities | 13 customers`, 3-2 cities wide in 8.2: THE PAIR CANNOT BE
             SEATED TODAY, measured on 2026-09-17 (plan step 31) with the page
             filter at 1280 and every split tried. The four field cards need
@@ -1044,6 +1074,10 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <LocalsKnow notes={locals} />
           </Band>
         ) : null}
+        {/* CHAPTER TURN THREE (8.2, "What the place is like"): a further
+            narrowing that goes quieter; zero accent from here to the exit. The
+            exit below carries no break (PART 1). */}
+        <Movement index="03" heading={COPY.chapters.place} />
         <Character iso2={iso2} />
         {/* `17 footing | 11 easiest`, 2-1, the footing wide because it is the
             band's only live content (8.4 rule 1), the easiest seat narrow. */}

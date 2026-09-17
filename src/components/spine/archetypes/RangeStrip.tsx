@@ -19,11 +19,22 @@
  * marks sit closer than a label's width the labels step to alternate rows,
  * and the harness checks it. Fewer than two marks and the strip becomes a
  * figure with its label, never a track with one tick.
+ *
+ * THE LEAD MARK IS INK (MODEL.md 8.2, `13 customers`: "the typical goes to
+ * ink, giving up the accent it held"; plan step 31's sixth dispatch,
+ * 2026-09-18). A mark may be the strip's LEAD, `lead`, drawn at the head rung
+ * in ink with an ink tick: the size says which mark is the answer of the
+ * spread, and the colour says nothing, because the country page's accents are
+ * the hero's and the staff card's (PART 6) and the strip is not on that list.
+ * `accent` survives as a separate flag for the one strip the model still lets
+ * mark a member in colour (the city's premises strip, its own size class,
+ * until 8.3's `04` bento retires it); a mark can be lead, accent, both or
+ * neither, and the country's customers strip is lead only.
  */
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
 
-export type StripMark = { key: string; label: string; value: number; accent?: boolean; sub?: string };
+export type StripMark = { key: string; label: string; value: number; accent?: boolean; lead?: boolean; sub?: string };
 export type RangeStripProps = {
   marks: StripMark[];
   scale?: "log" | "linear";
@@ -81,7 +92,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
         {/* the figures, over their ticks */}
         {placed.map((p, i) => (
           <div key={p.m.key} data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x), top: rows[i] === 1 ? 18 : 0 }}>
-            <Fig className={`block text-[length:var(--t-body)] font-semibold leading-none ${p.m.accent ? "text-[length:var(--t-head)] text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(p.m.value)}</Fig>
+            <Fig className={`block font-semibold leading-none ${p.m.accent || p.m.lead ? "text-[length:var(--t-head)]" : "text-[length:var(--t-body)]"} ${p.m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(p.m.value)}</Fig>
           </div>
         ))}
         {/* the track and the ticks */}

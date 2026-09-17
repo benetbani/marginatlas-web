@@ -16,7 +16,7 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 type Conf = "measured" | "modeled";
 
 export type StripData = {
-  marks: Array<{ key: string; label: string; value: number; accent?: boolean }>;
+  marks: Array<{ key: string; label: string; value: number; accent?: boolean; lead?: boolean }>;
   confidence: Conf;
   note: string | null;
   extra: { value: string; label: string } | null;
@@ -43,7 +43,17 @@ export function buildPremisesStrip(iso2: string): StripData | null {
   return { marks, confidence: conf, note: null, extra: kwh != null ? { value: `$${kwh}`, label: COPY.premises.electricity } : null };
 }
 
-/** Null when no typical pay is held. */
+/** Null when no typical pay is held.
+ *  THE TYPICAL IS THE LEAD, NOT THE ACCENT (MODEL.md 8.2, `13 customers`:
+ *  "the typical goes to ink, giving up the accent it held"; plan step 31's
+ *  sixth dispatch, 2026-09-18). It held `accent: true` and drew in terracotta,
+ *  a third accent on a page whose two are the hero's rate and the staff card's
+ *  average (PART 6); it is `lead` now, the head rung in ink, so the strip
+ *  still says which mark is the answer of the spread and spends no colour on
+ *  it. The city's own-income strip below still passes `accent` until the city
+ *  page's dispatch takes its `07 earnings` to ink (8.3's own row); a city that
+ *  falls back to this builder draws the country's strip as this builder draws
+ *  it. */
 export function buildCustomersStrip(iso2: string): StripData | null {
   const { p, held, conf } = profileOf(iso2);
   if (!held || !isNum(p.median_wage_full_time_usd) || p.median_wage_full_time_usd <= 0) return null;
@@ -52,8 +62,8 @@ export function buildCustomersStrip(iso2: string): StripData | null {
   const p90 = isNum(p.wage_p90_usd) && p.wage_p90_usd > 0 ? Math.round(p.wage_p90_usd) : null;
   const spread = p10 != null && p90 != null && p10 < med && med < p90;
   const marks: StripData["marks"] = spread
-    ? [{ key: "p10", label: COPY.customers.marks.bottom, value: p10 as number }, { key: "typical", label: COPY.customers.marks.typical, value: med, accent: true }, { key: "p90", label: COPY.customers.marks.top, value: p90 as number }]
-    : [{ key: "typical", label: COPY.customers.marks.typical, value: med, accent: true }];
+    ? [{ key: "p10", label: COPY.customers.marks.bottom, value: p10 as number }, { key: "typical", label: COPY.customers.marks.typical, value: med, lead: true }, { key: "p90", label: COPY.customers.marks.top, value: p90 as number }]
+    : [{ key: "typical", label: COPY.customers.marks.typical, value: med, lead: true }];
   return { marks, confidence: conf, note: spread ? null : COPY.customers.noSpread, extra: null };
 }
 
