@@ -19,6 +19,7 @@
  * bulk SQL generators apply a per-country construction-cost
  * multiplier on top.
  */
+import { resolveIndustryIdExact } from "@/lib/taxonomy";
 
 export type IndustryBaseline = {
   // Cost stack ratios (fraction of revenue)
@@ -292,3 +293,56 @@ export const INDUSTRY_BASELINES: Record<string, IndustryBaseline> = {
     source_note: "AVMA Economic State of the Veterinary Profession 2024 + VPI/Nationwide cost surveys.",
   },
 };
+
+/* ---------------------------------------------------------------------------
+ * The rent share, read from the table above (bug:rent-share-invented,
+ * 2026-09-17).
+ *
+ * adapt_city hardcoded baseRentShare = 0.12 for the district net-margin
+ * matrix, and that one constant decided the SIGN of four London rows: at the
+ * winner trade's own sourced share (dental_practices, 0.08 above) no district
+ * comes out negative, at 0.12 two do, at 0.20 four do. The two decide pages
+ * each carried a private copy of this lookup with a silent 0.08 fallback.
+ * This is the one accessor all of them read now.
+ *
+ * Any spelling: the table is keyed by id (cafes_coffee) and the site's slugs
+ * are built from names (cafes-coffee-shops), so the input goes through the
+ * taxonomy's EXACT resolver, never its fuzzy tier.
+ *
+ * THE FALLBACK IS COMPUTED, NOT TYPED, and it is MARKED. Where the table has
+ * no row the share is the median of the rows it does have, so it moves when
+ * the table moves and cannot be a number someone once found plausible. It
+ * comes back with sourced=false so a caller can say so on the page or
+ * withhold. bars_nightclubs, one of the ten leaderboard trades, has no row
+ * and lands here.
+ * ------------------------------------------------------------------------- */
+
+/** Median rent_occupancy across the sourced rows, computed at load. */
+export const RENT_OCCUPANCY_FALLBACK: number = (() => {
+  const shares = Object.values(INDUSTRY_BASELINES)
+    .map((b) => b.rent_occupancy)
+    .filter((v) => typeof v === "number" && Number.isFinite(v))
+    .sort((a, b) => a - b);
+  const n = shares.length;
+  if (n === 0) return 0;
+  return n % 2 ? shares[(n - 1) / 2] : (shares[n / 2 - 1] + shares[n / 2]) / 2;
+})();
+
+export type RentShareResolution =
+  | { share: number; sourced: true; id: string; sourceNote: string }
+  | { share: number; sourced: false; id: string | null; sourceNote: null };
+
+/**
+ * The baseline rent (occupancy) share of revenue for a trade, in either
+ * spelling. `sourced` is true when the table holds the row; otherwise the
+ * share is RENT_OCCUPANCY_FALLBACK and the result says so.
+ */
+export function rentOccupancyShareFor(activity: string): RentShareResolution {
+  const raw = String(activity ?? "").trim();
+  const id = INDUSTRY_BASELINES[raw] ? raw : resolveIndustryIdExact(raw);
+  const row = id ? INDUSTRY_BASELINES[id] : undefined;
+  if (row && typeof row.rent_occupancy === "number" && Number.isFinite(row.rent_occupancy)) {
+    return { share: row.rent_occupancy, sourced: true, id: id as string, sourceNote: row.source_note };
+  }
+  return { share: RENT_OCCUPANCY_FALLBACK, sourced: false, id: id ?? null, sourceNote: null };
+}

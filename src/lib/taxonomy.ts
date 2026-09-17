@@ -438,6 +438,40 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
 }
 
 /**
+ * EXACT resolution only, for the coefficient tables. Returns the industry id
+ * a string names when it names one unambiguously: an id as written, a
+ * canonical URL slug, a hand-curated alias, or a hyphenated spelling of an
+ * id. NEVER the fuzzy tier above: a table of betas must not receive another
+ * trade's numbers because two tokens overlapped. Null when nothing matches.
+ *
+ * WHY THIS EXISTS (bug:district-revenue-dead, 2026-09-17). The site's URL
+ * slugs are built from NAMES by industryToSlug ("Cafés & coffee shops" ->
+ * cafes-coffee-shops) while every economics table is keyed by ID
+ * (cafes_coffee). Swapping hyphens for underscores is therefore not a
+ * resolver: measured over the ten leaderboard trades in
+ * scratchpad/arch/probe_vocab.ts, it misses two (cafes-coffee-shops,
+ * clothing-shoe-stores). Both spellings resolve here, and the swap is kept
+ * as the LAST step only for an id spelled with hyphens.
+ */
+export function resolveIndustryIdExact(input: string | null | undefined): string | null {
+  if (!input) return null;
+  const raw = String(input).trim();
+  if (!raw) return null;
+  if (INDUSTRY_BY_ID[raw]) return raw;
+  const norm = stripDiacritics(raw)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (!norm) return null;
+  if (SLUG_TO_INDUSTRY[norm]) return SLUG_TO_INDUSTRY[norm].id;
+  const aliasId = INDUSTRY_SLUG_ALIASES[norm];
+  if (aliasId && INDUSTRY_BY_ID[aliasId]) return aliasId;
+  const asId = norm.replace(/-/g, "_");
+  if (INDUSTRY_BY_ID[asId]) return asId;
+  return null;
+}
+
+/**
  * Sectors in curated display order (Plan v4.0 master menu).
  * Falls back to `order` for any sector still on the v3 schema.
  */

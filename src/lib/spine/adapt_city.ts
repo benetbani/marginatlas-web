@@ -64,6 +64,7 @@ import {
   getNeighborhoodNetMargin,
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
+import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 
 /* ------------------------------------------------------------------------- */
 /* City record shape (the subset the adapter reads from city_list_v1.json).  */
@@ -398,14 +399,27 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     const baseNetMargin = isNum(marginLeader.net_margin_pct)
       ? (marginLeader.net_margin_pct as number) / 100
       : 0.1;
-    // A modeled baseline occupancy (rent) share for a single-site storefront trade.
-    // This is only used INSIDE the engine to compose the district net-margin matrix; it
-    // never surfaces as a standalone figure, and the district ranking it drives is the
-    // honest keep re-rank the section is built to show.
-    const baseRentShare = 0.12;
+    /* THE RENT SHARE IS THE TRADE'S OWN SOURCED ONE (bug:rent-share-invented,
+       2026-09-17). This used to be a typed 0.12, and that constant alone decided
+       the sign of four rows: at the winner's sourced share (dental, 0.08) no
+       district's engine net margin is negative, at 0.12 two are, at 0.20 four
+       are. It comes from src/lib/qa/industry_baselines.ts now, read for the
+       trade in question. Where the table has no row the share is the median of
+       the rows it has, and rent_share_sourced=false on the payload says so. */
+    const rentShare = rentOccupancyShareFor(marginLeader.slug);
+    const baseRentShare = rentShare.share;
+
+    /* WITHHELD when the engine has no model for the winner trade: every
+       district's revenue would then be a neutral 1.0 by absence, and the rent
+       ranking alone would stand under a heading about where to trade. The
+       card self-omits on an undefined where_to_trade. Not the case for any
+       of the ten leaderboard trades today (scratchpad/boundary.txt), so this
+       is a rail, not a live branch. */
+    let engineKnowsWinner = true;
 
     const districtRows = LONDON_DISTRICTS.map((dist) => {
       const mult = getNeighborhoodMultiplier(city.slug, dist.slug, marginLeader.slug);
+      if (!mult.activityKnown) engineKnowsWinner = false;
       const nm = getNeighborhoodNetMargin(
         city.slug,
         dist.slug,
@@ -419,8 +433,19 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
         name: dist.name,
         slug: dist.slug,
         character,
-        // rev_vs_city_pct: the honest revenue multiplier vs city baseline as a percent.
+        /* rev_vs_city_pct: the revenue multiplier vs the city baseline as a
+           percent. THIS WAS EXACTLY 0 IN EVERY ROW until 2026-09-17: the slug
+           went in hyphenated, the engine's tables are keyed with underscores,
+           and every lookup fell to a neutral 1.0. The engine resolves either
+           spelling at its boundary now (bug:district-revenue-dead). The
+           districts card reads rent_mult only, so this figure reaches no
+           reader today; see the honest answer at getNeighborhoodMultiplier
+           before any card prints it. */
         rev_vs_city_pct: Math.round((mult.final - 1) * 100),
+        /* rev_clipped: the revenue multiplier sits ON the engine's 0.4 floor or
+           3.0 ceiling, so it is the bound, not a reading. Carried so a card
+           can withhold on it. */
+        rev_clipped: mult.clipped,
         // rent_mult: the real rent multiplier from the district's tags.
         rent_mult: +nm.rentMultiplier.toFixed(2),
         // lat / lng DELIBERATELY absent (no coords held); the map self-omits.
@@ -429,14 +454,21 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
 
     // The full district x trade keep matrix behind the Pro veil is derived by the
     // component from these rows + the trades list, so it is fully real too.
-    where_to_trade = {
-      read:
-        "The loud names take the most revenue and give most of it back in rent; a few quieter districts keep more of every pound.",
-      keep_note:
-        "Keep index, city average = 100. Every inner district carries above-average rent, so the best keeper holds the most of each pound.",
-      pro_teaser: undefined, // the seed's teaser lines are authored; the real ProMatrix carries the disclosure.
-      list: districtRows,
-    };
+    where_to_trade = engineKnowsWinner
+      ? {
+          read:
+            "The loud names take the most revenue and give most of it back in rent; a few quieter districts keep more of every pound.",
+          keep_note:
+            "Keep index, city average = 100. Every inner district carries above-average rent, so the best keeper holds the most of each pound.",
+          pro_teaser: undefined, // the seed's teaser lines are authored; the real ProMatrix carries the disclosure.
+          list: districtRows,
+          /* The trade the district figures were run for, and whether its rent
+             share came from the baseline table or from the marked fallback. */
+          trade_slug: marginLeader.slug,
+          rent_share: baseRentShare,
+          rent_share_sourced: rentShare.sourced,
+        }
+      : undefined;
   }
 
   /* -- peers (real set + real indices; spend_index OMITTED) --------------- */

@@ -21,6 +21,7 @@
  *   - Eventually, the per-cell adjustment on every neighborhood page
  */
 import intensityJson from "../../../data/economics/neighborhood_intensity_v1.json";
+import { resolveIndustryIdExact } from "@/lib/taxonomy";
 
 // ---------------------------------------------------------------------------
 // Tag types
@@ -434,12 +435,110 @@ const TAG_REVENUE_MULTIPLIER: Partial<Record<NeighborhoodTag, Record<string, num
 };
 
 // ---------------------------------------------------------------------------
+// The activity boundary (bug:district-revenue-dead, 2026-09-17).
+//
+// Every table above is keyed by UNDERSCORE id (dental_practices). The site's
+// URL slugs are HYPHENATED and built from names (dental-practices,
+// cafes-coffee-shops), and adapt_city passed those straight in. Every lookup
+// missed, every `?? 0` and `?? 1.0` below answered "neutral", and every
+// London district's revenue printed as exactly +0% while the rent side, keyed
+// by tag rather than by activity, kept varying. Proved before the fix in
+// scratchpad/slug-before.txt: the hyphen form returned 1.000 in all seven
+// districts, the underscore form 0.400 to 0.841 for the same trade.
+//
+// The fix sits HERE, at the boundary, so no caller has to know which spelling
+// a table wants: every entry point that takes an activity resolves it through
+// resolveEngineActivity first. Order: the engine's own vocabulary as written
+// (pharmacies_drug_stores is a key here and not a taxonomy id); then the
+// taxonomy's EXACT resolver (canonical slug, alias, hyphenated id; never its
+// fuzzy tier, which would hand one trade another trade's betas); then a bare
+// hyphen swap for an engine-only id spelled with hyphens.
+//
+// A MISS IS NOT A 1.0. It used to be: an unknown activity fell through to the
+// same neutral multiplier as a trade whose betas happen to be zero, and no
+// caller could tell the two apart. Now a miss (a) warns once per string, so
+// a build log names every activity the engine has no model for, and (b) is
+// carried on the result as activityKnown=false with activityId=null, which a
+// caller must withhold on rather than print. The arithmetic still runs to a
+// neutral 1.0 so no caller receives NaN, but the number is tagged as absence,
+// not measurement. Not a throw: the neighbourhood page runs twelve activities
+// on every one of its pages, and this repo's honesty rail is "omit, never
+// crash" (CLAUDE.md), so a throw would take the page down for one trade's
+// missing coefficient. A throw is also the one behaviour a static build cannot
+// withhold on.
+// ---------------------------------------------------------------------------
+
+/** Every activity id at least one table above holds a coefficient for. Built
+ *  from the tables themselves so it cannot drift from them. Exported for the
+ *  boundary gate, which needs a membership test that does not warn. */
+export const KNOWN_ACTIVITY_IDS: ReadonlySet<string> = (() => {
+  const s = new Set<string>(Object.keys(ACTIVITY_COMMUTER_BETA));
+  for (const k of Object.keys(ACTIVITY_TOURISM_BETA)) s.add(k);
+  for (const table of Object.values(TAG_REVENUE_MULTIPLIER)) {
+    for (const k of Object.keys(table ?? {})) s.add(k);
+  }
+  return s;
+})();
+
+export type ActivityResolution =
+  | { known: true; id: string; input: string }
+  | { known: false; id: null; input: string };
+
+/** Strings already warned about, so a build log carries each unknown once. */
+const WARNED_UNKNOWN = new Set<string>();
+
+/**
+ * Resolve any spelling of an activity to the id the tables are keyed by, or
+ * to a tagged miss. Idempotent: an id the engine knows passes straight
+ * through, so the component functions can call it on an already-resolved id
+ * at the cost of one Set lookup.
+ */
+export function resolveEngineActivity(input: string): ActivityResolution {
+  const raw = String(input ?? "").trim();
+  if (KNOWN_ACTIVITY_IDS.has(raw)) return { known: true, id: raw, input: raw };
+  const viaTaxonomy = resolveIndustryIdExact(raw);
+  if (viaTaxonomy && KNOWN_ACTIVITY_IDS.has(viaTaxonomy)) {
+    return { known: true, id: viaTaxonomy, input: raw };
+  }
+  const swapped = raw.toLowerCase().replace(/-/g, "_");
+  if (KNOWN_ACTIVITY_IDS.has(swapped)) return { known: true, id: swapped, input: raw };
+  if (!WARNED_UNKNOWN.has(raw)) {
+    WARNED_UNKNOWN.add(raw);
+    console.warn(
+      `[neighborhood_multipliers] no activity model for "${raw}": its district multipliers are a neutral 1.0 by absence, not by measurement. Withhold on activityKnown=false.`,
+    );
+  }
+  return { known: false, id: null, input: raw };
+}
+
+// ---------------------------------------------------------------------------
 // Pure math helpers
 // ---------------------------------------------------------------------------
 
 function clip(x: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, x));
 }
+
+/**
+ * THE CLIP BOUNDS, named and exported so a check can read them instead of
+ * retyping them. A figure that sits ON one of these is the bound, not a
+ * reading, and two districts on the same bound print the same figure while
+ * nothing about them is alike.
+ *   REVENUE_CLIP_*: the final revenue multiplier for a CURATED district.
+ *   DEFAULT_CLIP_*: the final multiplier on the city-default fallback path.
+ *   RENT_CLIP_*:    the composed rent multiplier over a district's tags.
+ *   MARGIN_CLIP_*:  the district net margin (decimal) out of getNeighborhoodNetMargin.
+ * The component multipliers (commuter, tourism) clip at 0.5 to 2.0 and the
+ * tag product at 0.3 to 2.5; those stay inline where they are applied.
+ */
+export const REVENUE_CLIP_LO = 0.4;
+export const REVENUE_CLIP_HI = 3.0;
+export const DEFAULT_CLIP_LO = 0.5;
+export const DEFAULT_CLIP_HI = 2.0;
+export const RENT_CLIP_LO = 0.5;
+export const RENT_CLIP_HI = 3.0;
+export const MARGIN_CLIP_LO = -0.2;
+export const MARGIN_CLIP_HI = 0.5;
 
 /**
  * Commuter multiplier on an activity given a daytime/resident intensity.
@@ -451,7 +550,11 @@ export function commuterMultiplier(
   activityId: string,
   intensity: number,
 ): number {
-  const beta = ACTIVITY_COMMUTER_BETA[activityId] ?? 0;
+  /* Resolved at the boundary (see above). A bare-number entry point cannot
+     carry the activityKnown tag; an unknown activity warns once and reads
+     neutral here, so prefer getNeighborhoodMultiplier, which tags it. */
+  const id = resolveEngineActivity(activityId).id;
+  const beta = id ? (ACTIVITY_COMMUTER_BETA[id] ?? 0) : 0;
   const normalized = (clip(intensity, 0.3, 5.0) - 1.0) / 1.5;
   return clip(1 + beta * normalized, 0.5, 2.0);
 }
@@ -465,7 +568,8 @@ export function tourismMultiplier(
   activityId: string,
   intensity: number,
 ): number {
-  const beta = ACTIVITY_TOURISM_BETA[activityId] ?? 0;
+  const id = resolveEngineActivity(activityId).id;
+  const beta = id ? (ACTIVITY_TOURISM_BETA[id] ?? 0) : 0;
   const eff = Math.log10(clip(intensity, 0.1, 100) + 1);
   return clip(1 + beta * eff, 0.5, 2.0);
 }
@@ -492,10 +596,12 @@ export function tagMultiplier(
   activityId: string,
   tags: NeighborhoodTag[],
 ): number {
+  const id = resolveEngineActivity(activityId).id;
+  if (!id) return 1.0;
   let logSum = 0;
   let nActive = 0;
   for (const t of tags) {
-    const tm = TAG_REVENUE_MULTIPLIER[t]?.[activityId] ?? 1.0;
+    const tm = TAG_REVENUE_MULTIPLIER[t]?.[id] ?? 1.0;
     if (tm !== 1.0) {
       logSum += Math.log(tm);
       nActive += 1;
@@ -525,6 +631,15 @@ export type NeighborhoodMultiplierBreakdown = {
   sourceQuality: "A" | "B" | "C" | "default";
   /** Indicator: is this row hand-curated, or did we fall back to defaults? */
   isCurated: boolean;
+  /** The id the tables were read under, or null when no table knows the activity. */
+  activityId: string | null;
+  /**
+   * False when the engine holds NO coefficient for this activity, in any
+   * spelling. Every figure on this result is then a neutral 1.0 by absence,
+   * not by measurement, and a caller must withhold rather than print it as
+   * "+0% vs the city". See the boundary note above resolveEngineActivity.
+   */
+  activityKnown: boolean;
   /**
    * Did the final clip bite? A figure sitting on a bound is not a measurement,
    * it is the bound, and a reader cannot tell the difference from the number.
@@ -546,23 +661,72 @@ export type NeighborhoodMultiplierBreakdown = {
 /**
  * Compute the full multiplier breakdown for one (city, neighborhood, activity).
  * Falls back to city defaults when the neighborhood is not curated yet.
+ *
+ * IS A PER-DISTRICT KEEP OR NET-MARGIN FIGURE HONEST ENOUGH TO PRINT FOR
+ * LONDON? Measured 2026-09-17, after the boundary fix above and with each
+ * trade's own sourced rent share, in scratchpad/rows-21.txt: the winner trade
+ * (dental practices, the real leaderboard's margin leader at 18%), a cafe and
+ * a barbershop, across the seven curated districts, 21 rows.
+ *
+ *   revenue multiplier ON a bound:  6 of 21 (2 on the 0.4 floor, 4 on the 3.0 ceiling)
+ *   rent multiplier ON a bound:     3 of 21 (West End, 3.0, for every trade)
+ *   net margin ON a bound:          3 of 21 (all on the -20% floor)
+ *   any bound at all:               8 of 21
+ *
+ * By count the rows are mostly off the clips, so the figures CAN carry a
+ * modelled mark. But the test is not the count, it is whether two districts
+ * that share a bound print the same figure while nothing about them is
+ * alike, and they do, in exactly the rows a reader looks at first:
+ *
+ *   dental, City of London and West End: both 0.400 (the floor), both print
+ *     "-60% takings" and "-20.0% margin", with different tag sets and rents
+ *     of 2.96 and 3.00. The floor is hiding how far apart they are.
+ *   cafe, City of London, West End, South Bank, East London: all 3.000 (the
+ *     ceiling), all print "+200%". Four of seven rows tie, and the two cafe
+ *     "leaders" by margin (East London 14.3%, South Bank 12.3%) are computed
+ *     FROM that ceiling, so the cafe ranking is an artifact of the bound.
+ *
+ * SO: NO for a card that prints a figure in every row for the winner trade
+ * (two of its seven rows are the same floor) and NO for the cafe (four of
+ * seven are the same ceiling), until the 0.4 to 3.0 range is justified or
+ * widened by the data track. The range is asserted in the comment below
+ * ("Manhattan-vs-Bronx for pharmacies should be ~2.5x"), not derived from
+ * any measured district. YES, marked modelled, for rows off every clip:
+ * dental would lead with South London 14.6%, North London 11.3%, East London
+ * 6.9%; barbershops with South London 10.1%, North London 7.3% (all seven
+ * barbershop revenue rows read). Not a card change here: that decision is
+ * the next dispatch's, on these numbers. See DATA-REQUIREMENTS.md for the
+ * clip-range requirement.
+ *
+ * One more thing the live revenue half changed: with revenue dead at 1.0 the
+ * rent share alone decided the sign of the rows (at 0.08 none negative, at
+ * 0.12 two, at 0.20 four). With revenue running, dental is a trade the model
+ * SUPPRESSES in loud districts (commuter beta -0.4, tourism -0.3, financial
+ * CBD tag 0.6), so at the sourced 0.08 four of seven are negative and two sit
+ * on the margin floor. The sign is now the revenue side's, not the share's.
  */
 export function getNeighborhoodMultiplier(
   citySlug: string,
   neighborhoodSlug: string,
   activityId: string,
 ): NeighborhoodMultiplierBreakdown {
+  /* Resolved ONCE here; the component functions accept the resolved id and
+     pass it through on a single Set lookup. An unknown activity is carried
+     as activityKnown=false and the maths runs neutral (see the boundary note). */
+  const act = resolveEngineActivity(activityId);
+  const id = act.id ?? act.input;
   const row = FILE.neighborhoods[key(citySlug, neighborhoodSlug)];
   if (row) {
-    const cm = commuterMultiplier(activityId, row.commuter_intensity);
-    const tm = tourismMultiplier(activityId, row.tourism_intensity);
-    const gm = tagMultiplier(activityId, row.tags);
-    // Final clip: 0.4 - 3.0. Bigger range than individual components
-    // (which clip at 0.5-2.0) so a clear premium neighborhood can land
-    // at ~2.5x and a depressed one at ~0.6x. Manhattan-vs-Bronx for
-    // pharmacies should be ~2.5x in this model, matching reality.
+    const cm = commuterMultiplier(id, row.commuter_intensity);
+    const tm = tourismMultiplier(id, row.tourism_intensity);
+    const gm = tagMultiplier(id, row.tags);
+    // Final clip: REVENUE_CLIP_LO to REVENUE_CLIP_HI (0.4 to 3.0). Bigger range
+    // than individual components (which clip at 0.5-2.0) so a clear premium
+    // neighborhood can land at ~2.5x and a depressed one at ~0.6x.
+    // Manhattan-vs-Bronx for pharmacies should be ~2.5x in this model,
+    // matching reality.
     const raw = cm * tm * gm;
-    const final = clip(raw, 0.4, 3.0);
+    const final = clip(raw, REVENUE_CLIP_LO, REVENUE_CLIP_HI);
     return {
       final,
       commuter: cm,
@@ -573,6 +737,8 @@ export function getNeighborhoodMultiplier(
       tourismIntensity: row.tourism_intensity,
       sourceQuality: row.source_quality,
       isCurated: true,
+      activityId: act.id,
+      activityKnown: act.known,
       clipped: raw !== final,
     };
   }
@@ -580,11 +746,11 @@ export function getNeighborhoodMultiplier(
   // Fallback path: use city defaults, no tags.
   const cityDef =
     FILE.city_defaults[citySlug] || FILE.city_defaults["default"];
-  const cm = commuterMultiplier(activityId, cityDef.commuter_intensity);
-  const tm = tourismMultiplier(activityId, cityDef.tourism_intensity);
+  const cm = commuterMultiplier(id, cityDef.commuter_intensity);
+  const tm = tourismMultiplier(id, cityDef.tourism_intensity);
   /* The fallback path clips tighter, 0.5 to 2.0, and can sit on its bound too. */
   const rawDefault = cm * tm;
-  const final = clip(rawDefault, 0.5, 2.0);
+  const final = clip(rawDefault, DEFAULT_CLIP_LO, DEFAULT_CLIP_HI);
   return {
     final,
     commuter: cm,
@@ -595,6 +761,8 @@ export function getNeighborhoodMultiplier(
     tourismIntensity: cityDef.tourism_intensity,
     sourceQuality: "default",
     isCurated: false,
+    activityId: act.id,
+    activityKnown: act.known,
     clipped: rawDefault !== final,
   };
 }
@@ -667,7 +835,7 @@ export function rentMultiplier(tags: NeighborhoodTag[]): number {
   }
   if (nActive === 0) return 1.0;
   const dampedLog = logSum / Math.sqrt(Math.max(1, nActive));
-  return clip(Math.exp(dampedLog), 0.5, 3.0);
+  return clip(Math.exp(dampedLog), RENT_CLIP_LO, RENT_CLIP_HI);
 }
 
 // ---------------------------------------------------------------------------
@@ -677,6 +845,13 @@ export function rentMultiplier(tags: NeighborhoodTag[]): number {
 export type NetMarginBreakdown = {
   /** True when revenueMultiplier is the clip ceiling, not a reading. */
   revenueClipped?: boolean;
+  /** True when rentMultiplier sits on RENT_CLIP_LO or RENT_CLIP_HI. */
+  rentClipped: boolean;
+  /** True when neighborhoodNetMargin sits on MARGIN_CLIP_LO or MARGIN_CLIP_HI. */
+  marginClipped: boolean;
+  /** False when the engine holds no coefficient for the activity: the revenue
+   *  half of this result is then absence, not measurement. Withhold on it. */
+  activityKnown: boolean;
   /** Revenue multiplier vs city baseline (from getNeighborhoodMultiplier). */
   revenueMultiplier: number;
   /** Rent multiplier vs city baseline. */
@@ -725,11 +900,8 @@ export function getNeighborhoodNetMargin(
   const effectiveRentShare =
     (baselineRentShare * rentMult) / Math.max(0.5, mult.final);
 
-  const neighborhoodNetMargin = clip(
-    baselineNetMargin - (effectiveRentShare - baselineRentShare),
-    -0.20,
-    0.50,
-  );
+  const rawMargin = baselineNetMargin - (effectiveRentShare - baselineRentShare);
+  const neighborhoodNetMargin = clip(rawMargin, MARGIN_CLIP_LO, MARGIN_CLIP_HI);
 
   const baselineProfit = baselineNetMargin; // per unit revenue
   const neighborhoodProfit = mult.final * neighborhoodNetMargin;
@@ -744,6 +916,9 @@ export function getNeighborhoodNetMargin(
        people look at: Manhattan FiDi, Midtown, SoHo/Tribeca, the City of
        London, the West End. */
     revenueClipped: mult.clipped,
+    rentClipped: rentMult === RENT_CLIP_LO || rentMult === RENT_CLIP_HI,
+    marginClipped: rawMargin !== neighborhoodNetMargin,
+    activityKnown: mult.activityKnown,
     rentMultiplier: rentMult,
     baselineNetMargin,
     baselineRentShare,

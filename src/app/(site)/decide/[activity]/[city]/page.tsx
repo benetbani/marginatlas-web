@@ -42,7 +42,7 @@ import {
   tagLabel,
   type NeighborhoodTag,
 } from "@/lib/economics/neighborhood_multipliers";
-import { INDUSTRY_BASELINES } from "@/lib/qa/industry_baselines";
+import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import DecideActivitySelector from "@/components/DecideActivitySelector";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { colors } from "@/lib/design-tokens";
@@ -79,12 +79,11 @@ function baselineNetMarginFor(activityId: string): number {
   return INDUSTRY_MARGINS.default_fallback?.net_margin ?? 0.08;
 }
 
-/** Baseline rent occupancy share for an activity. Falls back to 0.08. */
-function baselineRentShareFor(activityId: string): number {
-  const row = INDUSTRY_BASELINES[activityId];
-  if (row && typeof row.rent_occupancy === "number") return row.rent_occupancy;
-  return 0.08;
-}
+/* The baseline rent share is read through the ONE accessor on the baselines
+   module (bug:rent-share-invented, 2026-09-17). This page and /decide each
+   carried a private copy of this lookup with a silent 0.08 typed in; the
+   shared one falls back to the median of the sourced rows and says so. */
+const baselineRentShareFor = (activityId: string): number => rentOccupancyShareFor(activityId).share;
 
 type MarginTone = "success" | "warning" | "danger";
 

@@ -40,7 +40,7 @@ import {
   hasNeighborhoodIntensity,
   type NeighborhoodTag,
 } from "@/lib/economics/neighborhood_multipliers";
-import { INDUSTRY_BASELINES } from "@/lib/qa/industry_baselines";
+import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import {
   generateFounderDecision,
   type FounderActivityInput,
@@ -199,12 +199,10 @@ const NEIGHBORHOODS_BY_CITY = (
 ).cities;
 const CITIES_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 
-// Rent occupancy share for the rent-drag math, mirroring the wizard page.
-function baselineRentShareFor(activityId: string): number {
-  const row = INDUSTRY_BASELINES[activityId];
-  if (row && typeof row.rent_occupancy === "number") return row.rent_occupancy;
-  return 0.08;
-}
+// Rent occupancy share for the rent-drag math, through the baselines module's
+// one accessor (bug:rent-share-invented, 2026-09-17): its fallback is the
+// median of the sourced rows, marked, not a 0.08 typed here.
+const baselineRentShareFor = (activityId: string): number => rentOccupancyShareFor(activityId).share;
 
 // One short, true clause keyed off the winning neighborhood's leading tag. It
 // names WHY this corner keeps the most, in plain language, never a number this
@@ -285,7 +283,10 @@ const WORKED_EXAMPLES: WorkedExample[] = WORKED_EXAMPLE_CANDIDATES.map(
     const top = ranked[0];
     // The card claims a real best-corner read, so the winner must be a
     // hand-curated neighborhood with a defensibly positive net margin.
-    if (!top.isCurated || top.breakdown.neighborhoodNetMargin < 0.08) return null;
+    /* activityKnown: the engine holds no coefficient for this trade, so the
+       revenue half of every district is a neutral 1.0 by absence and the
+       "best corner" would be nothing but the cheapest rent. Withheld. */
+    if (!top.isCurated || !top.breakdown.activityKnown || top.breakdown.neighborhoodNetMargin < 0.08) return null;
 
     return {
       activity,

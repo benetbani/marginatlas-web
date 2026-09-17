@@ -19,9 +19,18 @@
  * an honest one has to be drawn on the card; being the base is not being
  * recommended, and it buys no pill, no colour and no rung of its own. The day
  * the engine can name a district as genuinely the best place to trade in
- * (DATA-REQUIREMENTS.md 15, and the revenue side of the model, which returns
- * exactly 1.000 per district today), the card gets a leader again and it will
- * be that district, not this one. `cheapestKey` left with the pill it fed.
+ * (DATA-REQUIREMENTS.md 15, and the revenue side of the model), the card gets
+ * a leader again and it will be that district, not this one. `cheapestKey`
+ * left with the pill it fed.
+ *
+ * THE REVENUE SIDE RUNS SINCE 2026-09-17 (it returned exactly 1.000 per
+ * district before that: a hyphenated slug against underscore-keyed tables,
+ * bug:district-revenue-dead), and this card STILL reads rent_mult only, on
+ * purpose. The seed now carries rev_vs_city_pct and rev_clipped per row, and
+ * the honest answer on whether they can print is written at
+ * getNeighborhoodMultiplier in neighborhood_multipliers.ts: for the winner
+ * trade two of seven rows sit on the same 0.4 floor and print the same
+ * figure, so a figure-in-every-row card cannot carry them yet.
  *
  * THE REFERENCE POINT IS A DISTRICT ON THE CARD, NOT AN INVISIBLE AVERAGE,
  * and this is the whole of the change. His words on the old card: "then you

@@ -128,17 +128,27 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
     // zone its footfall trades. Only trades with a real positive lift qualify (a "what
     // works here" list must not list a trade the district does nothing for); the section
     // self-omits when none lift. The "why" states the real per-trade lift.
+    /* a.slug is the HYPHENATED url slug (cafes-coffee-shops); the engine's tables
+       are keyed by underscore id and it resolves either at its boundary since
+       2026-09-17 (bug:district-revenue-dead). Before that every slug but
+       "restaurants" missed, read +0% and was filtered out here, so this list was
+       "Restaurants" alone in all seven London districts. A trade the engine has
+       no model for is dropped by its tag, not by the accident of a 0 lift. */
     const best_trades = activitySlugs
-      .map((a) => ({
-        name: a.name,
-        pct: Math.round((getNeighborhoodMultiplier(citySlug, n.slug, a.slug).final - 1) * 100),
-      }))
-      .filter((t) => t.pct > 0)
+      .map((a) => {
+        const m = getNeighborhoodMultiplier(citySlug, n.slug, a.slug);
+        return { name: a.name, known: m.activityKnown, clipped: m.clipped, pct: Math.round((m.final - 1) * 100) };
+      })
+      .filter((t) => t.known && t.pct > 0)
       .sort((x, y) => y.pct - x.pct)
       .slice(0, 3)
       .map((t) => ({
         name: t.name,
-        why: `Revenue runs about +${t.pct}% versus the city for this trade here.`,
+        /* "at least" when the multiplier is the engine's 3.0 ceiling rather than
+           a reading (the [sub] page's own wording for the same flag): three
+           trades in the City of London all sit on it, and "about +200%" for
+           each would be the bound printed as a tie. */
+        why: `Revenue runs ${t.clipped ? "at least" : "about"} +${t.pct}% versus the city for this trade here.`,
       }));
 
     // Deterministic, honest verdict, a plain read of the knowable rent figure

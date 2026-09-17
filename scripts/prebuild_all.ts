@@ -213,6 +213,16 @@ const GATES: Gate[] = [
      Negative-tested against a 2747km displacement, a duplicate point, 0,0 and a
      missing centre. Registered 2026-08-01. */
   { name: "district-geometry", script: "scripts/verify_district_geometry.ts" },
+  /* The district engine's boundary. Its tables are keyed by underscore id and
+     the site's slugs are hyphenated from names; for as long as the city
+     adapter passed a slug straight in, every London district's revenue was
+     exactly +0% and nothing on the page could tell "average" from "never
+     asked". Either spelling must resolve to the same coefficients, a trade
+     with no model must come back tagged rather than as a silent 1.0, and the
+     rent share must be read from the baselines rather than typed. Negative-
+     tested against a resolver missing its taxonomy step (34 reds) and a
+     literal 0.12 typed back in. Registered 2026-09-17. */
+  { name: "district-engine-boundary", script: "scripts/verify_district_engine_boundary.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   /* WCAG AA on every token that carries text. The colour tokens are edited by
      eye in the founder's design file, where a shade nudged lighter still
