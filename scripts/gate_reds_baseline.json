@@ -1,0 +1,12 @@
+{
+  "no_path": 40,
+  "no_rule": 18,
+  "no_remedy": 49,
+  "gates": 142,
+  "tests": {
+    "no_path": 24,
+    "no_rule": 2,
+    "no_remedy": 20
+  },
+  "written": "2026-09-17"
+}

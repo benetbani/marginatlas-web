@@ -375,6 +375,14 @@ const GATES: Gate[] = [
      and this fails the chain when a block goes stale, naming the command that
      fixes it. Negative-tested by editing 103 to 99 in CLAUDE.md. */
   { name: "counts-fresh", script: "scripts/verify_counts_fresh.ts" },
+  /* THE GATE REGISTRY HOLDS NO CONTRADICTION. Plan step 15, 2026-09-17.
+     `scripts/gates.json` is generated from this array and the gate scripts by
+     counts.ts (the gate above reds when it is stale) and records what each gate
+     bans and requires. This reds when one gate bans a literal that another
+     requires, which is how archetype-copy once required the `x1.00` that
+     model-laws-copy bans and a page could satisfy only one of them. Proved by
+     planting a scratch gate declaring `requires "x1.00"`. */
+  { name: "gate-conflicts", script: "scripts/verify_gate_conflicts.ts" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "build-compare", script: "tests/scripts/build_compare.test.ts" },
   { name: "scope-rules", script: "tests/taxonomy/scope_rules.test.ts" },
