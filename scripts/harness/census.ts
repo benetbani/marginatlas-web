@@ -13,6 +13,7 @@
  * folder) or "kit", and the first builder the enclosing component calls.
  *
  * usage: npx tsx scripts/harness/census.ts            prints the census and exits 1 when PAGES.md's block is stale
+ *        npx tsx scripts/harness/census.ts --check    the chain gate: exits 1 when docs/loop/CENSUS.md (in-repo) is stale; never reads the other repo
  *        npx tsx scripts/harness/census.ts --write    writes the block between the markers in PAGES.md
  *        --pages=<path>  another PAGES.md (default ../design/loop/build/PAGES.md from the site root)
  *
@@ -20,8 +21,8 @@
  * not a section to it, a kicker built from a template prints as its template,
  * and a builder called outside the enclosing component is not seen.
  */
-import { readdirSync, readFileSync, statSync, writeFileSync, existsSync } from "node:fs";
-import { join, basename, resolve } from "node:path";
+import { readdirSync, readFileSync, statSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { join, basename, resolve, dirname } from "node:path";
 import { stripCommentLines } from "../lib/strip_comments";
 import { COPY } from "../../src/lib/spine/copy";
 import { preflight } from "./preflight.mjs";
@@ -37,7 +38,16 @@ const PAGE_ORDER = ["country", "howto", "city", "hood", "cell", "industry"];
 const START = "<!-- census:start -->";
 const END = "<!-- census:end -->";
 const WRITE = process.argv.includes("--write");
+const CHECK = process.argv.includes("--check");
 const PAGES_PATH = process.argv.find((a) => a.startsWith("--pages="))?.slice("--pages=".length) ?? resolve(process.cwd(), "..", "design", "loop", "build", "PAGES.md");
+/* THE IN-REPO COPY (plan step 24, 2026-09-17). The loop's PAGES.md lives in the
+   other repo, which Vercel does not have, so a chain gate that read it would
+   exit 2 on every deploy. The census therefore also writes the generated block
+   to a tracked file inside this repo, and the chain gate (`--check`) reads THAT
+   file and never the sibling repo. `--write` writes both when the sibling
+   exists and only the in-repo copy when it does not. The loop's PAGES.md is a
+   convenience view; the in-repo file is what the gate defends. */
+const CENSUS_PATH = resolve(process.cwd(), "docs", "loop", "CENSUS.md");
 const NL = String.fromCharCode(10);
 
 type Section = { page: string; file: string; id: string; component: string; kicker: string; archetype: string; builder: string };
@@ -137,6 +147,22 @@ const files = walk(ROOT);
 const sections = files.flatMap(sectionsOf);
 const block = render(sections, files);
 
+/* --check: the chain gate. Reads only the in-repo copy; stale or missing is a red
+   that names the command; the sibling repo is never touched. */
+if (CHECK) {
+  if (!existsSync(CENSUS_PATH)) { console.log(`census-fresh: ${CENSUS_PATH} is missing; run \`npm run census -- --write\` and commit docs/loop/CENSUS.md`); process.exit(1); }
+  const have = readFileSync(CENSUS_PATH, "utf8").split(String.fromCharCode(13)).join("").trim();
+  if (have !== block.trim()) { console.log(`census-fresh: docs/loop/CENSUS.md is STALE against src/components/spine; run \`npm run census -- --write\` and commit it`); process.exit(1); }
+  console.log(`census-fresh: docs/loop/CENSUS.md matches the code (${sections.length} sections in ${files.length} files)`);
+  process.exit(0);
+}
+
+if (WRITE) {
+  mkdirSync(dirname(CENSUS_PATH), { recursive: true });
+  writeFileSync(CENSUS_PATH, block + NL, "utf8");
+  console.log(`census: wrote ${sections.length} sections in ${files.length} files to ${CENSUS_PATH}`);
+  if (!existsSync(PAGES_PATH)) { console.log(`census: no loop PAGES.md at ${PAGES_PATH}; the in-repo copy is written and that is the gated one`); process.exit(0); }
+}
 if (!existsSync(PAGES_PATH)) { console.error(`census: no PAGES.md at ${PAGES_PATH}`); process.exit(2); }
 const pages = readFileSync(PAGES_PATH, "utf8").split(String.fromCharCode(13)).join("");
 const a = pages.indexOf(START), b = pages.indexOf(END);

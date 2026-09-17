@@ -152,6 +152,12 @@ const GATES: Gate[] = [
      Both checks were negative-tested against a real induced drift. */
   { name: "spine-css-fresh", script: "scripts/scope_atlas_css.mjs", args: ["--check"] },
   { name: "glyphs-fresh", script: "scripts/sync_glyphs.mjs", args: ["--check"] },
+  /* The section census (plan step 24, 2026-09-17): docs/loop/CENSUS.md is
+     generated from src/components/spine and this reds when it is stale, so
+     PAGES.md can never again say the country page draws a CardPager it stopped
+     drawing. Reads only the in-repo copy; never the loop repo, which the
+     build machine does not have. */
+  { name: "census-fresh", script: "scripts/harness/census.ts", args: ["--check"] },
   /* The reconciliation check on the ONLY hand-filled data file the product has.
      It existed and was runnable but was never registered, so the arithmetic
      behind every headline figure was verified only when somebody remembered to
