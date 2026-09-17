@@ -30,7 +30,7 @@ website/
 │   ├── lib/            # Domain layer — cells, design-tokens, motion, finance/fx, feature_flags, types
 │   ├── styles/         # globals.css + homepage-visual-tokens.css
 │   └── middleware.ts   # Rate-limit + edge-cache rules
-├── scripts/            # 25-gate prebuild verifiers + audit/ + maintenance codemods
+├── scripts/            # the prebuild gate chain (count in the generated block above) + harness/ + audit/ + codemods
 ├── data/               # Static data fixtures, audit outputs, quality reports
 ├── docs/               # AUTHORITATIVE — handoff, design-system, architecture, ingest, strategy
 ├── db/migrations/      # Supabase SQL — apply manually
@@ -111,26 +111,19 @@ Four rules. Not aspirations, and each one exists because breaking it cost real t
   `prebuild_all.ts --concurrency=1`, and `verify_single_gate_chain` stops a
   second list growing back.
 
-**WHETHER THESE RUN ON A DEPLOY IS NOT VISIBLE FROM THIS REPO, and it is worth
-settling.** There is no `vercel.json`, so the build command is a dashboard
-setting. The gates hang off npm's `prebuild` lifecycle hook, which fires only
-when the build is invoked as `npm run build`. If Vercel is configured to run
-`next build` directly, the hook is bypassed and EVERY gate is skipped on
-every deploy while still passing locally, which is the worst of both: the cost
-of maintaining them and none of the protection.
+**THE CHAIN RUNS ON EVERY DEPLOY, and a file says so.** `vercel.json` pins
+`"buildCommand": "npm run build"` (committed 2fedb20a), so npm's `prebuild`
+hook, which is the whole gate chain, fires on Vercel before every build; a
+push failed on Vercel at 54 seconds on the `no-cream` gate on 2026-09-11,
+which is the proof. Since plan step 14b (2026-09-17) the chain renders the
+six spine pages first (`pages-fresh`) and the browser gates, the archetype
+harness, the page filter and the model-laws list all read those live
+renders; nothing in the chain reads a frozen snapshot of a spine page any
+more. Run the same list locally before a push with `npm run verify:deploy`
+(serial, to `scratchpad/deploy/chain.txt`; `--build` adds the Next build) and
+watch the deploy land with `npm run deploy:watch -- --marker=<a string the new
+code puts on the page>`.
 
-`prebuild_all` itself is correct, verified: it exits 1 when any gate fails,
-including under `--no-bail`, so the build does fail when it is reached.
-
-One line settles it permanently, and it belongs in the repo rather than a
-dashboard:
-
-```json
-{ "buildCommand": "npm run build" }
-```
-
-Left for the founder because changing how production builds is a deploy
-decision, not a code change.
 - `npx tsc --noEmit` — typecheck only, ~30-60s
 - `npm run build` — full Next.js build (after prebuild); minutes
 
