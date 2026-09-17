@@ -53,6 +53,8 @@ import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { buildHeroFacts } from "@/lib/spine/hero_facts";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
+import { buildGlance, type GlanceData } from "@/lib/spine/glance_rows";
+import { buildWorldSeat, type WorldSeatData } from "@/lib/spine/world_seat_rows";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -70,6 +72,8 @@ import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
  */
 const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The tax burden" },
+  { id: "glance", label: "At a glance" },
+  { id: "world-seat", label: "Among the countries" },
   { id: "setup", label: "Registering, by legal form" },
   { id: "premises", label: "What premises cost" },
   { id: "workforce", label: "Who you can hire" },
@@ -242,6 +246,68 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
       answer={rate != null ? { label: "Total effective tax burden", value: `${rate}%`, regime: regime ?? null, confidence: "modeled" } : null}
       cells={[]}
     />
+  );
+}
+
+/**
+ * At a glance, `01 glance` (MODEL.md 8.2; plan step 31, second dispatch,
+ * 2026-09-17). THE SEAT IS HELD BY KvGrid AS CATALOGUED: the fact card with a
+ * focal (a first cell at 30 taking the card's width, complete rows beneath)
+ * is candidate 1 of FORM-CATALOG's CANDIDATES AWAITING HIS CLICK, and a form
+ * not in the catalogue is a candidate awaiting his click; so the cells draw
+ * at the head rung, nothing at 30, and the FOCAL finding on this card stands
+ * until he clicks. The census reads this Box as KvGrid, which is the truth
+ * of it today.
+ *
+ * The rows come from glance_rows.ts, pure over the files, every figure's
+ * file and field in its header: the published GDP snapshot with its year
+ * (the profile only for TW and YE, step 42), the pay pair's average and
+ * minimum from the staff-cost card's own builder (the minimum withheld
+ * wherever it is the 0.45 fill or the row is not tier A, step 43, gated by
+ * verify_min_wage_not_fill), the curated net wealth (the regional fill
+ * withheld), and the hero's own LLC registration time. Five cells at most;
+ * the withheld line names what the card does not hold, with the count. The
+ * mark on the opener reads the weakest cell, which today draws nothing; the
+ * foot says the year and names the modelled cells in words instead.
+ */
+function Glance({ glance }: { glance: GlanceData | null }) {
+  if (!glance) return null;
+  return (
+    <Box id="glance">
+      <Rail icon="scorecard" kicker={COPY.glance.kicker} sample={glance.confidence !== "measured"} />
+      <KvGrid cells={glance.cells} />
+      {glance.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.withheld}</p> : null}
+      {glance.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.basis}</p> : null}
+      {glance.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.foot}</p> : null}
+    </Box>
+  );
+}
+
+/**
+ * Among the countries, `02 world-seat` (MODEL.md 8.2; the same dispatch).
+ * THE SEAT IS HELD BY KvGrid: the composition's card is the placed-figures
+ * form, a figure with the sentence "Higher than {n} countries in ten" under
+ * it, which is candidate 1 in FORM-CATALOG's CANDIDATES AWAITING HIS CLICK
+ * (the placement line under a fact) and not clicked; the placement sentences
+ * are not drawn, nothing is at 30 (the FOCAL finding is expected), and the
+ * foot says the placement is not shown yet. The census reads this Box as
+ * KvGrid. The rows come from world_seat_rows.ts: the major-cities shop rent
+ * (the profile's second tier, the composition's "major cities") and the
+ * hero's own payroll rate (the rates file, 130 of 195, withheld on 65); the
+ * bank lending rate is held for every country and printed for none, because
+ * DATA-REQUIREMENTS item 38 says in its own words that the field has no
+ * published definition, and the withheld line says so.
+ */
+function WorldSeat({ seat }: { seat: WorldSeatData | null }) {
+  if (!seat) return null;
+  return (
+    <Box id="world-seat">
+      <Rail icon="vs-world" kicker={COPY.worldSeat.kicker} sample={seat.confidence !== "measured"} />
+      <KvGrid cells={seat.cells} />
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.withheld}</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.basis}</p>
+      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.foot}</p>
+    </Box>
   );
 }
 
@@ -681,6 +747,8 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const locals = iso2 ? buildLocalsNotes(iso2) : null;
   const premises = iso2 ? buildPremisesStrip(iso2) : null;
   const hasSetup = Array.isArray(d.setup?.tiers) && d.setup.tiers.length > 0;
+  const glance = iso2 ? buildGlance(iso2) : null;
+  const seat = iso2 ? buildWorldSeat(iso2) : null;
 
   /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
      first of six dispatches), with the twelve blocks that exist today seated
@@ -690,8 +758,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
      staff cost, then the peers table full width; turn two, the cities beside
      what customers earn, the margin beside what locals know; turn three, the
      two character tables, the footing beside the easiest seat; the close full
-     width. Blocks 01, 02, 18 and 19 and the three chapter breaks come in later
-     dispatches and are not seated here. A band whose partner is not built yet
+     width. Blocks 01 and 02 were seated by the second dispatch the same day;
+     18 and 19 and the three chapter breaks come in later dispatches and are
+     not seated here. A band whose partner is not built yet
      holds its one card in its own Band, unpadded: the LONE CARD finding on it
      is expected and temporary, and the kit's only-child rule gives the
      survivor two thirds so the composition reads as a choice meanwhile.
@@ -700,6 +769,19 @@ export function SpineCountryBody({ data }: { data?: any }) {
     <>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         <Masthead name={name} iso2={iso2} hero={d.hero} />
+        {/* `01 glance | 02 world-seat`, 1-1, the opening's one band (8.2; plan
+            step 31, second dispatch): what the country is in figures, and what
+            it charges a shop against the world, both quiet, both on KvGrid
+            while their clicked forms wait. Both cards exist for every country
+            in the taxonomy (the GDP has a profile fallback and the rent is held
+            for all 195), so the band holds two children; a country missing one
+            would show the survivor alone, honestly, as LONE CARD. */}
+        {glance || seat ? (
+          <Band split="1-1">
+            <Glance glance={glance} />
+            <WorldSeat seat={seat} />
+          </Band>
+        ) : null}
         {/* `03 setup`, 3-2 wide the day `04` lands; alone in the band until then. */}
         {hasSetup ? (
           <Band split="3-2">
