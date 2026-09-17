@@ -245,7 +245,9 @@
  *   concrete spec rather than the fuller prose clause.
  *
  * usage: node scripts/harness/check_model_laws.mjs <rendered.html ...>
- *        node scripts/harness/check_model_laws.mjs --list[=pages.json]
+ *        node scripts/harness/check_model_laws.mjs --list[=pages.json] [--render] [--ratchet [--write-baseline]]
+ *        --render renders the list first (otherwise the last run's renders are read, and their age is printed);
+ *        --ratchet holds each page to scripts/harness/model_laws_baseline.json (exit 1 only when a page is over it).
  */
 import { chromium } from "playwright";
 import { existsSync, readFileSync } from "node:fs";
@@ -857,4 +859,45 @@ for (const file of files) {
 await browser.close();
 console.log(`model laws: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r.name}@${r.w} #${r.id}: ${r.rule}: ${r.detail}${r.count > 1 ? ` (${r.count}x)` : ""}`);
+
+/* THE PER-PAGE RATCHET (plan step 14b, 2026-09-17), the same shape as
+   check_page_holes.mjs's: with --ratchet, a page's row count is held to
+   scripts/harness/model_laws_baseline.json and the exit is 1 only when a
+   page is OVER its number; a page under it prints the fall and
+   --write-baseline lowers the file in the same commit; a page not in the
+   file is seeded at its first measurement and announced, never silently
+   accepted. Without --ratchet the exit is 1 on any red, as before, which is
+   the form the controller reads while working. The baseline is the standing
+   backlog DEBUG.md section 7 records (the rows the pages carry before file
+   04 rebuilds them), and a baseline falls and never rises: the day a rule is
+   made to measure more, the new rows are recorded there with their reason
+   and the file is reseeded by hand, in the open. This is what lets the list
+   run in the chain (gate `harness-laws`) without a standing red hiding the
+   next real one. */
+const RATCHET = args.includes("--ratchet");
+if (RATCHET) {
+  const BASELINE = "scripts/harness/model_laws_baseline.json";
+  const WRITE_BASELINE = args.includes("--write-baseline");
+  const stored = existsSync(BASELINE) ? JSON.parse(readFileSync(BASELINE, "utf8")) : {};
+  const have = {};
+  for (const f of files) have[basename(f).replace(/\.html$/, "")] = 0;
+  for (const r of reds) have[r.name] = (have[r.name] || 0) + 1;
+  const over = [], under = [], held = [], seeded = [];
+  for (const [name, n] of Object.entries(have)) {
+    if (!(name in stored)) { seeded.push(`${name}: ${n} (first measurement)`); stored[name] = n; continue; }
+    if (n > stored[name]) over.push(`${name}: ${n} against a baseline of ${stored[name]}`);
+    else if (n < stored[name]) { under.push(`${name}: ${n}, baseline ${stored[name]} can fall`); if (WRITE_BASELINE) stored[name] = n; }
+    else held.push(`${name} ${n}`);
+  }
+  let exit = 0;
+  if (over.length) { console.log(`model laws RATCHET: ${over.length} page(s) over their baseline: ${over.join("; ")}. Remedy: fix the card the new row names, or record the row in DEBUG.md section 7 with its reason and reseed the file by hand; never raise it to pass`); exit = 1; }
+  if (seeded.length || (WRITE_BASELINE && under.length)) {
+    const { writeFileSync: writeBaseline } = await import("node:fs");
+    writeBaseline(BASELINE, JSON.stringify(stored, null, 2) + String.fromCharCode(10));
+    if (seeded.length) console.log(`model laws RATCHET: seeded and written: ${seeded.join("; ")}`);
+    if (WRITE_BASELINE && under.length) console.log(`model laws RATCHET: baseline lowered and written: ${under.join("; ")}`);
+  } else if (under.length) console.log(`model laws RATCHET: ${under.join("; ")} (run with --write-baseline to lower it)`);
+  if (held.length && !exit) console.log(`model laws RATCHET: holding at baseline on ${held.join(", ")}; these rows are file 04's work and not a pass`);
+  process.exit(exit);
+}
 process.exit(reds.length ? 1 : 0);
