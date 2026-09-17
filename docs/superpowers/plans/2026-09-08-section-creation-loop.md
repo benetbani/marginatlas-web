@@ -1510,6 +1510,121 @@ cd /e/atlas/website && git add src/components/spine/city/where-to-trade.tsx src/
 
 ---
 
+### Task 15: B3, the universal list card
+
+His words: "the one with flags is pretty universal but the use can be beyond the
+use of flags itself, universal format."
+
+He is right that it is the most reusable shape in his whole set, which is why it
+comes first of the four. **One headline figure with its own label, then a list of
+rows, each row a leading MARK, a name, and a figure.** The mark is a flag on a
+country list, and on any other list it is whatever identifies the row: a trade
+icon, a rank numeral, nothing at all. The card must not assume flags.
+
+**Files:** create `src/components/spine/archetypes/MarkList.tsx` and
+`src/lib/spine/mark_list_rows.ts`; modify `copy.ts`, `stories.tsx`,
+`render_archetypes.tsx`, `src/app/dev/archetypes/page.tsx`,
+`scripts/harness/check_archetypes.mjs`.
+
+**The law inside it:**
+- The headline figure is one of the page's loud moments, or it is not loud at
+  all. It never competes with the rows.
+- Every row carries a figure. A row whose figure is missing is withheld with a
+  stated line, never printed blank and never dropped silently.
+- The mark is OPTIONAL and the card reads without it. Prove that with a story
+  that has no marks at all; a card that collapses without its flags is a flag
+  card, not a universal one.
+- `CountryFlag` already exists and has cost this project 215 violations once
+  from one line of border arithmetic. Reuse it, do not re-implement it, and
+  measure the rendered aspect ratio in the harness.
+- Rows are equal height by construction, his ruling 8.
+
+**Stories:** a country list with flags, the same card with no marks, a thin case
+at the honest minimum, and the self-omit. Data read from real files, never
+invented.
+
+---
+
+### Task 16: B5, the gauge, for a bounded reading
+
+His words: "the gradient with cake pieces can be used fot some niche metrics
+maybe criminality."
+
+`Gauge` exists in `kit.tsx` as a drawing mark with no law and no builder. This
+turns it into a section: a value on a bounded scale, where the SCALE ITSELF is
+the information and the reader needs to see where the value sits on it.
+
+**Files:** create `src/components/spine/archetypes/GaugeCard.tsx` and its
+builder; the usual story, render and check files.
+
+**The law inside it:**
+- A gauge is only honest when the scale has real ends. If the ends are coined
+  ("0 to 100 safety score") it is a coined index, which the model bans outright.
+  The builder returns null unless both ends are real and nameable, and the card
+  prints what each end MEANS in words.
+- The value is one figure at the focal rung; the ends are quiet.
+- Segmented arcs are permitted; a gradient is not, because a gradient asserts a
+  continuum the data does not have.
+- Terracotta for the value, neutral for the rest. No green.
+- One gauge per card. It is a bar-family drawing and counts against the page's
+  budget of three: say so in the component's own comment.
+
+**Before building, find a real bounded reading in the data and name it.** If the
+only candidates are coined indices, build the archetype against the honest ones
+that exist and write the criminality reading into `DATA-REQUIREMENTS.md`. Do not
+invent a scale.
+
+---
+
+### Task 17: B8, the showcase card
+
+His words: "the monster card is a showcase one maybe for trending cities or
+business models."
+
+**A mark, a name, a one-line descriptor, and three figures in a row beneath.**
+Flat, never tilted: his reference tilts in perspective and that makes figures
+harder to read, which PART C already records as not taken.
+
+**Files:** create `src/components/spine/archetypes/Showcase.tsx` and its builder;
+the usual story, render and check files.
+
+**The law inside it:**
+- Exactly three figures. Two is a pair and reads as a comparison; four is a
+  grid. State the constant and its reason.
+- The descriptor is one line, natural language, and says something a reader
+  could not get from the three figures. If it only restates them, it goes.
+- "Trending" is a claim about change over time. **Do not print it unless a real
+  time series backs it**; if none exists, the card showcases on a stated basis
+  that is true today and the trend goes to `DATA-REQUIREMENTS.md`.
+- One showcase per page, because a showcase that repeats is a list.
+
+---
+
+### Task 18: B9, the pie, with his hard cap
+
+His words: "the violet pie chart of that kind should be our favorite when using
+pie chwrts, max 1 per page."
+
+`Donut` exists in `kit.tsx` as a mark. This makes it the sanctioned pie form and
+enforces his cap.
+
+**Files:** create `src/components/spine/archetypes/PieCard.tsx` and its builder;
+the usual story, render and check files; and a PAGE-LEVEL rule in
+`scripts/harness/check_page_holes.mjs`.
+
+**The law inside it:**
+- Labels in pills, as his reference draws them, in terracotta and neutrals.
+- The segments sum to one hundred by construction, the way `IncomeBreakdown`
+  already does, and a real residual is named rather than absorbed.
+- A cap on drawn segments, with the remainder one clearly labelled slice that is
+  never the largest.
+- **AT MOST ONE PIE PER PAGE**, his words, enforced in the page filter and not
+  merely in a comment. Write the rule, then PLANT a second pie on a fixture and
+  watch it red before removing it. A cap that has never been tested is a wish.
+- It counts against the page's three bar-family drawings.
+
+---
+
 ## Self-review
 
 **Spec coverage.** His message maps to tasks as follows. "creating all the sections for all main page types" is Task 1 (the catalogue, which is the list of everything to create, including four SPINE rows for the page types the model never spined) and Task 7 (the queue seeded from it). "think about all aspects, space, rhythm, hierarchy, readability" is Task 3 (readability measured, four rules), Task 4 (the model's twelve laws, which cover hierarchy, spacing, the edge, the focal figure and the label gap) and Task 5 (rhythm and space at page level). "the click and show button was removed, I hoped that you would keep it" is Task 2, restored as an archetype with the no-hidden-graphics law inside it. "quality checks of different kinds in place" is the four layers named in the prompt, built by Tasks 2, 3 and 4 and already-existing checks. "a final review in terms of harmony, and how well sections fit together" is Task 5, wired as stage S9 so it fires once per page rather than once per card. "the immense wealth of shadcn components" is Task 6, ordered so what already exists is consulted before the registry, and adopted for structure and not skin. "create a prompt to kickstart a loop that would run consecutively every 20 minutes, all its goals written in detail" is Task 8, with the twelve numbered steps, the hard rules and an explicit definition of done for the phase.
