@@ -39,18 +39,20 @@ import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
-import { buildLocalsNotes } from "@/lib/spine/locals_rows";
+import { buildLocalsNotes, type LocalsNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCloseDoors } from "@/lib/spine/close_rows";
 import { PayBars } from "@/components/spine/archetypes/PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
-import { buildPremisesStrip, buildCustomersStrip } from "@/lib/spine/range_rows";
+import { buildPremisesStrip, buildCustomersStrip, type StripData } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
-import { buildCityCards } from "@/lib/spine/city_cards";
+import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { COPY } from "@/lib/spine/copy";
-import { marginCardFromRows } from "@/lib/spine/margin_rows";
+import { marginCardFromRows, type MarginCard } from "@/lib/spine/margin_rows";
 import { buildPeerTable } from "@/lib/spine/peer_rows";
 import { buildHeroFacts } from "@/lib/spine/hero_facts";
+import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
+import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -58,18 +60,28 @@ import { buildHeroFacts } from "@/lib/spine/hero_facts";
  * same change that mounts the section, so the rail can never promise a section
  * that is not there (a dead in-page link fails to scroll and reads as missing
  * content, which is worse than a 404 because nothing tells the reader).
+ *
+ * THE ORDER IS MODEL.md 8.2's (plan step 31, 2026-09-17): the opening, then
+ * what it costs to open and to run, then where to open it and what to open,
+ * then what the place is like, then the exit. The two drawn blocked seats
+ * (workforce, easiest) are listed because they are on the page, saying what
+ * they do not hold; a rail that skipped them would promise a shorter page
+ * than the one that renders.
  */
 const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The tax burden" },
-  { id: "cities", label: "The cities" },
-  { id: "peers", label: "Against the peers" },
-  { id: "money", label: "Net profit margin" },
-  { id: "customers", label: "What customers earn" },
-  { id: "character", label: "The character" },
   { id: "setup", label: "Registering, by legal form" },
   { id: "premises", label: "What premises cost" },
+  { id: "workforce", label: "Who you can hire" },
   { id: "hiring", label: "What staff cost" },
+  { id: "peers", label: "Against the peers" },
+  { id: "cities", label: "The cities" },
+  { id: "customers", label: "What customers earn" },
+  { id: "money", label: "Net profit margin" },
   { id: "locals", label: "What locals know" },
+  { id: "character", label: "The character" },
+  { id: "footing", label: "The ground under you" },
+  { id: "easiest", label: "Easiest to break in" },
 ];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -261,27 +273,29 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
  * Two cards a row on phones ("on phones we should have two cities in a row
  * instead of one", 2026-08-30) and every card its own door (verdict 6) are the
  * archetype's own law and survive the swap. The unit is said once under the row.
+ *
+ * A BARE BOX SINCE PLAN STEP 31 (2026-09-17): the body seats it on the wide
+ * side of a 3-2 beside what customers earn (MODEL.md 8.2, `10 cities | 13
+ * customers`, the area band). It used to wrap itself in a Band of its own and
+ * stand alone at two thirds with an empty third beside it, the lone card he
+ * named on this very section. The cards come from the body, built once.
  */
-function Cities({ iso2 }: { iso2?: string }) {
-  if (!iso2) return null;
-  const c = buildCityCards(iso2);
-  if (!c) return null;
+function Cities({ cards }: { cards: CityCardsData | null }) {
+  if (!cards) return null;
   return (
-    <Band>
-      <Box id="cities">
-        <Rail icon="best-areas" kicker={COPY.cities.kicker} />
-        <CityCards
-          cards={c.cards}
-          allHref={c.allHref}
-          allLabel={COPY.cities.allLabel}
-          basis={COPY.cityCards.plain.basis}
-          basisDrawn={COPY.cityCards.field.basis}
-          look="field"
-          prevLabel={COPY.cities.prev}
-          nextLabel={COPY.cities.next}
-        />
-      </Box>
-    </Band>
+    <Box id="cities">
+      <Rail icon="best-areas" kicker={COPY.cities.kicker} />
+      <CityCards
+        cards={cards.cards}
+        allHref={cards.allHref}
+        allLabel={COPY.cities.allLabel}
+        basis={COPY.cityCards.plain.basis}
+        basisDrawn={COPY.cityCards.field.basis}
+        look="field"
+        prevLabel={COPY.cities.prev}
+        nextLabel={COPY.cities.next}
+      />
+    </Box>
   );
 }
 
@@ -320,17 +334,16 @@ function Peers({ iso2 }: { iso2?: string }) {
  * 390 alike, with no invented breakpoint and nothing scrolling sideways (law
  * M).
  */
-function Customers({ iso2 }: { iso2?: string }) {
+function Customers({ strip }: { strip: StripData | null }) {
   /* THE RANGE-STRIP ARCHETYPE (customers): the typical full-time pay with
      the bottom and top tenth where the deciles are researched; the typical
-     alone, with the reason, where they are not. */
-  if (!iso2) return null;
-  const d = buildCustomersStrip(iso2);
-  if (!d) return null;
+     alone, with the reason, where they are not. The strip comes from the
+     body, built once, so the band can know whether it has a second child. */
+  if (!strip) return null;
   return (
     <Box id="customers">
-      <Rail icon="spread" kicker={COPY.customers.kicker} sample={d.confidence !== "measured"} />
-      <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={COPY.customers.basis} note={d.note} />
+      <Rail icon="spread" kicker={COPY.customers.kicker} sample={strip.confidence !== "measured"} />
+      <RangeStrip marks={strip.marks} scale="linear" fmt={usd} basis={COPY.customers.basis} note={strip.note} />
     </Box>
   );
 }
@@ -341,19 +354,19 @@ function Customers({ iso2 }: { iso2?: string }) {
  * once at the top as a column and not repeated the same word six times in a
  * row"). Column headers ONCE; each row carries the trade, two figures and the
  * arrow, on one shared grid template so the headers sit over their columns.
- * Returns a bare Box: the body composes it into the 2-1 band beside the
- * customers card. His standing note, recorded and queued: "a little bit stale
- * and without a lot of character."
+ * Returns a bare Box: the body seats it on the left of the band beside what
+ * locals know (MODEL.md 8.2, `12 money | 16 locals`, since plan step 31; it
+ * stood beside the customers strip before). His standing note, recorded and
+ * queued: "a little bit stale and without a lot of character."
  */
-function Money({ money }: { money: any }) {
+function Money({ money, card }: { money: any; card: MarginCard }) {
   /* THE RANKED-BARS ARCHETYPE (founder ruling 6, 2026-09-04): the net profit
      margin in percent as vertical bars, the track's top at the world's
      highest credible margin (ruling 13). A loss or a floored margin is
      withheld with its reason, never drawn; fewer than two credible rows and
      the card self-omits. The keep figures the old card printed are gone with
-     it: four of the six were the 3% floor times revenue. */
-  const list: any[] = Array.isArray(money?.list) ? money.list : [];
-  const card = marginCardFromRows(list);
+     it: four of the six were the 3% floor times revenue. The card's rows are
+     built once in the body, which reads their count to seat the band. */
   const tagged = typeof money?._meta?.confidence === "string" && money._meta.confidence !== "measured";
   return (
     <RankedBars
@@ -476,20 +489,19 @@ function Setup({ setup, iso2 }: { setup: any; iso2?: string }) {
  *
  * The electricity rate keeps its own quiet line beneath.
  */
-function Premises({ iso2 }: { iso2?: string }) {
+function Premises({ strip }: { strip: StripData | null }) {
   /* THE RANGE-STRIP ARCHETYPE (premises, founder rulings 10 to 12 of
      2026-09-04): rent for a square metre of shop a year, by address, on one
      log scale with the figure over each mark and the name under it, in
      practical words, no conclusion sentence; the electricity rate under a
      hairline. The profile holds three national tiers today; the five metrics
-     he named are a data requirement the strip is built to hold. */
-  if (!iso2) return null;
-  const d = buildPremisesStrip(iso2);
-  if (!d) return null;
+     he named are a data requirement the strip is built to hold. The strip
+     comes from the body, built once, so its band is drawn only when it is. */
+  if (!strip) return null;
   return (
     <Box id="premises">
-      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={d.confidence !== "measured"} />
-      <RangeStrip marks={d.marks} scale="log" fmt={usd} basis={COPY.premises.basis} extra={d.extra} />
+      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={strip.confidence !== "measured"} />
+      <RangeStrip marks={strip.marks} scale="log" fmt={usd} basis={COPY.premises.basis} extra={strip.extra} />
     </Box>
   );
 }
@@ -520,8 +532,13 @@ function Hiring({ hiring, iso2 }: { hiring: any; iso2?: string }) {
   const informal = hiring?.informal_share_pct;
   if (!pay && !isNum(addPct) && !isNum(labour) && !isNum(informal)) return null;
   const tagged = (pay && pay.confidence !== "measured") || (typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured");
+  /* LEAN WHILE IT STANDS ALONE (plan step 31, 2026-09-17): the kit seats a lone
+     card at two thirds, and at 693 this card's world track runs on empty past
+     its two short fills, the void the page filter names; at the narrow third,
+     347, the card is exactly what it has been since 2026-09-05 and carries no
+     void. The declaration is inert the day the card has a partner again. */
   return (
-    <Box id="hiring">
+    <Box id="hiring" data-lean="1">
       <Rail icon="hiring" kicker={COPY.pay.kicker} sample={tagged} />
       {/* THE PAY BARS through the archetype (founder rulings 13 and 14, 2026-09-04):
           minimum and average salary on one track that ends at the world's
@@ -561,19 +578,61 @@ function Hiring({ hiring, iso2 }: { hiring: any; iso2?: string }) {
  * because they are written by hand and not derived from a dataset. A
  * country without notes draws nothing.
  */
-function LocalsKnow({ iso2 }: { iso2?: string }) {
-  if (!iso2) return null;
-  const d = buildLocalsNotes(iso2);
-  if (!d) return null;
+function LocalsKnow({ notes }: { notes: LocalsNotes | null }) {
+  if (!notes) return null;
   return (
     /* The id sits on the inner div, so the Box names its block explicitly
        (MODEL.md 8.2, `16 locals`); moving the id would change what `#locals`
-       selects for every crop and gate that reads it. */
+       selects for every crop and gate that reads it. The notes come from the
+       body, built once, so the band beside the money card knows its count. */
     <Box data-block="locals">
       <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
       <div id="locals">
-        <NoteList notes={d.notes} columns={2} />
+        <NoteList notes={notes.notes} columns={2} />
       </div>
+    </Box>
+  );
+}
+
+/**
+ * The ground under you, `17 footing` (MODEL.md 8.2). THE SEAT IS HELD BY
+ * KvGrid: the calibrated linear meter 8.2 draws for this block (a straight 0
+ * to 100 track, a marker and the whole number, two readings on one card) is a
+ * form he has not clicked, and a form not in the catalogue is a candidate
+ * awaiting his click; so the catalogued form nearest it holds the seat, two
+ * cells on one row, until the meter is his. The census reads this Box as
+ * KvGrid, which is the truth of it today. No 30 in it: the FOCAL finding on
+ * this card stands until his click, and `footing` joins EVEN_BY_RULING the
+ * day the meter is built, not before.
+ *
+ * DATA, by file and field: `ground` in src/lib/spine/adapt_country.ts (the
+ * block at its lines 1086 to 1108), computed since task 17 and read by
+ * nothing until this card: `corruption_perception_index` and
+ * `ease_of_doing_business_index` from
+ * data/economic_indicators/country_profile_v2.json through getCountryProfile,
+ * 197 of 197, 50 measured (the hand-anchored tier A) and 147 interpolated.
+ * `prof()` hands a figure over only when this country's own row is held, and
+ * profileConfidence tags the block measured for tier A and modeled otherwise;
+ * each cell carries that tag, so an interpolated row is marked modelled
+ * (the mark draws nothing behind his switch, and the basis line says it in
+ * words instead). Both print as WHOLE NUMBERS, 0 to 100: the adapter rounds
+ * the second reading to one decimal and the first to a whole number, the
+ * precision mismatch 8.2 names on 112 countries, fixed here where it is
+ * drawn rather than in the adapter this dispatch does not touch.
+ */
+function Footing({ ground }: { ground: any }) {
+  const clean = isNum(ground?.clean_dealing_0_100) ? Math.round(ground.clean_dealing_0_100) : undefined;
+  const admin = isNum(ground?.easy_admin_0_100) ? Math.round(ground.easy_admin_0_100) : undefined;
+  if (clean == null && admin == null) return null;
+  const confidence: KvCell["confidence"] = ground?._meta?.confidence === "measured" ? "measured" : "modeled";
+  const cells: KvCell[] = [];
+  if (clean != null) cells.push({ key: "clean", label: COPY.footing.cells.clean, value: String(clean), confidence });
+  if (admin != null) cells.push({ key: "admin", label: COPY.footing.cells.admin, value: String(admin), confidence });
+  return (
+    <Box id="footing">
+      <Rail icon="ease-of-business" kicker={COPY.footing.kicker} sample={confidence !== "measured"} />
+      <KvGrid cells={cells} />
+      <p className="mt-3 text-[length:var(--t-micro)] text-[var(--c-muted)]">{COPY.footing.basis}</p>
     </Box>
   );
 }
@@ -606,47 +665,117 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const d = data ?? {};
   const name: string | undefined = d.meta?.country_name;
   if (!name) return null;
+  const iso2: string | undefined = typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined;
 
+  /* WHO IS HOME, ASKED ONCE, FROM THE BUILDERS THE CARDS DRAW FROM. A band is
+     drawn when either of its cards exists and not otherwise, and a card that
+     self-omits under its own floor (the margin card under two credible rows)
+     must be asked, not its seed block guessed at: `d.money?.list` exists on
+     173 countries whose margin card draws nothing, and a band opened on that
+     guess would be an empty grid with a rung of air. So the cards whose
+     presence seats a band are built here and handed down, once each. */
+  const cities = iso2 ? buildCityCards(iso2) : null;
+  const customers = iso2 ? buildCustomersStrip(iso2) : null;
+  const margin = marginCardFromRows(Array.isArray(d.money?.list) ? d.money.list : []);
+  const hasMoney = margin.rows.length >= 2;
+  const locals = iso2 ? buildLocalsNotes(iso2) : null;
+  const premises = iso2 ? buildPremisesStrip(iso2) : null;
+  const hasSetup = Array.isArray(d.setup?.tiers) && d.setup.tiers.length > 0;
+
+  /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
+     first of six dispatches), with the twelve blocks that exist today seated
+     where the composition puts them: the opening full width; turn one,
+     registering (its partner `04 entry-bill` not built yet), premises (its
+     partner `06 running-costs` not built yet), the workforce seat beside what
+     staff cost, then the peers table full width; turn two, the cities beside
+     what customers earn, the margin beside what locals know; turn three, the
+     two character tables, the footing beside the easiest seat; the close full
+     width. Blocks 01, 02, 18 and 19 and the three chapter breaks come in later
+     dispatches and are not seated here. A band whose partner is not built yet
+     holds its one card in its own Band, unpadded: the LONE CARD finding on it
+     is expected and temporary, and the kit's only-child rule gives the
+     survivor two thirds so the composition reads as a choice meanwhile.
+     Three full widths, R1: the take, the peers, the close. */
   return (
     <>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-        <Masthead name={name} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} hero={d.hero} />
-        <Cities iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
-        <Peers iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
-        {/* The money grid takes the wide side and the customers card the narrow;
-            the lens grid that stood here is retired, every tile by his own words.
-            THE SPLIT MOVED 2-1 TO 3-2 IN C11, and a measurement decided it rather
-            than taste. At 347 the bracket's own left label, "Bottom ten percent",
-            needs 103px in a 100px column and wrapped to two lines while the two
-            beside it stayed on one, so a row of three labels went ragged. At 416
-            each column is 141px and every label sits on one line with room for a
-            wider middle figure than any country in the file holds. The money grid
-            gives up 69px and loses nothing: its name column falls 419 to 352 and
-            its longest trade name is about 140. D3 also reads better afterwards,
-            because 2-1 stood at three bands on this page and now stands at two. */}
-        {Array.isArray(d.money?.list) || isNum(d.customers?.median_usd) ? (
+        <Masthead name={name} iso2={iso2} hero={d.hero} />
+        {/* `03 setup`, 3-2 wide the day `04` lands; alone in the band until then. */}
+        {hasSetup ? (
           <Band split="3-2">
-            <Money money={d.money} />
-            <Customers iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
+            <Setup setup={d.setup} iso2={iso2} />
           </Band>
         ) : null}
-        <Character iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
-        {d.setup?.tiers?.length || d.premises ? (
-          <Band split="3-2">
-            <Setup setup={d.setup} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
-            <Premises iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
+        {/* `05 premises`, 1-1 beside `06` the day it lands; alone until then. */}
+        {premises ? (
+          <Band split="1-1">
+            <Premises strip={premises} />
           </Band>
         ) : null}
-        {/* 1-2, not 2-1, since 2026-09-05: the staff-cost card is short and the
-            note list tall, and the equal-heights rule left the wide salaries card
-            three fifths blank ("massive white space"). The notes take the wide
-            side in two columns and the two come close to one height. */}
-        {d.hiring || d.locals_know ? (
-          <Band split="1-2" stack="lg">
-            <Hiring hiring={d.hiring} iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
-            <LocalsKnow iso2={typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined} />
+        {/* `07 workforce | 08 hiring`, 1-1 in 8.2, the seat on the left and the
+            loud staff card on the right (its order list, its rhythm line
+            "blocked-seat · pay-bars", its ledger "08, band 4, right"). THE PAIR
+            CANNOT BE SEATED TODAY, measured on 2026-09-17 (plan step 31) at
+            every split in the closed set, with the two cards as they are:
+            at 1-1 the staff card is 520 wide and the page filter finds a 150
+            by 156 void on it, the long empty world track past two short fills
+            and the on-cost sentence stopping short (the same numbers the
+            2026-09-11 stash recorded at that width; the 08 dispatch's
+            placement sentences and plus are what fill it); with the seat on
+            the wide side (3-2 or 2-1) the staff card at 416 or 347 is clean
+            and the seat, stretched to its 264, is half air, 48 percent ink to
+            the art-direction gate's floor of 60, or a blank of exactly 120 to
+            the filter's floor of 120 with the foot pinned to the base. The set
+            cannot give the seat 520 and the staff card 416 at once. So each
+            stands in its own band in 8.2's order: the seat at the survivor's
+            two thirds at its own height, the staff card declared lean so it
+            keeps the 347 it has held since 2026-09-05, where it has no void.
+            One Band at 1-1 again the day 08's placement lines land. */}
+        <Band split="1-1">
+          <BlockedSeat id="workforce" icon="staffing-rota" kicker={COPY.blocked.workforce.kicker} line={COPY.blocked.workforce.line} foot={COPY.blocked.workforce.foot} />
+        </Band>
+        <Band split="1-1">
+          <Hiring hiring={d.hiring} iso2={iso2} />
+        </Band>
+        <Peers iso2={iso2} />
+        {/* `10 cities | 13 customers`, 3-2 cities wide in 8.2: THE PAIR CANNOT BE
+            SEATED TODAY, measured on 2026-09-17 (plan step 31) with the page
+            filter at 1280 and every split tried. The four field cards need
+            600px of inner width (CityCards' `minmax(9rem,1fr)` columns), and
+            3-2 gives 584: the cards fold to three and one, a 389 by 210 hole.
+            At 2-1 the cards sit four in a row at 693 and the strip beside them
+            at 347 carries 132px of air, twelve over the filter's floor (the
+            strip's content is 199 tall against the cards' 334; 8.2's own
+            heights on file, 181 and 199, predate the photograph). 1-1 and 2-3
+            fold the cards too. So each stands in its own band, in 8.2's
+            order, unpadded, and the filter reports LONE CARD on both; the
+            pair seats the day the strip gains its `reach` row (8.1, spending
+            per citizen) or the composition re-decides it. */}
+        {cities ? (
+          <Band split="2-1">
+            <Cities cards={cities} />
           </Band>
         ) : null}
+        {customers ? (
+          <Band split="2-1">
+            <Customers strip={customers} />
+          </Band>
+        ) : null}
+        {/* `12 money | 16 locals`, 1-1 until `npm run probe:page` decides
+            (8.2's own note on the split); money on the left either way. */}
+        {hasMoney || locals ? (
+          <Band split="2-3" stack="lg">
+            <Money money={d.money} card={margin} />
+            <LocalsKnow notes={locals} />
+          </Band>
+        ) : null}
+        <Character iso2={iso2} />
+        {/* `17 footing | 11 easiest`, 2-1, the footing wide because it is the
+            band's only live content (8.4 rule 1), the easiest seat narrow. */}
+        <Band split="2-1">
+          <Footing ground={d.ground} />
+          <BlockedSeat id="easiest" icon="where-it-pays" kicker={COPY.blocked.easiest.kicker} line={COPY.blocked.easiest.line} foot={COPY.blocked.easiest.foot} />
+        </Band>
         <Close meta={d.meta} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
