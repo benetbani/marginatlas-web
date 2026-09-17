@@ -14,7 +14,7 @@
  * because the name is the only medium-weight text in a row and the best
  * figures the only semibold.
  *
- * THE CHECK IS THE MECHANIC, finished 2026-09-10 (M3,
+ * THE CHECK IS THE MECHANIC, finished 2026-09-10 (his B7, the comparison; "M3" was a slip, there are no M mechanics in the reference file, corrected 2026-09-17;
  * design/references/founder-2026-09-10.md). Ink and weight alone on the
  * winning cell proved too quiet to read at a glance in the rendered
  * photograph, so a small tick now sits beside the figure, reused from

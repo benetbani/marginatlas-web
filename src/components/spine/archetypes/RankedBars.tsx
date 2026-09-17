@@ -105,7 +105,9 @@
  *
  * THE BLACK PILL, NOT THE ACCENT (task 12, 2026-09-10), on a card that
  * features a leader at all (`feature`, above). Ported from mechanic
- * M2 (B2) of design/references/founder-2026-09-10.md: every member of a set
+ * B2 of design/references/founder-2026-09-10.md (there are no M-numbered
+ * mechanics in that file, only A1, A2 and B1 to B12; "M2" here was a slip,
+ * corrected 2026-09-17): every member of a set
  * pale or hatched, exactly ONE saturated, that one member's value in a black
  * pill with white text. The leader's figure used to be terracotta TEXT , a
  * difference of hue at the same size and weight; it is now an ink pill , a

@@ -288,7 +288,7 @@ export const COPY = {
    *  count is now excluded at the instrument (verify_art_direction.mjs). The facts kept: what each
    *  column measures, that higher reads better throughout, and that peers match on size and market
    *  rather than sharing a border.
-   *  CAVEAT TRIMMED AGAIN 2026-09-10 (M3, design/references/founder-2026-09-10.md): the table now
+   *  CAVEAT TRIMMED AGAIN 2026-09-10 (his B7, the comparison, design/references/founder-2026-09-10.md; the old "M3" label was a slip, no M mechanics exist there): the table now
    *  marks the winning cell in every column with a tick (CompareTable.tsx), so the direction
    *  sentence ("lower is cheaper", "higher is better on both") is no longer the only way a reader
    *  can tell which value won, and is gone, along with the peer-matching sentence that went with
