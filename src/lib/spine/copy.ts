@@ -209,6 +209,42 @@ export const COPY = {
       lending: "A lending rate is held but its definition is not.",
     },
   },
+  /** THE BILL TO REGISTER (MODEL.md 8.2, `04 entry-bill`; plan step 31, third
+   *  dispatch, 2026-09-17, which closes plan step 44). The kicker is the
+   *  cross-page correction's (M13: "The bill to register", so a reader never
+   *  hears it as the trade page's "The cost to open", two orders larger). The
+   *  second figure's words are the warehouse schema's own reading of
+   *  `setup.total_days` ("realistic time to be trading"), not "until the doors
+   *  open", because the figure stops at the last filing step and the doors
+   *  also wait for a fit-out nobody measured. The basis is composed from the
+   *  figures the card prints, one clause each (the glance's rule): both on
+   *  the 91 countries where both print ("Fees and a first licence, all in;
+   *  days run until the last step clears.", fourteen words, PART 7's cap,
+   *  the skeptic's own count), one on the 70 where one does. The foot is the
+   *  exclusion the reader needs where the bill prints (thirteen words), and
+   *  names a modelled figure in words, because the sample mark is switched
+   *  off and the foot is the only line left that can say it. The three
+   *  withheld lines are the brief's, verbatim, in PART 5's shape. Every
+   *  string here was read aloud first. */
+  entryBill: {
+    kicker: "The bill to register",
+    /** After the second figure, on its line: "21 days until you can trade". */
+    daysWords: "until you can trade",
+    /** The basis clauses, joined with "; " where both figures print, each alone otherwise. */
+    basisBill: "fees and a first licence, all in",
+    basisDays: "days run until the last step clears",
+    foot: "Share capital, where the law asks for one, is not in the bill.",
+    /** `{what}` is "the bill", "the days" or "the bill and the days"; `{verb}` is "is" or "are". */
+    footModelled: "{what} {verb} modelled for this country.",
+    names: { bill: "the bill", days: "the days" },
+    withheld: {
+      bill: "The bill is withheld: two figures on record disagree.",
+      days: "The days are withheld: two figures on record disagree.",
+      billNotOnFile: "The bill is not on file for this country yet.",
+      /** Reachable by the guard's shape and by no country today (the days are held for 195 of 195). */
+      daysNotOnFile: "The days are not on file for this country yet.",
+    },
+  },
   /** The terminus (where to next): doors that leave the page. Run 4 of the architecture loop refused "with Pro" while Pro cannot be bought and "the deepest city" as jargon; the city door says a figure the list holds. */
   close: {
     kicker: "Where to next",

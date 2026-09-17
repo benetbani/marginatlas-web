@@ -37,6 +37,7 @@ import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
+import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
 import { DetailPanel, type DetailRow } from "./DetailPanel";
 import { IncomeBreakdown } from "./IncomeBreakdown";
@@ -945,6 +946,49 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
   );
 }
 
+/* THE STANDALONE METRIC CELL, `04 entry-bill` on the country page (MODEL.md
+   8.2; plan step 31, third dispatch, 2026-09-17): BentoMetric standing as its
+   own card with the two laws added for it, the second figure under a hairline
+   and the withheld line. Five stories, one per shape the guard can leave the
+   card in, each the FIRST country by code in that state read off the builder
+   (never typed), so a reader sees every line the card can print:
+     GB          both figures, the exemplar ($148, 21 days, the fourteen-word basis, the foot)
+     AZ          the bill withheld for disagreeing with its table, the days printed
+     AE          the days withheld, the bill printed (and the largest bill on file, $5,446, held)
+     AO          neither: two withheld lines, no basis, no foot, ugly on purpose
+     GE          no bill on file (one of the brief's four), the days printed
+   Drawn at 416, the narrow side of the 3-2 the card takes beside the
+   registering table at 1280. */
+export function pickBentoMetricInstances(): Instance[] {
+  const W = COPY.entryBill.withheld;
+  const all = codes().sort().map((c) => ({ c, d: buildEntryBill(c) })).filter((x) => x.d);
+  const out: Instance[] = [{ iso2: "GB:entry-bill", why: "block 04 on the exemplar: the bill at 30, the days at 16 under the hairline, the basis and the foot" }];
+  const seen = new Set(["GB"]);
+  const take = (iso2: string | undefined, why: string) => { if (iso2 && !seen.has(iso2)) { seen.add(iso2); out.push({ iso2: `${iso2}:entry-bill`, why }); } };
+  take(all.find((x) => x.d!.withheld === W.bill && "figure" in x.d!.second)?.c, "the bill withheld by the guard, the days printed");
+  take(all.find((x) => x.d!.figure != null && "withheld" in x.d!.second)?.c, "the days withheld by the guard, the bill printed");
+  take(all.find((x) => x.d!.withheld === W.bill && "withheld" in x.d!.second)?.c, "neither prints: two withheld lines and nothing else");
+  take(all.find((x) => x.d!.withheld === W.billNotOnFile && "figure" in x.d!.second)?.c, "no bill on file, the days printed");
+  return out;
+}
+
+export function BentoMetricStories({ instances = pickBentoMetricInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="bento-metric">
+      {instances.map((i) => {
+        const iso2 = i.iso2.split(":")[0];
+        const d = buildEntryBill(iso2);
+        const el = d ? (
+          <div style={{ maxWidth: 416 }}>
+            <BentoMetric id={`entry-bill-${iso2.toLowerCase()}`} icon="startup-cost" kicker={`${COPY.entryBill.kicker}, ${nameOf(iso2)}`} sample={d.sample} figure={d.figure ?? undefined} withheld={d.withheld ?? undefined} second={d.second} basis={d.basis ?? undefined} foot={d.foot ?? undefined} lean />
+          </div>
+        ) : null;
+        return <Story kind="bento-metric" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+      })}
+    </div>
+  );
+}
+
 /* ============================ THE MARK LIST ============================
  * B3 of design/references/founder-2026-09-10.md, and the reason it is built
  * before the three that follow it: "the one with flags is pretty universal but
@@ -1138,6 +1182,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": pickIncomeBreakdownInstances(),
     "bento-band": pickBentoBandInstances(),
+    "bento-metric": pickBentoMetricInstances(),
     "mark-list": pickMarkListInstances(),
     "blocked-seat": pickBlockedSeatInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),

@@ -319,19 +319,85 @@ export function BentoBand({ cols, cells }: { cols: BentoCols; cells: BentoCell[]
  * at the bottom it is the hole the founder rejects by name; opener at the top,
  * figure centred in what is left, basis pinned at the foot, it is the shape
  * his own reference draws.
+ *
+ * TWO LAWS ADDED FOR THE CELL'S FIRST STANDALONE SEAT, the country page's
+ * `04 entry-bill` (MODEL.md 8.2, "BentoMetric plus its two missing laws";
+ * plan step 31, third dispatch, 2026-09-17). The cluster form and the
+ * standalone card are ONE component; both laws are optional props, so a
+ * cluster cell that needs neither draws exactly what it drew before.
+ *
+ *  1. A SECOND FIGURE AT THE LEAD RUNG, `second`. Under a `--c-border`
+ *     hairline, one figure at `--t-lead` 16, `.fig`, weight 600, `--c-ink`,
+ *     then its words on the same line at `--t-body` 14 `--c-ink2` ("21 days
+ *     until you can trade"). It is RangeStrip's own `extra` idiom (a single
+ *     extra figure under a hairline, its line 34) lifted from 14 to the lead
+ *     rung, because this figure is a different quantity from the focal and
+ *     cannot share its rung without breaking FOCAL (PART 4: one 30 a card,
+ *     nothing between 16 and 30). Nothing else in the cell sits above 16.
+ *  2. THE WITHHELD LINE, PART 5's shape ("a cell that cannot hold an honest
+ *     figure is WITHHELD with a stated line ... never filled with a word,
+ *     never left deliberately empty, and never clipped"). Either slot can be
+ *     withheld: `withheld` stands where the focal would, at `--t-lead` 16 in
+ *     `--c-ink2`, the drawn blocked seat's own line (BlockedSeat.tsx), and a
+ *     `second` of the shape `{ withheld }` stands in the second slot at the
+ *     same rung. A withheld figure is never printed and never replaced by a
+ *     word; the line says what is missing and why. PART 4 is explicit that a
+ *     card whose figure is merely withheld is NOT exempt from FOCAL: its
+ *     line stands at 16 where the focal would and the finding stays until
+ *     the data lands, so a standalone card with its focal withheld reds
+ *     FOCAL on purpose.
+ *
+ *  BOTH DIRECTIONS ARE ENFORCED, the way MarkList enforces its withheld
+ *  count: a cell given neither `figure` nor `withheld` is a figure dropped in
+ *  silence, and a cell given both is a card apologising for nothing. Each
+ *  THROWS, by law 3 above: the pair is composed in a builder from data, but
+ *  which of the two a builder passes is the builder's own logic, so the fault
+ *  is deterministic and fails in the first gate, never on a reader.
+ *
+ *  THE FOOT, `foot`, is PART 7's own fourth part ("where earned, one line, a
+ *  coverage statement or one companion figure, never a verdict"), at
+ *  `--t-micro` under the basis; the bill's is the exclusion the reader needs
+ *  ("Share capital, where the law asks for one, is not in the bill."). And
+ *  the BASIS is optional for exactly one case: a card that prints no figure
+ *  at all (both slots withheld) has no unit to say, because a basis
+ *  describes a printed figure (the glance's rule, glance_rows.ts: a unit is
+ *  said for every cell the card prints and for none it withholds).
+ *
+ *  `id` reaches the kit's Box, which stamps it as `data-block` so BLOCK FLOOR
+ *  counts the standalone card (a cluster cell has no id and is not a block on
+ *  its own); `lean` stamps `data-lean="1"`, the kit's own rule for a lone
+ *  survivor holding one figure (Band: it takes the narrow column, so the air
+ *  falls outside its edge), inert while the card has a partner.
+ *  `data-archetype="bento-metric"` names the form to the three checkers
+ *  (check_archetypes reads it as the story's card; check_page_holes and
+ *  check_model_laws read it as the card's form, not exempt from NO LEAD or
+ *  FOCAL); inside a cluster the wrapper's `bento-band` comes first in
+ *  document order and still wins, measured on the three cluster stories.
  */
 export function BentoMetric({
+  id,
   kicker,
   icon,
   figure,
+  withheld,
+  second,
   label,
   basis,
+  foot,
   sample = false,
   accent = false,
+  lean = false,
 }: {
+  /** The section's id when the cell stands alone as a block; a cluster cell passes none. */
+  id?: string;
   kicker: string;
   icon?: AtlasIconId;
-  figure: string;
+  /** The focal figure, as printed. Given INSTEAD of `withheld`, never with it. */
+  figure?: string;
+  /** The stated line where the focal would stand, when the figure is withheld (law 2). Given INSTEAD of `figure`. */
+  withheld?: string;
+  /** The second figure at the lead rung under a hairline with its words, or the line that stands in its slot (laws 1 and 2). */
+  second?: { figure: string; words: string } | { withheld: string };
   /** OPTIONAL, AND USUALLY LEFT OUT. A line under the figure saying what the
    *  figure is, for the case where the opener above cannot say it. When the
    *  opener already does ("What it costs to register" over "$15"), a label is
@@ -341,23 +407,46 @@ export function BentoMetric({
    *  in it. Measured, on this component's own stories, before the line came
    *  out. */
   label?: string;
-  /** What is measured and in what unit. It says what the figure is, never what it means. */
-  basis: string;
+  /** What is measured and in what unit. It says what the figure is, never what it means. Absent only when no figure prints. */
+  basis?: string;
+  /** PART 7's foot, where earned: one line under the basis, never a verdict. */
+  foot?: string;
   sample?: boolean;
   accent?: boolean;
+  /** The kit's lone-survivor rule: a one-figure card takes the narrow column when it stands alone in a band. */
+  lean?: boolean;
 }) {
+  if (figure == null && withheld == null) throw new Error(`BentoMetric "${kicker}": neither a figure nor a withheld line. A figure withheld without a stated line is a silent drop (PART 5); pass one of the two.`);
+  if (figure != null && withheld != null) throw new Error(`BentoMetric "${kicker}": a figure and a withheld line together. A line beside a printed figure apologises for nothing; pass one of the two.`);
   return (
-    <Box className="flex h-full flex-col" data-bento-kind="metric">
+    <Box id={id} data-lean={lean ? "1" : undefined} className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric">
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
         {sample ? <SampleTag /> : null}
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">
-        <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</Fig>
+        {figure != null ? (
+          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</Fig>
+        ) : (
+          <p data-withheld-line="focal" className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p>
+        )}
         {label ? <div className="mt-2 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
-      <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+      {second ? (
+        <div data-second className="mb-3 border-t border-[var(--c-border)] pt-3">
+          {"figure" in second ? (
+            <div className="flex flex-wrap items-baseline gap-x-1.5">
+              <Fig className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{second.figure}</Fig>
+              <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{second.words}</span>
+            </div>
+          ) : (
+            <p data-withheld-line="second" className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{second.withheld}</p>
+          )}
+        </div>
+      ) : null}
+      {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
+      {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
     </Box>
   );
 }

@@ -32,6 +32,7 @@ import { buildCloseDoors, buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
+import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
@@ -417,6 +418,36 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
   }
   console.log(`country seats: ${glances} glance cards and ${seats} world-seat cards build; labels, withheld lines and the year in the foot held`);
+}
+
+/* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`; plan step 31's third
+   dispatch, 2026-09-17), on every country: no banned word or unfilled
+   placeholder in any string the card prints, the kicker within PART 7's four
+   words, the composed basis within its fourteen (the both-figures line sits
+   exactly at the cap), each slot holding a figure OR a stated line and never
+   neither, and the foot saying "modelled" exactly when a printed figure's tag
+   is not held (the sample mark is behind the switch, so the foot is the only
+   line that can). The guard's arithmetic against the formation table has its
+   own gate, entry-bill-guard, and is not repeated here. */
+{
+  let bills = 0;
+  for (const iso2 of codes) {
+    const d = buildEntryBill(iso2);
+    if (!d) continue;
+    bills++;
+    const secondText = "figure" in d.second ? `${d.second.figure} ${d.second.words}` : d.second.withheld;
+    const texts = [COPY.entryBill.kicker, d.figure ?? "", d.withheld ?? "", secondText, d.basis ?? "", d.foot ?? ""];
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`entry-bill ${iso2}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`entry-bill ${iso2}: a placeholder was never filled ("${t}")`);
+    }
+    if (COPY.entryBill.kicker.split(/\s+/).length > 4) reds.push(`entry-bill: the kicker runs over four words: "${COPY.entryBill.kicker}"`);
+    if (d.basis && d.basis.split(/\s+/).filter(Boolean).length > 14) reds.push(`entry-bill ${iso2}: the basis runs over fourteen words: "${d.basis}"`);
+    if ((d.figure == null) === (d.withheld == null)) reds.push(`entry-bill ${iso2}: the focal slot holds ${d.figure == null ? "neither a figure nor a line" : "a figure and a line"}`);
+    if (!("figure" in d.second) && !("withheld" in d.second)) reds.push(`entry-bill ${iso2}: the second slot holds neither a figure nor a line`);
+    if (d.sample !== /modelled/.test(d.foot ?? "")) reds.push(`entry-bill ${iso2}: ${d.sample ? "a printed figure is modelled and the foot does not say so" : "nothing printed is modelled and the foot says modelled"}`);
+  }
+  console.log(`entry bill: ${bills} cards build; no banned word, the kicker and basis within their caps, every slot a figure or a line, modelled said in the foot`);
 }
 console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

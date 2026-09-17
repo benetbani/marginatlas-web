@@ -34,7 +34,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, MarkListStories, BlockedSeatStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
 import { SpineShell } from "../../src/components/spine/shell";
@@ -111,6 +111,7 @@ const SHEET: Entry[] = [
   { kind: "detail-panel", city: "none", render: (c) => <DetailPanelStories instances={c.instances["detail-panel"]} /> },
   { kind: "income-breakdown", city: "none", render: (c) => <IncomeBreakdownStories instances={c.instances["income-breakdown"]} /> },
   { kind: "bento-band", city: "london", render: (c) => <BentoBandStories instances={c.instances["bento-band"]} city={c.cityHero} /> },
+  { kind: "bento-metric", city: "none", render: (c) => <BentoMetricStories instances={c.instances["bento-metric"]} /> },
   { kind: "mark-list", city: "none", render: (c) => <MarkListStories instances={c.instances["mark-list"]} /> },
   { kind: "blocked-seat", city: "none", render: (c) => <BlockedSeatStories instances={c.instances["blocked-seat"]} /> },
   { kind: "city-hero", city: "keyed", render: (c) => <CityHeroStories instances={c.cityHero} /> },

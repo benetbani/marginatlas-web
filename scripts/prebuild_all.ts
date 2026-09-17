@@ -521,6 +521,17 @@ const GATES: Gate[] = [
      figure was individually real, which is why nothing else here could see it.
      C31, 2026-09-03; negative-tested against the old picker inside the file. */
   { name: "formation-pair", script: "tests/spine/formation_pair_one_row.test.ts" },
+  /* The bill to register never prints beside a table that contradicts it
+     (plan step 44, 2026-09-17). The country shard's all-in bill and days until
+     trading sit in one band with the formation file's LLC row, and on 100 of
+     the 148 countries holding both the shard's figure is below the table's in
+     a direction that cannot be true. The guard in entry_bill_rows.ts withholds
+     the offending figure with a stated line; this holds the guard to the
+     brief's own cases, walks every country's built card against the row the
+     guard read, and ratchets the withheld counts (51 bills, 83 days, 4 not on
+     file) so they fall and never rise. Planted twice on 2026-09-17 (the bill
+     unchecked; the verdict ignored) and seen red both times. */
+  { name: "entry-bill-guard", script: "tests/spine/entry_bill_guard.test.ts" },
   /* The check that would have caught a three-month outage. The service-role key
      was rotated and Vercel kept the old value; every supabaseAdmin read failed,
      every page fell back to synthesised figures, and nothing said a word.

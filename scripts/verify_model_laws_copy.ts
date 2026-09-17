@@ -93,6 +93,7 @@ import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
+import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE" | "BANNED CONSTRUCTION";
@@ -400,6 +401,23 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     }
     const s = buildWorldSeat(iso2);
     if (s) heads.push([`buildWorldSeat(${iso2}).basis`, s.basis], [`buildWorldSeat(${iso2}).foot`, s.foot], [`buildWorldSeat(${iso2}).withheld`, s.withheld]);
+  }
+
+  /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`, plan step 31's third
+     dispatch, 2026-09-17), pushed composed: its basis is joined from the
+     clauses of the figures it prints, its foot carries the share-capital
+     exclusion and the modelled sentence, and its withheld lines stand where a
+     figure would. Five countries cover the shapes the guard can leave the
+     card in, the same five the story sheet draws: the exemplar (both
+     figures), Azerbaijan (the bill withheld), the Emirates (the days
+     withheld), Angola (neither) and Georgia (no bill on file). */
+  for (const iso2 of ["GB", "AZ", "AE", "AO", "GE"]) {
+    const b = buildEntryBill(iso2);
+    if (!b) continue;
+    if (b.basis) heads.push([`buildEntryBill(${iso2}).basis`, b.basis]);
+    if (b.foot) heads.push([`buildEntryBill(${iso2}).foot`, b.foot]);
+    if (b.withheld) heads.push([`buildEntryBill(${iso2}).withheld`, b.withheld]);
+    heads.push([`buildEntryBill(${iso2}).second`, "figure" in b.second ? `${b.second.figure} ${b.second.words}` : b.second.withheld]);
   }
 
   for (const [where, text] of heads) {

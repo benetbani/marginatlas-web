@@ -1662,6 +1662,19 @@
       "claims": []
     },
     {
+      "name": "entry-bill-guard",
+      "script": "tests/spine/entry_bill_guard.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The bill to register never prints beside a table that contradicts it (plan step 44, 2026-09-17: \"The bill to open never prints both\").",
+      "reads": [
+        "data/facts/country",
+        "src/lib/spine/entry_bill_rows.ts",
+        "tests/spine/entry_bill_guard.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "db-credential",
       "script": "scripts/verify_db_credential.mjs",
       "args": [],
