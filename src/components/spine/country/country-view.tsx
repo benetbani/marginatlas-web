@@ -55,6 +55,8 @@ import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
 import { buildGlance, type GlanceData } from "@/lib/spine/glance_rows";
 import { buildWorldSeat, type WorldSeatData } from "@/lib/spine/world_seat_rows";
+import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
+import { buildEntryBill, type EntryBillData } from "@/lib/spine/entry_bill_rows";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -75,6 +77,7 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "glance", label: "At a glance" },
   { id: "world-seat", label: "Among the countries" },
   { id: "setup", label: "Registering, by legal form" },
+  { id: "entry-bill", label: "The bill to register" },
   { id: "premises", label: "What premises cost" },
   { id: "workforce", label: "Who you can hire" },
   { id: "hiring", label: "What staff cost" },
@@ -505,6 +508,47 @@ function Setup({ setup, iso2 }: { setup: any; iso2?: string }) {
 }
 
 /**
+ * The bill to register, `04 entry-bill` (MODEL.md 8.2; plan step 31, third
+ * dispatch, 2026-09-17, which closes plan step 44). BentoMetric standing as
+ * its own card, the narrow side of the 3-2 beside the registering table, with
+ * the two laws the composition names added to the cell (BentoBand.tsx): the
+ * days until trading at 16 under a hairline, and the withheld line in PART
+ * 5's shape wherever the guard withholds a figure. QUIET: the bill at 30 in
+ * ink, no accent (PART 6 gives turn one's accent to the staff-cost card), no
+ * bar, no track, nothing from the ledger. The figures and the guard are in
+ * entry_bill_rows.ts: the shard's all-in bill and days (the two metrics that
+ * file held for three weeks unread) checked against the SAME LLC row the
+ * masthead and the glance print, so the band never shows a bill below the
+ * table's fee or days fewer than its filing wait (100 of 148 countries would,
+ * unguarded). No placement line yet: the bill's waits on the one site-wide
+ * builder (R2) the `05 | 06` dispatch forces, and the days carry none by the
+ * composition's own row.
+ *
+ * THE CENSUS DOES NOT READ THIS CARD. census.ts (and the coverage gate) read
+ * `<Box` in this file, and BentoMetric draws its own Box the way BlockedSeat
+ * and AnswerCard do, so the bill joins the two seats as a block on the page
+ * (`data-block="entry-bill"`, BLOCK FLOOR counts it) that the census's twelve
+ * country rows do not list. Its form to the checkers is `bento-metric`.
+ */
+function EntryBill({ bill }: { bill: EntryBillData | null }) {
+  if (!bill) return null;
+  return (
+    <BentoMetric
+      id="entry-bill"
+      icon="startup-cost"
+      kicker={COPY.entryBill.kicker}
+      sample={bill.sample}
+      figure={bill.figure ?? undefined}
+      withheld={bill.withheld ?? undefined}
+      second={bill.second}
+      basis={bill.basis ?? undefined}
+      foot={bill.foot ?? undefined}
+      lean
+    />
+  );
+}
+
+/**
  * What premises cost , a STANDING of the address tiers since C11 (2026-09-02).
  *
  * WHAT WAS HERE, AND WHY IT WAS A REPLACEMENT RATHER THAN A DECLARATION. The
@@ -749,12 +793,14 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const hasSetup = Array.isArray(d.setup?.tiers) && d.setup.tiers.length > 0;
   const glance = iso2 ? buildGlance(iso2) : null;
   const seat = iso2 ? buildWorldSeat(iso2) : null;
+  const bill = iso2 ? buildEntryBill(iso2) : null;
 
   /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
      first of six dispatches), with the twelve blocks that exist today seated
      where the composition puts them: the opening full width; turn one,
-     registering (its partner `04 entry-bill` not built yet), premises (its
-     partner `06 running-costs` not built yet), the workforce seat beside what
+     registering beside the bill to register (seated by the third dispatch
+     the same day), premises (its partner `06 running-costs` not built yet),
+     the workforce seat beside what
      staff cost, then the peers table full width; turn two, the cities beside
      what customers earn, the margin beside what locals know; turn three, the
      two character tables, the footing beside the easiest seat; the close full
@@ -782,10 +828,30 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <WorldSeat seat={seat} />
           </Band>
         ) : null}
-        {/* `03 setup`, 3-2 wide the day `04` lands; alone in the band until then. */}
-        {hasSetup ? (
+        {/* `03 setup | 04 entry-bill`, 3-2, the registering table wide and the
+            bill narrow (8.2; plan step 31, third dispatch). MEASURED BEFORE IT
+            WAS PAIRED, on GB with the page filter at every width: 1280, the
+            table 624 by 320 and the bill 416 by 320 on one level, the bill's
+            own content about 210 at that width, so its 110px of air is
+            distributed around the 30 (57px between the figure and the
+            hairline, about as much above) and no blank reaches the filter's
+            120 floor; 1024, 566 and 378 by 320; 768, equal halves 344 by 337;
+            375, stacked, the bill 238 against the table's 421. Zero holes on
+            18 cards at three widths. The filter's blind spot, stated: the
+            focal is a block-level leaf, so its full-width box counts as ink
+            and the air to the right of "$148" is not measured; it is the
+            cell's own composition (B4, one number, big, alone, with room
+            around it) and was judged by eye in the dispatch's photographs.
+            The table draws on 152 countries and the bill on 195, so on the 43
+            with no legal form on file the bill stands alone in the band,
+            honestly, as LONE CARD, on the narrow column by its own
+            `data-lean` (the kit's rule for a one-figure survivor); which
+            partner re-pairs it there is the composition's decision (the
+            brief's section 5), not this dispatch's. */}
+        {hasSetup || bill ? (
           <Band split="3-2">
             <Setup setup={d.setup} iso2={iso2} />
+            <EntryBill bill={bill} />
           </Band>
         ) : null}
         {/* `05 premises`, 1-1 beside `06` the day it lands; alone until then. */}
