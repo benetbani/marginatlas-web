@@ -60,8 +60,9 @@ type Gate = {
   /** Optional CLI args appended after the script path. */
   args?: string[];
   /** The script launches a Playwright browser: it counts against the memory
-      floor, and a memory death of it is retried once, alone. Nine today (ten
-     before blueprint-conformance was retired in plan step 14). */
+      floor, and a memory death of it is retried once, alone. Twelve today: nine
+     since plan step 14 retired blueprint-conformance, and the three harness
+     gates step 14b added. */
   browser?: true;
   /** `first`: the gate runs to completion, serially, before the pool starts,
       because other gates read what it writes (plan step 14b: `pages-fresh`
@@ -88,6 +89,20 @@ const GATES: Gate[] = [
      render is React. It needs NEXT_PUBLIC_SUPABASE_URL to start (the client
      is built at import) and says in its output whether it had one. */
   { name: "pages-fresh", script: "scripts/verify_pages_fresh.mjs", phase: "first" },
+  /* THE HARNESS'S OWN RULES JOIN THE CHAIN (plan step 14b, second half). Until
+     today the archetype rules, the page filter and the model-laws list ran by
+     hand only (`npm run harness`), so a deploy checked none of them. Three
+     gates, each behind a floor that falls and never rises: the archetype
+     sheet (rendered by the gate itself; exits on design reds alone, its data
+     reds go to DATA-REQUIREMENTS.md, step 17), the page filter over the
+     fresh renders (scripts/harness/page_holes_baseline.json, per page), and
+     the model-laws list over the same renders (--ratchet against
+     scripts/harness/model_laws_baseline.json, seeded at 99 rows on
+     2026-09-17). All three read what pages-fresh wrote, which is why it runs
+     first. Browser gates, three more of them: twelve in the chain. */
+  { name: "harness-archetypes", script: "scripts/harness/harness.mjs", args: ["archetypes"], browser: true },
+  { name: "harness-page-filter", script: "scripts/harness/check_page_holes.mjs", args: ["--list"], browser: true },
+  { name: "harness-laws", script: "scripts/harness/check_model_laws.mjs", args: ["--list", "--ratchet"], browser: true },
   { name: "taxonomy", script: "scripts/verify_taxonomy.ts" },
   { name: "no-em-dashes", script: "scripts/verify_no_em_dashes.ts" },
   { name: "no-source-agencies", script: "scripts/verify_no_source_agencies.ts" },

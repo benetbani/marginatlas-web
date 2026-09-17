@@ -15,6 +15,86 @@
       "claims": []
     },
     {
+      "name": "harness-archetypes",
+      "script": "scripts/harness/harness.mjs",
+      "args": [
+        "archetypes"
+      ],
+      "browser": true,
+      "asserts": "THE HARNESS DRIVER (plan step 21, 2026-09-17).",
+      "reads": [
+        "scratchpad/harness/pages/${stem(p)}.html",
+        "scripts/harness/check_archetypes.mjs",
+        "scripts/harness/check_page_holes.mjs",
+        "scripts/harness/check_renderers_agree.mjs",
+        "scripts/harness/pages.json",
+        "scripts/harness/render_archetypes.tsx",
+        "scripts/harness/render_page.tsx",
+        "scripts/tsconfig.harness.json"
+      ],
+      "claims": []
+    },
+    {
+      "name": "harness-page-filter",
+      "script": "scripts/harness/check_page_holes.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": true,
+      "asserts": "THE WHITE-SPACE FILTER FOR A RENDERED PAGE.",
+      "reads": [
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scratchpad/harness/shots",
+        "scratchpad/harness/shots/page-${name}${SECTION == null ? \"\" : ",
+        "scripts/harness/page_holes_baseline.json",
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
+      "name": "harness-laws",
+      "script": "scripts/harness/check_model_laws.mjs",
+      "args": [
+        "--list",
+        "--ratchet"
+      ],
+      "browser": true,
+      "asserts": "THE MODEL'S THIRTEEN LAWS, MEASURED (task 4, 2026-09-08; FIGURE FACE added 2026-09-11).",
+      "reads": [
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scripts/harness/model_laws_baseline.json",
+        "scripts/harness/pages.json",
+        "scripts/harness/render_page.tsx",
+        "scripts/tsconfig.harness.json"
+      ],
+      "claims": [
+        {
+          "kind": "bans",
+          "string": "same",
+          "source": "inferred",
+          "via": "BANNED"
+        },
+        {
+          "kind": "bans",
+          "string": "baseline",
+          "source": "inferred",
+          "via": "BANNED"
+        },
+        {
+          "kind": "bans",
+          "string": "x1.00",
+          "source": "inferred",
+          "via": "BANNED"
+        },
+        {
+          "kind": "bans",
+          "string": "world's highest",
+          "source": "inferred",
+          "via": "BANNED"
+        }
+      ]
+    },
+    {
       "name": "taxonomy",
       "script": "scripts/verify_taxonomy.ts",
       "args": [],
