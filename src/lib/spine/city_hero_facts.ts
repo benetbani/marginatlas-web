@@ -4,12 +4,13 @@
  * THE CITY MASTHEAD'S FACTS, mapped from the city seed the adapter builds: the
  * city's name and flag, its photograph (the same file the country page's
  * card shows, founder ruling 2), one answer figure, the support tiles as
- * cells, and the provenance line. The answer is the tile the quick reads
- * below do not already carry (the masthead's own rule since 2026-08, "two
- * readings of one metric near the top of a page is the founder's repeating
- * the front part"), the first tile otherwise. Its colour is ink: the city
- * blueprint reserves the page's one accent for the verdict card's rent load.
- * Synchronous over a seed; the seed itself comes from the async adapter.
+ * cells, and the provenance line. The answer is the seed's focal where it
+ * names one, the first tile otherwise: since plan step 32 (2026-09-18) that
+ * is "Average customer pay" off the adapter's scorecard (MODEL.md 8.3, `00
+ * masthead`, the page's only 40, loud 1), and the lens grid whose row labels
+ * this file used to dedupe the tiles against is retired with the quick-reads
+ * card (8.3 has no such block). Synchronous over a seed; the seed itself
+ * comes from the async adapter.
  */
 import { cityImageSrc } from "@/lib/cities/city_images";
 import { inSentence } from "@/lib/spine/place_names";
@@ -36,9 +37,7 @@ export function cityHeroFacts(seed: any): CityHeroFacts | null {
   const meta = seed?.meta;
   if (!meta || typeof meta.city !== "string") return null;
   const scorecard: Tile[] = Array.isArray(seed?.headline?.scorecard) ? seed.headline.scorecard.filter((t: Tile) => t && t.label && t.value != null && t.value !== "") : [];
-  const lensLabels = new Set(((seed?.lenses?.scales ?? []) as any[]).map((x) => String(x?.label ?? "").trim().toLowerCase()));
-  const notDuplicated = scorecard.filter((t) => !lensLabels.has(String(t.label).trim().toLowerCase()));
-  const chosen: Tile | null = seed?.headline?.focal ?? notDuplicated[0] ?? scorecard[0] ?? null;
+  const chosen: Tile | null = seed?.headline?.focal ?? scorecard[0] ?? null;
   const support = seed?.headline?.focal ? scorecard : scorecard.filter((t) => t !== chosen);
   const country = typeof meta.country_in_phrase === "string" ? meta.country_in_phrase : inSentence(String(meta.country_name ?? ""));
   const src = cityImageSrc(meta.slug);

@@ -5,7 +5,7 @@
  */
 import * as React from "react";
 import { loadCityHeroInstances } from "@/lib/spine/city_hero_facts";
-import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, CityVerdictStories, pickCityVerdictInstances, pickCityStripInstances, pickCityReadsInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
+import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
 
@@ -32,7 +32,7 @@ export default async function ArchetypesPage() {
       <TiersTableStories />
       <h2 data-typography="custom" className={h}>The range strip</h2>
       <RangeStripStories city={pickCityStripInstances(cityHero)} />
-      <SpectraTableStories city={pickCityReadsInstances(cityHero)} />
+      <SpectraTableStories />
       <NoteListStories />
       <TerminusStories city={pickCityCloseInstances(cityHero)} />
       <PayBarsStories />
@@ -48,7 +48,6 @@ export default async function ArchetypesPage() {
       <h2 data-typography="custom" className={h}>The drawn blocked seat</h2>
       <BlockedSeatStories />
       <CityHeroStories instances={cityHero} />
-      <CityVerdictStories instances={pickCityVerdictInstances(cityHero)} />
     </main>
   );
 }

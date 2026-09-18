@@ -82,8 +82,8 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/city/city-view.tsx#3",
-      "reason": "not yet on an archetype; a build loop queue row"
+      "section": "src/components/spine/city/city-view.tsx#4",
+      "reason": "the spend card (08 demand) on the old kit until plan step 32's fourth dispatch draws it as the plain figure; a build loop queue row"
     },
     {
       "section": "src/components/spine/city/city-view.tsx#seasonal",
@@ -91,18 +91,6 @@
     },
     {
       "section": "src/components/spine/city/city-view.tsx#trades",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/city/city-view.tsx#6",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/city/city-view.tsx#7",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/city/city-view.tsx#8",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {

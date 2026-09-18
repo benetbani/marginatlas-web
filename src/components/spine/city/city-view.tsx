@@ -1,5 +1,5 @@
 /**
- * City page , SPINE rebuild BODY. Leg 1.
+ * City page , SPINE rebuild BODY (SpineCityBody).
  *
  * Body/route split (Phase B): this file holds the whole page body as the named export
  * SpineCityBody, so the live metropolis route (src/app/cities/[slug]/page.tsx) can mount
@@ -9,19 +9,43 @@
  * the default. The default binding is the bundled spine seed, so the dev route stays
  * byte-identical to the pre-split page.
  *
+ * THE ORDER IS MODEL.md 8.3's (plan step 32, 2026-09-18, the first of six
+ * dispatches): the opening full width, then the band `01 glance | 02
+ * among-cities`; chapter turn one, what it costs to open and to run (the
+ * premises strip, then living beside the rent-against-income ratio); turn
+ * two, where to open it and what to open (what residents spend beside what
+ * customers earn, then rent by district beside the trades with local
+ * figures, then the peers table full width); turn three, what the place is
+ * like (the character tables, then the season split); the exit full width.
+ * The country view's idiom, exactly: the builders built once at the top of
+ * the body, a band seated only when a card exists, `Movement` with an index
+ * and a heading and nothing else, no chapter title in any rail (the city
+ * carries none). Three full widths, R1: the masthead, the peers, the close.
+ *
+ * THREE BLOCKS RETIRED BY THAT COMPOSITION, and their builders, copy and
+ * stories with them: `lenses` (the quick-reads spectra grid; 8.3 has no such
+ * block, and a percentile has no poles, R8), `verdict` (the section-level
+ * AnswerCard whose basis "{dearest} rent, against {cheapest}" was the rent
+ * verdict the composition dissolves into the masthead's answer: "The rent
+ * verdict card is dissolved, not cut"), `risks` (not in 8.3; it drew for no
+ * real city, the adapter omits the block for all 252), and the old chapter
+ * "What to watch" they sat under. `LowestBar`, the July-3 "Lowest bar to
+ * entry" card, went with them: it was unmounted dead code whose two Boxes the
+ * census still counted as city sections, and it drew the break-in blend
+ * ruling 30 bans (8.3's `10 easiest` is seated, blocked and unrendered until
+ * that ruling lands; nothing stands in for it).
+ *
  * NULL-GUARDS (real-data promotion): every section early-returns null when its data is
  * absent, so an omitted field renders NOTHING (never 0 / undefined / NaN / a broken
- * block), and the parent <Movement> chapter wrapper is skipped when its whole chapter is
- * empty. Chapter numbering is DYNAMIC (a cn() counter), so the numbers never gap after a
- * chapter is omitted. The full seed carries every field, so with it these guards never
- * fire and the dev route is unchanged.
+ * block). The chapter breaks are fixed "01", "02", "03" (8.3's own numbering); the
+ * first two always have content (the premises strip draws on every city, the spend
+ * figure is held for 252), and the third is drawn only when a card under it draws.
  *
  * 2026-07-11 reformation (rulebook v1): the derived per-district keep index, the
  * per-trade net-margin rail, the take-home bar list and the crowding column are DELETED
  * (§5, unknowable metrics); districts rank by RENT LOAD, lightest first (founder D1);
- * the verdict box, the "Lowest bar to entry" featured card and the "Next-easiest" plain
- * table return in their July-3 forms (§46); bars are rationed to three (§25); the
- * seasonality month bars are reframed to the who-is-here read (§7).
+ * bars are rationed to three (§25); the seasonality month bars are reframed to the
+ * who-is-here read (§7).
  *
  * NO first-year timeline (rulebook v1 §9): a first-year ramp is a TRADE-level concept
  * (how long THIS business takes to break even), and a city page is trade-agnostic, so any
@@ -30,133 +54,126 @@
  */
 import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
-/* TERRA is gone from this import with the peer cost strip (C9): it was the strip's one
-   accent, the home city's dot, and nothing else in this file paints with it. */
-import { Fig, Movement, Box, Head, Rail, WideRail, Even, TRACK, InfoTip, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
+/* SampleTag is imported and not called here, as in the country view: every
+   modelled figure on this page is marked through the `sample` prop of Rail
+   and Head, which draw the kit's SampleTag (hidden behind the one switch,
+   MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
+   proves the wiring by the reference, so the mark returns on every modelled
+   card the day the switch is flipped. */
+import { Fig, Movement, Box, Head, Rail, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
-import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
-import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCityCharacterTables } from "@/lib/spine/character_rows";
-import { buildCityQuickReads } from "@/lib/spine/reads_rows";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { buildCityPeerTable } from "@/lib/spine/peer_rows";
-import { AtlasMark } from "@/components/spine/marks";
+import { KvGrid } from "@/components/spine/archetypes/KvGrid";
+import { buildCityGlance, type CityGlanceData } from "@/lib/spine/city_glance_rows";
+import { buildCitySeat, type CitySeatData } from "@/lib/spine/city_seat_rows";
 import { CityHero } from "./masthead";
 import { IncomeCurve, OwnerRunway, RentAffordability } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
+import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
-import { buildCityPremisesStrip } from "@/lib/spine/range_rows";
+import { buildCityCustomersStrip, buildCityPremisesStrip, type CityPremisesStrip } from "@/lib/spine/range_rows";
 import { COPY } from "@/lib/spine/copy";
 
-/* A FIFTH PRIVATE FORMATTER, GONE (C29, 2026-09-02). It rounded a cost to open to
-   the nearest thousand and printed a K whatever the magnitude, which is the same
-   defect the kit's own `usd` carried until the founder ratified the money grammar
-   on 2026-09-02: a trade costing $8,400 to open read "$8K" and one costing $600
-   read "$1K". What survives here is the NULL GUARD and not a grammar, so a card
-   whose cost is absent still prints what it printed before rather than "$NaN". */
-const k = (v: number) => usd(v || 0);
-
-/* TierBand , the CATEGORICAL read form (FORM-CATALOG PriceTierBand: a discrete N-step
- * band, the active step inked). Replaces a continuous marker for a categorical read
- * (Riskier / Safer): a marker at a precise position fakes a precision the category
- * does not hold (Meter do-not, rule 6). The word is the value beside the read; the
- * band shows WHICH tier, in whole steps, between two named poles.
- * Ink only , these are conditions, not the box's one answer (rule 37, no accent).
+/* ================= THE OPENING ================= */
+/**
+ * At a glance, `01 glance` (MODEL.md 8.3; plan step 32, first dispatch,
+ * 2026-09-18), the country's `01 glance` one altitude down (R8, clause 43:
+ * the same form, the same cell rule). THE SEAT IS HELD BY KvGrid AS
+ * CATALOGUED: the fact card with a focal (a first cell at 30 taking the
+ * card's width) is candidate 1 of FORM-CATALOG's CANDIDATES AWAITING HIS
+ * CLICK, and a form not in the catalogue is a candidate awaiting his click;
+ * so the cells draw at the head rung, nothing at 30, and the FOCAL finding
+ * on this card stands until he clicks. The census reads this Box as KvGrid,
+ * which is the truth of it today.
  *
- * ONE CALLER LEFT, AND THE OTHER ONE'S REASON DID NOT HOLD (C9, 2026-09-02). The quick
- * reads used this six times in one box, which is the form-variety gate's per-card
- * clause failed, and their positions turned out to be MEASURED percentile ranks rather
- * than categories: see CityLenses below. This survives for the risk severities, which
- * are a placeholder 0-to-100 severity the seed itself calls illustrative, so a
- * quartile is the honest granularity there. That card is dark on every real city page
- * today, so this drawing reaches no reader; the day the risk data lands it is an
- * undeclared drawing and a third horizontal track on a page whose cap is two. */
-function TierBand({ steps = 4, pos, word, leftPole, rightPole }: { steps?: number; pos: number; word: string; leftPole: string; rightPole: string }) {
-  const active = Math.max(0, Math.min(steps - 1, Math.floor((pos / 100) * steps)));
+ * The rows come from city_glance_rows.ts, pure over the files, every
+ * figure's file and field in its header: the visitor count where the city
+ * counted it (45 cities; the country's count through a size divisor is
+ * withheld with its line, item 20), the human development figure withheld on
+ * every city (every row is the country's with a step), the days to clear the
+ * city's own permits and the businesses per 10,000 residents off the city
+ * shard, each marked with the shard's tag. Three of 8.3's seven print
+ * elsewhere and never here (M1): the metro GDP and the cost of living on the
+ * card beside, the average pay in the masthead. The withheld line names what
+ * the card does not hold, with the count; the foot names the modelled cells
+ * in words. The four readers of a city's income still differ (item 24: the
+ * masthead's mean off the city list, the strip's 0.88 of it on London, the
+ * peers row's mean, the ratio's median); the one-builder income is the
+ * fourth dispatch's, with `07 earnings`.
+ */
+function Glance({ glance }: { glance: CityGlanceData | null }) {
+  if (!glance) return null;
   return (
-    <div role="img" aria-label={`${leftPole} to ${rightPole}: ${word}`}>
-      <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${steps}, minmax(0,1fr))` }}>
-        {Array.from({ length: steps }).map((_, i) => (
-          <span key={i} className="h-[7px] rounded-full" style={{ background: i === active ? "var(--c-ink)" : TRACK }} />
-        ))}
-      </div>
-      <div className="mt-1.5 flex justify-between text-[length:var(--t-body)] tracking-wide text-[var(--c-ink2)]">
-        <span>{leftPole}</span><span>{rightPole}</span>
-      </div>
-    </div>
-  );
-}
-
-/* ================= CH1 , THE VERDICT ================= */
-/* CityVerdict: THE HERO VERDICT CARD on the answer-card archetype at section
-   level (the build loop's run 23, 2026-09-07). The lightest rent load among
-   the ranked districts is the answer, in the accent: the city blueprint
-   reserves the page's one accent for this figure, which is why the masthead
-   above it is ink. The city average and the heaviest district are the two
-   cells at the card's half, what the answer cannot say (the founder's
-   2026-08-25 "you are repeating the front part" is why there is no third
-   cell). The multiples are modelled and marked so. The archetype wraps
-   itself in the hero band, the page's full-width band; the facts come from
-   city_verdict_facts, so the stories draw the same card. Draws nothing for a
-   city without two ranked districts. */
-export function CityVerdict({ d }: { d: any }) {
-  const f = cityVerdictFacts(d);
-  if (!f) return null;
-  return <AnswerCard id="verdict" level="section" icon={f.icon} name={f.kicker} subtitle={null} answer={f.answer} cells={f.cells} tone="accent" />;
-}
-
-/* CityLenses: THE QUICK READS on the spectra-table archetype at body size (the
-   build loop's run 16, 2026-09-06). Six ranks among the cities carried, each a
-   position between two named poles, the founder's approved metric; his
-   correction of 2026-07-11 (rule 34, "text too small", one-sided white space)
-   is the reason the archetype has a body scale at all, and this is the card
-   that wears it. The kit's table drew this card until run 16 with the same
-   correction as an opt-in; the archetype carries it now, and the kit's table
-   has no caller left in this view. The registration days sit in the foot as a
-   figure with its words, the paperwork alone. */
-function CityLenses({ d }: { d: any }) {
-  const r = buildCityQuickReads(d);
-  if (!r) return null;
-  return (
-    <Box id="lenses">
-      <Head icon="scorecard" sample={r.sample}>{COPY.cityReads.kicker}</Head>
-      <SpectraTable rows={r.rows} scale="body" foot={r.foot} />
+    <Box id="glance">
+      <Rail icon="scorecard" kicker={COPY.glance.kicker} sample={glance.confidence !== "measured"} />
+      <KvGrid cells={glance.cells} />
+      {glance.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.withheld}</p> : null}
+      {glance.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.basis}</p> : null}
+      {glance.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.foot}</p> : null}
     </Box>
   );
 }
 
-/* ================= CH2 , WHAT IT COSTS HERE ================= */
+/**
+ * Among the cities, `02 among-cities` (MODEL.md 8.3; the same dispatch), the
+ * country's `02 world-seat` one altitude down. THE SEAT IS HELD BY KvGrid:
+ * the composition's card is the placed-figures form, a figure with the
+ * sentence "Higher than {n} cities in ten" under it, which is candidate 2 in
+ * FORM-CATALOG's CANDIDATES AWAITING HIS CLICK and not clicked; the placement
+ * sentences are not drawn, nothing is at 30 (the FOCAL finding is expected),
+ * and the foot says the placement is not shown yet. The day he clicks, the
+ * sentences come from placement.ts (`placementOf`, noun "cities"), the one
+ * builder every page shares (R2), over the 252 rows of the city list. The
+ * census reads this Box as KvGrid. The rows come from city_seat_rows.ts: the
+ * metro GDP and the cost of living, 252 of 252, the GDP marked modelled on
+ * every row (no row carries a source, item 31) and the cost of living
+ * measured on the 13 city-level pulls, modelled on the 239 hand anchors.
+ */
+function AmongCities({ seat }: { seat: CitySeatData | null }) {
+  if (!seat) return null;
+  return (
+    <Box id="among-cities">
+      <Rail icon="vs-world" kicker={COPY.citySeat.kicker} sample={seat.confidence !== "measured"} />
+      <KvGrid cells={seat.cells} />
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.basis}</p>
+      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.foot}</p>
+    </Box>
+  );
+}
+
+/* ================= TURN ONE , WHAT IT COSTS TO OPEN, AND TO RUN ================= */
 /* CityPremises: WHAT PREMISES COST TO RUN, on the range-strip archetype (the
    build loop's run 13, 2026-09-06; founder ruling 11, premises on city pages
-   too). No city holds a rent figure of its own (0 of 252 on 2026-09-06). The
-   country profile holds three rents by CITY SIZE (the tier-1, tier-2 and
-   tier-3 city averages, as the cost engine and the v29 plan read them), so the
-   card draws those three with the city's own size class in the accent, and the
-   basis line says whose average it is and where the city sits. The five
-   metrics the founder named (prime and secondary street, in the metropolis and
-   in a city, and a fifth) are the street axis the data does not hold: a data
-   requirement, not a drawing. This replaced "The lease terms", a card whose
-   three figures (deposit, lease length, rent-free months) the adapter omits for
-   every city, so it never drew. */
-export function CityPremises({ d }: { d: any }) {
-  const s = buildCityPremisesStrip(d);
-  if (!s) return null;
+   too). No city holds a rent figure of its own on this strip (0 of 252 on
+   2026-09-06). The country profile holds three rents by CITY SIZE (the tier-1,
+   tier-2 and tier-3 city averages, as the cost engine and the v29 plan read
+   them), so the card draws those three with the city's own size class in the
+   accent, and the basis line says whose average it is and where the city sits.
+   THIS STRIP KEEPS `04 premises`' SEAT UNTIL THE SECOND DISPATCH BUILDS THE
+   BENTO (MODEL.md 8.3: four readings of the city's own shop space off the
+   shard's `realestate.*`, the strip of national tiers leaving with it); its
+   electricity `extra` stays for now. The strip comes from the body, built
+   once, so its band is drawn only when it is. */
+function CityPremises({ strip }: { strip: CityPremisesStrip | null }) {
+  if (!strip) return null;
   return (
     <Box id="premises">
-      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={s.sample} />
-      <RangeStrip marks={s.marks} scale="log" fmt={usd} basis={s.basis} extra={s.extra} />
+      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={strip.sample} />
+      <RangeStrip marks={strip.marks} scale="log" fmt={usd} basis={strip.basis} extra={strip.extra} />
     </Box>
   );
 }
 
-/* ================= CH3 , YOUR CUSTOMERS ================= */
-/* DemandSize. Null-guards: the whole card omits when no split AND no magnitude. The
- * per-resident spend is the focal NUMBER (§26, C6); the $196B metro total is CUT (a
- * vague big total, §7). A second box carries the seasonal read as the resident/visitor
- * mix (the ONLY honest seasonal signal, C7); the invented month-by-month prose box is
- * DELETED (§4/§21). Each box carries its own figure's tag.
+/* ================= TURN TWO , WHERE TO OPEN IT, AND WHAT TO OPEN ================= */
+/* DemandSpend, `08 demand`: the per-resident spend is the focal NUMBER (§26, C6);
+ * the $196B metro total is CUT (a vague big total, §7). The season split that
+ * shared this function until plan step 32 is SeasonSplit below, turn three's,
+ * because 8.3 seats the two in different chapters (`08 demand | 07 earnings`,
+ * then `14 neighbourhoods | 15 season`). Each carries its own figure's tag.
  *
  * THE SPEND PER RESIDENT IS READ FROM THE CITY FACT BANK SINCE 2026-09-17
  * (CITY-PROGRAMME step 1a, research items 21 and 25; buildCityDemand in
@@ -164,67 +181,36 @@ export function CityPremises({ d }: { d: any }) {
  * of 252 cities and rendered for none, so the spending pool was a heading
  * over nothing and the season card stood alone in its band on London.
  *
- * THREE SMALL THINGS CHANGED IN THE FORM, each the smallest that lets the
- * bank's figure print honestly. The focal used to be a private formatter,
- * "$" + round(v / 1000) + "K", which is the exact shape the money grammar
- * ruling (C29) routed out of five other places: Abidjan's $2,860 would have
- * read "$3K". It prints through the shared usd now. Each box reads its OWN
- * figure's tag (spend_confidence, split_confidence) rather than one tag for
- * both, because a held spend beside a modelled split is two different truths.
- * And each box carries a basis line, since the sample mark is off site-wide
- * and the basis is the only place the word "modelled" can reach a reader: the
- * split is a slope over arrivals for every city (research item 28) and had
- * shipped unmarked on 245 of them (item 27). */
-export function DemandSize({ d }: { d: any }) {
+ * The focal prints through the shared usd (Abidjan's $2,860 would have read
+ * "$3K" through the private formatter C29 routed out); the box reads its OWN
+ * figure's tag (spend_confidence); and it carries a basis line, since the
+ * sample mark is off site-wide and the basis is the only place the word
+ * "modelled" can reach a reader. Ink, not terracotta: the demand brief
+ * (08-demand) rules this card quiet, the page's accents being named elsewhere
+ * (MODEL PART 6). Today's `text-3xl` is the fourth dispatch's to move to the
+ * ladder's 30 (F3, the plain figure). */
+const hasDemandSpend = (d: any) => {
+  const o = d?.demand;
+  const hasMagnitude = !!o && typeof o.spend_per_capita_usd === "number" && Number.isFinite(o.spend_per_capita_usd) && o.spend_per_capita_usd > 0;
+  return hasMagnitude || (o?.millionaires_count != null);
+};
+export function DemandSpend({ d }: { d: any }) {
+  if (!hasDemandSpend(d)) return null;
   const o = d.demand;
-  const hasSplit = o && o.resident_pct != null && o.visitor_pct != null;
-  // the decision read is the per-resident figure (§7/§16, founder C6: the $196B metro
-  // total is a vague big total, twice corrected, so it is CUT here, not just demoted).
-  const hasMagnitude = o && typeof o.spend_per_capita_usd === "number" && Number.isFinite(o.spend_per_capita_usd) && o.spend_per_capita_usd > 0;
+  const hasMagnitude = typeof o.spend_per_capita_usd === "number" && Number.isFinite(o.spend_per_capita_usd) && o.spend_per_capita_usd > 0;
   const hasMillionaires = o?.millionaires_count != null;
-  /* A HEADING IS NOT CONTENT. Both figures on this card are omitted upstream for a
-     real city, neither has a source, and the card was built anyway: a reader got a
-     bordered card carrying the words "The spending pool" and nothing at all under
-     them. It omits now, the way every other card in this file already does when its
-     figures are absent. The guard below gains the millionaire count for the same
-     reason, so a city holding only that figure no longer loses it. */
-  /* The spending pool's replacement (§3, see design/replacements/spending-pool.md).
-     The two figures this card was built for have no source and are dropped
-     upstream; this is the knowable neighbour, and it is what keeps the card from
-     being a heading over nothing (§2). */
-  const spreadWord: string | undefined = o?.spread_word;
-  /* THE SPREAD WORD NO LONGER COUNTS TOWARDS THIS CARD EXISTING. It moved to the
-     earnings chart, which is the card that shows the spread, so a city holding
-     ONLY the spread word would render this card as a naked heading with nothing
-     under it. That is exactly what happened on London the moment the word moved,
-     measured at 314x28 holding the words "The spending pool" and nothing else. A
-     section's guard has to ask for the content the section still draws. */
-  const hasSize = hasMagnitude || hasMillionaires;
-  if (!o || (!hasSplit && !hasSize)) return null;
   const growth = o?.growth_pct_yoy;
   const notHeld = (t: unknown) => t === "placeholder" || t === "modeled" || t === "extrapolated";
   const spendSample = notHeld(o.spend_confidence ?? o._meta?.confidence);
-  const splitSample = notHeld(o.split_confidence ?? o._meta?.confidence);
-  // residents = the steady base; visitors = the seasonal, tourism-led slice (founder C7:
-  // city seasonality reads as the tourism / commuter mix, never an invented month index).
-  /* THE TWO SEGMENTS WERE NEARLY THE SAME COLOUR. A line-strong against a
-     border tint differ by so little that a 72 to 28 split had no visible
-     boundary: the bar read as one bar. Both are CONTEXT greys, and the
-     convention is that a data mark takes ink and grey is for context, so the
-     larger share , the one the section is about , now carries ink and the
-     other stays quiet. */
-  const segs: Array<[string, number, string, string]> = [
-    ["Residents", o.resident_pct, "var(--c-ink2)", "steady"],
-    ["Visitors", o.visitor_pct, "var(--c-soft2)", "seasonal"],
-  ];
-  const sizeBox = hasSize ? (
-    <Box data-block="demand">
+  return (
+    /* LEAN WHILE IT STANDS ALONE (plan step 32, first dispatch): a card holding
+       one figure takes the band's narrow third, not the wide two thirds, so
+       the air falls outside its edge (kit.tsx, the lone lean card). Inert the
+       day the card has a partner again. */
+    <Box data-block="demand" data-lean="1">
       <Head icon="market-size" sample={spendSample}>{COPY.cityDemand.kicker}</Head>
       {hasMagnitude ? (
         <div className="flex flex-wrap items-baseline gap-x-3">
-          {/* INK, NOT TERRACOTTA: the demand brief (08-demand) rules this card quiet,
-              the page's three accents being named elsewhere (MODEL PART 6), and
-              the page filter counted the terracotta the moment the card drew. */}
           <Fig className="text-3xl text-[var(--c-ink)]">{usd(o.spend_per_capita_usd)}</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
             {COPY.cityDemand.focalSub}
@@ -233,20 +219,7 @@ export function DemandSize({ d }: { d: any }) {
         </div>
       ) : null}
       {hasMagnitude && o.spend_basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{o.spend_basis}</p> : null}
-      {/* THE WORD IS THE VALUE. No bar and no position: a precise marker on a rough
-          measure fakes precision, which FORM-CATALOG names as the meter do-not, and
-          §26 permits a lone value to stay a value. It is also a different form from
-          the tier bands and the share bar elsewhere on this page (§25, §33). The
-          statistic's own name never appears (§40); the gloss explains it plainly. */}
-      {/* THE SPREAD WORD MOVED TO THE CHART THAT SHOWS THE SPREAD. It used to sit
-          here, and on London it was the ONLY thing this card rendered: a 356x147
-          card holding one adjective and a caption, no figure and no visual, which
-          art direction E5 says is not a section. The earnings chart 650px down the
-          page draws the same finding properly, three marks on a log scale, so the
-          word joins it. Nothing is lost; the reader gets the word AND the shape in
-          one place. This card still renders whenever a city carries a spend figure
-          or a millionaire count, which is what it is actually for. */}
-      {/* the millionaire count: how deep the premium ticket runs (the Head tag covers it). */}
+      {/* the millionaire count: how deep the premium ticket runs (the Head tag covers it). No field, no source and no method today (item 27); the guard keeps the slot for the day one exists. */}
       {hasMillionaires ? (
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 border-t border-[var(--c-border)] pt-3">
           <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{Math.round((o.millionaires_count || 0) / 1000)}K</Fig>
@@ -254,83 +227,9 @@ export function DemandSize({ d }: { d: any }) {
         </div>
       ) : null}
     </Box>
-  ) : null;
-  // the seasonal read , the ONLY honest seasonal signal held (the split), rendered as
-  // the graphic; no invented "summer hump, December peak" prose (§4/§21, C7).
-  /* A WHOLE BAR IS A CLAIM THAT THE PARTS ACCOUNT FOR EVERYTHING, and nothing was
-     checking that they do. The two shares are rounded independently upstream, so
-     each carries up to half a point of error and the pair can land on 99 or 101.
-     At 99 a strip of bare card shows through the end of the bar; at 101 the last
-     segment is squeezed and the drawn widths stop matching the printed figures.
-     Reproduced in scripts/probe_split_identity.mjs.
-
-     Two responses, because the two causes are different. Within a point of 100 it
-     is rounding, so the WIDTHS are taken as proportions of the real total and the
-     bar closes; the printed figures are untouched. Further out than that, a slice
-     has gone missing somewhere upstream, the shape no longer means what it claims,
-     and the card draws NOTHING rather than draw a bar with a hole in it.
-
-     Today every one of eight real cities lands on exactly 100, so nothing moves.
-     That was true by luck and is now true by construction. Rounded to two decimals
-     because dividing by a total of exactly 100 does not give back the number you
-     started with: 28 came out as 28.000000000000004 and went into the markup. */
-  const splitTotal = (o.resident_pct ?? 0) + (o.visitor_pct ?? 0);
-  const splitCloses = Math.abs(100 - splitTotal) <= 1 && splitTotal > 0;
-  const tourismBox = hasSplit && splitCloses ? (
-    <Box id="seasonal">
-      <Head icon="seasonality" sample={splitSample}>{COPY.cityDemand.seasonKicker}</Head>
-      {/* DECLARED I3, WAVE C ROW C9, 2026-09-02. One bar divided into two named parts
-          that sum to a whole is the catalogue's STACKED WHOLE, and this drew it with
-          no idea on it. The shape is already right for the information, so this is a
-          declaration rather than a replacement; the kit's own StackBar was measured
-          against it and refused for a reason worth recording: its on-bar label colour
-          is chosen by parsing the segment's colour as hex, and these two segments are
-          CSS variables, which it cannot read, so it would set white type on the light
-          segment. That is the form's defect and it belongs in the form. The city page
-          spends its first I3 of two here. */}
-      <div data-idea="I3" className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${o.resident_pct}% steady, visitors ${o.visitor_pct}% seasonal`}>
-        {/* THE FIGURES SIT ON THE BAR, NOT ONLY IN THE KEY. This was the third
-            stacked bar in this vertical and the third different way of labelling
-            one: the trade page put all five figures in its legend, the
-            across-places page put them on the bar, and this one put them in a
-            legend too. A reader who learns how to read one of them should be able
-            to read all three. On the bar is the version that won, because it puts
-            the number inside the length it describes instead of asking the eye to
-            carry a colour from a key back to a shape.
-            THE LEGEND KEEPS THE NAMES AND LOSES THE FIGURES, so the same number is
-            not printed twice on one card. */}
-        {segs.map(([n, pct, bg]) => {
-          const w = Math.round((pct / splitTotal) * 10000) / 100;
-          const onDark = bg === "var(--c-ink2)";
-          return (
-            <div key={n} className="flex h-full items-center justify-center" style={{ width: `${w}%`, background: bg }}>
-              <span className={`fig text-[length:var(--t-micro)] font-semibold ${onDark ? "text-white" : "text-[var(--c-ink)]"}`}>{pct}%</span>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-        {segs.map(([n, pct, bg, tag]) => (
-          <span key={n} className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: bg }} /><span className="font-semibold text-[var(--c-ink)]">{n}</span>, {tag}</span>
-        ))}
-      </div>
-      {o.split_basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{o.split_basis}</p> : null}
-    </Box>
-  ) : null;
-  /* THE TWO BOXES ARE THE BAND'S OWN CHILDREN, not a rail inside it. The band
-     around this section declares split="3-2" for exactly these two cards, and
-     until the spend figure landed it had only ever held one of them, so the
-     declared split never applied. Wrapped in the WideRail they would have
-     reached the band as ONE child, taken its lone-child two thirds, and been
-     squeezed 3:2 inside that; and the rail sets its cards' heights ragged
-     (items-start), which founder ruling 7 of 2026-09-04 overrules for two cards
-     on one level. As siblings they take the band's 3-2 at its full width and
-     its equal heights. A lone survivor still takes the band's lone-child rule. */
-  if (sizeBox && tourismBox) return <>{sizeBox}{tourismBox}</>;
-  return sizeBox ?? tourismBox;
+  );
 }
 
-/* ================= CH4 , TRADES AND RIVALS ================= */
 /* TradesHere , the funnel block §24 asks for: "higher pages (country, city) carry a
  * block of real clickable businesses funneling into the cell pages". It replaces the
  * ranked "what to open, and what you keep" chapter, which cannot be restored at this
@@ -339,11 +238,12 @@ export function DemandSize({ d }: { d: any }) {
  * take-home with a term its own module labels "ROOM (crowding)", which §5 also bans.
  * So there is no ranking here, and there is no score. Only which trades this city
  * holds a real local measurement for, each linking to the page where those figures
- * are lawful.
+ * are lawful. 8.3's `09 trades` (trade rows, a foot in the coverage form) is a later
+ * dispatch's; this is today's card in the seat.
  *
  * Hover is INK, not the accent. §37: the accent marks answers and never appears on
- * hover. The older affordance a few hundred lines above this does use terracotta on
- * hover, and that is one of the open founder decisions; new code does not copy it. */
+ * hover. */
+const hasTradesHere = (d: any) => (d?.trades_here?.list?.length ?? 0) >= 4;
 function TradesHere({ d }: { d: any }) {
   const list: Array<{ name: string; slug: string; href: string }> = d.trades_here?.list ?? [];
   if (list.length < 4) return null;
@@ -377,126 +277,26 @@ function TradesHere({ d }: { d: any }) {
   );
 }
 
-/* LowestBar , the July-3 "Lowest bar to entry" featured trade card + the "Next-easiest,
- * and the cost to open" plain 3-column table (rulebook v1 §46 restored forms; no bars,
- * §25). Replaces the take-home bar list whole: the per-city Keeps and Crowding columns
- * are banned outright (rulebook v1 §5) and the horizontal-bar execution with them
- * (founder C9). Null-guards: omits without at least one trade carrying BOTH a real
- * ease and a real cost to open; rows missing either figure self-omit, never a dash wall. */
-function LowestBar({ d }: { d: any }) {
-  const arr = (d.trades?.list ?? [])
-    .filter((t: any) => t.break_in_0_100 != null && t.cost_to_open_usd != null)
-    .slice()
-    .sort((a: any, b: any) => b.break_in_0_100 - a.break_in_0_100);
-  if (arr.length === 0) return null;
-  const lead = arr[0];
-  const rest = arr.slice(1);
-  // cost-to-open and break-in are illustrative (trades._meta is "mixed"); tag them (§4).
-  const sample = ["placeholder", "modeled", "mixed"].includes(d.trades?._meta?.confidence);
-  // No prose myth-sentence, no "gentlest way in" caption (§19/§26); the two figures ARE
-  // the read. Terracotta rides ONLY the cost focal; the link is a neutral affordance (§37).
-  const featured = (
-    <Box data-block="easiest">
-      <Head icon="startup-cost" sample={sample}>Lowest bar to entry</Head>
-      <div className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{lead.name}</div>
-      <div className="mt-3 flex flex-wrap items-end gap-x-6 gap-y-3 border-t border-[var(--c-border)] pt-3">
-        <div>
-          <Fig className="text-[32px] leading-none text-[var(--terra-text)]">{k(lead.cost_to_open_usd)}</Fig>
-          <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">cost to open the doors</div>
-        </div>
-        <div>
-          <div className="fig text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{lead.break_in_0_100}<span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">/100</span></div>
-          <div className="mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">ease to enter</div>
-        </div>
-      </div>
-      {/* href={lead.href}, previously lead.href ?? "/dev/spine-cell". The
-              fallback sent a reader into the sandbox these components were
-              built in, which renders one hardcoded trade regardless of what was
-              clicked, so a missing link became somebody else's data presented
-              as this city's. An <a> with an undefined href renders as text, so
-              a row with no destination is simply not a link. */}
-            <a href={lead.href} className="mt-4 inline-flex items-center gap-1.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><AtlasMark id="alt-business" size={14} className="shrink-0" />See the trade's live economics &#8594;</a>
-    </Box>
-  );
-  if (rest.length === 0) return featured;
-  return (
-    <WideRail>
-      {featured}
-      <Box data-block="easiest-rest">
-        <Head icon="ranking" sample={sample}>Next-easiest, and the cost to open</Head>
-        <div className="-mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 px-2 pb-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-          <span>Trade</span><span className="text-right">Ease /100</span><span className="text-right">To open</span>
-        </div>
-        <div className="divide-y divide-[var(--c-border)]">
-          {rest.map((t: any) => (
-            <a key={t.slug} href={t.href} className="hov -mx-2 grid grid-cols-[1fr_64px_64px] items-baseline gap-4 rounded-md px-2 py-2">
-              <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink)]">{t.name}</span>
-              <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.break_in_0_100}</Fig>
-              <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{k(t.cost_to_open_usd)}</Fig>
-            </a>
-          ))}
-        </div>
-        <div className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Ease out of 100, higher is easier.</div>
-      </Box>
-    </WideRail>
-  );
+/* CityPeers: THE PEERS TABLE ON THE COMPARISON ARCHETYPE (city:peers, the build
+   loop's run 22, 2026-09-06). The country page's form, the one the founder
+   called one of the best versions he had seen (2026-08-30): the places as rows
+   with a flag each, the measures as columns, the home row marked, the phone form
+   stacked and never scrolling sideways. The city and up to four peers, three
+   columns: cheaper to live (index points, higher is cheaper), customer income
+   (percent of the home city's average pay), visitors (a multiple). The old kit
+   table had the cities as columns and the measures as rows, and printed "pp", a
+   word the doctrine bans, on the income row; the units are now in the caption
+   in plain words. Full width by the wide-table sanction, as on the country page,
+   so it no longer stands alone at two thirds: 8.3's `11 peers`, the seam of
+   turns two and three, the page's second full width (R1). Its kicker and
+   heads are the later peers dispatch's. */
+function CityPeers({ d }: { d: any }) {
+  const t = buildCityPeerTable(d);
+  if (!t) return null;
+  return <CompareTable id="peers" kicker={COPY.cityPeers.kicker} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} />;
 }
 
-/* ================= CH5 , RUNNING IT ================= */
-/* NO first-year timeline here (rulebook v1 §9): see the file header note. A
- * first-year ramp is a trade-level concept and this page is trade-agnostic, so the
- * block was deleted rather than replaced with a city-altitude substitute. */
-
-/* CityRisks. Null-guards on r.list (omitted on real-data promotion). The scale is
- * SAFETY out of 10 (high = good, the page-set grammar): safety = (100 - severity) / 10,
- * biggest exposure first, neutral track, words keyed to safety. Terracotta rides ONLY
- * the top exposure's label (never a marker). */
-function CityRisks({ d }: { d: any }) {
-  const r = d.risks;
-  if (!r || !(r.list?.length)) return null;
-  // Rulebook v1 §4: this seed's severities are illustrative, not measured
-  // (risks._meta.confidence is "placeholder" here). Mark the block so the reader
-  // never mistakes 82/74/58/46 for researched figures.
-  const sample = r._meta?.confidence === "placeholder" || r._meta?.confidence === "modeled";
-  const safetyOf = (sev: number) => Math.max(1, Math.min(10, Math.round((100 - sev) / 10)));
-  const wordOf = (s: number) => (s <= 3 ? "Exposed" : s <= 5 ? "Uneasy" : s <= 7 ? "Steadier" : "Calm");
-  const sorted = (r.list ?? []).slice().sort((a: any, b: any) => (b.severity_0_100 ?? 0) - (a.severity_0_100 ?? 0));
-  // ONE full-width box: categorical risk tiers (Riskier..Safer), no continuous marker
-  // (§6 false precision), no terracotta on the worst row (§37, accent marks the good end
-  // only). The "honest read" verdict box is DELETED (§14). The counterweights move into
-  // a disclosure (bullet text out of the first view, §18); no verdict prose in view.
-  return (
-    <Box data-block="risks">
-      <Head icon="watch" sample={sample}>Where the risks sit</Head>
-      <div className="divide-y divide-[var(--c-border)]">
-        {sorted.map((x: any) => {
-          const s = safetyOf(Number(x.severity_0_100 ?? 0));
-          return (
-            <div key={x.label} className="grid grid-cols-[minmax(140px,1fr)_1.1fr] items-center gap-4 py-2.5">
-              <div>
-                <div className="text-[length:var(--t-body)] text-[var(--c-ink)]">{x.label}{x.gloss ? <InfoTip gloss={x.gloss} /> : null}</div>
-                {x.who ? <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{x.who}</div> : null}
-              </div>
-              <div>
-                <div className="mb-1 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">{wordOf(s)}</div>
-                <TierBand pos={s * 10} word={wordOf(s)} leftPole="Riskier" rightPole="Safer" />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <InlineDisclosure name="risks" summary="The counterweight for each" className="group mt-3 border-t border-[var(--c-border)] pt-2.5">
-        <div className="mt-2 space-y-2.5">{sorted.map((x: any) => (
-          <div key={x.label} className="flex gap-2.5">
-            <span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span>
-            <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{x.label}.</b> {x.counterweight}</span>
-          </div>
-        ))}</div>
-      </InlineDisclosure>
-    </Box>
-  );
-}
-
+/* ================= TURN THREE , WHAT THE PLACE IS LIKE ================= */
 /* CityCharacter: THE CITY'S OWN CHARACTER TABLES on the spectra-table archetype
    (the build loop's run 14, 2026-09-06). Dealing with the state and dealing with
    people, the founder's kept form (ruling 14: named traits, explanatory poles,
@@ -505,8 +305,9 @@ function CityRisks({ d }: { d: any }) {
    own, from the per-city signature file, and never the country's under a city
    heading: a city with no reads of its own draws nothing here, and a city with
    one side's reads draws that one table alone. London holds three people reads
-   and no state reads on 2026-09-06. The old card drew authored "texture" rows
-   the adapter had omitted for every city, so it never drew. */
+   and no state reads on 2026-09-06. 8.3 seats `12 character-people` beside `13
+   locals` at 1-1; no city holds authored notes today (item 6), so the table
+   stands alone in its band until the locals card ships at its real structure. */
 function CityCharacter({ d }: { d: any }) {
   const t = buildCityCharacterTables(d?.meta?.slug);
   if (!t) return null;
@@ -534,7 +335,10 @@ function CityCharacter({ d }: { d: any }) {
     </Band>
   );
 }
-/* Locals. Null-guards on d.locals_intel (omitted on real-data promotion). */
+/* Locals. Null-guards on d.locals_intel (omitted on real-data promotion for
+   every city today: no city holds authored notes, item 6; 8.3's `13 locals`
+   ships the card at its real structure with its not-gathered line in a later
+   dispatch). */
 function Locals({ d }: { d: any }) {
   const items = d.locals_intel ?? [];
   if (items.length === 0) return null;
@@ -552,35 +356,96 @@ function Locals({ d }: { d: any }) {
   );
 }
 
-/* ================= CH6 , THE CLOSE ================= */
-/* CityPeers: THE PEERS TABLE ON THE COMPARISON ARCHETYPE (city:peers, the build
-   loop's run 22, 2026-09-06). The country page's form, the one the founder
-   called one of the best versions he had seen (2026-08-30): the places as rows
-   with a flag each, the measures as columns, the home row marked, the phone form
-   stacked and never scrolling sideways. The city and up to four peers, three
-   columns: cheaper to live (index points, higher is cheaper), customer income
-   (percent of the home city's average pay), visitors (a multiple). The old kit
-   table had the cities as columns and the measures as rows, and printed "pp", a
-   word the doctrine bans, on the income row; the units are now in the caption
-   in plain words. Full width by the wide-table sanction, as on the country page,
-   so it no longer stands alone at two thirds. */
-function CityPeers({ d }: { d: any }) {
-  const t = buildCityPeerTable(d);
-  if (!t) return null;
-  return <CompareTable id="peers" kicker={COPY.cityPeers.kicker} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} />;
+/* SeasonSplit, `15 season`: the resident/visitor mix, the ONLY honest seasonal
+ * signal held (founder C7: city seasonality reads as the tourism / commuter mix,
+ * never an invented month index); the invented month-by-month prose box is
+ * DELETED (§4/§21). Turn three's since plan step 32 (8.3: `14 neighbourhoods |
+ * 15 season`, 2-1); the KvGrid pair the composition names for it, and the
+ * kicker "Residents and visitors", are the sixth dispatch's. The box reads its
+ * own figure's tag (split_confidence) and carries a basis line, because the
+ * split is a slope over arrivals for every city (research item 28) and had
+ * shipped unmarked on 245 of them (item 27).
+ *
+ * A WHOLE BAR IS A CLAIM THAT THE PARTS ACCOUNT FOR EVERYTHING, and nothing was
+ * checking that they do. The two shares are rounded independently upstream, so
+ * each carries up to half a point of error and the pair can land on 99 or 101.
+ * At 99 a strip of bare card shows through the end of the bar; at 101 the last
+ * segment is squeezed and the drawn widths stop matching the printed figures.
+ * Reproduced in scripts/probe_split_identity.mjs. Within a point of 100 it is
+ * rounding, so the WIDTHS are taken as proportions of the real total and the bar
+ * closes; further out a slice has gone missing upstream and the card draws
+ * NOTHING rather than a bar with a hole in it. Rounded to two decimals because
+ * dividing by a total of exactly 100 does not give back the number you started
+ * with: 28 came out as 28.000000000000004 and went into the markup. */
+const seasonSplitOf = (d: any): { resident: number; visitor: number; total: number } | null => {
+  const o = d?.demand;
+  if (!o || o.resident_pct == null || o.visitor_pct == null) return null;
+  const total = (o.resident_pct ?? 0) + (o.visitor_pct ?? 0);
+  if (!(Math.abs(100 - total) <= 1 && total > 0)) return null;
+  return { resident: o.resident_pct, visitor: o.visitor_pct, total };
+};
+export function SeasonSplit({ d }: { d: any }) {
+  const split = seasonSplitOf(d);
+  if (!split) return null;
+  const o = d.demand;
+  const notHeld = (t: unknown) => t === "placeholder" || t === "modeled" || t === "extrapolated";
+  const splitSample = notHeld(o.split_confidence ?? o._meta?.confidence);
+  /* THE TWO SEGMENTS WERE NEARLY THE SAME COLOUR. A line-strong against a
+     border tint differ by so little that a 72 to 28 split had no visible
+     boundary: the bar read as one bar. Both are CONTEXT greys, and the
+     convention is that a data mark takes ink and grey is for context, so the
+     larger share , the one the section is about , now carries ink and the
+     other stays quiet. */
+  const segs: Array<[string, number, string, string]> = [
+    ["Residents", split.resident, "var(--c-ink2)", "steady"],
+    ["Visitors", split.visitor, "var(--c-soft2)", "seasonal"],
+  ];
+  return (
+    <Box id="seasonal">
+      <Head icon="seasonality" sample={splitSample}>{COPY.cityDemand.seasonKicker}</Head>
+      {/* DECLARED I3, WAVE C ROW C9, 2026-09-02. One bar divided into two named parts
+          that sum to a whole is the catalogue's STACKED WHOLE. The kit's own StackBar
+          was measured against it and refused: its on-bar label colour is chosen by
+          parsing the segment's colour as hex, and these two segments are CSS
+          variables, which it cannot read, so it would set white type on the light
+          segment. The city page spends its first I3 of two here. 8.3 retires the
+          bar for a KvGrid pair (a fourth bar-family card otherwise) in the sixth
+          dispatch. */}
+      <div data-idea="I3" className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${split.resident}% steady, visitors ${split.visitor}% seasonal`}>
+        {/* THE FIGURES SIT ON THE BAR, NOT ONLY IN THE KEY: the number inside the
+            length it describes. THE LEGEND KEEPS THE NAMES AND LOSES THE FIGURES,
+            so the same number is not printed twice on one card. */}
+        {segs.map(([n, pct, bg]) => {
+          const w = Math.round((pct / split.total) * 10000) / 100;
+          const onDark = bg === "var(--c-ink2)";
+          return (
+            <div key={n} className="flex h-full items-center justify-center" style={{ width: `${w}%`, background: bg }}>
+              <span className={`fig text-[length:var(--t-micro)] font-semibold ${onDark ? "text-white" : "text-[var(--c-ink)]"}`}>{pct}%</span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+        {segs.map(([n, pct, bg, tag]) => (
+          <span key={n} className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: bg }} /><span className="font-semibold text-[var(--c-ink)]">{n}</span>, {tag}</span>
+        ))}
+      </div>
+      {o.split_basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{o.split_basis}</p> : null}
+    </Box>
+  );
 }
 
+/* ================= THE EXIT ================= */
 /* CityClose: THE TERMINUS (city:close, the build loop's run 19, 2026-09-06).
    Up to three doors out of the page on the terminus archetype, the country
    page's own close: the lightest-rent district by name where the districts are
    ranked (the pick the old card named), else every district; the country page;
    and the compare page as the pill, since it puts the same business in up to
    three cities side by side. The old card reprinted the pick's name and its
-   character, both already on the page (the verdict card names the district, the
-   districts card its character), and hung a workbook veil no city ever filled.
-   A closing card names the pick and opens a door; it does not recite the page.
-   Every city has doors now, where the old card drew only for a city with
-   ranked districts. */
+   character, both already on the page, and hung a workbook veil no city ever
+   filled. A closing card names the pick and opens a door; it does not recite
+   the page. Every city has doors now, where the old card drew only for a city
+   with ranked districts. 8.3's `16 close`, the page's third full width (R1). */
 function CityClose({ d }: { d: any }) {
   const doors = buildCityCloseDoors(d);
   if (doors.length === 0) return null;
@@ -593,179 +458,182 @@ function CityClose({ d }: { d: any }) {
   );
 }
 
-/* ---- dynamic chapter numbering ------------------------------------------- */
-/* A chapter Movement renders ONLY when at least one of its sections has content, and the
- * index counter advances only for a rendered chapter, so the printed numbers (01, 02, ...)
- * never gap after an omitted chapter. On the full seed every chapter renders, so the
- * numbering is identical to the pre-split page. */
-function makeChapterCounter() {
-  let n = 0;
-  return () => {
-    n += 1;
-    return String(n).padStart(2, "0");
-  };
-}
+/* The living card's and the ratio card's own guards (chapters.tsx), asked
+   here so the body can seat their band; the cards ask them again and draw. */
+const hasLiving = (d: any) => { const o = d?.owner_runway ?? {}; return o.rent_1bed_usd_mo != null && o.groceries_usd_mo != null && o.transport_usd_mo != null; };
+const hasRunway = (d: any) => { const r = d?.rent_ratio; return !!r && Number.isFinite(r.pct) && r.rent?.value != null && r.pay?.value != null; };
 
 /**
  * The city spine page body. `data` defaults to the bundled illustrative seed so the dev
  * route (page.tsx) renders it unchanged; the live metropolis route passes the real-data
  * seed from buildSpineCitySeed. Every section null-guards its own data, so an omitted
- * field renders nothing and an empty chapter (its Movement wrapper included) is skipped.
- * Order (founder C1, 2026-07-11): hero, the slimmed verdict, then DISTRICTS as the
- * second block so the map crests into the first frame.
+ * field renders nothing.
  */
 export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const d = data ?? spineCitySeed;
-  const cn = makeChapterCounter();
+  const slug: string | undefined = typeof d.meta?.slug === "string" ? d.meta.slug : undefined;
 
-  // Per-chapter content presence (drives whether the Movement wrapper renders).
-  const hasWhereCh = !!(d.where_to_trade?.list?.length);
-  // IncomeCurve + RentAffordability live in the Customers chapter (earnings data
-  // belongs under "who buys"); OwnerRunway lives beside the risk material (C4).
-  const hasCostCh = !!(d.space?.read) || buildCityPremisesStrip(d) != null;
-  const hasCustomersCh = !!(d.demand && (d.demand.resident_pct != null || d.demand.spend_per_capita_usd != null)) || !!(d.income?.median_income_usd != null) || d.rent_ratio != null;
-  const tradeList = d.trades?.list ?? [];
-  // The owner-keeps net-margin block (MarginKept) is DELETED (§5 banned metric + the
-  // "fundamentally wrong" horizontal-bar money split, founder C9); the chapter is now
-  // the ease + cost-to-open read alone, so it only renders when those figures are held.
-  /* The chapter now renders on the FUNNEL, not on a ranking. The old guard asked
-     for a break-in score and a cost to open together, and no city has ever carried
-     both, so this chapter has been dark since the real-data promotion. */
-  const hasTradesCh = (d.trades_here?.list?.length ?? 0) >= 4;
-  const hasRunningCh = !!(d.risks?.list?.length) || buildCityCharacterTables(d?.meta?.slug) != null || !!(d.locals_intel?.length) || !!(d.owner_runway?.rent_1bed_usd_mo != null);
-  const hasCloseCh = (d.peers?.list?.length ?? 0) >= 2 || tradeList.some((t: any) => t.break_in_0_100 != null) || !!(d.where_to_trade?.list?.length);
+  /* WHO IS HOME, ASKED ONCE, FROM THE BUILDERS THE CARDS DRAW FROM (the
+     country view's idiom). A band is drawn when either of its cards exists and
+     not otherwise, so a card that self-omits never leaves an empty grid with a
+     rung of air behind it. The two seats read the city list and the city shard
+     by the seed's slug; the strips, the districts, the peers and the character
+     tables read the seed the adapter built. */
+  const glance = slug ? buildCityGlance(slug) : null;
+  const seat = slug ? buildCitySeat(slug) : null;
+  const premises = buildCityPremisesStrip(d);
+  const living = hasLiving(d);
+  const runway = hasRunway(d);
+  const demand = hasDemandSpend(d);
+  const earnings = buildCityCustomersStrip(d) != null;
+  const districts = buildCityDistrictBars(d) != null;
+  const trades = hasTradesHere(d);
+  const character = buildCityCharacterTables(d?.meta?.slug) != null;
+  const locals = (d.locals_intel?.length ?? 0) > 0;
+  const season = seasonSplitOf(d) != null;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+      {/* `00 masthead`, FULL WIDTH, the page's only 40 (8.3, loud 1): the answer
+          "Average customer pay" off the city list's mean, the archetype's own hero
+          band carrying the attribute the full-width gate reads. */}
       <CityHero d={d} />
-
-      {/* THE HERO, AND THE ONLY FULL-WIDTH BAND ON THE PAGE. Founder, 2026-08-25:
-          "for every subsection that stretches left to right full width, I think we
-          should ban it except hero section." Art direction D1. The archetype's own
-          band declares it with the hero prop, which sets the attribute the gate
-          reads, because looking like a hero is how twenty-eight sections got the
-          whole column. */}
-      <CityVerdict d={d} />
-
-      {/* FOUR CHAPTERS, NOT SIX, AND NOT ONE SECTION WAS CUT TO GET THERE.
-          Measured 2026-08-25: four of this page's six chapters held exactly ONE
-          section, and a lone section in a chapter has nothing to pair with, so it
-          took the full column by default. Merging those chapters is what lets
-          every section keep its place AND sit in a band. The headings consolidate;
-          the content does not move out.
-
-          The split of each band follows its content (D4) and no band repeats the
-          split of the band before it (D3): 1-1, 2-1, 3-2, 2-3, then 1-1, 2-1, then
-          3-2. The middle two omit on a city with no risk or character data, and
-          the sequence still holds without them. */}
-      {hasWhereCh ? (
-        <>
-          <Movement index={cn()} heading="Where to trade" icon="best-areas" />
-          {/* 2-1, NOT EQUAL HALVES, AND BOTH CARDS ARE MEASURED (C9, 2026-09-02).
-              Measured on the render at 520: SIX of the district ranking's seven names
-              wrap to two lines, "South London" through "City of London", every one at
-              63px in a 62px column. That is the number run 4 wrote down while building
-              the same ranking one altitude below, "seven columns want 693px for one
-              line each", and this band is where it bites. At 693 the columns are 91px
-              and every district sits on one line.
-              The quick reads gain by the same move rather than paying for it: six
-              two-pole tracks at 478px are a dot on a long empty rail, and at 307px the
-              same six read as a profile. */}
-          <Band split="2-1" stack="lg"><WhereToTrade d={d} /><CityLenses d={d} /></Band>
-        </>
+      {/* `01 glance | 02 among-cities`, 1-1, the opening's one band (8.3; plan
+          step 32, first dispatch): what the city is in figures, and where it
+          stands among the cities, both quiet, both on KvGrid while their
+          clicked forms wait. Both cards exist for every covered city (the
+          permit days, the business count, the metro GDP and the cost of living
+          are held for all 252), so the band holds two children; a city missing
+          one would show the survivor alone, honestly, as LONE CARD. */}
+      {glance || seat ? (
+        <Band split="1-1">
+          <Glance glance={glance} />
+          <AmongCities seat={seat} />
+        </Band>
       ) : null}
-
-      {(hasCostCh || hasCustomersCh || hasCloseCh) ? (
-        <>
-          <Movement index={cn()} eyebrow="What it costs here" heading="What it costs, and who buys" icon="commercial-rent" />
-          {/* The peer table is a comparison of what it COSTS to be here, so it
-              belongs with the cost read rather than at the close. It takes the
-              large side because four columns of figures cannot be the small one. */}
-          {/* THE TWO PEER COMPARISONS ARE NOT PUT SIDE BY SIDE. The table and the
-              one-axis dot plot both set London against Paris, Munich and Los
-              Angeles on cost, and the plot is a subset of the table's first row.
-              Banding them together printed those three city names twice inside
-              the first screen, which is the founder's "repeating the front part"
-              measured: front-page repeats went from four to seven the moment they
-              were paired. They are separated, and each takes a partner that says
-              something it does not. */}
-          {/* 3-2, NOT 2-1, AND D3 FORCED IT (C9, 2026-09-02). The band below this one
-              lost its second card when the peer cost strip was cut as a duplicate, and
-              `Band`'s only-child rule re-templates a lone survivor to two thirds and
-              one third, which is the 2-1 geometry. Two neighbouring bands measuring the
-              same split is the monotony D3 exists to stop, so one of the two had to
-              move and this is the one with a choice. Both cards gain: the earnings plot
-              goes 347 to 416, where its three log-scale labels stop crowding, and the
-              peers table gives up 69px it was not using, five columns being the widest
-              thing in it. */}
-          {/* THE PEERS TABLE ALONE, THEN THE TWO STRIPS SIDE BY SIDE, THEN THE
-              DEMAND ROW ALONE (the build loop's run 13, 2026-09-06). The premises
-              card arrived at 286px of natural height, and the only partner near
-              it is the earnings card at 265: two range strips, what customers earn
-              beside what premises cost, one form, one height. The peers table
-              (277) stood beside the earnings card before and now stands alone in
-              the lone-child column, as the demand row already did; the demand
-              row's card is 128px tall and beside either strip it would stretch
-              over a hole the filter reds. The lease-terms card that used to share
-              the demand row's band never drew: its figures are omitted upstream. */}
-          {/* THE PEERS TABLE TAKES THE WIDE-TABLE SANCTION (run 22), the same as on
-              the country page, so it no longer stands alone at two thirds. The
-              demand row and the trades card below still stack until lg (run 20). */}
-          <CityPeers d={d} />
-          <Band split="1-1"><IncomeCurve d={d} /><CityPremises d={d} /></Band>
-          {/* THE SPENDING POOL AND THE SEASON CARD, 3-2, both drawn since the
-              bank's spend figure landed (2026-09-17); DemandSize returns them as
-              this band's two children so the declared split finally applies. */}
-          <Band split="3-2" stack="lg"><DemandSize d={d} /></Band>
-          {/* THE RENT RATIO IN A BAND OF ITS OWN. It stood here outside any band,
-              which is the full width D1 bans for anything carrying a finding, and
-              nobody saw it because the card had never drawn for a real city: it
-              read the London-only income spread. It draws for every city now, off
-              the fact bank, so it takes a band and the lone-child rule gives it
-              the two thirds every other lone card on the page gets. A 2-3 here,
-              not the 3-2 above it (D3), though as a lone child the declared
-              split never applies; the declaration records the intent for the
-              day a partner card lands. THE BAND ONLY WHEN THE CARD DRAWS (run
-              14's rule): the builder withholds the ratio for thirty cities, and
-              an empty band is a 32px blank the filter cannot see. */}
-          {d.rent_ratio != null ? <Band split="2-3" stack="lg"><RentAffordability d={d} /></Band> : null}
-        </>
+      {/* CHAPTER TURN ONE (8.3, "What it costs to open, and to run"): the kit's
+          Movement, the muted index and one plain heading, no eyebrow and no icon
+          (8.4). 48 above and 12 below, the next Band's own 32 absorbing the 12
+          by margin collapse. The opening above carries no break (PART 1). */}
+      <Movement index="01" heading={COPY.chapters.costs} />
+      {/* `04 premises`: today's strip of the country's three rents by city size
+          holds the seat alone in its band until the second dispatch builds the
+          bento (8.3: the cluster IS the band). The kit's only-child rule gives
+          it two thirds; the LONE CARD finding on it is expected and temporary. */}
+      {premises ? (
+        <Band split="1-1">
+          <CityPremises strip={premises} />
+        </Band>
       ) : null}
-
-      {hasRunningCh ? (
+      {/* `05 living | 06 runway`, 1-1 (8.3), today's two kit cards until the
+          third dispatch: what living here costs beside a year of one-bed rent
+          against a year of typical pay. MEASURED BEFORE IT WAS PAIRED, on
+          London with the probe and the page filter: at 1280 the living card
+          wants 258 and the ratio card 243 at 520, the band stands at 244 with
+          the ratio's two rows anchored to its foot (its own mt-auto), and the
+          filter finds no hole; at 768's equal halves 344 by 304 (311 and 303
+          of content); at 375 each at its own height, 236 and 304. The
+          justify-between rows both cards draw at 520 are PART 5's LABEL GAP
+          finding, standing until the third dispatch redraws them as KvGrid
+          and the ratio card. The ratio is withheld on the 30 cities whose
+          one-bed rent exceeds a year of pay (fact_rows.ts), so the living
+          card stands alone there, honestly (LONE CARD, expected). */}
+      {living || runway ? (
+        <Band split="1-1">
+          <OwnerRunway d={d} />
+          <RentAffordability d={d} />
+        </Band>
+      ) : null}
+      {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market
+          sized before the street is picked. */}
+      <Movement index="02" heading={COPY.chapters.where} />
+      {/* `08 demand | 07 earnings`, demand LEFT and the strip RIGHT (8.3's bar
+          ledger: `07` is the dot family, right column), today's DemandSpend and
+          IncomeCurve cards until the fourth dispatch. THE PAIR CANNOT BE SEATED
+          TODAY, MEASURED on London with the probe, the page filter and the
+          art-direction gate: the strip wants 265 of content and the spend card
+          155, so at 1-2 (8.4 rule 1, the taller card wide) the spend card at
+          347 stretched to 266 carried a 307 by 111 blank, under the filter's
+          120 floor, but 50 percent of ink against the art-direction gate's E2
+          floor of 60 (its baseline for this page is 0 and never rises); every
+          other split stretches the same 155 of content to the same 266 and
+          reads the same, and 1-1 crowds the strip's three labels at 520 (C9).
+          The country's `07 | 08` stands the same way on the same rule. So each
+          stands in its own band, in 8.3's order: the spend card LEAN at the
+          narrow third (a card holding one figure, the kit's lean rule, so the
+          air falls outside its edge), the strip at the survivor's two thirds;
+          LONE CARD fires on both, expected, until the fourth dispatch gives
+          `08` its second reading or the composition re-decides the pair. */}
+      {demand ? (
+        <Band split="1-2">
+          <DemandSpend d={d} />
+        </Band>
+      ) : null}
+      {earnings ? (
+        <Band split="1-2">
+          <IncomeCurve d={d} />
+        </Band>
+      ) : null}
+      {/* `03 districts | 09 trades` (8.3): rent by district, the page's one
+          fill-bar card, LEFT; the trades with local figures RIGHT. London holds
+          both; 249 cities hold neither and the band is absent together (8.3,
+          "the sparse pair"). THE PAIR CANNOT BE SEATED TODAY, MEASURED on
+          London with the probe and the page filter (plan step 32, first
+          dispatch): alone at two thirds the ranking stands 693 by 437 (content
+          436) and the trade chips 693 by 194 (content 193); paired at 2-1 the
+          chips at 347 wrap to 381 of content inside a card stretched to 437,
+          and the filter reds a 121 by 144 blank in it (WHITE SPACE, against a
+          page-holes baseline of 0 that never rises); every wider seat for the
+          chips shortens their wrap and deepens the blank, and 1-2 puts the
+          ranking at 347, where its district names wrap (C9 measured six of
+          seven wrapping at 520 already). So each stands in its own band, in
+          8.3's order, the ranking at the survivor's two thirds (the width it
+          has held since C9) and the chips likewise, stacked until lg; LONE
+          CARD fires on both, expected, until `09` takes its trade-row form
+          with a figure per row (a later dispatch) and the pair is re-measured. */}
+      {districts ? (
+        <Band split="2-1" stack="lg">
+          <WhereToTrade d={d} />
+        </Band>
+      ) : null}
+      {trades ? (
+        <Band split="2-1" stack="lg">
+          <TradesHere d={d} />
+        </Band>
+      ) : null}
+      {/* `11 peers`, FULL WIDTH, the seam of turns two and three (8.3, R1). */}
+      <CityPeers d={d} />
+      {/* CHAPTER TURN THREE (8.3, "What the place is like"): zero accent from
+          here to the exit. Drawn only when a card under it draws (the character
+          tables hold reads on 19 of 252 cities; the season split on 241), so a
+          city with neither shows no heading over nothing; the index stays "03"
+          because the two turns above always draw. */}
+      {character || locals || season ? (
         <>
-          <Movement index={cn()} eyebrow="Running it" heading="What to watch" icon="watch" />
-          {/* EACH BAND ONLY WHEN SOMETHING DRAWS IN IT (run 14): the character
-              tables return their own band; the risks and the locals are omitted
-              upstream for every city today (the living costs draw since
-              2026-09-17), and an empty band is a blank the filter cannot see
-              because it is not inside a card. */}
-          {d.risks?.list?.length ? <Band><CityRisks d={d} /></Band> : null}
+          <Movement index="03" heading={COPY.chapters.place} />
+          {/* `12 character-people | 13 locals`, 1-1 (8.3): the character tables
+              draw their own band; no city holds authored notes today (item 6),
+              so the locals card is absent and the table stands alone, LONE CARD
+              expected until the locals card ships at its real structure. */}
           <CityCharacter d={d} />
-          {/* THE LIVING COSTS DRAW FOR EVERY CITY since the fact bank was wired
-              (2026-09-17); the locals notes are still omitted upstream for all,
-              so the card is this band's lone child and takes its two thirds. */}
-          {d.owner_runway?.rent_1bed_usd_mo != null || d.locals_intel?.length ? <Band split="2-1"><OwnerRunway d={d} /><Locals d={d} /></Band> : null}
+          {locals ? (
+            <Band split="1-1">
+              <Locals d={d} />
+            </Band>
+          ) : null}
+          {/* `14 neighbourhoods | 15 season`, 2-1 (8.3): no neighbourhood card
+              exists in this view today (the CardPager form is the sixth
+              dispatch's), so the season split stands alone in the band, at the
+              survivor's two thirds, LONE CARD expected; the band is not seated
+              as a pair because one of its cards does not exist. */}
+          {season ? (
+            <Band split="2-1" stack="lg">
+              <SeasonSplit d={d} />
+            </Band>
+          ) : null}
         </>
       ) : null}
-
-      {/* THE GUARD ASKS WHAT THESE TWO SECTIONS ACTUALLY NEED, not a loose OR.
-          It used to lean on hasCloseCh, which is true when the page has peer
-          cities, and the peer table used to live in this chapter. Moving that
-          table up to the cost read left the guard passing on cities where NEITHER
-          of the two sections here can draw: Mumbai, Lagos and Sydney rendered this
-          heading with nothing under it. Caught by the blast-radius sweep across
-          all fifteen real pages, which is what that sweep is for. Each condition
-          below is the section's own. */}
-      {hasTradesCh ? (
-        <>
-          <Movement index={cn()} eyebrow="The close" heading="What you can open" icon="startup-cost" />
-          {/* THE TRADES ALONE IN THEIR BAND since run 19: the close left the band for
-              the terminus below, the page's last full-width band, as on the country
-              page; the chapter draws only when the trades do. */}
-          <Band stack="lg"><TradesHere d={d} /></Band>
-        </>
-      ) : null}
+      {/* `16 close`, FULL WIDTH (8.3, R1): the exit carries no break (PART 1). */}
       <CityClose d={d} />
     </main>
   );

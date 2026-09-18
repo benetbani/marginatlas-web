@@ -21,8 +21,12 @@
  * proven on the real, shipped function; the DATA is invented and lettered,
  * never a real place.
  *
- * WHAT THIS FOUND, live in the repo today, recorded in the task 4 report and
- * left alone here (this task's subject is the instrument, not the pages):
+ * WHAT THIS FOUND, live in the repo on 2026-09-08, recorded in the task 4
+ * report and left alone then (that task's subject was the instrument, not
+ * the pages). The city verdict card named twice below, and its builder
+ * `cityVerdictFacts`, were RETIRED on plan step 32 (2026-09-18: MODEL.md 8.3
+ * dissolves the rent verdict into the masthead's answer), so those two
+ * entries are history:
  *  - `buildCityDistrictBars` attaches a district's `character` field as
  *    `note` whenever the source data holds one (district_rows.ts), and
  *    RankedBars.tsx prints that note as free text beside the district's
@@ -89,7 +93,6 @@
 import { COPY } from "@/lib/spine/copy";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { buildMarkList } from "@/lib/spine/mark_list_rows";
-import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
@@ -112,27 +115,13 @@ function checkBannedCell(where: string, text: string | null | undefined) {
   if (BANNED.includes(norm)) pushRed("BANNED WORDS", `${where}: a whole cell reading "${text}", banned`);
 }
 
-/* BANNED WORDS, on static COPY strings that print as a whole cell or note.
-   `COPY.cityVerdict.cells.averageNote` used to be read here and was this
-   gate's one direct finding: it read "the baseline", the note under a cell
-   whose value was the number 1. Task 13 (2026-09-10) deleted the cell and the
-   note with it, on his ruling, so there is no static string left on this card
-   that prints as a whole cell; every cell's text is composed now and is
-   proven clean by the fixture sweep directly below, which is the stronger
-   check of the two anyway. */
-for (const [key, text] of Object.entries(COPY.cityVerdict.cells)) checkBannedCell(`COPY.cityVerdict.cells.${key}`, text);
-
-/* BANNED WORDS, on the shipped city-verdict builder against a synthetic,
-   lettered fixture, the same one verify_archetype_copy.ts's own "THE CITY
-   VERDICT CARD" test uses. */
-{
-  const fixture = { where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }, { name: "C", rent_mult: 3 }] } };
-  const v = cityVerdictFacts(fixture);
-  if (v) {
-    for (const c of v.cells) { checkBannedCell(`cityVerdictFacts.cells[${c.label}]`, String(c.value)); checkBannedCell(`cityVerdictFacts.cells[${c.label}].note`, c.note); }
-    checkBannedCell("cityVerdictFacts.answer", v.answer.value);
-  }
-}
+/* BANNED WORDS on the city verdict card, static and composed, LEFT WITH THE
+   CARD (plan step 32, 2026-09-18): this gate's one direct finding was that
+   card's "the baseline" cell (task 13 deleted the cell), and its composed
+   sweep ran the verdict builder on a lettered fixture; MODEL.md 8.3
+   dissolves the verdict into the masthead's answer and the builder is
+   deleted, so there is nothing here to read. The district card's composed
+   strings are still swept below. */
 
 /* DISTRICT ADJECTIVE, on the shipped district-ranking builder against a
    synthetic, lettered fixture: "No adjective, no tag word, no one-word
@@ -349,8 +338,6 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      that only exist after a placeholder is filled are tested in the form a
      reader meets them. */
   const fixture = { where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.2 }, { name: "A", slug: "a", rent_mult: 0.9 }, { name: "C", slug: "c", rent_mult: 3 }] } };
-  const v = cityVerdictFacts(fixture);
-  if (v) heads.push(["cityVerdictFacts.kicker", v.kicker], ["cityVerdictFacts.answer.label", v.answer.label], ["cityVerdictFacts.answer.basis", v.answer.basis]);
   const bars = buildCityDistrictBars(fixture);
   /* THE COLUMN HEAD IS COMPOSED NOW, AND THIS RULE EXISTS BECAUSE OF IT.
      "Times the cheapest" was a STATIC `COPY.cityDistricts.phoneHead.value`
@@ -511,7 +498,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
   }
 }
 
-console.log(`model laws (copy): ${reds.length} red(s) across ${poleCount} spectra poles, ${rowLabels.length} row labels, the city-verdict and city-district builders on a synthetic fixture, and the city-peers "same" reachability proof`);
+console.log(`model laws (copy): ${reds.length} red(s) across ${poleCount} spectra poles, ${rowLabels.length} row labels, the city-district builder on a synthetic fixture, and the city-peers "same" reachability proof`);
 for (const r of reds.slice(0, 60)) console.log(`  ${r.text}`);
 
 /* THE RATCHET (IMPORTANT 4 fix, review fix wave 2026-09-08). Per-rule counts,

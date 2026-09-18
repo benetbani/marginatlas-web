@@ -147,16 +147,16 @@ export function buildCityGlance(slug: string): CityGlanceData | null {
   if (density != null && densityFig) {
     const c = cellConfidence(densityFig.tag);
     if (c !== "measured") modelled.push(COPY.cityGlance.footNames.density);
-    cells.push({ key: "density", label: COPY.cityGlance.cells.density, value: density.toLocaleString("en-US"), confidence: c });
+    cells.push({ key: "density", label: COPY.cityGlance.cells.density, value: `${density.toLocaleString("en-US")} businesses`, confidence: c });
   } else missing.push(COPY.cityGlance.reasons.densityNone);
 
   if (cells.length === 0) return null;
 
-  /* The basis names a unit for every cell the card prints and for none it withholds. */
+  /* The basis names a unit for a printed cell whose label and figure do not
+     carry it (the permit days) and for none it withholds; "Visitors a year"
+     over "16.0M" and "Per 10,000 residents" over "371 businesses" say theirs. */
   const unitParts: string[] = [];
-  if (visitors != null) unitParts.push(COPY.cityGlance.units.visitors);
   if (days != null) unitParts.push(COPY.cityGlance.units.days);
-  if (density != null) unitParts.push(COPY.cityGlance.units.density);
   const basis = unitParts.length > 0 ? `${unitParts.join("; ")}.`.replace(/^./, (ch) => ch.toUpperCase()) : null;
 
   const withheld = missing.length > 0 ? fill(COPY.cityGlance.withheld, { n: String(missing.length), reasons: missing.join("; ") }) : null;

@@ -14,7 +14,6 @@ import { COPY } from "@/lib/spine/copy";
 import { AnswerCard } from "./AnswerCard";
 import { KvGrid } from "./KvGrid";
 import { cityHeroFacts, type CityHeroInstance } from "@/lib/spine/city_hero_facts";
-import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
@@ -27,7 +26,6 @@ import { RangeStrip } from "./RangeStrip";
 import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip, buildCityPremisesStrip } from "@/lib/spine/range_rows";
 import { SpectraTable } from "./SpectraTable";
 import { buildCharacterTables, buildCityCharacterTables, citiesWithSignature } from "@/lib/spine/character_rows";
-import { buildCityQuickReads } from "@/lib/spine/reads_rows";
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { buildChecks } from "@/lib/spine/checks_rows";
@@ -361,11 +359,10 @@ export function pickSpectraTableInstances(): Instance[] {
   return out;
 }
 
-/** The quick reads (run 16): every loaded city seed that holds them, keyed <slug>:reads, at body size. */
-export function pickCityReadsInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
-  return cities.filter((c) => buildCityQuickReads(c.seed)).map((c) => ({ ...c, why: `the quick reads at body size, ${buildCityQuickReads(c.seed)!.rows.length} of six` }));
-}
-export function SpectraTableStories({ instances = pickSpectraTableInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
+/* The quick reads' stories (run 16, keyed <slug>:reads) left with the lens grid
+   on plan step 32 (2026-09-18): MODEL.md 8.3 has no such block, a percentile
+   has no poles (R8), and the city's `01 glance` is a KvGrid story above. */
+export function SpectraTableStories({ instances = pickSpectraTableInstances() }: { instances?: Instance[] }) {
   return (
     <div data-stories="spectra-table">
       {instances.map((i) => {
@@ -382,16 +379,6 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances(), c
           </div>
         ) : null;
         return <Story kind="spectra-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
-      })}
-      {city.map((c) => {
-        const r = buildCityQuickReads(c.seed);
-        const el = r ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 347 }}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.cityReads.kicker}, {String(c.seed?.meta?.city ?? c.slug)}</div>
-            <SpectraTable rows={r.rows} scale="body" foot={r.foot} />
-          </div>
-        ) : null;
-        return <Story kind="spectra-table" key={`${c.slug}:reads`} iso2={`${c.slug}:reads`} why={c.why}>{el}</Story>;
       })}
     </div>
   );
@@ -1261,33 +1248,18 @@ export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }
     <div data-stories="city-hero">
       {instances.map((i) => {
         const f = cityHeroFacts(i.seed);
-        const el = f ? <AnswerCard id={`city-${i.slug}`} name={f.name} iso2={f.iso2} image={f.image} subtitle={f.subtitle} answer={f.answer} cells={f.cells} tone="ink" foot={f.foot} /> : null;
+        /* tone="accent" since plan step 32 (2026-09-18), as masthead.tsx draws it: the answer is the page's loud 1 (MODEL.md 8.3, `00 masthead`). */
+        const el = f ? <AnswerCard id={`city-${i.slug}`} name={f.name} iso2={f.iso2} image={f.image} subtitle={f.subtitle} answer={f.answer} cells={f.cells} tone="accent" foot={f.foot} /> : null;
         return <Story kind="city-hero" key={i.slug} iso2={i.slug} why={i.why}>{el}</Story>;
       })}
     </div>
   );
 }
 
-/** The city verdict card's instances (city:verdict, run 23): the city with ranked districts, and one with none, which self-omits. */
-export function pickCityVerdictInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
-  const out: CityHeroInstance[] = [];
-  const ranked = cities.find((c) => cityVerdictFacts(c.seed));
-  if (ranked) out.push({ ...ranked, why: `the lightest rent load among ${cityVerdictFacts(ranked.seed)!.districts} ranked districts` });
-  const none = cities.find((c) => c !== ranked && !cityVerdictFacts(c.seed));
-  if (none) out.push({ ...none, why: "self-omits: no ranked districts" });
-  return out;
-}
-export function CityVerdictStories({ instances }: { instances: CityHeroInstance[] }) {
-  return (
-    <div data-stories="city-verdict">
-      {instances.map((i) => {
-        const f = cityVerdictFacts(i.seed);
-        const el = f ? <AnswerCard id={`verdict-${i.slug}`} level="section" icon={f.icon} name={f.kicker} subtitle={null} answer={f.answer} cells={f.cells} tone="accent" /> : null;
-        return <Story kind="city-verdict" key={i.slug} iso2={i.slug} why={i.why}>{el}</Story>;
-      })}
-    </div>
-  );
-}
+/* The city verdict card's stories (city:verdict, run 23) left with the card on
+   plan step 32 (2026-09-18): MODEL.md 8.3 dissolves the rent verdict into the
+   masthead's answer ("dissolved, not cut"), so no page draws a second answer
+   card and no story does either. */
 
 /* THE INDEX (sys:stories-index, the build loop's run 21, 2026-09-06): one
    picker for every archetype's instance set, shared by the harness sheet and
@@ -1297,7 +1269,6 @@ export function CityVerdictStories({ instances }: { instances: CityHeroInstance[
    so the checker does not read it as a story. */
 export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, Instance[]> {
   const cityStrips = pickCityStripInstances(cityHero);
-  const cityReads = pickCityReadsInstances(cityHero);
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
     "answer-card": pickAnswerCardInstances(),
@@ -1307,7 +1278,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "city-cards": pickCityCardsInstances(),
     "tiers-table": pickTiersTableInstances(),
     "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why }))],
-    "spectra-table": [...pickSpectraTableInstances(), ...cityReads.map((c) => ({ iso2: `${c.slug}:reads`, why: c.why }))],
+    "spectra-table": pickSpectraTableInstances(),
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))],
     "pay-bars": pickPayBarsInstances(),
@@ -1319,7 +1290,6 @@ export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, I
     "mark-list": pickMarkListInstances(),
     "blocked-seat": pickBlockedSeatInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
-    "city-verdict": pickCityVerdictInstances(cityHero).map((c) => ({ iso2: c.slug, why: c.why })),
   };
 }
 

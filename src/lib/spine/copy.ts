@@ -471,21 +471,30 @@ export const COPY = {
    *  words, because the sample mark is switched off. Every string here was
    *  read aloud first. */
   cityGlance: {
-    cells: { visitors: "Visitors a year", days: "City permits", density: "Businesses per 10,000 residents" },
-    /** One unit clause per printed cell, joined with "; ", the country's rule. */
-    units: { visitors: "visitors a year", days: "days to clear the city's own permits", density: "businesses for every ten thousand residents" },
+    /** "Per 10,000 residents" over "371 businesses", not "Businesses per
+     *  10,000 residents" over "371": the longer label wrapped at the 220px cell
+     *  of a 1-1 band at lg, where the grid reserves one line, photographed on
+     *  London with "371" a line under "56 days" beside it (ruling 8, figures
+     *  in one row level); and the noun on the figure spares the basis a clause
+     *  (the art-direction gate's E1 budget of 220 characters of prose a card,
+     *  which the first draft's three lines ran to 231 on London and would have
+     *  run to 273 on Frankfurt, two withheld). Every string here is sized so
+     *  the worst case, two withheld and two modelled, stays under 220. */
+    cells: { visitors: "Visitors a year", days: "City permits", density: "Per 10,000 residents" },
+    /** The one unit clause the labels do not carry themselves: "56 days" of what. Visitors a year and businesses per 10,000 residents say their unit in the label and the figure. */
+    units: { days: "days to clear the city's own permits" },
     /** `{what}` is a list of the names below; `{verb}` is "is" or "are". */
-    footModelled: "{what} {verb} modelled for this city.",
-    /** The cells as the foot names them, singular so the sentence reads: "The permit days and the business count are modelled for this city." */
+    footModelled: "{what} {verb} modelled.",
+    /** The cells as the foot names them, singular so the sentence reads: "The permit days and the business count are modelled." */
     footNames: { days: "the permit days", density: "the business count" },
     /** `{n}` of the four cells, `{reasons}` the joined reasons below. */
     withheld: "{n} of 4 withheld: {reasons}.",
     reasons: {
       /** Item 20: the country's arrivals divided by a size-class constant, which is not a count of this city's visitors. */
-      visitorsCountry: "the visitor count on file is the country's, split by city size",
+      visitorsCountry: "the visitor count on file is the country's",
       visitorsNone: "the visitor count is not on file",
-      /** Every row on file is the country's index plus a step for the city's size class; no city holds a reading of its own. */
-      hdi: "the human development figure on file is the country's, not the city's",
+      /** Every row on file is the country's figure plus a step for the city's size class; no city holds a reading of its own. */
+      hdi: "human development is the country's figure",
       daysNone: "the city's permit days are not on file",
       densityNone: "the business count is not on file",
     },
@@ -509,8 +518,6 @@ export const COPY = {
     footPlacement: "where each sits among the cities is not shown yet.",
     footPlacementOne: "where it sits among the cities is not shown yet.",
   },
-  /** The city's quick reads (city:quick-reads, run 16): the kicker and the foot's words; the reads' own words are composed by the adapter that ranks them. */
-  cityReads: { kicker: "Quick reads", daysOne: "day of paperwork to register a business", daysMany: "days of paperwork to register a business" },
   /** The city's terminus (city:close, run 19): the doors out of a city page; the kicker is the close's. */
   cityClose: { districtDoor: "Start in {district}", districtsDoor: "Every district of {city}", countryDoor: "Open a business in {country}", compareDoor: "Compare {city} with other cities" },
   /** The city's premises strip (city:premises, run 13): the country's three averages by city size, the city's own size class in the accent, the basis line saying so. */
@@ -628,35 +635,6 @@ export const COPY = {
      *  is now the absolute figure itself (peer_rows.ts), so every row reads a
      *  real number and the home row needs no special case at all. */
     caveat: "Cost of living against a leading metro; income and visitors a year.",
-  },
-  /** THE CITY'S VERDICT CARD (city:verdict, run 23, rebased task 13 2026-09-10).
-   *  It printed the same figures as the district card below it, so it moves with
-   *  them: the two ends of the ranking are one answer, "the dearest district
-   *  costs this many times the cheapest", and the two cells are the things that
-   *  answer cannot carry, the middle of the ranking and how many districts stand
-   *  behind the claim. WHAT WENT WITH THE OLD BASIS: the answer "the lightest
-   *  rent load, x1.20", which under a basis where the lightest IS the reference
-   *  would read x1.00 and say nothing; and the "City average / 1 / the baseline"
-   *  cell, his exact complaint ("then you say the city average times one which is
-   *  the baseline"), a cell whose value was 1 for every city on earth by
-   *  definition. */
-  cityVerdict: {
-    kicker: "The rent, district by district",
-    answerLabel: "The rent gap",
-    /* THE SUBJECT IS SAID, NOT ASSUMED (2026-09-10, his "the language ... should
-       be quite natural language for this kind of pages"). This line read
-       "{dearest} against {cheapest}", two place names either side of a
-       comparator and nothing saying WHAT was set against what: a reader met
-       "West End against South London" under a figure and had to guess it meant
-       rent. One word fixes it, and it is the word the card is about. */
-    basis: "{dearest} rent, against {cheapest}",
-    /* TWO WORDS EACH, AND NEAR THE SAME LENGTH ON PURPOSE. The cell label
-       reserves 2.6em below the wide layout and then grows, so a label that
-       wraps to three lines while its neighbour wraps to two pushes one figure
-       5px below the other, which the archetype harness reports as UNEQUAL
-       (his ruling 7: equivalent elements are the same height, no matter
-       what). "The middle district" did exactly that at 375. */
-    cells: { middle: "Middle district", ranked: "Districts ranked" },
   },
   /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13,
    *  reworded and unfeatured task 14, 2026-09-10). Every district's shop rent

@@ -46,7 +46,6 @@ import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
-import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
@@ -183,78 +182,10 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   cityTermini++;
   checkDoors(c.slug, doors, "city");
 }
-/* THE CITY VERDICT CARD (city:verdict, run 23): the builder's law on a synthetic
-   fixture, since the ranked districts come from the async adapter and the gate
-   is browser-free and offline. Letters, never a place: the gate fabricates no
-   district. The law: the answer is the spread between the two ends and names
-   both; the cells are the middle of the ranking and the count; the multiples
-   are modelled and marked so; one district draws nothing; the words sit under
-   the caps of the key-value grid's cells and hold no banned word.
-
-   THREE DISTRICTS AND TWO, both proven (task 13 fix wave, 2026-09-10). The
-   three-district fixture is the comfortable input: it has a middle. TWO is the
-   case the middle cell was wrong for, because the same expression that finds
-   the middle of a ranking returns the CHEAPEST when there are only two, so the
-   card printed the reference district twice, once in the basis line naming it
-   and once in a cell labelled "Middle district". London is the only city with
-   districts today, so nothing renders two; a rule proven only on the input
-   that suits it is not proven. */
-{
-  const fixture = { where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }, { name: "C", rent_mult: 3 }] } };
-  const v = cityVerdictFacts(fixture);
-  if (!v) reds.push("verdict: three ranked districts draw nothing");
-  else {
-    /* THE ANSWER IS THE SPREAD NOW, task 13 (2026-09-10), not the lightest
-       district. Under a basis where the cheapest district IS the reference,
-       "the lightest rent load" is a multiple of one and says nothing, which
-       is his complaint about the old average cell arriving one column over.
-       On this fixture the cheapest is A at 0.9, so C at 3 rebases to 3.33 and
-       the basis has to name BOTH ends: an answer of "x3.33" with only one
-       district beside it is a number measured against something the reader
-       cannot see, the exact fault this task was opened for. THE NOTATION FLIPPED
-       to a trailing "x" with task 14 (see rentMult): the same figure, read in
-       the order it is said out loud. */
-    if (v.answer.value !== "3.33x" || !v.answer.basis.includes("C") || !v.answer.basis.includes("A")) reds.push(`verdict: the answer is not the spread between the two ends (${v.answer.value}, ${v.answer.basis})`);
-    if (v.answer.confidence === "measured") reds.push("verdict: the multiples are composed from tag constants and are marked measured");
-    /* THE AVERAGE CELL'S ASSERTION CHANGED FROM "x1.00" TO "1" because of his
-       ruling of 2026-09-04 ("then you say the city average times one which
-       is the baseline. You don't seem to have an idea on how the information
-       should be actually given"), not because the old literal collided with
-       model-laws-copy's BANNED WORDS rule (it did, but that collision is the
-       symptom, not the reason for this line): the banned-word gate is
-       correct that "x1.00" is not information, and this assertion no longer
-       requires the builder to keep printing it. */
-    /* THE CELLS ARE THE MIDDLE AND THE COUNT. The average cell is gone with
-       the basis that made it ("City average / 1 / the baseline", a value that
-       was 1 for every city on earth by definition), and the heaviest cell is
-       gone because the answer is now the heaviest: a cell repeating it would
-       be the "repeating the front part" fault he named on 2026-08-25. What is
-       left is what the spread cannot say. Three districts rebased on A put B
-       in the middle at 1.33. */
-    if (v.cells.length !== 2 || v.cells[0].value !== "1.33x" || v.cells[0].note !== "B" || v.cells[1].value !== "3") reds.push(`verdict: the cells are not the middle district and the count (${v.cells.map((c) => `${c.label} ${c.value} ${c.note ?? ""}`).join("; ")})`);
-    for (const c of v.cells) {
-      if (c.label.split(/\s+/).length > 4) reds.push(`verdict: label over four words: "${c.label}"`);
-      if (c.note && c.note.length > 48) reds.push(`verdict: note over 48 characters: "${c.note}"`);
-    }
-    for (const t of [v.kicker, v.answer.label, v.answer.basis, ...v.cells.flatMap((c) => [c.label, c.note ?? ""])]) for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`verdict: banned word "${b}" in "${t}"`);
-  }
-  /* TWO DISTRICTS: the answer still stands (a spread between two ends is
-     exactly what two districts hold), the middle cell is GONE, and the one
-     surviving cell is the count. Asserted by shape, not by index, so a future
-     reordering of the cells cannot make this pass by accident. */
-  const two = cityVerdictFacts({ where_to_trade: { list: [{ name: "B", rent_mult: 1.2 }, { name: "A", rent_mult: 0.9 }] } });
-  if (!two) reds.push("verdict: two ranked districts draw nothing");
-  else {
-    if (two.answer.value !== "1.33x" || !two.answer.basis.includes("B") || !two.answer.basis.includes("A")) reds.push(`verdict: two districts, the answer is not the spread (${two.answer.value}, ${two.answer.basis})`);
-    if (two.cells.some((c) => c.key === "middle")) reds.push(`verdict: two districts, and a middle cell reading "${String(two.cells.find((c) => c.key === "middle")?.value)}" beside "${String(two.cells.find((c) => c.key === "middle")?.note)}"`);
-    if (two.cells.length !== 1 || two.cells[0].key !== "ranked" || two.cells[0].value !== "2") reds.push(`verdict: two districts, the cells are ${two.cells.map((c) => `${c.label} ${c.value}`).join("; ")}`);
-    /* NO CELL IS A BARE WORD. The middle cell's old value was one; this holds
-       for every cell the card may ever grow, not just that one. */
-    for (const c of two.cells) if (!/\d/.test(String(c.value))) reds.push(`verdict: two districts, a cell with no figure in it ("${c.label}": "${String(c.value)}")`);
-  }
-  if (cityVerdictFacts({ where_to_trade: { list: [{ name: "A", rent_mult: 1 }] } })) reds.push("verdict: one district draws a card");
-  if (cityVerdictFacts({})) reds.push("verdict: no districts draw a card");
-}
+/* THE CITY VERDICT CARD'S TESTS LEFT WITH THE CARD (plan step 32, 2026-09-18):
+   MODEL.md 8.3 dissolves the rent verdict into the masthead's answer, the
+   builder city_verdict_facts.ts is deleted, and the district ranking below
+   is the one card that prints the district rents. */
 /* THE DISTRICT RANKING (city:districts, run 25): the builder's law on the same
    kind of synthetic fixture, lettered, never a place. */
 {
@@ -660,6 +591,6 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   for (const [block, n] of Object.entries(seated)) if (n === 0) reds.push(`seat ${block}: no country in the taxonomy takes this seat, so its story has nothing to draw`);
   console.log(`seats: ${seats.length} drawn blocked seats' copy held (one line each under ${SEAT_LINE_WORDS_CAP + 1} words, a foot naming its item); of ${codes.length} countries the thin seats stand on ${seated.setup} (setup), ${seated.peers} (peers), ${seated.money} (money) and ${seated.locals} (locals)`);
 }
-console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
+console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);

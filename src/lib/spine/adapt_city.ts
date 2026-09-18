@@ -17,12 +17,14 @@
  * city_view.ts synthesis (view.honestTake / view.space / view.customer / view.visitorSplit),
  * never invented here.
  *
- * The verdict winner is the REAL local margin leader from the leaderboard
+ * The trades' margin leader is the REAL local margin leader from the leaderboard
  * (buildCityActivities), NOT the seed's hardcoded hair-beauty. The entire trades
  * leaderboard, the entire where_to_trade district set, and every peer index recompute
  * from real sources; the seed's contradicting numbers (income 47K, split 80/20, the
  * fabricated Mayfair/Soho/Shoreditch districts, the illustrative peer indices) never
- * survive promotion.
+ * survive promotion. The `verdict` and `lenses` blocks this adapter built until plan
+ * step 32 (2026-09-18) are gone with the cards MODEL.md 8.3 retires; the masthead's
+ * answer is the average customer pay off the scorecard below.
  *
  * What is OMITTED on promotion (no honest per-figure source; see the field spec
  * docs/superpowers/specs/2026-07-03-city-field-provenance-map.md):
@@ -85,6 +87,7 @@ import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
 import { weakerTag } from "@/lib/facts/city_shard";
 import { COPY } from "@/lib/spine/copy";
+import { usd } from "@/components/spine/kit";
 
 /* ------------------------------------------------------------------------- */
 /* City record shape (the subset the adapter reads from city_list_v1.json).  */
@@ -108,6 +111,8 @@ type City = {
      carry it. The type omitted it, so the field was invisible to this module even
      though every record had one. */
   hdi?: number;
+  /* The per-row source notes, read for the masthead answer's confidence (item 31). */
+  sources?: Record<string, string>;
 };
 
 const CITIES = (cityListJson as { cities: City[] }).cities;
@@ -279,36 +284,40 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
         }
       : undefined;
 
-  /* -- verdict (winner = the REAL local margin leader) -------------------- */
-  // The keep_pct, winner_trade, and winner_slug all follow the real leader; the why /
-  // catch prose reuses the sanctioned city_view honest-take + space verdict.
-  const verdict =
-    marginLeader && view.honestTake
-      ? {
-          kicker: `The ${city.name} verdict`,
-          winner_trade: `${marginLeader.name} keeps the most`,
-          winner_slug: marginLeader.slug,
-          keep_pct: marginLeader.net_margin_pct,
-          why: view.honestTake.body ?? view.honestTake.verdict,
-          catch: view.space ? view.space.verdict : undefined,
-          // strip: winner take-home + break-in word; cost-to-open OMITTED.
-          strip: undefined,
-        }
-      : undefined;
+  /* THE VERDICT BLOCK LEFT ON PLAN STEP 32 (2026-09-18). It composed a winner
+     trade and the honest-take prose for a card no view read since the
+     2026-07-11 reformation (the verdict card that stood on the page read the
+     district builder, never this block), and MODEL.md 8.3 dissolves the
+     rent verdict into the masthead's answer. The margin leader above still
+     feeds the trades' margin read. */
 
   /* -- headline scorecard + self-employment ------------------------------ */
   // Only the two tiles with an honest source survive: the customer income (the real
   // London salary, 64.8K, RECONCILING the seed's 47K) and self-employment. Cost-to-open,
   // consumer-spend, rent-pressure, and survival tiles are OMITTED (no source). The
-  // masthead renders whatever tiles are present.
+  // masthead renders whatever tiles are present, the first as its answer.
+  /* THE ANSWER IS "AVERAGE CUSTOMER PAY" (MODEL.md 8.3, `00 masthead`; plan
+     step 32's first dispatch, 2026-09-18; M16: "What customers earn" is the
+     strip's kicker, and two cards do not share one name for two figures). The
+     figure is unchanged, `avg_gross_salary_usd_year` off the city list, a
+     mean, so the label says average and the basis says gross and a year; it
+     prints through the kit's `usd` (C29, no private formatter). Its
+     confidence is read off the row's own source note (item 31): the city's
+     wage premium at tier A is measured, a country median times a size-class
+     multiplier (96 rows) or a tier-B row is modelled. The masthead used to
+     take the self-employment tile as its answer because this tile's label
+     matched a lens grid row; the grid is retired and the tile leads. The
+     four readers of a city's income still differ (item 24); the one-builder
+     income is the fourth dispatch's, with `07 earnings`. */
   const scorecard: Array<{ label: string; value: string; sub?: string; unit?: string; confidence: string }> = [];
   const income = isNum(city.avg_gross_salary_usd_year) ? city.avg_gross_salary_usd_year : null;
   if (isNum(income)) {
+    const note = String(city.sources?.avg_gross_salary_usd_year ?? "");
     scorecard.push({
-      label: "Customer income",
-      value: `$${Math.round(income / 1000)}K`,
-      sub: "average earner, a year",
-      confidence: "measured",
+      label: COPY.cityHero.answerLabel,
+      value: usd(income),
+      sub: COPY.cityHero.answerBasis,
+      confidence: /tier-A/.test(note) ? "measured" : "modeled",
     });
   }
   if (isNum(econSnap.selfEmploymentPct)) {
@@ -587,122 +596,16 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       "Modeled from local business demography; the district and per-trade figures are real per-trade measurements.",
   };
 
-  /* ===================== THE FIVE READS, RESTORED ==========================
-     Rulebook v2 §3: a t4 figure is REPLACED with a knowable neighbour, not
-     deleted. This section was dropped with "no honest source" and the whole
-     chapter went dark with it, which is exactly what §2 calls a failure: "a page
-     of dashes is a failure, not a virtue." The July-3 baseline (§46) carries this
-     chapter as "The city, in five reads".
-
-     Every input below is a MEASURED field on the city record, present for all or
-     nearly all 252 cities, counted rather than assumed:
-
-       gdp_b                     252/252    how much trade the place does
-       avg_gross_salary_usd_year 252/252    what a customer earns
-       cost_of_living_index      252/252    what it costs to be here
-       hdi                       247/252    the depth of the workforce
-       tourist_arrivals_m        246/252    how much demand comes from outside
-
-     ONE FIXED SITE-WIDE FORMULA, never hand-picked per city (§8): each read is a
-     PERCENTILE RANK within the whole 252-city set. A rank is like-for-like by
-     construction, which is what §10 requires, and it means no raw cross-geography
-     money is ever shown.
-
-     §29A, pinned: worse reads low and left, better high and right, and a COST is
-     inverted before rendering so high = good on every scale in the band. Cost of
-     living is therefore flipped: a cheap city ranks HIGH on "Cost of living".
-
-     §5 is respected: no per-district keep ranking, no derived crowding score. The
-     baseline's "Room to enter" read was a crowding score and stays deleted.
-
-     NOT TAGGED AS A SAMPLE (§4/§4A): every input is measured and the transform is
-     a rank, not a model. Nothing here is estimated. */
-  const RANK_POOL = CITIES.filter((c) => c.slug !== city.slug);
-  /** Where this city sits among all the others on one field, 0 to 100. */
-  const rankPct = (value: number | undefined, field: keyof City, invert = false): number | undefined => {
-    if (!isNum(value)) return undefined;
-    const others = RANK_POOL.map((c) => c[field]).filter((v): v is number => isNum(v as number));
-    if (others.length < 20) return undefined; // too thin a pool for a rank to mean anything
-    const below = others.filter((v) => v < value).length;
-    const pct = Math.round((below / others.length) * 100);
-    return invert ? 100 - pct : pct;
-  };
-  /** Four plain words across the scale. The word IS the value (FORM-CATALOG). */
-  const word = (pos: number, poles: [string, string, string, string]) =>
-    pos < 25 ? poles[0] : pos < 50 ? poles[1] : pos < 75 ? poles[2] : poles[3];
-
-  const lensSpecs: Array<{
-    key: string; label: string; pos?: number; left: string; right: string;
-    words: [string, string, string, string];
-  }> = [
-    { key: "demand", label: "Demand depth", pos: rankPct(city.gdp_b, "gdp_b"),
-      left: "Thin", right: "Deep", words: ["Thin", "Modest", "Solid", "Deep"] },
-    { key: "income", label: "Customer income", pos: rankPct(city.avg_gross_salary_usd_year, "avg_gross_salary_usd_year"),
-      left: "Modest", right: "High", words: ["Modest", "Middling", "Comfortable", "High"] },
-    /* RENAMED 2026-08-24, and it was my own mislabel from two iterations earlier.
-       This read is built on the cost index, and that file describes itself as
-       "Cost-of-Living Plus Rent Index per city, NYC = 100". It measures what it
-       costs a PERSON to live somewhere. Calling it "Affordable space" on a page
-       about opening a business invites the reader to take it for commercial rent,
-       which it is not, and §13 asks for titles that are descriptive and instantly
-       understandable.
-
-       Renaming it also answers a second question the page could not otherwise
-       answer. "Your own living costs" wanted a founder's monthly burn, rent plus
-       groceries plus transport, none of which has a per-city source. This IS that
-       question, measured and already on the page; it was just wearing the wrong
-       name. See design/replacements/owner-runway.md.
-
-       THE SAME INDEX IS MISLABELLED ONCE MORE ON THIS PAGE, in the peer strip,
-       which calls it "Rent against peer cities" inside a chapter called "What
-       space costs". Not touched here, because that is its own section and its own
-       iteration, and it is recorded as the next row. */
-    { key: "rent_relief", label: "Cost of living", pos: rankPct(city.cost_of_living_index, "cost_of_living_index", true),
-      left: "Costly", right: "Cheap", words: ["Costly", "Dear", "Fair", "Cheap"] },
-    { key: "talent", label: "Talent pool", pos: rankPct(city.hdi, "hdi"),
-      left: "Scarce", right: "Deep", words: ["Scarce", "Thin", "Solid", "Deep"] },
-    { key: "visitors", label: "Trade from outside", pos: rankPct(city.tourist_arrivals_m, "tourist_arrivals_m"),
-      left: "Local", right: "Visited", words: ["Local", "Mostly local", "Mixed", "Visited"] },
-    /* SIX, not five, and the sixth earns its place two ways. It fills the 2x3 grid,
-       so no read is left alone beside a blank half (§17, the sparse-but-wide reject
-       this section is specifically named for). And it says something the others do
-       not: measured against how much trade a place does, market size correlates at
-       r = 0.63, so the two disagree for a large share of cities, and against
-       customer income at r = -0.29, which is the opposite direction. A big poor
-       city and a small rich one read differently here, which is what §7 asks. */
-    { key: "size", label: "Market size", pos: rankPct(city.pop_m, "pop_m"),
-      left: "Small", right: "Large", words: ["Small", "Modest", "Big", "Large"] },
-  ];
-  const scales = lensSpecs
-    .filter((l): l is typeof l & { pos: number } => isNum(l.pos))
-    .map((l) => ({ key: l.key, label: l.label, pos: l.pos, word: word(l.pos, l.words), left: l.left, right: l.right }));
-  /* The chapter needs enough reads to be worth a chapter, and the grid is two
-     columns, so an ODD count leaves one read alone beside a blank half. Five of six
-     is the floor and six is the shape; at five the band would be lopsided, which is
-     the exact defect §17 names. */
-  /* HOW FAST YOU CAN OPEN, the knowable half of what the lease-terms card asked.
-     See design/replacements/lease-terms.md. §3: the deposit, lease length and
-     rent-free months it wanted are tier 4 with no per-city source, and the SPACE
-     half has no neighbour at all, because the one space field this record carries
-     is already spent twice on the page. The paperwork half is knowable for 235 of
-     252 cities, 93%.
-
-     IT SITS WITH THE CONDITIONS, AND THE FIRST ATTEMPT PUT IT IN THE WRONG PLACE.
-     It rode on the trades block, which is undefined unless a city holds four or
-     more trades with local figures, so on Lagos, Dhaka, New York and Mumbai the
-     figure was carried and reached nobody, which is the exact fault this whole
-     effort exists to fix. Caught by asking what could be wrong with it rather
-     than by any gate. The conditions card renders for every city, and how long
-     the paperwork takes is a condition of the place. */
-  const daysToRegister = isNum(econSnap.daysToStart) ? econSnap.daysToStart : undefined;
-
-  const lenses = scales.length >= 5
-    ? {
-        _meta: { confidence: "measured", source: "rank among all cities carried", as_of: "2026-08" },
-        scales,
-        days_to_register: daysToRegister,
-      }
-    : undefined;
+  /* THE LENS GRID LEFT ON PLAN STEP 32 (2026-09-18). It ranked six fields of
+     the city list against the other 251 cities (RANK_POOL and rankPct, a
+     percentile per field, the words for each quarter) for the quick-reads
+     spectra card; MODEL.md 8.3 has no such block (a percentile has no poles,
+     R8; the city's `01 glance` is the fact card and `02 among-cities` the
+     placement seat, both built off the files by their own builders). Its one
+     other reading, the days to register off the country snapshot's sole-trader
+     pick, went with it; the glance prints the city's own permit days off the
+     shard instead. The day the placement form is clicked, the rank comes from
+     placement.ts (one builder, every page, R2), not from here. */
 
   /* ============ WHAT TO OPEN HERE, RESTORED AS A FUNNEL BLOCK =============
      The July-3 baseline (§46) carries a chapter called "What to open, and what
@@ -777,8 +680,6 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
 
   return {
     meta,
-    verdict,
-    lenses,
     trades_here,
     headline,
     trades,
