@@ -34,7 +34,7 @@ import { COPY } from "@/lib/spine/copy";
 import { buildPeerTable, buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_rows";
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
-import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor, buildTradeCloseDoors } from "@/lib/spine/close_rows";
 import { buildChecks, CHECKS_BANK, WAIT_DAYS_THRESHOLD } from "@/lib/spine/checks_rows";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { getFormationRowByTier } from "@/lib/tax/country_rates";
@@ -72,6 +72,9 @@ import { buildTradePeers, TRADE_PEERS_CAP } from "@/lib/spine/trade_peer_rows";
 import { buildClears } from "@/lib/spine/clears_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
 import { buildMix, MIX_WHOLE, MIX_SUM_TOLERANCE } from "@/lib/spine/mix_rows";
+import { buildRivals } from "@/lib/spine/rivals_rows";
+import { buildWorth, countWorthBases } from "@/lib/spine/worth_rows";
+import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { buildMarket, densityText, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -1420,6 +1423,126 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   }
   for (const [block, n] of Object.entries(seated)) if (n === 0) reds.push(`seat ${block}: no country in the taxonomy takes this seat, so its story has nothing to draw`);
   console.log(`seats: ${seats.length} drawn blocked seats' copy held (one line each under ${SEAT_LINE_WORDS_CAP + 1} words, a foot naming its item); of ${codes.length} countries the thin seats stand on ${seated.setup} (setup), ${seated.peers} (peers), ${seated.money} (money) and ${seated.locals} (locals)`);
+}
+/* THE TRADE'S EXIT (MODEL.md 8.6 `13 rivals`, `14 worth`, `15 close`; plan
+   step 33's sixth dispatch, 2026-09-18). THE RIVALS on fixture seeds in the
+   shapes the data takes (the sibling resolver needs the database, so the
+   shapes are typed from the 2026-09-18 probe: six siblings with four keyed
+   on London and California, six all keyed on Berlin, none on Mumbai cafes
+   and Cairo): every drawn row holds a figure that prints as one, the rows
+   fall in order, the headline is the LOWER MEDIAN of the drawn rows (never
+   above the highest), the withheld count and its line agree both ways and
+   the line carries a digit, the label says which few the middle is the
+   middle of, every row is a door to a path under the place, no sibling on
+   the archetype's default is drawn (read by key, item 48's note: a keyed
+   trade authored at 80,000 still prints), and the floor holds from the low
+   side: three keyed of six, two siblings and no sibling all take the
+   withheld state with a line and NO rows, never a short list. The heads at
+   three words, the headline's label at four. THE WORTH on every shard id:
+   the strip with two marks where money is shown and the sale figures rest
+   on owner earnings, each mark the shard's figure times the take-home to
+   the dollar, the low under the high, the labels under three words; the
+   operating-earnings line on exactly the shards whose basis word is not
+   SDE (38, item 52) and NEVER a mark there whatever the money gate; the
+   withheld line off `moneyShown` on the rest; never a bare multiple in any
+   string (clause 15). THE DOORS on three fixture seeds through the
+   country's own `checkDoors` (the cap, one pill, distinct first words,
+   every href a route in the app folder, no "with Pro", no banned word):
+   London (three doors, the city page), California (three, the state page),
+   and a place with no page of its own (two doors, the industry page and
+   the pill; a door to a page that does not exist is never drawn); the pill
+   last on every one; no pricing door and no sibling door on any. */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+      if (/\u2014/.test(t)) reds.push(`${where}: an em dash in "${t}"`);
+    }
+  };
+  const siblings = (slugs: string[]) => ({ list: slugs.map((slug) => ({ name: slug.replace(/-/g, " "), slug, href: `/gb/london/${slug}` })) });
+  const fourOfSix = buildRivals({ meta: { trade: "Restaurants" }, rivals: siblings(["legal-services", "software-development", "office-business-support", "real-estate-agencies", "employment-services", "grocery-stores"]) });
+  if (!fourOfSix || fourOfSix.state !== "list" || fourOfSix.rows.length !== 4 || fourOfSix.withheld !== 2 || !fourOfSix.withheldLine || fourOfSix.siblings !== 6 || fourOfSix.keyed !== 4) reds.push("rivals (four keyed of six): four rows, two withheld with a line, six siblings do not build as expected");
+  const sixKeyed = buildRivals({ meta: { trade: "Restaurants" }, rivals: siblings(["marketing-design-agencies", "real-estate-agencies", "specialty-trades-mixed", "engineering-architecture", "software-development", "legal-services"]) });
+  if (!sixKeyed || sixKeyed.state !== "list" || sixKeyed.rows.length !== 6 || sixKeyed.withheld !== 0 || sixKeyed.withheldLine != null) reds.push("rivals (six keyed): six rows and no withheld line do not build as expected");
+  for (const [name, r] of [["four keyed of six", fourOfSix], ["six keyed", sixKeyed]] as const) {
+    if (!r || r.state !== "list") continue;
+    for (const row of r.rows) {
+      if (!Number.isFinite(row.value) || !/\d/.test(r.fmt(row.value))) reds.push(`rivals (${name}): row "${row.name}" prints no figure`);
+      if (startupCapitalArchetypeKeyed(row.key) == null) reds.push(`rivals (${name}): row "${row.name}" is on the archetype's default and is drawn`);
+      if (!row.href.startsWith("/gb/london/")) reds.push(`rivals (${name}): row "${row.name}" is not a door under the place (${row.href})`);
+    }
+    for (let i = 1; i < r.rows.length; i++) if (r.rows[i].value > r.rows[i - 1].value) reds.push(`rivals (${name}): "${r.rows[i].name}" ranks below "${r.rows[i - 1].name}" and holds the larger figure`);
+    const sorted = r.rows.map((x) => x.value).sort((a, b) => a - b);
+    if (r.middle !== sorted[Math.floor((sorted.length - 1) / 2)]) reds.push(`rivals (${name}): the middle (${r.middle}) is not the lower median of the drawn rows`);
+    if (r.middle != null && r.middle > r.rows[0].value) reds.push(`rivals (${name}): the middle stands above the highest row`);
+    if ((r.withheld > 0) !== (r.withheldLine != null)) reds.push(`rivals (${name}): ${r.withheld} withheld and the line is ${r.withheldLine ? "printed" : "absent"}`);
+    if (r.withheldLine && !/\d/.test(r.withheldLine)) reds.push(`rivals (${name}): the withheld line counts nothing ("${r.withheldLine}")`);
+    if (r.middleLabel !== COPY.markList.middleOfDrawn.replace("{n}", countWord(r.rows.length))) reds.push(`rivals (${name}): the headline's label does not say which few it is the middle of ("${r.middleLabel}")`);
+    if (r.middleLabel.trim().split(/\s+/).length > 4) reds.push(`rivals (${name}): the headline label runs over four words ("${r.middleLabel}")`);
+    for (const [where, t] of [["the name head", r.head.name], ["the value head", r.head.value]] as Array<[string, string]>) if (t.trim().split(/\s+/).length > 3) reds.push(`rivals (${name}): ${where} runs over three words ("${t}")`);
+    ban(`rivals (${name})`, [r.kicker, r.basis, r.middleLabel, r.head.name, r.head.value, r.withheldLine ?? ""]);
+  }
+  const under: Array<[string, any, number, number]> = [
+    ["three keyed of six", siblings(["legal-services", "software-development", "real-estate-agencies", "office-business-support", "employment-services", "vocational-other-training"]), 6, 3],
+    ["two siblings", siblings(["legal-services", "software-development"]), 2, 2],
+    ["no sibling", { list: [] }, 0, 0],
+  ];
+  for (const [name, rivals, siblingsN, keyedN] of under) {
+    const r = buildRivals({ meta: { trade: "Restaurants" }, rivals });
+    if (!r || r.state !== "withheld" || r.rows.length !== 0 || !r.stateLine || r.withheldLine != null || r.siblings !== siblingsN || r.keyed !== keyedN) { reds.push(`rivals (${name}): the withheld state with its line and no rows does not build (under the floor of ${MARK_LIST_FLOOR})`); continue; }
+    if (!r.stateLine.startsWith("Not gathered yet:")) reds.push(`rivals (${name}): the state line is not in the site's idiom ("${r.stateLine}")`);
+    if (siblingsN > 0 && !r.stateLine.includes(countWord(keyedN))) reds.push(`rivals (${name}): the state line does not count the siblings with a figure in words ("${r.stateLine}")`);
+    ban(`rivals (${name})`, [r.stateLine, r.basis]);
+  }
+  if (buildRivals({ meta: {} })) reds.push("rivals: a seed with no trade draws a card");
+  const ids = readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, "")).sort();
+  const bases = countWorthBases(ids);
+  let strips = 0, otherLines = 0, withheldLines = 0;
+  for (const id of ids) {
+    const shown = buildWorth({ meta: { industry_id: id, money_shown: true }, owner: { take_home_usd: 36000 } });
+    const hidden = buildWorth({ meta: { industry_id: id, money_shown: false }, owner: { take_home_usd: 36000 } });
+    if (!shown || !hidden) { reds.push(`worth (${id}): the builder returned nothing for a shard that holds both sale figures`); continue; }
+    const other = shown.figures.basisWord.toUpperCase() !== "SDE";
+    if (other) {
+      otherLines++;
+      if (shown.state !== "otherBasis" || hidden.state !== "otherBasis" || shown.marks.length || hidden.marks.length || !shown.withheld) reds.push(`worth (${id}): a shard whose sale figures rest on ${shown.figures.basisWord} draws a mark, or no line, in one of its states`);
+    } else {
+      if (shown.state !== "strip" || shown.marks.length !== 2) reds.push(`worth (${id}): money shown and owner earnings do not draw the two-mark strip`);
+      else {
+        strips++;
+        const [lo, hi] = shown.marks;
+        if (lo.value !== Math.round(shown.figures.multipleLow * 36000) || hi.value !== Math.round(shown.figures.multipleHigh * 36000)) reds.push(`worth (${id}): a mark is not the shard's figure times the take-home to the dollar`);
+        if (!(lo.value < hi.value)) reds.push(`worth (${id}): the low end is not under the high end`);
+        for (const m of shown.marks) { if (m.label.trim().split(/\s+/).length > 3) reds.push(`worth (${id}): a mark label over three words ("${m.label}")`); if (m.lead || m.accent) reds.push(`worth (${id}): a mark carries a lead or an accent; a low and a high are siblings`); }
+        if (!shown.basis || !shown.note) reds.push(`worth (${id}): the strip stands without its basis or its note`);
+      }
+      if (hidden.state !== "withheld" || hidden.marks.length || !hidden.withheld) reds.push(`worth (${id}): off moneyShown the card does not stand withheld with its line`);
+      else withheldLines++;
+    }
+    for (const w of [shown, hidden]) ban(`worth (${id})`, [w.basis ?? "", w.note ?? "", w.withheld ?? "", ...w.marks.map((m) => m.label)]);
+    for (const t of [shown.basis, shown.note, shown.withheld, hidden.withheld]) if (t && /\bmultiple/i.test(t)) reds.push(`worth (${id}): a string says "multiple" (clause 15): "${t}"`);
+  }
+  if (bases.other !== otherLines) reds.push(`worth: ${otherLines} shards took the operating-earnings line against ${bases.other} whose basis word is not SDE`);
+  if (buildWorth({ meta: { industry_id: "no_such_trade", money_shown: true }, owner: { take_home_usd: 36000 } })) reds.push("worth: a trade with no shard draws a card");
+  const tradeCloseSeeds: Array<[string, any, number, string]> = [
+    ["London", { meta: { trade: "Restaurants", iso2: "GB", geo: "london", industry: "restaurants", industry_id: "restaurants", city: "London" } }, 3, "/cities/london"],
+    ["California", { meta: { trade: "Restaurants", iso2: "US", geo: "california", industry: "restaurants", industry_id: "restaurants", city: "California" } }, 3, "/us/california"],
+    ["a place with no page", { meta: { trade: "Cafés & coffee shops", iso2: "GB", geo: "gb-e06000043", industry: "cafes-coffee-shops", industry_id: "cafes_coffee", city: "Portsmouth" } }, 2, ""],
+  ];
+  let tradeTermini = 0;
+  for (const [name, seed, expected, placeHref] of tradeCloseSeeds) {
+    const doors = buildTradeCloseDoors(seed);
+    if (doors.length !== expected) { reds.push(`trade close (${name}): ${doors.length} doors, expected ${expected}`); continue; }
+    tradeTermini++;
+    checkDoors(name, doors, "trade close");
+    if (doors[doors.length - 1].kind !== "pill" || doors[doors.length - 1].href !== "/compare") reds.push(`trade close (${name}): the compare pill is not last, or does not go to /compare`);
+    if (doors[0].key !== "industry" || !doors[0].href.startsWith("/industries/")) reds.push(`trade close (${name}): the first door is not the industry page's`);
+    if (placeHref && doors[1].href !== placeHref) reds.push(`trade close (${name}): the place door goes to ${doors[1].href}, not ${placeHref}`);
+    if (doors.some((d) => d.href === "/pricing" || /instead$/.test(d.label))) reds.push(`trade close (${name}): a pricing door or a sibling door is drawn`);
+  }
+  if (buildTradeCloseDoors({ meta: {} }).length) reds.push("trade close: a seed with no trade draws a door");
+  console.log(`exit (13, 14, 15): the rivals' laws held on five fixture shapes (two lists, three withheld); the worth on ${ids.length} shards, ${strips} strips with money shown, ${otherLines} operating-earnings lines (${bases.other} by basis word, ${bases.held} pairs held), ${withheldLines} withheld off moneyShown; ${tradeTermini} trade termini against the routes`);
 }
 console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

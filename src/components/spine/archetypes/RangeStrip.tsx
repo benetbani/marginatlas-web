@@ -58,6 +58,13 @@ export type RangeStripProps = {
   marks: StripMark[];
   scale?: "log" | "linear";
   fmt: (v: number) => string;
+  /** The basis line beneath the strip. AN EMPTY STRING DRAWS NOTHING (plan
+   *  step 33's sixth dispatch, 2026-09-18): the trade page's `14 worth` stands
+   *  its basis and note at the card's foot, the one-object card's composition
+   *  (the opener at the top, the basis at the foot, the object centred in
+   *  what is left), and an empty paragraph under the track would be an
+   *  invisible 18px that shifts the centre. Every other caller passes its
+   *  basis here and nothing changes for it. */
   basis: string;
   /** One quiet line beneath the basis (an absent spread, an extra figure). */
   note?: string | null;
@@ -76,7 +83,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
       <div data-archetype="range-strip" data-idea="I12" data-marks="1">
         <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{m.label}</div>
         <Fig className={`mt-1 block font-semibold leading-none ${m.lead ? "text-[length:var(--t-focal)]" : "text-[length:var(--t-head)]"} ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(m.value)}</Fig>
-        <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+        {basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
         {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
         {extra ? <Extra extra={extra} /> : null}
       </div>
@@ -129,7 +136,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
           <div key={`l-${p.m.key}`} data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ ...align(p.x), top: (twoRows ? 60 : 48) + shift + rows[i] * 18 }}>{p.m.label}</div>
         ))}
       </div>
-      <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+      {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
       {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
       {extra ? <Extra extra={extra} /> : null}
     </div>

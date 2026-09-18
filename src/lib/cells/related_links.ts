@@ -82,6 +82,14 @@ import type { Cell } from "@/lib/cells";
 export type RelatedLink = {
   label: string;
   href: string;
+  /** THE TRADE BEHIND AN "OTHER TRADES HERE" LINK (MODEL.md 8.6 `13 rivals`;
+   *  plan step 33's sixth dispatch, 2026-09-18): the sibling trade's URL slug
+   *  and taxonomy name, carried because the trade page's rivals list keys the
+   *  archetype's cost to open by that slug and prints the bare name as the
+   *  row's label. Set on the `otherTradesHere` category alone; a label alone
+   *  cannot say which trade it names once "in {place}" is on it. */
+  tradeSlug?: string;
+  tradeName?: string;
 };
 
 export type CellRelatedLinks = {
@@ -597,7 +605,7 @@ export function buildCellRelatedLinks(input: {
     });
     if (!href) return;
     tradesUsed.add(trade.slug);
-    take(otherTradesHere, { label: `${trade.name} in ${placeName}`, href });
+    take(otherTradesHere, { label: `${trade.name} in ${placeName}`, href, tradeSlug: trade.slug, tradeName: trade.name });
   };
 
   if (usState) {

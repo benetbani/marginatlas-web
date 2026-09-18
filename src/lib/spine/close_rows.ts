@@ -11,8 +11,9 @@
 import { coveredCities } from "@/lib/cities/city_pages";
 import { COPY } from "@/lib/spine/copy";
 import type { Door } from "@/components/spine/archetypes/Terminus";
-import { countryPageTarget } from "@/lib/geo/page_targets";
+import { countryPageTarget, geoPageTarget } from "@/lib/geo/page_targets";
 import { inSentence } from "@/lib/spine/place_names";
+import { industryToSlug } from "@/lib/taxonomy";
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
 
@@ -71,5 +72,43 @@ export function buildCityCloseDoors(seed: any): Door[] {
   const country = iso2.length === 2 ? countryPageTarget(iso2) : null;
   if (country) doors.push({ key: "country", label: fill(COPY.cityClose.countryDoor, { country: inSentence(String(meta.country_name ?? country.label)) }), href: country.href, kind: "link" });
   doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city }), href: "/compare", kind: "pill" });
+  return doors;
+}
+
+/** THE TRADE'S DOORS (MODEL.md 8.6 `15 close`; plan step 33's sixth
+ *  dispatch, 2026-09-18), three at Terminus's cap, the pill last (M21):
+ *  across to the industry page, "See {trade} in other cities", the same
+ *  trade elsewhere (M23 binds the industry page to open on the trade across
+ *  places, so the door lands on its answer); up to the place's own page,
+ *  "Opening a business in {city}", the city masthead's own idiom, through
+ *  the one resolver that says which place pages exist (page_targets.ts:
+ *  London to its city page, California to its state page, and NOTHING where
+ *  neither resolves, so a door to a page that does not exist is never
+ *  drawn); and the compare pill, "Compare {trade} across cities", to
+ *  `/compare`, which puts the same business in up to three cities side by
+ *  side. The pricing door leaves this close for the chrome, and "Look at
+ *  {sibling} in {city} instead" leaves because `13 rivals` is that door on
+ *  every row. The industry door's slug is the taxonomy's canonical one
+ *  (`industryToSlug`, the route's own `generateStaticParams`), falling back
+ *  to the URL's segment where the id is not carried. Built from the seed's
+ *  meta alone, so the copy gate proves the doors on fixtures without the
+ *  adapter; the trade's name in lowercase in a sentence, as the old close
+ *  printed it. The last-checked line and the report-an-error link 8.6
+ *  names under a hairline are NOT built: no fact on any shard carries a
+ *  year and no correction route exists (the city's sixth dispatch found the
+ *  same on its page), and both wait on the controller. */
+export function buildTradeCloseDoors(seed: any): Door[] {
+  const meta = seed?.meta ?? {};
+  const trade = String(meta.trade ?? "").trim();
+  const iso2 = String(meta.iso2 ?? "").toUpperCase();
+  const geo = String(meta.geo ?? "").trim();
+  if (!trade) return [];
+  const doors: Door[] = [];
+  const industrySlug = (typeof meta.industry_id === "string" ? industryToSlug(meta.industry_id) : null) || (typeof meta.industry === "string" ? meta.industry : null);
+  const tradeInSentence = trade.toLowerCase();
+  if (industrySlug) doors.push({ key: "industry", label: fill(COPY.tradeClose.industryDoor, { trade: tradeInSentence }), href: `/industries/${industrySlug}`, kind: "link" });
+  const place = iso2.length === 2 && geo ? geoPageTarget(iso2, geo) : null;
+  if (place) doors.push({ key: "place", label: fill(COPY.tradeClose.cityDoor, { city: place.name }), href: place.href, kind: "link" });
+  doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade: tradeInSentence }), href: "/compare", kind: "pill" });
   return doors;
 }

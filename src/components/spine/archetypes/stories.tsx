@@ -33,7 +33,7 @@ import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { buildChecks } from "@/lib/spine/checks_rows";
 import { Terminus } from "./Terminus";
-import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor, buildTradeCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
@@ -60,6 +60,9 @@ import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "@/components/spine/cell/turn-one";
 import { ClearsCard, LastsCard, WatchSeat, MixCard } from "@/components/spine/cell/turn-two";
+import { RivalsCard, WorthCard, CloseCard } from "@/components/spine/cell/exit";
+import { buildRivals } from "@/lib/spine/rivals_rows";
+import { buildWorth } from "@/lib/spine/worth_rows";
 import { marketCells } from "@/components/spine/cell/market";
 import { buildMix } from "@/lib/spine/mix_rows";
 import { buildMarket } from "@/lib/spine/market_rows";
@@ -443,9 +446,22 @@ export function pickCellSpreadInstances(cell: CellHeroInstance[]): Instance[] {
     return { iso2: cellSpreadKey(c), why };
   });
 }
+/** WHAT ONE SELLS FOR, `14 worth` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18), keyed cell:<handle>:worth off the seeds the sheet loads and drawn by the page's own card (cell/exit.tsx WorthCard) at the 347 the narrow seat of its 2-1 band takes at 1280: London (two marks, the shard's sale figures times the take-home `00` prints, the basis and its note at the foot, no 30 by the row's law), London dental practices (a shard whose sale figures rest on operating earnings, one of 38: the stated line where the strip would stand, item 52) and Mumbai cafes (money not shown: the withheld line). The strip is the page's second and the bookend to `01`. */
+export const cellWorthKey = (c: CellHeroInstance) => `cell:${c.key}:worth`;
+function worthWhy(d: NonNullable<ReturnType<typeof buildWorth>>): string {
+  return d.state === "strip" ? "trade block 14 on the exemplar: two marks, the low and the high of what one sells for in currency, the basis and its note at the foot, no 30" : d.state === "otherBasis" ? "trade block 14 on a shard whose sale figures rest on operating earnings: the line where the strip would stand, no figure (item 52)" : "trade block 14 withheld: money not shown, no take-home to work from, the line where the strip would stand";
+}
+export function pickCellWorthInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "worth")).map((c) => ({ c, d: buildWorth(c.seed) })).filter((x) => x.d).map(({ c, d }) => ({ iso2: cellWorthKey(c), why: worthWhy(d!) }));
+}
 export function RangeStripStories({ instances = pickRangeStripInstances(), city = pickCityStripInstances(), cell = [] }: { instances?: Instance[]; city?: CityStripInstance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="range-strip">
+      {cell.filter((c) => cellServes(c.key, "worth")).map((c) => {
+        const d = buildWorth(c.seed);
+        if (!d) return null;
+        return <Story kind="range-strip" key={cellWorthKey(c)} iso2={cellWorthKey(c)} why={worthWhy(d)}><div style={{ maxWidth: 347 }}><WorthCard id={`worth-cell-${c.key}`} worth={d} /></div></Story>;
+      })}
       {cell.filter((c) => cellServes(c.key, "spread")).map((c) => {
         const d = buildTradeSpread(c.seed);
         const el = d ? (
@@ -590,7 +606,7 @@ export function pickNoteListInstances(): Instance[] {
 export function suitsInputsFor(key: string): { industryId: string; iso2: string } | null {
   const [, handle] = key.split(":");
   if (handle === "london") return { industryId: "restaurants", iso2: "GB" };
-  if (handle === "none") return { industryId: "no_such_trade", iso2: "GB" };
+  if (handle === "none") return { industryId: "no_such_trade", iso2: "GB" }; // allow-industry-ref: the planted id no lookup holds, the not-gathered story's whole point (the industry-refs gate reads a literal industryId as a trade reference)
   return null;
 }
 
@@ -684,9 +700,19 @@ export function pickCityCloseInstances(cities: CityHeroInstance[]): CityHeroInst
   if (plain) out.push({ ...plain, why: "a second city, the same three doors on its own names" });
   return out;
 }
-export function TerminusStories({ instances = pickTerminusInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
+/** THE TRADE'S DOORS, `15 close` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18), keyed cell:<handle>:close off the seeds the sheet loads and drawn by the page's own card (cell/exit.tsx CloseCard) at the full width the terminus takes: the exemplar's three doors, the industry page, the city page up one altitude and the compare pill last (M21); no pricing door, no sibling door. */
+export const cellCloseKey = (c: CellHeroInstance) => `cell:${c.key}:close`;
+export function pickCellCloseInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "close") && buildTradeCloseDoors(c.seed).length > 0).map((c) => ({ iso2: cellCloseKey(c), why: "trade block 15 on the exemplar: the industry page, the city page up one altitude, the compare pill last; no pricing door, no sibling door" }));
+}
+export function TerminusStories({ instances = pickTerminusInstances(), city = [], cell = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="terminus">
+      {cell.filter((c) => cellServes(c.key, "close")).map((c) => {
+        const doors = buildTradeCloseDoors(c.seed);
+        if (doors.length === 0) return null;
+        return <Story kind="terminus" key={cellCloseKey(c)} iso2={cellCloseKey(c)} why={pickCellCloseInstances([c])[0]?.why ?? c.why}><div style={{ maxWidth: 1072 }}><CloseCard id={`close-cell-${c.key}`} doors={doors} /></div></Story>;
+      })}
       {instances.map((i) => {
         const [iso2, form] = i.iso2.split(":");
         if (form === "compare") {
@@ -1463,6 +1489,11 @@ export function BentoMetricStories({ instances = pickBentoMetricInstances(), cel
         if (!cl) return null;
         return <Story kind="bento-metric" key={cellClearsKey(c)} iso2={cellClearsKey(c)} why={clearsWhy(cl)}><div style={{ maxWidth: 520 }}><ClearsCard id={`clears-cell-${c.key}`} clears={cl} /></div></Story>;
       })}
+      {cell.filter((c) => cellServes(c.key, "rivals")).map((c) => {
+        const r = buildRivals(c.seed);
+        if (!r || r.state === "list") return null;
+        return <Story kind="bento-metric" key={cellRivalsKey(c)} iso2={cellRivalsKey(c)} why={rivalsWhy(r)}><div style={{ maxWidth: 693 }}><RivalsCard id={`rivals-cell-${c.key}`} rivals={r} /></div></Story>;
+      })}
       {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         if (i.iso2.startsWith("city:")) {
           const slug = i.iso2.split(":")[1];
@@ -1549,10 +1580,24 @@ export function pickMarkListInstances(): Instance[] {
   ];
 }
 
-export function MarkListStories({ instances = pickMarkListInstances() }: { instances?: Instance[] }) {
+/** OTHER TRADES TO OPEN, `13 rivals` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18), keyed cell:<handle>:rivals off the seeds the sheet loads and drawn by the page's own card (cell/exit.tsx RivalsCard) at the 693 the wide seat of its 2-1 band takes at 1280 (the list in two columns of rows there, PART 5; one column under 600px of container). Two kinds, as the cost to open has: the LIST on mark-list, no marks, every row a door (the exemplar: six siblings, four keyed, two withheld with the count; Berlin restaurants: six siblings, all six keyed, the longest list), the headline the middle of the keyed set at 30 in ink; the WITHHELD state on bento-metric (Mumbai cafes: no sibling resolves at the place, the line where the list would stand), never a short list. */
+export const cellRivalsKey = (c: CellHeroInstance) => `cell:${c.key}:rivals`;
+function rivalsWhy(r: NonNullable<ReturnType<typeof buildRivals>>): string {
+  if (r.state === "withheld") return r.siblings === 0 ? "trade block 13 withheld: no sibling trade resolves at the place, the line where the list would stand, on the seat form" : `trade block 13 withheld: ${r.keyed} of the ${r.siblings} siblings hold a figure, under the floor of four; the line counting them, never a short list`;
+  return r.withheld > 0 ? `trade block 13 on the exemplar: ${r.rows.length} siblings with a figure as doors, ${r.withheld} on the default withheld with the count, the middle at 30 in ink, no marks` : `trade block 13 at its longest: ${r.rows.length} siblings, every one keyed, every row a door, nothing withheld`;
+}
+export function pickCellRivalsInstances(cell: CellHeroInstance[], kind: "mark-list" | "bento-metric"): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "rivals")).map((c) => ({ c, r: buildRivals(c.seed) })).filter((x) => x.r && (kind === "mark-list" ? x.r.state === "list" : x.r.state !== "list")).map(({ c, r }) => ({ iso2: cellRivalsKey(c), why: rivalsWhy(r!) }));
+}
+export function MarkListStories({ instances = pickMarkListInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="mark-list">
-      {instances.map((i) => {
+      {cell.filter((c) => cellServes(c.key, "rivals")).map((c) => {
+        const r = buildRivals(c.seed);
+        if (!r || r.state !== "list") return null;
+        return <Story kind="mark-list" key={cellRivalsKey(c)} iso2={cellRivalsKey(c)} why={rivalsWhy(r)}><div style={{ maxWidth: 693 }}><RivalsCard id={`rivals-cell-${c.key}`} rivals={r} /></div></Story>;
+      })}
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         const cfg = MARK_LIST_STORIES[i.iso2];
         const d = cfg ? buildMarkList(cfg.key) : null;
         /* THE FLAG COMES FROM `CountryFlag` AND NOWHERE ELSE (its own law:
@@ -1740,17 +1785,17 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
     "tiers-table": [...pickTiersTableInstances(), ...pickCellTeamInstances(cellHero)],
-    "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why })), ...pickCellSpreadInstances(cellHero)],
+    "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why })), ...pickCellSpreadInstances(cellHero), ...pickCellWorthInstances(cellHero)],
     "spectra-table": pickSpectraTableInstances(),
     "note-list": pickNoteListInstances(),
-    "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))],
+    "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero)],
     "pay-bars": pickPayBarsInstances(),
     "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero)],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero)],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero)],
-    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero)],
-    "mark-list": pickMarkListInstances(),
+    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero), ...pickCellRivalsInstances(cellHero, "bento-metric")],
+    "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list")],
     "blocked-seat": pickBlockedSeatInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
   };

@@ -159,11 +159,25 @@ export type CellHeroInstance = { key: string; route: [string, string, string]; w
  * exemplar serves the mix (three parts) and the market (four fields, the
  * swing held); the seat needs no seed. Probed 2026-09-18 with
  * buildSpineCellSeed on both new routes (money shown on each).
+ *
+ * THE SIXTH DISPATCH (2026-09-18), the band `13 rivals | 14 worth` and `15
+ * close`, adds two handles and widens one: Berlin restaurants (six siblings
+ * resolve and all six are keyed, the list's longest form) serves the rivals
+ * alone; London dental practices (a shard whose sale figures rest on
+ * operating earnings, one of 38; money shown) serves the worth alone, the
+ * stated line where the strip would stand; Mumbai cafes gains the rivals
+ * (no sibling resolves at the place, the withheld state on the seat) and
+ * the worth (money not shown, the line). The exemplar serves all three:
+ * six siblings with four keyed and two withheld, the strip off the London
+ * take-home, the three doors. Probed 2026-09-18 with loadCellView and the
+ * sibling resolver on each route.
  */
 export const CELL_INSTANCES: Record<string, { route: [string, string, string]; why: string; blocks?: readonly string[] }> = {
   london: { route: ["gb", "london", "restaurants"], why: "the exemplar: money shown, the take-home at 40, the three companions" },
   california: { route: ["us", "california", "restaurants"], why: "a trusted local cell off London: money shown, the engine's net, a measured spread", blocks: ["take", "spread", "open", "peers"] },
-  "mumbai-cafes": { route: ["in", "mumbai", "cafes-coffee-shops"], why: "money not shown (an untrusted read): the state word, the net off the shard's ladder, firms and takings withheld with the line", blocks: ["take", "spread", "open", "peers", "clears"] },
+  "mumbai-cafes": { route: ["in", "mumbai", "cafes-coffee-shops"], why: "money not shown (an untrusted read): the state word, the net off the shard's ladder, firms and takings withheld with the line", blocks: ["take", "spread", "open", "peers", "clears", "rivals", "worth"] },
+  "berlin-restaurants": { route: ["de", "berlin", "restaurants"], why: "six siblings resolve and every one is keyed: the rivals list at its longest, six rows and nothing withheld", blocks: ["rivals"] },
+  "london-dental": { route: ["gb", "london", "dental-practices"], why: "a shard whose sale figures rest on operating earnings, one of 38: the worth's stated line where the strip would stand, money shown", blocks: ["worth"] },
   "london-shoe-repair": { route: ["gb", "london", "shoe-repair"], why: "a trade on the archetype's default with no setup lines: the cost to open withheld, and a three-licence shard", blocks: ["permits", "open", "split", "team", "lasts", "market"] },
   "london-bookshops": { route: ["gb", "london", "indie-bookstores"], why: "a five-licence shard, the trade on the archetype's default", blocks: ["permits"] },
   "london-chiropractic": { route: ["gb", "london", "chiropractic"], why: "the split withheld on a live cell: the sector's lines and the engine's net come to more than a hundred", blocks: ["split"] },

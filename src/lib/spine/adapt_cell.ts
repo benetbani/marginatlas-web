@@ -34,10 +34,12 @@
 import {
   getCellBySlug,
   getSameIndustryAcrossStates,
+  getComparableCells,
   cellUrl,
   withBudget,
 } from "@/lib/cells";
 import type { Cell } from "@/lib/cells";
+import { buildCellRelatedLinks, fetchCellSiblings } from "@/lib/cells/related_links";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { getCityTier } from "@/lib/cities/city_tier";
@@ -587,6 +589,49 @@ export async function buildSpineCellSeed(
   // a cell with no setup_costs contributes nothing rather than a fabricated $0.
   const setup = setupItemsFromCell(cell);
 
+  /* -- rivals: THE SIBLING TRADES IN THIS PLACE (`13 rivals`, MODEL.md 8.6;
+     plan step 33's sixth dispatch, 2026-09-18) ---------------------------
+     `otherTradesHere` from related_links.ts, the one resolver the legacy
+     page's related tail already runs: every row a trade that HOLDS a cell at
+     this place, round-tripped through the destination route's own resolver
+     before it is emitted (the module's header says why nothing here is
+     assembled from a slug and hoped over), capped at six (PER_CATEGORY_CAP),
+     the solo-professional and corporate-only trades kept out as they are
+     everywhere else. Two reads, both budget-wrapped and fail-soft, so a slow
+     table costs the list and never the page: the regional siblings off the
+     United States, the state's comparable cells on it (the legacy page's own
+     two reads, 200 rows because a state's rows repeat per year, size band
+     and grain, measured there). The list carries the trade's slug, its name
+     and its verified href and NOTHING ELSE; the cost to open per sibling is
+     rivals_rows.ts's to look up (the archetype by key, R3), never a figure
+     carried here. The old `related` block (a keep-percent column with no
+     honest per-sibling source) stays retired; this is its honest half. Off
+     the database (the copy gates, a render with the table down) the list is
+     empty and the card stands in its withheld state with the count. */
+  const isUsCell = country.toLowerCase() === "us";
+  const [cellSiblings, usOtherTradeRows] = await Promise.all([
+    isUsCell ? Promise.resolve({ sameTradeElsewhere: [], otherTradesHere: [] }) : fetchCellSiblings(country, geo, industry),
+    isUsCell
+      ? withBudget(getComparableCells(cell.geo_name || "", cell.naics_6 || undefined, 200), [] as Cell[], 4_000, "getComparableCells")
+      : Promise.resolve([] as Cell[]),
+  ]);
+  const rivalLinks = buildCellRelatedLinks({
+    cell,
+    countrySlug: country,
+    geoSlug: geo,
+    industrySlug: industry,
+    tradeName,
+    placeName,
+    siblings: cellSiblings,
+    usSameTradeRows: [],
+    usOtherTradeRows,
+  }).otherTradesHere;
+  const rivals = {
+    list: rivalLinks
+      .filter((l) => typeof l.tradeSlug === "string" && typeof l.tradeName === "string")
+      .map((l) => ({ name: l.tradeName as string, slug: l.tradeSlug as string, href: l.href })),
+  };
+
   /* -- OMITTED entirely (no honest source): demand, subtypes, who_suits,
         related keep-% column. Leaving them undefined makes the spine components
         render nothing (guarded). ------------------------------------------- */
@@ -617,6 +662,7 @@ export async function buildSpineCellSeed(
     // risks: undefined  (retired with `#risks`; `10 watch` is the drawn blocked seat)
     nearby,
     setup,
+    rivals,
     // demand: undefined  (Demand chapter omitted)
     // subtypes: undefined  (FormatPicker control room omitted)
     // who_suits: undefined  (numeric scales omitted; rightWrong bullets could

@@ -112,6 +112,8 @@ import { buildClears } from "@/lib/spine/clears_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
 import { buildMix } from "@/lib/spine/mix_rows";
 import { buildMarket, MARKET_CELLS } from "@/lib/spine/market_rows";
+import { buildRivals } from "@/lib/spine/rivals_rows";
+import { buildWorth } from "@/lib/spine/worth_rows";
 import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
@@ -768,6 +770,55 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     heads.push(["COPY.tradeMix.withheld", COPY.tradeMix.withheld]);
     for (const [key, k] of Object.entries(COPY.tradeMarket.kickers)) heads.push([`COPY.tradeMarket.kickers.${key}`, k]);
     for (const [key, w] of Object.entries(COPY.tradeMarket.withheld)) heads.push([`COPY.tradeMarket.withheld.${key}`, w]);
+    /* THE EXIT (MODEL.md 8.6 `13 rivals`, `14 worth`; plan step 33's sixth
+       dispatch, 2026-09-18). The rivals composed off fixture seeds in the
+       district builder's idiom, every state a reader meets: six siblings
+       with four keyed (the exemplar's shape: the headline's label, the
+       withheld line for two), six all keyed (Berlin's shape), one withheld
+       (the singular line), three keyed of six (the state line with its
+       count in words), two siblings both keyed (the state line under the
+       floor from the low side) and no sibling at all (the shorter line);
+       the kicker, the two heads and the basis the static sweep takes by
+       key. The worth composed off every one of the 243 shard ids in each of
+       its states (the strip on a seed with money shown and a take-home; the
+       withheld line off `moneyShown`; the operating-earnings line on its
+       38 shards), the basis and the note by key. The sibling names on the
+       rivals rows are the taxonomy's own trade names, judged as the peers'
+       place names are, by the ROW SENTENCE loop's rule. */
+    const siblings = (slugs: string[]) => ({ list: slugs.map((slug) => ({ name: slug.replace(/-/g, " "), slug, href: `/gb/london/${slug}` })) });
+    const rivalSeeds: Array<[string, any]> = [
+      ["four keyed of six", { meta: { trade: "Restaurants" }, rivals: siblings(["legal-services", "software-development", "office-business-support", "real-estate-agencies", "employment-services", "grocery-stores"]) }],
+      ["six keyed", { meta: { trade: "Restaurants" }, rivals: siblings(["marketing-design-agencies", "real-estate-agencies", "specialty-trades-mixed", "engineering-architecture", "software-development", "legal-services"]) }],
+      ["one withheld", { meta: { trade: "Restaurants" }, rivals: siblings(["legal-services", "software-development", "real-estate-agencies", "grocery-stores", "employment-services"]) }],
+      ["three keyed of six", { meta: { trade: "Restaurants" }, rivals: siblings(["legal-services", "software-development", "real-estate-agencies", "office-business-support", "employment-services", "vocational-other-training"]) }],
+      ["two siblings", { meta: { trade: "Restaurants" }, rivals: siblings(["legal-services", "software-development"]) }],
+      ["no sibling", { meta: { trade: "Restaurants" }, rivals: { list: [] } }],
+    ];
+    for (const [name, seed] of rivalSeeds) {
+      const r = buildRivals(seed);
+      if (!r) { pushRed("BANNED CONSTRUCTION", `buildRivals(${name}): the builder returned nothing for a seed that names a trade`); continue; }
+      if (r.state === "list") heads.push([`buildRivals(${name}).middleLabel`, r.middleLabel]);
+      if (r.withheldLine) heads.push([`buildRivals(${name}).withheldLine`, r.withheldLine]);
+      if (r.stateLine) heads.push([`buildRivals(${name}).stateLine`, r.stateLine]);
+      for (const row of r.rows) { const n = row.name.trim().split(/\s+/).filter(Boolean).length; if (n > 3) pushRed("ROW SENTENCE", `buildRivals(${name}).rows.${row.key}: "${row.name}" is a label of ${n} words, over three`); }
+    }
+    heads.push(["COPY.tradeRivals.basis", COPY.tradeRivals.basis], ["COPY.tradeRivals.head.name", COPY.tradeRivals.head.name], ["COPY.tradeRivals.head.value", COPY.tradeRivals.head.value]);
+    heads.push(["COPY.tradeWorth.basis", COPY.tradeWorth.basis], ["COPY.tradeWorth.note", COPY.tradeWorth.note], ["COPY.tradeWorth.marks.low", COPY.tradeWorth.marks.low], ["COPY.tradeWorth.marks.high", COPY.tradeWorth.marks.high]);
+    let worthStrips = 0, worthOther = 0, worthWithheld = 0;
+    for (const id of readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, ""))) {
+      const shown = buildWorth({ meta: { industry_id: id, money_shown: true }, owner: { take_home_usd: 36000 } });
+      const hidden = buildWorth({ meta: { industry_id: id, money_shown: false } });
+      if (!shown || !hidden) { pushRed("BANNED CONSTRUCTION", `buildWorth(${id}): the builder returned nothing for a shard that holds both sale figures`); continue; }
+      if (shown.state === "strip") worthStrips++; else if (shown.state === "otherBasis") worthOther++;
+      if (hidden.state === "withheld") worthWithheld++;
+      for (const [name, w] of [["shown", shown], ["hidden", hidden]] as const) {
+        if (w.withheld) heads.push([`buildWorth(${id}, ${name}).withheld`, w.withheld]);
+        if (w.basis) heads.push([`buildWorth(${id}, ${name}).basis`, w.basis]);
+        if (w.note) heads.push([`buildWorth(${id}, ${name}).note`, w.note]);
+        for (const m of w.marks) heads.push([`buildWorth(${id}, ${name}).marks.${m.key}`, m.label]);
+      }
+    }
+    console.log(`worth (14): ${worthStrips} shards draw the strip with money shown, ${worthOther} hold the operating-earnings line, ${worthWithheld} the withheld line off moneyShown`);
   }
 
   for (const [where, text] of heads) {

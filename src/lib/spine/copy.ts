@@ -1473,6 +1473,61 @@ export const COPY = {
       swing: "The year's swing is not on file for this trade yet.",
     },
   },
+  /** `13 rivals` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18):
+   *  the kicker is 8.6's title; the two heads are one word and two (PART 5,
+   *  the unit in the figure's own notation, "$300K"); the headline's label is
+   *  the mark list's own "Middle of the {n}", because the rows are every
+   *  sibling that holds a figure, so the middle is the middle of what is
+   *  printed (the form's law). The basis is 8.6's sentence without the word
+   *  the shape gate bans as machinery ("baseline"; the second dispatch's
+   *  finding), read aloud: each trade's typical figure, modelled (R3, R12),
+   *  never this city's. The withheld line counts the siblings on the
+   *  archetype's default (R11), the country money card's idiom. The state
+   *  line stands where the list would when fewer than four siblings hold a
+   *  figure (8.6: "full form with the withheld line counting the members it
+   *  cannot print, never a short list"), in the site's idiom (M19); `{k}`
+   *  is the count in words, "none" at zero. Where no sibling resolves at
+   *  all the shorter line says so. */
+  tradeRivals: {
+    kicker: "Other trades to open",
+    head: { name: "Trade", value: "To open" },
+    basis: "Typical for each trade, modelled; not this city's own figures.",
+    withheldOne: "One trade withheld: no cost to open is on file.",
+    withheldMany: "{n} trades withheld: no cost to open is on file.",
+    state: "Not gathered yet: what it costs to open the other trades here; {k} of the four the list needs hold a figure.",
+    stateNone: "Not gathered yet: the other trades measured here.",
+  },
+  /** `14 worth` (the same dispatch): the kicker is 8.6's title; the two marks
+   *  are the ends of what a business like this sells for, in a person's
+   *  words; the basis is 8.6's own sentence, verbatim. The note under it is
+   *  the strip's own second line (RangeStrip's `note`) and says whose each
+   *  figure is, because the two ends rest on two sources: the sale figures
+   *  are the trade's, off the shard, modelled (R3, R12; the mark is behind
+   *  his switch, so the word is said), and the take-home they multiply is
+   *  this city's, the figure `00 take` prints. The withheld line stands where
+   *  the strip would off `moneyShown` (no take-home to work from). The last
+   *  line stands on the 38 shards whose sale figures rest on operating
+   *  earnings (item 52): a figure worked from an owner's take-home would be
+   *  the wrong base, so none prints; the word the shape gate bans
+   *  ("multiple") is not used. */
+  tradeWorth: {
+    kicker: "What one sells for",
+    marks: { low: "Low end", high: "High end" },
+    basis: "What a buyer would pay, worked from a year's owner take-home.",
+    note: "The two ends are the trade's typical figures, modelled; the take-home is this city's.",
+    withheld: "Not measured yet: the take-home here that a sale price is worked from.",
+    otherBasis: "Not worked out yet: this trade's sale figures on file rest on operating earnings, not an owner's take-home.",
+  },
+  /** `15 close` (the same dispatch): the trade's three doors, 8.6's and
+   *  M21's own words. Across to the industry page, up to the city page (the
+   *  city masthead's own idiom, "Opening a business in"), and the compare
+   *  pill last. Three first words, none shared; no pricing door, no sibling
+   *  door (`13` is that door on every row). */
+  tradeClose: {
+    industryDoor: "See {trade} in other cities",
+    cityDoor: "Opening a business in {city}",
+    compareDoor: "Compare {trade} across cities",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

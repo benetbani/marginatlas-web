@@ -100,12 +100,22 @@
  * track behind these figures it becomes I2 and spends a bar, and that is a
  * different card with a different declaration.
  *
- * NOT BUILT, AND SAID RATHER THAN LEFT AS A GAP: a row that navigates. PART 5
- * requires a navigating row to carry an arrow at its right edge and a
- * `--c-soft` hover, which is a fourth column and a second look; no section has
- * adopted this card yet, so which rows have a destination is not known, and a
- * fourth column built for a link nothing uses would be decoration. `MarkRow`
- * therefore carries no `href`.
+ * A ROW THAT NAVIGATES, built 2026-09-18 (plan step 33's sixth dispatch) for
+ * the first section that has a destination on every row: the trade page's
+ * `13 rivals` (MODEL.md 8.6, "every row a link"). Until then this paragraph
+ * said the fourth column was not built because nothing used it. PART 5's
+ * law, exactly: a row that navigates carries an arrow at its right edge and
+ * a `--c-soft` hover, and a row that does not carries neither, so a page
+ * never has two rows that look the same and behave differently. A row with
+ * an `href` is drawn as an `<a>` on the same grid, with one more column at
+ * the right edge for the arrow; the column is drawn when ANY row carries an
+ * href, the same rule as the marks, so a card whose rows navigate keeps one
+ * right edge for every figure, and a card with a stray link among static
+ * rows shows the fault rather than hiding it (no harness rule reads the
+ * arrows yet; a row navigating without its arrow, or an arrow on a row that
+ * does not, shows in the photograph). The figures keep one right edge
+ * either way; only the arrow column sits past them. Measured on the trade
+ * page at 1280, 768 and 375: the four rows one height, nothing overflows.
  */
 import * as React from "react";
 import { Box, Fig, Rail } from "@/components/spine/kit";
@@ -117,11 +127,16 @@ import type { AtlasIconId } from "@/components/brand/icons";
  *  builder holds the same number rather than a second copy of it. */
 export const MARK_LIST_FLOOR = 4;
 
+/** PART 9 clause 20's line: a ranking of six or more is one column read top to
+ *  bottom at every width; under six the rows may stand in two columns on a wide
+ *  card (PART 5). The model's number, held here beside the floor. */
+export const TWO_COLUMN_CAP = 6;
+
 /** A row: the name, its figure, and whatever stands in front of them. `mark`
  *  is a node rather than an id or an iso2 on purpose , this file must not know
  *  what kind of thing a mark is, or the next subject (a trade icon, a rank
  *  numeral, nothing at all) would need a branch in here. */
-export type MarkRow = { key: string; name: string; value: number; mark?: React.ReactNode };
+export type MarkRow = { key: string; name: string; value: number; mark?: React.ReactNode; /** A destination makes the row a door (PART 5): drawn as a link with an arrow at its right edge and a `--c-soft` hover. */ href?: string };
 
 export type MarkListProps = {
   id: string;
@@ -175,9 +190,14 @@ const NAME_CLS = "min-w-0 py-0.5 text-[length:var(--t-body)] font-medium text-[v
    wider glyph (a "%" is wider than "0" in some faces). A few pixels are
    absorbed by the 12px column gap, and a real overrun is reported by the
    harness's own overflow rule (check_archetypes.mjs BOTCHED MOBILE). */
-function geometry(figChars: number, marks: boolean): React.CSSProperties {
+/* THE ARROW COLUMN, a constant for the same reason the mark column is: one
+   column shared by every row keeps every figure on one right edge. Sized to
+   the glyph at the body rung with air on its left. */
+const ARROW_COL = "1.25rem";
+function geometry(figChars: number, marks: boolean, doors: boolean): React.CSSProperties {
   const fig = `calc(${figChars}ch + 0.5rem)`;
-  return { gridTemplateColumns: marks ? `${MARK_COL} minmax(0,1fr) ${fig}` : `minmax(0,1fr) ${fig}` };
+  const cols = [marks ? MARK_COL : null, "minmax(0,1fr)", fig, doors ? ARROW_COL : null].filter((c): c is string => c != null);
+  return { gridTemplateColumns: cols.join(" ") };
 }
 
 export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows, fmt, withheld = 0, withheldLine = null }: MarkListProps) {
@@ -191,10 +211,14 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
      marks at all in that case would hide the fault inside a layout that looks
      deliberate. */
   const marks = rows.some((r) => r.mark != null);
+  /* DOORS ARE DRAWN IF ANY ROW CARRIES ONE, the marks' rule: a row with an
+     href among rows without is a caller fault and is met loudly, the arrow
+     column drawn and the static rows visibly without an arrow. */
+  const doors = rows.some((r) => typeof r.href === "string" && r.href.length > 0);
   const figChars = Math.max(1, ...rows.map((r) => fmt(r.value).length));
-  const GEO = geometry(figChars, marks);
+  const GEO = geometry(figChars, marks, doors);
   return (
-    <Box id={id} data-archetype="mark-list" data-idea="I11" data-rows={rows.length} data-marks={marks ? "1" : "0"} data-withheld={withheld}>
+    <Box id={id} data-archetype="mark-list" data-idea="I11" data-rows={rows.length} data-marks={marks ? "1" : "0"} data-doors={doors ? "1" : "0"} data-withheld={withheld}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
       {/* THE HEADLINE: the set's middle, at the focal rung, in ink. Clause 3. */}
       <div data-answer="1">
@@ -213,33 +237,96 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           check_model_laws.mjs reads it as such (a row drawing a `.fig` or
           carrying `[data-row]`); these are two column names and the head
           carries neither. */}
-      <div className={`${ROW} mt-3.5 items-baseline pb-2`} style={GEO}>
-        {marks ? <span aria-hidden="true" /> : null}
-        <div className="col-span-2 flex items-baseline justify-between gap-x-3">
-          <span className={HEAD_CLS}>{head.name}</span>
-          <span className={HEAD_CLS}>{head.value}</span>
-        </div>
-      </div>
-      <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={rows.length}>
-        {rows.map((r) => (
-          <div key={r.key} className={`${ROW} h-11 items-center`} style={GEO} data-row={r.key} data-value={r.value}>
-            {marks ? (
-              <span className="flex min-w-0 items-center">
-                {/* THE MARK'S OWN BOX, and the only thing in this card the
-                    harness measures for size. The outer cell is a grid item
-                    and stretches to the track, so measuring IT would be
-                    vacuous; this inner box is inline and is exactly as big as
-                    whatever was passed in. It exists only where a mark does,
-                    so a missing mark is a missing element rather than an empty
-                    box nobody can tell from a drawn one. */}
-                {r.mark != null ? <span data-mark className="inline-flex items-center">{r.mark}</span> : null}
-              </span>
-            ) : null}
-            <span data-label className={NAME_CLS}>{r.name}</span>
-            <Fig className="py-0.5 text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{fmt(r.value)}</Fig>
+      {/* TWO COLUMNS OF ROWS ON A WIDE CARD (PART 5, THE GEOMETRY: "On a card
+          wide enough to open a hole, rows go into two columns of rows, never
+          one wide row"; built 2026-09-18, plan step 33's sixth dispatch, for
+          the trade page's `13 rivals` in the wide seat of its 2-1 band, where
+          a one-column list of four stood 397 tall beside a two-mark strip and
+          opened a 280 by 138 blank on the strip's card that no split in the
+          closed set could close). The rows flow DOWN the left column and then
+          down the right (column-major, `grid-flow-col` on a declared row
+          count), so the ranking still reads top to bottom, each column under
+          its own heads (PART 5: "a wide table reconfigures into two narrower
+          reads with their heads said once", one head row per read); the
+          second head row is drawn only when the columns are. The switch is
+          the CONTAINER'S width, 600px, the same rung NoteList's two columns
+          fire at, never the viewport: the same card at 520 in a 1-1 band
+          stays one column. SIX OR MORE ROWS STAY ONE COLUMN whatever the
+          width (PART 9 clause 20, "a ranking of six or more drawn as
+          left-to-right columns", and PART 5: "Six or more ranked members is a
+          table read top to bottom"), so the two-column form is the under-six
+          form and a six-row list is the tall list it always was. Every row
+          keeps its declared height and its own top hairline (the container's
+          divide rule cannot tell two columns apart, so each row draws its own
+          line), and the harness's ROWS CUT, NO FIGURE and UNEQUAL read the
+          rows wherever they stand. */}
+      {(() => {
+        const twoCols = rows.length < TWO_COLUMN_CAP;
+        const perCol = Math.ceil(rows.length / 2);
+        const headRow = (hidden: boolean) => (
+          <div className={`${ROW} items-baseline pb-2 ${hidden ? "hidden [@container(min-width:600px)]:grid" : ""}`} style={GEO} aria-hidden={hidden ? "true" : undefined}>
+            {marks ? <span aria-hidden="true" /> : null}
+            <div className="col-span-2 flex items-baseline justify-between gap-x-3">
+              <span className={HEAD_CLS}>{head.name}</span>
+              <span className={HEAD_CLS}>{head.value}</span>
+            </div>
+            {/* An empty cell over the arrow column, so the value head's right edge stays over every figure's. */}
+            {doors ? <span aria-hidden="true" /> : null}
           </div>
-        ))}
-      </div>
+        );
+        const rowEl = (r: MarkRow) => {
+          const cells = (
+            <>
+              {marks ? (
+                <span className="flex min-w-0 items-center">
+                  {/* THE MARK'S OWN BOX, and the only thing in this card the
+                      harness measures for size. The outer cell is a grid item
+                      and stretches to the track, so measuring IT would be
+                      vacuous; this inner box is inline and is exactly as big as
+                      whatever was passed in. It exists only where a mark does,
+                      so a missing mark is a missing element rather than an empty
+                      box nobody can tell from a drawn one. */}
+                  {r.mark != null ? <span data-mark className="inline-flex items-center">{r.mark}</span> : null}
+                </span>
+              ) : null}
+              <span data-label className={NAME_CLS}>{r.name}</span>
+              <Fig className="py-0.5 text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{fmt(r.value)}</Fig>
+              {/* THE ARROW, at the right edge of a row that navigates and on
+                  no other (PART 5, LINKS LOOK LIKE LINKS): the cell is drawn
+                  on every row of a card with doors so the columns hold, and
+                  the glyph only where the row has somewhere to go. */}
+              {doors ? (
+                <span aria-hidden="true" className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.href ? <>&#8594;</> : null}</span>
+              ) : null}
+            </>
+          );
+          const rowCls = `${ROW} h-11 items-center border-t border-[var(--c-border)]`;
+          return r.href ? (
+            <a key={r.key} href={r.href} className={`${rowCls} no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value}>
+              {cells}
+            </a>
+          ) : (
+            <div key={r.key} className={rowCls} style={GEO} data-row={r.key} data-value={r.value}>
+              {cells}
+            </div>
+          );
+        };
+        return (
+          <div className="mt-3.5 [container-type:inline-size]">
+            <div
+              className={twoCols ? "grid [@container(min-width:600px)]:grid-flow-col [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6 [@container(min-width:600px)]:grid-rows-[auto_repeat(var(--ml-rows),2.75rem)]" : "grid"}
+              style={twoCols ? ({ "--ml-rows": String(perCol) } as React.CSSProperties) : undefined}
+              data-expect-rows={rows.length}
+              data-columns={twoCols ? "2" : "1"}
+            >
+              {headRow(false)}
+              {rows.slice(0, twoCols ? perCol : rows.length).map(rowEl)}
+              {twoCols ? headRow(true) : null}
+              {twoCols ? rows.slice(perCol).map(rowEl) : null}
+            </div>
+          </div>
+        );
+      })()}
       {/* THE WITHHELD LINE SITS AT THE FOOT, not at the top where the money
           card puts it, because it is a statement about what is NOT in the list
           and it reads after the list rather than before it. PART 7's fourth

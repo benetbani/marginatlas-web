@@ -116,7 +116,8 @@ const SHEET: Entry[] = [
   { kind: "range-strip", city: "none", cell: "keyed", render: (c) => <RangeStripStories instances={pickRangeStripInstances()} city={pickCityStripInstances()} cell={c.cellHero} /> },
   { kind: "spectra-table", city: "none", render: () => <SpectraTableStories instances={pickSpectraTableInstances()} /> },
   { kind: "note-list", city: "none", render: (c) => <NoteListStories instances={c.instances["note-list"]} /> },
-  { kind: "terminus", city: "keyed", render: (c) => <TerminusStories instances={pickTerminusInstances()} city={pickCityCloseInstances(c.cityHero)} /> },
+  /* The trade's close (cell/exit.tsx CloseCard) reads a cell seed since plan step 33's sixth dispatch (2026-09-18). */
+  { kind: "terminus", city: "keyed", cell: "keyed", render: (c) => <TerminusStories instances={pickTerminusInstances()} city={pickCityCloseInstances(c.cityHero)} cell={c.cellHero} /> },
   { kind: "pay-bars", city: "none", render: (c) => <PayBarsStories instances={c.instances["pay-bars"]} /> },
   /* The permits (cell/turn-one.tsx) read a cell seed since the same dispatch. */
   { kind: "kv-grid", city: "none", cell: "keyed", render: (c) => <KvGridStories instances={c.instances["kv-grid"]} cell={c.cellHero} /> },
@@ -127,7 +128,8 @@ const SHEET: Entry[] = [
   { kind: "bento-band", city: "london", cell: "keyed", render: (c) => <BentoBandStories instances={c.instances["bento-band"]} city={c.cityHero} cell={c.cellHero} /> },
   /* The cost to open's baseline and withheld states read a cell seed since the same dispatch. */
   { kind: "bento-metric", city: "none", cell: "keyed", render: (c) => <BentoMetricStories instances={c.instances["bento-metric"]} cell={c.cellHero} /> },
-  { kind: "mark-list", city: "none", render: (c) => <MarkListStories instances={c.instances["mark-list"]} /> },
+  /* The trade's rivals list (cell/exit.tsx RivalsCard) reads a cell seed since the same dispatch; its withheld state is on bento-metric. */
+  { kind: "mark-list", city: "none", cell: "keyed", render: (c) => <MarkListStories instances={c.instances["mark-list"]} cell={c.cellHero} /> },
   { kind: "blocked-seat", city: "none", render: (c) => <BlockedSeatStories instances={c.instances["blocked-seat"]} /> },
   { kind: "city-hero", city: "keyed", render: (c) => <CityHeroStories instances={c.cityHero} /> },
   /* "city-verdict" left the sheet on plan step 32 (2026-09-18): MODEL.md 8.3 dissolves the rent verdict into the masthead's answer. */
