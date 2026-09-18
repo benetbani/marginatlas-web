@@ -351,6 +351,11 @@ export function BentoBand({ id, cols, cells }: { id?: string; cols: BentoCols; c
  *     rung, because this figure is a different quantity from the focal and
  *     cannot share its rung without breaking FOCAL (PART 4: one 30 a card,
  *     nothing between 16 and 30). Nothing else in the cell sits above 16.
+ *     Since plan step 33's second dispatch (2026-09-18) the slot also takes
+ *     an ARRAY of companions on the one hairline row (`CompanionRow`, the
+ *     trade page's `04 open`: months to break even beside years to pay
+ *     back), the same rung and the same words idiom, two figures where the
+ *     composition names two; a single companion draws exactly as before.
  *  2. THE WITHHELD LINE, PART 5's shape ("a cell that cannot hold an honest
  *     figure is WITHHELD with a stated line ... never filled with a word,
  *     never left deliberately empty, and never clipped"). Either slot can be
@@ -391,6 +396,33 @@ export function BentoBand({ id, cols, cells }: { id?: string; cols: BentoCols; c
  *  FOCAL); inside a cluster the wrapper's `bento-band` comes first in
  *  document order and still wins, measured on the three cluster stories.
  */
+/** One companion figure at the lead rung with its words: "21 days" "until you can trade". */
+export type Companion = { figure: string; words: string };
+
+/**
+ * THE COMPANION ROW, law 1's markup once, drawn for one companion (the
+ * country's entry bill: the days until trading) or for two on the same
+ * hairline row (the trade page's `04 open`, MODEL.md 8.6: months to break
+ * even and years to pay back, "two figures on one hairline row, the strip's
+ * extra idiom"). Each figure at `--t-lead` 16, `.fig`, weight 600, `--c-ink`,
+ * its words beside it at `--t-body` 14 `--c-ink2`; the pairs wrap as a unit
+ * where the card is too narrow for both. Exported so RankedBars draws its
+ * foot from this one function rather than a second copy of the row (the
+ * hatch's precedent: one pattern, imported, never reinvented).
+ */
+export function CompanionRow({ items }: { items: Companion[] }) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+      {items.map((c, i) => (
+        <span key={`${c.figure}-${i}`} data-companion className="inline-flex flex-wrap items-baseline gap-x-1.5">
+          <Fig className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{c.figure}</Fig>
+          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{c.words}</span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export function BentoMetric({
   id,
   kicker,
@@ -413,8 +445,8 @@ export function BentoMetric({
   figure?: string;
   /** The stated line where the focal would stand, when the figure is withheld (law 2). Given INSTEAD of `figure`. */
   withheld?: string;
-  /** The second figure at the lead rung under a hairline with its words, or the line that stands in its slot (laws 1 and 2). */
-  second?: { figure: string; words: string } | { withheld: string };
+  /** The second figure at the lead rung under a hairline with its words, or the line that stands in its slot (laws 1 and 2); or TWO companions on that one hairline row (the trade page's `04 open`, MODEL.md 8.6: months to break even, years to pay back). */
+  second?: Companion | Companion[] | { withheld: string };
   /** OPTIONAL, AND USUALLY LEFT OUT. A line under the figure saying what the
    *  figure is, for the case where the opener above cannot say it. When the
    *  opener already does ("What it costs to register" over "$15"), a label is
@@ -452,11 +484,10 @@ export function BentoMetric({
       </div>
       {second ? (
         <div data-second className="mb-3 border-t border-[var(--c-border)] pt-3">
-          {"figure" in second ? (
-            <div className="flex flex-wrap items-baseline gap-x-1.5">
-              <Fig className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{second.figure}</Fig>
-              <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{second.words}</span>
-            </div>
+          {Array.isArray(second) ? (
+            <CompanionRow items={second} />
+          ) : "figure" in second ? (
+            <CompanionRow items={[second]} />
           ) : (
             <p data-withheld-line="second" className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{second.withheld}</p>
           )}

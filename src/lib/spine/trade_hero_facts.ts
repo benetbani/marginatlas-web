@@ -115,12 +115,32 @@ export type CellHeroInstance = { key: string; route: [string, string, string]; w
  * ("cell:london:take", "cell:mumbai-cafes:spread"). The 240-case suits
  * story needs no seed (`cell:none:suits`, the builder handed an id no shard
  * holds) and is not here.
+ *
+ * TWO MORE FOR TURN ONE (plan step 33's second dispatch, 2026-09-18), each
+ * naming the blocks it serves so the opening's stories do not grow by two
+ * cells that add nothing to them, and the two opening cells off London
+ * naming theirs so the permits (a trade's card, not a cell's) are not drawn
+ * twice off one shard: London shoe repair (a trade on the
+ * archetype's 80,000 default with no setup lines, `04 open`'s withheld
+ * state, and a three-licence shard for `03 permits`) and London bookshops
+ * (the default too, a five-licence shard). The exemplar holds nine setup
+ * lines (`04` held) and four licences; California restaurants hold no lines
+ * and the trade is keyed (`04` baseline). Probed 2026-09-18 with
+ * buildSpineCellSeed on each route.
  */
-export const CELL_INSTANCES: Record<string, { route: [string, string, string]; why: string }> = {
+export const CELL_INSTANCES: Record<string, { route: [string, string, string]; why: string; blocks?: readonly string[] }> = {
   london: { route: ["gb", "london", "restaurants"], why: "the exemplar: money shown, the take-home at 40, the three companions" },
-  california: { route: ["us", "california", "restaurants"], why: "a trusted local cell off London: money shown, the engine's net, a measured spread" },
-  "mumbai-cafes": { route: ["in", "mumbai", "cafes-coffee-shops"], why: "money not shown (an untrusted read): the state word, the net off the shard's ladder, firms and takings withheld with the line" },
+  california: { route: ["us", "california", "restaurants"], why: "a trusted local cell off London: money shown, the engine's net, a measured spread", blocks: ["take", "spread", "open"] },
+  "mumbai-cafes": { route: ["in", "mumbai", "cafes-coffee-shops"], why: "money not shown (an untrusted read): the state word, the net off the shard's ladder, firms and takings withheld with the line", blocks: ["take", "spread", "open"] },
+  "london-shoe-repair": { route: ["gb", "london", "shoe-repair"], why: "a trade on the archetype's default with no setup lines: the cost to open withheld, and a three-licence shard", blocks: ["permits", "open"] },
+  "london-bookshops": { route: ["gb", "london", "indie-bookstores"], why: "a five-licence shard, the trade on the archetype's default", blocks: ["permits"] },
 };
+
+/** Whether a handle's cell serves a block's story: every block unless the handle names its own. */
+export function cellServes(handle: string, block: string): boolean {
+  const inst = CELL_INSTANCES[handle];
+  return !!inst && (!inst.blocks || inst.blocks.includes(block));
+}
 
 /** The seeds for the handles named, or all of them; async because the adapter is. A cell the adapter cannot build self-omits from the sheet. */
 export async function loadCellHeroInstances(handles: string[] = Object.keys(CELL_INSTANCES)): Promise<CellHeroInstance[]> {

@@ -1085,6 +1085,50 @@ export const COPY = {
     notGathered: "Not gathered yet: who this trade suits, and who should think twice.",
     basis: "Written for the trade anywhere, not this city. Two questions, nothing scored.",
   },
+  /** `03 permits` (MODEL.md 8.6; plan step 33's second dispatch, 2026-09-18):
+   *  the kicker is 8.6's title; each licence is a label over its typical days
+   *  (the shard's own name, never shortened); the basis is 8.6's own sentence;
+   *  the foot says the waits are modelled in words, because the sample mark is
+   *  behind his switch (every shard figure is modelled, R12). A licence whose
+   *  wait is on file as zero days is not a wait, so it is withheld with the
+   *  line, counted (one licence on one shard today). */
+  tradePermits: {
+    kicker: "The permits you need",
+    basis: "Typical for the trade anywhere, not measured for this city.",
+    foot: "The waits are modelled.",
+    withheldOne: "One licence has no wait on file and is not shown.",
+    withheldMany: "{n} licences have no wait on file and are not shown.",
+  },
+  /** `04 open` (MODEL.md 8.6; the same dispatch): one card, three states. The
+   *  held basis says what the total is (the whole bill here) and what the
+   *  rows are (its lines, biggest first), never the sum reading, which is
+   *  `05`'s (M2). The baseline basis is R3's sentence in plain words: the
+   *  trade's typical figure, modelled, not this city's own. The withheld line
+   *  stands where the total would, in the site's idiom (M19). The foot's two
+   *  companions carry their own words; the foot line says they are modelled,
+   *  the shard's figures for the trade (R12). The table's two heads are one
+   *  word each. */
+  tradeOpen: {
+    kicker: "The cost to open",
+    /** One basis per card in every state (the baseline's rule): what the total is, what the bars are, and that the foot's two figures are the trade's, modelled. No order word: the vertical form stands its leader at the right. */
+    basisHeld: "The whole bill here and its lines; months and years modelled for the trade.",
+    basisHeldCapped: "The whole bill here, its five biggest lines; months and years modelled for the trade.",
+    /** Where the trade holds no shard for the foot: the total's own line, the foot withheld with its own. */
+    basisHeldAlone: "The whole bill to open here, and its lines.",
+    basisHeldCappedAlone: "The whole bill to open here, and its five biggest lines.",
+    /** Under the bars where the bill runs past the five the vertical form holds (RankedBars turns six or more into a table): the rest counted and summed, never dropped. */
+    tailOne: "The smallest line, {sum}, is in the total.",
+    tailMany: "The {n} smallest lines, {sum} together, are in the total.",
+    basisBaseline: "All three figures are typical for the trade, modelled, not this city's own.",
+    basisBaselineAlone: "Typical for the trade, modelled; not this city's own figure.",
+    withheld: "Not gathered yet: what it costs to open here.",
+    foot: "Months and years are typical for the trade, modelled.",
+    footWithheld: "Not gathered yet: the months to break even and the years to pay back.",
+    breakEven: "to break even",
+    payBack: "to pay back",
+    biggest: "The biggest line",
+    phoneHead: { name: "Line", value: "Cost" },
+  },
   /** THE TRADE PAGE'S THREE CHAPTER HEADINGS (8.6's own titles): turn one is
    *  the site's string (M7), referenced; turn two's stands with its written
    *  reason (the reader arrives with the place chosen, so "where" is `07

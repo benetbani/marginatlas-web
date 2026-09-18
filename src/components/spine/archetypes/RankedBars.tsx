@@ -162,6 +162,13 @@ import { COPY } from "./copy";
  * whole point , two hatch systems would drift apart the first time either
  * one changed. */
 import { HATCH } from "./IncomeBreakdown";
+/* THE FOOT'S ROW IS SHARED TOO (plan step 33's second dispatch, 2026-09-18):
+ * BentoMetric draws the companion row for the country's entry bill, and the
+ * trade page's cost to open draws the same two-figure foot under its bars
+ * in one state and under BentoMetric's figure in the other two (MODEL.md
+ * 8.6 `04 open`); one function, imported, so the card's foot cannot differ
+ * by state. */
+import { CompanionRow, type Companion } from "./BentoBand";
 
 export type BarRow = { key: string; name: string; href?: string; value: number; flagged?: boolean;
   /** NO LONGER DRAWN ANYWHERE (task 13, 2026-09-10). The field stays on the
@@ -199,6 +206,22 @@ export type RankedBarsProps = {
    *  an answer worth sending anyone to; see the header. Defaults to "leader",
    *  so a caller who says nothing keeps the mark. */
   feature?: "leader" | "none";
+  /** THE CARD'S OWN FOCAL OVER THE BARS (MODEL.md 8.6 `04 open`, plan step 33's
+   *  second dispatch, 2026-09-18): one figure at 30 between the opener and the
+   *  basis, `--terra-text` when the card is one of the page's loud moments and
+   *  ink otherwise. It is a figure the rows do not print (the bill's total over
+   *  its lines), never a sum the bars are read to make (M2), and it is the ONE
+   *  place accent text may stand on this card: the rows' one mark is still the
+   *  pill (task 12), and check_archetypes.mjs reads the two apart by this slot's
+   *  `data-focal`. Under PART 6 the fills follow it: the leader's bar `--terra`
+   *  and the rest hatched, exactly as a featured card already draws. */
+  focal?: { figure: string; accent?: boolean };
+  /** THE FOOT, PART 7's fourth part, where earned: companion figures at 16
+   *  under a hairline after the drawing (the cost to open's months to break
+   *  even and years to pay back), then one micro line saying what they are.
+   *  Drawn by BentoMetric's own CompanionRow so the trade card's foot is one
+   *  markup in all three of its states. */
+  foot?: { items: Companion[]; line?: string | null } | null;
 };
 
 /* The bar band's MINIMUM height, and the figure rung reserved above the
@@ -298,7 +321,7 @@ const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader" }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot }: RankedBarsProps) {
   if (rows.length < 2) return null;
   const ascending = [...rows].sort((a, b) => a.value - b.value);
   /* THE LEADER IS ALWAYS THE RIGHT-MOST BAR: the highest for a margin, the lowest for a burden. */
@@ -318,6 +341,19 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
   /* SIX OR MORE READ TOP TO BOTTOM AT EVERY WIDTH (rule 20), which is why
      this is not another breakpoint: the columns are wrong at 1280 as well. */
   const drawWide = sorted.length >= WIDE_ROWS;
+  /* THE BARS CARD'S MIDDLE FORM (plan step 33's second dispatch, 2026-09-18).
+     The bars stand from lg; below it the card drew the PHONE list, whose rows
+     are `[1fr auto]` justify-between, which PART 5 licenses only on a card of
+     420px or under. That held while every bars card sat in an equal-halves
+     band at 768 (352 wide); the trade page's cost to open sits in a band that
+     stacks until lg (`stack="lg"`), so at 768 the card is 720 wide and its five
+     phone rows were five LABEL GAP rows (measured: 477 to 575px between a name
+     and its figure, and the justify-between clause). So between sm and lg a
+     bars card draws the same row grid the six-or-more table draws (PART 5's
+     three columns, the track absorbing the leftover width), and the phone
+     list stays for the phone. The Box is flex-col for this form too, so the
+     table can take a stretched card's height as the wide form already does. */
+  const drawMidTable = drawBars;
   const ranked = [...sorted].reverse();
   /* THE WIDEST FIGURE THE CARD ACTUALLY DRAWS, counted once, in characters:
      every row contributes the length of its own formatted figure, because
@@ -326,13 +362,29 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
   const figChars = Math.max(1, ...sorted.map((r) => fmt(r.value).length));
   const GEO = wideColumns(figChars);
   return (
-    <Box id={id} className={drawWide ? "flex flex-col" : ""} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature}>
+    <Box id={id} className={drawWide || drawMidTable ? "flex flex-col" : ""} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
+      {/* THE FOCAL, when the card holds one: the only element on this card
+          above 16, and the only one that may wear the accent (see the prop). */}
+      {focal ? (
+        /* The slot is a div because the kit's Fig carries no data attributes; the checkers read `[data-focal]` on the slot. */
+        <div data-focal="1" className="mb-2">
+          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{focal.figure}</Fig>
+        </div>
+      ) : null}
       <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
       {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{withheldLine}</p> : null}
       {drawBars ? <div className="relative mt-2.5 hidden lg:block" data-idea="I2">
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-border)]" style={{ top: PILL }} />
-        <div className="absolute right-0 text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ top: 8 }}>{topLabel ?? COPY.margin.worldBest} {fmt(top)}</div>
+        {/* THE CEILING'S NAME STANDS AT THE END NO MEMBER TOUCHES (plan step 33's
+            second dispatch, 2026-09-18, the first bars card with a SET ceiling:
+            the trade page's cost to open). A set's own heaviest member touches
+            the rule by this file's law, and its pill sat on the name at the
+            right end (measured on cell:london:open at 1280: "$250K" over "The
+            biggest line $250K"); the leader stands at the right for "max" and
+            at the left for "min", so the name takes the other end. A world
+            ceiling keeps the right, since no member stands on it. */}
+        <div className={`absolute ${ceiling === "set" && best === "max" ? "left-0" : "right-0"} text-[length:var(--t-micro)] text-[var(--c-muted)]`} style={{ top: 8 }}>{topLabel ?? COPY.margin.worldBest} {fmt(top)}</div>
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-line-strong)]" style={{ top: H + PILL }} />
         <ol className="grid" data-expect-rows={sorted.length} style={{ listStyle: "none", margin: 0, padding: 0, gridAutoFlow: "column", gridAutoColumns: "minmax(0,1fr)", columnGap: 8 }}>
           {sorted.map((r) => {
@@ -373,8 +425,8 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           })}
         </ol>
       </div> : null}
-      {drawWide ? (
-        <div className="mt-2.5 hidden flex-1 flex-col sm:flex" data-idea="I2">
+      {drawWide || drawMidTable ? (
+        <div className={drawWide ? "mt-2.5 hidden flex-1 flex-col sm:flex" : "mt-2.5 hidden flex-1 flex-col sm:flex lg:hidden"} data-idea="I2">
           {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS (task 13
               alignment fix): same `GEO`, so its first two cells begin exactly
               where every name and every figure below them begins. Its own two
@@ -454,7 +506,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           </div>
         </div>
       ) : null}
-      <div className={drawBars ? "mt-2.5 lg:hidden" : drawWide ? "mt-2.5 sm:hidden" : "mt-2.5"}>
+      <div className={drawBars || drawWide ? "mt-2.5 sm:hidden" : "mt-2.5"}>
         <div className="flex items-baseline justify-between pb-2">
           <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.name}</span>
           <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
@@ -494,6 +546,18 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           })}
         </div>
       </div>
+      {/* THE FOOT, where the caller earns one: the companions on one hairline
+          row at 16, then the micro line that says what they are. After every
+          form, so the table's `flex-1` still takes the card's spare height
+          above it and the foot sits on the card's floor. */}
+      {foot && foot.items.length > 0 ? (
+        <div data-foot className="mt-3 border-t border-[var(--c-border)] pt-3">
+          <CompanionRow items={foot.items} />
+          {foot.line ? <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
+        </div>
+      ) : foot && foot.line ? (
+        <p data-foot className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{foot.line}</p>
+      ) : null}
     </Box>
   );
 }

@@ -296,6 +296,25 @@ export function startupCapitalArchetypeForSlug(
 }
 
 /**
+ * THE KEYED FIGURE OR NOTHING (MODEL.md 8.6 `04 open`, plan step 33's second
+ * dispatch, 2026-09-18). `startupCapitalArchetypeForSlug` never returns null
+ * by its own charter (the board's cost-to-open row "stops dashing"), so a
+ * caller cannot tell a trade the table holds from one on the 80,000 default
+ * by the value alone: three keyed trades (nail salons, yoga and pilates
+ * studios, dance studios) are authored at exactly 80,000. The trade page
+ * prints the figure only for a trade the table KEYS (153 of the 243 shard
+ * ids, counted 2026-09-18) and withholds the 90 on the default with a stated
+ * line (PART 9 clause 46, R11: a fill value is never printed as a figure).
+ * This is the lookup that says which is which; it reads the key, never the
+ * value.
+ */
+export function startupCapitalArchetypeKeyed(slug: string | null | undefined): number | null {
+  if (!slug) return null;
+  const v = STARTUP_CAPITAL_ARCHETYPE_USD[slug.toLowerCase()];
+  return typeof v === "number" && Number.isFinite(v) && v > 0 ? v : null;
+}
+
+/**
  * Modeled baseline (index-100) startup capital for an industry id (e.g.
  * "restaurants", "cafes_coffee"), resolving the id to its URL slug first so
  * callers that hold the id (the cell board) and callers that hold the slug (the

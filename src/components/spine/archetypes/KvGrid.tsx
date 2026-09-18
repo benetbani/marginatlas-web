@@ -48,7 +48,27 @@ export type KvCell = {
 
 /* The container-query classes are written out in full below, never assembled from a constant: the stylesheet compiler scans source for literal class strings and generates nothing for a template. */
 
-export function KvGrid({ cells, className = "" }: { cells: KvCell[]; className?: string }) {
+/**
+ * THE LABEL RESERVE, TWO WAYS (plan step 33's second dispatch, 2026-09-18,
+ * the trade page's `03 permits`, MODEL.md 8.6). The default, "two-lines", is
+ * the law above: two lines below lg, none from lg up, right for every label
+ * a builder writes (four words at most). "row" is for a grid whose labels
+ * are NAMES the caller may not shorten (a licence is what the shard calls
+ * it, five to twelve words, "Food service or retail food establishment
+ * permit"): a fixed reserve is either too short for those or too tall for
+ * everything else, so the reserve becomes THE ROW'S OWN TALLEST LABEL. Each
+ * cell is a column and its figure sits on the cell's floor; the grid row is
+ * as tall as its tallest label; so every figure in a row shares one top by
+ * construction, at every width, whatever the labels wrap to. Ruling 8 held
+ * by a different mechanism, not relaxed: the archetype harness's UNEQUAL
+ * rule reads the figures' tops and does not know which reserve drew them.
+ * One limit, stated: a `note` under a figure lifts that figure off the
+ * floor, so a "row" grid carries no notes (the permits cells carry none).
+ */
+export type KvLabelReserve = "two-lines" | "row";
+
+export function KvGrid({ cells, className = "", labelReserve = "two-lines" }: { cells: KvCell[]; className?: string; labelReserve?: KvLabelReserve }) {
+  const byRow = labelReserve === "row";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   if (live.length === 0) return null;
   const groups: Array<{ group?: string; cells: KvCell[] }> = [];
@@ -79,7 +99,7 @@ export function KvGrid({ cells, className = "" }: { cells: KvCell[]; className?:
             <div className={`grid ${g.cells.length > 1 ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
               {g.cells.map((c, ci) => (
                 /* COMPLETE ROWS: in an odd group above one, the first cell spans both columns. */
-                <div key={c.key} data-kv-cell={c.key} className={g.cells.length > 1 && g.cells.length % 2 === 1 && ci === 0 ? "col-span-2" : undefined}>
+                <div key={c.key} data-kv-cell={c.key} className={`${g.cells.length > 1 && g.cells.length % 2 === 1 && ci === 0 ? "col-span-2" : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
                   {/* THE RESERVE IS EXACTLY TWO LINES BY CONSTRUCTION (plan step 31's
                       second dispatch, 2026-09-17, the first cards whose labels wrap at
                       375 and 768, "Net wealth per adult" and "Shop rent, major cities").
@@ -91,8 +111,9 @@ export function KvGrid({ cells, className = "" }: { cells: KvCell[]; className?:
                       reserve itself is unchanged in size on purpose: raising it to
                       2.75em grew every one-line label by 1.8px and tipped a 118px
                       blank on the answer card's Fiji story at 768 over the 120 floor. */}
-                  <div className="min-h-[2.6em] text-[length:var(--t-micro)] font-semibold uppercase leading-[1.3] tracking-wide text-[var(--c-muted)] lg:min-h-0">{c.label}</div>
-                  <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <div className={`${byRow ? "" : "min-h-[2.6em] lg:min-h-0 "}text-[length:var(--t-micro)] font-semibold uppercase leading-[1.3] tracking-wide text-[var(--c-muted)]`}>{c.label}</div>
+                  {/* On the "row" reserve the figure sits on the cell's floor (`mt-auto`), so a row's figures share one top whatever their labels wrap to. */}
+                  <div className={`${byRow ? "mt-auto pt-1" : "mt-1"} flex flex-wrap items-baseline gap-x-2 gap-y-1`}>
                     <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{c.value}</Fig>
                     {c.confidence && c.confidence !== "measured" ? <SampleTag /> : null}
                   </div>

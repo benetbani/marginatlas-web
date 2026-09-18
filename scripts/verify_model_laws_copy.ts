@@ -105,6 +105,9 @@ import { buildSuits } from "@/lib/spine/suits_rows";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
 import { resolveTradeNet } from "@/lib/spine/trade_net";
+import { buildPermits } from "@/lib/spine/permits_rows";
+import { buildOpen } from "@/lib/spine/open_rows";
+import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
@@ -213,6 +216,11 @@ const rowLabels: Array<[string, string]> = [
   ["COPY.checks.rows.price.label", COPY.checks.rows.price.label],
   ["COPY.checks.rows.margin.label", COPY.checks.rows.margin.label],
   ["COPY.checks.rows.wait.label", COPY.checks.rows.wait.label],
+  /* THE COST TO OPEN'S TWO HEADS (MODEL.md 8.6 `04 open`, plan step 33's
+     second dispatch, 2026-09-18): the line's name and its cost, over the
+     RankedBars table of the bill's lines, held to the same three words. */
+  ["COPY.tradeOpen.phoneHead.name", COPY.tradeOpen.phoneHead.name],
+  ["COPY.tradeOpen.phoneHead.value", COPY.tradeOpen.phoneHead.value],
 ];
 for (const [where, t] of rowLabels) {
   const words = t.trim().split(/\s+/).filter(Boolean);
@@ -644,6 +652,45 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     heads.push(["COPY.tradeSpread.basisMeasured", COPY.tradeSpread.basisMeasured], ["COPY.tradeSuits.notGathered", COPY.tradeSuits.notGathered], ["COPY.tradeHero.withheld", COPY.tradeHero.withheld]);
     for (const [key, text] of Object.entries(COPY.tradeChapters)) heads.push([`COPY.tradeChapters.${key}`, text]);
     for (const [key, text] of Object.entries(COPY.tradeNet.notes)) heads.push([`COPY.tradeNet.notes.${key}`, text]);
+    /* THE PERMITS AND THE COST TO OPEN (MODEL.md 8.6 `03 permits | 04 open`;
+       plan step 33's second dispatch, 2026-09-18). The permits' labels are the
+       shards' own licence names, five to twelve words a reader meets over a
+       figure, so the sweep reads EVERY shard (243 local files, no database):
+       each label, the basis, the foot and the one withheld line (the zero-day
+       licence). The cost to open composed in its three states off fixture
+       seeds (the district builder's idiom): held (nine lines, the exemplar's
+       shape), baseline (a keyed trade, no lines) and withheld (a trade on the
+       default), each pushing its basis, its withheld line, its foot line and
+       the companions' words; the static strings (the kicker, the ceiling's
+       words, the two heads) by key. */
+    for (const id of readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, ""))) {
+      const p = buildPermits(id);
+      if (!p) continue;
+      for (const c of p.cells) heads.push([`buildPermits(${id}).cells.${c.key}`, c.label]);
+      if (p.withheld) heads.push([`buildPermits(${id}).withheld`, p.withheld]);
+    }
+    heads.push(["COPY.tradePermits.basis", COPY.tradePermits.basis], ["COPY.tradePermits.foot", COPY.tradePermits.foot], ["COPY.tradePermits.withheldOne", COPY.tradePermits.withheldOne], ["buildPermits(withheldMany)", COPY.tradePermits.withheldMany.replace("{n}", "2")]);
+    const lines = { items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }] };
+    const nine = { items: [...lines.items, { name: "Initial inventory", usd: 20000 }, { name: "Pre-opening marketing", usd: 12000 }, { name: "Business registration", usd: 20 }, { name: "Industry licences", usd: 1500 }, { name: "Insurance and bonds", usd: 2000 }, { name: "Certifications", usd: 500 }] };
+    const openSeeds: Array<[string, any]> = [
+      ["held", { meta: { industry: "restaurants", industry_id: "restaurants" }, setup: lines }],
+      ["held, nine lines", { meta: { industry: "restaurants", industry_id: "restaurants" }, setup: nine }],
+      ["held, six lines", { meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items.slice(0, 6) } }],
+      ["held, no shard", { meta: { industry: "restaurants", industry_id: "no_such_trade" }, setup: nine }],
+      ["baseline", { meta: { industry: "restaurants", industry_id: "restaurants" } }],
+      ["withheld", { meta: { industry: "shoe-repair", industry_id: "shoe_repair" } }],
+      ["baseline, no shard", { meta: { industry: "restaurants", industry_id: "no_such_trade" } }],
+    ];
+    for (const [name, seed] of openSeeds) {
+      const o = buildOpen(seed);
+      if (!o) { pushRed("BANNED CONSTRUCTION", `buildOpen(${name}): the builder returned nothing for a seed that names a trade`); continue; }
+      if (o.basis) heads.push([`buildOpen(${name}).basis`, o.basis]);
+      if (o.withheld) heads.push([`buildOpen(${name}).withheld`, o.withheld]);
+      if (o.footLine) heads.push([`buildOpen(${name}).footLine`, o.footLine]);
+      if (o.tailLine) heads.push([`buildOpen(${name}).tailLine`, o.tailLine]);
+      for (const c of o.foot) heads.push([`buildOpen(${name}).foot`, c.words]);
+    }
+    heads.push(["COPY.tradeOpen.biggest", COPY.tradeOpen.biggest], ["COPY.tradeOpen.footWithheld", COPY.tradeOpen.footWithheld]);
   }
 
   for (const [where, text] of heads) {

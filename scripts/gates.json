@@ -166,6 +166,7 @@
       "browser": false,
       "asserts": "verify_archetype_copy , the browser-free half of the archetype harness, so it can sit in the prebuild chain (no network, no secret, no browser).",
       "reads": [
+        "data/facts/industry",
         "src/app"
       ],
       "claims": []
@@ -177,6 +178,7 @@
       "browser": false,
       "asserts": "verify_model_laws_copy , the browser-free, database-free third of the model's twelve laws (task 4, 2026-09-08): BANNED WORDS, ROW SENTENCE and DISTRICT ADJECTIVE, the three PART 8.5 clauses that are p",
       "reads": [
+        "data/facts/industry",
         "scripts/model_laws_copy_baseline.json"
       ],
       "claims": [

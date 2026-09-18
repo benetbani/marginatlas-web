@@ -63,7 +63,9 @@ import { resolveTradeNet, countTradeNets, netText } from "@/lib/spine/trade_net"
 import { buildSuits } from "@/lib/spine/suits_rows";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
-import { ALL_INDUSTRIES, INDUSTRIES } from "@/lib/taxonomy";
+import { ALL_INDUSTRIES, INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
+import { buildPermits } from "@/lib/spine/permits_rows";
+import { buildOpen, buildOpenFoot, countOpenStates } from "@/lib/spine/open_rows";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
@@ -991,6 +993,87 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (!measured || measured.basis !== COPY.tradeSpread.basisMeasured || measured.sample) reds.push(`trade spread (measured): the measured basis does not build`);
   for (const d of [ss, sh, measured]) if (d) ban("trade spread", [d.basis ?? "", d.withheld ?? "", ...d.marks.map((m) => m.label)]);
   console.log(`trade opening: the one net builder with the engine absent lands ${counts.ladder} of ${counts.total} trades on the shard's ladder and ${counts.profile} on the sector profile (${counts.fill} of them past the 42 / 10 / 5 fill, withheld), 0 on the fill; the suits draw the two prose notes on ${counts.total - notCharacter} of ${counts.total} trades and the not-gathered row on ${notCharacter}, at most ${rowsMax} rows; ${longFacts} authored facts run over the locals notes' ${FACT_CHARS_CAP}-character cap (the longest ${longestFact}), a copy fault in the source file and not cut here; ${retiredBanned} banned word(s) on retired or merged ids that reach no reader${retiredBanned ? ` (${retiredQueue.join(", ")})` : ""}`);
+}
+
+/* THE TRADE PAGE'S FIRST BAND OF TURN ONE (MODEL.md 8.6 `03 permits | 04
+   open`; plan step 33's second dispatch, 2026-09-18), on every one of the 243
+   shard ids, without the database. THE PERMITS: every shard builds a card;
+   every cell prints a figure in the days form ("30 days", "1 day"), never a
+   word, never "0 days" (a zero-day licence is withheld and counted); the
+   withheld line agrees with the zero-day rows BOTH WAYS (a zero with no line
+   is a silent drop, a line with no zero is a card apologising for nothing);
+   the longest wait is the first cell; no banned word or unfilled placeholder
+   in a label, the basis, the foot or the line; the count of cells per shard is
+   printed (2 / 46 / 146 / 49, counted here rather than remembered). THE COST
+   TO OPEN: the archetype's key measured over the 243 ids (153 keyed, 90 on
+   the default: item 48's own numbers, held as a ratchet in the direction the
+   data track moves them), the foot's two companions resolving on every shard
+   id in the months and years forms, and the three states off fixture seeds:
+   held (lines -> ranked rows, the total the sum of the lines, the biggest
+   line the leader, accent on), baseline (no lines, a keyed trade -> the
+   table's figure, accent on, one basis naming all three figures), withheld
+   (no lines, a default trade -> the stated line in the site's idiom, no
+   figure, accent off). Every string through the register ban. */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const ids = readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, "")).sort();
+  const perShard: Record<number, number> = {};
+  let withheldCards = 0, cellsTotal = 0, footFull = 0;
+  const DAYS = /^(1 day|\d+ days)$/;
+  for (const id of ids) {
+    const p = buildPermits(id);
+    if (!p) { reds.push(`permits ${id}: no card off a shard that holds licences`); continue; }
+    perShard[p.cells.length] = (perShard[p.cells.length] ?? 0) + 1;
+    cellsTotal += p.cells.length;
+    const zero = p.count - p.cells.length;
+    if (zero > 0 && !p.withheld) reds.push(`permits ${id}: ${zero} zero-day licence(s) and no withheld line (a silent drop)`);
+    if (zero === 0 && p.withheld) reds.push(`permits ${id}: a withheld line with nothing withheld`);
+    if (p.withheld) withheldCards++;
+    for (const c of p.cells) {
+      if (typeof c.value !== "string" || !DAYS.test(c.value) || c.value === "0 days") reds.push(`permits ${id}: the cell ${c.key} prints "${String(c.value)}", not the days form`);
+      if (!c.label.trim()) reds.push(`permits ${id}: an empty label on ${c.key}`);
+      if (c.confidence !== "modeled") reds.push(`permits ${id}: a cell not marked modelled (R12)`);
+    }
+    if (p.longest && p.cells[0]?.key !== p.longest.key) reds.push(`permits ${id}: the longest wait is not the first cell`);
+    if (p.cells.length > 1 && p.longest) { const days = Math.max(...p.cells.map((c) => parseInt(String(c.value), 10))); if (days !== p.longest.days) reds.push(`permits ${id}: the longest wait named (${p.longest.days}) is not the longest printed (${days})`); }
+    ban(`permits ${id}`, [...p.cells.map((c) => c.label), p.basis, p.foot, p.withheld ?? ""]);
+    if (buildOpenFoot(id).length === 2) footFull++;
+  }
+  const states = countOpenStates(ids, industryToSlug);
+  if (states.keyed !== 153 || states.default !== 90) reds.push(`open: the archetype keys ${states.keyed} of ${states.total} shard ids and leaves ${states.default} on the default; item 48 counts 153 and 90 (a change here is the data track's to record)`);
+  if (footFull !== ids.length) reds.push(`open: the foot's two companions resolve on ${footFull} of ${ids.length} shard ids, not all`);
+  const lines = { items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }, { name: "Business registration", usd: 20 }] };
+  const held = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: lines });
+  if (!held || held.state !== "held" || held.rows.length !== 4 || held.tail !== null || held.tailLine !== null || held.value !== 390020 || held.figure !== usd(390020) || !held.accent || held.sample || held.basis !== COPY.tradeOpen.basisHeld || held.foot.length !== 2 || held.footLine !== null) reds.push("open (held): four lines do not build the total, the accent, the one basis and the foot as expected");
+  if (held && held.rows.find((r) => r.key === held.biggestKey)?.name !== "Fit-out") reds.push("open (held): the biggest line is not the leader");
+  /* THE CAP (open_rows.ts DRAWN_LINES_CAP): the exemplar's nine lines draw as the
+     five biggest with the four smallest stated, count and sum, in the capped
+     basis; the total is still every line's sum; a five-line bill draws all five
+     and no tail line; a six-line bill states its one smallest line singular. */
+  const nine = { items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Initial inventory", usd: 20000 }, { name: "Lease deposit", usd: 40000 }, { name: "Pre-opening marketing", usd: 12000 }, { name: "Business registration", usd: 20 }, { name: "Industry licences", usd: 1500 }, { name: "Insurance and bonds", usd: 2000 }, { name: "Certifications", usd: 500 }] };
+  const capped = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: nine });
+  if (!capped || capped.rows.length !== 5 || capped.lines.length !== 9 || capped.value !== 426020 || !capped.tail || capped.tail.count !== 4 || capped.tail.sum !== 4020 || capped.tailLine !== "The four smallest lines, $4,020 together, are in the total." || capped.basis !== COPY.tradeOpen.basisHeldCapped) reds.push(`open (held, nine lines): the five biggest do not draw with the four smallest stated ("${capped?.tailLine}")`);
+  if (capped && capped.rows.some((r) => r.value < 12000)) reds.push("open (held, nine lines): a line under the fifth biggest is drawn");
+  const five = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items.slice(0, 5) } });
+  if (!five || five.rows.length !== 5 || five.tail !== null || five.basis !== COPY.tradeOpen.basisHeld) reds.push("open (held, five lines): five lines draw with a tail or the capped basis");
+  const six = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items.slice(0, 6) } });
+  if (!six || six.rows.length !== 5 || six.tail?.count !== 1 || six.tailLine !== "The smallest line, $20, is in the total.") reds.push(`open (held, six lines): the one smallest line is not stated singular ("${six?.tailLine}")`);
+  const base = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" } });
+  if (!base || base.state !== "baseline" || base.value !== 300000 || !base.accent || !base.sample || base.basis !== COPY.tradeOpen.basisBaseline || base.footLine !== null || base.foot.length !== 2) reds.push("open (baseline): a keyed trade with no lines does not build the table's figure, the accent, the one basis and the foot as expected");
+  const withheld = buildOpen({ meta: { industry: "shoe-repair", industry_id: "shoe_repair" } });
+  if (!withheld || withheld.state !== "withheld" || withheld.figure !== null || withheld.accent || withheld.withheld !== COPY.tradeOpen.withheld || !withheld.withheld.startsWith("Not gathered yet:") || withheld.basis !== null || withheld.foot.length !== 2) reds.push("open (withheld): a default trade with no lines does not build the stated line, no figure and the foot as expected");
+  const noShard = buildOpen({ meta: { industry: "restaurants", industry_id: "no_such_trade" } });
+  if (!noShard || noShard.foot.length !== 0 || noShard.footLine !== COPY.tradeOpen.footWithheld || noShard.basis !== COPY.tradeOpen.basisBaselineAlone) reds.push("open (no shard): the withheld foot line and the total's own basis do not build");
+  const heldNoShard = buildOpen({ meta: { industry: "restaurants", industry_id: "no_such_trade" }, setup: nine });
+  if (!heldNoShard || heldNoShard.basis !== COPY.tradeOpen.basisHeldCappedAlone || heldNoShard.footLine !== COPY.tradeOpen.footWithheld) reds.push("open (held, no shard): the total's own capped basis and the withheld foot do not build");
+  for (const [name, o] of [["held", held], ["held, nine lines", capped], ["held, six lines", six], ["held, no shard", heldNoShard], ["baseline", base], ["withheld", withheld], ["no shard", noShard]] as const) if (o) ban(`open (${name})`, [o.basis ?? "", o.withheld ?? "", o.footLine ?? "", o.tailLine ?? "", ...o.foot.flatMap((c) => [c.figure, c.words]), ...o.rows.map((r) => r.name)]);
+  for (const o of [held, base, withheld]) if (o) for (const c of o.foot) if (!/^(1 month|\d+ months)$/.test(c.figure) && !/^(1 year|\d+(\.\d)? years)$/.test(c.figure)) reds.push(`open: a companion off the months or years form: "${c.figure}"`);
+  console.log(`trade turn one: the permits build on ${ids.length} shards, ${cellsTotal} cells (${Object.entries(perShard).sort().map(([k, v]) => `${v} with ${k}`).join(", ")}), ${withheldCards} with a zero-day licence withheld; the cost to open is keyed on ${states.keyed} of ${states.total} shard ids and on the default for ${states.default} (item 48), the foot's two companions on ${footFull}; the three states build off fixtures`);
 }
 
 /* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce`, `11 easiest` and the

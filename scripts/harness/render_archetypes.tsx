@@ -104,7 +104,8 @@ type Ctx = { instances: Record<string, { iso2: string; why: string }[]>; cityHer
 type Entry = { kind: string; city: "keyed" | "london" | "none"; cell?: "keyed"; render: (c: Ctx) => React.ReactNode };
 const SHEET: Entry[] = [
   { kind: "answer-card", city: "none", cell: "keyed", render: (c) => <AnswerCardStories instances={c.instances["answer-card"]} cell={c.cellHero} /> },
-  { kind: "ranked-bars", city: "keyed", render: (c) => <RankedBarsStories instances={pickRankedBarsInstances()} city={pickCityDistrictInstances(c.cityHero)} /> },
+  /* The cost to open's held state (cell/turn-one.tsx) reads a cell seed since plan step 33's second dispatch (2026-09-18). */
+  { kind: "ranked-bars", city: "keyed", cell: "keyed", render: (c) => <RankedBarsStories instances={pickRankedBarsInstances()} city={pickCityDistrictInstances(c.cityHero)} cell={c.cellHero} /> },
   { kind: "compare-table", city: "keyed", render: (c) => <CompareTableStories instances={pickCompareTableInstances()} city={pickCityPeerInstances(c.cityHero)} /> },
   { kind: "card-pager", city: "none", render: (c) => <CardPagerStories instances={c.instances["card-pager"]} /> },
   { kind: "city-cards", city: "none", render: (c) => <CityCardsStories instances={c.instances["city-cards"]} /> },
@@ -115,11 +116,13 @@ const SHEET: Entry[] = [
   { kind: "note-list", city: "none", render: (c) => <NoteListStories instances={c.instances["note-list"]} /> },
   { kind: "terminus", city: "keyed", render: (c) => <TerminusStories instances={pickTerminusInstances()} city={pickCityCloseInstances(c.cityHero)} /> },
   { kind: "pay-bars", city: "none", render: (c) => <PayBarsStories instances={c.instances["pay-bars"]} /> },
-  { kind: "kv-grid", city: "none", render: (c) => <KvGridStories instances={c.instances["kv-grid"]} /> },
+  /* The permits (cell/turn-one.tsx) read a cell seed since the same dispatch. */
+  { kind: "kv-grid", city: "none", cell: "keyed", render: (c) => <KvGridStories instances={c.instances["kv-grid"]} cell={c.cellHero} /> },
   { kind: "detail-panel", city: "none", render: (c) => <DetailPanelStories instances={c.instances["detail-panel"]} /> },
   { kind: "income-breakdown", city: "none", render: (c) => <IncomeBreakdownStories instances={c.instances["income-breakdown"]} /> },
   { kind: "bento-band", city: "london", render: (c) => <BentoBandStories instances={c.instances["bento-band"]} city={c.cityHero} /> },
-  { kind: "bento-metric", city: "none", render: (c) => <BentoMetricStories instances={c.instances["bento-metric"]} /> },
+  /* The cost to open's baseline and withheld states read a cell seed since the same dispatch. */
+  { kind: "bento-metric", city: "none", cell: "keyed", render: (c) => <BentoMetricStories instances={c.instances["bento-metric"]} cell={c.cellHero} /> },
   { kind: "mark-list", city: "none", render: (c) => <MarkListStories instances={c.instances["mark-list"]} /> },
   { kind: "blocked-seat", city: "none", render: (c) => <BlockedSeatStories instances={c.instances["blocked-seat"]} /> },
   { kind: "city-hero", city: "keyed", render: (c) => <CityHeroStories instances={c.cityHero} /> },

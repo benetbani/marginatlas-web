@@ -13,9 +13,13 @@
  *    least 1.6x the next size (rule 16).
  *  LADDER: every font size on the ladder.
  *  ACCENT: at most one accent-coloured text element per card. A ranked-bars
- *    card carries none , its one loud moment is a BLACK PILL on the row the
- *    card declares as the leader (`data-leader-key`), not a colour (task 12,
- *    2026-09-10), so its own law is stricter: zero accent text, AT MOST one
+ *    card's ROWS carry none , their one loud moment is a BLACK PILL on the row
+ *    the card declares as the leader (`data-leader-key`), not a colour (task
+ *    12, 2026-09-10), so its own law is stricter: zero accent text off the
+ *    card's own focal slot (`[data-focal]`, the bill's total over its lines
+ *    on the trade page's `04 open`, MODEL.md 8.6, plan step 33's second
+ *    dispatch, 2026-09-18: the one accent figure a ranked card may hold, and
+ *    at most one leaf in it), AT MOST one
  *    pill, and if there is one it sits on the leader's row. Whether that one
  *    exists is the card's own declaration, `data-feature`, read both ways: a
  *    card declaring "leader" must carry exactly one, so a mark cannot go
@@ -152,7 +156,7 @@ function inPage(storySelector) {
   for (const story of stories) {
     const inst = story.closest("[data-stories]")?.getAttribute("data-stories") + ":" + story.getAttribute("data-story");
     const card = story.querySelector("[data-archetype]");
-    const r = { inst, kind: card?.getAttribute("data-archetype") || "", overflow: [], sizes: [], accents: 0, answerSizes: [], rows: [], labels: [], hole: null, subtitle: "", cells: [], state: "", bars: [], tableRows: [], selfOmit: !!story.querySelector("[data-self-omit]") };
+    const r = { inst, kind: card?.getAttribute("data-archetype") || "", overflow: [], sizes: [], accents: 0, focalAccents: 0, answerSizes: [], rows: [], labels: [], hole: null, subtitle: "", cells: [], state: "", bars: [], tableRows: [], selfOmit: !!story.querySelector("[data-self-omit]") };
     if (!card) { out.push(r); continue; }
     for (const el of card.querySelectorAll("*")) {
       if (el.getClientRects().length === 0) continue; // display:none at this width
@@ -161,7 +165,8 @@ function inPage(storySelector) {
       const txt = (el.textContent || "").trim();
       if (txt && el.children.length === 0) {
         const fs = parseFloat(cs.fontSize); r.sizes.push(fs);
-        if (cs.color === accentRgb) r.accents++;
+        /* The card's own focal (`[data-focal]`, RankedBars since plan step 33's second dispatch) is counted apart from everything else: on a ranked card it is the one place accent text may stand. */
+        if (cs.color === accentRgb) { r.accents++; if (el.closest("[data-focal]")) r.focalAccents++; }
       }
     }
     r.state = card.querySelector("[data-state]")?.getAttribute("data-state") || "";
@@ -700,7 +705,19 @@ for (const w of WIDTHS) {
       const inverted = [];
       for (const a of rr) for (const b of rr) if (a.value > b.value && a.drawn < b.drawn - RANK_TOL) inverted.push(`${a.key} (${a.value}) draws ${a.drawn}px against ${b.key} (${b.value}) at ${b.drawn}px`);
       if (inverted.length) red(r.inst, w, "OUT OF ORDER", `${inverted.length} bar(s) drawn out of the order of their values: ${inverted[0]}`);
-      if (r.accents > 0) red(r.inst, w, "ACCENT", `${r.accents} accent-coloured text(s); the card's one mark is a pill now, not a colour`);
+      /* THE FOCAL IS THE ONE EXCEPTION (plan step 33's second dispatch, 2026-09-18,
+         MODEL.md 8.6 `04 open`): a ranked card may carry ONE accent figure of its
+         own over the bars, the bill's total, the page's second loud moment, in
+         the `[data-focal]` slot RankedBars draws for it; PART 6 then lights the
+         leader's bar and hatches the rest, which is what a featured card already
+         does. The rows' law is unchanged: accent text anywhere else on the card
+         is still a row wearing colour, and the pill is still their one mark.
+         Planted and watched go red the day it landed: the wide table's row
+         figures in the accent colour on cell:london:open reddened "8
+         accent-coloured text(s) off the focal" at 1280 and at 768 (the phone
+         table is another span and was not planted), then restored. */
+      if (r.accents - r.focalAccents > 0) red(r.inst, w, "ACCENT", `${r.accents - r.focalAccents} accent-coloured text(s) off the focal; the rows' one mark is a pill, not a colour`);
+      if (r.focalAccents > 1) red(r.inst, w, "ACCENT", `${r.focalAccents} accent-coloured texts in the focal slot; a card holds one focal`);
       /* AT MOST ONE PILL, ON THE ROW THE CARD DECLARES (widened, task 14).
          Four clauses, in the order a fault is worth naming:
            a second pill is always a fault, whatever the card features , two

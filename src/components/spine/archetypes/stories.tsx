@@ -55,7 +55,10 @@ import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { BlockedSeat } from "./BlockedSeat";
 import { CountryFlag } from "@/components/CountryFlag";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
-import { tradeHeroFacts, type CellHeroInstance } from "@/lib/spine/trade_hero_facts";
+import { tradeHeroFacts, cellServes, type CellHeroInstance } from "@/lib/spine/trade_hero_facts";
+import { buildPermits } from "@/lib/spine/permits_rows";
+import { buildOpen } from "@/lib/spine/open_rows";
+import { PermitsCard, OpenCard } from "@/components/spine/cell/turn-one";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { buildSuits } from "@/lib/spine/suits_rows";
 
@@ -226,14 +229,14 @@ export function AnswerCardStory({ facts, why }: { facts: HeroFacts; why: string 
 /** THE TRADE'S TAKE, `00 take` (MODEL.md 8.6; plan step 33's first dispatch, 2026-09-18), keyed cell:<handle>:take off the seeds the sheet loads (trade_hero_facts.ts CELL_INSTANCES): the exemplar with money shown, and the untrusted cell with the state word. Drawn exactly as cell/masthead.tsx draws it, the crumb under the h1, the one net builder's figure in the first companion. */
 export const cellTakeKey = (c: CellHeroInstance) => `cell:${c.key}:take`;
 export function pickCellTakeInstances(cell: CellHeroInstance[]): Instance[] {
-  return cell.filter((c) => tradeHeroFacts(c.seed)).map((c) => ({ iso2: cellTakeKey(c), why: c.why }));
+  return cell.filter((c) => cellServes(c.key, "take") && tradeHeroFacts(c.seed)).map((c) => ({ iso2: cellTakeKey(c), why: c.why }));
 }
 export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="answer-card">
       {/* The country half draws the two-letter keys alone: the kind's list also carries the cell keys (pickAllInstances), and the country builder handed "cell:london:take" returns a bogus code with no answer, which drew a second, false card for each cell on the first full run. */}
       {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}
-      {cell.map((c) => {
+      {cell.filter((c) => cellServes(c.key, "take")).map((c) => {
         const f = tradeHeroFacts(c.seed);
         const el = f ? <AnswerCard id={`take-cell-${c.key}`} name={f.name} iso2={f.iso2} crumb={f.crumb} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} /> : null;
         return <Story kind="answer-card" key={cellTakeKey(c)} iso2={cellTakeKey(c)} why={c.why}>{el}</Story>;
@@ -242,6 +245,20 @@ export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell 
   );
 }
 
+/** THE TRADE'S PERMITS AND ITS COST TO OPEN (MODEL.md 8.6 `03 permits | 04 open`; plan step 33's second dispatch, 2026-09-18), keyed cell:<handle>:permits and cell:<handle>:open off the seeds the sheet loads, drawn by the page's own cards (cell/turn-one.tsx) at the widths their seats take at 1280: the permits at the narrow 416 of the 2-3, the cost to open at its wide 624. The permits on three shards: the exemplar's four licences, a three-licence shard and a five-licence one. The cost to open in its three states across two kinds: held on ranked-bars (London, nine lines), baseline and withheld on bento-metric (California restaurants keyed, London shoe repair on the default). */
+export const cellPermitsKey = (c: CellHeroInstance) => `cell:${c.key}:permits`;
+const permitsWhy = (p: NonNullable<ReturnType<typeof buildPermits>>) => `trade block 03: ${p.cells.length} licences over their typical days${p.withheld ? ", one withheld" : ""}, the longest wait first at the head rung (the focal cell is a candidate awaiting his click)`;
+export function pickCellPermitsInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "permits")).map((c) => ({ c, p: buildPermits(c.seed?.meta?.industry_id) })).filter((x) => x.p).map(({ c, p }) => ({ iso2: cellPermitsKey(c), why: permitsWhy(p!) }));
+}
+export const cellOpenKey = (c: CellHeroInstance) => `cell:${c.key}:open`;
+const openWhy = (o: NonNullable<ReturnType<typeof buildOpen>>) =>
+  o.state === "held" ? `trade block 04 held: ${o.rows.length} setup lines as one set, the total at 30 in terracotta over them, the biggest line lit, the two companions in the foot`
+    : o.state === "baseline" ? "trade block 04 baseline: no setup lines, the trade's typical cost to open at 30 in terracotta, modelled, the two companions in the foot"
+    : "trade block 04 withheld: the trade on the archetype's default, the stated line at 16 where the total would stand, unaccented, the two companions in the foot";
+export function pickCellOpenInstances(cell: CellHeroInstance[], kind: "ranked-bars" | "bento-metric"): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "open")).map((c) => ({ c, o: buildOpen(c.seed) })).filter((x) => x.o && (kind === "ranked-bars" ? x.o.state === "held" : x.o.state !== "held")).map(({ c, o }) => ({ iso2: cellOpenKey(c), why: openWhy(o!) }));
+}
 /** The city district rankings (city:districts, run 25): the city with ranked districts, and one with none, which self-omits. */
 export function pickCityDistrictInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
   const out: CityHeroInstance[] = [];
@@ -251,11 +268,16 @@ export function pickCityDistrictInstances(cities: CityHeroInstance[]): CityHeroI
   if (none) out.push({ ...none, why: "self-omits: no ranked districts" });
   return out;
 }
-export function RankedBarsStories({ instances = pickRankedBarsInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
+export function RankedBarsStories({ instances = pickRankedBarsInstances(), city = [], cell = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="ranked-bars">
+      {cell.filter((c) => cellServes(c.key, "open")).map((c) => {
+        const o = buildOpen(c.seed);
+        if (!o || o.state !== "held") return null;
+        return <Story kind="ranked-bars" key={cellOpenKey(c)} iso2={cellOpenKey(c)} why={openWhy(o)}><div style={{ maxWidth: 693 }}><OpenCard id={`open-cell-${c.key}`} open={o} /></div></Story>;
+      })}
       <p className="mb-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">Margins from the engine snapshot of {SNAPSHOT_TAKEN}.</p>
-      {instances.map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         const card = marginCardFromSnapshot(i.iso2);
         const el = card && card.rows.length >= 2 ? (
           <RankedBars id={`money-${i.iso2.toLowerCase()}`} kicker={`${COPY.margin.kicker}, ${nameOf(i.iso2)}`} icon="owner-keeps" tagged basis={COPY.margin.basis} withheldLine={card.withheldLine} rows={card.rows.map((r) => ({ key: r.key, name: r.name, value: r.margin, flagged: r.flagged }))} worldMax={card.worldMax} fmt={(v) => `${Math.round(v * 100)}%`} phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }} />
@@ -368,7 +390,7 @@ export function pickCityStripInstances(): CityStripInstance[] {
 /** THE TRADE'S SPREAD, `01 spread` (MODEL.md 8.6; plan step 33's first dispatch, 2026-09-18), keyed cell:<handle>:spread off the seeds the sheet loads: London (the three fixed multipliers, modelled, 8.6's basis), California (the cell's own bottom and top tenth, measured) and Mumbai cafes (money not shown: the withheld line where the figure would stand). Drawn as cell-view.tsx's `Spread` draws it, at the 520 the card takes in its 1-1 band at 1280. */
 export const cellSpreadKey = (c: CellHeroInstance) => `cell:${c.key}:spread`;
 export function pickCellSpreadInstances(cell: CellHeroInstance[]): Instance[] {
-  return cell.filter((c) => buildTradeSpread(c.seed)).map((c) => {
+  return cell.filter((c) => cellServes(c.key, "spread") && buildTradeSpread(c.seed)).map((c) => {
     const d = buildTradeSpread(c.seed)!;
     const why = d.marks.length === 0 ? "trade block 01 withheld: money not shown, the line where the figure would stand" : d.modelled ? "trade block 01 on the exemplar: three fixed multipliers of the typical, modelled, the typical at 30" : "trade block 01 measured: the cell's own bottom and top tenth, the typical at 30";
     return { iso2: cellSpreadKey(c), why };
@@ -377,7 +399,7 @@ export function pickCellSpreadInstances(cell: CellHeroInstance[]): Instance[] {
 export function RangeStripStories({ instances = pickRangeStripInstances(), city = pickCityStripInstances(), cell = [] }: { instances?: Instance[]; city?: CityStripInstance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="range-strip">
-      {cell.map((c) => {
+      {cell.filter((c) => cellServes(c.key, "spread")).map((c) => {
         const d = buildTradeSpread(c.seed);
         const el = d ? (
           <div style={{ maxWidth: 520 }}>
@@ -783,10 +805,16 @@ function KvSeatStory({ id, icon, kicker, sample, cells, withheld, basis, foot }:
   );
 }
 
-export function KvGridStories({ instances = pickKvGridInstances() }: { instances?: Instance[] }) {
+export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="kv-grid">
-      {instances.map((i) => {
+      {cell.filter((c) => cellServes(c.key, "permits")).map((c) => {
+        const p = buildPermits(c.seed?.meta?.industry_id);
+        if (!p) return null;
+        return <Story kind="kv-grid" key={cellPermitsKey(c)} iso2={cellPermitsKey(c)} why={permitsWhy(p)}><div style={{ maxWidth: 347 }}><PermitsCard id={`permits-cell-${c.key}`} permits={p} /></div></Story>;
+      })}
+      {/* The cell keys are drawn above off their seeds; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         const parts = i.iso2.split(":");
         if (parts[0] === "city") {
           /* The city's seats, drawn as city-view.tsx draws them (Glance, AmongCities): the country's KvSeatStory markup, the kicker naming the city. */
@@ -1314,10 +1342,15 @@ export function pickBentoMetricInstances(): Instance[] {
   return out;
 }
 
-export function BentoMetricStories({ instances = pickBentoMetricInstances() }: { instances?: Instance[] }) {
+export function BentoMetricStories({ instances = pickBentoMetricInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="bento-metric">
-      {instances.map((i) => {
+      {cell.filter((c) => cellServes(c.key, "open")).map((c) => {
+        const o = buildOpen(c.seed);
+        if (!o || o.state === "held") return null;
+        return <Story kind="bento-metric" key={cellOpenKey(c)} iso2={cellOpenKey(c)} why={openWhy(o)}><div style={{ maxWidth: 693 }}><OpenCard id={`open-cell-${c.key}`} open={o} /></div></Story>;
+      })}
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         if (i.iso2.startsWith("city:")) {
           const slug = i.iso2.split(":")[1];
           const d = buildCityDemand(slug);
@@ -1575,7 +1608,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
     "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero)],
-    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why }))],
+    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars")],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why }))],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
@@ -1585,11 +1618,11 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": pickKvGridInstances(),
+    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero)],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": pickIncomeBreakdownInstances(),
     "bento-band": pickBentoBandInstances(),
-    "bento-metric": pickBentoMetricInstances(),
+    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric")],
     "mark-list": pickMarkListInstances(),
     "blocked-seat": pickBlockedSeatInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
