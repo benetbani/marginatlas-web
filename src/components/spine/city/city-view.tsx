@@ -79,7 +79,10 @@ import { spineCitySeed } from "@/lib/spine-seeds";
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Movement, Box, Head, Rail, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
+import { Movement, Box, Head, Rail, Ico, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
+import type { AtlasIconId } from "@/components/brand/icons";
+import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
+import { countWord } from "@/lib/spine/district_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
@@ -310,49 +313,100 @@ function Earnings({ strip }: { strip: CityEarningsData | null }) {
   );
 }
 
-/* TradesHere , the funnel block §24 asks for: "higher pages (country, city) carry a
- * block of real clickable businesses funneling into the cell pages". It replaces the
- * ranked "what to open, and what you keep" chapter, which cannot be restored at this
- * altitude: cost-to-open per city is omitted upstream, per-city trade margin and
- * take-home are banned outright by §5, and the break-in score blends the banned
- * take-home with a term its own module labels "ROOM (crowding)", which §5 also bans.
- * So there is no ranking here, and there is no score. Only which trades this city
- * holds a real local measurement for, each linking to the page where those figures
- * are lawful. 8.3's `09 trades` (trade rows, a foot in the coverage form) is a later
- * dispatch's; this is today's card in the seat.
+/**
+ * Trades with local figures, `09 trades` (MODEL.md 8.3; plan step 32, fifth
+ * dispatch, 2026-09-18): THE TRADE ROWS, PART 5's own grammar for a trade
+ * ("a 28px icon tile, the trade name at 14px weight 500, ... an arrow, a
+ * hairline between rows, equal heights, seven rows maximum. Never a chip,
+ * never a wrapped ragged row"; PART 9 clause 21 bans the wrapped chips this
+ * card drew until today). One row per trade, full card width at every width:
+ * the trade's own icon tile (the trade family of icons), its name, and the
+ * arrow at the right edge with a `--c-soft` hover, because every row
+ * navigates to the trade's page under this city (PART 5, LINKS LOOK LIKE
+ * LINKS). NO FIGURE PER ROW: take-home and margin are stripped upstream by
+ * the 2026-07-11 ban (adapt_city.ts maps the list down to name, slug and
+ * href), so the row is wordless past its name and the landing page answers
+ * (CROSS-PAGE-COHERENCE M23's handoff note). The one line is THE FOOT, in the
+ * coverage form PART 7 puts there, the model's own words: "Local figures for
+ * {n} trades. Which is easiest to open here is not yet known.", the count as
+ * a word. No headline figure: the form holds none.
  *
- * Hover is INK, not the accent. §37: the accent marks answers and never appears on
- * hover. */
+ * SEVEN IS THE CAP AND THE SLATE HOLDS IT: the eight everyday trades
+ * (adapt_city.ts EVERYDAY_TRADES) minus pharmacies, which resolve no cell on
+ * any city (city_board.ts POPULAR_TRADES: "Pharmacies are intentionally
+ * absent"), are seven, so no city can hand this card an eighth row today and
+ * nothing here truncates. The day pharmacies resolve, "seven max" and "never
+ * quietly shortened" (PART 7) meet on this card and the model decides; a
+ * slice here would be the silent drop the model forbids. Under four trades
+ * the card self-omits (8.3: "null under four trades elsewhere"; the adapter
+ * leaves `trades_here` undefined under four too). COUNTED 2026-09-18 through
+ * the adapter's own path on all 252 listed cities: 101 draw the card (51
+ * with seven trades, 35 with six, 15 with five; 151 hold none), London 7 of
+ * its 8 local rows, Berlin 7 of 7, New York 6 of 9; 8.3's "London 8, New
+ * York 9, Berlin 7" are the local rows before the everyday filter.
+ *
+ * THE ORDER IS THE SLATE'S, the same on every city: the everyday set's own
+ * order (restaurants, grocery, hairdressers, gym, auto repair, cafes, bars),
+ * never the adapter's, which sorts by owner take-home, a figure this card may
+ * not print; an order set by a banned figure is that figure leaking through
+ * the row order, and a reader who cannot see the basis of an order reads it
+ * as a ranking (the chips stood in take-home order for that reason without
+ * anyone deciding it).
+ *
+ * EQUAL HEIGHTS BY CONSTRUCTION, and the rows share the band's height the way
+ * RankedBars' table rows do (`flex-1` on the grid, rows on `minmax(2.75rem,
+ * 1fr)`, MarkList's declared row): beside the districts table the seven rows
+ * stretch to the partner's height and the hairlines spread with them, so the
+ * card never stands short with a blank under its last row. The rows declare
+ * their count (`data-expect-rows`) and mark every drawn row (`data-row`), so
+ * ROWS CUT proves every row draws at every width; the name carries
+ * `data-label` for ROW SENTENCE, which reads the taxonomy's "Cafés & coffee
+ * shops" as four words here as it does on the country's money card (a copy
+ * fault in the trade's own name, recorded, never shortened by this card).
+ *
+ * The opener is `Rail`, PART 7's one opener style; the `Head` this card wore
+ * was the page's alternation between two opener styles inside one band.
+ * Hover is INK on the name and `--c-soft` on the row, never the accent (§37).
+ */
+/* slug -> the trade's icon tile, the trade family (added 2026-07-08). Every
+   everyday trade that resolves a cell has one; an unknown slug takes the
+   street rather than no tile, so every row keeps one geometry. */
+const TRADE_ICON: Record<string, AtlasIconId> = {
+  "restaurants": "trade-restaurant",
+  "grocery-stores": "trade-grocery",
+  "pharmacies": "trade-retail",
+  "hairdressers-beauty": "trade-salon",
+  "sports-fitness": "trade-gym",
+  "auto-repair-shops": "trade-auto",
+  "cafes-coffee-shops": "trade-cafe",
+  "bars-nightclubs": "trade-bar",
+};
+const SLATE_ORDER: string[] = [...EVERYDAY_TRADES];
 const hasTradesHere = (d: any) => (d?.trades_here?.list?.length ?? 0) >= 4;
 function TradesHere({ d }: { d: any }) {
   const list: Array<{ name: string; slug: string; href: string }> = d.trades_here?.list ?? [];
   if (list.length < 4) return null;
+  const rank = (slug: string) => { const i = SLATE_ORDER.indexOf(slug); return i < 0 ? SLATE_ORDER.length : i; };
+  const rows = list.slice().sort((a, b) => rank(a.slug) - rank(b.slug) || a.name.localeCompare(b.name));
+  const foot = COPY.cityTrades.foot.replace("{n}", countWord(rows.length));
   return (
-    <Box id="trades">
-      {/* NOT a restatement of the chapter heading above it (§11, the double-title
-          defect): the chapter says what the reader gets, this says what the set IS. */}
-      <Head icon="honest-take">Trades with local figures</Head>
-      {/* A WRAPPING ROW, NOT A GRID. These are equal links with no ranking, and a
-          two-column grid leaves the odd one out beside a blank half whenever the
-          count is odd, which is §17 and is the fault I had just fixed one section
-          above. A wrap has no empty cell by construction. It is also a different
-          form from the bands and tables either side of it (§25, §33: the rule is
-          variety). */}
-      <div className="flex flex-wrap gap-2">
-        {list.map((t) => (
+    <Box id="trades" data-form="trade-rows" className="flex flex-col">
+      <Rail icon="high-street" kicker={COPY.cityTrades.kicker} />
+      <div className="grid flex-1 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={rows.length} style={{ gridAutoRows: "minmax(2.75rem,1fr)" }}>
+        {rows.map((t) => (
           <a
             key={t.slug}
             href={t.href}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] px-3 py-2 text-[length:var(--t-body)] text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]"
+            data-row={t.slug}
+            className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 no-underline transition hover:bg-[var(--c-soft)]"
           >
-            {t.name}
-            <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">&#8594;</span>
+            <Ico id={TRADE_ICON[t.slug] ?? "high-street"} />
+            <span data-label className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.name}</span>
+            <span aria-hidden="true" className="pr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">&#8594;</span>
           </a>
         ))}
       </div>
-      <div className="mt-3 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        Each of these has a real local measurement in {d.meta?.city}.
-      </div>
+      <p className="mt-2.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p>
     </Box>
   );
 }
@@ -361,15 +415,48 @@ function TradesHere({ d }: { d: any }) {
    loop's run 22, 2026-09-06). The country page's form, the one the founder
    called one of the best versions he had seen (2026-08-30): the places as rows
    with a flag each, the measures as columns, the home row marked, the phone form
-   stacked and never scrolling sideways. The city and up to four peers, three
-   columns: cheaper to live (index points, higher is cheaper), customer income
-   (percent of the home city's average pay), visitors (a multiple). The old kit
-   table had the cities as columns and the measures as rows, and printed "pp", a
-   word the doctrine bans, on the income row; the units are now in the caption
-   in plain words. Full width by the wide-table sanction, as on the country page,
-   so it no longer stands alone at two thirds: 8.3's `11 peers`, the seam of
-   turns two and three, the page's second full width (R1). Its kicker and
-   heads are the later peers dispatch's. */
+   stacked and never scrolling sideways. The city and its three peers (the peer
+   set is three roles by his 2026-06-08 rule, a competitor, the rival and one
+   abroad, so "four peers" resolve on no city and every listed city draws four
+   rows; counted 2026-09-18, 252 of 252 with all three columns held), three
+   columns: the cost of living (the absolute index, a leading metro at 100),
+   the typical pay (the one income builder's figure since the fourth dispatch,
+   the masthead's own), visitors a year. Full width by the wide-table sanction,
+   as on the country page: 8.3's `11 peers`, the seam of turns two and three,
+   the page's second full width (R1).
+
+   THE WORDS ARE 8.3's, corrected in plan step 32's fifth dispatch (2026-09-18,
+   copy.ts `cityPeers`): the kicker "Against other cities" (the live "Peer
+   cities, side by side" was five words, over PART 7's cap), the column heads
+   "Cost of living" (the comparative "Cheaper to live" went: the column prints
+   the absolute index, and a comparison table never prints a comparison) and
+   "Typical pay" (the label follows the figure the column has printed since the
+   fourth dispatch). The rows never navigate (M23: CompareTable draws no href
+   in either form, read before it was asserted; the trade rows above are the
+   doors out of this turn). The better value by weight and a tick, terracotta
+   never.
+
+   THE CENSUS NOTE. His 2026-09-07 "two more metrics" has one honest candidate
+   for a fourth column, prime shop rent a square metre a year off `realestate`
+   (252 of 252, 133 held), the cost this table lacks; it is RECORDED here and
+   NOT BUILT, the 11 brief's decision (8.3, the row's own words: "proposed to
+   the 11 brief, not decided here"). THE NAME COLUMN IS THE 1.2-SHARE the laws
+   list reads against PART 5's 22ch: CompareTable.tsx sizes it to 1.2 of a
+   1.2-plus-columns share (28.6 percent with three columns, 295px of the
+   1032px table at 1280, 194px of the 680 at 768) while the longest name in
+   London's set, "Los Angeles" with its flag, needs 123px, so the first figure
+   stands 386 to 432px from a short name at 1280 and 247px at 768, over the
+   rule's third of the card (357 and 240). PART 5's `minmax(0,22ch)` on that
+   column (158px at the table's 12px) would move every first figure 91px left
+   at 1280 and 24px at 768 (the column gives up 137px and 36px, the three
+   value columns gain a third of it each), so the same rows would read about
+   295 to 341px and 223px, under the thresholds by 16 to 62px and by 17px,
+   and change nothing a reader sees: a figure right-aligned under its head in
+   a table three columns wide still sits far from a short name. Where
+   a comparison table's figures stand under PART 5's row law (which was
+   written for label, figure, track) is a form decision on a card shared with
+   the country page and praised there, so the five rows are recorded for the
+   controller with these numbers rather than moved by this dispatch. */
 function CityPeers({ d }: { d: any }) {
   const t = buildCityPeerTable(d);
   if (!t) return null;
@@ -654,28 +741,25 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
         </Band>
       ) : null}
       {/* `03 districts | 09 trades` (8.3): rent by district, the page's one
-          fill-bar card, LEFT; the trades with local figures RIGHT. London holds
-          both; 249 cities hold neither and the band is absent together (8.3,
-          "the sparse pair"). THE PAIR CANNOT BE SEATED TODAY, MEASURED on
-          London with the probe and the page filter (plan step 32, first
-          dispatch): alone at two thirds the ranking stands 693 by 437 (content
-          436) and the trade chips 693 by 194 (content 193); paired at 2-1 the
-          chips at 347 wrap to 381 of content inside a card stretched to 437,
-          and the filter reds a 121 by 144 blank in it (WHITE SPACE, against a
-          page-holes baseline of 0 that never rises); every wider seat for the
-          chips shortens their wrap and deepens the blank, and 1-2 puts the
-          ranking at 347, where its district names wrap (C9 measured six of
-          seven wrapping at 520 already). So each stands in its own band, in
-          8.3's order, the ranking at the survivor's two thirds (the width it
-          has held since C9) and the chips likewise, stacked until lg; LONE
-          CARD fires on both, expected, until `09` takes its trade-row form
-          with a figure per row (a later dispatch) and the pair is re-measured. */}
-      {districts ? (
+          fill-bar card, LEFT; the trades with local figures RIGHT, at 2-1
+          (plan step 32, fifth dispatch, 2026-09-18; the measurements are in
+          the dispatch's report and below). London alone draws `03` (8.3:
+          LONDON ONLY); `09` draws on 101 of 252 cities (counted through the
+          adapter's own path, 2026-09-18), so on 100 cities the band is the
+          trade rows alone at the survivor's two thirds, LONE CARD by the
+          rule, and on 151 it is absent. 8.3's "absent together on 249" was
+          written before the count existed; the controller holds the pairing
+          on those 100. */}
+      {districts && trades ? (
+        <Band split="2-1" stack="lg">
+          <WhereToTrade d={d} />
+          <TradesHere d={d} />
+        </Band>
+      ) : districts ? (
         <Band split="2-1" stack="lg">
           <WhereToTrade d={d} />
         </Band>
-      ) : null}
-      {trades ? (
+      ) : trades ? (
         <Band split="2-1" stack="lg">
           <TradesHere d={d} />
         </Band>

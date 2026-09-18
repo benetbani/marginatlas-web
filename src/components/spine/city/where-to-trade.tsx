@@ -33,6 +33,16 @@
  * no district holds coordinates (DATA-REQUIREMENTS.md 16; the code is in the
  * file's history). The facts come from district_rows, so the stories draw the
  * same card.
+ *
+ * CHECKED AGAINST 8.3's LETTER on plan step 32's fifth dispatch (2026-09-18):
+ * the table form, seven rows read top to bottom, the cheapest district the
+ * named reference printing 1.00x on its own row, nobody featured, every bar
+ * one neutral and every figure one ink, the set's own ceiling declared, the
+ * head and the basis naming the reference, no foot (the row asks for none):
+ * all as built. The one string that disagreed was the kicker, "By district",
+ * which said the set and not the thing; it is 8.3's own title now, "Rent by
+ * district" (copy.ts). The band is `03 | 09` at 2-1, this card left, the
+ * trade rows right, measured in city-view.tsx.
  */
 import * as React from "react";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
