@@ -1161,31 +1161,65 @@ export function MarkListStories({ instances = pickMarkListInstances() }: { insta
   );
 }
 
-/* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce` and `11 easiest`;
-   plan step 31, 2026-09-17). Two stories, both on GB, keyed "GB:workforce" and
-   "GB:easiest", because the seat's words are the same on every country (a seat
-   holds no figure, so there is no data-poor case and no extreme name): what
-   varies is only which block it holds. Drawn at the width its seat takes on
-   the page (520 for 07's half of a 1-1, 347 for 11's third of a 2-1), so the
-   line's wrap is the page's. */
-const BLOCKED_SEAT_STORIES: Record<string, { icon: "staffing-rota" | "where-it-pays"; kicker: string; line: string; foot: string; maxWidth: number }> = {
-  "GB:workforce": { icon: "staffing-rota", ...COPY.blocked.workforce, maxWidth: 520 },
-  "GB:easiest": { icon: "where-it-pays", ...COPY.blocked.easiest, maxWidth: 347 },
+/* THE DRAWN BLOCKED SEATS (MODEL.md 8.2; plan step 31, 2026-09-17 and
+   2026-09-18). A seat's words are the same on every country (it holds no
+   figure, so there is no data-poor case and no extreme name): what varies is
+   which block it holds and which country's data leaves the block seated.
+   Two seats stand on every country, `07 workforce` and `11 easiest`, so their
+   stories are keyed on the exemplar, "GB:workforce" and "GB:easiest". Four
+   stand only where the drawn card's own floor is not met (8.2's "THE THIN
+   COUNTRY, SEATED"), so their keys come OFF THE BUILDERS: the thin country
+   is AF wherever the builder says AF needs the seat, and otherwise the first
+   country in the taxonomy that does, and the `why` states the builder's own
+   verdict, so a story can never draw a seat on a country whose card would
+   draw. Each is drawn at the width its seat takes on the page at 1280 (the
+   column is 1072 inside the main's padding, minus the band's 32 gap: 520 for
+   07's half of a 1-1, 347 for 11's third of a 2-1, 624 for 03's wide side of
+   the 3-2 and 16's wide side of the 2-3, 416 for 12's narrow side of the
+   2-3, 1072 for 09's full width), so the line's wrap is the page's. */
+type SeatBlock = "setup" | "peers" | "money" | "locals";
+const SEAT_FORM: Record<SeatBlock | "workforce" | "easiest", { icon: "staffing-rota" | "where-it-pays" | "register-cost" | "benchmark" | "owner-keeps" | "locals-know"; maxWidth: number }> = {
+  workforce: { icon: "staffing-rota", maxWidth: 520 },
+  easiest: { icon: "where-it-pays", maxWidth: 347 },
+  setup: { icon: "register-cost", maxWidth: 624 },
+  peers: { icon: "benchmark", maxWidth: 1072 },
+  money: { icon: "owner-keeps", maxWidth: 416 },
+  locals: { icon: "locals-know", maxWidth: 624 },
+};
+/** Whether a country's data leaves the block seated, by the builder the drawn card reads (the view's own floors). */
+const SEATED: Record<SeatBlock, (iso2: string) => string | null> = {
+  setup: (c) => (buildSetupRows(c).length === 0 ? "no legal form on file" : null),
+  peers: (c) => (buildPeerTable(c) == null ? "no peer table resolves" : null),
+  money: (c) => { const m = marginCardFromSnapshot(c); return !m || m.rows.length < 2 ? `${m ? m.rows.length : 0} credible margin(s), under the card's two` : null; },
+  locals: (c) => (buildLocalsNotes(c) == null ? "no authored notes" : null),
+};
+const SEAT_WHY: Record<SeatBlock, string> = {
+  setup: "block 03, the seat beside the bill to register; item 10 not gathered",
+  peers: "block 09, the seat at the table's full width; item 57 not gathered",
+  money: "block 12, the seat beside what locals know; item 8 not gathered",
+  locals: "block 16, the seat beside the net profit margin; item 6 not gathered",
 };
 export function pickBlockedSeatInstances(): Instance[] {
-  return [
+  const out: Instance[] = [
     { iso2: "GB:workforce", why: "block 07, the seat beside what staff cost; items 40 and 17 not gathered" },
     { iso2: "GB:easiest", why: "block 11, the seat beside the footing; item 8's addendum not gathered" },
   ];
+  for (const block of ["setup", "peers", "money", "locals"] as SeatBlock[]) {
+    const c = ["AF", ...codes()].find((x) => SEATED[block](x) != null);
+    if (c) out.push({ iso2: `${c}:${block}`, why: `${SEAT_WHY[block]} (${SEATED[block](c)})` });
+  }
+  return out;
 }
 export function BlockedSeatStories({ instances = pickBlockedSeatInstances() }: { instances?: Instance[] }) {
   return (
     <div data-stories="blocked-seat">
       {instances.map((i) => {
-        const cfg = BLOCKED_SEAT_STORIES[i.iso2];
-        const el = cfg ? (
-          <div style={{ maxWidth: cfg.maxWidth }}>
-            <BlockedSeat id={`seat-${i.iso2.split(":")[1]}`} icon={cfg.icon} kicker={cfg.kicker} line={cfg.line} foot={cfg.foot} />
+        const block = i.iso2.split(":")[1] as keyof typeof SEAT_FORM;
+        const form = SEAT_FORM[block];
+        const copy = (COPY.blocked as Record<string, { kicker: string; line: string; foot: string }>)[block];
+        const el = form && copy ? (
+          <div style={{ maxWidth: form.maxWidth }}>
+            <BlockedSeat id={`seat-${block}`} icon={form.icon} kicker={copy.kicker} line={copy.line} foot={copy.foot} />
           </div>
         ) : null;
         return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;

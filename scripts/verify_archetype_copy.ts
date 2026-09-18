@@ -20,6 +20,12 @@
  *    in the app folder (route groups dropped, [params] matched).
  *  NOTES: every authored note list holds at most five notes, a label of at
  *    most seven words and a fact of at most 140 characters, no banned word.
+ *  SEATS: every drawn blocked seat's copy (MODEL.md 8.2; plan step 31's
+ *    seventh dispatch, 2026-09-18): one line in the site's idiom, under
+ *    fifteen words, a foot naming a DATA-REQUIREMENTS item, no banned word,
+ *    a kicker within four words that is the drawn card's own; and the four
+ *    thin-country seats' conditions counted over the taxonomy from the
+ *    builders the view reads, so the count a comment quotes is measured.
  * BLIND SPOT: it cannot see a wrap or a hole; the browser half does that.
  */
 import { COUNTRIES } from "@/lib/taxonomy";
@@ -42,6 +48,8 @@ import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
+import { SEAT_LINE_WORDS_CAP } from "@/components/spine/archetypes/BlockedSeat";
+import { buildSetupRows } from "@/lib/spine/setup_rows";
 import { buildMarkList, MARK_LIST_CAP } from "@/lib/spine/mark_list_rows";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -537,6 +545,53 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (COPY.compare.kicker.split(/\s+/).length > 4) reds.push(`compare: the kicker runs over four words: "${COPY.compare.kicker}"`);
   for (const b of [COPY.checks.basis.three, COPY.checks.basis.two]) if (b.split(/\s+/).filter(Boolean).length > 14) reds.push(`checks: the basis runs over fourteen words: "${b}"`);
   console.log(`checks: ${cards} cards build, ${three} with three rows and ${two} with two, ${over} on the over-21 wait; every row a bank row, the compare door on every country against the routes`);
+}
+/* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce`, `11 easiest` and the
+   four of "THE THIN COUNTRY, SEATED"; plan step 31's seventh dispatch,
+   2026-09-18). The seat's law is BlockedSeat.tsx's: one stated line in the
+   idiom "Not gathered yet: ...", under fifteen words (the cap is the
+   component's own constant, fourteen), no figure (a digit in the line would
+   be one), a foot naming the requirement by its DATA-REQUIREMENTS item, no
+   banned word and no em dash in either, the kicker within PART 7's four
+   words. A seat that stands for a drawn card opens under that card's own
+   kicker, referenced in copy.ts and never retyped, so the four are held to
+   the literal their drawn card prints. Then the four seating conditions,
+   counted over the taxonomy from the same builders the view and the stories
+   read (no legal form, no peer table, under two credible margins in the
+   snapshot, no authored notes), printed so the counts the comments quote are
+   measured rather than remembered; each must seat at least one country, or
+   the seat has no thin country to stand on and the story would draw nothing.
+   The kicker is not held to COPY.banned: "Against the peers" is the table's
+   own praised kicker and carries the banned substring by design (the list
+   is applied to caveats, heads, notes and doors, never to a kicker). */
+{
+  const seats = Object.entries(COPY.blocked) as Array<[string, { kicker: string; line: string; foot: string }]>;
+  for (const [key, seat] of seats) {
+    const words = seat.line.trim().split(/\s+/).filter(Boolean).length;
+    if (!seat.line.startsWith("Not gathered yet: ")) reds.push(`seat ${key}: the line is not in the idiom "Not gathered yet: ...": "${seat.line}"`);
+    if (words > SEAT_LINE_WORDS_CAP) reds.push(`seat ${key}: the line runs ${words} words, over the cap of ${SEAT_LINE_WORDS_CAP}: "${seat.line}"`);
+    if (/\d/.test(seat.line)) reds.push(`seat ${key}: a digit in a line whose law is no figure: "${seat.line}"`);
+    if (!/^Waits on DATA-REQUIREMENTS items? \d+/.test(seat.foot)) reds.push(`seat ${key}: the foot does not name a DATA-REQUIREMENTS item: "${seat.foot}"`);
+    if (seat.kicker.split(/\s+/).length > 4) reds.push(`seat ${key}: the kicker runs over four words: "${seat.kicker}"`);
+    for (const t of [seat.line, seat.foot]) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`seat ${key}: banned word "${b}" in "${t}"`);
+      if (/\u2014/.test(t)) reds.push(`seat ${key}: an em dash in "${t}"`);
+    }
+  }
+  const drawnKicker: Record<string, string> = { setup: COPY.tiers.kicker, peers: COPY.peers.kicker, money: COPY.margin.kicker, locals: COPY.locals.kicker };
+  for (const [block, kicker] of Object.entries(drawnKicker)) {
+    if ((COPY.blocked as Record<string, { kicker: string }>)[block]?.kicker !== kicker) reds.push(`seat ${block}: its kicker is not the drawn card's own ("${kicker}")`);
+  }
+  const seated: Record<string, number> = { setup: 0, peers: 0, money: 0, locals: 0 };
+  for (const iso2 of codes) {
+    if (buildSetupRows(iso2).length === 0) seated.setup++;
+    if (!buildPeerTable(iso2)) seated.peers++;
+    const m = marginCardFromSnapshot(iso2);
+    if (!m || m.rows.length < 2) seated.money++;
+    if (!buildLocalsNotes(iso2)) seated.locals++;
+  }
+  for (const [block, n] of Object.entries(seated)) if (n === 0) reds.push(`seat ${block}: no country in the taxonomy takes this seat, so its story has nothing to draw`);
+  console.log(`seats: ${seats.length} drawn blocked seats' copy held (one line each under ${SEAT_LINE_WORDS_CAP + 1} words, a foot naming its item); of ${codes.length} countries the thin seats stand on ${seated.setup} (setup), ${seated.peers} (peers), ${seated.money} (money) and ${seated.locals} (locals)`);
 }
 console.log(`archetype copy: the verdict card's and the district ranking's laws held on their fixtures; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

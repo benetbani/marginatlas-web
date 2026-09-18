@@ -472,6 +472,15 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      are pushed by name; a heading is read aloud like a kicker. */
   for (const [key, text] of Object.entries(COPY.chapters)) heads.push([`COPY.chapters.${key}`, text]);
 
+  /* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, the two on every country and the
+     four of "THE THIN COUNTRY, SEATED"; plan step 31's seventh dispatch,
+     2026-09-18): each seat's stated line and its foot are leaves named `line`
+     and `foot`, which the static sweep does not read (it reads a leaf named
+     `kicker` or `basis`; the seats' kickers it already takes by key), so they
+     are pushed by name. A seat's line stands where a card's focal would and
+     is read aloud like a basis line. */
+  for (const [key, seat] of Object.entries(COPY.blocked)) heads.push([`COPY.blocked.${key}.line`, seat.line], [`COPY.blocked.${key}.foot`, seat.foot]);
+
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);
     if (why) pushRed("BANNED CONSTRUCTION", `${where}: "${text}" is ${why}`);

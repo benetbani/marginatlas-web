@@ -22,6 +22,16 @@ const MARGIN_KICKER = "Net profit margin";
  *  first cell (MODEL.md 8.2, `17 footing`: "reused from copy.ts line 98"); one
  *  literal, so the two never drift. */
 const CLEAN_DEALING = "Clean dealing";
+/** THE THREE KICKERS A DRAWN BLOCKED SEAT SHARES WITH THE CARD IT STANDS FOR
+ *  (MODEL.md 8.2, "THE THIN COUNTRY, SEATED"; plan step 31's seventh dispatch,
+ *  2026-09-18): the registering table and its seat, the peers table and its
+ *  seat, the note list and its seat open with one literal each, so the kicker
+ *  a reader meets on Afghanistan is byte for byte the one on the United
+ *  Kingdom, and a rewording changes both. The money seat takes MARGIN_KICKER
+ *  above for the same reason. */
+const TIERS_KICKER = "Registering, by legal form";
+const PEERS_KICKER = "Against the peers";
+const LOCALS_KICKER = "What locals know";
 export const COPY = {
   answer: {
     /** Founder verbatim, 2026-08-30: "the total effective tax burden". */
@@ -58,7 +68,7 @@ export const COPY = {
   },
   /** The tiers table (registering, by legal form). The explainers are definitional, true in every country (rule 21). */
   tiers: {
-    kicker: "Registering, by legal form",
+    kicker: TIERS_KICKER,
     heads: { fee: "Fee", time: "Time", paperwork: "Paperwork" },
     legend: "Dots are the paperwork: one is an online form, five is a notary and a lawyer.",
     /** Founder ruling 8, 2026-09-04: the section leads to this page. */
@@ -121,14 +131,27 @@ export const COPY = {
     },
   },
   /** The note list (what locals know): authored notes, the page's one editorial section. */
-  locals: { kicker: "What locals know" },
-  /** THE TWO DRAWN BLOCKED SEATS on the country page (MODEL.md 8.2, `07
-   *  workforce` and `11 easiest`; plan step 31, 2026-09-17). Each is an
-   *  opener, ONE stated line under fifteen words in the site's idiom ("Not
-   *  gathered yet: ..."), and a foot naming the requirement it waits on in
+  locals: { kicker: LOCALS_KICKER },
+  /** THE DRAWN BLOCKED SEATS on the country page (MODEL.md 8.2; plan step 31,
+   *  2026-09-17 and 2026-09-18). Each is an opener, ONE stated line under
+   *  fifteen words in the site's idiom ("Not gathered yet: ..."), and a foot
+   *  naming the requirement it waits on in
    *  E:/atlas/design/loop/build/DATA-REQUIREMENTS.md. The lines are 8.2's own,
-   *  verbatim, read aloud: fourteen words on 07 (at the cap), thirteen on 11.
-   *  The kicker on 11 is the shipped one; "easiest to start" is his ban. */
+   *  verbatim, read aloud.
+   *
+   *  TWO SEATS STAND ON EVERY COUNTRY (`07 workforce` and `11 easiest`, the
+   *  first dispatch): fourteen words on 07 (at the cap), thirteen on 11. The
+   *  kicker on 11 is the shipped one; "easiest to start" is his ban.
+   *
+   *  FOUR SEATS STAND ON THE THIN COUNTRIES ONLY, where the drawn card's own
+   *  floor leaves the block unbuilt (8.2's "THE THIN COUNTRY, SEATED", the
+   *  seventh dispatch): `03 setup` on the 43 with no legal form on file
+   *  (thirteen words, item 10), `09 peers` where the peer table does not
+   *  resolve (thirteen words, item 57), `12 money` where the engine holds
+   *  under two credible margins (thirteen words, item 8) and `16 locals`
+   *  where no notes are authored (nine words, item 6). Their kickers are the
+   *  drawn cards' own, referenced and never retyped, so the block reads under
+   *  one name whether it is drawn or seated. */
   blocked: {
     workforce: {
       kicker: "Who you can hire",
@@ -139,6 +162,26 @@ export const COPY = {
       kicker: "Easiest to break in",
       line: "Not gathered yet: the payback, in years, for each of the six trades.",
       foot: "Waits on DATA-REQUIREMENTS item 8's addendum.",
+    },
+    setup: {
+      kicker: TIERS_KICKER,
+      line: "Not gathered yet: the legal forms here and what each costs to register.",
+      foot: "Waits on DATA-REQUIREMENTS item 10.",
+    },
+    peers: {
+      kicker: PEERS_KICKER,
+      line: "Not gathered yet: the four countries most like this one, side by side.",
+      foot: "Waits on DATA-REQUIREMENTS item 57.",
+    },
+    money: {
+      kicker: MARGIN_KICKER,
+      line: "Not gathered yet: what a shop in the six everyday trades keeps here.",
+      foot: "Waits on DATA-REQUIREMENTS item 8.",
+    },
+    locals: {
+      kicker: LOCALS_KICKER,
+      line: "Not gathered yet: what locals know about opening here.",
+      foot: "Waits on DATA-REQUIREMENTS item 6.",
     },
   },
   /** THE FOOTING SEAT (MODEL.md 8.2, `17 footing`): the calibrated meter is a
@@ -503,7 +546,7 @@ export const COPY = {
   },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
   peers: {
-    kicker: "Against the peers",
+    kicker: PEERS_KICKER,
     cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC fee", llcDays: "LLC time" },
     caveat: "Peers are picked for comparable size and market, not for sharing a border. Effective tax is what a small business typically pays under each country's own small-business rules. LLC fee is the government fee only and LLC time runs until the company is registered.",
   },
