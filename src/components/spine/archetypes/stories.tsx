@@ -38,6 +38,8 @@ import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
+import { buildCityGlance } from "@/lib/spine/city_glance_rows";
+import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
@@ -593,6 +595,18 @@ export function pickKvGridInstances(): Instance[] {
   const costs = codes().map((c) => ({ c, r: buildRunningCosts(c) })).filter((x) => x.r);
   const fillCase = [...costs].filter((x) => x.r!.figures.electricity == null && x.r!.figures.living != null).sort((a, b) => a.c.localeCompare(b.c))[0];
   if (fillCase) take(`${fillCase.c}:running-costs`, "block 06 on the fill: the electricity rate withheld with its line, the cost of living alone");
+  /* THE CITY'S TWO SEATS (MODEL.md 8.3 `01 glance` and `02 among-cities`;
+     plan step 32's first dispatch, 2026-09-18), keyed "city:<slug>:glance"
+     and "city:<slug>:among", the country's form one altitude down (R8): the
+     exemplar's glance (three cells, the human development line withheld,
+     one modelled cell in the foot), a thin city's glance (Abidjan: two
+     cells, the visitor count not on file, nothing modelled, so no foot),
+     and the exemplar's placement seat (two cells, both modelled, the
+     placement not drawn). All read off the builders, which read the city
+     list and the city shard and nothing else. */
+  take("city:london:glance", "city block 01 on the exemplar: three cells, the human development index withheld, the business count modelled in the foot");
+  take("city:abidjan:glance", "city block 01 thin: two cells, the visitor count not on file, every cell held so no foot");
+  take("city:london:among", "city block 02 on the exemplar: the metro GDP and the living index, both modelled, the placement not drawn");
   return out;
 }
 
@@ -615,7 +629,20 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
   return (
     <div data-stories="kv-grid">
       {instances.map((i) => {
-        const [iso2, form] = i.iso2.split(":");
+        const parts = i.iso2.split(":");
+        if (parts[0] === "city") {
+          /* The city's seats, drawn as city-view.tsx draws them (Glance, AmongCities): the country's KvSeatStory markup, the kicker naming the city. */
+          const [, slug, cityForm] = parts;
+          if (cityForm === "glance") {
+            const g = buildCityGlance(slug);
+            const el = g ? <KvSeatStory id={`city-glance-${slug}`} icon="scorecard" kicker={`${COPY.glance.kicker}, ${g.name}`} sample={g.confidence !== "measured"} cells={g.cells} withheld={g.withheld} basis={g.basis} foot={g.foot} /> : null;
+            return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+          }
+          const s = buildCitySeat(slug);
+          const el = s ? <KvSeatStory id={`city-among-${slug}`} icon="vs-world" kicker={`${COPY.citySeat.kicker}, ${s.name}`} sample={s.confidence !== "measured"} cells={s.cells} withheld={null} basis={s.basis} foot={s.foot} /> : null;
+          return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        const [iso2, form] = parts;
         if (form === "glance") {
           const g = buildGlance(iso2);
           const el = g ? <KvSeatStory id={`glance-${iso2.toLowerCase()}`} icon="scorecard" kicker={`${COPY.glance.kicker}, ${nameOf(iso2)}`} sample={g.confidence !== "measured"} cells={g.cells} withheld={g.withheld} basis={g.basis} foot={g.foot} /> : null;

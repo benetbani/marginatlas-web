@@ -54,12 +54,23 @@ export const TRACK = "#e6e6e6";
  * ROUTE EVERY HAND-ROLLED MONEY FORMAT HERE. Five private copies existed when
  * this landed (C29), and every one of them had been written because the shared
  * function could not be fixed without this ruling. */
+/* TWO RUNGS ABOVE A MILLION (plan step 32's first dispatch, 2026-09-18), for
+ * the one figure on the site that is billions: a metro's GDP on the city's
+ * `02 among-cities` card, held as whole billions in city_list_v1.json. A
+ * trillion prints one place, as a million does ($1.0T for London's 1,000);
+ * billions print whole, as thousands do ($230B for Frankfurt's 230). No
+ * caller passed a figure at or above a billion before this, so no printed
+ * figure changed. One grammar, still (C29). */
 export const usd = (v: number) =>
-  v >= 1e6
-    ? "$" + (v / 1e6).toFixed(1) + "M"
-    : v >= 1e4
-      ? "$" + Math.round(v / 1000) + "K"
-      : "$" + Math.round(v).toLocaleString("en-US");
+  v >= 1e12
+    ? "$" + (v / 1e12).toFixed(1) + "T"
+    : v >= 1e9
+      ? "$" + Math.round(v / 1e9) + "B"
+      : v >= 1e6
+        ? "$" + (v / 1e6).toFixed(1) + "M"
+        : v >= 1e4
+          ? "$" + Math.round(v / 1000) + "K"
+          : "$" + Math.round(v).toLocaleString("en-US");
 /* A MONTHLY FIGURE IS STILL A FIGURE, so the ruling reaches this one too: it
  * divides and then prints in the one grammar rather than carrying a second.
  * Before, it printed "K" at every magnitude, so $200 a month read "$0.2K". */

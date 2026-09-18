@@ -93,6 +93,8 @@ import { cityVerdictFacts } from "@/lib/spine/city_verdict_facts";
 import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
+import { buildCityGlance } from "@/lib/spine/city_glance_rows";
+import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { placementSentence } from "@/lib/spine/placement";
@@ -411,6 +413,28 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     }
     const s = buildWorldSeat(iso2);
     if (s) heads.push([`buildWorldSeat(${iso2}).basis`, s.basis], [`buildWorldSeat(${iso2}).foot`, s.foot], [`buildWorldSeat(${iso2}).withheld`, s.withheld]);
+  }
+
+  /* THE CITY'S TWO KvGrid SEATS (MODEL.md 8.3 `01 glance` and `02
+     among-cities`, plan step 32's first dispatch, 2026-09-18), pushed
+     composed for the same reason as the country's: the glance's basis is
+     joined from the units of the cells it prints, its foot lists the
+     modelled cells and its withheld line a count and joined reasons; the
+     seat's basis is joined from its two units and its foot from the
+     modelled clauses and the placement sentence. Three cities cover the
+     shapes: the exemplar (three cells, one modelled), Frankfurt (the visitor
+     count withheld as the country's, two withheld) and Abidjan (the visitor
+     count not on file, every cell held, no foot). Both builders read the
+     city list and the city shard only. */
+  for (const slug of ["london", "frankfurt", "abidjan"]) {
+    const g = buildCityGlance(slug);
+    if (g) {
+      if (g.basis) heads.push([`buildCityGlance(${slug}).basis`, g.basis]);
+      if (g.foot) heads.push([`buildCityGlance(${slug}).foot`, g.foot]);
+      if (g.withheld) heads.push([`buildCityGlance(${slug}).withheld`, g.withheld]);
+    }
+    const s = buildCitySeat(slug);
+    if (s) heads.push([`buildCitySeat(${slug}).basis`, s.basis], [`buildCitySeat(${slug}).foot`, s.foot]);
   }
 
   /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`, plan step 31's third

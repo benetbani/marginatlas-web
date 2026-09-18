@@ -453,8 +453,62 @@ export const COPY = {
     dotLabels: ["One dot", "Two dots", "Three dots", "Four dots", "Five dots"],
     back: "Back to {country}",
   },
-  /** The city masthead through the answer card. */
-  cityHero: { subtitle: "Opening a business in {country}", allCities: "All cities" },
+  /** The city masthead through the answer card. THE ANSWER'S LABEL is
+   *  "Average customer pay" (MODEL.md 8.3, `00 masthead`; M16: "What
+   *  customers earn" is `07`'s kicker, and two cards do not share one name
+   *  for two figures): the figure is `avg_gross_salary_usd_year`, a mean, so
+   *  the label says average and the basis says gross and a year. Plan step
+   *  32's first dispatch, 2026-09-18. */
+  cityHero: { subtitle: "Opening a business in {country}", allCities: "All cities", answerLabel: "Average customer pay", answerBasis: "Gross pay, a year" },
+  /** AT A GLANCE, the city's (MODEL.md 8.3, `01 glance`; plan step 32's
+   *  first dispatch, 2026-09-18): the country's form one altitude down (R8,
+   *  clause 43), the kicker the country's own (`glance.kicker`). Four cells
+   *  are the card's to print and three of 8.3's seven are printed elsewhere
+   *  on the page and never here (M1, one figure once): the metro GDP and the
+   *  cost of living are `02`'s, and the average pay is the masthead's
+   *  answer. The withheld line names each cell the card does not hold and
+   *  why, with the count (PART 5); the foot names the modelled cells in
+   *  words, because the sample mark is switched off. Every string here was
+   *  read aloud first. */
+  cityGlance: {
+    cells: { visitors: "Visitors a year", days: "City permits", density: "Businesses per 10,000 residents" },
+    /** One unit clause per printed cell, joined with "; ", the country's rule. */
+    units: { visitors: "visitors a year", days: "days to clear the city's own permits", density: "businesses for every ten thousand residents" },
+    /** `{what}` is a list of the names below; `{verb}` is "is" or "are". */
+    footModelled: "{what} {verb} modelled for this city.",
+    /** The cells as the foot names them, singular so the sentence reads: "The permit days and the business count are modelled for this city." */
+    footNames: { days: "the permit days", density: "the business count" },
+    /** `{n}` of the four cells, `{reasons}` the joined reasons below. */
+    withheld: "{n} of 4 withheld: {reasons}.",
+    reasons: {
+      /** Item 20: the country's arrivals divided by a size-class constant, which is not a count of this city's visitors. */
+      visitorsCountry: "the visitor count on file is the country's, split by city size",
+      visitorsNone: "the visitor count is not on file",
+      /** Every row on file is the country's index plus a step for the city's size class; no city holds a reading of its own. */
+      hdi: "the human development figure on file is the country's, not the city's",
+      daysNone: "the city's permit days are not on file",
+      densityNone: "the business count is not on file",
+    },
+  },
+  /** AMONG THE CITIES, the city's `02 among-cities` (MODEL.md 8.3; the same
+   *  dispatch): the seat of the placement form (candidate 2 in
+   *  FORM-CATALOG's CANDIDATES AWAITING HIS CLICK), held by KvGrid with the
+   *  two figures alone until he clicks; the foot says the placement is not
+   *  drawn and names what is modelled (item 31: the metro GDP has no source
+   *  on any row and the file calls it approximate; the cost of living is an
+   *  analyst's hand anchor on 239 of 252 rows). The cost of living's label is
+   *  the country's running-costs cell's own, so one reading has one name. */
+  citySeat: {
+    kicker: "Among the cities",
+    cells: { gdp: "Metro GDP" },
+    /** One unit clause per printed cell, joined with "; " (both print on every city today: "GDP across the metro area in a year; living costs with rent, where New York is 100."). */
+    units: { gdp: "GDP across the metro area in a year", living: "living costs with rent, where New York is 100" },
+    /** The foot is composed: the modelled clauses that apply (the GDP on every city; the cost of living on the 239 hand-anchored rows, not on the 13 read city-level), joined with " and ", then the placement sentence, whose pronoun follows the count of cells ("each" over two, "it" over one). On the exemplar: "The metro GDP is approximate and the cost of living is anchored by hand; where each sits among the cities is not shown yet." The word "index" never prints: BANNED CONSTRUCTION names it as machinery. */
+    footGdp: "the metro GDP is approximate",
+    footLiving: "the cost of living is anchored by hand",
+    footPlacement: "where each sits among the cities is not shown yet.",
+    footPlacementOne: "where it sits among the cities is not shown yet.",
+  },
   /** The city's quick reads (city:quick-reads, run 16): the kicker and the foot's words; the reads' own words are composed by the adapter that ranks them. */
   cityReads: { kicker: "Quick reads", daysOne: "day of paperwork to register a business", daysMany: "days of paperwork to register a business" },
   /** The city's terminus (city:close, run 19): the doors out of a city page; the kicker is the close's. */

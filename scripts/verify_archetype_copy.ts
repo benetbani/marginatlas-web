@@ -41,6 +41,8 @@ import { getFormationRowByTier } from "@/lib/tax/country_rates";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
+import { buildCityGlance, CITY_GLANCE_CELLS, isVisitorsRead } from "@/lib/spine/city_glance_rows";
+import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
@@ -430,6 +432,71 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
   }
   console.log(`country seats: ${glances} glance cards and ${seats} world-seat cards build; labels, withheld lines and the year in the foot held`);
+}
+
+/* THE CITY'S TWO KvGrid SEATS (MODEL.md 8.3 `01 glance` and `02
+   among-cities`; plan step 32's first dispatch, 2026-09-18), the country's
+   rule one altitude down, on every covered city: a label of four words or
+   fewer, no banned word or placeholder in any string, no empty cell, and the
+   withheld line agreeing with the cells BOTH WAYS. The glance's count is
+   four minus its cells, since the human development index is withheld on
+   every city (no row is a reading of the city); the visitor cell prints
+   exactly where the row's own source note says the city counted it, and
+   never a figure the file derived from the country's arrivals (item 20),
+   which is the fill R11 withholds. The seat prints its two cells on every
+   city, its GDP always modelled (no row carries a source, item 31), and its
+   foot always says the placement is not shown. Both builders read the city
+   list and the city shard only, no browser, no database. */
+{
+  const cities = (cityListJson as { cities: Array<{ slug: string; tourist_arrivals_m?: number; sources?: Record<string, string> }> }).cities;
+  let glances = 0;
+  let seats = 0;
+  let visitorsDrawn = 0;
+  for (const c of cities) {
+    const g = buildCityGlance(c.slug);
+    if (!g) reds.push(`city glance ${c.slug}: builds nothing (the permit days and the business count are held for every city)`);
+    else {
+      glances++;
+      const texts = [...g.cells.map((x) => x.label), g.basis ?? "", g.foot ?? "", g.withheld ?? ""];
+      for (const t of texts) {
+        for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`city glance ${c.slug}: banned word "${b}" in "${t}"`);
+        if (/[{}]/.test(t)) reds.push(`city glance ${c.slug}: a placeholder was never filled ("${t}")`);
+      }
+      for (const x of g.cells) {
+        if (x.label.split(/\s+/).length > 4) reds.push(`city glance ${c.slug}: label over four words: "${x.label}"`);
+        if (x.value === "" || x.value == null) reds.push(`city glance ${c.slug}: empty cell ${x.key}`);
+      }
+      const missing = CITY_GLANCE_CELLS - g.cells.length;
+      if ((missing > 0) !== (g.withheld != null)) reds.push(`city glance ${c.slug}: ${missing} cell(s) missing and the withheld line is ${g.withheld ? "printed" : "absent"}`);
+      if (g.withheld && !g.withheld.startsWith(`${missing} of ${CITY_GLANCE_CELLS}`)) reds.push(`city glance ${c.slug}: ${missing} cell(s) missing but the line reads "${g.withheld}"`);
+      if (g.cells.some((x) => x.key === "hdi") || !(g.withheld ?? "").includes(COPY.cityGlance.reasons.hdi)) reds.push(`city glance ${c.slug}: the human development index is withheld on every city and the line does not say so`);
+      const visitorsOwn = typeof c.tourist_arrivals_m === "number" && c.tourist_arrivals_m > 0 && isVisitorsRead(c.sources?.tourist_arrivals_m);
+      const drawn = g.cells.some((x) => x.key === "visitors");
+      if (drawn !== visitorsOwn) reds.push(`city glance ${c.slug}: the visitor cell is ${drawn ? "drawn" : "absent"} and the row's count is ${visitorsOwn ? "the city's own" : "not the city's own"}`);
+      if (drawn) visitorsDrawn++;
+      const modelledCells = g.cells.filter((x) => x.confidence !== "measured").length;
+      if ((modelledCells > 0) !== (g.foot != null)) reds.push(`city glance ${c.slug}: ${modelledCells} modelled cell(s) and the foot is ${g.foot ? "printed" : "absent"}`);
+    }
+    const s = buildCitySeat(c.slug);
+    if (!s) reds.push(`city seat ${c.slug}: builds nothing (the metro GDP and the living index are held for every city)`);
+    else {
+      seats++;
+      const texts = [...s.cells.map((x) => x.label), s.basis, s.foot];
+      for (const t of texts) {
+        for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`city seat ${c.slug}: banned word "${b}" in "${t}"`);
+        if (/[{}]/.test(t)) reds.push(`city seat ${c.slug}: a placeholder was never filled ("${t}")`);
+      }
+      for (const x of s.cells) {
+        if (x.label.split(/\s+/).length > 4) reds.push(`city seat ${c.slug}: label over four words: "${x.label}"`);
+        if (x.value === "" || x.value == null) reds.push(`city seat ${c.slug}: empty cell ${x.key}`);
+      }
+      const gdpCell = s.cells.find((x) => x.key === "gdp");
+      if (gdpCell && gdpCell.confidence === "measured") reds.push(`city seat ${c.slug}: the metro GDP carries no source on any row and is marked measured`);
+      if (!s.foot.includes("not shown yet")) reds.push(`city seat ${c.slug}: the placement is not drawn and the foot does not say so ("${s.foot}")`);
+      if (/in ten/.test(s.cells.map((x) => `${x.label} ${x.note ?? ""}`).join(" ") + s.basis + s.foot)) reds.push(`city seat ${c.slug}: a placement sentence is drawn before his click`);
+    }
+  }
+  console.log(`city seats: ${glances} glance cards (the visitor cell drawn on ${visitorsDrawn}, the human development index withheld on all) and ${seats} placement seats build over ${cities.length} cities; labels, withheld lines and the foot held`);
 }
 
 /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`; plan step 31's third
