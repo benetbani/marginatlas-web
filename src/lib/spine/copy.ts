@@ -718,9 +718,6 @@ export const COPY = {
       /** Reachable by the builder's shape and by no city today (252 of 252 hold the figure). */
       notOnFile: "The spend per resident is not on file for this city yet.",
     },
-    /** The old season card's two strings, read by the view until the sixth dispatch's second commit retires the card with them. */
-    seasonKicker: "How seasonal it is",
-    seasonBasis: "The visitor share is modelled from a year's arrivals and the resident count, not counted at the till.",
   },
   /** RESIDENTS AND VISITORS, the city's `15 season` (MODEL.md 8.3; plan step
    *  32's sixth dispatch, 2026-09-18): two shares of a hundred on a KvGrid

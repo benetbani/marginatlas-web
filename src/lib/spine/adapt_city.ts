@@ -48,10 +48,12 @@
  * `buildCityRunway(slug)`, `buildCityDemand(slug)`), so no `owner_runway`,
  * `rent_ratio` or `spend_*` field is composed here and the kit cards that
  * read them are retired. `owner_runway.*` is read by nothing on the site:
- * London's placeholders are deleted from the bank (item 23). trades and
- * demand carry a _meta.confidence of their own (item 27): the trade figures
- * are the engine's model over trusted cells, and the resident/visitor split
- * is a slope over arrivals for every city, London's included.
+ * London's placeholders are deleted from the bank (item 23). trades carry a
+ * _meta.confidence of their own (item 27): the trade figures are the
+ * engine's model over trusted cells. The `demand` block (the resident and
+ * visitor split off the slope) left with the sixth dispatch: `15 season` is
+ * built in the view by the slug too (`buildCitySeason(slug)`), off the
+ * shard's own footfall field.
  *
  * THE CITY'S INCOME IS ONE BUILDER'S (plan step 32's fourth dispatch,
  * 2026-09-18; DATA-REQUIREMENTS item 24): `cityTypicalIncome(slug)` in
@@ -373,45 +375,14 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       }
     : undefined;
 
-  /* -- demand (the resident/visitor split) -------------------------------- */
-  // The 72/28 split (view.visitorSplit.items) RECONCILES the seed's 80/20. The
-  // $196B consumer-spend total is CUT by design, growth and the trend Spark are
-  // OMITTED (no source), and the DemandCalendar is omitted (authored monthly index).
-  // THE SPEND PER RESIDENT LEFT THIS BLOCK on plan step 32's fourth dispatch
-  // (2026-09-18): `08 demand` is built in the view by the slug
-  // (`buildCityDemand(slug)` in fact_rows.ts, the bank's figure or its
-  // withheld line), as the living and runway seats are, so this block is the
-  // season card's alone. THE SPREAD WORD WENT WITH THE STRIP THAT PRINTED IT:
-  // a quartile word off the gini field ("Somewhat uneven") rode the old
-  // earnings strip's extra slot; 8.3's `07` holds no extra, a one-word
-  // summary of a place is banned (clause 19), and `02`'s row excludes gini.
-  const vs = view.visitorSplit;
-  const resItem = vs.items?.find((it) => it.kept);
-  const visItem = vs.items?.find((it) => !it.kept);
-
-  /* THE SPLIT IS A SLOPE, NOT A COUNT, FOR EVERY CITY (research item 28): a
-     visitor share of arrivals over residents times fourteen, clamped, and for
-     London a typed 72/28. So the split's own tag is modelled wherever it
-     draws, and until item 27 it carried no tag at all: the old DemandSize's
-     sample check read undefined for every city and 245 modelled splits
-     shipped unmarked. */
-  const hasSplit = !!(resItem && visItem);
-  const splitConfidence: "modeled" | undefined = hasSplit ? "modeled" : undefined;
-  const demand = hasSplit
-    ? {
-        resident_pct: Math.round(resItem!.perHundred),
-        visitor_pct: Math.round(visItem!.perHundred),
-        read: vs.body ?? vs.headline,
-        split_confidence: splitConfidence,
-        split_basis: COPY.cityDemand.seasonBasis,
-        // consumer_spend_usd_bn (cut by design) / growth_pct_yoy / trend_* OMITTED.
-        _meta: {
-          confidence: splitConfidence,
-          source: "the visitor share is a slope over arrivals and residents",
-        },
-      }
-    : undefined;
-
+  /* -- demand: RETIRED (plan step 32's sixth dispatch, 2026-09-18) --------- */
+  // The resident/visitor split rode this block from `view.visitorSplit` (the
+  // slope over arrivals, London's typed 72/28) into the season card. 8.3's
+  // `15 season` is built in the view by the slug (`buildCitySeason` in
+  // fact_rows.ts): the shard's own `footfall.resident_pct / visitor_pct`
+  // (251 of 252, the split's own field, unread until then) and the slope for
+  // London alone, the clamp withheld. Nothing reads `demand` on the seed now;
+  // the spend left on the fourth dispatch, the spread word with the old strip.
   /* -- where_to_trade (the 7 REAL districts, keep from the real engine) ---- */
   // London only: run the neighborhood engine per real district for the winner
   // activity. The component derives keep = (1 + rev_vs_city_pct/100) / rent_mult x 100,
@@ -639,11 +610,11 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     headline,
     trades,
     space,
-    demand,
     where_to_trade,
     peers: peers_out,
     // OMITTED entirely (no honest source): demand_calendar, first_year, risks,
-    // character, locals_intel. Leaving them undefined makes the spine body
-    // render nothing there (null-guarded).
+    // character, locals_intel; and demand since the sixth dispatch (the view
+    // builds the season pair by the slug). Leaving them undefined makes the
+    // spine body render nothing there (null-guarded).
   };
 }

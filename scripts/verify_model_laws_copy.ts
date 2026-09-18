@@ -440,7 +440,6 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     for (const line of Object.values(COPY.cityLiving.reasons)) heads.push(["COPY.cityLiving.reasons", line]);
     for (const line of Object.values(COPY.cityRunway.withheld)) heads.push(["COPY.cityRunway.withheld", line]);
   }
-  heads.push(["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
 
   /* TURN THREE OF THE CITY PAGE (MODEL.md 8.3 `12` to `15`; plan step 32's
      sixth dispatch, 2026-09-18), pushed composed: the people table's basis

@@ -16,7 +16,8 @@
  * two, where to open it and what to open (what residents spend beside what
  * customers earn, then rent by district beside the trades with local
  * figures, then the peers table full width); turn three, what the place is
- * like (the character tables, then the season split); the exit full width.
+ * like (the people table, the locals seat, the neighbourhoods beside the
+ * residents and visitors); the exit full width.
  * The country view's idiom, exactly: the builders built once at the top of
  * the body, a band seated only when a card exists, `Movement` with an index
  * and a heading and nothing else, no chapter title in any rail (the city
@@ -53,12 +54,25 @@
  * London prints $48,756 in all four places where it printed 64,800, 57,000,
  * 64,800 and 48,756.
  *
+ * THE SIXTH AND LAST DISPATCH (2026-09-18) SEATED TURN THREE AND CHECKED THE
+ * CLOSE: `12 character-people` at full form off `buildCityPeopleTable`, the
+ * state table gone from this page (8.3 names one character table; the
+ * state reads are the country's `14`); `13 locals` as the drawn blocked seat
+ * on every city (item 6); `14 neighbourhoods` on the card pager with no
+ * image, or its seat on the 209 placeholder schemes; `15 season` as the
+ * KvGrid pair off the shard's footfall field, the old stacked bar
+ * (`SeasonSplit`, the page's I3) and the adapter's `demand` block retired
+ * with it; `16 close` as built, the lightest-rent door gone. The
+ * illustrative seed's `locals_intel` and `demand` blocks left with the code
+ * that read them.
+ *
  * NULL-GUARDS (real-data promotion): every section early-returns null when its data is
  * absent, so an omitted field renders NOTHING (never 0 / undefined / NaN / a broken
  * block). The chapter breaks are fixed "01", "02", "03" (8.3's own numbering); the
  * first two always have content (the premises bento draws on every listed city
  * whose shard loads, the spend card and the earnings strip build for 252), and
- * the third is drawn only when a card under it draws.
+ * the third always draws too since the sixth dispatch, because the locals seat
+ * stands on every city.
  *
  * 2026-07-11 reformation (rulebook v1): the derived per-district keep index, the
  * per-trade net-margin rail, the take-home bar list and the crowding column are DELETED
@@ -74,25 +88,28 @@
 import * as React from "react";
 import { spineCitySeed } from "@/lib/spine-seeds";
 /* SampleTag is imported and not called here, as in the country view: every
-   modelled figure on this page is marked through the `sample` prop of Rail
-   and Head, which draw the kit's SampleTag (hidden behind the one switch,
+   modelled figure on this page is marked through the `sample` prop of Rail,
+   which draws the kit's SampleTag (hidden behind the one switch,
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Movement, Box, Head, Rail, Ico, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
+import { Movement, Box, Rail, Ico, SampleTag, Band, usd } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 import { countWord } from "@/lib/spine/district_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
-import { buildCityCharacterTables } from "@/lib/spine/character_rows";
+import { buildCityPeopleTable, type CityPeopleTable } from "@/lib/spine/character_rows";
+import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
+import { CardPager } from "@/components/spine/archetypes/CardPager";
+import { buildCityNeighbourhoods, type CityNeighbourhoodsData } from "@/lib/spine/hood_rows";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { buildCityGlance, type CityGlanceData } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat, type CitySeatData } from "@/lib/spine/city_seat_rows";
-import { buildCityLiving, buildCityRunway, buildCityDemand, type CityLivingData, type CityRunwayData, type CityDemandData } from "@/lib/spine/fact_rows";
+import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason, type CityLivingData, type CityRunwayData, type CityDemandData, type CitySeasonData } from "@/lib/spine/fact_rows";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { buildCityEarningsStrip, type CityEarningsData } from "@/lib/spine/range_rows";
@@ -464,155 +481,124 @@ function CityPeers({ d }: { d: any }) {
 }
 
 /* ================= TURN THREE , WHAT THE PLACE IS LIKE ================= */
-/* CityCharacter: THE CITY'S OWN CHARACTER TABLES on the spectra-table archetype
-   (the build loop's run 14, 2026-09-06). Dealing with the state and dealing with
-   people, the founder's kept form (ruling 14: named traits, explanatory poles,
-   the better end on the right, ink dots for the state and terracotta for people,
-   a foot figure under each, side by side on desktop). The reads are the city's
-   own, from the per-city signature file, and never the country's under a city
-   heading: a city with no reads of its own draws nothing here, and a city with
-   one side's reads draws that one table alone. London holds three people reads
-   and no state reads on 2026-09-06. 8.3 seats `12 character-people` beside `13
-   locals` at 1-1; no city holds authored notes today (item 6), so the table
-   stands alone in its band until the locals card ships at its real structure. */
-function CityCharacter({ d }: { d: any }) {
-  const t = buildCityCharacterTables(d?.meta?.slug);
-  if (!t) return null;
-  /* ONE TABLE ALONE STACKS UNTIL LG: photographed at 768 on run 14, a lone
-     table took one of the two tablet columns and left the other half empty,
-     the one-sided white space the splitting exists to prevent; the lone-child
-     rule of the band reaches only lg. Two tables keep the tablet halves. */
-  const lone = !(t.state && t.people);
+/**
+ * Dealing with people, `12 character-people` (MODEL.md 8.3; plan step 32,
+ * sixth dispatch, 2026-09-18): the spectra table at full form, six traits,
+ * the poles pinned to the track, the terracotta dots his 2026-08-30
+ * exemption (the archetype stamps `data-founder-accent`, uncounted). ONE
+ * CHARACTER TABLE ON THE CITY PAGE: 8.3 names the people table alone, and
+ * the state table (`#character`, which drew New York's own six state reads
+ * and nothing on the other 251, since only that city's entry in the city
+ * signature file holds government reads) left this page with this dispatch;
+ * 8.2's `14 character-state` is the country's. The rows come from
+ * character_rows.ts (`buildCityPeopleTable`): the city's own read where the
+ * city file holds one, the country's where it does not, and the basis under
+ * the rows says which and says modelled, because the sample mark is off
+ * site-wide (counted 2026-09-18: 252 draw six rows; New York all its own,
+ * 36 mixed, London three of six, 215 the country's throughout). The foot is
+ * the city's own share born abroad where held (55 cities), never the
+ * country's. Quiet: turn three carries zero accent.
+ */
+function CharacterPeople({ people }: { people: CityPeopleTable | null }) {
+  if (!people) return null;
   return (
-    <Band split="1-1" stack={lone ? "lg" : undefined}>
-      {t.state ? (
-        <Box id="character">
-          <Rail icon="bank" kicker={COPY.character.state.kicker} sample />
-          <SpectraTable rows={t.state.rows} dot={t.state.dot} foot={t.state.foot} />
-        </Box>
-      ) : null}
-      {t.people ? (
-        /* A section card of its own (MODEL.md 8.3, `12 character-people`),
-           unnamed while the first table holds "character": named for BLOCK FLOOR. */
-        <Box {...(t.state ? {} : { id: "character" })} data-block="character-people">
-          <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
-          <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} />
-        </Box>
-      ) : null}
-    </Band>
-  );
-}
-/* Locals. Null-guards on d.locals_intel (omitted on real-data promotion for
-   every city today: no city holds authored notes, item 6; 8.3's `13 locals`
-   ships the card at its real structure with its not-gathered line in a later
-   dispatch). */
-function Locals({ d }: { d: any }) {
-  const items = d.locals_intel ?? [];
-  if (items.length === 0) return null;
-  // The place-specific bullets move into a disclosure (§18/§19: invented prose out of the
-  // first view; these are London-specific and fail the universality test in the open).
-  return (
-    <Box id="locals">
-      <Head icon="locals-know">What locals know</Head>
-      <InlineDisclosure name="locals" summary={`${items.length} things worth knowing before you sign`}>
-        <div className="mt-2 space-y-3 border-t border-[var(--c-border)] pt-2.5">{items.map((it: any, i: number) => (
-          <div key={i} className="flex gap-2.5"><span className="mt-0.5 text-[var(--c-muted)]">&#9656;</span><span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"><b className="text-[var(--c-ink)]">{it.title}</b> {it.detail}</span></div>))}
-        </div>
-      </InlineDisclosure>
+    <Box id="character-people">
+      <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
+      <SpectraTable rows={people.rows} dot={people.dot} foot={people.foot} basis={people.basis} />
     </Box>
   );
 }
 
-/* SeasonSplit, `15 season`: the resident/visitor mix, the ONLY honest seasonal
- * signal held (founder C7: city seasonality reads as the tourism / commuter mix,
- * never an invented month index); the invented month-by-month prose box is
- * DELETED (§4/§21). Turn three's since plan step 32 (8.3: `14 neighbourhoods |
- * 15 season`, 2-1); the KvGrid pair the composition names for it, and the
- * kicker "Residents and visitors", are the sixth dispatch's. The box reads its
- * own figure's tag (split_confidence) and carries a basis line, because the
- * split is a slope over arrivals for every city (research item 28) and had
- * shipped unmarked on 245 of them (item 27).
- *
- * A WHOLE BAR IS A CLAIM THAT THE PARTS ACCOUNT FOR EVERYTHING, and nothing was
- * checking that they do. The two shares are rounded independently upstream, so
- * each carries up to half a point of error and the pair can land on 99 or 101.
- * At 99 a strip of bare card shows through the end of the bar; at 101 the last
- * segment is squeezed and the drawn widths stop matching the printed figures.
- * Reproduced in scripts/probe_split_identity.mjs. Within a point of 100 it is
- * rounding, so the WIDTHS are taken as proportions of the real total and the bar
- * closes; further out a slice has gone missing upstream and the card draws
- * NOTHING rather than a bar with a hole in it. Rounded to two decimals because
- * dividing by a total of exactly 100 does not give back the number you started
- * with: 28 came out as 28.000000000000004 and went into the markup. */
-const seasonSplitOf = (d: any): { resident: number; visitor: number; total: number } | null => {
-  const o = d?.demand;
-  if (!o || o.resident_pct == null || o.visitor_pct == null) return null;
-  const total = (o.resident_pct ?? 0) + (o.visitor_pct ?? 0);
-  if (!(Math.abs(100 - total) <= 1 && total > 0)) return null;
-  return { resident: o.resident_pct, visitor: o.visitor_pct, total };
-};
-export function SeasonSplit({ d }: { d: any }) {
-  const split = seasonSplitOf(d);
-  if (!split) return null;
-  const o = d.demand;
-  const notHeld = (t: unknown) => t === "placeholder" || t === "modeled" || t === "extrapolated";
-  const splitSample = notHeld(o.split_confidence ?? o._meta?.confidence);
-  /* THE TWO SEGMENTS WERE NEARLY THE SAME COLOUR. A line-strong against a
-     border tint differ by so little that a 72 to 28 split had no visible
-     boundary: the bar read as one bar. Both are CONTEXT greys, and the
-     convention is that a data mark takes ink and grey is for context, so the
-     larger share , the one the section is about , now carries ink and the
-     other stays quiet. */
-  const segs: Array<[string, number, string, string]> = [
-    ["Residents", split.resident, "var(--c-ink2)", "steady"],
-    ["Visitors", split.visitor, "var(--c-soft2)", "seasonal"],
-  ];
+/**
+ * What locals know, `13 locals` (MODEL.md 8.3; the same dispatch): THE
+ * PAGE'S ONE PROSE SECTION (R9), and NO CITY HOLDS AUTHORED NOTES (the UK's
+ * four are the country's, item 6), so the card ships present as the drawn
+ * blocked seat on every city: the kicker, the one stated line in the site's
+ * idiom (M19, the same three strings as the country's seat on 194
+ * countries), the requirement in the foot, no figure, no sample. Never the
+ * country's notes under the city's kicker. The old `Locals` (a `Head` over
+ * a disclosure of `d.locals_intel`) drew nothing on any live city, because
+ * the adapter omits the block for all 252; it printed the illustrative
+ * seed's three London bullets on the dev route alone, and it is retired
+ * with the seed's block. The day the notes land the NoteList takes this
+ * seat with `editorial` on (`data-editorial="1"`).
+ */
+function LocalsSeat() {
+  return <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />;
+}
+
+/**
+ * The city's neighbourhoods, `14 neighbourhoods` (MODEL.md 8.3; the same
+ * dispatch): the card pager, four a row, each card a name and an arrow to
+ * the city's neighbourhoods page at the district's own anchor, NO IMAGE
+ * (`images="none"`, and the harness asks for none), no sub-line, no
+ * figure. The rows come from hood_rows.ts (`buildCityNeighbourhoods`) in
+ * the file's own order. TWO STATES: the 43 cities on a curated scheme draw
+ * the pager (London seven, New York ten); the 209 on the compass
+ * placeholder draw the blocked seat, because a placeholder name never
+ * prints (clause 32, R11), its line naming the city and its foot item 30.
+ * The foot under the pager is the coverage form, the count as a word.
+ */
+function Neighbourhoods({ hoods }: { hoods: CityNeighbourhoodsData | null }) {
+  if (!hoods) return null;
+  if (!hoods.cards) {
+    return <BlockedSeat id="neighbourhoods" icon="neighborhood" kicker={COPY.blocked.cityNeighbourhoods.kicker} line={hoods.seatLine ?? COPY.blocked.cityNeighbourhoods.line} foot={COPY.blocked.cityNeighbourhoods.foot} />;
+  }
   return (
-    <Box id="seasonal">
-      <Head icon="seasonality" sample={splitSample}>{COPY.cityDemand.seasonKicker}</Head>
-      {/* DECLARED I3, WAVE C ROW C9, 2026-09-02. One bar divided into two named parts
-          that sum to a whole is the catalogue's STACKED WHOLE. The kit's own StackBar
-          was measured against it and refused: its on-bar label colour is chosen by
-          parsing the segment's colour as hex, and these two segments are CSS
-          variables, which it cannot read, so it would set white type on the light
-          segment. The city page spends its first I3 of two here. 8.3 retires the
-          bar for a KvGrid pair (a fourth bar-family card otherwise) in the sixth
-          dispatch. */}
-      <div data-idea="I3" className="flex h-6 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={`Residents ${split.resident}% steady, visitors ${split.visitor}% seasonal`}>
-        {/* THE FIGURES SIT ON THE BAR, NOT ONLY IN THE KEY: the number inside the
-            length it describes. THE LEGEND KEEPS THE NAMES AND LOSES THE FIGURES,
-            so the same number is not printed twice on one card. */}
-        {segs.map(([n, pct, bg]) => {
-          const w = Math.round((pct / split.total) * 10000) / 100;
-          const onDark = bg === "var(--c-ink2)";
-          return (
-            <div key={n} className="flex h-full items-center justify-center" style={{ width: `${w}%`, background: bg }}>
-              <span className={`fig text-[length:var(--t-micro)] font-semibold ${onDark ? "text-white" : "text-[var(--c-ink)]"}`}>{pct}%</span>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-        {segs.map(([n, pct, bg, tag]) => (
-          <span key={n} className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: bg }} /><span className="font-semibold text-[var(--c-ink)]">{n}</span>, {tag}</span>
-        ))}
-      </div>
-      {o.split_basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{o.split_basis}</p> : null}
+    <Box id="neighbourhoods">
+      <Rail icon="neighborhood" kicker={COPY.cityNeighbourhoods.kicker} />
+      <CardPager cards={hoods.cards} allHref={hoods.allHref} allLabel={COPY.cityNeighbourhoods.allLabel} prevLabel={COPY.cityNeighbourhoods.prev} nextLabel={COPY.cityNeighbourhoods.next} images="none" />
+      {hoods.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{hoods.foot}</p> : null}
+    </Box>
+  );
+}
+
+/**
+ * Residents and visitors, `15 season` (MODEL.md 8.3; the same dispatch): the
+ * KvGrid pair, two shares of a hundred in ink, NOT the proportion bar (a
+ * fourth bar-family card, and R7 gives B6 no net-less mode). The kicker
+ * changes from "How seasonal it is": an annual share is not a season (the
+ * old name returns the day a month shape exists, item 29). The rows come
+ * from fact_rows.ts (`buildCitySeason`): the shard's own footfall field
+ * first (251 of 252: 12 held, 239 modelled, the foot saying so), the slope
+ * over arrivals where the shard holds no row (London, 84 and 16, the foot
+ * saying so), a clamp or a missing count withheld with its line (no city
+ * today). No cell at 30: a pair of siblings takes the head rung, and FOCAL's
+ * zero finding on this card stands as it does on the glance. The old
+ * `SeasonSplit` (the stacked bar off the adapter's `demand` block, the
+ * page's first I3) is retired with the block.
+ */
+function Season({ season }: { season: CitySeasonData | null }) {
+  if (!season) return null;
+  return (
+    <Box id="season">
+      <Rail icon="seasonality" kicker={COPY.citySeason.kicker} sample={season.confidence !== "measured"} />
+      <KvGrid cells={season.cells} />
+      {season.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.withheld}</p> : null}
+      {season.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.basis}</p> : null}
+      {season.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.foot}</p> : null}
     </Box>
   );
 }
 
 /* ================= THE EXIT ================= */
-/* CityClose: THE TERMINUS (city:close, the build loop's run 19, 2026-09-06).
-   Up to three doors out of the page on the terminus archetype, the country
-   page's own close: the lightest-rent district by name where the districts are
-   ranked (the pick the old card named), else every district; the country page;
-   and the compare page as the pill, since it puts the same business in up to
-   three cities side by side. The old card reprinted the pick's name and its
-   character, both already on the page, and hung a workbook veil no city ever
-   filled. A closing card names the pick and opens a door; it does not recite
-   the page. Every city has doors now, where the old card drew only for a city
-   with ranked districts. 8.3's `16 close`, the page's third full width (R1). */
+/* CityClose: THE TERMINUS (city:close, the build loop's run 19, 2026-09-06;
+   MODEL.md 8.3's `16 close`, checked against the row on plan step 32's sixth
+   dispatch, 2026-09-18). Three doors out of the page on the terminus
+   archetype, as built in close_rows.ts (M21): every district of the city, to
+   its neighbourhoods page; the country page, up one altitude, "Open a
+   business in {country}"; and the compare pill, "Compare {city} with other
+   cities". No pricing door (the row's own words). WHAT CHANGED AGAINST THE
+   ROW: the first door named the lightest-rent district on London ("Start in
+   {district}"), the cheapest member featured for being the cheapest, his
+   2026-09-10 ruling's fault in a door; it reads "Every district of {city}" on
+   every city now. WHAT THE ROW NAMES AND THE SITE DOES NOT HOLD: the
+   last-checked line and the report-an-error link "on one row under a
+   hairline" (8.1's furniture, restored on the country's `20` the same way):
+   no city fact carries a year (item 26) and no route exists for a correction
+   (the old kit's `OneThing` printed "Last checked" and "Flag it." from props
+   no caller ever passed), so neither is drawn here or on the country's close,
+   and both wait on the controller. The page's third full width (R1). */
 function CityClose({ d }: { d: any }) {
   const doors = buildCityCloseDoors(d);
   if (doors.length === 0) return null;
@@ -650,9 +636,9 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const earnings = slug ? buildCityEarningsStrip(slug) : null;
   const districts = buildCityDistrictBars(d) != null;
   const trades = hasTradesHere(d);
-  const character = buildCityCharacterTables(d?.meta?.slug) != null;
-  const locals = (d.locals_intel?.length ?? 0) > 0;
-  const season = seasonSplitOf(d) != null;
+  const people = slug ? buildCityPeopleTable(slug) : null;
+  const hoods = slug ? buildCityNeighbourhoods(slug) : null;
+  const season = slug ? buildCitySeason(slug) : null;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
@@ -767,34 +753,48 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
       {/* `11 peers`, FULL WIDTH, the seam of turns two and three (8.3, R1). */}
       <CityPeers d={d} />
       {/* CHAPTER TURN THREE (8.3, "What the place is like"): zero accent from
-          here to the exit. Drawn only when a card under it draws (the character
-          tables hold reads on 19 of 252 cities; the season split on 241), so a
-          city with neither shows no heading over nothing; the index stays "03"
-          because the two turns above always draw. */}
-      {character || locals || season ? (
-        <>
-          <Movement index="03" heading={COPY.chapters.place} />
-          {/* `12 character-people | 13 locals`, 1-1 (8.3): the character tables
-              draw their own band; no city holds authored notes today (item 6),
-              so the locals card is absent and the table stands alone, LONE CARD
-              expected until the locals card ships at its real structure. */}
-          <CityCharacter d={d} />
-          {locals ? (
-            <Band split="1-1">
-              <Locals d={d} />
-            </Band>
-          ) : null}
-          {/* `14 neighbourhoods | 15 season`, 2-1 (8.3): no neighbourhood card
-              exists in this view today (the CardPager form is the sixth
-              dispatch's), so the season split stands alone in the band, at the
-              survivor's two thirds, LONE CARD expected; the band is not seated
-              as a pair because one of its cards does not exist. */}
-          {season ? (
-            <Band split="2-1" stack="lg">
-              <SeasonSplit d={d} />
-            </Band>
-          ) : null}
-        </>
+          here to the exit. It draws whenever a card under it draws, and one
+          always does: the locals seat stands on every city (item 6), so the
+          heading never sits over nothing; the index stays "03" because the
+          two turns above always draw. */}
+      <Movement index="03" heading={COPY.chapters.place} />
+      {/* `12 character-people | 13 locals`, 1-1 in 8.3 (plan step 32, sixth
+          dispatch, 2026-09-18): the people table at full form beside the
+          locals seat. THE PAIR CANNOT BE SEATED, MEASURED on London with the
+          probe and the page filter at the 1-1 split: the six-row table
+          stands 572 tall at 1280 (content 571) and the seat, a Rail, one
+          line and a foot, wants 149, so stretched level it carries a 480 by
+          420 blank inside its 480 by 532 card, the filter's WHITE SPACE red
+          and the art-direction gate's E2 floor of 60 percent ink missed by
+          forty points; no split in the closed set holds a 149-tall seat
+          level with a 572-tall table (the seat's foot sits under its line by
+          the seat's own law, so the air falls below it at any width). So
+          each stands in its own band, the country's precedent for `12 money
+          | 16 locals` on the 21 countries holding a drawn card beside a
+          seated one: the table at the survivor's two thirds (693 by 572 at
+          1280), the seat at two thirds at its own 150, LONE CARD twice,
+          expected, until the notes land (item 6) or the composition
+          re-decides the split; both bands stack until lg. */}
+      {people ? (
+        <Band split="2-1" stack="lg">
+          <CharacterPeople people={people} />
+        </Band>
+      ) : null}
+      <Band split="2-1" stack="lg">
+        <LocalsSeat />
+      </Band>
+      {/* `14 neighbourhoods | 15 season`, 2-1, the neighbourhoods wide (8.3):
+          the pager or its seat beside the two shares. Both cards exist for
+          every listed city (the scheme for 252, the shares for 252), so the
+          band holds two children everywhere; stacked until lg so the pager's
+          cards keep a row of four at the wide side and the pair is never
+          two slivers at 768. MEASURED after it was seated, the numbers in
+          the dispatch's report. */}
+      {hoods || season ? (
+        <Band split="2-1" stack="lg">
+          <Neighbourhoods hoods={hoods} />
+          <Season season={season} />
+        </Band>
       ) : null}
       {/* `16 close`, FULL WIDTH (8.3, R1): the exit carries no break (PART 1). */}
       <CityClose d={d} />

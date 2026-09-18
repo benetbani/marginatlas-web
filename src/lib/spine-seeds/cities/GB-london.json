@@ -42,12 +42,6 @@
     "rent_free_months": "2 to 3",
     "terms_note": "Standard on a prime retail unit; secondary streets soften every figure."
   },
-  "demand": {
-    "_meta": { "confidence": "placeholder", "source": "the resident/visitor split, illustrative; the spend per resident left this seed on plan step 32's fourth dispatch (the view builds 08 demand by the slug off the city fact bank)", "as_of": "2026-06" },
-    "resident_pct": 80, "visitor_pct": 20,
-    "read": "Most of the trade is residents' money; visitors add a fifth.",
-    "note": "The resident/visitor split, illustrative."
-  },
   "demand_calendar": {
     "_meta": { "confidence": "placeholder", "source": "seasonal read, illustrative; no honest per-month demand index is held (rulebook v1, 2026-07-11)", "as_of": "2026-06" },
     "read": "A summer hump, then a December peak. The swing is real but gentle; staff and stock for the festive lift, not a crisis."
@@ -95,11 +89,6 @@
       { "name": "Brixton", "slug": "brixton", "character": "Food and culture", "rev_vs_city_pct": -4, "rent_mult": 1.1, "lat": 51.4613, "lng": -0.1156 }
     ]
   },
-  "locals_intel": [
-    { "title": "Business rates ride on top of rent.", "detail": "Headline rent understates the true cost by roughly a third once rates and service charge are counted. Price all three as one." },
-    { "title": "Footfall is postcode-deep.", "detail": "Two streets apart can halve trade. Stand outside the unit at the hours you plan to open before you sign." },
-    { "title": "Delivery trades carry road charges.", "detail": "Congestion and clean-air charges add up fast for anything on wheels. Budget them into the cost base." }
-  ],
   "character": {
     "_meta": { "confidence": "modeled", "source": "London business-culture spectra, illustrative positions", "as_of": "2026-06" },
     "read": "The trading culture here is fast, card-first, and landlord-leaning. Plan for cards not cash, expect a slow first deal, and read every lease as the counterparty's document.",
