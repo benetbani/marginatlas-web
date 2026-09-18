@@ -74,10 +74,6 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/city/city-view.tsx#5",
-      "reason": "the spend card (08 demand) on the old kit until plan step 32's fourth dispatch draws it as the plain figure; a build loop queue row (its key moved from #3 on the third dispatch, when the living and runway seats took ids before it in file order; the two chapters.tsx exceptions, the kit cards those seats retired, went with them)"
-    },
-    {
       "section": "src/components/spine/city/city-view.tsx#seasonal",
       "reason": "not yet on an archetype; a build loop queue row"
     },
