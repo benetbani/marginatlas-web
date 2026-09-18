@@ -123,7 +123,8 @@ const SHEET: Entry[] = [
   { kind: "detail-panel", city: "none", render: (c) => <DetailPanelStories instances={c.instances["detail-panel"]} /> },
   /* The split (cell/turn-one.tsx) reads a cell seed since the same dispatch. */
   { kind: "income-breakdown", city: "none", cell: "keyed", render: (c) => <IncomeBreakdownStories instances={c.instances["income-breakdown"]} cell={c.cellHero} /> },
-  { kind: "bento-band", city: "london", render: (c) => <BentoBandStories instances={c.instances["bento-band"]} city={c.cityHero} /> },
+  /* The trade's market cluster (cell/market.tsx) reads a cell seed since plan step 33's fifth dispatch (2026-09-18); the three older clusters still read London's city seed. */
+  { kind: "bento-band", city: "london", cell: "keyed", render: (c) => <BentoBandStories instances={c.instances["bento-band"]} city={c.cityHero} cell={c.cellHero} /> },
   /* The cost to open's baseline and withheld states read a cell seed since the same dispatch. */
   { kind: "bento-metric", city: "none", cell: "keyed", render: (c) => <BentoMetricStories instances={c.instances["bento-metric"]} cell={c.cellHero} /> },
   { kind: "mark-list", city: "none", render: (c) => <MarkListStories instances={c.instances["mark-list"]} /> },

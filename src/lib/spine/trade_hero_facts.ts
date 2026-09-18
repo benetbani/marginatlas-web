@@ -149,15 +149,27 @@ export type CellHeroInstance = { key: string; route: [string, string, string]; w
  * shoe repair serves the survival grid off a second shard. The exemplar
  * serves all three: the seated table (no peer resolves off the United
  * States), the engine's share, the restaurants shard's triple.
+ *
+ * THE FIFTH DISPATCH (2026-09-18), the band `10 watch | 11 mix` and `12
+ * market`, adds two handles and widens one: London nail salons (a
+ * five-part shard, the most `channel_mix` holds, 25 of 243) and London
+ * barbershops (the one two-part shard) serve the mix alone; London shoe
+ * repair gains the market as the thin shard (every one of its four fields
+ * modelled, 0.1 firms per 10,000 printed as read, sparse dot grids). The
+ * exemplar serves the mix (three parts) and the market (four fields, the
+ * swing held); the seat needs no seed. Probed 2026-09-18 with
+ * buildSpineCellSeed on both new routes (money shown on each).
  */
 export const CELL_INSTANCES: Record<string, { route: [string, string, string]; why: string; blocks?: readonly string[] }> = {
   london: { route: ["gb", "london", "restaurants"], why: "the exemplar: money shown, the take-home at 40, the three companions" },
   california: { route: ["us", "california", "restaurants"], why: "a trusted local cell off London: money shown, the engine's net, a measured spread", blocks: ["take", "spread", "open", "peers"] },
   "mumbai-cafes": { route: ["in", "mumbai", "cafes-coffee-shops"], why: "money not shown (an untrusted read): the state word, the net off the shard's ladder, firms and takings withheld with the line", blocks: ["take", "spread", "open", "peers", "clears"] },
-  "london-shoe-repair": { route: ["gb", "london", "shoe-repair"], why: "a trade on the archetype's default with no setup lines: the cost to open withheld, and a three-licence shard", blocks: ["permits", "open", "split", "team", "lasts"] },
+  "london-shoe-repair": { route: ["gb", "london", "shoe-repair"], why: "a trade on the archetype's default with no setup lines: the cost to open withheld, and a three-licence shard", blocks: ["permits", "open", "split", "team", "lasts", "market"] },
   "london-bookshops": { route: ["gb", "london", "indie-bookstores"], why: "a five-licence shard, the trade on the archetype's default", blocks: ["permits"] },
   "london-chiropractic": { route: ["gb", "london", "chiropractic"], why: "the split withheld on a live cell: the sector's lines and the engine's net come to more than a hundred", blocks: ["split"] },
   "cairo-restaurants": { route: ["eg", "cairo", "restaurants"], why: "the team with no median pay: Egypt's pair is withheld, so the pay column prints dashes and the card says so once", blocks: ["team"] },
+  "london-nail-salons": { route: ["gb", "london", "nail-salons"], why: "a five-part shard, the most the channel mix holds: three rows on the grid, the leader first", blocks: ["mix"] },
+  "london-barbershops": { route: ["gb", "london", "barbershops"], why: "the one two-part shard: one row of two, the leader first", blocks: ["mix"] },
 };
 
 /** Whether a handle's cell serves a block's story: every block unless the handle names its own. */

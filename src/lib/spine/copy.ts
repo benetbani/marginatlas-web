@@ -207,6 +207,18 @@ export const COPY = {
       line: "Not gathered yet: what locals know about opening here.",
       foot: "Waits on DATA-REQUIREMENTS item 6.",
     },
+    /** THE TRADE PAGE'S ONE DRAWN BLOCKED SEAT, `10 watch` (MODEL.md 8.6;
+     *  plan step 33's fifth dispatch, 2026-09-18): his B1 bars wait on item
+     *  53 (causes of closure with shares, 0 of 243), so the block stands on
+     *  every trade cell as the seat, eight words, the kicker 8.6's title.
+     *  Never the four London titles the old `#risks` card drew (authored for
+     *  every storefront trade, scored by hand), never churn dressed as a
+     *  cause: `12 market` prints churn as what it is. */
+    watch: {
+      kicker: "What closes one",
+      line: "Not gathered yet: what closes one of these.",
+      foot: "Waits on DATA-REQUIREMENTS item 53.",
+    },
     /** THE CITY'S SEATS (MODEL.md 8.3; plan step 32's sixth dispatch,
      *  2026-09-18). `13 locals` stands as the seat on every city, the same
      *  three strings as the country's (M19: one idiom on both pages; no city
@@ -1413,6 +1425,53 @@ export const COPY = {
     cells: { yr5: "After five years", yr1: "After one year", yr3: "After three years" },
     basis: "Typical for the trade anywhere, not measured for this city.",
     foot: "Of every 100 that open, the share still trading; modelled.",
+  },
+  /** `11 mix` (MODEL.md 8.6; plan step 33's fifth dispatch, 2026-09-18):
+   *  the kicker is 8.6's title; each part's label is the shard's own channel
+   *  name, never shortened (the permits' rule); the basis is the shard-fed
+   *  cards' one sentence; the foot says what the shares are in the split
+   *  card's own words ("Of every $100 of sales", M20) and that they are
+   *  modelled (R12), because the sample mark is behind his switch. The
+   *  withheld line stands where the parts would when they do not add up to a
+   *  whole (outside 95 to 105 of 100; no shard today, every file sums to 100
+   *  exactly, counted 2026-09-18). The donut is candidate 5 awaiting his
+   *  click; the seat is KvGrid. */
+  tradeMix: {
+    kicker: "Where sales come from",
+    basis: "Typical for the trade anywhere, not measured for this city.",
+    foot: "Of every $100 of sales, the share from each; modelled.",
+    withheld: "The parts on file do not make a whole and are not shown.",
+  },
+  /** `12 market` (MODEL.md 8.6; the same dispatch): the bento's four openers,
+   *  each within PART 7's four words and read aloud; the composition's
+   *  longer phrases ("firms for every 10,000 people", "the busiest month
+   *  over the quietest") are carried by the two metric cells' basis lines,
+   *  which say what each figure is and in what unit. The count cells' basis
+   *  says the whole ("of every 100 firms") the way 8.6 words it. Every
+   *  basis says the figure is the trade's, not this city's, and modelled
+   *  (R12), because the cluster has no line of its own and the sample mark
+   *  is behind his switch. A withheld line per cell stands where a figure
+   *  would when the shard does not hold it (no shard today, 243 of 243 hold
+   *  all four); the count cells' second line is the guard's, for a share
+   *  over 100 that is not a count of firms (none on file: 3 to 92, 1 to 30). */
+  tradeMarket: {
+    kickers: { firms: "Firms per 10,000 people", chains: "Held by chains", close: "Close in a year", swing: "The year's swing" },
+    basis: {
+      /** The opener says the unit, so the basis says whose figure it is (the clears foot's own sentence). */
+      firms: "Typical for the trade anywhere, not measured for this city; modelled.",
+      chains: "Of every 100 firms; typical for the trade anywhere, not this city's; modelled.",
+      close: "Of every 100 firms; typical for the trade anywhere, not this city's; modelled.",
+      /** Fourteen words, at the cap: the unit clause is the composition's phrase in a person's words. */
+      swing: "How much more the busiest month sells than the quietest; the trade's figure, modelled.",
+    },
+    withheld: {
+      firms: "The number of firms is not on file for this trade yet.",
+      chains: "The share held by chains is not on file for this trade yet.",
+      chainsNotAShare: "The share held by chains on file is not a share of 100 firms.",
+      close: "How many close in a year is not on file for this trade yet.",
+      closeNotAShare: "The closures on file are not a share of 100 firms.",
+      swing: "The year's swing is not on file for this trade yet.",
+    },
   },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the

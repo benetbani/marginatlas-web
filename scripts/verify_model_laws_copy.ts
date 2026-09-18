@@ -110,6 +110,8 @@ import { buildOpen } from "@/lib/spine/open_rows";
 import { buildTradePeers } from "@/lib/spine/trade_peer_rows";
 import { buildClears } from "@/lib/spine/clears_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
+import { buildMix } from "@/lib/spine/mix_rows";
+import { buildMarket, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
@@ -750,7 +752,22 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
       if (cl) heads.push([`buildClears(${id}).basis`, cl.basis], [`buildClears(${id}).foot`, cl.foot]);
       const l = buildLasts(id);
       if (l) { for (const c of l.cells) heads.push([`buildLasts(${id}).cells.${c.key}`, c.label]); heads.push([`buildLasts(${id}).basis`, l.basis], [`buildLasts(${id}).foot`, l.foot]); }
+      /* THE MIX AND THE MARKET (MODEL.md 8.6 `11 mix`, `12 market`; plan step
+         33's fifth dispatch, 2026-09-18): the mix's labels are the shards' own
+         channel names (one to nine words a reader meets over a figure, the
+         permits' rule), so each is swept off every shard with the basis and
+         the foot; the market's four basis lines composed off every shard. The
+         seat's line and foot go with the other seats above (COPY.blocked);
+         the mix's kicker, its withheld line, the market's four openers and
+         its withheld lines the static sweep takes by key and by name. */
+      const mx = buildMix(id);
+      if (mx) { for (const c of mx.cells) heads.push([`buildMix(${id}).cells.${c.key}`, c.label]); heads.push([`buildMix(${id}).basis`, mx.basis], [`buildMix(${id}).foot`, mx.foot]); }
+      const mk = buildMarket(id);
+      if (mk) for (const key of MARKET_CELLS) { const cell = mk[key]; heads.push([`buildMarket(${id}).${key}`, "withheld" in cell ? cell.withheld : cell.basis]); }
     }
+    heads.push(["COPY.tradeMix.withheld", COPY.tradeMix.withheld]);
+    for (const [key, k] of Object.entries(COPY.tradeMarket.kickers)) heads.push([`COPY.tradeMarket.kickers.${key}`, k]);
+    for (const [key, w] of Object.entries(COPY.tradeMarket.withheld)) heads.push([`COPY.tradeMarket.withheld.${key}`, w]);
   }
 
   for (const [where, text] of heads) {

@@ -59,7 +59,10 @@ import { tradeHeroFacts, cellServes, type CellHeroInstance } from "@/lib/spine/t
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "@/components/spine/cell/turn-one";
-import { ClearsCard, LastsCard } from "@/components/spine/cell/turn-two";
+import { ClearsCard, LastsCard, WatchSeat, MixCard } from "@/components/spine/cell/turn-two";
+import { marketCells } from "@/components/spine/cell/market";
+import { buildMix } from "@/lib/spine/mix_rows";
+import { buildMarket } from "@/lib/spine/market_rows";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { buildSuits } from "@/lib/spine/suits_rows";
 import { buildSplit } from "@/lib/spine/split_rows";
@@ -855,6 +858,12 @@ const lastsWhy = (l: NonNullable<ReturnType<typeof buildLasts>>) => `trade block
 export function pickCellLastsInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "lasts")).map((c) => ({ c, l: buildLasts(c.seed?.meta?.industry_id) })).filter((x) => x.l).map(({ c, l }) => ({ iso2: cellLastsKey(c), why: lastsWhy(l!) }));
 }
+/** WHERE SALES COME FROM, `11 mix` (MODEL.md 8.6; plan step 33's fifth dispatch, 2026-09-18), keyed cell:<handle>:mix off the seeds the sheet loads and drawn by the page's own card (cell/turn-two.tsx MixCard) at the 520 the card takes in its 1-1 band at 1280: the exemplar's three parts (restaurants, dine-in leading at 60), London nail salons' five (the most a shard holds, three rows on COMPLETE ROWS) and London barbershops' two (the one two-part shard, one row), the leader first at the head rung; the donut is candidate 5 awaiting his click and its mockup is owed to the review sheet. */
+export const cellMixKey = (c: CellHeroInstance) => `cell:${c.key}:mix`;
+const mixWhy = (m: NonNullable<ReturnType<typeof buildMix>>) => `trade block 11: ${m.parts.length} named parts of the trade's sales with their shares${m.leader ? ` (${m.leader.name} leading at ${Math.round(m.leader.share)})` : ", withheld"}, the leader first at the head rung (the donut is candidate 5 awaiting his click), summing to ${Math.round(m.sum)}`;
+export function pickCellMixInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "mix")).map((c) => ({ c, m: buildMix(c.seed?.meta?.industry_id) })).filter((x) => x.m).map(({ c, m }) => ({ iso2: cellMixKey(c), why: mixWhy(m!) }));
+}
 export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="kv-grid">
@@ -867,6 +876,11 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
         const l = buildLasts(c.seed?.meta?.industry_id);
         if (!l) return null;
         return <Story kind="kv-grid" key={cellLastsKey(c)} iso2={cellLastsKey(c)} why={lastsWhy(l)}><div style={{ maxWidth: 520 }}><LastsCard id={`lasts-cell-${c.key}`} lasts={l} /></div></Story>;
+      })}
+      {cell.filter((c) => cellServes(c.key, "mix")).map((c) => {
+        const m = buildMix(c.seed?.meta?.industry_id);
+        if (!m) return null;
+        return <Story kind="kv-grid" key={cellMixKey(c)} iso2={cellMixKey(c)} why={mixWhy(m)}><div style={{ maxWidth: 520 }}><MixCard id={`mix-cell-${c.key}`} mix={m} /></div></Story>;
       })}
       {/* The cell keys are drawn above off their seeds; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
       {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
@@ -1212,7 +1226,13 @@ export function pickPremisesBentoInstances(): Instance[] {
   return out;
 }
 
-export function BentoBandStories({ instances = pickBentoBandInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
+/** THE MARKET FOR IT, `12 market` (MODEL.md 8.6; plan step 33's fifth dispatch, 2026-09-18), keyed cell:<handle>:market off the seeds the sheet loads and drawn exactly as the trade view draws it (cell/market.tsx marketCells: the same four cells in the same declared order and spans, firms 2 by 1, chains 1 by 1, close 1 by 1, the swing 2 by 1, three columns), the page's only bento at the band's 1072, zero accent: the exemplar (restaurants, 16 firms per 10,000, chains 30, close 20, a 20 percent swing, the swing held and the rest modelled) and London shoe repair, the thin shard (every field modelled, 0.1 firms per 10,000 printed as read, chains 5 and close 8 as sparse grids). */
+export const cellMarketKey = (c: CellHeroInstance) => `cell:${c.key}:market`;
+const marketWhy = (m: NonNullable<ReturnType<typeof buildMarket>>) => `trade block 12, the page's only bento: four cells tiling 2+1 over 1+2 on three columns, each its own 30 in ink, zero accent (${"figure" in m.firms ? `${m.firms.figure} firms per 10,000` : "firms withheld"}, ${"part" in m.chains ? `${m.chains.part} of 100 held by chains` : "chains withheld"}, ${"part" in m.close ? `${m.close.part} of 100 close in a year` : "close withheld"}, ${"figure" in m.swing ? `a ${m.swing.figure} swing` : "the swing withheld"}), every figure modelled${m.withheld ? `, ${m.withheld} withheld with its line` : ""}`;
+export function pickCellMarketInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "market")).map((c) => ({ c, m: buildMarket(c.seed?.meta?.industry_id) })).filter((x) => x.m).map(({ c, m }) => ({ iso2: cellMarketKey(c), why: marketWhy(m!) }));
+}
+export function BentoBandStories({ instances = pickBentoBandInstances(), city = [], cell = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[] }) {
   const london = city.find((c) => c.slug === "london") ?? city[0];
   const setup = buildSetupRows("GB");
   const lightest = [...setup].sort((a, b) => (a.complexity_1_5 ?? 9) - (b.complexity_1_5 ?? 9))[0];
@@ -1361,7 +1381,19 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
 
   return (
     <div data-stories="bento-band">
-      {instances.map((i) => {
+      {/* The trade's market cluster, drawn from the view's own cell function off the cell seeds the sheet loads; the kind's list carries the keys too (pickAllInstances), so they are skipped below as the answer card skips its own. */}
+      {cell.filter((c) => cellServes(c.key, "market")).map((c) => {
+        const m = buildMarket(c.seed?.meta?.industry_id);
+        if (!m) return null;
+        return (
+          <Story kind="bento-band" key={cellMarketKey(c)} iso2={cellMarketKey(c)} why={marketWhy(m)}>
+            <div style={{ maxWidth: 1072 }}>
+              <BentoBand cols={3} cells={marketCells(m)} />
+            </div>
+          </Story>
+        );
+      })}
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         const c = cluster(i.iso2);
         const el = c ? (
           <div style={{ maxWidth: 1072 }}>
@@ -1617,6 +1649,12 @@ export function pickBlockedSeatInstances(): Instance[] {
   out.push({ iso2: "city:london:locals", why: "city block 13 on the exemplar: the seat beside the people table; item 6 not gathered for any city" });
   const placeholder = citiesWithScheme().sort().find((slug) => buildCityNeighbourhoods(slug)?.cards == null);
   if (placeholder) out.push({ iso2: `city:${placeholder}:neighbourhoods`, why: "city block 14 on a placeholder scheme: the seat at the band's wide side, its line naming the city; item 30 not gathered" });
+  /* THE TRADE'S ONE SEAT (MODEL.md 8.6 `10 watch`; plan step 33's fifth
+     dispatch, 2026-09-18), keyed on the exemplar: the same three strings on
+     every trade (his B1 bars wait on item 53 for 0 of 243), drawn by the
+     page's own card (cell/turn-two.tsx WatchSeat) at the 520 of its 1-1
+     band at 1280, beside where sales come from. It needs no seed. */
+  out.push({ iso2: "cell:london:watch", why: "trade block 10 on the exemplar: the seat beside where sales come from; item 53 (causes of closure with shares) not gathered for any trade" });
   return out;
 }
 export function BlockedSeatStories({ instances = pickBlockedSeatInstances() }: { instances?: Instance[] }) {
@@ -1624,6 +1662,14 @@ export function BlockedSeatStories({ instances = pickBlockedSeatInstances() }: {
     <div data-stories="blocked-seat">
       {instances.map((i) => {
         const parts = i.iso2.split(":");
+        if (parts[0] === "cell") {
+          const el = parts[2] === "watch" ? (
+            <div style={{ maxWidth: 520 }}>
+              <WatchSeat id={`seat-cell-${parts[1]}-watch`} />
+            </div>
+          ) : null;
+          return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         if (parts[0] === "city") {
           const slug = parts[1];
           const block = parts[2] as keyof typeof CITY_SEAT_FORM;
@@ -1699,10 +1745,10 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero)],
+    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero)],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero)],
-    "bento-band": pickBentoBandInstances(),
+    "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero)],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero)],
     "mark-list": pickMarkListInstances(),
     "blocked-seat": pickBlockedSeatInstances(),

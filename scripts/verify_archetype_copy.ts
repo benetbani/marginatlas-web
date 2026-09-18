@@ -71,6 +71,8 @@ import { buildTeam, countTeamRows, roleLines, TEAM_ROWS_CAP } from "@/lib/spine/
 import { buildTradePeers, TRADE_PEERS_CAP } from "@/lib/spine/trade_peer_rows";
 import { buildClears } from "@/lib/spine/clears_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
+import { buildMix, MIX_WHOLE, MIX_SUM_TOLERANCE } from "@/lib/spine/mix_rows";
+import { buildMarket, densityText, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
@@ -1273,6 +1275,103 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   }
   if (buildLasts("no_such_trade") !== null || buildLasts(undefined) !== null) reds.push("lasts: a trade with no shard builds a card");
   console.log(`trade turn one's close and turn two's first band: the peers build the home row and ${slate?.peers ?? 0} of ${slateRows.filter((r) => r.name && r.name !== "California").length} named peers off a slate, the seated table off none, the dash off moneyShown; the share draws off the shard on ${shardClears} of ${ids.length} shard ids (${clearsRange.min} to ${clearsRange.max}) and off the engine where money is shown (restaurants 75); the survival grid draws on ${lastsCards} of ${ids.length}, every triple falling`);
+}
+
+/* THE TRADE PAGE'S SECOND BAND OF TURN TWO AND ITS BENTO (MODEL.md 8.6 `10
+   watch`, `11 mix`, `12 market`; plan step 33's fifth dispatch, 2026-09-18),
+   without the database. THE SEAT is held below with the country's and the
+   city's (COPY.blocked.watch: one line under fifteen words, a foot naming
+   item 53, the kicker within four words). THE MIX on every one of the 243
+   shard ids: two to five named parts, each label the shard's own name and
+   each share a whole percent, the leader first and the rest falling, the
+   parts summing to the whole within the tolerance (counted: every file
+   sums to 100 exactly), the leader named, no withheld line; the withheld
+   shape is the builder's own arithmetic on the tolerance, checked at the
+   whole's edges, because no shard takes it. THE MARKET on every shard id:
+   four cells in declared order, the density printed as the file holds it
+   (whole where whole, else at most three decimals, never "0" for a
+   fraction), the two counts whole parts in 0 to 100, the swing a whole
+   percent, every basis within fourteen words, the four openers within
+   PART 7's four words. Every string through the register ban. */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+  const ids = readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, "")).sort();
+  const partCounts: Record<number, number> = {};
+  let mixCards = 0, mixSum100 = 0;
+  /* A SHARD'S OWN NAME PAST THE REGISTER BAN, BY EXACT STRING. "Contact
+     lenses and solutions" (eyewear_optical and optometry, both live) carries
+     "solution", which the ban lists for the corporate word; here it is the
+     lens-care fluid a shop sells, a product a reader knows, and the name is
+     the shard's own, never shortened on the card. The ban is a substring
+     floor that cannot tell a product from a buzzword, so the exemption is
+     the exact label and nothing wider, and it reds the day it matches no
+     shard, the way a withheld line with nothing withheld reds. The data
+     track may still rename it (a queue row in the dispatch's report). */
+  const MIX_LABELS_PAST_THE_REGISTER = new Set(["Contact lenses and solutions"]);
+  const seenPastBan = new Set<string>();
+  for (const id of ids) {
+    const m = buildMix(id);
+    if (!m) { reds.push(`mix ${id}: no card off a shard that holds channels`); continue; }
+    mixCards++;
+    partCounts[m.parts.length] = (partCounts[m.parts.length] ?? 0) + 1;
+    if (m.parts.length < 2 || m.parts.length > 5) reds.push(`mix ${id}: ${m.parts.length} parts; the composition holds two to five`);
+    if (Math.abs(m.sum - MIX_WHOLE) > MIX_SUM_TOLERANCE) reds.push(`mix ${id}: the parts sum to ${m.sum}, outside the tolerance, and the card should withhold`);
+    if (m.sum === MIX_WHOLE) mixSum100++;
+    if (m.withheld || !m.leader || m.cells.length !== m.parts.length) reds.push(`mix ${id}: a whole that withholds or names no leader`);
+    for (let i = 1; i < m.parts.length; i++) if (m.parts[i].share > m.parts[i - 1].share) reds.push(`mix ${id}: the parts do not fall from the leader (${m.parts.map((p) => p.share).join(" / ")})`);
+    if (m.leader && m.cells[0]?.key !== m.leader.key) reds.push(`mix ${id}: the leader is not the first cell`);
+    for (const c of m.cells) {
+      if (typeof c.value !== "string" || !/^\d{1,3}%$/.test(c.value)) reds.push(`mix ${id}: the cell ${c.key} prints "${String(c.value)}", not the percent form`);
+      if (c.confidence !== "modeled") reds.push(`mix ${id}: a cell not marked modelled (R12)`);
+      if (!c.label.trim()) reds.push(`mix ${id}: a part with no name`);
+    }
+    for (const c of m.cells) { if (MIX_LABELS_PAST_THE_REGISTER.has(c.label)) seenPastBan.add(c.label); else ban(`mix ${id}`, [c.label]); }
+    ban(`mix ${id}`, [m.basis, m.foot]);
+  }
+  for (const label of MIX_LABELS_PAST_THE_REGISTER) if (!seenPastBan.has(label)) reds.push(`mix: the register exemption for "${label}" matches no shard's channel name any more; delete it`);
+  if (buildMix("no_such_trade") !== null || buildMix(undefined) !== null) reds.push("mix: a trade with no shard builds a card");
+  if (wordsOf(COPY.tradeMix.withheld) > 14) reds.push(`mix: the withheld line runs ${wordsOf(COPY.tradeMix.withheld)} words, over fourteen`);
+  ban("mix", [COPY.tradeMix.withheld, COPY.tradeMix.basis, COPY.tradeMix.foot]);
+  if (wordsOf(COPY.tradeMix.kicker) > 4) reds.push(`mix: the kicker runs over four words: "${COPY.tradeMix.kicker}"`);
+  /* The withheld shape, off the builder's own arithmetic: a sum at the tolerance's edge prints, one past it withholds. */
+  const edge = MIX_WHOLE - MIX_SUM_TOLERANCE;
+  if (!(Math.abs(edge - MIX_WHOLE) <= MIX_SUM_TOLERANCE) || Math.abs(edge - 1 - MIX_WHOLE) <= MIX_SUM_TOLERANCE) reds.push("mix: the tolerance does not close at the whole's edges as the builder states");
+
+  const K = COPY.tradeMarket.kickers;
+  for (const [key, k] of Object.entries(K)) if (wordsOf(k) > 4) reds.push(`market ${key}: the opener runs over four words: "${k}"`);
+  for (const [key, b] of Object.entries(COPY.tradeMarket.basis)) if (wordsOf(b) > 14) reds.push(`market ${key}: a basis over fourteen words: "${b}"`);
+  for (const [key, w] of Object.entries(COPY.tradeMarket.withheld)) if (wordsOf(w) > 14) reds.push(`market ${key}: a withheld line over fourteen words: "${w}"`);
+  ban("market", [...Object.values(COPY.tradeMarket.basis), ...Object.values(COPY.tradeMarket.withheld)]);
+  if (densityText(16) !== "16" || densityText(4.5) !== "4.5" || densityText(0.003) !== "0.003" || densityText(1.7) !== "1.7" || densityText(0.1) !== "0.1") reds.push("market: the density does not print as the file holds it");
+  let marketCards = 0, fractions = 0;
+  const held: Record<(typeof MARKET_CELLS)[number], number> = { firms: 0, chains: 0, close: 0, swing: 0 };
+  const range: Record<(typeof MARKET_CELLS)[number], [number, number]> = { firms: [Infinity, -Infinity], chains: [Infinity, -Infinity], close: [Infinity, -Infinity], swing: [Infinity, -Infinity] };
+  for (const id of ids) {
+    const m = buildMarket(id);
+    if (!m) { reds.push(`market ${id}: no cluster off a shard that holds the four fields`); continue; }
+    marketCards++;
+    if (m.withheld !== 0) reds.push(`market ${id}: ${m.withheld} cell(s) withheld on a shard counted as holding all four`);
+    if (m.confidence !== "modeled") reds.push(`market ${id}: the cluster not marked modelled (R12)`);
+    for (const key of MARKET_CELLS) {
+      const cell = m[key];
+      if ("withheld" in cell) continue;
+      if (cell.tag === "held") held[key]++;
+      range[key][0] = Math.min(range[key][0], cell.value); range[key][1] = Math.max(range[key][1], cell.value);
+      if (wordsOf(cell.basis) > 14) reds.push(`market ${id}: the ${key} basis runs over fourteen words`);
+      if ("figure" in cell) {
+        if (key === "firms") { if (cell.figure === "0" || !/^\d+(\.\d{1,3})?$/.test(cell.figure)) reds.push(`market ${id}: the density prints "${cell.figure}"`); if (!Number.isInteger(cell.value)) fractions++; }
+        if (key === "swing" && !/^\d{1,3}%$/.test(cell.figure)) reds.push(`market ${id}: the swing prints "${cell.figure}", not a whole percent`);
+      } else if (!Number.isInteger(cell.part) || cell.part < 0 || cell.part > 100 || cell.whole !== 100) reds.push(`market ${id}: the ${key} count is ${cell.part} of ${cell.whole}, not a whole part in 100`);
+    }
+  }
+  if (buildMarket("no_such_trade") !== null || buildMarket(undefined) !== null) reds.push("market: a trade with no shard builds a cluster");
+  console.log(`trade turn two's second band and turn three: the mix draws on ${mixCards} of ${ids.length} shard ids (parts ${Object.entries(partCounts).map(([n, c]) => `${n}: ${c}`).join(", ")}; ${mixSum100} sum to 100 exactly); the market on ${marketCards} of ${ids.length} (firms ${range.firms.join(" to ")}, ${fractions} with a fraction, ${held.firms} held; chains ${range.chains.join(" to ")}, ${held.chains} held; close ${range.close.join(" to ")}, ${held.close} held; swing ${range.swing.join(" to ")}, ${held.swing} held)`);
 }
 
 /* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce`, `11 easiest` and the
