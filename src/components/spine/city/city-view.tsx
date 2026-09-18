@@ -71,8 +71,9 @@ import { buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { buildCityGlance, type CityGlanceData } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat, type CitySeatData } from "@/lib/spine/city_seat_rows";
+import { buildCityLiving, buildCityRunway, type CityLivingData, type CityRunwayData } from "@/lib/spine/fact_rows";
 import { CityHero } from "./masthead";
-import { IncomeCurve, OwnerRunway, RentAffordability } from "./chapters";
+import { IncomeCurve } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { Premises } from "./premises";
@@ -151,6 +152,83 @@ function AmongCities({ seat }: { seat: CitySeatData | null }) {
 /* `04 premises` is ./premises.tsx: the bento cluster and the one function
    that composes its cells, which the story sheet reads too, so the story is
    the card and not a copy of it. */
+
+/**
+ * What living here costs, `05 living` (MODEL.md 8.3; plan step 32, third
+ * dispatch, 2026-09-18), the fact card: the one-bed rent, groceries, a
+ * transit pass, each a month, and a coffee. THE SEAT IS HELD BY KvGrid AS
+ * CATALOGUED: the fact card with a focal (the one-bed rent at 30 taking the
+ * card's width, the three smaller cells beside it) is candidate 1 of
+ * FORM-CATALOG's CANDIDATES AWAITING HIS CLICK, drawn once in the 2026-09-16
+ * mockup and unclicked; a form not in the catalogue is a candidate awaiting
+ * his click. So the four cells draw at the head rung in one group (two rows
+ * of two), nothing at 30, and the FOCAL finding on this card stands until he
+ * clicks. The census reads this Box as KvGrid, which is the truth of it
+ * today. The rows come from fact_rows.ts (`buildCityLiving`), pure over the
+ * city list and the city shard: `owner_col.*` off data/facts/city, 252 of
+ * 252 holding all four (247 held, 5 modelled), each cell marked with the
+ * shard's tag; the foot names the modelled cells in words; the withheld line
+ * names a missing field with the count (none today). `owner_runway.*` is
+ * never read: London's placeholders are deleted (item 23). The old kit card
+ * that held this seat (`OwnerRunway`, a summed monthly focal off the ladder
+ * with the four figures behind a disclosure in justify-between rows, PART
+ * 5's LABEL GAP finding) is retired with this dispatch.
+ */
+function Living({ living }: { living: CityLivingData | null }) {
+  if (!living) return null;
+  return (
+    <Box id="living">
+      <Rail icon="cost-breakdown" kicker={COPY.cityLiving.kicker} sample={living.confidence !== "measured"} />
+      <KvGrid cells={living.cells} />
+      {living.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.withheld}</p> : null}
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.basis}</p>
+      {living.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.foot}</p> : null}
+    </Box>
+  );
+}
+
+/**
+ * Rent against income, `06 runway` (MODEL.md 8.3; the same dispatch): a year
+ * of one-bed rent as a share of a year of typical income, and the typical
+ * income a year, the one absolute `05` does not hold (M1: the rent is never
+ * printed twice in one band). THE SEAT IS HELD BY KvGrid: the derived-ratio
+ * card (the percentage at 30, its sentence, a hairline, then one KvGrid row
+ * beneath, F2) is candidate 3 of FORM-CATALOG's CANDIDATES AWAITING HIS
+ * CLICK, drawn once in the 2026-09-16 mockup and unclicked; until he clicks
+ * the seat is one KvGrid row of two cells at the head rung, no bar, no
+ * track, no placement line, nothing at 30, and the FOCAL finding on this
+ * card is expected. The census reads this Box as KvGrid. The rows come from
+ * fact_rows.ts (`buildCityRunway`): the denominator chosen once, the held
+ * monthly salary times twelve (item 24), never "median"; the share is
+ * WITHHELD with its line on the thirty cities where a year of rent is more
+ * than a year of income (Dakar 425 down to Surabaya 101, counted 2026-09-18;
+ * the three like-for-like pairs of item 24 wait for their own block and stay
+ * withheld here), so on those the card prints the income alone under the
+ * line and the band keeps its two children. WHAT THE BASIS CANNOT YET SAY:
+ * whether the income is before or after tax. The bank carries no marker on
+ * the row (item 26: the drop's method never reaches a shard), and item 23
+ * found the convention split across the UK cities (London, Edinburgh and
+ * Leeds net as Frankfurt is, Birmingham, Bristol, Glasgow and Manchester
+ * gross), so the basis says "a typical income" and neither word, and item
+ * 24 carries the requirement. The four readers of a city's income (the
+ * masthead's mean, the strip's 0.88 of it on London, the peers row, this
+ * card's median salary) still differ; the one builder is the fourth
+ * dispatch's, with `07 earnings`. The old kit card (`RentAffordability`, a
+ * `text-3xl` percentage over two justify-between rows that printed the rent
+ * a second time in the band) is retired with this dispatch.
+ */
+function Runway({ runway }: { runway: CityRunwayData | null }) {
+  if (!runway) return null;
+  return (
+    <Box id="runway">
+      <Rail icon="commercial-rent" kicker={COPY.cityRunway.kicker} sample={runway.confidence !== "measured"} />
+      <KvGrid cells={runway.cells} />
+      {runway.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.withheld}</p> : null}
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.basis}</p>
+      {runway.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
+    </Box>
+  );
+}
 
 /* ================= TURN TWO , WHERE TO OPEN IT, AND WHAT TO OPEN ================= */
 /* DemandSpend, `08 demand`: the per-resident spend is the focal NUMBER (§26, C6);
@@ -442,11 +520,6 @@ function CityClose({ d }: { d: any }) {
   );
 }
 
-/* The living card's and the ratio card's own guards (chapters.tsx), asked
-   here so the body can seat their band; the cards ask them again and draw. */
-const hasLiving = (d: any) => { const o = d?.owner_runway ?? {}; return o.rent_1bed_usd_mo != null && o.groceries_usd_mo != null && o.transport_usd_mo != null; };
-const hasRunway = (d: any) => { const r = d?.rent_ratio; return !!r && Number.isFinite(r.pct) && r.rent?.value != null && r.pay?.value != null; };
-
 /**
  * The city spine page body. `data` defaults to the bundled illustrative seed so the dev
  * route (page.tsx) renders it unchanged; the live metropolis route passes the real-data
@@ -466,8 +539,8 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const glance = slug ? buildCityGlance(slug) : null;
   const seat = slug ? buildCitySeat(slug) : null;
   const premises = slug ? buildPremisesBento(slug) : null;
-  const living = hasLiving(d);
-  const runway = hasRunway(d);
+  const living = slug ? buildCityLiving(slug) : null;
+  const runway = slug ? buildCityRunway(slug) : null;
   const demand = hasDemandSpend(d);
   const earnings = buildCityCustomersStrip(d) != null;
   const districts = buildCityDistrictBars(d) != null;
@@ -506,23 +579,30 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           between the two fact-grid bands, so no two adjacent bands share a
           form (M1). Built for every listed city whose shard loads, 252 today. */}
       <Premises bento={premises} />
-      {/* `05 living | 06 runway`, 1-1 (8.3), today's two kit cards until the
-          third dispatch: what living here costs beside a year of one-bed rent
-          against a year of typical pay. MEASURED BEFORE IT WAS PAIRED, on
-          London with the probe and the page filter: at 1280 the living card
-          wants 258 and the ratio card 243 at 520, the band stands at 244 with
-          the ratio's two rows anchored to its foot (its own mt-auto), and the
-          filter finds no hole; at 768's equal halves 344 by 304 (311 and 303
-          of content); at 375 each at its own height, 236 and 304. The
-          justify-between rows both cards draw at 520 are PART 5's LABEL GAP
-          finding, standing until the third dispatch redraws them as KvGrid
-          and the ratio card. The ratio is withheld on the 30 cities whose
-          one-bed rent exceeds a year of pay (fact_rows.ts), so the living
-          card stands alone there, honestly (LONE CARD, expected). */}
+      {/* `05 living | 06 runway`, 1-1 (8.3; plan step 32, third dispatch): the
+          page's second one-form-two-readings band, under the same R8 reading
+          as `01 | 02` (the fact grid, and the fact grid with a focal), both
+          on KvGrid while their clicked forms (candidates 1 and 3) wait, both
+          quiet, ink. What living here costs beside a year of one-bed rent as
+          a share of a year of typical income, the income the one absolute the
+          living card does not hold (M1). Both cards exist for every covered
+          city (252 of 252 hold the four living figures and the salary); on
+          the thirty cities where the share is withheld the ratio card prints
+          the income under its withheld line, so the band holds two children
+          everywhere. MEASURED after it was seated, on London, Frankfurt and
+          Abidjan with the probe and the page filter: at 1280 the band stands
+          level at 520 by 243 (the living card's two rows of cells want 242,
+          the ratio card's one row 166, or 211 under Abidjan's withheld
+          line), at 768's equal halves 344 by 274 (273 against 198 or 243),
+          at 375 each card at its own height, 274 and 199 (Abidjan 244); the
+          ratio card's stretch is 77 pixels at most, under the filter's 120
+          floor, and the filter finds no hole in either card at any width.
+          The old kit cards stood level at 244, so the band's height did not
+          move. */}
       {living || runway ? (
         <Band split="1-1">
-          <OwnerRunway d={d} />
-          <RentAffordability d={d} />
+          <Living living={living} />
+          <Runway runway={runway} />
         </Band>
       ) : null}
       {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market

@@ -40,6 +40,7 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
+import { buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
@@ -587,11 +588,29 @@ export function pickKvGridInstances(): Instance[] {
   take("city:london:glance", "city block 01 on the exemplar: three cells, the human development index withheld, the business count modelled in the foot");
   take("city:abidjan:glance", "city block 01 thin: two cells, the visitor count not on file, every cell held so no foot");
   take("city:london:among", "city block 02 on the exemplar: the metro GDP and the living index, both modelled, the placement not drawn");
+  /* THE CITY'S LIVING AND RUNWAY SEATS (MODEL.md 8.3 `05 living` and `06
+     runway`; plan step 32's third dispatch, 2026-09-18), keyed
+     "city:<slug>:living" and "city:<slug>:runway", the seats of candidates 1
+     and 3 held by KvGrid: the exemplar's living card (four cells, every
+     figure held since 2026-09-17, no foot), Abidjan's (four held cells, the
+     cheapest coffee among the three named cities), the first city by slug
+     whose living figures are modelled (the foot naming all four, read off
+     the builder, never typed), the exemplar's share beside its income, and
+     the city whose share is withheld at the largest ratio (the income alone
+     under the withheld line, picked off the builder). */
+  take("city:london:living", "city block 05 on the exemplar: four cells, every figure held, no foot");
+  take("city:abidjan:living", "city block 05 on a thin city: four cells held, the coffee at its cents");
+  const citySlugs = listedCitySlugs();
+  const modelledLiving = citySlugs.find((s) => buildCityLiving(s)?.confidence === "modeled");
+  if (modelledLiving) take(`city:${modelledLiving}:living`, "city block 05 modelled: every cell modelled, the foot naming all four");
+  take("city:london:runway", "city block 06 on the exemplar: the share and the typical income, both held");
+  const overs = citySlugs.map((s) => ({ s, r: buildCityRunway(s) })).filter((x) => x.r?.figures.overPct != null).sort((a, b) => b.r!.figures.overPct! - a.r!.figures.overPct! || a.s.localeCompare(b.s));
+  if (overs[0]) take(`city:${overs[0].s}:runway`, `city block 06 withheld: the share over 100 (${overs[0].r!.figures.overPct} percent) withheld with its line, the typical income alone`);
   return out;
 }
 
 /** The country seats as the page draws them (country-view.tsx `Glance`, `WorldSeat` and `RunningCosts` with a cell to draw): opener, grid, the withheld line, the basis, the foot. The same markup, so the story measures the card a reader meets. */
-function KvSeatStory({ id, icon, kicker, sample, cells, withheld, basis, foot }: { id: string; icon: "scorecard" | "vs-world" | "cost-breakdown"; kicker: string; sample: boolean; cells: React.ComponentProps<typeof KvGrid>["cells"]; withheld: string | null; basis: string | null; foot: string | null }) {
+function KvSeatStory({ id, icon, kicker, sample, cells, withheld, basis, foot }: { id: string; icon: "scorecard" | "vs-world" | "cost-breakdown" | "commercial-rent"; kicker: string; sample: boolean; cells: React.ComponentProps<typeof KvGrid>["cells"]; withheld: string | null; basis: string | null; foot: string | null }) {
   return (
     <div style={{ maxWidth: 520 }}>
       <Box id={id}>
@@ -616,6 +635,17 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
           if (cityForm === "glance") {
             const g = buildCityGlance(slug);
             const el = g ? <KvSeatStory id={`city-glance-${slug}`} icon="scorecard" kicker={`${COPY.glance.kicker}, ${g.name}`} sample={g.confidence !== "measured"} cells={g.cells} withheld={g.withheld} basis={g.basis} foot={g.foot} /> : null;
+            return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+          }
+          /* The living and runway seats, drawn as city-view.tsx draws them (Living, Runway): the same markup, the kicker naming the city. */
+          if (cityForm === "living") {
+            const l = buildCityLiving(slug);
+            const el = l ? <KvSeatStory id={`city-living-${slug}`} icon="cost-breakdown" kicker={`${COPY.cityLiving.kicker}, ${l.name}`} sample={l.confidence !== "measured"} cells={l.cells} withheld={l.withheld} basis={l.basis} foot={l.foot} /> : null;
+            return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+          }
+          if (cityForm === "runway") {
+            const r = buildCityRunway(slug);
+            const el = r ? <KvSeatStory id={`city-runway-${slug}`} icon="commercial-rent" kicker={`${COPY.cityRunway.kicker}, ${r.name}`} sample={r.confidence !== "measured"} cells={r.cells} withheld={r.withheld} basis={r.basis} foot={r.foot} /> : null;
             return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
           }
           const s = buildCitySeat(slug);

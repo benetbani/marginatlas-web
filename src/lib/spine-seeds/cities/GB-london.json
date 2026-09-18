@@ -47,17 +47,6 @@
     "rent_free_months": "2 to 3",
     "terms_note": "Standard on a prime retail unit; secondary streets soften every figure."
   },
-  "owner_runway": {
-    "_meta": { "confidence": "placeholder", "source": "illustrative founder cost-of-living; to be researched", "as_of": "2026-06" },
-    "_identity": "runway = (rent_1bed + groceries + transport) x months(weeks_to_breakeven / 52 x 12) = $3,060 x 9 = $27,540 (~$28K)",
-    "rent_1bed_usd_mo": 2400,
-    "groceries_usd_mo": 400,
-    "transport_usd_mo": 260,
-    "coffee_usd": 4,
-    "weeks_to_breakeven": 38,
-    "read": "Before the business pays you, you still have to pay to live. Plan the runway from the day you sign to the week the till clears costs.",
-    "runway_note": "Personal burn only, not the business. Cut it by sharing rent or holding a part-time wage through fit-out."
-  },
   "demand": {
     "_meta": { "confidence": "placeholder", "source": "illustrative consumer-spend size; millionaire count modeled from published wealth tallies; to be researched", "as_of": "2026-06" },
     "consumer_spend_usd_bn": 196,

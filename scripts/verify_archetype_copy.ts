@@ -43,6 +43,7 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance, CITY_GLANCE_CELLS, isVisitorsRead } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
+import { buildCityLiving, buildCityRunway, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
@@ -429,6 +430,78 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
   }
   console.log(`city seats: ${glances} glance cards (the visitor cell drawn on ${visitorsDrawn}, the human development index withheld on all) and ${seats} placement seats build over ${cities.length} cities; labels, withheld lines and the foot held`);
+}
+
+/* THE CITY'S LIVING AND RUNWAY SEATS (MODEL.md 8.3 `05 living` and `06
+   runway`; plan step 32's third dispatch, 2026-09-18), the same rule on every
+   covered city: a label of four words or fewer, no banned word or unfilled
+   placeholder in any string, no empty cell, and the withheld line agreeing
+   with the cells BOTH WAYS. The living card's count is four minus its cells;
+   a transit pass of zero prints the word and never $0 (the two fare-free
+   cities); the foot prints exactly when a cell is not held. The runway card
+   draws its share exactly when the ratio is at most 100 and its withheld line
+   exactly when it is not (item 24's thirty), the income cell on every city
+   (the builder holds no card without one), never "median" (item 24), never a
+   placement sentence (no world track behind a personal ratio), and never
+   "before tax" or "after tax" (the bank carries no marker; the basis cannot
+   say). The counts by tag are printed so the numbers the builders' comments
+   quote (247 held, 5 modelled; 222 drawn, 30 withheld) are measured here
+   rather than remembered. */
+{
+  const cities = (cityListJson as { cities: Array<{ slug: string }> }).cities;
+  let livingBuilt = 0, livingHeld = 0, livingModelled = 0, livingPlaceholder = 0, fareFree = 0;
+  let runwayBuilt = 0, sharesDrawn = 0, sharesWithheld = 0, runwayModelled = 0;
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+      if (/\bmedian\b/i.test(t)) reds.push(`${where}: "median" where "typical" is the word (item 24): "${t}"`);
+      if (/\b(before|after) tax\b/i.test(t)) reds.push(`${where}: the basis claims a tax convention the bank does not carry: "${t}"`);
+      if (/in ten\b/.test(t)) reds.push(`${where}: a placement sentence on a card with no world track: "${t}"`);
+    }
+  };
+  for (const c of cities) {
+    const l = buildCityLiving(c.slug);
+    if (!l) reds.push(`city living ${c.slug}: builds nothing (every city holds the four living figures)`);
+    else {
+      livingBuilt++;
+      if (l.confidence === "measured") livingHeld++; else if (l.confidence === "modeled") livingModelled++; else livingPlaceholder++;
+      ban(`city living ${c.slug}`, [...l.cells.map((x) => x.label), ...l.cells.map((x) => x.note ?? ""), l.basis, l.foot ?? "", l.withheld ?? ""]);
+      for (const x of l.cells) {
+        if (x.label.split(/\s+/).length > 4) reds.push(`city living ${c.slug}: label over four words: "${x.label}"`);
+        if (x.value === "" || x.value == null) reds.push(`city living ${c.slug}: empty cell ${x.key}`);
+      }
+      const missing = CITY_LIVING_CELLS - l.cells.length;
+      if ((missing > 0) !== (l.withheld != null)) reds.push(`city living ${c.slug}: ${missing} cell(s) missing and the withheld line is ${l.withheld ? "printed" : "absent"}`);
+      if (l.withheld && !l.withheld.startsWith(`${missing} of ${CITY_LIVING_CELLS}`)) reds.push(`city living ${c.slug}: ${missing} cell(s) missing but the line reads "${l.withheld}"`);
+      const transit = l.cells.find((x) => x.key === "transit");
+      if (transit && (l.figures.transit === 0) !== (transit.value === COPY.free)) reds.push(`city living ${c.slug}: a transit pass of ${l.figures.transit} prints "${String(transit.value)}"`);
+      if (transit && transit.value === COPY.free) fareFree++;
+      const weakCells = l.cells.filter((x) => x.confidence !== "measured").length;
+      if ((weakCells > 0) !== (l.foot != null)) reds.push(`city living ${c.slug}: ${weakCells} cell(s) not held and the foot is ${l.foot ? "printed" : "absent"}`);
+    }
+    const r = buildCityRunway(c.slug);
+    if (!r) reds.push(`city runway ${c.slug}: builds nothing (every city holds a typical income)`);
+    else {
+      runwayBuilt++;
+      if (r.confidence !== "measured") runwayModelled++;
+      ban(`city runway ${c.slug}`, [...r.cells.map((x) => x.label), ...r.cells.map((x) => x.note ?? ""), r.basis, r.foot ?? "", r.withheld ?? ""]);
+      for (const x of r.cells) {
+        if (x.label.split(/\s+/).length > 4) reds.push(`city runway ${c.slug}: label over four words: "${x.label}"`);
+        if (x.value === "" || x.value == null) reds.push(`city runway ${c.slug}: empty cell ${x.key}`);
+      }
+      if (!r.cells.some((x) => x.key === "income")) reds.push(`city runway ${c.slug}: no income cell on a card that built`);
+      const share = r.cells.find((x) => x.key === "share");
+      if ((share != null) !== (r.figures.pct != null)) reds.push(`city runway ${c.slug}: the share cell is ${share ? "drawn" : "absent"} and the figure is ${r.figures.pct ?? "null"}`);
+      if (r.figures.pct != null && r.figures.pct > 100) reds.push(`city runway ${c.slug}: a share of ${r.figures.pct} percent drawn; over 100 is withheld`);
+      if ((share == null) !== (r.withheld != null)) reds.push(`city runway ${c.slug}: the share is ${share ? "drawn" : "withheld"} and the withheld line is ${r.withheld ? "printed" : "absent"}`);
+      if ((r.figures.overPct != null) !== (r.withheld === COPY.cityRunway.withheld.over)) reds.push(`city runway ${c.slug}: the ratio ${r.figures.overPct ?? "is not over 100"} and the line reads "${r.withheld ?? ""}"`);
+      if (share) sharesDrawn++; else sharesWithheld++;
+      const weakCells = r.cells.filter((x) => x.confidence !== "measured").length;
+      if ((weakCells > 0) !== (r.foot != null)) reds.push(`city runway ${c.slug}: ${weakCells} cell(s) not held and the foot is ${r.foot ? "printed" : "absent"}`);
+    }
+  }
+  console.log(`city living and runway: ${livingBuilt} living cards build (${livingHeld} held, ${livingModelled} modelled, ${livingPlaceholder} placeholder; ${fareFree} fare-free) and ${runwayBuilt} runway cards (${sharesDrawn} shares drawn, ${sharesWithheld} withheld over 100; ${runwayModelled} modelled) over ${cities.length} cities; labels, withheld lines and the foot held`);
 }
 
 /* THE PREMISES BENTO (MODEL.md 8.3 `04 premises`; plan step 32's second

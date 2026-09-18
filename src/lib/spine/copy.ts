@@ -567,46 +567,69 @@ export const COPY = {
     countryBasis: "Full-time pay a year across {country}; {city} not researched on its own yet.",
   },
   /** THE THREE CARDS THE CITY FACT BANK FEEDS (2026-09-17, CITY-PROGRAMME step
-   *  1a, research item 21): one person's living costs, a year of rent over a
-   *  year of pay, and what a resident spends. The builders are in
-   *  src/lib/spine/fact_rows.ts; every string here was read aloud first.
+   *  1a, research item 21): one person's living costs, a year of rent against
+   *  a year of typical income, and what a resident spends. The builders are
+   *  in src/lib/spine/fact_rows.ts; every string here was read aloud first.
    *
-   *  THE BASIS CARRIES THE WORD "MODELLED" OR "PLACEHOLDER" WHERE THE FIGURE
-   *  IS NOT HELD, because the sample mark is switched off site-wide
-   *  (areSampleMarksVisible, 2026-09-11) and the basis line is the only place
-   *  left that can say it, the way the districts card says "Rents are
-   *  modelled, not read off leases." A card on a modelled figure that said
-   *  nothing would be asserting a measurement. The weak clauses name WHICH
-   *  figure is weak, so a held rent over a modelled pay does not tar the rent. */
+   *  THE FOOT CARRIES THE WORD "MODELLED" OR "PLACEHOLDER" WHERE A FIGURE IS
+   *  NOT HELD, because the sample mark is switched off site-wide
+   *  (areSampleMarksVisible, 2026-09-11) and the foot is the only line left
+   *  that can say it, the glance's idiom. A card on a modelled figure that
+   *  said nothing would be asserting a measurement. The foot names WHICH
+   *  cells are weak, so a held rent beside a modelled pay does not tar the rent. */
+  /** WHAT LIVING HERE COSTS, the city's `05 living` (MODEL.md 8.3; plan step
+   *  32's third dispatch, 2026-09-18): the fact card, four cells on KvGrid,
+   *  the seat of candidate 1 (the fact card with a focal) until his click. The
+   *  kicker is 8.3's own title. The unit sits in each cell's qualifier line
+   *  ("a month", "a cup"), the mockup's markup, so the click changes the rung
+   *  and nothing else. The basis says whose prices these are (founder C4,
+   *  2026-07-11: personal, never the shop's) and never what they mean. The
+   *  withheld line names each cell the card does not hold and why, with the
+   *  count (PART 5); no city takes it today (252 of 252 hold all four). */
   cityLiving: {
-    kicker: "Your own living costs",
-    /** Over the focal figure: what the sum is made of, in the words a person would use. */
-    focal: "Rent, food and transport, a month",
-    /** Under the figure: the flat's share of it, and the coffee for the everyday texture. */
-    sub: "One-bed rent is {rent} of that; a coffee is {coffee}.",
-    subNoCoffee: "One-bed rent is {rent} of that.",
-    items: { rent: "one-bed rent, a month", groceries: "groceries, a month", transit: "transport pass, a month", coffee: "a coffee" },
-    disclosure: "See what goes into it",
-    /** Personal prices, never the shop's (founder C4, 2026-07-11): the basis says which. */
+    kicker: "What living here costs",
+    cells: { rent: "One-bed rent", groceries: "Groceries", transit: "Transit pass", coffee: "A coffee" },
+    units: { month: "a month", cup: "a cup" },
     basis: "Prices for one person living here, not for the shop.",
-    modelled: "Modelled, not read off local prices.",
-    placeholder: "Placeholders until {city} is researched, not local prices.",
+    /** `{what}` is a list of the names below; `{verb}` is "is" or "are". */
+    footModelled: "{what} {verb} modelled.",
+    footPlaceholder: "{what} {verb} placeholders until {city} is researched.",
+    /** The cells as the foot names them: "The one-bed rent, groceries, the transit pass and the coffee are modelled." */
+    footNames: { rent: "the one-bed rent", groceries: "groceries", transit: "the transit pass", coffee: "the coffee" },
+    /** `{n}` of the four cells, `{reasons}` the joined reasons below. */
+    withheld: "{n} of 4 withheld: {reasons}.",
+    reasons: {
+      rent: "the one-bed rent is not on file",
+      groceries: "groceries are not on file",
+      transit: "the transit pass is not on file",
+      coffee: "a coffee is not on file",
+    },
   },
+  /** RENT AGAINST INCOME, the city's `06 runway` (MODEL.md 8.3; the same
+   *  dispatch): one KvGrid row of two cells, the seat of candidate 3 (the
+   *  derived-ratio card) until his click: the share, a year of one-bed rent
+   *  over a year of typical income, and the typical income a year, the one
+   *  absolute `05` does not hold (M1). "Typical", never "median" (item 24).
+   *  The basis says "a typical income" and neither "before tax" nor "after
+   *  tax", because the bank carries no marker on the row (item 24 carries
+   *  the requirement). The withheld lines stand where the share would: on the
+   *  thirty cities where a year of rent is more than a year of income
+   *  (item 24), and where the rent is not on file (no city today); a city
+   *  with no typical income on file holds no cell and draws nothing, the
+   *  glance's rule (none today, 252 of 252 hold it). */
   cityRunway: {
     kicker: "Rent against income",
-    /** "Typical", never "median" (research item 24): the income is modelled for 202 of 252 cities, and one word serves every city. "Income" because the kicker says income and the brief (06-runway) read the pair aloud; the figure behind it is the held monthly salary times twelve for 251 cities. */
-    focalSub: "of a typical income goes to a year of one-bed rent.",
-    rows: { rent: "One-bed rent", pay: "Typical income" },
-    units: { month: "a month", year: "a year" },
-    basis: "Twelve months of one-bed rent, over what a typical worker here earns in a year.",
-    /** Which side is weak, said by name, so the reader knows what to doubt. */
-    weak: {
-      modeled: "{what} is modelled, not measured.",
-      extrapolated: "{what} is extrapolated, not measured.",
-      placeholder: "{what} is a placeholder until {city} is researched.",
+    cells: { share: "Rent's share of income", income: "Typical income" },
+    units: { year: "a year" },
+    basis: "A year of one-bed rent, against a typical income here for a year.",
+    footModelled: "{what} {verb} modelled.",
+    footPlaceholder: "{what} {verb} placeholders until {city} is researched.",
+    /** The inputs as the foot names them: "The rent and the typical income are modelled." */
+    footNames: { rent: "the rent", income: "the typical income" },
+    withheld: {
+      over: "The share is withheld: a year of one-bed rent here is more than a year of typical income.",
+      noRent: "The share is withheld: the one-bed rent is not on file for this city.",
     },
-    whatRent: "The rent",
-    whatPay: "The income",
   },
   cityDemand: {
     kicker: "The spending pool",

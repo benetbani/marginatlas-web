@@ -103,6 +103,7 @@ import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { placementSentence } from "@/lib/spine/placement";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import cityListJson from "../data/cities/city_list_v1.json";
 
 type Rule = "BANNED WORDS" | "ROW SENTENCE" | "DISTRICT ADJECTIVE" | "BANNED CONSTRUCTION";
 const reds: { rule: Rule; text: string }[] = [];
@@ -367,21 +368,44 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
   }
 
   /* THE CITY FACT BANK'S THREE CARDS (2026-09-17, CITY-PROGRAMME step 1a),
-     pushed composed for the same reason: their basis lines gain a clause
-     naming the city where a figure is a placeholder, so the static sweep
-     skips them by design. London is the placeholder city (every clause
-     fires), Frankfurt is held (the bare basis), and both come off the
-     shipped builders reading the local bank files, no browser, no database.
-     A city the bank does not hold simply pushes nothing. */
+     pushed composed for the same reason. The spend's basis gains a clause
+     naming the city where the figure is a placeholder (London), so the
+     static sweep skips it by design; Frankfurt is held (the bare basis). The
+     two KvGrid seats (MODEL.md 8.3 `05 living` and `06 runway`; plan step
+     32's third dispatch, 2026-09-18) push their labels, basis, foot and
+     withheld line composed, over the shapes a city can take: the exemplar
+     (every cell held, no foot), Abidjan (the living card held; the share
+     withheld for standing over 100, the income alone under the line) and
+     the first modelled city off the builder (every cell modelled, the foot
+     naming all four, and the share's foot naming both inputs). All come off
+     the shipped builders reading the city list and the local bank files, no
+     browser, no database. */
   for (const [iso2, slug, name] of [["GB", "london", "London"], ["DE", "frankfurt", "Frankfurt am Main"]] as const) {
-    const living = buildCityLiving(iso2, slug, name);
-    if (living) heads.push([`buildCityLiving(${slug}).basis`, living.basis]);
-    const ratio = buildCityRunway(iso2, slug, name);
-    if (ratio) heads.push([`buildCityRunway(${slug}).basis`, ratio.basis]);
     const spend = buildCityDemand(iso2, slug, name);
     if (spend) heads.push([`buildCityDemand(${slug}).basis`, spend.basis]);
   }
-  heads.push(["COPY.cityLiving.focal", COPY.cityLiving.focal], ["COPY.cityRunway.focalSub", COPY.cityRunway.focalSub], ["COPY.cityDemand.focalSub", COPY.cityDemand.focalSub], ["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
+  {
+    const modelledCity = (cityListJson as { cities: Array<{ slug: string }> }).cities.map((c) => c.slug).sort().find((s) => buildCityLiving(s)?.confidence === "modeled");
+    for (const slug of ["london", "frankfurt", "abidjan", ...(modelledCity ? [modelledCity] : [])]) {
+      const living = buildCityLiving(slug);
+      if (living) {
+        for (const c of living.cells) heads.push([`buildCityLiving(${slug}).cells.${c.key}`, c.label]);
+        heads.push([`buildCityLiving(${slug}).basis`, living.basis]);
+        if (living.foot) heads.push([`buildCityLiving(${slug}).foot`, living.foot]);
+        if (living.withheld) heads.push([`buildCityLiving(${slug}).withheld`, living.withheld]);
+      }
+      const runway = buildCityRunway(slug);
+      if (runway) {
+        for (const c of runway.cells) heads.push([`buildCityRunway(${slug}).cells.${c.key}`, c.label]);
+        heads.push([`buildCityRunway(${slug}).basis`, runway.basis]);
+        if (runway.foot) heads.push([`buildCityRunway(${slug}).foot`, runway.foot]);
+        if (runway.withheld) heads.push([`buildCityRunway(${slug}).withheld`, runway.withheld]);
+      }
+    }
+    for (const line of Object.values(COPY.cityLiving.reasons)) heads.push(["COPY.cityLiving.reasons", line]);
+    for (const line of Object.values(COPY.cityRunway.withheld)) heads.push(["COPY.cityRunway.withheld", line]);
+  }
+  heads.push(["COPY.cityDemand.focalSub", COPY.cityDemand.focalSub], ["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
 
   /* THE COUNTRY'S TWO KvGrid SEATS (MODEL.md 8.2 `01 glance` and `02
      world-seat`, plan step 31's second dispatch, 2026-09-17), pushed composed
