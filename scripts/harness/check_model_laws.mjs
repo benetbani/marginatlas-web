@@ -324,11 +324,13 @@ if (listArg && args.includes("--render")) {
    8.2 country 21, 8.3 city 17, 8.6 trade (the cell surface) 16, 8.7 industry 12,
    8.8 neighbourhood 7 and provisional. The renderer names the trade surface
    "cell" and the neighbourhood "hood"; the keys follow the renderer's stems. */
-const FLOOR_BY_SURFACE = { country: 21, city: 17, cell: 16, industry: 12, hood: 7 };
+/* howto 6 since 2026-09-18: PART 8.9 (plan step 36) wrote the how-to page's
+   spine and named its floor, six blocks; until then this function returned
+   null for it and BLOCK FLOOR printed "no floor is named". */
+const FLOOR_BY_SURFACE = { country: 21, city: 17, cell: 16, industry: 12, hood: 7, howto: 6 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;
-  if (surface === "howto") return null; // no floor is named for how-to in PART 8
   if (surface && FLOOR_BY_SURFACE[surface] != null) return FLOOR_BY_SURFACE[surface];
   return FLOOR_BY_SURFACE.city;
 }
