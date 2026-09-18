@@ -50,7 +50,7 @@ import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { COPY } from "@/lib/spine/copy";
 import { marginCardFromRows, type MarginCard } from "@/lib/spine/margin_rows";
-import { buildPeerTable } from "@/lib/spine/peer_rows";
+import { buildPeerTable, type PeerTable } from "@/lib/spine/peer_rows";
 import { buildHeroFacts } from "@/lib/spine/hero_facts";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
@@ -373,15 +373,30 @@ function Cities({ cards }: { cards: CityCardsData | null }) {
   );
 }
 
-function Peers({ iso2 }: { iso2?: string }) {
+function Peers({ table }: { table: PeerTable | null }) {
   /* THE COMPARISON-TABLE ARCHETYPE (the reset of 2026-09-04): rows built
      locally by peer_rows.ts from the same modules the masthead reads, with
      the LLC columns the founder ruled (3 and 4); the desktop table he praised
-     kept whole, the phone form rebuilt with the heads said once (ruling 5). */
-  if (!iso2) return null;
-  const t = buildPeerTable(iso2);
-  if (!t) return null;
-  return <CompareTable id="peers" kicker={COPY.peers.kicker} icon="benchmark" rows={t.rows} columns={t.columns} caveat={t.caveat} />;
+     kept whole, the phone form rebuilt with the heads said once (ruling 5).
+     The table comes from the body, built once, so the body knows whether
+     the block is drawn or seated.
+
+     WHERE NO PEER TABLE RESOLVES (144 of 195 countries: no ratified peer
+     group, or fewer than two rows; measured by verify_archetype_copy), THE
+     DRAWN BLOCKED SEAT STANDS WHERE THE TABLE WOULD (MODEL.md 8.2, "THE THIN
+     COUNTRY, SEATED"; plan step 31's seventh dispatch, 2026-09-18): the same
+     kicker, the same tile, one stated line and the requirement in its foot,
+     at the table's own full width and under the table's own sanction (the
+     `data-wide-table` wrapper CompareTable draws, which the full-width gate
+     reads and LONE CARD excludes), so the page keeps its three full widths
+     (R1: the take, the peers, the close) whether the block is drawn or
+     seated. A seat holds no figure by its law, so nothing here is at 30. */
+  if (table) return <CompareTable id="peers" kicker={COPY.peers.kicker} icon="benchmark" rows={table.rows} columns={table.columns} caveat={table.caveat} />;
+  return (
+    <div data-wide-table className="mt-8">
+      <BlockedSeat id="peers" icon="benchmark" kicker={COPY.blocked.peers.kicker} line={COPY.blocked.peers.line} foot={COPY.blocked.peers.foot} />
+    </div>
+  );
 }
 
 /**
@@ -925,6 +940,26 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const costs = iso2 ? buildRunningCosts(iso2) : null;
   const hasPremises = premises != null && premises.marks.length > 0;
   const checks = iso2 ? buildChecks(iso2) : null;
+  const peers = iso2 ? buildPeerTable(iso2) : null;
+
+  /* THE THIN COUNTRY, SEATED (MODEL.md 8.2's paragraph of that name; plan
+     step 31's seventh dispatch, 2026-09-18, measured on Afghanistan, which
+     drew 16 of 21). Every block is present on every country, drawn or
+     seated, and the one omission PART 7 allows is `10 cities` on a country
+     with no covered city. Four blocks used to self-omit on thin data and
+     now draw the blocked seat where the card would stand, pairing with the
+     same partner, so LONE CARD closes rather than opens: `03 setup` on the
+     43 with no legal form (`hasSetup`), `09 peers` where the table does not
+     resolve (`peers`, above), `12 money` where the engine holds under two
+     credible margins (`hasMoney`, 173) and `16 locals` where no notes are
+     authored (`locals`, 194). The counts are verify_archetype_copy's,
+     measured over the taxonomy every run. The seats' words are COPY.blocked's
+     and their kickers the drawn cards' own. THE CENSUS DOES NOT LIST THEM:
+     census.ts reads `<Box` in this file, and BlockedSeat draws its own Box
+     the way BentoMetric and AnswerCard do, so the four join `07` and `11` as
+     blocks on the page (`data-blocked="1"`, BLOCK FLOOR counts them) that
+     the census's country rows do not name; their form to the checkers is
+     `blocked-seat`, exempt from FOCAL and NO LEAD by its law. */
 
   /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
      first of six dispatches), with the twelve blocks that exist today seated
@@ -938,7 +973,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
      width. Blocks 01 and 02 were seated by the second dispatch the same day;
      18 and 19, the exit's pair, by the fifth (2026-09-18); the three chapter
      breaks by the sixth (2026-09-18), which also re-measured `07 | 08` and
-     left it unseated on the seat's ink share (its band's comment). A band
+     left it unseated on the seat's ink share (its band's comment); the four
+     thin-country seats by the seventh (2026-09-18, the comment above the
+     return). A band
      whose partner is not built yet
      holds its one card in its own Band, unpadded: the LONE CARD finding on it
      is expected and temporary, and the kit's only-child rule gives the
@@ -985,18 +1022,34 @@ export function SpineCountryBody({ data }: { data?: any }) {
             and the air to the right of "$148" is not measured; it is the
             cell's own composition (B4, one number, big, alone, with room
             around it) and was judged by eye in the dispatch's photographs.
-            The table draws on 152 countries and the bill on 195, so on the 43
-            with no legal form on file the bill stands alone in the band,
-            honestly, as LONE CARD, on the narrow column by its own
-            `data-lean` (the kit's rule for a one-figure survivor); which
-            partner re-pairs it there is the composition's decision (the
-            brief's section 5), not this dispatch's. */}
-        {hasSetup || bill ? (
-          <Band split="3-2">
+            The table draws on 152 countries and the bill on 195; on the 43
+            with no legal form on file THE SETUP SEAT stands where the table
+            would, beside the same bill (the seventh dispatch, 2026-09-18;
+            8.2's "THE THIN COUNTRY, SEATED"), so LONE CARD closes, and the
+            band is always drawn because the seat exists for every country.
+            THE SEATED BAND TAKES 2-3, NOT THE TABLE'S 3-2, by 8.4 rule 1
+            (the taller card takes the wide side), MEASURED ON AFGHANISTAN
+            with the probe, the page filter and the art-direction gate: at
+            1280 the bill (on a country with no LLC row the guard has nothing
+            to check against, so it prints its $50 at 30 and 7 days at 16,
+            marked modelled in its foot) wants 221 of height at 416 and at
+            624 alike, and the seat wants 149 at 624 (one line) or 171 at
+            416 (two); so at 3-2 the seat stretched to 222 carries 109 of
+            ink in 182 inside, 59 percent against the gate's E2 floor of 60,
+            the sixth dispatch's fault on the workforce seat in a second
+            place; at 2-3 it carries 131 in 182, 72 percent, and the bill
+            stands at its own height on the wide side with no hole (the
+            filter: 0 holes on 20 cards at 1280, 768 and 375). At 768 the
+            two take equal halves, 344 by 238, the seat's two lines 131 in
+            198, 66 percent; at 375 they stack at their own heights. */}
+        <Band split={hasSetup ? "3-2" : "2-3"}>
+          {hasSetup ? (
             <Setup setup={d.setup} iso2={iso2} />
-            <EntryBill bill={bill} />
-          </Band>
-        ) : null}
+          ) : (
+            <BlockedSeat id="setup" icon="register-cost" kicker={COPY.blocked.setup.kicker} line={COPY.blocked.setup.line} foot={COPY.blocked.setup.foot} />
+          )}
+          <EntryBill bill={bill} />
+        </Band>
         {/* `05 premises | 06 running-costs`, 1-1 (8.2; plan step 31, fourth
             dispatch, 2026-09-18). MEASURED BEFORE IT WAS PAIRED. */}
         {hasPremises || costs ? (
@@ -1038,7 +1091,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
         <Band split="1-1">
           <Hiring hiring={d.hiring} iso2={iso2} />
         </Band>
-        <Peers iso2={iso2} />
+        <Peers table={peers} />
         {/* CHAPTER TURN TWO (8.2, "Where to open it, and what to open"): the
             page's biggest volume jump, the break and the area band in one
             breath. */}
@@ -1066,14 +1119,61 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <Customers strip={customers} />
           </Band>
         ) : null}
-        {/* `12 money | 16 locals`, 1-1 until `npm run probe:page` decides
-            (8.2's own note on the split); money on the left either way. */}
-        {hasMoney || locals ? (
-          <Band split="2-3" stack="lg">
+        {/* `12 money | 16 locals`, 2-3 (8.2's own note on the split: the notes
+            are the taller card, so they take the wide side), money on the
+            left either way, stacked until lg. EITHER SEAT STANDS WHERE ITS
+            CARD WOULD (the seventh dispatch, 2026-09-18): the money seat on
+            the 173 countries whose engine holds under two credible margins,
+            the locals seat on the 194 without authored notes, so on the thin
+            country the band holds two seats at its 2-3 and on the United
+            Kingdom the two drawn cards, and the band is always drawn.
+            Measured on Afghanistan with the probe and the page filter: at
+            1280 the money seat at 416 wants 171 (its line wraps to two) and
+            the locals seat at 624 wants 149, so the band stands at 172 with
+            the wide seat carrying 109 of ink in 132 inside, 83 percent, no
+            hole; at 768 each stacks at its own 150; at 375 at 172. On the
+            United Kingdom the drawn pair is unchanged, 0 holes on 21 cards
+            at three widths. */}
+        {hasMoney && !locals ? (
+          /* THE ONE PAIRING THAT CANNOT BE SEATED: a DRAWN money card beside a
+             SEATED locals, on the 21 countries (AD AU AT BB BN DE GY IE IL IT
+             JP LA LI ME NZ PH PL PT TR AE US) whose engine holds two or more
+             credible margins and whose notes are not authored. Measured on
+             DE (two rows) and AT (four) at 1280 with the probe and the page
+             filter: at the band's 2-3 the seat at 624 stretched to the bars'
+             244 (DE) or 338 (AT) opens a 584 by 126 or 584 by 222 hole; at
+             3-2, the bars wide by 8.4 rule 1, the seat at 416 stretched to
+             244 passes on DE (131 of ink in 204 inside, 64 percent, a 376 by
+             73 blank) and opens a 376 by 168 hole on AT at 342; no split in
+             the closed set holds a 171-tall seat level with a 342-tall card.
+             So each stands in its own band, the first dispatch's precedent
+             for `07 | 08`: the money card at the survivor's two thirds (693
+             by 244 on DE, 693 by 342 on AT, no hole in either), the seat at
+             two thirds at its own 150. LONE CARD fires twice on these 21,
+             which are not on the harness list; the pair seats the day the
+             notes land (item 6) or the composition re-decides it. */
+          <>
+            <Band split="2-3" stack="lg">
+              <Money money={d.money} card={margin} />
+            </Band>
+            <Band split="2-3" stack="lg">
+              <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
+            </Band>
+          </>
+        ) : (
+        <Band split="2-3" stack="lg">
+          {hasMoney ? (
             <Money money={d.money} card={margin} />
+          ) : (
+            <BlockedSeat id="money" icon="owner-keeps" kicker={COPY.blocked.money.kicker} line={COPY.blocked.money.line} foot={COPY.blocked.money.foot} />
+          )}
+          {locals ? (
             <LocalsKnow notes={locals} />
-          </Band>
-        ) : null}
+          ) : (
+            <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
+          )}
+        </Band>
+        )}
         {/* CHAPTER TURN THREE (8.2, "What the place is like"): a further
             narrowing that goes quieter; zero accent from here to the exit. The
             exit below carries no break (PART 1). */}
