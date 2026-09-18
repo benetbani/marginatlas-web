@@ -644,7 +644,8 @@ for (const w of WIDTHS) {
     if (r.kind === "answer-card") {
       if (r.level === "section" && r.h1 > 0) red(r.inst, w, "HEADLINE", `a section-level answer card draws ${r.h1} h1`);
       if (r.level === "page" && r.h1 !== 1) red(r.inst, w, "HEADLINE", `${r.h1} h1 on a page-level answer card`);
-      if (r.state === "no-answer") { if (w === WIDTHS[0]) data(r.inst, "NO ANSWER", "no small-business regime row is on file; the card shows the state word"); }
+      /* The state word's cause is the page's: a country's answer card lacks a regime row; a trade cell's (keyed cell:<handle>:take since plan step 33, 2026-09-18) lacks trusted money for the cell (cell_view.ts `moneyShown`), so the note names the right gap for the data track. */
+      if (r.state === "no-answer") { if (w === WIDTHS[0]) data(r.inst, "NO ANSWER", r.inst.includes(":cell:") ? "money is not shown for this cell (an untrusted read, trust.ts), so the take-home is withheld and the card shows the state word" : "no small-business regime row is on file; the card shows the state word"); }
       else if (r.answerSizes.length !== 1) red(r.inst, w, "NO HIERARCHY", `${r.answerSizes.length} answer figures`);
       else { const next = Math.max(...r.sizes.filter((s) => s < r.answerSizes[0] - 0.5)); if (r.answerSizes[0] / next < 1.6) red(r.inst, w, "NO HIERARCHY", `answer ${r.answerSizes[0]} against ${next}, under 1.6x`); }
     }

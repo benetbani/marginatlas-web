@@ -196,7 +196,7 @@
     "hook": "A sign shop earns more than a print shop because the job is not done until someone installs it.",
     "economics": "Signs and vehicle wraps carry a healthier margin than flat printing because the work bundles design, fabrication, and installation, which an online seller cannot ship in a box. The equipment is modest, so the value sits in the customization and the on-site install that make each job hard to price-shop. Revenue is project-based, and the installation component is exactly what insulates the margin from the commoditization that grinds down ordinary printing.",
     "watchOut": "Misjudging the install labor or a tricky on-site job can eat the margin that the customization built. Compete on the printed graphic alone and you slide toward the same price war that flattens print shops.",
-    "edge": "The shops that profit lean into design, fabrication, and installation as a bundle, charging for the whole solution rather than the printed vinyl, where no website can follow.",
+    "edge": "The shops that profit lean into design, fabrication, and installation as a bundle, charging for the whole job rather than the printed vinyl, where no website can follow.",
     "categoryNote": "Versus a print shop, the sign shop earns a better margin precisely because installation and customization keep the job off the price-shopping internet."
   },
   "chemical_pharma_mfg": {
@@ -963,7 +963,7 @@
     "hook": "IT services and hosting layer recurring contracts on top of the servers and infrastructure they run.",
     "economics": "Unlike pure-labor dev work, this carries real infrastructure cost in servers and colocation, which is why the gross margin sits below the asset-light software shops. The offset is recurring revenue from hosting and managed-service contracts, which are sticky and predictable once a client is onboarded. Profit comes from spreading the fixed infrastructure cost across enough recurring accounts and keeping utilization of that capacity high.",
     "watchOut": "Underused servers and colo capacity are a fixed cost that runs whether or not clients fill it, and churn on recurring accounts erodes the predictable base.",
-    "edge": "Top operators stack recurring contracts onto well-utilized infrastructure, while a median provider over-provisions capacity and leaves it half-loaded.",
+    "edge": "Top operators stack recurring contracts onto infrastructure that is kept busy, while a median provider over-provisions capacity and leaves it half-loaded.",
     "categoryNote": "Hosting and managed services trade the software shop's asset-light margin for sticky recurring revenue on owned infrastructure, so utilization and retention drive the return."
   },
   "it_services_msp": {
@@ -1407,7 +1407,7 @@
     "hook": "A gym sells more memberships than it has capacity to use, and profit is the gap between who pays and who actually shows up.",
     "economics": "Members pay monthly against a fixed base of equipment and a lease, so once those are covered each additional member is high margin, which is exactly why the model can sell well past its physical limits. The recurring fee is the engine, and the quiet truth is that many members rarely come, letting the floor serve far more people than walk through it. Profit scales with total dues collected, not with bodies on the floor.",
     "watchOut": "Cancellations hit a fixed cost base hard, and an equipment or lease commitment sized for a peak that never materializes turns a strong margin into a monthly loss.",
-    "edge": "Top operators maximize member count and retention against the same fixed floor and add high-margin classes and training, while the median over-invests in equipment and churns members faster than it signs them."
+    "edge": "Top operators maximize member count and retention on the same fixed floor and add high-margin classes and training, while the median over-invests in equipment and churns members faster than it signs them."
   },
   "yoga_pilates": {
     "id": "yoga_pilates",

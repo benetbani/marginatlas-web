@@ -55,6 +55,9 @@ import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { BlockedSeat } from "./BlockedSeat";
 import { CountryFlag } from "@/components/CountryFlag";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
+import { tradeHeroFacts, type CellHeroInstance } from "@/lib/spine/trade_hero_facts";
+import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
+import { buildSuits } from "@/lib/spine/suits_rows";
 
 export type Instance = { iso2: string; why: string };
 
@@ -220,8 +223,23 @@ export function AnswerCardStory({ facts, why }: { facts: HeroFacts; why: string 
   );
 }
 
-export function AnswerCardStories({ instances = pickAnswerCardInstances() }: { instances?: Instance[] }) {
-  return <div data-stories="answer-card">{instances.map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}</div>;
+/** THE TRADE'S TAKE, `00 take` (MODEL.md 8.6; plan step 33's first dispatch, 2026-09-18), keyed cell:<handle>:take off the seeds the sheet loads (trade_hero_facts.ts CELL_INSTANCES): the exemplar with money shown, and the untrusted cell with the state word. Drawn exactly as cell/masthead.tsx draws it, the crumb under the h1, the one net builder's figure in the first companion. */
+export const cellTakeKey = (c: CellHeroInstance) => `cell:${c.key}:take`;
+export function pickCellTakeInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => tradeHeroFacts(c.seed)).map((c) => ({ iso2: cellTakeKey(c), why: c.why }));
+}
+export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
+  return (
+    <div data-stories="answer-card">
+      {/* The country half draws the two-letter keys alone: the kind's list also carries the cell keys (pickAllInstances), and the country builder handed "cell:london:take" returns a bogus code with no answer, which drew a second, false card for each cell on the first full run. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}
+      {cell.map((c) => {
+        const f = tradeHeroFacts(c.seed);
+        const el = f ? <AnswerCard id={`take-cell-${c.key}`} name={f.name} iso2={f.iso2} crumb={f.crumb} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} /> : null;
+        return <Story kind="answer-card" key={cellTakeKey(c)} iso2={cellTakeKey(c)} why={c.why}>{el}</Story>;
+      })}
+    </div>
+  );
 }
 
 /** The city district rankings (city:districts, run 25): the city with ranked districts, and one with none, which self-omits. */
@@ -347,9 +365,34 @@ export function pickCityStripInstances(): CityStripInstance[] {
   take(built.find((x) => x.d!.from === "country")?.slug, "city block 07 on the country's figures: no typical of the city's own, the basis naming the country");
   return out;
 }
-export function RangeStripStories({ instances = pickRangeStripInstances(), city = pickCityStripInstances() }: { instances?: Instance[]; city?: CityStripInstance[] }) {
+/** THE TRADE'S SPREAD, `01 spread` (MODEL.md 8.6; plan step 33's first dispatch, 2026-09-18), keyed cell:<handle>:spread off the seeds the sheet loads: London (the three fixed multipliers, modelled, 8.6's basis), California (the cell's own bottom and top tenth, measured) and Mumbai cafes (money not shown: the withheld line where the figure would stand). Drawn as cell-view.tsx's `Spread` draws it, at the 520 the card takes in its 1-1 band at 1280. */
+export const cellSpreadKey = (c: CellHeroInstance) => `cell:${c.key}:spread`;
+export function pickCellSpreadInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => buildTradeSpread(c.seed)).map((c) => {
+    const d = buildTradeSpread(c.seed)!;
+    const why = d.marks.length === 0 ? "trade block 01 withheld: money not shown, the line where the figure would stand" : d.modelled ? "trade block 01 on the exemplar: three fixed multipliers of the typical, modelled, the typical at 30" : "trade block 01 measured: the cell's own bottom and top tenth, the typical at 30";
+    return { iso2: cellSpreadKey(c), why };
+  });
+}
+export function RangeStripStories({ instances = pickRangeStripInstances(), city = pickCityStripInstances(), cell = [] }: { instances?: Instance[]; city?: CityStripInstance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="range-strip">
+      {cell.map((c) => {
+        const d = buildTradeSpread(c.seed);
+        const el = d ? (
+          <div style={{ maxWidth: 520 }}>
+            <Box id={`spread-cell-${c.key}`}>
+              <Rail icon="spread" kicker={COPY.tradeSpread.kicker} sample={d.sample} />
+              {d.marks.length > 0 ? (
+                <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={d.basis ?? ""} />
+              ) : (
+                <p data-withheld-line="spread" className="mt-2 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{d.withheld}</p>
+              )}
+            </Box>
+          </div>
+        ) : null;
+        return <Story kind="range-strip" key={cellSpreadKey(c)} iso2={cellSpreadKey(c)} why={pickCellSpreadInstances([c])[0]?.why ?? c.why}>{el}</Story>;
+      })}
       {instances.map((i) => {
         const [iso2, kind] = i.iso2.split(":");
         const d = kind === "premises" ? buildPremisesStrip(iso2) : buildCustomersStrip(iso2);
@@ -461,7 +504,25 @@ export function pickNoteListInstances(): Instance[] {
   take("GB:checks", "the question list, three rows, the exemplar");
   const worst = codes().find((c) => { const d = buildChecks(c); return d.regimeHeld && d.days != null && d.days > 21; }); if (worst) take(`${worst}:checks`, "the question list at its longest: the regime held, the wait over 21 days");
   const omit = codes().find((c) => { const d = buildChecks(c); return !d.regimeHeld && d.days == null; }); if (omit) take(`${omit}:checks`, "the question list with no regime and no registration time: two rows, the third omitted");
+  /* WHO THIS SUITS, the trade's `02 suits` (MODEL.md 8.6; plan step 33's
+     first dispatch, 2026-09-18), keyed cell:<handle>:suits and built off
+     suits_rows.ts by the trade's taxonomy id and the cell's country, pure
+     over the files, no seed: the exemplar (restaurants in the United
+     Kingdom: the hand-written edge and watch-out, the regime held so the
+     margin check asks about the margin left), and the planted case no live
+     trade is in (an id no shard or lookup holds: the one not-gathered row
+     over the two checks), so the branch is looked at rather than asserted. */
+  take("cell:london:suits", "trade block 02 on the exemplar: who does well, think twice, the two checks, four notes, the one prose section");
+  take("cell:none:suits", "trade block 02 with no character on file (planted, no live trade): the not-gathered row and the two checks");
   return out;
+}
+
+/** The suits card's inputs by its story key: the exemplar's trade and country, or the planted id no lookup holds. */
+export function suitsInputsFor(key: string): { industryId: string; iso2: string } | null {
+  const [, handle] = key.split(":");
+  if (handle === "london") return { industryId: "restaurants", iso2: "GB" };
+  if (handle === "none") return { industryId: "no_such_trade", iso2: "GB" };
+  return null;
 }
 
 export function NoteListStories({ instances = pickNoteListInstances() }: { instances?: Instance[] }) {
@@ -470,6 +531,21 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
       {instances.map((i) => {
         const [iso2, form] = i.iso2.split(":");
         const wide = form === "wide";
+        if (iso2 === "cell") {
+          /* The suits card as cell-view.tsx draws it: the opener, the rows on NoteList's law with the exemption on, the basis, at the 520 the card takes in its 1-1 band at 1280. */
+          const inputs = suitsInputsFor(i.iso2);
+          const d = inputs ? buildSuits(inputs.industryId, inputs.iso2) : null;
+          const el = d ? (
+            <div style={{ maxWidth: 520 }}>
+              <Box id={`suits-cell-${i.iso2.split(":")[1]}`}>
+                <Rail icon="who-for" kicker={COPY.tradeSuits.kicker} sample />
+                <NoteList notes={d.rows} />
+                <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.basis}</p>
+              </Box>
+            </div>
+          ) : null;
+          return <Story kind="note-list" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         if (form === "checks") {
           /* The checks card at the 1-1 card's width (520 at 1280): the opener's
              kicker, the rows on NoteList's law with no exemption, the basis. */
@@ -1494,17 +1570,17 @@ export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }
    lists every archetype, its instance keys and the reason each was picked,
    each key a link to its story's section by id. Outside any stories wrapper,
    so the checker does not read it as a story. */
-export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, Instance[]> {
+export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHeroInstance[] = []): Record<string, Instance[]> {
   const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
-    "answer-card": pickAnswerCardInstances(),
+    "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero)],
     "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why }))],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why }))],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
     "tiers-table": pickTiersTableInstances(),
-    "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why }))],
+    "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why })), ...pickCellSpreadInstances(cellHero)],
     "spectra-table": pickSpectraTableInstances(),
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why }))],

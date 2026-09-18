@@ -37,6 +37,7 @@ const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|fl
 import { AnswerCardStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
+import { CELL_INSTANCES, loadCellHeroInstances, type CellHeroInstance } from "../../src/lib/spine/trade_hero_facts";
 import { SpineShell } from "../../src/components/spine/shell";
 import { preflight } from "./preflight.mjs";
 
@@ -93,17 +94,23 @@ const css = readFileSync(CSS_PATH, "utf8");
    targeted form can load exactly that: "keyed" kinds take the cities the key
    names, "london" is the bento clusters (BentoBandStories reads London by
    name), "none" is a kind that never reads a city seed. */
-type Ctx = { instances: Record<string, { iso2: string; why: string }[]>; cityHero: CityHeroInstance[] };
-type Entry = { kind: string; city: "keyed" | "london" | "none"; render: (c: Ctx) => React.ReactNode };
+/* THE CELL SEEDS (plan step 33's first dispatch, 2026-09-18): the trade page's
+   `00 take` and `01 spread` stories draw off real cell seeds the way the city
+   hero draws off city seeds, keyed cell:<handle>:<block> over the handles
+   trade_hero_facts.ts names (London, California, Mumbai cafes). A kind that
+   reads them says `cell: "keyed"`; the targeted form loads the one handle the
+   key names, the full form all three. The suits stories need no seed. */
+type Ctx = { instances: Record<string, { iso2: string; why: string }[]>; cityHero: CityHeroInstance[]; cellHero: CellHeroInstance[] };
+type Entry = { kind: string; city: "keyed" | "london" | "none"; cell?: "keyed"; render: (c: Ctx) => React.ReactNode };
 const SHEET: Entry[] = [
-  { kind: "answer-card", city: "none", render: (c) => <AnswerCardStories instances={c.instances["answer-card"]} /> },
+  { kind: "answer-card", city: "none", cell: "keyed", render: (c) => <AnswerCardStories instances={c.instances["answer-card"]} cell={c.cellHero} /> },
   { kind: "ranked-bars", city: "keyed", render: (c) => <RankedBarsStories instances={pickRankedBarsInstances()} city={pickCityDistrictInstances(c.cityHero)} /> },
   { kind: "compare-table", city: "keyed", render: (c) => <CompareTableStories instances={pickCompareTableInstances()} city={pickCityPeerInstances(c.cityHero)} /> },
   { kind: "card-pager", city: "none", render: (c) => <CardPagerStories instances={c.instances["card-pager"]} /> },
   { kind: "city-cards", city: "none", render: (c) => <CityCardsStories instances={c.instances["city-cards"]} /> },
   { kind: "tiers-table", city: "none", render: (c) => <TiersTableStories instances={c.instances["tiers-table"]} /> },
   /* The city strips build by the slug since plan step 32's fourth dispatch (2026-09-18), so the kind reads no city seed. */
-  { kind: "range-strip", city: "none", render: () => <RangeStripStories instances={pickRangeStripInstances()} city={pickCityStripInstances()} /> },
+  { kind: "range-strip", city: "none", cell: "keyed", render: (c) => <RangeStripStories instances={pickRangeStripInstances()} city={pickCityStripInstances()} cell={c.cellHero} /> },
   { kind: "spectra-table", city: "none", render: () => <SpectraTableStories instances={pickSpectraTableInstances()} /> },
   { kind: "note-list", city: "none", render: (c) => <NoteListStories instances={c.instances["note-list"]} /> },
   { kind: "terminus", city: "keyed", render: (c) => <TerminusStories instances={pickTerminusInstances()} city={pickCityCloseInstances(c.cityHero)} /> },
@@ -170,25 +177,35 @@ if (ONLY != null) {
     : key == null ? await loadCityHeroInstances()
     : slug != null && cityList.includes(slug) ? await loadOneCity(slug)
     : [];
-  const all = pickAllInstances(cityHero);
+  /* THE CELLS THIS STORY NEEDS: a key whose first segment is "cell" loads the
+     handle its second segment names (nothing for a handle the table does not
+     hold, such as the planted "none"); a whole keyed kind loads all three. */
+  const cellHandle = key != null && key.startsWith("cell:") ? key.split(":")[1] : null;
+  const cellHero: CellHeroInstance[] =
+    entry!.cell !== "keyed" ? []
+    : key == null ? await loadCellHeroInstances()
+    : cellHandle != null && cellHandle in CELL_INSTANCES ? await loadCellHeroInstances([cellHandle])
+    : [];
+  const all = pickAllInstances(cityHero, cellHero);
   const held = all[kind] ?? [];
   const selected = key == null ? held : held.filter((i) => i.iso2 === key);
   if (selected.length === 0) miss(kind, key, all);
   const body = renderToStaticMarkup(
     <SpineShell>
     <main className="mx-auto max-w-[1120px] px-4 py-10">
-      {entry!.render({ instances: all, cityHero })}
+      {entry!.render({ instances: all, cityHero, cellHero })}
     </main>
     </SpineShell>,
   );
   mkdirSync("scratchpad/harness", { recursive: true });
   writeFileSync(ONLY_HTML, mapAssets(shell(body)));
   writeFileSync(ONLY_CENSUS, JSON.stringify({ [kind]: selected }, null, 2));
-  console.log(`rendered ${kind}, ${key == null ? `every story of the kind (${held.length})` : `the story ${key}`}, with ${cityHero.length} city seed(s) loaded, to ${ONLY_HTML}`);
+  console.log(`rendered ${kind}, ${key == null ? `every story of the kind (${held.length})` : `the story ${key}`}, with ${cityHero.length} city seed(s) and ${cellHero.length} cell seed(s) loaded, to ${ONLY_HTML}`);
   return;
 }
 const cityHero = await loadCityHeroInstances();
-const instances = pickAllInstances(cityHero);
+const cellHero = await loadCellHeroInstances();
+const instances = pickAllInstances(cityHero, cellHero);
 /* THE SHEET MOUNTS THE SAME SHELL THE PAGE DOES (sys:sheet-mounts-shell,
    2026-09-11). render_page.tsx has always wrapped its output in SpineShell and
    this file did not, so a story and the card it stands for rendered under
@@ -198,7 +215,7 @@ const instances = pickAllInstances(cityHero);
    case and is now fixed at the root (globals.css owns `.fig`), which is what
    makes this wrap safe rather than a second place to keep in sync: the shell
    carries no stylesheet of its own any more, only the scope and the ground. */
-const ctx: Ctx = { instances, cityHero };
+const ctx: Ctx = { instances, cityHero, cellHero };
 const body = renderToStaticMarkup(
   <SpineShell>
   <main className="mx-auto max-w-[1120px] px-4 py-10">

@@ -101,6 +101,10 @@ import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
+import { buildSuits } from "@/lib/spine/suits_rows";
+import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
+import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
+import { resolveTradeNet } from "@/lib/spine/trade_net";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
@@ -605,6 +609,42 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      corrected strings (the kicker, "Cost of living", "Typical pay") the sweep
      takes by key too, as `kicker` and `cols`. */
   for (let n = 4; n <= 7; n++) heads.push([`COPY.cityTrades.foot(${n})`, COPY.cityTrades.foot.replace("{n}", countWord(n))]);
+
+  /* THE TRADE PAGE'S OPENING (MODEL.md 8.6 `00 take`, `01 spread`, `02
+     suits`; plan step 33's first dispatch, 2026-09-18), pushed by name and
+     composed: the masthead's answer label and basis, the state word and its
+     note, the three companion labels and the takings' note, the withheld
+     foot; the strip's two basis lines and its withheld line (its kicker the
+     sweep takes by key); the suits card's three note labels, its
+     not-gathered row and its basis; the three chapter headings; and the one
+     net builder's three notes, each in the form a reader meets. The
+     composed forms come off the shipped builders over two fixture seeds (the
+     exemplar's shape with money shown, and the untrusted shape without),
+     the district builder's own idiom in this file, and off the real shard
+     for the net (restaurants on the ladder; the engine on London's 5). */
+  {
+    const shown = { meta: { trade: "Restaurants", city: "London", country_name: "United Kingdom", iso2: "GB", industry_id: "restaurants", money_shown: true, provenance_line: "National business statistics" }, owner: { take_home_usd: 36000 }, headline: { n_firms: 13000, rev_p10_usd: 360000, rev_p50_usd: 720000, rev_p90_usd: 1296000, rev_spread_basis: "modelled" }, net: resolveTradeNet("restaurants", { moneyShown: true, netMarginPct: 5 }) };
+    const hidden = { meta: { trade: "Cafés & coffee shops", city: "Mumbai", country_name: "India", iso2: "IN", industry_id: "cafes_coffee", money_shown: false, provenance_line: "Modeled from national business statistics." }, headline: { n_firms: 100 }, net: resolveTradeNet("cafes_coffee", { moneyShown: false, netMarginPct: 11.3 }) };
+    for (const [name, seed] of [["shown", shown], ["hidden", hidden]] as const) {
+      const f = tradeHeroFacts(seed);
+      if (f) {
+        if (f.answer) heads.push([`tradeHeroFacts(${name}).answer.label`, f.answer.label], [`tradeHeroFacts(${name}).answer.basis`, f.answer.basis]);
+        heads.push([`tradeHeroFacts(${name}).absent.label`, f.absent.label], [`tradeHeroFacts(${name}).absent.word`, f.absent.word], [`tradeHeroFacts(${name}).absent.note`, f.absent.note]);
+        for (const c of f.cells) { heads.push([`tradeHeroFacts(${name}).cells.${c.key}`, c.label]); if (c.note) heads.push([`tradeHeroFacts(${name}).cells.${c.key}.note`, c.note]); }
+        if (f.foot) heads.push([`tradeHeroFacts(${name}).foot`, f.foot.text]);
+      }
+      const sp = buildTradeSpread(seed);
+      if (sp) { if (sp.basis) heads.push([`buildTradeSpread(${name}).basis`, sp.basis]); if (sp.withheld) heads.push([`buildTradeSpread(${name}).withheld`, sp.withheld]); for (const m of sp.marks) heads.push([`buildTradeSpread(${name}).marks.${m.key}`, m.label]); }
+    }
+    for (const [id, iso2] of [["restaurants", "GB"], ["no_such_trade", "GB"], ["restaurants", "AF"]] as const) {
+      const su = buildSuits(id, iso2);
+      for (const r of su.rows) heads.push([`buildSuits(${id}, ${iso2}).rows.${r.key}.label`, r.label]);
+      heads.push([`buildSuits(${id}, ${iso2}).basis`, su.basis]);
+    }
+    heads.push(["COPY.tradeSpread.basisMeasured", COPY.tradeSpread.basisMeasured], ["COPY.tradeSuits.notGathered", COPY.tradeSuits.notGathered], ["COPY.tradeHero.withheld", COPY.tradeHero.withheld]);
+    for (const [key, text] of Object.entries(COPY.tradeChapters)) heads.push([`COPY.tradeChapters.${key}`, text]);
+    for (const [key, text] of Object.entries(COPY.tradeNet.notes)) heads.push([`COPY.tradeNet.notes.${key}`, text]);
+  }
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);

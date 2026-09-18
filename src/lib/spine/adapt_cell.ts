@@ -50,7 +50,7 @@ import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
 import { buildCellView } from "@/lib/cells/cell_view";
 import type { CellView } from "@/lib/cells/cell_view";
 import { slugToIndustry, tradeNounFor } from "@/lib/taxonomy";
-import { getActivityCharacter } from "@/lib/content/activity_character";
+import { resolveTradeNet } from "@/lib/spine/trade_net";
 
 /* ------------------------------------------------------------------------- */
 /* Shared cell-view loader , the ONE call chain the live cell page also runs. */
@@ -79,6 +79,8 @@ export type LoadedCellView = {
   tradeName: string;
   tradeNoun: string;
   isLondon: boolean;
+  /** cell_view.ts's own gate, `isLondon || isTrustedLocal`: revenue and take-home are real. The one net builder reads the engine only where this is true (trade_net.ts). */
+  moneyShown: boolean;
 };
 
 /**
@@ -244,6 +246,7 @@ export async function loadCellView(
     tradeName,
     tradeNoun,
     isLondon: cellView.isLondon,
+    moneyShown: cellView.isLondon || trustedLocalCell,
   };
 }
 
@@ -309,7 +312,13 @@ export async function buildSpineCellSeed(
     breakInScore,
     placeName,
     tradeName,
+    moneyShown,
   } = loaded;
+  /* THE TRADE'S TAXONOMY ID, resolved once here the way the character lookup
+     resolved it (the URL slug is hyphenated, the shards and the lookups are
+     keyed by the underscored id), and carried on the seed so the view's
+     builders (the suits, the shard readers) never guess it a second time. */
+  const industryId: string | undefined = slugToIndustry(industry)?.id ?? cell.industry_id ?? undefined;
 
   const countryName = iso2ToName(country) || country.toUpperCase();
 
@@ -331,7 +340,24 @@ export async function buildSpineCellSeed(
        carried in a database field walks straight past it. Anything after a pipe
        that looks like an internal key is cut, and the sentence keeps its meaning. */
     provenance_line: sanitiseProvenance(cell.coverage_source) || "Modeled from national business statistics.",
+    /* THE MONEY GATE ON THE SEED (plan step 33's first dispatch, 2026-09-18):
+       cell_view.ts's `moneyShown`, so the masthead's facts and the spread's
+       builder (trade_hero_facts.ts, trade_spread_rows.ts) can say which state
+       the card is in without re-deriving the trust rule. */
+    money_shown: moneyShown,
+    industry_id: industryId,
   };
+
+  /* -- net: THE ONE BUILDER'S FIGURE (trade_net.ts, R7, DATA-REQUIREMENTS
+     item 58; plan step 33's first dispatch, 2026-09-18) ------------------
+     The engine's `netMarginPct` where money is shown; else the shard's
+     ladder unless it is the 42 / 10 / 5 fill; else the sector profile's
+     residual. Every reader of a net on the page reads THIS block: the
+     masthead's companion cell now, `05 split` at its own dispatch. The old
+     `margins.net_pct` below is the engine's figure alone and stays for the
+     readers this dispatch does not touch (OwnerKeeps reads it as a fallback);
+     it leaves with them. */
+  const net = industryId ? resolveTradeNet(industryId, { moneyShown, netMarginPct }) : null;
 
   /* -- headline ------------------------------------------------------------ */
   // The spread is the masthead's p10/p50/p90; break-in as a 0..100 for the word.
@@ -547,47 +573,21 @@ export async function buildSpineCellSeed(
         related keep-% column. Leaving them undefined makes the spine components
         render nothing (guarded). ------------------------------------------- */
 
-  /* -- who this suits: authored trade character, connected across altitudes ----
-     THE FIRST TRUE CONNECTION FOUND ON ANY LONDON PAGE, and my instrument could
-     not see it. That probe compares each adapter against its OWN page, so it is
-     blind to content that exists in a sibling module at a different altitude.
-     This is exactly that: the trade-across-places page has rendered an authored
-     "who it suits" read for months, from a lookup keyed by trade, and the trade
-     page never asked for it.
-
-     Read the module before using it (the standing rule): the lookup is a generated
-     set of 243 activities plus four hand-written overrides, and it is genuinely
-     per-trade rather than a family default. Restaurants and salons return
-     different text, checked, not assumed. Trades with no entry return nothing and
-     the section self-omits; auto repair and pharmacies are two such today.
-
-     The component is the one the sibling page already uses, imported rather than
-     rebuilt (§0 never invent a form, §44 the shared piece is the leverage point).
-     Its accent on the "suits" column is correct under §29A: terracotta marks the
-     good end, never the worse one. */
-  /* The trade's taxonomy id, resolved the same way the loader resolves it. The
-     URL slug is hyphenated and the lookup is keyed by the underscored taxonomy id,
-     so the slug alone matches nothing: that is the identifier-guessing trap this
-     work already fell into once, on a different filter, silently, on every city. */
-  const tradeCharacter = getActivityCharacter(slugToIndustry(industry)?.id ?? cell.industry_id ?? undefined);
-  /* NAMED trade_character, NOT who_suits. The trade page already has a component
-     called WhoSuits and it expects tier BANDS under that key; feeding it prose
-     would have made it return null and the section would have stayed dark while
-     looking wired. Found by reading the component before naming the field. */
-  const tradeCharacterOut =
-    tradeCharacter && (tradeCharacter.edge || tradeCharacter.watchOut)
-      ? {
-          suits: tradeCharacter.edge ? [tradeCharacter.edge] : [],
-          think_twice: tradeCharacter.watchOut ? [tradeCharacter.watchOut] : [],
-        }
-      : undefined;
+  /* -- who this suits: READ BY THE VIEW, NOT CARRIED HERE (plan step 33's
+     first dispatch, 2026-09-18). The authored trade character (the lookup in
+     src/lib/content/activity_character.ts, 243 activities keyed by the
+     underscored taxonomy id, connected across altitudes on 2026-08-24) fed a
+     `trade_character` block for the imported WhoItSuits card; `02 suits`
+     (suits_rows.ts) reads the same lookup by `meta.industry_id` and the
+     checks bank by `meta.iso2`, pure over the files, so the block left the
+     seed with the card. ------------------------------------------------- */
 
   return {
     meta,
     headline,
     margins,
+    net: net ?? undefined,
     verdict,
-    trade_character: tradeCharacterOut,
     money_split: moneySplit,
     cost_drivers: costDrivers,
     owner,

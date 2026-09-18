@@ -32,6 +32,10 @@ const CLEAN_DEALING = "Clean dealing";
 const TIERS_KICKER = "Registering, by legal form";
 const PEERS_KICKER = "Against the peers";
 const LOCALS_KICKER = "What locals know";
+/** Turn one's heading on every page (M7): the country's, the city's and the
+ *  trade's open the same chapter with one literal, so a rewording changes
+ *  all three. */
+const COSTS_CHAPTER = "What it costs to open, and to run";
 export const COPY = {
   answer: {
     /** Founder verbatim, 2026-08-30: "the total effective tax burden". */
@@ -441,7 +445,7 @@ export const COPY = {
    *  cover or its back page"). Drawn by the kit's Movement, the index and one
    *  plain heading, no eyebrow, no icon (8.4). */
   chapters: {
-    costs: "What it costs to open, and to run",
+    costs: COSTS_CHAPTER,
     where: "Where to open it, and what to open",
     place: "What the place is like",
   },
@@ -1016,6 +1020,80 @@ export const COPY = {
       withheldOne: "1 country withheld: the model returns a loss or a floor for a typical shop.",
       withheldMany: "{n} countries withheld: the model returns a loss or a floor for a typical shop.",
     },
+  },
+  /** THE TRADE PAGE'S OPENING (MODEL.md 8.6, `00 take`, `01 spread`, `02
+   *  suits`; plan step 33's first dispatch, 2026-09-18). Every string here was
+   *  read aloud first, in the practical register, and the ones another page
+   *  already prints are referenced and never retyped (M20: the two checks on
+   *  `02` are the country's `18 checks` bank, word for word; the strip's
+   *  three mark names are the customers strip's own). */
+  /** THE ONE NET BUILDER'S QUALIFIER (trade_net.ts, R7, item 58): one line
+   *  under the companion cell, under 48 characters, saying where the figure
+   *  came from, because the sample mark is off site-wide and the cell is the
+   *  only place left that can say it. The engine's is a model over the city's
+   *  own revenue and payroll; the shard's and the profile's are the trade's
+   *  world figures (R12: every shard figure prints as modelled). */
+  tradeNet: {
+    notes: {
+      engine: "from this city's own figures",
+      shard: "typical for the trade, modelled",
+      profile: "the sector's typical, modelled",
+    },
+  },
+  /** `00 take`: the answer label is 8.6's title; the basis says what the
+   *  figure is (a year, after every cost) and never what it means. The state
+   *  word stands where the answer would when money is not shown for the cell
+   *  (an untrusted read, trust.ts), and its note says what is not measured
+   *  without naming the place, which the crumb names once (clause 11). The
+   *  three companions are 8.6's own; no ease score (clause 17). The withheld
+   *  foot counts what the card does not hold off `moneyShown` (PART 5). */
+  tradeHero: {
+    answerLabel: "A typical owner keeps",
+    answerBasis: "a year, after every cost is paid",
+    absent: "Not measured yet",
+    absentNote: "the take-home is not measured for this trade in this city",
+    cells: {
+      net: "Net margin",
+      firms: "Firms trading here",
+      takings: "A typical year's takings",
+      takingsNote: "sales, before any cost comes out",
+    },
+    withheld: "Not measured yet for this trade here: how many trade, and a year's takings.",
+    /** The crumb's separator, the identity row's own since the first masthead. */
+    crumbJoin: " · ",
+  },
+  /** `01 spread`: the kicker is 8.6's title; the marks take the customers
+   *  strip's three names; the modelled basis is 8.6's own sentence, said on
+   *  London where the three marks are fixed multipliers of the typical; the
+   *  measured basis says whose figures they are on a trusted local cell; the
+   *  withheld line stands where the figure would off `moneyShown`. */
+  tradeSpread: {
+    kicker: "A year's takings",
+    basisModelled: "A modelled spread around the typical; measured where the city holds its own.",
+    basisMeasured: "A year's turnover here, the bottom tenth to the top tenth.",
+    withheld: "Not measured yet: a year's takings for this trade in this city.",
+  },
+  /** `02 suits`: the page's one prose section. Two notes off the trade's
+   *  authored character (edge and watch-out, one each; the file holds one of
+   *  each per trade), then the two checks from the country's bank (M20). On a
+   *  trade with no character the two notes are ONE row in the site's idiom
+   *  (M19). The basis says whose words the notes are and that the questions
+   *  score nothing, the checks card's own words. */
+  tradeSuits: {
+    kicker: "Who this suits",
+    labels: { suits: "Who does well", thinkTwice: "Think twice", notGathered: "The people it suits" },
+    notGathered: "Not gathered yet: who this trade suits, and who should think twice.",
+    basis: "Written for the trade anywhere, not this city. Two questions, nothing scored.",
+  },
+  /** THE TRADE PAGE'S THREE CHAPTER HEADINGS (8.6's own titles): turn one is
+   *  the site's string (M7), referenced; turn two's stands with its written
+   *  reason (the reader arrives with the place chosen, so "where" is `07
+   *  peers` inside turn one); turn three parallels "What the place is like"
+   *  with the subject swapped. */
+  tradeChapters: {
+    costs: COSTS_CHAPTER,
+    keep: "What it takes to keep it open",
+    trade: "What the trade is like",
   },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the

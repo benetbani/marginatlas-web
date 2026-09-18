@@ -46,6 +46,21 @@ export type AnswerCardProps = {
   foot?: { text: string; modeled: boolean } | null;
   /** "page": the identity row and the h1 (a masthead). "section": the rail opener, no h1 (a verdict card below a masthead). */
   level?: "page" | "section";
+  /** THE IDENTITY CRUMB (MODEL.md 8.6, `00 take`; the trade composition's
+   * kit work 1.2; plan step 33's first dispatch, 2026-09-18): the segments
+   * that place the h1 in its altitudes, drawn ONCE on one body line under the
+   * h1 (the city masthead's own precedent, PART 3: "one --t-body line under
+   * it names the country, once"), never above it (an eyebrow above a title
+   * is clause 11's ban) and never in uppercase. The h1 is the first segment
+   * by construction, so a caller passes the rest: on a trade page the city
+   * and the country, and the place is named once on the page (clause 11).
+   * Undefined on the country and city mastheads, which draw nothing new. */
+  crumb?: string[];
+  /** THE STATE WORD'S OWN STRINGS when `answer` is null: the label the answer
+   * would carry, the word at figure size, and the note saying what is not
+   * measured. The country's three (COPY.answer) are the default, so the
+   * country masthead is unchanged; the trade masthead passes its own. */
+  absent?: { label: string; word: string; note: string };
   /** The rail's icon tile at section level. */
   icon?: AtlasIconId;
   /** THE FOUNDER'S PLUS, at the card's actual foot (review finding 2, 2026-09-08):
@@ -57,7 +72,7 @@ export type AnswerCardProps = {
   detail?: React.ReactNode;
 };
 
-export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail }: AnswerCardProps) {
+export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail, crumb, absent }: AnswerCardProps) {
   const tagged = answer != null && answer.confidence !== "measured";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   return (
@@ -96,6 +111,11 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
             about a SUBTITLE promising registration started reading a sentence
             it had never seen. The hook names the one element the rule is
             about, so nothing added below this line can be mistaken for it. */}
+        {/* THE CRUMB, under the h1, one line at the body rung in ink2, the
+            segments joined by a middle dot; the harness reads it by
+            `data-crumb`. Nothing is drawn when a caller passes none, so
+            the country and city cards are byte for byte what they were. */}
+        {crumb && crumb.length > 0 ? <p data-crumb className="mt-1 text-[length:var(--t-body)] text-[var(--c-ink2)]">{crumb.join(COPY.tradeHero.crumbJoin)}</p> : null}
         {subtitle ? <p data-subtitle className="mt-1.5 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p> : null}
         {/* THE SPLIT ONLY WHEN THERE ARE CELLS. Measured by the harness at 768:
             a 1-1 split put a 130px answer beside a 250px grid and left a
@@ -126,9 +146,9 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
                size, with its label, never an empty slot and never a fabricated
                rate. Ink, not the accent: it is not an answer. */
             <div data-answer-absent="1">
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.answer.label}</div>
-              <div className="mt-1 text-[length:var(--t-head)] font-medium leading-none text-[var(--c-ink)]">{COPY.answer.absent}</div>
-              <div className="mt-2.5 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{COPY.answer.absentNote}</div>
+              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{absent?.label ?? COPY.answer.label}</div>
+              <div className="mt-1 text-[length:var(--t-head)] font-medium leading-none text-[var(--c-ink)]">{absent?.word ?? COPY.answer.absent}</div>
+              <div className="mt-2.5 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{absent?.note ?? COPY.answer.absentNote}</div>
             </div>
           )}
           {live.length > 0 ? <KvGrid cells={live} /> : null}

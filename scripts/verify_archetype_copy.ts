@@ -59,6 +59,11 @@ import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { SEAT_LINE_WORDS_CAP } from "@/components/spine/archetypes/BlockedSeat";
 import { buildSetupRows } from "@/lib/spine/setup_rows";
 import { buildMarkList, MARK_LIST_CAP } from "@/lib/spine/mark_list_rows";
+import { resolveTradeNet, countTradeNets, netText } from "@/lib/spine/trade_net";
+import { buildSuits } from "@/lib/spine/suits_rows";
+import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
+import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
+import { ALL_INDUSTRIES, INDUSTRIES } from "@/lib/taxonomy";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
@@ -897,6 +902,97 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   for (const b of [COPY.checks.basis.three, COPY.checks.basis.two]) if (b.split(/\s+/).filter(Boolean).length > 14) reds.push(`checks: the basis runs over fourteen words: "${b}"`);
   console.log(`checks: ${cards} cards build, ${three} with three rows and ${two} with two, ${over} on the over-21 wait; every row a bank row, the compare door on every country against the routes`);
 }
+/* THE TRADE PAGE'S OPENING (MODEL.md 8.6 `00 take`, `01 spread`, `02 suits`;
+   plan step 33's first dispatch, 2026-09-18), on every one of the 243 trade
+   ids the shards are filed under (ALL_INDUSTRIES; the 138 in scope are a
+   subset), without the database. THE ONE NET BUILDER (R7, item 58): with the
+   engine absent every trade resolves a net, on the shard's ladder or on the
+   sector profile's residual and never on the 42 / 10 / 5 fill (the fill
+   shards are the ones on the profile, and their count is printed so item 50's
+   38 is measured here rather than remembered); the printed form is a whole
+   percent on every branch; with the engine present and money shown the net
+   is the engine's; no banned word or unfilled placeholder in a note. THE
+   SUITS (M20, R9): every trade holds at most five rows, each a label within
+   the locals cap and a non-empty fact; the two checks are the bank's own
+   strings, the margin row steered by the country exactly as the country's
+   card steers it; the not-gathered row stands where no character is held
+   (counted; none today) and never beside a prose row; the facts over the
+   locals notes' 140-character cap are COUNTED and printed, not redded, since
+   they are authored prose the builder may not cut (suits_rows.ts); a banned
+   word in a fact is a RED on the 138 trades in scope (the register rule is
+   his, and the day this gate first read the prose it found three: "the
+   whole solution", "well-utilized infrastructure", "retention against the
+   same fixed floor", each reworded in the source file the same day) and a
+   COUNTED queue line on a retired or merged id, which redirects and reaches
+   no reader. THE
+   MASTHEAD AND THE STRIP, over two fixture seeds (the district builder's
+   idiom): with money shown the answer and the three companions print and the
+   strip draws three marks with the typical as the lead; without it the
+   answer is the state word, the net is the one companion, the foot carries
+   the withheld line, and the strip holds the line and no basis. */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const counts = countTradeNets();
+  if (counts.unresolved > 0) reds.push(`trade net: ${counts.unresolved} of ${counts.total} trades resolve no net (R7 allows no net-less mode)`);
+  let fillPrinted = 0, notCharacter = 0, longFacts = 0, longestFact = 0, rowsMax = 0, retiredBanned = 0;
+  const inScope = new Set(INDUSTRIES.map((i) => i.id));
+  const retiredQueue: string[] = [];
+  for (const ind of ALL_INDUSTRIES) {
+    const n = resolveTradeNet(ind.id, { moneyShown: false, netMarginPct: null });
+    if (n) {
+      if (n.branch === "engine") reds.push(`trade net ${ind.id}: the engine's branch with money not shown`);
+      if (n.branch === "shard" && n.fill) fillPrinted++;
+      if (n.text !== netText(n.pct) || !/^-?\d+%$/.test(n.text)) reds.push(`trade net ${ind.id}: the printed form "${n.text}" is not a whole percent`);
+      if (n.note.length > 48) reds.push(`trade net ${ind.id}: a note over 48 characters: "${n.note}"`);
+      ban(`trade net ${ind.id}`, [n.note]);
+    }
+    const su = buildSuits(ind.id, "GB");
+    if (su.rows.length > NOTE_CAP) reds.push(`trade suits ${ind.id}: ${su.rows.length} rows, over ${NOTE_CAP}`);
+    rowsMax = Math.max(rowsMax, su.rows.length);
+    if (!su.hasCharacter) notCharacter++;
+    if (!su.hasCharacter && su.rows.some((r) => r.key === "suits" || r.key === "thinkTwice")) reds.push(`trade suits ${ind.id}: the not-gathered row beside a prose row`);
+    if (su.hasCharacter && su.rows.some((r) => r.key === "notGathered")) reds.push(`trade suits ${ind.id}: a not-gathered row beside a character`);
+    for (const r of su.rows) {
+      if (r.label.split(/\s+/).filter(Boolean).length > LABEL_WORDS_CAP) reds.push(`trade suits ${ind.id}: label over ${LABEL_WORDS_CAP} words: "${r.label}"`);
+      if (!r.fact || !r.fact.trim()) reds.push(`trade suits ${ind.id}: an empty fact under "${r.label}"`);
+      if (r.fact.length > FACT_CHARS_CAP) { longFacts++; longestFact = Math.max(longestFact, r.fact.length); }
+      ban(`trade suits ${ind.id}`, [r.label]);
+      if (/[{}]/.test(r.fact)) reds.push(`trade suits ${ind.id}: a placeholder was never filled ("${r.fact}")`);
+      for (const b of COPY.banned) if (r.fact.toLowerCase().includes(b)) { if (inScope.has(ind.id)) reds.push(`trade suits ${ind.id}: banned word "${b}" in "${r.fact}"`); else { retiredBanned++; retiredQueue.push(`${ind.id} ("${b}")`); } }
+    }
+    const price = su.rows.find((r) => r.key === "price"), margin = su.rows.find((r) => r.key === "margin");
+    if (!price || price.fact !== CHECKS_BANK.price.always!.fact) reds.push(`trade suits ${ind.id}: the price check is not the bank's`);
+    if (!margin || margin.fact !== CHECKS_BANK.margin.held!.fact) reds.push(`trade suits ${ind.id}: the margin check on a held regime is not the bank's held row`);
+    if (su.rows.some((r) => (r.key as string) === "wait")) reds.push(`trade suits ${ind.id}: the wait row is carried (08 draws its figure)`);
+    ban(`trade suits ${ind.id}`, [su.basis]);
+  }
+  if (fillPrinted) reds.push(`trade net: the 42 / 10 / 5 fill printed on ${fillPrinted} trade(s) (R11)`);
+  const notHeld = buildSuits("restaurants", "AF").rows.find((r) => r.key === "margin");
+  if (!notHeld || notHeld.fact !== CHECKS_BANK.margin.notHeld!.fact) reds.push(`trade suits: the margin check on a country with no regime is not the bank's not-held row`);
+  const none = buildSuits("no_such_trade", "GB");
+  if (none.hasCharacter || none.rows.length !== 3 || none.rows[0].key !== "notGathered" || !none.rows[0].fact.startsWith("Not gathered yet:")) reds.push(`trade suits: a trade with no character does not take the one not-gathered row over the two checks`);
+  const engine = resolveTradeNet("restaurants", { moneyShown: true, netMarginPct: 5 });
+  if (!engine || engine.branch !== "engine" || engine.text !== "5%") reds.push(`trade net: with money shown the engine's 5 does not print as 5% on the engine branch`);
+  const shown = { meta: { trade: "Restaurants", city: "London", country_name: "United Kingdom", iso2: "GB", industry_id: "restaurants", money_shown: true, provenance_line: "National business statistics" }, owner: { take_home_usd: 36000 }, headline: { n_firms: 13000, rev_p10_usd: 360000, rev_p50_usd: 720000, rev_p90_usd: 1296000, rev_spread_basis: "modelled" }, net: engine };
+  const hidden = { meta: { trade: "Caf\u00e9s & coffee shops", city: "Mumbai", country_name: "India", iso2: "IN", industry_id: "cafes_coffee", money_shown: false, provenance_line: "Modeled from national business statistics." }, headline: { n_firms: 100, rev_p50_usd: 5215000 }, net: resolveTradeNet("cafes_coffee", { moneyShown: false, netMarginPct: 11.3 }) };
+  const fs = tradeHeroFacts(shown), fh = tradeHeroFacts(hidden);
+  if (!fs || !fs.answer || fs.answer.value !== usd(36000) || fs.cells.length !== 3 || fs.withheld) reds.push(`trade take (money shown): the answer and three companions do not print as expected`);
+  if (!fh || fh.answer || fh.cells.length !== 1 || fh.cells[0].key !== "net" || !fh.withheld || !fh.foot?.text.startsWith(COPY.tradeHero.withheld)) reds.push(`trade take (money not shown): the state word, the net alone and the withheld foot do not print as expected`);
+  for (const f of [fs, fh]) if (f) { for (const c of f.cells) { if (c.label.split(/\s+/).length > 4) reds.push(`trade take: label over four words: "${c.label}"`); if (c.note && c.note.length > 48) reds.push(`trade take: note over 48 characters: "${c.note}"`); } if (f.crumb.length !== 2) reds.push(`trade take: the crumb holds ${f.crumb.length} segments, not the city and the country`); ban("trade take", [f.absent.label, f.absent.word, f.absent.note, f.answer?.label ?? "", f.answer?.basis ?? "", f.foot?.text ?? "", ...f.cells.flatMap((c) => [c.label, c.note ?? ""])]); }
+  const ss = buildTradeSpread(shown), sh = buildTradeSpread(hidden);
+  if (!ss || ss.marks.length !== 3 || !ss.marks.find((m) => m.key === "typical")?.lead || ss.basis !== COPY.tradeSpread.basisModelled || ss.withheld) reds.push(`trade spread (money shown, modelled): three marks with the typical as the lead under the modelled basis do not build`);
+  if (!sh || sh.marks.length !== 0 || sh.basis || sh.withheld !== COPY.tradeSpread.withheld) reds.push(`trade spread (money not shown): the withheld line without a basis does not build`);
+  const measured = buildTradeSpread({ ...shown, headline: { ...shown.headline, rev_spread_basis: "measured" } });
+  if (!measured || measured.basis !== COPY.tradeSpread.basisMeasured || measured.sample) reds.push(`trade spread (measured): the measured basis does not build`);
+  for (const d of [ss, sh, measured]) if (d) ban("trade spread", [d.basis ?? "", d.withheld ?? "", ...d.marks.map((m) => m.label)]);
+  console.log(`trade opening: the one net builder with the engine absent lands ${counts.ladder} of ${counts.total} trades on the shard's ladder and ${counts.profile} on the sector profile (${counts.fill} of them past the 42 / 10 / 5 fill, withheld), 0 on the fill; the suits draw the two prose notes on ${counts.total - notCharacter} of ${counts.total} trades and the not-gathered row on ${notCharacter}, at most ${rowsMax} rows; ${longFacts} authored facts run over the locals notes' ${FACT_CHARS_CAP}-character cap (the longest ${longestFact}), a copy fault in the source file and not cut here; ${retiredBanned} banned word(s) on retired or merged ids that reach no reader${retiredBanned ? ` (${retiredQueue.join(", ")})` : ""}`);
+}
+
 /* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce`, `11 easiest` and the
    four of "THE THIN COUNTRY, SEATED"; plan step 31's seventh dispatch,
    2026-09-18). The seat's law is BlockedSeat.tsx's: one stated line in the
