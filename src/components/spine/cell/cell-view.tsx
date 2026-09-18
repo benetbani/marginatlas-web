@@ -1,4 +1,69 @@
 /**
+ * Cell page (a trade in a place) , SPINE rebuild BODY (SpineCellBody).
+ *
+ * THE ORDER IS MODEL.md 8.6's (plan step 33, 2026-09-18, the first of six
+ * dispatches): the opening full width (`00 take`), then the band `01 spread
+ * | 02 suits`; chapter turn one, what it costs to open and to run (`03
+ * permits | 04 open`, `05 split | 06 team`, `07 peers` full width); turn two,
+ * what it takes to keep it open (`08 clears | 09 lasts`, `10 watch | 11
+ * mix`); turn three, what the trade is like (`12 market`, the bento); the
+ * exit (`13 rivals | 14 worth`, `15 close` full width). The country view's
+ * idiom, exactly: the builders built once at the top of the body, a band
+ * seated only when a card exists, `Movement` with an index and a heading and
+ * nothing else, no rail (the trade page carries none). Three full widths,
+ * R1: the take, the peers, the close.
+ *
+ * WHAT THIS DISPATCH BUILT: `00 take` on the answer card (masthead.tsx, the
+ * one net builder behind its companion), `01 spread` on the range strip and
+ * `02 suits` on the note list (below). WHAT IT RETIRED: the old masthead's
+ * client island, crumb, answer sentence, break-in word and docked strip
+ * (masthead.tsx says which law each broke); the WhoSuits tier band
+ * (`who_suits.scales`, never populated on the live route, a coined 0 to 100
+ * read, clause 17; `02` answers the question in prose); and the imported
+ * WhoItSuits card (`02` is its seat, on the archetype).
+ *
+ * WHAT STAYS MOUNTED UNTIL ITS OWN DISPATCH, each of today's cards in the
+ * seat of the 8.6 block that absorbs it (SPINE.md PART A's inventory), and
+ * retiring nothing a later block absorbs:
+ *   ramp (PhaseBar)         -> `04 open`'s companion figure; sits in `03`'s
+ *                              empty seat beside the cost to open until `03
+ *                              permits` is built, then goes
+ *   opening (CostToOpen)    -> `04 open`, RankedBars in its held state
+ *   split (MoneySplit)      -> `05 split`, IncomeBreakdown
+ *   keeps (OwnerKeeps)      -> CUT at `05`'s dispatch (a second drawing of
+ *                              the split's figures); stands alone after the
+ *                              `05 | 06` band until then
+ *   wages (Wages)           -> `06 team`, TiersTable
+ *   peers (Nearby)          -> `07 peers`, CompareTable full width; in a
+ *                              band until then, because a full width with no
+ *                              wide-table sanction reds the section-bands
+ *                              gate (its baseline for this page is 0)
+ *   breakeven (BreakEven)   -> `08 clears`, the ring
+ *   myth (Myth)             -> `09 lasts`, the survival KvGrid (R5)
+ *   risks (Risks)           -> `10 watch`, his B1, data-blocked and seated
+ *   week + catchment        -> `11 mix`, the donut (channels); the dayparts
+ *   (Demand)                   donut is cut there; both self-omit on the
+ *                              live route today
+ *   seasonality             -> `12 market`, one cell of the bento; self-omits
+ *                              on the live route today
+ *   related (Related)       -> `13 rivals`, MarkList; self-omits on the live
+ *                              route today
+ *   format (FormatPicker)   -> CUT at the money chapter's dispatch (the
+ *                              industry page's subject); self-omits on the
+ *                              live route today (no subtypes)
+ *   close (Close)           -> `15 close`, Terminus
+ *
+ * THE THIRD CHAPTER BREAK draws when a card stands under it (the city
+ * view's own rule for its turn three): today `12 market` is not built and
+ * seasonality and related self-omit on the live route, so on London the
+ * heading would sit over nothing until `12` lands; a heading over empty
+ * space is the fault the old body already guarded against. Turns one and
+ * two always hold a card on a resolving cell.
+ *
+ * (The paragraph below is the old header, kept for the chart dictionary it
+ * carries of the cards still mounted; the counted bars and free forms it
+ * names retire card by card with the dispatches above.)
+ *
  * Cell page (a trade in a place) , SPINE rebuild, publish-ready flagship. Leg 3 and
  * the pattern-setter for the other four page types. The locked content-map order
  * re-presented to the shared spine kit, taken to the masterplan's publish bar:
@@ -40,13 +105,17 @@ import * as React from "react";
 import { spineCellSeed, spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 import {
-  Fig, Box, Rail, Movement, Row, Full, WideRail, Donut, StackBar, ShareStack, PhaseBar, InfoTip, StruckLine, TERRA, usd, Band,
+  Fig, Box, Rail, Movement, Full, WideRail, Donut, StackBar, ShareStack, PhaseBar, InfoTip, StruckLine, TERRA, usd, Band,
 } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { FormatPicker, FormatProvider } from "./format-picker";
 import { OwnerKeeps, BreakEven, CostToOpen } from "./money-chapter";
 import { Nearby, Wages, Risks } from "./interactive";
-import { WhoItSuits } from "@/components/spine/industry/industry-view";
+import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
+import { NoteList } from "@/components/spine/archetypes/NoteList";
+import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
+import { buildSuits } from "@/lib/spine/suits_rows";
+import { COPY } from "@/lib/spine/copy";
 
 const X: any = spineCellSeed;
 
@@ -112,43 +181,62 @@ function MoneySplit({ d }: { d: any }) {
   );
 }
 
-/* WhoSuits , WI-3 brief (rulebook 28/29 + FORM-CATALOG Meter do-not, 2026-07-12):
- * the four operator demands are CATEGORICAL reads (Low / Mid / High), so they render
- * as a discrete stepped tier band (the ratified PriceTierBand idiom: discrete pips,
- * the active tier inked, labels aligned below), NOT a marker on a continuous track ,
- * a drawn position fakes a precision the coarse 20/50/80 honesty steps never had. The
- * vague words ("Real", "High", "Heavy", "Hands-on") are DROPPED for the honest tier
- * each hides; the concrete sub-phrase carries the specifics. Neutral: positions are
- * the read, no answer, no accent. width: Even half. */
-const DEMAND_TIERS = ["Low", "Mid", "High"];
-const tierOf = (pos: number): number => (pos >= 67 ? 2 : pos >= 34 ? 1 : 0);
-
-function WhoSuits({ d }: { d: any }) {
-  const w = d.who_suits ?? {};
-  const rows: Array<{ label: string; tier: number; sub?: string }> = (w.scales ?? []).map((s: any) => ({ label: s.label, tier: tierOf(s.pos), sub: s.sub }));
-  if (rows.length === 0) return null; // omitted on promotion: no honest tier read
+/* ================= THE OPENING BAND, `01 spread | 02 suits` ================= */
+/**
+ * A year's takings, `01 spread` (MODEL.md 8.6; plan step 33's first dispatch,
+ * 2026-09-18): the range strip, three marks, linear, the typical the card's
+ * one 30 in ink (the strip's `lead`, the city strip's precedent, M3), the
+ * outer marks at 14, no accent (the opening's accent is spent on `00`). The
+ * marks come from trade_spread_rows.ts off the seed's `headline`: on London
+ * the three are fixed multipliers of the typical (0.5, 1, 1.8), a modelled
+ * shape, and the basis says so in 8.6's own words; on a trusted local cell
+ * off London the cell's own bottom and top tenth, measured. Off `moneyShown`
+ * the card stands with its opener and the withheld line at the lead rung
+ * where the figure would (the running-costs card's idiom; the builder's
+ * header says why not a sample), and FOCAL names it until the data lands.
+ * Dot family, off the bar ledger (M10), the LEFT seat of the band.
+ */
+function Spread({ d }: { d: any }) {
+  const s = buildTradeSpread(d);
+  if (!s) return null;
   return (
-    <Box data-block="suits">
-      <Rail icon="who-for" kicker="Who this suits" sample />
-      <div className="mt-1 space-y-3">
-        {rows.map((r) => (
-          <div key={r.label} className="grid grid-cols-[150px_1fr] items-center gap-3">
-            <span className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{r.label}{r.sub ? <span className="mt-0.5 block text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.sub}</span> : null}</span>
-            <div className="grid grid-cols-3 gap-1" role="img" aria-label={`${r.label}: ${DEMAND_TIERS[r.tier]}`}>
-              {DEMAND_TIERS.map((t, i) => (
-                <span key={t} className="h-[7px] rounded-full" style={{ background: i === r.tier ? "var(--c-ink)" : "#e6e6e6" }} />
-              ))}
-            </div>
-          </div>
-        ))}
-        {/* the shared Low / Mid / High axis, aligned to the three pip columns */}
-        <div aria-hidden className="grid grid-cols-[150px_1fr] items-center gap-3">
-          <span />
-          <div className="grid grid-cols-3 gap-1 text-center text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">
-            {DEMAND_TIERS.map((t) => <span key={t}>{t}</span>)}
-          </div>
-        </div>
-      </div>
+    <Box id="spread">
+      <Rail icon="spread" kicker={COPY.tradeSpread.kicker} sample={s.sample} />
+      {s.marks.length > 0 ? (
+        <RangeStrip marks={s.marks} scale="linear" fmt={usd} basis={s.basis ?? ""} />
+      ) : (
+        <p data-withheld-line="spread" className="mt-2 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{s.withheld}</p>
+      )}
+    </Box>
+  );
+}
+
+/**
+ * Who this suits, `02 suits` (MODEL.md 8.6; the same dispatch): THE PAGE'S
+ * ONE PROSE SECTION (R9, `data-editorial="1"` through NoteList's default),
+ * on NoteList's law: two notes off the trade's authored character (who does
+ * well, think twice) and the two checks from the country's one string bank
+ * phrased as questions (M20, R10), four notes on every trade, the
+ * not-gathered row where a trade holds no character (no live trade today;
+ * suits_rows.ts counts 243 of 243 and says why the brief's three was a
+ * miscount). No figure on the card: the opening band's rest point. The
+ * basis says whose words the notes are and that the questions score
+ * nothing. The Rail's sample flag is on because the notes are authored, not
+ * measured (the locals card's own idiom). The RIGHT seat of the band. The
+ * old WhoSuits tier band (`who_suits.scales`, a coined 0 to 100 read never
+ * populated on the live route) and the imported WhoItSuits card left with
+ * this dispatch.
+ */
+function Suits({ d }: { d: any }) {
+  const industryId: string | undefined = typeof d.meta?.industry_id === "string" ? d.meta.industry_id : undefined;
+  const iso2: string | undefined = typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined;
+  if (!industryId || !iso2) return null;
+  const s = buildSuits(industryId, iso2);
+  return (
+    <Box id="suits">
+      <Rail icon="who-for" kicker={COPY.tradeSuits.kicker} sample />
+      <NoteList notes={s.rows} columns={2} />
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{s.basis}</p>
     </Box>
   );
 }
@@ -467,10 +555,14 @@ function SurvivalSlope({ points }: { points: Array<[string, number]> }) {
               <span
                 aria-hidden
                 className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"
-                style={{ left: `${leftPct(i)}%`, top: `${Y(v)}px`, width: lead ? 8 : 6, height: lead ? 8 : 6, background: lead ? TERRA : "var(--c-ink)" }}
+                style={{ left: `${leftPct(i)}%`, top: `${Y(v)}px`, width: lead ? 8 : 6, height: lead ? 8 : 6, background: "var(--c-ink)" }}
               />
+              {/* INK ON THE YEAR-ONE NODE AND FIGURE (plan step 33's first dispatch,
+                  2026-09-18): the page's loud moments are 8.6's three (`00`, `04`,
+                  `08`) and PART 6 sends every other terracotta figure to ink; this
+                  card is `09 lasts`'s seat until the survival grid replaces it. */}
               <span className="absolute leading-none" style={{ left: `${leftPct(i)}%`, top: `${Y(v) - 19}px`, transform: anchor(i) }}>
-                <Fig className={`text-[length:var(--t-micro)] ${lead ? "font-semibold text-[var(--terra-text)]" : "font-medium text-[var(--c-ink)]"}`}>{v}%</Fig>
+                <Fig className={`text-[length:var(--t-micro)] ${lead ? "font-semibold text-[var(--c-ink)]" : "font-medium text-[var(--c-ink)]"}`}>{v}%</Fig>
               </span>
               <span className="absolute whitespace-nowrap text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]" style={{ left: `${leftPct(i)}%`, top: `${H - 13}px`, transform: anchor(i) }}>
                 {label}
@@ -660,185 +752,177 @@ function Close({ d }: { d: any }) {
 export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const d = data;
 
-  // Chapter/section presence , each is true only when the adapter (or the seed)
-  // carries an honest source for it. A whole Movement is suppressed when its
-  // chapter has no content, so a promoted-but-thinner page never shows a bare
-  // heading over empty space.
-  const hasWhoSuits = Array.isArray(d.who_suits?.scales) && d.who_suits.scales.length > 0;
-  const hasTradeCharacter =
-    (d.trade_character?.suits ?? []).length > 0 || (d.trade_character?.think_twice ?? []).length > 0;
+  /* WHO IS HOME, ASKED ONCE (the country view's idiom): each card's presence,
+     so a band is drawn when a card exists and not otherwise, and a heading
+     never sits over nothing. The opening's two cards build for every
+     resolving cell (the strip stands withheld off `moneyShown`, the notes
+     draw on every trade), so the band always holds two children. */
+  const hasSpread = buildTradeSpread(d) != null;
+  const hasSuits = typeof d.meta?.industry_id === "string" && typeof d.meta?.iso2 === "string";
   const hasMoneySplit = Array.isArray(d.money_split?.items) && d.money_split.items.length > 0;
-  // The break-in density figure now lives in the masthead scorecard (founder D7),
-  // so the chapter no longer keys on the old verdict block.
-  const showVerdictChapter = hasWhoSuits || hasTradeCharacter || hasMoneySplit;
-
   const hasDemand =
     Array.isArray(d.demand?.dayparts) ||
     Array.isArray(d.demand?.channels) ||
     Array.isArray(d.demand?.catchment);
-
   const hasSubtypes = Array.isArray(d.subtypes?.items) && d.subtypes.items.length > 0;
   const hasSetup = Array.isArray(d.setup?.items) && d.setup.items.length > 0;
-  // OwnerKeeps draws the gross-to-net waterfall from the $100 split, so it needs
-  // the money split (the hero take-home lives once in the masthead, not here).
   const hasOwner = hasMoneySplit;
   const hasBreakEven = typeof d.break_even?.covers_per_day === "number";
   const hasWages = Array.isArray(d.wages?.roles) && d.wages.roles.length > 0;
-  const showMoneyChapter = hasSubtypes || hasOwner || hasBreakEven || hasSetup || hasWages;
-
   const hasSeasonality = Array.isArray(d.seasonality?.months) && d.seasonality.months.length >= 2;
   const hasRisks = Array.isArray(d.risks?.items) && d.risks.items.length > 0;
   const hasRamp = breakevenWeekFor(d) != null;
-  const showRunningChapter = hasSeasonality || hasRisks || hasRamp;
-
   const hasNearby = Array.isArray(d.nearby?.places) && d.nearby.places.length > 0;
   const hasMyth = !!d.myth?.claim;
   const hasRelated = Array.isArray(d.related) && d.related.length > 0;
-  const showPlaceChapter = hasNearby || hasMyth || hasRelated;
+  /* The turns, by whether a card stands under each (the header says why the
+     third waits on `12 market`): turn one holds the money cards, turn two
+     the ring, the survival curve and the risks, turn three the seasonality
+     alone today. */
+  const turnOne = hasRamp || hasSetup || hasMoneySplit || hasWages || hasOwner || hasNearby || hasSubtypes;
+  const turnTwo = hasBreakEven || hasMyth || hasRisks || hasDemand;
+  const turnThree = hasSeasonality;
 
-  // Chapter numbers count only the chapters that actually render, so an omitted
-  // chapter (e.g. Demand on promotion) never leaves a gap in the 01/02/03 sequence.
-  // Each cn() is evaluated inside its chapter's conditional, so it advances in
-  // source order for present chapters only.
-  let chapCount = 0;
-  const cn = () => String(++chapCount).padStart(2, "0");
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-      {/* THE HERO, one of the two chrome bands that may run full width (art
-          direction D1). Everything below it divides. */}
-      <Band hero><Masthead d={d} /></Band>
-
-      {/* The verdict , the who-suits scale band (the break-in count folded into the
-          masthead scorecard, founder D7) then the canonical full-width $100
-          cost-stack (T1: a single stacked bar earns the full column). */}
-      {showVerdictChapter ? (
-        <>
-          <Movement index={cn()} eyebrow="The verdict" heading="What it takes, and what it pays" icon="gut-check" />
-          <div className="space-y-4">
-            {hasWhoSuits ? <Row><WhoSuits d={d} /></Row> : null}
-            {/* THE AUTHORED TRADE CHARACTER, connected across altitudes on
-                2026-08-24. The trade-across-places page has rendered this for
-                months from a lookup keyed by trade, 243 activities deep, and this
-                page never asked for it. Its component is imported rather than
-                rebuilt (§0, §44); its accent on the "suits" column is correct
-                under §29A, terracotta marks the good end. */}
-            {/* PAIRED, NOT STACKED. Both took the full column and neither needed
-                it: one is two short lists, the other a single stacked bar. */}
-            {hasTradeCharacter || hasMoneySplit ? (
-              <Band>
-                {hasTradeCharacter ? <WhoItSuits d={{ who_suits: d.trade_character }} /> : null}
-                {hasMoneySplit ? <MoneySplit d={d} /> : null}
-              </Band>
-            ) : null}
-          </div>
-        </>
+      {/* `00 take`, FULL WIDTH, the page's only 40 (8.6, loud one): the answer
+          card draws its own hero band, the attribute the full-width gate reads. */}
+      <Masthead d={d} />
+      {/* `01 spread | 02 suits`, 1-1, the opening's one band (8.6): is the money
+          in the range I pictured, and am I the kind of person this suits. The
+          strip LEFT (the dot family's seat, M10), the notes RIGHT, both quiet.
+          MEASURED at 1-1 after it was seated (the dispatch's report carries
+          the numbers): 8.6's own expectation was that five notes would open
+          air under the strip and the split would move to 2-3 with `02` wide;
+          the card holds four notes, and the measurement decided the split. */}
+      {hasSpread || hasSuits ? (
+        <Band split="1-2" stack="lg">
+          <Spread d={d} />
+          <Suits d={d} />
+        </Band>
       ) : null}
 
-      {/* Demand , a single WideRail band: dayparts + channels + catchment. Omitted on
-          promotion (no honest per-figure source); rendered on the full seed. */}
-      {hasDemand ? (
+      {/* CHAPTER TURN ONE (8.6, "What it costs to open, and to run", the site's
+          string, M7): the kit's Movement, the muted index and one plain
+          heading, no eyebrow and no icon (8.4). */}
+      {turnOne ? (
         <>
-          <Movement index={cn()} eyebrow="The demand" heading="Where the revenue comes from" icon="footfall" />
-          <Demand d={d} />
-        </>
-      ) : null}
-
-      {/* THE MONEY , the heaviest chapter. FormatProvider wraps it so the chosen subtype propagates
-          through OwnerKeeps, BreakEven and CostToOpen. FormatPicker is the staged centerpiece.
-          When no subtypes ride on the data, FormatProvider renders children unchanged and the
-          money cards read the single cell's numbers. */}
-      {showMoneyChapter ? (
-        <>
-          <Movement index={cn()} eyebrow="The money" heading="What it earns, what it keeps" icon="owner-keeps" />
+          <Movement index="01" heading={COPY.tradeChapters.costs} />
+          {/* `03 permits | 04 open`, 2-3 in 8.6, the permits narrow LEFT and the
+              cost to open wide RIGHT. `03` is not built (its dispatch is next),
+              so the cost to open stands in its own band at the survivor's two
+              thirds, LONE CARD expected, and the ramp's phase bar, which `04`
+              absorbs as a companion figure, stands in its own band before it:
+              MEASURED 2026-09-18 with the page filter, the ramp seated in
+              `03`'s empty seat beside the cost to open at 2-3 stretched to the
+              taller card's 310 and opened a 376 by 150 hole at 1280 and 304 by
+              150 at 768 (8.4 rule 1: a card that cannot fill its partner's
+              height is re-paired, never unstretched), and each alone carries
+              none. The FormatProvider still wraps the money cards it feeds. */}
           <FormatProvider d={d}>
-            <div className="space-y-4">
-              {hasSubtypes ? <Full><FormatPicker d={d} /></Full> : null}
-              {/* Re-tier (rulebook 17, no one-sided white space): the tall signature
-                  waterfall pairs with the tall pay plot so both fill the band; break-even
-                  and cost-to-open are the shorter entry-threshold reads, paired together so
-                  break-even is no longer stretched ~half-empty beside the waterfall. */}
-              {/* BANDS, NOT THE OLDER ROW WRAPPERS. Found by rendering this page for
-                  trades and cities that are not the exemplar: on Sao Paulo grocery
-                  stores the cost-to-open card does not render, and its partner took
-                  the whole column, because those wrappers have no rule for a lone
-                  survivor. Band gives it two thirds, which is a composition rather
-                  than an accident. It also brings both rows under the rhythm check,
-                  which reads bands and could not see them. */}
-              {hasOwner || hasWages ? (
-                <Band split="3-2">{hasOwner ? <OwnerKeeps d={d} /> : null}{hasWages ? <Wages d={d} /> : null}</Band>
-              ) : null}
-              {/* ONE THIRD FOR THE RING, TWO FOR THE STACK, and a photograph decided
-                  it rather than the constitution. At equal halves the break-even card
-                  came out 520 by 285 with a 168px ring floating in the middle of it
-                  and about 175px of nothing on either side, which is the founder's
-                  first named fault class arriving inside a border. A ring has a fixed
-                  size and cannot fill a width, so the width has to come to the ring.
-                  CostToOpen takes the other two thirds, which its lollipop line items
-                  wanted anyway.
-                  THIS COMMENT SITS ABOVE THE TERNARY, NOT INSIDE ITS BRANCH: a branch
-                  is one expression and a comment plus an element is two. */}
-              {hasBreakEven || hasSetup ? (
-                <Band split="1-2">{hasBreakEven ? <BreakEven d={d} /> : null}{hasSetup ? <CostToOpen d={d} /> : null}</Band>
-              ) : null}
-            </div>
-          </FormatProvider>
-        </>
-      ) : null}
-
-      {/* Running it , Even (cost calendar reads) then Full phase bar. London exemplar
-          only; each section also self-omits on absent data. */}
-      {showRunningChapter ? (
-        <>
-          <Movement index={cn()} eyebrow="Running it" heading="The first year" icon="first-year" />
-          <div className="space-y-4">
-            {/* THE RISK SCALES NO LONGER PAIR WITH THE RAMP (reverted 2026-09-08,
-                E2, found once the card-detection repoint could finally see this
-                card). The seasonality card that used to sit beside the risks does
-                not render for this trade, so the two were squeezed into one 2-1
-                band: risks the wide side, ramp , a single phase bar , the small
-                side. EQUAL HEIGHTS, NO MATTER WHAT (founder ruling 7, 2026-09-04)
-                then stretched the ramp's card to the risks list's height, and a
-                single bar with a two-line legend fills 56% of a card sized for a
-                multi-row list, the exact hole ruling 7 calls a card to redesign,
-                not a rule to relax. The ramp already had its OWN band for the
-                sibling case three lines down (hasSeasonality, no risks pairing at
-                all); this gives it the same treatment here, so it is never
-                stretched against a list built for a different amount of content.
-                A lone card re-templates to two thirds and one third (Band's own
-                rule) rather than a gap, which is the sanctioned asymmetry the
-                hasSeasonality branch already uses below. */}
-            {hasSeasonality ? <Band split="2-1"><Risks d={d} /><Seasonality d={d} /></Band> : null}
-            {!hasSeasonality && hasRisks ? <Band split="2-1"><Risks d={d} /></Band> : null}
-            {hasRamp ? <Band split="3-2"><Ramp d={d} /></Band> : null}
-          </div>
-        </>
-      ) : null}
-
-      {/* Place and rivals , Full leaderboard then Even (myth + related close). */}
-      {showPlaceChapter ? (
-        <>
-          <Movement index={cn()} eyebrow="Place and rivals" heading="Place and rivals" icon="best-areas" />
-          <div className="space-y-4">
-            {/* THE LEADERBOARD PAIRS WITH THE MYTH. The related-trades card beside
-                the myth was rejected at 9% coverage with identical rows, so the
-                myth was left holding the column alone and the leaderboard above it
-                did the same. */}
-            {hasNearby || hasMyth ? (
-              <Band split="3-2">
-                {hasNearby ? <Nearby d={d} /> : null}
-                {hasMyth ? <Myth d={d} /> : null}
+            {hasSubtypes ? <Full><FormatPicker d={d} /></Full> : null}
+            {hasRamp ? (
+              <Band split="2-3">
+                <Ramp d={d} />
               </Band>
             ) : null}
-            {hasRelated ? <Band split="2-1"><Related d={d} /></Band> : null}
-          </div>
+            {hasSetup ? (
+              <Band split="2-3">
+                <CostToOpen d={d} />
+              </Band>
+            ) : null}
+            {/* `05 split | 06 team`, 3-2 in 8.6, the split wide LEFT (fill-bar one,
+                M10) and the team narrow RIGHT. TODAY'S CARDS CANNOT SEAT THAT
+                PAIR, MEASURED 2026-09-18 with the page filter and the
+                art-direction gate: the $100 stack's card (a bar and a legend,
+                about 93 inside) stretched to the three-row wage table's 243
+                opened a 584 by 150 hole at 3-2, and at 2-3 and 1-2 alike stood
+                at 51 percent ink against the gate's E2 floor of 60 (a card that
+                cannot fill its partner's height is re-paired, never
+                unstretched, 8.4). So the stack stands alone in `05`'s seat
+                position at the survivor's two thirds (LONE CARD, expected), and
+                the waterfall, a second drawing of the same split that `05`'s
+                dispatch cuts, stands beside the wage table at the 3-2 the old
+                body measured and shipped: the waterfall wide LEFT in `05`'s
+                column, the team narrow RIGHT in `06`'s. */}
+            {hasMoneySplit ? (
+              <Band split="2-1">
+                <MoneySplit d={d} />
+              </Band>
+            ) : null}
+            {hasOwner || hasWages ? (
+              <Band split="3-2">
+                {hasOwner ? <OwnerKeeps d={d} /> : null}
+                {hasWages ? <Wages d={d} /> : null}
+              </Band>
+            ) : null}
+          </FormatProvider>
+          {/* `07 peers`, FULL WIDTH in 8.6 on CompareTable, closing turn one; today's
+              Nearby table in a band at the survivor's two thirds until its
+              dispatch (the header says why not full width yet). */}
+          {hasNearby ? (
+            <Band split="2-1">
+              <Nearby d={d} />
+            </Band>
+          ) : null}
         </>
       ) : null}
 
-      {/* The close , a deliberate full-width terminus so the page ends on a CTA band,
-          not dead background-photo margin. Reads only meta + related, both guarded. */}
-      {/* THE TERMINUS, the second and last chrome band (art direction D1). It
-          offers one link and carries no finding, so it does not ask a reader to
-          traverse a row of figures. */}
+      {/* CHAPTER TURN TWO (8.6, "What it takes to keep it open"): does an
+          ordinary day cover the costs, and do places like this last. */}
+      {turnTwo ? (
+        <>
+          <Movement index="02" heading={COPY.tradeChapters.keep} />
+          {/* `08 clears | 09 lasts`, 1-1, the ring LEFT (loud three in 8.6) and the
+              survival figures RIGHT: today's break-even ring and the myth's
+              survival curve in their seats. The ring still reads the format
+              context, so the provider wraps it here too. */}
+          {hasBreakEven || hasMyth ? (
+            /* MEASURED 2026-09-18: at 1-1 the ring (a fixed 168 drawing) beside the
+               survival curve opened a 150 by 246 hole to its right at 1280; a ring
+               cannot fill a width, so the width comes to the ring (the old body's
+               own finding on this card) and the interim pair sits at 1-2 until the
+               ring is redrawn at `08`'s dispatch. */
+            <Band split="1-2">
+              {hasBreakEven ? <FormatProvider d={d}><BreakEven d={d} /></FormatProvider> : null}
+              {hasMyth ? <Myth d={d} /> : null}
+            </Band>
+          ) : null}
+          {/* `10 watch | 11 mix`, 1-1, the risks LEFT (his B1's seat) and the
+              channels RIGHT (the donut's): today's risks card in a band, and the
+              demand rail (dayparts, channels, catchment) after it where it
+              renders, which on the live route is nowhere. */}
+          {hasRisks ? (
+            <Band split="1-1">
+              <Risks d={d} />
+            </Band>
+          ) : null}
+          {hasDemand ? <Demand d={d} /> : null}
+        </>
+      ) : null}
+
+      {/* CHAPTER TURN THREE (8.6, "What the trade is like"): the one-band turn,
+          `12 market`, the bento; today's seasonality columns hold the seat
+          where they render, and the heading waits on a card. */}
+      {turnThree ? (
+        <>
+          <Movement index="03" heading={COPY.tradeChapters.trade} />
+          <Band split="2-1">
+            <Seasonality d={d} />
+          </Band>
+        </>
+      ) : null}
+
+      {/* THE EXIT (no chapter break, PART 1): `13 rivals | 14 worth`, then `15
+          close` full width. Today's related links hold `13`'s seat where they
+          render; `14` is not built. */}
+      {hasRelated ? (
+        <Band split="2-1">
+          <Related d={d} />
+        </Band>
+      ) : null}
+      {/* `15 close`, FULL WIDTH (8.6, R1): the terminus, as built until its
+          dispatch, on the hero band the full-width gate reads. */}
       <div className="mt-6 mb-2">
         <Band hero><Close d={d} /></Band>
       </div>

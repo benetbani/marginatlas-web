@@ -1441,7 +1441,12 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
   return (
     <div data-idea="I4">
       <div className="relative pt-7">
-        <span className="absolute top-0 whitespace-nowrap text-[length:var(--t-body)] font-semibold text-[var(--terra-text)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
+        {/* INK, NOT THE ACCENT (plan step 33's first dispatch, 2026-09-18): the
+            trade page's three loud moments are its `00 take`, `04 open` and
+            `08 clears` (MODEL.md 8.6's seat ledger), and PART 6 sends anything
+            terracotta that is not on the list to ink; this card's one caller is
+            the trade page's ramp, which `04` absorbs at its own dispatch. */}
+        <span className="absolute top-0 whitespace-nowrap text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
         {/* THE MARKER SITS OUTSIDE THE TRACK, not inside it.
             The track hides its overflow so its segments keep the rounded ends,
             and the break-even dot used to live inside that same box. A dot is
@@ -1458,7 +1463,7 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
               {segs.map((s) => <div key={s.label} className="h-full border-r border-white/70 last:border-0" style={{ width: `${pct(s.to - s.from)}%`, background: s.color }} />)}
             </div>
           </div>
-          <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: TERRA, boxShadow: "0 0 0 1px var(--c-border)" }} />
+          <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
         </div>
         {/* BOTH ENDS OF A RULER ARE WRITTEN ALIKE. This one read "0" at the left and
             "WEEK 52" at the right, one bare and one carrying its unit, so a reader
