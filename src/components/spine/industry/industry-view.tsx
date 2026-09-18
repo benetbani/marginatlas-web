@@ -1,42 +1,94 @@
 /**
- * Industry page (a trade across places) , SPINE rebuild BODY. Leg 4.
- * The cross-geography "can I make money doing Y" decision engine. The Margin Index
- * ("keeps $X of every $100") is the answer-first hero; the neighbours benchmark
- * proves it high; the SUBTYPE DRILL is the richness lever; the WherePays list keeps
- * the trade grounded place by place (rent-load facts + city links only, founder D3
- * 2026-07-11: per-city net margin for one trade is unknowable, rulebook v1 §5).
- * Composed from the shared spine kit + page-local forms (forms.tsx) + where-pays.
+ * Industry page (a trade across places) , SPINE rebuild BODY (SpineIndustryBody).
  *
- * Body/route split (Phase B): this file holds the whole page body as the named
- * export SpineIndustryBody, so the live industry route can mount it with real data
- * (buildSpineIndustrySeed) while the thin dev route (page.tsx) renders it with the
- * bundled seed. Next forbids arbitrary named exports + custom props on a route file,
- * so the body lives here (a plain module) and page.tsx re-exports it as the default.
- * The default binding is the bundled spine seed, so the dev route stays byte-identical.
+ * THE ORDER IS MODEL.md 8.7's (plan step 34, 2026-09-18, the first of four
+ * dispatches): the opening full width (`00 take`), then the band `01 lasts
+ * | 02 benchmark`; chapter turn one, what it costs to open and what it keeps
+ * (`03 split | 04 open`, `05 pays` the bento); turn two, where it pays and
+ * what to sell (`06 places` full width, `07 formats | 08 channels`); turn
+ * three, what the trade is like (`09 know | 10 field`); the exit (`11 close`
+ * full width, no chapter break). The trade view's idiom, exactly: the
+ * builders built once at the top of the body, a band seated only when a card
+ * exists, `Movement` with an index and a heading and nothing else, no rail.
+ * Three full widths, R1: the take, the places table, the close.
  *
- * NULL-GUARDS (real-data promotion): every card early-returns null when its data is
- * absent, so an omitted field renders NOTHING (never 0 / undefined / NaN / a broken
- * block). Demand guards the whole card down to the surviving AOV; CapitalPayback,
- * BreakEven, Seasonality, Ramp self-omit; Operator drops the sale-multiple fact when
- * absent; WherePaysExplorer self-omits when no place carries a rent_load_pct (its
- * only remaining figure).
+ * WHAT THE FIRST DISPATCH BUILT: `00 take` on the answer card in its trade
+ * identity variant, `01 lasts` on the trade page's own survival card and
+ * `02 benchmark` on RankedBars (opening.tsx says which law each obeys; the
+ * builders are industry_hero_facts.ts, lasts_rows.ts at the world altitude
+ * and benchmark_rows.ts, every figure off the one net builder or the shard,
+ * marked modelled). WHAT IT RETIRED, each with what it drew: the old
+ * Masthead and its `#ladder` box (the keeps-per-$100 count-up off
+ * `margin_index`, the margins file's clamped net with a silent 5% default on
+ * 39 trades, the prose sentence beside it, the three-rung MarginLadder, the
+ * provenance line: `00` is its seat); `#kept`, the Benchmark (the
+ * LollipopColumn over `foodDrinkSiblings()`'s eight food ids, 23 of 243
+ * trades served with the same six rows, the atlas median as a dashed rule,
+ * the computed finding sentence: `02` is its seat, the sector set from the
+ * shards replaces the list, and the hardcoded list dies with the adapter's
+ * `benchmark` and `subtypes` blocks); `#spend`, the Demand card (the spend
+ * per head off `computeBreakeven`'s AOV, visits never fed on the live
+ * route: `00`'s two companions are its seat, off the shard for 243); `#open`,
+ * the Operator (its one live fact the archetype's cost to open, which `00`
+ * prints as a companion and which on the 90 default trades printed the
+ * table's 80,000 fill as a figure, clause 46; its sale multiple never fed on
+ * the live route and is UNPLACED by 8.7 on two bases; its year-one survival
+ * already off the card); `#survival` (the SurvivalCurve off the London
+ * file's archetype for 20 of 243, R5's banned slope: `01` is its seat, the
+ * shard's triple for 243) and the `survival` feed with it, which also fed
+ * the myths card's struck claim and the adapter's folklore sentence, both
+ * echoes of `01` that 8.7's inventory says stay dead; `#neighbours`, the
+ * SubtypeDrill (the trades next door ranked by the archetype's cost to open
+ * over the same eight food ids: its feed dies with `foodDrinkSiblings()`;
+ * `07 formats` draws the shard's own formats at its dispatch, a different
+ * feed). The old chapter headings (four with eyebrows and icons, and "The
+ * next move" over the exit) left with the order: 8.7's three turns carry
+ * the breaks and the exit carries none.
  *
- * PAGE-LEVEL HIERARCHY (3 hero reads outweigh the rest): Margin Index masthead,
- * the $100 money split, and the Subtype drill carry the most weight.
+ * TODAY'S SURVIVORS KEEP THEIR SEATS IN 8.7's ORDER until their dispatches,
+ * each mapped to its block: `#split` (MoneySplit, the $100 stack off the
+ * margins file) is `03 split`, rebuilt on IncomeBreakdown off the shard's
+ * drivers and the one net builder at the second dispatch (until then the
+ * page carries two nets on 8 of 243 trades by one point and the file's 5%
+ * default on the 39 the file does not hold, stated in the dispatch's
+ * report); the Ramp's break-even week is `04 open`'s months cell and the
+ * BreakEven meter and the CapitalPayback bracket are `05 pays`'s two metric
+ * cells (none of the three is fed on the live route today; each keeps its
+ * guard); the WherePaysExplorer is `06 places` (it gates on `rent_load_pct`,
+ * never set, so it has never drawn on the live route); WhoItSuits and the
+ * Caveats are the two halves of `09 know`, the page's one prose section,
+ * seated side by side until that dispatch merges them on NoteList; the
+ * Seasonality ribbon's swing is `10 field`'s third cell (never fed on the
+ * live route); the Close is `11 close` on Terminus at the fourth dispatch
+ * (its recap figure left today with the `margin_index` and `benchmark`
+ * feeds, 8.7's own cut: "no recap figure").
+ *
+ * THE THIRD CHAPTER BREAK draws when a card stands under it (the trade
+ * view's own rule): the suits and the caveats build off the authored
+ * character, the failure modes and the margins file, so on a trade holding
+ * none of them the heading waits with them. Turn two's heading waits on the
+ * places table, which no live trade draws today.
+ *
+ * THE SAMPLE MARK'S WIRING, said once for the render group: every card on
+ * this page whose figures are modelled passes `sample` to the kit's `Rail`
+ * (or `tagged` to RankedBars, `confidence` to the answer card's cells), and
+ * the kit draws `SampleTag` there, behind his switch (MODEL.md, THE SAMPLE
+ * MARK IS BEHIND ONE SWITCH); the sample-tags gate reads this group for that
+ * name, and the mechanism it names is the one every card here uses.
  */
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
-import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, Even, WideRail, TERRA, GREY_RAMP, usd, SampleTag, Band } from "@/components/spine/kit";
+import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, TERRA, GREY_RAMP, usd, Band } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
-/* RankedTiles joins LollipopColumn here for C6: the trades-next-door card gave
-   up its keep column to the benchmark card above it, and six named things with
-   ONE figure each is a standing, not a table. The ui/table imports left with the
-   columns they carried. */
-import { LollipopColumn, RankedTiles } from "@/components/spine/forms-v2";
 import { WherePaysExplorer } from "./where-pays";
-import { MarginLadder, SurvivalCurve, SeasonRibbon, RangeBracket, CountFig } from "./forms";
-import { deriveSubtypes } from "./subtypes";
+import { SeasonRibbon, RangeBracket, CountFig } from "./forms";
+import { Masthead, BenchmarkCard } from "./opening";
+import { LastsCard } from "@/components/spine/cell/turn-two";
+import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
+import { buildLasts } from "@/lib/spine/lasts_rows";
+import { buildBenchmark } from "@/lib/spine/benchmark_rows";
+import { COPY } from "@/lib/spine/copy";
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
@@ -55,378 +107,6 @@ function glossTerm(text: string | undefined, term: string, gloss: string): React
 }
 const GLOSS_PRIME_COST = "Food and labour together, the two big controllable costs.";
 const GLOSS_UTILISATION = "Share of a typical day's trade.";
-
-/* ============================================================
- * MASTHEAD , THE MARGIN INDEX (hero, answer-first)
- * decision: does this trade make money? Number: the $7 kept per $100.
- * answer: the $7 keeps-per-100 figure, the ONE figure on this page at the 40 rung.
- * width: hero band, dissolved onto the atmosphere (no half-scrim); the margin
- *   ladder shows the collapse as a stair of three levels beside it.
- * terracotta: the $7 figure + the ladder's kept tread (one answer + the kept level).
- *
- * THE TWO SIZES IN THIS BAND WERE BOTH ABOVE THE LADDER'S CEILING (queue row C7),
- * and only one of them was visible to the gate. The figure was `md:text-[48px]`,
- * which `verify_type_ladder` counts; the h1 was `md:text-[2.75rem]`, which is 44px
- * and which that gate cannot see, because it reads px and this was written in rem.
- * The ladder tops at 40 with "NOTHING IS LARGER" beside it.
- *
- * SHRINKING THE FIGURE ALONE WOULD HAVE INVERTED THE BAND. At 48 against 44 the
- * answer outranked the name by 1.09x, which is two claimants and no answer (step
- * 5); at 40 against 44 the name would have won outright. Measured at 375 the
- * inversion was ALREADY SHIPPING: the h1 rendered at 33.6px over a 30px figure,
- * so on every phone the page's title outranked the page's answer, 0.89x.
- * Both are on the ladder now and neither carries a breakpoint: the answer takes
- * --t-answer (40) and the name takes --t-section (24), which is the rung the
- * ladder's own comment in globals.css assigns to "a naming h1". 1.67x at every
- * width, which clears step 5's floor of 1.6, and one grammar instead of two. */
-function Masthead({ d }: { d: any }) {
-  const mi = d.margin_index ?? {}; const m = d.margins ?? {};
-  const hasLadder = [m.gross_pct, m.operating_pct, m.net_pct].every((v) => typeof v === "number" && Number.isFinite(v));
-  return (
-    <section className="pt-4 md:pt-6">
-      <div className="mb-2 flex items-center gap-2.5">
-        <span className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">00</span>
-      </div>
-      <h1 data-typography="custom" className="text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]">{d.meta?.name}</h1>
-      <div className="mt-5 grid gap-5 md:grid-cols-[1.35fr_1fr] md:items-center">
-        <div>
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <CountFig value={mi.keeps_per_100} prefix="$" className="text-[length:var(--t-answer)] leading-[1] text-[var(--terra-text)]" />
-            {/* PROSE, NOT A SUBSECTION HEADING. This is the one use of the
-                retired 18 rung, site-wide, that did not fold onto the head step
-                with the other 23. It is a sentence a reader reads, set beside
-                the figure it explains, so it takes the lead prose step and
-                drops from 20 to 16. Everything else that wore the retired rung
-                was a heading or a figure. */}
-            <span className="max-w-[22rem] text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">kept by the owner from every <Fig className="text-[var(--c-ink)]">$100</Fig> a customer spends.</span>
-          </div>
-        </div>
-        {/* the margin ladder: the gross-to-net collapse, seen as three shrinking bars */}
-        {/* THE SECTION IDS ARE THE BLUEPRINT'S, NOT THIS FILE'S. Each of the ten
-            cards carries the id its row declares in design/blueprints/industry.md,
-            so the conformance gate can read the page's sections and their order
-            straight off the rendered markup. An id born here without a row there,
-            or a row there without an id here, is the drift the gate exists to
-            catch: fix the file or fix the page, the same day. */}
-        {/* THE CARD GOES WHEN THE LADDER GOES. Every other card on this page
-            early-returns null when its figures are absent; this one printed its
-            kicker and its sample tag over three NaN% rungs, because the three
-            margins arrive from `d.margins ?? {}` and nothing checked them. The
-            form self-omits on a partial set, so the Box has to as well or the
-            masthead keeps an empty box beside its hero.
-            THE HEAD GAP IS 8, NOT 12. Twelve sits between two rungs of the
-            spacing ladder, and 8 is what the kit's own Rail leaves under every
-            other kicker on the site. Sixth instance of that fault in this loop. */}
-        {hasLadder ? (
-          <Box id="ladder">
-            <div className="mb-2 flex items-center gap-2"><h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">The margin ladder</h3><SampleTag /></div>
-            <MarginLadder gross={m.gross_pct} operating={m.operating_pct} net={m.net_pct} />
-          </Box>
-        ) : null}
-      </div>
-      <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.provenance_line}</p>
-    </section>
-  );
-}
-
-
-/* ============================================================
- * BENCHMARK (queue row A9) , the "vs the neighbours" USP, proving $7 is low.
- * decision: is $7 actually low? Number: this trade against the trades next door.
- * focal: the drawing , seven stems from one drawn zero, the subject's dot lit,
- *   the all-trades average as one dashed rule across the set.
- * width: the large side of a band; it earns it by the column count (see below).
- * terracotta: the subject's dot and figure, and nothing else.
- *
- * WHAT THIS REPLACED, AND WHY IT WAS THE WRONG DRAWING RATHER THAN A REPEATED ONE.
- * Eight hand-rolled horizontal tracks with a dot on each, stacked, carrying no
- * data-idea: the founder's own 2026-09-01 complaint in a single card, and eight
- * of the eleven undeclared drawings on this whole page. A dot ON a rail says
- * "somewhere between these two ends", and the two ends here were never named:
- * the left end was zero and the right end was 1.12 times the largest entry, a
- * ceiling nobody stated and no reader could infer. Height above a drawn zero
- * says "this much", which is the sentence the card is actually making.
- * The reference moved with it. It used to be a vertical tick on its OWN eighth
- * rail under a divider, so a reader had to compare a mark on one rail against
- * dots on seven others; it is one dashed rule across the whole set now, and the
- * four stems above it and three below are the reading. */
-export function Benchmark({ d }: { d: any }) {
-  const b = d.benchmark ?? {};
-  const trades: any[] = (b.trades ?? []).slice().sort((a: any, c: any) => c.keeps_per_100 - a.keeps_per_100);
-  if (!trades.length) return null;
-  const avg: number | null = typeof b.all_trades_avg === "number" ? b.all_trades_avg : null;
-  /* THE ACCENT GOES ON THE SUBJECT, NOT ON THE LEADER, and the form takes an
-     index for it rather than this card drawing its own mark. The leader here is
-     a trade the reader did not come for; the card's answer is where THEIRS
-     lands. With no self row the index falls back to entry one, where the leader
-     is the answer and the form's default is right. */
-  const selfIdx = trades.findIndex((t: any) => !!t.self);
-  const self = selfIdx >= 0 ? trades[selfIdx] : null;
-  /* THE FINDING IS TWO COUNTS, WHICH IS WHAT THE DRAWING SHOWS AND DOES NOT
-     SAY. Every figure in this card is printed exactly once: the seven keeps
-     ride their own dots, the average rides the legend, and this sentence names
-     none of them.
-     THE SECOND CLAUSE EXISTS BECAUSE OF THE PHONE. Below `lg` the set drops to
-     the four columns this card's width can hold at the 12px read floor, and
-     the subject is fifth, so a phone reader sees neither the terracotta dot nor
-     the stem sitting under the dashed rule. The sentence renders at EVERY
-     width and carries both facts in words, which is the escape A6 took when its
-     own tail dropped: the fact a reader loses from the drawing has to be
-     within reach, and here it is one line above it. */
-  const neighbours = trades.length - 1;
-  const beat = self ? trades.filter((t: any) => !t.self && t.keeps_per_100 > self.keeps_per_100).length : 0;
-  const word = (n: number) => COUNT_WORD[n] ?? `${n}`;
-  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-  const vsAvg =
-    self && avg != null
-      ? avg > self.keeps_per_100
-        ? " The atlas average is higher too."
-        : avg < self.keeps_per_100
-          ? " The atlas average is lower."
-          : ""
-      : "";
-  const finding = self
-    ? (beat === 0
-        ? `Nothing next door keeps more.`
-        : `${cap(word(beat))} of the ${word(neighbours)} trades next door ${beat === 1 ? "keeps" : "keep"} more.`) + vsAvg
-    : `${trades[0].name} keeps the most.`;
-  return (
-    <Full>
-      <Box id="kept">
-        <Rail icon="benchmark" kicker="Kept per $100, by trade" verdict={b.verdict} sample />
-        {/* THE HEAD, one baseline carrying two objects: what the ranking is
-            ordered by at the left, what it found at the right.
-            THEY STACK BELOW `lg` RATHER THAN BELOW `sm`, and the breakpoint was
-            measured rather than copied from A7. Side by side they need about
-            560px: the label is 250 and the finding is two sentences. This card
-            has 584 at 1280 and 312 at the two-up md width, so a shared row
-            anywhere below lg squeezes the finding to a column of two-word lines
-            beside a block of capitals. Stacked, the label reads as a column head
-            over the sentence, which is what it is. */}
-        <div className="mb-4 flex flex-col gap-2 border-t border-[var(--c-border)] pt-2 lg:flex-row lg:items-baseline lg:justify-between lg:gap-4">
-          <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)] lg:whitespace-nowrap">Ranked by what the owner keeps</span>
-          <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{finding}</span>
-        </div>
-        <LollipopColumn
-          rows={trades.map((t: any) => ({ name: t.name, value: t.keeps_per_100 }))}
-          format={(n) => `$${n}`}
-          accentIndex={selfIdx >= 0 ? selfIdx : 0}
-          reference={avg != null ? { value: avg } : null}
-          narrowCount={4}
-          ariaLabel={`Trades ranked by what the owner keeps of every $100 of sales, most first${avg != null ? `, against an all-trades average of $${avg}` : ""}`}
-        />
-        {/* THE FOOT, one baseline: the reference's own legend at the left, the
-            disclosure at the right when the seed carries the sentences for it.
-            The legend is where the dashed rule is named, because inside the plot
-            there is nowhere to put it: the tallest stem holds the left edge at
-            every height and the shortest stems crowd the right. */}
-        <div className="mt-4 flex flex-col gap-2 border-t border-[var(--c-border)] pt-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-          {avg != null ? (
-            <span className="inline-flex items-center gap-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
-              {/* THE REFERENCE IS EVERY TRADE IN THE ATLAS, NOT EVERY FOOD TRADE,
-                  and that is why the rule can sit above most of the set without
-                  reading as the average of its own parts. It used to say "incl.
-                  non-food", which is true on a restaurant page and false on every
-                  page that is not about food: rule 21, a section has to hold in
-                  Dhaka and Lagos as well as in London. */}
-              <span aria-hidden className="inline-block w-4 border-t border-dashed border-[var(--c-line-strong)]" />
-              Every trade in the atlas, <Fig className="text-[var(--c-ink2)]">${avg}</Fig>
-            </span>
-          ) : null}
-          {trades.some((t: any) => t.why) ? (
-            <InlineDisclosure name="bench" summary="Why each neighbour keeps what it keeps" className="group">
-              <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
-                {trades.map((t: any) => (
-                  <div key={t.slug} className="grid grid-cols-[110px_1fr] items-baseline gap-3 py-2">
-                    {/* NO FIGURE HERE. It rides its own dot four lines above, and
-                        a card that prints one quantity twice is asking a reader
-                        which of the two to believe. */}
-                    <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.name}</span>
-                    <span className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{t.why}</span>
-                  </div>
-                ))}
-              </div>
-            </InlineDisclosure>
-          ) : null}
-        </div>
-      </Box>
-    </Full>
-  );
-}
-
-/* ============================================================
- * DEMAND , what a customer is worth per visit. The multi-year "demand index" area-line
- * is REMOVED: it was an off-catalog chart stand-in on a faked zero baseline, and its
- * pandemic-recovery arc failed the universality test (false for grocery / pharmacy).
- * The saturation venues-per-10k half stays DELETED (rulebook v1 §5, founder G8: a
- * derived "crowding" score has no statistical basis). What remains is honest and
- * universal: spend per head + visits a year, as plain figures behind a SampleTag.
- * decision: what a diner is worth per visit. Number: spend per head (the terra focal).
- * width: Full (T1); the two figures split the band so nothing floats centered. */
-export function Demand({ d }: { d: any }) {
-  const dm = d.demand ?? {};
-  const hasSpend = typeof dm.spend_per_head_usd === "number";
-  const hasVisits = typeof dm.purchases_per_year === "number";
-  if (!hasSpend && !hasVisits) return null;
-  /* TWO COLUMNS ONLY WHEN THERE ARE TWO FIGURES.
-     The live page supplies the spend figure and nothing else: the visits figure
-     is deliberately omitted upstream for want of an honest source. The band was
-     splitting into two halves regardless, so a reader on a real trade page got
-     one figure sitting in the left half of a full-width band with the right half
-     empty, and a dividing rule drawn down the middle of nothing. */
-  const both = hasSpend && hasVisits;
-  return (
-    <Full>
-      <Box id="spend">
-        <Rail icon="spending-power" kicker="What a customer spends" sample />
-        <div className={`grid gap-5 border-t border-[var(--c-border)] pt-4${both ? " sm:grid-cols-2 sm:divide-x sm:divide-[var(--c-border)]" : ""}`}>
-          {hasSpend ? (
-            <div className={both ? "sm:pr-6" : ""}>
-              {/* THE CARD SAID ONE THING THREE TIMES in a hundred and fifty pixels: the
-                  section is called "What a customer spends", the label under it read
-                  "Spend per head", and the figure carried "per visit". A head and a
-                  visit are the same person on the same occasion.
-                  The label survives only when there are TWO figures side by side and it
-                  is doing column-heading work. On its own the section name already
-                  said it. Notation N8. */}
-              {both ? <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Spend per head</div> : null}
-              <div className="mt-1.5 flex items-baseline gap-2"><CountFig value={dm.spend_per_head_usd} prefix="$" className="text-[length:var(--t-focal)] leading-none text-[var(--terra-text)]" /></div>
-            </div>
-          ) : null}
-          {hasVisits ? (
-            <div className={both ? "sm:pl-6 sm:text-right" : ""}>
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Visits a year</div>
-              {/* the support figure: half the size of the spend focal (rule 16 >=1.6 contrast,
-                  so the single terracotta accent sits on ONE dominant answer, not one of two
-                  equal siblings) and right-aligned so it fills the band's right edge (rule 17). */}
-              <div className="mt-1.5 flex items-baseline gap-2 sm:justify-end"><CountFig value={dm.purchases_per_year} className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">per diner</span></div>
-            </div>
-          ) : null}
-        </div>
-        {dm.demand_note ? (
-          <InlineDisclosure name="demand-why" summary="What moves demand">
-            <p className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{dm.demand_note}</p>
-          </InlineDisclosure>
-        ) : null}
-      </Box>
-    </Full>
-  );
-}
-
-/* ============================================================
- * WHAT THE DOOR COSTS (queue row C6) , the trades next door, ranked by the price
- * of getting in. A STANDING, six rows, cheapest first.
- * decision: whether paying more for the door buys a better business.
- * focal: the standing; the cheapest door carries the form's one accent.
- * width: the small side of a 2-3 band. terracotta: entry one only.
- *
- * WHAT THIS CARD GAVE UP, AND WHY IT HAD TO. It printed the SAME SIX TRADES'
- * KEEPS as the benchmark card one chapter above, in percent where that card
- * prints dollars: 12.0% here and $12 there, 10.0% and $10, 9.0% and $9, down to
- * 6.0% and $6. The adapter says so in its own comment, that one seed ships one
- * array twice. Six trade names printed twice and six keep figures printed twice
- * is the founder's "one quantity, one statement" broken six times over, and
- * restyling both cards would have left it exactly where it was.
- *
- * THE BENCHMARK CARD EARNS THE KEEP, on three counts and not on seniority. It
- * DRAWS the figure, as height above a zero, where this card only printed it. It
- * carries the reader's OWN trade in the set, which is the whole reason a keep
- * is worth ranking, and this card never could: its rows are the neighbours
- * only. And it carries the atlas average as a drawn reference, so a reader
- * learns whether $7 is normal. Nothing here could be given up to make room for
- * any of that.
- *
- * WHAT THIS CARD UNIQUELY HOLDS IS THE COST OF THE DOOR, and it is the only
- * place in the atlas a reader sees six of them side by side: $81K to $351K, a
- * four-fold spread inside one sector. Each neighbour's own page states its own
- * cost; not one of them states the spread.
- * The reading that needs BOTH quantities survives as a computed sentence rather
- * than as a second column of figures: in this sector the dearest door keeps
- * LESS, not more, which is the opposite of what a reader expects and is the one
- * thing neither card could say alone.
- *
- * Reads the derived subtype shape (capital_usd) via deriveSubtypes. The keeps
- * are still read, and only to decide which way that sentence runs. */
-export function SubtypeDrill({ d }: { d: any }) {
-  /* CHEAPEST FIRST, which is rule 29A satisfied by the ORDER rather than by an
-     inversion, exactly as A6 and A7 did for a rent. A cost is a burden, the
-     form's one accent lands on entry one, and entry one is therefore the good
-     end. A door with no price is dropped rather than drawn at zero. */
-  const items = deriveSubtypes(d)
-    .filter((s) => Number.isFinite(s.capital_usd) && s.capital_usd > 0)
-    .slice()
-    .sort((a, b) => a.capital_usd - b.capital_usd);
-  /* A RANKING OF ONE IS NOT A RANKING, and the form refuses it anyway. */
-  if (items.length < 2) return null;
-  const cheapest = items[0];
-  const dearest = items[items.length - 1];
-  const ratio = dearest.capital_usd / cheapest.capital_usd;
-  /* THE ANSWER IS THE ONE THING NEITHER CARD COULD SAY ALONE, and it is a
-     COMPARISON rather than a figure: the keeps themselves are printed once, one
-     chapter above, in dollars. It is COMPUTED, never typed, for the reason A9
-     gives for its own finding one card up: the same six rows render on all 23
-     food-and-drink pages, so a sentence asserting a direction has to be read off
-     the data or it is a claim about a page nobody checked.
-     A WORD IS NOT A QUANTITY, so this takes the section rung and never focal
-     (step 5, and A1's own answerKind="words" for the standing it shares). */
-  const answer =
-    dearest.keeps_pct < cheapest.keeps_pct
-      ? "The dearest door keeps less than the cheapest."
-      : dearest.keeps_pct > cheapest.keeps_pct
-        ? "The dearest door keeps more than the cheapest."
-        : "The dearest door keeps the same as the cheapest.";
-  /* Under 1.15 the spread is not a finding and the note says so rather than
-     dressing a rounding as a range. */
-  const spread =
-    ratio >= 1.15
-      ? `It costs ${ratio.toFixed(1)} times as much to open.`
-      : `Every door here costs about the same to open.`;
-  const note: string | undefined = d?.subtypes?.note;
-  return (
-    <Full>
-      <Box id="neighbours">
-        <Rail icon="subtype" kicker="What the door costs, trades next door" sample />
-        {/* A1'S COMPOSITION, NOT A9'S, AND THE PHOTOGRAPH IS WHY. The first
-            build of this card wore the benchmark card's head row, a micro-caps
-            label at the left and the finding at the right, because that card is
-            one chapter up and sharing its grammar looked like step 9's
-            predictability. Photographed at 1280 it was six rows of body type
-            under two lines of body type: NOTHING in the card was larger than
-            14px, so there was no first thing to see and no ratio to state.
-            That escape belongs to a card with a DRAWING (A6, A7, A9, A10 all
-            declare drawing-to-type), and a standing draws nothing at all, which
-            the catalogue says in as many words. A1 settled the shape for this
-            form: the answer at the section rung, its note under it, then the
-            standing. */}
-        <div className="text-[length:var(--t-section)] font-semibold leading-snug text-[var(--c-ink)]">{answer}</div>
-        {/* THE ORDERING CLAUSE IS GONE, C22. It read "Ranked by what it costs to
-            open one, cheapest first", which the standing states in its own rank
-            numerals and its ascending money column, and which the rail states in
-            its name. B7's rule, applied here: a clause whose value the evidence
-            already carries is dropped. What is left is the one thing neither the
-            answer nor the standing says, the size of the spread, and with the
-            answer directly above it the "it" is the dearest door. */}
-        <div className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{spread}</div>
-        <div className="mt-4">
-          <RankedTiles
-            rows={items.map((s) => ({ name: s.name, value: money(s.capital_usd) }))}
-            ariaLabel="Trades next door, ranked by what it costs to open one, cheapest first"
-          />
-        </div>
-        {/* THE NOTE HAS NEVER REACHED A READER. The adapter has owned this
-            string since 2026-08-18, calls it "the one string this module owns"
-            and wrote it precisely to say that these rows are peer trades rather
-            than formats inside this one; the card it was written for never
-            rendered it. It carries the second half too, which is the half this
-            card now depends on entirely: the cost is a modeled archetype for a
-            baseline economy, not a quote for any one place. */}
-        {note ? (
-          <p className="mt-4 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{note}</p>
-        ) : null}
-      </Box>
-    </Full>
-  );
-}
 
 /* ============================================================
  * MONEY SPLIT , where each $100 goes, the ONE carrier of the fixed/variable split.
@@ -600,60 +280,6 @@ function Ramp({ d }: { d: any }) {
   );
 }
 
-/* OPERATOR , what a typical owner walks away with (a DIFFERENT cut from the hero
- * margin ladder: durability + exit, not the gross->net collapse restated).
- * decision: what a typical owner actually sees. Numbers: the three facts (capital,
- *   survival, sale multiple) promoted to the card's figures; the owner-keeps lockup is
- *   GONE (it was the hero number's 5th appearance). Verdict line above, seed note below.
- * On real-data promotion the sale-multiple fact OMITS (no honest source); each held
- * fact is guarded so the strip never prints "x undefined" or a bare "%".
- * width: WideRail (T2) chart half. terracotta: none; the facts read in ink. */
-export function Operator({ d }: { d: any }) {
-  const o = d.operator ?? {};
-  const facts: Array<[string, string]> = [];
-  if (typeof o.capital_to_open_usd === "number") facts.push([money(o.capital_to_open_usd), "to open"]);
-  /* THE ONE-YEAR SURVIVAL FIGURE IS NOT SHOWN HERE ANY MORE, because this page
-     already printed it twice and drew it a third time. It reads as "89% survive
-     yr 1" on this scorecard, as the refutation of "most fail within a year" in
-     the myths card, and as the first point of the five-year curve. Three sections
-     of one page carrying one number, and the scorecard is the only one of the
-     three that does nothing with it: the myths card uses it to break a claim, and
-     the curve needs it to have a curve at all.
-     NOTHING TAKES ITS PLACE, and that was checked rather than assumed. The
-     adapter also carries what the owner keeps, which the page prints in the myths
-     card, in the close, and in the hundred-dollar split; and the five-year figure
-     is already the label on the curve. Every candidate neighbour was itself a
-     repeat, so a second fact here would only move the duplication rather than end
-     it. The card states the one thing on it that appears nowhere else. */
-  void o.survival_1yr_pct;
-  if (typeof o.sale_multiple_low === "number" && typeof o.sale_multiple_high === "number") {
-    facts.push([`x${o.sale_multiple_low}-${o.sale_multiple_high}`, "profit at sale"]);
-  }
-  // Nothing honest to show: no support fact survives.
-  if (facts.length === 0) return null;
-  const factCols = facts.length >= 3 ? "grid-cols-3" : facts.length === 2 ? "grid-cols-2" : "grid-cols-1";
-  return (
-    <Box id="open" {...(facts.length === 1 ? { "data-lean": "1" } : {})}>
-      {/* THE CARD IS NAMED FOR WHAT IT SHOWS. It was called "The typical operator",
-          which promises a portrait of a person, and after the duplicate survival
-          figure came off it holds one number and that number describes the venture,
-          not the owner: what it takes to open one.
-          It was also repeating, word for word, the eyebrow of the movement it sits
-          inside. A chapter opener and the first card under it saying the same three
-          words is a reader being told twice where they are. */}
-      <Rail icon="worked-example" kicker="What it takes to open" verdict={o.verdict} sample />
-      <div className={`grid ${factCols} divide-x divide-[var(--c-border)] border-t border-[var(--c-border)] pt-3`}>
-        {/* A SCORECARD OF ONE IS NOT A SCORECARD, IT IS AN ANSWER. Three facts side by
-            side share a size because they are peers being compared. When only one
-            survives, that size makes the card look like a scorecard with two cells
-            missing, so the single fact takes answer size and the card reads as what
-            it now is: one figure and what it means. */}
-        {facts.map(([val, l]) => <div key={l} className="px-3 first:pl-0 last:pr-0"><Fig className={`${facts.length === 1 ? "text-[length:var(--t-focal)] leading-none" : "text-[length:var(--t-head)]"} text-[var(--c-ink)]`}>{val}</Fig><div className="mt-0.5 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]">{l}</div></div>)}
-      </div>
-    </Box>
-  );
-}
-
 /* CAPITAL PAYBACK , how long the fit-out takes to return + the gearing depth (Pro-ish).
  * decision: when does the cash come back, and what does debt do to it. Number: payback months.
  * Needs a single-place take-home + an authored gearing model, neither of which exists at
@@ -684,29 +310,6 @@ function CapitalPayback({ d }: { d: any }) {
           {p.gearing_note ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{p.gearing_note}</p> : null}
         </InlineDisclosure>
       ) : null}
-    </Box>
-  );
-}
-
-/* SURVIVAL , how many last, as a decay CURVE on a zero baseline.
- * decision: how durable is the trade. Number: the share still open at yr 5.
- * The curve derives from the REAL seed fields (survival.yr1/yr3/yr5 pcts); the 100% at
- * open is definitional, nothing is invented. Skips any year the seed does not carry.
- * focal: the falling curve. width: Even (T3), paired with who-it-suits.
- * terracotta: the curve line + its end dot. idiom: drawn curve (1 of 2, with SeasonRibbon). */
-export function Survival({ d }: { d: any }) {
-  const s = d.survival ?? {};
-  const curve: Array<{ yr: number; pct: number }> = [
-    { yr: 0, pct: 100 },
-    ...([[1, s.yr1_pct], [3, s.yr3_pct], [5, s.yr5_pct]] as Array<[number, unknown]>)
-      .filter((e): e is [number, number] => typeof e[1] === "number")
-      .map(([yr, pct]) => ({ yr, pct })),
-  ];
-  if (curve.length < 2) return null;
-  return (
-    <Box id="survival" className="flex flex-col">
-      <Rail icon="trend" kicker="Five-year survival" verdict={s.verdict} />
-      <SurvivalCurve curve={curve} />
     </Box>
   );
 }
@@ -944,104 +547,128 @@ export function Close({ d }: { d: any }) {
  * The industry spine page body. `data` defaults to the bundled illustrative seed so
  * the dev route (page.tsx) renders it unchanged; the live route passes the real-data
  * seed from buildSpineIndustrySeed. Every card null-guards its own data, so an omitted
- * field renders nothing while the full seed is byte-identical to the pre-split page.
+ * field renders nothing.
  */
 export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } = {}) {
   const d = data ?? spineIndustrySeed;
 
-  // Chapter-presence reads (mirror each card's own null-guard) so a Movement header
-  // never floats over an empty chapter, and a half-omitted WideRail pair degrades to
-  // the survivor at Full width (never a blank half-row), the way Demand already does.
-  const dm = d.demand ?? {};
-  const hasDemand = ["spend_per_head_usd", "purchases_per_year"].some((k) => typeof dm[k] === "number");
-  const hasBenchmark = (d.benchmark?.trades ?? []).length > 0;
-  const subCount = deriveSubtypes(d).length;
+  /* WHO IS HOME, ASKED ONCE (the trade view's idiom): the three opening
+     builders over the taxonomy id the adapter carries (`meta.id`, the id the
+     shard is filed under), so a band is drawn when its cards exist and a
+     heading never sits over nothing. The take builds for every trade in the
+     taxonomy (the one net builder resolves 243 of 243); the survival triple
+     and the sector set build for every trade holding a shard, so the band
+     `01 | 02` holds two children or does not draw. */
+  const industryId: string | undefined = typeof d.meta?.id === "string" ? d.meta.id : typeof d.meta?.industry === "string" ? d.meta.industry : undefined;
+  const hero = industryHeroFacts(industryId);
+  const lasts = buildLasts(industryId, "world");
+  const benchmark = buildBenchmark(industryId);
+
+  // Chapter-presence reads for today's survivors (each mirrors its card's own
+  // null-guard) so a Movement header never floats over an empty chapter.
   const hasMoneySplit = (d.money_split?.items ?? []).length > 0;
   const hasBreakEven = typeof d.cost_structure?.breakeven_utilization_pct === "number";
   const hasRamp = breakevenWeekFor(d) != null;
-  const o = d.operator ?? {};
-  const hasOperator = typeof o.capital_to_open_usd === "number" || typeof o.survival_1yr_pct === "number" || (typeof o.sale_multiple_low === "number" && typeof o.sale_multiple_high === "number");
   const hasPayback = typeof d.payback?.payback_months === "number";
-  const hasSurvival = [d.survival?.yr1_pct, d.survival?.yr3_pct, d.survival?.yr5_pct].some((v) => typeof v === "number");
   const hasWhoSuits = (d.who_suits?.suits ?? []).length > 0 || (d.who_suits?.think_twice ?? []).length > 0;
-  // Mirrors WherePaysExplorer's own guard: the list now carries rent-load facts only
+  // Mirrors WherePaysExplorer's own guard: the list carries rent-load facts only
   // (founder D3, 2026-07-11), so a place without rent_load_pct contributes nothing.
   const hasWherePays = (d.where_pays?.places ?? []).some((p: any) => typeof p?.rent_load_pct === "number");
   const hasSeasonality = (d.seasonality?.months ?? []).length >= 2;
-  const hasCaveats = (d.caveats?.myths ?? []).length > 0 || !!d.caveats?.honest_take;
+  // Mirrors Caveats' own guard: the margin claim off the margins file, the myths, the honest take.
+  const hasCaveats = (d.caveats?.myths ?? []).length > 0 || !!d.caveats?.honest_take || (typeof d.margins?.gross_pct === "number" && typeof d.margins?.net_pct === "number");
+  /* The turns, by whether a card stands under each. */
+  const turnOne = hasMoneySplit || hasRamp || hasBreakEven || hasPayback;
+  const turnTwo = hasWherePays;
+  const turnThree = hasWhoSuits || hasCaveats || hasSeasonality;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-      {/* THE HERO, one of the two chrome bands that may run full width (art
-          direction D1). Everything below it divides. */}
-      <Band hero><Masthead d={d} /></Band>
-
-      {/* SEVEN CHAPTERS BECOME FOUR, AND NOT ONE SECTION WAS CUT. Measured
-          2026-08-25 at 1440, seven of this page's ten sections took the full
-          column, and the cause was the same on every one: a chapter holding a
-          single section has nothing to pair with, so it takes the width by
-          default. Four of these seven chapters held exactly one. The headings
-          consolidate; the content stays.
-
-          No band repeats the split of the band before it (D3), and the split
-          follows the content (D4): the seven-row leaderboard takes the large side
-          of its band, the one-figure spend read takes the small one. */}
-      {hasBenchmark || hasDemand ? <>
-        <Movement index="01" eyebrow="Against the neighbours" heading="Against the trades next door" icon="benchmark" />
-        <Band split="3-2">
-          {hasBenchmark ? <Benchmark d={d} /> : null}
-          {hasDemand ? <Demand d={d} /> : null}
+      {/* `00 take`, FULL WIDTH, the page's only 40 (8.7, loud one): the answer
+          card draws its own hero band, the attribute the full-width gate reads. */}
+      <Masthead facts={hero} />
+      {/* `01 lasts | 02 benchmark`, the opening's one band (8.7): do they
+          survive, and is that keep high or low. The survival grid LEFT, the
+          bars RIGHT (fill-bar one of three, RIGHT, so it never shares a column
+          with `03`, M10), both quiet. RULED BY MEASUREMENT 2026-09-18 (8.4 rule
+          1, the closed set; the dispatch's report carries the numbers at three
+          widths on restaurants, a two-member sector and a fill shard): see the
+          split below. `stack="lg"` because at a tablet's equal halves the
+          five bars stand past the three-cell grid. */}
+      {lasts && benchmark ? (
+        <Band split="1-2" stack="lg">
+          <LastsCard lasts={lasts} />
+          <BenchmarkCard benchmark={benchmark} />
         </Band>
-      </> : null}
+      ) : null}
 
-      {subCount > 0 || hasMoneySplit || hasBreakEven ? <>
-        <Movement index="02" eyebrow="How the money works" heading="What a door costs, and where the money goes" icon="unit-economics" />
-        {/* 2-1 TO 2-3, AND BOTH CARDS GAIN, WHICH IS THE STRONGEST KIND OF WIDTH
-            ARGUMENT. C6 turned the first card into a STANDING, and A1 measured
-            what a standing does past roughly 500px: the name sits at one edge and
-            the figure at the other and the rows read as pairs marooned across a
-            gap. At 693 this one put 386px between "Pizzerias" and its price. The
-            money split beside it is a stacked bar, and a bar wants every pixel of
-            width it can get. So the standing takes 416 and the bar takes 624.
-            D3 pins the choice rather than leaving it to taste: the band above is
-            3-2 and the band below is 1-2, so of the five legal splits only 1-1,
-            2-1 and 2-3 remain, and 1-1 leaves the standing at 520 where A1's
-            stranding is worse, not better. */}
-        <Band split="2-3">
-          {subCount > 0 ? <SubtypeDrill d={d} /> : null}
-          {hasMoneySplit ? <MoneySplit d={d} /> : null}
-        </Band>
-        {hasBreakEven || hasRamp ? (
-          <Band split="1-2">
-            {hasBreakEven ? <BreakEven d={d} /> : null}
-            {hasRamp ? <Ramp d={d} /> : null}
-          </Band>
-        ) : null}
-      </> : null}
+      {/* CHAPTER TURN ONE (8.7, "What it costs to open, and what it keeps", the
+          spine's own string: 8.7's chapter-turns paragraph leaves the industry
+          strings to the composition round and names no winner, and M7 bound
+          the trade page alone; the controller may rule the site's words in):
+          the kit's Movement, the muted index and one plain heading. */}
+      {turnOne ? (
+        <>
+          <Movement index="01" heading={COPY.industryChapters.costs} />
+          {/* `03 split | 04 open`: the $100 stack (03's seat until its dispatch)
+              beside the break-even week (04's months cell; never fed on the live
+              route, so the split stands alone under the lone-card finding the
+              laws list already records). */}
+          {hasMoneySplit || hasRamp ? (
+            <Band split="3-2">
+              {hasMoneySplit ? <MoneySplit d={d} /> : null}
+              {hasRamp ? <Ramp d={d} /> : null}
+            </Band>
+          ) : null}
+          {/* `05 pays`: the day share and the payback, the bento's two metric
+              cells until its dispatch; neither is fed on the live route. */}
+          {hasBreakEven || hasPayback ? (
+            <Band split="1-2">
+              {hasBreakEven ? <BreakEven d={d} /> : null}
+              {hasPayback ? <CapitalPayback d={d} /> : null}
+            </Band>
+          ) : null}
+        </>
+      ) : null}
 
-      {hasOperator || hasPayback || hasSurvival || hasWhoSuits ? <>
-        <Movement index="03" eyebrow="The typical operator" heading="The owner's take, and the odds" icon="who-for" />
-        <Band split="2-3">
-          {hasOperator ? <Operator d={d} /> : null}
-          {hasPayback ? <CapitalPayback d={d} /> : null}
-        </Band>
-        <Band>
-          {hasSurvival ? <Survival d={d} /> : null}
-          {hasWhoSuits ? <WhoItSuits d={d} /> : null}
-        </Band>
-      </> : null}
+      {/* CHAPTER TURN TWO (8.7, "Where it pays, and what to sell"): `06 places`,
+          the one table, full width at its dispatch; the explorer that holds
+          its seat has never drawn on the live route, so the heading waits. */}
+      {turnTwo ? (
+        <>
+          <Movement index="02" heading={COPY.industryChapters.where} />
+          <WherePaysExplorer d={d} />
+        </>
+      ) : null}
 
-      {hasWherePays || hasSeasonality || hasCaveats ? <>
-        <Movement index="04" heading="The place, and the year" icon="where-it-pays" />
-        <WherePaysExplorer d={d} />
-        <Band split="2-1">
-          {hasCaveats ? <Caveats d={d} /> : null}
-          {hasSeasonality ? <Seasonality d={d} /> : null}
-        </Band>
-      </> : null}
+      {/* CHAPTER TURN THREE (8.7, "What the trade is like"): `09 know`, held by
+          its two halves side by side until that dispatch merges them on
+          NoteList (who it suits, what people get wrong), and `10 field`'s
+          swing (the ribbon, never fed on the live route). The heading draws
+          when a card stands under it. `stack="lg"` on the pair, MEASURED
+          2026-09-18 (8.4's tablet rule): at a tablet's equal halves the suits'
+          two bullet columns wrap to 316 and the caveats stretch to them with a
+          291 by 156 blank; stacked, each stands at its own height, and at 1280
+          the pair holds 0 holes at 1-1. */}
+      {turnThree ? (
+        <>
+          <Movement index="03" heading={COPY.industryChapters.trade} />
+          {hasWhoSuits || hasCaveats ? (
+            <Band split="1-1" stack="lg">
+              {hasWhoSuits ? <WhoItSuits d={d} /> : null}
+              {hasCaveats ? <Caveats d={d} /> : null}
+            </Band>
+          ) : null}
+          {hasSeasonality ? (
+            <Band split="2-1">
+              <Seasonality d={d} />
+            </Band>
+          ) : null}
+        </>
+      ) : null}
 
-      {/* THE TERMINUS, the second and last chrome band (D1). */}
-      <Movement index="05" heading="The next move" icon="bookmark" />
+      {/* THE EXIT (no chapter break, 8.7): `11 close`, FULL WIDTH on the hero
+          band until its dispatch seats it on Terminus. */}
       <Band hero><Close d={d} /></Band>
     </main>
   );

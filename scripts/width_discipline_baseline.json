@@ -1,8 +1,8 @@
 {
   "total": {
-    "remCaps": 225,
+    "remCaps": 224,
     "chCaps": 28,
-    "smPairings": 52
+    "smPairings": 51
   },
   "byFile": {
     "src/app/(site)/about-data/page.tsx": {
@@ -555,11 +555,6 @@
       "chCaps": 1,
       "smPairings": 0
     },
-    "src/components/spine/cell/cell-view.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
-      "smPairings": 0
-    },
     "src/components/spine/country/country-view.tsx": {
       "remCaps": 0,
       "chCaps": 1,
@@ -588,7 +583,7 @@
     "src/components/spine/industry/industry-view.tsx": {
       "remCaps": 0,
       "chCaps": 0,
-      "smPairings": 2
+      "smPairings": 1
     },
     "src/components/spine/kit-index.tsx": {
       "remCaps": 1,
