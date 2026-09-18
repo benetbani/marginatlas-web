@@ -88,12 +88,21 @@
  * swing cell), and the adapter's `risks` and `seasonality` blocks that fed
  * the last two.
  *
- * WHAT STAYS MOUNTED UNTIL ITS OWN DISPATCH, each of today's cards in the
- * seat of the 8.6 block that absorbs it (SPINE.md PART A's inventory), and
- * retiring nothing a later block absorbs:
- *   related (Related)       -> `13 rivals`, MarkList; self-omits on the live
- *                              route today
- *   close (Close)           -> `15 close`, Terminus
+ * WHAT THE SIXTH AND LAST DISPATCH BUILT (2026-09-18): the exit, on
+ * exit.tsx. The band `13 rivals | 14 worth`: other trades to open on
+ * MarkList with no marks, every row a door to the sibling trade's page here
+ * (rivals_rows.ts: the siblings the adapter now resolves through
+ * related_links.ts, the archetype's cost to open by key, a sibling on the
+ * default withheld with the count; under four with a figure the structure
+ * and the stated line, never a short list), beside what one sells for on
+ * RangeStrip with two marks (worth_rows.ts: the shard's sale figures times
+ * the take-home `00` prints, in currency; the stated line off `moneyShown`
+ * and on the 38 operating-earnings shards); then `15 close` on Terminus,
+ * three doors and the pill last (close_rows.ts buildTradeCloseDoors: the
+ * industry page, the place's own page, the compare pill). WHAT IT RETIRED:
+ * the Related links (`d.related`, never fed on the live route) and the old
+ * Close below this header (the sibling door, the pricing pill), so nothing
+ * of the old body remains mounted; the page draws 8.6's sixteen blocks.
  *
  * THE THIRD CHAPTER BREAK draws when a card stands under it (the city
  * view's own rule for its turn three): `12 market` builds on every trade
@@ -103,44 +112,32 @@
  * fault the old body already guarded against. Turns one and two always
  * hold a card on a resolving cell.
  *
- * (The paragraph below is the old header, kept for the chart dictionary it
- * carries of the cards still mounted; the counted bars and free forms it
- * names retire card by card with the dispatches above.)
+ * THE OLD HEADER'S CHART DICTIONARY LEFT WITH ITS LAST CARD (the sixth
+ * dispatch): the counted bars and free forms it named (the PhaseBar, the
+ * WhoSuits tier band, the LollipopColumn, the masthead's strip) retired
+ * card by card across the six dispatches above, and the bar ledger is
+ * 8.6's (M10): `04` held, `05`, `10`; the two strips `01` and `14` are the
+ * dot family. The as-built order, the loud moments and the counts are the
+ * model's rows, not this file's.
  *
- * Cell page (a trade in a place) , SPINE rebuild, publish-ready flagship. Leg 3 and
- * the pattern-setter for the other four page types. The locked content-map order
- * re-presented to the shared spine kit, taken to the masterplan's publish bar:
- * answer-first hero, one dominant decision figure, progressive disclosure creating
- * the free/Pro seam, honest baselines, rationed terracotta, count-up + hover motion.
- *
- * As-built chart dictionary (rulebook 25 bar budget: max 3 bar-family graphics per
- * page, no two adjacent sections sharing the bar form). The THREE counted bars:
- *   BAR 3 , PhaseBar (two-anchor open/break-even time axis): Ramp x1 (ch4)
- *   (BAR 2, the ShareStack of the Demand channels, left on the fifth dispatch)
- * FREE forms carry the rest of the variety (no budget cost):
- *   big figure at hero scale: masthead $43K (the ONE hero; the control-room trio
- *      restates it at sub-hero support scale by design, the seam's summary)
- *   discrete tier band (categorical Low/Mid/High pips, active inked): WhoSuits x1 (ch1)
- *   lollipop on a drawn track (thin, marker family, not a fill bar): CostToOpen line items x1
- *   (the SurvivalSlope, the ClearanceRing and the Nearby table left on the
- *      fourth dispatch; the dayparts donut, the catchment list and the
- *      Seasonality columns on the fifth, above)
- *   spread strip: masthead turnover p10/p50/p90 x1
- * REMOVED forms: Gauge, 3-pip meters, Dots, invented-ceiling break-even fill bar, the
- *   3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area,
- *   the Related keep-% lollipops, the catchment IndexBars, the Nearby in-cell CellScaleBars;
- *   the WhoSuits continuous-track Meters (-> discrete categorical tier band, 2026-07-12).
- * Every modeled/placeholder figure block carries a visible SampleTag (rulebook 4A);
- * the masthead states provenance once as the page-level tag.
- * Width tiers per WI-4; the money chapter is weighted heaviest (control room + wide reads).
+ * THE SAMPLE MARK'S WIRING, said once for the render group: every card on
+ * this page whose figures are modelled passes `sample` to the kit's `Rail`
+ * (or `tagged` to MarkList, `sample` to BentoMetric), and the kit draws
+ * `SampleTag` there, behind his switch (MODEL.md, THE SAMPLE MARK IS BEHIND
+ * ONE SWITCH); the sample-tags gate reads this group for that name, and the
+ * mechanism it names is the one every card here uses.
  */
 import * as React from "react";
 import { spineCellSeed } from "@/lib/spine-seeds";
-import { Fig, Box, Rail, Movement, usd, Band } from "@/components/spine/kit";
+import { Box, Rail, Movement, usd, Band } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "./turn-one";
 import { ClearsCard, LastsCard, WatchSeat, MixCard } from "./turn-two";
 import { MarketBand } from "./market";
+import { RivalsCard, WorthCard, CloseCard } from "./exit";
+import { buildRivals } from "@/lib/spine/rivals_rows";
+import { buildWorth } from "@/lib/spine/worth_rows";
+import { buildTradeCloseDoors } from "@/lib/spine/close_rows";
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { buildSplit } from "@/lib/spine/split_rows";
@@ -157,8 +154,6 @@ import { buildSuits } from "@/lib/spine/suits_rows";
 import { COPY } from "@/lib/spine/copy";
 
 const X: any = spineCellSeed;
-
-const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
 
 /* The .celltop terracotta top-edge hover motif is DELETED (rulebook v1 section 37,
  * founder G3, 2026-07-11): the accent never appears on hover. The quiet grey .hov
@@ -230,153 +225,13 @@ function Suits({ d }: { d: any }) {
   );
 }
 
-/* ================= CH5 , PLACE AND RIVALS ================= */
-/* The Myth card, its folklore constants and the SurvivalSlope stood here
- * until plan step 33's fourth dispatch (2026-09-18): the London file's
- * survival triple drawn as a descending line with "9 in 10 fail" struck
- * across it. Survival is a series on the metric row, quiet, fed by the 243
- * shards, with no slope and no myth sentence (R5, PART 9 clause 40); it is
- * `09 lasts` on turn-two.tsx now, off lasts_rows.ts. */
-
-/* Related , rulebook v1 sections 5, 15 and 32 (founder G6/G7/G9, 2026-07-11): the
- * per-trade keep-% lollipop ranking and its computed "every neighbouring trade
- * keeps more" footer are DELETED , net margin by trade in a specific city is
- * structurally unknowable, and the cross-entity verdict footer is a banned copy
- * pattern. Related is now plain sibling links (the Close link-row form): name +
- * what one costs to open, a knowable entry figure (the seed carries the modeled
- * startup-capital anchor per trade). A sibling with no cost figure renders the
- * name alone , nothing is ever faked. The seed list is hospitality-adjacent,
- * cafe first; dental never surfaces on a restaurant page.
- * width: Even half. terracotta target: none (links are chrome). */
-function Related({ d }: { d: any }) {
-  const arr: any[] = d.related ?? [];
-  if (arr.length === 0) return null; // omitted on promotion: no sibling-cell links
-  /* THE PLACE COMES FROM THE DATUM. Every row here was hardcoded to
-     `/gb/london/${r.slug}` under a heading that reads "Related trades in this
-     place", so the heading and the href disagreed for every place that is not
-     London.
-
-     It has never reached a reader: adapt_cell leaves `related` undefined on the
-     public route ("keep-% column has no honest per-sibling source"), so the
-     guard above returns null and these links render only in the /dev sandbox,
-     where the London seed makes them correct by accident.
-
-     That accident is the problem. The day anyone gives `related` a source, this
-     section starts sending readers from Madrid and Sydney to London, and the
-     heading tells them they are still in their own city. Deriving the prefix
-     from d.meta is identical for the seed (GB + london) and correct for
-     everything else. No meta means no href, so a row renders as text rather
-     than as somewhere else's page. */
-  const iso2: string | undefined = d.meta?.iso2;
-  const geo: string | undefined = d.meta?.geo;
-  const placePrefix =
-    iso2 && geo ? `/${String(iso2).toLowerCase()}/${String(geo).toLowerCase()}` : null;
-  return (
-    <Box data-block="related" className="md:flex-[3]">
-      {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
-      <Rail icon="subtype" kicker="Related trades in this place" sample />
-      {/* the explanatory subtitle is DELETED (rulebook 14: most subtitles should not
-          exist); the cost figure's unit is a direct column label, never a sentence (rule 26). */}
-      <div className="mb-2 flex items-baseline justify-between border-b border-[var(--c-border)] pb-1.5">
-        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Trade</span>
-        <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">To open</span>
-      </div>
-      <div className="space-y-1">
-        {arr.map((r) => (
-          <a key={r.slug} href={placePrefix ? `${placePrefix}/${r.slug}` : undefined} className="hov -mx-2 flex items-baseline justify-between gap-3 rounded-md px-2 py-1.5">
-            <span className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{r.name} &#8594;</span>
-            {typeof r.cost_to_open_usd === "number" ? (
-              <Fig className="shrink-0 text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{money(r.cost_to_open_usd)}</Fig>
-            ) : null}
-          </a>
-        ))}
-      </div>
-    </Box>
-  );
-}
-
-/* Close , the deliberate full-width end of the page. The recap PARAPHRASES the verdict
- * (an echo, never a verbatim copy of the hero or the break-in line), one ink CTA, and
- * ink next-step links (navigation is chrome; the accent never sits on chrome).
- * The "format by format" door left with the format picker (plan step 33's third
- * dispatch, 2026-09-18): there is no format read on the page to point at. */
-function Close({ d }: { d: any }) {
-  const rel: any[] = d.related ?? [];
-  const city = d.meta?.city ?? "this market";
-  /* The same hardcoded London as Related above, in the same file, one function
-     down. This one is louder: the row it builds reads "Look at X in {city}
-     instead", so the label named the reader's own city while the href went to
-     London. Derived from the datum, and null when the datum cannot say, in
-     which case the row renders without a link rather than with a wrong one. */
-  const iso2: string | undefined = d.meta?.iso2;
-  const geo: string | undefined = d.meta?.geo;
-  const placePrefix =
-    iso2 && geo ? `/${String(iso2).toLowerCase()}/${String(geo).toLowerCase()}` : null;
-  const trade = (d.meta?.trade ?? "this trade").toLowerCase();
-  // Every link carries a REAL destination or renders as a plain span with no arrow
-  // (no fake affordance): the trade-across-markets read lives on the industry page,
-  // and the sibling-trade cell rides its seed slug.
-  const links: Array<{ t: string; href?: string }> = [
-    /* THE DESTINATION NOW MATCHES THE PROMISE. This row said "compare X across
-       nearby markets" and went to the industries INDEX, a directory of trades,
-       not a comparison of anywhere. The page it describes exists and this cell
-       knows its own slug, so the link goes there. It falls back to the index only
-       when the slug is missing, which is a real directory rather than a wrong one.
-       AND IT NO LONGER STARTS WITH "COMPARE". The only other action in this
-       section is "Compare this trade with Pro", so a reader met two doors whose
-       first word was identical and had to read to the end of both to tell them
-       apart. This one names where it goes. */
-    { t: `See ${trade} in other cities`, href: d.meta?.industry ? `/industries/${d.meta.industry}` : "/industries" },
-    ...(rel[0]
-      ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug && placePrefix ? `${placePrefix}/${rel[0].slug}` : undefined }]
-      : []),
-  ];
-  return (
-    <Box id="close">
-      <div>
-        <div className="max-w-2xl">
-          {/* the asserted "bottom line" verdict paragraph and the forward "where the same
-              work keeps more" line are BOTH deleted (rulebook 15/19: a section's data shows
-              the conclusion, the copy never asserts it). This is a navigation terminus: the
-              label points at the next steps below, it states no finding. */}
-          <h3 data-typography="custom" className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">Where to next</h3>
-        </div>
-      </div>
-      {/* THE DOORS SIT IN ONE ROW AND THE ROW HAS AS MANY COLUMNS AS IT HAS DOORS.
-          Two faults, one shape. The row was fixed at three columns and this page
-          resolves ONE link, so two thirds of it were empty. And the paid door was
-          pinned to the far right of a header whose only other content was a
-          nine-word label in micro caps, which left a dead band across the middle
-          of a full-width card. Photographed at 1280: 1072 by 137, and most of it
-          nothing.
-          The paid door now sits with the others as the last item, which is what it
-          is, and the column count follows the number of doors, so the row is full
-          at one door or at four. */}
-      {/* A ROW THAT DISTRIBUTES, RATHER THAN COLUMNS THAT ARE COUNTED.
-          The first attempt at this picked a column count from the number of doors,
-          which meant writing three different breakpoint layouts where there had
-          been one, and the width gate refused it: this repo already carries
-          fifty-odd grids whose second layout is pitched at a width no phone
-          reaches and it will not take more. The gate was right, and the rewrite is
-          better than what it rejected. A distributing row needs no arithmetic at
-          all: it is full with one door and full with four, it wraps instead of
-          leaving empty cells, and it removes a breakpoint layout rather than
-          adding three. */}
-      <div className="mt-4 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
-        {links.map((l, i) =>
-          l.href ? (
-            <a key={i} href={l.href} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--terra-text)]">{l.t} &#8594;</a>
-          ) : (
-            <span key={i} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{l.t}</span>
-          )
-        )}
-        <a href="/pricing" className="rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--terra-text)]">
-          Compare this trade with Pro &#8594;
-        </a>
-      </div>
-    </Box>
-  );
-}
+/* THE EXIT'S CARDS live on exit.tsx since plan step 33's sixth dispatch
+ * (2026-09-18): the Myth card, its folklore constants and the SurvivalSlope
+ * stood here until the fourth dispatch (the London file's survival triple
+ * drawn as a descending line with "9 in 10 fail" struck across it; survival
+ * is `09 lasts` on turn-two.tsx now, off the shards, R5), and the Related
+ * links and the old Close until the sixth (`13 rivals` and `15 close` on
+ * exit.tsx now, off rivals_rows.ts and close_rows.ts). */
 
 /**
  * The cell spine body. Parameterized on `data` (defaults to the bundled
@@ -432,7 +287,17 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      same shard, the cluster its own band. */
   const mix = buildMix(d.meta?.industry_id);
   const market = buildMarket(d.meta?.industry_id);
-  const hasRelated = Array.isArray(d.related) && d.related.length > 0;
+  /* `13 rivals | 14 worth` (exit.tsx): the rivals off the seed's siblings on
+     every resolving cell (the list where four or more hold a figure, the
+     structure and the line otherwise), the worth off the shard's sale
+     figures and the take-home on every trade that holds a shard (the strip,
+     or the line off `moneyShown` and on the operating-earnings shards); the
+     band is gated on both so it holds two children or does not draw, and a
+     sector-average cell (no shard) never seats a lone `13`. `15 close`: the
+     doors off the meta, on every resolving cell. */
+  const rivals = buildRivals(d);
+  const worth = buildWorth(d);
+  const doors = buildTradeCloseDoors(d);
   /* The turns, by whether a card stands under each: turn one holds the
      money cards and the peers, turn two the share, the survival grid, the
      seat and the mix, turn three the bento. */
@@ -570,19 +435,32 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
         </>
       ) : null}
 
-      {/* THE EXIT (no chapter break, PART 1): `13 rivals | 14 worth`, then `15
-          close` full width. Today's related links hold `13`'s seat where they
-          render; `14` is not built. */}
-      {hasRelated ? (
-        <Band split="2-1">
-          <Related d={d} />
+      {/* THE EXIT (no chapter break, PART 1): `13 rivals | 14 worth`, the
+          rivals LEFT (the list, quiet by its form's law) and the worth RIGHT
+          (the second strip, the dot family's seat, M10), AT 2-1, THE ROW'S
+          OWN FALLBACK, RULED BY MEASUREMENT 2026-09-18 (8.4 rule 1): air
+          opened under `14` at the expected 1-1 (a 480 by 228 blank), and at
+          2-1 the list takes its two-column form on the wide seat (PART 5) so
+          the band stands 308 tall on London and California; exit.tsx carries
+          the four readings and the six-row residual. `stack="lg"` because at
+          a tablet's equal halves the strip's card stood 414 with air above
+          and below the strip. Both cards draw on every cell whose trade holds
+          a shard; the band is gated on both. */}
+      {rivals && worth ? (
+        <Band split="2-1" stack="lg">
+          <RivalsCard rivals={rivals} />
+          <WorthCard worth={worth} />
         </Band>
       ) : null}
-      {/* `15 close`, FULL WIDTH (8.6, R1): the terminus, as built until its
-          dispatch, on the hero band the full-width gate reads. */}
-      <div className="mt-6 mb-2">
-        <Band hero><Close d={d} /></Band>
-      </div>
+      {/* `15 close`, FULL WIDTH (8.6, R1), the page's third of three: the
+          terminus on the hero band the old close stood on, the sanction the
+          full-width gate, the lone-card rule and the section-bands baseline
+          read on this page (exit.tsx says why it stays there). */}
+      {doors.length > 0 ? (
+        <div className="mt-6 mb-2">
+          <Band hero><CloseCard doors={doors} /></Band>
+        </div>
+      ) : null}
     </main>
   );
 }
