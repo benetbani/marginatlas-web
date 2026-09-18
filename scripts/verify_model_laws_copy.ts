@@ -107,6 +107,9 @@ import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
 import { resolveTradeNet } from "@/lib/spine/trade_net";
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
+import { buildTradePeers } from "@/lib/spine/trade_peer_rows";
+import { buildClears } from "@/lib/spine/clears_rows";
+import { buildLasts } from "@/lib/spine/lasts_rows";
 import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
@@ -293,6 +296,13 @@ const SUBJECTS = [
   "staff", "payroll", "customers", "visitors", "people", "peers", "cities", "city", "districts",
   "district", "countries", "country", "trades", "trade", "shop", "shops", "business", "businesses",
   "premises", "paperwork", "population", "money", "capital", "hours", "week", "living",
+  /* "places" joined 2026-09-18 (plan step 33's fourth dispatch): the trade
+     page's peers table names the other side of its comparison as "other
+     places" (MODEL.md 8.6 `07 peers`, M12: states or cities in one country),
+     the same subject the city's "other cities" and the country's "the peers"
+     name; a card naming a subject this list did not yet hold, the extension
+     the note above allows, not a red quieted. */
+  "places", "place",
 ];
 
 /** Units and measurement furniture: how a thing is counted, never what. */
@@ -706,6 +716,41 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
        and sit in the ROW SENTENCE list above. */
     heads.push(["COPY.tradeSplit.basisShard", COPY.tradeSplit.basisShard], ["COPY.tradeSplit.basisProfile", COPY.tradeSplit.basisProfile], ["COPY.tradeSplit.basisWithheld", COPY.tradeSplit.basisWithheld], ["COPY.tradeSplit.withheld", COPY.tradeSplit.withheld], ["COPY.tradeSplit.foot", COPY.tradeSplit.foot], ["COPY.tradeSplit.detail.summary", COPY.tradeSplit.detail.summary], ["COPY.tradeSplit.detail.note", COPY.tradeSplit.detail.note]);
     heads.push(["COPY.tradeTeam.basis", COPY.tradeTeam.basis], ["COPY.tradeTeam.foot", COPY.tradeTeam.foot], ["COPY.tradeTeam.noMedian", COPY.tradeTeam.noMedian]);
+    /* THE PEERS, THE SHARE AND THE SURVIVAL (MODEL.md 8.6 `07 peers`, `08
+       clears`, `09 lasts`; plan step 33's fourth dispatch, 2026-09-18). The
+       peers' kicker, its two heads and its basis the static sweep takes by
+       key (`kicker`, `cols`, `basis`); its two stated lines (the not-gathered
+       line where no peer resolves, the dash line where the home row's
+       takings are not shown) are pushed by name and composed off three
+       fixture seeds in the district builder's idiom (a United States cell
+       with a slate, London with none, a cell off `moneyShown`), with the row
+       names a reader meets. The share's basis the sweep takes by key; its
+       foot by name; composed on the engine branch (money shown) and on the
+       shard's for every one of the 243 shard ids. The survival's basis the
+       sweep takes by key; its three cell labels and its foot by name and
+       composed off every shard id. */
+    const slate = { meta: { trade: "Restaurants", city: "California", country_name: "United States", iso2: "US", industry_id: "restaurants", money_shown: true }, headline: { rev_p50_usd: 1100000 }, nearby: { places: [{ name: "Texas", home: false, rev_p50_usd: 900000 }, { name: "Florida", home: false, rev_p50_usd: 850000 }, { name: "New York", home: false, rev_p50_usd: 1200000 }] } };
+    const seated = { meta: { trade: "Restaurants", city: "London", country_name: "United Kingdom", iso2: "GB", industry_id: "restaurants", money_shown: true }, headline: { rev_p50_usd: 620000 } };
+    const dashed = { meta: { trade: "Cafés & coffee shops", city: "Mumbai", country_name: "India", iso2: "IN", industry_id: "cafes_coffee", money_shown: false }, headline: { rev_p50_usd: 5215000 } };
+    for (const [name, seed] of [["slate", slate], ["seated", seated], ["dashed", dashed]] as const) {
+      const p = buildTradePeers(seed);
+      if (!p) { pushRed("BANNED CONSTRUCTION", `buildTradePeers(${name}): the builder returned nothing for a seed that names a place`); continue; }
+      if (p.notGathered) heads.push([`buildTradePeers(${name}).notGathered`, p.notGathered]);
+      if (p.homeWithheld) heads.push([`buildTradePeers(${name}).homeWithheld`, p.homeWithheld]);
+      /* The row names are place names (a state, a city), judged here as the ROW SENTENCE loop above judges its list, which has already run. */
+      for (const r of p.rows) { const n = r.name.trim().split(/\s+/).filter(Boolean).length; if (n > 3) pushRed("ROW SENTENCE", `buildTradePeers(${name}).rows.${r.key}: "${r.name}" is a label of ${n} words, over three`); }
+    }
+    heads.push(["COPY.tradeClears.foot", COPY.tradeClears.foot], ["COPY.tradeLasts.foot", COPY.tradeLasts.foot]);
+    for (const [key, text] of Object.entries(COPY.tradeLasts.cells)) heads.push([`COPY.tradeLasts.cells.${key}`, text]);
+    const engineClears = buildClears({ meta: { industry_id: "restaurants", money_shown: true }, break_even: { share_pct: 75 } });
+    if (!engineClears || engineClears.branch !== "engine") pushRed("BANNED CONSTRUCTION", "buildClears(engine): a seed with money shown and the engine's share does not build on the engine branch");
+    else heads.push(["buildClears(engine).basis", engineClears.basis], ["buildClears(engine).foot", engineClears.foot]);
+    for (const id of readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, ""))) {
+      const cl = buildClears({ meta: { industry_id: id, money_shown: false } });
+      if (cl) heads.push([`buildClears(${id}).basis`, cl.basis], [`buildClears(${id}).foot`, cl.foot]);
+      const l = buildLasts(id);
+      if (l) { for (const c of l.cells) heads.push([`buildLasts(${id}).cells.${c.key}`, c.label]); heads.push([`buildLasts(${id}).basis`, l.basis], [`buildLasts(${id}).foot`, l.foot]); }
+    }
   }
 
   for (const [where, text] of heads) {

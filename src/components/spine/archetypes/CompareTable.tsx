@@ -46,6 +46,29 @@
  * VALUE cell, in both forms, never on a head (heads are words by design), so
  * UNIT MIX can group a column's cells by their key and read the units across
  * them. Until then both rules printed UNMEASURED on every page.
+ *
+ * THE SEATED TABLE, three optional props for the trade page's `07 peers`
+ * (MODEL.md 8.6; plan step 33's fourth dispatch, 2026-09-18), each inert
+ * where a caller passes none, so the country's and the city's tables draw
+ * exactly what they drew:
+ *  - `withheld`: the stated line for rows the table does not hold, at the
+ *    lead rung in `--c-ink2` under the table (the drawn blocked seat's own
+ *    line, BlockedSeat.tsx; `data-withheld-line="rows"`). WITH IT THE TABLE
+ *    DRAWS FROM ONE ROW: 8.6 seats the trade's table off the United States
+ *    "present with its real structure, the heads said once and the home row
+ *    printing its own real figure, under the stated line", and the two-row
+ *    floor below stays for every caller that states no line (the country's
+ *    builder returns null under two rows and the seat there is BlockedSeat).
+ *    A one-row table marks no best value (that needs two figures), so the
+ *    home row's only marks are its tint and its weight.
+ *  - `note`: one line at `--t-micro` in `--c-muted` under the table, before
+ *    the caveat, for a dash the card has to explain once (PART 5's blanks;
+ *    the team card's idiom for its dashed pay column).
+ *  - `flags`: off, no flag is drawn and the names sit flush to the card's
+ *    edge (MarkList's own law for an optional mark). The trade's peers are
+ *    places in ONE country, so a flag would be the same flag on every row,
+ *    saying nothing five times; the country's and the city's rows are in
+ *    different countries and keep theirs (`flags` defaults on).
  */
 import * as React from "react";
 import { Box, Rail, Fig, usd } from "@/components/spine/kit";
@@ -69,7 +92,23 @@ import { COPY } from "./copy";
 export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m"; best: "min" | "max" };
 /** `iso2` draws the flag; `key` names the row when two rows share a flag (two cities in one country). */
 export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null> };
-export type CompareTableProps = { id: string; kicker: string; icon?: AtlasIconId; rows: CompareRow[]; columns: CompareColumn[]; caveat?: string; entityHead?: string };
+export type CompareTableProps = {
+  id: string;
+  kicker: string;
+  icon?: AtlasIconId;
+  rows: CompareRow[];
+  columns: CompareColumn[];
+  caveat?: string;
+  entityHead?: string;
+  /** The stated line for rows the table does not hold; with it the table draws from one row (the header's SEATED TABLE). */
+  withheld?: string;
+  /** One line explaining a dash, said once, under the table before the caveat. */
+  note?: string;
+  /** Off, no flag is drawn on any row. Defaults on. */
+  flags?: boolean;
+  /** The opener's sample mark. Defaults off. */
+  sample?: boolean;
+};
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -84,9 +123,11 @@ function fmt(unit: CompareColumn["unit"], v: number): string {
 }
 const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
 
-export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead }: CompareTableProps) {
+export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false }: CompareTableProps) {
   const phoneCols = PHONE_COLS[Math.min(4, Math.max(1, columns.length))];
-  if (rows.length < 2) return null;
+  /* The two-row floor for every caller that states no line; a seated table
+     (a `withheld` line) draws from one row, the home row alone (the header). */
+  if (rows.length < (withheld ? 1 : 2)) return null;
   const bestOf: Record<string, number | undefined> = {};
   for (const c of columns) {
     const vs = rows.map((r) => r.values[c.key]).filter(isNum);
@@ -128,8 +169,8 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
   const head = "text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]";
   return (
     <div data-wide-table className="mt-8">
-      <Box id={id} data-archetype="compare-table">
-        <Rail icon={icon} kicker={kicker} />
+      <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"}>
+        <Rail icon={icon} kicker={kicker} sample={sample} />
         <div className="hidden md:block">
           <Table className="table-fixed text-[length:var(--t-micro)]">
             <caption className="sr-only">{caveat ?? kicker}</caption>
@@ -152,7 +193,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
                 <TableRow key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`h-12 border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
                   <TableCell className="px-0 py-0 align-middle">
                     <span className="flex min-w-0 items-center gap-2.5">
-                      <CountryFlag iso2={r.iso2} className="w-7 shrink-0" />
+                      {flags ? <CountryFlag iso2={r.iso2} className="w-7 shrink-0" /> : null}
                       <span data-label className={`truncate text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
                     </span>
                   </TableCell>
@@ -179,7 +220,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
             {rows.map((r) => (
               <div key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`py-2.5 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
                 <span className="flex items-center gap-2.5">
-                  <CountryFlag iso2={r.iso2} className="w-6 shrink-0" />
+                  {flags ? <CountryFlag iso2={r.iso2} className="w-6 shrink-0" /> : null}
                   <span data-label className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
                 </span>
                 <div className={`mt-1 grid ${phoneCols} gap-x-2`}>
@@ -196,7 +237,10 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
             ))}
           </div>
         </div>
-        {caveat ? <p className="mt-2.5 text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]">{caveat}</p> : null}
+        {/* The stated line for the rows the table does not hold, at the lead rung where those rows would stand (the header's SEATED TABLE). */}
+        {withheld ? <p data-withheld-line="rows" className="mt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p> : null}
+        {note ? <p className="mt-2.5 text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
+        {caveat ? <p className={`${note ? "mt-1" : "mt-2.5"} text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]`}>{caveat}</p> : null}
       </Box>
     </div>
   );

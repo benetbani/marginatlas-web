@@ -68,6 +68,9 @@ import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen, buildOpenFoot, countOpenStates } from "@/lib/spine/open_rows";
 import { resolveSplit, countSplitStates, shardCostLines, driverLabel, LABEL_WORDS_CAP as SPLIT_LABEL_WORDS_CAP } from "@/lib/spine/split_rows";
 import { buildTeam, countTeamRows, roleLines, TEAM_ROWS_CAP } from "@/lib/spine/team_rows";
+import { buildTradePeers, TRADE_PEERS_CAP } from "@/lib/spine/trade_peer_rows";
+import { buildClears } from "@/lib/spine/clears_rows";
+import { buildLasts } from "@/lib/spine/lasts_rows";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
@@ -1201,6 +1204,75 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const split1 = roleLines("Owner or general manager"), split2 = roleLines("Owner-operator (working, sales and estimating)"), whole = roleLines("Line and prep cook");
   if (split1.name !== "Owner" || split1.sub !== "or general manager" || split2.name !== "Owner-operator" || split2.sub !== "working, sales and estimating" || whole.name !== "Line and prep cook" || whole.sub !== null) reds.push("team: the name block's two lines do not split at the or and the parenthetical as stated");
   console.log(`trade turn one, band two: the split draws on ${counts.drawn} of ${counts.total} shard ids with the engine absent (${counts.shardFed} off the shard's held drivers, ${counts.profileFed} off the sector profile; ${counts.residual} name a residual, ${counts.exact} balance) and is withheld on ${counts.withheld} (${counts.withheldIds.join(", ")}); ${labelsShortened} driver names take the copy table's short form, ${Object.keys(COPY.tradeSplit.lineLabels).length} entries all live; the plus holds its two rows on ${detailFull}; the team draws ${Object.entries(rows.perCount).sort().map(([k, v]) => `${v} with ${k}`).join(", ")} rows, ${rows.split} name blocks split at an or or a parenthetical, ${rows.over} labels still over three words (the shards' own compounds, item 54), dashes with the line on ${dashCards} no-median countries`);
+}
+
+/* THE TRADE PAGE'S PEERS, ITS SHARE OF A DAY AND ITS SURVIVAL (MODEL.md 8.6
+   `07 peers`, `08 clears`, `09 lasts`; plan step 33's fourth dispatch,
+   2026-09-18), without the database. THE PEERS off three fixture seeds: a
+   United States cell with a slate of seven (five printed, the cap, the home
+   row first and tinted, every figure an absolute, no line); London with no
+   slate (the home row alone printing its own figure under the not-gathered
+   line, the seated table); a cell off `moneyShown` (the home row's takings
+   null, the dash line said once; with no slate, both lines). Never an
+   invented peer: a row without a name is dropped, a home-named row is not
+   printed twice, a figure that is not a number is a dash and never a word.
+   THE SHARE on every one of the 243 shard ids with money not shown (the
+   shard branch, a whole percent above zero, the stated basis and foot) and
+   on the engine branch off a seed carrying the engine's ratio (money shown,
+   75 for restaurants: the trade's fixed-cost share over its gross margin)
+   and off the bundled dev seed's shape (two rounded counts, 36 of 45 -> 80);
+   a seed with money shown and no engine share falls to the shard. THE
+   SURVIVAL on every shard id: three cells, year five first, every figure in
+   the percent form, the triple falling from year one to year five, every
+   cell modelled (R12). Every string through the register ban. */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const ids = readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, "")).sort();
+  const slateRows = [{ name: "Texas", home: false, rev_p50_usd: 900000 }, { name: "Florida", home: false, rev_p50_usd: 850000 }, { name: "New York", home: false, rev_p50_usd: 1200000 }, { name: "Illinois", home: false, rev_p50_usd: 780000 }, { name: "Pennsylvania", home: false, rev_p50_usd: 700000 }, { name: "Ohio", home: false, rev_p50_usd: 650000 }, { name: "Georgia", home: false }, { name: "", home: false, rev_p50_usd: 1 }, { name: "California", home: false, rev_p50_usd: 5 }];
+  const slate = buildTradePeers({ meta: { city: "California", iso2: "US", industry_id: "restaurants", money_shown: true }, headline: { rev_p50_usd: 1100000 }, nearby: { places: slateRows } });
+  if (!slate || slate.peers !== TRADE_PEERS_CAP || slate.rows.length !== TRADE_PEERS_CAP + 1 || !slate.rows[0].home || slate.rows[0].name !== "California" || slate.rows[0].values.takings !== 1100000 || slate.notGathered || slate.homeWithheld || slate.columns.length !== 1 || slate.columns[0].unit !== "usd") reds.push("trade peers (slate): the home row first with its figure, five peers of seven and no stated line do not build as expected");
+  if (slate && (slate.rows.slice(1).some((r) => r.home || !r.name || r.name === "California") || slate.rows.slice(1).map((r) => r.name).join("|") !== "Texas|Florida|New York|Illinois|Pennsylvania")) reds.push(`trade peers (slate): the peers are not the slate's first five named rows in the slate's order (${slate.rows.slice(1).map((r) => r.name).join(", ")})`);
+  const dashPeer = buildTradePeers({ meta: { city: "California", iso2: "US", industry_id: "restaurants", money_shown: true }, headline: { rev_p50_usd: 1100000 }, nearby: { places: [{ name: "Georgia", home: false }, { name: "Nevada", home: false, rev_p50_usd: "n/a" }] } });
+  if (!dashPeer || dashPeer.peers !== 2 || dashPeer.rows.slice(1).some((r) => r.values.takings !== null)) reds.push("trade peers (a peer without a figure): the row does not print a dash for its takings");
+  const seated = buildTradePeers({ meta: { city: "London", iso2: "GB", industry_id: "restaurants", money_shown: true }, headline: { rev_p50_usd: 620000 } });
+  if (!seated || seated.peers !== 0 || seated.rows.length !== 1 || !seated.rows[0].home || seated.rows[0].values.takings !== 620000 || seated.notGathered !== COPY.tradePeers.notGathered || !seated.notGathered.startsWith("Not gathered yet:") || seated.homeWithheld) reds.push("trade peers (seated): the home row alone with its figure under the not-gathered line does not build");
+  const dashed = buildTradePeers({ meta: { city: "Mumbai", iso2: "IN", industry_id: "cafes_coffee", money_shown: false }, headline: { rev_p50_usd: 5215000 } });
+  if (!dashed || dashed.rows.length !== 1 || dashed.rows[0].values.takings !== null || dashed.homeWithheld !== COPY.tradePeers.homeWithheld || dashed.notGathered !== COPY.tradePeers.notGathered) reds.push("trade peers (off moneyShown, no slate): the home row's dash with both lines does not build");
+  const dashedSlate = buildTradePeers({ meta: { city: "Nevada", iso2: "US", industry_id: "restaurants", money_shown: false }, headline: { rev_p50_usd: 900000 }, nearby: { places: slateRows.slice(0, 3) } });
+  if (!dashedSlate || dashedSlate.peers !== 3 || dashedSlate.rows[0].values.takings !== null || dashedSlate.notGathered || dashedSlate.homeWithheld !== COPY.tradePeers.homeWithheld) reds.push("trade peers (off moneyShown, a slate): the peers print, the home row's dash with its one line");
+  if (buildTradePeers({ meta: { iso2: "GB" } }) !== null) reds.push("trade peers: a seed naming no place builds a table");
+  for (const p of [slate, seated, dashed, dashedSlate]) if (p) ban("trade peers", [p.caveat, p.entityHead, p.notGathered ?? "", p.homeWithheld ?? "", ...p.columns.map((c) => c.head), ...p.rows.map((r) => r.name)]);
+  const engineClears = buildClears({ meta: { industry_id: "restaurants", money_shown: true }, break_even: { share_pct: 75 } });
+  if (!engineClears || engineClears.branch !== "engine" || engineClears.value !== 75 || engineClears.figure !== "75%" || !engineClears.accent || !engineClears.sample || engineClears.basis !== COPY.tradeClears.basis || engineClears.foot !== COPY.tradeClears.foot) reds.push("clears (engine): the engine's 75 does not print as 75% on the engine branch with the accent, the basis and the foot");
+  const devClears = buildClears({ meta: { industry_id: "restaurants", money_shown: true }, break_even: { covers_per_day: 36, typical_covers_per_day: 45 } });
+  if (!devClears || devClears.branch !== "engine" || devClears.value !== 80) reds.push("clears (the dev seed's two counts): 36 of 45 does not print as 80% on the engine branch");
+  const noEngine = buildClears({ meta: { industry_id: "restaurants", money_shown: true } });
+  if (!noEngine || noEngine.branch !== "shard" || noEngine.value !== 70) reds.push("clears (money shown, no engine share): the card does not fall to the shard's 70");
+  if (buildClears({ meta: { industry_id: "no_such_trade", money_shown: false } }) !== null) reds.push("clears: a trade with no shard and no engine share builds a card");
+  let shardClears = 0, lastsCards = 0; const clearsRange = { min: Infinity, max: -Infinity };
+  for (const id of ids) {
+    const cl = buildClears({ meta: { industry_id: id, money_shown: false } });
+    if (!cl) { reds.push(`clears ${id}: no card off a shard that holds the share`); continue; }
+    if (cl.branch !== "shard" || !Number.isInteger(cl.value) || cl.value < 1 || cl.figure !== `${cl.value}%`) reds.push(`clears ${id}: the shard branch prints "${cl.figure}", not a whole percent above zero`);
+    clearsRange.min = Math.min(clearsRange.min, cl.value); clearsRange.max = Math.max(clearsRange.max, cl.value);
+    shardClears++;
+    ban(`clears ${id}`, [cl.basis, cl.foot]);
+    const l = buildLasts(id);
+    if (!l) { reds.push(`lasts ${id}: no card off a shard that holds the triple`); continue; }
+    lastsCards++;
+    if (l.cells.length !== 3 || l.cells[0].key !== "yr5" || l.cells[1].key !== "yr1" || l.cells[2].key !== "yr3") reds.push(`lasts ${id}: the cells are not year five, one, three in that order`);
+    for (const c of l.cells) { if (typeof c.value !== "string" || !/^\d{1,3}%$/.test(c.value)) reds.push(`lasts ${id}: the cell ${c.key} prints "${String(c.value)}", not the percent form`); if (c.confidence !== "modeled") reds.push(`lasts ${id}: a cell not marked modelled (R12)`); }
+    if (!(l.values.yr1 >= l.values.yr3 && l.values.yr3 >= l.values.yr5)) reds.push(`lasts ${id}: the triple does not fall from year one to year five (${l.values.yr1} / ${l.values.yr3} / ${l.values.yr5})`);
+    if (l.focal.key !== "yr5" || l.focal.value !== l.values.yr5) reds.push(`lasts ${id}: the focal named is not year five`);
+    ban(`lasts ${id}`, [...l.cells.map((c) => c.label), l.basis, l.foot]);
+  }
+  if (buildLasts("no_such_trade") !== null || buildLasts(undefined) !== null) reds.push("lasts: a trade with no shard builds a card");
+  console.log(`trade turn one's close and turn two's first band: the peers build the home row and ${slate?.peers ?? 0} of ${slateRows.filter((r) => r.name && r.name !== "California").length} named peers off a slate, the seated table off none, the dash off moneyShown; the share draws off the shard on ${shardClears} of ${ids.length} shard ids (${clearsRange.min} to ${clearsRange.max}) and off the engine where money is shown (restaurants 75); the survival grid draws on ${lastsCards} of ${ids.length}, every triple falling`);
 }
 
 /* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce`, `11 easiest` and the

@@ -57,6 +57,25 @@
  * exempt from the focal rung by its own law. Where the country holds no
  * credible median the pay column prints dashes and the card says so once.
  * The census reads this card as TiersTable.
+ *
+ * THE TURN'S CLOSE, `07 peers` (plan step 33's fourth dispatch, 2026-09-18),
+ * drawn here for the same reason: AGAINST OTHER PLACES on CompareTable
+ * (B7), the page's one table and its second full width (R1: the take, the
+ * peers, the close), quiet by table law, terracotta never. The home row
+ * tinted, one figure column (a typical year's takings, the strip's own
+ * figure) in one unit, an en dash for a hole, the rows never navigating
+ * (M23). The rows come from trade_peer_rows.ts: the United States' per-state
+ * slate where the trade holds one, at most five peers; off the United
+ * States the card stands with its real structure, the heads said once and
+ * the home row printing its own figure, under the stated line "Not gathered
+ * yet: the same trade in other places." (M19, item 57), never an invented
+ * peer; off `moneyShown` the home row's takings show a dash and the card
+ * says so once. No flags: every row is in one country. CompareTable draws
+ * its own Box inside the `data-wide-table` wrapper the full-width and
+ * lone-card gates read, so the census does not read this card (the country's
+ * peers table, the same note); it is a block on the page all the same
+ * (`data-block="peers"`, BLOCK FLOOR counts it). The old Nearby table (a
+ * sortable client island with the four invented UK cities) retired with it.
  */
 import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
@@ -66,12 +85,14 @@ import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { IncomeBreakdown } from "@/components/spine/archetypes/IncomeBreakdown";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
+import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { PermitsData } from "@/lib/spine/permits_rows";
 import type { OpenData } from "@/lib/spine/open_rows";
 import type { SplitData } from "@/lib/spine/split_rows";
 import type { TeamData } from "@/lib/spine/team_rows";
+import type { TradePeersData } from "@/lib/spine/trade_peer_rows";
 
 export function PermitsCard({ id = "permits", permits }: { id?: string; permits: PermitsData | null }) {
   if (!permits) return null;
@@ -156,5 +177,24 @@ export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | 
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.basis}</p>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.foot}</p>
     </Box>
+  );
+}
+
+export function PeersCard({ id = "peers", peers }: { id?: string; peers: TradePeersData | null }) {
+  if (!peers) return null;
+  return (
+    <CompareTable
+      id={id}
+      icon="benchmark"
+      kicker={COPY.tradePeers.kicker}
+      entityHead={peers.entityHead}
+      rows={peers.rows}
+      columns={peers.columns}
+      withheld={peers.notGathered ?? undefined}
+      note={peers.homeWithheld ?? undefined}
+      caveat={peers.caveat}
+      flags={false}
+      sample={peers.confidence !== "measured"}
+    />
   );
 }

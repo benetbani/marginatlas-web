@@ -19,10 +19,13 @@
  *   - the whole Demand chapter (dayparts / channels / catchment)
  *   - the entire subtype control room (FormatPicker / FormatProvider / ComparePro)
  *   - who_suits numeric dot scales
- *   - per-peer take-home / break-in columns in Nearby
+ *   - per-peer take-home / break-in columns in the peers (name and a typical
+ *     year's takings only, the United States' per-state slate; never an
+ *     invented peer, plan step 33's fourth dispatch)
  *   - setup / cost-to-open when the cell carries no real setup_costs
- *   - off-London: seasonality / first_year / wages / risks / myth (cell_view
- *     already returns null there, so they pass through as undefined)
+ *   - off-London: seasonality / first_year / wages / risks (cell_view
+ *     already returns null there, so they pass through as undefined); the
+ *     myth block is gone everywhere (the same dispatch, R5)
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
@@ -81,6 +84,8 @@ export type LoadedCellView = {
   isLondon: boolean;
   /** cell_view.ts's own gate, `isLondon || isTrustedLocal`: revenue and take-home are real. The one net builder reads the engine only where this is true (trade_net.ts). */
   moneyShown: boolean;
+  /** The same trade in other places, the United States' per-state slate (name and a typical year's takings, real), the home state excluded; empty off the United States. The seed's `nearby` (plan step 33's fourth dispatch, 2026-09-18). */
+  peers: Array<{ name: string; href: string; value: number | null }>;
 };
 
 /**
@@ -228,6 +233,15 @@ export async function loadCellView(
     peers: nearbyPeers,
     narrative: null,
     medianWageUsd,
+    /* NEVER AN INVENTED PEER (MODEL.md 8.6 `07 peers`; plan step 33's fourth
+       dispatch, 2026-09-18): without this, cell_view.ts hands London four
+       synthesised UK cities (the London figure times four constants,
+       "Invented for the exemplar"), and the trade page's table would print
+       a peer with an invented name and an invented figure. The neighbourhood
+       route has passed it since the district page; the trade page passes it
+       now, and its seed carries the slate below rather than this view's
+       `nearby` at all. */
+    suppressInventedPeers: true,
   });
 
   return {
@@ -247,6 +261,7 @@ export async function loadCellView(
     tradeNoun,
     isLondon: cellView.isLondon,
     moneyShown: cellView.isLondon || trustedLocalCell,
+    peers: nearbyPeers,
   };
 }
 
@@ -313,6 +328,9 @@ export async function buildSpineCellSeed(
     placeName,
     tradeName,
     moneyShown,
+    peers,
+    breakevenOrdersDaily,
+    typicalOrdersDaily,
   } = loaded;
   /* THE TRADE'S TAXONOMY ID, resolved once here the way the character lookup
      resolved it (the URL slug is hyphenated, the shards and the lookups are
@@ -458,13 +476,27 @@ export async function buildSpineCellSeed(
       ? v.costDrivers.map((c) => ({ name: c.label, note: c.note ?? "" }))
       : undefined;
 
-  /* -- break_even (real covers a day) -------------------------------------- */
+  /* -- break_even: THE ENGINE'S SHARE (`08 clears`, MODEL.md 8.6; plan step
+     33's fourth dispatch, 2026-09-18) -------------------------------------
+     `share_pct` is computeBreakeven()'s own ratio, breakevenOrdersDaily over
+     currentOrdersDaily, unrounded, carried where money is shown (8.6: the
+     engine where `moneyShown`, else the shard, which clears_rows.ts reads
+     itself). The two rounded counts stay beside it for the shape the bundled
+     dev seed holds; nothing on the page reads them since the ring card
+     retired (money-chapter.tsx). clears_rows.ts's header says why this share
+     is the trade's figure and not the city's: the takings cancel out of the
+     ratio. */
+  const engineShare =
+    moneyShown && isNum(breakevenOrdersDaily) && isNum(typicalOrdersDaily) && breakevenOrdersDaily > 0 && typicalOrdersDaily > 0
+      ? (breakevenOrdersDaily / typicalOrdersDaily) * 100
+      : undefined;
   const breakEven =
-    v.breakEven && isNum(v.breakEven.value)
+    engineShare != null || (v.breakEven && isNum(v.breakEven.value))
       ? {
-          covers_per_day: v.breakEven.value,
-          typical_covers_per_day: isNum(v.breakEven.typical) ? v.breakEven.typical : undefined,
-          surface_line: v.breakEven.detail ?? v.breakEven.headline,
+          share_pct: engineShare,
+          covers_per_day: v.breakEven && isNum(v.breakEven.value) ? v.breakEven.value : undefined,
+          typical_covers_per_day: v.breakEven && isNum(v.breakEven.typical) ? v.breakEven.typical : undefined,
+          surface_line: v.breakEven ? v.breakEven.detail ?? v.breakEven.headline : undefined,
         }
       : undefined;
 
@@ -512,25 +544,13 @@ export async function buildSpineCellSeed(
         }
       : undefined;
 
-  /* -- myth (London only; survival is the real GB curve) ------------------- */
-  // cell_view surfaces the myth prose (myths[0]) but not the survival curve. The
-  // real GB survival triple rides on the London entry (getLondonEntry), so re-read
-  // it from the entry via the cell. The Myth section needs both to render.
-  const mythEntry = v.myths && v.myths.length > 0 ? v.myths[0] : null;
-  const londonSurvival = getLondonEntry(cell)?.survival ?? null;
-  const myth =
-    mythEntry && londonSurvival && isNum(londonSurvival.yr1)
-      ? {
-          claim: mythEntry.myth,
-          reality: mythEntry.reality,
-          survival: {
-            year1_pct: londonSurvival.yr1,
-            year3_pct: isNum(londonSurvival.yr3) ? londonSurvival.yr3 : undefined,
-            year5_pct: isNum(londonSurvival.yr5) ? londonSurvival.yr5 : undefined,
-            line: undefined,
-          },
-        }
-      : undefined;
+  /* -- myth: GONE (`09 lasts`, MODEL.md 8.6; plan step 33's fourth dispatch,
+     2026-09-18). The block carried the London file's survival triple
+     (getLondonEntry().survival, 20 activities) with a folklore claim for the
+     old `#myth` card, a slope with the claim struck across it; both the
+     slope and the sentence are banned (R5), the card retired, and `09` reads
+     the shard's triple for 243 trades (lasts_rows.ts), never the London
+     file. Nothing builds the block now. --------------------------------- */
 
   /* -- risks (London only) ------------------------------------------------- */
   const risks =
@@ -548,17 +568,26 @@ export async function buildSpineCellSeed(
         }
       : undefined;
 
-  /* -- nearby (name + revenue real; per-peer take/break-in OMITTED) -------- */
+  /* -- nearby: THE SLATE, NEVER AN INVENTED PEER (`07 peers`, MODEL.md 8.6;
+     plan step 33's fourth dispatch, 2026-09-18) ---------------------------
+     The United States' per-state slate from loadCellView (one row per state,
+     the home state excluded, name and `revenue_per_firm` real), carried
+     whenever it resolved and not through cell_view.ts's `nearby`, which is
+     gated on the home cell's own money and, without `suppressInventedPeers`,
+     held London's four synthesised cities. The peers' figures are other
+     cells' measured takings, so the home cell's trust gate is not theirs;
+     the home row is trade_peer_rows.ts's own, off `meta` and `headline`,
+     and its figure is gated there on `money_shown`. Off the United States
+     the slate is empty and the block is absent, which the builder reads as
+     "no peer resolved" and seats the table with its stated line (M19). */
   const nearby =
-    v.nearby && v.nearby.length > 0
+    peers.length > 0
       ? {
           surface_line: undefined,
-          places: v.nearby.map((p, i) => ({
+          places: peers.filter((p) => p.name).map((p) => ({
             name: p.name,
-            home: i === 0 && p.name === placeName,
-            rev_p50_usd: isNum(p.value) ? p.value : undefined,
-            // take_home_usd / break_in_0_100 are DELIBERATELY absent (no honest
-            // per-peer source); interactive.tsx null-guards those columns.
+            home: false,
+            rev_p50_usd: isNum(p.value) && p.value > 0 ? Math.round(p.value) : undefined,
           })),
         }
       : undefined;
@@ -595,7 +624,7 @@ export async function buildSpineCellSeed(
     wages,
     seasonality,
     first_year: firstYear,
-    myth,
+    // myth: undefined  (retired with `#myth`; `09 lasts` reads the shard)
     risks,
     nearby,
     setup,

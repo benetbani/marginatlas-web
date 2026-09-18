@@ -1372,6 +1372,48 @@ export const COPY = {
     foot: "Headcounts and pay are modelled.",
     noMedian: "Pay shows a dash: the country holds no credible median pay.",
   },
+  /** `07 peers` (MODEL.md 8.6; plan step 33's fourth dispatch, 2026-09-18):
+   *  the kicker is M12's, the compare table opening on the same word on
+   *  every page ("Against other cities" on the city's); the one figure
+   *  column's head is the strip's own kicker, because it is the strip's own
+   *  figure (`headline.rev_p50_usd`, M20: the same figure the same words);
+   *  the basis says what the column holds in the hero's words for the same
+   *  figure ("before any cost comes out"). The not-gathered line is the
+   *  site's idiom (M19) and stands where no peer resolves, off the United
+   *  States; the dash line is the team card's idiom for a dashed cell and
+   *  stands where the home row's takings are not shown (off `moneyShown`),
+   *  so the card says once what its one dash means (PART 5). */
+  tradePeers: {
+    kicker: "Against other places",
+    cols: { place: "Place", takings: "A year's takings" },
+    basis: "A typical year's takings, before any cost comes out.",
+    notGathered: "Not gathered yet: the same trade in other places.",
+    homeWithheld: "Takings show a dash: not measured yet for this trade in this city.",
+  },
+  /** `08 clears` (MODEL.md 8.6; the same dispatch): the kicker is 8.6's
+   *  title; the basis says what the figure is, in a person's words, and
+   *  never what it means; the foot is the shard-fed cards' one sentence with
+   *  "modelled" said in words, because the sample mark is behind his switch
+   *  and the share is a trade figure on both of its feeds (the engine's
+   *  share is the trade's cost shares over its gross margin, the city's
+   *  takings cancel out of it; the shard's is the trade's researched share). */
+  tradeClears: {
+    kicker: "When it clears costs",
+    basis: "Of a typical day's takings, the share that clears the costs.",
+    foot: "Typical for the trade anywhere, not measured for this city; modelled.",
+  },
+  /** `09 lasts` (MODEL.md 8.6; the same dispatch): the kicker is 8.6's
+   *  title; the three cell labels are one phrase each, read aloud under the
+   *  kicker ("How many last: after five years, 50%"); the basis is the
+   *  composition's one sentence for every shard-fed card (its section 5,
+   *  item 16: `03`, `09`, `11`, `12`); the foot says what the figures are
+   *  and that they are modelled (R12). No slope, no myth sentence (R5). */
+  tradeLasts: {
+    kicker: "How many last",
+    cells: { yr5: "After five years", yr1: "After one year", yr3: "After three years" },
+    basis: "Typical for the trade anywhere, not measured for this city.",
+    foot: "Of every 100 that open, the share still trading; modelled.",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

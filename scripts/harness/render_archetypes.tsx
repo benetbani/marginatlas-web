@@ -106,7 +106,8 @@ const SHEET: Entry[] = [
   { kind: "answer-card", city: "none", cell: "keyed", render: (c) => <AnswerCardStories instances={c.instances["answer-card"]} cell={c.cellHero} /> },
   /* The cost to open's held state (cell/turn-one.tsx) reads a cell seed since plan step 33's second dispatch (2026-09-18). */
   { kind: "ranked-bars", city: "keyed", cell: "keyed", render: (c) => <RankedBarsStories instances={pickRankedBarsInstances()} city={pickCityDistrictInstances(c.cityHero)} cell={c.cellHero} /> },
-  { kind: "compare-table", city: "keyed", render: (c) => <CompareTableStories instances={pickCompareTableInstances()} city={pickCityPeerInstances(c.cityHero)} /> },
+  /* The trade's peers table (cell/turn-one.tsx PeersCard) reads a cell seed since plan step 33's fourth dispatch (2026-09-18). */
+  { kind: "compare-table", city: "keyed", cell: "keyed", render: (c) => <CompareTableStories instances={pickCompareTableInstances()} city={pickCityPeerInstances(c.cityHero)} cell={c.cellHero} /> },
   { kind: "card-pager", city: "none", render: (c) => <CardPagerStories instances={c.instances["card-pager"]} /> },
   { kind: "city-cards", city: "none", render: (c) => <CityCardsStories instances={c.instances["city-cards"]} /> },
   /* The team (cell/turn-one.tsx) reads a cell seed since plan step 33's third dispatch (2026-09-18); the seven-row planted key needs none. */
