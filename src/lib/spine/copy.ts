@@ -525,6 +525,44 @@ export const COPY = {
     basis: "Rent for a square metre of shop a year, the average across {country} by city size; {city} counts among the {tier}.",
     basisNoTier: "Rent for a square metre of shop a year, the average across {country} by city size.",
   },
+  /** THE PREMISES BENTO, the city's `04 premises` (MODEL.md 8.3; plan step
+   *  32, second dispatch, 2026-09-18): four readings of the city's own shop
+   *  space off the shard's `realestate.*`, his A2 cluster in his B4 cells. The
+   *  four openers are 8.3's own words, verbatim. No cell prints a label under
+   *  its figure: the opener says what the figure is (PART 5, the bento's own
+   *  clause). A basis says the unit in a person's words and never what the
+   *  figure means; where the figure's tag is not held it gains "; modelled
+   *  for this city" (the sample mark is behind the switch, so the basis is
+   *  the only line that can say it). Every string here was read aloud.
+   *  "a square metre a year" is on the banned list below, so the rent's line
+   *  names the space and then the year. The builder is premises_bento_rows.ts.
+   *  The strip of the country's three rents by city size that held this seat
+   *  (city:premises, run 13; `COPY.cityPremises`) left with it: it printed a
+   *  country average under a city's name. */
+  premisesBento: {
+    kickers: { rent: "Prime shop rent", empty: "Shops standing empty", fitOut: "Fit-out cost", deposit: "Deposit up front" },
+    basis: {
+      rent: "A square metre of prime shop space, a year",
+      /** `{rate}` is the shard's rate as read. The count draws it to a whole shop; the second line says so, and only where the rate had to be rounded. */
+      empty: "{rate} in every 100 shops",
+      emptyRounded: "{rate} in every 100 shops, rounded to a whole shop",
+      fitOut: "To fit out a square metre of shop space",
+      deposit: "Months of rent held as the deposit on a shop",
+    },
+    /** Joined to a basis with "; " where a printed figure's tag is not held. */
+    modelled: "modelled for this city",
+    /** The deposit's unit words, beside its figure: "6 months", "1 month". */
+    months: { one: "month", many: "months" },
+    /** PART 5's stated line, standing where the figure would, one per cell the bank does not hold. */
+    withheld: {
+      rent: "The prime rent is not on file for this city yet.",
+      empty: "The empty-shop rate is not on file for this city yet.",
+      /** Reachable by the guard's shape and by no city today (every rate on file sits between 0.5 and 41.3). */
+      emptyNotAShare: "The empty-shop rate on file is not a share of 100 shops.",
+      fitOut: "The fit-out cost is not on file for this city yet.",
+      deposit: "The deposit is not on file for this city yet.",
+    },
+  },
   /** The city's customers strip (city:earnings, run 11): the city's own spread where held, the country's typical pay where not, the basis line saying which. */
   cityCustomers: {
     kicker: "What customers earn here",

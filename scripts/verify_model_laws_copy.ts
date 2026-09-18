@@ -98,6 +98,7 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
+import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { placementSentence } from "@/lib/spine/placement";
@@ -422,6 +423,26 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     }
     const s = buildCitySeat(slug);
     if (s) heads.push([`buildCitySeat(${slug}).basis`, s.basis], [`buildCitySeat(${slug}).foot`, s.foot]);
+  }
+
+  /* THE PREMISES BENTO (MODEL.md 8.3 `04 premises`, plan step 32's second
+     dispatch, 2026-09-18), pushed by name and composed: its four openers sit
+     under `kickers.*` and its basis clauses under `basis.*`, leaves the static
+     sweep does not read (it reads a leaf named `kicker` or `basis`), and the
+     lines a reader meets are composed (the count's rate filled in, the
+     modelled clause joined on) so they come off the builder. Three cities
+     cover the shapes: the exemplar (every figure held, the count rounded),
+     Frankfurt (held, a whole rate, no rounding clause) and Abidjan (every
+     figure modelled, the clause on all four lines). The five withheld lines
+     are pushed from COPY, since no city takes them today. */
+  for (const k of Object.values(COPY.premisesBento.kickers)) heads.push(["COPY.premisesBento.kickers", k]);
+  for (const line of Object.values(COPY.premisesBento.withheld)) heads.push(["COPY.premisesBento.withheld", line]);
+  for (const slug of ["london", "frankfurt", "abidjan"]) {
+    const d = buildPremisesBento(slug);
+    if (!d) continue;
+    for (const [name, cell] of [["rent", d.rent], ["fitOut", d.fitOut], ["deposit", d.deposit], ["empty", d.empty]] as const) {
+      heads.push([`buildPremisesBento(${slug}).${name}`, "withheld" in cell ? cell.withheld : cell.basis]);
+    }
   }
 
   /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`, plan step 31's third

@@ -24,6 +24,8 @@ import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
 import { RangeStrip } from "./RangeStrip";
 import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip, buildCityPremisesStrip } from "@/lib/spine/range_rows";
+import { buildPremisesBento, listedCitySlugs } from "@/lib/spine/premises_bento_rows";
+import { premisesCells } from "@/components/spine/city/premises";
 import { SpectraTable } from "./SpectraTable";
 import { buildCharacterTables, buildCityCharacterTables, citiesWithSignature } from "@/lib/spine/character_rows";
 import { NoteList } from "./NoteList";
@@ -880,7 +882,40 @@ export function pickBentoBandInstances(): Instance[] {
     { iso2: "exemplar", why: "three cells, two columns: one tall beside two small, his B4 shape" },
     { iso2: "four-cells", why: "four cells, the cap: a tall one, two small ones, and a wide one under both" },
     { iso2: "three-columns", why: "three columns at 1280, which must repack onto two at 768 and still tile" },
+    ...pickPremisesBentoInstances(),
   ];
+}
+
+/* THE PREMISES BENTO ON A PAGE (MODEL.md 8.3 `04 premises`; plan step 32,
+   second dispatch, 2026-09-18), the first real cluster on a page, drawn here
+   exactly as the city view draws it: the same four cells in the same
+   declared order and spans (rent 2 by 1, empty shops 1 by 2, fit-out 1 by 1,
+   deposit 1 by 1, three columns), off premises_bento_rows.ts and the city
+   shards, no seed needed. Three instances at most, each picked off the
+   builder, never typed:
+     london:premises   the exemplar, every figure held, the rent lit
+     <slug>:premises   the first city by slug whose figures are modelled, so
+                       "modelled for this city" is looked at on all four lines
+     <slug>:premises   the first city by slug with a withheld cell, the stated
+                       line standing where a figure would. NO CITY TAKES IT
+                       TODAY: 252 of 252 hold all four fields (counted
+                       2026-09-18), so the picker finds none; the story appears
+                       the day a null lands, with no edit here.
+   The walk loads every shard into the store once; the archetype copy gate
+   already walks the same 252 for the glance and the seat. Cached, because
+   pickAllInstances asks more than once per render. */
+let premisesPicks: Instance[] | null = null;
+export function pickPremisesBentoInstances(): Instance[] {
+  if (premisesPicks) return premisesPicks;
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (slug: string | undefined, why: string) => { if (slug && !seen.has(slug)) { seen.add(slug); out.push({ iso2: `${slug}:premises`, why }); } };
+  take("london", "the city page's 04 premises on the exemplar: four cells tiling 3 by 2, the prime rent lit, every figure held");
+  const all = listedCitySlugs().map((slug) => ({ slug, d: buildPremisesBento(slug) })).filter((x) => x.d);
+  take(all.find((x) => x.d!.withheld === 0 && x.d!.sample)?.slug, "every figure modelled, the four basis lines saying so, the rent still lit");
+  take(all.find((x) => x.d!.withheld > 0)?.slug, "a cell withheld: the stated line where its figure would stand");
+  premisesPicks = out;
+  return out;
 }
 
 export function BentoBandStories({ instances = pickBentoBandInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
@@ -898,6 +933,13 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
   const tradesPart = london ? (london.seed?.trades_here?.list?.length ?? 0) : 0;
 
   const cluster = (key: string): { cols: 2 | 3; cells: BentoCell[] } | null => {
+    /* THE PAGE'S OWN CLUSTER, `<slug>:premises`: the city view's cells from the
+       one function both read (city/premises.tsx), so the story is the card and
+       not a copy of it. */
+    if (key.endsWith(":premises")) {
+      const d = buildPremisesBento(key.slice(0, -":premises".length));
+      return d ? { cols: 3, cells: premisesCells(d) } : null;
+    }
     /* THE EXEMPLAR IS A CITY DASHBOARD, which is what his reference is: the
        fitness bento sets a ring, a count and a chart side by side because they
        are three different readings of one subject, not three views of one

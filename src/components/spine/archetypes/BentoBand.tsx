@@ -260,8 +260,22 @@ const LG_GRID: Record<BentoCols, string> = { 2: "lg:grid-cols-2", 3: "lg:grid-co
  * The band itself. It IS the band, never a child of one: `Band` wrapping this
  * would put a single child in a row and the model's LONE CARD rule would fire
  * on the wrapper, correctly.
+ *
+ * THE CLUSTER NAMES ITSELF TO THE CHECKERS (plan step 32, second dispatch,
+ * 2026-09-18, the first real cluster on a page: the city's `04 premises`).
+ * `data-band="bento"` on the root says the root is the band, because the
+ * model-laws checker infers a card's band from its parent and a cell's
+ * parent here is its own placement wrapper, one child each: LONE CARD read
+ * a four-cell cluster as four lone cards until the root declared itself
+ * (check_model_laws.mjs, the BAND note). `id` reaches the root and stamps
+ * `data-block` the way the kit's Box does for a section card (a cluster with
+ * an id is a section by construction), so BLOCK FLOOR counts the cluster
+ * once, MODEL.md 8.3's own count ("the bento counted as one"), and the two
+ * checkers address every cell by the cluster's id: the cluster is the
+ * section, and a cell of it is not a section of its own. A cluster in a
+ * story passes no id and is no block, as before.
  */
-export function BentoBand({ cols, cells }: { cols: BentoCols; cells: BentoCell[] }) {
+export function BentoBand({ id, cols, cells }: { id?: string; cols: BentoCols; cells: BentoCell[] }) {
   const { wide, tablet } = layoutBento(cells, cols);
   const wideBy = new Map(wide.placements.map((p) => [p.key, p]));
   const tabletBy = new Map(tablet.placements.map((p) => [p.key, p]));
@@ -270,6 +284,9 @@ export function BentoBand({ cols, cells }: { cols: BentoCols; cells: BentoCell[]
        band 32, card padding 16/20/28, slot 8): a bento sits in the same rhythm
        as every other band or it reads as a different page. */
     <div
+      id={id}
+      data-block={id}
+      data-band="bento"
       data-archetype="bento-band"
       data-bento-cells={cells.length}
       data-bento-cols={cols}
@@ -473,6 +490,35 @@ export function BentoMetric({
  * this the cluster's ONE loud cell; a page adopting it spends one of its three
  * accents and names it in the page's brief. `accent={false}` returns the cell
  * to ink for a page that has already spent its three.
+ *
+ * AND THE UNITS RETURN WITH IT. Until plan step 32's second dispatch
+ * (2026-09-18) the units never read `accent`: a cell returned to ink still
+ * drew its filled units in `--terra`, a second terracotta fill in the cluster
+ * beside the lit cell, found by the city premises mockup (04-premises.html,
+ * 2026-09-16) and by the art-direction gate's C2, which counts a `--terra`
+ * background as a mark. PART 6 gives a card with no accent figure its leader
+ * mark in `--c-ink2` and the rest in `--c-soft2`, so that is what an ink
+ * count draws now: the fill follows the figure in both directions.
+ *
+ * THE GRID'S HEIGHT FOLLOWS THE WHOLE, WHEN THE CELL STANDS TALL: `columns`
+ * (plan step 32, second dispatch, 2026-09-18, for the city's `04 premises`).
+ * By default the units are 10px squares that wrap to the cell's width, so a
+ * whole of 100 in a 300px cell is five rows, 66px tall, whatever the cell's
+ * height. MODEL.md 8.3 makes the count the cluster's one tall cell "because
+ * a dot grid of 100 is the one drawing", and a cell spanning two rows is
+ * stretched to the stack beside it, so its content has to be about as tall
+ * as that stack (BentoBand law 5, the composer's work). Measured on Abidjan
+ * at 768 with the default wrap: the grid 66px, 82px of air above the figure
+ * and 70 below, and the page filter red on a 234 by 120 blank (the air above
+ * joined to the figure row's right side) while London and Frankfurt, whose
+ * cells beside the count wrapped one line less, passed by three pixels.
+ * `columns` fixes the units in a row and sizes each to the cell's width
+ * (a CSS grid of equal square cells), so the grid's height is set by the
+ * whole and the column count and not by the cell's width: a whole of 100 in
+ * fifteen columns is seven rows, about 140px at a 300px cell, and the air
+ * on either side of the figure falls to a few dozen pixels at every width.
+ * Left out, the cell draws exactly what it drew before; the three older
+ * stories pass nothing.
  */
 export function BentoCount({
   kicker,
@@ -483,6 +529,7 @@ export function BentoCount({
   basis,
   sample = false,
   accent = true,
+  columns,
 }: {
   kicker: string;
   icon?: AtlasIconId;
@@ -495,6 +542,8 @@ export function BentoCount({
   basis: string;
   sample?: boolean;
   accent?: boolean;
+  /** The units in a row, each sized to the cell's width, for a cell that stands tall (the note above). Left out: 10px units wrapping to the width. */
+  columns?: number;
 }) {
   /* A count that is not a count self-omits rather than drawing a wrong whole:
      a part over its whole, a negative part, or a whole of nothing. */
@@ -515,15 +564,22 @@ export function BentoCount({
               the eye; a reader who counts nothing still reads "of 8" here. */}
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of {Math.round(whole)}</span>
         </div>
-        <div className="mt-2.5 flex flex-wrap gap-[4px]" role="img" aria-label={`${filled} out of ${Math.round(whole)}, ${label ?? kicker}`}>
+        <div
+          className={columns ? "mt-2.5 grid gap-[4px]" : "mt-2.5 flex flex-wrap gap-[4px]"}
+          style={columns ? { gridTemplateColumns: `repeat(${Math.max(1, Math.round(columns))}, minmax(0, 1fr))` } : undefined}
+          role="img"
+          aria-label={`${filled} out of ${Math.round(whole)}, ${label ?? kicker}`}
+        >
           {units.map((_, i) => (
             <span
               key={i}
               aria-hidden
-              className="h-[10px] w-[10px] rounded-[2px] border"
+              className={columns ? "aspect-square w-full rounded-[2px] border" : "h-[10px] w-[10px] rounded-[2px] border"}
               style={
                 i < filled
-                  ? { background: "var(--terra)", borderColor: "var(--terra)" }
+                  ? accent
+                    ? { background: "var(--terra)", borderColor: "var(--terra)" }
+                    : { background: "var(--c-ink2)", borderColor: "var(--c-ink2)" }
                   : { background: "var(--c-soft2)", borderColor: "var(--c-border)" }
               }
             />

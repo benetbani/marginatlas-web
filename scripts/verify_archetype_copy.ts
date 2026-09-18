@@ -43,6 +43,7 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance, CITY_GLANCE_CELLS, isVisitorsRead } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
+import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
@@ -428,6 +429,59 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
   }
   console.log(`city seats: ${glances} glance cards (the visitor cell drawn on ${visitorsDrawn}, the human development index withheld on all) and ${seats} placement seats build over ${cities.length} cities; labels, withheld lines and the foot held`);
+}
+
+/* THE PREMISES BENTO (MODEL.md 8.3 `04 premises`; plan step 32's second
+   dispatch, 2026-09-18), on every covered city: the cluster builds for every
+   listed city (the shard's four `realestate.*` fields, 252 of 252); each of
+   the four cells holds a figure OR a stated line and never neither (the
+   builder's type makes both impossible; the count here is the withheld
+   number agreeing with the cells both ways); the four openers are 8.3's own
+   words, within PART 7's four; every basis within its fourteen words, saying
+   "modelled" exactly when its figure's tag is not held (the sample mark is
+   behind the switch, so the basis is the only line that can) and never on a
+   held figure; the count cell's basis prints the shard's rate and says
+   "rounded" exactly when the drawn part is not the rate; the count's part a
+   whole number in 0 to 100; no banned word or unfilled placeholder in any
+   string. The counts by tag are printed so the numbers 8.3 quotes (133 held,
+   119 modelled) are measured here rather than remembered. */
+{
+  const cities = (cityListJson as { cities: Array<{ slug: string }> }).cities;
+  let built = 0, held = 0, modelled = 0, withheldCells = 0, rounded = 0;
+  const K = COPY.premisesBento.kickers;
+  for (const k of Object.values(K)) if (k.split(/\s+/).length > 4) reds.push(`premises: the opener runs over four words: "${k}"`);
+  for (const c of cities) {
+    const d = buildPremisesBento(c.slug);
+    if (!d) { reds.push(`premises ${c.slug}: builds nothing (every listed city holds a shard)`); continue; }
+    built++;
+    if (d.withheld === 0 && !d.sample) held++;
+    if (d.sample) modelled++;
+    const cells = [d.rent, d.fitOut, d.deposit, d.empty] as const;
+    const lines: string[] = [];
+    let withheld = 0;
+    for (const cell of cells) {
+      if ("withheld" in cell) { withheld++; lines.push(cell.withheld); continue; }
+      lines.push(cell.basis);
+      const figure = "figure" in cell ? cell.figure : `${cell.part} of ${cell.whole}`;
+      if (!figure || figure === "undefined") reds.push(`premises ${c.slug}: an empty figure`);
+      if (cell.basis.split(/\s+/).filter(Boolean).length > 14) reds.push(`premises ${c.slug}: a basis over fourteen words: "${cell.basis}"`);
+      if ((cell.tag !== "held") !== /modelled/.test(cell.basis)) reds.push(`premises ${c.slug}: ${cell.tag !== "held" ? "a modelled figure and the basis does not say so" : "a held figure and the basis says modelled"}: "${cell.basis}"`);
+      if ("part" in cell) {
+        if (!Number.isInteger(cell.part) || cell.part < 0 || cell.part > 100) reds.push(`premises ${c.slug}: the count's part is ${cell.part}, not a whole number in 0 to 100`);
+        const didRound = cell.part !== cell.rate;
+        if (didRound) rounded++;
+        if (didRound !== /rounded/.test(cell.basis)) reds.push(`premises ${c.slug}: the part ${cell.part} against the rate ${cell.rate} and the basis ${didRound ? "does not say rounded" : "says rounded"}: "${cell.basis}"`);
+        if (!cell.basis.includes(String(cell.rate))) reds.push(`premises ${c.slug}: the basis does not print the rate ${cell.rate}: "${cell.basis}"`);
+      }
+    }
+    withheldCells += withheld;
+    if (withheld !== d.withheld) reds.push(`premises ${c.slug}: ${withheld} withheld cell(s) and the cluster counts ${d.withheld}`);
+    for (const t of [...Object.values(K), ...lines]) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`premises ${c.slug}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`premises ${c.slug}: a placeholder was never filled ("${t}")`);
+    }
+  }
+  console.log(`premises bento: ${built} clusters build over ${cities.length} cities, ${held} every figure held, ${modelled} modelled and saying so, ${withheldCells} withheld cell(s), ${rounded} counts rounded and saying so; openers and basis lines within their caps, no banned word`);
 }
 
 /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`; plan step 31's third
