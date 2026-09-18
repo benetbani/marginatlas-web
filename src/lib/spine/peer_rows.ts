@@ -84,10 +84,13 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
  *  this rewrite (its own comment: "Each peer's rent_index <- cost_of_living_
  *  index (real, London = 75, NOT indexed to 100), median_income_usd <- avg_
  *  gross_salary_usd_year (real), visitors_m <- tourist_arrivals_m (real)"):
- *   - cheaper: `rent_index` is the source cost-of-living index itself, "a
- *     leading metro = 100" (cities/[slug]/page.tsx's own field comment), so a
- *     value IS honestly a percent of that leading metro; LOWER reads cheaper,
- *     so `best` is "min" here, unlike the other two.
+ *   - living (the key was `cheaper` until plan step 32's fifth dispatch,
+ *     2026-09-18, when its head "Cheaper to live" became "Cost of living",
+ *     8.3's words: a comparative over a column of absolutes went, and the
+ *     key follows the head): `rent_index` is the source cost-of-living index
+ *     itself, "a leading metro = 100" (cities/[slug]/page.tsx's own field
+ *     comment), so a value IS honestly a percent of that leading metro; LOWER
+ *     reads cheaper, so `best` is "min" here, unlike the other two.
  *   - income: `median_income_usd` is already a dollar figure (a mean, not
  *     really a median; see adapt_city.ts's own warning on the field name),
  *     printed through the unit the country table already uses for money.
@@ -112,13 +115,13 @@ export function buildCityPeerTable(seed: any): CityPeerTable | null {
     name: String(r.name),
     home: !!r.home,
     values: {
-      cheaper: isNum(r.rent_index) ? Math.round(r.rent_index) : null,
+      living: isNum(r.rent_index) ? Math.round(r.rent_index) : null,
       income: isNum(r.median_income_usd) && r.median_income_usd > 0 ? Math.round(r.median_income_usd) : null,
       visitors: isNum(r.visitors_m) && r.visitors_m > 0 ? Math.round(r.visitors_m * 10) / 10 : null,
     },
   }));
   const all: PeerColumn[] = [
-    { key: "cheaper", head: COPY.cityPeers.cols.cheaper, unit: "pct", best: "min" },
+    { key: "living", head: COPY.cityPeers.cols.living, unit: "pct", best: "min" },
     { key: "income", head: COPY.cityPeers.cols.income, unit: "usd", best: "max" },
     { key: "visitors", head: COPY.cityPeers.cols.visitors, unit: "m", best: "max" },
   ];

@@ -719,9 +719,18 @@ export const COPY = {
    *  can tell which value won, and is gone, along with the peer-matching sentence that went with
    *  it under the same rule: what a tick cannot say is only what the figures are and over what
    *  period, so that is all that is left. */
+  /** THE WORDS ARE 8.3's `11 peers` (plan step 32's fifth dispatch,
+   *  2026-09-18), each read aloud. The kicker was "Peer cities, side by side",
+   *  five words, over PART 7's four-word cap; "Against other cities" is what
+   *  the table does. The first column head was "Cheaper to live", a
+   *  comparative over a column that prints the absolute index (PART 5: a
+   *  comparison table never prints a comparison, and a head names the thing
+   *  measured); it is "Cost of living", the figure's own name. The income head
+   *  was "Customer income" and the column has printed the one builder's
+   *  typical pay since the fourth dispatch; the label follows the figure. */
   cityPeers: {
-    kicker: "Peer cities, side by side",
-    cols: { city: "City", cheaper: "Cheaper to live", income: "Customer income", visitors: "Visitors" },
+    kicker: "Against other cities",
+    cols: { city: "City", living: "Cost of living", income: "Typical pay", visitors: "Visitors" },
     /** THE BARE WORD IS GONE (his words, 2026-09-07): "for the table, you say
      *  cheaper to live, customer income, visitors, and then you just say you
      *  mention the word same. That's a major mistake." `same` printed for any
@@ -749,7 +758,12 @@ export const COPY = {
    *  words. It names the thing measured and what it is measured against, in
    *  the order a person would say them. */
   cityDistricts: {
-    kicker: "By district",
+    /* THE KICKER IS 8.3's OWN TITLE (plan step 32's fifth dispatch,
+       2026-09-18): "Rent by district", three words, naming the thing measured
+       and the set it is measured over. "By district" said the set and not the
+       thing, and read against the model's letter it was the one string on
+       this card that disagreed. */
+    kicker: "Rent by district",
     /* WHAT THE OLD BASIS DID WRONG: "Each district's shop rent set against
        {district}, the cheapest here" made the reader carry a clause inside a
        clause to learn one fact, and "the cheapest here" left "here" doing work
@@ -769,6 +783,19 @@ export const COPY = {
        exception rather than this file quietly keeping a shorter, worse head.
        The reference district is filled in from the data, never typed. */
     phoneHead: { name: "District", value: "Rent, against {district}" },
+  },
+  /** THE TRADES WITH LOCAL FIGURES (MODEL.md 8.3 `09 trades`; plan step 32's
+   *  fifth dispatch, 2026-09-18): the trade rows, no figure per row (take-home
+   *  and margin are stripped upstream by the 2026-07-11 ban), so the card's
+   *  one line is the foot in the coverage form PART 7 puts there, in the
+   *  model's own words. `{n}` is the count of trades the card draws, composed
+   *  in city-view.tsx as a word ("seven"): digits are what a figure cell is
+   *  for and a sentence takes the word (district_rows.ts, countWord). The
+   *  second sentence says on the page what the model knows about `10
+   *  easiest`: it has no seat here until ruling 30 lands. Both read aloud. */
+  cityTrades: {
+    kicker: "Trades with local figures",
+    foot: "Local figures for {n} trades. Which is easiest to open here is not yet known.",
   },
   /** THE FOUNDER'S PLUS (2026-09-08): the detail panel's summary lines, one for
    * each query a reader clicks open. Reused, not invented per instance: the

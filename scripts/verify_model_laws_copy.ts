@@ -91,7 +91,7 @@
  * enforced at the point where it could be broken, not just stated in prose.
  */
 import { COPY } from "@/lib/spine/copy";
-import { buildCityDistrictBars } from "@/lib/spine/district_rows";
+import { buildCityDistrictBars, countWord } from "@/lib/spine/district_rows";
 import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
 import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
@@ -569,6 +569,17 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      are pushed by name. A seat's line stands where a card's focal would and
      is read aloud like a basis line. */
   for (const [key, seat] of Object.entries(COPY.blocked)) heads.push([`COPY.blocked.${key}.line`, seat.line], [`COPY.blocked.${key}.foot`, seat.foot]);
+
+  /* THE TRADE ROWS' FOOT (MODEL.md 8.3 `09 trades`; plan step 32's fifth
+     dispatch, 2026-09-18): the card's one line, in the coverage form, carries
+     `{n}` and is skipped by the static sweep by design, so it is pushed in the
+     forms a reader meets: the count as a word for every count the card can
+     draw (four, the floor under which it self-omits, to seven, the cap the
+     slate holds; counted 2026-09-18 through the adapter's path, cities draw
+     five, six or seven). The kicker the sweep takes by key. The peers' three
+     corrected strings (the kicker, "Cost of living", "Typical pay") the sweep
+     takes by key too, as `kicker` and `cols`. */
+  for (let n = 4; n <= 7; n++) heads.push([`COPY.cityTrades.foot(${n})`, COPY.cityTrades.foot.replace("{n}", countWord(n))]);
 
   for (const [where, text] of heads) {
     const why = bannedConstruction(text);
