@@ -71,14 +71,18 @@ async function main() {
   console.log(`\n  ${bad} chapter heading(s) with nothing under them.\n`);
 }
 /* ------------------------------------------------------------------------- *
- * THE TWO SECTIONS THE LEDGER NEVER LISTED. The customers chapter is built to
- * hold four cards: the spending pool, the seasonal split, what customers earn,
- * and rent measured against that income. Only the first two were ever written
- * down. This asks whether the other two reach a reader at all.
+ * THE SECTION THE LEDGER NEVER LISTED. The customers chapter was built to hold
+ * four cards: the spending pool, the seasonal split, what customers earn, and
+ * rent measured against that income. Only the first two were ever written
+ * down. This asks whether the earnings card reaches a reader at all. The rent
+ * card is no longer asked here: since plan step 32's third dispatch
+ * (2026-09-18) it is `Runway` in city-view.tsx, a KvGrid seat off
+ * `buildCityRunway(slug)`, in the census like every other section, and the
+ * kit card this probe used to render (`RentAffordability`) is retired.
  * ------------------------------------------------------------------------- */
 async function unlisted() {
-  const { IncomeCurve, RentAffordability } = await import("../src/components/spine/city/chapters");
-  console.log("  the two sections that were never in the ledger\n");
+  const { IncomeCurve } = await import("../src/components/spine/city/chapters");
+  console.log("  the section that was never in the ledger\n");
   for (const slug of [...SLUGS]) {
     const d: any = await buildSpineCitySeed(slug);
     if (!d) continue;
@@ -87,16 +91,11 @@ async function unlisted() {
       return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length;
     };
     const a = draws(IncomeCurve);
-    const b = draws(RentAffordability);
-    console.log(
-      `    ${String(d.meta?.city ?? slug).padEnd(11)} what customers earn ${a ? String(a).padStart(4) + " chars" : "  nothing"}   rent against income ${b ? String(b).padStart(4) + " chars" : "  nothing"}`,
-    );
+    console.log(`    ${String(d.meta?.city ?? slug).padEnd(11)} what customers earn ${a ? String(a).padStart(4) + " chars" : "  nothing"}`);
   }
   const s: any = spineCitySeed;
   const draws = (C: unknown) =>
     renderToStaticMarkup(React.createElement(C as React.FC<{ d: any }>, { d: s })).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length;
-  console.log(
-    `    ${"the sample".padEnd(11)} what customers earn ${String(draws(IncomeCurve)).padStart(4)} chars   rent against income ${String(draws(RentAffordability)).padStart(4)} chars\n`,
-  );
+  console.log(`    ${"the sample".padEnd(11)} what customers earn ${String(draws(IncomeCurve)).padStart(4)} chars\n`);
 }
 void main().then(unlisted);
