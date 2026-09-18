@@ -34,14 +34,24 @@
  * from the picker; `04` draws every line as one set with the shard's own
  * payback). LollipopColumn itself stays in forms-v2 for its other callers.
  *
+ * WHAT THE THIRD DISPATCH BUILT (2026-09-18): the band `05 split | 06 team`
+ * on turn-one.tsx, the net profit margin on IncomeBreakdown (split_rows.ts:
+ * the shard's held drivers or the sector profile, the residual named, the
+ * net pinned last at 30 in ink, THE SAME FIGURE `00` prints, the plus with
+ * fixed and variable costs at its foot) and what staff cost on TiersTable's
+ * figures shape (team_rows.ts: the roles with a headcount and a year's pay
+ * off the country's median). WHAT IT RETIRED: the $100 stack (MoneySplit,
+ * which rescaled every cost to fit the net, the fabrication the residual law
+ * forbids), the owner-keeps waterfall (a second drawing of the split's
+ * figures), the wage table (three London roles on a lowest / typical /
+ * highest the seed alone held; `06` draws the shard's roles on 243 trades),
+ * and the format picker with its context (the subtype control room, never
+ * populated on the live route; the industry page's subject). BreakEven reads
+ * the seed alone now.
+ *
  * WHAT STAYS MOUNTED UNTIL ITS OWN DISPATCH, each of today's cards in the
  * seat of the 8.6 block that absorbs it (SPINE.md PART A's inventory), and
  * retiring nothing a later block absorbs:
- *   split (MoneySplit)      -> `05 split`, IncomeBreakdown
- *   keeps (OwnerKeeps)      -> CUT at `05`'s dispatch (a second drawing of
- *                              the split's figures); stands alone after the
- *                              `05 | 06` band until then
- *   wages (Wages)           -> `06 team`, TiersTable
  *   peers (Nearby)          -> `07 peers`, CompareTable full width; in a
  *                              band until then, because a full width with no
  *                              wide-table sanction reds the section-bands
@@ -56,9 +66,6 @@
  *                              on the live route today
  *   related (Related)       -> `13 rivals`, MarkList; self-omits on the live
  *                              route today
- *   format (FormatPicker)   -> CUT at the money chapter's dispatch (the
- *                              industry page's subject); self-omits on the
- *                              live route today (no subtypes)
  *   close (Close)           -> `15 close`, Terminus
  *
  * THE THIRD CHAPTER BREAK draws when a card stands under it (the city
@@ -80,7 +87,6 @@
  *
  * As-built chart dictionary (rulebook 25 bar budget: max 3 bar-family graphics per
  * page, no two adjacent sections sharing the bar form). The THREE counted bars:
- *   BAR 1 , 100% stacked bar (legended): MoneySplit $100 split x1 (ch1)
  *   BAR 2 , ShareStack (the founder-blessed channel/how-they-pay share bar): Demand channels x1 (ch2)
  *   BAR 3 , PhaseBar (two-anchor open/break-even time axis): Ramp x1 (ch4)
  * FREE forms carry the rest of the variety (no budget cost):
@@ -95,12 +101,7 @@
  *      surplus takes a second lap outside it): BreakEven x1. It replaced a
  *      two-marker scale on 2026-09-02, subsection queue row A4.
  *   editorial table (figures + bold-best, no in-cell bars): Nearby x1
- *   waterfall (gross -> labeled decrements -> net, from the $100 split): OwnerKeeps x1 (max 1)
  *   spread strip: masthead turnover p10/p50/p90 x1
- *   pay table, three roles across a lowest / typical / highest (idea I8, free):
- *      Wages x1. It replaced three hand-rolled range brackets on a shared rail
- *      on 2026-09-02, subsection queue row A8, which also closes queue row C1.
- *   segmented-control (selection chrome, ink): FormatPicker x1
  * REMOVED forms: Gauge, 3-pip meters, Dots, invented-ceiling break-even fill bar, the
  *   3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area,
  *   the Related keep-% lollipops, the catchment IndexBars, the Nearby in-cell CellScaleBars;
@@ -112,15 +113,16 @@
 import * as React from "react";
 import { spineCellSeed } from "@/lib/spine-seeds";
 import {
-  Fig, Box, Rail, Movement, Full, WideRail, Donut, StackBar, ShareStack, InfoTip, StruckLine, TERRA, usd, Band,
+  Fig, Box, Rail, Movement, WideRail, Donut, ShareStack, InfoTip, StruckLine, TERRA, usd, Band,
 } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
-import { FormatPicker, FormatProvider } from "./format-picker";
-import { OwnerKeeps, BreakEven } from "./money-chapter";
-import { PermitsCard, OpenCard } from "./turn-one";
+import { BreakEven } from "./money-chapter";
+import { PermitsCard, OpenCard, SplitCard, TeamCard } from "./turn-one";
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
-import { Nearby, Wages, Risks } from "./interactive";
+import { buildSplit } from "@/lib/spine/split_rows";
+import { buildTeam } from "@/lib/spine/team_rows";
+import { Nearby, Risks } from "./interactive";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
@@ -142,54 +144,6 @@ const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
  * 2026-07-11): after the 07-10 verdict deletions it was a lone n_firms figure
  * stretched across a half band. The count survives, reframed as what it is (how
  * many already trade here), as the masthead scorecard's third tile. */
-
-/* MoneySplit , WI-3 brief (rulebook v2 corrections, 2026-07-10): the Rail verdict
- * and the two-sentence `read` are both DELETED; the 100%-stacked $100 bar plus its
- * kept-slice legend already carries "two thirds is gone before rent". The one
- * surviving line is a COMPUTED fact (the largest non-kept slice), not seed prose ,
- * schematic, not editorial.
- * decision: where the money goes. Number: the kept slice (7%). focal: the 100%-stacked $100 bar.
- * width: Full (T1, the canonical cost-stack). terracotta target: the kept slice only.
- * StackBar's default HONESTY SORT does the work: size-descending, kept slice pinned last
- * + terracotta, grey darkness remapped to magnitude, legend the visible carrier. */
-function MoneySplit({ d }: { d: any }) {
-  const items: any[] = d.money_split?.items ?? [];
-  if (items.length === 0) return null;
-  const segments = items.map((it) => ({ label: it.name, pct: it.pct, color: it.kept ? TERRA : "#c8c8c6", kept: !!it.kept }));
-
-  /* THE PRICE OF NORMALISING, paid here rather than left as a trap.
-     Stretching the slices to fill the track is right for a one-point rounding
-     drift and WRONG for a split that is genuinely broken: a stack summing to 70
-     used to show an unmissable third of empty track, and normalised it would
-     quietly draw as a full, confident, entirely false hundred dollars. So the
-     bar is allowed to stretch only over a rounding-sized gap, and refuses to
-     draw at all beyond that.
-     The tolerance is four points against a measured worst case of one, so on
-     today's pipeline this never fires. It is not for today's pipeline. It is
-     for the day the upstream split changes shape and nothing else notices. */
-  const total = segments.reduce((a, s) => a + (Number.isFinite(s.pct) ? s.pct : NaN), 0);
-  if (!Number.isFinite(total) || Math.abs(total - 100) > 4) return null;
-  return (
-    <Box id="split">
-      {/* sample: the kept 7% is a modeled cost-structure share, not a measured net
-          margin by city (rulebook 4A/5); the tag marks it so it never reads as real. */}
-      <Rail icon="cost-breakdown" kicker="Where each $100 of sales goes" sample />
-      {/* NORMALISE. Measured 2026-08-22, not assumed: the five slices are scaled
-          to sum to exactly 100 as decimals, then each is rounded on its own, and
-          across 320 realistic splits that lands off 100 in 39% of cases. When it
-          lands SHORT, and it does in 20% of cases, the bar stops before the end
-          of its own track and leaves a pale notch, on a section whose entire
-          claim is that these five parts ARE the hundred dollars. A gap reads as
-          a sixth cost nobody named.
-          The prediction that the over-100 case would CLIP the terracotta kept
-          slice was wrong, and the browser said so: flex shrinks the row back to
-          the track, so those cases were already correct. Only the short ones
-          were broken. Widths change by at most one point; no printed figure
-          moves. The legend still prints the caller's real numbers. */}
-      <StackBar segments={segments} normalize ariaLabel={segments.map((p) => `${p.label} ${p.pct}%`).join(", ")} legend />
-    </Box>
-  );
-}
 
 /* ================= THE OPENING BAND, `01 spread | 02 suits` ================= */
 /**
@@ -620,9 +574,8 @@ function Related({ d }: { d: any }) {
 /* Close , the deliberate full-width end of the page. The recap PARAPHRASES the verdict
  * (an echo, never a verbatim copy of the hero or the break-in line), one ink CTA, and
  * ink next-step links (navigation is chrome; the accent never sits on chrome).
- * Rulebook v2 corrections (2026-07-10): the two "format" strings are gated on
- * hasSubtypes so a cell with no subtype picker (e.g. a dental or auto-repair cell)
- * never references a format it never showed. */
+ * The "format by format" door left with the format picker (plan step 33's third
+ * dispatch, 2026-09-18): there is no format read on the page to point at. */
 function Close({ d }: { d: any }) {
   const rel: any[] = d.related ?? [];
   const city = d.meta?.city ?? "this market";
@@ -636,12 +589,9 @@ function Close({ d }: { d: any }) {
   const placePrefix =
     iso2 && geo ? `/${String(iso2).toLowerCase()}/${String(geo).toLowerCase()}` : null;
   const trade = (d.meta?.trade ?? "this trade").toLowerCase();
-  const hasSubtypes = Array.isArray(d.subtypes?.items) && d.subtypes.items.length > 0;
   // Every link carries a REAL destination or renders as a plain span with no arrow
   // (no fake affordance): the trade-across-markets read lives on the industry page,
-  // the sibling-trade cell rides its seed slug, and the format-by-format read has no
-  // page of its own yet (it lives in this page's money chapter , and only exists at
-  // all when this cell actually has a format picker to point at).
+  // and the sibling-trade cell rides its seed slug.
   const links: Array<{ t: string; href?: string }> = [
     /* THE DESTINATION NOW MATCHES THE PROMISE. This row said "compare X across
        nearby markets" and went to the industries INDEX, a directory of trades,
@@ -656,7 +606,6 @@ function Close({ d }: { d: any }) {
     ...(rel[0]
       ? [{ t: `Look at ${rel[0].name.toLowerCase()} in ${city} instead`, href: rel[0].slug && placePrefix ? `${placePrefix}/${rel[0].slug}` : undefined }]
       : []),
-    ...(hasSubtypes ? [{ t: "See what an owner keeps, format by format" }] : []),
   ];
   return (
     <Box id="close">
@@ -727,12 +676,10 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      draw on every trade), so the band always holds two children. */
   const hasSpread = buildTradeSpread(d) != null;
   const hasSuits = typeof d.meta?.industry_id === "string" && typeof d.meta?.iso2 === "string";
-  const hasMoneySplit = Array.isArray(d.money_split?.items) && d.money_split.items.length > 0;
   const hasDemand =
     Array.isArray(d.demand?.dayparts) ||
     Array.isArray(d.demand?.channels) ||
     Array.isArray(d.demand?.catchment);
-  const hasSubtypes = Array.isArray(d.subtypes?.items) && d.subtypes.items.length > 0;
   /* `03 permits | 04 open` (turn-one.tsx): both builders on every resolving
      cell whose trade holds a shard (243), the permits off the licences and
      the cost to open in whichever of its three states the cell is in, so the
@@ -740,9 +687,13 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      `default`, no shard) draws neither and the band does not draw. */
   const permits = buildPermits(d.meta?.industry_id);
   const open = buildOpen(d);
-  const hasOwner = hasMoneySplit;
+  /* `05 split | 06 team` (turn-one.tsx): the split off the seed's one-builder
+     net and the trade's lines, the team off the shard's roles and the
+     country's median; both on every trade that holds a shard, so the band
+     holds two children or does not draw (the same condition as `03 | 04`). */
+  const split = buildSplit(d);
+  const team = buildTeam(d.meta?.industry_id, d.meta?.iso2);
   const hasBreakEven = typeof d.break_even?.covers_per_day === "number";
-  const hasWages = Array.isArray(d.wages?.roles) && d.wages.roles.length > 0;
   const hasSeasonality = Array.isArray(d.seasonality?.months) && d.seasonality.months.length >= 2;
   const hasRisks = Array.isArray(d.risks?.items) && d.risks.items.length > 0;
   const hasNearby = Array.isArray(d.nearby?.places) && d.nearby.places.length > 0;
@@ -752,7 +703,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      third waits on `12 market`): turn one holds the money cards, turn two
      the ring, the survival curve and the risks, turn three the seasonality
      alone today. */
-  const turnOne = !!(permits && open) || hasMoneySplit || hasWages || hasOwner || hasNearby || hasSubtypes;
+  const turnOne = !!(permits && open) || !!(split && team) || hasNearby;
   const turnTwo = hasBreakEven || hasMyth || hasRisks || hasDemand;
   const turnThree = hasSeasonality;
 
@@ -802,34 +753,19 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               <OpenCard open={open} />
             </Band>
           ) : null}
-          <FormatProvider d={d}>
-            {hasSubtypes ? <Full><FormatPicker d={d} /></Full> : null}
-            {/* `05 split | 06 team`, 3-2 in 8.6, the split wide LEFT (fill-bar one,
-                M10) and the team narrow RIGHT. TODAY'S CARDS CANNOT SEAT THAT
-                PAIR, MEASURED 2026-09-18 with the page filter and the
-                art-direction gate: the $100 stack's card (a bar and a legend,
-                about 93 inside) stretched to the three-row wage table's 243
-                opened a 584 by 150 hole at 3-2, and at 2-3 and 1-2 alike stood
-                at 51 percent ink against the gate's E2 floor of 60 (a card that
-                cannot fill its partner's height is re-paired, never
-                unstretched, 8.4). So the stack stands alone in `05`'s seat
-                position at the survivor's two thirds (LONE CARD, expected), and
-                the waterfall, a second drawing of the same split that `05`'s
-                dispatch cuts, stands beside the wage table at the 3-2 the old
-                body measured and shipped: the waterfall wide LEFT in `05`'s
-                column, the team narrow RIGHT in `06`'s. */}
-            {hasMoneySplit ? (
-              <Band split="2-1">
-                <MoneySplit d={d} />
-              </Band>
-            ) : null}
-            {hasOwner || hasWages ? (
-              <Band split="3-2">
-                {hasOwner ? <OwnerKeeps d={d} /> : null}
-                {hasWages ? <Wages d={d} /> : null}
-              </Band>
-            ) : null}
-          </FormatProvider>
+          {/* `05 split | 06 team`, the split wide LEFT (fill-bar two, M10) and the
+              team narrow RIGHT (8.6), AT 3-2 as expected, RULED BY MEASUREMENT
+              2026-09-18 (8.4 rule 1; the dispatch's report carries the numbers
+              at three widths on the three story cells). `stack="lg"` because at
+              a tablet's 344 the split's legend fell to one column and the
+              seven-row table stood past it. Both cards draw on every cell whose
+              trade holds a shard. */}
+          {split && team ? (
+            <Band split="3-2" stack="lg">
+              <SplitCard split={split} />
+              <TeamCard team={team} />
+            </Band>
+          ) : null}
           {/* `07 peers`, FULL WIDTH in 8.6 on CompareTable, closing turn one; today's
               Nearby table in a band at the survivor's two thirds until its
               dispatch (the header says why not full width yet). */}
@@ -848,8 +784,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           <Movement index="02" heading={COPY.tradeChapters.keep} />
           {/* `08 clears | 09 lasts`, 1-1, the ring LEFT (loud three in 8.6) and the
               survival figures RIGHT: today's break-even ring and the myth's
-              survival curve in their seats. The ring still reads the format
-              context, so the provider wraps it here too. */}
+              survival curve in their seats. */}
           {hasBreakEven || hasMyth ? (
             /* MEASURED 2026-09-18: at 1-1 the ring (a fixed 168 drawing) beside the
                survival curve opened a 150 by 246 hole to its right at 1280; a ring
@@ -857,7 +792,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
                own finding on this card) and the interim pair sits at 1-2 until the
                ring is redrawn at `08`'s dispatch. */
             <Band split="1-2">
-              {hasBreakEven ? <FormatProvider d={d}><BreakEven d={d} /></FormatProvider> : null}
+              {hasBreakEven ? <BreakEven d={d} /> : null}
               {hasMyth ? <Myth d={d} /> : null}
             </Band>
           ) : null}

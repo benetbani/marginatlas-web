@@ -3,11 +3,12 @@
  * Client interactives for the cell page that are NOT part of the money-chapter
  * subtype propagation: the sortable Nearby comparison table (click-to-sort, a
  * keeps-per-$1 rate column proving the section's own verdict; figures + bold-best
- * only, the in-cell bars are gone per rulebook v1 sections 22/25), the Wages
- * mid-pay figures + track-free range brackets (permanently visible, rulebook v2
- * S6), and the Risks dot plot on a shared labeled 0-10 scale. Kept out
- * of money-chapter.tsx
- * because they do not read the FormatContext. All prose from the seed.
+ * only, the in-cell bars are gone per rulebook v1 sections 22/25) and the Risks
+ * dot plot on a shared labeled 0-10 scale. THE WAGE TABLE LEFT THIS FILE on
+ * plan step 33's third dispatch (2026-09-18): MODEL.md 8.6 `06 team` draws the
+ * shard's roles on TiersTable in cell/turn-one.tsx from team_rows.ts, on 243
+ * trades where this card drew three London roles off the seed alone. All
+ * prose from the seed.
  */
 import * as React from "react";
 import { Box, Rail, Fig, EaseScale, InfoTip, InlineDisclosure, usd } from "@/components/spine/kit";
@@ -153,153 +154,6 @@ export function Nearby({ d }: { d: any }) {
       {/* the glued definition + "read like for like" instruction caption is DELETED
           (rulebook 26/40): the unit lives in the column header "(c)" and its InfoTip, and
           the section's own kicker already states the "same trade, comparable places" scope. */}
-    </Box>
-  );
-}
-
-/* Wages , "What each role is paid", and A8 OF THE SUBSECTION QUEUE.
- *
- * WARRANT (procedure step 1). A visitor reads this to decide WHAT THEY MUST
- * OFFER TO FILL EACH ROLE, and which of those wages they can move. Without it
- * they would budget one figure a role, discover the market's floor sits above
- * it for the role they cannot open without, and find out too late that the
- * cheapest role has no room in it at all.
- *
- * NOT THREE RANGE BRACKETS, AND NOT A GROUPED ONE EITHER, which is the decision
- * this row turned on and it is worth writing out because the queue predicted
- * both.
- *
- * THREE BRACKETS ARE FORBIDDEN BY THE CAP, and the arithmetic is simpler than
- * the note that reopened it. RangeBracket declares data-idea="I12" per
- * instance, SPAN is capped at two a page, and three is more than two whether or
- * not any other section has spent one. They are also the same shape three times
- * in one card, which is the sameness this whole effort exists to end, and each
- * one sets its typical at the focal rung, so the card would hold three figures
- * competing to be read first and therefore no answer at all.
- *
- * A GROUPED RANGE FORM IS NOT IN THE CATALOGUE, and inventing one is rule 0's
- * ban. The nearest thing that exists, SpreadStrip, is a horizontal track and
- * this page is at the track cap of two. So step 3's own escape applies: when
- * every form the named type points at is unavailable, the information was named
- * wrongly. Three roles, each carrying a lowest, a typical and a highest, is not
- * three ranges read one at a time. It is ENTITIES ACROSS SEVERAL METRICS, whose
- * catalogue row is a table, idea I8, free. The reader compares roles down the
- * columns, which is what a table is for and what three stacked brackets cannot
- * do at all.
- *
- * WHAT WAS HERE, AND WHY IT HAD TO GO. Three range brackets on a shared rail,
- * hand-rolled inline, carrying no data-idea: the catalogue addendum's "where
- * the sameness actually lives", and the three tracks that put this page at five
- * against a cap of two the moment anyone declared them. They also could not be
- * read. The card's own comment said so: the low and the high existed only in
- * the description a screen reader hears, so a sighted reader got a bracket on a
- * scale and could recover neither end. The table prints all nine figures.
- *
- * A ROLE PAID ONE RATE PRINTS THE SAME FIGURE THREE TIMES, and that is the
- * honest picture rather than a rendering fault. Every cell that carries wages
- * has one such role, the kitchen porter here at 24K and the junior stylist in a
- * salon, and the drawing this replaces had already been corrected once for
- * making that role look like a role with no figures at all. Empty cells would
- * reintroduce exactly that.
- *
- * THE CARD HAS NO ACCENT, and that is inherited rather than newly decided: a
- * head-chef row is a roster position, not an answer, so the figures are the
- * read. Rule 29A would forbid the obvious alternative anyway, because a wage is
- * a burden and terracotta never marks the dearest of anything.
- *
- * width: two fifths of the band, beside the money waterfall.
- */
-export function Wages({ d }: { d: any }) {
-  const roles: any[] = d.wages?.roles ?? [];
-  if (roles.length === 0) return null;
-  /* A FOURTH PRIVATE FORMATTER STOOD HERE AND IS GONE (C29, 2026-09-02): a local
-     `kUsd` that rounded every wage to the nearest thousand and printed a K
-     whatever the magnitude, so a role paid $4,200 a year read "$4K" and one paid
-     $600 read "$1K". The three figures use this file's own `money` now, which is
-     the kit's ratified formatter. London's roles are all above $10,000, so no
-     committed render moves; the card renders on every cell page in the atlas,
-     including the ones where a kitchen porter is paid four figures. */
-  /* DEAREST FIRST, sorted here rather than trusted from the adapter, because
-     the order is the reading: a budget starts at the hire that costs most. */
-  const rows = [...roles].sort((a, b) => (b.mid_usd ?? 0) - (a.mid_usd ?? 0));
-  /* A ROLE WITH NO TYPICAL HAS NOTHING FOR THE MIDDLE COLUMN TO SAY, so it is
-     dropped rather than printed as a zero or a dash beside two real ends. */
-  const kept = rows.filter((r) => Number.isFinite(r.mid_usd));
-  if (kept.length === 0) return null;
-  /* Number.isFinite FIRST: two undefined ends are equal to each other, so the
-     bare comparison printed the one-rate caveat for a role that simply carries
-     no ends at all. */
-  const flat = kept.some((r) => Number.isFinite(r.low_usd) && r.low_usd === r.high_usd);
-  return (
-    <Box id="wages">
-      <Rail icon="wages" kicker="What the team costs" sample />
-      {/* THE TABLE IS THE FORM, idea I8, and its craft is the alignment. Every
-          role's three figures sit on ONE baseline, so a row reads as one span
-          rather than as three separate facts, and every column's digits line up
-          under each other, so a reader compares roles by looking down rather
-          than by reading across three times.
-          SIZE CONTRAST CARRIES THE MEANING: the typical stands at the section
-          rung against its own two ends at body, 24 against 14, so each row says
-          "this much, and it can move between these" in one glance. The column
-          of typicals is therefore the first thing on the card and the ends are
-          the second, which is the same hierarchy the catalogue's own span form
-          uses and the reason this reads as its relative rather than as a
-          different idea wearing a table.
-          LOW, TYPICAL, HIGH IN THAT ORDER, left to right, and in the span
-          form's own words: those are RangeBracket's default end labels, and its
-          own layout puts the low at the left, the typical between and the high
-          at the right. A reader who has met one meets the other
-          in the same arrangement. */}
-      {/* NO mt HERE. The Rail already carries 8 below it, which is the spacing
-          ladder's slot rung, and adding 4 made the gap 12, a value between two
-          rungs, which is the same fault this loop has now found four times. */}
-      <div data-idea="I8">
-        <table className="w-full table-fixed border-collapse">
-          {/* THE TYPICAL COLUMN IS THE WIDEST OF THE THREE, because it holds the
-              largest type. At four equal-ish columns a 24px figure filled its
-              cell edge to edge and sat about eight pixels from the 14px figure
-              beside it at 375, which is the collision fault class one measurement
-              short of happening. */}
-          <colgroup>
-            <col style={{ width: "30%" }} />
-            <col style={{ width: "21%" }} />
-            <col style={{ width: "28%" }} />
-            <col style={{ width: "21%" }} />
-          </colgroup>
-          <thead>
-            <tr className="border-b border-[var(--c-border)]">
-              {/* the corner cell labels nothing, so it declares nothing */}
-              <th className="pb-2" />
-              <th scope="col" className="pb-2 pl-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Low</th>
-              <th scope="col" className="pb-2 pl-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">Typical</th>
-              <th scope="col" className="pb-2 pl-2 text-right text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">High</th>
-            </tr>
-          </thead>
-          <tbody>
-            {kept.map((r) => (
-              <tr key={r.role} className="border-b border-[var(--c-border)] last:border-b-0">
-                <th scope="row" className="py-2 pr-2 text-left align-baseline text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]">{r.role}</th>
-                <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-body)] text-[var(--c-ink2)]">
-                  {Number.isFinite(r.low_usd) ? <Fig>{money(r.low_usd)}</Fig> : null}
-                </td>
-                <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-section)] leading-none text-[var(--c-ink)]">
-                  <Fig>{money(r.mid_usd)}</Fig>
-                </td>
-                <td className="py-2 pl-2 text-right align-baseline text-[length:var(--t-body)] text-[var(--c-ink2)]">
-                  {Number.isFinite(r.high_usd) ? <Fig>{money(r.high_usd)}</Fig> : null}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {/* THE UNIT, AND THEN THE ONE CAVEAT THE TABLE CANNOT STATE ABOUT
-            ITSELF. The second sentence renders only when a role in this cell
-            actually pays one rate, so a page where every role has a spread is
-            never told about a case it does not contain. */}
-        <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
-          Pay a year, for one person in the role.{flat ? " A role that pays one rate shows the same figure three times." : ""}
-        </p>
-      </div>
     </Box>
   );
 }

@@ -10,14 +10,6 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/cell/cell-view.tsx#split",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/cell-view.tsx#2",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/cell/cell-view.tsx#3",
       "reason": "not yet on an archetype; a build loop queue row"
     },
@@ -30,15 +22,7 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/cell/cell-view.tsx#ramp",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/cell/cell-view.tsx#myth",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/cell-view.tsx#8",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
@@ -46,7 +30,7 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/cell/format-picker.tsx#1",
+      "section": "src/components/spine/cell/cell-view.tsx#7",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
@@ -54,23 +38,11 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/cell/interactive.tsx#wages",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/cell/interactive.tsx#risks",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/cell/money-chapter.tsx#keeps",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/cell/money-chapter.tsx#breakeven",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/money-chapter.tsx#opening",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {

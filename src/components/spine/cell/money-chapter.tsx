@@ -1,31 +1,69 @@
 "use client";
 /**
- * The money chapter , the client half that reads the FormatContext so the chosen
- * subtype PROPAGATES: the owner-keeps stepped waterfall (derived from the $100 split,
- * always closing to 100) and the break-even headroom re-read for the format the
- * reader actually means. THE COST TO OPEN LEFT THIS FILE on plan step 33's second
- * dispatch (2026-09-18): MODEL.md 8.6 `04 open` draws it on RankedBars in
- * cell/turn-one.tsx from open_rows.ts, every setup line as one set with the
- * shard's own payback in the foot; the LollipopColumn card that stood here drew
- * five of nine lines and a payback derived from the picker, and retires with it. Focal figures count
- * up once on scroll-in (reduced-motion safe). Terracotta is rationed to exactly one
- * element per Box (the kept step / the payback figure / the break-even fill). The
- * owner's $ take appears at hero scale in the masthead + control-room trio ONLY ,
- * this file never restates it big (Final Ascent dedup).
- *
- * PROPAGATION IS TOTAL: every figure a format switch touches either recomputes from
- * the picked subtype (break-even numerator AND denominator, payback = capex / take)
- * or is format-neutral prose the seed keeps number-free (break_even.surface_line).
- * The signature interaction must never render side-by-side contradictions.
- *
- * All prose comes from the seed (owner.surface_line, break_even.surface_line),
- * so scaled cells read specific, not templated.
+ * The money chapter's one remaining client card: the break-even ring
+ * (`08 clears`'s seat until its own dispatch). THE COST TO OPEN LEFT THIS
+ * FILE on plan step 33's second dispatch (2026-09-18): MODEL.md 8.6 `04
+ * open` draws it on RankedBars in cell/turn-one.tsx from open_rows.ts. THE
+ * OWNER-KEEPS WATERFALL AND THE FORMAT CONTEXT LEFT ON THE THIRD (2026-09-18):
+ * `05 split` draws the one split on IncomeBreakdown from split_rows.ts (the
+ * waterfall was a second drawing of the same figures, rescaled to close to
+ * a hundred, which the residual law forbids), and the subtype control room
+ * (format-picker.tsx: the picker, its provider and the Pro seam, never
+ * populated on the live route) retired with it, so this card reads the seed
+ * alone: `break_even.covers_per_day` against `typical_covers_per_day`, the
+ * cell's own, never a format's. The count-up hooks the ring's one-figure
+ * fallback uses moved here from that file. Terracotta is rationed to the
+ * ring's closed sweep.
  */
 import * as React from "react";
-import { Box, Rail, Fig, InfoTip, InlineDisclosure } from "@/components/spine/kit";
+import { Box, Rail, Fig, InfoTip } from "@/components/spine/kit";
 import { ClearanceRing } from "@/components/spine/forms-v2";
-import { AtlasWaterfall } from "@/components/kit/charts/AtlasWaterfall";
-import { useFormat, useCountUp, useInView } from "./format-picker";
+
+/* Count/draw the focal number toward its target. The RESTING value is always the real
+ * target (SSR / no-JS / reduced-motion / not-yet-in-view all show the true number , never
+ * a 0). `active` gates only the ANIMATION: pass a scroll-in flag for below-fold figures so
+ * they show the real number until seen, then count up; above-fold callers leave it true.
+ * First reveal tweens from 85% of the target (mirrors spine-city/motion, the sanctioned
+ * pattern): a mid-tween capture must sit within rounding distance of the truth, never a
+ * transient 0% beside settled context. Later target switches run prev -> target. */
+function useCountUp(target: number, reduced: boolean, ms = 520, active = true) {
+  const [v, setV] = React.useState(target);
+  const from = React.useRef(0);
+  const done = React.useRef(false);
+  React.useEffect(() => {
+    if (reduced || !active) { setV(target); from.current = target; return; }
+    const start = performance.now();
+    const a = done.current ? from.current : target * 0.85; // first reveal: 85% -> target; later switches: prev -> target
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / ms);
+      const e = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      setV(a + (target - a) * e);
+      if (t < 1) raf = requestAnimationFrame(tick);
+      else { from.current = target; done.current = true; }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, reduced, ms, active]);
+  return v;
+}
+
+/* run a callback once when the element first scrolls into view (for count-up-on-scroll) */
+function useInView<T extends HTMLElement>() {
+  const ref = React.useRef<T | null>(null);
+  const [seen, setSeen] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || seen) return;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } },
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [seen]);
+  return { ref, seen };
+}
 
 function useReduced() {
   const [r, setR] = React.useState(false);
@@ -40,80 +78,6 @@ function CountFig({ value, fmt, className }: { value: number; fmt: (n: number) =
   // rest at the real value; animate up only once it scrolls into view (never render 0)
   const v = useCountUp(value, reduced, 520, seen);
   return <span ref={ref} className={`fig ${className ?? ""}`}>{fmt(v)}</span>;
-}
-
-/* a small "reflecting: Fast casual" tag so the propagation is legible */
-function FormatTag() {
-  const ctx = useFormat();
-  if (!ctx) return null;
-  return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">
-      {ctx.sel.name}
-    </span>
-  );
-}
-
-/* OwnerKeeps , WI-3/4 brief (merged, Final Ascent):
- * decision: how much of turnover actually reaches the owner. The headline $ figure is
- * REMOVED (it lives once at hero scale in the masthead and once in the control-room trio);
- * this card's unique content is the PATH, a true stepped gross-to-net waterfall derived
- * from the $100 split (the one margin source, so the numbers always close to 100).
- * Format propagation: the kept slice follows the picker; the cost steps re-scale
- * proportionally to close the identity (same contract as CostToOpen's line items).
- * width: WideRail chart half. terracotta target: the kept step only.
- * disclosure: the cost-driver notes (names + mechanisms, figures live in the chart). */
-export function OwnerKeeps({ d }: { d: any }) {
-  const ctx = useFormat();
-  const items: any[] = d.money_split?.items ?? [];
-  // The card's unique content is the gross-to-net waterfall drawn from the $100
-  // split. With no honest split there is nothing to draw, so omit the whole card
-  // rather than render an empty shell.
-  if (items.length === 0) return null;
-  const baseKeep = items.find((it) => it.kept)?.pct ?? d.margins?.net_pct ?? 0;
-  const keepPct = ctx ? ctx.sel.keeps_pct : baseKeep;
-  // re-scale the non-kept slices so steps + keep always sum to exactly 100
-  // (largest-remainder rounding; at the blended default the seed integers pass through).
-  const nonKept = items.filter((it) => !it.kept);
-  const restSum = nonKept.reduce((a, it) => a + it.pct, 0) || 1;
-  const target = 100 - keepPct;
-  const exact = nonKept.map((it) => ({ name: it.name, raw: (it.pct * target) / restSum }));
-  const floored = exact.map((e) => ({ name: e.name, pct: Math.floor(e.raw), frac: e.raw - Math.floor(e.raw) }));
-  let remainder = target - floored.reduce((a, e) => a + e.pct, 0);
-  const byFrac = [...floored].sort((a, b) => b.frac - a.frac);
-  for (let i = 0; i < byFrac.length && remainder > 0; i++, remainder--) byFrac[i].pct += 1;
-  const costs = floored.map(({ name, pct }) => ({ name, pct })).sort((a, b) => b.pct - a.pct);
-  const drivers: any[] = d.cost_drivers ?? [];
-  return (
-    <Box id="keeps" className="md:flex-[3]">
-      <div className="flex items-start justify-between gap-2">
-        <Rail icon="owner-keeps" kicker="What the owner keeps" sample />
-        <FormatTag />
-      </div>
-      {/* THE MONEY IDENTITY, on the chart library rather than hand cut SVG.
-          The drawing it replaced scaled its own TEXT with its box, so the same
-          labels were unreadable on a phone and oversized in a wide band. This
-          one holds a real size at every width, wraps a long cost name onto a
-          second line instead of running it into its neighbour, and renders
-          NOTHING at all if the split does not close to the opening figure. */}
-      <AtlasWaterfall
-        start={{ label: "Sales", value: 100 }}
-        steps={costs.map((c) => ({ label: c.name, value: c.pct }))}
-        end={{ label: "Keeps", value: keepPct }}
-        prefix="$"
-        height={190}
-      />
-      <InlineDisclosure name="ownerkeeps" summary="What moves the margin">
-        <div className="mt-2 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
-          {drivers.map((c) => (
-            <div key={c.name} className="grid grid-cols-[130px_1fr] items-baseline gap-3 py-2">
-              <span className="text-[12px] font-medium text-[var(--c-ink)]">{c.name}</span>
-              <span className="text-[11.5px] leading-snug text-[var(--c-ink2)]">{c.note}</span>
-            </div>
-          ))}
-        </div>
-      </InlineDisclosure>
-    </Box>
-  );
 }
 
 /* BreakEven , A4 of the subsection queue, rebuilt 2026-09-02 on the catalogue's
@@ -173,14 +137,14 @@ export function OwnerKeeps({ d }: { d: any }) {
  * figure and its words, which is the catalogue's form for one number standing on
  * its own.
  *
- * PROPAGATION IS UNCHANGED AND STILL TOTAL: both the numerator and the
- * denominator follow the format picker, so the ring can never draw one subtype's
- * threshold against another's day. */
+ * THE FORMAT CONTEXT IS GONE (plan step 33's third dispatch): the numerator and
+ * the denominator are the seed's own, one cell's day against one cell's
+ * threshold, so the ring can never draw one subtype's threshold against
+ * another's day, because there are no subtypes on the page. */
 export function BreakEven({ d }: { d: any }) {
-  const ctx = useFormat();
   const b = d.break_even ?? {};
-  const covers = ctx ? ctx.sel.break_even_covers_per_day : (b.covers_per_day ?? 0);
-  const typicalRaw = ctx ? ctx.sel.typical_covers_per_day : b.typical_covers_per_day;
+  const covers = b.covers_per_day ?? 0;
+  const typicalRaw = b.typical_covers_per_day;
   /* ROUNDED ONCE, HERE, AND THE DRAWING READS THE ROUNDED PAIR. Half a cover is
      not a thing that walks through a door, and a ring drawn from 16.4 against a
      caption saying 16 would be a drawing disagreeing with its own caption by a
@@ -192,10 +156,7 @@ export function BreakEven({ d }: { d: any }) {
   const gloss = "One cover is one customer served; a table of four is four covers.";
   return (
     <Box id="breakeven" className="md:flex-[2]">
-      <div className="flex items-center justify-between gap-2">
-        <Rail icon="break-even" kicker="When it clears costs" sample />
-        <FormatTag />
-      </div>
+      <Rail icon="break-even" kicker="When it clears costs" sample />
       {need != null && takes != null ? (
         <ClearanceRing
           needed={need}
