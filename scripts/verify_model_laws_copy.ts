@@ -94,6 +94,8 @@ import { COPY } from "@/lib/spine/copy";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
+import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
+import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
@@ -380,9 +382,40 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      naming all four, and the share's foot naming both inputs). All come off
      the shipped builders reading the city list and the local bank files, no
      browser, no database. */
-  for (const [iso2, slug, name] of [["GB", "london", "London"], ["DE", "frankfurt", "Frankfurt am Main"]] as const) {
-    const spend = buildCityDemand(iso2, slug, name);
-    if (spend) heads.push([`buildCityDemand(${slug}).basis`, spend.basis]);
+  /* THE SPEND CARD AND THE EARNINGS STRIP (MODEL.md 8.3 `08 demand` and `07
+     earnings`; plan step 32's fourth dispatch, 2026-09-18), composed the same
+     way: the spend's basis, foot and withheld line over the exemplar (the
+     placeholder withheld with its line naming London), Frankfurt (modelled,
+     the foot) and the first held city off the builder; the strip's basis and
+     note over the exemplar (the three marks), Abidjan (no deciles), the first
+     city whose typical falls outside its country's deciles and the first
+     modelled one; and the masthead's answer basis off the one income builder
+     for the same cities (the country-naming basis is a template and the
+     static sweep skips it by design). */
+  {
+    const slugs = (cityListJson as { cities: Array<{ slug: string }> }).cities.map((c) => c.slug).sort();
+    const heldSpend = slugs.find((s) => buildCityDemand(s)?.tag === "held");
+    for (const slug of ["london", "frankfurt", ...(heldSpend ? [heldSpend] : [])]) {
+      const spend = buildCityDemand(slug);
+      if (!spend) continue;
+      if (spend.basis) heads.push([`buildCityDemand(${slug}).basis`, spend.basis]);
+      if (spend.foot) heads.push([`buildCityDemand(${slug}).foot`, spend.foot]);
+      if (spend.withheld) heads.push([`buildCityDemand(${slug}).withheld`, spend.withheld]);
+    }
+    const outside = slugs.find((s) => buildCityEarningsStrip(s)?.figures.outside);
+    const modelledPay = slugs.find((s) => cityTypicalIncome(s)?.sample);
+    for (const slug of ["london", "abidjan", ...(outside ? [outside] : []), ...(modelledPay ? [modelledPay] : [])]) {
+      const strip = buildCityEarningsStrip(slug);
+      if (strip) {
+        heads.push([`buildCityEarningsStrip(${slug}).basis`, strip.basis]);
+        if (strip.note) heads.push([`buildCityEarningsStrip(${slug}).note`, strip.note]);
+        for (const m of strip.marks) heads.push([`buildCityEarningsStrip(${slug}).marks.${m.key}`, m.label]);
+      }
+      const typical = cityTypicalIncome(slug);
+      if (typical && typical.from === "city") heads.push([`cityTypicalIncome(${slug}).answerBasis`, typical.sample ? COPY.cityHero.answerBasisModelled : COPY.cityHero.answerBasis]);
+    }
+    for (const line of Object.values(COPY.cityDemand.withheld)) heads.push(["COPY.cityDemand.withheld", line]);
+    heads.push(["COPY.cityDemand.footModelled", COPY.cityDemand.footModelled], ["COPY.cityCustomers.basisAlone", COPY.cityCustomers.basisAlone], ["COPY.cityCustomers.noSpread", COPY.cityCustomers.noSpread], ["COPY.cityCustomers.outside", COPY.cityCustomers.outside], ["COPY.cityCustomers.modelled", COPY.cityCustomers.modelled], ["COPY.cityHero.answerBasisModelled", COPY.cityHero.answerBasisModelled]);
   }
   {
     const modelledCity = (cityListJson as { cities: Array<{ slug: string }> }).cities.map((c) => c.slug).sort().find((s) => buildCityLiving(s)?.confidence === "modeled");
@@ -405,7 +438,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     for (const line of Object.values(COPY.cityLiving.reasons)) heads.push(["COPY.cityLiving.reasons", line]);
     for (const line of Object.values(COPY.cityRunway.withheld)) heads.push(["COPY.cityRunway.withheld", line]);
   }
-  heads.push(["COPY.cityDemand.focalSub", COPY.cityDemand.focalSub], ["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
+  heads.push(["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
 
   /* THE COUNTRY'S TWO KvGrid SEATS (MODEL.md 8.2 `01 glance` and `02
      world-seat`, plan step 31's second dispatch, 2026-09-17), pushed composed

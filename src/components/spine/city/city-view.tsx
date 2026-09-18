@@ -35,12 +35,30 @@
  * ruling 30 bans (8.3's `10 easiest` is seated, blocked and unrendered until
  * that ruling lands; nothing stands in for it).
  *
+ * TWO MORE RETIRED BY THE FOURTH DISPATCH (2026-09-18, the band `08 demand |
+ * 07 earnings` and the one income builder): `IncomeCurve` in chapters.tsx
+ * (the file is gone with it, it held nothing else), the strip that drew
+ * London's three marks off the seed's `income` block, which was the city
+ * list's mean times 0.42, 0.88 and 2.2 (`city_view.ts`, a stopgap sanctioned
+ * for one city and deleted), the typical in terracotta, a fourth accent
+ * under another name, and the country's typical alone on 251 cities under
+ * the city's kicker; and `DemandSpend`, the `text-3xl` spend card off the
+ * seed's `demand.spend_*` fields. Their seats are `Earnings` and `Demand`
+ * below, built by the slug like the seats before them; the illustrative
+ * London seed no longer carries `income` or the spend fields, and the
+ * adapter composes neither. THE FOUR INCOME READERS ARE ONE (item 24): the
+ * masthead's answer, this strip's typical, the runway's income and the peers'
+ * income column all print `cityTypicalIncome(slug)` (city_income.ts), which
+ * is `owner_col.median_salary_usd_mo` times twelve on every listed city;
+ * London prints $48,756 in all four places where it printed 64,800, 57,000,
+ * 64,800 and 48,756.
+ *
  * NULL-GUARDS (real-data promotion): every section early-returns null when its data is
  * absent, so an omitted field renders NOTHING (never 0 / undefined / NaN / a broken
  * block). The chapter breaks are fixed "01", "02", "03" (8.3's own numbering); the
  * first two always have content (the premises bento draws on every listed city
- * whose shard loads, the spend figure is held for 252), and the third is drawn
- * only when a card under it draws.
+ * whose shard loads, the spend card and the earnings strip build for 252), and
+ * the third is drawn only when a card under it draws.
  *
  * 2026-07-11 reformation (rulebook v1): the derived per-district keep index, the
  * per-trade net-margin rail, the take-home bar list and the crowding column are DELETED
@@ -61,7 +79,7 @@ import { spineCitySeed } from "@/lib/spine-seeds";
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Fig, Movement, Box, Head, Rail, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
+import { Movement, Box, Head, Rail, InlineDisclosure, SampleTag, Band, usd } from "@/components/spine/kit";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
@@ -71,14 +89,15 @@ import { buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { buildCityGlance, type CityGlanceData } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat, type CitySeatData } from "@/lib/spine/city_seat_rows";
-import { buildCityLiving, buildCityRunway, type CityLivingData, type CityRunwayData } from "@/lib/spine/fact_rows";
+import { buildCityLiving, buildCityRunway, buildCityDemand, type CityLivingData, type CityRunwayData, type CityDemandData } from "@/lib/spine/fact_rows";
+import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
+import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
+import { buildCityEarningsStrip, type CityEarningsData } from "@/lib/spine/range_rows";
 import { CityHero } from "./masthead";
-import { IncomeCurve } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { Premises } from "./premises";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
-import { buildCityCustomersStrip } from "@/lib/spine/range_rows";
 import { COPY } from "@/lib/spine/copy";
 
 /* ================= THE OPENING ================= */
@@ -103,10 +122,9 @@ import { COPY } from "@/lib/spine/copy";
  * elsewhere and never here (M1): the metro GDP and the cost of living on the
  * card beside, the average pay in the masthead. The withheld line names what
  * the card does not hold, with the count; the foot names the modelled cells
- * in words. The four readers of a city's income still differ (item 24: the
- * masthead's mean off the city list, the strip's 0.88 of it on London, the
- * peers row's mean, the ratio's median); the one-builder income is the
- * fourth dispatch's, with `07 earnings`.
+ * in words. The average pay left the masthead with the fourth dispatch: the
+ * masthead prints the typical pay off the one income builder now, and the
+ * mean prints nowhere on this page.
  */
 function Glance({ glance }: { glance: CityGlanceData | null }) {
   if (!glance) return null;
@@ -210,12 +228,12 @@ function Living({ living }: { living: CityLivingData | null }) {
  * found the convention split across the UK cities (London, Edinburgh and
  * Leeds net as Frankfurt is, Birmingham, Bristol, Glasgow and Manchester
  * gross), so the basis says "a typical income" and neither word, and item
- * 24 carries the requirement. The four readers of a city's income (the
- * masthead's mean, the strip's 0.88 of it on London, the peers row, this
- * card's median salary) still differ; the one builder is the fourth
- * dispatch's, with `07 earnings`. The old kit card (`RentAffordability`, a
- * `text-3xl` percentage over two justify-between rows that printed the rent
- * a second time in the band) is retired with this dispatch.
+ * 24 carries the requirement. The income is the one builder's figure
+ * (city_income.ts, the fourth dispatch): the same $48,756 the masthead, the
+ * earnings strip and the peers row print on London. The old kit card
+ * (`RentAffordability`, a `text-3xl` percentage over two justify-between
+ * rows that printed the rent a second time in the band) is retired with
+ * this dispatch.
  */
 function Runway({ runway }: { runway: CityRunwayData | null }) {
   if (!runway) return null;
@@ -231,63 +249,63 @@ function Runway({ runway }: { runway: CityRunwayData | null }) {
 }
 
 /* ================= TURN TWO , WHERE TO OPEN IT, AND WHAT TO OPEN ================= */
-/* DemandSpend, `08 demand`: the per-resident spend is the focal NUMBER (§26, C6);
- * the $196B metro total is CUT (a vague big total, §7). The season split that
- * shared this function until plan step 32 is SeasonSplit below, turn three's,
- * because 8.3 seats the two in different chapters (`08 demand | 07 earnings`,
- * then `14 neighbourhoods | 15 season`). Each carries its own figure's tag.
+/**
+ * What residents spend, `08 demand` (MODEL.md 8.3; plan step 32, fourth
+ * dispatch, 2026-09-18): the plain figure (F3), BentoMetric standing as its
+ * own card the way the country's `04 entry-bill` does, the spend per
+ * resident a year at 30 IN INK, one basis line, no track, no second figure
+ * (the millionaire count has no field, no source and no method, item 27).
+ * QUIET: the card's old `text-3xl` terracotta was a defect (off the ladder,
+ * and not on PART 6's city list), and its `text-3xl` ink was still off the
+ * ladder; the figure sits at `--t-focal` now. The rows come from
+ * fact_rows.ts (`buildCityDemand`): `demand.spend_per_capita_usd` off the
+ * bank, 252 of 252, 3 held, 248 modelled (the foot says so), 1 placeholder,
+ * London, WITHHELD with its line and never printed, so the exemplar's card
+ * holds a line where its 30 would stand and reds FOCAL on purpose until
+ * London's spend is researched (item 23). Left of the band, 8.3's column.
  *
- * THE SPEND PER RESIDENT IS READ FROM THE CITY FACT BANK SINCE 2026-09-17
- * (CITY-PROGRAMME step 1a, research items 21 and 25; buildCityDemand in
- * src/lib/spine/fact_rows.ts, run in the adapter). The figure existed for 252
- * of 252 cities and rendered for none, so the spending pool was a heading
- * over nothing and the season card stood alone in its band on London.
- *
- * The focal prints through the shared usd (Abidjan's $2,860 would have read
- * "$3K" through the private formatter C29 routed out); the box reads its OWN
- * figure's tag (spend_confidence); and it carries a basis line, since the
- * sample mark is off site-wide and the basis is the only place the word
- * "modelled" can reach a reader. Ink, not terracotta: the demand brief
- * (08-demand) rules this card quiet, the page's accents being named elsewhere
- * (MODEL PART 6). Today's `text-3xl` is the fourth dispatch's to move to the
- * ladder's 30 (F3, the plain figure). */
-const hasDemandSpend = (d: any) => {
-  const o = d?.demand;
-  const hasMagnitude = !!o && typeof o.spend_per_capita_usd === "number" && Number.isFinite(o.spend_per_capita_usd) && o.spend_per_capita_usd > 0;
-  return hasMagnitude || (o?.millionaires_count != null);
-};
-export function DemandSpend({ d }: { d: any }) {
-  if (!hasDemandSpend(d)) return null;
-  const o = d.demand;
-  const hasMagnitude = typeof o.spend_per_capita_usd === "number" && Number.isFinite(o.spend_per_capita_usd) && o.spend_per_capita_usd > 0;
-  const hasMillionaires = o?.millionaires_count != null;
-  const growth = o?.growth_pct_yoy;
-  const notHeld = (t: unknown) => t === "placeholder" || t === "modeled" || t === "extrapolated";
-  const spendSample = notHeld(o.spend_confidence ?? o._meta?.confidence);
+ * THE CENSUS DOES NOT READ THIS CARD (the bill's own note): BentoMetric draws
+ * its own Box, so the card is a block on the page (`data-block="demand"`,
+ * BLOCK FLOOR counts it) that the census's city rows do not list; its form
+ * to the checkers is `bento-metric`.
+ */
+function Demand({ demand }: { demand: CityDemandData | null }) {
+  if (!demand) return null;
   return (
-    /* LEAN WHILE IT STANDS ALONE (plan step 32, first dispatch): a card holding
-       one figure takes the band's narrow third, not the wide two thirds, so
-       the air falls outside its edge (kit.tsx, the lone lean card). Inert the
-       day the card has a partner again. */
-    <Box data-block="demand" data-lean="1">
-      <Head icon="market-size" sample={spendSample}>{COPY.cityDemand.kicker}</Head>
-      {hasMagnitude ? (
-        <div className="flex flex-wrap items-baseline gap-x-3">
-          <Fig className="text-3xl text-[var(--c-ink)]">{usd(o.spend_per_capita_usd)}</Fig>
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">
-            {COPY.cityDemand.focalSub}
-            {growth != null ? <>, {growth >= 0 ? "up" : "down"} <Fig className="text-[var(--c-ink)]">{Math.abs(growth)}%</Fig> on the year</> : null}.
-          </span>
-        </div>
-      ) : null}
-      {hasMagnitude && o.spend_basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{o.spend_basis}</p> : null}
-      {/* the millionaire count: how deep the premium ticket runs (the Head tag covers it). No field, no source and no method today (item 27); the guard keeps the slot for the day one exists. */}
-      {hasMillionaires ? (
-        <div className="mt-3 flex flex-wrap items-baseline gap-x-2 border-t border-[var(--c-border)] pt-3">
-          <Fig className="text-[length:var(--t-head)] text-[var(--c-ink)]">{Math.round((o.millionaires_count || 0) / 1000)}K</Fig>
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">millionaires live here, net worth $1M and up beyond the main home.</span>
-        </div>
-      ) : null}
+    <BentoMetric
+      id="demand"
+      icon="market-size"
+      kicker={COPY.cityDemand.kicker}
+      sample={demand.sample}
+      figure={demand.figure ?? undefined}
+      withheld={demand.withheld ?? undefined}
+      basis={demand.basis ?? undefined}
+      foot={demand.foot ?? undefined}
+    />
+  );
+}
+
+/**
+ * What customers earn, `07 earnings` (MODEL.md 8.3; the same dispatch): the
+ * range strip, linear, three marks: the country's bottom tenth and top tenth
+ * as the outer marks, the city's own typical pay from the one income builder
+ * as the middle mark, the lead, the card's 30 in ink (M3; the strip's own
+ * law since this dispatch took its lead rung to the focal). The basis says
+ * whose each figure is, M5's words. The rows come from range_rows.ts
+ * (`buildCityEarningsStrip`), counted 2026-09-18: 152 cities draw the three
+ * marks, 84 the typical alone over a country with no deciles (Abidjan), 16
+ * the typical alone because it sits outside the country's deciles (the two
+ * bases meeting, item 24), each with its note; a city with no typical of its
+ * own would draw the country's whole strip and say so (none today). The
+ * kicker is the country's words (M16). Right of the band: the dot family's
+ * column (M10). Quiet: the accent the old strip's typical wore is gone.
+ */
+function Earnings({ strip }: { strip: CityEarningsData | null }) {
+  if (!strip) return null;
+  return (
+    <Box id="earnings">
+      <Rail icon="spread" kicker={COPY.cityCustomers.kicker} sample={strip.sample} />
+      <RangeStrip marks={strip.marks} scale="linear" fmt={usd} basis={strip.basis} note={strip.note} extra={strip.extra} />
     </Box>
   );
 }
@@ -541,8 +559,8 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const premises = slug ? buildPremisesBento(slug) : null;
   const living = slug ? buildCityLiving(slug) : null;
   const runway = slug ? buildCityRunway(slug) : null;
-  const demand = hasDemandSpend(d);
-  const earnings = buildCityCustomersStrip(d) != null;
+  const demand = slug ? buildCityDemand(slug) : null;
+  const earnings = slug ? buildCityEarningsStrip(slug) : null;
   const districts = buildCityDistrictBars(d) != null;
   const trades = hasTradesHere(d);
   const character = buildCityCharacterTables(d?.meta?.slug) != null;
@@ -608,31 +626,31 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
       {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market
           sized before the street is picked. */}
       <Movement index="02" heading={COPY.chapters.where} />
-      {/* `08 demand | 07 earnings`, demand LEFT and the strip RIGHT (8.3's bar
-          ledger: `07` is the dot family, right column), today's DemandSpend and
-          IncomeCurve cards until the fourth dispatch. THE PAIR CANNOT BE SEATED
-          TODAY, MEASURED on London with the probe, the page filter and the
-          art-direction gate: the strip wants 265 of content and the spend card
-          155, so at 1-2 (8.4 rule 1, the taller card wide) the spend card at
-          347 stretched to 266 carried a 307 by 111 blank, under the filter's
-          120 floor, but 50 percent of ink against the art-direction gate's E2
-          floor of 60 (its baseline for this page is 0 and never rises); every
-          other split stretches the same 155 of content to the same 266 and
-          reads the same, and 1-1 crowds the strip's three labels at 520 (C9).
-          The country's `07 | 08` stands the same way on the same rule. So each
-          stands in its own band, in 8.3's order: the spend card LEAN at the
-          narrow third (a card holding one figure, the kit's lean rule, so the
-          air falls outside its edge), the strip at the survivor's two thirds;
-          LONE CARD fires on both, expected, until the fourth dispatch gives
-          `08` its second reading or the composition re-decides the pair. */}
-      {demand ? (
-        <Band split="1-2">
-          <DemandSpend d={d} />
-        </Band>
-      ) : null}
-      {earnings ? (
-        <Band split="1-2">
-          <IncomeCurve d={d} />
+      {/* `08 demand | 07 earnings`, 1-1, demand LEFT and the strip RIGHT
+          (8.3: `07` is the dot family, right column, M10; plan step 32, fourth
+          dispatch, 2026-09-18): what the whole city spends beside what one
+          customer earns, the market sized before the street is picked, both
+          quiet, both cards built for every listed city (the spend is held or
+          withheld with its line for 252, the typical for 252), so the band
+          holds two children everywhere. THE PAIR HOLDS, MEASURED after it was
+          seated on London, Frankfurt and Abidjan with the page filter and a
+          band probe at 1280, 768 and 375: at 1280 both cards stand level at
+          520 by 212 on London and Frankfurt (the strip's own height: a Rail,
+          the 116 of a strip holding a lead, the basis) and 520 by 174 on
+          Abidjan (the strip's typical alone, its two notes); at 768's equal
+          halves 344 by 212, 212 and 192; at 375 each card at its own height,
+          the spend card 136 (London's withheld line), 159 and 159 under the
+          strip's 212, 212 and 192. Zero holes in either card at any width on
+          the three cities. The old spend card could not be seated at any
+          split because its one figure sat in the top left corner of a
+          stretched box with three quarters of it empty; BentoMetric puts the
+          opener at the top, the basis at the foot and the 30 centred in what
+          is left (Frankfurt's air at 1280: 26 above the opener, 21 under the
+          foot), so the stretched card reads as composed. */}
+      {demand || earnings ? (
+        <Band split="1-1">
+          <Demand demand={demand} />
+          <Earnings strip={earnings} />
         </Band>
       ) : null}
       {/* `03 districts | 09 trades` (8.3): rent by district, the page's one

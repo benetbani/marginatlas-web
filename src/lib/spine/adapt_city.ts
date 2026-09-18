@@ -32,7 +32,6 @@
  *   - CommercialSpace numeric rent-pressure + the peer rent STRIP + the lease-terms card
  *   - DemandSize's trend Spark and growth; DemandCalendar (monthly index)
  *   - FirstYear timeline; CityRisks; CityCharacter
- *   - IncomeCurve spend-share tiers (the curve itself is real, from the London spread)
  *   - locals_intel; the WhereToTrade map (no district lat/lng held)
  *   - trades cost_to_open + saturation columns; peers spend_index
  *
@@ -40,23 +39,30 @@
  * research item 21). Three cards sat in the OMITTED list above as "founder
  * cost-of-living placeholders" and "$-magnitude, no source" while
  * data/facts/city/<ISO2>-<slug>.json held the figures for 252 cities and
- * nothing read it. The builders in src/lib/spine/fact_rows.ts read it now.
- * ONE OF THE THREE RIDES THIS SEED:
- *   - demand.spend_per_capita_usd   what a resident spends in a year
- * THE OTHER TWO LEFT THE SEED with plan step 32's third dispatch (2026-09-18):
- * the living costs (`05 living`) and the rent-to-income share (`06 runway`)
- * are KvGrid seats the view builds by the seed's slug, exactly as it builds
- * the glance and the placement seat (`buildCityLiving(slug)`,
- * `buildCityRunway(slug)` in fact_rows.ts), so no `owner_runway` and no
- * `rent_ratio` block is composed here and the two kit cards that read them
- * (chapters.tsx) are retired. `owner_runway.*` is read by nothing on the
- * site: London's placeholders are deleted from the bank (item 23).
- * The spend carries the bank's tag into _meta.confidence and a basis line
- * that says "modelled" or "placeholder" where the tag is not held, since the
- * sample mark is switched off site-wide. trades and demand carry a
- * _meta.confidence of their own now too (item 27): the trade figures are the
- * engine's model over trusted cells, and the resident/visitor split is a
- * slope over arrivals for every city, London's included.
+ * nothing read it. The builders in src/lib/spine/fact_rows.ts read it now,
+ * and NONE OF THE THREE RIDES THIS SEED: the living costs (`05 living`) and
+ * the rent-to-income share (`06 runway`) left with plan step 32's third
+ * dispatch (2026-09-18) and the spend per resident (`08 demand`) with the
+ * fourth; all three are seats the view builds by the seed's slug, exactly
+ * as it builds the glance and the placement seat (`buildCityLiving(slug)`,
+ * `buildCityRunway(slug)`, `buildCityDemand(slug)`), so no `owner_runway`,
+ * `rent_ratio` or `spend_*` field is composed here and the kit cards that
+ * read them are retired. `owner_runway.*` is read by nothing on the site:
+ * London's placeholders are deleted from the bank (item 23). trades and
+ * demand carry a _meta.confidence of their own (item 27): the trade figures
+ * are the engine's model over trusted cells, and the resident/visitor split
+ * is a slope over arrivals for every city, London's included.
+ *
+ * THE CITY'S INCOME IS ONE BUILDER'S (plan step 32's fourth dispatch,
+ * 2026-09-18; DATA-REQUIREMENTS item 24): `cityTypicalIncome(slug)` in
+ * src/lib/spine/city_income.ts feeds the masthead's answer and every row of
+ * the peers' income column here, and the earnings strip and the runway card
+ * in the view, so one city prints one typical pay wherever it prints one.
+ * The `income` block this adapter built off `view.customer.incomeSpread`
+ * (the city list's mean times 0.42, 0.88 and 2.2, London only, "sanctioned
+ * invented-but-plausible") is gone with the invention (city_view.ts), and
+ * the masthead no longer prints the list's `avg_gross_salary_usd_year`
+ * (a mean; the label said "average" for one day and says "typical" now).
  *
  * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
  * Classified 2026-08-18. verify_take_home_identity flags it because the seed
@@ -88,9 +94,9 @@ import {
   tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
-import { buildCityDemand } from "@/lib/spine/fact_rows";
-import { weakerTag } from "@/lib/facts/city_shard";
+import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { COPY } from "@/lib/spine/copy";
+import { inSentence } from "@/lib/spine/place_names";
 import { usd } from "@/components/spine/kit";
 
 /* ------------------------------------------------------------------------- */
@@ -109,7 +115,10 @@ type City = {
   cost_of_living_index?: number;
   unemployment_pct?: number;
   tourist_arrivals_m?: number;
-  /* Added 2026-08-24 for the spending pool's replacement. 234 of 252 carry it. */
+  /* Added 2026-08-24 for the spending pool's replacement (a quartile word off
+     it rode the old earnings strip). 234 of 252 carry it; read by nothing in
+     this module since plan step 32's fourth dispatch (2026-09-18), and
+     excluded from the city's cards by 8.3's `02` row. */
   gini?: number;
   /* Added 2026-08-24 for the five reads. Counted, not assumed: 247 of 252 cities
      carry it. The type omitted it, so the field was invisible to this module even
@@ -296,32 +305,38 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
      feeds the trades' margin read. */
 
   /* -- headline scorecard + self-employment ------------------------------ */
-  // Only the two tiles with an honest source survive: the customer income (the real
-  // London salary, 64.8K, RECONCILING the seed's 47K) and self-employment. Cost-to-open,
-  // consumer-spend, rent-pressure, and survival tiles are OMITTED (no source). The
-  // masthead renders whatever tiles are present, the first as its answer.
-  /* THE ANSWER IS "AVERAGE CUSTOMER PAY" (MODEL.md 8.3, `00 masthead`; plan
-     step 32's first dispatch, 2026-09-18; M16: "What customers earn" is the
-     strip's kicker, and two cards do not share one name for two figures). The
-     figure is unchanged, `avg_gross_salary_usd_year` off the city list, a
-     mean, so the label says average and the basis says gross and a year; it
-     prints through the kit's `usd` (C29, no private formatter). Its
-     confidence is read off the row's own source note (item 31): the city's
-     wage premium at tier A is measured, a country median times a size-class
-     multiplier (96 rows) or a tier-B row is modelled. The masthead used to
-     take the self-employment tile as its answer because this tile's label
-     matched a lens grid row; the grid is retired and the tile leads. The
-     four readers of a city's income still differ (item 24); the one-builder
-     income is the fourth dispatch's, with `07 earnings`. */
+  // Only the two tiles with an honest source survive: the customer pay and
+  // self-employment. Cost-to-open, consumer-spend, rent-pressure, and survival
+  // tiles are OMITTED (no source). The masthead renders whatever tiles are
+  // present, the first as its answer.
+  /* THE ANSWER IS "TYPICAL CUSTOMER PAY" (MODEL.md 8.3, `00 masthead`; plan
+     step 32's fourth dispatch, 2026-09-18), the one income builder's figure
+     (city_income.ts: `owner_col.median_salary_usd_mo` times twelve off the
+     city shard, 247 held, 5 modelled, on every listed city), the same figure
+     the earnings strip, the runway card and the peers row print. The label
+     says typical because the figure is a median; the first dispatch's
+     "Average customer pay" named the city list's mean, which no card prints
+     now (a mean is never printed under "typical"). The basis says the unit
+     and neither "before tax" nor "take-home" (the shard carries no marker,
+     item 24), and says "modelled" where the tag is not held, since the mark
+     is off site-wide; where the builder falls back to the country's typical
+     (no city today) the basis names the country. It prints through the kit's
+     `usd` (C29, no private formatter). The masthead used to take the
+     self-employment tile as its answer because this tile's label matched a
+     lens grid row; the grid is retired and the tile leads. */
   const scorecard: Array<{ label: string; value: string; sub?: string; unit?: string; confidence: string }> = [];
-  const income = isNum(city.avg_gross_salary_usd_year) ? city.avg_gross_salary_usd_year : null;
-  if (isNum(income)) {
-    const note = String(city.sources?.avg_gross_salary_usd_year ?? "");
+  const typical = cityTypicalIncome(city.slug);
+  if (typical) {
     scorecard.push({
       label: COPY.cityHero.answerLabel,
-      value: usd(income),
-      sub: COPY.cityHero.answerBasis,
-      confidence: /tier-A/.test(note) ? "measured" : "modeled",
+      value: usd(typical.value),
+      sub:
+        typical.from === "country"
+          ? COPY.cityCustomers.countryBasis.replace("{country}", inSentence(typical.countryName)).replace("{city}", city.name)
+          : typical.sample
+            ? COPY.cityHero.answerBasisModelled
+            : COPY.cityHero.answerBasis,
+      confidence: typical.sample ? "modeled" : "measured",
     });
   }
   if (isNum(econSnap.selfEmploymentPct)) {
@@ -339,38 +354,14 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     scorecard: scorecard.length > 0 ? scorecard : undefined,
   };
 
-  /* -- income curve (real London spread; tiers OMITTED) ------------------- */
-  // The curve reads median / top10 / top1 off the sanctioned London income spread
-  // (city_view.buildCustomer, London-only invented-but-plausible p50/p75/p90). Every
-  // other city has no defensible spread, so income is left undefined (the section
-  // self-omits). The spend-share tiers are authored, so they are OMITTED.
-  const spread = view.customer?.incomeSpread ?? null;
-  const income_out =
-    spread && isNum(spread.p50) && isNum(spread.p90)
-      ? {
-          median_income_usd: Math.round(spread.p50),
-          // THE BOTTOM TENTH, carried since the build loop's run 11 (2026-09-06): the
-          // range strip draws bottom tenth, typical, top tenth, the three marks the
-          // country page's customers strip draws, so the two pages rhyme.
-          bottom10_income_usd: Math.round(spread.p10),
-          top10_income_usd: Math.round(spread.p90),
-          // top1 is not carried in the spread; approximate the visible top tick from
-          // the p90 tail only when the spread exists. The curve needs a top-1 x-tick;
-          // use the p90 scaled by the same skew the spread already encodes (p90/p50),
-          // so it stays inside the sanctioned distribution rather than a new invention.
-          // Rounded to the nearest thousand like the spread it is derived from.
-          // The spread stopped carrying dollar precision (it is multipliers on a
-          // mean, not a measurement), so a figure derived from it twice over must
-          // not read as exact either: this was printing $358,754.
-          top1_income_usd: Math.round((spread.p90 * (spread.p90 / spread.p50)) / 1000) * 1000,
-          read: view.customer?.note ?? undefined,
-          // THE SPREAD IS MULTIPLIERS ON A MEAN, NOT A MEASUREMENT (city_view says
-          // so), and the section wore no sample mark for it until run 11. Modelled,
-          // and the card's note says so.
-          _meta: { confidence: "modeled", source: "multipliers on the city's average gross pay" },
-          // tiers OMITTED (authored spend shares).
-        }
-      : undefined;
+  /* THE INCOME CURVE BLOCK LEFT ON PLAN STEP 32's FOURTH DISPATCH (2026-09-18).
+     It carried London's bottom tenth, typical and top tenth off
+     `view.customer.incomeSpread`, the city list's mean times three fixed
+     multipliers, an invention sanctioned as a stopgap for one city, and left
+     `income` undefined on the other 251 so the strip drew the country's
+     figures under the city's kicker (M5). The earnings strip is built in the
+     view by the slug now (`buildCityEarningsStrip`): the city's own typical
+     from the one income builder between the country's measured deciles. */
 
   /* -- space (prose only; numeric rent-pressure + peer strip + terms OMITTED) */
   const space = view.space
@@ -382,68 +373,44 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
       }
     : undefined;
 
-  /* -- demand (the resident/visitor split, and the spend per resident) ---- */
+  /* -- demand (the resident/visitor split) -------------------------------- */
   // The 72/28 split (view.visitorSplit.items) RECONCILES the seed's 80/20. The
   // $196B consumer-spend total is CUT by design, growth and the trend Spark are
   // OMITTED (no source), and the DemandCalendar is omitted (authored monthly index).
-  // The spend per resident is READ FROM THE CITY FACT BANK since 2026-09-17
-  // (research item 25 revised item 18: it existed for 252 of 252 and 0 rendered).
+  // THE SPEND PER RESIDENT LEFT THIS BLOCK on plan step 32's fourth dispatch
+  // (2026-09-18): `08 demand` is built in the view by the slug
+  // (`buildCityDemand(slug)` in fact_rows.ts, the bank's figure or its
+  // withheld line), as the living and runway seats are, so this block is the
+  // season card's alone. THE SPREAD WORD WENT WITH THE STRIP THAT PRINTED IT:
+  // a quartile word off the gini field ("Somewhat uneven") rode the old
+  // earnings strip's extra slot; 8.3's `07` holds no extra, a one-word
+  // summary of a place is banned (clause 19), and `02`'s row excludes gini.
   const vs = view.visitorSplit;
   const resItem = vs.items?.find((it) => it.kept);
   const visItem = vs.items?.find((it) => !it.kept);
-  /* HOW EVENLY THE MONEY IS SPREAD, the knowable neighbour for the spending pool.
-     See design/replacements/spending-pool.md. §3: the t4 figures that card wanted,
-     spend per resident and a millionaire count, are replaced rather than deleted.
-
-     The page already answers "is there money here" twice. Nothing on it answered
-     the SHAPE of that money: a broad middle to sell volume to, or a thin top to
-     sell premium to. For an owner choosing a ticket price that is the actionable
-     half, and it is knowable everywhere the field exists.
-
-     THE WORD IS THE VALUE and the position is not printed (§26, and FORM-CATALOG's
-     meter do-not: a precise marker on a rough measure fakes precision). Bands are
-     the quartiles of the 234 cities that carry the field, computed from the set
-     rather than chosen: 32.4, 35.7, 41.5. §40: the statistic's name never reaches
-     a reader. */
-  const spreadPool = CITIES.map((c) => c.gini).filter((v): v is number => isNum(v));
-  const spreadWord = (() => {
-    if (!isNum(city.gini) || spreadPool.length < 50) return undefined;
-    const sorted = spreadPool.slice().sort((a, b) => a - b);
-    const q = (f: number) => sorted[Math.floor(sorted.length * f)];
-    const g = city.gini as number;
-    return g < q(0.25) ? "Evenly spread" : g < q(0.5) ? "Fairly even" : g < q(0.75) ? "Somewhat uneven" : "Very uneven";
-  })();
 
   /* THE SPLIT IS A SLOPE, NOT A COUNT, FOR EVERY CITY (research item 28): a
      visitor share of arrivals over residents times fourteen, clamped, and for
      London a typed 72/28. So the split's own tag is modelled wherever it
-     draws, and until item 27 it carried no tag at all: DemandSize's sample
-     check read undefined for every city and 245 modelled splits shipped
-     unmarked. The spend per resident carries the bank's tag per city. The
-     object's _meta.confidence is the weaker of the two, and each card reads
-     its own figure's tag beside it. */
-  const spendRow = buildCityDemand(city.iso2, city.slug, city.name);
+     draws, and until item 27 it carried no tag at all: the old DemandSize's
+     sample check read undefined for every city and 245 modelled splits
+     shipped unmarked. */
   const hasSplit = !!(resItem && visItem);
   const splitConfidence: "modeled" | undefined = hasSplit ? "modeled" : undefined;
-  const demand =
-    hasSplit || spendRow
-      ? {
-          resident_pct: hasSplit ? Math.round(resItem!.perHundred) : undefined,
-          visitor_pct: hasSplit ? Math.round(visItem!.perHundred) : undefined,
-          spread_word: spreadWord,
-          read: hasSplit ? (vs.body ?? vs.headline) : undefined,
-          split_confidence: splitConfidence,
-          split_basis: hasSplit ? COPY.cityDemand.seasonBasis : undefined,
-          spend_per_capita_usd: spendRow ? Math.round(spendRow.spend.value) : undefined,
-          spend_confidence: spendRow ? spendRow.tag : undefined,
-          spend_basis: spendRow ? spendRow.basis : undefined,
-          // consumer_spend_usd_bn (cut by design) / growth_pct_yoy / trend_* OMITTED.
-          _meta: {
-            confidence: weakerTag(splitConfidence ?? "held", spendRow?.tag ?? "held"),
-            source: "the visitor share is a slope over arrivals and residents; the spend per resident is the city fact bank's",
-          },
-        }
-      : undefined;
+  const demand = hasSplit
+    ? {
+        resident_pct: Math.round(resItem!.perHundred),
+        visitor_pct: Math.round(visItem!.perHundred),
+        read: vs.body ?? vs.headline,
+        split_confidence: splitConfidence,
+        split_basis: COPY.cityDemand.seasonBasis,
+        // consumer_spend_usd_bn (cut by design) / growth_pct_yoy / trend_* OMITTED.
+        _meta: {
+          confidence: splitConfidence,
+          source: "the visitor share is a slope over arrivals and residents",
+        },
+      }
+    : undefined;
 
   /* -- where_to_trade (the 7 REAL districts, keep from the real engine) ---- */
   // London only: run the neighborhood engine per real district for the winner
@@ -534,22 +501,25 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
 
   /* -- peers (real set + real indices; spend_index OMITTED) --------------- */
   // Each peer's rent_index <- cost_of_living_index (real, London = 75, NOT indexed to
-  // 100), median_income_usd <- avg_gross_salary_usd_year (real), visitors_m <-
-  // tourist_arrivals_m (real). spend_index has NO source and is OMITTED (the CityPeers
-  // table drops that row). The home city leads the list.
+  // 100), median_income_usd <- the one income builder's figure for that city
+  // (the fourth dispatch, 2026-09-18), visitors_m <- tourist_arrivals_m (real).
+  // spend_index has NO source and is OMITTED (the CityPeers table drops that
+  // row). The home city leads the list.
   //
-  // CAREFUL, THE FIELD NAME LIES AND THE SEED SHAPE FORCES IT. This slot is
-  // called median_income_usd, and what goes in it is avg_gross_salary_usd_year,
-  // which is a MEAN. The other median_income_usd on this seed, the one on the
-  // income curve above, really is a median (spread.p50), so the same name
-  // carries two different statistics in one payload. It is safe TODAY only
-  // because the table renders it as "Customer income", its own absolute
-  // dollar figure in the column's own unit (task 9, 2026-09-08, replaced the
-  // old reading as a percentage of the home city), so every row is a mean
-  // printed beside another mean and no reader ever sees the word median.
-  // Do NOT print this slot as a median, and do not reconcile it against the
-  // income curve's figure: for London they are 64,800 and 57,000, and the
-  // gap between them is real.
+  // THE FIELD NAME IS TRUE NOW. This slot is called median_income_usd, and for
+  // one year what went in it was avg_gross_salary_usd_year, a MEAN, beside a
+  // strip whose own median_income_usd was a median: two statistics under one
+  // name, safe only because the table printed the mean as an absolute under
+  // "Customer income". Every row is `cityTypicalIncome(slug)` now, the
+  // salary median off each city's shard, the same figure the home city's
+  // masthead prints, so the home row and the answer agree by construction
+  // and one basis serves the column (PART 5; the caveat says "typical pay").
+  // A city whose builder falls back to the country's figure prints a dash
+  // here rather than a country's pay in a column of cities' (none today).
+  const cityIncome = (slug: string): number | undefined => {
+    const t = cityTypicalIncome(slug);
+    return t && t.from === "city" ? t.value : undefined;
+  };
   const homeRow = {
     name: city.name,
     // The slug and the country code, carried since run 22 for the peers table's row key and flag.
@@ -557,7 +527,7 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     iso2: city.iso2,
     home: true,
     rent_index: isNum(city.cost_of_living_index) ? Math.round(city.cost_of_living_index) : undefined,
-    median_income_usd: isNum(income) ? Math.round(income) : undefined,
+    median_income_usd: cityIncome(city.slug),
     visitors_m: isNum(city.tourist_arrivals_m) ? +city.tourist_arrivals_m.toFixed(1) : undefined,
     // spend_index OMITTED.
   };
@@ -571,9 +541,7 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
         iso2: p.iso2,
         home: false,
         rent_index: isNum(rec.cost_of_living_index) ? Math.round(rec.cost_of_living_index) : undefined,
-        median_income_usd: isNum(rec.avg_gross_salary_usd_year)
-          ? Math.round(rec.avg_gross_salary_usd_year)
-          : undefined,
+        median_income_usd: cityIncome(p.slug),
         visitors_m: isNum(rec.tourist_arrivals_m) ? +rec.tourist_arrivals_m.toFixed(1) : undefined,
       };
     })
@@ -670,7 +638,6 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     trades_here,
     headline,
     trades,
-    income: income_out,
     space,
     demand,
     where_to_trade,

@@ -22,14 +22,33 @@
  *
  * THE LEAD MARK IS INK (MODEL.md 8.2, `13 customers`: "the typical goes to
  * ink, giving up the accent it held"; plan step 31's sixth dispatch,
- * 2026-09-18). A mark may be the strip's LEAD, `lead`, drawn at the head rung
- * in ink with an ink tick: the size says which mark is the answer of the
- * spread, and the colour says nothing, because the country page's accents are
- * the hero's and the staff card's (PART 6) and the strip is not on that list.
- * `accent` survives as a separate flag for the one strip the model still lets
- * mark a member in colour (the city's premises strip, its own size class,
- * until 8.3's `04` bento retires it); a mark can be lead, accent, both or
- * neither, and the country's customers strip is lead only.
+ * 2026-09-18). A mark may be the strip's LEAD, `lead`, drawn in ink with an
+ * ink tick: the size says which mark is the answer of the spread, and the
+ * colour says nothing, because the country page's accents are the hero's and
+ * the staff card's (PART 6) and the strip is not on that list. `accent`
+ * survives as a separate flag (the head rung in terracotta) for a strip the
+ * model lets mark a member in colour; none does today, since the city's
+ * premises strip left with 8.3's `04` bento. A mark can be lead, accent,
+ * both or neither; the country's customers strip and the city's earnings
+ * strip are lead only.
+ *
+ * THE LEAD IS THE CARD'S 30 (M3: "the typical mark is the card's 30 in ink
+ * on every strip that holds one"; 8.3's `07`: "the typical is the card's 30
+ * in ink, the site's strip law"; plan step 32's fourth dispatch,
+ * 2026-09-18). It drew at the head rung, 20, for one day, and FOCAL redded
+ * every strip that held it for holding no 30 (country-GB and country-AF
+ * `#customers`, city-london `#earnings`, in the laws list of that morning).
+ * At `--t-focal` the figure's box is 30 tall, so when a lead sits in the
+ * strip the track, the ticks and the names all sit 12 lower than they would
+ * (the lead's row is 30 where a body figure's is 14, the stepped row is 18
+ * down, and 18 plus 30 meets the ticks at 42 without the shift), and the box
+ * is 12 taller; a strip with no lead draws exactly what it drew before, so
+ * the premises strips and the industry's `14 worth` do not move. A lead
+ * figure is about twice the width of a body one, so it centres only between
+ * a quarter and three quarters of the track and hangs inward outside that
+ * band, where a body figure centres between 15 and 85 percent; measured on
+ * the city's stories at 375 before the thresholds were set. Fewer than two
+ * marks and the lead is the same 30 alone, a figure with its label.
  */
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
@@ -56,7 +75,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
     return (
       <div data-archetype="range-strip" data-idea="I12" data-marks="1">
         <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{m.label}</div>
-        <Fig className={`mt-1 block text-[length:var(--t-head)] font-semibold leading-none ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(m.value)}</Fig>
+        <Fig className={`mt-1 block font-semibold leading-none ${m.lead ? "text-[length:var(--t-focal)]" : "text-[length:var(--t-head)]"} ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(m.value)}</Fig>
         <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
         {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
         {extra ? <Extra extra={extra} /> : null}
@@ -79,30 +98,35 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
      past the card (measured by the harness: two labels outside on every
      premises strip). Below 15% a label hangs right of its tick, above 85% it
      hangs left, in between it centres. */
-  const align = (x: number): React.CSSProperties => (x < 15 ? { left: `${x}%`, transform: "translateX(0)", textAlign: "left" } : x > 85 ? { left: `${x}%`, transform: "translateX(-100%)", textAlign: "right" } : { left: `${x}%`, transform: "translateX(-50%)", textAlign: "center" });
+  const align = (x: number, wide = false): React.CSSProperties => {
+    const [lo, hi] = wide ? [25, 75] : [15, 85];
+    return x < lo ? { left: `${x}%`, transform: "translateX(0)", textAlign: "left" } : x > hi ? { left: `${x}%`, transform: "translateX(-100%)", textAlign: "right" } : { left: `${x}%`, transform: "translateX(-50%)", textAlign: "center" };
+  };
   /* EVERY SECOND MARK STEPS, whenever the strip holds three or more. A rule
      on distance cannot know a label's width at render time and let a middle
      label collide with an end one (measured by the harness on every premises
      strip); alternation is deterministic and holds for five marks. */
   const rows = placed.map((_, i) => (live.length >= 3 ? i % 2 : 0));
   const twoRows = rows.some((r) => r === 1);
+  /* THE LEAD'S SHIFT: a lead figure is 30 tall where a body figure is 14, so the track and everything under it sit 12 lower (the header says why). */
+  const shift = live.some((m) => m.lead) ? 12 : 0;
   return (
     <div data-archetype="range-strip" data-idea="I12" data-marks={String(live.length)} data-scale={useLog ? "log" : "linear"}>
-      <div className="relative" style={{ height: twoRows ? 104 : 72 }}>
+      <div className="relative" style={{ height: (twoRows ? 104 : 72) + shift }}>
         {/* the figures, over their ticks */}
         {placed.map((p, i) => (
-          <div key={p.m.key} data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x), top: rows[i] === 1 ? 18 : 0 }}>
-            <Fig className={`block font-semibold leading-none ${p.m.accent || p.m.lead ? "text-[length:var(--t-head)]" : "text-[length:var(--t-body)]"} ${p.m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(p.m.value)}</Fig>
+          <div key={p.m.key} data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x, !!p.m.lead), top: rows[i] === 1 ? 18 : 0 }}>
+            <Fig className={`block font-semibold leading-none ${p.m.lead ? "text-[length:var(--t-focal)]" : p.m.accent ? "text-[length:var(--t-head)]" : "text-[length:var(--t-body)]"} ${p.m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(p.m.value)}</Fig>
           </div>
         ))}
         {/* the track and the ticks */}
-        <div aria-hidden className="absolute inset-x-0 h-px bg-[var(--c-line-strong)]" style={{ top: twoRows ? 48 : 36 }} />
+        <div aria-hidden className="absolute inset-x-0 h-px bg-[var(--c-line-strong)]" style={{ top: (twoRows ? 48 : 36) + shift }} />
         {placed.map((p) => (
-          <div key={`t-${p.m.key}`} aria-hidden className="absolute w-px -translate-x-1/2" style={{ left: `${p.x}%`, top: twoRows ? 42 : 30, height: 13, background: p.m.accent ? "var(--terra)" : "var(--c-ink)" }} />
+          <div key={`t-${p.m.key}`} aria-hidden className="absolute w-px -translate-x-1/2" style={{ left: `${p.x}%`, top: (twoRows ? 42 : 30) + shift, height: 13, background: p.m.accent ? "var(--terra)" : "var(--c-ink)" }} />
         ))}
         {/* the names, under their ticks, stepping to a second row when crowded */}
         {placed.map((p, i) => (
-          <div key={`l-${p.m.key}`} data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ ...align(p.x), top: (twoRows ? 60 : 48) + rows[i] * 18 }}>{p.m.label}</div>
+          <div key={`l-${p.m.key}`} data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ ...align(p.x), top: (twoRows ? 60 : 48) + shift + rows[i] * 18 }}>{p.m.label}</div>
         ))}
       </div>
       <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>

@@ -23,7 +23,8 @@ import { buildCityCards } from "@/lib/spine/city_cards";
 import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
 import { RangeStrip } from "./RangeStrip";
-import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip } from "@/lib/spine/range_rows";
+import { buildPremisesStrip, buildCustomersStrip, buildCityEarningsStrip } from "@/lib/spine/range_rows";
+import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { buildPremisesBento, listedCitySlugs } from "@/lib/spine/premises_bento_rows";
 import { premisesCells } from "@/components/spine/city/premises";
 import { SpectraTable } from "./SpectraTable";
@@ -40,7 +41,7 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
-import { buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
+import { buildCityLiving, buildCityRunway, buildCityDemand } from "@/lib/spine/fact_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
@@ -291,18 +292,35 @@ export function TiersTableStories({ instances = pickTiersTableInstances() }: { i
   );
 }
 
-/** The city instances for the strip, from the loaded city seeds: one drawing its own spread and one drawing the country's figure, each saying which (city:earnings, run 11). The city premises strip's instances (run 13, one city per size class) left on plan step 32's second dispatch with the strip itself: MODEL.md 8.3 seats the premises bento on the city's own figures, and its stories are the bento band's `<slug>:premises` below. */
-export type CityStripInstance = CityHeroInstance & { kind: "customers" };
-export const cityStripKey = (c: CityStripInstance) => `${c.slug}:city`;
-export function pickCityStripInstances(cities: CityHeroInstance[]): CityStripInstance[] {
+/** THE CITY'S EARNINGS STRIP STORIES, `07 earnings` (MODEL.md 8.3; plan step
+ *  32's fourth dispatch, 2026-09-18), keyed "city:<slug>:earnings" and built
+ *  by the slug off `buildCityEarningsStrip` (the one income builder between
+ *  the country's deciles), never off a seed: the exemplar (the three marks,
+ *  London's typical inside the United Kingdom's deciles, held); the first
+ *  city by slug whose typical is modelled (the note says so); a city whose
+ *  country holds no deciles (Abidjan: the typical alone, the note saying the
+ *  tenths are not researched); and the first city by slug whose typical sits
+ *  outside its country's deciles (the typical alone, the note saying the
+ *  spread is not drawn). Each is read off the builder, never typed. The old
+ *  "own spread" and "country's typical" pair keyed "<slug>:city" went with
+ *  the seed's `income` block: no city draws a spread of its own now, and no
+ *  city falls back to the country's strip today (252 of 252 hold a typical). */
+export type CityStripInstance = { slug: string; why: string };
+export const cityStripKey = (c: CityStripInstance) => `city:${c.slug}:earnings`;
+export function pickCityStripInstances(): CityStripInstance[] {
   const out: CityStripInstance[] = [];
-  const own = cities.find((c) => buildCityCustomersStrip(c.seed)?.from === "city");
-  if (own) out.push({ ...own, kind: "customers", why: "the city's own spread, modelled on its average pay" });
-  const country = cities.find((c) => buildCityCustomersStrip(c.seed)?.from === "country");
-  if (country) out.push({ ...country, kind: "customers", why: "no figure of its own, the country's typical pay, said so" });
+  const seen = new Set<string>();
+  const take = (slug: string | undefined, why: string) => { if (slug && !seen.has(slug)) { seen.add(slug); out.push({ slug, why }); } };
+  const slugs = listedCitySlugs();
+  const built = slugs.map((slug) => ({ slug, d: buildCityEarningsStrip(slug) })).filter((x) => x.d);
+  take("london", "city block 07 on the exemplar: the typical at 30 between the country's bottom and top tenth, all held");
+  take(built.find((x) => x.d!.from === "city" && x.d!.sample)?.slug, "city block 07 modelled: the typical alone or in its spread, the note saying modelled");
+  take("abidjan", "city block 07 with no deciles: the typical alone, the note saying the country's tenths are not researched");
+  take(built.find((x) => x.d!.figures.outside)?.slug, "city block 07 outside the spread: the typical sits under the country's bottom tenth, so the tenths are not drawn and the note says so");
+  take(built.find((x) => x.d!.from === "country")?.slug, "city block 07 on the country's figures: no typical of the city's own, the basis naming the country");
   return out;
 }
-export function RangeStripStories({ instances = pickRangeStripInstances(), city = [] }: { instances?: Instance[]; city?: CityStripInstance[] }) {
+export function RangeStripStories({ instances = pickRangeStripInstances(), city = pickCityStripInstances() }: { instances?: Instance[]; city?: CityStripInstance[] }) {
   return (
     <div data-stories="range-strip">
       {instances.map((i) => {
@@ -316,12 +334,15 @@ export function RangeStripStories({ instances = pickRangeStripInstances(), city 
         ) : null;
         return <Story kind="range-strip" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
+      {/* THE CITY'S STRIP AS THE PAGE DRAWS IT (city-view.tsx `Earnings`): the kit's Box and Rail, the strip, at the 520 the card takes in its 1-1 band at 1280. */}
       {city.map((c) => {
-        const d = buildCityCustomersStrip(c.seed);
+        const d = buildCityEarningsStrip(c.slug);
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 536 }}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.cityCustomers.kicker}, {String(c.seed?.meta?.city ?? c.slug)}</div>
-            <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={d.basis} note={d.note} extra={d.extra} />
+          <div style={{ maxWidth: 520 }}>
+            <Box id={`earnings-${c.slug}`}>
+              <Rail icon="spread" kicker={`${COPY.cityCustomers.kicker}, ${d.name}`} sample={d.sample} />
+              <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={d.basis} note={d.note} extra={d.extra} />
+            </Box>
           </div>
         ) : null;
         return <Story kind="range-strip" key={cityStripKey(c)} iso2={cityStripKey(c)} why={c.why}>{el}</Story>;
@@ -950,7 +971,7 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
   const notes = buildLocalsNotes("GB");
   const premises = buildPremisesStrip("GB");
   const people = london ? buildCityCharacterTables(london.slug)?.people : null;
-  const typical = london ? buildCityCustomersStrip(london.seed)?.marks.find((m) => m.key === "typical") : null;
+  const typical = london ? cityTypicalIncome(london.slug) : null;
   const tradesPart = london ? (london.seed?.trades_here?.list?.length ?? 0) : 0;
 
   const cluster = (key: string): { cols: 2 | 3; cells: BentoCell[] } | null => {
@@ -1118,6 +1139,18 @@ export function pickBentoMetricInstances(): Instance[] {
   take(all.find((x) => x.d!.figure != null && "withheld" in x.d!.second)?.c, "the days withheld by the guard, the bill printed");
   take(all.find((x) => x.d!.withheld === W.bill && "withheld" in x.d!.second)?.c, "neither prints: two withheld lines and nothing else");
   take(all.find((x) => x.d!.withheld === W.billNotOnFile && "figure" in x.d!.second)?.c, "no bill on file, the days printed");
+  /* THE CITY'S SPEND CARD, `08 demand` (MODEL.md 8.3; plan step 32's fourth
+     dispatch, 2026-09-18), keyed "city:<slug>:demand", the plain figure
+     standing as its own card, three shapes read off the builder: the
+     exemplar, whose spend is the set's one placeholder and is WITHHELD with
+     its line (the 30 absent on purpose, item 23); the first city by slug
+     whose spend is held (the figure at 30, no foot); and Frankfurt, modelled,
+     the foot saying so, the state 248 of 252 share. */
+  const citySlugs = listedCitySlugs();
+  const takeCity = (slug: string | undefined, why: string) => { if (slug && !seen.has(`city:${slug}`)) { seen.add(`city:${slug}`); out.push({ iso2: `city:${slug}:demand`, why }); } };
+  takeCity("london", "city block 08 on the exemplar: the placeholder withheld with its line, no figure, no basis");
+  takeCity(citySlugs.find((slug) => buildCityDemand(slug)?.tag === "held"), "city block 08 held: the spend at 30 in ink, the basis, no foot");
+  takeCity("frankfurt", "city block 08 modelled: the spend at 30, the foot saying modelled, the state 248 of 252 share");
   return out;
 }
 
@@ -1125,6 +1158,17 @@ export function BentoMetricStories({ instances = pickBentoMetricInstances() }: {
   return (
     <div data-stories="bento-metric">
       {instances.map((i) => {
+        if (i.iso2.startsWith("city:")) {
+          const slug = i.iso2.split(":")[1];
+          const d = buildCityDemand(slug);
+          /* At the 520 the card takes in its 1-1 band at 1280 (city-view.tsx `Demand`, the same props). */
+          const el = d ? (
+            <div style={{ maxWidth: 520 }}>
+              <BentoMetric id={`demand-${slug}`} icon="market-size" kicker={`${COPY.cityDemand.kicker}, ${d.name}`} sample={d.sample} figure={d.figure ?? undefined} withheld={d.withheld ?? undefined} basis={d.basis ?? undefined} foot={d.foot ?? undefined} />
+            </div>
+          ) : null;
+          return <Story kind="bento-metric" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         const iso2 = i.iso2.split(":")[0];
         const d = buildEntryBill(iso2);
         const el = d ? (
@@ -1331,7 +1375,7 @@ export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }
    each key a link to its story's section by id. Outside any stories wrapper,
    so the checker does not read it as a story. */
 export function pickAllInstances(cityHero: CityHeroInstance[]): Record<string, Instance[]> {
-  const cityStrips = pickCityStripInstances(cityHero);
+  const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
     "answer-card": pickAnswerCardInstances(),

@@ -31,11 +31,6 @@
       { "key": "rent_relief", "label": "Affordable space", "pos": 18, "word": "Scarce", "left": "Scarce", "right": "Cheap" }
     ]
   },
-  "income": {
-    "_meta": { "confidence": "modeled", "source": "London earnings distribution, illustrative", "as_of": "2026-06" },
-    "median_income_usd": 47000, "top10_income_usd": 130000, "top1_income_usd": 350000,
-    "read": "Money runs deep and skews high. The everyday customer earns a solid wage, and a long tail above them leaves real room for a premium ticket."
-  },
   "space": {
     "_meta": { "confidence": "modeled", "source": "London commercial market, illustrative; no street-level per-sqm held", "as_of": "2026-06" },
     "prime_rent_note": "Prime space runs near the top of Europe",
@@ -48,14 +43,10 @@
     "terms_note": "Standard on a prime retail unit; secondary streets soften every figure."
   },
   "demand": {
-    "_meta": { "confidence": "placeholder", "source": "illustrative consumer-spend size; millionaire count modeled from published wealth tallies; to be researched", "as_of": "2026-06" },
-    "consumer_spend_usd_bn": 196,
-    "spend_per_capita_usd": 22000,
-    "growth_pct_yoy": 4,
-    "millionaires_count": 227000,
+    "_meta": { "confidence": "placeholder", "source": "the resident/visitor split, illustrative; the spend per resident left this seed on plan step 32's fourth dispatch (the view builds 08 demand by the slug off the city fact bank)", "as_of": "2026-06" },
     "resident_pct": 80, "visitor_pct": 20,
-    "read": "The spending pool is large and still growing. Size is not the constraint here; room and rent are.",
-    "note": "Annual consumer spend across the metro, modeled. The base is large and growing, not the constraint here."
+    "read": "Most of the trade is residents' money; visitors add a fifth.",
+    "note": "The resident/visitor split, illustrative."
   },
   "demand_calendar": {
     "_meta": { "confidence": "placeholder", "source": "seasonal read, illustrative; no honest per-month demand index is held (rulebook v1, 2026-07-11)", "as_of": "2026-06" },

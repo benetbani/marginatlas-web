@@ -454,12 +454,26 @@ export const COPY = {
     back: "Back to {country}",
   },
   /** The city masthead through the answer card. THE ANSWER'S LABEL is
-   *  "Average customer pay" (MODEL.md 8.3, `00 masthead`; M16: "What
-   *  customers earn" is `07`'s kicker, and two cards do not share one name
-   *  for two figures): the figure is `avg_gross_salary_usd_year`, a mean, so
-   *  the label says average and the basis says gross and a year. Plan step
-   *  32's first dispatch, 2026-09-18. */
-  cityHero: { subtitle: "Opening a business in {country}", allCities: "All cities", answerLabel: "Average customer pay", answerBasis: "Gross pay, a year" },
+   *  "Typical customer pay" (MODEL.md 8.3, `00 masthead`; plan step 32's
+   *  fourth dispatch, 2026-09-18): the figure comes from the one builder for
+   *  a city's typical income (city_income.ts, `owner_col.median_salary_usd_mo`
+   *  times twelve), a median, so the label says typical and never average
+   *  (the first dispatch's "Average customer pay" named the city list's mean,
+   *  which the masthead no longer prints; a mean is never printed under
+   *  "typical" nor a median under "average"). M16: "What customers earn" is
+   *  `07`'s kicker, and the two cards now share one FIGURE, not one name.
+   *  The basis says the unit and neither "before tax" nor "take-home": the
+   *  shard carries no marker (item 24); it gains the word "modelled" where
+   *  the figure's tag is not held, since the mark is off site-wide; and where
+   *  the builder falls back to the country's typical it is
+   *  `cityCustomers.countryBasis`, naming the country (no city today). */
+  cityHero: {
+    subtitle: "Opening a business in {country}",
+    allCities: "All cities",
+    answerLabel: "Typical customer pay",
+    answerBasis: "Pay, a year.",
+    answerBasisModelled: "Pay, a year; modelled.",
+  },
   /** AT A GLANCE, the city's (MODEL.md 8.3, `01 glance`; plan step 32's
    *  first dispatch, 2026-09-18): the country's form one altitude down (R8,
    *  clause 43), the kicker the country's own (`glance.kicker`). Four cells
@@ -558,12 +572,26 @@ export const COPY = {
       deposit: "The deposit is not on file for this city yet.",
     },
   },
-  /** The city's customers strip (city:earnings, run 11): the city's own spread where held, the country's typical pay where not, the basis line saying which. */
+  /** WHAT CUSTOMERS EARN, the city's `07 earnings` (MODEL.md 8.3; plan step
+   *  32's fourth dispatch, 2026-09-18): the kicker is the country's words
+   *  (M16, `CUSTOMERS_KICKER`). The strip's middle mark is the city's own
+   *  typical pay from the one builder (city_income.ts) and the outer marks
+   *  are the country's bottom and top tenth, so the basis says whose each is
+   *  (M5's words: "Typical pay here; the spread is the country's"). Where the
+   *  country holds no deciles, or the city's typical falls outside them (a
+   *  net figure under a gross bottom tenth: 15 cities below, 1 above, counted
+   *  2026-09-18), the typical stands alone and the note says why the spread is
+   *  not drawn. Where the city holds no typical of its own the whole strip is
+   *  the country's and `countryBasis` says so (no city today). "Modelled" in
+   *  the note where the figure's tag is not held. Never "before tax" or
+   *  "take-home" (item 24), never "median". */
   cityCustomers: {
-    kicker: "What customers earn here",
-    basis: "Pay a year across the city, before tax.",
-    modelled: "the spread is modelled on the city's average pay, not measured",
-    spreadWord: "is how the money is spread here",
+    kicker: CUSTOMERS_KICKER,
+    basis: "Typical pay here, a year; the spread is the country's.",
+    basisAlone: "Typical pay here, a year.",
+    noSpread: "The country's bottom and top tenth are not researched yet.",
+    outside: "The country's spread is not drawn: the typical pay here sits outside it.",
+    modelled: "The typical pay is modelled, not measured.",
     countryBasis: "Full-time pay a year across {country}; {city} not researched on its own yet.",
   },
   /** THE THREE CARDS THE CITY FACT BANK FEEDS (2026-09-17, CITY-PROGRAMME step
@@ -631,12 +659,22 @@ export const COPY = {
       noRent: "The share is withheld: the one-bed rent is not on file for this city.",
     },
   },
+  /** WHAT RESIDENTS SPEND, the city's `08 demand` (MODEL.md 8.3; plan step
+   *  32's fourth dispatch, 2026-09-18): the plain figure on BentoMetric, the
+   *  kicker 8.3's own title. The basis says what the figure is and its unit;
+   *  the foot says "modelled" where the tag is not held (248 of 252), the
+   *  bill's idiom; the withheld lines stand where the figure would, PART 5's
+   *  shape: the placeholder (London, the set's one, item 23) is never printed,
+   *  and a shard with no figure (no city today) says so. */
   cityDemand: {
-    kicker: "The spending pool",
-    focalSub: "spent per resident a year",
+    kicker: "What residents spend",
     basis: "What one resident spends in a year, on everything.",
-    modelled: "Modelled, not measured.",
-    placeholder: "A placeholder until {city} is researched.",
+    footModelled: "The spend is modelled for this city.",
+    withheld: {
+      placeholder: "The spend is withheld: the figure on file for {city} is a placeholder.",
+      /** Reachable by the builder's shape and by no city today (252 of 252 hold the figure). */
+      notOnFile: "The spend per resident is not on file for this city yet.",
+    },
     /** The season card (item 27): the split is a slope over arrivals for every city, and now says so. */
     seasonKicker: "How seasonal it is",
     seasonBasis: "The visitor share is modelled from a year's arrivals and the resident count, not counted at the till.",
@@ -690,7 +728,11 @@ export const COPY = {
      *  peer that tied the home row on a signed-difference column; the column
      *  is now the absolute figure itself (peer_rows.ts), so every row reads a
      *  real number and the home row needs no special case at all. */
-    caveat: "Cost of living against a leading metro; income and visitors a year.",
+    /** THE INCOME COLUMN IS THE ONE BUILDER'S FIGURE (plan step 32's fourth
+     *  dispatch, 2026-09-18): every row's income is `cityTypicalIncome(slug)`
+     *  for that city, the same figure the home city's masthead prints, so the
+     *  caveat says "typical pay" and one basis serves the column. */
+    caveat: "Cost of living against a leading metro; typical pay and visitors a year.",
   },
   /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13,
    *  reworded and unfeatured task 14, 2026-09-10). Every district's shop rent
@@ -780,7 +822,7 @@ export const COPY = {
     /** The city's typical customer pay, the strip's own middle mark. */
     cityPay: {
       kicker: "What customers earn",
-      basis: "The typical earner, a year, before tax.",
+      basis: "The typical earner, a year.",
     },
     /** The effective burden, the country page's own answer figure. */
     burden: {

@@ -7,10 +7,14 @@
  * fifth, are a data requirement the strip is built to hold) and customers
  * (typical full-time pay with the bottom and top tenth where the deciles are
  * researched). Local and synchronous, the adapter's own rules and tiering.
+ * And the city's earnings strip (`buildCityEarningsStrip`, plan step 32's
+ * fourth dispatch, 2026-09-18): the city's own typical from the one income
+ * builder between the country's two deciles.
  */
 import { getCountryProfile } from "@/lib/economic_profile";
 import { COPY } from "@/lib/spine/copy";
 import { inSentence } from "@/lib/spine/place_names";
+import { cityTypicalIncome } from "@/lib/spine/city_income";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 type Conf = "measured" | "modeled";
@@ -50,10 +54,11 @@ export function buildPremisesStrip(iso2: string): StripData | null {
  *  a third accent on a page whose two are the hero's rate and the staff card's
  *  average (PART 6); it is `lead` now, the head rung in ink, so the strip
  *  still says which mark is the answer of the spread and spends no colour on
- *  it. The city's own-income strip below still passes `accent` until the city
- *  page's dispatch takes its `07 earnings` to ink (8.3's own row); a city that
- *  falls back to this builder draws the country's strip as this builder draws
- *  it. */
+ *  it. THE LEAD IS THE CARD'S 30 (M3, "the typical mark is the card's 30 in
+ *  ink on every strip that holds one"; plan step 32's fourth dispatch,
+ *  2026-09-18, which took RangeStrip's lead rung from the head to the focal
+ *  rung, so FOCAL closes on this strip and on the city's). A city that falls
+ *  back to this builder draws the country's strip as this builder draws it. */
 export function buildCustomersStrip(iso2: string): StripData | null {
   const { p, held, conf } = profileOf(iso2);
   if (!held || !isNum(p.median_wage_full_time_usd) || p.median_wage_full_time_usd <= 0) return null;
@@ -67,36 +72,89 @@ export function buildCustomersStrip(iso2: string): StripData | null {
   return { marks, confidence: conf, note: spread ? null : COPY.customers.noSpread, extra: null };
 }
 
-/** THE CITY'S CUSTOMERS STRIP (city:earnings, the build loop's run 11, 2026-09-06).
- *  The city's own bottom tenth, typical and top tenth where the seed holds them
- *  (London: a spread modelled on the city's average pay, so the note says
- *  modelled and the head wears the sample mark); else the country's typical pay
- *  through buildCustomersStrip, the basis line naming the country and saying the
- *  city is not researched on its own yet. Null when neither is held. The spread
- *  word (the city's place among cities by how unevenly income is spread) rides
- *  the extra slot. */
-export type CityStripData = StripData & { basis: string; sample: boolean; from: "city" | "country" };
-export function buildCityCustomersStrip(seed: any): CityStripData | null {
-  const o = seed?.income ?? null;
-  const city = String(seed?.meta?.city ?? "").trim();
-  const med = o && isNum(o.median_income_usd) && o.median_income_usd > 0 ? Math.round(o.median_income_usd) : null;
-  if (med != null) {
-    const p10 = isNum(o.bottom10_income_usd) && o.bottom10_income_usd > 0 ? Math.round(o.bottom10_income_usd) : null;
-    const p90 = isNum(o.top10_income_usd) && o.top10_income_usd > 0 ? Math.round(o.top10_income_usd) : null;
-    const spread = p10 != null && p90 != null && p10 < med && med < p90;
-    const marks: StripData["marks"] = spread
-      ? [{ key: "p10", label: COPY.customers.marks.bottom, value: p10 as number }, { key: "typical", label: COPY.customers.marks.typical, value: med, accent: true }, { key: "p90", label: COPY.customers.marks.top, value: p90 as number }]
-      : [{ key: "typical", label: COPY.customers.marks.typical, value: med, accent: true }];
-    const conf: Conf = o._meta?.confidence === "measured" ? "measured" : "modeled";
-    const word = typeof seed?.demand?.spread_word === "string" && seed.demand.spread_word.trim() ? String(seed.demand.spread_word).trim() : null;
-    return { marks, confidence: conf, note: conf === "modeled" ? COPY.cityCustomers.modelled : null, extra: word ? { value: word, label: COPY.cityCustomers.spreadWord } : null, basis: COPY.cityCustomers.basis, sample: conf !== "measured", from: "city" };
+/** THE CITY'S EARNINGS STRIP, `07 earnings` (MODEL.md 8.3; M3, M5; plan step
+ *  32's fourth dispatch, 2026-09-18). Three marks, linear: the country's
+ *  bottom tenth and top tenth off the profile's measured deciles
+ *  (`wage_p10_usd`, `wage_p90_usd`, data/economics/wage_deciles_v1.json
+ *  through apply_wage_deciles.ts) as the outer marks, and the city's OWN
+ *  typical pay from the one builder (city_income.ts: `owner_col.
+ *  median_salary_usd_mo` times twelve, the same figure the masthead, the
+ *  runway and the peers row print) as the middle mark, the lead, the card's
+ *  30 in ink. The basis says whose each is: "Typical pay here, a year; the
+ *  spread is the country's."
+ *
+ *  COUNTED 2026-09-18 over the 252 listed cities: 152 draw the three marks;
+ *  84 stand on a country holding no deciles (Abidjan among them) and draw
+ *  the typical alone, the note saying the country's tenths are not
+ *  researched; 16 hold deciles that do not bracket the city's typical (15
+ *  below the bottom tenth, Rome, Kyoto and Valencia among them, 1 above,
+ *  San Jose) and draw the typical alone with the note saying the spread is
+ *  not drawn because the typical sits outside it. The reason under those 16
+ *  is item 24's marker gap: the city's figure is a take-home on most files
+ *  and the country's deciles are gross, and the shard cannot say which, so
+ *  a typical under a bottom tenth is the two bases meeting, not a fact, and
+ *  a strip that drew it would read "the typical Roman earns less than
+ *  Italy's poorest tenth". Withheld with the stated line instead. Where the
+ *  city holds no typical of its own (no city today) the whole strip is the
+ *  country's through buildCustomersStrip and `countryBasis` names the
+ *  country and says the city is not researched on its own yet.
+ *
+ *  The spread word that rode the old strip's extra slot (a quartile word off
+ *  the gini field) is gone: 8.3's row holds no extra today, a one-word
+ *  summary of a place is banned (clause 19), and `gini` is excluded from
+ *  the city's cards by `02`'s own row. */
+export type CityEarningsData = StripData & {
+  slug: string;
+  iso2: string;
+  name: string;
+  basis: string;
+  sample: boolean;
+  from: "city" | "country";
+  /** The figures for the gates: the typical printed, the country's deciles where drawn, and whether the deciles were withheld for not bracketing the typical. */
+  figures: { typical: number; p10: number | null; p90: number | null; outside: boolean };
+};
+export function buildCityEarningsStrip(slug: string): CityEarningsData | null {
+  const income = cityTypicalIncome(slug);
+  if (!income) return null;
+  const base = { slug, iso2: income.iso2, name: income.name };
+  if (income.from === "country") {
+    const c = buildCustomersStrip(income.iso2);
+    if (!c) return null;
+    const typical = c.marks.find((m) => m.key === "typical")?.value ?? income.value;
+    return {
+      ...base,
+      ...c,
+      basis: COPY.cityCustomers.countryBasis.replace("{country}", inSentence(income.countryName)).replace("{city}", income.name),
+      sample: c.confidence !== "measured",
+      from: "country",
+      figures: { typical, p10: c.marks.find((m) => m.key === "p10")?.value ?? null, p90: c.marks.find((m) => m.key === "p90")?.value ?? null, outside: false },
+    };
   }
-  const iso2 = String(seed?.meta?.iso2 ?? "").toUpperCase();
-  const country = String(seed?.meta?.country_name ?? "").trim();
-  if (iso2.length !== 2 || !city || !country) return null;
-  const c = buildCustomersStrip(iso2);
-  if (!c) return null;
-  return { ...c, basis: COPY.cityCustomers.countryBasis.replace("{country}", inSentence(country)).replace("{city}", city), sample: c.confidence !== "measured", from: "country" };
+  const { p } = profileOf(income.iso2);
+  const held = p.iso2.toUpperCase() === income.iso2;
+  const p10 = held && isNum(p.wage_p10_usd) && p.wage_p10_usd > 0 ? Math.round(p.wage_p10_usd) : null;
+  const p90 = held && isNum(p.wage_p90_usd) && p.wage_p90_usd > 0 ? Math.round(p.wage_p90_usd) : null;
+  const deciles = p10 != null && p90 != null;
+  const brackets = deciles && (p10 as number) < income.value && income.value < (p90 as number);
+  const typicalMark = { key: "typical", label: COPY.customers.marks.typical, value: income.value, lead: true };
+  const marks: StripData["marks"] = brackets
+    ? [{ key: "p10", label: COPY.customers.marks.bottom, value: p10 as number }, typicalMark, { key: "p90", label: COPY.customers.marks.top, value: p90 as number }]
+    : [typicalMark];
+  const notes: string[] = [];
+  if (!deciles) notes.push(COPY.cityCustomers.noSpread);
+  else if (!brackets) notes.push(COPY.cityCustomers.outside);
+  if (income.sample) notes.push(COPY.cityCustomers.modelled);
+  return {
+    ...base,
+    marks,
+    confidence: income.sample ? "modeled" : "measured",
+    note: notes.length ? notes.join(" ") : null,
+    extra: null,
+    basis: brackets ? COPY.cityCustomers.basis : COPY.cityCustomers.basisAlone,
+    sample: income.sample,
+    from: "city",
+    figures: { typical: income.value, p10: brackets ? p10 : null, p90: brackets ? p90 : null, outside: deciles && !brackets },
+  };
 }
 
 /* THE CITY'S PREMISES STRIP LEFT ON PLAN STEP 32 (second dispatch, 2026-09-18).

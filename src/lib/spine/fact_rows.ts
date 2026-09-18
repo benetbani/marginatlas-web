@@ -10,8 +10,9 @@
  * every city as "unsourced"; three research briefs re-diagnosed the same
  * wall from zero. This file is the standing answer. Server only: it reads
  * the bank through src/lib/facts/city_shard.ts, which reads the file
- * system, so it runs in the view (the two seats, as the glance and the
- * placement seat do) and in the adapter (the spend).
+ * system, so it runs in the view, by the seed's slug, as the glance and the
+ * placement seat do (all three since plan step 32's fourth dispatch,
+ * 2026-09-18; the spend rode the adapter's seed until then).
  *
  * THE TWO SEATS ARE KvGrid CARDS SINCE PLAN STEP 32's THIRD DISPATCH
  * (2026-09-18; MODEL.md 8.3, the band `05 | 06`, "the fact grid, and the
@@ -41,12 +42,29 @@
  * held; zero is a figure for the transport pass alone (city_shard.ts says
  * why: Belgrade and Richmond hold 0, tagged held, and both run fare-free
  * transit) and prints as the word, the site's rule for a zero fee. The
- * ratio needs a rent and a salary and is withheld above one hundred percent
- * with its line (the reason sits on the builder). The spend needs the one
- * figure.
+ * ratio needs a rent and a typical income and is withheld above one hundred
+ * percent with its line (the reason sits on the builder). The spend needs
+ * the one figure, and a placeholder is withheld, never printed.
+ *
+ * THE TYPICAL INCOME COMES FROM ONE BUILDER (plan step 32's fourth dispatch,
+ * 2026-09-18): `cityTypicalIncome(slug)` in city_income.ts, the same call
+ * the masthead, the earnings strip and the peers row make, so the runway's
+ * income and the strip's middle mark are one figure (R7's discipline applied
+ * to pay, 8.3's `06` row). The runway draws only on the city's OWN figure
+ * (`from: "city"`, 252 of 252 today): a year of a city's rent over a year
+ * of the country's pay would be a ratio between two places.
+ *
+ * THE SPEND IS A BentoMetric SINCE THE SAME DISPATCH (8.3's `08 demand`: the
+ * plain figure, F3, standing as its own card the way the country's `04
+ * entry-bill` does): `buildCityDemand` returns the cell's shape, a figure OR
+ * a withheld line (never both, never neither: BentoBand.tsx throws on
+ * either), the basis, and a foot saying "modelled" where the tag is not
+ * held. The one placeholder in the set (London, item 23) is withheld with
+ * its line: a fill value is never printed (R11, clause 46).
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { cityFigure, weakerTag, type BankFigure } from "@/lib/facts/city_shard";
+import { cityTypicalIncome } from "@/lib/spine/city_income";
 import type { FactTag } from "@/lib/facts/types";
 import { usd, usdCents } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
@@ -197,15 +215,18 @@ export type CityRunwayData = {
  * income a year, the one absolute `05` does not hold (M1: the rent is never
  * printed twice in one band, so the rent is not here).
  *
- * THE DENOMINATOR, CHOSEN ONCE (research item 24): `owner_col.median_salary_usd_mo`
- * times twelve, and nothing else. It is the held figure (247 of 252, 5
- * modelled, 0 absent, counted 2026-09-18), it comes off the same key family
- * and the same research pass as the rent it is divided into, so both sides
- * share one basis and one tag, and a year of rent over a year of pay is the
- * question in a worker's own terms. The bank's `income.median_income_usd`,
- * which stood in for London alone while London held no salary, is not read
- * any more: London's salary is held since 2026-09-17, and a second
- * denominator on one city is a second reading of one figure (M1).
+ * THE DENOMINATOR, CHOSEN ONCE (research item 24) AND READ THROUGH THE ONE
+ * BUILDER (the fourth dispatch, 2026-09-18): `cityTypicalIncome(slug)`,
+ * which is `owner_col.median_salary_usd_mo` times twelve on every listed
+ * city (247 held, 5 modelled, 0 absent, counted 2026-09-18). It comes off
+ * the same key family and the same research pass as the rent it is divided
+ * into, so both sides share one basis and one tag, and a year of rent over
+ * a year of pay is the question in a worker's own terms. The bank's
+ * `income.median_income_usd` is not read: city_income.ts says why (on 35 of
+ * the 51 cities holding it held, it is a household's or a per-head figure,
+ * and the shard cannot say which). Where the builder falls back to the
+ * country's typical (no city today) this card draws nothing rather than a
+ * city's rent over a country's pay.
  *
  * "TYPICAL", NEVER "MEDIAN", in every string: the pay is a modelled figure
  * on 5 cities and one word serves every city (item 24). WHETHER THE INCOME
@@ -249,29 +270,29 @@ export function buildCityRunway(slug: string): CityRunwayData | null {
   };
 
   const rent = figure(iso2, slug, "owner_col.rent_1bed_usd_mo");
-  const salary = figure(iso2, slug, "owner_col.median_salary_usd_mo");
-  const incomeYr = salary ? Math.round(salary.value * 12) : null;
+  const income = cityTypicalIncome(slug);
+  /* No typical income of the city's own: no cell, and the card draws nothing (the glance's rule; no city today). */
+  if (!income || income.from !== "city") return null;
+  const incomeYr = income.value;
 
   let pct: number | null = null;
   let overPct: number | null = null;
   let withheld: string | null = null;
-  if (rent && salary && incomeYr) {
+  if (rent) {
     const ratio = Math.round(((rent.value * 12) / incomeYr) * 100);
     if (ratio > 100) {
       overPct = ratio;
       withheld = C.withheld.over;
     } else {
       pct = ratio;
-      cells.push({ key: "share", label: C.cells.share, value: `${pct}%`, confidence: cellConfidence(weakest([rent.tag, salary.tag])) });
+      cells.push({ key: "share", label: C.cells.share, value: `${pct}%`, confidence: cellConfidence(weakest([rent.tag, income.tag])) });
       /* The share's inputs are named in the foot once each, whichever side is weak. */
       if (notHeld(rent.tag)) mark("rent", rent.tag);
     }
-  } else if (salary && !rent) {
+  } else {
     withheld = C.withheld.noRent;
   }
-  /* No typical income on file: no cell, and the card draws nothing (the glance's rule; no city today). */
-  if (!salary || !incomeYr) return null;
-  cells.push({ key: "income", label: C.cells.income, value: usd(incomeYr), note: C.units.year, confidence: mark("income", salary.tag) });
+  cells.push({ key: "income", label: C.cells.income, value: usd(incomeYr), note: C.units.year, confidence: mark("income", income.tag) });
 
   return {
     slug,
@@ -287,30 +308,58 @@ export function buildCityRunway(slug: string): CityRunwayData | null {
 }
 
 /* ------------------------------------------------------------------------- */
-/* The spending pool: what one resident spends in a year.                     */
+/* 08 demand: what one resident spends in a year.                             */
 /* ------------------------------------------------------------------------- */
 
-export type CityDemand = {
-  /** Spend per resident, a year. */
-  spend: BankFigure;
-  tag: FactTag;
+export type CityDemandData = {
+  slug: string;
+  iso2: string;
+  name: string;
+  /** The spend per resident a year as printed, or null where withheld; the raw figure beside it for the gates. */
+  figure: string | null;
+  value: number | null;
+  /** The stated line where the figure would stand (the placeholder, or nothing on file), or null where the figure prints. */
+  withheld: string | null;
+  /** Said only when a figure prints: a basis describes a printed figure. */
+  basis: string | null;
+  /** "modelled" in words where the tag is not held, since the mark is off site-wide; null on a held figure and under a withheld line. */
+  foot: string | null;
+  tag: FactTag | null;
   sample: boolean;
-  basis: string;
 };
 
-/** The clause a basis gains when a tag is not held; empty when it is. Extrapolated reads as modelled here: neither is a measurement, and no spend fact carries it today. */
-function weakClause(tag: FactTag, modelled: string, placeholder: string, cityName: string): string {
-  if (tag === "held") return "";
-  if (tag === "placeholder") return placeholder.replace("{city}", cityName);
-  return modelled;
-}
-
-/** Null unless the bank holds the one figure, above zero. */
-export function buildCityDemand(iso2: string, slug: string, cityName?: string): CityDemand | null {
+/**
+ * WHAT RESIDENTS SPEND (MODEL.md 8.3, `08 demand`; plan step 32's fourth
+ * dispatch, 2026-09-18): the plain figure, `demand.spend_per_capita_usd` off
+ * the bank, counted 2026-09-18 over the 252 shards: 252 hold it, 3 held
+ * (Nanjing, Shanghai, Shenzhen, city retail-sales statistics), 248 modelled
+ * (a share of metro GDP, marked in the foot), 1 placeholder (London, whose
+ * drop says "illustrative; to be researched", item 23). A placeholder is
+ * WITHHELD with its line, never printed (R11, clause 46); a shard with no
+ * figure is withheld with its own line (no city today), so the band `08 |
+ * 07` keeps two children on every city and the card never self-omits. The
+ * millionaire count is not on this card: no field, no source, no method
+ * (item 27), and a fill for a figure with no method is an invented figure
+ * (clause 32). No second figure today (8.3: "a second figure only in the
+ * `RangeStrip.extra` idiom, and none today").
+ */
+export function buildCityDemand(slug: string): CityDemandData | null {
+  const city = BY_SLUG.get(slug);
+  if (!city) return null;
+  const iso2 = String(city.iso2).toUpperCase();
+  const C = COPY.cityDemand;
   const spend = figure(iso2, slug, "demand.spend_per_capita_usd");
-  if (!spend) return null;
-  const basis = [COPY.cityDemand.basis, weakClause(spend.tag, COPY.cityDemand.modelled, COPY.cityDemand.placeholder, cityName ?? slug)]
-    .filter(Boolean)
-    .join(" ");
-  return { spend, tag: spend.tag, sample: notHeld(spend.tag), basis };
+  const base = { slug, iso2, name: city.name };
+  if (!spend) return { ...base, figure: null, value: null, withheld: C.withheld.notOnFile, basis: null, foot: null, tag: null, sample: false };
+  if (spend.tag === "placeholder") return { ...base, figure: null, value: null, withheld: fill(C.withheld.placeholder, { city: city.name }), basis: null, foot: null, tag: spend.tag, sample: true };
+  return {
+    ...base,
+    figure: usd(spend.value),
+    value: Math.round(spend.value),
+    withheld: null,
+    basis: C.basis,
+    foot: notHeld(spend.tag) ? C.footModelled : null,
+    tag: spend.tag,
+    sample: notHeld(spend.tag),
+  };
 }

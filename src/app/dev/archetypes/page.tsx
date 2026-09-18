@@ -31,7 +31,7 @@ export default async function ArchetypesPage() {
       <h2 data-typography="custom" className={h}>The tiers table</h2>
       <TiersTableStories />
       <h2 data-typography="custom" className={h}>The range strip</h2>
-      <RangeStripStories city={pickCityStripInstances(cityHero)} />
+      <RangeStripStories city={pickCityStripInstances()} />
       <SpectraTableStories />
       <NoteListStories />
       <TerminusStories city={pickCityCloseInstances(cityHero)} />

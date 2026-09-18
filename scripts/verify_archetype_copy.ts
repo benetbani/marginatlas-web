@@ -43,7 +43,10 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance, CITY_GLANCE_CELLS, isVisitorsRead } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
-import { buildCityLiving, buildCityRunway, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
+import { buildCityLiving, buildCityRunway, buildCityDemand, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
+import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
+import { cityTypicalIncome } from "@/lib/spine/city_income";
+import { usd } from "@/components/spine/kit";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
@@ -555,6 +558,87 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
   }
   console.log(`premises bento: ${built} clusters build over ${cities.length} cities, ${held} every figure held, ${modelled} modelled and saying so, ${withheldCells} withheld cell(s), ${rounded} counts rounded and saying so; openers and basis lines within their caps, no banned word`);
+}
+
+/* THE ONE INCOME BUILDER, THE SPEND CARD AND THE EARNINGS STRIP (MODEL.md 8.3
+   `08 demand` and `07 earnings`, DATA-REQUIREMENTS item 24; plan step 32's
+   fourth dispatch, 2026-09-18), on every listed city. THE IDENTITY: the
+   typical income prints in four places (the masthead's answer through the
+   adapter, the strip's middle mark, the runway's income cell, the peers'
+   income column, the last two through the adapter as well) and all four
+   read `cityTypicalIncome(slug)`; this gate proves the three it can reach
+   without the database agree on the figure (the strip's typical mark, the
+   runway's income cell, the builder), counts the branches (city or country)
+   and the tags, and proves the shape of each card: the spend prints a figure
+   OR a withheld line and never neither or both, says "modelled" in its foot
+   exactly when its tag is not held, and never prints a placeholder; the
+   strip draws three marks exactly when the country's deciles bracket the
+   typical, one otherwise, with the note saying which of the two reasons
+   (no deciles, or the typical outside them), the typical the lead mark on
+   every strip, and never "median", "before tax" or "take-home" in any
+   string, since the shard carries no marker. The counts by branch are
+   printed so the numbers the builders' comments quote (252 city, 0 country;
+   152 three-mark, 84 no deciles, 16 outside) are measured here rather than
+   remembered. */
+{
+  const cities = (cityListJson as { cities: Array<{ slug: string }> }).cities;
+  let cityBranch = 0, countryBranch = 0, modelledPay = 0, threeMarks = 0, noDeciles = 0, outside = 0, spendHeld = 0, spendModelled = 0, spendWithheld = 0;
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+      if (/\bmedian\b/i.test(t)) reds.push(`${where}: "median" where "typical" is the word (item 24): "${t}"`);
+      if (/\b(before|after) tax\b|take-home/i.test(t)) reds.push(`${where}: the basis claims a tax convention the bank does not carry: "${t}"`);
+    }
+  };
+  for (const c of cities) {
+    const income = cityTypicalIncome(c.slug);
+    if (!income) { reds.push(`city income ${c.slug}: builds nothing (every listed city holds a salary or a country median)`); continue; }
+    if (income.from === "city") cityBranch++; else countryBranch++;
+    if (income.sample) modelledPay++;
+    if (!(income.value > 0)) reds.push(`city income ${c.slug}: a figure of ${income.value}`);
+    const runway = buildCityRunway(c.slug);
+    const cell = runway?.cells.find((x) => x.key === "income");
+    if (income.from === "city" && (!cell || cell.value !== usd(income.value))) reds.push(`city income ${c.slug}: the runway prints ${cell?.value ?? "nothing"} and the one builder says ${usd(income.value)}`);
+    if (income.from === "country" && runway) reds.push(`city income ${c.slug}: the runway draws on the country's figure`);
+    const strip = buildCityEarningsStrip(c.slug);
+    if (!strip) { reds.push(`city earnings ${c.slug}: builds nothing`); continue; }
+    const typical = strip.marks.find((m) => m.key === "typical");
+    if (!typical || !typical.lead) reds.push(`city earnings ${c.slug}: no lead typical mark`);
+    if (typical && typical.value !== income.value) reds.push(`city earnings ${c.slug}: the strip's typical ${typical.value} and the one builder's ${income.value} differ`);
+    if (strip.from !== income.from) reds.push(`city earnings ${c.slug}: the strip is the ${strip.from}'s and the builder's figure the ${income.from}'s`);
+    if (strip.marks.length === 3) {
+      threeMarks++;
+      const [a, b, d] = [...strip.marks].sort((x, y) => x.value - y.value);
+      if (a.key !== "p10" || b.key !== "typical" || d.key !== "p90") reds.push(`city earnings ${c.slug}: the marks do not read bottom tenth, typical, top tenth in order (${strip.marks.map((m) => `${m.key} ${m.value}`).join(", ")})`);
+      if (strip.basis !== COPY.cityCustomers.basis && strip.from === "city") reds.push(`city earnings ${c.slug}: three marks under the basis "${strip.basis}"`);
+      if (strip.figures.outside) reds.push(`city earnings ${c.slug}: three marks drawn and the figures say the typical is outside the deciles`);
+    } else if (strip.marks.length === 1) {
+      if (strip.from === "city" && strip.basis !== COPY.cityCustomers.basisAlone) reds.push(`city earnings ${c.slug}: one mark under the basis "${strip.basis}"`);
+      if (strip.figures.outside) outside++; else noDeciles++;
+      const note = strip.note ?? "";
+      if (strip.figures.outside !== note.includes(COPY.cityCustomers.outside)) reds.push(`city earnings ${c.slug}: the typical is ${strip.figures.outside ? "" : "not "}outside the deciles and the note ${note.includes(COPY.cityCustomers.outside) ? "says it is" : "does not say so"}`);
+      if (!strip.figures.outside && strip.from === "city" && !note.includes(COPY.cityCustomers.noSpread)) reds.push(`city earnings ${c.slug}: one mark, no deciles, and the note does not say the tenths are not researched: "${note}"`);
+    } else reds.push(`city earnings ${c.slug}: ${strip.marks.length} marks`);
+    if (income.sample !== (strip.note ?? "").includes(COPY.cityCustomers.modelled)) reds.push(`city earnings ${c.slug}: the typical is ${income.sample ? "" : "not "}modelled and the note ${(strip.note ?? "").includes(COPY.cityCustomers.modelled) ? "says modelled" : "does not"}`);
+    ban(`city earnings ${c.slug}`, [strip.basis, strip.note ?? "", ...strip.marks.map((m) => m.label)]);
+    const spend = buildCityDemand(c.slug);
+    if (!spend) { reds.push(`city demand ${c.slug}: builds nothing (every listed city holds a shard)`); continue; }
+    if ((spend.figure == null) === (spend.withheld == null)) reds.push(`city demand ${c.slug}: ${spend.figure == null ? "neither a figure nor a withheld line" : "a figure and a withheld line together"}`);
+    if (spend.tag === "placeholder" && spend.figure != null) reds.push(`city demand ${c.slug}: a placeholder printed as a figure`);
+    if (spend.figure != null) {
+      if (spend.tag === "held") spendHeld++; else spendModelled++;
+      if ((spend.tag !== "held") !== (spend.foot != null)) reds.push(`city demand ${c.slug}: the tag is ${spend.tag} and the foot is ${spend.foot ? "printed" : "absent"}`);
+      if (!spend.basis) reds.push(`city demand ${c.slug}: a figure with no basis`);
+      if (spend.basis && spend.basis.split(/\s+/).filter(Boolean).length > 14) reds.push(`city demand ${c.slug}: a basis over fourteen words: "${spend.basis}"`);
+    } else {
+      spendWithheld++;
+      if (spend.basis || spend.foot) reds.push(`city demand ${c.slug}: a basis or a foot under a withheld line`);
+    }
+    if (COPY.cityDemand.kicker.split(/\s+/).length > 4) reds.push(`city demand: the opener runs over four words: "${COPY.cityDemand.kicker}"`);
+    ban(`city demand ${c.slug}`, [spend.basis ?? "", spend.foot ?? "", spend.withheld ?? ""]);
+  }
+  console.log(`city income, earnings and demand: ${cityBranch} cities read their own typical and ${countryBranch} the country's (${modelledPay} modelled); the strip draws three marks on ${threeMarks}, the typical alone on ${noDeciles} with no country deciles and on ${outside} whose typical sits outside them; the spend prints on ${spendHeld + spendModelled} (${spendHeld} held, ${spendModelled} modelled) and is withheld on ${spendWithheld}; the runway's income and the strip's typical agree with the one builder on every city`);
 }
 
 /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`; plan step 31's third

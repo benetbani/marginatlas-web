@@ -102,7 +102,8 @@ const SHEET: Entry[] = [
   { kind: "card-pager", city: "none", render: (c) => <CardPagerStories instances={c.instances["card-pager"]} /> },
   { kind: "city-cards", city: "none", render: (c) => <CityCardsStories instances={c.instances["city-cards"]} /> },
   { kind: "tiers-table", city: "none", render: (c) => <TiersTableStories instances={c.instances["tiers-table"]} /> },
-  { kind: "range-strip", city: "keyed", render: (c) => <RangeStripStories instances={pickRangeStripInstances()} city={pickCityStripInstances(c.cityHero)} /> },
+  /* The city strips build by the slug since plan step 32's fourth dispatch (2026-09-18), so the kind reads no city seed. */
+  { kind: "range-strip", city: "none", render: () => <RangeStripStories instances={pickRangeStripInstances()} city={pickCityStripInstances()} /> },
   { kind: "spectra-table", city: "none", render: () => <SpectraTableStories instances={pickSpectraTableInstances()} /> },
   { kind: "note-list", city: "none", render: (c) => <NoteListStories instances={c.instances["note-list"]} /> },
   { kind: "terminus", city: "keyed", render: (c) => <TerminusStories instances={pickTerminusInstances()} city={pickCityCloseInstances(c.cityHero)} /> },

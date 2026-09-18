@@ -19,7 +19,6 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { SpineCityBody } from "../src/components/spine/city/city-view";
 import { buildSpineCitySeed } from "../src/lib/spine/adapt_city";
-import { spineCitySeed } from "../src/lib/spine-seeds";
 
 const SLUGS = ["london", "tokyo", "new-york", "sao-paulo", "berlin", "mumbai", "lagos", "sydney"];
 
@@ -70,32 +69,11 @@ async function main() {
      population the question is about. */
   console.log(`\n  ${bad} chapter heading(s) with nothing under them.\n`);
 }
-/* ------------------------------------------------------------------------- *
- * THE SECTION THE LEDGER NEVER LISTED. The customers chapter was built to hold
- * four cards: the spending pool, the seasonal split, what customers earn, and
- * rent measured against that income. Only the first two were ever written
- * down. This asks whether the earnings card reaches a reader at all. The rent
- * card is no longer asked here: since plan step 32's third dispatch
- * (2026-09-18) it is `Runway` in city-view.tsx, a KvGrid seat off
- * `buildCityRunway(slug)`, in the census like every other section, and the
- * kit card this probe used to render (`RentAffordability`) is retired.
- * ------------------------------------------------------------------------- */
-async function unlisted() {
-  const { IncomeCurve } = await import("../src/components/spine/city/chapters");
-  console.log("  the section that was never in the ledger\n");
-  for (const slug of [...SLUGS]) {
-    const d: any = await buildSpineCitySeed(slug);
-    if (!d) continue;
-    const draws = (C: unknown) => {
-      const html = renderToStaticMarkup(React.createElement(C as React.FC<{ d: any }>, { d }));
-      return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length;
-    };
-    const a = draws(IncomeCurve);
-    console.log(`    ${String(d.meta?.city ?? slug).padEnd(11)} what customers earn ${a ? String(a).padStart(4) + " chars" : "  nothing"}`);
-  }
-  const s: any = spineCitySeed;
-  const draws = (C: unknown) =>
-    renderToStaticMarkup(React.createElement(C as React.FC<{ d: any }>, { d: s })).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length;
-  console.log(`    ${"the sample".padEnd(11)} what customers earn ${String(draws(IncomeCurve)).padStart(4)} chars\n`);
-}
-void main().then(unlisted);
+/* THE UNLISTED-SECTION HALF OF THIS PROBE IS GONE (plan step 32's fourth
+ * dispatch, 2026-09-18). It rendered the customers chapter's earnings card
+ * (`IncomeCurve`, chapters.tsx) alone to ask whether it reached a reader;
+ * that card is retired and its seat, `Earnings` in city-view.tsx, is a
+ * RangeStrip off `buildCityEarningsStrip(slug)`, in the census like every
+ * other section, so the question is answered by the census and the page
+ * filter rather than here. The heading half above stands. */
+void main();

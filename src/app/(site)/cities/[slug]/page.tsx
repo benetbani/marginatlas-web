@@ -55,7 +55,6 @@ import {
   AnswerFirstMasthead,
   BeatCard,
   HonestTakeBox,
-  RangeStrip,
   StickySectionNav,
   ContrarianInsight,
   SectionEmpty,
@@ -73,7 +72,6 @@ import {
 } from "@/components/kit";
 import {
   buildCityView,
-  cityFmtUsdFull,
   type CityView,
 } from "@/lib/cities/city_view";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
@@ -565,32 +563,11 @@ export default async function CityPage({
                     </div>
                   ))}
                 </dl>
-                {/* The spread, and the heading is doing real work now. It read
-                    "What residents earn a year" directly under a stat reading
-                    "Average pay each month", so one card carried one quantity
-                    in two units and the reader had to reconcile "$5K" against
-                    a TYPICAL tick of "$57,024" with nothing on the page
-                    connecting them. The stat above is now the same year, and
-                    this heading says the strip is that average spread out
-                    rather than a second answer to the same question. The
-                    caption comes from the view beside the numbers themselves,
-                    so the words and the figures cannot drift. */}
-                {view.customer.incomeSpread ? (
-                  <div className="mt-6 border-t border-parchment pt-5">
-                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-cocoa-500">
-                      How that pay spreads, a year
-                    </p>
-                    <RangeStrip
-                      p10={view.customer.incomeSpread.p10}
-                      p25={view.customer.incomeSpread.p25}
-                      p50={view.customer.incomeSpread.p50}
-                      p75={view.customer.incomeSpread.p75}
-                      p90={view.customer.incomeSpread.p90}
-                      format={cityFmtUsdFull}
-                      caption={view.customer.spreadCaption}
-                    />
-                  </div>
-                ) : null}
+                {/* The London income spread that stood here (a RangeStrip off
+                    view.customer.incomeSpread) left with the invention behind it
+                    on plan step 32's fourth dispatch, 2026-09-18: city_view.ts
+                    says why. This branch is the flag-off page and ships to no
+                    reader; the live city page is the spine body above. */}
               </BeatCard>
             ) : (
               <SectionEmpty

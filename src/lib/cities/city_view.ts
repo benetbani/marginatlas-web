@@ -88,17 +88,13 @@ export type CityView = {
   /** Who the local customer is: the spending-power facts, in plain terms. */
   customer: {
     stats: CityStat[];
-    /** A real income distribution across the metro, when one exists (London). */
-    incomeSpread: {
-      p10: number;
-      p25: number | null;
-      p50: number;
-      p75: number | null;
-      p90: number;
-    } | null;
-    /** Reads the spread against the average above it (mean vs midpoint). Set
-     *  only where a spread is set, so the two can never drift apart. */
-    spreadCaption: string | null;
+    /* `incomeSpread` and `spreadCaption` LEFT THIS TYPE on plan step 32's
+       fourth dispatch (2026-09-18). They carried London's "sanctioned
+       invented-but-plausible" spread: the mean times 0.42, 0.64, 0.88, 1.35
+       and 2.2, rounded to the thousand, an invention that put a second
+       typical (57,000) on the page beside the bank's held figures. The one
+       income builder (src/lib/spine/city_income.ts) is every reader's figure
+       now, and R7 forbids a second figure for one thing. */
     note: string | null;
   } | null;
   /** What space costs: the commercial-rent character read. */
@@ -156,9 +152,6 @@ function usd(n: number): string {
   if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
   if (Math.abs(n) >= 1_000) return `$${Math.round(n / 1_000)}K`;
   return `$${Math.round(n)}`;
-}
-function usdFull(n: number): string {
-  return `$${Math.round(n).toLocaleString("en-US")}`;
 }
 /**
  * Average pay, formatted the way the /cities card formats the SAME field.
@@ -502,42 +495,20 @@ function buildCustomer(
     });
   if (stats.length === 0) return null;
 
-  // A real income distribution across the metro. We only hold a defensible
-  // spread for the London exemplar (sanctioned invented-but-plausible); every
-  // other city shows the figures it has without a fabricated band.
-  //
-  // ROUNDED TO THE NEAREST THOUSAND, because these are multipliers on a mean,
-  // not measurements. The old code rounded to the dollar and the strip printed
-  // "$57,024" under the word TYPICAL, which is the look of an audited figure
-  // and reads as a rival to the average printed two lines above it. Same
-  // shape, same story, honest grain: a multiplier can carry three significant
-  // figures, and it cannot carry five.
-  const grand = (n: number) => Math.round(n / 1000) * 1000;
-  let incomeSpread: NonNullable<CityView["customer"]>["incomeSpread"] = null;
-  let spreadCaption: string | null = null;
-  if (isLondon && isNum(incomeYearly)) {
-    const m = incomeYearly;
-    incomeSpread = {
-      p10: grand(m * 0.42),
-      p25: grand(m * 0.64),
-      p50: grand(m * 0.88),
-      p75: grand(m * 1.35),
-      p90: grand(m * 2.2),
-    };
-    // THE LINE THAT STOPS THE TWO FIGURES LOOKING LIKE A CONTRADICTION. The
-    // typical sits below the average because the top of the distribution pulls
-    // the mean up. That is a property of pay everywhere, it is the single most
-    // useful thing this strip has to say to someone sizing a customer base,
-    // and the page had it on screen and never said it.
-    spreadCaption =
-      "The typical resident earns less than the average, because a thick band of very high earners pulls the average up. Model the mid figure, not the mean.";
-  }
+  // THE LONDON INCOME SPREAD IS GONE (plan step 32's fourth dispatch,
+  // 2026-09-18). For a year this function invented one for the exemplar: the
+  // mean times 0.42, 0.64, 0.88, 1.35 and 2.2, rounded to the thousand,
+  // "sanctioned invented-but-plausible", with a caption explaining why its
+  // typical sat under the average. The bank holds London's survey figures
+  // now, and the one income builder (src/lib/spine/city_income.ts) is every
+  // reader's typical; an invented 57,000 beside it was a second figure for
+  // one thing (R7). Nothing here draws a band for any city.
 
   const note = isLondon
     ? "Pay is high, but it spreads wide: a large lower-paid service workforce sits under a thick band of high earners in finance, tech, and the professions. A neighbourhood can swing the spending base more than the city average suggests."
     : "These are the broad spending figures we hold for the metro. A neighbourhood can sit well above or below them.";
 
-  return { stats, incomeSpread, spreadCaption, note };
+  return { stats, note };
 }
 
 function buildSpace(
@@ -646,8 +617,8 @@ function londonChanging(): NonNullable<CityView["changing"]> {
 }
 
 /* ------------------------- shared formatters ---------------------------- */
-// Exported so the page renders the spread and the money split with the same
-// formatting the view assumes, without re-deriving it.
+// Exported so the page renders the money split with the same formatting the
+// view assumes, without re-deriving it. `cityFmtUsdFull` left with the London
+// income spread it formatted (plan step 32's fourth dispatch, 2026-09-18).
 
 export const cityFmtUsd = usd;
-export const cityFmtUsdFull = usdFull;
