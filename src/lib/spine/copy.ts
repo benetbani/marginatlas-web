@@ -36,6 +36,10 @@ const LOCALS_KICKER = "What locals know";
  *  trade's open the same chapter with one literal, so a rewording changes
  *  all three. */
 const COSTS_CHAPTER = "What it costs to open, and to run";
+/** Turn three's heading on the trade page and the industry page (8.6, 8.7):
+ *  "What the place is like" with the subject swapped, one literal for both,
+ *  so a rewording changes the pair. */
+const TRADE_CHAPTER = "What the trade is like";
 export const COPY = {
   answer: {
     /** Founder verbatim, 2026-08-30: "the total effective tax burden". */
@@ -1149,7 +1153,7 @@ export const COPY = {
   tradeChapters: {
     costs: COSTS_CHAPTER,
     keep: "What it takes to keep it open",
-    trade: "What the trade is like",
+    trade: TRADE_CHAPTER,
   },
   /** `05 split` (MODEL.md 8.6; plan step 33's third dispatch, 2026-09-18):
    *  the kicker is his name for the B6 seat (M15); the focal's label is the
@@ -1527,6 +1531,89 @@ export const COPY = {
     industryDoor: "See {trade} in other cities",
     cityDoor: "Opening a business in {city}",
     compareDoor: "Compare {trade} across cities",
+  },
+  /** THE INDUSTRY PAGE'S `00 take` (MODEL.md 8.7; plan step 34's first
+   *  dispatch, 2026-09-18): the answer label is the trade's keep in four
+   *  words (8.7's title, "What this trade keeps of every $100 a customer
+   *  spends", is the question; the basis carries the rest of it). One basis
+   *  per branch of the one net builder (trade_net.ts, R7): the shard's
+   *  ladder says the figure is the trade's, modelled; the sector profile's
+   *  residual says whose it is, since it is not this trade's own (R12: every
+   *  shard figure prints as modelled, and the sample mark is off). The state
+   *  word stands where the answer would when neither holds a figure (no
+   *  trade today; the copy exists so the card can say it). The three
+   *  companions are 8.7's own, each with its qualifier under 48 characters
+   *  (the word modelled is said once for the three, in the foot, not three
+   *  times under three figures); the cost is a trade figure marked modelled
+   *  (R3), never a place's, and its note says so. The
+   *  foot is the coverage line: the not-gathered idiom (M19) for whichever
+   *  companions are withheld (the 90 on the archetype's default, R11; the
+   *  seven business-to-business shards whose spend is on file as zero), then
+   *  one sentence saying the printed ones are the trade's, modelled. The
+   *  crumb is the sector, the altitude above the trade, named once. */
+  industryHero: {
+    answerLabel: "What this trade keeps",
+    answerBasisShard: "Of every $100 a customer spends, after every cost; modelled for the trade anywhere.",
+    answerBasisProfile: "Of every $100 a customer spends, after every cost; the sector's typical, modelled.",
+    absent: "Not gathered yet",
+    absentNote: "what this trade keeps of every $100 is not on file",
+    cells: {
+      cost: { label: "Cost to open", note: "typical for the trade, no one place" },
+      spend: { label: "Spend per visit", note: "one customer, one visit" },
+      visits: { label: "Visits a year", note: "a typical customer" },
+    },
+    /** The not-gathered line's parts, joined by the builder in the order the cells stand. */
+    notGathered: "Not gathered yet: {parts}.",
+    parts: { cost: "what it costs to open", spend: "what a customer spends", visits: "how often a customer buys" },
+    /** The coverage sentence over the printed companions, their names filled in the cells' order. */
+    footAll: "The {names} are typical for the trade anywhere, modelled.",
+    footOne: "The {names} is typical for the trade anywhere, modelled.",
+    names: { cost: "cost", spend: "spend", visits: "visits" },
+  },
+  /** `01 lasts` at the world altitude (8.7): the same builder and card as the
+   *  trade's `09 lasts` (lasts_rows.ts, R5), the basis without the city
+   *  clause because there is no city here; the kicker and the foot are the
+   *  trade's, one literal each. */
+  industryLasts: {
+    basis: "Typical for the trade anywhere.",
+  },
+  /** `02 benchmark` (8.7): the trades next door, on RankedBars with a set
+   *  ceiling. The kicker is four words; the basis says the rows are the
+   *  highest of the sector's count and names the sector, composed by the
+   *  builder (the sector's name read aloud, "food and drink", never the
+   *  taxonomy's ampersand), within fourteen words on every one of the 25
+   *  sectors (four of them are four words long); the ceiling's words
+   *  stand at the rule's free end; the two heads are the country money
+   *  card's, one literal (COPY.margin.phoneHead). The withheld lines, each
+   *  under fourteen words: a member on the sector profile (its keep is the
+   *  sector's, not its own) is counted and never ranked (clause 46); under
+   *  four members holding a figure the card draws what it has under the
+   *  count (clause 22; 8.7's own row); with none or one it holds the
+   *  not-gathered line where the rows would stand (M19). */
+  industryBenchmark: {
+    kicker: "The trades next door",
+    basis: "Kept of every $100; the highest of {n} in {sector}; modelled.",
+    topLabel: "The highest",
+    withheldOne: "1 trade withheld: its keep is the sector's typical, not its own.",
+    withheldMany: "{n} trades withheld: their keep is the sector's typical, not their own.",
+    withheldSelf: "This trade is not ranked: its keep is the sector's typical, not its own.",
+    withheldSelfAmong: "{n} trades withheld, this one among them: their keep is the sector's typical.",
+    underFloorAll: "Only {rows} trades are in this sector; a ranking needs four.",
+    underFloor: "{rows} of {members} trades in this sector hold a figure; a ranking needs four.",
+    oneRow: "One of {members} trades in this sector holds a figure; a ranking needs four.",
+    noRows: "Not gathered yet: what the {members} trades in this sector keep of every $100.",
+  },
+  /** THE INDUSTRY PAGE'S THREE CHAPTER HEADINGS (8.7's own titles, the
+   *  first dispatch): turn one is the spine's string and not yet the site's
+   *  (8.7's chapter-turns paragraph leaves the two industry strings to the
+   *  composition round and names no winner; M7 bound the trade page alone),
+   *  so the spine's stands until the controller rules; turn two is the
+   *  spine's; turn three shares the trade's literal, the site's pattern with
+   *  the subject swapped. */
+  industryChapters: {
+    costs: "What it costs to open, and what it keeps",
+    where: "Where it pays, and what to sell",
+    trade: TRADE_CHAPTER,
   },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the

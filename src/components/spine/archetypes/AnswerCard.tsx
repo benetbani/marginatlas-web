@@ -21,9 +21,12 @@
  *    rail, an icon tile and a kicker, and no h1 is drawn, so a page keeps one
  *    headline whatever its answer cards number. The harness reads the level
  *    and counts the h1s.
+ *  - THE TRADE IDENTITY VARIANT (MODEL.md 8.7, plan step 34, 2026-09-18): a
+ *    trade anywhere has no flag, so `tile` puts the trade's 28px icon tile
+ *    in the flag's seat and drops the country mark; see the prop.
  */
 import * as React from "react";
-import { Band, Box, Rail, SampleTag } from "@/components/spine/kit";
+import { Band, Box, Ico, Rail, SampleTag } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { AtlasMark } from "@/components/spine/marks";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -63,6 +66,17 @@ export type AnswerCardProps = {
   absent?: { label: string; word: string; note: string };
   /** The rail's icon tile at section level. */
   icon?: AtlasIconId;
+  /** THE TRADE IDENTITY VARIANT (MODEL.md 8.7 `00 take`: "the trade's 28px
+   * icon tile in the flag's seat"; plan step 34's first dispatch,
+   * 2026-09-18): a page whose subject is a trade anywhere has no flag and no
+   * country mark, so the identity row draws the trade's own tile (the kit's
+   * `Ico`, PART 5's 28px trade tile, the one the city's trade rows draw)
+   * where the flag stands, then the h1, and nothing else: the country mark
+   * that leads the flag on a country's or a city's masthead is not drawn,
+   * because it names an altitude this page does not have. The same
+   * component, one more seat; undefined on every other masthead, which
+   * draws byte for byte what it drew. */
+  tile?: AtlasIconId;
   /** THE FOUNDER'S PLUS, at the card's actual foot (review finding 2, 2026-09-08):
    * a `DetailPanel` (or any disclosure) rendered under the grid and the
    * provenance line, exactly where DetailPanel's own doc comment says it
@@ -72,7 +86,7 @@ export type AnswerCardProps = {
   detail?: React.ReactNode;
 };
 
-export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail, crumb, absent }: AnswerCardProps) {
+export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail, crumb, absent, tile }: AnswerCardProps) {
   const tagged = answer != null && answer.confidence !== "measured";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   return (
@@ -82,7 +96,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
           <Rail icon={icon} kicker={name} />
         ) : (
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <AtlasMark id="alt-country" size={13} className="opacity-55" />
+          {tile ? <span data-identity-tile={tile} className="inline-flex"><Ico id={tile} /></span> : <AtlasMark id="alt-country" size={13} className="opacity-55" />}
           {image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={image.src} alt={image.alt} width={80} height={60} className="h-[60px] w-20 shrink-0 rounded-lg object-cover" data-hero-image />
@@ -95,7 +109,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
               dropped rather than kept alongside it: CountryFlag's inline
               height/width always overrides a caller's width class, so it was
               already inert, just misleading to read next to a real size. */}
-          {iso2 ? <CountryFlag iso2={iso2} size="hero" className="shrink-0" /> : null}
+          {iso2 && !tile ? <CountryFlag iso2={iso2} size="hero" className="shrink-0" /> : null}
           <h1 id="headline" data-typography="custom" className="text-balance text-[length:var(--t-section)] font-semibold leading-[1.05] tracking-tight text-[var(--c-ink)]">
             {name}
           </h1>

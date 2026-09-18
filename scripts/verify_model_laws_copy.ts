@@ -114,6 +114,9 @@ import { buildMix } from "@/lib/spine/mix_rows";
 import { buildMarket, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth } from "@/lib/spine/worth_rows";
+import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
+import { buildBenchmark } from "@/lib/spine/benchmark_rows";
+import { ALL_INDUSTRIES } from "@/lib/taxonomy";
 import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
@@ -819,6 +822,54 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
       }
     }
     console.log(`worth (14): ${worthStrips} shards draw the strip with money shown, ${worthOther} hold the operating-earnings line, ${worthWithheld} the withheld line off moneyShown`);
+  }
+
+  /* THE INDUSTRY PAGE'S OPENING (MODEL.md 8.7 `00 take`, `01 lasts`, `02
+     benchmark`; plan step 34's first dispatch, 2026-09-18), pushed by name
+     and composed off the shipped builders over every one of the 243
+     taxonomy ids, no seed, no database: the take's answer label, its two
+     basis lines (one per branch of the one net builder), the state word and
+     its note, the three companion labels and notes, and the foot in every
+     shape the 243 produce (all three printed, one or more withheld in the
+     not-gathered idiom; deduplicated, since 243 trades share a few strings);
+     the survival grid's world basis; the benchmark's kicker, its ceiling
+     words, its basis on every one of the 25 sectors (the sector's count and
+     name composed) and its line in every shape the states produce
+     (deduplicated). THE ROW NAMES ARE THE TAXONOMY'S OWN TRADE NAMES and
+     are not redded here: the country money card's rows are the same names
+     and this gate has never judged them, because the fault is in the
+     taxonomy's name ("Catering & food service contractors", five words) and
+     not in a card, and the rendered laws list (check_model_laws.mjs, ROW
+     SENTENCE on `[data-label]`) already reports every such name on every
+     page that draws it. Over 243 trades' ten rows the same name would be
+     counted hundreds of times, and a ratchet that may only fall cannot
+     seed hundreds of reds for one copy fault. The distinct names over
+     three words are COUNTED and printed as the queue line instead. The
+     chapter headings, read aloud like a kicker. */
+  {
+    const ids = ALL_INDUSTRIES.map((i) => i.id);
+    heads.push(["COPY.industryHero.answerLabel", COPY.industryHero.answerLabel], ["COPY.industryHero.answerBasisShard", COPY.industryHero.answerBasisShard], ["COPY.industryHero.answerBasisProfile", COPY.industryHero.answerBasisProfile], ["COPY.industryHero.absent", COPY.industryHero.absent], ["COPY.industryHero.absentNote", COPY.industryHero.absentNote]);
+    for (const [key, c] of Object.entries(COPY.industryHero.cells)) heads.push([`COPY.industryHero.cells.${key}.label`, c.label], [`COPY.industryHero.cells.${key}.note`, c.note]);
+    const feet = new Map<string, string>();
+    const lines = new Map<string, string>();
+    const bases = new Map<string, string>();
+    const longNames = new Set<string>();
+    for (const id of ids) {
+      const f = industryHeroFacts(id);
+      if (f?.foot && !feet.has(f.foot.text)) feet.set(f.foot.text, id);
+      const b = buildBenchmark(id);
+      if (b) {
+        if (!bases.has(b.basis)) bases.set(b.basis, id);
+        if (b.line && !lines.has(b.line)) lines.set(b.line, id);
+        for (const r of b.rows) { const n = r.name.trim().split(/\s+/).filter(Boolean).length; if (n > 3) longNames.add(r.name); }
+      }
+    }
+    for (const [text, id] of feet) heads.push([`industryHeroFacts(${id}).foot`, text]);
+    for (const [text, id] of bases) heads.push([`buildBenchmark(${id}).basis`, text]);
+    for (const [text, id] of lines) heads.push([`buildBenchmark(${id}).line`, text]);
+    heads.push(["COPY.industryLasts.basis", COPY.industryLasts.basis], ["COPY.industryBenchmark.topLabel", COPY.industryBenchmark.topLabel]);
+    for (const [key, text] of Object.entries(COPY.industryChapters)) heads.push([`COPY.industryChapters.${key}`, text]);
+    console.log(`industry opening: ${feet.size} foot shapes, ${bases.size} benchmark bases (one per sector), ${lines.size} line shapes over ${ids.length} trades; ${longNames.size} distinct taxonomy names over three words stand in the benchmark's rows, a copy fault in the taxonomy the rendered laws list reports page by page, not redded here`);
   }
 
   for (const [where, text] of heads) {

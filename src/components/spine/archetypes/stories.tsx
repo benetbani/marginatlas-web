@@ -74,6 +74,9 @@ import { buildTradePeers } from "@/lib/spine/trade_peer_rows";
 import { buildClears } from "@/lib/spine/clears_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
 import { ALL_INDUSTRIES } from "@/lib/taxonomy";
+import { industryHeroFacts, INDUSTRY_INSTANCES, industryServes } from "@/lib/spine/industry_hero_facts";
+import { buildBenchmark } from "@/lib/spine/benchmark_rows";
+import { Masthead as IndustryMasthead, BenchmarkCard } from "@/components/spine/industry/opening";
 
 export type Instance = { iso2: string; why: string };
 
@@ -260,11 +263,21 @@ export const cellTakeKey = (c: CellHeroInstance) => `cell:${c.key}:take`;
 export function pickCellTakeInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "take") && tradeHeroFacts(c.seed)).map((c) => ({ iso2: cellTakeKey(c), why: c.why }));
 }
+/** THE INDUSTRY'S TAKE, `00 take` (MODEL.md 8.7; plan step 34's first dispatch, 2026-09-18), keyed industry:<handle>:take over the handles industry_hero_facts.ts names, built by id off the shard with no seed and no database: the exemplar (restaurants, the ladder's net, the three companions) and alarm systems (the ladder is the file's fill, so the answer is the sector profile's residual under its own basis, and the cost is the table's default, withheld in the foot). Drawn exactly as industry/opening.tsx draws it: the trade identity variant of the answer card, the tile in the flag's seat, the sector as the crumb. */
+export const industryKey = (handle: string, block: string) => `industry:${handle}:${block}`;
+export function pickIndustryTakeInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "take")).filter(([, i]) => industryHeroFacts(i.id)).map(([h, i]) => ({ iso2: industryKey(h, "take"), why: i.why }));
+}
 export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="answer-card">
-      {/* The country half draws the two-letter keys alone: the kind's list also carries the cell keys (pickAllInstances), and the country builder handed "cell:london:take" returns a bogus code with no answer, which drew a second, false card for each cell on the first full run. */}
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "take")).map(([h, i]) => {
+        const f = industryHeroFacts(i.id);
+        if (!f) return null;
+        return <Story kind="answer-card" key={industryKey(h, "take")} iso2={industryKey(h, "take")} why={i.why}><IndustryMasthead id={`take-industry-${h}`} facts={f} /></Story>;
+      })}
+      {/* The country half draws the two-letter keys alone: the kind's list also carries the cell and industry keys (pickAllInstances), and the country builder handed "cell:london:take" returns a bogus code with no answer, which drew a second, false card for each cell on the first full run. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}
       {cell.filter((c) => cellServes(c.key, "take")).map((c) => {
         const f = tradeHeroFacts(c.seed);
         const el = f ? <AnswerCard id={`take-cell-${c.key}`} name={f.name} iso2={f.iso2} crumb={f.crumb} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} /> : null;
@@ -297,16 +310,36 @@ export function pickCityDistrictInstances(cities: CityHeroInstance[]): CityHeroI
   if (none) out.push({ ...none, why: "self-omits: no ranked districts" });
   return out;
 }
+/** THE TRADES NEXT DOOR, `02 benchmark` (MODEL.md 8.7; plan step 34's first dispatch, 2026-09-18), keyed industry:<handle>:benchmark, built by id off the shards and drawn by the page's own card (industry/opening.tsx BenchmarkCard) at the 693 the wide seat of its 1-2 band takes at 1280. Two kinds, as the cost to open has: RANKED and SHORT on ranked-bars (restaurants: the trade and the highest four of the 23 food and drink trades as five bars, the pill on the leader, the trade last, two members withheld with the line (five rows and not 8.7's ten, benchmark_rows.ts says why); game development studios: the three-member sector as the short two-column table under the floor line), the WITHHELD state on bento-metric (telecommunications: both members of the two-member sector on the fill, the not-gathered line where the rows would stand). */
+const benchmarkWhy = (b: NonNullable<ReturnType<typeof buildBenchmark>>) =>
+  b.state === "ranked" ? `industry block 02 ranked: ${b.rows.length} rows of the ${b.members} trades in its sector, the pill on the leader${b.selfKey ? ", the trade among them" : ", the trade itself withheld"}${b.withheldCount ? `, ${b.withheldCount} withheld with the line` : ""}`
+    : b.state === "short" ? `industry block 02 short: ${b.rows.length} of ${b.members} members hold a figure, the two-column table under the floor line (a ranking needs four)`
+    : `industry block 02 withheld: ${b.holding} of ${b.members} members hold a figure, the stated line where the rows would stand`;
+export function pickIndustryBenchmarkInstances(kind: "ranked-bars" | "bento-metric"): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "benchmark")).map(([h, i]) => ({ h, i, b: buildBenchmark(i.id) })).filter((x) => x.b && (kind === "ranked-bars" ? x.b.state !== "withheld" : x.b.state === "withheld")).map(({ h, b }) => ({ iso2: industryKey(h, "benchmark"), why: benchmarkWhy(b!) }));
+}
+function IndustryBenchmarkStories({ kind }: { kind: "ranked-bars" | "bento-metric" }) {
+  return (
+    <>
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "benchmark")).map(([h, i]) => {
+        const b = buildBenchmark(i.id);
+        if (!b || (kind === "ranked-bars" ? b.state === "withheld" : b.state !== "withheld")) return null;
+        return <Story kind={kind} key={industryKey(h, "benchmark")} iso2={industryKey(h, "benchmark")} why={benchmarkWhy(b)}><div style={{ maxWidth: 693 }}><BenchmarkCard id={`benchmark-industry-${h}`} benchmark={b} /></div></Story>;
+      })}
+    </>
+  );
+}
 export function RankedBarsStories({ instances = pickRankedBarsInstances(), city = [], cell = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="ranked-bars">
+      <IndustryBenchmarkStories kind="ranked-bars" />
       {cell.filter((c) => cellServes(c.key, "open")).map((c) => {
         const o = buildOpen(c.seed);
         if (!o || o.state !== "held") return null;
         return <Story kind="ranked-bars" key={cellOpenKey(c)} iso2={cellOpenKey(c)} why={openWhy(o)}><div style={{ maxWidth: 693 }}><OpenCard id={`open-cell-${c.key}`} open={o} /></div></Story>;
       })}
       <p className="mb-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">Margins from the engine snapshot of {SNAPSHOT_TAKEN}.</p>
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
         const card = marginCardFromSnapshot(i.iso2);
         const el = card && card.rows.length >= 2 ? (
           <RankedBars id={`money-${i.iso2.toLowerCase()}`} kicker={`${COPY.margin.kicker}, ${nameOf(i.iso2)}`} icon="owner-keeps" tagged basis={COPY.margin.basis} withheldLine={card.withheldLine} rows={card.rows.map((r) => ({ key: r.key, name: r.name, value: r.margin, flagged: r.flagged }))} worldMax={card.worldMax} fmt={(v) => `${Math.round(v * 100)}%`} phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }} />
@@ -890,9 +923,19 @@ const mixWhy = (m: NonNullable<ReturnType<typeof buildMix>>) => `trade block 11:
 export function pickCellMixInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "mix")).map((c) => ({ c, m: buildMix(c.seed?.meta?.industry_id) })).filter((x) => x.m).map(({ c, m }) => ({ iso2: cellMixKey(c), why: mixWhy(m!) }));
 }
+/** THE INDUSTRY'S SURVIVAL, `01 lasts` (MODEL.md 8.7; plan step 34's first dispatch, 2026-09-18), keyed industry:<handle>:lasts, the trade page's own LastsCard off the same builder at the world altitude (lasts_rows.ts, the basis without the city clause), built by id off the shard and drawn at the 347 the narrow seat of its 1-2 band takes at 1280: the exemplar's triple (restaurants, 80 / 60 / 50, held), year five first at the head rung (the focal cell is candidate 1 awaiting his click). */
+const industryLastsWhy = (l: NonNullable<ReturnType<typeof buildLasts>>) => `industry block 01: ${lastsWhy(l).replace(/^trade block 09: /, "")}, the basis for the trade anywhere`;
+export function pickIndustryLastsInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "lasts")).map(([h, i]) => ({ h, l: buildLasts(i.id, "world") })).filter((x) => x.l).map(({ h, l }) => ({ iso2: industryKey(h, "lasts"), why: industryLastsWhy(l!) }));
+}
 export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="kv-grid">
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "lasts")).map(([h, i]) => {
+        const l = buildLasts(i.id, "world");
+        if (!l) return null;
+        return <Story kind="kv-grid" key={industryKey(h, "lasts")} iso2={industryKey(h, "lasts")} why={industryLastsWhy(l)}><div style={{ maxWidth: 347 }}><LastsCard id={`lasts-industry-${h}`} lasts={l} /></div></Story>;
+      })}
       {cell.filter((c) => cellServes(c.key, "permits")).map((c) => {
         const p = buildPermits(c.seed?.meta?.industry_id);
         if (!p) return null;
@@ -908,8 +951,8 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
         if (!m) return null;
         return <Story kind="kv-grid" key={cellMixKey(c)} iso2={cellMixKey(c)} why={mixWhy(m)}><div style={{ maxWidth: 520 }}><MixCard id={`mix-cell-${c.key}`} mix={m} /></div></Story>;
       })}
-      {/* The cell keys are drawn above off their seeds; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
+      {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
         const parts = i.iso2.split(":");
         if (parts[0] === "city") {
           /* The city's seats, drawn as city-view.tsx draws them (Glance, AmongCities): the country's KvSeatStory markup, the kicker naming the city. */
@@ -1479,6 +1522,7 @@ export function pickCellClearsInstances(cell: CellHeroInstance[]): Instance[] {
 export function BentoMetricStories({ instances = pickBentoMetricInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="bento-metric">
+      <IndustryBenchmarkStories kind="bento-metric" />
       {cell.filter((c) => cellServes(c.key, "open")).map((c) => {
         const o = buildOpen(c.seed);
         if (!o || o.state === "held") return null;
@@ -1494,7 +1538,7 @@ export function BentoMetricStories({ instances = pickBentoMetricInstances(), cel
         if (!r || r.state === "list") return null;
         return <Story kind="bento-metric" key={cellRivalsKey(c)} iso2={cellRivalsKey(c)} why={rivalsWhy(r)}><div style={{ maxWidth: 693 }}><RivalsCard id={`rivals-cell-${c.key}`} rivals={r} /></div></Story>;
       })}
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
         if (i.iso2.startsWith("city:")) {
           const slug = i.iso2.split(":")[1];
           const d = buildCityDemand(slug);
@@ -1779,8 +1823,8 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
   const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
-    "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero)],
-    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars")],
+    "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero), ...pickIndustryTakeInstances()],
+    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars")],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero)],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
@@ -1790,11 +1834,11 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero)],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero)],
+    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances()],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero)],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero)],
-    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero), ...pickCellRivalsInstances(cellHero, "bento-metric")],
+    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
     "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list")],
     "blocked-seat": pickBlockedSeatInstances(),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),

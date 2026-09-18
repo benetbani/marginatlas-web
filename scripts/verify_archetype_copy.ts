@@ -76,6 +76,10 @@ import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth, countWorthBases } from "@/lib/spine/worth_rows";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { buildMarket, densityText, MARKET_CELLS } from "@/lib/spine/market_rows";
+import { industryHeroFacts, countIndustryHeroStates, INDUSTRY_HERO_CELLS, INDUSTRY_HERO_METRICS } from "@/lib/spine/industry_hero_facts";
+import { buildBenchmark, countBenchmarkStates, BENCHMARK_FLOOR, BENCHMARK_ROWS_CAP } from "@/lib/spine/benchmark_rows";
+import { industryFigure } from "@/lib/facts/industry_shard";
+import { INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
@@ -1543,6 +1547,145 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   }
   if (buildTradeCloseDoors({ meta: {} }).length) reds.push("trade close: a seed with no trade draws a door");
   console.log(`exit (13, 14, 15): the rivals' laws held on five fixture shapes (two lists, three withheld); the worth on ${ids.length} shards, ${strips} strips with money shown, ${otherLines} operating-earnings lines (${bases.other} by basis word, ${bases.held} pairs held), ${withheldLines} withheld off moneyShown; ${tradeTermini} trade termini against the routes`);
+}
+/* THE INDUSTRY PAGE'S OPENING (MODEL.md 8.7 `00 take`, `01 lasts`, `02
+   benchmark`; plan step 34's first dispatch, 2026-09-18), on every one of the
+   243 ids the shards are filed under, without the database: every industry
+   builder is pure over the taxonomy, the shard and the archetype table. THE
+   TAKE: the answer is the one net builder's figure (R7) in its one printed
+   form, the basis names the branch that printed it (the trade's own on the
+   ladder, the sector's typical on the profile), the state word stands only
+   where neither holds a figure (none today, counted); at most three
+   companions in 8.7's order, a label of four words or fewer and a note under
+   48 characters, the cost drawn only for a KEYED trade (never the table's
+   80,000 default, clause 46), spend and visits never zero; the foot carries
+   the not-gathered idiom (M19) for exactly the companions withheld and the
+   coverage sentence for the ones printed; the crumb is the sector, once;
+   the tile resolves. THE SURVIVAL at the world altitude: the same cells,
+   order, foot and figures the trade page's builder prints (one builder),
+   under the basis with no city clause. THE BENCHMARK: every row's figure a
+   member's own ladder net through the one builder, never a profile member's
+   (a sector's residual on several rows ranks nothing), at most five rows
+   (the trade and the highest four; benchmark_rows.ts says why not ten)
+   highest first, the trade's own row present exactly when it holds a
+   figure, the members holding a figure plus the withheld count summing to
+   the sector, the state by the four-member floor on the members HOLDING a
+   figure, the line by the state and within fourteen words, the basis within
+   fourteen words naming the sector's count; the four sectors 8.7 names under
+   four members are under the floor here too. Every string through the
+   register ban and the placeholder check. Planted and watched go red
+   2026-09-18: a profile member let into the rows (the ROW NET check), a
+   cost drawn on a default trade (the COST KEYED check). */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+  const ids = ALL_INDUSTRIES.map((i) => i.id);
+  const hero = countIndustryHeroStates(ids);
+  if (hero.absent > 0) reds.push(`industry take: ${hero.absent} of ${hero.total} trades show the state word (the one net builder resolves every trade today)`);
+  let takes = 0, costDrawn = 0, notGathered = 0;
+  for (const id of ids) {
+    const f = industryHeroFacts(id);
+    if (!f) { reds.push(`industry take ${id}: no facts for a taxonomy id`); continue; }
+    takes++;
+    const n = resolveTradeNet(id, { moneyShown: false, netMarginPct: null });
+    if (!n) { reds.push(`industry take ${id}: the one net builder resolves nothing`); continue; }
+    if (!f.answer || f.answer.value !== n.text || f.answer.value !== netText(n.pct) || f.answer.confidence !== "modeled") reds.push(`industry take ${id}: the answer is not the one builder's figure in its printed form (${f.answer?.value ?? "absent"} against ${n.text})`);
+    if (f.answer && f.answer.basis !== (n.branch === "profile" ? COPY.industryHero.answerBasisProfile : COPY.industryHero.answerBasisShard)) reds.push(`industry take ${id}: the basis does not name the branch that printed the net (${n.branch})`);
+    if (f.crumb.length !== 1 || !f.crumb[0]) reds.push(`industry take ${id}: the crumb is not the sector alone (${f.crumb.join(" / ")})`);
+    if (!f.tile) reds.push(`industry take ${id}: no tile`);
+    if (f.cells.length > 3) reds.push(`industry take ${id}: ${f.cells.length} companions, over three`);
+    const order = f.cells.map((c) => c.key).join(",");
+    if (order !== INDUSTRY_HERO_CELLS.filter((k) => !f.withheld.includes(k)).join(",")) reds.push(`industry take ${id}: the companions are not in 8.7's order (${order})`);
+    for (const c of f.cells) {
+      if (c.label.split(/\s+/).length > 4) reds.push(`industry take ${id}: label over four words: "${c.label}"`);
+      if (c.note && c.note.length > 48) reds.push(`industry take ${id}: note over 48 characters: "${c.note}"`);
+      if (c.value == null || c.value === "") reds.push(`industry take ${id}: an empty cell ${c.key}`);
+      if (c.confidence !== "modeled") reds.push(`industry take ${id}: the cell ${c.key} is not marked modelled (R12)`);
+    }
+    const keyed = startupCapitalArchetypeKeyed(industryToSlug(id));
+    const costCell = f.cells.find((c) => c.key === "cost");
+    if (keyed == null && costCell) reds.push(`industry take ${id}: COST KEYED: the cost cell draws on a trade the archetype table does not key (the 80,000 default, clause 46)`);
+    if (keyed != null && (!costCell || costCell.value !== usd(keyed))) reds.push(`industry take ${id}: COST KEYED: the cost cell does not print the keyed figure`);
+    if (costCell) costDrawn++;
+    for (const key of ["spend", "visits"] as const) {
+      const fig = industryFigure(id, INDUSTRY_HERO_METRICS[key]);
+      const cell = f.cells.find((c) => c.key === key);
+      if (fig && fig.value > 0 && !cell) reds.push(`industry take ${id}: the ${key} cell is withheld though the shard holds ${fig.value}`);
+      if ((!fig || fig.value <= 0) && cell) reds.push(`industry take ${id}: the ${key} cell prints off a zero or missing figure`);
+    }
+    const foot = f.foot?.text ?? "";
+    if (f.withheld.length > 0) {
+      notGathered++;
+      if (!foot.startsWith("Not gathered yet: ")) reds.push(`industry take ${id}: ${f.withheld.length} companion(s) withheld and the foot does not open "Not gathered yet:" ("${foot}")`);
+      for (const k of f.withheld) if (!foot.includes(COPY.industryHero.parts[k])) reds.push(`industry take ${id}: the foot does not name the withheld ${k}`);
+    } else if (foot.startsWith("Not gathered yet")) reds.push(`industry take ${id}: nothing withheld and the foot apologises`);
+    if (f.cells.length > 0 && !/typical for the trade anywhere, modelled\.$/.test(foot)) reds.push(`industry take ${id}: the foot does not end on the coverage sentence ("${foot}")`);
+    if (f.foot && !f.foot.modeled) reds.push(`industry take ${id}: the foot is not marked modelled`);
+    ban(`industry take ${id}`, [f.absent.label, f.absent.word, f.absent.note, f.answer?.label ?? "", f.answer?.basis ?? "", foot, ...f.cells.flatMap((c) => [c.label, c.note ?? ""])]);
+  }
+  if (hero.costWithheld !== ids.length - costDrawn) reds.push(`industry take: the cost is withheld on ${hero.costWithheld} by the count and drawn on ${costDrawn} of ${ids.length}`);
+  if (industryHeroFacts("no_such_trade") !== null || industryHeroFacts(undefined) !== null) reds.push("industry take: a trade not in the taxonomy builds a card");
+
+  let worldLasts = 0;
+  for (const id of ids) {
+    const w = buildLasts(id, "world"), p = buildLasts(id);
+    if (!w || !p) { reds.push(`industry lasts ${id}: no card off a shard that holds the triple`); continue; }
+    worldLasts++;
+    if (w.basis !== COPY.industryLasts.basis || /city/i.test(w.basis)) reds.push(`industry lasts ${id}: the world basis names a city or is not the copy table's ("${w.basis}")`);
+    if (w.foot !== p.foot || JSON.stringify(w.cells) !== JSON.stringify(p.cells) || JSON.stringify(w.values) !== JSON.stringify(p.values)) reds.push(`industry lasts ${id}: the world card and the trade card disagree off one builder`);
+    if (w.altitude !== "world" || p.altitude !== "place") reds.push(`industry lasts ${id}: the altitude is not carried`);
+    ban(`industry lasts ${id}`, [w.basis, w.foot, ...w.cells.map((c) => c.label)]);
+  }
+
+  const bench = countBenchmarkStates(ids);
+  let benchCards = 0, tenRows = 0;
+  const sectors = new Map<string, number>();
+  for (const i of ALL_INDUSTRIES) sectors.set(i.sector_id, (sectors.get(i.sector_id) ?? 0) + 1);
+  for (const id of ids) {
+    const b = buildBenchmark(id);
+    if (!b) { reds.push(`industry benchmark ${id}: no card for a taxonomy id`); continue; }
+    benchCards++;
+    const ind = INDUSTRY_BY_ID[id];
+    if (b.members !== sectors.get(ind.sector_id)) reds.push(`industry benchmark ${id}: ${b.members} members against the taxonomy's ${sectors.get(ind.sector_id)} in ${ind.sector_id}`);
+    if (b.holding + b.withheldCount !== b.members) reds.push(`industry benchmark ${id}: ${b.holding} holding and ${b.withheldCount} withheld do not sum to ${b.members}`);
+    const expected = b.holding >= BENCHMARK_FLOOR ? "ranked" : b.holding >= 2 ? "short" : "withheld";
+    if (b.state !== expected) reds.push(`industry benchmark ${id}: the state is ${b.state} with ${b.holding} holding a figure; expected ${expected}`);
+    if (b.rows.length > BENCHMARK_ROWS_CAP) reds.push(`industry benchmark ${id}: ${b.rows.length} rows, over ${BENCHMARK_ROWS_CAP}`);
+    if (b.state === "withheld" && b.rows.length) reds.push(`industry benchmark ${id}: rows drawn in the withheld state`);
+    if (b.state !== "withheld" && b.rows.length !== Math.min(BENCHMARK_ROWS_CAP, b.holding)) reds.push(`industry benchmark ${id}: ${b.rows.length} rows where ${Math.min(BENCHMARK_ROWS_CAP, b.holding)} hold a figure`);
+    if (b.rows.length === BENCHMARK_ROWS_CAP) tenRows++;
+    for (let r = 1; r < b.rows.length; r++) if (b.rows[r].value > b.rows[r - 1].value) reds.push(`industry benchmark ${id}: the rows are not highest first (${b.rows[r - 1].name} before ${b.rows[r].name})`);
+    for (const row of b.rows) {
+      const n = resolveTradeNet(row.key, { moneyShown: false, netMarginPct: null });
+      if (!n || n.branch !== "shard" || n.pct !== row.value) reds.push(`industry benchmark ${id}: ROW NET: the row ${row.key} is not that member's own ladder net through the one builder (${n?.branch ?? "none"})`);
+      if (INDUSTRY_BY_ID[row.key]?.sector_id !== ind.sector_id) reds.push(`industry benchmark ${id}: the row ${row.key} is not in the sector`);
+      if (row.name.split(/\s+/).length > 4) { /* the taxonomy's own name, judged by ROW SENTENCE in the model-laws gate, never shortened here */ }
+    }
+    const own = resolveTradeNet(id, { moneyShown: false, netMarginPct: null });
+    const ownRanked = b.rows.some((r) => r.key === id);
+    if (own?.branch === "shard" && b.state !== "withheld" && !ownRanked) reds.push(`industry benchmark ${id}: the trade holds a figure and is not among the rows`);
+    if (own?.branch !== "shard" && ownRanked) reds.push(`industry benchmark ${id}: the trade's own row is drawn on a profile figure`);
+    if ((b.selfKey === id) !== (own?.branch === "shard" && b.state !== "withheld")) reds.push(`industry benchmark ${id}: selfKey does not match the trade's branch and the state`);
+    if (b.rows.length && b.top !== Math.max(...b.rows.map((r) => r.value))) reds.push(`industry benchmark ${id}: the ceiling is not the set's highest row`);
+    if (wordsOf(b.basis) > 14) reds.push(`industry benchmark ${id}: the basis runs ${wordsOf(b.basis)} words, over fourteen: "${b.basis}"`);
+    if (!b.basis.includes(String(b.members))) reds.push(`industry benchmark ${id}: the basis does not name the sector's count ${b.members}`);
+    if (b.line && wordsOf(b.line) > 14) reds.push(`industry benchmark ${id}: the line runs ${wordsOf(b.line)} words, over fourteen: "${b.line}"`);
+    if (b.state === "withheld" && (!b.line || (b.holding === 0 && !b.line.startsWith("Not gathered yet: ")))) reds.push(`industry benchmark ${id}: the withheld state has no line, or no not-gathered line with nothing held`);
+    if (b.state === "short" && (!b.line || !/a ranking needs four\.$/.test(b.line))) reds.push(`industry benchmark ${id}: the short state's line does not name the floor ("${b.line}")`);
+    if (b.state === "ranked" && (b.withheldCount > 0) !== !!b.line) reds.push(`industry benchmark ${id}: ${b.withheldCount} withheld and ${b.line ? "a" : "no"} line`);
+    if (b.state === "ranked" && b.line && own?.branch !== "shard" && !/this (trade|one)/i.test(b.line)) reds.push(`industry benchmark ${id}: the trade itself is withheld and the line does not say so ("${b.line}")`);
+    ban(`industry benchmark ${id}`, [b.basis, b.line ?? "", ...b.rows.map((r) => r.name)]);
+  }
+  for (const [sector, n] of sectors) if (n < BENCHMARK_FLOOR) { for (const i of ALL_INDUSTRIES.filter((x) => x.sector_id === sector)) { const b = buildBenchmark(i.id); if (b && b.state === "ranked") reds.push(`industry benchmark ${i.id}: ranked in a sector of ${n}, under the floor`); } }
+  if (buildBenchmark("no_such_trade") !== null || buildBenchmark(undefined) !== null) reds.push("industry benchmark: a trade not in the taxonomy builds a card");
+  ban("industry copy", [COPY.industryBenchmark.kicker, COPY.industryBenchmark.topLabel, COPY.industryHero.answerLabel, ...Object.values(COPY.industryChapters)]);
+  if (wordsOf(COPY.industryBenchmark.kicker) > 4 || wordsOf(COPY.industryHero.answerLabel) > 4) reds.push("industry copy: a kicker or the answer label runs over four words");
+  console.log(`industry opening: the take draws on ${takes} of ${ids.length} trades (${hero.ladder} on the ladder, ${hero.profile} on the sector profile, ${hero.absent} with the state word), the cost keyed on ${costDrawn} and withheld on ${hero.costWithheld}, spend withheld on ${hero.spendWithheld} and visits on ${hero.visitsWithheld}, the not-gathered foot on ${notGathered}; the survival grid at the world altitude on ${worldLasts}; the benchmark on ${benchCards}: ${bench.ranked} ranked (${tenRows} at the cap of ${BENCHMARK_ROWS_CAP} rows), ${bench.short} short, ${bench.withheld} withheld, the trade itself on the profile on ${bench.selfWithheld}, a member withheld on ${bench.anyWithheld}`);
 }
 console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

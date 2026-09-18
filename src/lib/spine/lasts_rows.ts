@@ -31,6 +31,15 @@
  * nothing rather than a row with a hole: the count is 243 of 243 today, and
  * a shard that loses a year is the data track's to see, not a card to draw
  * two cells of three.
+ *
+ * ONE BUILDER AT TWO ALTITUDES (MODEL.md 8.7 `01 lasts`; plan step 34's
+ * first dispatch, 2026-09-18): the industry page's `01` is this same card
+ * off this same builder, the shard's triple for the trade anywhere, and the
+ * only thing that changes is the basis line, which drops its city clause
+ * because there is no city on that page (`altitude: "world"`). The kicker,
+ * the three cells, their order and the foot are one literal each on both
+ * pages, so the survival a reader meets on the trade page and the one on
+ * its industry page can never be two figures or two sets of words.
  */
 import { industryFigure } from "@/lib/facts/industry_shard";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
@@ -38,8 +47,12 @@ import { COPY } from "@/lib/spine/copy";
 
 export const LASTS_METRICS = { yr1: "survival.yr1_pct", yr3: "survival.yr3_pct", yr5: "survival.yr5_pct" } as const;
 
+/** Where the card stands: "place" on a trade in a city (the basis says what is not this city's), "world" on the industry page (no city to name). */
+export type LastsAltitude = "place" | "world";
+
 export type LastsData = {
   industryId: string;
+  altitude: LastsAltitude;
   /** Year five first, then one and three: the seat's order. */
   cells: KvCell[];
   /** The candidate's focal, named for the day of his click. */
@@ -52,7 +65,7 @@ export type LastsData = {
 
 const isPct = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v) && v > 0 && v <= 100;
 
-export function buildLasts(industryId: string | undefined): LastsData | null {
+export function buildLasts(industryId: string | undefined, altitude: LastsAltitude = "place"): LastsData | null {
   if (!industryId) return null;
   const yr1 = industryFigure(industryId, LASTS_METRICS.yr1)?.value;
   const yr3 = industryFigure(industryId, LASTS_METRICS.yr3)?.value;
@@ -62,10 +75,11 @@ export function buildLasts(industryId: string | undefined): LastsData | null {
   const cell = (key: "yr5" | "yr1" | "yr3"): KvCell => ({ key, label: COPY.tradeLasts.cells[key], value: `${values[key]}%`, confidence: "modeled" });
   return {
     industryId,
+    altitude,
     cells: [cell("yr5"), cell("yr1"), cell("yr3")],
     focal: { key: "yr5", value: values.yr5 },
     values,
-    basis: COPY.tradeLasts.basis,
+    basis: altitude === "world" ? COPY.industryLasts.basis : COPY.tradeLasts.basis,
     foot: COPY.tradeLasts.foot,
     confidence: "modeled",
   };
