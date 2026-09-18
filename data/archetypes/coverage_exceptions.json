@@ -11,39 +11,11 @@
     },
     {
       "section": "src/components/spine/cell/cell-view.tsx#3",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/cell-view.tsx#4",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/cell-view.tsx#5",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/cell-view.tsx#myth",
-      "reason": "not yet on an archetype; a build loop queue row"
+      "reason": "the Related links (`13 rivals`'s seat until its dispatch, MarkList); renumbered #6 to #3 when the Demand rail and the Seasonality columns retired (plan step 33's fifth dispatch, 2026-09-18)"
     },
     {
       "section": "src/components/spine/cell/cell-view.tsx#close",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/cell-view.tsx#7",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/interactive.tsx#peers",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/interactive.tsx#risks",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/cell/money-chapter.tsx#breakeven",
-      "reason": "not yet on an archetype; a build loop queue row"
+      "reason": "the old Close (`15 close`'s seat until its dispatch, Terminus); a build loop queue row"
     },
     {
       "section": "src/components/spine/city/city-view.tsx#trades",

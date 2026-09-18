@@ -23,9 +23,11 @@
  *     year's takings only, the United States' per-state slate; never an
  *     invented peer, plan step 33's fourth dispatch)
  *   - setup / cost-to-open when the cell carries no real setup_costs
- *   - off-London: seasonality / first_year / wages / risks (cell_view
- *     already returns null there, so they pass through as undefined); the
- *     myth block is gone everywhere (the same dispatch, R5)
+ *   - off-London: first_year / wages (cell_view already returns null there,
+ *     so they pass through as undefined); the myth block is gone everywhere
+ *     (the same dispatch, R5), and so are seasonality and risks (plan step
+ *     33's fifth dispatch: `12 market` and `10 watch` read the shard, or
+ *     stand seated, on every trade)
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
@@ -514,16 +516,12 @@ export async function buildSpineCellSeed(
         }
       : undefined;
 
-  /* -- seasonality (London only) ------------------------------------------- */
-  const seasonality =
-    v.seasonality && v.seasonality.monthly && v.seasonality.monthly.length >= 2
-      ? {
-          surface_line: v.seasonality.note ?? undefined,
-          // cell_view emits 0..1 multipliers; the column chart reads an index
-          // where the reference rule is 100, so scale to an index.
-          months: v.seasonality.monthly.map((m) => Math.round(m * 100)),
-        }
-      : undefined;
+  /* -- seasonality: GONE (`12 market`, MODEL.md 8.6; plan step 33's fifth
+     dispatch, 2026-09-18). The block carried the London file's monthly
+     multipliers (cell_view's `seasonality.monthly`, London only) for the old
+     `#seasonality` columns; the bento's swing cell reads the shard's
+     `seasonality.swing_pct` for 243 trades (market_rows.ts). Nothing builds
+     the block now. --------------------------------------------------------- */
 
   /* -- first_year (London only) -------------------------------------------- */
   const firstYear =
@@ -552,21 +550,12 @@ export async function buildSpineCellSeed(
      the shard's triple for 243 trades (lasts_rows.ts), never the London
      file. Nothing builds the block now. --------------------------------- */
 
-  /* -- risks (London only) ------------------------------------------------- */
-  const risks =
-    v.risks && v.risks.length > 0
-      ? {
-          surface_line: undefined,
-          // cell_view risks carry a severity word (rare/watch/serious), not a
-          // 1..10 score. Map severity to a modest score band so the shared 0..10
-          // dot scale reads honestly (serious high, watch mid, rare low).
-          items: v.risks.map((r) => ({
-            name: r.title,
-            score_1_10: r.severity === "serious" ? 8 : r.severity === "watch" ? 6 : 3,
-            note: r.note,
-          })),
-        }
-      : undefined;
+  /* -- risks: GONE (`10 watch`, MODEL.md 8.6; the same dispatch). The block
+     mapped cell_view's four London risks (titles authored for every
+     storefront trade, a severity word each) to invented 1..10 scores (8 / 6
+     / 3) for the old `#risks` dot plot; none is a held cause of closure with
+     a share for one trade, so `10 watch` stands as the drawn blocked seat
+     until DATA-REQUIREMENTS item 53 lands, and nothing builds the block. -- */
 
   /* -- nearby: THE SLATE, NEVER AN INVENTED PEER (`07 peers`, MODEL.md 8.6;
      plan step 33's fourth dispatch, 2026-09-18) ---------------------------
@@ -622,10 +611,10 @@ export async function buildSpineCellSeed(
     owner,
     break_even: breakEven,
     wages,
-    seasonality,
+    // seasonality: undefined  (retired with `#seasonality`; `12 market` reads the shard)
     first_year: firstYear,
     // myth: undefined  (retired with `#myth`; `09 lasts` reads the shard)
-    risks,
+    // risks: undefined  (retired with `#risks`; `10 watch` is the drawn blocked seat)
     nearby,
     setup,
     // demand: undefined  (Demand chapter omitted)

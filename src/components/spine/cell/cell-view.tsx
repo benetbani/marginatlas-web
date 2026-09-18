@@ -65,25 +65,43 @@
  * London file's survival triple as a slope with "9 in 10 fail" struck
  * across it, both banned by R5), with the seed's `myth` block.
  *
+ * WHAT THE FIFTH DISPATCH BUILT (2026-09-18): the band `10 watch | 11 mix`
+ * on turn-two.tsx, the drawn blocked seat for what closes one (BlockedSeat
+ * off the copy table: his B1 bars wait on DATA-REQUIREMENTS item 53, 0 of
+ * 243) beside where sales come from on KvGrid (mix_rows.ts: the shard's
+ * channels with their shares, the leader first; THE DONUT IS CANDIDATE 5
+ * of FORM-CATALOG's CANDIDATES AWAITING HIS CLICK, its mockup owed to the
+ * review sheet, and KvGrid holds the seat until then); and `12 market` on
+ * market.tsx, the page's only bento, four cells tiled 2+1 over 1+2 off
+ * market_rows.ts (the shard's competition triple and its seasonal swing),
+ * zero accent, under chapter break 03, which now has a card to draw over.
+ * WHAT IT RETIRED: the Risks dot plot (interactive.tsx, the file gone with
+ * it: the London file's four titles authored for every storefront trade,
+ * scored 8 / 6 / 3 by hand from two pressure words, never a held cause
+ * with a share for one trade, so none of its rows is printed), the Demand
+ * rail below this header (`#week`, the dayparts donut and the covers
+ * figures off the dev seed alone, cut by 8.6's inventory and item 68;
+ * `#catchment`, the channel ShareStack with its accented leader and the
+ * catchment index list, item 49; neither ever drew on the live route), the
+ * Seasonality columns (`#seasonality`, twelve zero-based monthly columns
+ * off the London file's multipliers, London only, its reading now the
+ * swing cell), and the adapter's `risks` and `seasonality` blocks that fed
+ * the last two.
+ *
  * WHAT STAYS MOUNTED UNTIL ITS OWN DISPATCH, each of today's cards in the
  * seat of the 8.6 block that absorbs it (SPINE.md PART A's inventory), and
  * retiring nothing a later block absorbs:
- *   risks (Risks)           -> `10 watch`, his B1, data-blocked and seated
- *   week + catchment        -> `11 mix`, the donut (channels); the dayparts
- *   (Demand)                   donut is cut there; both self-omit on the
- *                              live route today
- *   seasonality             -> `12 market`, one cell of the bento; self-omits
- *                              on the live route today
  *   related (Related)       -> `13 rivals`, MarkList; self-omits on the live
  *                              route today
  *   close (Close)           -> `15 close`, Terminus
  *
  * THE THIRD CHAPTER BREAK draws when a card stands under it (the city
- * view's own rule for its turn three): today `12 market` is not built and
- * seasonality and related self-omit on the live route, so on London the
- * heading would sit over nothing until `12` lands; a heading over empty
- * space is the fault the old body already guarded against. Turns one and
- * two always hold a card on a resolving cell.
+ * view's own rule for its turn three): `12 market` builds on every trade
+ * that holds a shard, so on every such cell the heading stands over the
+ * bento; on a sector-average cell (no shard) nothing in turn three draws
+ * and the heading waits with it, because a heading over empty space is the
+ * fault the old body already guarded against. Turns one and two always
+ * hold a card on a resolving cell.
  *
  * (The paragraph below is the old header, kept for the chart dictionary it
  * carries of the cards still mounted; the counted bars and free forms it
@@ -97,18 +115,16 @@
  *
  * As-built chart dictionary (rulebook 25 bar budget: max 3 bar-family graphics per
  * page, no two adjacent sections sharing the bar form). The THREE counted bars:
- *   BAR 2 , ShareStack (the founder-blessed channel/how-they-pay share bar): Demand channels x1 (ch2)
  *   BAR 3 , PhaseBar (two-anchor open/break-even time axis): Ramp x1 (ch4)
+ *   (BAR 2, the ShareStack of the Demand channels, left on the fifth dispatch)
  * FREE forms carry the rest of the variety (no budget cost):
  *   big figure at hero scale: masthead $43K (the ONE hero; the control-room trio
  *      restates it at sub-hero support scale by design, the seam's summary)
  *   discrete tier band (categorical Low/Mid/High pips, active inked): WhoSuits x1 (ch1)
- *   donut (a whole = donut; peak slice terracotta): Demand dayparts x1 (ch2)
- *   ranked figure list (label + right-aligned figure, no track): Demand catchment
  *   lollipop on a drawn track (thin, marker family, not a fill bar): CostToOpen line items x1
- *   zero-baseline monthly COLUMNS: Seasonality x1
  *   (the SurvivalSlope, the ClearanceRing and the Nearby table left on the
- *      fourth dispatch, above)
+ *      fourth dispatch; the dayparts donut, the catchment list and the
+ *      Seasonality columns on the fifth, above)
  *   spread strip: masthead turnover p10/p50/p90 x1
  * REMOVED forms: Gauge, 3-pip meters, Dots, invented-ceiling break-even fill bar, the
  *   3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area,
@@ -120,12 +136,11 @@
  */
 import * as React from "react";
 import { spineCellSeed } from "@/lib/spine-seeds";
-import {
-  Fig, Box, Rail, Movement, WideRail, Donut, ShareStack, InfoTip, TERRA, usd, Band,
-} from "@/components/spine/kit";
+import { Fig, Box, Rail, Movement, usd, Band } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "./turn-one";
-import { ClearsCard, LastsCard } from "./turn-two";
+import { ClearsCard, LastsCard, WatchSeat, MixCard } from "./turn-two";
+import { MarketBand } from "./market";
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { buildSplit } from "@/lib/spine/split_rows";
@@ -133,7 +148,8 @@ import { buildTeam } from "@/lib/spine/team_rows";
 import { buildTradePeers } from "@/lib/spine/trade_peer_rows";
 import { buildClears } from "@/lib/spine/clears_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
-import { Risks } from "./interactive";
+import { buildMix } from "@/lib/spine/mix_rows";
+import { buildMarket } from "@/lib/spine/market_rows";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
@@ -143,8 +159,6 @@ import { COPY } from "@/lib/spine/copy";
 const X: any = spineCellSeed;
 
 const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
-
-const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
 /* The .celltop terracotta top-edge hover motif is DELETED (rulebook v1 section 37,
  * founder G3, 2026-07-11): the accent never appears on hover. The quiet grey .hov
@@ -212,183 +226,6 @@ function Suits({ d }: { d: any }) {
       <Rail icon="who-for" kicker={COPY.tradeSuits.kicker} sample />
       <NoteList notes={s.rows} columns={2} />
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{s.basis}</p>
-    </Box>
-  );
-}
-
-/* ================= CH2 , THE DEMAND ================= */
-/* Demand , WI-4 brief (rulebook 25/26 + M1 richness restore, 2026-07-12): the July-3
- * chapter carried three distinct reads and was stripped to three look-alike figure
- * lists (the sparse-but-wide failure M1 names). Richness is restored WITHOUT the bar
- * monotony G2 killed: the daypart split is a DONUT (a whole = donut, free), the channel
- * mix is the ONE share bar the founder blessed ("how customers pay... the horizontal bar
- * is perfect"), and the catchment index stays a ranked figure list. Three forms, none
- * alike (resolves INV cell 04, where the index bars read as the daypart % bars).
- * Title fixed: the box reads COVERS timing, so the kicker names covers, not revenue.
- * width: WideRail. terracotta target: the peak daypart slice (box 1) and the leading
- * channel (box 2, ShareStack's built-in leader accent) , one answer per box. */
-const DP_GREYS = ["#c1c1bf", "#dcdbd9"];
-
-function Demand({ d }: { d: any }) {
-  const dm = d.demand ?? {};
-  const dayparts: any[] = dm.dayparts ?? [];
-  const channels: any[] = dm.channels ?? [];
-  const cat: any[] = [...(dm.catchment ?? [])].sort((a, b) => b.pct - a.pct);
-  // the peak daypart is the box's one answer (when the week fills up); rest neutral.
-  const peakIdx = dayparts.reduce((best, p, i, a) => (p.pct > a[best].pct ? i : best), 0);
-  const dpSegs: Array<[string, number, string]> = dayparts.map((p, i) => [p.name, p.pct, i === peakIdx ? TERRA : DP_GREYS[i % DP_GREYS.length]]);
-  return (
-    <WideRail>
-      <Box data-block="week" className="flex flex-col">
-        <Rail icon="daily-takings" kicker="When the week fills up" sample />
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <Donut segs={dpSegs} centerBig={(dm.covers_per_week ?? 0).toLocaleString()} centerSub="covers a week" />
-          <div className="min-w-0 flex-1 space-y-1.5">
-            {dayparts.map((p, i) => (
-              <div key={p.name} className="flex items-baseline justify-between gap-3">
-                <span className="inline-flex min-w-0 items-center gap-2 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]"><span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: i === peakIdx ? TERRA : DP_GREYS[i % DP_GREYS.length] }} />{p.name}</span>
-                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{p.pct}%</Fig>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* covers unit-economics, anchored to the box base: fills the donut box to its
-            taller neighbour's height (rulebook 17, no one-sided white space) and glosses
-            "covers" at first textual use (rule 40), replacing the misplaced a-head tooltip. */}
-        <div className="mt-auto grid grid-cols-2 gap-x-4 border-t border-[var(--c-border)] pt-3">
-          <div>
-            <Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">${dm.avg_spend_usd}</Fig>
-            <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">a head</div>
-          </div>
-          <div>
-            <Fig className="text-[length:var(--t-lead)] text-[var(--c-ink)]">~{Math.round((dm.covers_per_week ?? 0) / 7)}</Fig>
-            <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">covers<InfoTip gloss="One cover is one customer served; a table of four is four covers." /> a typical day</div>
-          </div>
-        </div>
-      </Box>
-      <Box data-block="catchment">
-        <Rail icon="catchment" kicker="Who comes in, and how" sample />
-        {/* channel mix , the one share bar the founder blessed; the leading channel
-            carries the accent (ShareStack pins terracotta on the largest slice). */}
-        <div className="mb-1.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">How they order</div>
-        <ShareStack segments={channels.map((c) => ({ label: c.name, pct: c.pct }))} />
-        {/* catchment , ranked descending; the heading names the unit so a 100-baseline
-            index never reads as a percentage. */}
-        <div className="mt-4 border-t border-[var(--c-border)] pt-3">
-          <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Where the covers come from <span className="font-normal normal-case">({dm.catchment_unit})</span></div>
-          <div className="space-y-1.5">
-            {cat.map((c) => (
-              <div key={c.name} className="flex items-baseline justify-between gap-3">
-                <span className="min-w-0 truncate text-[length:var(--t-body)] text-[var(--c-ink2)]">{c.name}</span>
-                <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{c.pct}</Fig>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Box>
-    </WideRail>
-  );
-}
-
-/* ================= CH4 , RUNNING IT ================= */
-/* Seasonality , WI-4 brief (re-visualed, Final Ascent; rulebook v2 corrections
- * 2026-07-10 drop the Rail verdict and the editorial "stays gentle" close , the
- * zero-baseline shape already reads modest, so the caption states only the axis
- * unit and the two named months, never a claim about the swing itself).
- * decision: how much the year swings. Number: the peak vs the trough. focal: 12 ZERO-baseline
- * monthly COLUMNS + a faint index-100 reference rule. width: Even half. terracotta target:
- * NONE (rulebook v1 section 37: a month can never be "featured"; all columns neutral,
- * the caption's two named months carry the read). */
-function Seasonality({ d }: { d: any }) {
-  const m: number[] = d.seasonality?.months ?? [];
-  if (m.length < 2) return null;
-  // HONEST AXIS: zero-based columns (never floored at the data min), scale drawn on-surface.
-  const top = Math.max(100, ...m);
-  const peak = m.indexOf(Math.max(...m)); // the busy month, data-derived (year-end in the seed)
-  const trough = m.indexOf(Math.min(...m)); // the quiet month, data-derived
-  const PLOT = 78; // px of drawable column height, under a gutter that holds the two marks
-  const MONTHS_ROW = 15; // the baseline rule plus the month initials beneath it, at the ladder floor
-  const RULE = (100 / top) * PLOT + MONTHS_ROW; // the index-100 line, measured from the block bottom
-  return (
-    <Box data-block="seasonality" className="md:flex-[2]">
-      <Rail icon="seasonality" kicker="Busy months and quiet months" sample />
-      {/* DRAWN IN LAYOUT, NOT IN A STRETCHED PICTURE.
-          This was a 300-unit wide drawing stretched to whatever width the card
-          landed at, with aspect ratio preservation switched OFF and the height
-          pinned. Every letter in it, the month initials, the axis mark, the two
-          values, was therefore scaled HORIZONTALLY ONLY: squeezed narrow in a
-          phone column and pulled wide in a full band. Not merely resized,
-          distorted, because the horizontal and vertical scales differed by more
-          than two and a half times at the wide end.
-          Columns whose heights are percentages fix it outright: the bars stretch
-          with the card and the text is real text at a real size that never
-          moves. It also stays on the server with no JavaScript, which a chart
-          library could not have done.
-          THE PAID BLOCK WAS PULLED AND READ FIRST. It is a recharts bar chart in
-          a card, and after refusing what it ships switched on, the rounded tops,
-          the hover tooltip carrying the values, the axis ticks, the card heading
-          duplicating the section heading above it, and terracotta on every
-          single month against the rule that no month may ever be featured,
-          nothing of it would have remained. */}
-      {/* THE AXIS MARK AND ITS RULE ARE POSITIONED FROM THE SAME BOX.
-          The first pass hung the "100" in a sibling column and the dashed rule
-          inside the plot, so the two were measured from different bottoms and
-          sat about eighteen pixels apart: an axis label pointing at nothing.
-          Both now share one offset, so they cannot drift. Measured in a browser
-          afterwards rather than trusted. */}
-      <div
-        className="relative mt-1 pl-6"
-        role="img"
-        aria-label={`Monthly demand index, zero-based columns. The busiest month reads ${m[peak]}, the quietest ${m[trough]}, against an index of 100.`}
-      >
-        <span
-          aria-hidden
-          className="absolute left-0 w-5 text-right text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
-          style={{ bottom: `${RULE - 4}px` }}
-        >
-          100
-        </span>
-        <div
-          aria-hidden
-          className="absolute inset-x-0 left-6 border-t border-dashed border-[var(--c-border)]"
-          style={{ bottom: `${RULE}px` }}
-        />
-        <div className="flex items-end" style={{ height: PLOT + 14 }}>
-          {m.map((v, i) => (
-            <div key={i} className="relative flex min-w-0 flex-1 flex-col items-center justify-end">
-              {/* the busy and quiet months carry their value ON the column
-                  (rulebook 26), neutral ink, never a featured month (rule 37) */}
-              {i === peak || i === trough ? (
-                <span
-                  className="absolute inset-x-0 text-center leading-none"
-                  style={{ bottom: `${(v / top) * PLOT + 3}px` }}
-                >
-                  <Fig className="text-[length:var(--t-mark)] text-[var(--c-ink)]">{v}</Fig>
-                </span>
-              ) : null}
-              {/* 64% of its slot, which is the proportion the old drawing used.
-                  A fixed pixel gap looked right in a phone column and turned the
-                  wide band into a solid block of bars: caught by photographing
-                  it, not by reading it. */}
-              <div
-                aria-hidden
-                className="w-[64%] rounded-[1.5px]"
-                style={{ height: `${(v / top) * PLOT}px`, background: "var(--chart-5)" }}
-              />
-            </div>
-          ))}
-        </div>
-        {/* the zero baseline, drawn */}
-        <div aria-hidden className="border-t border-[var(--chart-5)]" />
-        <div className="mt-1 flex">
-          {m.map((_, i) => (
-            <span key={i} className="min-w-0 flex-1 text-center text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]">
-              {MONTHS[i]}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100.</div>
     </Box>
   );
 }
@@ -563,10 +400,6 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      draw on every trade), so the band always holds two children. */
   const hasSpread = buildTradeSpread(d) != null;
   const hasSuits = typeof d.meta?.industry_id === "string" && typeof d.meta?.iso2 === "string";
-  const hasDemand =
-    Array.isArray(d.demand?.dayparts) ||
-    Array.isArray(d.demand?.channels) ||
-    Array.isArray(d.demand?.catchment);
   /* `03 permits | 04 open` (turn-one.tsx): both builders on every resolving
      cell whose trade holds a shard (243), the permits off the licences and
      the cost to open in whichever of its three states the cell is in, so the
@@ -591,16 +424,21 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      does not draw (the same condition as `03 | 04`). */
   const clears = buildClears(d);
   const lasts = buildLasts(d.meta?.industry_id);
-  const hasSeasonality = Array.isArray(d.seasonality?.months) && d.seasonality.months.length >= 2;
-  const hasRisks = Array.isArray(d.risks?.items) && d.risks.items.length > 0;
+  /* `10 watch | 11 mix` (turn-two.tsx): the seat stands on every cell (it
+     holds no data), the mix off the shard's channels on every trade that
+     holds a shard; the band is gated on the mix alone so it holds two
+     children or does not draw, and a sector-average cell never seats a lone
+     card beside nothing. `12 market` (market.tsx): the four cells off the
+     same shard, the cluster its own band. */
+  const mix = buildMix(d.meta?.industry_id);
+  const market = buildMarket(d.meta?.industry_id);
   const hasRelated = Array.isArray(d.related) && d.related.length > 0;
-  /* The turns, by whether a card stands under each (the header says why the
-     third waits on `12 market`): turn one holds the money cards and the
-     peers, turn two the share, the survival grid and the risks, turn three
-     the seasonality alone today. */
+  /* The turns, by whether a card stands under each: turn one holds the
+     money cards and the peers, turn two the share, the survival grid, the
+     seat and the mix, turn three the bento. */
   const turnOne = !!(permits && open) || !!(split && team) || !!peers;
-  const turnTwo = !!(clears && lasts) || hasRisks || hasDemand;
-  const turnThree = hasSeasonality;
+  const turnTwo = !!(clears && lasts) || !!mix;
+  const turnThree = !!market;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
@@ -690,28 +528,45 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               <LastsCard lasts={lasts} />
             </Band>
           ) : null}
-          {/* `10 watch | 11 mix`, 1-1, the risks LEFT (his B1's seat) and the
-              channels RIGHT (the donut's): today's risks card in a band, and the
-              demand rail (dayparts, channels, catchment) after it where it
-              renders, which on the live route is nowhere. */}
-          {hasRisks ? (
-            <Band split="1-1">
-              <Risks d={d} />
+          {/* `10 watch | 11 mix`, the drawn blocked seat LEFT (his B1's seat
+              until item 53 lands, the page's visual floor beside the fullest
+              quiet card in its band) and the parts of the trade's sales RIGHT
+              on KvGrid (the donut's seat, candidate 5 awaiting his click), AT
+              1-2, RULED BY MEASUREMENT 2026-09-18 (8.4 rule 1: the taller card
+              takes the wide side): at 8.6's expected 1-1 the seat stood 520
+              by 222 with 149 of content against the mix's 221 on London, 0
+              holes at three widths, but 59 percent ink of its 222, one under
+              the art-direction gate's E2 floor of 60 (a seat beside a taller
+              card, the precedent the country's seats measured), and the
+              five-part mix stands taller still; at 1-2 the seat's line wraps
+              to two at 347 (171 of content, 130 of ink) and the seat reads 71
+              percent beside a two-row mix (222 tall on London, California and
+              Mumbai cafes, 0 holes at three widths), 98 beside the one-row
+              two-part mix (barbershops, 172), and 54 beside the three-row
+              five-part mix (nail salons, 278; 25 of 243 trades), which no
+              split in the closed set mends because a seat cannot be narrower
+              than a third; that residual is in the dispatch's report, not in
+              a padded seat. `stack="lg"` because at a tablet's equal halves
+              the five-part mix stands 357 and opened a 304 by 186 hole under
+              the seat's 171 (measured; the `03 | 04` precedent); stacked,
+              the seat stands at its own 172. The seat draws on every cell;
+              the band is gated on the mix so it never holds one child. */}
+          {mix ? (
+            <Band split="1-2" stack="lg">
+              <WatchSeat />
+              <MixCard mix={mix} />
             </Band>
           ) : null}
-          {hasDemand ? <Demand d={d} /> : null}
         </>
       ) : null}
 
       {/* CHAPTER TURN THREE (8.6, "What the trade is like"): the one-band turn,
-          `12 market`, the bento; today's seasonality columns hold the seat
-          where they render, and the heading waits on a card. */}
+          `12 market`, the bento, its own band with zero accent; the heading
+          draws when the cluster does (every trade that holds a shard). */}
       {turnThree ? (
         <>
           <Movement index="03" heading={COPY.tradeChapters.trade} />
-          <Band split="2-1">
-            <Seasonality d={d} />
-          </Band>
+          <MarketBand market={market} />
         </>
       ) : null}
 
