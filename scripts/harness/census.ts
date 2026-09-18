@@ -119,10 +119,22 @@ function sectionsOf(file: string): Section[] {
   while ((m = re.exec(src))) {
     n++;
     const idMatch = /\bid=(?:"([^"]+)"|\{`?([^}`]+)`?\})/.exec(m[1]);
-    const id = idMatch ? (idMatch[1] ?? idMatch[2]).trim() : `#${n}`;
     const end = src.indexOf("</Box>", m.index);
     const block = end === -1 ? src.slice(m.index) : src.slice(m.index, end);
     const fn = [...fns].reverse().find((f) => f.at < m!.index);
+    /* A PROP ID WITH A LITERAL DEFAULT IS THE SEAT'S ID (plan step 33's second
+       dispatch, 2026-09-18): a card drawn once for the page and the stories
+       takes `id` as a prop (cell/turn-one.tsx, `id = "permits"`), the page
+       passing nothing and a story its own key; the census reads the default
+       from the component's own signature, so the row names the seat the page
+       draws. A prop with no literal default prints as written, which is the
+       fault it was. */
+    let id = idMatch ? (idMatch[1] ?? idMatch[2]).trim() : `#${n}`;
+    if (idMatch && idMatch[2] && /^[a-z_$][\w$]*$/i.test(id) && fn) {
+      const signature = src.slice(fn.at, src.indexOf(")", fn.at) + 1);
+      const def = new RegExp(`\\b${id}\\s*=\\s*"([^"]+)"`).exec(signature);
+      if (def) id = def[1];
+    }
     const scope = src.slice(fn ? fn.at : 0, end === -1 ? src.length : end);
     const tag = ARCHETYPES.find((a) => imported.has(a) && new RegExp(`<${a}\\b`).test(block)) ?? "kit";
     /* A Box that DECLARES its form (`data-form="door"`) prints the declaration

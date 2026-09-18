@@ -13,22 +13,30 @@
  * nothing else, no rail (the trade page carries none). Three full widths,
  * R1: the take, the peers, the close.
  *
- * WHAT THIS DISPATCH BUILT: `00 take` on the answer card (masthead.tsx, the
- * one net builder behind its companion), `01 spread` on the range strip and
- * `02 suits` on the note list (below). WHAT IT RETIRED: the old masthead's
- * client island, crumb, answer sentence, break-in word and docked strip
- * (masthead.tsx says which law each broke); the WhoSuits tier band
+ * WHAT THE FIRST DISPATCH BUILT: `00 take` on the answer card (masthead.tsx,
+ * the one net builder behind its companion), `01 spread` on the range strip
+ * and `02 suits` on the note list (below). WHAT IT RETIRED: the old
+ * masthead's client island, crumb, answer sentence, break-in word and docked
+ * strip (masthead.tsx says which law each broke); the WhoSuits tier band
  * (`who_suits.scales`, never populated on the live route, a coined 0 to 100
  * read, clause 17; `02` answers the question in prose); and the imported
  * WhoItSuits card (`02` is its seat, on the archetype).
  *
+ * WHAT THE SECOND DISPATCH BUILT (2026-09-18): the band `03 permits | 04
+ * open` at 2-3 on turn-one.tsx, the permits on KvGrid over the shard's
+ * licences (permits_rows.ts) and the cost to open in its three states
+ * (open_rows.ts: RankedBars held, BentoMetric baseline and withheld), the
+ * foot's months to break even and years to pay back off the shard on all
+ * three. WHAT IT RETIRED: the ramp's phase bar (its figure lives in `04`'s
+ * foot now, off the shard for 243 trades instead of the one bundled seed)
+ * and the old cost to open on the LollipopColumn (five of nine lines drawn,
+ * the rest behind a disclosure of justify-between rows, a payback derived
+ * from the picker; `04` draws every line as one set with the shard's own
+ * payback). LollipopColumn itself stays in forms-v2 for its other callers.
+ *
  * WHAT STAYS MOUNTED UNTIL ITS OWN DISPATCH, each of today's cards in the
  * seat of the 8.6 block that absorbs it (SPINE.md PART A's inventory), and
  * retiring nothing a later block absorbs:
- *   ramp (PhaseBar)         -> `04 open`'s companion figure; sits in `03`'s
- *                              empty seat beside the cost to open until `03
- *                              permits` is built, then goes
- *   opening (CostToOpen)    -> `04 open`, RankedBars in its held state
  *   split (MoneySplit)      -> `05 split`, IncomeBreakdown
  *   keeps (OwnerKeeps)      -> CUT at `05`'s dispatch (a second drawing of
  *                              the split's figures); stands alone after the
@@ -102,14 +110,16 @@
  * Width tiers per WI-4; the money chapter is weighted heaviest (control room + wide reads).
  */
 import * as React from "react";
-import { spineCellSeed, spineIndustrySeed } from "@/lib/spine-seeds";
-import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
+import { spineCellSeed } from "@/lib/spine-seeds";
 import {
-  Fig, Box, Rail, Movement, Full, WideRail, Donut, StackBar, ShareStack, PhaseBar, InfoTip, StruckLine, TERRA, usd, Band,
+  Fig, Box, Rail, Movement, Full, WideRail, Donut, StackBar, ShareStack, InfoTip, StruckLine, TERRA, usd, Band,
 } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { FormatPicker, FormatProvider } from "./format-picker";
-import { OwnerKeeps, BreakEven, CostToOpen } from "./money-chapter";
+import { OwnerKeeps, BreakEven } from "./money-chapter";
+import { PermitsCard, OpenCard } from "./turn-one";
+import { buildPermits } from "@/lib/spine/permits_rows";
+import { buildOpen } from "@/lib/spine/open_rows";
 import { Nearby, Wages, Risks } from "./interactive";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
@@ -414,48 +424,6 @@ function Seasonality({ d }: { d: any }) {
         </div>
       </div>
       <div className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">Monthly demand, indexed; the dashed rule marks 100.</div>
-    </Box>
-  );
-}
-
-/* Honest break-even week for this cell's trade, counted from week 0 (never from
- * opening): the bundled industry seed's own ramp_to_breakeven_months, converted
- * to weeks. The cell seed carries no break-even figure of its own (its old
- * first_year block was a fully invented milestone list, scrapped under
- * rulebook v2 S10/D4); the industry altitude is the one honest source for this
- * figure, and ramp_to_breakeven_months is currently bundled for exactly ONE
- * trade (restaurants). The ramp figure is an industry-altitude fact and must
- * NEVER be borrowed across trades, so this cross-checks the cell's own
- * meta.industry against the seed it would borrow from and returns null on any
- * mismatch or on a cell with no honest ramp source , the same guard a real
- * dental-practice or auto-repair cell hits today (no ramp seed exists for them
- * yet), so the caller self-omits rather than show a different trade's number. */
-function breakevenWeekFor(d: any): number | null {
-  const industryId = d?.meta?.industry ?? null;
-  if (!industryId || industryId !== spineIndustrySeed?.meta?.industry) return null;
-  const rampMonths = spineIndustrySeed?.first_year?.ramp_to_breakeven_months;
-  return typeof rampMonths === "number" && Number.isFinite(rampMonths) && rampMonths > 0
-    ? Math.round(rampMonths * (52 / 12))
-    : null;
-}
-
-/* Ramp , rulebook v2 S10/D4, founder decision a (2026-07-09): the placeholder
- * milestone-by-milestone launch Timeline is scrapped (its six weekly steps ,
- * a lease/licence step, a fit-out completion, a hiring step, a soft-opening
- * step, a break-even week, and a first-profit step , were all invented, none
- * measured). Replaced by the ratified PhaseBar, fed by the only two honest
- * anchors: the modeled time to open (opening_archetypes, place-invariant,
- * resolves for every trade) and the modeled break-even week (industry seed's
- * ramp_to_breakeven_months, from week 0). Self-omits when no break-even anchor
- * resolves for this cell's trade , never forces a tick. */
-function Ramp({ d }: { d: any }) {
-  const breakevenWeek = breakevenWeekFor(d);
-  if (breakevenWeek == null) return null;
-  const openWeek = timeToOpenWeeks(d.meta?.industry ?? null);
-  return (
-    <Box id="ramp">
-      <Rail icon="first-year" kicker="Getting to break-even" sample />
-      <PhaseBar openWeek={openWeek} breakevenWeek={breakevenWeek} />
     </Box>
   );
 }
@@ -765,13 +733,18 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
     Array.isArray(d.demand?.channels) ||
     Array.isArray(d.demand?.catchment);
   const hasSubtypes = Array.isArray(d.subtypes?.items) && d.subtypes.items.length > 0;
-  const hasSetup = Array.isArray(d.setup?.items) && d.setup.items.length > 0;
+  /* `03 permits | 04 open` (turn-one.tsx): both builders on every resolving
+     cell whose trade holds a shard (243), the permits off the licences and
+     the cost to open in whichever of its three states the cell is in, so the
+     band always holds two children; a sector-average cell (industry_id
+     `default`, no shard) draws neither and the band does not draw. */
+  const permits = buildPermits(d.meta?.industry_id);
+  const open = buildOpen(d);
   const hasOwner = hasMoneySplit;
   const hasBreakEven = typeof d.break_even?.covers_per_day === "number";
   const hasWages = Array.isArray(d.wages?.roles) && d.wages.roles.length > 0;
   const hasSeasonality = Array.isArray(d.seasonality?.months) && d.seasonality.months.length >= 2;
   const hasRisks = Array.isArray(d.risks?.items) && d.risks.items.length > 0;
-  const hasRamp = breakevenWeekFor(d) != null;
   const hasNearby = Array.isArray(d.nearby?.places) && d.nearby.places.length > 0;
   const hasMyth = !!d.myth?.claim;
   const hasRelated = Array.isArray(d.related) && d.related.length > 0;
@@ -779,7 +752,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      third waits on `12 market`): turn one holds the money cards, turn two
      the ring, the survival curve and the risks, turn three the seasonality
      alone today. */
-  const turnOne = hasRamp || hasSetup || hasMoneySplit || hasWages || hasOwner || hasNearby || hasSubtypes;
+  const turnOne = !!(permits && open) || hasMoneySplit || hasWages || hasOwner || hasNearby || hasSubtypes;
   const turnTwo = hasBreakEven || hasMyth || hasRisks || hasDemand;
   const turnThree = hasSeasonality;
 
@@ -808,29 +781,29 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
       {turnOne ? (
         <>
           <Movement index="01" heading={COPY.tradeChapters.costs} />
-          {/* `03 permits | 04 open`, 2-3 in 8.6, the permits narrow LEFT and the
-              cost to open wide RIGHT. `03` is not built (its dispatch is next),
-              so the cost to open stands in its own band at the survivor's two
-              thirds, LONE CARD expected, and the ramp's phase bar, which `04`
-              absorbs as a companion figure, stands in its own band before it:
-              MEASURED 2026-09-18 with the page filter, the ramp seated in
-              `03`'s empty seat beside the cost to open at 2-3 stretched to the
-              taller card's 310 and opened a 376 by 150 hole at 1280 and 304 by
-              150 at 768 (8.4 rule 1: a card that cannot fill its partner's
-              height is re-paired, never unstretched), and each alone carries
-              none. The FormatProvider still wraps the money cards it feeds. */}
+          {/* `03 permits | 04 open`, the permits narrow LEFT and the cost to open
+              wide RIGHT in all three of its states (8.6), AT 1-2, RULED BY
+              MEASUREMENT 2026-09-18 (8.4 rule 1, the closed set): at 8.6's
+              expected 2-3 the exemplar's held card stood 610 (nine setup lines
+              as a table) against the four-cell licence grid's 268, a 376 by
+              342 hole and 40 percent ink at 1280; with the bill's five biggest
+              lines drawn and the rest stated (open_rows.ts) the card is 426,
+              and at 1-2 the grid's labels wrap to its phone form, 316, so the
+              air under it is 110, under the 120 floor, 0 holes at three
+              widths; at 2-3 it would still be 133. The baseline and withheld
+              states hold at either split (269 and 238 against the grid at
+              2-3, measured). `stack="lg"` because without it the grid at a
+              tablet's 344 stretched to the bill's height with 373 of air
+              (measured). Both cards draw on every cell whose trade holds a
+              shard. */}
+          {permits && open ? (
+            <Band split="1-2" stack="lg">
+              <PermitsCard permits={permits} />
+              <OpenCard open={open} />
+            </Band>
+          ) : null}
           <FormatProvider d={d}>
             {hasSubtypes ? <Full><FormatPicker d={d} /></Full> : null}
-            {hasRamp ? (
-              <Band split="2-3">
-                <Ramp d={d} />
-              </Band>
-            ) : null}
-            {hasSetup ? (
-              <Band split="2-3">
-                <CostToOpen d={d} />
-              </Band>
-            ) : null}
             {/* `05 split | 06 team`, 3-2 in 8.6, the split wide LEFT (fill-bar one,
                 M10) and the team narrow RIGHT. TODAY'S CARDS CANNOT SEAT THAT
                 PAIR, MEASURED 2026-09-18 with the page filter and the
