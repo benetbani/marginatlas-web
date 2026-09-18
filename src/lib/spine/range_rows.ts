@@ -99,28 +99,9 @@ export function buildCityCustomersStrip(seed: any): CityStripData | null {
   return { ...c, basis: COPY.cityCustomers.countryBasis.replace("{country}", inSentence(country)).replace("{city}", city), sample: c.confidence !== "measured", from: "country" };
 }
 
-/** THE CITY'S PREMISES STRIP (city:premises, the build loop's run 13, 2026-09-06;
- *  founder ruling 11, premises on city pages too). No city holds a rent figure
- *  of its own (0 of 252 on 2026-09-06). The country profile holds three rents by
- *  city size, so the city draws its country's three with its own size class in
- *  the accent (the seed's meta.tier, 1 to 3, the same hierarchy the profile's
- *  tiers follow), and the basis line says whose average it is and where the
- *  city sits. The street axis the founder named (prime and secondary street) is
- *  a data requirement. Null when the country holds no rent or the seed no country. */
-export type CityPremisesStrip = StripData & { basis: string; sample: boolean };
-export function buildCityPremisesStrip(seed: any): CityPremisesStrip | null {
-  const iso2 = String(seed?.meta?.iso2 ?? "").toUpperCase();
-  const city = String(seed?.meta?.city ?? "").trim();
-  const country = String(seed?.meta?.country_name ?? "").trim();
-  if (iso2.length !== 2 || !city || !country) return null;
-  const c = buildPremisesStrip(iso2);
-  if (!c || c.marks.length === 0) return null;
-  const tier = seed?.meta?.tier;
-  const key: "t1" | "t2" | "t3" | null = tier === 1 ? "t1" : tier === 2 ? "t2" : tier === 3 ? "t3" : null;
-  const marks = c.marks.map((m) => ({ ...m, accent: key != null && m.key === key }));
-  const own = key != null && marks.some((m) => m.key === key) ? COPY.premises.marks[key] : null;
-  const basis = own
-    ? COPY.cityPremises.basis.replace("{country}", inSentence(country)).replace("{city}", city).replace("{tier}", own.toLowerCase())
-    : COPY.cityPremises.basisNoTier.replace("{country}", inSentence(country));
-  return { ...c, marks, basis, sample: c.confidence !== "measured" };
-}
+/* THE CITY'S PREMISES STRIP LEFT ON PLAN STEP 32 (second dispatch, 2026-09-18).
+   `buildCityPremisesStrip` drew the country's three rents by city size under a
+   city's name from run 13 (2026-09-06) until MODEL.md 8.3 seated the premises
+   bento in `04 premises` on the city's own `realestate.*` (premises_bento_rows.ts):
+   "The old strip of national tiers leaves." The country page keeps
+   `buildPremisesStrip` above, unchanged. */

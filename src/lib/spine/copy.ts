@@ -520,11 +520,6 @@ export const COPY = {
   },
   /** The city's terminus (city:close, run 19): the doors out of a city page; the kicker is the close's. */
   cityClose: { districtDoor: "Start in {district}", districtsDoor: "Every district of {city}", countryDoor: "Open a business in {country}", compareDoor: "Compare {city} with other cities" },
-  /** The city's premises strip (city:premises, run 13): the country's three averages by city size, the city's own size class in the accent, the basis line saying so. */
-  cityPremises: {
-    basis: "Rent for a square metre of shop a year, the average across {country} by city size; {city} counts among the {tier}.",
-    basisNoTier: "Rent for a square metre of shop a year, the average across {country} by city size.",
-  },
   /** THE PREMISES BENTO, the city's `04 premises` (MODEL.md 8.3; plan step
    *  32, second dispatch, 2026-09-18): four readings of the city's own shop
    *  space off the shard's `realestate.*`, his A2 cluster in his B4 cells. The

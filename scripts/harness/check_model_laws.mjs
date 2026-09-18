@@ -55,6 +55,16 @@
  *            terminus on every page, which is exactly the false-confident
  *            reading this repo has already paid for once (check_page_holes'
  *            own EVEN_BY_RULING exists for the same reason, one level up).
+ *            `[data-band]` is REAL since plan step 32's second dispatch
+ *            (2026-09-18): BentoBand.tsx stamps `data-band="bento"` on a
+ *            cluster's root. The kit's Band() still stamps nothing and is
+ *            read by the parent inference, as before. A card INSIDE a
+ *            declared band reads that band as its band, not its own parent:
+ *            a bento cell sits alone in its placement wrapper, one child
+ *            each, and the parent inference read the city's four-cell
+ *            premises cluster as four lone cards the first time it rendered.
+ *            The cluster is the band and holds four children (MODEL.md 8.3,
+ *            "the cluster IS the band"); the wrapper is not a band at all.
  *   FLAG   = `img[data-flag]` UNION `img[src*="flagcdn.com"]`, the real
  *            source CountryFlag.tsx renders. It no longer needs the network:
  *            the ratio clause that had to decode a real flag's natural size
@@ -358,10 +368,14 @@ function inPage(ctx) {
   const cards = [...document.querySelectorAll(CARD)].filter((c) => c.getClientRects().length && !c.parentElement.closest(CARD));
   /* A card is addressed by its id, else by its block name (plan step 11: a
      Box drawn without an id now names its block, so "demand" or "living"
-     prints where "card" did), else by the first id inside it. */
+     prints where "card" did), else by the cluster it is a cell of (plan step
+     32, second dispatch: a bento's cells carry no id of their own and the
+     cluster is the section, so a finding on any cell names the cluster, the
+     way `--section=<id>` names it), else by the first id inside it. */
+  const CLUSTER = "[data-archetype='bento-band'][id]";
   const cardIdOf = (el) => {
     const c = el.closest(CARD);
-    if (c) return c.id || c.getAttribute("data-block") || c.querySelector("[id]")?.id || "card";
+    if (c) return c.id || c.getAttribute("data-block") || c.closest(CLUSTER)?.id || c.querySelector("[id]")?.id || "card";
     return el.closest("[id]")?.id || "page";
   };
 
@@ -389,10 +403,14 @@ function inPage(ctx) {
     unmeasured.push(`BLOCK FLOOR: ${topBlocks.length} blocks counted, and no floor is named for this surface in MODEL.md PART 8; the floor is unmeasured, not passed`);
   }
 
-  /* LONE CARD: "a band with one child fails." */
+  /* LONE CARD: "a band with one child fails." A card inside a declared band
+     (`[data-band]`, a bento cluster's root) is judged by that band and never
+     by its own placement wrapper; every other card by its parent (the BAND
+     note in the header). */
   if (wide) {
     const CHROME = "[data-hero], [data-wide-table], [data-terminus]";
-    const candidates = new Set([...document.querySelectorAll("[data-band]"), ...cards.map((c) => c.parentElement).filter(Boolean)]);
+    const bandOf = (c) => c.parentElement?.closest("[data-band]") ?? c.parentElement;
+    const candidates = new Set([...document.querySelectorAll("[data-band]"), ...cards.map(bandOf).filter(Boolean)]);
     for (const band of candidates) {
       if (!band || band === document.body || band === document.documentElement || band.tagName === "MAIN") continue;
       if (band.closest(CHROME)) continue;
@@ -642,7 +660,7 @@ function inPage(ctx) {
   const sizesOf = (card) => [...card.querySelectorAll("*")]
     .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el))
     .map((el) => parseFloat(getComputedStyle(el).fontSize));
-  const idOfCard = (card) => card.id || card.getAttribute("data-block") || card.querySelector("[id]")?.id || "card";
+  const idOfCard = (card) => card.id || card.getAttribute("data-block") || card.closest(CLUSTER)?.id || card.querySelector("[id]")?.id || "card";
   let any30 = false;
   for (const card of cards) {
     if (EVEN_BY_RULING.has(formOf(card))) continue;
@@ -727,7 +745,7 @@ function inPage(ctx) {
         }
         if (matched) break;
       }
-      if (matched) push(card.id || card.querySelector("[id]")?.id || "card", "EDGE", "the card's outer edge is the same colour as a hairline divider inside it");
+      if (matched) push(idOfCard(card), "EDGE", "the card's outer edge is the same colour as a hairline divider inside it");
     }
   }
 

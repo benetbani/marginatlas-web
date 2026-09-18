@@ -12,7 +12,7 @@
  * THE ORDER IS MODEL.md 8.3's (plan step 32, 2026-09-18, the first of six
  * dispatches): the opening full width, then the band `01 glance | 02
  * among-cities`; chapter turn one, what it costs to open and to run (the
- * premises strip, then living beside the rent-against-income ratio); turn
+ * premises bento, then living beside the rent-against-income ratio); turn
  * two, where to open it and what to open (what residents spend beside what
  * customers earn, then rent by district beside the trades with local
  * figures, then the peers table full width); turn three, what the place is
@@ -38,8 +38,9 @@
  * NULL-GUARDS (real-data promotion): every section early-returns null when its data is
  * absent, so an omitted field renders NOTHING (never 0 / undefined / NaN / a broken
  * block). The chapter breaks are fixed "01", "02", "03" (8.3's own numbering); the
- * first two always have content (the premises strip draws on every city, the spend
- * figure is held for 252), and the third is drawn only when a card under it draws.
+ * first two always have content (the premises bento draws on every listed city
+ * whose shard loads, the spend figure is held for 252), and the third is drawn
+ * only when a card under it draws.
  *
  * 2026-07-11 reformation (rulebook v1): the derived per-district keep index, the
  * per-trade net-margin rail, the take-home bar list and the crowding column are DELETED
@@ -74,8 +75,9 @@ import { CityHero } from "./masthead";
 import { IncomeCurve, OwnerRunway, RentAffordability } from "./chapters";
 import { WhereToTrade } from "./where-to-trade";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
-import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
-import { buildCityCustomersStrip, buildCityPremisesStrip, type CityPremisesStrip } from "@/lib/spine/range_rows";
+import { Premises } from "./premises";
+import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
+import { buildCityCustomersStrip } from "@/lib/spine/range_rows";
 import { COPY } from "@/lib/spine/copy";
 
 /* ================= THE OPENING ================= */
@@ -146,27 +148,9 @@ function AmongCities({ seat }: { seat: CitySeatData | null }) {
 }
 
 /* ================= TURN ONE , WHAT IT COSTS TO OPEN, AND TO RUN ================= */
-/* CityPremises: WHAT PREMISES COST TO RUN, on the range-strip archetype (the
-   build loop's run 13, 2026-09-06; founder ruling 11, premises on city pages
-   too). No city holds a rent figure of its own on this strip (0 of 252 on
-   2026-09-06). The country profile holds three rents by CITY SIZE (the tier-1,
-   tier-2 and tier-3 city averages, as the cost engine and the v29 plan read
-   them), so the card draws those three with the city's own size class in the
-   accent, and the basis line says whose average it is and where the city sits.
-   THIS STRIP KEEPS `04 premises`' SEAT UNTIL THE SECOND DISPATCH BUILDS THE
-   BENTO (MODEL.md 8.3: four readings of the city's own shop space off the
-   shard's `realestate.*`, the strip of national tiers leaving with it); its
-   electricity `extra` stays for now. The strip comes from the body, built
-   once, so its band is drawn only when it is. */
-function CityPremises({ strip }: { strip: CityPremisesStrip | null }) {
-  if (!strip) return null;
-  return (
-    <Box id="premises">
-      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={strip.sample} />
-      <RangeStrip marks={strip.marks} scale="log" fmt={usd} basis={strip.basis} extra={strip.extra} />
-    </Box>
-  );
-}
+/* `04 premises` is ./premises.tsx: the bento cluster and the one function
+   that composes its cells, which the story sheet reads too, so the story is
+   the card and not a copy of it. */
 
 /* ================= TURN TWO , WHERE TO OPEN IT, AND WHAT TO OPEN ================= */
 /* DemandSpend, `08 demand`: the per-resident spend is the focal NUMBER (§26, C6);
@@ -481,7 +465,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
      tables read the seed the adapter built. */
   const glance = slug ? buildCityGlance(slug) : null;
   const seat = slug ? buildCitySeat(slug) : null;
-  const premises = buildCityPremisesStrip(d);
+  const premises = slug ? buildPremisesBento(slug) : null;
   const living = hasLiving(d);
   const runway = hasRunway(d);
   const demand = hasDemandSpend(d);
@@ -516,15 +500,12 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           (8.4). 48 above and 12 below, the next Band's own 32 absorbing the 12
           by margin collapse. The opening above carries no break (PART 1). */}
       <Movement index="01" heading={COPY.chapters.costs} />
-      {/* `04 premises`: today's strip of the country's three rents by city size
-          holds the seat alone in its band until the second dispatch builds the
-          bento (8.3: the cluster IS the band). The kit's only-child rule gives
-          it two thirds; the LONE CARD finding on it is expected and temporary. */}
-      {premises ? (
-        <Band split="1-1">
-          <CityPremises strip={premises} />
-        </Band>
-      ) : null}
+      {/* `04 premises`, the bento, its own band, loud 2 on the prime rent cell
+          (8.3): the cluster IS the band, never a child of Band, four cells
+          tiling 3 by 2 at 1280, 2 by 3 at 768, one column under. It stands
+          between the two fact-grid bands, so no two adjacent bands share a
+          form (M1). Built for every listed city whose shard loads, 252 today. */}
+      <Premises bento={premises} />
       {/* `05 living | 06 runway`, 1-1 (8.3), today's two kit cards until the
           third dispatch: what living here costs beside a year of one-bed rent
           against a year of typical pay. MEASURED BEFORE IT WAS PAIRED, on

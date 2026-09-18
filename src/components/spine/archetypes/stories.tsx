@@ -23,7 +23,7 @@ import { buildCityCards } from "@/lib/spine/city_cards";
 import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
 import { RangeStrip } from "./RangeStrip";
-import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip, buildCityPremisesStrip } from "@/lib/spine/range_rows";
+import { buildPremisesStrip, buildCustomersStrip, buildCityCustomersStrip } from "@/lib/spine/range_rows";
 import { buildPremisesBento, listedCitySlugs } from "@/lib/spine/premises_bento_rows";
 import { premisesCells } from "@/components/spine/city/premises";
 import { SpectraTable } from "./SpectraTable";
@@ -290,23 +290,15 @@ export function TiersTableStories({ instances = pickTiersTableInstances() }: { i
   );
 }
 
-/** The city instances for the strip, from the loaded city seeds: one drawing its own spread and one drawing the country's figure, each saying which (city:earnings, run 11). */
-export type CityStripInstance = CityHeroInstance & { kind: "customers" | "premises" };
-export const cityStripKey = (c: CityStripInstance) => `${c.slug}:${c.kind === "premises" ? "premises" : "city"}`;
+/** The city instances for the strip, from the loaded city seeds: one drawing its own spread and one drawing the country's figure, each saying which (city:earnings, run 11). The city premises strip's instances (run 13, one city per size class) left on plan step 32's second dispatch with the strip itself: MODEL.md 8.3 seats the premises bento on the city's own figures, and its stories are the bento band's `<slug>:premises` below. */
+export type CityStripInstance = CityHeroInstance & { kind: "customers" };
+export const cityStripKey = (c: CityStripInstance) => `${c.slug}:city`;
 export function pickCityStripInstances(cities: CityHeroInstance[]): CityStripInstance[] {
   const out: CityStripInstance[] = [];
   const own = cities.find((c) => buildCityCustomersStrip(c.seed)?.from === "city");
   if (own) out.push({ ...own, kind: "customers", why: "the city's own spread, modelled on its average pay" });
   const country = cities.find((c) => buildCityCustomersStrip(c.seed)?.from === "country");
   if (country) out.push({ ...country, kind: "customers", why: "no figure of its own, the country's typical pay, said so" });
-  /* The premises strip (run 13): the country's three rents by city size with the city's own class in the accent; one city of each size class the loaded seeds hold. */
-  const seenTier = new Set<number>();
-  for (const c of cities) {
-    const tier = Number(c.seed?.meta?.tier);
-    if (!buildCityPremisesStrip(c.seed) || seenTier.has(tier)) continue;
-    seenTier.add(tier);
-    out.push({ ...c, kind: "premises", why: `the country's three rents by city size, a size-${tier} city's own class in the accent` });
-  }
   return out;
 }
 export function RangeStripStories({ instances = pickRangeStripInstances(), city = [] }: { instances?: Instance[]; city?: CityStripInstance[] }) {
@@ -324,12 +316,11 @@ export function RangeStripStories({ instances = pickRangeStripInstances(), city 
         return <Story kind="range-strip" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
       })}
       {city.map((c) => {
-        const premises = c.kind === "premises";
-        const d = premises ? buildCityPremisesStrip(c.seed) : buildCityCustomersStrip(c.seed);
+        const d = buildCityCustomersStrip(c.seed);
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: premises ? 416 : 536 }}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{premises ? COPY.premises.kicker : COPY.cityCustomers.kicker}, {String(c.seed?.meta?.city ?? c.slug)}</div>
-            <RangeStrip marks={d.marks} scale={premises ? "log" : "linear"} fmt={usd} basis={d.basis} note={d.note} extra={d.extra} />
+          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 536 }}>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.cityCustomers.kicker}, {String(c.seed?.meta?.city ?? c.slug)}</div>
+            <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={d.basis} note={d.note} extra={d.extra} />
           </div>
         ) : null;
         return <Story kind="range-strip" key={cityStripKey(c)} iso2={cityStripKey(c)} why={c.why}>{el}</Story>;

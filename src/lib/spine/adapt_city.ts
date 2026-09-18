@@ -590,7 +590,7 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
     city: city.name,
     slug: city.slug,
     country_name: countryName,
-    // The city's size class (1 to 3), carried since run 13 so the premises strip can accent the country's average for cities of this size.
+    // The city's size class (1 to 3), carried since run 13 for the premises strip, which accented the country's average for cities of this size. That strip left the city page on plan step 32's second dispatch (2026-09-18; MODEL.md 8.3's bento draws the city's own figures), so nothing on the page reads this field today; it stays on the seed as the city's own fact.
     tier: city.tier,
     provenance_line:
       "Modeled from local business demography; the district and per-trade figures are real per-trade measurements.",

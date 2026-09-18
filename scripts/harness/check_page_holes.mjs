@@ -111,8 +111,15 @@ function inPage() {
   const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat"]);
   const out = [];
   const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));
+  /* A CELL OF A BENTO IS ADDRESSED BY ITS CLUSTER (plan step 32, second
+     dispatch, 2026-09-18): the cells carry no id of their own and the cluster
+     is the section (MODEL.md 8.3, "the cluster IS the band"), so `--section=
+     premises` names all four cells of the city's premises cluster and a hole
+     in any of them is reported under that name. The cluster's root is also the
+     band the sibling count reads, never a cell's own placement wrapper. */
+  const CLUSTER = "[data-archetype='bento-band'][id]";
   for (const card of cards) {
-    const id = card.id || card.querySelector("[id]")?.id || (card.querySelector("h1,h2,h3")?.textContent || "").trim().toLowerCase() || "card";
+    const id = card.id || card.closest(CLUSTER)?.id || card.querySelector("[id]")?.id || (card.querySelector("h1,h2,h3")?.textContent || "").trim().toLowerCase() || "card";
     const cb = card.getBoundingClientRect(); const cs = getComputedStyle(card);
     const x0 = cb.left + parseFloat(cs.paddingLeft), x1 = cb.right - parseFloat(cs.paddingRight), y0 = cb.top + parseFloat(cs.paddingTop), y1 = cb.bottom - parseFloat(cs.paddingBottom);
     const W = x1 - x0, H = y1 - y0, COLS = 48, ROW = 6; const nRows = Math.max(1, Math.round(H / ROW));
@@ -144,7 +151,7 @@ function inPage() {
         st.push(cc);
       }
     }
-    const band = card.parentElement; const bb = band ? band.getBoundingClientRect() : null;
+    const band = card.parentElement?.closest("[data-band]") ?? card.parentElement; const bb = band ? band.getBoundingClientRect() : null;
     out.push({ id, cardW: Math.round(W), cardH: Math.round(H), holeW: Math.round(best.w / COLS * W), holeH: best.h * ROW, bandW: bb ? Math.round(bb.width) : null, siblings: band ? band.children.length : 1, x: Math.round(cb.left), y: Math.round(cb.top + scrollY) });
   }
   /* ROWS CUT: a chart that declares how many rows it holds must draw them all
@@ -167,7 +174,7 @@ function inPage() {
   const probe = (token) => { const d = document.createElement("div"); d.style.color = "var(" + token + ")"; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; };
   const accentRgb = probe("--terra-text");
   const accentReadable = accentRgb !== probe("--no-such-token-xyz");
-  const accents = !accentReadable ? [] : [...document.querySelectorAll("main *")].filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && getComputedStyle(el).color === accentRgb).map((el) => (el.closest('[class*="rounded-[14px]"]')?.id || "card") + ": " + (el.textContent || "").trim().slice(0, 16));
+  const accents = !accentReadable ? [] : [...document.querySelectorAll("main *")].filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && getComputedStyle(el).color === accentRgb).map((el) => (el.closest('[class*="rounded-[14px]"]')?.id || el.closest(CLUSTER)?.id || "card") + ": " + (el.textContent || "").trim().slice(0, 16));
   const hierarchy = [];
   for (const card of cards) {
     const id = card.id || card.querySelector("[id]")?.id || "card";
