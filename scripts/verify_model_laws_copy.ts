@@ -93,7 +93,9 @@
 import { COPY } from "@/lib/spine/copy";
 import { buildCityDistrictBars, countWord } from "@/lib/spine/district_rows";
 import { buildMarkList } from "@/lib/spine/mark_list_rows";
-import { buildCityDemand, buildCityLiving, buildCityRunway } from "@/lib/spine/fact_rows";
+import { buildCityDemand, buildCityLiving, buildCityRunway, buildCitySeason } from "@/lib/spine/fact_rows";
+import { buildCityPeopleTable } from "@/lib/spine/character_rows";
+import { buildCityNeighbourhoods } from "@/lib/spine/hood_rows";
 import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { buildGlance } from "@/lib/spine/glance_rows";
@@ -439,6 +441,30 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     for (const line of Object.values(COPY.cityRunway.withheld)) heads.push(["COPY.cityRunway.withheld", line]);
   }
   heads.push(["COPY.cityDemand.seasonKicker", COPY.cityDemand.seasonKicker], ["COPY.cityDemand.seasonBasis", COPY.cityDemand.seasonBasis]);
+
+  /* TURN THREE OF THE CITY PAGE (MODEL.md 8.3 `12` to `15`; plan step 32's
+     sixth dispatch, 2026-09-18), pushed composed: the people table's basis
+     in its three shapes (New York all its own, London mixed, Frankfurt the
+     country's), the season pair's basis and both feet (Paris held, Frankfurt
+     modelled off the shard, London off the slope) and its two withheld lines
+     (reachable by the builder's shape and by no city today, so pushed from
+     the copy table), the neighbourhoods pager's foot and "all" link (London)
+     and the seat's line naming the city (Frankfurt), and the seats' foot. */
+  for (const slug of ["london", "new-york", "frankfurt", "paris", "abidjan"]) {
+    const p = buildCityPeopleTable(slug);
+    if (p) heads.push([`buildCityPeopleTable(${slug}).basis`, p.basis]);
+    const se = buildCitySeason(slug);
+    if (se) {
+      if (se.basis) heads.push([`buildCitySeason(${slug}).basis`, se.basis]);
+      if (se.foot) heads.push([`buildCitySeason(${slug}).foot`, se.foot]);
+      if (se.withheld) heads.push([`buildCitySeason(${slug}).withheld`, se.withheld]);
+    }
+    const h = buildCityNeighbourhoods(slug);
+    if (h?.foot) heads.push([`buildCityNeighbourhoods(${slug}).foot`, h.foot]);
+    if (h?.seatLine) heads.push([`buildCityNeighbourhoods(${slug}).seatLine`, h.seatLine]);
+  }
+  for (const line of Object.values(COPY.citySeason.withheld)) heads.push(["COPY.citySeason.withheld", line]);
+  heads.push(["COPY.citySeason.footModelled", COPY.citySeason.footModelled], ["COPY.citySeason.footSlope", COPY.citySeason.footSlope], ["COPY.cityNeighbourhoods.allLabel", COPY.cityNeighbourhoods.allLabel], ["COPY.blocked.cityNeighbourhoods.foot", COPY.blocked.cityNeighbourhoods.foot], ["COPY.blocked.locals.line", COPY.blocked.locals.line]);
 
   /* THE COUNTRY'S TWO KvGrid SEATS (MODEL.md 8.2 `01 glance` and `02
      world-seat`, plan step 31's second dispatch, 2026-09-17), pushed composed

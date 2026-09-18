@@ -128,6 +128,26 @@ export const COPY = {
         ambition: { name: "Ambition", left: "Kept quiet", right: "Worn openly" },
       },
       foot: "born abroad",
+      /** The city table's foot where the city file holds no share of its own:
+       *  the country's share, and the label says so (plan step 32's sixth
+       *  dispatch, 2026-09-18; a national figure under a city's name needs
+       *  the word). */
+      footCountry: "born abroad, nationwide",
+    },
+    /** THE CITY'S PEOPLE TABLE (MODEL.md 8.3, `12 character-people`; plan step
+     *  32's sixth dispatch, 2026-09-18) ships at full form on every city, six
+     *  traits: the city's own read where the city signature file holds one
+     *  (19 cities, London three), the country's read where it does not, and
+     *  the basis says which and says modelled, because the sample mark is
+     *  switched off site-wide and the basis is the only line left that can.
+     *  The country is never named (it is the masthead's subtitle, and a
+     *  country name in a chart's furniture is PART 8.5's ban); "the
+     *  country's" is what a person says. Fourteen words at most, measured on
+     *  the longest case (three own reads and a two-word city). */
+    city: {
+      basisOwn: "All six reads are {city}'s own, modelled.",
+      basisMixed: "{traits} {verb} {city}'s own; the rest are the country's, modelled.",
+      basisCountry: "The country's reads, modelled; {city}'s own are not gathered yet.",
     },
   },
   /** The note list (what locals know): authored notes, the page's one editorial section. */
@@ -182,6 +202,22 @@ export const COPY = {
       kicker: LOCALS_KICKER,
       line: "Not gathered yet: what locals know about opening here.",
       foot: "Waits on DATA-REQUIREMENTS item 6.",
+    },
+    /** THE CITY'S SEATS (MODEL.md 8.3; plan step 32's sixth dispatch,
+     *  2026-09-18). `13 locals` stands as the seat on every city, the same
+     *  three strings as the country's (M19: one idiom on both pages; no city
+     *  holds authored notes, item 6, and the country's notes never print under
+     *  the city's kicker). `14 neighbourhoods` stands as the seat on the 209
+     *  cities whose scheme is the compass placeholder (a placeholder name never
+     *  prints); the line names the city, the way the demand card's withheld
+     *  line does, and runs twelve words on the longest city name in the set
+     *  ("Ho Chi Minh City"). The item is 30, the neighbourhood names (the
+     *  city synthesis's item 29 became DATA-REQUIREMENTS item 30 in the merge;
+     *  item 29 is the season slope). */
+    cityNeighbourhoods: {
+      kicker: "The city's neighbourhoods",
+      line: "Not gathered yet: the neighbourhoods of {city} by name.",
+      foot: "Waits on DATA-REQUIREMENTS item 30.",
     },
   },
   /** THE FOOTING SEAT (MODEL.md 8.2, `17 footing`): the calibrated meter is a
@@ -532,8 +568,15 @@ export const COPY = {
     footPlacement: "where each sits among the cities is not shown yet.",
     footPlacementOne: "where it sits among the cities is not shown yet.",
   },
-  /** The city's terminus (city:close, run 19): the doors out of a city page; the kicker is the close's. */
-  cityClose: { districtDoor: "Start in {district}", districtsDoor: "Every district of {city}", countryDoor: "Open a business in {country}", compareDoor: "Compare {city} with other cities" },
+  /** The city's terminus (city:close, run 19): the doors out of a city page; the kicker is the close's.
+   *  THE DISTRICT DOOR NAMES NO DISTRICT (plan step 32's sixth dispatch,
+   *  2026-09-18). It read "Start in {district}" for the lightest-rent district
+   *  on London; that is the cheapest member featured for being the cheapest,
+   *  the reason he struck out on 2026-09-10 ("featuring one neighborhood ...
+   *  just for the fact that it's cheaper. It is not justifiable"), and a door
+   *  is a recommendation a reader follows. The door is the districts page's on
+   *  every city, 8.3's "the districts door". */
+  cityClose: { districtsDoor: "Every district of {city}", countryDoor: "Open a business in {country}", compareDoor: "Compare {city} with other cities" },
   /** THE PREMISES BENTO, the city's `04 premises` (MODEL.md 8.3; plan step
    *  32, second dispatch, 2026-09-18): four readings of the city's own shop
    *  space off the shard's `realestate.*`, his A2 cluster in his B4 cells. The
@@ -675,12 +718,50 @@ export const COPY = {
       /** Reachable by the builder's shape and by no city today (252 of 252 hold the figure). */
       notOnFile: "The spend per resident is not on file for this city yet.",
     },
-    /** The season card (item 27): the split is a slope over arrivals for every city, and now says so. */
+    /** The old season card's two strings, read by the view until the sixth dispatch's second commit retires the card with them. */
     seasonKicker: "How seasonal it is",
     seasonBasis: "The visitor share is modelled from a year's arrivals and the resident count, not counted at the till.",
   },
+  /** RESIDENTS AND VISITORS, the city's `15 season` (MODEL.md 8.3; plan step
+   *  32's sixth dispatch, 2026-09-18): two shares of a hundred on a KvGrid
+   *  pair, in ink. The kicker changes from "How seasonal it is": an annual
+   *  share is not a season, and the old name returns the day a month shape
+   *  exists (item 29). The basis says what the two figures are; the foot says
+   *  "modelled" where the shard's tag is not held (239 of 252) or where the
+   *  share is the slope over arrivals (London, the one city with no footfall
+   *  row in its shard); the withheld lines stand where the shares would, and
+   *  both are reachable by the builder's shape and by no city today. "Footfall"
+   *  is the trade's own word for the people passing a door, and the field's.
+   *  Every string here was read aloud. No "against": it is a comparator with
+   *  no subject to the copy gate, and the sentence needs none. */
+  citySeason: {
+    kicker: "Residents and visitors",
+    cells: { residents: "Residents", visitors: "Visitors" },
+    basis: "Of the year's footfall, the share who live here and the share visiting.",
+    footModelled: "Both shares are modelled for this city.",
+    footSlope: "Both shares are modelled from a year's arrivals and the resident count.",
+    withheld: {
+      clamp: "The split is withheld: the modelled share for this city sits at the model's limit.",
+      noCount: "The split is withheld: no visitor count is on file for this city.",
+    },
+  },
   /** The card pager (the cities). */
   cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
+  /** THE CITY'S NEIGHBOURHOODS, `14 neighbourhoods` (MODEL.md 8.3; the same
+   *  dispatch): the card pager, four a row, a name and an arrow, no image, no
+   *  sub-line (a district's character tag is a one-word summary of a place,
+   *  clause 19). The "all" link and the arrows' names follow the cities
+   *  pager's grammar. The foot is the coverage form, the count as a word, on
+   *  the 43 cities whose scheme holds real names; the 209 on the compass
+   *  placeholders draw the blocked seat below (a placeholder name never
+   *  prints, clause 32, R11). */
+  cityNeighbourhoods: {
+    kicker: "The city's neighbourhoods",
+    allLabel: "Every neighbourhood",
+    prev: "Previous neighbourhoods",
+    next: "More neighbourhoods",
+    foot: "{n} named areas, each a door to the neighbourhoods page.",
+  },
   /** The city cards in their three looks (B11, 2026-09-10). The unit is said
    *  ONCE for the whole row, never in a card (PART 5). `plain` says what the
    *  figure is and nothing else, and it is what prints when the look draws no

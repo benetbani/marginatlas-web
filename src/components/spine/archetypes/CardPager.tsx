@@ -34,14 +34,22 @@ export type PagerCard = { id: string; name: string; sub?: string; href: string; 
    card alone on a second row. Four is within his maximum and fills the row. */
 const PER_PAGE = 4;
 
-export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", nextLabel = "More" }: { cards: PagerCard[]; allHref: string; allLabel: string; prevLabel?: string; nextLabel?: string }) {
+/** A pager that DECLARES it carries no image (`images="none"`) draws no slot on
+ *  any card and says so on its root (`data-images="none"`), so the harness's
+ *  IMAGE MISSING line, a data red for the data track, never asks for a
+ *  photograph the model says the card must not carry (MODEL.md 8.3, `14
+ *  neighbourhoods`: NO IMAGE; DATA-REQUIREMENTS item 14's photograph half is
+ *  retired). A card handed an image under that declaration is a fault the
+ *  harness reds (IMAGE), planted once on 2026-09-18 and watched go red. The
+ *  default, `left`, is the cities pager as the founder ruled it. */
+export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", nextLabel = "More", images = "left" }: { cards: PagerCard[]; allHref: string; allLabel: string; prevLabel?: string; nextLabel?: string; images?: "left" | "none" }) {
   const [page, setPage] = React.useState(0);
   const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
   const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
   const btn = "flex h-8 w-8 items-center justify-center rounded-[14px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
-    <div data-archetype="card-pager">
+    <div data-archetype="card-pager" data-images={images}>
       {pages > 1 ? (
         <div className="mb-2 flex items-center justify-end gap-1.5">
           <span className="mr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
@@ -57,7 +65,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
              left 39px for "London". So below md the image runs the card's width
              above the name; from md it sits on the left as the founder chose. */
           <a key={c.id} href={c.href} data-card={c.id} className="group flex h-full flex-col gap-2 rounded-[14px] border border-[var(--c-border)] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] md:flex-row md:items-center md:gap-2.5">
-            {c.image ? (
+            {images !== "none" && c.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={c.image} alt="" width={48} height={48} loading="lazy" className="h-16 w-full shrink-0 rounded-lg object-cover md:h-12 md:w-12" />
             ) : null}

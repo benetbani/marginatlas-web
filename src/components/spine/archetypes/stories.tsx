@@ -28,7 +28,7 @@ import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { buildPremisesBento, listedCitySlugs } from "@/lib/spine/premises_bento_rows";
 import { premisesCells } from "@/components/spine/city/premises";
 import { SpectraTable } from "./SpectraTable";
-import { buildCharacterTables, buildCityCharacterTables, citiesWithSignature } from "@/lib/spine/character_rows";
+import { buildCharacterTables, buildCityCharacterTables, buildCityPeopleTable, listedCitySlugsForCharacter } from "@/lib/spine/character_rows";
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { buildChecks } from "@/lib/spine/checks_rows";
@@ -41,7 +41,8 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
-import { buildCityLiving, buildCityRunway, buildCityDemand } from "@/lib/spine/fact_rows";
+import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason } from "@/lib/spine/fact_rows";
+import { buildCityNeighbourhoods, citiesWithScheme } from "@/lib/spine/hood_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { usd, Box, Rail, CARD_SURFACE } from "@/components/spine/kit";
@@ -115,6 +116,19 @@ export function pickCardPagerInstances(): Instance[] {
   const one = all.find((x) => x.cards && x.cards.cards.length === 1); if (one) take(one.c, "one city");
   const longest = [...all].filter((x) => x.cards).sort((a, b) => Math.max(...b.cards!.cards.map((k) => k.name.length)) - Math.max(...a.cards!.cards.map((k) => k.name.length)))[0]; if (longest) take(longest.c, "extreme name");
   const none = all.find((x) => !x.cards); if (none) take(none.c, "self-omits: no covered city");
+  /* THE CITY'S NEIGHBOURHOODS (MODEL.md 8.3 `14 neighbourhoods`; plan step
+     32's sixth dispatch, 2026-09-18), keyed city:<slug>:hoods, off
+     `buildCityNeighbourhoods`, no image on any card (`images="none"`): the
+     exemplar (seven real districts, so the arrows render and the second page
+     holds three), the city with the most districts, the curated city with
+     the longest district name (it wraps to a second line and the row grows
+     with it), and the curated city with the fewest. The 209 placeholder
+     cities draw the blocked seat, which is a blocked-seat story. */
+  const hoods = citiesWithScheme().map((slug) => ({ slug, h: buildCityNeighbourhoods(slug) })).filter((x) => x.h?.cards);
+  take("city:london:hoods", "the exemplar city's seven districts: four a row, the arrows, three on the second page, no image");
+  const mostHoods = [...hoods].sort((a, b) => b.h!.cards!.length - a.h!.cards!.length || a.slug.localeCompare(b.slug))[0]; if (mostHoods) take(`city:${mostHoods.slug}:hoods`, `the most districts a city holds, ${mostHoods.h!.cards!.length}`);
+  const longHood = [...hoods].sort((a, b) => Math.max(...b.h!.cards!.map((k) => k.name.length)) - Math.max(...a.h!.cards!.map((k) => k.name.length)) || a.slug.localeCompare(b.slug))[0]; if (longHood) take(`city:${longHood.slug}:hoods`, "the longest district name, wrapping to a second line");
+  const fewHoods = [...hoods].sort((a, b) => a.h!.cards!.length - b.h!.cards!.length || a.slug.localeCompare(b.slug))[0]; if (fewHoods) take(`city:${fewHoods.slug}:hoods`, `the fewest districts on a curated scheme, ${fewHoods.h!.cards!.length}`);
   return out;
 }
 
@@ -264,6 +278,19 @@ export function CardPagerStories({ instances = pickCardPagerInstances() }: { ins
   return (
     <div data-stories="card-pager">
       {instances.map((i) => {
+        const parts = i.iso2.split(":");
+        if (parts[0] === "city") {
+          /* The neighbourhoods pager as city-view.tsx draws it, at the wide side of its 2-1 band (693 at 1280): the kicker, the pager with no image, the coverage foot. */
+          const h = buildCityNeighbourhoods(parts[1]);
+          const el = h?.cards ? (
+            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
+              <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.cityNeighbourhoods.kicker}, {h.name}</div>
+              <CardPager cards={h.cards} allHref={h.allHref} allLabel={COPY.cityNeighbourhoods.allLabel} prevLabel={COPY.cityNeighbourhoods.prev} nextLabel={COPY.cityNeighbourhoods.next} images="none" />
+              {h.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{h.foot}</p> : null}
+            </div>
+          ) : null;
+          return <Story kind="card-pager" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         const c = buildCityCards(i.iso2);
         const el = c ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
@@ -365,12 +392,20 @@ export function pickSpectraTableInstances(): Instance[] {
   const loPeople = [...held].sort((a, b) => mean(a.t.people) - mean(b.t.people))[0]; if (loPeople) take(`${loPeople.c}:people`, "the lowest reads, a dot at the track's start");
   const loState = [...held].sort((a, b) => mean(a.t.state) - mean(b.t.state))[0]; if (loState) take(`${loState.c}:state`, "the lowest state reads");
   const none = all.find((x) => !x.t.state && !x.t.people); if (none) take(`${none.c}:state`, "no reads on file, self-omits");
-  /* The cities (run 14): keyed city:<slug>:<side>, from the city signature file; the exemplar, the city with most reads on each side, and one with none. */
-  const cities = citiesWithSignature().map((slug) => ({ slug, t: buildCityCharacterTables(slug) }));
-  const london = cities.find((x) => x.slug === "london"); if (london?.t?.people) take("city:london:people", "the exemplar city, its own reads"); if (london?.t?.state) take("city:london:state", "the exemplar city, its own reads");
-  const mostState = [...cities].filter((x) => x.t?.state).sort((a, b) => b.t!.state!.rows.length - a.t!.state!.rows.length)[0]; if (mostState) take(`city:${mostState.slug}:state`, `the most state reads a city holds, ${mostState.t!.state!.rows.length}`);
-  const mostPeople = [...cities].filter((x) => x.t?.people).sort((a, b) => b.t!.people!.rows.length - a.t!.people!.rows.length)[0]; if (mostPeople) take(`city:${mostPeople.slug}:people`, `the most people reads a city holds, ${mostPeople.t!.people!.rows.length}`);
-  const noCity = cities.find((x) => !x.t); if (noCity) take(`city:${noCity.slug}:state`, "a city in the file with no reads, self-omits");
+  /* THE CITY'S PEOPLE TABLE AT FULL FORM (MODEL.md 8.3 `12 character-people`;
+     plan step 32's sixth dispatch, 2026-09-18), keyed city:<slug>:people and
+     read off `buildCityPeopleTable`: the exemplar (three own reads, three the
+     country's, the basis naming which), the one city whose six are all its
+     own, the first city by slug holding exactly one own read (the basis in
+     the singular), and the first by slug holding none (the country's six
+     under the city's name, the basis saying so, no foot). The city's STATE
+     stories left with the state table: 8.3 names one character table on the
+     city page, and the state reads are the country's `14`. */
+  const cities = listedCitySlugsForCharacter().map((slug) => ({ slug, t: buildCityPeopleTable(slug) })).filter((x) => x.t);
+  take("city:london:people", "the exemplar city: three reads its own, three the country's, the basis naming which");
+  const allOwn = cities.find((x) => x.t!.own === x.t!.rows.length); if (allOwn) take(`city:${allOwn.slug}:people`, "every read the city's own");
+  const oneOwn = cities.find((x) => x.t!.own === 1); if (oneOwn) take(`city:${oneOwn.slug}:people`, "one read the city's own, the basis in the singular");
+  const noneOwn = cities.find((x) => x.t!.own === 0); if (noneOwn) take(`city:${noneOwn.slug}:people`, "no read of its own: the country's six under the city's name, the basis saying so, no foot");
   return out;
 }
 
@@ -383,13 +418,23 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances() }:
       {instances.map((i) => {
         const parts = i.iso2.split(":");
         const isCity = parts[0] === "city";
-        const [iso2, side] = isCity ? [parts[1], parts[2]] : parts;
-        const cityT = isCity ? buildCityCharacterTables(iso2) : null;
-        const t = isCity ? (cityT ?? { state: null, people: null }) : buildCharacterTables(iso2);
+        if (isCity) {
+          /* The city's people table as city-view.tsx draws it: the rows, the basis under them, the foot. */
+          const c = buildCityPeopleTable(parts[1]);
+          const el = c ? (
+            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+              <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.character.people.kicker}, {c.name}</div>
+              <SpectraTable rows={c.rows} dot={c.dot} foot={c.foot} basis={c.basis} />
+            </div>
+          ) : null;
+          return <Story kind="spectra-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        const [iso2, side] = parts;
+        const t = buildCharacterTables(iso2);
         const d = side === "people" ? t.people : t.state;
         const el = d ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{side === "people" ? COPY.character.people.kicker : COPY.character.state.kicker}, {isCity ? cityT?.name ?? iso2 : nameOf(iso2)}</div>
+            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{side === "people" ? COPY.character.people.kicker : COPY.character.state.kicker}, {nameOf(iso2)}</div>
             <SpectraTable rows={d.rows} dot={d.dot} foot={d.foot} />
           </div>
         ) : null;
@@ -481,13 +526,17 @@ export function pickTerminusInstances(): Instance[] {
   return out;
 }
 
-/** The city termini (run 19): one city with ranked districts (the district named as the first door) and one without (every district), from the loaded seeds. */
+/** The city termini (run 19; MODEL.md 8.3 `16 close`, checked on plan step 32's
+ *  sixth dispatch, 2026-09-18): the exemplar and one more city from the loaded
+ *  seeds, the same three doors on both (every district, the country up one
+ *  altitude, the compare pill), the names differing. The door that named the
+ *  lightest-rent district on London is gone (close_rows.ts says why). */
 export function pickCityCloseInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
   const out: CityHeroInstance[] = [];
-  const ranked = cities.find((c) => (c.seed?.where_to_trade?.list?.length ?? 0) > 0 && buildCityCloseDoors(c.seed).length > 0);
-  if (ranked) out.push({ ...ranked, why: "the lightest-rent district named as the first door" });
-  const plain = cities.find((c) => c !== ranked && buildCityCloseDoors(c.seed).length > 0);
-  if (plain) out.push({ ...plain, why: "no districts ranked, the door to every district" });
+  const first = cities.find((c) => c.slug === "london" && buildCityCloseDoors(c.seed).length > 0) ?? cities.find((c) => buildCityCloseDoors(c.seed).length > 0);
+  if (first) out.push({ ...first, why: "the exemplar: every district, the country up one altitude, the compare pill" });
+  const plain = cities.find((c) => c !== first && buildCityCloseDoors(c.seed).length > 0);
+  if (plain) out.push({ ...plain, why: "a second city, the same three doors on its own names" });
   return out;
 }
 export function TerminusStories({ instances = pickTerminusInstances(), city = [] }: { instances?: Instance[]; city?: CityHeroInstance[] }) {
@@ -627,6 +676,19 @@ export function pickKvGridInstances(): Instance[] {
   take("city:london:runway", "city block 06 on the exemplar: the share and the typical income, both held");
   const overs = citySlugs.map((s) => ({ s, r: buildCityRunway(s) })).filter((x) => x.r?.figures.overPct != null).sort((a, b) => b.r!.figures.overPct! - a.r!.figures.overPct! || a.s.localeCompare(b.s));
   if (overs[0]) take(`city:${overs[0].s}:runway`, `city block 06 withheld: the share over 100 (${overs[0].r!.figures.overPct} percent) withheld with its line, the typical income alone`);
+  /* THE SEASON PAIR (MODEL.md 8.3 `15 season`; plan step 32's sixth dispatch,
+     2026-09-18), keyed "city:<slug>:season", at the narrow side of its 2-1
+     band (347 at 1280): the exemplar (the slope over arrivals, London's shard
+     holding no footfall row, the foot saying so), the first city by slug
+     whose two shares are held in the shard (no foot), the first whose shares
+     are modelled in the shard (the foot saying so), and the first withheld,
+     if any: none today, and a story is never typed, so the withheld lines
+     are proven by the copy gates alone until a city reaches them. */
+  take("city:london:season", "city block 15 on the exemplar: the two shares from the slope over arrivals, modelled, the foot saying so");
+  const seasons = citySlugs.map((s) => ({ s, d: buildCitySeason(s) })).filter((x) => x.d);
+  const heldSeason = seasons.find((x) => x.d!.from === "shard" && x.d!.confidence === "measured"); if (heldSeason) take(`city:${heldSeason.s}:season`, "city block 15 held: both shares from the shard, no foot");
+  const modelledSeason = seasons.find((x) => x.d!.from === "shard" && x.d!.confidence === "modeled"); if (modelledSeason) take(`city:${modelledSeason.s}:season`, "city block 15 modelled: both shares from the shard, the foot saying modelled");
+  const withheldSeason = seasons.find((x) => x.d!.withheld); if (withheldSeason) take(`city:${withheldSeason.s}:season`, "city block 15 withheld: the line where the shares would stand");
   return out;
 }
 
@@ -667,6 +729,22 @@ export function KvGridStories({ instances = pickKvGridInstances() }: { instances
           if (cityForm === "runway") {
             const r = buildCityRunway(slug);
             const el = r ? <KvSeatStory id={`city-runway-${slug}`} icon="commercial-rent" kicker={`${COPY.cityRunway.kicker}, ${r.name}`} sample={r.confidence !== "measured"} cells={r.cells} withheld={r.withheld} basis={r.basis} foot={r.foot} /> : null;
+            return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+          }
+          if (cityForm === "season") {
+            /* The season pair as city-view.tsx draws it (Season): the same markup, at the narrow third of its band. */
+            const d = buildCitySeason(slug);
+            const el = d ? (
+              <div style={{ maxWidth: 347 }}>
+                <Box id={`city-season-${slug}`}>
+                  <Rail icon="seasonality" kicker={`${COPY.citySeason.kicker}, ${d.name}`} sample={d.confidence !== "measured"} />
+                  <KvGrid cells={d.cells} />
+                  {d.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.withheld}</p> : null}
+                  {d.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.basis}</p> : null}
+                  {d.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.foot}</p> : null}
+                </Box>
+              </div>
+            ) : null;
             return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
           }
           const s = buildCitySeat(slug);
@@ -970,6 +1048,12 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
   const payroll = heroCells.find((c) => c.key === "payroll");
   const notes = buildLocalsNotes("GB");
   const premises = buildPremisesStrip("GB");
+  /* THE EXEMPLAR'S OWN THREE READS, NOT THE PAGE'S SIX-ROW TABLE (plan step 32's
+     sixth dispatch, 2026-09-18): this cluster demonstrates the bento's tiling,
+     and the city page's full-form table (six rows, 572 tall) stretched the
+     two-row cell past the pair beside it, a 380 by 192 hole the harness
+     reported (LONE STAT) the day the page's card went to full form. The
+     page's card is its own story (spectra-table, city:london:people). */
   const people = london ? buildCityCharacterTables(london.slug)?.people : null;
   const typical = london ? cityTypicalIncome(london.slug) : null;
   const tradesPart = london ? (london.seed?.trades_here?.list?.length ?? 0) : 0;
@@ -1320,6 +1404,17 @@ const SEAT_WHY: Record<SeatBlock, string> = {
   money: "block 12, the seat beside what locals know; item 8 not gathered",
   locals: "block 16, the seat beside the net profit margin; item 6 not gathered",
 };
+/* THE CITY'S TWO SEATS (MODEL.md 8.3; plan step 32's sixth dispatch,
+   2026-09-18), keyed "city:<slug>:<block>": `13 locals` on the exemplar, the
+   same three strings as the country's seat (M19), at the 1-1 card's 520; and
+   `14 neighbourhoods` on the first placeholder city by slug (209 of 252 hold
+   the compass scheme), its line naming the city, at the wide side of its 2-1
+   band, 693. The kicker of the neighbourhoods seat is the pager's own
+   (`COPY.cityNeighbourhoods.kicker`), referenced by the copy table. */
+const CITY_SEAT_FORM: Record<"locals" | "neighbourhoods", { icon: "locals-know" | "neighborhood"; maxWidth: number }> = {
+  locals: { icon: "locals-know", maxWidth: 520 },
+  neighbourhoods: { icon: "neighborhood", maxWidth: 693 },
+};
 export function pickBlockedSeatInstances(): Instance[] {
   const out: Instance[] = [
     { iso2: "GB:workforce", why: "block 07, the seat beside what staff cost; items 40 and 17 not gathered" },
@@ -1329,13 +1424,38 @@ export function pickBlockedSeatInstances(): Instance[] {
     const c = ["AF", ...codes()].find((x) => SEATED[block](x) != null);
     if (c) out.push({ iso2: `${c}:${block}`, why: `${SEAT_WHY[block]} (${SEATED[block](c)})` });
   }
+  out.push({ iso2: "city:london:locals", why: "city block 13 on the exemplar: the seat beside the people table; item 6 not gathered for any city" });
+  const placeholder = citiesWithScheme().sort().find((slug) => buildCityNeighbourhoods(slug)?.cards == null);
+  if (placeholder) out.push({ iso2: `city:${placeholder}:neighbourhoods`, why: "city block 14 on a placeholder scheme: the seat at the band's wide side, its line naming the city; item 30 not gathered" });
   return out;
 }
 export function BlockedSeatStories({ instances = pickBlockedSeatInstances() }: { instances?: Instance[] }) {
   return (
     <div data-stories="blocked-seat">
       {instances.map((i) => {
-        const block = i.iso2.split(":")[1] as keyof typeof SEAT_FORM;
+        const parts = i.iso2.split(":");
+        if (parts[0] === "city") {
+          const slug = parts[1];
+          const block = parts[2] as keyof typeof CITY_SEAT_FORM;
+          const form = CITY_SEAT_FORM[block];
+          let el: React.ReactNode = null;
+          if (form && block === "locals") {
+            el = (
+              <div style={{ maxWidth: form.maxWidth }}>
+                <BlockedSeat id={`seat-city-${slug}-locals`} icon={form.icon} kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
+              </div>
+            );
+          } else if (form && block === "neighbourhoods") {
+            const h = buildCityNeighbourhoods(slug);
+            el = h?.seatLine ? (
+              <div style={{ maxWidth: form.maxWidth }}>
+                <BlockedSeat id={`seat-city-${slug}-neighbourhoods`} icon={form.icon} kicker={COPY.blocked.cityNeighbourhoods.kicker} line={h.seatLine} foot={COPY.blocked.cityNeighbourhoods.foot} />
+              </div>
+            ) : null;
+          }
+          return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        const block = parts[1] as keyof typeof SEAT_FORM;
         const form = SEAT_FORM[block];
         const copy = (COPY.blocked as Record<string, { kicker: string; line: string; foot: string }>)[block];
         const el = form && copy ? (

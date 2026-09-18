@@ -48,13 +48,18 @@ export function buildCompareDoor(countryName: string): Door[] {
   return [{ key: "compare", label: fill(COPY.compare.door, { country: inSentence(name) }), href: "/compare", kind: "pill" }];
 }
 
-/** THE CITY'S DOORS (city:close, the build loop's run 19, 2026-09-06): the
- *  lightest-rent district by name where the districts are ranked (the pick the
- *  old card named), else every district, to the city's neighbourhoods page; the
- *  country page, through the country address resolver; and the compare page as
- *  the pill, since it puts the same business in up to three cities side by side.
- *  Built from the seed's meta alone where no districts are held, so the copy
- *  gate can prove every city's doors from the city list without the adapter. */
+/** THE CITY'S DOORS (city:close, the build loop's run 19, 2026-09-06; MODEL.md
+ *  8.3's `16 close`, checked on plan step 32's sixth dispatch, 2026-09-18):
+ *  every district, to the city's neighbourhoods page; the country page, up
+ *  one altitude, through the country address resolver; and the compare page
+ *  as the pill, since it puts the same business in up to three cities side by
+ *  side (M21). Built from the seed's meta alone, so the copy gate can prove
+ *  every city's doors from the city list without the adapter. THE DOOR NO
+ *  LONGER NAMES THE LIGHTEST-RENT DISTRICT: it read "Start in {district}" on
+ *  London, the cheapest member of the set featured for being the cheapest,
+ *  which is the reason he struck out on 2026-09-10 (PART 5, "no district is
+ *  featured"); a door is a recommendation, and the set's rent ordering is not
+ *  a reason a reader would accept. No pricing door: 8.3's row, as built. */
 export function buildCityCloseDoors(seed: any): Door[] {
   const meta = seed?.meta ?? {};
   const slug = String(meta.slug ?? "").trim();
@@ -62,9 +67,7 @@ export function buildCityCloseDoors(seed: any): Door[] {
   const iso2 = String(meta.iso2 ?? "").toUpperCase();
   if (!slug || !city) return [];
   const doors: Door[] = [];
-  const list: any[] = Array.isArray(seed?.where_to_trade?.list) ? seed.where_to_trade.list : [];
-  const lightest = list.filter((r) => r && typeof r.rent_mult === "number" && r.name).sort((a, b) => a.rent_mult - b.rent_mult)[0];
-  doors.push({ key: "districts", label: lightest ? fill(COPY.cityClose.districtDoor, { district: String(lightest.name) }) : fill(COPY.cityClose.districtsDoor, { city }), href: `/cities/${slug}/neighborhoods`, kind: "link" });
+  doors.push({ key: "districts", label: fill(COPY.cityClose.districtsDoor, { city }), href: `/cities/${slug}/neighborhoods`, kind: "link" });
   const country = iso2.length === 2 ? countryPageTarget(iso2) : null;
   if (country) doors.push({ key: "country", label: fill(COPY.cityClose.countryDoor, { country: inSentence(String(meta.country_name ?? country.label)) }), href: country.href, kind: "link" });
   doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city }), href: "/compare", kind: "pill" });

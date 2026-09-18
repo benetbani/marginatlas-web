@@ -247,6 +247,12 @@ function inPage(storySelector) {
       r.noImage = cards.filter((el) => !el.querySelector("img")).map((el) => el.getAttribute("data-card"));
       r.brokenImage = cards.filter((el) => { const im = el.querySelector("img"); return im && (!im.complete || im.naturalWidth === 0); }).map((el) => el.getAttribute("data-card"));
       r.imageCount = cards.length - r.noImage.length;
+      /* THE PAGER DECLARES WHETHER IT CARRIES IMAGES (plan step 32's sixth
+         dispatch, 2026-09-18): `data-images="none"` on the root is the city's
+         neighbourhoods pager, which MODEL.md 8.3 draws with NO IMAGE by design,
+         so the IMAGE MISSING data red below does not ask for a photograph the
+         model forbids; an image drawn under that declaration is a fault. */
+      r.images = card.getAttribute("data-images") || "left";
     }
     /* THE CITY CARDS (B11, 2026-09-10). Its own block and not the pager's,
        because the two laws differ where it matters: a pager card is a row and
@@ -718,7 +724,14 @@ for (const w of WIDTHS) {
       for (const row of r.cardRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `cards in one row at heights ${row.join(", ")}`);
       if (r.namesCut) red(r.inst, w, "BOTCHED MOBILE", `${r.namesCut} city name(s) cut`);
       if (r.brokenImage && r.brokenImage.length) red(r.inst, w, "IMAGE BROKEN", `image did not load: ${r.brokenImage.join(", ")}`);
-      if (w === WIDTHS[0] && r.noImage && r.noImage.length) data(r.inst, "IMAGE MISSING", `${r.noImage.length} card(s) without a photograph: ${r.noImage.join(", ")}`);
+      /* NO IMAGE BY DECLARATION (MODEL.md 8.3, `14 neighbourhoods`): a pager whose
+         root says `data-images="none"` owes no photograph, and one drawn under
+         that declaration is a red (planted once, 2026-09-18, by passing an
+         image through a story with the component's guard lifted, and watched
+         go red before the guard went back). The cities pager keeps the data
+         red as it was. */
+      if (r.images === "none") { if (r.imageCount > 0) red(r.inst, w, "IMAGE", `${r.imageCount} card(s) carry an image on a pager that declares it draws none`); }
+      else if (w === WIDTHS[0] && r.noImage && r.noImage.length) data(r.inst, "IMAGE MISSING", `${r.noImage.length} card(s) without a photograph: ${r.noImage.join(", ")}`);
     }
     if (r.kind === "city-cards") {
       for (const row of r.cityRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `city cards in one row at heights ${row.join(", ")}`);

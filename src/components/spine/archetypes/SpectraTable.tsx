@@ -32,16 +32,27 @@ export type SpectraTableProps = {
   scale?: "micro" | "body";
   /** One figure under a hairline (foreign-owned firms, born abroad). */
   foot?: { value: string; label: string } | null;
+  /** ONE BASIS LINE, PART 7's third part, between the rows and the foot (the
+   *  city's people table since plan step 32's sixth dispatch, 2026-09-18: it
+   *  says whose the reads are and that they are modelled, because the sample
+   *  mark is off site-wide). At most fourteen words, `--t-micro`, muted; the
+   *  country's tables pass none and draw as before. */
+  basis?: string | null;
 };
 
 const DOT = 11; // px, the dot's diameter; the track keeps half of it clear at each end
 
-export function SpectraTable({ rows, dot = "ink", foot, scale = "micro" }: SpectraTableProps) {
+export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }: SpectraTableProps) {
   const live = rows.filter((r) => Number.isFinite(r.position));
   if (live.length < 2) return null;
   const dotBg = dot === "terra" ? "var(--terra)" : "var(--c-ink)";
   return (
-    <div data-archetype="spectra-table" data-idea="I1" data-dot={dot} data-scale={scale} data-rows={String(live.length)}>
+    /* THE TERRACOTTA DOTS ARE HIS EXEMPTION (2026-08-30; MODEL.md PART 6, "ONE
+       EXEMPTION, HIS"): a people table stamps `data-founder-accent`, the
+       attribute the page filter's ACCENT BUDGET reads to leave a ruled mark
+       uncounted. The dots are fills, not text, so the count never reached
+       them; the stamp says in the markup what the ruling says in the model. */
+    <div data-archetype="spectra-table" data-idea="I1" data-dot={dot} data-scale={scale} data-rows={String(live.length)} {...(dot === "terra" ? { "data-founder-accent": "1" } : {})}>
       <div className="grid auto-rows-fr divide-y divide-[var(--c-border)]">
         {live.map((r) => {
           const pos = Math.max(0, Math.min(1, r.position));
@@ -87,8 +98,9 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro" }: Spect
           wide with the quick reads' foot, a flex row wrapped the whole label under
           the figure and left a lone "1" on a line of its own; inline, the words
           wrap after the figure and the figure keeps its first words beside it. */}
+      {basis ? <p data-basis className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
       {foot ? (
-        <div data-foot className="border-t border-[var(--c-border)] pt-3 leading-snug">
+        <div data-foot className={`${basis ? "mt-3 " : ""}border-t border-[var(--c-border)] pt-3 leading-snug`}>
           <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{foot.value}</Fig>{" "}
           <span className={scale === "body" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-micro)] text-[var(--c-muted)]"}>{foot.label}</span>
         </div>

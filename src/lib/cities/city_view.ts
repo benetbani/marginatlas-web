@@ -549,6 +549,23 @@ function buildSpace(
   };
 }
 
+/** THE SLOPE, IN ONE PLACE (plan step 32's sixth dispatch, 2026-09-18): the
+ *  visitor share of footfall read off a year's arrivals against the resident
+ *  count, times fourteen, clamped to 8 and 45. Neither constant is sourced
+ *  (DATA-REQUIREMENTS item 29). `clamped` says when the value is the
+ *  mechanism's own floor or ceiling and not the city's figure: counted on the
+ *  city list on 2026-09-18, 106 of the 246 cities with both inputs sit on the
+ *  floor and 47 on the ceiling, so a card fed by this slope alone would print
+ *  a clamp on 153 cities; the season card reads the shard's own footfall
+ *  field first and reaches this for London alone (fact_rows.ts). Exported so
+ *  that builder and the legacy city view compute one figure, never two. */
+export function visitorShareSlope(touristArrivalsM: number | null | undefined, popM: number | null | undefined): { pct: number; clamped: boolean } | null {
+  if (!isNum(touristArrivalsM) || !isNum(popM) || popM <= 0) return null;
+  const raw = (touristArrivalsM / popM) * 14;
+  const clamped = raw <= 8 || raw >= 45;
+  return { pct: Math.round(Math.max(8, Math.min(45, raw))), clamped };
+}
+
 function buildVisitorSplit(
   input: CityViewInput,
   isLondon: boolean,
@@ -569,11 +586,8 @@ function buildVisitorSplit(
 
   // A rough visitor share from arrivals against population (a footfall proxy,
   // not a spend figure), banded so a thin estimate never prints a false split.
-  let visitorPct: number | null = null;
-  if (isNum(touristArrivalsM) && isNum(popM) && popM > 0) {
-    const ratio = touristArrivalsM / popM;
-    visitorPct = Math.round(Math.max(8, Math.min(45, ratio * 14)));
-  }
+  const slope = visitorShareSlope(touristArrivalsM, popM);
+  const visitorPct: number | null = slope ? slope.pct : null;
 
   const heavy = visitorPct != null && visitorPct >= 30;
   const headline =

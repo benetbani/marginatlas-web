@@ -91,7 +91,9 @@ const CITY_SIGS: Record<string, CitySig> = (() => {
   if (Array.isArray(raw)) return Object.fromEntries(raw.filter((c) => typeof c.slug === "string").map((c) => [c.slug as string, c]));
   return raw;
 })();
-const CITY_NAMES: Record<string, string> = Object.fromEntries(((cityListJson as { cities: Array<{ slug: string; name: string }> }).cities).map((c) => [c.slug, c.name]));
+const CITY_LIST = (cityListJson as { cities: Array<{ slug: string; name: string; iso2: string }> }).cities;
+const CITY_NAMES: Record<string, string> = Object.fromEntries(CITY_LIST.map((c) => [c.slug, c.name]));
+const CITY_ISO2: Record<string, string> = Object.fromEntries(CITY_LIST.map((c) => [c.slug, String(c.iso2 ?? "").toUpperCase()]));
 
 export type CityCharacterTables = CharacterTables & { name: string };
 /** The city's own two tables, from the city signature file; null when the city has no entry or fewer than two reads on both sides. */
@@ -106,3 +108,80 @@ export function buildCityCharacterTables(slug: string | null | undefined): CityC
 }
 /** The slugs the signature file holds, for the stories. */
 export function citiesWithSignature(): string[] { return Object.keys(CITY_SIGS); }
+
+/* ------------------------------------------------------------------------- */
+/* The city's people table at full form, `12 character-people` (MODEL.md 8.3). */
+/* ------------------------------------------------------------------------- */
+
+export type CityPeopleTable = SpectraData & {
+  slug: string;
+  name: string;
+  /** How many of the six rows are the city's own reads; the rest are the country's. */
+  own: number;
+  /** The one line under the table saying whose the reads are, and that they are modelled. */
+  basis: string;
+};
+
+const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
+const capFirst = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const listOf = (names: string[]) => (names.length === 1 ? names[0] : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`);
+
+/**
+ * DEALING WITH PEOPLE, THE CITY'S TABLE AT FULL FORM (MODEL.md 8.3, `12
+ * character-people`; plan step 32's sixth dispatch, 2026-09-18): six traits on
+ * every listed city. Each row is the city's own read where the per-city
+ * signature file holds one (19 of 252 hold two or more, London three, New
+ * York six; item 13), and the country's read from the country signature
+ * where it does not, the city's word for the trait either way; the basis says
+ * which rows are whose and says modelled, because the reads on both files are
+ * anchored to published indices and the sample mark is off site-wide. This is
+ * M5's pattern one card over: the city's own figure where the city holds
+ * one, the country's named as the country's where it does not. COUNTED
+ * 2026-09-18 over the 252 listed cities: 252 draw six rows; New York's six
+ * are its own, 36 mix the city's own with the country's (the 19 holding two
+ * or more reads and 17 holding one), 215 are the country's throughout. THE
+ * FOOT is the city's own share born abroad where the city file holds it (55
+ * cities) and the country's share where it does not (197), under a label
+ * that says so ("born abroad, nationwide"; the country signature holds it for
+ * all 196): a national figure under a city's name needs the word, and a
+ * table with no foot has no lead (measured on Frankfurt and Abidjan with the
+ * page filter: every word in the card 12px, NO LEAD). Fewer than two rows on
+ * both files is not a table and draws nothing (no listed city today).
+ */
+export function buildCityPeopleTable(slug: string | null | undefined): CityPeopleTable | null {
+  const key = String(slug ?? "").trim().toLowerCase();
+  if (!key || !(key in CITY_NAMES)) return null;
+  const name = CITY_NAMES[key];
+  const city = CITY_SIGS[key];
+  const country = getCountrySignature(CITY_ISO2[key] ?? "");
+  const own = (city?.culture ?? null) as Reads;
+  const theirs = (country?.culture ?? null) as unknown as Reads;
+  const rows: SpectrumRow[] = [];
+  const ownNames: string[] = [];
+  for (const [k, field] of PEOPLE_KEYS) {
+    const mine = own ? own[field] : undefined;
+    const v = isNum(mine) ? mine : theirs && isNum(theirs[field]) ? (theirs[field] as number) : null;
+    if (v == null) continue;
+    const w = COPY.character.people.rows[k];
+    if (isNum(mine)) ownNames.push(w.name.toLowerCase());
+    rows.push({ key: k, name: w.name, left: w.left, right: w.right, position: clamp01((v - 1) / 9) });
+  }
+  if (rows.length < 2) return null;
+  const C = COPY.character.city;
+  const basis =
+    ownNames.length === rows.length ? fill(C.basisOwn, { city: name })
+    : ownNames.length === 0 ? fill(C.basisCountry, { city: name })
+    : capFirst(fill(C.basisMixed, { traits: listOf(ownNames), verb: ownNames.length === 1 ? "is" : "are", city: name }));
+  return {
+    slug: key,
+    name,
+    rows,
+    dot: "terra",
+    foot: foot(city?.foreign_born_pct, COPY.character.people.foot) ?? foot(country?.foreign_born_pct, COPY.character.people.footCountry),
+    confidence: "modeled",
+    own: ownNames.length,
+    basis,
+  };
+}
+/** Every listed city's slug, for the stories and the gates. */
+export function listedCitySlugsForCharacter(): string[] { return CITY_LIST.map((c) => c.slug); }

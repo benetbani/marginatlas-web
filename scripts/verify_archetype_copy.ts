@@ -43,7 +43,9 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance, CITY_GLANCE_CELLS, isVisitorsRead } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
-import { buildCityLiving, buildCityRunway, buildCityDemand, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
+import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
+import { buildCityPeopleTable } from "@/lib/spine/character_rows";
+import { buildCityNeighbourhoods, PLACEHOLDER_SCHEME } from "@/lib/spine/hood_rows";
 import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { usd } from "@/components/spine/kit";
@@ -686,6 +688,99 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     ban(`city demand ${c.slug}`, [spend.basis ?? "", spend.foot ?? "", spend.withheld ?? ""]);
   }
   console.log(`city income, earnings and demand: ${cityBranch} cities read their own typical and ${countryBranch} the country's (${modelledPay} modelled); the strip draws three marks on ${threeMarks}, the typical alone on ${noDeciles} with no country deciles and on ${outside} whose typical sits outside them; the spend prints on ${spendHeld + spendModelled} (${spendHeld} held, ${spendModelled} modelled) and is withheld on ${spendWithheld}; the runway's income and the strip's typical agree with the one builder on every city`);
+}
+
+/* TURN THREE OF THE CITY PAGE (MODEL.md 8.3 `12 character-people`, `13
+   locals`, `14 neighbourhoods`, `15 season`; plan step 32's sixth dispatch,
+   2026-09-18), on every listed city. THE PEOPLE TABLE: six rows on every
+   city, the basis under fourteen words in one of its three shapes (all the
+   city's own, mixed with the traits named, the country's throughout) and
+   saying "modelled" in every shape, the count of own reads agreeing with
+   the shape, the foot the city's own share or absent. THE SEASON PAIR: two
+   cells summing to a hundred OR a withheld line and never neither or both,
+   the foot saying "modelled" exactly when the confidence is not measured,
+   the basis within fourteen words, and the feed counted (shard, slope,
+   withheld) so the numbers the builder's comment quotes are measured. THE
+   NEIGHBOURHOODS: a curated scheme yields cards (a name and a real href on
+   each, no sub-line, the foot counting them as a word) and the placeholder
+   scheme yields the seat's line, naming the city, under the seat's cap;
+   never both. THE LOCALS SEAT is the country's three strings (M19), already
+   held above. No banned word or unfilled placeholder in any of it. */
+{
+  const cities = (cityListJson as { cities: Array<{ slug: string }> }).cities;
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const wordsOf = (t: string) => t.split(/\s+/).filter(Boolean).length;
+  let ownAll = 0, mixed = 0, countryOnly = 0, feet = 0, nationalFeet = 0;
+  let sHeld = 0, sModelled = 0, sShard = 0, sSlope = 0, sWithheld = 0;
+  let curated = 0, seated = 0, cards = 0;
+  for (const c of cities) {
+    const p = buildCityPeopleTable(c.slug);
+    if (!p) { reds.push(`city people ${c.slug}: builds nothing (every listed city's country holds the six reads)`); continue; }
+    if (p.rows.length !== 6) reds.push(`city people ${c.slug}: ${p.rows.length} rows, not six`);
+    if (p.own === 6) ownAll++; else if (p.own === 0) countryOnly++; else mixed++;
+    if (!p.foot) reds.push(`city people ${c.slug}: no foot (every listed city's country holds the share born abroad, and a table with no foot has no lead)`);
+    else if (p.foot.label === COPY.character.people.foot) feet++; else if (p.foot.label === COPY.character.people.footCountry) nationalFeet++; else reds.push(`city people ${c.slug}: a foot label off the copy table: "${p.foot.label}"`);
+    if (wordsOf(p.basis) > 14) reds.push(`city people ${c.slug}: a basis over fourteen words: "${p.basis}"`);
+    if (!/modelled/.test(p.basis)) reds.push(`city people ${c.slug}: the basis does not say modelled: "${p.basis}"`);
+    if ((p.own === 0) !== p.basis.startsWith("The country's reads")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
+    if ((p.own === 6) !== p.basis.startsWith("All six reads")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
+    if (p.own > 0 && p.own < 6 && !/ own; the rest are the country's, modelled\.$/.test(p.basis)) reds.push(`city people ${c.slug}: a mixed table under the basis "${p.basis}"`);
+    ban(`city people ${c.slug}`, [p.basis, ...p.rows.map((r) => r.name)]);
+
+    const se = buildCitySeason(c.slug);
+    if (!se) { reds.push(`city season ${c.slug}: builds nothing (every listed city holds a shard or a row in the list)`); continue; }
+    const drawn = se.cells.length > 0;
+    if (drawn === (se.withheld != null)) reds.push(`city season ${c.slug}: ${drawn ? "cells and a withheld line together" : "neither cells nor a withheld line"}`);
+    if (drawn) {
+      if (se.cells.length !== 2) reds.push(`city season ${c.slug}: ${se.cells.length} cells, not two`);
+      if (se.figures.resident == null || se.figures.visitor == null || se.figures.resident + se.figures.visitor !== 100) reds.push(`city season ${c.slug}: the two shares do not sum to a hundred (${se.figures.resident}, ${se.figures.visitor})`);
+      if (!se.basis) reds.push(`city season ${c.slug}: cells with no basis`);
+      if (se.basis && wordsOf(se.basis) > 14) reds.push(`city season ${c.slug}: a basis over fourteen words: "${se.basis}"`);
+      if ((se.confidence !== "measured") !== (se.foot != null)) reds.push(`city season ${c.slug}: the confidence is ${se.confidence} and the foot is ${se.foot ? "printed" : "absent"}`);
+      if (se.from === "slope" && se.foot !== COPY.citySeason.footSlope) reds.push(`city season ${c.slug}: the slope's shares under the foot "${se.foot}"`);
+      if (se.from === "shard" && se.foot != null && se.foot !== COPY.citySeason.footModelled) reds.push(`city season ${c.slug}: the shard's modelled shares under the foot "${se.foot}"`);
+      if (se.confidence === "measured") sHeld++; else sModelled++;
+      if (se.from === "shard") sShard++; else if (se.from === "slope") sSlope++; else reds.push(`city season ${c.slug}: cells drawn from no named feed`);
+    } else {
+      sWithheld++;
+      if (se.basis || se.foot) reds.push(`city season ${c.slug}: a basis or a foot under a withheld line`);
+    }
+    ban(`city season ${c.slug}`, [se.basis ?? "", se.foot ?? "", se.withheld ?? "", ...se.cells.map((x) => x.label)]);
+
+    const h = buildCityNeighbourhoods(c.slug);
+    if (!h) { reds.push(`city neighbourhoods ${c.slug}: builds nothing (every listed city holds a scheme)`); continue; }
+    if ((h.cards != null) === (h.seatLine != null)) reds.push(`city neighbourhoods ${c.slug}: ${h.cards ? "cards and a seat line together" : "neither cards nor a seat line"}`);
+    if ((h.scheme === PLACEHOLDER_SCHEME) !== (h.cards == null)) reds.push(`city neighbourhoods ${c.slug}: the scheme is ${h.scheme} and the card ${h.cards ? "draws" : "is seated"}`);
+    if (h.cards) {
+      curated++; cards += h.cards.length;
+      if (!h.foot) reds.push(`city neighbourhoods ${c.slug}: cards with no foot`);
+      const word = countWord(h.cards.length);
+      if (h.foot && !h.foot.startsWith(word.charAt(0).toUpperCase() + word.slice(1))) reds.push(`city neighbourhoods ${c.slug}: the foot does not open with the count as a word: "${h.foot}"`);
+      for (const k of h.cards) {
+        if (!k.name.trim()) reds.push(`city neighbourhoods ${c.slug}: a card with no name`);
+        if (k.href !== `${h.allHref}#${k.id}`) reds.push(`city neighbourhoods ${c.slug}: the card "${k.name}" points at ${k.href}, not the hub's anchor`);
+        if (k.sub) reds.push(`city neighbourhoods ${c.slug}: the card "${k.name}" carries a sub-line ("${k.sub}"), a one-word summary of a place`);
+        if (k.image) reds.push(`city neighbourhoods ${c.slug}: the card "${k.name}" carries an image`);
+      }
+      if (!resolves(h.allHref)) reds.push(`city neighbourhoods ${c.slug}: the all link points at ${h.allHref}, which is not a route`);
+      ban(`city neighbourhoods ${c.slug}`, [h.foot ?? "", ...h.cards.map((k) => k.name)]);
+    } else {
+      seated++;
+      if (wordsOf(h.seatLine!) > SEAT_LINE_WORDS_CAP) reds.push(`city neighbourhoods ${c.slug}: the seat's line runs ${wordsOf(h.seatLine!)} words, over ${SEAT_LINE_WORDS_CAP}: "${h.seatLine}"`);
+      if (!h.seatLine!.startsWith("Not gathered yet:")) reds.push(`city neighbourhoods ${c.slug}: the seat's line is not in the site's idiom: "${h.seatLine}"`);
+      ban(`city neighbourhoods ${c.slug}`, [h.seatLine!]);
+    }
+  }
+  ban("city turn three COPY", [COPY.cityNeighbourhoods.kicker, COPY.cityNeighbourhoods.allLabel, COPY.cityNeighbourhoods.prev, COPY.cityNeighbourhoods.next, COPY.citySeason.kicker, COPY.citySeason.cells.residents, COPY.citySeason.cells.visitors, COPY.blocked.cityNeighbourhoods.foot, COPY.blocked.cityNeighbourhoods.kicker]);
+  if (wordsOf(COPY.cityNeighbourhoods.kicker) > 4) reds.push(`city neighbourhoods: the opener runs over four words: "${COPY.cityNeighbourhoods.kicker}"`);
+  if (wordsOf(COPY.citySeason.kicker) > 4) reds.push(`city season: the opener runs over four words: "${COPY.citySeason.kicker}"`);
+  if (COPY.blocked.cityNeighbourhoods.kicker !== COPY.cityNeighbourhoods.kicker) reds.push("city neighbourhoods: the seat's kicker and the pager's differ");
+  console.log(`city turn three: the people table draws six rows on ${ownAll + mixed + countryOnly} cities (${ownAll} all the city's own, ${mixed} mixed, ${countryOnly} the country's; ${feet} with the city's own foot, ${nationalFeet} with the country's, labelled); the season pair prints on ${sHeld + sModelled} (${sHeld} held, ${sModelled} modelled; ${sShard} off the shard, ${sSlope} off the slope) and is withheld on ${sWithheld}; the neighbourhoods pager draws on ${curated} cities (${cards} cards) and the seat on ${seated}`);
 }
 
 /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`; plan step 31's third

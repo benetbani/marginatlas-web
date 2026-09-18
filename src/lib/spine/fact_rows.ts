@@ -61,16 +61,22 @@
  * either), the basis, and a foot saying "modelled" where the tag is not
  * held. The one placeholder in the set (London, item 23) is withheld with
  * its line: a fill value is never printed (R11, clause 46).
+ *
+ * THE FOURTH CARD, `15 season` (plan step 32's sixth dispatch, 2026-09-18):
+ * `buildCitySeason` at the foot of this file, the shard's own footfall field
+ * on a KvGrid pair, the slope over the city list where the shard holds no
+ * row, the clamp withheld. Its header says the counts.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { cityFigure, weakerTag, type BankFigure } from "@/lib/facts/city_shard";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
+import { visitorShareSlope } from "@/lib/cities/city_view";
 import type { FactTag } from "@/lib/facts/types";
 import { usd, usdCents } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 
-type CityRow = { slug: string; name: string; iso2: string };
+type CityRow = { slug: string; name: string; iso2: string; tourist_arrivals_m?: number | null; pop_m?: number | null };
 const CITIES = (cityListJson as { cities: CityRow[] }).cities;
 const BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 
@@ -361,5 +367,94 @@ export function buildCityDemand(slug: string): CityDemandData | null {
     foot: notHeld(spend.tag) ? C.footModelled : null,
     tag: spend.tag,
     sample: notHeld(spend.tag),
+  };
+}
+
+/* ------------------------------------------------------------------------- */
+/* 15 season: residents and visitors, two shares of a hundred.               */
+/* ------------------------------------------------------------------------- */
+
+export type CitySeasonData = {
+  slug: string;
+  iso2: string;
+  name: string;
+  cells: KvCell[];
+  /** The two shares as printed, null where withheld; `from` names the feed the gates count. */
+  figures: { resident: number | null; visitor: number | null };
+  from: "shard" | "slope" | null;
+  withheld: string | null;
+  basis: string | null;
+  foot: string | null;
+  confidence: "measured" | "modeled" | "placeholder";
+};
+
+/**
+ * RESIDENTS AND VISITORS (MODEL.md 8.3, `15 season`; plan step 32's sixth
+ * dispatch, 2026-09-18): two shares of a year's footfall, the people who live
+ * here and the people visiting, on a KvGrid pair in ink. THE FEED ORDER, and
+ * the count that set it: the shard's own field first, `footfall.resident_pct`
+ * and `footfall.visitor_pct` in data/facts/city/<ISO2>-<slug>.json, held for
+ * 251 of 252 (12 held at c 0.9, 239 modelled at c 0.55; each row in the
+ * drop carries its own source, year and method, and the 239 differ from the
+ * slope on 231 cities, so they are a reading of that city and not a fill;
+ * FORMS-HOMES finding 5 named this field as the split's own, unread until
+ * today); then, where the shard holds no row, the slope over the city list's
+ * `tourist_arrivals_m` and `pop_m` (`visitorShareSlope`, London alone: its
+ * shard carries no footfall row, item 23), marked modelled in the foot; and a
+ * slope value that is the mechanism's own floor or ceiling is WITHHELD with
+ * its line (R11, clause 46: a value at the model's limit is not the city's
+ * figure; 153 of the 246 slope values are clamps, which is why the shard
+ * comes first), as is a city with no visitor count on file. Counted
+ * 2026-09-18 over the 252: 12 measured, 240 modelled (239 shard, London on
+ * the slope at 84 and 16), 0 withheld; both withheld lines are reachable by
+ * the builder's shape and by no city today. NO CELL AT 30: a pair of siblings
+ * takes the head rung (PART 4, the sibling-figure reading), and FOCAL's zero
+ * finding on this card stands as it does on the glance. The pair sums to a
+ * hundred by construction on the shard (251 of 251) and by arithmetic on the
+ * slope. The basis says what the two figures are; "footfall" is the field's
+ * own word and the trade's.
+ */
+export function buildCitySeason(slug: string): CitySeasonData | null {
+  const city = BY_SLUG.get(slug);
+  if (!city) return null;
+  const iso2 = String(city.iso2).toUpperCase();
+  const C = COPY.citySeason;
+  const base = { slug, iso2, name: city.name };
+  const cellsOf = (resident: number, visitor: number, confidence: NonNullable<KvCell["confidence"]>): KvCell[] => [
+    { key: "residents", label: C.cells.residents, value: `${resident}%`, confidence },
+    { key: "visitors", label: C.cells.visitors, value: `${visitor}%`, confidence },
+  ];
+
+  const r = figure(iso2, slug, "footfall.resident_pct", true);
+  const v = figure(iso2, slug, "footfall.visitor_pct", true);
+  if (r && v && r.value + v.value > 0) {
+    const tag = weakest([r.tag, v.tag]);
+    const confidence = cellConfidence(tag);
+    /* A placeholder is never printed (no shard row carries one today; the rule stands). */
+    if (confidence === "placeholder") return { ...base, cells: [], figures: { resident: null, visitor: null }, from: null, withheld: C.withheld.noCount, basis: null, foot: null, confidence: "placeholder" };
+    return {
+      ...base,
+      cells: cellsOf(Math.round(r.value), Math.round(v.value), confidence),
+      figures: { resident: Math.round(r.value), visitor: Math.round(v.value) },
+      from: "shard",
+      withheld: null,
+      basis: C.basis,
+      foot: notHeld(tag) ? C.footModelled : null,
+      confidence,
+    };
+  }
+
+  const slope = visitorShareSlope(city.tourist_arrivals_m, city.pop_m);
+  if (!slope) return { ...base, cells: [], figures: { resident: null, visitor: null }, from: null, withheld: C.withheld.noCount, basis: null, foot: null, confidence: "modeled" };
+  if (slope.clamped) return { ...base, cells: [], figures: { resident: null, visitor: null }, from: null, withheld: C.withheld.clamp, basis: null, foot: null, confidence: "modeled" };
+  return {
+    ...base,
+    cells: cellsOf(100 - slope.pct, slope.pct, "modeled"),
+    figures: { resident: 100 - slope.pct, visitor: slope.pct },
+    from: "slope",
+    withheld: null,
+    basis: C.basis,
+    foot: C.footSlope,
+    confidence: "modeled",
   };
 }
