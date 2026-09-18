@@ -109,7 +109,8 @@ const SHEET: Entry[] = [
   { kind: "compare-table", city: "keyed", render: (c) => <CompareTableStories instances={pickCompareTableInstances()} city={pickCityPeerInstances(c.cityHero)} /> },
   { kind: "card-pager", city: "none", render: (c) => <CardPagerStories instances={c.instances["card-pager"]} /> },
   { kind: "city-cards", city: "none", render: (c) => <CityCardsStories instances={c.instances["city-cards"]} /> },
-  { kind: "tiers-table", city: "none", render: (c) => <TiersTableStories instances={c.instances["tiers-table"]} /> },
+  /* The team (cell/turn-one.tsx) reads a cell seed since plan step 33's third dispatch (2026-09-18); the seven-row planted key needs none. */
+  { kind: "tiers-table", city: "none", cell: "keyed", render: (c) => <TiersTableStories instances={c.instances["tiers-table"]} cell={c.cellHero} /> },
   /* The city strips build by the slug since plan step 32's fourth dispatch (2026-09-18), so the kind reads no city seed. */
   { kind: "range-strip", city: "none", cell: "keyed", render: (c) => <RangeStripStories instances={pickRangeStripInstances()} city={pickCityStripInstances()} cell={c.cellHero} /> },
   { kind: "spectra-table", city: "none", render: () => <SpectraTableStories instances={pickSpectraTableInstances()} /> },
@@ -119,7 +120,8 @@ const SHEET: Entry[] = [
   /* The permits (cell/turn-one.tsx) read a cell seed since the same dispatch. */
   { kind: "kv-grid", city: "none", cell: "keyed", render: (c) => <KvGridStories instances={c.instances["kv-grid"]} cell={c.cellHero} /> },
   { kind: "detail-panel", city: "none", render: (c) => <DetailPanelStories instances={c.instances["detail-panel"]} /> },
-  { kind: "income-breakdown", city: "none", render: (c) => <IncomeBreakdownStories instances={c.instances["income-breakdown"]} /> },
+  /* The split (cell/turn-one.tsx) reads a cell seed since the same dispatch. */
+  { kind: "income-breakdown", city: "none", cell: "keyed", render: (c) => <IncomeBreakdownStories instances={c.instances["income-breakdown"]} cell={c.cellHero} /> },
   { kind: "bento-band", city: "london", render: (c) => <BentoBandStories instances={c.instances["bento-band"]} city={c.cityHero} /> },
   /* The cost to open's baseline and withheld states read a cell seed since the same dispatch. */
   { kind: "bento-metric", city: "none", cell: "keyed", render: (c) => <BentoMetricStories instances={c.instances["bento-metric"]} cell={c.cellHero} /> },

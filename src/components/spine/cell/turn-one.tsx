@@ -31,16 +31,47 @@
  * a block on the page all the same (`data-block="open"`, BLOCK FLOOR counts
  * it). LOUD in the held and baseline states, turn one's accent, the page's
  * second of three; unaccented where withheld, and the page carries two.
+ *
+ * THE SECOND BAND OF TURN ONE, `05 split | 06 team` (plan step 33's third
+ * dispatch, 2026-09-18), drawn here for the same reason:
+ *
+ * `05 split`, THE NET PROFIT MARGIN on IncomeBreakdown (B6, R7): the cost
+ * segments descending from split_rows.ts (the shard's held drivers or the
+ * sector profile), the residual named as its own segment, the net pinned
+ * last at 30 in ink, THE SAME FIGURE `00 take` prints (the one builder's,
+ * carried on the seed); at its foot, closed on arrival, the plus with two
+ * rows, fixed and variable costs. QUIET, his 2026-09-08 ruling: accenting
+ * the net here would be one number wearing terracotta in two places (R7),
+ * and on the 38 ladder-fill shards would sometimes mark a figure the file
+ * invented (R11). The withheld state (the lines and the net over a hundred)
+ * keeps the net at 30 and states its line where the bar would stand. The
+ * page's second bar-family drawing (M10). The census reads this card as
+ * IncomeBreakdown.
+ *
+ * `06 team`, WHAT STAFF COST on TiersTable's figures shape (not
+ * CompareTable: with `07 peers` a CompareTable in the next section, two
+ * adjacent sections would share a form, 8.4 rule 2): the roles in the name
+ * block, two figure columns with one unit each, how many and pay a year,
+ * the heads as props, dots, panel and door off, no winner mark because a
+ * wage row has no best. Table figures at 14, the form table-family and
+ * exempt from the focal rung by its own law. Where the country holds no
+ * credible median the pay column prints dashes and the card says so once.
+ * The census reads this card as TiersTable.
  */
 import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
+import { IncomeBreakdown } from "@/components/spine/archetypes/IncomeBreakdown";
+import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
+import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { PermitsData } from "@/lib/spine/permits_rows";
 import type { OpenData } from "@/lib/spine/open_rows";
+import type { SplitData } from "@/lib/spine/split_rows";
+import type { TeamData } from "@/lib/spine/team_rows";
 
 export function PermitsCard({ id = "permits", permits }: { id?: string; permits: PermitsData | null }) {
   if (!permits) return null;
@@ -93,5 +124,37 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
       basis={open.basis ?? undefined}
       foot={open.foot.length > 0 && open.footLine ? open.footLine : undefined}
     />
+  );
+}
+
+export function SplitCard({ id = "split", split }: { id?: string; split: SplitData | null }) {
+  if (!split) return null;
+  return (
+    <IncomeBreakdown
+      id={id}
+      icon="cost-breakdown"
+      kicker={COPY.tradeSplit.kicker}
+      netLabel={split.netLabel}
+      netPct={split.netPct}
+      segments={split.segments}
+      basis={split.basis}
+      withheld={split.withheld}
+      foot={split.foot}
+      detail={split.detail ? <DetailPanel name={`detail-${id}`} summary={split.detail.summary} rows={split.detail.rows} /> : null}
+    />
+  );
+}
+
+export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | null }) {
+  if (!team) return null;
+  return (
+    <Box id={id}>
+      {/* Every figure is modelled (R12): the roles are the shard's and the pay an index times the country's median; the mark is on, behind his switch. */}
+      <Rail icon="wages" kicker={COPY.tradeTeam.kicker} sample />
+      <TiersTable heads={team.heads} figures={team.rows} />
+      {team.noMedian ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.noMedian}</p> : null}
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.basis}</p>
+      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.foot}</p>
+    </Box>
   );
 }

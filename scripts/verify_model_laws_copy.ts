@@ -221,6 +221,13 @@ const rowLabels: Array<[string, string]> = [
      RankedBars table of the bill's lines, held to the same three words. */
   ["COPY.tradeOpen.phoneHead.name", COPY.tradeOpen.phoneHead.name],
   ["COPY.tradeOpen.phoneHead.value", COPY.tradeOpen.phoneHead.value],
+  /* THE SPLIT'S LEGEND LABELS (MODEL.md 8.6 `05 split`, plan step 33's third
+     dispatch, 2026-09-18): the copy table's short form of every held driver
+     name that runs past three words, each a row label a reader meets beside
+     a share, held to the same three words; and the plus's two row labels. */
+  ...Object.entries(COPY.tradeSplit.lineLabels).map(([name, short]) => [`COPY.tradeSplit.lineLabels["${name}"]`, short] as [string, string]),
+  ["COPY.tradeSplit.detail.fixed", COPY.tradeSplit.detail.fixed],
+  ["COPY.tradeSplit.detail.variable", COPY.tradeSplit.detail.variable],
 ];
 for (const [where, t] of rowLabels) {
   const words = t.trim().split(/\s+/).filter(Boolean);
@@ -691,6 +698,14 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
       for (const c of o.foot) heads.push([`buildOpen(${name}).foot`, c.words]);
     }
     heads.push(["COPY.tradeOpen.biggest", COPY.tradeOpen.biggest], ["COPY.tradeOpen.footWithheld", COPY.tradeOpen.footWithheld]);
+    /* THE SPLIT AND THE TEAM (MODEL.md 8.6 `05 split | 06 team`; plan step
+       33's third dispatch, 2026-09-18): the two basis lines (one per feed),
+       the withheld line, the foot, the plus's summary and note; the team's
+       basis, foot and the no-median line. The kickers and the team's three
+       heads the static sweep takes by key. The legend labels are row labels
+       and sit in the ROW SENTENCE list above. */
+    heads.push(["COPY.tradeSplit.basisShard", COPY.tradeSplit.basisShard], ["COPY.tradeSplit.basisProfile", COPY.tradeSplit.basisProfile], ["COPY.tradeSplit.basisWithheld", COPY.tradeSplit.basisWithheld], ["COPY.tradeSplit.withheld", COPY.tradeSplit.withheld], ["COPY.tradeSplit.foot", COPY.tradeSplit.foot], ["COPY.tradeSplit.detail.summary", COPY.tradeSplit.detail.summary], ["COPY.tradeSplit.detail.note", COPY.tradeSplit.detail.note]);
+    heads.push(["COPY.tradeTeam.basis", COPY.tradeTeam.basis], ["COPY.tradeTeam.foot", COPY.tradeTeam.foot], ["COPY.tradeTeam.noMedian", COPY.tradeTeam.noMedian]);
   }
 
   for (const [where, text] of heads) {

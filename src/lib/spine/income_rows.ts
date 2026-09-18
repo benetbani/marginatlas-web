@@ -95,13 +95,10 @@ function num(v: unknown): number | null {
  * a page calls; this is the one a proof script calls.
  */
 export function buildIncomeBreakdownFromProfile(profile: CostProfile): IncomeBreakdownData | null {
-  const shares = SHARE_KEYS
-    .map((key) => ({ key, value: num(profile[key]) ?? 0 }))
-    .filter((s) => s.value > 0)
-    .sort((a, b) => b.value - a.value);
+  const shares = profileCostLines(profile);
   if (shares.length === 0) return null;
 
-  const sumShares = shares.reduce((a, s) => a + s.value, 0);
+  const sumShares = shares.reduce((a, s) => a + s.share, 0);
   const netFrac = 1 - sumShares;
   const hardCap = num(profile.net_margin_hard_cap) ?? 1;
   // Cannot happen on data that already clears verify_cost_share_invariant.ts
@@ -111,40 +108,86 @@ export function buildIncomeBreakdownFromProfile(profile: CostProfile): IncomeBre
   if (netFrac < -TOLERANCE_PP / 100) return null; // the nine shares alone already overrun revenue
   if (netFrac > hardCap + TOLERANCE_PP / 100) return null; // the shares are suspiciously thin; nothing credible to draw
 
+  const netPct = netFrac * 100;
+  const segments = composeIncomeSegments(shares, netPct);
+  if (!segments) return null;
+  return { netPct, segments, modelled: true };
+}
+
+/** One cost line before composition: its key, the label the legend prints,
+ *  and its share of revenue as a FRACTION (the profile's own unit; a shard's
+ *  percent is divided by a hundred at the door in split_rows.ts). */
+export type CostLine = { key: string; label: string; share: number };
+
+/** The profile's nine lines as cost lines, the ones held above zero, biggest
+ *  first, each under the one-word label the copy table gives it. Exported
+ *  so the trade page's split (split_rows.ts) reads the SAME lines off the
+ *  same file when a shard's own drivers are not held (R7: one feed). */
+export function profileCostLines(profile: CostProfile): CostLine[] {
+  return SHARE_KEYS
+    .map((key) => ({ key, label: COPY.incomeBreakdown.lines[key], share: num(profile[key]) ?? 0 }))
+    .filter((s) => s.share > 0)
+    .sort((a, b) => b.share - a.share);
+}
+
+/** The profile a sector is filed under, or null when the file holds none. */
+export function sectorProfile(sector: string): CostProfile | null {
+  return ICP.sectors?.[sector] ?? null;
+}
+
+/**
+ * THE ONE LAW OF THE SEGMENTS (R7, MODEL.md PART 9 clause 42: "the income
+ * breakdown under a second law ... cannot happen"), pulled out of the profile
+ * builder on plan step 33's third dispatch (2026-09-18) so the trade page's
+ * `05 split` composes its bar by THIS function and no other, with the net
+ * pinned from outside (the one net builder's figure) instead of implied from
+ * the shares. Given cost lines as fractions of revenue and a net in percent:
+ *  - the largest few named individually (NAMED_SEGMENT_CAP), a line under
+ *    MIN_SHARE_TO_NAME never named;
+ *  - the rest one bucket, "Smaller costs", which is never allowed to outweigh
+ *    a named line (lines are pulled in until it does not);
+ *  - fewer than MIN_NAMED_SEGMENTS named lines is not a breakdown: null;
+ *  - the lines plus the net short of a hundred by more than the tolerance is a
+ *    residual NAMED as its own segment ("Unallocated"), never absorbed;
+ *  - the lines plus the net OVER a hundred by more than the tolerance is a
+ *    model claiming more than the whole of revenue: null, never scaled to fit.
+ * Every branch is the profile builder's own, unchanged; only the seam moved.
+ */
+export function composeIncomeSegments(lines: CostLine[], netPct: number): IncomeSegment[] | null {
+  if (!Number.isFinite(netPct)) return null;
+  const shares = lines.filter((s) => Number.isFinite(s.share) && s.share > 0).sort((a, b) => b.share - a.share);
+  if (shares.length === 0) return null;
+  const sumShares = shares.reduce((a, s) => a + s.share, 0);
+
   // THE LARGEST FEW BY SHARE, NAMED INDIVIDUALLY: shares is sorted
   // descending already, so the first line under the floor ends the list,
   // nothing after it could have cleared it either.
-  const named: typeof shares = [];
+  const named: CostLine[] = [];
   for (let i = 0; i < shares.length && i < NAMED_SEGMENT_CAP; i++) {
-    if (shares[i].value < MIN_SHARE_TO_NAME) break;
+    if (shares[i].share < MIN_SHARE_TO_NAME) break;
     named.push(shares[i]);
   }
   if (named.length < MIN_NAMED_SEGMENTS) return null;
 
   let namedEnd = named.length;
-  let other = sumShares - named.reduce((a, s) => a + s.value, 0);
+  let other = sumShares - named.reduce((a, s) => a + s.share, 0);
   // NEVER LET THE BUCKET OUTWEIGH A NAMED LINE (his instruction): pull the
   // next-largest unlabelled share in, one at a time, until the bucket is no
   // longer the bar's biggest piece. Each pull strictly shrinks `other` (it
   // moves one positive value out of it), so this always terminates. Never
   // iterates on the 25 sectors shipped today, checked; proved instead by a
   // planted fault, recorded in task-11-report.md.
-  while (other > named[0].value && namedEnd < shares.length) {
-    other -= shares[namedEnd].value;
+  while (other > named[0].share && namedEnd < shares.length) {
+    other -= shares[namedEnd].share;
     named.push(shares[namedEnd]);
     namedEnd++;
   }
 
-  const segments: IncomeSegment[] = named.map((s) => ({
-    key: s.key,
-    label: COPY.incomeBreakdown.lines[s.key],
-    share: s.value * 100,
-  }));
+  const segments: IncomeSegment[] = named.map((s) => ({ key: s.key, label: s.label, share: s.share * 100 }));
   if (other > 0.00005) {
     segments.push({ key: "other", label: COPY.incomeBreakdown.otherLabel, share: other * 100 });
   }
 
-  const netPct = netFrac * 100;
   const drawnTotal = segments.reduce((a, s) => a + s.share, 0) + netPct;
   const residual = 100 - drawnTotal;
   if (residual > TOLERANCE_PP) {
@@ -159,12 +202,14 @@ export function buildIncomeBreakdownFromProfile(profile: CostProfile): IncomeBre
     // prevent, so the section self-omits instead of drawing a lie.
     return null;
   }
-
-  return { netPct, segments, modelled: true };
+  return segments;
 }
 
+/** The residual law's tolerance, in percentage points, for the gates that count residuals the way this file does. */
+export const INCOME_TOLERANCE_PP = TOLERANCE_PP;
+
 export function buildIncomeBreakdown(sector: string): IncomeBreakdownData | null {
-  const profile = ICP.sectors?.[sector];
+  const profile = sectorProfile(sector);
   if (!profile) return null;
   return buildIncomeBreakdownFromProfile(profile);
 }

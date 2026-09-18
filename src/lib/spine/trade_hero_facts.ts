@@ -127,13 +127,27 @@ export type CellHeroInstance = { key: string; route: [string, string, string]; w
  * lines (`04` held) and four licences; California restaurants hold no lines
  * and the trade is keyed (`04` baseline). Probed 2026-09-18 with
  * buildSpineCellSeed on each route.
+ *
+ * TWO MORE FOR THE BAND `05 split | 06 team` (plan step 33's third
+ * dispatch, 2026-09-18), and London shoe repair widened to serve both: the
+ * exemplar draws the split off the shard's held drivers with the residual
+ * named and the team's five roles; shoe repair is profile-fed (the repair
+ * sector's shares, the drivers on its shard tagged modelled) and holds two
+ * roles, the table's floor; London chiropractic is the split's withheld
+ * state on a live cell (the sector's lines and the engine's net come to
+ * 108); Cairo restaurants is the team with no median (Egypt's pay pair is
+ * withheld, item 9), the pay column in dashes. The seven-row team is drawn
+ * off the one seven-row shard by id (a retired trade no route reaches;
+ * stories.tsx says so) and needs no seed.
  */
 export const CELL_INSTANCES: Record<string, { route: [string, string, string]; why: string; blocks?: readonly string[] }> = {
   london: { route: ["gb", "london", "restaurants"], why: "the exemplar: money shown, the take-home at 40, the three companions" },
   california: { route: ["us", "california", "restaurants"], why: "a trusted local cell off London: money shown, the engine's net, a measured spread", blocks: ["take", "spread", "open"] },
   "mumbai-cafes": { route: ["in", "mumbai", "cafes-coffee-shops"], why: "money not shown (an untrusted read): the state word, the net off the shard's ladder, firms and takings withheld with the line", blocks: ["take", "spread", "open"] },
-  "london-shoe-repair": { route: ["gb", "london", "shoe-repair"], why: "a trade on the archetype's default with no setup lines: the cost to open withheld, and a three-licence shard", blocks: ["permits", "open"] },
+  "london-shoe-repair": { route: ["gb", "london", "shoe-repair"], why: "a trade on the archetype's default with no setup lines: the cost to open withheld, and a three-licence shard", blocks: ["permits", "open", "split", "team"] },
   "london-bookshops": { route: ["gb", "london", "indie-bookstores"], why: "a five-licence shard, the trade on the archetype's default", blocks: ["permits"] },
+  "london-chiropractic": { route: ["gb", "london", "chiropractic"], why: "the split withheld on a live cell: the sector's lines and the engine's net come to more than a hundred", blocks: ["split"] },
+  "cairo-restaurants": { route: ["eg", "cairo", "restaurants"], why: "the team with no median pay: Egypt's pair is withheld, so the pay column prints dashes and the card says so once", blocks: ["team"] },
 };
 
 /** Whether a handle's cell serves a block's story: every block unless the handle names its own. */

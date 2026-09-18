@@ -58,9 +58,12 @@ import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 import { tradeHeroFacts, cellServes, type CellHeroInstance } from "@/lib/spine/trade_hero_facts";
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
-import { PermitsCard, OpenCard } from "@/components/spine/cell/turn-one";
+import { PermitsCard, OpenCard, SplitCard, TeamCard } from "@/components/spine/cell/turn-one";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { buildSuits } from "@/lib/spine/suits_rows";
+import { buildSplit } from "@/lib/spine/split_rows";
+import { buildTeam, tallestTeamTrade } from "@/lib/spine/team_rows";
+import { ALL_INDUSTRIES } from "@/lib/taxonomy";
 
 export type Instance = { iso2: string; why: string };
 
@@ -173,6 +176,22 @@ export function CityCardsStories({ instances = pickCityCardsInstances() }: { ins
       })}
     </div>
   );
+}
+
+/** THE TRADE'S TEAM, `06 team` (MODEL.md 8.6; plan step 33's third dispatch, 2026-09-18), keyed cell:<handle>:team off the seeds the sheet loads and drawn by the page's own card (cell/turn-one.tsx TeamCard) at the 416 the narrow seat of the 3-2 takes at 1280: the exemplar's five roles with a year's pay off the United Kingdom's median, London shoe repair's two roles (the table's floor), Cairo restaurants with no median (the pay column in dashes, the line said once). THE SEVEN-ROW TABLE is the planted key cell:most-roles:team, built off the one seven-row shard by id with the United Kingdom's median and no seed: the shard belongs to a retired trade (commercial construction, merged into residential construction) that no live route reaches, and the tallest table the data holds has to be on the sheet for the band to be measured against it. */
+export const cellTeamKey = (c: CellHeroInstance) => `cell:${c.key}:team`;
+export const MOST_ROLES_KEY = "cell:most-roles:team";
+const teamWhy = (t: NonNullable<ReturnType<typeof buildTeam>>) => `trade block 06: ${t.rows.length} roles with a headcount and a year's pay${t.median == null ? ", no median for the country so the pay column prints dashes and the card says so once" : ""}, no winner mark`;
+export function pickCellTeamInstances(cell: CellHeroInstance[]): Instance[] {
+  const out = cell.filter((c) => cellServes(c.key, "team")).map((c) => ({ c, t: buildTeam(c.seed?.meta?.industry_id, c.seed?.meta?.iso2) })).filter((x) => x.t).map(({ c, t }) => ({ iso2: cellTeamKey(c), why: teamWhy(t!) }));
+  const tallest = tallestTeamTrade(ALL_INDUSTRIES.map((i) => i.id));
+  if (tallest) out.push({ iso2: MOST_ROLES_KEY, why: `trade block 06 at its tallest: the ${tallest.rows}-row shard (${tallest.id}, a retired trade no route reaches), drawn by id with the United Kingdom's median` });
+  return out;
+}
+/** The team's inputs for the planted key: the tallest shard by id and the exemplar's country. */
+export function mostRolesTeam(): ReturnType<typeof buildTeam> {
+  const tallest = tallestTeamTrade(ALL_INDUSTRIES.map((i) => i.id));
+  return tallest ? buildTeam(tallest.id, "GB") : null;
 }
 
 /** The instance set for the tiers table. */
@@ -343,10 +362,18 @@ export function CardPagerStories({ instances = pickCardPagerInstances() }: { ins
   );
 }
 
-export function TiersTableStories({ instances = pickTiersTableInstances() }: { instances?: Instance[] }) {
+export function TiersTableStories({ instances = pickTiersTableInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="tiers-table">
-      {instances.map((i) => {
+      {cell.filter((c) => cellServes(c.key, "team")).map((c) => {
+        const t = buildTeam(c.seed?.meta?.industry_id, c.seed?.meta?.iso2);
+        if (!t) return null;
+        return <Story kind="tiers-table" key={cellTeamKey(c)} iso2={cellTeamKey(c)} why={teamWhy(t)}><div style={{ maxWidth: 416 }}><TeamCard id={`team-cell-${c.key}`} team={t} /></div></Story>;
+      })}
+      {/* The seven-row table off the shard alone, the planted key; drawn whenever its key is in the list (the whole sheet, or the targeted form naming it). */}
+      {instances.some((i) => i.iso2 === MOST_ROLES_KEY) ? (() => { const t = mostRolesTeam(); return <Story kind="tiers-table" key={MOST_ROLES_KEY} iso2={MOST_ROLES_KEY} why={instances.find((i) => i.iso2 === MOST_ROLES_KEY)!.why}>{t ? <div style={{ maxWidth: 416 }}><TeamCard id="team-cell-most-roles" team={t} /></div> : null}</Story>; })() : null}
+      {/* The cell keys are drawn above off their seeds; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         const rows = buildSetupRows(i.iso2);
         const el = rows.length ? (
           <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 624 }}>
@@ -1042,10 +1069,25 @@ export function pickIncomeBreakdownInstances(): Instance[] {
   ];
 }
 
-export function IncomeBreakdownStories({ instances = pickIncomeBreakdownInstances() }: { instances?: Instance[] }) {
+/** THE TRADE'S SPLIT, `05 split` (MODEL.md 8.6; plan step 33's third dispatch, 2026-09-18), keyed cell:<handle>:split off the seeds the sheet loads and drawn by the page's own card (cell/turn-one.tsx SplitCard) at the 624 the wide seat of the 3-2 takes at 1280: the exemplar off the shard's held drivers with the engine's net pinned last and the residual named (86 in lines, 5 net, 9 unallocated); London shoe repair off the sector profile (the repair sector's shares, the shard's drivers tagged modelled); London chiropractic withheld (the sector's lines and the engine's net come to 108: the net still at 30, the stated line where the bar would stand, the plus still at the foot). */
+export const cellSplitKey = (c: CellHeroInstance) => `cell:${c.key}:split`;
+const splitWhy = (s: NonNullable<ReturnType<typeof buildSplit>>) =>
+  s.state === "withheld" ? `trade block 05 withheld: the ${s.feed === "shard" ? "shard's" : "sector's"} lines (${Math.round(s.linesPct)}) and the net (${s.netText}) come to more than a hundred; the net at 30, the stated line where the bar would stand, the plus at the foot`
+    : `trade block 05 ${s.feed === "shard" ? "off the shard's held drivers" : "off the sector profile"}: ${s.segments.length} segments, the net pinned last at 30 in ink (${s.netText}, the opening card's own figure)${s.residual != null ? `, the residual named (${Math.round(s.residual)})` : ""}, the plus at the foot`;
+export function pickCellSplitInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "split")).map((c) => ({ c, s: buildSplit(c.seed) })).filter((x) => x.s).map(({ c, s }) => ({ iso2: cellSplitKey(c), why: splitWhy(s!) }));
+}
+
+export function IncomeBreakdownStories({ instances = pickIncomeBreakdownInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="income-breakdown">
-      {instances.map((i) => {
+      {cell.filter((c) => cellServes(c.key, "split")).map((c) => {
+        const sp = buildSplit(c.seed);
+        if (!sp) return null;
+        return <Story kind="income-breakdown" key={cellSplitKey(c)} iso2={cellSplitKey(c)} why={splitWhy(sp)}><div style={{ maxWidth: 624 }}><SplitCard id={`split-cell-${c.key}`} split={sp} /></div></Story>;
+      })}
+      {/* The cell keys are drawn above off their seeds; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         const d = buildIncomeBreakdown(i.iso2);
         const el = d ? (
           <div style={{ maxWidth: 416 }}>
@@ -1612,7 +1654,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why }))],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
-    "tiers-table": pickTiersTableInstances(),
+    "tiers-table": [...pickTiersTableInstances(), ...pickCellTeamInstances(cellHero)],
     "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why })), ...pickCellSpreadInstances(cellHero)],
     "spectra-table": pickSpectraTableInstances(),
     "note-list": pickNoteListInstances(),
@@ -1620,7 +1662,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "pay-bars": pickPayBarsInstances(),
     "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero)],
     "detail-panel": pickDetailPanelInstances(),
-    "income-breakdown": pickIncomeBreakdownInstances(),
+    "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero)],
     "bento-band": pickBentoBandInstances(),
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric")],
     "mark-list": pickMarkListInstances(),

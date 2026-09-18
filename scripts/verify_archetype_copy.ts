@@ -66,9 +66,17 @@ import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
 import { ALL_INDUSTRIES, INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen, buildOpenFoot, countOpenStates } from "@/lib/spine/open_rows";
-import { readdirSync, statSync } from "node:fs";
+import { resolveSplit, countSplitStates, shardCostLines, driverLabel, LABEL_WORDS_CAP as SPLIT_LABEL_WORDS_CAP } from "@/lib/spine/split_rows";
+import { buildTeam, countTeamRows, roleLines, TEAM_ROWS_CAP } from "@/lib/spine/team_rows";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
+
+/** Every cost driver name a shard holds, whatever its tag, for the short-label census (plan step 33's third dispatch). */
+function shardCostLineNames(id: string): string[] {
+  const shard = JSON.parse(readFileSync(join("data/facts/industry", `${id}.json`), "utf8")) as { facts: Array<{ metric: string; value: unknown }> };
+  return shard.facts.filter((f) => f.metric === "cost_structure.cost_drivers.*.name" && typeof f.value === "string").map((f) => f.value as string);
+}
 
 const reds: string[] = [];
 const codes = (COUNTRIES as any[]).map((c) => String(c.code ?? c.iso2 ?? "").toUpperCase()).filter((c) => c.length === 2);
@@ -1074,6 +1082,125 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   for (const [name, o] of [["held", held], ["held, nine lines", capped], ["held, six lines", six], ["held, no shard", heldNoShard], ["baseline", base], ["withheld", withheld], ["no shard", noShard]] as const) if (o) ban(`open (${name})`, [o.basis ?? "", o.withheld ?? "", o.footLine ?? "", o.tailLine ?? "", ...o.foot.flatMap((c) => [c.figure, c.words]), ...o.rows.map((r) => r.name)]);
   for (const o of [held, base, withheld]) if (o) for (const c of o.foot) if (!/^(1 month|\d+ months)$/.test(c.figure) && !/^(1 year|\d+(\.\d)? years)$/.test(c.figure)) reds.push(`open: a companion off the months or years form: "${c.figure}"`);
   console.log(`trade turn one: the permits build on ${ids.length} shards, ${cellsTotal} cells (${Object.entries(perShard).sort().map(([k, v]) => `${v} with ${k}`).join(", ")}), ${withheldCards} with a zero-day licence withheld; the cost to open is keyed on ${states.keyed} of ${states.total} shard ids and on the default for ${states.default} (item 48), the foot's two companions on ${footFull}; the three states build off fixtures`);
+}
+
+/* THE TRADE PAGE'S SECOND BAND OF TURN ONE (MODEL.md 8.6 `05 split | 06
+   team`; plan step 33's third dispatch, 2026-09-18), on every one of the 243
+   shard ids with the engine absent, without the database. THE SPLIT: the one
+   net builder's figure is the split's net on every trade (R7: `netPct` and
+   `netText` are the builder's own, so `00`'s companion and `05`'s focal are
+   one figure; the city's income gate is the precedent), the feed is the
+   shard's drivers only where they are tagged held (79) and the sector profile
+   otherwise (164), a drawn card's segments plus its net come to a hundred
+   within the residual law's tolerance with the residual named as its own
+   segment when it is, a withheld card draws no segment and carries the
+   stated line, no segment is negative, every legend label is within PART 5's
+   three words (the copy table's short form on the 79 held shards, held both
+   ways: a name over three words with no entry is a red, an entry naming no
+   shard line is a dead row), the plus holds its two rows on every shard, and
+   the counts (drawn, withheld and which, residual, exact) are printed rather
+   than remembered. THE TEAM: two to seven rows on every shard under one of
+   the three key spellings, the count column a count and the pay column the
+   index times the country's median (a whole dollar, the kit's one grammar),
+   dashes with the line said once where the country holds no credible median
+   (the pay builder's own withholding, Cuba and Egypt), no dash and no line
+   where it does, the rows dearest first, the name block's two lines the
+   shard's words whole (the split at " or " and at a parenthetical reassembles
+   to the name), and the counts per shard printed. Every string through the
+   register ban. */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const ids = readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, "")).sort();
+  const netOf = (id: string) => resolveTradeNet(id, { moneyShown: false, netMarginPct: null });
+  const used = new Set<string>();
+  let detailFull = 0, labelsShortened = 0;
+  for (const id of ids) {
+    const net = netOf(id);
+    if (!net) { reds.push(`split ${id}: no net off the one builder (R7 allows no net-less mode)`); continue; }
+    const sp = resolveSplit(id, net);
+    if (!sp) { reds.push(`split ${id}: builds nothing off a shard that holds a cost stack`); continue; }
+    if (sp.netPct !== net.pct || sp.netText !== net.text) reds.push(`split ${id}: the split's net (${sp.netText}) is not the one builder's (${net.text})`);
+    if (sp.netLabel !== COPY.tradeHero.cells.net) reds.push(`split ${id}: the focal's label is not the opening card's companion label`);
+    const shard = shardCostLines(id);
+    if ((sp.feed === "shard") !== (shard.held && shard.lines.length > 0)) reds.push(`split ${id}: fed by the ${sp.feed} while the shard's drivers are ${shard.held ? "held" : "not held"}`);
+    if (sp.state === "drawn") {
+      if (sp.withheld) reds.push(`split ${id}: a drawn card with a withheld line`);
+      const sum = sp.segments.reduce((a, g) => a + g.share, 0) + sp.netPct;
+      if (Math.abs(sum - 100) > 0.5) reds.push(`split ${id}: the segments and the net come to ${sum.toFixed(2)}, not a hundred`);
+      if (sp.segments.some((g) => !(g.share > 0))) reds.push(`split ${id}: a segment at or under zero is drawn`);
+      if (sp.segments.length < 2) reds.push(`split ${id}: ${sp.segments.length} segment(s), under the breakdown's two`);
+      const res = sp.segments.find((g) => g.key === "unallocated");
+      if ((res != null) !== (sp.residual != null)) reds.push(`split ${id}: the residual is ${sp.residual == null ? "not " : ""}counted while the segment is ${res ? "" : "not "}drawn`);
+      for (const g of sp.segments) {
+        if (g.label.split(/\s+/).filter(Boolean).length > SPLIT_LABEL_WORDS_CAP) reds.push(`split ${id}: a legend label over ${SPLIT_LABEL_WORDS_CAP} words: "${g.label}"`);
+        if (!g.label.trim()) reds.push(`split ${id}: an empty legend label on ${g.key}`);
+      }
+      ban(`split ${id}`, sp.segments.map((g) => g.label));
+    } else {
+      if (sp.segments.length) reds.push(`split ${id}: a withheld card with segments`);
+      if (sp.withheld !== COPY.tradeSplit.withheld) reds.push(`split ${id}: a withheld card without the stated line`);
+      if (sp.linesPct + sp.netPct <= 100.5) reds.push(`split ${id}: withheld at ${(sp.linesPct + sp.netPct).toFixed(1)}, not over a hundred`);
+    }
+    if (sp.state === "drawn" && sp.basis !== (sp.feed === "shard" ? COPY.tradeSplit.basisShard : COPY.tradeSplit.basisProfile)) reds.push(`split ${id}: the basis does not name the feed`);
+    if (sp.state === "withheld" && (sp.basis !== COPY.tradeSplit.basisWithheld || sp.foot)) reds.push(`split ${id}: a withheld card's basis or foot speaks of shares it does not draw`);
+    if (sp.state === "drawn" && sp.foot !== COPY.tradeSplit.foot) reds.push(`split ${id}: a drawn card without the modelled foot`);
+    if (sp.detail) { detailFull++; if (sp.detail.rows.length !== 2 || sp.detail.rows.some((r) => !/^\d+%$/.test(r.value))) reds.push(`split ${id}: the plus does not hold its two shares as whole percents`); }
+    ban(`split ${id}`, [sp.basis, sp.foot, sp.withheld ?? "", ...(sp.detail ? [sp.detail.summary, ...sp.detail.rows.flatMap((r) => [r.label, r.note ?? ""])] : [])]);
+    /* THE SHORT LABELS, BOTH WAYS, on every shard's drivers whatever the feed:
+       a name over three words must have an entry, and every entry must name a
+       line some shard holds. */
+    const names = shardCostLineNames(id);
+    for (const n of names) {
+      const short = COPY.tradeSplit.lineLabels[n];
+      if (short) { used.add(n); labelsShortened++; }
+      if (shard.held && driverLabel(n).split(/\s+/).filter(Boolean).length > SPLIT_LABEL_WORDS_CAP) reds.push(`split ${id}: the held driver "${n}" has no short label within ${SPLIT_LABEL_WORDS_CAP} words`);
+      if (short && short.split(/\s+/).filter(Boolean).length > SPLIT_LABEL_WORDS_CAP) reds.push(`split labels: the short form "${short}" runs over ${SPLIT_LABEL_WORDS_CAP} words`);
+    }
+  }
+  for (const n of Object.keys(COPY.tradeSplit.lineLabels)) if (!used.has(n)) reds.push(`split labels: a dead row, no shard names a driver "${n}"`);
+  const counts = countSplitStates(ids, netOf);
+  if (counts.noNet) reds.push(`split: ${counts.noNet} shard id(s) build no split`);
+  if (detailFull !== ids.length) reds.push(`split: the plus holds two rows on ${detailFull} of ${ids.length} shards, not all`);
+  /* THE TEAM over the 243 in the exemplar's country, then the two countries the pay builder withholds and one the profile does not hold. */
+  const rows = countTeamRows(ids);
+  if (rows.none) reds.push(`team: ${rows.none} shard id(s) hold no roles`);
+  let dashCards = 0;
+  for (const id of ids) {
+    const t = buildTeam(id, "GB");
+    if (!t) { reds.push(`team ${id}: builds nothing in the exemplar's country`); continue; }
+    if (t.rows.length < 2 || t.rows.length > TEAM_ROWS_CAP) reds.push(`team ${id}: ${t.rows.length} rows, outside two to ${TEAM_ROWS_CAP}`);
+    if (t.median == null || t.noMedian) reds.push(`team ${id}: no median in the exemplar's country`);
+    const oneDecimal = t.roles.some((r) => !Number.isInteger(r.headcount));
+    for (const r of t.rows) {
+      if (r.a == null || !(oneDecimal ? /^\d+\.\d$/ : /^\d+$/).test(r.a)) reds.push(`team ${id}: the count "${r.a}" is not one decimal count with its column`);
+      if (r.b == null || !/^\$[\d,]+(K|M)?$/.test(r.b)) reds.push(`team ${id}: the pay "${r.b}" is not a dollar figure`);
+      if (!r.name.trim()) reds.push(`team ${id}: an empty role name`);
+    }
+    for (const role of t.roles) {
+      const back = role.sub ? (role.sub.startsWith("or ") ? `${role.name} ${role.sub}` : `${role.name} (${role.sub})`) : role.name;
+      if (back !== role.role.trim()) reds.push(`team ${id}: the name block "${role.name}" / "${role.sub}" does not reassemble to the shard's "${role.role}"`);
+      if (role.pay == null || role.pay !== Math.round(role.wageIndex * t.median!)) reds.push(`team ${id}: the pay is not the index times the median`);
+    }
+    for (let i = 1; i < t.roles.length; i++) if (t.roles[i].wageIndex > t.roles[i - 1].wageIndex) reds.push(`team ${id}: the rows are not dearest first`);
+    ban(`team ${id}`, [...t.rows.flatMap((r) => [r.name, r.sub ?? ""]), t.basis, t.foot, t.heads.name, t.heads.a, t.heads.b]);
+  }
+  /* ZZ, not XX: the profile's default fallback carries "XX" as its own code, so XX matches it and reads its fill median; a code the file cannot echo is the unknown-country case. */
+  for (const iso2 of ["CU", "EG", "ZZ"]) {
+    const t = buildTeam("restaurants", iso2);
+    if (!t) { reds.push(`team restaurants ${iso2}: builds nothing`); continue; }
+    if (t.median != null || t.noMedian !== COPY.tradeTeam.noMedian || t.rows.some((r) => r.b != null)) reds.push(`team restaurants ${iso2}: a country with no credible median does not print dashes with the line said once`);
+    if (t.rows.some((r) => r.a == null)) reds.push(`team restaurants ${iso2}: the count column went blank with the pay`);
+    dashCards++;
+    ban(`team restaurants ${iso2}`, [t.noMedian ?? ""]);
+  }
+  const split1 = roleLines("Owner or general manager"), split2 = roleLines("Owner-operator (working, sales and estimating)"), whole = roleLines("Line and prep cook");
+  if (split1.name !== "Owner" || split1.sub !== "or general manager" || split2.name !== "Owner-operator" || split2.sub !== "working, sales and estimating" || whole.name !== "Line and prep cook" || whole.sub !== null) reds.push("team: the name block's two lines do not split at the or and the parenthetical as stated");
+  console.log(`trade turn one, band two: the split draws on ${counts.drawn} of ${counts.total} shard ids with the engine absent (${counts.shardFed} off the shard's held drivers, ${counts.profileFed} off the sector profile; ${counts.residual} name a residual, ${counts.exact} balance) and is withheld on ${counts.withheld} (${counts.withheldIds.join(", ")}); ${labelsShortened} driver names take the copy table's short form, ${Object.keys(COPY.tradeSplit.lineLabels).length} entries all live; the plus holds its two rows on ${detailFull}; the team draws ${Object.entries(rows.perCount).sort().map(([k, v]) => `${v} with ${k}`).join(", ")} rows, ${rows.split} name blocks split at an or or a parenthetical, ${rows.over} labels still over three words (the shards' own compounds, item 54), dashes with the line on ${dashCards} no-median countries`);
 }
 
 /* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce`, `11 easiest` and the

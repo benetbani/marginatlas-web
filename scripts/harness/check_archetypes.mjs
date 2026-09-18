@@ -349,7 +349,27 @@ function inPage(storySelector) {
     if (r.kind === "tiers-table") {
       const trs = [...card.querySelectorAll("[data-tier-row]")].filter((el) => el.getClientRects().length);
       r.tierRows = trs.map((el) => Math.round(el.getBoundingClientRect().height));
-      r.headsCount = [...card.querySelectorAll("span")].filter((el) => el.getClientRects().length && /^(Fee|Time|Paperwork)$/.test((el.textContent || "").trim())).length;
+      /* THE HEADS ARE READ OFF THE DOM (plan step 33's third dispatch,
+         2026-09-18): the table's heads are the caller's words since the
+         figures shape landed (the trade's "How many" and "Pay a year" beside
+         the country's "Fee", "Time", "Paperwork"), so the check reads every
+         stamped `[data-head]`, the count the root declares in `data-heads`,
+         and whether any head's text appears in more than one visible span
+         of the card (said once, PART 5). The old literal regex would have
+         counted the trade's card as a table with no heads. */
+      const root = card.matches("[data-archetype='tiers-table']") ? card : card.querySelector("[data-archetype='tiers-table']");
+      r.headsDeclared = root ? Number(root.getAttribute("data-heads") || "0") : 0;
+      const heads = [...card.querySelectorAll("[data-head]")].filter((el) => el.getClientRects().length).map((el) => (el.textContent || "").trim());
+      r.headsCount = heads.length;
+      r.headsRepeated = heads.filter((h) => h && [...card.querySelectorAll("span")].filter((el) => el.getClientRects().length && (el.textContent || "").trim() === h).length > 1);
+      /* THE DASHES: a figure cell printing an en dash, and whether the card
+         says once what a dash means (PART 5 BLANKS; the team's no-median
+         line). Read as text, since the line is the card's own words. */
+      r.tierShape = root ? root.getAttribute("data-shape") : null;
+      r.tierDashes = [...card.querySelectorAll("[data-col]")].filter((el) => el.getClientRects().length && (el.textContent || "").trim() === "–").length;
+      /* The line is the card's, not the table's: the enclosing section card (the Box the table sits in), or the table when it stands alone. */
+      const box = card.closest('[class*="rounded-[14px]"]') || card;
+      r.tierDashLine = /dash/i.test(box.textContent || "");
     }
     if (r.kind === "spectra-table") {
       const trs = [...card.querySelectorAll("[data-spectrum-row]")].filter((el) => el.getClientRects().length);
@@ -410,6 +430,11 @@ function inPage(storySelector) {
         widthPx: el.getBoundingClientRect().width,
       }));
       r.incomeLegendKeys = [...card.querySelectorAll("[data-legend-key]")].map((el) => el.getAttribute("data-legend-key"));
+      /* THE WITHHELD STATE (plan step 33's third dispatch, 2026-09-18): the
+         root declares it and the stated line stands where the bar would. */
+      const root = card.matches("[data-archetype='income-breakdown']") ? card : card.querySelector("[data-archetype='income-breakdown']");
+      r.incomeWithheld = !!root && root.getAttribute("data-withheld") === "1";
+      r.incomeLine = [...card.querySelectorAll("[data-withheld-line]")].filter((el) => el.getClientRects().length && (el.textContent || "").trim()).length;
     }
     /* THE MARK LIST (B3, 2026-09-10). Read off the DRAWN boxes, except where
        the drawing is deliberately compared against the card's own declaration
@@ -782,7 +807,10 @@ for (const w of WIDTHS) {
     }
     if (r.kind === "tiers-table") {
       const hs = r.tierRows || []; if (hs.length > 1 && Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `tier rows at heights ${hs.join(", ")}`);
-      if (r.headsCount !== 3) red(r.inst, w, "REPETITION", `the three heads appear ${r.headsCount} times`);
+      if (r.headsCount !== r.headsDeclared) red(r.inst, w, "REPETITION", `${r.headsCount} head(s) drawn against the ${r.headsDeclared} the table declares`);
+      if ((r.headsRepeated || []).length) red(r.inst, w, "REPETITION", `a head said more than once: ${r.headsRepeated.join(", ")}`);
+      /* The figures shape only: the registering shape prints a dash for a fee or a wait not held and its card carries no line saying so today (the country's `#setup`, a standing PART 5 finding recorded on plan step 33's third dispatch, not this rule's to open on a card it did not draw). */
+      if (r.tierShape === "figures" && r.tierDashes > 0 && !r.tierDashLine) red(r.inst, w, "PROMISE", `${r.tierDashes} dash(es) in the figure columns and no line saying what a dash means`);
     }
     if (r.kind === "spectra-table") {
       const hs = r.spectraRows || []; if (hs.length > 1 && Math.max(...hs) - Math.min(...hs) > 2) red(r.inst, w, "UNEQUAL", `spectrum rows at heights ${hs.join(", ")}`);
@@ -842,6 +870,14 @@ for (const w of WIDTHS) {
     }
     if (r.kind === "income-breakdown") {
       const segs = r.incomeSegs || [];
+      // THE WITHHELD STATE, both ways: a withheld card draws no segment and
+      // states its line; a card that is not withheld draws its segments and
+      // states none. Planted once (the line withheld in IncomeBreakdown.tsx)
+      // and seen red before this was trusted.
+      if (r.incomeWithheld && segs.length) red(r.inst, w, "PROMISE", "a withheld breakdown draws segments");
+      if (r.incomeWithheld && !r.incomeLine) red(r.inst, w, "PROMISE", "a withheld breakdown with no stated line where the bar would stand");
+      if (!r.incomeWithheld && !segs.length) red(r.inst, w, "PROMISE", "a breakdown with no segments and no withheld line");
+      if (!r.incomeWithheld && r.incomeLine) red(r.inst, w, "PROMISE", "a stated withheld line on a breakdown that draws its bar");
       // RULE 1, PLANTED FAULT PROVED (task-11-report.md): a segment set
       // summing to 130 was fed through a temporary story and reded here
       // before this line was trusted.

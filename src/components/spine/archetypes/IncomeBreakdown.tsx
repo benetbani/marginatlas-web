@@ -55,15 +55,39 @@
  */
 import * as React from "react";
 import { Box, Fig, GREY_RAMP, Rail } from "@/components/spine/kit";
+import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "@/lib/spine/copy";
 import type { IncomeSegment } from "@/lib/spine/income_rows";
 
+/**
+ * THE TRADE PAGE'S SEAT (MODEL.md 8.6 `05 split`; plan step 33's third
+ * dispatch, 2026-09-18) added four optional props and changed nothing for
+ * the country stories, which pass none of them:
+ *  - `icon`, the opener's tile (PART 7: one opener style on the whole page).
+ *  - `netLabel`, the words over the focal: the trade page passes the same
+ *    words `00 take`'s companion wears, because they are one figure from one
+ *    builder (R7, M20); the default is this file's own "Net income".
+ *  - `withheld`, THE WITHHELD STATE: the net still stands at 30 (it is the
+ *    one builder's figure and prints on `00` regardless) and the stated line
+ *    stands at 16 where the bar and the legend would, so the card's height
+ *    does not collapse and nothing is scaled to fit. The residual law's
+ *    refusal (income_rows.ts: the lines and the net over a hundred) is the
+ *    only caller today. No segments are drawn and the legend is empty.
+ *  - `foot`, one line after the legend, and `detail`, THE PLUS at the foot
+ *    (DetailPanel, closed on arrival, weightless in the hierarchy): the
+ *    trade page's fixed and variable costs, the plus's one honest seat.
+ */
 export type IncomeBreakdownProps = {
   id: string;
   kicker: string;
   netPct: number;
   segments: IncomeSegment[];
   basis: string;
+  icon?: AtlasIconId;
+  netLabel?: string;
+  withheld?: string | null;
+  foot?: string | null;
+  detail?: React.ReactNode;
 };
 
 const NET_KEY = "net";
@@ -107,71 +131,103 @@ function roundToHundred(values: Array<{ key: string; value: number }>): Record<s
   return out;
 }
 
-export function IncomeBreakdown({ id, kicker, netPct, segments, basis }: IncomeBreakdownProps) {
-  const live = segments.filter((s) => Number.isFinite(s.share) && s.share > 0);
-  if (live.length < 2 || !Number.isFinite(netPct)) return null;
+export function IncomeBreakdown({ id, kicker, netPct, segments, basis, icon, netLabel = COPY.incomeBreakdown.netLabel, withheld = null, foot = null, detail = null }: IncomeBreakdownProps) {
+  const live = withheld ? [] : segments.filter((s) => Number.isFinite(s.share) && s.share > 0);
+  if (!Number.isFinite(netPct)) return null;
+  if (!withheld && live.length < 2) return null;
 
   const rounded = roundToHundred([...live.map((s) => ({ key: s.key, value: s.share })), { key: NET_KEY, value: netPct }]);
-  const ariaLabel = `Net income ${rounded[NET_KEY]} percent. ${live.map((s) => `${s.label} ${rounded[s.key]} percent`).join(", ")}.`;
+  const netShown = withheld ? Math.round(netPct) : rounded[NET_KEY];
+  const ariaLabel = `${netLabel} ${netShown} percent. ${withheld ? withheld : live.map((s) => `${s.label} ${rounded[s.key]} percent`).join(", ") + "."}`;
 
   return (
-    <Box id={id} data-archetype="income-breakdown">
+    <Box id={id} data-archetype="income-breakdown" data-withheld={withheld ? "1" : undefined}>
       {/* THE SAMPLE MARK IS UNCONDITIONAL (his ruling, 2026-09-08): every
           figure this card ever prints is the same modelled split for every
           country (income_rows.ts explains why), so there is no "measured"
           variant of this card for the tag to distinguish it from. */}
-      <Rail kicker={kicker} sample />
+      <Rail icon={icon} kicker={kicker} sample />
       <div data-answer="1">
-        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.incomeBreakdown.netLabel}</div>
-        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>
+        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
+        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
       </div>
       <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
-      {/* THE BAR: one track, full width, cost segments in the builder's
-          descending order, net pinned last. `data-expect-rows` on the track
-          plus `data-row` on every child is the site's existing rows-cut
-          mechanism (RankedBars, PayBars already use it); it is reused here
-          rather than reinvented, and it already runs at every width. */}
-      <div
-        className="mt-3.5 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]"
-        data-expect-rows={live.length + 1}
-        role="img"
-        aria-label={ariaLabel}
-      >
-        {live.map((s, i) => (
+      {withheld ? (
+        <>
+          {/* THE WITHHELD STATE: the stated line at the lead rung where the
+              bar would stand (the cost-to-open card's own idiom), so the seat
+              keeps its height and the reader is told why there is no bar. */}
+          <p data-withheld-line={id} className="mt-3.5 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p>
+          {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+          {detail}
+        </>
+      ) : (
+        <>
+          {/* THE BAR: one track, full width, cost segments in the builder's
+              descending order, net pinned last. `data-expect-rows` on the track
+              plus `data-row` on every child is the site's existing rows-cut
+              mechanism (RankedBars, PayBars already use it); it is reused here
+              rather than reinvented, and it already runs at every width. */}
           <div
-            key={s.key}
-            data-row={s.key}
-            data-seg-key={s.key}
-            data-seg-share={String(s.share)}
-            className="h-full border-r border-[var(--c-card)]"
-            style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }}
-          />
-        ))}
-        <div
-          data-row={NET_KEY}
-          data-seg-key={NET_KEY}
-          data-seg-share={String(netPct)}
-          className="h-full"
-          style={{ width: `${netPct}%`, background: "var(--c-ink)" }}
-        />
-      </div>
-      {/* THE LEGEND: every drawn segment, no more, each swatch painted with
-          the exact tone+hatch its bar segment carries so the two can never
-          visually disagree. */}
-      <div className="mt-2.5 grid grid-cols-2 gap-x-4 gap-y-1.5">
-        {live.map((s, i) => (
-          <span key={s.key} data-legend-key={s.key} className="inline-flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-            <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
-            <span data-label className="truncate">{s.label}</span>
-            <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
-          </span>
-        ))}
-        <span data-legend-key={NET_KEY} className="inline-flex min-w-0 items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-          <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
-          <span data-label className="truncate">{COPY.incomeBreakdown.netLabel}</span>
-          <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>
-        </span>
-      </div>
+            className="mt-3.5 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]"
+            data-expect-rows={live.length + 1}
+            role="img"
+            aria-label={ariaLabel}
+          >
+            {live.map((s, i) => (
+              <div
+                key={s.key}
+                data-row={s.key}
+                data-seg-key={s.key}
+                data-seg-share={String(s.share)}
+                className="h-full border-r border-[var(--c-card)]"
+                style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }}
+              />
+            ))}
+            <div
+              data-row={NET_KEY}
+              data-seg-key={NET_KEY}
+              data-seg-share={String(netPct)}
+              className="h-full"
+              style={{ width: `${netPct}%`, background: "var(--c-ink)" }}
+            />
+          </div>
+          {/* THE LEGEND: every drawn segment, no more, each swatch painted with
+              the exact tone+hatch its bar segment carries so the two can never
+              visually disagree. TWO COLUMNS BY THE CARD'S OWN WIDTH, ONE UNDER
+              360px OF IT (plan step 33's third dispatch, 2026-09-18, the
+              NoteList's container-query idiom): at a phone's 343 the fixed
+              two columns clipped three of the trade page's labels ("Utilities
+              and supplies" at 114px in a 96px cell, measured), and a name cut
+              on a phone is clause 31's fault; a tablet's 344 half gets one
+              column the same way, which is also why the trade page stacks the
+              band until lg. */}
+          <div className="mt-2.5 [container-type:inline-size]">
+          {/* One column is the phone row form (PART 5: below 420 the row is
+              [1fr auto] and the gap is the card's own inner width), so the
+              rows take hairlines between them the way every phone row does,
+              which is also what keeps the figure column from reading as a
+              blank (the page filter's hole is 145 by 174 without them,
+              measured). */}
+          <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
+            {live.map((s, i) => (
+              <span key={s.key} data-legend-key={s.key} className="inline-flex min-w-0 items-center gap-1.5 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+                <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
+                <span data-label className="truncate">{s.label}</span>
+                <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
+              </span>
+            ))}
+            <span data-legend-key={NET_KEY} className="inline-flex min-w-0 items-center gap-1.5 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+              <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
+              <span data-label className="truncate">{netLabel}</span>
+              <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>
+            </span>
+          </div>
+          </div>
+          {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+          {detail}
+        </>
+      )}
     </Box>
   );
 }
