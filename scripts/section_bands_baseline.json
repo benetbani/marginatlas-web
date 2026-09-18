@@ -3,7 +3,7 @@
   "country-AF": 2,
   "howto-GB": 1,
   "city-london": 2,
-  "cell-london-restaurants": 0,
+  "cell-london-restaurants": 1,
   "industry-restaurants": 0,
   "hood-london": 0,
   "_reseed_history": [
@@ -27,6 +27,13 @@
       "new": 2,
       "date": "2026-09-18",
       "reason": "Not a regression: a first measurement. Afghanistan joined the harness list at 32db62cf with only its model-laws baseline seeded, so this gate read the key as 0 and was red on the next run (1: the exit) before plan step 31's seventh dispatch touched the page. With the four thin-country seats the count is 2, the same two the country-gb-new re-seed of 2026-09-17 names: the peers block, here the drawn blocked seat standing at the table's own full width under the table's own data-wide-table sanction (MODEL.md 8.2, 'THE THIN COUNTRY, SEATED'; three full widths stand, R1), and the exit. The count may fall and never rise."
+    },
+    {
+      "page": "cell-london-restaurants",
+      "old": 0,
+      "new": 1,
+      "date": "2026-09-18",
+      "reason": "Not a regression: the trade page's second full width landed. Plan step 33's fourth dispatch seated MODEL.md 8.6's `07 peers` on CompareTable at the table's own full width under its data-wide-table sanction, the second of the page's three full widths (R1: the take, the peers, the close; PART 9 clause 36, 'three stands'), where until then the old Nearby table sat in a 2-1 band because a full width with no wide-table sanction reds this gate. The one full-width section with no wide form this gate now names is that peers table, the same section the city-london re-seed of 2026-09-08 and the country-gb-new re-seed of 2026-09-17 name on their pages; the exit stands on the hero band and is not counted here. The count may fall and never rise."
     }
   ]
 }

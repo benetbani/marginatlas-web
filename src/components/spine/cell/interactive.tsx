@@ -1,162 +1,19 @@
 "use client";
 /**
- * Client interactives for the cell page that are NOT part of the money-chapter
- * subtype propagation: the sortable Nearby comparison table (click-to-sort, a
- * keeps-per-$1 rate column proving the section's own verdict; figures + bold-best
- * only, the in-cell bars are gone per rulebook v1 sections 22/25) and the Risks
- * dot plot on a shared labeled 0-10 scale. THE WAGE TABLE LEFT THIS FILE on
- * plan step 33's third dispatch (2026-09-18): MODEL.md 8.6 `06 team` draws the
- * shard's roles on TiersTable in cell/turn-one.tsx from team_rows.ts, on 243
- * trades where this card drew three London roles off the seed alone. All
- * prose from the seed.
+ * Client interactives for the cell page: the Risks dot plot on a shared
+ * labeled 0-10 scale, `10 watch`'s seat until his B1 lands (MODEL.md 8.6).
+ * THE WAGE TABLE LEFT THIS FILE on plan step 33's third dispatch (2026-09-18):
+ * MODEL.md 8.6 `06 team` draws the shard's roles on TiersTable in
+ * cell/turn-one.tsx from team_rows.ts, on 243 trades where this card drew
+ * three London roles off the seed alone. THE NEARBY TABLE LEFT ON THE FOURTH
+ * (2026-09-18): a sortable client island (click-to-sort heads, a coined
+ * keeps-per-dollar column, an "Illustrative" line under four invented UK
+ * cities) where 8.6 `07 peers` draws CompareTable full width from
+ * trade_peer_rows.ts, the rows never navigating (M23), never an invented
+ * peer. All prose from the seed.
  */
 import * as React from "react";
-import { Box, Rail, Fig, EaseScale, InfoTip, InlineDisclosure, usd } from "@/components/spine/kit";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
-const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
-
-type Col = { key: string; label: string; unit: string; get: (x: any) => number; cell: (v: number) => string };
-
-/* Nearby , WI-4 brief (enriched, Final Ascent; rulebook v2 corrections 2026-07-10
- * drop the hand-rolled surface_line div , a verdict outside Rail that claimed "keeps
- * the least per dollar"): the table CARRIES that claim itself, needing no sentence
- * to assert it , a sortable keeps-per-$1 column (take over turnover, in cents),
- * default sort, proves it directly. The in-cell CellScaleBars are DELETED
- * (rulebook v1 sections 22/25, founder G2/G11: figures + bold-best carry each
- * column's winner; a table you read like a sentence, not a chart you study).
- * terracotta target: ONE , the keeps-per-$1 winner's figure. Best in the other
- * columns is semibold ink; the sort header, HERE tag and row tint are ink/neutral chrome. */
-export function Nearby({ d }: { d: any }) {
-  const rows: any[] = d.nearby?.places ?? [];
-  // Column presence: keep only the columns for which EVERY row carries a real
-  // value. On promotion the peers hold name + turnover only (no honest per-peer
-  // take-home / break-in), so those columns , and the derived keeps-per-$1 ,
-  // drop out; the full seed keeps all four. Turnover is always present.
-  const hasTake = rows.length > 0 && rows.every((r) => typeof r.take_home_usd === "number");
-  const hasBrk = rows.length > 0 && rows.every((r) => typeof r.break_in_0_100 === "number");
-  const cols: Col[] = [
-    { key: "rev", label: "Turnover", unit: "$/yr", get: (x) => x.rev_p50_usd, cell: (v) => money(v) },
-    ...(hasTake ? [{ key: "take", label: "Owner keeps", unit: "$/yr", get: (x: any) => x.take_home_usd, cell: (v: number) => money(v) } as Col] : []),
-    ...(hasTake ? [{ key: "rate", label: "Keeps per $1", unit: "c", get: (x: any) => (x.rev_p50_usd ? (x.take_home_usd / x.rev_p50_usd) * 100 : 0), cell: (v: number) => v.toFixed(1) + "c" } as Col] : []),
-    ...(hasBrk ? [{ key: "brk", label: "Ease of entry", unit: "/10", get: (x: any) => x.break_in_0_100, cell: (v: number) => "" + Math.round(v / 10) } as Col] : []),
-  ];
-  // Default sort: keeps-per-$1 when present (proves the section's verdict),
-  // else turnover. Never a key that no longer exists.
-  const defaultSort = hasTake ? "rate" : "rev";
-  const [sortKey, setSortKey] = React.useState<string>(defaultSort);
-  const col = cols.find((c) => c.key === sortKey) ?? cols[0];
-  const best: Record<string, number> = {};
-  cols.forEach((c) => (best[c.key] = Math.max(...rows.map((r) => c.get(r)))));
-  const sorted = [...rows].sort((a, b) => col.get(b) - col.get(a));
-  // Grid template adapts to the live column count (place + N metric columns), so
-  // a promoted table with turnover only reads as a clean two-column list rather
-  // than a five-slot grid with three empty tracks.
-  const gridCols = `1.3fr ${cols.map(() => "1fr").join(" ")}`;
-
-  return (
-    <Box id="peers">
-      {/* same section-opener treatment as sibling cards (Rail kicker, not a bold Head) */}
-      <Rail icon="compare" kicker="The same trade, comparable places" sample />
-      {/* A REAL TABLE, because this is a real table.
-          It was a grid of plain boxes: places down the side, metrics across the
-          top, a header row, click-to-sort and a sorted-direction attribute, and
-          not one table element in it. Measured before changing anything:
-          FOUR sorted-direction attributes, all four sitting on buttons, where
-          that attribute means nothing and is discarded.
-          SIXTEEN column labels that vanish above 640 pixels. Each figure carries
-          a small label naming its column, and that label is hidden on anything
-          wider than a phone, because on a wide screen the column header does the
-          naming. Except there was no column header, only a box that looked like
-          one. So the desktop reading was a place name followed by four bare
-          numbers: "Birmingham, $340K, $39K, 11.5c, 5". Nothing said which was
-          which. The phone reading was better than the desktop one.
-          The structure now carries the meaning: real column headers, a real row
-          header per place, and the sort state on the header where it is read.
-          The small labels stay for the phone layout, and above it the header
-          does the work it was always drawn to look like it was doing. */}
-      <Table className="text-[length:var(--t-micro)]">
-        <caption className="sr-only">
-          The same trade in comparable places, sorted by {col.label.toLowerCase()}, highest first.
-        </caption>
-        <TableHeader className="hidden sm:table-header-group">
-          <TableRow className="border-[var(--c-border)] hover:bg-transparent">
-            <TableHead scope="col" className="h-auto w-[30%] px-0 pb-2 text-left text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">
-              Place
-            </TableHead>
-            {cols.map((c) => {
-              const on = c.key === sortKey;
-              return (
-                <TableHead
-                  key={c.key}
-                  scope="col"
-                  aria-sort={on ? "descending" : "none"}
-                  className="h-auto px-0 pb-2 text-right"
-                >
-                  <span className="flex items-center justify-end gap-1">
-                    <button
-                      type="button"
-                      onClick={() => setSortKey(c.key)}
-                      className={`flex items-center gap-1 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide transition-colors ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"}`}
-                    >
-                      <span>{c.label} <span className="font-normal lowercase tracking-normal">({c.unit})</span></span>
-                      <span aria-hidden className={`fig text-[length:var(--t-mark)] ${on ? "opacity-100" : "opacity-30"}`}>{on ? "↓" : "↕"}</span>
-                    </button>
-                    {/* rulebook 40: the coined "keeps per $1" metric carries its gloss as a "?"
-                        InfoTip on the header (OUTSIDE the sort button, no nested buttons), which
-                        replaces the glued definition caption that used to sit under the table. */}
-                    {c.key === "rate" ? <InfoTip gloss="The owner's yearly take for every dollar of turnover." /> : null}
-                  </span>
-                </TableHead>
-              );
-            })}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sorted.map((r) => (
-            <TableRow
-              key={r.name}
-              className="grid grid-cols-2 gap-x-3 gap-y-2 rounded-md border border-[var(--c-border)] p-3 hover:bg-transparent sm:table-row sm:gap-0 sm:rounded-none sm:border-0 sm:border-b sm:p-0"
-              style={r.home ? { background: "var(--c-soft)" } : undefined}
-            >
-              <TableHead
-                scope="row"
-                className="col-span-2 h-auto px-0 py-0 text-left text-[length:var(--t-body)] font-medium text-[var(--c-ink)] sm:table-cell sm:py-2.5 sm:align-middle"
-              >
-                <span data-label className="block min-w-0 truncate">
-                  {r.name}
-                  {r.home ? <span className="ml-1.5 text-[length:var(--t-mark)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">here</span> : null}
-                </span>
-              </TableHead>
-              {cols.map((c) => {
-                const v = c.get(r);
-                const isBest = v === best[c.key];
-                const crowned = c.key === "rate" && isBest; // the ONE terracotta accent in this card
-                return (
-                  <TableCell key={c.key} data-col={c.key} className="min-w-0 px-0 py-0 align-middle sm:table-cell sm:py-2.5 sm:text-right">
-                    <span className="block text-[length:var(--t-mark)] uppercase tracking-wide text-[var(--c-muted)] sm:hidden">{c.label}</span>
-                    <Fig className={`text-[length:var(--t-micro)] ${crowned ? "font-semibold text-[var(--terra-text)]" : isBest ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink)]"}`}>{c.cell(v)}</Fig>
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      {/* THE DISCLOSURE SAT WHERE THE NUMBERS ARE NOT. This card declares itself a
-          sample at its head, and the tables only other caption is screen-reader
-          only, so a sighted reader who scrolls down to four named cities and four
-          exact turnover figures has nothing beside those figures saying what they
-          are. A tag forty pixels above a table gets read once, on the way past;
-          the figures get read one at a time, and each one reads as a measurement.
-          One line, at the point of reading, in the same words the tag uses. */}
-      <p className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">Illustrative. These are not measurements taken in each city.</p>
-      {/* the glued definition + "read like for like" instruction caption is DELETED
-          (rulebook 26/40): the unit lives in the column header "(c)" and its InfoTip, and
-          the section's own kicker already states the "same trade, comparable places" scope. */}
-    </Box>
-  );
-}
+import { Box, Rail, EaseScale, InlineDisclosure } from "@/components/spine/kit";
 
 /* Risks , WI-3 brief (enriched, Final Ascent):
  * decision: what actually closes these kitchens. ALL FOUR scores visible on ONE shared

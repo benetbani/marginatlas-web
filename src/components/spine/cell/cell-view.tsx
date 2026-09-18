@@ -49,15 +49,25 @@
  * populated on the live route; the industry page's subject). BreakEven reads
  * the seed alone now.
  *
+ * WHAT THE FOURTH DISPATCH BUILT (2026-09-18): `07 peers` on CompareTable,
+ * full width, closing turn one (turn-one.tsx PeersCard off
+ * trade_peer_rows.ts: the United States' per-state slate, the seated table
+ * with its stated line off the United States, never an invented peer); and
+ * the band `08 clears | 09 lasts` on turn-two.tsx, the share of a typical
+ * day at 30 in terracotta on BentoMetric (clears_rows.ts: the engine where
+ * money is shown, else the shard; the ring is candidate 4 awaiting his
+ * click, its mockup owed to the review sheet) and survival as a series on
+ * KvGrid (lasts_rows.ts, the shard's triple, year five first, the focal
+ * cell candidate 1). WHAT IT RETIRED: the Nearby table (a sortable client
+ * island in interactive.tsx holding the four invented UK cities), the
+ * break-even ring (money-chapter.tsx, the ClearanceRing off two rounded
+ * covers, the file gone with it) and the Myth card below this header (the
+ * London file's survival triple as a slope with "9 in 10 fail" struck
+ * across it, both banned by R5), with the seed's `myth` block.
+ *
  * WHAT STAYS MOUNTED UNTIL ITS OWN DISPATCH, each of today's cards in the
  * seat of the 8.6 block that absorbs it (SPINE.md PART A's inventory), and
  * retiring nothing a later block absorbs:
- *   peers (Nearby)          -> `07 peers`, CompareTable full width; in a
- *                              band until then, because a full width with no
- *                              wide-table sanction reds the section-bands
- *                              gate (its baseline for this page is 0)
- *   breakeven (BreakEven)   -> `08 clears`, the ring
- *   myth (Myth)             -> `09 lasts`, the survival KvGrid (R5)
  *   risks (Risks)           -> `10 watch`, his B1, data-blocked and seated
  *   week + catchment        -> `11 mix`, the donut (channels); the dayparts
  *   (Demand)                   donut is cut there; both self-omit on the
@@ -96,11 +106,9 @@
  *   donut (a whole = donut; peak slice terracotta): Demand dayparts x1 (ch2)
  *   ranked figure list (label + right-aligned figure, no track): Demand catchment
  *   lollipop on a drawn track (thin, marker family, not a fill bar): CostToOpen line items x1
- *   line/area zero baseline: SurvivalSlope x1; zero-baseline monthly COLUMNS: Seasonality x1
- *   ClearanceRing (idea I7, area, cap 1: the ring closes AT break-even and the
- *      surplus takes a second lap outside it): BreakEven x1. It replaced a
- *      two-marker scale on 2026-09-02, subsection queue row A4.
- *   editorial table (figures + bold-best, no in-cell bars): Nearby x1
+ *   zero-baseline monthly COLUMNS: Seasonality x1
+ *   (the SurvivalSlope, the ClearanceRing and the Nearby table left on the
+ *      fourth dispatch, above)
  *   spread strip: masthead turnover p10/p50/p90 x1
  * REMOVED forms: Gauge, 3-pip meters, Dots, invented-ceiling break-even fill bar, the
  *   3-level "waterfall" bars (-> true stepped waterfall), min-floored seasonality area,
@@ -113,16 +121,19 @@
 import * as React from "react";
 import { spineCellSeed } from "@/lib/spine-seeds";
 import {
-  Fig, Box, Rail, Movement, WideRail, Donut, ShareStack, InfoTip, StruckLine, TERRA, usd, Band,
+  Fig, Box, Rail, Movement, WideRail, Donut, ShareStack, InfoTip, TERRA, usd, Band,
 } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
-import { BreakEven } from "./money-chapter";
-import { PermitsCard, OpenCard, SplitCard, TeamCard } from "./turn-one";
+import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "./turn-one";
+import { ClearsCard, LastsCard } from "./turn-two";
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { buildSplit } from "@/lib/spine/split_rows";
 import { buildTeam } from "@/lib/spine/team_rows";
-import { Nearby, Risks } from "./interactive";
+import { buildTradePeers } from "@/lib/spine/trade_peer_rows";
+import { buildClears } from "@/lib/spine/clears_rows";
+import { buildLasts } from "@/lib/spine/lasts_rows";
+import { Risks } from "./interactive";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
@@ -383,136 +394,12 @@ function Seasonality({ d }: { d: any }) {
 }
 
 /* ================= CH5 , PLACE AND RIVALS ================= */
-/* Myth , WI-3 brief (rulebook v2 corrections, 2026-07-10; S12, the myth-busting
- * device was "a schematic cliche"): the "Myth, busted" kicker (a pre-asserted
- * conclusion) and the Rail verdict are both DELETED, retitled to a plain "Myth vs.
- * reality". The quoted claim box is ALSO gone , the folklore is now struck directly
- * ON the survival chart (StruckLine, a phantom grey dashed line), not asserted in a
- * text box beside it.
- * decision: bust the belief operators actually hold. Number: the real year-one survival rate (NEW, not restated).
- * focal: the survival curve with the folklore struck on it. width: Even half. terracotta target: the survival figure. */
-export function Myth({ d }: { d: any }) {
-  const my = d.myth ?? {};
-  const s = my.survival ?? {};
-  const survival: Array<[string, number]> = [["Yr 1", s.year1_pct], ["Yr 3", s.year3_pct], ["Yr 5", s.year5_pct]]
-    .filter(([, v]) => typeof v === "number") as Array<[string, number]>;
-  return (
-    <Box id="myth" className="md:flex-[3]">
-      {/* ink rail: the ONE accent in this box is the year-one survival node + figure. */}
-      <Rail icon="myth-reality" kicker="Myth vs. reality" sample />
-      {/* the evidence, ALONE: a survival curve with the "9 in 10 fail" folklore struck ON
-          it (rulebook 30), terracotta on the year-one node only. The "survivors, not
-          failures" caption read and the reality paragraph are BOTH deleted , the bust lives
-          on the chart, never in prose glued beside it (rulebook 26/19). */}
-      {survival.length >= 2 ? <SurvivalSlope points={survival} /> : null}
-    </Box>
-  );
-}
-
-/* The struck phantom line represents this page's one myth (myth.claim: "Nine in
- * ten restaurants fail in the first year"), read as a 10% year-one survival rate ,
- * the documented illustrative reading of that PROSE claim (rulebook v2 D4: a
- * modelled/illustrative figure must carry a visible label; StruckLine's own struck
- * caption is that label). It is the thing being debunked, not a data figure, so it
- * is fixed to this page's specific folklore rather than parsed out of myth.claim; a
- * future cell with a differently-worded myth would need this constant revisited. */
-const FOLKLORE_SURVIVAL_PCT = 10; // "nine in ten fail" -> 10% survive
-const FOLKLORE_LABEL = "folklore: 9 in 10 fail";
-
-/* survival curve , the share still trading at year 1 / 3 / 5 as a descending line.
- * One accent: the year-one node + figure (the belief being busted). StruckLine draws
- * the folklore phantom INSIDE this same <svg>, projected through this chart's own
- * X()/Y() scale (a flat line at the folklore's implied survival level, spanning the
- * same x-span as the real curve, struck out) , the kit.tsx:598 contract. */
-function SurvivalSlope({ points }: { points: Array<[string, number]> }) {
-  /* THE DRAWING STRETCHES. THE WORDS DO NOT.
-     This was one fixed 320-unit picture given the card's full width with its
-     height pinned and its aspect ratio LOCKED, which does not stretch it: it
-     scales the whole thing to FIT, and with the height already at its limit the
-     scale stays at one. So on any card wider than 320 the chart drew at its
-     native size and sat centred with blank space either side, a half-width
-     drawing floating in a full-width band.
-     Unlocking the ratio alone would repeat the fault fixed on the year chart,
-     where every letter got stretched sideways. So the SVG now holds the PATHS
-     ONLY and stretches freely, while every readable thing, the three readings,
-     the year names and the struck folklore words, is real text in the page laid
-     over it. The horizontal scale is the only one that changes, so a percentage
-     puts a DOM element exactly on its path point, and a viewBox unit stays a
-     pixel vertically. */
-  const W = 320, H = 110, padL = 8, padR = 8, padTop = 22, padBot = 26;
-  const min = 0, max = 100;
-  const X = (i: number) => padL + (i / (points.length - 1)) * (W - padL - padR);
-  const Y = (v: number) => padTop + (1 - (v - min) / (max - min)) * (H - padTop - padBot);
-  const leftPct = (i: number) => (X(i) / W) * 100;
-  /* THE END LABELS ANCHOR INWARD. Centring a label on its own point is right in
-     the middle of a chart and wrong at either end: once the drawing filled the
-     card, the first and last readings hung half outside it and "Yr 5" wrapped
-     onto two lines. Caught by photographing the fix, not by writing it. The
-     same anchor rule the break-even marker and the risk scale already use. */
-  const anchor = (i: number) =>
-    i === 0 ? "translateX(0)" : i === points.length - 1 ? "translateX(-100%)" : "translateX(-50%)";
-  const coords = points.map(([, v], i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
-  const line = "M " + coords.join(" L ");
-  const area = `M ${X(0).toFixed(1)},${(H - padBot).toFixed(1)} L ` + coords.join(" L ") + ` L ${X(points.length - 1).toFixed(1)},${(H - padBot).toFixed(1)} Z`;
-  const phantomPts: Array<[number, number]> = [[X(0), Y(FOLKLORE_SURVIVAL_PCT)], [X(points.length - 1), Y(FOLKLORE_SURVIVAL_PCT)]];
-  return (
-    <div className="mt-3 border-t border-[var(--c-border)] pt-3">
-      <div
-        className="relative w-full"
-        style={{ height: H }}
-        role="img"
-        aria-label={`Still trading: ${points.map(([l, v]) => `${l} ${v}%`).join(", ")}. Folklore claims 9 in 10 fail in the first year, struck out on the same chart.`}
-      >
-        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
-          {/* neutral fill: the line's carrier is grey, so the fill is too , the ONE accent
-              in this box is the year-one node + figure (the myth being busted) */}
-          <path d={area} fill="var(--chart-4)" opacity={0.08} />
-          <path d={line} fill="none" stroke="var(--chart-5)" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-          <StruckLine points={phantomPts} label={FOLKLORE_LABEL} hideLabel />
-        </svg>
-        {points.map(([label, v], i) => {
-          const lead = i === 0;
-          return (
-            <React.Fragment key={label}>
-              <span
-                aria-hidden
-                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white"
-                style={{ left: `${leftPct(i)}%`, top: `${Y(v)}px`, width: lead ? 8 : 6, height: lead ? 8 : 6, background: "var(--c-ink)" }}
-              />
-              {/* INK ON THE YEAR-ONE NODE AND FIGURE (plan step 33's first dispatch,
-                  2026-09-18): the page's loud moments are 8.6's three (`00`, `04`,
-                  `08`) and PART 6 sends every other terracotta figure to ink; this
-                  card is `09 lasts`'s seat until the survival grid replaces it. */}
-              <span className="absolute leading-none" style={{ left: `${leftPct(i)}%`, top: `${Y(v) - 19}px`, transform: anchor(i) }}>
-                <Fig className={`text-[length:var(--t-micro)] ${lead ? "font-semibold text-[var(--c-ink)]" : "font-medium text-[var(--c-ink)]"}`}>{v}%</Fig>
-              </span>
-              <span className="absolute whitespace-nowrap text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]" style={{ left: `${leftPct(i)}%`, top: `${H - 13}px`, transform: anchor(i) }}>
-                {label}
-              </span>
-            </React.Fragment>
-          );
-        })}
-        {/* THE CAPTION NAMES THE CLAIM, IT IS NOT A SECOND STRIKE. It carried a
-            line through its own text while the dashed line it labels was already
-            struck: one idea cancelled twice, which reads as a mistake rather than
-            a finding, and it is the pile the founder described on 2026-08-25. */}
-        <span
-          aria-hidden
-          className="absolute text-[length:var(--t-mark)] leading-none text-[var(--c-muted)]"
-          style={{ right: `${100 - leftPct(points.length - 1)}%`, top: `${Y(FOLKLORE_SURVIVAL_PCT) - 15}px` }}
-        >
-          {FOLKLORE_LABEL}
-        </span>
-      </div>
-      {/* one-line legend only (rulebook 26): names the two lines so the real curve reads
-          against the struck folklore phantom. No sentence, no verdict, no "read". */}
-      <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: "var(--chart-5)" }} />still trading</span>
-        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-0 w-4 border-t border-dashed" style={{ borderColor: "var(--c-line-strong)" }} />folklore</span>
-      </div>
-    </div>
-  );
-}
+/* The Myth card, its folklore constants and the SurvivalSlope stood here
+ * until plan step 33's fourth dispatch (2026-09-18): the London file's
+ * survival triple drawn as a descending line with "9 in 10 fail" struck
+ * across it. Survival is a series on the metric row, quiet, fed by the 243
+ * shards, with no slope and no myth sentence (R5, PART 9 clause 40); it is
+ * `09 lasts` on turn-two.tsx now, off lasts_rows.ts. */
 
 /* Related , rulebook v1 sections 5, 15 and 32 (founder G6/G7/G9, 2026-07-11): the
  * per-trade keep-% lollipop ranking and its computed "every neighbouring trade
@@ -693,18 +580,26 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      holds two children or does not draw (the same condition as `03 | 04`). */
   const split = buildSplit(d);
   const team = buildTeam(d.meta?.industry_id, d.meta?.iso2);
-  const hasBreakEven = typeof d.break_even?.covers_per_day === "number";
+  /* `07 peers` (turn-one.tsx): the table builds on every resolving cell
+     (the seed always names its place), with the slate's rows on a United
+     States cell and the seated form off it, so the second full width stands
+     on every trade page. */
+  const peers = buildTradePeers(d);
+  /* `08 clears | 09 lasts` (turn-two.tsx): the share off the engine where
+     money is shown, else the shard; the survival triple off the shard; both
+     on every trade that holds a shard, so the band holds two children or
+     does not draw (the same condition as `03 | 04`). */
+  const clears = buildClears(d);
+  const lasts = buildLasts(d.meta?.industry_id);
   const hasSeasonality = Array.isArray(d.seasonality?.months) && d.seasonality.months.length >= 2;
   const hasRisks = Array.isArray(d.risks?.items) && d.risks.items.length > 0;
-  const hasNearby = Array.isArray(d.nearby?.places) && d.nearby.places.length > 0;
-  const hasMyth = !!d.myth?.claim;
   const hasRelated = Array.isArray(d.related) && d.related.length > 0;
   /* The turns, by whether a card stands under each (the header says why the
-     third waits on `12 market`): turn one holds the money cards, turn two
-     the ring, the survival curve and the risks, turn three the seasonality
-     alone today. */
-  const turnOne = !!(permits && open) || !!(split && team) || hasNearby;
-  const turnTwo = hasBreakEven || hasMyth || hasRisks || hasDemand;
+     third waits on `12 market`): turn one holds the money cards and the
+     peers, turn two the share, the survival grid and the risks, turn three
+     the seasonality alone today. */
+  const turnOne = !!(permits && open) || !!(split && team) || !!peers;
+  const turnTwo = !!(clears && lasts) || hasRisks || hasDemand;
   const turnThree = hasSeasonality;
 
   return (
@@ -766,14 +661,14 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               <TeamCard team={team} />
             </Band>
           ) : null}
-          {/* `07 peers`, FULL WIDTH in 8.6 on CompareTable, closing turn one; today's
-              Nearby table in a band at the survivor's two thirds until its
-              dispatch (the header says why not full width yet). */}
-          {hasNearby ? (
-            <Band split="2-1">
-              <Nearby d={d} />
-            </Band>
-          ) : null}
+          {/* `07 peers`, FULL WIDTH, the page's second of three (8.6, R1: the
+              take, the peers, the close), closing turn one: the table on
+              CompareTable, which draws its own `data-wide-table` wrapper, the
+              sanction the full-width and lone-card gates read; the
+              section-bands baseline for this page moved 0 to 1 with it, the
+              city's precedent (its history entry says so). Quiet by table
+              law, no colour; the rows never navigate (M23). */}
+          {peers ? <PeersCard peers={peers} /> : null}
         </>
       ) : null}
 
@@ -782,18 +677,17 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
       {turnTwo ? (
         <>
           <Movement index="02" heading={COPY.tradeChapters.keep} />
-          {/* `08 clears | 09 lasts`, 1-1, the ring LEFT (loud three in 8.6) and the
-              survival figures RIGHT: today's break-even ring and the myth's
-              survival curve in their seats. */}
-          {hasBreakEven || hasMyth ? (
-            /* MEASURED 2026-09-18: at 1-1 the ring (a fixed 168 drawing) beside the
-               survival curve opened a 150 by 246 hole to its right at 1280; a ring
-               cannot fill a width, so the width comes to the ring (the old body's
-               own finding on this card) and the interim pair sits at 1-2 until the
-               ring is redrawn at `08`'s dispatch. */
-            <Band split="1-2">
-              {hasBreakEven ? <BreakEven d={d} /> : null}
-              {hasMyth ? <Myth d={d} /> : null}
+          {/* `08 clears | 09 lasts`, 1-1 AS EXPECTED, the share LEFT (loud three
+              in 8.6, the page's third and last accent, on BentoMetric while
+              the ring waits for his click) and the survival grid RIGHT, quiet,
+              ink. MEASURED 2026-09-18 at three widths on London, California
+              and Mumbai cafes (the dispatch's report carries the numbers): a
+              one-figure card against three cells, 0 holes. Both cards draw on
+              every cell whose trade holds a shard. */}
+          {clears && lasts ? (
+            <Band split="1-1">
+              <ClearsCard clears={clears} />
+              <LastsCard lasts={lasts} />
             </Band>
           ) : null}
           {/* `10 watch | 11 mix`, 1-1, the risks LEFT (his B1's seat) and the
