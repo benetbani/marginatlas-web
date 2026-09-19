@@ -45,23 +45,32 @@
  * next move" over the exit) left with the order: 8.7's three turns carry
  * the breaks and the exit carries none.
  *
+ * WHAT THE SECOND DISPATCH BUILT (2026-09-18): turn one, `03 split | 04
+ * open` at `2-1` stacked until lg and `05 pays` the bento, on turn-one.tsx
+ * (it says which law each obeys; the builders are split_rows.ts at the
+ * world altitude over the one net builder, industry_open_rows.ts over the
+ * trade's permits and open builders, pays_rows.ts over the shard's roles,
+ * first-year rows and cost stack, every figure marked modelled). WHAT IT
+ * RETIRED, each with what it drew: `#split`, the MoneySplit (the $100 stack
+ * as three stages off the margins file's clamped ladder, the file's 5%
+ * default on 39 trades, a net that disagreed with the hero's by a point on
+ * 8, the verdict sentence in its rail, the fixed-and-variable bracket and
+ * its notes: `03` is its seat, the shard's drivers and the one net); the
+ * BreakEven meter, the Ramp phase bar and the CapitalPayback bracket, none
+ * of them fed on the live route (the adapter omitted `cost_structure`,
+ * `first_year` and `payback` on purpose): `04`'s months cell and `05`'s two
+ * metric cells are their seats, off the shard for 243. The adapter's
+ * `money_split` block left with the MoneySplit.
+ *
  * TODAY'S SURVIVORS KEEP THEIR SEATS IN 8.7's ORDER until their dispatches,
- * each mapped to its block: `#split` (MoneySplit, the $100 stack off the
- * margins file) is `03 split`, rebuilt on IncomeBreakdown off the shard's
- * drivers and the one net builder at the second dispatch (until then the
- * page carries two nets on 8 of 243 trades by one point and the file's 5%
- * default on the 39 the file does not hold, stated in the dispatch's
- * report); the Ramp's break-even week is `04 open`'s months cell and the
- * BreakEven meter and the CapitalPayback bracket are `05 pays`'s two metric
- * cells (none of the three is fed on the live route today; each keeps its
- * guard); the WherePaysExplorer is `06 places` (it gates on `rent_load_pct`,
- * never set, so it has never drawn on the live route); WhoItSuits and the
- * Caveats are the two halves of `09 know`, the page's one prose section,
- * seated side by side until that dispatch merges them on NoteList; the
- * Seasonality ribbon's swing is `10 field`'s third cell (never fed on the
- * live route); the Close is `11 close` on Terminus at the fourth dispatch
- * (its recap figure left today with the `margin_index` and `benchmark`
- * feeds, 8.7's own cut: "no recap figure").
+ * each mapped to its block: the WherePaysExplorer is `06 places` (it gates
+ * on `rent_load_pct`, never set, so it has never drawn on the live route);
+ * WhoItSuits and the Caveats are the two halves of `09 know`, the page's
+ * one prose section, seated side by side until that dispatch merges them on
+ * NoteList; the Seasonality ribbon's swing is `10 field`'s third cell (never
+ * fed on the live route); the Close is `11 close` on Terminus at the fourth
+ * dispatch (its recap figure left today with the `margin_index` and
+ * `benchmark` feeds, 8.7's own cut: "no recap figure").
  *
  * THE THIRD CHAPTER BREAK draws when a card stands under it (the trade
  * view's own rule): the suits and the caveats build off the authored
@@ -78,22 +87,20 @@
  */
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
-import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
-import { Fig, Meter, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, PhaseBar, StackBar, Full, TERRA, GREY_RAMP, usd, Band } from "@/components/spine/kit";
+import { Fig, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Full, Band } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
 import { WherePaysExplorer } from "./where-pays";
-import { SeasonRibbon, RangeBracket, CountFig } from "./forms";
+import { SeasonRibbon } from "./forms";
 import { Masthead, BenchmarkCard } from "./opening";
+import { SplitCard, OpenCard, PaysBand } from "./turn-one";
 import { LastsCard } from "@/components/spine/cell/turn-two";
 import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import { buildLasts } from "@/lib/spine/lasts_rows";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
+import { buildIndustrySplit } from "@/lib/spine/split_rows";
+import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
+import { buildPays } from "@/lib/spine/pays_rows";
 import { COPY } from "@/lib/spine/copy";
-
-const money = usd; // ONE money grammar page-set-wide (kit usd: exact below $10,000, $426K, $1.4M)
-
-/* count words shared by the count-derived sentences (kept in the component, never the seed) */
-const COUNT_WORD: Record<number, string> = { 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven" };
 
 /* glossTerm , attach the kit InfoTip after the FIRST occurrence of a jargon term inside
  * seed prose (rule 24: teach as you inform). Returns the text untouched when the term is
@@ -106,213 +113,6 @@ function glossTerm(text: string | undefined, term: string, gloss: string): React
   return <>{text.slice(0, end)}<InfoTip gloss={gloss} />{text.slice(end)}</>;
 }
 const GLOSS_PRIME_COST = "Food and labour together, the two big controllable costs.";
-const GLOSS_UTILISATION = "Share of a typical day's trade.";
-
-/* ============================================================
- * MONEY SPLIT , where each $100 goes, the ONE carrier of the fixed/variable split.
- * decision: what eats the sale. Number: the kept $7 slice of the stacked $100.
- * focal: the 100%-stacked bar, ON-BAR % labels on every segment >=12%; the legend
- *   stays as the name-to-colour mapping.
- * width: Full (T1). terracotta: the kept slice only. */
-export function MoneySplit({ d }: { d: any }) {
-  const ms = d.money_split ?? {};
-  const items: any[] = ms.items ?? [];
-  if (!items.length) return null;
-  /* THE SHARED RAMP, not a second copy of it. These five values were written out
-     again here, identical to the ramp the spine kit already declares, so the two
-     could drift apart without anything noticing. */
-  const GREYS = GREY_RAMP.slice(0, 5);
-
-  /* THE STACK MUST TOTAL A HUNDRED, and this one is built so that it does: the
-     fixed stage is the residual of the other three, so rounding cannot escape.
-     What CAN escape is a floor. Every stage is clamped at zero, and a clamp is a
-     silent correction: measured margins are under no obligation to arrive in
-     textbook order, and nothing upstream promises they will. Run the real
-     arithmetic on a ladder where the net sits above the operating figure and the
-     four parts total 107; on one where it sits above the gross, 135. The bar is
-     a flex row, so it quietly squeezes itself back inside its own track and
-     looks fine, while the printed percentages beside it add up to a third more
-     than the hundred dollars the section is about.
-     So it refuses to draw. The tolerance is ONE point rather than the four the
-     cell page's version uses, and deliberately: that stack rounds each slice on
-     its own and can drift by about a point in ordinary use, while this one is
-     exact by construction. Anything off here means a floor fired, which is a
-     real inconsistency in the ladder and not a rounding artefact. */
-  const groupRank: Record<string, number> = { variable: 0, fixed: 1, kept: 2 };
-  const ordered = items.slice().sort((a, b) => (groupRank[a.group] ?? 1) - (groupRank[b.group] ?? 1) || b.pct - a.pct);
-  const sizeRank = new Map<string, number>(ordered.filter((i) => !i.kept).slice().sort((a, b) => b.pct - a.pct).map((s, i) => [s.name as string, i] as [string, number]));
-  const parts = ordered.map((it) => ({ ...it, color: it.kept ? TERRA : GREYS[Math.min(GREYS.length - 1, sizeRank.get(it.name) ?? 0)] }));
-  const variablePct = items.filter((i) => i.group === "variable").reduce((a, i) => a + i.pct, 0);
-  const fixedPct = items.filter((i) => i.group === "fixed").reduce((a, i) => a + i.pct, 0);
-  const keptPct = items.filter((i) => i.group === "kept").reduce((a, i) => a + i.pct, 0);
-  const hasGroups = variablePct > 0 && fixedPct > 0 && keptPct > 0;
-  const hasSplitNotes = !!(ms.fixed_note || ms.variable_note);
-  // The verdict names how many cost lines the owner's slice sits behind, counted
-  // from the real stack (four on the full seed, three on the reconciled real stack),
-  // so the sentence is honest on both and byte-identical on the dev route.
-  const nonKeptCount = items.filter((i) => !i.kept).length;
-  const nonKeptWord = COUNT_WORD[nonKeptCount] ?? `${nonKeptCount}`;
-  const stackTotal = items.reduce((a, i) => a + (Number.isFinite(i.pct) ? i.pct : NaN), 0);
-  if (!Number.isFinite(stackTotal) || Math.abs(stackTotal - 100) > 1) return null;
-  return (
-    <Full>
-      <Box id="split">
-        <Rail icon="cost-breakdown" kicker="Where each $100 goes" verdict={`The owner's slice is what ${nonKeptWord} bigger lines leave behind.`} sample />
-        {/* THE ON-BAR LABELS MOVED INTO THE SHARED BAR. This page drew its own
-            overlay, with the same rule the shared form now applies , at or above
-            12%, plus the kept slice regardless, because the kept slice is the
-            card's answer and must never be the one segment without a value.
-
-            The trade page uses the same form and drew NO on-bar labels, so one
-            idea rendered two ways on two pages. Fixing that in the shared bar
-            duplicated every label here, ink over ink, until this overlay came
-            out. The shared version also picks its text colour from each segment's
-            own luminance instead of one ink at 80% opacity, so it holds on the
-            dark grey as well as the light ones. */}
-        <StackBar segments={parts.map((p) => ({ label: p.name, pct: p.pct, color: p.color, kept: !!p.kept }))} sort={false} h="h-11" ariaLabel={parts.map((p) => `${p.name} ${p.pct}%`).join(", ")} legend />
-        {/* fixed / variable bracket row , folds the old donut into an annotation over the same
-            $100. Subs arrive from the seed (trade-specific copy never hardcodes here) and each
-            omits when absent. Below sm the value-proportional grid becomes a wrapped flex legend
-            (three label+figure+sub stacks, border-top kept); the proportional bracket holds sm+. */}
-        {hasGroups ? (() => {
-          const bracket: Array<{ label: string; pct: number; sub?: string }> = [
-            { label: "Variable", pct: variablePct, sub: ms.variable_sub },
-            { label: "Fixed", pct: fixedPct, sub: ms.fixed_sub },
-            { label: "Kept", pct: keptPct, sub: ms.kept_sub },
-          ];
-          const cell = (b: { label: string; pct: number; sub?: string }) => (
-            <>
-              <span className="whitespace-nowrap font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{b.label} <Fig className="text-[var(--c-ink)]">{b.pct}%</Fig></span>
-              {b.sub ? <span className="mt-0.5 block leading-tight text-[var(--c-muted)]">{b.sub}</span> : null}
-            </>
-          );
-          return (
-            <>
-              <div /* MINMAX, SO A COLUMN NEVER GETS NARROWER THAN ITS OWN LABEL. The tracks
-                     are proportional to the values, which is the point of the bracket, but
-                     a 3fr track against a 90fr one is far too narrow to hold the words
-                     FIXED 3% on one line. So two of the three labels wrapped and one did
-                     not, and the row showed the same kind of information in two different
-                     arrangements. Each track now starts at the width its text needs and
-                     shares what is left in proportion. */
-                className="mt-4 hidden gap-1 text-[length:var(--t-micro)] sm:grid sm:grid-cols-[minmax(min-content,var(--vc))_minmax(min-content,var(--fc))_minmax(min-content,var(--kc))]" style={{ ["--vc" as any]: `${variablePct}fr`, ["--fc" as any]: `${fixedPct}fr`, ["--kc" as any]: `${keptPct}fr` }}>
-                {bracket.map((b) => <div key={b.label} className="border-t border-[var(--c-line-strong)] pt-1">{cell(b)}</div>)}
-              </div>
-              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[length:var(--t-micro)] sm:hidden">
-                {bracket.map((b) => <div key={b.label} className="min-w-[6rem] flex-1 border-t border-[var(--c-line-strong)] pt-1">{cell(b)}</div>)}
-              </div>
-            </>
-          );
-        })() : null}
-        {hasSplitNotes ? (
-          <InlineDisclosure name="split-notes" summary="What is fixed, and what flexes with covers">
-            <div className="mt-2 space-y-2.5 border-t border-[var(--c-border)] pt-2.5">
-              {ms.fixed_note ? (
-                <div className="grid grid-cols-[4.5rem_1fr] gap-3">
-                  <span className="pt-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Fixed</span>
-                  <span className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{ms.fixed_note}</span>
-                </div>
-              ) : null}
-              {ms.variable_note ? (
-                <div className="grid grid-cols-[4.5rem_1fr] gap-3">
-                  <span className="pt-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Variable</span>
-                  <span className="text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{ms.variable_note}</span>
-                </div>
-              ) : null}
-            </div>
-          </InlineDisclosure>
-        ) : null}
-      </Box>
-    </Full>
-  );
-}
-
-/* BREAK-EVEN , how full a typical day must run to clear costs (fill-bar meter).
- * decision: what share of a typical day's trade pays the nut. Number: breakeven_utilization_pct.
- * The seed field is cost_structure.breakeven_utilization_pct; if it is absent the card
- * renders nothing (never a 0). No honest per-figure source at industry altitude, so it
- * OMITS on real-data promotion.
- * focal: the utilisation figure over a filled Meter. width: WideRail rail (paired with
- * MoneySplit, the chart), no width tier of its own (S8/S9: it no longer floats alone).
- * terracotta: the meter fill only. idiom: fill-bar (1 use on the page). */
-function BreakEven({ d }: { d: any }) {
-  const cs = d.cost_structure ?? {};
-  const be: number | null = typeof cs.breakeven_utilization_pct === "number" ? cs.breakeven_utilization_pct : null;
-  if (be == null) return null;
-  return (
-    <Box data-block="breakeven">
-      {/* plain-words kicker (rulebook v1 §13: no jargon in titles; "utilisation" lives in the InfoTip) */}
-      <Rail icon="break-even" kicker="When a day starts paying" verdict="Below this share of a typical day's trade, the day loses money." />
-      <div className="mb-3 flex items-baseline gap-2.5"><CountFig value={be} suffix="%" className="text-[40px] leading-none text-[var(--c-ink)]" /><InfoTip gloss={GLOSS_UTILISATION} /></div>
-      <Meter value={be} left="empty" right="a typical day" />
-    </Box>
-  );
-}
-
-/* ============================================================
- * RAMP , the phase bar (rulebook v2 S10/D4, founder decision a, 2026-07-09). The
- * placeholder month-by-month milestone Timeline is scrapped (its invented nodes ,
- * "Full rota on", "Cash gap opens", "Cash gap closes", "Year one done" , were
- * modeled narrative, not measured weeks). Replaced by PhaseBar, fed by the only
- * two honest anchors: the modeled time to open (opening_archetypes, place-
- * invariant) and the seed's own ramp_to_breakeven_months (counted from week 0,
- * never from opening).
- * decision: how long to break even. focal: the phase bar's break-even tick.
- * Self-omits when the seed carries no break-even anchor.
- * width: Full (T1). terracotta: the break-even tick (PhaseBar-owned). */
-function breakevenWeekFor(d: any): number | null {
-  const rampMonths = d?.first_year?.ramp_to_breakeven_months;
-  return typeof rampMonths === "number" && Number.isFinite(rampMonths) && rampMonths > 0
-    ? Math.round(rampMonths * (52 / 12))
-    : null;
-}
-function Ramp({ d }: { d: any }) {
-  const breakevenWeek = breakevenWeekFor(d);
-  if (breakevenWeek == null) return null;
-  const openWeek = timeToOpenWeeks(d.meta?.id ?? d.meta?.industry ?? null);
-  return (
-    <Full>
-      <Rail icon="first-year" kicker="Getting to break-even" sample />
-      <Box data-block="ramp">
-        <PhaseBar openWeek={openWeek} breakevenWeek={breakevenWeek} />
-      </Box>
-    </Full>
-  );
-}
-
-/* CAPITAL PAYBACK , how long the fit-out takes to return + the gearing depth (Pro-ish).
- * decision: when does the cash come back, and what does debt do to it. Number: payback months.
- * Needs a single-place take-home + an authored gearing model, neither of which exists at
- * industry altitude, so the whole card OMITS on real-data promotion (guards on d.payback).
- * focal: the payback figure over a range BRACKET. width: WideRail rail. */
-function CapitalPayback({ d }: { d: any }) {
-  const p = d.payback;
-  if (!p || typeof p.payback_months !== "number") return null;
-  const lo = p.low_months ?? 0, hi = p.high_months ?? 1, mid = p.payback_months ?? 0;
-  const hasGearing = typeof p.unlevered_keep_pct === "number" && typeof p.levered_keep_pct === "number";
-  return (
-    <Box data-block="payback" className="flex flex-col justify-center">
-      <Rail icon="startup-cost" kicker="Payback window" verdict={p.verdict} sample />
-      <div className="mb-1 flex items-baseline gap-2.5"><CountFig value={mid} className="text-[40px] leading-none text-[var(--terra-text)]" /><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">months to return the <Fig className="text-[var(--c-ink)]">{money(p.capital_usd ?? 0)}</Fig> opening cost.</span></div>
-      <RangeBracket lo={lo} hi={hi} mid={mid} unit="mo" midLabel={`${mid} mo`} accent={false} />
-      {hasGearing ? (
-        <InlineDisclosure name="gearing" summary="If the fit-out is borrowed">
-          <div className="mt-2 grid grid-cols-2 gap-3 border-t border-[var(--c-border)] pt-2.5">
-            <div>
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Unlevered</div>
-              <div className="mt-0.5 text-[length:var(--t-body)] text-[var(--c-ink)]"><Fig>{p.unlevered_keep_pct}%</Fig> keep, back in <Fig>{p.unlevered_months}</Fig> mo</div>
-            </div>
-            <div>
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">At {p.levered_ltv_pct}% borrowed</div>
-              <div className="mt-0.5 text-[length:var(--t-body)] text-[var(--c-ink)]"><Fig>{p.levered_keep_pct}%</Fig> keep, back in <Fig>{p.levered_months}</Fig> mo</div>
-            </div>
-          </div>
-          {p.gearing_note ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{p.gearing_note}</p> : null}
-        </InlineDisclosure>
-      ) : null}
-    </Box>
-  );
-}
 
 /* WHO IT SUITS , two columns: suits / think twice.
  * decision: is this operator you. focal: the two bullet columns as a contrast.
@@ -563,13 +363,19 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   const hero = industryHeroFacts(industryId);
   const lasts = buildLasts(industryId, "world");
   const benchmark = buildBenchmark(industryId);
+  /* TURN ONE'S THREE, off the same id (plan step 34's second dispatch): the
+     split on the trade's builder at the world altitude (the one net builder
+     with the engine absent, the hero's own figure), the open card over the
+     trade's permits and open builders, the bento over the shard's roles,
+     first-year rows and cost stack. Each builds for every trade holding a
+     shard, so the band `03 | 04` holds two children or does not draw, and
+     the bento draws its four cells or not at all. */
+  const split = buildIndustrySplit(industryId);
+  const open = buildIndustryOpen(industryId);
+  const pays = buildPays(industryId);
 
   // Chapter-presence reads for today's survivors (each mirrors its card's own
   // null-guard) so a Movement header never floats over an empty chapter.
-  const hasMoneySplit = (d.money_split?.items ?? []).length > 0;
-  const hasBreakEven = typeof d.cost_structure?.breakeven_utilization_pct === "number";
-  const hasRamp = breakevenWeekFor(d) != null;
-  const hasPayback = typeof d.payback?.payback_months === "number";
   const hasWhoSuits = (d.who_suits?.suits ?? []).length > 0 || (d.who_suits?.think_twice ?? []).length > 0;
   // Mirrors WherePaysExplorer's own guard: the list carries rent-load facts only
   // (founder D3, 2026-07-11), so a place without rent_load_pct contributes nothing.
@@ -578,7 +384,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   // Mirrors Caveats' own guard: the margin claim off the margins file, the myths, the honest take.
   const hasCaveats = (d.caveats?.myths ?? []).length > 0 || !!d.caveats?.honest_take || (typeof d.margins?.gross_pct === "number" && typeof d.margins?.net_pct === "number");
   /* The turns, by whether a card stands under each. */
-  const turnOne = hasMoneySplit || hasRamp || hasBreakEven || hasPayback;
+  const turnOne = (!!split && !!open) || !!pays;
   const turnTwo = hasWherePays;
   const turnThree = hasWhoSuits || hasCaveats || hasSeasonality;
 
@@ -610,24 +416,44 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
       {turnOne ? (
         <>
           <Movement index="01" heading={COPY.industryChapters.costs} />
-          {/* `03 split | 04 open`: the $100 stack (03's seat until its dispatch)
-              beside the break-even week (04's months cell; never fed on the live
-              route, so the split stands alone under the lone-card finding the
-              laws list already records). */}
-          {hasMoneySplit || hasRamp ? (
-            <Band split="3-2">
-              {hasMoneySplit ? <MoneySplit d={d} /> : null}
-              {hasRamp ? <Ramp d={d} /> : null}
+          {/* `03 split | 04 open` (8.7): where each $100 goes before the owner
+              sees any of it, beside what it takes to be allowed to open the
+              doors. The breakdown LEFT and wide (fill-bar two of three, LEFT,
+              so it never shares a column with `02`'s bars, M10), the licence
+              grid RIGHT, both quiet. `2-1`, NOT 8.7's expected `3-2`, RULED
+              BY MEASUREMENT 2026-09-18 (8.4 rule 1, the closed set), and the
+              instrument had to be corrected first: probe_page and the page
+              filter count a closed plus's hidden rows as ink (a closed
+              <details>' rows still report client rects), so both read the
+              licence card as full at every split; measured with those rows
+              excluded (the art-direction gate's own inDeadDetails), the
+              breakdown stands 360 of content at every split and every width
+              on restaurants, hardware stores and watch repair, and the
+              licence card 237 at `3-2` and at `1-1` (123 of air under its
+              plus, over the filter's 120 floor to the eye) against 253 at
+              `2-1` (108 of air, "The slowest licence" wrapping to two lines
+              in the 347 seat), which is the one split in the set under the
+              floor; E2 reads 66 and 70 percent ink. `stack="lg"`, as the
+              trade page's split band: at a tablet's equal halves the legend
+              goes to one column under 360px of card and the breakdown stands
+              past the grid. */}
+          {split && open ? (
+            <Band split="2-1" stack="lg">
+              <SplitCard split={split} />
+              <OpenCard open={open} />
             </Band>
           ) : null}
-          {/* `05 pays`: the day share and the payback, the bento's two metric
-              cells until its dispatch; neither is fed on the live route. */}
-          {hasBreakEven || hasPayback ? (
-            <Band split="1-2">
-              {hasBreakEven ? <BreakEven d={d} /> : null}
-              {hasPayback ? <CapitalPayback d={d} /> : null}
-            </Band>
-          ) : null}
+          {/* `05 pays` (8.7): the bento, its own band; the payback lit, turn
+              one's accent and the page's second, the crew, the fixed part of
+              the costs and the day's share in ink. FOUR CELLS ON THE TRADE
+              MARKET'S TILING, not 8.7's three on two columns: 8.7's crew cell
+              was a 1072px card, full width by the section-bands gate and by
+              his ban (0 to 1 on a baseline that may only fall), and a tall
+              crew cell cannot hold a whole that runs 2 to 38; pays_rows.ts
+              and turn-one.tsx carry the numbers, the controller the ruling
+              (QUEUE industry:pays-fourth-cell). The cluster proves its own
+              tiling (2 + 1 + 1 + 2 = 6 of 6 on three columns; BentoBand.tsx). */}
+          <PaysBand pays={pays} />
         </>
       ) : null}
 

@@ -18,52 +18,12 @@
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/industry/industry-view.tsx#ladder",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#kept",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#spend",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#neighbours",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#split",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#6",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#7",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#open",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#9",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#survival",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
       "section": "src/components/spine/industry/industry-view.tsx#suits",
       "reason": "not yet on an archetype; a build loop queue row"
     },
     {
-      "section": "src/components/spine/industry/industry-view.tsx#12",
-      "reason": "not yet on an archetype; a build loop queue row"
+      "section": "src/components/spine/industry/industry-view.tsx#2",
+      "reason": "the Seasonality ribbon, never fed on the live route, the swing's seat until 10 field's dispatch (was #12 before the retirements of plan step 34)"
     },
     {
       "section": "src/components/spine/industry/industry-view.tsx#myths",

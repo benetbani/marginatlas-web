@@ -36,19 +36,27 @@
  *     failure claim is folklore ..."), a myth sentence R5 bans and an echo of
  *     `01`, and the caveats' struck survival claim.
  *
+ * WHAT LEFT WITH THE SECOND DISPATCH (plan step 34, 2026-09-18): the
+ * `money_split` block (the $100 stack as three stages off the margins file's
+ * ladder through the clamp, the file's 5% default on the 39 trades it does
+ * not hold, drawn by the old MoneySplit): `03 split` builds off the shard's
+ * drivers and THE ONE NET BUILDER by id (split_rows.ts `buildIndustrySplit`,
+ * R7), so the page carries one net where it carried two on 8 of 243 trades by
+ * a point and the file's default on 39. The old BreakEven, Ramp and
+ * CapitalPayback cards, never fed on the live route (`cost_structure`,
+ * `first_year`, `payback` were omitted here on purpose), retired into `04
+ * open`'s months cell and `05 pays`'s two metric cells, off the shard by id.
+ *
  * HONESTY RAIL (absolute) on what remains: every figure is driven from the
  * accessor and synthesis engines the live industry page already runs (the
- * margins file for the $100 stack and the caveats' margin claim until `03
- * split` lands on the shard's drivers, the activity character, the failure
- * modes, the real where_pays via buildAcrossCities). Nothing is fabricated.
- * Fields with no honest source at industry altitude are left UNDEFINED; the
- * spine body null-guards them so an omitted field renders nothing.
+ * margins file for the caveats' margin claim until `09 know` lands, the
+ * activity character, the failure modes, the real where_pays via
+ * buildAcrossCities). Nothing is fabricated. Fields with no honest source at
+ * industry altitude are left UNDEFINED; the spine body null-guards them so
+ * an omitted field renders nothing.
  *
  * What is OMITTED on promotion (no honest per-figure source):
  *   - seasonality (no monthly source) , the Season ribbon
- *   - first_year / the Ramp timeline (no ramp source)
- *   - payback / CapitalPayback (needs a single-place take-home + authored gearing)
- *   - cost_structure.breakeven_utilization (the BreakEven meter, no source)
  *   - where_pays[].rent_load_pct
  *
  * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
@@ -123,13 +131,10 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
   const character = getActivityCharacter(ind.id);
   const sector = SECTOR_BY_ID[ind.sector_id] ?? null;
 
-  // --- the margins file's ladder (whole percents), for the $100 stack and the
-  // caveats' margin claim until `03 split` lands on the shard's drivers and the
-  // one net builder. THE HERO NO LONGER READS THIS: `00 take` prints the one
-  // builder's net, which is the shard's ladder or the sector profile's residual
-  // (trade_net.ts); on 8 of 243 trades the two round to different whole
-  // percents and on the 39 the file does not hold this stack prints the file's
-  // default, stated in plan step 34's first report for the second dispatch.
+  // --- the margins file's ladder (whole percents), for the caveats' margin
+  // claim until `09 know` lands on NoteList. NEITHER THE HERO NOR THE SPLIT
+  // READS THIS: `00 take` and `03 split` print the one builder's net, which is
+  // the shard's ladder or the sector profile's residual (trade_net.ts).
   const grossPct = isNum(margin.gross_margin) ? Math.round(margin.gross_margin * 100) : undefined;
   const operatingPct = isNum(margin.operating_margin) ? Math.round(margin.operating_margin * 100) : undefined;
   // Net through the shared clamp (floor 3%), exactly as every other surface, so a
@@ -151,31 +156,6 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
     edge: character?.edge ?? null,
     watchOut: character?.watchOut ?? null,
   });
-
-  // --- money split (the $100 stack), 3 real stages from the margin ladder ------
-  // Direct cost of sales = 1 - gross; running the business = gross - operating;
-  // fixed + tax = operating - net; kept = net. Every stage is a real gap in the
-  // measured ladder. The fixed stage is taken as the residual so the stack totals
-  // exactly 100 (every dollar accounted). OMITS the seed's 5-line food/wages
-  // granularity + the $27/$66 fixed/variable notes (no honest source).
-  let moneySplit: any = undefined;
-  if (isNum(grossPct) && isNum(operatingPct) && isNum(netPct)) {
-    const direct = Math.max(0, 100 - grossPct);
-    const running = Math.max(0, grossPct - operatingPct);
-    const kept = netPct;
-    const fixed = Math.max(0, 100 - direct - running - kept);
-    moneySplit = {
-      items: [
-        { name: "Direct cost of sales", pct: direct, kept: false, group: "variable" },
-        { name: "Running the business", pct: running, kept: false, group: "variable" },
-        { name: "Fixed costs and tax", pct: fixed, kept: false, group: "fixed" },
-        { name: "Owner keeps", pct: kept, kept: true, group: "kept" },
-      ],
-      annotation:
-        "Direct costs and the running cost of the business decide the year; the owner keeps what the bigger lines leave behind.",
-      // fixed_note / variable_note deliberately OMITTED (no honest $-per-$100 source).
-    };
-  }
 
   // --- where_pays: the REAL like-for-like leaderboard (buildAcrossCities) ------
   // The commercial heart, fully real: each city is a trusted local measurement of
@@ -252,12 +232,11 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
       isNum(grossPct) && isNum(operatingPct) && isNum(netPct)
         ? { gross_pct: grossPct, operating_pct: operatingPct, net_pct: netPct }
         : undefined,
-    money_split: moneySplit,
     where_pays: wherePays,
     caveats,
     who_suits: whoSuits,
-    // OMITTED entirely (no honest source): first_year (Ramp), payback
-    // (CapitalPayback), cost_structure (BreakEven meter), seasonality. Leaving
-    // them undefined makes the spine body render nothing there (guarded).
+    // OMITTED entirely (no honest source): seasonality. Leaving it undefined
+    // makes the spine body render nothing there (guarded). `first_year`,
+    // `payback` and `cost_structure` are read off the shard by id now.
   };
 }
