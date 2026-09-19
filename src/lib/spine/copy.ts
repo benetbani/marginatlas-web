@@ -36,6 +36,15 @@ const LOCALS_KICKER = "What locals know";
  *  stands where it would on a country with no covered city (MODEL.md 8.2's
  *  FLOOR bracket, plan step 49, 2026-09-19). */
 const CITIES_KICKER = "The cities";
+/** The city page's `03 districts` and `09 trades` kickers, one literal each
+ *  for the drawn card and for the seat that stands where it would on a city
+ *  whose data is absent (QUEUE launch:city-seats-off-london, 2026-09-19): off
+ *  London the districts ranking has no rents to rank, and under four local
+ *  trades the rows have no card to fill, so the block draws the seat with its
+ *  line instead of leaving the band absent (PART 4's idiom; the country's
+ *  `07 workforce` is the exemplar). */
+const CITY_DISTRICTS_KICKER = "Rent by district";
+const CITY_TRADES_KICKER = "Trades with local figures";
 /** Turn one's heading on every page (M7): the country's, the city's and the
  *  trade's open the same chapter with one literal, so a rewording changes
  *  all three. */
@@ -278,6 +287,28 @@ export const COPY = {
       kicker: "What lifts revenue most",
       line: "Not gathered yet: what lifts revenue most in each district.",
       foot: "Waits on DATA-REQUIREMENTS item 70.",
+    },
+    /** THE CITY PAGE'S TWO SEATS OFF LONDON, `03 districts` and `09 trades`
+     *  (MODEL.md 8.3; QUEUE launch:city-seats-off-london, 2026-09-19, the
+     *  controller's, from plan step 50's first run: Frankfurt and Abidjan
+     *  drew 14 of 17 because both blocks self-omitted where the country page
+     *  draws the seat). The kickers are the drawn cards' own, referenced.
+     *  Each line names the city the way the neighbourhoods seat does and
+     *  runs eleven words on the longest city name in the set ("Ho Chi Minh
+     *  City"); the districts seat waits on the district rents themselves
+     *  (item 15: no city but London has ranked districts), not on item 70,
+     *  which is the keep half London lacks too; the trades seat waits on the
+     *  per-city trade cells (item 69: the rows need four local trades and
+     *  151 cities hold none). Both read aloud. */
+    cityDistricts: {
+      kicker: CITY_DISTRICTS_KICKER,
+      line: "Not gathered yet: rent by district in {city}.",
+      foot: "Waits on DATA-REQUIREMENTS item 15.",
+    },
+    cityTrades: {
+      kicker: CITY_TRADES_KICKER,
+      line: "Not gathered yet: local figures for four trades in {city}.",
+      foot: "Waits on DATA-REQUIREMENTS item 69.",
     },
   },
   /** THE FOOTING SEAT (MODEL.md 8.2, `17 footing`): the calibrated meter is a
@@ -905,7 +936,7 @@ export const COPY = {
        and the set it is measured over. "By district" said the set and not the
        thing, and read against the model's letter it was the one string on
        this card that disagreed. */
-    kicker: "Rent by district",
+    kicker: CITY_DISTRICTS_KICKER,
     /* WHAT THE OLD BASIS DID WRONG: "Each district's shop rent set against
        {district}, the cheapest here" made the reader carry a clause inside a
        clause to learn one fact, and "the cheapest here" left "here" doing work
@@ -936,7 +967,7 @@ export const COPY = {
    *  second sentence says on the page what the model knows about `10
    *  easiest`: it has no seat here until ruling 30 lands. Both read aloud. */
   cityTrades: {
-    kicker: "Trades with local figures",
+    kicker: CITY_TRADES_KICKER,
     foot: "Local figures for {n} trades. Which is easiest to open here is not yet known.",
   },
   /** THE FOUNDER'S PLUS (2026-09-08): the detail panel's summary lines, one for

@@ -418,6 +418,16 @@ const TRADE_ICON: Record<string, AtlasIconId> = {
 };
 const SLATE_ORDER: string[] = [...EVERYDAY_TRADES];
 const hasTradesHere = (d: any) => (d?.trades_here?.list?.length ?? 0) >= 4;
+/* A seat's line names the city, the way the neighbourhoods seat's does
+   (hood_rows.ts): `{city}` filled from the seed's own display name, the
+   masthead's. The seed always carries one on the spine (city_hero_facts
+   returns null without it); the fallback keeps the line a sentence. */
+const seatLine = (line: string, d: any) => line.replace("{city}", typeof d?.meta?.city === "string" && d.meta.city ? d.meta.city : "this city");
+/* The two seats of the `03 | 09` band (QUEUE launch:city-seats-off-london,
+   2026-09-19): the drawn cards' own ids, icons and kickers, so the block
+   keeps one name whether it is drawn or seated; the line names the city. */
+const DistrictsSeat = ({ d }: { d: any }) => <BlockedSeat id="districts" icon="best-areas" kicker={COPY.blocked.cityDistricts.kicker} line={seatLine(COPY.blocked.cityDistricts.line, d)} foot={COPY.blocked.cityDistricts.foot} />;
+const TradesSeat = ({ d }: { d: any }) => <BlockedSeat id="trades" icon="high-street" kicker={COPY.blocked.cityTrades.kicker} line={seatLine(COPY.blocked.cityTrades.line, d)} foot={COPY.blocked.cityTrades.foot} />;
 function TradesHere({ d }: { d: any }) {
   /* `lands` is the adapter's declaration of what each row promises (adapt_city.ts, the trade page's own answer), stamped here and never chosen here. */
   const list: Array<{ name: string; slug: string; href: string; lands?: string }> = d.trades_here?.list ?? [];
@@ -753,25 +763,35 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           (plan step 32, fifth dispatch, 2026-09-18; the measurements are in
           the dispatch's report and below). London alone draws `03` (8.3:
           LONDON ONLY); `09` draws on 101 of 252 cities (counted through the
-          adapter's own path, 2026-09-18), so on 100 cities the band is the
-          trade rows alone at the survivor's two thirds, LONE CARD by the
-          rule, and on 151 it is absent. 8.3's "absent together on 249" was
-          written before the count existed; the controller holds the pairing
-          on those 100. */}
-      {districts && trades ? (
+          adapter's own path, 2026-09-18). THE BAND DRAWS ON EVERY CITY
+          (QUEUE launch:city-seats-off-london, 2026-09-19): where a card's
+          data is absent its seat stands in its place, the drawn blocked
+          seat with its stated line and the item it waits on, the way the
+          country page seats `07 workforce` (PART 4's idiom), so the block
+          counts toward the floor and a reader is told what is missing
+          instead of meeting nothing. Plan step 50's first run found
+          Frankfurt and Abidjan at 14 of 17 because both blocks self-omitted
+          here. On the cities under four local trades and off London the
+          band is two seats, level at their own height (Frankfurt and
+          Abidjan, 0 holes at three widths). Where ONE of the pair draws and
+          the other is a seat (New York: six trade rows, no districts), the
+          two cannot share a band: the seat stretched to the rows' height
+          carried a 653 by 240 blank inside a 653 by 352 card, the page
+          filter's WHITE SPACE red, MEASURED 2026-09-19; so each stands in
+          its own band at the survivor's two thirds, the country's precedent
+          for `12 money | 16 locals` and this page's own for `12 | 13`
+          below, LONE CARD twice, expected. */}
+      {(districts && trades) || (!districts && !trades) ? (
         <Band split="2-1" stack="lg">
-          <WhereToTrade d={d} />
-          <TradesHere d={d} />
+          {districts ? <WhereToTrade d={d} /> : <DistrictsSeat d={d} />}
+          {trades ? <TradesHere d={d} /> : <TradesSeat d={d} />}
         </Band>
-      ) : districts ? (
-        <Band split="2-1" stack="lg">
-          <WhereToTrade d={d} />
-        </Band>
-      ) : trades ? (
-        <Band split="2-1" stack="lg">
-          <TradesHere d={d} />
-        </Band>
-      ) : null}
+      ) : (
+        <>
+          <Band split="2-1" stack="lg">{districts ? <WhereToTrade d={d} /> : <DistrictsSeat d={d} />}</Band>
+          <Band split="2-1" stack="lg">{trades ? <TradesHere d={d} /> : <TradesSeat d={d} />}</Band>
+        </>
+      )}
       {/* `11 peers`, FULL WIDTH, the seam of turns two and three (8.3, R1). */}
       <CityPeers d={d} />
       {/* CHAPTER TURN THREE (8.3, "What the place is like"): zero accent from
