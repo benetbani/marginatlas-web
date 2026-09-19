@@ -22,10 +22,14 @@
  *     first colon or semicolon (the clause before it, closed with a full
  *     stop: the South Bank and South London today, whose opening sentences
  *     run 170 and 197). Nothing is composed and no word is changed; the
- *     basis says the line is the note's opening. Where even the clause runs
+ *     row's label says the line is the note's first. Where even the clause runs
  *     past the cap (no district today) the row prints the stated line
  *     instead of a cut mid-sentence. The rest of each paragraph is printed
- *     nowhere on the spine, and the report says so.
+ *     nowhere on the spine, and the report says so. The row's label, "The
+ *     note's first line", says what the fact is, so the card carries no basis
+ *     line: measured 2026-09-19, a basis stood the notes at 277 beside the
+ *     seat's 171 in the 1-2 band and the seat read 54 percent ink under the
+ *     art-direction gate's 60; without it the notes stand shorter.
  *  2. WHO IS HERE: `.demographic_skew`, the file's compact tag, sentence-cased
  *     and closed with a full stop (a fact is a sentence), nothing added.
  *  3. PRICE TIER: `.price_tier`, the file's own word (luxury, expensive, mid,
@@ -58,7 +62,6 @@ export type HoodCharacterData = {
   district: HoodDistrict;
   kicker: string;
   rows: HoodCharacterRow[];
-  basis: string;
   foot: string;
   /** How the first row was cut: the whole opening sentence, its clause before a colon or semicolon, or withheld. */
   cut: "sentence" | "clause" | "withheld";
@@ -106,7 +109,6 @@ export function buildHoodCharacter(citySlug: string, focus: string | null = null
     district,
     kicker: focus ? COPY.hoodCharacter.kicker : fill(COPY.hoodCharacter.kickerNamed, { district: district.name }),
     rows: notes,
-    basis: COPY.hoodCharacter.basis,
     foot: fill(COPY.hoodCharacter.foot, { n: countWord(rows.length - 1) }),
     cut,
     sample: true,

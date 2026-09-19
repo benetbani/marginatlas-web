@@ -1846,7 +1846,10 @@ export const COPY = {
    *
    *  THE CHARACTER CARD's first row is the note's opening sentence
    *  (hood_character_rows.ts says why a paragraph cannot stand as a fact),
-   *  under the label "In a sentence", which is what it is; the basis says so.
+   *  under the label "The note's first line", which says what it is, so the
+   *  card carries no basis line: measured 2026-09-19, the basis was the one
+   *  line that stood the notes at 277 beside the seat's 171 in the 1-2 band,
+   *  where the seat read 54 percent ink under the art-direction gate's 60.
    *  Never "foot traffic" (8.8: it reads as the cut footfall metric). */
   hoodTake: {
     subtitle: "Shop rent, district by district",
@@ -1883,9 +1886,8 @@ export const COPY = {
   hoodCharacter: {
     kicker: "What it is like",
     kickerNamed: "What {district} is like",
-    rows: { sentence: "In a sentence", who: "Who is here", price: "Price tier", description: "In brief" },
+    rows: { sentence: "The note's first line", who: "Who is here", price: "Price tier", description: "In brief" },
     sentenceWithheld: "Not printed: the note's opening sentence runs past the card's four lines.",
-    basis: "Written by hand for this district; the first line is how its note opens.",
     foot: "The other {n} districts' notes are on their own pages.",
   },
   /** Words that must never appear in an archetype's copy: the corporate register.

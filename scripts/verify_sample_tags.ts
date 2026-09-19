@@ -17,7 +17,7 @@
  * surface file imports each src/lib/spine-seeds/index.ts export
  * (spineCellSeed -> spine-cell/cell-view.tsx, spineCitySeed ->
  * spine-city/city-view.tsx, spineHoodSeed -> spine-hood/hood-view.tsx
- * (which itself imports and mounts NeighborhoodExplorer.tsx , included in
+ * (whose cards are hood/blocks.tsx, in the same folder; NeighborhoodExplorer.tsx was retired on plan step 35 and no longer listed in
  * its render group), spineIndustrySeed -> spine-industry/industry-view.tsx,
  * SPINE_COUNTRIES -> src/components/spine/country/country-view.tsx). A render
  * group is every .tsx file in the same dev-route directory (mirrors
@@ -116,10 +116,9 @@ function resolveRenderGroup(seedRelPath: string): { label: string; files: string
   ];
   if (dir === "cells") return { label: "spine-cell", files: group("cell") };
   if (dir === "cities" && base.includes("neighborhoods")) {
-    return {
-      label: "spine-hood",
-      files: group("hood", ["src/components/spine/NeighborhoodExplorer.tsx"]),
-    };
+    /* NeighborhoodExplorer.tsx left the group on plan step 35 (2026-09-19):
+       the file is deleted, the hub's cards are hood/blocks.tsx, in the folder. */
+    return { label: "spine-hood", files: group("hood") };
   }
   if (dir === "cities") return { label: "spine-city", files: group("city") };
   if (dir === "industries") return { label: "spine-industry", files: group("industry") };

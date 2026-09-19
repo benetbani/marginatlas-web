@@ -51,6 +51,14 @@
         "london"
       ],
       "since": "plan step 3, 2026-09-17: the neighbourhood page joins the filter with its provisional spine (8.8, floor 7); ad-hoc until file 04"
+    },
+    {
+      "surface": "hood",
+      "slugs": [
+        "london",
+        "city-of-london"
+      ],
+      "since": "plan step 35, 2026-09-19: the district page, the hub's spine in focus on one district (8.8, the same floor 7; /cities/london/neighborhoods/city-of-london), rendered through the hood surface's second slug"
     }
   ]
 }

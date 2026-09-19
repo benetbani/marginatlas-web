@@ -9,7 +9,5 @@
   "src/components/brand/LogoMark.tsx": 1,
   "src/components/spine/kit-index.tsx": 8,
   "src/components/spine/kit.tsx": 53,
-  "src/components/spine/NeighborhoodExplorer.tsx": 9,
-  "src/components/spine/SpineMap.tsx": 10,
-  "src/components/spine/industry/industry-view.tsx": 1
+  "src/components/spine/SpineMap.tsx": 10
 }

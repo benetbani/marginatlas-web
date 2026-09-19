@@ -2393,9 +2393,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
         for (const r of character.rows) if (wordsOf(r.label) > LABEL_WORDS_CAP) reds.push(`${where}: the note label "${r.label}" runs over ${LABEL_WORDS_CAP} words`);
         if (focus ? character.kicker.includes(drawn.name) : !character.kicker.includes(drawn.name)) reds.push(`${where}: the kicker ${focus ? "names the district under its own h1" : "does not name the district"} ("${character.kicker}")`);
         if (wordsOf(character.kicker.replace(drawn.name, "")) > 4) reds.push(`${where}: the kicker runs over four words past the name ("${character.kicker}")`);
-        if (wordsOf(character.basis) > 14) reds.push(`${where}: the notes' basis runs ${wordsOf(character.basis)} words`);
         if (!character.foot.includes(countWord(districts.length - 1))) reds.push(`${where}: the foot does not count the other districts ("${character.foot}")`);
-        ban(where, [character.kicker, character.basis, character.foot, ...character.rows.flatMap((r) => [r.label, r.fact])]);
+        ban(where, [character.kicker, character.foot, ...character.rows.flatMap((r) => [r.label, r.fact])]);
       }
       /* THE DOORS. */
       const doors = buildHoodCloseDoors(city, focus);

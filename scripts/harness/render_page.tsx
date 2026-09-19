@@ -8,7 +8,10 @@
    usage, from E:/atlas/website:
      npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs        scripts/harness/render_page.tsx <surface> <slug...>
      ... render_page.tsx --list [scripts/harness/pages.json]   (every page in the list, one process; a page that does not render is a red)
-     surfaces: country <iso2> | city <slug> | cell <country> <geo> <industry> | industry <slug> | hood <city>
+     surfaces: country <iso2> | city <slug> | cell <country> <geo> <industry> | industry <slug> | hood <city> [<district>]
+   The hood surface takes a second slug for a DISTRICT PAGE (plan step 35, 2026-09-19):
+   the same body in focus (SpineHoodBody's `focus`), the same adapter, so the stem is
+   hood-<city>-<district> and every page gate keys it under the hood floor.
    Writes scratchpad/harness/pages/<surface>-<slugs>.html. No environment file is
    loaded: an adapter that needs a secret to render does not belong in a gate.
    Two charts cannot draw statically (the client-only stepped waterfall and the
@@ -85,9 +88,15 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
   /* The how-to page carries its main landmark in the page file, so the harness
      render wraps the body the same way; without it the filter would find no
      section card under main and pass on nothing. */
+  /* The hood surface's second slug is the district in focus; the body draws
+     the hub with `focus` unset. A district the scheme does not hold renders
+     the hub's own cards with the take, the table and the notes self-omitted
+     (the builders return null), which the page gates then red, as they should. */
   const inner = surface === "howto"
     ? React.createElement("main", { className: "mx-auto max-w-[1120px] px-4 py-2 md:px-6" }, React.createElement(C, data))
-    : React.createElement(C, { data });
+    : surface === "hood" && slugs[1]
+      ? React.createElement(C, { data, focus: slugs[1] })
+      : React.createElement(C, { data });
   const body = renderToStaticMarkup(selfShelled ? inner : React.createElement(SpineShell as any, null, inner));
   mkdirSync("scratchpad/harness/pages", { recursive: true });
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}.html`;

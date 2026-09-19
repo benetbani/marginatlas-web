@@ -1,113 +1,71 @@
 /**
- * src/lib/spine/adapt_hood.ts , the NEIGHBORHOOD-hub real-data adapter (Phase B).
+ * src/lib/spine/adapt_hood.ts , the NEIGHBOURHOOD-hub real-data adapter (Phase B).
  *
- * Promotes the neighborhood-hub spine surface (/dev/spine-hood body, SpineHoodBody)
- * from its illustrative 9-district London seed to real, reconciled data behind the
- * per-page spine gate (isSpineReformEnabledFor("hood")). Server only, pure (no
- * "use client"): awaited from the RSC route src/app/cities/[slug]/neighborhoods/page.tsx.
+ * Promotes the neighbourhood-hub spine surface (SpineHoodBody) from its
+ * illustrative 9-district London seed to real data behind the per-page spine
+ * gate (isSpineReformEnabledFor("hood")). Server only, pure of the network but
+ * for `buildCityActivities` (the database, budgeted): awaited from the RSC
+ * routes src/app/(site)/cities/[slug]/neighborhoods/page.tsx and its
+ * [district] route under it.
  *
- * HONESTY RAIL (absolute). The seed's nine named fine-districts (Mayfair, Soho,
- * Shoreditch, ...) do NOT exist in any live scheme, so promotion RE-KEYS the page to
- * the seven real London macro-districts (neighborhoods_v1.json cities.london) and
- * discards the fabricated set wholesale. Every filled figure is driven from the SAME
- * engine the live non-spine neighborhoods page runs (getNeighborhoodMultiplier +
- * rentMultiplier over data/economics/neighborhood_intensity_v1.json) plus the real
- * flavor accessor (neighborhood_flavor_v1.json). Every ranked surface runs on RENT
- * LOAD, the knowable input (rulebook v1 §5, founder 2026-07-11: the derived
- * per-district keep index never renders). Nothing is fabricated.
+ * WHAT THE SEED CARRIES SINCE PLAN STEP 35 (2026-09-19, MODEL.md 8.8): `meta`
+ * (the city's iso2, name, slug, country name and page href) and `districts`
+ * (name, slug, the engine's rent multiple and revenue reading with its clip
+ * flag, the district's `best_trades`). THE BODY READS `meta.slug` AND NOTHING
+ * ELSE: every card is built by the slug off the files through
+ * src/lib/spine/hood_scheme.ts and the hood_*_rows.ts builders, pure and
+ * synchronous, so the stories and the copy gates draw the page without this
+ * adapter. The admission gate lives in hood_scheme.ts now (`spineHoodDistricts`,
+ * with `CENTROIDS`), and this adapter reads it: a city is admitted with four
+ * or more curated districts AND an authored centroid, London alone today;
+ * every other city returns undefined and the hub route falls through to the
+ * legacy page, never a 404.
  *
- * The benchmark activity is "restaurants" (the exact activity the live non-spine page
- * hardcodes, page.tsx:131), so the revenue figures reconcile with it; the provenance
- * line states this. Revenue is per-activity, so there is no activity-free number.
+ * WHAT LEFT WITH THE OLD CARDS (hood-view.tsx names each card): the
+ * masthead's hero_note, support_label and support_note (the "x1.20 the city
+ * rate" sentences, a multiple of a base drawn nowhere); the explorer's rail,
+ * map_note, compare and myth blocks and the districts' verdict, blurb, tags,
+ * character (the one-word class, never printed: PART 9 clause 19),
+ * walkability (item 66), price_tier, demographics, lat, lng and cell_href;
+ * the provenance_line (the take's foot says it now, off the files). Nothing
+ * here fed a reader after this step but `meta`.
  *
- * What is filled REAL: name / slug / character, the revenue/rent pair + the
- * commuter/visitor/character multiplier factors + tags (engine), walkability / price
- * tier / demographic skew / character paragraph (flavor), the per-district best-trade
- * ranking (real per-trade multiplier), and the narrative notes (derived from the real
- * figures, never asserted). The orientation MAP survives via authored macro-district
- * centroids (verifiable public geography, not fabricated business data).
+ * `best_trades` STAYS AS IT WAS, UNREAD (the controller's ruling d): the
+ * per-district lists off `getNeighborhoodMultiplier` for the city's real
+ * trades, which the engine resolves at its boundary since 2026-09-17
+ * (bug:district-revenue-dead is the QUEUE row; do not fix it here). They are
+ * not printed: `04 works` stands as the drawn blocked seat on
+ * DATA-REQUIREMENTS item 70, because the engine's district coefficients are
+ * within 30 percent of the measured turnover on 4 of 21 London rows, and
+ * three of the seven districts read the 3.0 ceiling on every trade
+ * ("at least +200%"), a bound printed as a finding. Measured 2026-09-19: the
+ * lists are NOT empty on any of the seven (the step's brief said they were;
+ * the boundary fix of 2026-09-17 reached this call site), which changes
+ * nothing about the seat.
  *
- * What is OMITTED (no honest source; the spine body null-guards each so it renders
- * NOTHING, never a 0 / "?" / fabricated value): footfall timing (kills FootfallScale +
- * the weekday-dependence and weekend-footfall Pro compare rows), "what locals know"
- * (the panel Pro seam), prime streets, the numeric walk score (the categorical 3-band
- * survives), the per-district cell count, headline_trade, and the legacy xy coords.
- *
- * DATA-QUALITY NOTE (surfaced, not a fabrication): the visitor multiplier clips, so
- * City of London, West End and South Bank all read an identical +200% revenue. The
- * rent load still separates them, so the page thesis holds; the narrative copy is
- * written to the true "same takings, rent decides" story rather than the seed's
- * "loudest keeps least" framing, which the real data does not support.
+ * The benchmark activity is "restaurants" (the exact activity the legacy
+ * neighbourhoods page hardcodes, page.tsx), so the revenue reading reconciles
+ * with it; the hub's one trade door (close_rows.ts) opens on that trade.
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
-import cityListJson from "../../../data/cities/city_list_v1.json";
-import neighborhoodsJson from "../../../data/cities/neighborhoods_v1.json";
-import { COUNTRIES } from "@/lib/taxonomy";
-import {
-  getNeighborhoodMultiplier,
-  rentMultiplier,
-  hasNeighborhoodIntensity,
-  tagLabel,
-} from "@/lib/economics/neighborhood_multipliers";
-import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
+import { getNeighborhoodMultiplier, rentMultiplier } from "@/lib/economics/neighborhood_multipliers";
 import { buildCityActivities } from "@/lib/scores/city_board";
+import { hoodCity, spineHoodDistricts, hoodHubHref, HOOD_BENCHMARK_TRADE } from "@/lib/spine/hood_scheme";
 
-type City = { slug: string; name: string; iso2: string };
-type Neighborhood = { slug: string; name: string; character: string; description?: string };
-type Scheme = { scheme: string; neighborhoods: Neighborhood[] };
-
-const CITIES = (cityListJson as { cities: City[] }).cities;
-const CITIES_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
-const SCHEMES = (neighborhoodsJson as { cities: Record<string, Scheme> }).cities;
-
-/** The benchmark activity the live non-spine neighborhoods page uses (page.tsx:131),
- * so the revenue figures reconcile with it. Stated in the provenance line. */
-const BENCHMARK_ACTIVITY = "restaurants";
-
-/** Authored macro-district centroids: the true geographic center of each broad London
- * district (verifiable public geography, not fabricated business data), so the
- * orientation map survives the re-key. ONLY a city present here renders the spine hub;
- * every other city falls through to the existing non-spine page (no invented coords). */
-const CENTROIDS: Record<string, Record<string, { lat: number; lng: number }>> = {
-  london: {
-    "city-of-london": { lat: 51.515, lng: -0.093 },
-    "west-end": { lat: 51.513, lng: -0.14 },
-    "south-bank": { lat: 51.505, lng: -0.116 },
-    "north-london": { lat: 51.552, lng: -0.118 },
-    "south-london": { lat: 51.457, lng: -0.117 },
-    "east-london": { lat: 51.541, lng: -0.056 },
-    "west-london": { lat: 51.499, lng: -0.205 },
-  },
-};
-
-/** The panel's price band lacks a "budget" step; fold it onto the nearest real one. */
-function priceTierBand(t: string | undefined): string | undefined {
-  if (!t) return undefined;
-  return t === "budget" ? "affordable" : t;
-}
+/** The benchmark activity the legacy neighbourhoods page uses (page.tsx), so the revenue reading reconciles with it; held in hood_scheme.ts beside the door that opens on it. */
+export const BENCHMARK_ACTIVITY = HOOD_BENCHMARK_TRADE.slug;
 
 /**
- * Build the real-data spine neighborhood seed for one city slug. Returns undefined
- * when the city has no authored centroids or fewer than four curated districts (the
- * caller then falls through to the existing non-spine neighborhoods page, never a 404),
- * so the spine hub only ever renders where every number is real and the rent-divergence
- * thesis actually has districts to separate. London is the one such city today.
+ * Build the real-data spine neighbourhood seed for one city slug. Returns
+ * undefined when the city is not admitted (hood_scheme.ts: no authored
+ * centroids, or fewer than four curated districts), so the caller falls
+ * through to the legacy neighbourhoods page. London is the one such city today.
  */
 export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
-  const city = CITIES_BY_SLUG.get(citySlug);
-  const scheme = SCHEMES[citySlug];
-  const centroids = CENTROIDS[citySlug];
-  if (!city || !scheme || !centroids) return undefined;
-
-  // Only districts with a curated intensity row AND an authored centroid carry real
-  // numbers; anything else is dropped rather than shown on a city-default fallback.
-  const curated = scheme.neighborhoods.filter(
-    (n) => hasNeighborhoodIntensity(citySlug, n.slug) && centroids[n.slug],
-  );
-  if (curated.length < 4) return undefined;
-
-  const countryName = COUNTRIES.find((c) => c.code === city.iso2)?.name || city.iso2;
+  const city = hoodCity(citySlug);
+  const curated = spineHoodDistricts(citySlug);
+  if (!city || !curated) return undefined;
 
   // The real city trade set, used to rank each district's best-suited trades. One
   // budgeted call, reused across the districts; capped so the per-district ranking loop
@@ -116,28 +74,20 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
   const activitySlugs = activities.filter((a) => a.slug && a.name).slice(0, 24);
 
   const districts = curated.map((n) => {
-    const m = getNeighborhoodMultiplier(citySlug, n.slug, BENCHMARK_ACTIVITY);
+    const m = getNeighborhoodMultiplier(city.slug, n.slug, BENCHMARK_ACTIVITY);
     const rent = +rentMultiplier(m.appliedTags).toFixed(2);
     const rev = Math.round((m.final - 1) * 100);
-    const lighter = rent < 1;
-    const flavor = getNeighborhoodFlavor(citySlug, n.slug);
-    const cen = centroids[n.slug];
 
     // Best trades: the real city trades that actually lift in THIS district, ranked by
-    // that lift, so a finance-tagged district surfaces its finance trades and a tourist
-    // zone its footfall trades. Only trades with a real positive lift qualify (a "what
-    // works here" list must not list a trade the district does nothing for); the section
-    // self-omits when none lift. The "why" states the real per-trade lift.
+    // that lift. Only trades with a real positive lift qualify; a trade the engine has
+    // no model for is dropped by its tag, not by the accident of a 0 lift.
     /* a.slug is the HYPHENATED url slug (cafes-coffee-shops); the engine's tables
        are keyed by underscore id and it resolves either at its boundary since
-       2026-09-17 (bug:district-revenue-dead). Before that every slug but
-       "restaurants" missed, read +0% and was filtered out here, so this list was
-       "Restaurants" alone in all seven London districts. A trade the engine has
-       no model for is dropped by its tag, not by the accident of a 0 lift. */
+       2026-09-17 (bug:district-revenue-dead). */
     const best_trades = activitySlugs
       .map((a) => {
-        const m = getNeighborhoodMultiplier(citySlug, n.slug, a.slug);
-        return { name: a.name, known: m.activityKnown, clipped: m.clipped, pct: Math.round((m.final - 1) * 100) };
+        const t = getNeighborhoodMultiplier(city.slug, n.slug, a.slug);
+        return { name: a.name, known: t.activityKnown, clipped: t.clipped, pct: Math.round((t.final - 1) * 100) };
       })
       .filter((t) => t.known && t.pct > 0)
       .sort((x, y) => y.pct - x.pct)
@@ -145,87 +95,27 @@ export async function buildSpineHoodSeed(citySlug: string): Promise<any> {
       .map((t) => ({
         name: t.name,
         /* "at least" when the multiplier is the engine's 3.0 ceiling rather than
-           a reading (the [sub] page's own wording for the same flag): three
-           trades in the City of London all sit on it, and "about +200%" for
-           each would be the bound printed as a tie. */
+           a reading: three trades in the City of London all sit on it. */
         why: `Revenue runs ${t.clipped ? "at least" : "about"} +${t.pct}% versus the city for this trade here.`,
       }));
-
-    // Deterministic, honest verdict, a plain read of the knowable rent figure
-    // (rulebook v1 §5: no derived keep claim; the old counterweight lines cited
-    // the retired keep index and are gone with it).
-    const verdict = lighter
-      ? "Rent runs lighter than the city rate here; the lease leaves more of the takings in place."
-      : rent > 1
-        ? "Rent runs heavier than the city rate here; the lease takes its share before the takings arrive."
-        : "Rent runs at the city rate here, neither an edge nor a load.";
 
     return {
       name: n.name,
       slug: n.slug,
-      character: n.character.replace(/-/g, " "),
-      tags: m.appliedTags.map(tagLabel),
-      commuter_mult: m.commuter,
-      tourism_mult: m.tourism,
-      tag_mult: m.tags,
       rent_mult: rent,
       rev_vs_city_pct: rev,
-      walkability: flavor?.walkability,
-      price_tier: priceTierBand(flavor?.price_tier),
-      lat: cen.lat,
-      lng: cen.lng,
-      blurb: flavor?.character_paragraph ?? n.description,
-      verdict,
+      rev_clipped: m.clipped,
       best_trades: best_trades.length ? best_trades : undefined,
-      demographics: flavor?.demographic_skew ? [flavor.demographic_skew] : undefined,
-      /* The comment used to call this "the district overview page". There is
-         no district overview page: /{country}/{city}/{district} is the TRADE
-         route with a district in the industry slot, so 191 of the 194 district
-         slugs 404 there and three open somebody else's trade. Seventh and last
-         copy of that shape. The hub entry is the page that holds the district. */
-      cell_href: `/cities/${citySlug}/neighborhoods#${n.slug}`,
-      // OMITTED (no honest source): footfall, locals_know, prime_streets, walk_score,
-      // cell_count, headline_trade, xy. Left undefined so the body renders nothing there.
     };
   });
-
-  // lightest + heaviest lease, resolved the SAME way the masthead does (stable sort
-  // over the same array, rent ascending per D1), so the derived notes match what it shows.
-  const byRent = [...districts].sort((a, b) => a.rent_mult - b.rent_mult);
-  const best = byRent[0];
-  const heavy = byRent[byRent.length - 1];
 
   const meta = {
     iso2: city.iso2,
     city: city.name,
-    slug: citySlug,
-    country_name: countryName,
-    default_slug: best.slug,
-    // real hrefs (the promoted page must not link to the dev routes).
-    city_href: `/cities/${citySlug}`,
-    // honest, derived masthead prose: plain reads of the knowable rent figures
-    // (rulebook v1 §5: no keep-index claim, no takes-most/keeps-most opposition).
-    hero_note: `Rent here runs x${best.rent_mult.toFixed(2)} the city rate, the lightest lease of the ${districts.length} districts.`,
-    support_label: "Heaviest rent",
-    support_note: `Rent runs x${heavy.rent_mult.toFixed(2)} the city rate here, the heaviest lease on the map.`,
-    rail: {
-      kicker: "Where in the city",
-    },
-    map_note:
-      "Where each district sits. Tap a pin for its rent read; the ranking and the panel move with it.",
-    compare: {
-      kicker: "Hold two or three side by side",
-    },
-    myth: {
-      claim: "The busiest, highest-revenue district is the best place to open.",
-      reality:
-        "It takes the most, but takings are not what stays. Top revenue comes with the heaviest rent, so the loud districts hand a large share of the lift straight to the lease, while quieter districts trade on far lighter rent. Revenue rank and rent rank are simply not the same list.",
-      tell: "Two addresses with the same takings can carry very different leases. The rent is the difference.",
-      slope_note:
-        "Revenue rank and rent rank are different lists. The priciest addresses carry the heaviest leases; the lightest leases sit far from the top of the takings.",
-    },
-    provenance_line:
-      "Revenue is shown for a representative restaurant, modeled from each district's commuter, visitor and character multipliers against the city baseline. The map uses the seven broad London districts.",
+    slug: city.slug,
+    country_name: city.countryName,
+    city_href: `/cities/${city.slug}`,
+    hub_href: hoodHubHref(city.slug),
   };
 
   return { meta, districts };

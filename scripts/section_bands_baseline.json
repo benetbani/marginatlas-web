@@ -5,7 +5,8 @@
   "city-london": 2,
   "cell-london-restaurants": 1,
   "industry-restaurants": 1,
-  "hood-london": 0,
+  "hood-london": 1,
+  "hood-london-city-of-london": 1,
   "_reseed_history": [
     {
       "page": "city-london",
@@ -41,6 +42,13 @@
       "new": 1,
       "date": "2026-09-19",
       "reason": "Not a regression: the industry page's second full width landed. Plan step 34's third dispatch seated MODEL.md 8.7's `06 places` at the table's own full width under CompareTable's data-wide-table sanction, the second of the page's three full widths (R1: the take, the places table, the close; PART 9 clause 36, 'three stands'), the same section the cell-london-restaurants re-seed of 2026-09-18 and the country-AF re-seed name on their pages. On this page the block stands as the drawn blocked seat today (industry_places_rows.ts: no trade holds four cities of their own, the slate's rows being filled headlines and the clamp's floor, measured 2026-09-19 over 243), at the table's width under the table's sanction, as Afghanistan's peers block does; the day the table draws the count is the same one. The exit stands on the hero band and is not counted here. The count may fall and never rise."
+    },
+    {
+      "page": "hood-london and hood-london-city-of-london",
+      "old": "0 and 0",
+      "new": "1 and 1",
+      "date": "2026-09-19",
+      "reason": "Not a regression: the neighbourhood pages' second full width landed, and the district page is a first measurement. Plan step 35 seated MODEL.md 8.8's `03 compare` on CompareTable at the table's own full width under its data-wide-table sanction, the second of the page's three full widths (R1: the take, the districts table, the close; PART 9 clause 36, 'three stands'), the same section the cell-london-restaurants re-seed of 2026-09-18 and the industry-restaurants re-seed of 2026-09-19 name on their pages. The hub's 0 was the count of the old page, whose comparison sat in a 1-1 band beside the myth chapter; the district page is the same body in focus (/cities/london/neighborhoods/city-of-london) and holds the same table. The exit stands on the hero band and is not counted here. The count may fall and never rise."
     }
   ]
 }

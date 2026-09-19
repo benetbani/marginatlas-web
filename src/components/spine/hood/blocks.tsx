@@ -109,9 +109,10 @@ export function WorksSeat({ id = "works" }: { id?: string }) {
 /**
  * `05 character`: THE PAGE'S ONE PROSE SECTION (R9, `data-editorial="1"`
  * through NoteList's default), the cheapest district's rows on the hub and
- * the district's own on its page, the basis saying the first line is the
- * note's opening, the foot saying where the other districts' notes are (one
- * line, no door). The notes are authored: the opener carries the mark.
+ * the district's own on its page, the first row's label saying it is the
+ * note's first line, the foot saying where the other districts' notes are
+ * (one line, no door; no basis, hood_character_rows.ts says why). The notes
+ * are authored: the opener carries the mark.
  */
 export function CharacterCard({ id = "character", character }: { id?: string; character: HoodCharacterData | null }) {
   if (!character) return null;
@@ -119,8 +120,8 @@ export function CharacterCard({ id = "character", character }: { id?: string; ch
     <Box id={id}>
       <Rail icon="district-mix" kicker={character.kicker} sample={character.sample} />
       <NoteList notes={character.rows} />
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{character.basis}</p>
-      <p data-foot className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{character.foot}</p>
+      {/* The foot at the ladder's slot rung (8, PART 2) under the last hairline: measured 2026-09-19 at 1440, the seat beside this card reads 130 of 217 inked at a 12px foot, 59.9 percent against the art-direction gate's 60, and 130 of 213 at 8, 61; the card's own height is the pair's. */}
+      <p data-foot className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{character.foot}</p>
     </Box>
   );
 }

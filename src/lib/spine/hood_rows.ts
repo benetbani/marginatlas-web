@@ -21,19 +21,22 @@
  * scheme named, so the view and the gates read one answer.
  *
  * THE ORDER IS THE FILE'S: never re-sorted by a figure the page cannot show
- * honestly (the 14 brief). THE HREF is real on every city: the route
- * src/app/(site)/cities/[slug]/neighborhoods/page.tsx exists for every slug
- * in the file (generateStaticParams), and the legacy page plants
- * `id={n.slug}` on each district's card, so the fragment lands on the named
- * district there; on London, the one city whose hub renders the spine
- * explorer (NeighborhoodExplorer selects by state and plants no per-district
- * id), the fragment lands at the top of the same page, recorded for the
- * controller under plan step 39 (the doors land where they promise).
+ * honestly (the 14 brief). THE HREF is real on every city, and since plan
+ * step 35 (2026-09-19, MODEL.md 8.8) it lands on the DISTRICT'S OWN PAGE
+ * where one exists: `/cities/<slug>/neighborhoods/<district>`, through the
+ * one resolver that says which place pages exist (page_targets.ts
+ * `districtPageTarget`: the hub's admission gate, London's seven today, and
+ * the neighbourhood spine's flag). Where no district page exists (the 42
+ * other curated cities, whose hubs are the legacy page) the card keeps the
+ * hub's anchor: that page plants `id={n.slug}` on each district's card, so
+ * the fragment lands on the named district there. The spine hub plants no
+ * per-district anchor and needs none: its city's districts all have pages.
  */
 import neighborhoodsJson from "../../../data/cities/neighborhoods_v1.json";
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { countWord } from "@/lib/spine/district_rows";
 import { COPY } from "@/lib/spine/copy";
+import { districtPageTarget } from "@/lib/geo/page_targets";
 import type { PagerCard } from "@/components/spine/archetypes/CardPager";
 
 type Hood = { slug: string; name: string; character?: string; description?: string };
@@ -56,6 +59,8 @@ export type CityNeighbourhoodsData = {
   foot: string | null;
   /** The seat's line, the city's name filled; null where the pager draws. */
   seatLine: string | null;
+  /** True where every card lands on a district page of its own (the hub's admitted cities), false where the cards land on the hub's anchors. */
+  onPages: boolean;
 };
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
@@ -69,17 +74,21 @@ export function buildCityNeighbourhoods(slug: string): CityNeighbourhoodsData | 
   const allHref = `/cities/${key}/neighborhoods`;
   const hoods = Array.isArray(scheme.neighborhoods) ? scheme.neighborhoods.filter((h) => h && h.slug && h.name) : [];
   if (scheme.scheme === PLACEHOLDER_SCHEME || hoods.length === 0) {
-    return { slug: key, name, scheme: scheme.scheme, cards: null, allHref, foot: null, seatLine: fill(COPY.blocked.cityNeighbourhoods.line, { city: name }) };
+    return { slug: key, name, scheme: scheme.scheme, cards: null, allHref, foot: null, seatLine: fill(COPY.blocked.cityNeighbourhoods.line, { city: name }), onPages: false };
   }
-  const cards: PagerCard[] = hoods.map((h) => ({ id: h.slug, name: h.name, href: `${allHref}#${h.slug}` }));
+  const pages = hoods.map((h) => districtPageTarget(key, h.slug)?.href ?? null);
+  const cards: PagerCard[] = hoods.map((h, i) => ({ id: h.slug, name: h.name, href: pages[i] ?? `${allHref}#${h.slug}` }));
+  /* The foot says where the cards land: on the district pages where every one has one, on the hub's anchors otherwise. */
+  const onPages = pages.length > 0 && pages.every((p) => p != null);
   return {
     slug: key,
     name,
     scheme: scheme.scheme,
     cards,
     allHref,
-    foot: capFirst(fill(COPY.cityNeighbourhoods.foot, { n: countWord(cards.length) })),
+    foot: capFirst(fill(onPages ? COPY.cityNeighbourhoods.footPages : COPY.cityNeighbourhoods.foot, { n: countWord(cards.length) })),
     seatLine: null,
+    onPages,
   };
 }
 

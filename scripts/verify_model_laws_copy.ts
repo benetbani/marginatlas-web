@@ -1007,10 +1007,10 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      foot; the rank's clip line (the basis and the head are the city district
      builder's, swept on its fixture above); the visitor list's headline
      label and withheld line; the table's heads, caveat and dash note; the
-     notes' kicker, labels and facts, basis and foot; the doors' labels; the
+     notes' kicker, labels, facts and foot; the doors' labels; the
      two chapter headings and the seat's three strings. The static ones
      (hoodPremium.kicker, .basis, .head; hoodCompare.kicker, .cols;
-     hoodCharacter.kicker, .basis; hoodTake.basis; blocked.hoodWorks.kicker)
+     hoodCharacter.kicker; hoodTake.basis; blocked.hoodWorks.kicker)
      the sweep above takes by key. */
   {
     let hoodPages = 0;
@@ -1031,7 +1031,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
         const compare = buildHoodCompare(city, focus);
         if (compare) heads.push([`${where} compare.entityHead`, compare.entityHead], [`${where} compare.caveat`, compare.caveat], ...compare.columns.map((c) => [`${where} compare.head.${c.key}`, c.head] as [string, string]), ...(compare.note ? [[`${where} compare.note`, compare.note] as [string, string]] : []));
         const character = buildHoodCharacter(city, focus);
-        if (character) heads.push([`${where} character.kicker`, character.kicker], [`${where} character.basis`, character.basis], [`${where} character.foot`, character.foot], ...character.rows.flatMap((r) => [[`${where} character.label.${r.key}`, r.label], [`${where} character.fact.${r.key}`, r.fact]] as Array<[string, string]>));
+        if (character) heads.push([`${where} character.kicker`, character.kicker], [`${where} character.foot`, character.foot], ...character.rows.flatMap((r) => [[`${where} character.label.${r.key}`, r.label], [`${where} character.fact.${r.key}`, r.fact]] as Array<[string, string]>));
         for (const d of buildHoodCloseDoors(city, focus)) heads.push([`${where} close.door.${d.key}`, d.label]);
       }
     }

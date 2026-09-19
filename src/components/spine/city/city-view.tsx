@@ -530,7 +530,9 @@ function LocalsSeat() {
 /**
  * The city's neighbourhoods, `14 neighbourhoods` (MODEL.md 8.3; the same
  * dispatch): the card pager, four a row, each card a name and an arrow to
- * the city's neighbourhoods page at the district's own anchor, NO IMAGE
+ * the district's own page where one exists (London's seven since plan step
+ * 35, 2026-09-19; hood_rows.ts says how) and to the city's neighbourhoods
+ * page at the district's own anchor otherwise, NO IMAGE
  * (`images="none"`, and the harness asks for none), no sub-line, no
  * figure. The rows come from hood_rows.ts (`buildCityNeighbourhoods`) in
  * the file's own order. TWO STATES: the 43 cities on a curated scheme draw
