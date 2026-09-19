@@ -77,6 +77,16 @@
  * bar fills its track and the rule is named at its free end. The figure's
  * one form is the builder's whole percent (`netText`), the same string `00`
  * prints, so a trade never reads two nets on one page.
+ *
+ * BUILT ONCE PER ID IN A PROCESS (plan step 34's fourth dispatch,
+ * 2026-09-19): the sector set resolves every member's net through the fact
+ * store, whose lookup is a filter over every fact loaded in the process
+ * (store.ts `queryFacts`), so on a gate that has loaded every country, city
+ * and trade the same ranking cost 17 seconds for 243 ids against 2.5 in a
+ * fresh process, and the archetype copy gate, which builds it for the
+ * opening, the counts and the close, passed the chain's 120-second timeout.
+ * The builder is pure over static files, so its result for an id is kept in
+ * a map and returned frozen; nothing observable changes.
  */
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { countWord } from "@/lib/spine/district_rows";
@@ -114,8 +124,18 @@ export type BenchmarkData = {
   confidence: "modeled";
 };
 
+const BUILT = new Map<string, BenchmarkData | null>();
+
 export function buildBenchmark(industryId: string | null | undefined): BenchmarkData | null {
   if (!industryId) return null;
+  const kept = BUILT.get(industryId);
+  if (kept !== undefined) return kept;
+  const built = buildBenchmarkOnce(industryId);
+  BUILT.set(industryId, built);
+  return built;
+}
+
+function buildBenchmarkOnce(industryId: string): BenchmarkData | null {
   const ind = INDUSTRY_BY_ID[industryId];
   if (!ind) return null;
   const sector = ALL_INDUSTRIES.filter((i) => i.sector_id === ind.sector_id);
@@ -147,7 +167,7 @@ export function buildBenchmark(industryId: string | null | undefined): Benchmark
       ? (withheldCount === 1 ? B.withheldSelf : B.withheldSelfAmong.replace("{n}", String(withheldCount)))
       : (withheldCount === 1 ? B.withheldOne : B.withheldMany.replace("{n}", String(withheldCount)));
   }
-  return {
+  return Object.freeze({
     industryId,
     sectorId: ind.sector_id,
     state,
@@ -160,7 +180,7 @@ export function buildBenchmark(industryId: string | null | undefined): Benchmark
     basis: B.basis.replace("{n}", String(sector.length)).replace("{sector}", sectorPhrase(ind.sector_id)),
     line,
     confidence: "modeled",
-  };
+  }) as BenchmarkData;
 }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
