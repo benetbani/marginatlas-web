@@ -33,10 +33,10 @@ Loud today: 2 of 3, as `LOUD_SEATS` in country-view.tsx declares (a LIT seat is 
 
 | section id | component | kicker | archetype | builder |
 |---|---|---|---|---|
+| dots | HowToBody | What the paperwork dots mean | NoteList | buildHowTo |
 | howto | HowToBody |  | KvGrid | buildHowTo |
 | forms | HowToBody | Registering, by legal form | TiersTable | buildHowTo |
 | what | HowToBody | What each form is | NoteList | buildHowTo |
-| dots | HowToBody | What the paperwork dots mean | NoteList | buildHowTo |
 | locals | HowToBody | What locals know | NoteList | buildHowTo |
 | close | HowToBody |  | Terminus | buildHowTo |
 

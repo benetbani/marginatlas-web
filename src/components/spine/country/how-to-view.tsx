@@ -13,6 +13,7 @@ import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
+import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { COPY } from "@/lib/spine/copy";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
@@ -34,6 +35,14 @@ export const LOUD_SEATS = [
 export function HowToBody({ iso2 }: { iso2: string }) {
   const d = buildHowTo(iso2);
   if (!d) return null;
+  /* `03 dots`, written once (the census counts `<Box` in this file) and seated
+     in whichever band the page draws below. */
+  const dots = (
+    <Box id="dots">
+      <Rail icon="register-cost" kicker={COPY.howto.dots} />
+      <NoteList notes={d.dots} />
+    </Box>
+  );
   return (
     <div>
       <Band hero>
@@ -64,18 +73,34 @@ export function HowToBody({ iso2 }: { iso2: string }) {
           ) : null}
         </Band>
       ) : null}
-      <Band split="1-1">
-        <Box id="dots">
-          <Rail icon="register-cost" kicker={COPY.howto.dots} />
-          <NoteList notes={d.dots} />
-        </Box>
-        {d.locals ? (
+      {/* `03 dots | 04 locals` (MODEL.md 8.9): GB's authored notes beside the
+          dots at 1-1; elsewhere `04` is THE DRAWN BLOCKED SEAT with the country
+          page's own line and item (its `16 locals`, DATA-REQUIREMENTS item 6),
+          the same seat form, which 8.9 said from the day it was written and
+          the code never drew (QUEUE launch:howto-locals-seat, 2026-09-19: DE
+          and IN rendered 5 of 6 with the dots card alone in this band). The
+          seat cannot share the band with the five notes: stretched to their
+          height it carried a 480 by 246 blank inside a 480 by 361 card at 1280
+          and 304 by 270 at 768, the page filter's WHITE SPACE red, MEASURED
+          2026-09-19 on DE and IN; so off GB each stands in its own band at
+          two thirds, the country's precedent for a drawn card beside a seat
+          (`12 money | 16 locals`), LONE CARD twice, expected. */}
+      {d.locals ? (
+        <Band split="1-1">
+          {dots}
           <Box id="locals">
             <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
             <NoteList notes={d.locals} />
           </Box>
-        ) : null}
-      </Band>
+        </Band>
+      ) : (
+        <>
+          <Band split="2-1" stack="lg">{dots}</Band>
+          <Band split="2-1" stack="lg">
+            <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
+          </Band>
+        </>
+      )}
       <div data-terminus className="mt-8">
         <Box id="close">
           <Terminus kicker={COPY.close.kicker} doors={d.doors} />
