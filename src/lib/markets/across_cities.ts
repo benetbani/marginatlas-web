@@ -422,9 +422,23 @@ async function resolveCity(
   //      sub-national measurements are tier S or P
   //   4. country level    - a national aggregate resolved under a city slug
   // Curated London is tier P at lad level, so it is unaffected.
-  if (!isTrustedLocalCell(cell, expectIndustryId)) return null;
+  //
+  // THE CURATED LONDON ENTRY IS ADMITTED ON ITS OWN (QUEUE across:london-entry,
+  // ruled 2026-09-19): since the gate's sixth guard refuses a filled headline,
+  // London's cells, whose revenue field is the fill and whose take-home and
+  // margin are the curated entry's, fell out of every column, so the entry's
+  // own figures (the trade page prints them as London's) never reached this
+  // route or the industry places seat. A cell that carries the entry passes
+  // when it is the expected activity and a local, non-synthetic row; every
+  // other cell still passes the whole gate. The column's `economics` says
+  // "curated" and the places builder reads that word, never the fill mark.
+  const curatedLondon = getLondonEntry(cell)?.economics ?? null;
+  if (curatedLondon) {
+    if (cell.industry_id !== expectIndustryId || cell.is_synthetic || cell.geo_level === "country") return null;
+  } else if (!isTrustedLocalCell(cell, expectIndustryId)) return null;
 
-  const revenue = typicalRevenueOf(cell);
+  // The entry's revenue is the row's where the entry holds one; else the cell's.
+  const revenue = curatedLondon && isPos(curatedLondon.revenue) ? curatedLondon.revenue : typicalRevenueOf(cell);
   if (revenue == null) return null;
 
   const { takeHome, netMarginFraction, economics, netMarginFloored } = ownerEconomicsOf(cell);

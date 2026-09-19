@@ -79,15 +79,14 @@
  * SINCE 2026-09-19 (QUEUE trust:revenue-filled) THE TRUST GATE ITSELF READS
  * THE FILL MARK (its sixth guard, trust.ts), so the resolver returns no
  * filled column at all: the `filled` reason above is now counted upstream,
- * a resolved column is New York's own row or a floored one, and London's
- * curated entry never reaches this builder because its row is filled and
- * the resolver (across_cities.ts resolveCity, unchanged by that step) reads
- * the gate alone and not the entry. The `curated` exception in
- * withheldReason is unreachable until the resolver reads the entry the way
- * cell_view.ts does; that is the controller's row, not a second gate.
- * Measured over the slate (scratchpad/steptrust/compare-slate.txt): 83
- * trades resolve New York alone, 160 nothing; restaurants' seat reads "own
- * figures in one of 15 cities" where it read "2 of 15".
+ * a resolved column is New York's own row or a floored one. London's
+ * curated entry did not reach this builder until QUEUE across:london-entry
+ * (2026-09-19): the resolver now admits a cell carrying the entry on the
+ * entry's own figures (across_cities.ts resolveCity), so the `curated`
+ * exception in withheldReason is reachable and restaurants' seat reads
+ * "own figures in 2 of 15 cities" again (New York, London). Measured over
+ * the slate before that change (scratchpad/steptrust/compare-slate.txt): 83
+ * trades resolved New York alone, 160 nothing.
  *
  * THE FIGURES ARE MODELLED, AND THE BASIS SAYS SO: the revenue a row holds is
  * read, and the take-home and the margin are the shared estimator's model

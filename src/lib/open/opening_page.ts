@@ -57,6 +57,7 @@ import {
   type Cell,
 } from "@/lib/cells";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
+import { clampMargin } from "@/lib/finance/margin_floor";
 import { slugToIndustry } from "@/lib/taxonomy";
 import { iso2ToName } from "@/lib/countries";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
@@ -296,13 +297,23 @@ function pageTakeHome(cell: Cell, country: string, geo: string): {
   // resolved take-home (what the user sees as the headline), not for the value
   // we hand the board (the board applies the London preference itself).
   const londonEcon = getLondonEntry(cell)?.economics ?? null;
-  const resolvedTakeHome =
-    londonEcon && isNum(londonEcon.owner_take_home)
-      ? londonEcon.owner_take_home
-      : adjustedNetTakeHome;
+  /* A MARGIN AT THE FLOOR PRINTS NO TAKE-HOME (QUEUE opening:floor-take-home,
+     2026-09-19). The trade page's money law (cell_view.ts, trust:revenue-filled)
+     withholds the take-home where the shown margin is the clamp's floor, because
+     the floor times the revenue is the floor's figure and not the place's; this
+     page derived the same dollars and printed them on three own-revenue hotel
+     cells at 3 percent. Where the raw margin sits under the floor and no
+     curated London entry holds a take-home of its own, both take-homes are
+     null: the payback card self-omits and the board refuses to score, which is
+     the repo's rule for a figure it cannot stand behind. */
+  const floored =
+    isNum(rawNetMargin) &&
+    clampMargin(rawNetMargin, "net", cell.industry_id || null) > rawNetMargin;
+  const londonTakeHome = londonEcon && isNum(londonEcon.owner_take_home) ? londonEcon.owner_take_home : null;
+  const resolvedTakeHome = londonTakeHome ?? (floored ? null : adjustedNetTakeHome);
 
   return {
-    ownerTakeHomeForBoard: adjustedNetTakeHome,
+    ownerTakeHomeForBoard: londonTakeHome != null || !floored ? adjustedNetTakeHome : null,
     resolvedTakeHome,
     corporateTaxRate: netProfitResult?.effective_cit_rate ?? null,
     netMarginPct: rawNetMargin,
