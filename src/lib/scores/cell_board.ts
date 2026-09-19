@@ -72,6 +72,7 @@ import {
 } from "@/lib/scores/break_in_rating";
 import { displayDensityPer10k } from "@/lib/finance/margin_floor";
 import { LONDON_MARKET } from "@/lib/london/market";
+import { MANUAL_FRIENDLY_TO_GEO_ID } from "@/lib/cities/manual_city_aliases";
 
 /**
  * One curated London activity entry. Modeled from national business
@@ -119,6 +120,9 @@ type LondonFile = {
 
 const LONDON = LONDON_MARKET as LondonFile;
 
+/** The London alias's geo id, the one key under which the curated entry applies. */
+const LONDON_GEO_ID: string | null = MANUAL_FRIENDLY_TO_GEO_ID.GB?.london ?? null;
+
 /** London resident population for density math (firms per 10k residents). */
 const LONDON_POPULATION = LONDON.london_population;
 
@@ -129,6 +133,15 @@ const LONDON_POPULATION = LONDON.london_population;
  */
 export function getLondonEntry(cell: Cell): LondonEntry | null {
   if (cell.country !== "GB") return null;
+  /* THE ENTRY IS LONDON'S, NOT THE COUNTRY'S (QUEUE cell:gb-aggregate-london-entry,
+     2026-09-19). Until today every GB cell qualified, so the prerendered UK
+     aggregates gb/gb/restaurants and gb/gb/cafes-coffee printed London's curated
+     take-home under "United Kingdom", and any other GB city resolving a curated
+     activity would have done the same. The cell must be the London alias's own
+     geo (MANUAL_CITY_ALIASES, GB "london"), read from the aliases file and never
+     typed here; the database spells the id in capitals (GB-E09000001) and the alias in lower case, so the comparison folds case. This check cannot distinguish a London cell keyed on another
+     geo id from a non-London cell; the alias is the one key the routes use. */
+  if (!LONDON_GEO_ID || (cell.geo_id ?? "").toLowerCase() !== LONDON_GEO_ID.toLowerCase()) return null;
   if (!cell.industry_id) return null;
   const slug = industryToSlug(cell.industry_id);
   return LONDON.activities[slug] ?? null;
