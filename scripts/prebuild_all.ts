@@ -667,6 +667,22 @@ const GATES: Gate[] = [
      21,873 fields compared, zero changed. The gate reads the tier off its own
      output, so it reached zero on its own rather than being adjusted to. */
   { name: "shared-revenue", script: "scripts/verify_shared_revenue_across_countries.ts", args: ["--strict"] },
+  /* THE TRADE PAGE PRINTS A TAKE-HOME ONLY OFF A ROW OF ITS OWN (QUEUE
+     trust:revenue-filled, launch-blocking, 2026-09-19). The gate above kept
+     the fill's figure and dropped its label; the trust gate (trust.ts) never
+     read the mark, so the trade page's money gate (cell_view.ts moneyShown)
+     printed the engine's take-home over a filled anchor, or over the margin
+     clamp's floor, as the city's own on every prerendered cell off London
+     and the United States (plan step 34's third dispatch: 945 filled and 22
+     floored of the slate's 1,029 resolved rows). Now the gate has a sixth
+     guard on the mark and moneyShown refuses a floored margin, and this
+     walks every prerendered trade cell (the two routes' static params read
+     off the files, and the sheet's exemplars) through loadCellView and reds
+     on any cell whose money shows off a filled or floored row but through
+     the curated London entry. Needs the database like pages-fresh (it says
+     when a lookup fell back and passed vacuously); not a browser gate.
+     Planted once: the sixth guard removed, red on eight of forty by route. */
+  { name: "money-shown-own-rows", script: "scripts/verify_money_shown_own_rows.ts" },
   /* A URL assembled from parts is not a URL that resolves. Seven live link
      defects were found and repaired in four iterations on 2026-08-01 and every
      one was the same move, and every one passed the dead-link gate, which

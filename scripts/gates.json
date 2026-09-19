@@ -2174,6 +2174,21 @@
       "claims": []
     },
     {
+      "name": "money-shown-own-rows",
+      "script": "scripts/verify_money_shown_own_rows.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "scripts/verify_money_shown_own_rows.ts , THE TRADE PAGE PRINTS A TAKE-HOME ONLY OFF A ROW OF ITS OWN (QUEUE trust:revenue-filled, launch-blocking, 2026-09-19; the controller's step between plan steps ",
+      "reads": [
+        "scripts/verify_money_shown_own_rows.ts",
+        "src/app/[country]/[geo]/[industry]/opening/page.tsx",
+        "src/app/[country]/[geo]/[industry]/page.tsx",
+        "src/lib/cells/cell_view.ts",
+        "src/lib/spine/adapt_cell.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "geo-link-construction (KNOWN DEFECT)",
       "script": "scripts/verify_geo_link_construction.ts",
       "args": [],

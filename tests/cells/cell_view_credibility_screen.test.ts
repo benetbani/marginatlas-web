@@ -63,6 +63,7 @@ function baseInput(overrides: Partial<CellViewInput>): CellViewInput {
     firms: 30_000,
     breakInRating: 50,
     isTrustedLocal: true,
+    netMarginFloored: false,
     costStructure: null,
     breakevenOrdersDaily: null,
     typicalOrdersDaily: null,

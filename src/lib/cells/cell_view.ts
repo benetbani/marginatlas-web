@@ -97,6 +97,17 @@ export type CellView = {
    * from the honest-take verdict. Null when there is no held read. */
   oneThing: string | null;
   isLondon: boolean;
+  /**
+   * THE ONE MONEY GATE OF THE TRADE PAGE (QUEUE trust:revenue-filled,
+   * 2026-09-19): true where the revenue and the take-home on this view are the
+   * place's own. The curated London entry, or a cell the trust gate passes
+   * (src/lib/cells/trust.ts, six guards, the sixth the fill mark) whose net
+   * margin is the engine's own reading and not the clamp's floor
+   * (`netMarginFloored`). Set here and nowhere else; the spine adapter
+   * (adapt_cell.ts) carries this field onto the seed as `meta.money_shown`,
+   * and every trade-page builder reads that.
+   */
+  moneyShown: boolean;
 };
 
 /* ------------------------------- inputs --------------------------------- */
@@ -116,6 +127,16 @@ export type CellViewInput = {
   firms: number | null;
   breakInRating: number | null;
   isTrustedLocal: boolean;
+  /**
+   * True when `netMarginPct` is the clamp's floor and not the engine's own
+   * reading: the caller's raw margin from estimateNetProfit against the
+   * clamped one from clampMargin (src/lib/finance/margin_floor.ts; the same
+   * test across_cities.ts records per column as `netMarginFloored`). A
+   * take-home on a floored margin is the floor times the revenue, not a
+   * reading of this place, so the money is withheld on it (see `moneyShown`).
+   * False on the curated London entry, whose margin rests on no engine run.
+   */
+  netMarginFloored: boolean;
   costStructure: { cogs: number; labor: number; rent: number; other: number } | null;
   breakevenOrdersDaily: number | null;
   typicalOrdersDaily: number | null;
@@ -209,6 +230,7 @@ export function buildCellView(rawInput: CellViewInput): CellView {
     firms,
     breakInRating,
     isTrustedLocal,
+    netMarginFloored,
     costStructure,
     breakevenOrdersDaily,
     typicalOrdersDaily,
@@ -222,7 +244,21 @@ export function buildCellView(rawInput: CellViewInput): CellView {
   const slug = cell.industry_id ? cell.industry_id.replace(/_/g, "-") : "";
   const hrefFor = (citySlug: string) =>
     industrySlug ? `/gb/${citySlug}/${industrySlug}` : "#";
-  const moneyShown = isLondon || isTrustedLocal; // revenue/take-home are real
+  /* THE MONEY GATE, ONE LINE, TWO CONDITIONS (QUEUE trust:revenue-filled,
+     2026-09-19). The curated London entry's figures are the exemplar's own
+     and rest on no row. Otherwise the cell must pass the trust gate, which
+     since this step refuses a row whose headline revenue fillMissingFields
+     supplied (`_revenueFilled`: 945 of the slate's 1,029 rows, measured by
+     plan step 34's third dispatch), AND its net margin must be the engine's
+     own reading and not the clamp's 3 percent floor: a take-home on the floor
+     is 0.03 times the revenue, the finding of 2026-09-04 (the four smallest
+     country keeps were the floor times revenue) and of the third dispatch (22
+     floored rows in the slate). Off this gate the take-home, the takings, the
+     firm count, the spread, the split and the peers' home figure are withheld
+     with their stated lines, and the trade page's net falls to the shard's
+     ladder (trade_net.ts); nothing here prints a fill or a floor as a place's
+     own figure. */
+  const moneyShown = isLondon || (isTrustedLocal && !netMarginFloored);
 
   /* -- masthead ------------------------------------------------------- */
   const tier: CellViewMasthead["tier"] = isLondon
@@ -435,6 +471,7 @@ export function buildCellView(rawInput: CellViewInput): CellView {
     costDrivers,
     oneThing,
     isLondon,
+    moneyShown,
   };
 }
 

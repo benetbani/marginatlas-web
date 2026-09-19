@@ -86,8 +86,14 @@ export type LoadedCellView = {
   tradeName: string;
   tradeNoun: string;
   isLondon: boolean;
-  /** cell_view.ts's own gate, `isLondon || isTrustedLocal`: revenue and take-home are real. The one net builder reads the engine only where this is true (trade_net.ts). */
+  /** cell_view.ts's own gate, read off the view and never re-derived here (QUEUE trust:revenue-filled, 2026-09-19): the curated London entry, or a trusted cell (six guards, the sixth the fill mark) whose margin is not the clamp's floor. The one net builder reads the engine only where this is true (trade_net.ts). */
   moneyShown: boolean;
+  /** The trust gate's own answer for the cell (src/lib/cells/trust.ts), for the chain gate and the counts; `moneyShown` is this or the London entry, less the floor. */
+  trustedLocalCell: boolean;
+  /** The cell's fill mark (`_revenueFilled`, fill_defaults.ts): its headline revenue was supplied from an anchor, not read off the row. */
+  revenueFilled: boolean;
+  /** The engine's raw net margin was below the clamp's floor and `netMarginPct` is the floor (margin_floor.ts); false on the London entry. */
+  netMarginFloored: boolean;
   /** The same trade in other places, the United States' per-state slate (name and a typical year's takings, real), the home state excluded; empty off the United States. The seed's `nearby` (plan step 33's fourth dispatch, 2026-09-18). */
   peers: Array<{ name: string; href: string; value: number | null }>;
 };
@@ -142,6 +148,12 @@ export async function loadCellView(
   const annualIncome = econSnap.avgMonthlySalary != null ? econSnap.avgMonthlySalary * 12 : null;
   const computedNetMargin =
     rawNetMargin != null ? clampMargin(rawNetMargin, "net", cell.industry_id || null) : null;
+  /* THE FLOOR, RECORDED: raw against clamped, the test across_cities.ts
+     applies per column (`netMarginFloored`). Where the clamp raised the
+     margin, the take-home below is the floor times the revenue and not a
+     reading of this place; cell_view.ts withholds the money on it. */
+  const netMarginFloored =
+    rawNetMargin != null && computedNetMargin != null && computedNetMargin > rawNetMargin;
   const adjustedNetTakeHome = resolveOwnerTakeHome({
     structuralNetProfit: netTakeHome,
     rawNetMargin,
@@ -229,6 +241,9 @@ export async function loadCellView(
     firms: viewFirms,
     breakInRating: breakInRating?.score ?? null,
     isTrustedLocal: trustedLocalCell,
+    /* The London entry's margin rests on no engine run, so the floor test
+       is the engine's cells' alone. */
+    netMarginFloored: Le ? false : netMarginFloored,
     costStructure: cell.cost_structure ?? null,
     breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
     typicalOrdersDaily: be?.currentOrdersDaily ?? null,
@@ -264,7 +279,10 @@ export async function loadCellView(
     tradeName,
     tradeNoun,
     isLondon: cellView.isLondon,
-    moneyShown: cellView.isLondon || trustedLocalCell,
+    moneyShown: cellView.moneyShown,
+    trustedLocalCell,
+    revenueFilled: cell._revenueFilled === true,
+    netMarginFloored: Le ? false : netMarginFloored,
     peers: nearbyPeers,
   };
 }

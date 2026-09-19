@@ -62,14 +62,16 @@ type Params = { country: string; geo: string; industry: string };
  * slate). Verified end to end with scripts/audit/dryrun_flagship_static_params.ts
  * (each entry returns a non-null buildBuyVsStart). Keep the two lists in sync by
  * hand; re-run that dry-run after any change.
+ *
+ * TWENTY TO EIGHT, 2026-09-19 (QUEUE trust:revenue-filled): the opening route's
+ * header says why; the same eight, in the same order.
  */
 export async function generateStaticParams(): Promise<Params[]> {
   return [
     // US restaurants, hotels, and software resolve a trusted local cell at state
-    // level; cafes / hairdressers / auto-repair are extrapolated at state level
-    // and only resolve at city level, so those use the metro geo. US
-    // legal-services is extrapolated everywhere, so the legal flagship is the
-    // curated gb/london one below.
+    // level with a revenue of their own. US legal-services is extrapolated
+    // everywhere and the London flagships stand on filled rows, so no legal
+    // flagship prerenders today.
     { country: "us", geo: "california",  industry: "software-development" },
     { country: "us", geo: "california",  industry: "restaurants" },
     { country: "us", geo: "new-york",    industry: "restaurants" },
@@ -77,23 +79,12 @@ export async function generateStaticParams(): Promise<Params[]> {
     { country: "us", geo: "florida",     industry: "restaurants" },
     { country: "us", geo: "california",  industry: "hotels-lodging" },
     { country: "us", geo: "new-york",    industry: "hotels-lodging" },
-    { country: "us", geo: "los-angeles", industry: "cafes-coffee" },
-    { country: "us", geo: "los-angeles", industry: "hairdressers-beauty" },
-    { country: "us", geo: "los-angeles", industry: "auto-repair-shops" },
 
-    // Non-US flagships at trusted city / region resolution. The cell page's
-    // featured aggregates (gb/gb legal, es511 restaurants, de/de, fr/fr, it/it,
-    // jp/jp) do not resolve a trusted local cell, so the city geo is used here.
-    { country: "gb", geo: "london",     industry: "legal-services" },
-    { country: "gb", geo: "london",     industry: "restaurants" },
-    { country: "gb", geo: "london",     industry: "cafes-coffee" },
-    { country: "de", geo: "de21",       industry: "metal-fabrication-machine-shops" },
-    { country: "de", geo: "berlin",     industry: "restaurants" },
-    { country: "es", geo: "barcelona",  industry: "restaurants" },
+    // The one non-US flagship whose row holds its own revenue (tier P, state
+    // level). The cell page's featured aggregates (gb/gb legal, es511
+    // restaurants, de/de, fr/fr, it/it, jp/jp) do not resolve a trusted local
+    // cell either.
     { country: "mx", geo: "mx-roo",     industry: "hotels-lodging" },
-    { country: "fr", geo: "paris",      industry: "restaurants" },
-    { country: "it", geo: "rome",       industry: "restaurants" },
-    { country: "jp", geo: "tokyo",      industry: "restaurants" },
   ];
 }
 

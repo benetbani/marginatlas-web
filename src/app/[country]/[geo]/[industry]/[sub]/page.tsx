@@ -371,6 +371,10 @@ async function NeighborhoodCellPageBody({
     firms: null,
     breakInRating: null,
     isTrustedLocal: trustedLocalCell,
+    /* The clamp's floor, raw against clamped (QUEUE trust:revenue-filled):
+       a floored margin withholds the money in buildCellView; the London
+       entry's margin rests on no engine run. */
+    netMarginFloored: Le ? false : rawNetMargin != null && computedNetMargin != null && computedNetMargin > rawNetMargin,
     costStructure: cell.cost_structure ?? null,
     breakevenOrdersDaily: be?.breakevenOrdersDaily ?? null,
     typicalOrdersDaily: be?.currentOrdersDaily ?? null,
