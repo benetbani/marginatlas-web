@@ -4,7 +4,7 @@
   "howto-GB": 1,
   "city-london": 2,
   "cell-london-restaurants": 1,
-  "industry-restaurants": 0,
+  "industry-restaurants": 1,
   "hood-london": 0,
   "_reseed_history": [
     {
@@ -34,6 +34,13 @@
       "new": 1,
       "date": "2026-09-18",
       "reason": "Not a regression: the trade page's second full width landed. Plan step 33's fourth dispatch seated MODEL.md 8.6's `07 peers` on CompareTable at the table's own full width under its data-wide-table sanction, the second of the page's three full widths (R1: the take, the peers, the close; PART 9 clause 36, 'three stands'), where until then the old Nearby table sat in a 2-1 band because a full width with no wide-table sanction reds this gate. The one full-width section with no wide form this gate now names is that peers table, the same section the city-london re-seed of 2026-09-08 and the country-gb-new re-seed of 2026-09-17 name on their pages; the exit stands on the hero band and is not counted here. The count may fall and never rise."
+    },
+    {
+      "page": "industry-restaurants",
+      "old": 0,
+      "new": 1,
+      "date": "2026-09-19",
+      "reason": "Not a regression: the industry page's second full width landed. Plan step 34's third dispatch seated MODEL.md 8.7's `06 places` at the table's own full width under CompareTable's data-wide-table sanction, the second of the page's three full widths (R1: the take, the places table, the close; PART 9 clause 36, 'three stands'), the same section the cell-london-restaurants re-seed of 2026-09-18 and the country-AF re-seed name on their pages. On this page the block stands as the drawn blocked seat today (industry_places_rows.ts: no trade holds four cities of their own, the slate's rows being filled headlines and the clamp's floor, measured 2026-09-19 over 243), at the table's width under the table's sanction, as Afghanistan's peers block does; the day the table draws the count is the same one. The exit stands on the hero band and is not counted here. The count may fall and never rise."
     }
   ]
 }

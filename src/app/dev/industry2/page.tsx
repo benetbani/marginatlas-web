@@ -230,9 +230,15 @@ export default async function IndustryV2Proposal() {
     isNum(sv.yr5_pct) ? { icon: "first-year" as GlyphId, label: "After five years", sub: "of those that opened", value: String(Math.round(sv.yr5_pct)), unit: "%", answer: true } : null,
   ].filter(Boolean) as StatRow[];
 
-  /* ---- where it pays best. Real cities, like-for-like, one currency. ---- */
+  /* ---- where it pays best. Real cities, like-for-like, one currency. ----
+     The adapter's `where_pays` block left with plan step 34's third dispatch
+     (2026-09-19); the seed carries the slate's resolved columns as `across`
+     (resolveAcrossColumns, no floor), so the rows are shaped here from the
+     columns that hold both figures, as the adapter shaped them before. */
   const places: Array<{ name: string; take_home_usd: number; net_margin_pct: number }> =
-    d.where_pays?.places ?? [];
+    (Array.isArray(d.across) ? d.across : [])
+      .filter((c: { takeHome: number | null; netMarginFraction: number | null }) => isNum(c.takeHome) && isNum(c.netMarginFraction))
+      .map((c: { name: string; takeHome: number; netMarginFraction: number }) => ({ name: c.name, take_home_usd: Math.round(c.takeHome), net_margin_pct: Math.round(c.netMarginFraction * 100) }));
   const placeRows: StatRow[] = places.slice(0, 10).map((p) => ({
     icon: "where-it-pays" as GlyphId,
     label: p.name,
@@ -406,7 +412,7 @@ export default async function IndustryV2Proposal() {
           label="Where this trade pays best"
           icon={"where-it-pays" as GlyphId}
           rows={placeRows}
-          note={d.where_pays?.note}
+          note={places.length >= 3 ? "Owner take-home, like-for-like and converted to one currency, across the world cities where this trade resolves to a real local measurement." : undefined}
           gap="Fewer than three cities resolve to a real local measurement for this trade, so a ranking would be a list of one or two places pretending to be a pattern."
           valCol={96}
         />

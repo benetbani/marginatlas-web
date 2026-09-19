@@ -47,25 +47,40 @@
  * `first_year`, `payback` were omitted here on purpose), retired into `04
  * open`'s months cell and `05 pays`'s two metric cells, off the shard by id.
  *
+ * WHAT LEFT WITH THE THIRD DISPATCH (plan step 34, 2026-09-19): the
+ * `where_pays` block (the slate's columns re-shaped to name, take-home and
+ * margin, dropped to `undefined` under three cities, with a note nothing
+ * printed; it fed the WherePaysExplorer, which gated on `rent_load_pct`, a
+ * field this adapter never set, so `06`'s seat never drew on a live page).
+ * `06 places` builds off `across`, the slate resolved with no floor
+ * (`resolveAcrossColumns`), through industry_places_rows.ts: the table
+ * where four cities hold figures of their own, the drawn blocked seat
+ * naming its count otherwise, which today is every one of the 243 (the
+ * slate's rows are filled headlines and the clamp's floor, the builder's
+ * header carries the measurement). `07 formats` and `08 channels` read the shard by
+ * id (formats_rows.ts, mix_rows.ts at the world altitude); nothing here
+ * composes them.
+ *
  * HONESTY RAIL (absolute) on what remains: every figure is driven from the
  * accessor and synthesis engines the live industry page already runs (the
  * margins file for the caveats' margin claim until `09 know` lands, the
- * activity character, the failure modes, the real where_pays via
- * buildAcrossCities). Nothing is fabricated. Fields with no honest source at
- * industry altitude are left UNDEFINED; the spine body null-guards them so
- * an omitted field renders nothing.
+ * activity character, the failure modes, the slate's real columns via
+ * resolveAcrossColumns). Nothing is fabricated. Fields with no honest source
+ * at industry altitude are left UNDEFINED; the spine body null-guards them
+ * so an omitted field renders nothing.
  *
  * What is OMITTED on promotion (no honest per-figure source):
  *   - seasonality (no monthly source) , the Season ribbon
- *   - where_pays[].rent_load_pct
  *
- * WHY THIS FILE SITS ON THE TAKE-HOME BYPASS BASELINE AND STAYS THERE.
- * Classified 2026-08-18. verify_take_home_identity flags it for its
- * `clampMargin` call, made without importing the resolver. That call bounds a
- * MARGIN at trade altitude (the $100 stack's net), where there is no revenue
- * and therefore no take-home to reconcile. The one take-home on this page,
- * `where_pays[].take_home_usd`, is `buildAcrossCities`'s figure rounded, and
- * that module resolves it through `resolveOwnerTakeHome`.
+ * OFF THE TAKE-HOME BYPASS BASELINE since plan step 34's third dispatch
+ * (2026-09-19): the `where_pays` block was the one place this file named a
+ * take-home or a margin per city, and with it gone the file no longer
+ * matches verify_take_home_identity's bypass shape, so its reviewed entry
+ * was deleted in the same commit (the gate counts down and never up). The
+ * one take-home on this page is each column's `takeHome` in `across`, which
+ * across_cities.ts resolves through `resolveOwnerTakeHome`. `clampMargin` is
+ * still called here, on the margins file's net for the caveats' claim until
+ * `09 know` lands, a MARGIN at trade altitude with no revenue behind it.
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
@@ -79,7 +94,7 @@ import {
 import { generateIndustryVerdict } from "@/lib/scores/industry_verdict";
 import { getActivityCharacter } from "@/lib/content/activity_character";
 import { getFailureModes } from "@/lib/qa/industry_failure_modes";
-import { buildAcrossCities } from "@/lib/markets/across_cities";
+import { resolveAcrossColumns } from "@/lib/markets/across_cities";
 import { clampMargin } from "@/lib/finance/margin_floor";
 
 type IndustryMarginRow = {
@@ -157,30 +172,22 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
     watchOut: character?.watchOut ?? null,
   });
 
-  // --- where_pays: the REAL like-for-like leaderboard (buildAcrossCities) ------
-  // The commercial heart, fully real: each city is a trusted local measurement of
-  // this activity, with the same after-tax take-home + net margin the cell page
-  // computes. rent_load_pct OMITTED (no honest source), which is why the re-rank
-  // chips are dropped upstream. Self-omits when fewer than three cities resolve.
-  const across = await buildAcrossCities(ind.id);
-  const wherePlaces =
-    across && across.cities.length > 0
-      ? across.cities
-          .filter((c) => isNum(c.takeHome) && isNum(c.netMarginFraction))
-          .map((c) => ({
-            name: c.name,
-            take_home_usd: Math.round(c.takeHome as number),
-            net_margin_pct: Math.round((c.netMarginFraction as number) * 100),
-            // rent_load_pct OMITTED.
-          }))
-      : [];
-  const wherePays =
-    wherePlaces.length >= 3
-      ? {
-          note: "Owner take-home, like-for-like and converted to one currency, across the world cities where this trade resolves to a real local measurement.",
-          places: wherePlaces,
-        }
-      : undefined;
+  // --- across: the slate resolved, for `06 places` (MODEL.md 8.7; plan step
+  // 34's third dispatch, 2026-09-19). The one database read this adapter
+  // still makes: every city of the curated slate where this trade resolves
+  // to a real, trusted local measurement, with the same after-tax take-home
+  // and net margin the trade page computes for that city, through
+  // `resolveAcrossColumns` (the resolution `buildAcrossCities` runs for the
+  // across route, with no floor, so the page's seat can name the count it
+  // holds). Handed down as the columns themselves; the builder
+  // (industry_places_rows.ts, pure) decides the table or the seat, and an
+  // empty list is a count of zero, never an omission. The old `where_pays`
+  // block left with this dispatch: it re-shaped the same columns, dropped a
+  // trade under three cities to `undefined` (so the seat could not say "one
+  // of 15"), carried a note nothing printed, and fed an explorer that gated
+  // on `rent_load_pct`, a field this adapter never set, so the block never
+  // drew on a live page.
+  const across = await resolveAcrossColumns(ind.id);
 
   // --- caveats: the margin read and the character/failure read -----------------
   // The survival folklore sentence and the struck survival claim left with the
@@ -221,7 +228,7 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
 
   // --- meta + provenance ------------------------------------------------------
   const provenanceLine = `Modeled from the trade's structural cost shape${
-    wherePays ? " and its real per-city take-home" : ""
+    across && across.length > 0 ? " and its real per-city take-home" : ""
   }. Figures are directional and place-stable; the dollars land once you pick a city.`;
 
   return {
@@ -232,7 +239,7 @@ export async function buildSpineIndustrySeed(industrySlug: string): Promise<any>
       isNum(grossPct) && isNum(operatingPct) && isNum(netPct)
         ? { gross_pct: grossPct, operating_pct: operatingPct, net_pct: netPct }
         : undefined,
-    where_pays: wherePays,
+    across,
     caveats,
     who_suits: whoSuits,
     // OMITTED entirely (no honest source): seasonality. Leaving it undefined

@@ -62,21 +62,45 @@
  * metric cells are their seats, off the shard for 243. The adapter's
  * `money_split` block left with the MoneySplit.
  *
- * TODAY'S SURVIVORS KEEP THEIR SEATS IN 8.7's ORDER until their dispatches,
- * each mapped to its block: the WherePaysExplorer is `06 places` (it gates
- * on `rent_load_pct`, never set, so it has never drawn on the live route);
- * WhoItSuits and the Caveats are the two halves of `09 know`, the page's
- * one prose section, seated side by side until that dispatch merges them on
- * NoteList; the Seasonality ribbon's swing is `10 field`'s third cell (never
- * fed on the live route); the Close is `11 close` on Terminus at the fourth
- * dispatch (its recap figure left today with the `margin_index` and
- * `benchmark` feeds, 8.7's own cut: "no recap figure").
+ * WHAT THE THIRD DISPATCH BUILT (2026-09-19): turn two, `06 places` full
+ * width (the page's second of three, R1) and the band `07 formats | 08
+ * channels`, on turn-two.tsx (it says which law each obeys; the builders are
+ * industry_places_rows.ts over the slate the adapter resolves, formats_rows.ts
+ * over the shard's formats on the one net builder, and mix_rows.ts at the
+ * world altitude, every figure marked modelled). THE TABLE DRAWS ON NO
+ * TRADE TODAY: 8.7's "106 of 243 clear four cities" was counted on the
+ * trust gate, which reads a row's tier and never its figure, and the rows
+ * it passes are filled headlines (one ladder of city constants times a
+ * trade base, or one global median shared to the cent, `_revenueFilled` on
+ * the cell) and the clamp's floor; under the own-row law
+ * (industry_places_rows.ts, measured 2026-09-19 over 243) no trade holds
+ * four cities of their own, so the drawn blocked seat stands at the table's
+ * full width on 243 of 243, naming the count of own figures each holds
+ * (restaurants two: New York read, London curated); the formats and the mix
+ * draw on 243. WHAT IT RETIRED, each with what it drew: the WherePaysExplorer
+ * (where-pays.tsx, the rent load city by city, gated on `rent_load_pct`, a
+ * field the adapter never set, so it never drew on a live page: `06` is its
+ * seat, on the two fields that exist) and the adapter's `where_pays` block
+ * that fed it. Chapter break 02 draws on every trade now: `07 | 08` stand
+ * under it on 243, and `06` stands there drawn or seated.
+ *
+ * TODAY'S SURVIVORS KEEP THEIR SEATS IN 8.7's ORDER until their dispatch,
+ * each mapped to its block: WhoItSuits and the Caveats are the two halves
+ * of `09 know`, the page's one prose section, seated side by side until
+ * that dispatch merges them on NoteList; the Seasonality ribbon's swing is
+ * `10 field`'s third cell (never fed on the live route); the Close is `11
+ * close` on Terminus at the fourth dispatch (its recap figure left today
+ * with the `margin_index` and `benchmark` feeds, 8.7's own cut: "no recap
+ * figure").
  *
  * THE THIRD CHAPTER BREAK draws when a card stands under it (the trade
  * view's own rule): the suits and the caveats build off the authored
  * character, the failure modes and the margins file, so on a trade holding
- * none of them the heading waits with them. Turn two's heading waits on the
- * places table, which no live trade draws today.
+ * none of them the heading waits with them. Turn two's heading stands on
+ * every trade holding a shard (the formats and the mix), and on the live
+ * route the places block stands under it drawn or seated; on the bundled
+ * dev seed no slate was resolved (`across` absent), so the places block
+ * builds nothing there and the heading stands over the band alone.
  *
  * THE SAMPLE MARK'S WIRING, said once for the render group: every card on
  * this page whose figures are modelled passes `sample` to the kit's `Rail`
@@ -89,10 +113,10 @@ import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
 import { Fig, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Full, Band } from "@/components/spine/kit";
 import { AtlasMark } from "@/components/spine/marks";
-import { WherePaysExplorer } from "./where-pays";
 import { SeasonRibbon } from "./forms";
 import { Masthead, BenchmarkCard } from "./opening";
 import { SplitCard, OpenCard, PaysBand } from "./turn-one";
+import { PlacesTable, FormatsCard, ChannelsCard } from "./turn-two";
 import { LastsCard } from "@/components/spine/cell/turn-two";
 import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import { buildLasts } from "@/lib/spine/lasts_rows";
@@ -100,6 +124,9 @@ import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
 import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
 import { buildPays } from "@/lib/spine/pays_rows";
+import { buildIndustryPlaces } from "@/lib/spine/industry_places_rows";
+import { buildFormats } from "@/lib/spine/formats_rows";
+import { buildMix } from "@/lib/spine/mix_rows";
 import { COPY } from "@/lib/spine/copy";
 
 /* glossTerm , attach the kit InfoTip after the FIRST occurrence of a jargon term inside
@@ -373,19 +400,28 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   const split = buildIndustrySplit(industryId);
   const open = buildIndustryOpen(industryId);
   const pays = buildPays(industryId);
+  /* TURN TWO'S THREE (plan step 34's third dispatch): the places off the
+     slate the adapter resolved (`across`: the columns, or an empty list for
+     a trade the slate does not measure anywhere; absent on the bundled dev
+     seed, where no lookup was made and the block builds nothing), the
+     formats off the shard on the one net builder, the mix off the shard at
+     the world altitude. The places block ships as the table or the seat and
+     is never dropped where a slate was resolved; the formats and the mix
+     build for every trade holding a shard, so the band `07 | 08` holds two
+     children or does not draw. */
+  const places = buildIndustryPlaces(industryId, d.across);
+  const formats = buildFormats(industryId);
+  const mix = buildMix(industryId, "world");
 
   // Chapter-presence reads for today's survivors (each mirrors its card's own
   // null-guard) so a Movement header never floats over an empty chapter.
   const hasWhoSuits = (d.who_suits?.suits ?? []).length > 0 || (d.who_suits?.think_twice ?? []).length > 0;
-  // Mirrors WherePaysExplorer's own guard: the list carries rent-load facts only
-  // (founder D3, 2026-07-11), so a place without rent_load_pct contributes nothing.
-  const hasWherePays = (d.where_pays?.places ?? []).some((p: any) => typeof p?.rent_load_pct === "number");
   const hasSeasonality = (d.seasonality?.months ?? []).length >= 2;
   // Mirrors Caveats' own guard: the margin claim off the margins file, the myths, the honest take.
   const hasCaveats = (d.caveats?.myths ?? []).length > 0 || !!d.caveats?.honest_take || (typeof d.margins?.gross_pct === "number" && typeof d.margins?.net_pct === "number");
   /* The turns, by whether a card stands under each. */
   const turnOne = (!!split && !!open) || !!pays;
-  const turnTwo = hasWherePays;
+  const turnTwo = !!places || (!!formats && !!mix);
   const turnThree = hasWhoSuits || hasCaveats || hasSeasonality;
 
   return (
@@ -457,13 +493,33 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
         </>
       ) : null}
 
-      {/* CHAPTER TURN TWO (8.7, "Where it pays, and what to sell"): `06 places`,
-          the one table, full width at its dispatch; the explorer that holds
-          its seat has never drawn on the live route, so the heading waits. */}
+      {/* CHAPTER TURN TWO (8.7, "Where it pays, and what to sell", the spine's
+          own string): `06 places`, the one table, FULL WIDTH, the page's
+          second of three (R1), quiet by table law; the table where four
+          cities hold figures of their own and the drawn blocked seat at the
+          same width otherwise, which today is every trade (turn-two.tsx and
+          the builder say how and why). Then the band `07 formats | 08
+          channels`. */}
       {turnTwo ? (
         <>
           <Movement index="02" heading={COPY.industryChapters.where} />
-          <WherePaysExplorer d={d} />
+          <PlacesTable places={places} />
+          {/* `07 formats | 08 channels` (8.7): which format of the trade to
+              open, beside which lines of it you would mostly be selling. The
+              list LEFT (the mark list, quiet by its form's law, the middle at
+              30 in ink) and the mix RIGHT (the donut's seat on KvGrid,
+              candidate 5 awaiting his click, no 30 and no accent until then,
+              so the page carries two loud moments). The split is measured
+              below this comment's last line (8.4 rule 1, the closed set), at
+              three widths on restaurants, a four-format shard with a
+              four-part mix and the fill shard; the dispatch's report carries
+              the numbers. Both cards draw on every trade holding a shard. */}
+          {formats && mix ? (
+            <Band split="2-1" stack="lg">
+              <FormatsCard formats={formats} />
+              <ChannelsCard id="channels" mix={mix} />
+            </Band>
+          ) : null}
         </>
       ) : null}
 

@@ -32,10 +32,6 @@
     {
       "section": "src/components/spine/industry/industry-view.tsx#close",
       "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/where-pays.tsx#1",
-      "reason": "not yet on an archetype; a build loop queue row"
     }
   ]
 }
