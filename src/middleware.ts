@@ -26,7 +26,7 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { redirectFor } from "@/lib/taxonomy/retired";
 import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
-import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
+import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
 
 /**
  * TRAINING harvesters, blocked at the door with a 451.
@@ -255,9 +255,13 @@ function isPlaceWeDoNotHold(path: string): boolean {
   // segment here may be a route namespace, and guessing would 404 a real page.
   if (countryName === undefined) return false;
 
-  // The one static child of the country segment. It is a real page, not a
-  // region, so it must never be judged against the region list.
-  if (geoSlug === "industries") return false;
+  // The static children of the country segment (src/app/[country]/<name>/,
+  // generated into COUNTRY_STATIC_CHILDREN and kept true by the
+  // top-level-segments gate). Each is a real page, not a region, so it must
+  // never be judged against the region list. Until 2026-09-19 this line named
+  // "industries" alone, and /gb/how-to-open answered 404 with the whole page
+  // in its body on every deploy since that route was added.
+  if (COUNTRY_STATIC_CHILDREN.has(geoSlug)) return false;
 
   return !regionSlugsFor(countrySlug, countryName).has(geoSlug);
 }

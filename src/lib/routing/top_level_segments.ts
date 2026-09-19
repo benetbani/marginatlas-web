@@ -2,9 +2,10 @@
  * src/lib/routing/top_level_segments.ts
  *
  * Every first URL segment a real route can occupy, other than the country
+ * wildcard, and (since 2026-09-19) every static child folder of the country
  * wildcard. GENERATED from src/app by scripts/verify_top_level_segments.mjs,
- * which fails the build if this list and the filesystem disagree. Do not hand
- * edit: add a route folder and run the gate.
+ * which fails the build if either list and the filesystem disagree. Do not
+ * hand edit: add a route folder and run the gate.
  *
  * WHAT IT IS FOR, and it closes a hole the middleware documented but could not
  * close itself.
@@ -72,4 +73,19 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "tools",
   "world",
   "you",
+]);
+
+/**
+ * Static second segments that exist as route folders under src/app/[country]
+ * (its non-wildcard children). The middleware's two-segment rule judges the
+ * second segment of a known country's path against that country's region
+ * list, so a static child that is not in this set is pinned to 404 while its
+ * page renders: /gb/how-to-open answered 404 with the whole how-to page in
+ * its body from the day the route was added until 2026-09-19, because the
+ * middleware exempted "industries" by name and nothing else. Generated and
+ * kept true by the same gate as the set above.
+ */
+export const COUNTRY_STATIC_CHILDREN: ReadonlySet<string> = new Set([
+  "how-to-open",
+  "industries",
 ]);

@@ -42,16 +42,28 @@ function topSegments(dir, out = new Set()) {
 
 const onDisk = topSegments(APP);
 const src = fs.readFileSync(LIST, "utf8");
-const body = src.slice(src.indexOf("new Set(["));
+/* TWO SETS IN ONE FILE (2026-09-19): TOP_LEVEL_SEGMENTS, then
+   COUNTRY_STATIC_CHILDREN, the static children of src/app/[country] (the
+   middleware exempted "industries" by name and pinned 404 on /gb/how-to-open
+   for every deploy since that route was added). Each set is read from its own
+   `new Set([` and compared to its own folder. */
+const firstSet = src.indexOf("new Set([");
+const secondSet = src.indexOf("new Set([", firstSet + 1);
+const body = src.slice(firstSet, secondSet > 0 ? secondSet : undefined);
 const declared = new Set([...body.matchAll(/"([^"]+)"/g)].map((m) => m[1]));
+const childrenOnDisk = topSegments(path.join(APP, "[country]"));
+const childrenBody = secondSet > 0 ? src.slice(secondSet) : "";
+const childrenDeclared = new Set([...childrenBody.matchAll(/"([^"]+)"/g)].map((m) => m[1]));
 
 const missing = [...onDisk].filter((s) => !declared.has(s)).sort();
 const stale = [...declared].filter((s) => !onDisk.has(s)).sort();
+const childMissing = [...childrenOnDisk].filter((s) => !childrenDeclared.has(s)).sort();
+const childStale = [...childrenDeclared].filter((s) => !childrenOnDisk.has(s)).sort();
 
-console.log(`top-level-segments: ${onDisk.size} route folder(s) on disk, ${declared.size} declared`);
+console.log(`top-level-segments: ${onDisk.size} route folder(s) on disk, ${declared.size} declared; ${childrenOnDisk.size} static child folder(s) of [country] on disk, ${childrenDeclared.size} declared`);
 
-if (missing.length === 0 && stale.length === 0) {
-  console.log("top-level-segments: the list matches src/app");
+if (missing.length === 0 && stale.length === 0 && childMissing.length === 0 && childStale.length === 0) {
+  console.log("top-level-segments: both lists match src/app");
   process.exit(0);
 }
 
@@ -81,10 +93,28 @@ for (const s of stale) {
     remedy: `remove "${s}" from the set in ${LIST}`,
   });
 }
+for (const s of childMissing) {
+  red({
+    rule: RULE,
+    file: LIST,
+    line: (lines.findIndex((l) => l.includes("COUNTRY_STATIC_CHILDREN")) + 1) || undefined,
+    detail: `static child folder ${APP}/[country]/${s} is on disk and not in COUNTRY_STATIC_CHILDREN, so middleware will pin 404 on /<country>/${s} while the page renders`,
+    remedy: `add "${s}" to COUNTRY_STATIC_CHILDREN in ${LIST}`,
+  });
+}
+for (const s of childStale) {
+  red({
+    rule: RULE,
+    file: LIST,
+    line: lineOf(s),
+    detail: `"${s}" is in COUNTRY_STATIC_CHILDREN and ${APP}/[country]/${s} does not exist, a permission nobody revoked`,
+    remedy: `delete "${s}" from COUNTRY_STATIC_CHILDREN in ${LIST}`,
+  });
+}
 redSummary(
   RULE,
-  missing.length + stale.length,
-  `edit the set in ${LIST} so it matches the folders under ${APP}`,
-  `${missing.length} missing, ${stale.length} stale`,
+  missing.length + stale.length + childMissing.length + childStale.length,
+  `edit the sets in ${LIST} so they match the folders under ${APP} and ${APP}/[country]`,
+  `${missing.length} missing, ${stale.length} stale; children ${childMissing.length} missing, ${childStale.length} stale`,
 );
 process.exit(1);
