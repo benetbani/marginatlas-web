@@ -32,6 +32,10 @@ const CLEAN_DEALING = "Clean dealing";
 const TIERS_KICKER = "Registering, by legal form";
 const PEERS_KICKER = "Against the peers";
 const LOCALS_KICKER = "What locals know";
+/** The cities' kicker, one literal for the card gallery and for the seat that
+ *  stands where it would on a country with no covered city (MODEL.md 8.2's
+ *  FLOOR bracket, plan step 49, 2026-09-19). */
+const CITIES_KICKER = "The cities";
 /** Turn one's heading on every page (M7): the country's, the city's and the
  *  trade's open the same chapter with one literal, so a rewording changes
  *  all three. */
@@ -210,6 +214,29 @@ export const COPY = {
       kicker: LOCALS_KICKER,
       line: "Not gathered yet: what locals know about opening here.",
       foot: "Waits on DATA-REQUIREMENTS item 6.",
+    },
+    /** THE CITIES SEAT, `10 cities` on the 90 countries with no covered city
+     *  (MODEL.md 8.2's FLOOR bracket; plan step 49, decided 2026-09-19 by the
+     *  controller, option A, reversible by his word). The line is COMPOSED by
+     *  src/lib/spine/country_cities_seat.ts: `{cities}` takes the three
+     *  largest covered cities of the country's own region, said the way a
+     *  person says them ("Delhi, Dhaka and Mumbai"; "Lagos and Luanda" where
+     *  the region holds two; "Cairo" where one), so the template stands at
+     *  eight words and the longest composed line at fourteen, the cap
+     *  (Latin America & Caribbean: "São Paulo, Mexico City and Buenos
+     *  Aires"). The region is said as "Nearby", not by its name: its name
+     *  runs to five words and no line naming both it and three cities fits
+     *  the cap on any region but South Asia (the builder says so). `lineNone`
+     *  is the line where the region holds no covered city, reachable by no
+     *  live country today (every region holds twelve or more); it is drawn on
+     *  the sheet from a cut of the list. No door: a seat carries none, and
+     *  the names are text. The item is 82, appended for this seat: one covered
+     *  city per country in data/cities/city_list_v1.json. */
+    cities: {
+      kicker: CITIES_KICKER,
+      line: "Not gathered yet: any city here. Nearby: {cities}.",
+      lineNone: "Not gathered yet: any city here, or nearby.",
+      foot: "Waits on DATA-REQUIREMENTS item 82.",
     },
     /** THE TRADE PAGE'S ONE DRAWN BLOCKED SEAT, `10 watch` (MODEL.md 8.6;
      *  plan step 33's fifth dispatch, 2026-09-18): his B1 bars wait on item
@@ -776,7 +803,7 @@ export const COPY = {
     },
   },
   /** The card pager (the cities). */
-  cities: { kicker: "The cities", allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
+  cities: { kicker: CITIES_KICKER, allLabel: "Every covered city", prev: "Previous cities", next: "More cities" },
   /** THE CITY'S NEIGHBOURHOODS, `14 neighbourhoods` (MODEL.md 8.3; the same
    *  dispatch): the card pager, four a row, a name and an arrow, no image, no
    *  sub-line (a district's character tag is a one-word summary of a place,

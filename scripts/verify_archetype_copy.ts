@@ -69,6 +69,8 @@ import { buildCityDistrictBars, rentMult, countWord } from "@/lib/spine/district
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { SEAT_LINE_WORDS_CAP } from "@/components/spine/archetypes/BlockedSeat";
+import { buildCityCards } from "@/lib/spine/city_cards";
+import { buildCitiesSeat, cutCitiesSeatTables, sayNames, LIVE_CITIES_SEAT_TABLES, PROFILE_REGIONS, CITIES_SEAT_NAMES_CAP } from "@/lib/spine/country_cities_seat";
 import { buildSetupRows } from "@/lib/spine/setup_rows";
 import { buildMarkList, MARK_LIST_CAP } from "@/lib/spine/mark_list_rows";
 import { resolveTradeNet, countTradeNets, netText } from "@/lib/spine/trade_net";
@@ -1447,7 +1449,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (/\u2014/.test(t)) reds.push(`seat ${key}: an em dash in "${t}"`);
     }
   }
-  const drawnKicker: Record<string, string> = { setup: COPY.tiers.kicker, peers: COPY.peers.kicker, money: COPY.margin.kicker, locals: COPY.locals.kicker };
+  const drawnKicker: Record<string, string> = { setup: COPY.tiers.kicker, peers: COPY.peers.kicker, money: COPY.margin.kicker, locals: COPY.locals.kicker, cities: COPY.cities.kicker };
   for (const [block, kicker] of Object.entries(drawnKicker)) {
     if ((COPY.blocked as Record<string, { kicker: string }>)[block]?.kicker !== kicker) reds.push(`seat ${block}: its kicker is not the drawn card's own ("${kicker}")`);
   }
@@ -1461,6 +1463,102 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   }
   for (const [block, n] of Object.entries(seated)) if (n === 0) reds.push(`seat ${block}: no country in the taxonomy takes this seat, so its story has nothing to draw`);
   console.log(`seats: ${seats.length} drawn blocked seats' copy held (one line each under ${SEAT_LINE_WORDS_CAP + 1} words, a foot naming its item); of ${codes.length} countries the thin seats stand on ${seated.setup} (setup), ${seated.peers} (peers), ${seated.money} (money) and ${seated.locals} (locals)`);
+}
+/* THE CITIES SEAT (MODEL.md 8.2's FLOOR bracket, plan step 49, decided
+   2026-09-19: option A, the 90 countries with no covered city ship with `10
+   cities` drawn as the blocked seat, its one line naming the three largest
+   covered cities of the country's own region). The builder's law, held over
+   every country in the taxonomy from the two files it reads:
+    SEATED EXACTLY WHERE THE LIST HOLDS NO CITY, both ways: a country the city
+      list holds a row for builds no seat (its line would be false: Bangladesh
+      holds Dhaka's page and the close door goes there, whatever the cards
+      draw), and a country it holds none for builds one.
+    THE LINE: the idiom ("Not gathered yet: "), under fifteen words (the cap
+      is the component's), no digit, no placeholder left, no banned word, no
+      em dash, and NO DOOR: no path, no markup, no "See", no arrow; a seat
+      carries none (PART 7).
+    THE REGION: the profile's own `world_bank_region` for that country, one of
+      the seven plain names, NEVER A CODE: the profile's `continent` ("SA",
+      "MENA", "EU", "NA") is a code, and no code token stands in the line.
+    THE NAMES: this gate's own reading of the two files (the region's rows by
+      `pop_m`, largest first, ties by name), so the builder's pick is checked
+      against an independent sort, never against itself; three where the
+      region holds three, the form word agreeing.
+    THE CUTS the sheet draws (two names, one, none) compose under the same
+      law, and the none line is COPY's own.
+   Counted over the taxonomy: how many draw cards, how many the seat, how many
+   hold a covered city and draw no card (the card builder's draft-list
+   intersection, QUEUE'd on 2026-09-19), and the forms. Planted twice on
+   2026-09-19 and watched red before it was trusted: a door let into the line
+   (a path after the names) and the continent code carried as the region. */
+{
+  const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+  const profiles = LIVE_CITIES_SEAT_TABLES.profiles;
+  const cityRows = LIVE_CITIES_SEAT_TABLES.cities;
+  const CODES = new Set(["NA", "SA", "EU", "MENA"]);
+  const door = (t: string) => /\/|<|>|https?:|\bSee\b|→|href/i.test(t);
+  const lineLaw = (where: string, line: string) => {
+    const words = wordsOf(line);
+    if (!line.startsWith("Not gathered yet: ")) reds.push(`${where}: the line is not in the idiom "Not gathered yet: ...": "${line}"`);
+    if (words > SEAT_LINE_WORDS_CAP) reds.push(`${where}: the line runs ${words} words, over the cap of ${SEAT_LINE_WORDS_CAP}: "${line}"`);
+    if (/\d/.test(line)) reds.push(`${where}: a digit in a line whose law is no figure: "${line}"`);
+    if (/[{}]/.test(line)) reds.push(`${where}: a placeholder was never filled: "${line}"`);
+    if (door(line)) reds.push(`${where}: a door let into the seat: "${line}"`);
+    if (line.split(/\s+/).some((w) => CODES.has(w.replace(/[^A-Za-z]/g, "")))) reds.push(`${where}: a code printed as a region: "${line}"`);
+    for (const b of COPY.banned) if (line.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${line}"`);
+    if (/—/.test(line)) reds.push(`${where}: an em dash in "${line}"`);
+  };
+  const largestOf = (region: string, n: number) => cityRows
+    .filter((c) => profiles[String(c.iso2).toUpperCase()]?.world_bank_region === region)
+    .slice()
+    .sort((a, b) => (typeof b.pop_m === "number" ? b.pop_m : -1) - (typeof a.pop_m === "number" ? a.pop_m : -1) || a.name.localeCompare(b.name))
+    .slice(0, n)
+    .map((c) => c.name.replace(/\s*\([^)]*\)\s*$/, "").trim());
+  let cards = 0, seatedCities = 0, coveredNoCard = 0;
+  const forms: Record<string, number> = { three: 0, fewer: 0, none: 0 };
+  const perRegion: Record<string, number> = {};
+  for (const iso2 of codes) {
+    const covered = cityRows.some((c) => String(c.iso2).toUpperCase() === iso2);
+    const drawn = buildCityCards(iso2) != null;
+    const seat = buildCitiesSeat(iso2);
+    if (drawn) cards++;
+    if (covered && !drawn) coveredNoCard++;
+    if (covered && seat) reds.push(`cities seat ${iso2}: the list holds a covered city here and the seat still stands (its line would be false)`);
+    if (!covered && !seat) reds.push(`cities seat ${iso2}: no covered city and no seat, so the page falls to 20 blocks`);
+    if (!seat) continue;
+    seatedCities++;
+    forms[seat.form] = (forms[seat.form] ?? 0) + 1;
+    perRegion[seat.region] = (perRegion[seat.region] ?? 0) + 1;
+    const where = `cities seat ${iso2}`;
+    lineLaw(where, seat.line);
+    const profileRegion = profiles[iso2]?.world_bank_region;
+    if (seat.region !== profileRegion) reds.push(`${where}: the region "${seat.region}" is not the profile's ("${profileRegion}")`);
+    if (!PROFILE_REGIONS.includes(seat.region)) reds.push(`${where}: the region "${seat.region}" is not one of the profile's seven plain names`);
+    if (CODES.has(seat.region)) reds.push(`${where}: a code carried as the region: "${seat.region}"`);
+    const expect = largestOf(seat.region, CITIES_SEAT_NAMES_CAP);
+    if (JSON.stringify(seat.names) !== JSON.stringify(expect)) reds.push(`${where}: the names ${JSON.stringify(seat.names)} are not the region's largest ${JSON.stringify(expect)}`);
+    const expectForm = expect.length === 0 ? "none" : expect.length < CITIES_SEAT_NAMES_CAP ? "fewer" : "three";
+    if (seat.form !== expectForm) reds.push(`${where}: the form "${seat.form}" against ${expect.length} name(s)`);
+    if (seat.names.some((n) => n.includes(","))) reds.push(`${where}: a name carrying a comma would break the reading: ${JSON.stringify(seat.names)}`);
+    if (seat.form === "none" && seat.line !== COPY.blocked.cities.lineNone) reds.push(`${where}: the none form is not COPY's none line`);
+    if (seat.form !== "none" && !seat.line.endsWith(`${sayNames(seat.names)}.`)) reds.push(`${where}: the line does not end on the names as a person says them: "${seat.line}"`);
+  }
+  if (seatedCities === 0) reds.push("cities seat: no country in the taxonomy takes this seat, so its story has nothing to draw");
+  /* The cuts: real rows, fewer of them; the same law on each. */
+  const live = buildCitiesSeat("AF");
+  if (!live) reds.push("cities seat: Afghanistan, the thin-country exemplar, builds no seat");
+  else {
+    for (const [n, want] of [[2, "fewer"], [1, "fewer"], [0, "none"]] as Array<[number, string]>) {
+      const cut = buildCitiesSeat("AF", cutCitiesSeatTables(live.region, n));
+      if (!cut) { reds.push(`cities seat cut ${n}: builds nothing`); continue; }
+      lineLaw(`cities seat cut ${n}`, cut.line);
+      if (cut.form !== want || cut.names.length !== n) reds.push(`cities seat cut ${n}: form "${cut.form}" with ${cut.names.length} name(s)`);
+    }
+    if (buildCitiesSeat("BD") != null) reds.push("cities seat: Bangladesh holds Dhaka and builds a seat");
+    if (buildCitiesSeat("GB") != null) reds.push("cities seat: the United Kingdom builds a seat");
+  }
+  lineLaw("COPY.blocked.cities.lineNone", COPY.blocked.cities.lineNone);
+  console.log(`cities seat: of ${codes.length} countries ${cards} draw cards, ${seatedCities} the seat (${forms.three} naming three, ${forms.fewer} fewer, ${forms.none} the none line; by region ${Object.entries(perRegion).map(([r, n]) => `${r} ${n}`).join(", ")}) and ${coveredNoCard} hold a covered city and draw no card (the card builder's draft-list intersection, queued); every line in the idiom under ${SEAT_LINE_WORDS_CAP + 1} words, no figure, no door, no code`);
 }
 /* THE TRADE'S EXIT (MODEL.md 8.6 `13 rivals`, `14 worth`, `15 close`; plan
    step 33's sixth dispatch, 2026-09-18). THE RIVALS on fixture seeds in the

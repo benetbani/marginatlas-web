@@ -35,6 +35,7 @@ import { buildChecks } from "@/lib/spine/checks_rows";
 import { Terminus } from "./Terminus";
 import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor, buildTradeCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
+import { buildCitiesSeat, cutCitiesSeatTables, CITIES_SEAT_NAMES_CAP } from "@/lib/spine/country_cities_seat";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
@@ -1894,14 +1895,33 @@ export function MarkListStories({ instances = pickMarkListInstances(), cell = []
    the 3-2 and 16's wide side of the 2-3, 416 for 12's narrow side of the
    2-3, 1072 for 09's full width), so the line's wrap is the page's. */
 type SeatBlock = "setup" | "peers" | "money" | "locals";
-const SEAT_FORM: Record<SeatBlock | "workforce" | "easiest", { icon: "staffing-rota" | "where-it-pays" | "register-cost" | "benchmark" | "owner-keeps" | "locals-know"; maxWidth: number }> = {
+const SEAT_FORM: Record<SeatBlock | "workforce" | "easiest" | "cities", { icon: "staffing-rota" | "where-it-pays" | "register-cost" | "benchmark" | "owner-keeps" | "locals-know" | "best-areas"; maxWidth: number }> = {
   workforce: { icon: "staffing-rota", maxWidth: 520 },
   easiest: { icon: "where-it-pays", maxWidth: 347 },
   setup: { icon: "register-cost", maxWidth: 624 },
   peers: { icon: "benchmark", maxWidth: 1072 },
   money: { icon: "owner-keeps", maxWidth: 416 },
   locals: { icon: "locals-know", maxWidth: 624 },
+  /* THE CITIES SEAT (plan step 49, 2026-09-19): the cards' band stands alone
+     at the survivor's two thirds, 693 at 1280, so the seat draws there. */
+  cities: { icon: "best-areas", maxWidth: 693 },
 };
+/* THE CITIES SEAT'S THREE LINES (MODEL.md 8.2's FLOOR bracket; plan step 49,
+   2026-09-19), keyed "<iso2>:cities" for the live line and "<iso2>:cities-two"
+   and "<iso2>:cities-none" for the two forms no live region reaches (every
+   region holds twelve covered cities or more, so the line names three on all
+   90 seated countries): those two are drawn on the country's own region cut
+   to its two largest covered cities and to none, real rows from the list and
+   nothing invented, so the fewer-than-three composition and the none line are
+   on the sheet and measured. The live key is AF wherever the builder seats
+   AF, else the first seated country in the taxonomy. */
+const CITIES_SEAT_CUTS: Record<"cities" | "cities-two" | "cities-none", number | null> = { cities: null, "cities-two": CITIES_SEAT_NAMES_CAP - 1, "cities-none": 0 };
+function citiesSeatFor(iso2: string, block: keyof typeof CITIES_SEAT_CUTS) {
+  const cut = CITIES_SEAT_CUTS[block];
+  const live = buildCitiesSeat(iso2);
+  if (!live || cut == null) return live;
+  return buildCitiesSeat(iso2, cutCitiesSeatTables(live.region, cut));
+}
 /** Whether a country's data leaves the block seated, by the builder the drawn card reads (the view's own floors). */
 const SEATED: Record<SeatBlock, (iso2: string) => string | null> = {
   setup: (c) => (buildSetupRows(c).length === 0 ? "no legal form on file" : null),
@@ -1944,6 +1964,16 @@ export function pickBlockedSeatInstances(industry: IndustryPlacesInstance[] = []
   for (const block of ["setup", "peers", "money", "locals"] as SeatBlock[]) {
     const c = ["AF", ...codes()].find((x) => SEATED[block](x) != null);
     if (c) out.push({ iso2: `${c}:${block}`, why: `${SEAT_WHY[block]} (${SEATED[block](c)})` });
+  }
+  /* The cities seat, block 10, at the cards' band's two thirds: the live line
+     on the thin country, then the two-name and the none line on the same
+     country's region cut (CITIES_SEAT_CUTS above). */
+  const citiesSeated = ["AF", ...codes()].find((x) => buildCitiesSeat(x) != null);
+  if (citiesSeated) {
+    const live = buildCitiesSeat(citiesSeated)!;
+    out.push({ iso2: `${citiesSeated}:cities`, why: `block 10, the seat in the cards' band; no covered city here, the three largest of its region named (${live.region}, ${live.regionCovered} covered); item 82 not gathered` });
+    out.push({ iso2: `${citiesSeated}:cities-two`, why: `block 10's line where a region holds two covered cities: no live region does (the fewest holds twelve), so ${live.region} is cut to its two largest` });
+    out.push({ iso2: `${citiesSeated}:cities-none`, why: `block 10's line where a region holds no covered city: no live region does, so ${live.region} is cut to none` });
   }
   out.push({ iso2: "city:london:locals", why: "city block 13 on the exemplar: the seat beside the people table; item 6 not gathered for any city" });
   const placeholder = citiesWithScheme().sort().find((slug) => buildCityNeighbourhoods(slug)?.cards == null);
@@ -2007,6 +2037,16 @@ export function BlockedSeatStories({ instances = pickBlockedSeatInstances(), ind
               </div>
             ) : null;
           }
+          return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        if (parts[1] in CITIES_SEAT_CUTS) {
+          /* The cities seat's line is composed per country, never COPY's template; the sheet draws what the page draws. */
+          const seat = citiesSeatFor(parts[0], parts[1] as keyof typeof CITIES_SEAT_CUTS);
+          const el = seat ? (
+            <div style={{ maxWidth: SEAT_FORM.cities.maxWidth }}>
+              <BlockedSeat id={`seat-${parts[0].toLowerCase()}-${parts[1]}`} icon={SEAT_FORM.cities.icon} kicker={COPY.blocked.cities.kicker} line={seat.line} foot={COPY.blocked.cities.foot} />
+            </div>
+          ) : null;
           return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
         }
         const block = parts[1] as keyof typeof SEAT_FORM;

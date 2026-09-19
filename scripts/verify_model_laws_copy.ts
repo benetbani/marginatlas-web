@@ -130,7 +130,8 @@ import { MAJOR_CITIES } from "@/lib/markets/major_cities";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { buildKnow } from "@/lib/spine/know_rows";
 import { buildIndustryCloseDoors } from "@/lib/spine/close_rows";
-import { ALL_INDUSTRIES } from "@/lib/taxonomy";
+import { ALL_INDUSTRIES, COUNTRIES } from "@/lib/taxonomy";
+import { buildCitiesSeat, cutCitiesSeatTables } from "@/lib/spine/country_cities_seat";
 import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
@@ -644,6 +645,26 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      are pushed by name. A seat's line stands where a card's focal would and
      is read aloud like a basis line. */
   for (const [key, seat] of Object.entries(COPY.blocked)) heads.push([`COPY.blocked.${key}.line`, seat.line], [`COPY.blocked.${key}.foot`, seat.foot]);
+
+  /* THE CITIES SEAT'S COMPOSED LINES (MODEL.md 8.2's FLOOR bracket; plan step
+     49, 2026-09-19): the template above carries `{cities}` and is proven in
+     its composed form here, every distinct line the 90 seated countries
+     print (one per region that seats a country, six on 2026-09-19), the none
+     line, and the sheet's two cuts (two names, one), so what is swept is
+     what a reader meets. */
+  {
+    const seen = new Set<string>();
+    for (const c of COUNTRIES as Array<{ code?: string; iso2?: string }>) {
+      const iso2 = String(c.code ?? c.iso2 ?? "").toUpperCase();
+      const s = buildCitiesSeat(iso2);
+      if (!s || seen.has(s.line)) continue;
+      seen.add(s.line);
+      heads.push([`buildCitiesSeat(${iso2}).line`, s.line]);
+    }
+    const af = buildCitiesSeat("AF");
+    if (af) for (const n of [2, 1, 0]) { const cut = buildCitiesSeat("AF", cutCitiesSeatTables(af.region, n)); if (cut) heads.push([`buildCitiesSeat(AF, cut ${n}).line`, cut.line]); }
+    heads.push(["COPY.blocked.cities.lineNone", COPY.blocked.cities.lineNone]);
+  }
 
   /* THE TRADE ROWS' FOOT (MODEL.md 8.3 `09 trades`; plan step 32's fifth
      dispatch, 2026-09-18): the card's one line, in the coverage form, carries

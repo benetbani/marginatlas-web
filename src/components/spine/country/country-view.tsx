@@ -49,6 +49,7 @@ import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildPremisesStrip, buildCustomersStrip, type StripData } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
+import { buildCitiesSeat, type CitiesSeat } from "@/lib/spine/country_cities_seat";
 import { COPY } from "@/lib/spine/copy";
 import { marginCardFromRows, type MarginCard } from "@/lib/spine/margin_rows";
 import { buildPeerTable, type PeerTable } from "@/lib/spine/peer_rows";
@@ -372,24 +373,39 @@ function WorldSeat({ seat }: { seat: WorldSeatData | null }) {
  * customers`, the area band). It used to wrap itself in a Band of its own and
  * stand alone at two thirds with an empty third beside it, the lone card he
  * named on this very section. The cards come from the body, built once.
+ *
+ * THE SEAT WHERE NO CITY IS COVERED (MODEL.md 8.2's FLOOR bracket; plan step
+ * 49, decided 2026-09-19 by the controller, option A, reversible by his
+ * word): on the 90 countries the city list holds no row for, the block is
+ * the drawn blocked seat in the cards' place, under the cards' own kicker,
+ * with the one line country_cities_seat.ts composes ("Not gathered yet: any
+ * city here. Nearby: Delhi, Dhaka and Mumbai." on Afghanistan, the three
+ * largest covered cities of the country's region), no figure, no door, and
+ * the foot naming item 82. `data-blocked="1"` on it, so BLOCK FLOOR counts
+ * 21 of 21 where it counted 20 against 21; the seat comes from the body,
+ * built once, like the cards. PART 7's "a country with no covered city
+ * omits" is the older ground this bracket supersedes for this row.
  */
-function Cities({ cards }: { cards: CityCardsData | null }) {
-  if (!cards) return null;
-  return (
-    <Box id="cities">
-      <Rail icon="best-areas" kicker={COPY.cities.kicker} />
-      <CityCards
-        cards={cards.cards}
-        allHref={cards.allHref}
-        allLabel={COPY.cities.allLabel}
-        basis={COPY.cityCards.plain.basis}
-        basisDrawn={COPY.cityCards.field.basis}
-        look="field"
-        prevLabel={COPY.cities.prev}
-        nextLabel={COPY.cities.next}
-      />
-    </Box>
-  );
+function Cities({ cards, seat }: { cards: CityCardsData | null; seat: CitiesSeat | null }) {
+  if (cards) {
+    return (
+      <Box id="cities">
+        <Rail icon="best-areas" kicker={COPY.cities.kicker} />
+        <CityCards
+          cards={cards.cards}
+          allHref={cards.allHref}
+          allLabel={COPY.cities.allLabel}
+          basis={COPY.cityCards.plain.basis}
+          basisDrawn={COPY.cityCards.field.basis}
+          look="field"
+          prevLabel={COPY.cities.prev}
+          nextLabel={COPY.cities.next}
+        />
+      </Box>
+    );
+  }
+  if (seat) return <BlockedSeat id="cities" icon="best-areas" kicker={COPY.blocked.cities.kicker} line={seat.line} foot={COPY.blocked.cities.foot} />;
+  return null;
 }
 
 function Peers({ table }: { table: PeerTable | null }) {
@@ -947,6 +963,11 @@ export function SpineCountryBody({ data }: { data?: any }) {
      guess would be an empty grid with a rung of air. So the cards whose
      presence seats a band are built here and handed down, once each. */
   const cities = iso2 ? buildCityCards(iso2) : null;
+  /* THE CITIES SEAT (plan step 49, 2026-09-19): built only where no card
+     draws, and the builder itself returns null for a country that holds a
+     covered city (52 of 195 hold one and draw no card, the card builder's
+     draft-list intersection, queued), so the seat's line is never false. */
+  const citiesSeat = !cities && iso2 ? buildCitiesSeat(iso2) : null;
   const customers = iso2 ? buildCustomersStrip(iso2) : null;
   const margin = marginCardFromRows(Array.isArray(d.money?.list) ? d.money.list : []);
   const hasMoney = margin.rows.length >= 2;
@@ -978,7 +999,15 @@ export function SpineCountryBody({ data }: { data?: any }) {
      the way BentoMetric and AnswerCard do, so the four join `07` and `11` as
      blocks on the page (`data-blocked="1"`, BLOCK FLOOR counts them) that
      the census's country rows do not name; their form to the checkers is
-     `blocked-seat`, exempt from FOCAL and NO LEAD by its law. */
+     `blocked-seat`, exempt from FOCAL and NO LEAD by its law.
+
+     AND THE FIFTH THIN-COUNTRY SEAT, `10 cities` (plan step 49, 2026-09-19,
+     the FLOOR bracket's option A): PART 7's one omission is withdrawn for
+     this row; on the 90 countries the city list holds no row for, the seat
+     stands in the cards' band with its composed line (`citiesSeat`, above),
+     so Afghanistan reads 21 blocks where it read 20. The census's `cities`
+     row is the drawn card's Box; the seat is a fifth Box the census does not
+     name, like the four above. */
 
   /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
      first of six dispatches), with the twelve blocks that exist today seated
@@ -1127,10 +1156,17 @@ export function SpineCountryBody({ data }: { data?: any }) {
             fold the cards too. So each stands in its own band, in 8.2's
             order, unpadded, and the filter reports LONE CARD on both; the
             pair seats the day the strip gains its `reach` row (8.1, spending
-            per citizen) or the composition re-decides it. */}
-        {cities ? (
+            per citizen) or the composition re-decides it.
+            THE SEAT TAKES THE CARDS' BAND (plan step 49, 2026-09-19): on the
+            90 countries with no covered city the seat stands where the cards
+            would, alone at the survivor's two thirds in 8.2's order, so LONE
+            CARD fires on it as it fires on the cards (the same row GB carries
+            on this band) and BLOCK FLOOR counts it. A seat needs no 600px, so
+            `10 | 13` could pair on these 90 where the cards cannot; that is
+            8.4 rule 1's to measure, not this dispatch's to guess. */}
+        {cities || citiesSeat ? (
           <Band split="2-1">
-            <Cities cards={cities} />
+            <Cities cards={cities} seat={citiesSeat} />
           </Band>
         ) : null}
         {customers ? (
