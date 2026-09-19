@@ -64,8 +64,10 @@ import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { COPY } from "@/lib/spine/copy";
 import { countWord } from "@/lib/spine/district_rows";
+import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
 
-export type RivalRow = { key: string; name: string; value: number; href: string };
+/** Every row lands on a sibling trade's page in this city, "A typical owner keeps" (8.6's doors paragraph): the promise, declared once here (plan step 39). */
+export type RivalRow = { key: string; name: string; value: number; href: string; lands: DoorKind };
 
 export type RivalsData = {
   state: "list" | "withheld";
@@ -110,7 +112,7 @@ export function buildRivals(seed: any): RivalsData | null {
   for (const s of siblings) {
     const v = startupCapitalArchetypeKeyed(s.slug);
     if (v == null) { withheld++; continue; }
-    keyedRows.push({ key: s.slug, name: s.name, value: v, href: s.href });
+    keyedRows.push({ key: s.slug, name: s.name, value: v, href: s.href, lands: SURFACE_ANSWERS.cell });
   }
   keyedRows.sort((a, b) => b.value - a.value);
   const c = COPY.tradeRivals;

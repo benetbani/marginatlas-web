@@ -19,6 +19,7 @@
 import snapshotJson from "../../../data/archetypes/net_margin_snapshot.json";
 import { COPY } from "@/lib/spine/copy";
 import { industryToSlug } from "@/lib/taxonomy";
+import type { DoorKind } from "@/lib/spine/door_kinds";
 
 export const MARGIN_FLOOR = 0.03;
 
@@ -26,7 +27,8 @@ type SnapRow = { name: string; margin: number; revenue: number; flagged: boolean
 type Snapshot = { taken: string; world_max: Record<string, { margin: number; iso2: string }>; countries: Record<string, Record<string, SnapRow>> };
 const SNAP = snapshotJson as unknown as Snapshot;
 
-export type MarginRow = { key: string; name: string; href?: string; margin: number; flagged: boolean };
+/** `lands`: what a row that navigates promises (door_kinds.ts), carried from the adapter's row with its href (plan step 39, 2026-09-19); the snapshot's rows carry neither. */
+export type MarginRow = { key: string; name: string; href?: string; lands?: DoorKind; margin: number; flagged: boolean };
 export type MarginCard = {
   rows: MarginRow[];
   withheld: number;
@@ -51,11 +53,11 @@ function withheldLine(n: number): string | null {
 }
 
 /** Rows from live trade rows that carry `net_margin` (the adapter's money block). */
-export function marginCardFromRows(rows: Array<{ slug?: string; name?: string; href?: string; net_margin?: number | null; net_margin_clamped?: boolean; net_margin_flagged?: boolean }>): MarginCard {
+export function marginCardFromRows(rows: Array<{ slug?: string; name?: string; href?: string; lands?: DoorKind; net_margin?: number | null; net_margin_clamped?: boolean; net_margin_flagged?: boolean }>): MarginCard {
   const credible: MarginRow[] = [];
   let withheld = 0;
   for (const r of rows) {
-    if (isMarginCredible(r.net_margin, !!r.net_margin_clamped)) credible.push({ key: r.slug ?? String(r.name), name: String(r.name ?? r.slug), href: r.href, margin: r.net_margin as number, flagged: !!r.net_margin_flagged });
+    if (isMarginCredible(r.net_margin, !!r.net_margin_clamped)) credible.push({ key: r.slug ?? String(r.name), name: String(r.name ?? r.slug), href: r.href, lands: r.lands, margin: r.net_margin as number, flagged: !!r.net_margin_flagged });
     else withheld++;
   }
   credible.sort((a, b) => a.margin - b.margin);

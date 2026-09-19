@@ -27,9 +27,10 @@
 import * as React from "react";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 
 export function Masthead({ d }: { d: any }) {
   const f = tradeHeroFacts(d);
   if (!f) return null;
-  return <AnswerCard id="take" name={f.name} iso2={f.iso2} crumb={f.crumb} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} />;
+  return <AnswerCard id="take" name={f.name} iso2={f.iso2} crumb={f.crumb} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} answers={SURFACE_ANSWERS.cell} />;
 }

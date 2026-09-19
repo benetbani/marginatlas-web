@@ -26,8 +26,10 @@
  * the accent; the phone's two-up is the founder's own.
  */
 import * as React from "react";
+import type { DoorKind } from "@/lib/spine/door_kinds";
 
-export type PagerCard = { id: string; name: string; sub?: string; href: string; image?: string | null };
+/** `lands`: what the card promises, the kind its page's masthead answers (src/lib/spine/door_kinds.ts), set by the builder and stamped as `data-lands` for the chain's `doors` gate (plan step 39, 2026-09-19). */
+export type PagerCard = { id: string; name: string; sub?: string; href: string; image?: string | null; lands: DoorKind };
 /* FOUR A PAGE. The founder's order was "five cities maximum" (2026-08-30). The
    cities card is the lone two-thirds band, 693px at 1280, whose inner 653px
    holds four 9rem tracks and not five; photographed, a page of five put one
@@ -64,7 +66,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
              at 375: a two-up card is 151px wide, and a 48px image beside a name
              left 39px for "London". So below md the image runs the card's width
              above the name; from md it sits on the left as the founder chose. */
-          <a key={c.id} href={c.href} data-card={c.id} className="group flex h-full flex-col gap-2 rounded-[14px] border border-[var(--c-border)] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] md:flex-row md:items-center md:gap-2.5">
+          <a key={c.id} href={c.href} data-card={c.id} data-lands={c.lands} className="group flex h-full flex-col gap-2 rounded-[14px] border border-[var(--c-border)] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] md:flex-row md:items-center md:gap-2.5">
             {images !== "none" && c.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={c.image} alt="" width={48} height={48} loading="lazy" className="h-16 w-full shrink-0 rounded-lg object-cover md:h-12 md:w-12" />

@@ -7,16 +7,25 @@
  * today ("Notify me"), never "with Pro" while Pro cannot be bought. Every href
  * is a route the app folder holds; the copy gate proves it. Local and
  * synchronous. A country with no covered city gets two doors.
+ *
+ * EVERY DOOR DECLARES WHAT IT PROMISES (plan step 39, 2026-09-19): `lands`,
+ * a kind from door_kinds.ts, the answer the door's landing page leads with,
+ * taken from the resolver that says the page exists (page_targets.ts hands
+ * every target its `answers`) or from SURFACE_ANSWERS where the href is a
+ * static route's. The `doors` gate reads the promise off the render and holds
+ * it to the route the href reaches; a door promising what its page does not
+ * answer is a wrong door, and is fixed here, in the builder that owns it.
  */
 import { coveredCities } from "@/lib/cities/city_pages";
 import { COPY } from "@/lib/spine/copy";
 import type { Door } from "@/components/spine/archetypes/Terminus";
-import { countryPageTarget, geoPageTarget } from "@/lib/geo/page_targets";
+import { countryPageTarget, geoPageTarget, neighbourhoodsHubTarget } from "@/lib/geo/page_targets";
 import { inSentence } from "@/lib/spine/place_names";
 import { industryToSlug, INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import type { IndustryPlacesData } from "@/lib/spine/industry_places_rows";
 import type { BenchmarkData } from "@/lib/spine/benchmark_rows";
-import { hoodCity, spineHoodDistricts, hoodHubHref, HOOD_BENCHMARK_TRADE } from "@/lib/spine/hood_scheme";
+import { hoodCity, spineHoodDistricts, HOOD_BENCHMARK_TRADE } from "@/lib/spine/hood_scheme";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
 
@@ -27,10 +36,11 @@ export function buildCloseDoors(iso2: string): Door[] {
   if (cities.length > 0) {
     const largest = [...cities].sort((a, b) => (b.pop_m ?? 0) - (a.pop_m ?? 0))[0];
     const label = cities.length === 1 ? fill(COPY.close.cityDoor, { city: largest.name }) : fill(COPY.close.cityDoorMany, { city: largest.name, n: String(cities.length) });
-    doors.push({ key: "city", label, href: `/cities/${largest.slug}`, kind: "link" });
+    /* Down to the largest covered city, landing on customer pay (8.2 `20 close`; the coherence check's handoff list). */
+    doors.push({ key: "city", label, href: `/cities/${largest.slug}`, kind: "link", lands: SURFACE_ANSWERS.city });
   }
-  doors.push({ key: "trades", label: COPY.close.tradesDoor, href: `/${code.toLowerCase()}/industries`, kind: "link" });
-  doors.push({ key: "pro", label: COPY.close.proDoor, href: "/pricing", kind: "pill" });
+  doors.push({ key: "trades", label: COPY.close.tradesDoor, href: `/${code.toLowerCase()}/industries`, kind: "link", lands: SURFACE_ANSWERS["trades-index"] });
+  doors.push({ key: "pro", label: COPY.close.proDoor, href: "/pricing", kind: "pill", lands: SURFACE_ANSWERS.pricing });
   return doors;
 }
 
@@ -49,7 +59,7 @@ export function buildCloseDoors(iso2: string): Door[] {
 export function buildCompareDoor(countryName: string): Door[] {
   const name = countryName.trim();
   if (!name) return [];
-  return [{ key: "compare", label: fill(COPY.compare.door, { country: inSentence(name) }), href: "/compare", kind: "pill" }];
+  return [{ key: "compare", label: fill(COPY.compare.door, { country: inSentence(name) }), href: "/compare", kind: "pill", lands: SURFACE_ANSWERS.compare }];
 }
 
 /** THE CITY'S DOORS (city:close, the build loop's run 19, 2026-09-06; MODEL.md
@@ -63,7 +73,12 @@ export function buildCompareDoor(countryName: string): Door[] {
  *  London, the cheapest member of the set featured for being the cheapest,
  *  which is the reason he struck out on 2026-09-10 (PART 5, "no district is
  *  featured"); a door is a recommendation, and the set's rent ordering is not
- *  a reason a reader would accept. No pricing door: 8.3's row, as built. */
+ *  a reason a reader would accept. No pricing door: 8.3's row, as built.
+ *  THE DISTRICTS DOOR GOES THROUGH THE HUB RESOLVER (plan step 39): the hub
+ *  route answers 404 for a city with no scheme, so the door is drawn only
+ *  where `neighbourhoodsHubTarget` says the page exists, and it promises what
+ *  that hub answers, the rent spread on the admitted cities (London) and the
+ *  district list on the legacy hub elsewhere. */
 export function buildCityCloseDoors(seed: any): Door[] {
   const meta = seed?.meta ?? {};
   const slug = String(meta.slug ?? "").trim();
@@ -71,10 +86,11 @@ export function buildCityCloseDoors(seed: any): Door[] {
   const iso2 = String(meta.iso2 ?? "").toUpperCase();
   if (!slug || !city) return [];
   const doors: Door[] = [];
-  doors.push({ key: "districts", label: fill(COPY.cityClose.districtsDoor, { city }), href: `/cities/${slug}/neighborhoods`, kind: "link" });
+  const hub = neighbourhoodsHubTarget(slug);
+  if (hub) doors.push({ key: "districts", label: fill(COPY.cityClose.districtsDoor, { city }), href: hub.href, kind: "link", lands: hub.answers });
   const country = iso2.length === 2 ? countryPageTarget(iso2) : null;
-  if (country) doors.push({ key: "country", label: fill(COPY.cityClose.countryDoor, { country: inSentence(String(meta.country_name ?? country.label)) }), href: country.href, kind: "link" });
-  doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city }), href: "/compare", kind: "pill" });
+  if (country) doors.push({ key: "country", label: fill(COPY.cityClose.countryDoor, { country: inSentence(String(meta.country_name ?? country.label)) }), href: country.href, kind: "link", lands: country.answers });
+  doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city }), href: "/compare", kind: "pill", lands: SURFACE_ANSWERS.compare });
   return doors;
 }
 
@@ -103,10 +119,15 @@ export function buildHoodCloseDoors(citySlug: string, focus: string | null = nul
   if (!city || !districts) return [];
   if (focus && !districts.some((d) => d.slug === focus)) return [];
   const doors: Door[] = [];
-  if (focus) doors.push({ key: "districts", label: fill(COPY.cityClose.districtsDoor, { city: city.name }), href: hoodHubHref(city.slug), kind: "link" });
-  doors.push({ key: "city", label: fill(COPY.tradeClose.cityDoor, { city: city.name }), href: `/cities/${city.slug}`, kind: "link" });
-  if (!focus) doors.push({ key: "trade", label: fill(COPY.industryClose.cityDoor, { trade: HOOD_BENCHMARK_TRADE.name, city: city.name }), href: `/${city.iso2.toLowerCase()}/${city.slug}/${HOOD_BENCHMARK_TRADE.slug}`, kind: "link" });
-  doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city: city.name }), href: "/compare", kind: "pill" });
+  /* The hub the district page returns to is this city's own spine hub (the
+     city is admitted, or no district page exists): its answer through the one
+     resolver, never assumed. */
+  const hub = focus ? neighbourhoodsHubTarget(city.slug) : null;
+  if (focus && hub) doors.push({ key: "districts", label: fill(COPY.cityClose.districtsDoor, { city: city.name }), href: hub.href, kind: "link", lands: hub.answers });
+  const cityPage = geoPageTarget(city.iso2, city.slug);
+  if (cityPage && cityPage.kind === "city") doors.push({ key: "city", label: fill(COPY.tradeClose.cityDoor, { city: city.name }), href: cityPage.href, kind: "link", lands: cityPage.answers });
+  if (!focus) doors.push({ key: "trade", label: fill(COPY.industryClose.cityDoor, { trade: HOOD_BENCHMARK_TRADE.name, city: city.name }), href: `/${city.iso2.toLowerCase()}/${city.slug}/${HOOD_BENCHMARK_TRADE.slug}`, kind: "link", lands: SURFACE_ANSWERS.cell });
+  doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city: city.name }), href: "/compare", kind: "pill", lands: SURFACE_ANSWERS.compare });
   return doors;
 }
 
@@ -141,10 +162,15 @@ export function buildTradeCloseDoors(seed: any): Door[] {
   const doors: Door[] = [];
   const industrySlug = (typeof meta.industry_id === "string" ? industryToSlug(meta.industry_id) : null) || (typeof meta.industry === "string" ? meta.industry : null);
   const tradeInSentence = trade.toLowerCase();
-  if (industrySlug) doors.push({ key: "industry", label: fill(COPY.tradeClose.industryDoor, { trade: tradeInSentence }), href: `/industries/${industrySlug}`, kind: "link" });
+  /* The industry door promises what the industry page answers today, the
+     trade's keep of every $100 (8.7 `00`); its words name the trade in other
+     cities, which M23 binds the industry composition to open on, PROVISIONAL
+     there (door_kinds.ts says so beside the kind). */
+  if (industrySlug) doors.push({ key: "industry", label: fill(COPY.tradeClose.industryDoor, { trade: tradeInSentence }), href: `/industries/${industrySlug}`, kind: "link", lands: SURFACE_ANSWERS.industry });
   const place = iso2.length === 2 && geo ? geoPageTarget(iso2, geo) : null;
-  if (place) doors.push({ key: "place", label: fill(COPY.tradeClose.cityDoor, { city: place.name }), href: place.href, kind: "link" });
-  doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade: tradeInSentence }), href: "/compare", kind: "pill" });
+  /* A city place lands on customer pay; a region place (California) on the region's cities, the resolver's own answer. */
+  if (place) doors.push({ key: "place", label: fill(COPY.tradeClose.cityDoor, { city: place.name }), href: place.href, kind: "link", lands: place.answers });
+  doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade: tradeInSentence }), href: "/compare", kind: "pill", lands: SURFACE_ANSWERS.compare });
   return doors;
 }
 
@@ -194,9 +220,10 @@ export function buildIndustryCloseDoors(industryId: string | undefined, places: 
   if (!ind) return [];
   const trade = ind.name.trim().toLowerCase();
   const doors: Door[] = [];
-  if (places && places.state === "table" && places.top) doors.push({ key: "city", label: fill(COPY.industryClose.cityDoor, { trade, city: places.top.name }), href: places.top.href, kind: "link" });
+  /* The best-paying city's trade page, landing on "A typical owner keeps" (8.7 `11 close`, the R4 door). */
+  if (places && places.state === "table" && places.top) doors.push({ key: "city", label: fill(COPY.industryClose.cityDoor, { trade, city: places.top.name }), href: places.top.href, kind: "link", lands: SURFACE_ANSWERS.cell });
   const leader = industryLeader(industryId, benchmark);
-  if (leader) doors.push({ key: "leader", label: fill(COPY.industryClose.leaderDoor, { leader: leader.name }), href: leader.href, kind: "link" });
-  doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade }), href: "/compare", kind: "pill" });
+  if (leader) doors.push({ key: "leader", label: fill(COPY.industryClose.leaderDoor, { leader: leader.name }), href: leader.href, kind: "link", lands: SURFACE_ANSWERS.industry });
+  doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade }), href: "/compare", kind: "pill", lands: SURFACE_ANSWERS.compare });
   return doors;
 }

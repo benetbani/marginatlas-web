@@ -32,10 +32,16 @@
  *    hover state, a control or a pill; this file was the named offender).
  *    The rest state is `--c-ink` and the hover lifts to `--c-ink2`, the same
  *    ink pair the link doors already use the other way round.
+ *  - EVERY DOOR CARRIES WHAT IT PROMISES (plan step 39, 2026-09-19): `lands`,
+ *    a kind from src/lib/spine/door_kinds.ts, set by the builder that made
+ *    the door and stamped here as `data-lands`, never chosen in this file.
+ *    The chain's `doors` gate (scripts/verify_doors.ts) reads it off the
+ *    render and holds it to what the href's page answers.
  */
 import * as React from "react";
+import type { DoorKind } from "@/lib/spine/door_kinds";
 
-export type Door = { key: string; label: string; href: string; kind: "link" | "pill" };
+export type Door = { key: string; label: string; href: string; kind: "link" | "pill"; /** What the door promises: the kind its landing page's masthead answers (door_kinds.ts). */ lands: DoorKind };
 export const DOOR_CAP = 3;
 
 export function Terminus({ kicker, doors }: { kicker?: string; doors: Door[] }) {
@@ -49,11 +55,11 @@ export function Terminus({ kicker, doors }: { kicker?: string; doors: Door[] }) 
       <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
         {ordered.map((d) =>
           d.kind === "pill" ? (
-            <a key={d.key} data-door={d.key} data-door-kind="pill" href={d.href} className="w-full rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--c-ink2)] sm:w-auto">
+            <a key={d.key} data-door={d.key} data-door-kind="pill" data-lands={d.lands} href={d.href} className="w-full rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--c-ink2)] sm:w-auto">
               {d.label} <span aria-hidden>&#8594;</span>
             </a>
           ) : (
-            <a key={d.key} data-door={d.key} data-door-kind="link" href={d.href} className="flex w-full items-center justify-between gap-3 border-b border-[var(--c-border)] pb-3 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)] sm:w-auto sm:border-0 sm:pb-0">
+            <a key={d.key} data-door={d.key} data-door-kind="link" data-lands={d.lands} href={d.href} className="flex w-full items-center justify-between gap-3 border-b border-[var(--c-border)] pb-3 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)] sm:w-auto sm:border-0 sm:pb-0">
               <span>{d.label}</span> <span aria-hidden>&#8594;</span>
             </a>
           ),

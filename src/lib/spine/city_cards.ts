@@ -32,6 +32,16 @@ import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { cityPageHref, cityPageSlug } from "@/lib/cities/city_pages";
 import { cityImageSrc } from "@/lib/cities/city_images";
 import { getCityAveragePayUsd } from "@/lib/cities/city_tier";
+import type { DoorKind } from "@/lib/spine/door_kinds";
+
+/** WHAT EVERY CITY CARD PROMISES (plan step 39, 2026-09-19): the figure the
+ *  card prints is what an average customer earns in a year, and the city
+ *  page it opens leads with customer pay (MODEL.md 8.3 `00`; the coherence
+ *  check's "strongest handoff on the site"). Declared here, where the card is
+ *  built, as a literal and not through the resolver: the card PRINTS the
+ *  promise, so if the href ever pointed anywhere else the `doors` gate must
+ *  red it against the page it reaches. */
+export const CITY_CARD_LANDS: DoorKind = "customer-pay";
 
 /**
  * THE PLACEHOLDER PHOTOGRAPH, AND IT IS NOT A PHOTOGRAPH OF ANY CITY WE COVER.
@@ -94,6 +104,8 @@ export type CityCard = {
    *  another by accident. */
   region?: string;
   href: string;
+  /** What the card promises, stamped on the card as `data-lands` (CITY_CARD_LANDS). */
+  lands: DoorKind;
   /** The city's OWN photograph, or null. Read by the live card pager, which
    *  draws no slot for a null and must keep doing so: see `photo` below. */
   image: string | null;
@@ -157,6 +169,7 @@ export function buildCityCards(iso2In: string): CityCards | null {
          two details on nothing. Dropped when either name contains the other. */
       region: keepRegion(name, c.region_name) ?? undefined,
       href,
+      lands: CITY_CARD_LANDS,
       image: cityImageSrc(slug),
       photo,
       payUsd: pay ?? undefined,

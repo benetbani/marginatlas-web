@@ -87,7 +87,11 @@ export function buildHoodPremium(citySlug: string): HoodPremiumData | null {
     headline: { label: fill(COPY.markList.middleOfDrawn, { n: countWord(held.length) }), value: middleOf(values) },
     basis,
     head: { name: COPY.hoodPremium.head.name, value: COPY.hoodPremium.head.value },
-    rows: ranked.map((d) => ({ key: d.slug, name: d.name, value: d.tourism!.value, href: districtPageTarget(citySlug, d.slug)?.href })),
+    /* The href and the promise from the one resolver, together: a row with no district page carries neither. */
+    rows: ranked.map((d) => {
+      const page = districtPageTarget(citySlug, d.slug);
+      return { key: d.slug, name: d.name, value: d.tourism!.value, href: page?.href, lands: page?.answers };
+    }),
     fmt,
     withheld,
     withheldLine: withheld === 0 ? null : fill(withheld === 1 ? COPY.hoodPremium.withheldOne : COPY.hoodPremium.withheldMany, { n: countWord(withheld) }),

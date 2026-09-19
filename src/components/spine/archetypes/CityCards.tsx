@@ -69,7 +69,11 @@
  *    (PART 5).
  *  - A DOOR AT THE FOOT. The whole card navigates, so it carries an arrow at
  *    its right edge and a hover, and nothing on the card looks like a link and
- *    is not one (LINKS LOOK LIKE LINKS).
+ *    is not one (LINKS LOOK LIKE LINKS). The card stamps what it promises,
+ *    `data-lands`, from the builder (city_cards.ts CITY_CARD_LANDS, customer
+ *    pay: the figure it prints is the city page's own answer), and the
+ *    chain's `doors` gate holds that promise to the page the href reaches
+ *    (plan step 39, 2026-09-19).
  *  - EQUAL HEIGHTS BY CONSTRUCTION, his ruling 7: the grid stretches, every
  *    card is `h-full`, and the name block RESERVES its second line on every
  *    card, so a one-word city and a two-line city are the same object. Never by
@@ -255,6 +259,7 @@ function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (
     <a
       href={card.href}
       data-card={card.id}
+      data-lands={card.lands}
       className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[14px] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
     >
       {field ? <Photo card={card} /> : null}
@@ -329,6 +334,7 @@ function Row({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v
     <a
       href={card.href}
       data-card={card.id}
+      data-lands={card.lands}
       className={`group relative grid h-full items-center gap-3 overflow-hidden rounded-[14px] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto] ${field ? "border border-transparent" : "border border-[var(--c-border)]"}`}
     >
       {field ? <Photo card={card} /> : null}

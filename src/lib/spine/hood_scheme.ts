@@ -150,6 +150,17 @@ export function spineHoodDistrict(citySlug: string, districtSlug: string): HoodD
   return spineHoodDistricts(citySlug)?.find((d) => d.slug === key) ?? null;
 }
 
+/** WHETHER A HUB PAGE EXISTS AT ALL for a city, admitted or not: the hub
+ *  route (src/app/(site)/cities/[slug]/neighborhoods/page.tsx) answers 404
+ *  unless the city list holds the slug AND the neighbourhoods file holds a
+ *  scheme for it; every other city serves the legacy hub. The two
+ *  `notFound()` lines of that route, read as one pure function, so a door to
+ *  a hub is never assembled and hoped over (page_targets.ts reads this). */
+export function hasHoodScheme(citySlug: string): boolean {
+  const key = String(citySlug ?? "").trim().toLowerCase();
+  return CITIES_BY_SLUG.has(key) && !!SCHEMES[key];
+}
+
 /** The hub's URL and a district page's URL, spelled once. */
 export const hoodHubHref = (citySlug: string) => `/cities/${citySlug}/neighborhoods`;
 export const districtPageHref = (citySlug: string, districtSlug: string) => `${hoodHubHref(citySlug)}/${districtSlug}`;

@@ -25,6 +25,7 @@ import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { Terminus, type Door } from "@/components/spine/archetypes/Terminus";
 import { rentMult } from "@/lib/spine/district_rows";
 import { COPY } from "@/lib/spine/copy";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import type { HoodTakeData } from "@/lib/spine/hood_take_rows";
 import type { HoodRankData } from "@/lib/spine/hood_rank_rows";
 import type { HoodPremiumData } from "@/lib/spine/hood_premium_rows";
@@ -43,7 +44,8 @@ void SampleTag;
  */
 export function HoodTake({ id = "take", take }: { id?: string; take: HoodTakeData | null }) {
   if (!take) return null;
-  return <AnswerCard id={id} name={take.name} iso2={take.iso2} crumb={take.crumb.length ? take.crumb : undefined} subtitle={take.subtitle} answer={take.answer} cells={take.cells} tone="accent" foot={take.foot} />;
+  /* The hub and the district page are two surfaces with one answer (the rent spread, or the district's own rent: `rent-lightest`); each declares its own. */
+  return <AnswerCard id={id} name={take.name} iso2={take.iso2} crumb={take.crumb.length ? take.crumb : undefined} subtitle={take.subtitle} answer={take.answer} cells={take.cells} tone="accent" foot={take.foot} answers={take.focus ? SURFACE_ANSWERS.district : SURFACE_ANSWERS.hood} />;
 }
 
 /**

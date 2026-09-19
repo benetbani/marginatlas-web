@@ -72,7 +72,7 @@ export function RivalsCard({ id = "rivals", rivals }: { id?: string; rivals: Riv
         headline={{ label: rivals.middleLabel, value: rivals.middle }}
         basis={rivals.basis}
         head={rivals.head}
-        rows={rivals.rows.map((r) => ({ key: r.key, name: r.name, value: r.value, href: r.href }))}
+        rows={rivals.rows.map((r) => ({ key: r.key, name: r.name, value: r.value, href: r.href, lands: r.lands }))}
         fmt={rivals.fmt}
         withheld={rivals.withheld}
         withheldLine={rivals.withheldLine}

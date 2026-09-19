@@ -31,12 +31,18 @@
  * hub's anchor: that page plants `id={n.slug}` on each district's card, so
  * the fragment lands on the named district there. The spine hub plants no
  * per-district anchor and needs none: its city's districts all have pages.
+ *
+ * EVERY CARD DECLARES WHAT IT PROMISES (plan step 39, 2026-09-19): `lands`,
+ * the answer of the page it opens, from the same resolvers that say the page
+ * exists (page_targets.ts): the district's own rent on a district page, the
+ * district list on the legacy hub's anchor. The chain's `doors` gate reads it
+ * off the render and holds it to the route the href reaches.
  */
 import neighborhoodsJson from "../../../data/cities/neighborhoods_v1.json";
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { countWord } from "@/lib/spine/district_rows";
 import { COPY } from "@/lib/spine/copy";
-import { districtPageTarget } from "@/lib/geo/page_targets";
+import { districtPageTarget, neighbourhoodsHubTarget } from "@/lib/geo/page_targets";
 import type { PagerCard } from "@/components/spine/archetypes/CardPager";
 
 type Hood = { slug: string; name: string; character?: string; description?: string };
@@ -76,8 +82,18 @@ export function buildCityNeighbourhoods(slug: string): CityNeighbourhoodsData | 
   if (scheme.scheme === PLACEHOLDER_SCHEME || hoods.length === 0) {
     return { slug: key, name, scheme: scheme.scheme, cards: null, allHref, foot: null, seatLine: fill(COPY.blocked.cityNeighbourhoods.line, { city: name }), onPages: false };
   }
-  const pages = hoods.map((h) => districtPageTarget(key, h.slug)?.href ?? null);
-  const cards: PagerCard[] = hoods.map((h, i) => ({ id: h.slug, name: h.name, href: pages[i] ?? `${allHref}#${h.slug}` }));
+  const pages = hoods.map((h) => districtPageTarget(key, h.slug));
+  /* The hub the anchors land on, through the resolver: it exists for every
+     city with a scheme (the same two conditions this builder checked above),
+     and a card is never assembled toward a hub the route would refuse. */
+  const hub = neighbourhoodsHubTarget(key);
+  if (!hub) return null;
+  const cards: PagerCard[] = hoods.map((h, i) => {
+    const page = pages[i];
+    return page
+      ? { id: h.slug, name: h.name, href: page.href, lands: page.answers }
+      : { id: h.slug, name: h.name, href: `${hub.href}#${h.slug}`, lands: hub.answers };
+  });
   /* The foot says where the cards land: on the district pages where every one has one, on the hub's anchors otherwise. */
   const onPages = pages.length > 0 && pages.every((p) => p != null);
   return {

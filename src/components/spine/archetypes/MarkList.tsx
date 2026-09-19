@@ -120,6 +120,7 @@
 import * as React from "react";
 import { Box, Fig, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
+import type { DoorKind } from "@/lib/spine/door_kinds";
 
 /** PART 9 rule 22's floor, the model's and not this file's: "a ranked
  *  comparison with fewer than four members". Under four the card draws
@@ -136,7 +137,16 @@ export const TWO_COLUMN_CAP = 6;
  *  is a node rather than an id or an iso2 on purpose , this file must not know
  *  what kind of thing a mark is, or the next subject (a trade icon, a rank
  *  numeral, nothing at all) would need a branch in here. */
-export type MarkRow = { key: string; name: string; value: number; mark?: React.ReactNode; /** A destination makes the row a door (PART 5): drawn as a link with an arrow at its right edge and a `--c-soft` hover. */ href?: string };
+export type MarkRow = {
+  key: string;
+  name: string;
+  value: number;
+  mark?: React.ReactNode;
+  /** A destination makes the row a door (PART 5): drawn as a link with an arrow at its right edge and a `--c-soft` hover. */
+  href?: string;
+  /** What a row that navigates promises: the kind its page's masthead answers (door_kinds.ts), set by the builder with the href and stamped as `data-lands` (plan step 39, 2026-09-19). */
+  lands?: DoorKind;
+};
 
 export type MarkListProps = {
   id: string;
@@ -302,7 +312,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           );
           const rowCls = `${ROW} h-11 items-center border-t border-[var(--c-border)]`;
           return r.href ? (
-            <a key={r.key} href={r.href} className={`${rowCls} no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value}>
+            <a key={r.key} href={r.href} className={`${rowCls} no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value} data-lands={r.lands}>
               {cells}
             </a>
           ) : (

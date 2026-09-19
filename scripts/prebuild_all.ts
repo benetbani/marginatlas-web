@@ -89,6 +89,22 @@ const GATES: Gate[] = [
      render is React. It needs NEXT_PUBLIC_SUPABASE_URL to start (the client
      is built at import) and says in its output whether it had one. */
   { name: "pages-fresh", script: "scripts/verify_pages_fresh.mjs", phase: "first" },
+  /* THE DOORS LAND WHERE THEY PROMISE (plan step 39, 2026-09-19; MODEL.md
+     PART 8's "THE DOORS" paragraphs, M23, the coherence check of 2026-09-16).
+     Reads the renders pages-fresh wrote and walks every door on them (the
+     termini, the city cards, the neighbourhood cards, the trade rows, the
+     rivals and visitor rows, the money card's rows): the href resolves to a
+     route by a pure mirror of each route's notFound() over the same files,
+     the door's declared promise (`data-lands`, set where the door is built)
+     is the kind its landing page's masthead declares (`data-answers`, one
+     declaration per surface in src/lib/spine/door_kinds.ts), no compare
+     table's rows navigate, no two doors of one terminus share a first word.
+     A trade cell's route is decided by the database, so a cell href is
+     verified against the prerendered list and the harness exemplars and
+     otherwise printed unverifiable, never passing. The walk is written to
+     scratchpad/harness/doors.txt. No browser, no network: jsdom over the
+     files. Planted twice (a dead door, a wrong promise) and watched red. */
+  { name: "doors", script: "scripts/verify_doors.ts" },
   /* THE HARNESS'S OWN RULES JOIN THE CHAIN (plan step 14b, second half). Until
      today the archetype rules, the page filter and the model-laws list ran by
      hand only (`npm run harness`), so a deploy checked none of them. Three

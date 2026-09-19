@@ -135,6 +135,7 @@ import { getCountrySignature } from "@/lib/countries/country_signature";
 import { PEER_GROUPS } from "@/lib/countries/country_view";
 import { ownerTakeHomeForCell } from "@/lib/scores/country_board";
 import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import coordinatesJson from "../cities/coordinates_curated.json";
 import formationJson from "../../../data/legal/business_formation_costs_v1.json";
 
@@ -759,6 +760,8 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
         name: cell.industry_name || cell.industry_description || industryId,
         slug,
         href: `/${code.toLowerCase()}/${placeGeo}/${slug}`,
+        /* The row is a door to the trade's page at national altitude, landing on "A typical owner keeps" (plan step 39): the promise declared with the href. */
+        lands: SURFACE_ANSWERS.cell,
         keeps_usd_year: Math.round(keeps),
         cost_to_open_usd: Math.round(costToOpen),
         net_margin: nm ? nm.margin : null,

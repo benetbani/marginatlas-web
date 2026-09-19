@@ -20,6 +20,7 @@ import * as React from "react";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { cityHeroFacts } from "@/lib/spine/city_hero_facts";
 import { COPY } from "@/lib/spine/copy";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 
 export function CityHero({ d }: { d: any }) {
   const f = cityHeroFacts(d);
@@ -27,7 +28,7 @@ export function CityHero({ d }: { d: any }) {
   return (
     <div id="masthead">
       <a href="/cities" className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]">&#8592; {COPY.cityHero.allCities}</a>
-      <AnswerCard id="city-take" name={f.name} iso2={f.iso2} image={f.image} subtitle={f.subtitle} answer={f.answer} cells={f.cells} tone="accent" foot={f.foot} />
+      <AnswerCard id="city-take" name={f.name} iso2={f.iso2} image={f.image} subtitle={f.subtitle} answer={f.answer} cells={f.cells} tone="accent" foot={f.foot} answers={SURFACE_ANSWERS.city} />
     </div>
   );
 }

@@ -401,7 +401,8 @@ const TRADE_ICON: Record<string, AtlasIconId> = {
 const SLATE_ORDER: string[] = [...EVERYDAY_TRADES];
 const hasTradesHere = (d: any) => (d?.trades_here?.list?.length ?? 0) >= 4;
 function TradesHere({ d }: { d: any }) {
-  const list: Array<{ name: string; slug: string; href: string }> = d.trades_here?.list ?? [];
+  /* `lands` is the adapter's declaration of what each row promises (adapt_city.ts, the trade page's own answer), stamped here and never chosen here. */
+  const list: Array<{ name: string; slug: string; href: string; lands?: string }> = d.trades_here?.list ?? [];
   if (list.length < 4) return null;
   const rank = (slug: string) => { const i = SLATE_ORDER.indexOf(slug); return i < 0 ? SLATE_ORDER.length : i; };
   const rows = list.slice().sort((a, b) => rank(a.slug) - rank(b.slug) || a.name.localeCompare(b.name));
@@ -415,6 +416,7 @@ function TradesHere({ d }: { d: any }) {
             key={t.slug}
             href={t.href}
             data-row={t.slug}
+            data-lands={t.lands}
             className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 no-underline transition hover:bg-[var(--c-soft)]"
           >
             <Ico id={TRADE_ICON[t.slug] ?? "high-street"} />

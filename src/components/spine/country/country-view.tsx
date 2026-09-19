@@ -42,6 +42,7 @@ import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildLocalsNotes, type LocalsNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCloseDoors, buildCompareDoor } from "@/lib/spine/close_rows";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { buildChecks, type ChecksData } from "@/lib/spine/checks_rows";
 import { PayBars } from "@/components/spine/archetypes/PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
@@ -241,7 +242,7 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
      (scripts/harness) across nine countries at three widths. */
   if (iso2) {
     const facts = buildHeroFacts(iso2);
-    return <AnswerCard id="take" name={name} iso2={iso2} subtitle={facts.subtitle} answer={facts.answer} cells={facts.cells} />;
+    return <AnswerCard id="take" name={name} iso2={iso2} subtitle={facts.subtitle} answer={facts.answer} cells={facts.cells} answers={SURFACE_ANSWERS.country} />;
   }
   const eb = hero?.effective_burden;
   const rate = isNum(eb?.rate_pct) ? eb.rate_pct : undefined;
@@ -253,6 +254,7 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
       subtitle={rate != null ? "What a small business effectively pays the state." : null}
       answer={rate != null ? { label: "Total effective tax burden", value: `${rate}%`, regime: regime ?? null, confidence: "modeled" } : null}
       cells={[]}
+      answers={SURFACE_ANSWERS.country}
     />
   );
 }
@@ -465,7 +467,7 @@ function Money({ money, card }: { money: any; card: MarginCard }) {
       tagged={tagged}
       basis={COPY.margin.basis}
       withheldLine={card.withheldLine}
-      rows={card.rows.map((r) => ({ key: r.key, name: r.name, href: r.href, value: r.margin, flagged: r.flagged }))}
+      rows={card.rows.map((r) => ({ key: r.key, name: r.name, href: r.href, lands: r.lands, value: r.margin, flagged: r.flagged }))}
       worldMax={card.worldMax}
       fmt={(v) => `${Math.round(v * 100)}%`}
       phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }}

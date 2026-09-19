@@ -55,7 +55,7 @@ export function buildHowTo(iso2: string): HowToData | null {
      geo-link gate's rule, and Greece's dead /el links are why. */
   const back = countryPageTarget(code);
   const doors: Door[] = [
-    ...(back ? [{ key: "back", label: fill(COPY.howto.back, { country: inSentence(name) }), href: back.href, kind: "link" as const }] : []),
+    ...(back ? [{ key: "back", label: fill(COPY.howto.back, { country: inSentence(name) }), href: back.href, kind: "link" as const, lands: back.answers }] : []),
     ...buildCloseDoors(code).filter((d) => d.key !== "pro"),
   ];
   return {

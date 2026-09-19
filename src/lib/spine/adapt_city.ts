@@ -99,6 +99,7 @@ import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { COPY } from "@/lib/spine/copy";
 import { inSentence } from "@/lib/spine/place_names";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { usd } from "@/components/spine/kit";
 
 /* ------------------------------------------------------------------------- */
@@ -580,12 +581,17 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
      example of an out-of-context trade. The set itself is `EVERYDAY_TRADES` at
      the top of this file, exported so a card can draw the WHOLE beside the
      part; the note on the slugs' shape lives with it. */
+  /* Each row is a door to the trade's page in this city, landing on "A
+     typical owner keeps" (the coherence check's handoff list): the promise is
+     declared here with the href (plan step 39, 2026-09-19) and the city view
+     stamps it as `data-lands` for the chain's `doors` gate. */
   const tradesHere = (trades?.list ?? [])
     .filter((t: any) => t.local && t.slug && EVERYDAY_TRADES.has(String(t.slug)))
     .map((t: any) => ({
       name: t.name,
       slug: t.slug,
       href: `/${String(city.iso2).toLowerCase()}/${city.slug}/${t.slug}`,
+      lands: SURFACE_ANSWERS.cell,
     }));
   /* Below four this reads as a stub rather than a block, and a thin funnel is
      worse than none: it implies the city is barely covered. */

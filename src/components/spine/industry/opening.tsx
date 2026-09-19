@@ -40,12 +40,13 @@ import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { COPY } from "@/lib/spine/copy";
 import { netText } from "@/lib/spine/trade_net";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import type { IndustryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import type { BenchmarkData } from "@/lib/spine/benchmark_rows";
 
 export function Masthead({ id = "take", facts }: { id?: string; facts: IndustryHeroFacts | null }) {
   if (!facts) return null;
-  return <AnswerCard id={id} name={facts.name} tile={facts.tile} crumb={facts.crumb} subtitle={null} answer={facts.answer} absent={facts.absent} cells={facts.cells} tone="accent" foot={facts.foot} />;
+  return <AnswerCard id={id} name={facts.name} tile={facts.tile} crumb={facts.crumb} subtitle={null} answer={facts.answer} absent={facts.absent} cells={facts.cells} tone="accent" foot={facts.foot} answers={SURFACE_ANSWERS.industry} />;
 }
 
 export function BenchmarkCard({ id = "benchmark", benchmark }: { id?: string; benchmark: BenchmarkData | null }) {

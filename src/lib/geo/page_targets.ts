@@ -16,17 +16,26 @@
  * "All of New York" opened New York STATE, because `new-york` is a city in one
  * list and a state in another.
  *
+ * EVERY TARGET CARRIES WHAT ITS PAGE ANSWERS (plan step 39, 2026-09-19):
+ * `answers`, a kind from src/lib/spine/door_kinds.ts, declared once per
+ * surface there and handed to the door's builder here, so a door that names a
+ * page promises exactly what that page's masthead leads with, and the chain's
+ * `doors` gate (scripts/verify_doors.ts) can hold the promise to the route the
+ * href actually reaches.
+ *
  * PURE. No fetch, no client, no environment. Unit-runnable.
  */
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getCityIdentity } from "@/lib/cities/city_tier";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
-import { spineHoodDistrict, districtPageHref } from "@/lib/spine/hood_scheme";
+import { spineHoodDistrict, spineHoodDistricts, districtPageHref, hasHoodScheme, hoodHubHref } from "@/lib/spine/hood_scheme";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
+import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
 
-export type GeoPageTarget = { href: string; name: string; kind: "city" | "region" };
-export type CountryPageTarget = { href: string; label: string };
-export type DistrictPageTarget = { href: string; name: string };
+export type GeoPageTarget = { href: string; name: string; kind: "city" | "region"; answers: DoorKind };
+export type CountryPageTarget = { href: string; label: string; answers: DoorKind };
+export type DistrictPageTarget = { href: string; name: string; answers: DoorKind };
+export type HubPageTarget = { href: string; /** True where the hub is the neighbourhood spine (the admitted cities, London today), false where it is the legacy page. */ spine: boolean; answers: DoorKind };
 
 /**
  * The page for a district of a city, or null when none exists (MODEL.md 8.8;
@@ -47,7 +56,24 @@ export function districtPageTarget(citySlug: string, districtSlug: string): Dist
   if (!isSpineReformEnabledFor("hood")) return null;
   const city = (citySlug ?? "").toLowerCase();
   const district = spineHoodDistrict(city, districtSlug);
-  return district ? { href: districtPageHref(city, district.slug), name: district.name } : null;
+  return district ? { href: districtPageHref(city, district.slug), name: district.name, answers: SURFACE_ANSWERS.district } : null;
+}
+
+/**
+ * The neighbourhoods hub of a city, or null when the route would answer 404
+ * (no city of that slug, or no scheme in the neighbourhoods file: the hub
+ * route's own two `notFound()` lines, read through hood_scheme.ts). WHAT THE
+ * HUB ANSWERS DEPENDS ON THE CITY: the admitted cities (the gate above, with
+ * the neighbourhood spine on) serve the spine hub, whose masthead leads with
+ * the rent spread (`rent-lightest`, 8.8 `00 take`); every other city serves
+ * the legacy hub, a list of the city's districts (`districts`). The city's
+ * districts door and its neighbourhood cards read one answer from here.
+ */
+export function neighbourhoodsHubTarget(citySlug: string): HubPageTarget | null {
+  const city = (citySlug ?? "").toLowerCase();
+  if (!hasHoodScheme(city)) return null;
+  const spine = isSpineReformEnabledFor("hood") && spineHoodDistricts(city) != null;
+  return { href: hoodHubHref(city), spine, answers: spine ? SURFACE_ANSWERS.hood : SURFACE_ANSWERS["hub-legacy"] };
 }
 
 /**
@@ -61,7 +87,7 @@ export function districtPageTarget(citySlug: string, districtSlug: string): Dist
 export function countryPageTarget(countrySlug: string): CountryPageTarget | null {
   const iso2 = (countrySlug ?? "").toUpperCase();
   const meta = COUNTRIES.find((c) => c.code === iso2);
-  return meta ? { href: `/${iso2.toLowerCase()}`, label: meta.name } : null;
+  return meta ? { href: `/${iso2.toLowerCase()}`, label: meta.name, answers: SURFACE_ANSWERS.country } : null;
 }
 
 /**
@@ -75,6 +101,9 @@ export function countryPageTarget(countrySlug: string): CountryPageTarget | null
  * Where this returns null the caller renders plain text or omits the link. It
  * must never fall back to the two-segment form, which is the bug this exists to
  * end.
+ *
+ * A city page answers customer pay; a region page is an index into its cities
+ * (`region-cities`, door_kinds.ts), and a door that lands there says so.
  */
 export function geoPageTarget(countrySlug: string, geoSlug: string): GeoPageTarget | null {
   const iso2 = (countrySlug ?? "").toUpperCase();
@@ -85,12 +114,12 @@ export function geoPageTarget(countrySlug: string, geoSlug: string): GeoPageTarg
 
   const city = getCityIdentity(slug);
   if (city && city.iso2.toUpperCase() === iso2) {
-    return { href: `/cities/${slug}`, name: city.name, kind: "city" };
+    return { href: `/cities/${slug}`, name: city.name, kind: "city", answers: SURFACE_ANSWERS.city };
   }
 
   const region = getRegionsForCountry(iso2, meta.name).find((r) => r.value === slug);
   if (region) {
-    return { href: `/${iso2.toLowerCase()}/${slug}`, name: region.label, kind: "region" };
+    return { href: `/${iso2.toLowerCase()}/${slug}`, name: region.label, kind: "region", answers: SURFACE_ANSWERS.region };
   }
   return null;
 }

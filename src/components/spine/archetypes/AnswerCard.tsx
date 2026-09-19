@@ -24,10 +24,17 @@
  *  - THE TRADE IDENTITY VARIANT (MODEL.md 8.7, plan step 34, 2026-09-18): a
  *    trade anywhere has no flag, so `tile` puts the trade's 28px icon tile
  *    in the flag's seat and drops the country mark; see the prop.
+ *  - THE MASTHEAD DECLARES WHAT IT ANSWERS (plan step 39, 2026-09-19):
+ *    `answers`, a kind from src/lib/spine/door_kinds.ts, set by each
+ *    surface's view from SURFACE_ANSWERS and stamped as `data-answers`, so a
+ *    door promising a kind can be held to the masthead it lands on; the
+ *    chain's `doors` gate reads the module for the promise check and the
+ *    render for this stamp, and reds a page-level masthead without one.
  */
 import * as React from "react";
 import { Band, Box, Ico, Rail, SampleTag } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
+import type { DoorKind } from "@/lib/spine/door_kinds";
 import { AtlasMark } from "@/components/spine/marks";
 import { CountryFlag } from "@/components/CountryFlag";
 import { KvGrid, type KvCell } from "./KvGrid";
@@ -84,14 +91,16 @@ export type AnswerCardProps = {
    * it, so no existing render changes. It exists so a section can nest the
    * plus at a real card's foot, the same way `cells` already nests a KvGrid. */
   detail?: React.ReactNode;
+  /** What this masthead answers (door_kinds.ts SURFACE_ANSWERS), stamped as `data-answers`; the view sets it, never this file. */
+  answers?: DoorKind;
 };
 
-export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail, crumb, absent, tile }: AnswerCardProps) {
+export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail, crumb, absent, tile, answers }: AnswerCardProps) {
   const tagged = answer != null && answer.confidence !== "measured";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   return (
     <Band hero>
-      <Box id={id} data-archetype="answer-card" data-level={level}>
+      <Box id={id} data-archetype="answer-card" data-level={level} data-answers={answers}>
         {level === "section" ? (
           <Rail icon={icon} kicker={name} />
         ) : (

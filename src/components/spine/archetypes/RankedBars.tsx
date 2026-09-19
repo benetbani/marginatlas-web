@@ -155,6 +155,7 @@
 import * as React from "react";
 import { Box, Rail, Fig } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
+import type { DoorKind } from "@/lib/spine/door_kinds";
 import { COPY } from "./copy";
 /* THE HATCH IS SHARED, NOT REINVENTED (task 12): IncomeBreakdown.tsx drew
  * the one repeating-line pattern this site uses for "not the answer, still
@@ -170,7 +171,10 @@ import { HATCH } from "./IncomeBreakdown";
  * by state. */
 import { CompanionRow, type Companion } from "./BentoBand";
 
-export type BarRow = { key: string; name: string; href?: string; value: number; flagged?: boolean;
+export type BarRow = { key: string; name: string; href?: string;
+  /** What a row that navigates promises: the kind its page's masthead answers (src/lib/spine/door_kinds.ts), set by the builder with the href and stamped as `data-lands` for the chain's `doors` gate (plan step 39, 2026-09-19). */
+  lands?: DoorKind;
+  value: number; flagged?: boolean;
   /** NO LONGER DRAWN ANYWHERE (task 13, 2026-09-10). The field stays on the
    * type so `scripts/verify_model_laws_copy.ts`'s DISTRICT ADJECTIVE ratchet
    * can keep reading `row.note` on every builder and prove it is unset;
@@ -419,7 +423,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
             );
             return (
               <li key={r.key} style={{ minWidth: 0 }} data-bar={r.key} data-row={r.key} data-value={r.value}>
-                {r.href ? <a href={r.href} className="block no-underline">{inner}</a> : inner}
+                {r.href ? <a href={r.href} data-lands={r.lands} className="block no-underline">{inner}</a> : inner}
               </li>
             );
           })}
@@ -500,7 +504,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                  The attribute is the component's own declaration, which is the
                  rule's blind spot and is stated where the rule is written. */
               return r.href
-                ? <a key={r.key} href={r.href} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</a>
+                ? <a key={r.key} href={r.href} data-lands={r.lands} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</a>
                 : <div key={r.key} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</div>;
             })}
           </div>
@@ -541,7 +545,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                rule that reads drawn length against value keeps working the day
                this form grows one. */
             return r.href
-              ? <a key={r.key} href={r.href} className={cls} data-row={r.key} data-value={r.value}>{row}</a>
+              ? <a key={r.key} href={r.href} data-lands={r.lands} className={cls} data-row={r.key} data-value={r.value}>{row}</a>
               : <div key={r.key} className={cls} data-row={r.key} data-value={r.value}>{row}</div>;
           })}
         </div>
