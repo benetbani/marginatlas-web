@@ -50,9 +50,20 @@ import { mkdirSync, existsSync, readFileSync, writeFileSync, statSync } from "no
 import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
+import { requireBrowser } from "../lib/local_only.mjs";
 import { accentWalk } from "../lib/accent_walk.mjs";
 
 /* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
+/* A BUILD SERVER HAS NO BROWSER (scripts/lib/local_only.mjs, the rule every
+   browser gate follows since 2026-08-27): Vercel clones website/ alone and
+   holds no chromium, and on 2026-09-19 the first push after the harness
+   joined the chain failed its deploy on this gate's own preflight, which
+   STOPs where the browser is absent, the right answer on the design machine
+   and the wrong one on a build server. The skip is loud and says what was
+   not checked; the gate runs unchanged here. The chain is proved end to end
+   before a push by `npm run verify:deploy`, which is where this gate holds
+   the deploy. */
+await requireBrowser("harness-page-filter", "the page filter's holes, rows-cut, no-lead, wall and accent-budget reads on every page in scripts/harness/pages.json");
 preflight({ browser: true, name: "check_page_holes" });
 
 const WIDTHS = [1280, 768, 375];

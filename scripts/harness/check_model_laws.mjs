@@ -269,7 +269,18 @@ import { existsSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
+import { requireBrowser } from "../lib/local_only.mjs";
 
+/* A BUILD SERVER HAS NO BROWSER (scripts/lib/local_only.mjs, the rule every
+   browser gate follows since 2026-08-27): Vercel clones website/ alone and
+   holds no chromium, and on 2026-09-19 the first push after the harness
+   joined the chain failed its deploy on this gate's own preflight, which
+   STOPs where the browser is absent, the right answer on the design machine
+   and the wrong one on a build server. The skip is loud and says what was
+   not checked; the gate runs unchanged here. The chain is proved end to end
+   before a push by `npm run verify:deploy`, which is where this gate holds
+   the deploy. */
+await requireBrowser("harness-laws", "the model-laws list (BLOCK FLOOR, FOCAL, LONE CARD, LABEL GAP, EDGE, ROW SENTENCE) on every page in scripts/harness/pages.json");
 preflight({ browser: true, name: "check_model_laws" });
 
 /* MINOR 9 FIX (review fix wave, 2026-09-08): EVEN_BY_RULING (FOCAL's set,

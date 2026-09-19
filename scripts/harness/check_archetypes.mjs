@@ -113,8 +113,19 @@ import { chromium } from "playwright";
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { preflight } from "./preflight.mjs";
+import { requireBrowser } from "../lib/local_only.mjs";
 
 /* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
+/* A BUILD SERVER HAS NO BROWSER (scripts/lib/local_only.mjs, the rule every
+   browser gate follows since 2026-08-27): Vercel clones website/ alone and
+   holds no chromium, and on 2026-09-19 the first push after the harness
+   joined the chain failed its deploy on this gate's own preflight, which
+   STOPs where the browser is absent, the right answer on the design machine
+   and the wrong one on a build server. The skip is loud and says what was
+   not checked; the gate runs unchanged here. The chain is proved end to end
+   before a push by `npm run verify:deploy`, which is where this gate holds
+   the deploy. */
+await requireBrowser("harness-archetypes", "the archetype sheet's stories at three widths (the design and data reds)");
 preflight({ browser: true, name: "check_archetypes" });
 
 const LADDER = new Set([10, 12, 14, 16, 20, 24, 30, 40]);
