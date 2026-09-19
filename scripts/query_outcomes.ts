@@ -29,21 +29,20 @@
  * addresses end in .invalid so no real reader is ever in the table.
  *
  * Exit 1 when any table errors, so a shell can notice; the words are the point.
+ *
+ * THE TABLE HALF IS EXPORTED (plan step 50, 2026-09-19): `checkTables(db)`
+ * returns one outcome per table in the same shape the lines print, and
+ * `makeClient()` builds the client the same way `main()` does, so the launch
+ * checklist (scripts/verify_launch_ready.ts, by hand, never in the chain) runs
+ * this script's own function for its "two tables present" line instead of a
+ * second query list. `main()` runs only when this file is the entry point.
  */
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 process.env.QUERY_OUTCOMES = "1";
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-if (!url || !key) {
-  console.error("query_outcomes: NEXT_PUBLIC_SUPABASE_URL and a key are not in the environment. Run with --env-file=.env.local.");
-  process.exit(2);
-}
-const role = process.env.SUPABASE_SERVICE_ROLE_KEY ? "service role" : "anon key (RLS applies; a 0 may be a policy, not an empty table)";
-
 /* Every table src/ touches: readers in src/lib, the API routes, the two REST routes. */
-const TABLES: Array<{ name: string; where: string; off?: string }> = [
+export const TABLES: Array<{ name: string; where: string; off?: string }> = [
   { name: "cells_master", where: "src/lib/cells.ts, the US cells" },
   { name: "regional_cells", where: "src/lib/cells/*.ts, trusted-local cells" },
   { name: "extrapolated_cells", where: "src/lib/cells/*.ts" },
@@ -54,19 +53,63 @@ const TABLES: Array<{ name: string; where: string; off?: string }> = [
   { name: "contact_messages", where: "src/app/api/contact, by REST (migration 2026-08-01-contact-messages.sql)" },
 ];
 
+/** One table's outcome: `ok` with its count; `off` when it is missing and its feature is off (never an error); `error` or `nocount` otherwise. */
+export type TableOutcome = {
+  name: string;
+  where: string;
+  off?: string;
+  state: "ok" | "off" | "error" | "nocount";
+  count: number | null;
+  message?: string;
+  ms: number;
+};
+
+/** The client `main()` builds: the URL and a key from the environment (load .env.local first), or null with the reason. */
+export function makeClient(): { db: SupabaseClient; url: string; role: string } | null {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  const role = process.env.SUPABASE_SERVICE_ROLE_KEY ? "service role" : "anon key (RLS applies; a 0 may be a policy, not an empty table)";
+  return { db: createClient(url, key, { auth: { persistSession: false } }), url, role };
+}
+
+/** One one-row select with an exact count per table in TABLES, in order; the words of each line are the state's. */
+export async function checkTables(db: SupabaseClient): Promise<TableOutcome[]> {
+  const out: TableOutcome[] = [];
+  for (const { name, where, off } of TABLES) {
+    const t0 = Date.now();
+    const { count, error } = await db.from(name).select("*", { count: "exact" }).limit(1);
+    const ms = Date.now() - t0;
+    if (error && off) out.push({ name, where, off, state: "off", count: null, message: error.message, ms });
+    else if (error) out.push({ name, where, state: "error", count: null, message: error.message, ms });
+    else if (count == null) out.push({ name, where, state: "nocount", count: null, ms });
+    else out.push({ name, where, state: "ok", count, ms });
+  }
+  return out;
+}
+
+/** The line `main()` prints for one outcome. */
+export function tableLine(o: TableOutcome): string {
+  const name = o.name.padEnd(22);
+  if (o.state === "off") return `  ${name} missing, and its feature is off (${o.off}); not counted as an error: ${o.message} (${o.ms}ms)`;
+  if (o.state === "error") return `  ${name} error: ${o.message} (${o.ms}ms)`;
+  if (o.state === "nocount") return `  ${name} no count came back and no error either; treated as an error (${o.ms}ms)`;
+  return `  ${name} ok: ${o.count} rows (${o.ms}ms)`;
+}
+
 async function main() {
-  const db = createClient(url!, key!, { auth: { persistSession: false } });
+  const client = makeClient();
+  if (!client) {
+    console.error("query_outcomes: NEXT_PUBLIC_SUPABASE_URL and a key are not in the environment. Run with --env-file=.env.local.");
+    process.exit(2);
+  }
+  const { db, url, role } = client;
   console.log(`query_outcomes: ${url} with the ${role}\n`);
   console.log("=== Tables ===");
   let errors = 0;
-  for (const { name: t, off } of TABLES) {
-    const t0 = Date.now();
-    const { count, error } = await db.from(t).select("*", { count: "exact" }).limit(1);
-    const ms = Date.now() - t0;
-    if (error && off) console.log(`  ${t.padEnd(22)} missing, and its feature is off (${off}); not counted as an error: ${error.message} (${ms}ms)`);
-    else if (error) { errors++; console.log(`  ${t.padEnd(22)} error: ${error.message} (${ms}ms)`); }
-    else if (count == null) { errors++; console.log(`  ${t.padEnd(22)} no count came back and no error either; treated as an error (${ms}ms)`); }
-    else console.log(`  ${t.padEnd(22)} ok: ${count} rows (${ms}ms)`);
+  for (const o of await checkTables(db)) {
+    if (o.state === "error" || o.state === "nocount") errors++;
+    console.log(tableLine(o));
   }
 
   if (process.argv.includes("--write-test")) {
@@ -97,4 +140,5 @@ async function main() {
   console.log(`\n${errors ? `${errors} table(s) in error` : "every table answered"}; ${queryLedger.length} reader outcome(s) logged.`);
   process.exit(errors ? 1 : 0);
 }
-main().catch((e) => { console.error("query_outcomes crashed:", e); process.exit(1); });
+
+if (require.main === module) main().catch((e) => { console.error("query_outcomes crashed:", e); process.exit(1); });

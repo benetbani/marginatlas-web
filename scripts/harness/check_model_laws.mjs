@@ -408,6 +408,14 @@ function inPage(ctx) {
      for it. THE HOW-TO SURFACE: PART 8 names no floor for it, so the count is
      printed and the comparison is left unmeasured, in one honest line. */
   const topBlocks = [...document.querySelectorAll("[data-block]")].filter((b) => !b.parentElement?.closest("[data-block]"));
+  /* THE COUNT IS RETURNED WHETHER OR NOT IT IS A FINDING (plan step 50,
+     2026-09-19): until then a page at its floor printed nothing about BLOCK
+     FLOOR at all, so a reader of the output could not tell "21 against 21"
+     from "the rule did not run", and the launch checklist
+     (scripts/verify_launch_ready.ts) reads its floor line off this output.
+     The line below the reds prints it; no red, no ratchet row, no baseline
+     is touched by it. */
+  const blocks = wide ? topBlocks.length : null;
   if (wide && floor != null) {
     if (topBlocks.length === 0) {
       unmeasured.push("BLOCK FLOOR: no [data-block] elements on this page; the count is unmeasured, not zero");
@@ -842,7 +850,7 @@ function inPage(ctx) {
     }
   }
 
-  return { found: out, unmeasured };
+  return { found: out, unmeasured, blocks };
 }
 
 const reds = [];
@@ -868,6 +876,7 @@ for (const file of files) {
      of being silently discarded. */
   const perFile = new Map();
   const unmeasured = new Set();
+  let blocksAtWide = null;
   for (const w of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 1200 }, deviceScaleFactor: 1, reducedMotion: "reduce" });
     const page = await ctx.newPage();
@@ -876,7 +885,8 @@ for (const file of files) {
     /* Real flag images need a decode to report a true natural size; a
        data-URI fixture image needs no network for this and still benefits. */
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
-    const { found, unmeasured: um } = await page.evaluate(inPage, { floor, wide: w === WIDTHS[0] });
+    const { found, unmeasured: um, blocks } = await page.evaluate(inPage, { floor, wide: w === WIDTHS[0] });
+    if (blocks != null) blocksAtWide = blocks;
     const countThisWidth = new Map();
     for (const f of found) {
       const key = `${f.id}␟${f.rule}␟${f.detail}`;
@@ -897,6 +907,8 @@ for (const file of files) {
     reds.push({ name, w: [...v.widths].sort((a, b) => b - a).join("/"), id: v.id, rule: v.rule, detail: v.detail, count: v.count });
   }
   for (const u of unmeasured) console.log(`  ${name}: ${u}`);
+  /* The floor line on every page, met or not (plan step 50): the reds above carry a breach; this line carries the count. */
+  if (blocksAtWide != null && floor != null && blocksAtWide >= floor) console.log(`  ${name}: BLOCK FLOOR: ${blocksAtWide} blocks against a floor of ${floor}, met`);
 }
 await browser.close();
 console.log(`model laws: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);

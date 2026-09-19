@@ -34,13 +34,22 @@
  * Planted 2026-09-19: with `.env.production` emptied of the private flag and
  * no environment override the gate printed the sentence and exited 1; restored,
  * it passed. Exit 0 on pass, 1 on the sentence.
+ *
+ * THE READERS ARE EXPORTED (plan step 50, 2026-09-19): the launch checklist
+ * (scripts/verify_launch_ready.ts, by hand, never in the chain) reads the two
+ * flags through `readFlag` and prints `SENTENCE` when both fail, so there is
+ * one parser of the env files and one sentence. `main()` runs only when this
+ * file is the entry point.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const ROOT = resolve(__dirname, "..");
 
-type Source = "environment" | ".env.production" | ".env.local" | "unset";
+export type Source = "environment" | ".env.production" | ".env.local" | "unset";
+
+/** The one sentence the plan prescribes (step 48), printed by this gate and by the launch checklist. */
+export const SENTENCE = "the site is not private and the sample marks are off";
 
 /** Parse a dotenv file into a map: KEY=VALUE lines, quotes stripped, comments and blanks skipped. */
 function parseEnvFile(path: string): Record<string, string> {
@@ -69,7 +78,7 @@ function isOn(value: string | undefined): boolean | null {
   return null;
 }
 
-function readFlag(name: string): { on: boolean | null; source: Source } {
+export function readFlag(name: string): { on: boolean | null; source: Source } {
   const fromEnv = isOn(process.env[name]);
   if (fromEnv != null) return { on: fromEnv, source: "environment" };
   const prod = isOn(parseEnvFile(resolve(ROOT, ".env.production"))[name]);
@@ -93,9 +102,9 @@ function main(): number {
     console.log("sample-switch: PASS (the marks are off and the site declares itself private; launch day flips both in one commit, see docs/DEPLOY-PACK-spine-flags.md)");
     return 0;
   }
-  console.log("sample-switch: FAIL: the site is not private and the sample marks are off");
+  console.log(`sample-switch: FAIL: ${SENTENCE}`);
   console.log("  Remedy: set NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1 (the launch state) or NEXT_PUBLIC_SITE_PRIVATE=1 (the private state) in .env.production; never both off.");
   return 1;
 }
 
-process.exit(main());
+if (require.main === module) process.exit(main());
