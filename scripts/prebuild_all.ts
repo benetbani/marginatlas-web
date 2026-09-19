@@ -120,6 +120,17 @@ const GATES: Gate[] = [
      thirteen with loud-seats below. */
   { name: "harness-archetypes", script: "scripts/harness/harness.mjs", args: ["archetypes"], browser: true },
   { name: "harness-page-filter", script: "scripts/harness/check_page_holes.mjs", args: ["--list"], browser: true },
+  /* HIS PAGE LAWS OF 2026-09-20 (MODEL.md PART 9 clauses 50 to 58; the checks
+     in E:/atlas/design/loop/architecture/HARNESS-SPEC.md). The page filter
+     above measures a blank rectangle inside a card and a full-width band; the
+     renders of 2026-09-19 passed it and failed his eye ("the harness is not
+     working correctly"). This gate holds what it did not: cards per level,
+     the level's fill, visuals per level, the text measure, a card's foot, the
+     hero's side, overlap and overflow, repeated kinds, parts behind a click.
+     The same fresh renders, the same per-page ratchet
+     (scripts/harness/page_laws_baseline.json), seeded at the first honest
+     measurement of each page and falling only. A browser gate, one more. */
+  { name: "harness-page-laws", script: "scripts/harness/check_page_laws.mjs", args: ["--list"], browser: true },
   { name: "harness-laws", script: "scripts/harness/check_model_laws.mjs", args: ["--list", "--ratchet"], browser: true },
   /* THE LOUD-MOMENTS LEDGER AND THE RENDER AGREE (plan step 40, 2026-09-19;
      MODEL.md PART 6 and PART 8's seat tables). Each surface's view declares

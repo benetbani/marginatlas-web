@@ -670,8 +670,12 @@ export function Band({
      row, so two cards on one level share one bottom edge by construction. A
      card that cannot fill its height is a card to redesign, not a rule to
      relax; the emptiness gate reports the hole it leaves. */
+  /* THE LEVEL IS STAMPED (his page laws of 2026-09-20, MODEL PART 9 clauses 50
+     to 53; scripts/harness/check_page_laws.mjs reads them): a band is one
+     horizontal level of the page, and the checker counts its cards, its fill
+     and its visuals by this attribute, never by guessing from a class list. */
   return (
-    <div className={`mt-8 grid grid-cols-1 items-stretch gap-8 [&>*]:h-full [&:has(>*:only-child)]:lg:grid-cols-[2fr_1fr] [&:has(>*:only-child[data-lean])]:lg:grid-cols-[1fr_2fr] ${cols}`}>
+    <div data-band={split} {...(stack ? { "data-stack": stack } : {})} className={`mt-8 grid grid-cols-1 items-stretch gap-8 [&>*]:h-full [&:has(>*:only-child)]:lg:grid-cols-[2fr_1fr] [&:has(>*:only-child[data-lean])]:lg:grid-cols-[1fr_2fr] ${cols}`}>
       {children}
     </div>
   );

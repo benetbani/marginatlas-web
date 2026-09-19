@@ -65,6 +65,7 @@
     "harness:page": "node scripts/harness/harness.mjs page",
     "harness:readability": "node scripts/harness/check_readability.mjs",
     "harness:laws": "node scripts/harness/check_model_laws.mjs",
+    "harness:page-laws": "node scripts/harness/check_page_laws.mjs --list",
     "verify:deploy": "node scripts/verify_deploy.mjs",
     "deploy:watch": "node scripts/deploy_watch.mjs",
     "launch:check": "npx tsx scripts/verify_launch_ready.ts",

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>page laws clean</title>
+<style>
+  body { margin: 0; font: 16px/1.4 Arial, sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 8px 24px; }
+  [data-band] { display: grid; column-gap: 32px; margin-top: 32px; }
+  .card { border: 1px solid #ccc; padding: 20px; background: #fff; }
+  .two { grid-template-columns: 1fr 1fr; }
+  .bar { height: 12px; background: #b5532f; width: 60%; }
+  p { margin: 0; max-width: 480px; }
+</style></head>
+<body><main>
+  <div data-hero="1">
+    <div class="card rounded-[14px]" id="take" data-archetype="answer-card" data-visual="1" style="display: flex; justify-content: space-between;">
+      <div><div>United Kingdom</div><div style="font-size: 40px;">20%</div></div>
+      <div style="width: 300px;"><div class="bar" style="width: 100%;"></div><p>the state's share of every 100</p></div>
+    </div>
+  </div>
+  <div data-band="1-1" class="two">
+    <div class="card rounded-[14px]" id="a" data-archetype="ranked-bars" data-form="vertical"><div class="bar"></div><p>a</p></div>
+    <div class="card rounded-[14px]" id="b" data-archetype="kv-grid"><p>b</p></div>
+  </div>
+  <div data-band="1-1" class="two">
+    <div class="card rounded-[14px]" id="c" data-archetype="ranked-bars" data-form="table"><div class="bar"></div><p>c</p></div>
+    <div class="card rounded-[14px]" id="d" data-archetype="note-list"><p>d</p></div>
+  </div>
+</main></body></html>

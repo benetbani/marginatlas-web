@@ -69,6 +69,21 @@
       "claims": []
     },
     {
+      "name": "harness-page-laws",
+      "script": "scripts/harness/check_page_laws.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": true,
+      "asserts": "THE PAGE LAWS OF 2026-09-20, held on a rendered page.",
+      "reads": [
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scripts/harness/page_laws_baseline.json",
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-laws",
       "script": "scripts/harness/check_model_laws.mjs",
       "args": [

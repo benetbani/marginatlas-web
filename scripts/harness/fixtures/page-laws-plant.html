@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>page laws plant</title>
+<style>
+  body { margin: 0; font: 16px/1.4 Arial, sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 8px 24px; }
+  [data-band] { display: grid; column-gap: 32px; margin-top: 32px; }
+  .card { border: 1px solid #ccc; padding: 20px; background: #fff; }
+  .four { grid-template-columns: repeat(4, 1fr); }
+  .two { grid-template-columns: 1fr 1fr; }
+  .bar { height: 12px; background: #b5532f; width: 60%; }
+</style></head>
+<body><main>
+  <!-- HERO SIDE BLANK: the hero's ink stops at a third of its width -->
+  <div data-hero="1">
+    <div class="card rounded-[14px]" id="take" data-archetype="answer-card" style="width: 1072px;">
+      <div style="width: 320px;">United Kingdom</div>
+      <div style="width: 320px; font-size: 40px;">20%</div>
+    </div>
+  </div>
+  <!-- LEVEL OVER THREE: four cards on one level, each a visual so LEVEL VISUALS says "over two" and not "none" -->
+  <div data-band="1-1" class="four">
+    <div class="card rounded-[14px]" id="a" data-archetype="ranked-bars"><div class="bar"></div><p>a</p></div>
+    <div class="card rounded-[14px]" id="b" data-archetype="range-strip"><div class="bar"></div><p>b</p></div>
+    <div class="card rounded-[14px]" id="c" data-archetype="pay-bars"><div class="bar"></div><p>c</p></div>
+    <div class="card rounded-[14px]" id="d" data-archetype="spectra-table"><div class="bar"></div><p>d</p></div>
+  </div>
+  <!-- TEXT OUT OF BOX and PARTS NOT REVEALED on one level with one visual -->
+  <div data-band="1-1" class="two">
+    <div class="card rounded-[14px]" id="e" data-archetype="income-breakdown" data-parts="3">
+      <div class="bar"></div>
+      <p style="white-space: nowrap; width: 200px;">This line is written far too long for its card and runs out of the box on purpose</p>
+    </div>
+    <div class="card rounded-[14px]" id="f" data-archetype="note-list" data-parts="2"><p>f</p></div>
+  </div>
+</main></body></html>
