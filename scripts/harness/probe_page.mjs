@@ -28,7 +28,8 @@ for (const w of widthsArg.split(",").map(Number)) {
       const band = c.parentElement; if (!bands.has(band)) bands.set(band, []);
       const cb = c.getBoundingClientRect(); const cs = getComputedStyle(c);
       let bottom = cb.top + parseFloat(cs.paddingTop);
-      for (const el of c.querySelectorAll("*")) { if (!el.getClientRects().length) continue; const r = el.getBoundingClientRect(); if (r.height > 0 && r.bottom > bottom && r.bottom <= cb.bottom + 1) bottom = r.bottom; }
+      /* a closed plus's hidden rows are not content (sys:closed-plus-ink, 2026-09-19): a closed <details> reports rects for what it hides */
+      for (const el of c.querySelectorAll("*")) { if (!el.getClientRects().length) continue; { const d = el.closest("details"); if (d && !d.open) { const sum = d.querySelector(":scope > summary"); if (!sum || !sum.contains(el)) continue; } } const r = el.getBoundingClientRect(); if (r.height > 0 && r.bottom > bottom && r.bottom <= cb.bottom + 1) bottom = r.bottom; }
       const natural = Math.round(bottom - cb.top + parseFloat(cs.paddingBottom));
       bands.get(band).push({ id: c.id || c.querySelector("[id]")?.id || "?", w: Math.round(cb.width), h: Math.round(cb.height), natural });
     }

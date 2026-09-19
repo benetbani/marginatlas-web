@@ -131,6 +131,16 @@ function inPage() {
     };
     for (const el of card.querySelectorAll("*")) {
       if (el.getClientRects().length === 0) continue;
+      /* A CLOSED PLUS IS NOT INK (sys:closed-plus-ink, 2026-09-19). Chromium
+         reports client rects for the content of a closed <details>, so the
+         rows behind a DetailPanel's plus marked the grid as drawn and the
+         industry licence card read as full at 3-2 where the eye saw 374 by
+         123 of air (plan step 34, second dispatch). The laws checker's
+         hiddenFromSight and the art-direction gate's inDeadDetails already
+         skip them; this filter now does the same. This measurement cannot
+         distinguish a hidden row from a drawn one by rects alone, only by
+         the details' open state. */
+      { const d = el.closest("details"); if (d && !d.open) { const sum = d.querySelector(":scope > summary"); if (!sum || !sum.contains(el)) continue; } }
       const es = getComputedStyle(el);
       const b0 = el.getBoundingClientRect();
       /* a hairline is ink: row rules and dividers break the emptiness the eye would read as a hole */
