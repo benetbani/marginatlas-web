@@ -1,7 +1,7 @@
 /**
  * Industry page (a trade across places) , SPINE rebuild BODY (SpineIndustryBody).
  *
- * THE ORDER IS MODEL.md 8.7's (plan step 34, 2026-09-18, the first of four
+ * THE ORDER IS MODEL.md 8.7's (plan step 34, 2026-09-18 to 2026-09-19, four
  * dispatches): the opening full width (`00 take`), then the band `01 lasts
  * | 02 benchmark`; chapter turn one, what it costs to open and what it keeps
  * (`03 split | 04 open`, `05 pays` the bento); turn two, where it pays and
@@ -10,7 +10,8 @@
  * full width, no chapter break). The trade view's idiom, exactly: the
  * builders built once at the top of the body, a band seated only when a card
  * exists, `Movement` with an index and a heading and nothing else, no rail.
- * Three full widths, R1: the take, the places table, the close.
+ * Three full widths, R1: the take, the places table, the close. Twelve
+ * blocks, 8.7's floor, and nothing of the ad-hoc page remains mounted.
  *
  * WHAT THE FIRST DISPATCH BUILT: `00 take` on the answer card in its trade
  * identity variant, `01 lasts` on the trade page's own survival card and
@@ -84,23 +85,41 @@
  * that fed it. Chapter break 02 draws on every trade now: `07 | 08` stand
  * under it on 243, and `06` stands there drawn or seated.
  *
- * TODAY'S SURVIVORS KEEP THEIR SEATS IN 8.7's ORDER until their dispatch,
- * each mapped to its block: WhoItSuits and the Caveats are the two halves
- * of `09 know`, the page's one prose section, seated side by side until
- * that dispatch merges them on NoteList; the Seasonality ribbon's swing is
- * `10 field`'s third cell (never fed on the live route); the Close is `11
- * close` on Terminus at the fourth dispatch (its recap figure left today
- * with the `margin_index` and `benchmark` feeds, 8.7's own cut: "no recap
- * figure").
+ * WHAT THE FOURTH AND LAST DISPATCH BUILT (2026-09-19): turn three, the band
+ * `09 know | 10 field`, and the exit `11 close` full width (the page's third
+ * of three, R1), on turn-three.tsx (it says which law each obeys; the
+ * builders are know_rows.ts over the trade's authored character and its
+ * failure modes, market_rows.ts at the world altitude, the trade's own
+ * market builder with the churn cell built and not drawn, and close_rows.ts
+ * `buildIndustryCloseDoors` over the places and benchmark results). WHAT IT
+ * RETIRED, each with what it drew: `#suits`, the WhoItSuits (the character's
+ * edge and watch-out as two bullet columns under "Suits" and "Think twice",
+ * carrying the page's `data-editorial` stamp: `09` is its seat, the same two
+ * facts as notes under the trade page's labels); `#myths`, the Caveats (the
+ * struck claim "a fat gross margin means good profit" against the margins
+ * file's clamped net, the computed sentence "A high gross margin is
+ * misleading ..." fired by a thirty-point gap on that file's ladder, which
+ * nobody wrote, the first failure mode as "label: explanation" in a bullet,
+ * the character's economics paragraph behind a disclosure, the prime-cost
+ * gloss: `09` carries the two failure modes as notes; the sentence and the
+ * ladder that fed it are gone, R7's one net); the Seasonality ribbon (the
+ * census's `#2`, "Across the year", twelve months as an area ribbon off the
+ * bundled seed alone, never fed on the live route: `10`'s swing cell is its
+ * seat, the shard's `seasonality.swing_pct` for 243) and forms.tsx with it
+ * (nothing else mounted its five exports); the old Close (the recap figure
+ * off `margin_index` with its "versus the typical trade" label, the "See
+ * {trade} in a specific city" sentence and the "Pick a place" pill to
+ * `/cities`, on a hairline in the card's own edge colour, the laws list's
+ * EDGE row: `11` is its seat, on Terminus, doors with arrows and the compare
+ * pill); the adapter's `caveats`, `margins`, `who_suits`, `verdict` and
+ * `provenance_line` blocks (nothing of the twelve reads them), the three
+ * capture probes of the retired cards and their four coverage exceptions.
  *
  * THE THIRD CHAPTER BREAK draws when a card stands under it (the trade
- * view's own rule): the suits and the caveats build off the authored
- * character, the failure modes and the margins file, so on a trade holding
- * none of them the heading waits with them. Turn two's heading stands on
- * every trade holding a shard (the formats and the mix), and on the live
- * route the places block stands under it drawn or seated; on the bundled
- * dev seed no slate was resolved (`across` absent), so the places block
- * builds nothing there and the heading stands over the band alone.
+ * view's own rule): the notes build for every taxonomy id and the field for
+ * every shard, so on every live trade the heading stands over the band;
+ * an id with neither draws no turn three. The close draws on every trade
+ * (the pill always stands).
  *
  * THE SAMPLE MARK'S WIRING, said once for the render group: every card on
  * this page whose figures are modelled passes `sample` to the kit's `Rail`
@@ -111,12 +130,11 @@
  */
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
-import { Fig, Bullets, InfoTip, InlineDisclosure, Movement, Box, Rail, Full, Band } from "@/components/spine/kit";
-import { AtlasMark } from "@/components/spine/marks";
-import { SeasonRibbon } from "./forms";
+import { Movement, Band } from "@/components/spine/kit";
 import { Masthead, BenchmarkCard } from "./opening";
 import { SplitCard, OpenCard, PaysBand } from "./turn-one";
 import { PlacesTable, FormatsCard, ChannelsCard } from "./turn-two";
+import { KnowCard, FieldCard, CloseCard } from "./turn-three";
 import { LastsCard } from "@/components/spine/cell/turn-two";
 import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import { buildLasts } from "@/lib/spine/lasts_rows";
@@ -127,254 +145,16 @@ import { buildPays } from "@/lib/spine/pays_rows";
 import { buildIndustryPlaces } from "@/lib/spine/industry_places_rows";
 import { buildFormats } from "@/lib/spine/formats_rows";
 import { buildMix } from "@/lib/spine/mix_rows";
+import { buildKnow } from "@/lib/spine/know_rows";
+import { buildMarket } from "@/lib/spine/market_rows";
+import { buildIndustryCloseDoors } from "@/lib/spine/close_rows";
 import { COPY } from "@/lib/spine/copy";
-
-/* glossTerm , attach the kit InfoTip after the FIRST occurrence of a jargon term inside
- * seed prose (rule 24: teach as you inform). Returns the text untouched when the term is
- * absent, so real-data prose that never says the word never grows a stray "?". */
-function glossTerm(text: string | undefined, term: string, gloss: string): React.ReactNode {
-  if (!text) return text;
-  const i = text.toLowerCase().indexOf(term.toLowerCase());
-  if (i < 0) return text;
-  const end = i + term.length;
-  return <>{text.slice(0, end)}<InfoTip gloss={gloss} />{text.slice(end)}</>;
-}
-const GLOSS_PRIME_COST = "Food and labour together, the two big controllable costs.";
-
-/* WHO IT SUITS , two columns: suits / think twice.
- * decision: is this operator you. focal: the two bullet columns as a contrast.
- * width: Even (T3), paired with survival. terracotta: the "suits" dots only. */
-export function WhoItSuits({ d }: { d: any }) {
-  const w = d.who_suits ?? {};
-  const suits: string[] = w.suits ?? [];
-  const thinkTwice: string[] = w.think_twice ?? [];
-  if (!suits.length && !thinkTwice.length) return null;
-  /* TWO COLUMNS ONLY WHEN THERE ARE TWO COLUMNS OF CONTENT.
-     The live builder fills each side from a different fact about the trade, and
-     it runs when EITHER one is present. So a trade with something to watch out
-     for and no stated edge, or the reverse, produced a full-width band with its
-     one list wrapping inside the left half and the right half empty. Same fault
-     the customer-spend band had two rows ago, arrived at from a different
-     direction: there the second figure was missing upstream, here either side
-     can be. The dividing rule was already guarded, so what was left was the
-     emptiness, not a line drawn through it. */
-  const both = suits.length > 0 && thinkTwice.length > 0;
-  return (
-    /* THE ONE EDITORIAL SECTION ON THIS PAGE (art direction E1). A page built out
-       of figures needs one place where a person speaks, and this is it: whether a
-       trade suits the reader is a judgment, not a measurement, and cutting it to
-       the 220-character prose budget would be cutting the only human voice on the
-       page to satisfy a number. The exemption is capped at one per page, so
-       declaring a second one here would fail rather than compound. */
-    <Box id="suits" data-editorial="1">
-      <Rail icon="who-for" kicker="Who it suits" verdict={w.verdict} sample />
-      <div className={`grid gap-5${both ? " sm:grid-cols-2" : ""}`}>
-        {suits.length ? (
-          <div>
-            {/* A COLUMN LABEL IS FURNITURE, NOT AN ANSWER. Rule 37: the accent marks
-                answers only. "Suits" and "Think twice" are the two headings of a
-                two-column read, and one of them was accented while its twin was
-                muted, which told a reader the left column mattered more when the
-                whole point of the pair is that both do. */}
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Suits</div>
-            <Bullets items={suits} />
-          </div>
-        ) : null}
-        {thinkTwice.length ? (
-          <div className={both ? "sm:border-l sm:border-[var(--c-border)] sm:pl-5" : ""}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Think twice</div>
-            <ul className="space-y-2">{thinkTwice.map((t: string, i: number) => <li key={i} className="relative pl-4 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]"><span className="absolute left-0 top-[7px] h-1.5 w-1.5 rounded-full border border-[var(--c-line-strong)]" />{t}</li>)}</ul>
-          </div>
-        ) : null}
-      </div>
-    </Box>
-  );
-}
-
-/* ============================================================
- * SEASONALITY , the year's shape as a single area RIBBON.
- * decision: when the cash comes and when it is tight. focal: the ribbon over 12 months.
- * No honest monthly source at industry altitude, so it OMITS on real-data promotion.
- * width: the chart half of a WideRail (T2), paired with Caveats.
- * terracotta: the peak node only; the trough is derived + inked.
- * idiom: drawn ribbon (2 of 2, with SurvivalCurve). Returns a bare Box for WideRail. */
-function Seasonality({ d }: { d: any }) {
-  const se = d.seasonality ?? {};
-  const months: number[] = se.months ?? [];
-  if (!months.length) return null;
-  return (
-    <Box data-block="seasonality">
-      <Rail icon="seasonality" kicker="Across the year" verdict="The year breathes: the high season pays for the quiet months." />
-      <SeasonRibbon months={months} />
-    </Box>
-  );
-}
-
-/* ClaimRow , one claim-vs-reality pair (rulebook v2 S12 rework of the myth listicle):
- * the folklore claim struck through as plain text, the real figure beside it, en route
- * to a schematic device instead of a bullet list or a "myth busted" game-show tag. Both
- * fields the two call sites below feed it are real, already-measured page fields
- * (survival.yr1_pct, margins.gross_pct/net_pct), never a fabricated claim number , the
- * struck side stays a QUOTED PHRASE, not an invented statistic. `accent` opts the real
- * figure into terracotta; the page's other ClaimRow stays ink (terracotta once per box). */
-function ClaimRow({ claim, real, realLabel, accent = false }: { claim: string; real: string; realLabel: string; accent?: boolean }) {
-  return (
-    /* A ROW THAT WRAPS, NOT TWO COLUMNS THAT CANNOT.
-       The claim sat in a flexible column beside a column sized to its own
-       contents, and the thing on the right carries a long line of explanation.
-       On a phone that leaves the claim about seventy pixels, and the claim is a
-       sentence: photographed at 320, "a fat gross margin means good profit"
-       came out over SIX lines of one or two words each, struck through, which
-       reads as broken rather than as folklore being crossed out.
-       The claim now asks for a sensible width and the pair wraps when it cannot
-       have it, so on a phone the struck line takes the full row and the figure
-       sits under it. No breakpoint: the row wraps when it must, at whatever
-       width that turns out to be. */
-    /* NO BOX AROUND EACH CLAIM. Founder verdict F1, "you have just boxed it": a
-       bordered panel inside a bordered card is two edges around one idea. Each of
-       these rows carried its own rounded border inside the card's border, and
-       there are two of them, so the card held three nested outlines. Siblings are
-       separated by a rule, not by being individually boxed.
-       AND THE STRIKE READS AS A CANCELLATION NOW, not as a highlight. It was two
-       pixels thick in a pale line colour laid across muted grey text, which is the
-       shape of a highlighter pen: the eye read it as the claim being EMPHASISED,
-       on a card whose entire job is to cross the claim out. One pixel, in ink dark
-       enough to be a line rather than a wash. */
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 py-2.5 first:pt-0 last:pb-0">
-      <span className="min-w-0 flex-[1_1_11rem] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] line-through decoration-1 decoration-[var(--c-ink2)]">{claim}</span>
-      <div className="ml-auto text-right">
-        <Fig className={`block text-[length:var(--t-head)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{real}</Fig>
-        <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{realLabel}</div>
-      </div>
-    </div>
-  );
-}
-
-/* CAVEATS , claim vs. reality (rulebook v2 S12: the old "3 myths + honest take" bullet
- * list was named a schematic cliche). Two universal claim/reality pairs carry the first
- * view, each backed by a real field measured elsewhere on the page (survival.yr1_pct,
- * margins.gross_pct/net_pct); the seed's own myth sentences + honest_take move into a
- * disclosure , supporting prose, never the first-view wall of text (S5/S6).
- * decision-support: the comfortable stories do not survive the maths.
- * width: the rail half of a WideRail (T2), beside the season ribbon.
- * terracotta: the survival reality figure only (one accent; the margin row stays ink). */
-export function Caveats({ d }: { d: any }) {
-  const c = d.caveats ?? {};
-  const myths: string[] = c.myths ?? [];
-  const s = d.survival ?? {};
-  const m = d.margins ?? {};
-  const hasSurvivalClaim = typeof s.yr1_pct === "number";
-  const hasMarginClaim = typeof m.gross_pct === "number" && typeof m.net_pct === "number";
-  if (!hasSurvivalClaim && !hasMarginClaim && !myths.length && !c.honest_take) return null;
-  return (
-    <Box id="myths">
-      <Rail icon="myth-reality" tone="terra" kicker="What people get wrong" sample />
-      {(hasSurvivalClaim || hasMarginClaim) ? (
-        <div className="divide-y divide-[var(--c-border)]">
-          {hasSurvivalClaim ? (
-            <ClaimRow claim='"most fail within a year"' real={`${s.yr1_pct}%`} realLabel="actually trade past year one" accent />
-          ) : null}
-          {/* "that claim", not "that quote". The line read "the bills that quote does
-              not mention", and "quote" is a verb as readily as a noun, so a reader
-              parses "the bills that quote" as a relative clause and has to back up.
-              "Claim" cannot be misread that way, and it names the struck line
-              directly above it. One word, and the sentence stops garden-pathing.
-              Art direction H7. */}
-          {hasMarginClaim ? (
-            <ClaimRow claim='"a fat gross margin means good profit"' real={`${m.net_pct}%`} realLabel="kept, after the bills that claim leaves out" />
-          ) : null}
-        </div>
-      ) : null}
-      {/* kit-InlineDisclosure markup: the seed's own myth sentences + honest_take, moved
-          out of the first view (S5/S6, never a graphic hidden here , see kit.tsx assertNoGraphics).
-          The "prime cost" jargon still carries its InfoTip gloss at first use. */}
-      {(myths.length || c.honest_take) ? (
-        <InlineDisclosure name="myths-full" summary="The claims, in full" className={(hasSurvivalClaim || hasMarginClaim) ? "group mt-4 border-t border-[var(--c-border)] pt-3" : "group mt-3"}>
-          <div className="space-y-2.5">
-            {myths.length ? (
-              <ul className="space-y-2">
-                {myths.map((t, i) => (
-                  <li key={i} className="relative pl-4 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
-                    <span className="absolute left-0 top-[7px] h-1.5 w-1.5 rounded-full" style={{ background: "#c9c9c9" }} />
-                    {glossTerm(t, "prime cost", GLOSS_PRIME_COST)}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            {c.honest_take ? <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.honest_take}</p> : null}
-          </div>
-        </InlineDisclosure>
-      ) : null}
-    </Box>
-  );
-}
-
-/* CLOSE , a deliberate full-width capstone: the page's answer restated (the $ kept per
- * $100) then the one next action. The two "keeps most" recap lines (top format, top
- * city) are CUT (rulebook v1 §15: the cross-entity "X keeps the most of it" verdict
- * footer is banned, and the per-city line restated an unknowable per-city net margin).
- * focal: the CTA. terracotta: the $-kept recap figure only (the page's answer restated). */
-export function Close({ d }: { d: any }) {
-  const mi = d.margin_index ?? {};
-  // The keep recap label earns its words: read against the real all-trades average when
-  // the benchmark carries one, else the plain fallback.
-  const avg = d.benchmark?.all_trades_avg;
-  const keepLabel = typeof avg === "number" && avg > 0
-    ? `kept per $100, versus $${avg} for the typical trade`
-    : "kept per $100, a thin keep won on volume";
-  const recap: Array<[React.ReactNode, string, boolean]> = [
-    ...(typeof mi.keeps_per_100 === "number" ? [[<>${mi.keeps_per_100}</>, keepLabel, true] as [React.ReactNode, string, boolean]] : []),
-  ];
-  return (
-    <Full>
-      <Box id="close">
-        <Rail icon="bookmark" kicker="The close" sample />
-        {/* one full-width band, not a left-huddled recap over a blank right (rule 17):
-            the answer restated on the left, the one next action on the right, both flanks
-            carrying content. The recap figure keeps its own visible sample marker via the
-            Rail above (the $ kept is modeled). */}
-        <div className="flex flex-col gap-5 border-t border-[var(--c-line-strong)] pt-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-          {recap.length ? (
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-6 sm:gap-y-1">
-              {recap.map(([fig, label, accent], i) => (
-                <div key={i} className="flex items-baseline gap-2.5">
-                  <div className={`fig text-[length:var(--t-head)] leading-none ${accent ? "text-[var(--terra-text)]" : "font-semibold text-[var(--c-ink)]"}`}>{fig}</div>
-                  <div className="max-w-[20rem] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{label}</div>
-                </div>
-              ))}
-            </div>
-          ) : null}
-          {/* WHEN THERE IS NO RECAP, THIS BLOCK TAKES THE WHOLE ROW.
-              The comment above states the rule this band is built to: one
-              full-width band, both flanks carrying content, never a left-huddled
-              lockup over a blank right. The recap on the left is OPTIONAL, and
-              its guard lets it vanish whenever the trade carries no kept figure.
-              With it gone, the row's spacing rule had one child to space and put
-              it at the start, so the band failed its own stated rule: a lone call
-              to action on the left and an empty right. Rendered without the recap
-              to confirm it rather than reasoning about it.
-              With no recap this block spans the row and pushes its own two halves
-              apart instead, so both flanks carry something either way. */}
-          <div className={`flex flex-col items-start gap-3 sm:flex-row sm:items-center${recap.length ? " sm:shrink-0" : " sm:w-full sm:justify-between"}`}>
-            <div className="max-w-[22rem] text-[length:var(--t-body)] leading-snug text-[var(--c-ink)]">See {d.meta?.name?.toLowerCase()} in a specific city, with the local rent, wages and take-home.</div>
-            {/* the alt-city mark says what the button opens (city-level pages); its strokes
-                are var(--c-ink), so remap that var to currentColor inside the dark pill */}
-            <a href="/cities" className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[var(--c-ink)] px-5 py-2.5 text-[length:var(--t-body)] font-semibold text-white transition hover:bg-[var(--terra-text)]">
-              <span style={{ ["--c-ink" as any]: "currentColor" }} className="inline-flex"><AtlasMark id="alt-city" size={14} /></span>
-              Pick a place
-            </a>
-          </div>
-        </div>
-      </Box>
-    </Full>
-  );
-}
 
 /**
  * The industry spine page body. `data` defaults to the bundled illustrative seed so
  * the dev route (page.tsx) renders it unchanged; the live route passes the real-data
- * seed from buildSpineIndustrySeed. Every card null-guards its own data, so an omitted
- * field renders nothing.
+ * seed from buildSpineIndustrySeed. Every card builds off the taxonomy id the seed
+ * carries (and the slate it resolved), so an omitted field renders nothing.
  */
 export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } = {}) {
   const d = data ?? spineIndustrySeed;
@@ -412,17 +192,20 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   const places = buildIndustryPlaces(industryId, d.across);
   const formats = buildFormats(industryId);
   const mix = buildMix(industryId, "world");
+  /* TURN THREE'S TWO AND THE EXIT (plan step 34's fourth dispatch): the
+     notes off the trade's authored character and failure modes (every
+     taxonomy id builds a card: the notes, or the one row), the field off
+     the trade's market builder at the world altitude (every shard), so the
+     band `09 | 10` holds two children or does not draw; the doors off the
+     places and benchmark results built above, the pill on every trade. */
+  const know = buildKnow(industryId);
+  const field = buildMarket(industryId, "world");
+  const doors = buildIndustryCloseDoors(industryId, places, benchmark);
 
-  // Chapter-presence reads for today's survivors (each mirrors its card's own
-  // null-guard) so a Movement header never floats over an empty chapter.
-  const hasWhoSuits = (d.who_suits?.suits ?? []).length > 0 || (d.who_suits?.think_twice ?? []).length > 0;
-  const hasSeasonality = (d.seasonality?.months ?? []).length >= 2;
-  // Mirrors Caveats' own guard: the margin claim off the margins file, the myths, the honest take.
-  const hasCaveats = (d.caveats?.myths ?? []).length > 0 || !!d.caveats?.honest_take || (typeof d.margins?.gross_pct === "number" && typeof d.margins?.net_pct === "number");
   /* The turns, by whether a card stands under each. */
   const turnOne = (!!split && !!open) || !!pays;
   const turnTwo = !!places || (!!formats && !!mix);
-  const turnThree = hasWhoSuits || hasCaveats || hasSeasonality;
+  const turnThree = !!know && !!field;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
@@ -523,35 +306,52 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
         </>
       ) : null}
 
-      {/* CHAPTER TURN THREE (8.7, "What the trade is like"): `09 know`, held by
-          its two halves side by side until that dispatch merges them on
-          NoteList (who it suits, what people get wrong), and `10 field`'s
-          swing (the ribbon, never fed on the live route). The heading draws
-          when a card stands under it. `stack="lg"` on the pair, MEASURED
-          2026-09-18 (8.4's tablet rule): at a tablet's equal halves the suits'
-          two bullet columns wrap to 316 and the caveats stretch to them with a
-          291 by 156 blank; stacked, each stands at its own height, and at 1280
-          the pair holds 0 holes at 1-1. */}
+      {/* CHAPTER TURN THREE (8.7, "What the trade is like"): the band `09 know
+          | 10 field`, what owners say beside what the field looks like in
+          figures (the country page's `locals | footing`). The notes LEFT and
+          wide (the page's one prose section, two columns of notes at the
+          wide seat), the field RIGHT (the fact card with a focal, unclicked),
+          both quiet; turn three carries zero accent. `2-1`, 8.7's own split,
+          RULED BY MEASUREMENT 2026-09-19 (8.4 rule 1, the closed set;
+          scratchpad/step34d/splits.txt): the notes take their two-column
+          form only at the 693 seat (NoteList's 600px container query), so on
+          restaurants (four notes) the band stands 326 with the notes at 325
+          of content beside the grid's 275 (51 of air, under the 120 floor),
+          against 410 beside 242 at 1-1, 391 beside 258 at 3-2, 465 beside
+          242 at 2-3 and 542 beside 242 at 1-2, every other split opening
+          134 to 301 of air under the grid; on plumbers (two notes, the shape
+          227 of 243 trades take) the notes stand 210 beside the grid's 275
+          at 2-1 (66 of air under the notes; 3-2 would be 257 beside 258 on
+          that shape and 391 beside 258 on this page's), 0 holes at three
+          widths on both; the planted one-row card (no live trade) stands
+          143 on the sheet at this seat, so beside the grid's 275 it would
+          open 132 of air, the one residual over the floor, on a fixture
+          only. `stack="lg"`: at a tablet's equal halves the notes fall to
+          one column under 600px of card and stand 542 beside the grid's 306
+          (237 of air); stacked, 306 over 274. The heading draws when the
+          band does. */}
       {turnThree ? (
         <>
           <Movement index="03" heading={COPY.industryChapters.trade} />
-          {hasWhoSuits || hasCaveats ? (
-            <Band split="1-1" stack="lg">
-              {hasWhoSuits ? <WhoItSuits d={d} /> : null}
-              {hasCaveats ? <Caveats d={d} /> : null}
-            </Band>
-          ) : null}
-          {hasSeasonality ? (
-            <Band split="2-1">
-              <Seasonality d={d} />
-            </Band>
-          ) : null}
+          <Band split="2-1" stack="lg">
+            <KnowCard know={know} />
+            <FieldCard market={field} />
+          </Band>
         </>
       ) : null}
 
-      {/* THE EXIT (no chapter break, 8.7): `11 close`, FULL WIDTH on the hero
-          band until its dispatch seats it on Terminus. */}
-      <Band hero><Close d={d} /></Band>
+      {/* THE EXIT (no chapter break, 8.7): `11 close`, FULL WIDTH, the page's
+          third of three (R1), the terminus on the hero band the old close
+          stood on and the trade's close stands on, the sanction the
+          full-width gate, the lone-card rule and the section-bands baseline
+          read on this page (cell/exit.tsx says why it stays there). Doors
+          with arrows, the compare pill last, no recap figure, no accent, no
+          verdict. */}
+      {doors.length > 0 ? (
+        <div className="mt-6 mb-2">
+          <Band hero><CloseCard doors={doors} /></Band>
+        </div>
+      ) : null}
     </main>
   );
 }

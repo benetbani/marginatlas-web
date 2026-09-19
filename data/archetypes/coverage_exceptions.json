@@ -16,22 +16,6 @@
     {
       "section": "src/components/spine/hood/hood-view.tsx#funnel",
       "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#suits",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#2",
-      "reason": "the Seasonality ribbon, never fed on the live route, the swing's seat until 10 field's dispatch (was #12 before the retirements of plan step 34)"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#myths",
-      "reason": "not yet on an archetype; a build loop queue row"
-    },
-    {
-      "section": "src/components/spine/industry/industry-view.tsx#close",
-      "reason": "not yet on an archetype; a build loop queue row"
     }
   ]
 }
