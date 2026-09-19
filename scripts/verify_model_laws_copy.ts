@@ -121,6 +121,8 @@ import { buildPays, PAYS_CELLS } from "@/lib/spine/pays_rows";
 import { buildFormats, FORMAT_NAME_FITS } from "@/lib/spine/formats_rows";
 import { MAJOR_CITIES } from "@/lib/markets/major_cities";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
+import { buildKnow } from "@/lib/spine/know_rows";
+import { buildIndustryCloseDoors } from "@/lib/spine/close_rows";
 import { ALL_INDUSTRIES } from "@/lib/taxonomy";
 import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
@@ -955,6 +957,40 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     for (const [text, id] of formatBases) heads.push([`buildFormats(${id}).basis`, text]);
     for (const [text, id] of labels) heads.push([`buildFormats(${id}).middleLabel`, text]);
     console.log(`industry turn two: ${formatBases.size} format bases (one per branch) and ${labels.size} middle labels over ${ids.length} trades; ${longNames.size} distinct format names over three words and ${wideNames.size} over ${FORMAT_NAME_FITS} characters stand in the formats' rows, a copy fault in the shards the rendered laws list and the archetype harness report page by page, not redded here`);
+  }
+
+  /* THE INDUSTRY PAGE'S TURN THREE AND ITS EXIT (MODEL.md 8.7 `09 know`, `10
+     field`, `11 close`; plan step 34's fourth dispatch, 2026-09-19). The
+     know card's kicker and basis the static sweep takes by key; every note
+     LABEL the 243 compose (deduplicated: the trade page's two character
+     labels and the failure-modes file's own labels, 32 of them, read aloud
+     as a kicker is because a label over a note is the first thing a reader
+     meets; the file's "Booth-rent vs commission imbalance" was corrected on
+     this dispatch after this sweep found it), the not-gathered label and
+     line. The field card's kicker and basis by key; its foot, the two notes
+     under its figures and the three world cell bases by name; the labels
+     are the trade market's openers, swept above by key. The close's doors
+     as the 243 compose them (deduplicated: one leader door per trade next
+     door, the pill per trade name), and the city door on the table's
+     fixture, because a door's words are a reader's next step. */
+  {
+    const ids = ALL_INDUSTRIES.map((i) => i.id);
+    const noteLabels = new Map<string, string>();
+    for (const id of ids) {
+      const k = buildKnow(id);
+      if (!k) continue;
+      for (const r of k.rows) if (!noteLabels.has(r.label)) noteLabels.set(r.label, id);
+    }
+    for (const [text, id] of noteLabels) heads.push([`buildKnow(${id}).rows.label`, text]);
+    heads.push(["COPY.industryKnow.notGatheredLabel", COPY.industryKnow.notGatheredLabel], ["COPY.industryKnow.notGathered", COPY.industryKnow.notGathered]);
+    heads.push(["COPY.industryField.foot", COPY.industryField.foot]);
+    for (const [key, text] of Object.entries(COPY.industryField.notes)) heads.push([`COPY.industryField.notes.${key}`, text]);
+    for (const [key, text] of Object.entries(COPY.industryField.cellBasis)) heads.push([`COPY.industryField.cellBasis.${key}`, text]);
+    const doorLabels = new Map<string, string>();
+    for (const id of ids) for (const d of buildIndustryCloseDoors(id, null, buildBenchmark(id))) if (!doorLabels.has(d.label)) doorLabels.set(d.label, id);
+    for (const [text, id] of doorLabels) heads.push([`buildIndustryCloseDoors(${id}).label`, text]);
+    heads.push(["COPY.industryClose.cityDoor(restaurants, London)", COPY.industryClose.cityDoor.replace("{trade}", "restaurants").replace("{city}", "London")]);
+    console.log(`industry turn three and the exit: ${noteLabels.size} note labels and ${doorLabels.size} door labels over ${ids.length} trades`);
   }
 
   for (const [where, text] of heads) {

@@ -13,7 +13,9 @@ import { COPY } from "@/lib/spine/copy";
 import type { Door } from "@/components/spine/archetypes/Terminus";
 import { countryPageTarget, geoPageTarget } from "@/lib/geo/page_targets";
 import { inSentence } from "@/lib/spine/place_names";
-import { industryToSlug } from "@/lib/taxonomy";
+import { industryToSlug, INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
+import type { IndustryPlacesData } from "@/lib/spine/industry_places_rows";
+import type { BenchmarkData } from "@/lib/spine/benchmark_rows";
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
 
@@ -110,5 +112,58 @@ export function buildTradeCloseDoors(seed: any): Door[] {
   const place = iso2.length === 2 && geo ? geoPageTarget(iso2, geo) : null;
   if (place) doors.push({ key: "place", label: fill(COPY.tradeClose.cityDoor, { city: place.name }), href: place.href, kind: "link" });
   doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade: tradeInSentence }), href: "/compare", kind: "pill" });
+  return doors;
+}
+
+/** The pages the taxonomy publishes: an id in scope and not merged. A retired or merged slug answers a permanent redirect, which is not the page a door promises. */
+const PUBLISHED = new Set(INDUSTRIES.map((i) => i.id));
+
+/** THE TRADE NEXT DOOR (MODEL.md 8.7 `11 close`): the highest row of `02`
+ *  that is not the trade itself and whose page exists, or null. The rows are
+ *  `02`'s own (the sector's members holding a figure, highest first, capped
+ *  at the card's five), so a sector whose other rows are all retired gives
+ *  no door, and a retired leader passes the door to the next member in scope
+ *  (69 of 243 on 2026-09-19; the label claims no superlative for that
+ *  reason). Null where `02` is withheld (no rows). */
+export function industryLeader(industryId: string, benchmark: BenchmarkData | null): { id: string; name: string; href: string } | null {
+  if (!benchmark || benchmark.state === "withheld") return null;
+  const row = benchmark.rows.find((r) => r.key !== industryId && PUBLISHED.has(r.key));
+  if (!row) return null;
+  const name = INDUSTRY_BY_ID[row.key]?.name ?? row.name;
+  return { id: row.key, name, href: `/industries/${industryToSlug(row.key)}` };
+}
+
+/** THE INDUSTRY PAGE'S DOORS (MODEL.md 8.7 `11 close`; plan step 34's
+ *  fourth dispatch, 2026-09-19), at most three at Terminus's cap, the pill
+ *  last (M21), none promising what is not on sale: (a) the best-paying
+ *  city's trade page off `06`'s top row, "See {trade} in {city}", through
+ *  the link the resolver gave that city's column (`cellUrl`, the route
+ *  `/[country]/[geo]/[industry]`; the copy gate proves it against the app
+ *  folder), drawn only where the table draws, which under the own-row law
+ *  is no trade today (the branch is proven on the table's own fixtures); (b)
+ *  the trade next door off `02`'s rows, "{Leader}, the trade next door"
+ *  (`industryLeader` above), drawn on every trade whose `02` holds another
+ *  member in scope; (c) the compare pill, "Compare {trade} across cities",
+ *  the trade page's own literal, on every trade. No sector door: the app
+ *  folder holds no sector route (read 2026-09-19: `/industries`,
+ *  `/industries/[industry]`, `/industries/[industry]/across`,
+ *  `/[country]/industries`; none takes a sector), so none is drawn rather
+ *  than one to the index dressed as the sector's. The trade's name in
+ *  lowercase inside a sentence, as the trade close prints it; the leader's
+ *  as the taxonomy prints it, at the head of its door. Pure over the two
+ *  builders' results, so the gate proves every state on fixtures. The
+ *  last-checked line and the report-an-error link are NOT built: no fact
+ *  carries a year and no correction route exists (the trade's and the
+ *  city's closes found the same; QUEUE close:furniture-lines). */
+export function buildIndustryCloseDoors(industryId: string | undefined, places: IndustryPlacesData | null, benchmark: BenchmarkData | null): Door[] {
+  if (!industryId) return [];
+  const ind = INDUSTRY_BY_ID[industryId];
+  if (!ind) return [];
+  const trade = ind.name.trim().toLowerCase();
+  const doors: Door[] = [];
+  if (places && places.state === "table" && places.top) doors.push({ key: "city", label: fill(COPY.industryClose.cityDoor, { trade, city: places.top.name }), href: places.top.href, kind: "link" });
+  const leader = industryLeader(industryId, benchmark);
+  if (leader) doors.push({ key: "leader", label: fill(COPY.industryClose.leaderDoor, { leader: leader.name }), href: leader.href, kind: "link" });
+  doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade }), href: "/compare", kind: "pill" });
   return doors;
 }

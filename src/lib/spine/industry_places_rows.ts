@@ -118,8 +118,11 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 /** The model's four-member floor (PART 9 clause 22), the mark list's own number and not a second copy of it. */
 export const PLACES_FLOOR = MARK_LIST_FLOOR;
 
-/** The fields of a column this builder reads; the resolver's columns carry them all. */
-export type PlacesColumn = Pick<CityColumn, "slug" | "name" | "country" | "revenue" | "takeHome" | "netMarginFraction" | "revenueFilled" | "economics" | "netMarginFloored">;
+/** The fields of a column this builder reads; the resolver's columns carry them all. `href` is the column's own link to the trade's page in that city (`cellUrl` in cells.ts, the route `/[country]/[geo]/[industry]`), carried for the close's door (plan step 34's fourth dispatch) and never assembled here from parts. */
+export type PlacesColumn = Pick<CityColumn, "slug" | "name" | "country" | "href" | "revenue" | "takeHome" | "netMarginFraction" | "revenueFilled" | "economics" | "netMarginFloored">;
+
+/** The best-paying city of the table: the top row's city with the link the resolver gave it, for `11 close`'s door (MODEL.md 8.7). */
+export type PlacesTop = { slug: string; name: string; href: string };
 
 /** Why a resolved city is not a row. */
 export type PlacesWithheldReason = "missing" | "filled" | "shared" | "floored";
@@ -129,6 +132,8 @@ export type IndustryPlacesData = {
   state: "table" | "blocked";
   /** The cities of their own, take-home highest first; empty in the blocked state. */
   rows: CompareRow[];
+  /** The top row's city with its own link, the close's door (`11 close`); null in the blocked state, so the door is never drawn where the table is not. */
+  top: PlacesTop | null;
   columns: CompareColumn[];
   entityHead: string;
   /** PART 7's basis, printed under the table as the archetype's caveat. */
@@ -192,15 +197,17 @@ export function buildIndustryPlaces(industryId: string | undefined, across: Plac
     if (why) reasons[why]++; else own.push(city);
   }
   const withheld = across.length - own.length;
-  const rows: CompareRow[] = [...own]
-    .sort((a, b) => (b.takeHome as number) - (a.takeHome as number) || a.name.localeCompare(b.name))
-    .map((city) => ({
-      iso2: city.country.toUpperCase(),
-      key: city.slug,
-      name: city.name,
-      home: false,
-      values: { takeHome: Math.round(city.takeHome as number), netMargin: Math.round((city.netMarginFraction as number) * 100) },
-    }));
+  const ordered = [...own].sort((a, b) => (b.takeHome as number) - (a.takeHome as number) || a.name.localeCompare(b.name));
+  const rows: CompareRow[] = ordered.map((city) => ({
+    iso2: city.country.toUpperCase(),
+    key: city.slug,
+    name: city.name,
+    home: false,
+    values: { takeHome: Math.round(city.takeHome as number), netMargin: Math.round((city.netMarginFraction as number) * 100) },
+  }));
+  /* The best-paying city is the top row, and its link is the resolver's own; a column with no link gives no door. */
+  const first = ordered[0];
+  const top: PlacesTop | null = first && typeof first.href === "string" && first.href.startsWith("/") ? { slug: first.slug, name: first.name, href: first.href } : null;
   const columns: CompareColumn[] = [
     { key: "takeHome", head: c.cols.takeHome, unit: "usd", best: "max" },
     { key: "netMargin", head: c.cols.netMargin, unit: "pct", best: "max" },
@@ -210,9 +217,9 @@ export function buildIndustryPlaces(industryId: string | undefined, across: Plac
   const common = { industryId, columns, entityHead: c.cols.city, caveat: c.basis, note, resolved: across.length, holding: own.length, withheld, reasons, slate, confidence: "modeled" as const };
   if (own.length < PLACES_FLOOR) {
     const line = own.length === 0 ? fill(c.blocked.none, { slate: String(slate) }) : own.length === 1 ? fill(c.blocked.one, { slate: String(slate) }) : fill(c.blocked.some, { n: String(own.length), slate: String(slate) });
-    return { ...common, state: "blocked", rows: [], line, foot: c.blocked.foot };
+    return { ...common, state: "blocked", rows: [], top: null, line, foot: c.blocked.foot };
   }
-  return { ...common, state: "table", rows, line: null, foot: null };
+  return { ...common, state: "table", rows, top, line: null, foot: null };
 }
 
 /** How a set of resolutions falls, for the gates and the record: the table on the ids holding four cities of their own, the seat on the rest, by the count each holds and the reasons the rest were withheld. */

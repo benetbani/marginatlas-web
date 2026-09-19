@@ -89,7 +89,8 @@ export const INDUSTRY_FAILURE_MODES: Record<string, FailureMode[]> = {
       when: "Year 2-5",
     },
     {
-      label: "Booth-rent vs commission imbalance",
+      /* "Booth-rent vs commission imbalance" until plan step 34's fourth dispatch (2026-09-19): "vs" is a banned construction in a label (MODEL.md PART 5, verify_model_laws_copy.ts BANNED CONSTRUCTION), and this label reaches the industry page's `09 know` card now. Same meaning, the model's grammar. */
+      label: "Booth rent or commission",
       explanation: "Salon converted to booth-rent for stability; stylists set their own prices below salon-recommended, undercutting the brand. Or kept commission and watched stylists leave for booth-rent shops nearby.",
       when: "Year 1-3",
     },
@@ -258,7 +259,8 @@ export const INDUSTRY_FAILURE_MODES: Record<string, FailureMode[]> = {
     },
     {
       label: "AR / collections crisis",
-      explanation: "Firm bills $X but only collects 70-80%; cash flow assumes 95%; difference accumulates as bad debt until working capital is exhausted.",
+      /* "Firm bills $X but only collects 70-80%" until plan step 34's fourth dispatch (2026-09-19): "$X" is a letter standing where a figure goes (MODEL.md PART 5, his 2026-09-10 ruling), and this sentence reaches the industry page's `09 know` card now. The authored figures are unchanged. */
+      explanation: "The firm collects only 70-80% of what it bills; cash flow assumes 95%; the difference accumulates as bad debt until working capital is exhausted.",
       when: "Year 1-5",
     },
     {

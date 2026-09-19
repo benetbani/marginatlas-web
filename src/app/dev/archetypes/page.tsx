@@ -37,7 +37,7 @@ export default async function ArchetypesPage() {
       <RangeStripStories city={pickCityStripInstances()} />
       <SpectraTableStories />
       <NoteListStories />
-      <TerminusStories city={pickCityCloseInstances(cityHero)} />
+      <TerminusStories city={pickCityCloseInstances(cityHero)} industry={industryPlaces} />
       <PayBarsStories />
       <KvGridStories />
       <h2 data-typography="custom" className={h}>The income breakdown</h2>

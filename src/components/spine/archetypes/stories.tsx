@@ -79,11 +79,14 @@ import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { Masthead as IndustryMasthead, BenchmarkCard } from "@/components/spine/industry/opening";
 import { OpenCard as IndustryOpenCard, paysCells } from "@/components/spine/industry/turn-one";
 import { PlacesTable, FormatsCard, ChannelsCard } from "@/components/spine/industry/turn-two";
+import { KnowCard, FieldCard, CloseCard as IndustryCloseCard } from "@/components/spine/industry/turn-three";
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
 import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
 import { buildPays } from "@/lib/spine/pays_rows";
 import { buildIndustryPlaces } from "@/lib/spine/industry_places_rows";
 import { buildFormats } from "@/lib/spine/formats_rows";
+import { buildKnow } from "@/lib/spine/know_rows";
+import { buildIndustryCloseDoors } from "@/lib/spine/close_rows";
 
 export type Instance = { iso2: string; why: string };
 
@@ -380,12 +383,13 @@ const placesWhy = (p: NonNullable<ReturnType<typeof buildIndustryPlaces>>) =>
   p.state === "table" ? `industry block 06: ${p.rows.length} cities of the slate's ${p.slate} are their own, two columns, the best cell of each ticked, no home row${p.note ? `, ${p.withheld} withheld with the note` : ""}`
     : `industry block 06 seated: ${p.holding} of the slate's ${p.slate} cities hold figures of their own (${p.resolved} resolve; ${p.reasons.filled} on a filled headline, ${p.reasons.floored} on the floor), under the floor of four; the drawn blocked seat at the table's full width, its line naming the count`;
 export function pickIndustryPlacesInstances(industry: IndustryPlacesInstance[], kind: "compare-table" | "blocked-seat"): Instance[] {
-  return industry.map((i) => ({ i, p: buildIndustryPlaces(i.id, i.across) })).filter((x) => x.p && (kind === "compare-table" ? x.p.state === "table" : x.p.state === "blocked")).map(({ i, p }) => ({ iso2: industryPlacesKey(i), why: placesWhy(p!) }));
+  /* The loaded slates serve the places block and the close (industry_hero_facts.ts SLATE_BLOCKS); only the handles serving `places` draw a places story. */
+  return industry.filter((i) => industryServes(i.key, "places")).map((i) => ({ i, p: buildIndustryPlaces(i.id, i.across) })).filter((x) => x.p && (kind === "compare-table" ? x.p.state === "table" : x.p.state === "blocked")).map(({ i, p }) => ({ iso2: industryPlacesKey(i), why: placesWhy(p!) }));
 }
 export function CompareTableStories({ instances = pickCompareTableInstances(), city = [], cell = [], industry = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[]; industry?: IndustryPlacesInstance[] }) {
   return (
     <div data-stories="compare-table">
-      {industry.map((i) => {
+      {industry.filter((i) => industryServes(i.key, "places")).map((i) => {
         const p = buildIndustryPlaces(i.id, i.across);
         if (!p || p.state !== "table") return null;
         return <Story kind="compare-table" key={industryPlacesKey(i)} iso2={industryPlacesKey(i)} why={placesWhy(p)}><PlacesTable id={`places-industry-${i.key}`} places={p} /></Story>;
@@ -653,7 +657,35 @@ export function pickNoteListInstances(): Instance[] {
      over the two checks), so the branch is looked at rather than asserted. */
   take("cell:london:suits", "trade block 02 on the exemplar: who does well, think twice, the two checks, four notes, the one prose section");
   take("cell:none:suits", "trade block 02 with no character on file (planted, no live trade): the not-gathered row and the two checks");
+  /* BEFORE YOU SIGN, the industry's `09 know` (MODEL.md 8.7; plan step 34's
+     fourth dispatch, 2026-09-19), keyed industry:<handle>:know and built off
+     know_rows.ts by the taxonomy id alone, no seed: the exemplar (restaurants:
+     the character's edge and watch-out under the trade page's labels and the
+     first two of its five failure modes under their own, four notes in two
+     columns at the 693 wide seat, the one prose section), the two-note card
+     227 of 243 trades draw (hostels: the hand-written edge and watch-out, no
+     failure mode on file; industry_hero_facts.ts says why not a trade whose
+     facts run past four lines on a phone), and the planted one-row case no
+     live trade is in (an id no file holds: the not-gathered line under its
+     own label), so every branch is looked at. */
+  for (const i of pickIndustryKnowInstances()) take(i.iso2, i.why);
   return out;
+}
+
+/** The know card's instances: the handles serving the block, and the planted id. */
+export const industryKnowWhy = (k: NonNullable<ReturnType<typeof buildKnow>>) =>
+  k.notGathered ? "industry block 09 with nothing authored (planted, no live trade): the one not-gathered row under its own label"
+    : `industry block 09: ${k.rows.length} notes, the character's edge and watch-out${k.failureModes ? ` and ${k.failureModes === 1 ? "one failure mode" : "the first two failure modes"} under their file's labels` : " and no failure mode on file, the two-note card"}; the page's one prose section, two columns at the wide seat`;
+export function pickIndustryKnowInstances(): Instance[] {
+  const out = Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "know")).map(([h, i]) => ({ h, k: buildKnow(i.id) })).filter((x) => x.k).map(({ h, k }) => ({ iso2: industryKey(h, "know"), why: industryKnowWhy(k!) }));
+  const planted = buildKnow(knowInputsFor("none"));
+  if (planted) out.push({ iso2: industryKey("none", "know"), why: industryKnowWhy(planted) });
+  return out;
+}
+/** The id behind a know story's handle: the table's, or the planted id no file holds. */
+export function knowInputsFor(handle: string): string {
+  if (handle === "none") return "no_such_trade"; // allow-industry-ref: the planted id no lookup holds, the not-gathered story's whole point (the suits story's own precedent)
+  return INDUSTRY_INSTANCES[handle]?.id ?? handle;
 }
 
 /** The suits card's inputs by its story key: the exemplar's trade and country, or the planted id no lookup holds. */
@@ -670,6 +702,16 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
       {instances.map((i) => {
         const [iso2, form] = i.iso2.split(":");
         const wide = form === "wide";
+        if (iso2 === "industry") {
+          /* The know card as industry-view.tsx draws it (industry/turn-three.tsx KnowCard), at the 693 the wide seat of its 2-1 band takes at 1280, where the notes flow in two columns. */
+          const k = buildKnow(knowInputsFor(i.iso2.split(":")[1]));
+          const el = k ? (
+            <div style={{ maxWidth: 693 }}>
+              <KnowCard id={`know-industry-${i.iso2.split(":")[1]}`} know={k} />
+            </div>
+          ) : null;
+          return <Story kind="note-list" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         if (iso2 === "cell") {
           /* The suits card as cell-view.tsx draws it: the opener, the rows on NoteList's law with the exemption on, the basis, at the 520 the card takes in its 1-1 band at 1280. */
           const inputs = suitsInputsFor(i.iso2);
@@ -759,9 +801,23 @@ export const cellCloseKey = (c: CellHeroInstance) => `cell:${c.key}:close`;
 export function pickCellCloseInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "close") && buildTradeCloseDoors(c.seed).length > 0).map((c) => ({ iso2: cellCloseKey(c), why: "trade block 15 on the exemplar: the industry page, the city page up one altitude, the compare pill last; no pricing door, no sibling door" }));
 }
-export function TerminusStories({ instances = pickTerminusInstances(), city = [], cell = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[] }) {
+/** THE INDUSTRY'S DOORS, `11 close` (MODEL.md 8.7; plan step 34's fourth dispatch, 2026-09-19), keyed industry:<handle>:close off the slate the sheet resolves for each handle (the same resolution the seated places block reads, so the city door is drawn exactly where the table is, which today is nowhere) and the benchmark built by id, drawn by the page's own card (cell/exit.tsx CloseCard through industry/turn-three.tsx) at the full width the terminus takes: the exemplar's two doors (restaurants: the trade next door off `02`, short-term rental management, and the compare pill last; no city door because `06` stands seated) and the pill alone (game development studios: the sector's other members retired, so `02` holds no other row in scope). The three-door branch, the best-paying city's trade page, is proven on the table's own fixtures by the archetype copy gate, as the table's law is. */
+export const industryCloseKey = (i: IndustryPlacesInstance) => industryKey(i.key, "close");
+const industryCloseWhy = (doors: ReturnType<typeof buildIndustryCloseDoors>) => {
+  const keys = doors.map((d) => d.key);
+  return `industry block 11: ${doors.length} door${doors.length === 1 ? "" : "s"}, ${keys.includes("city") ? "the best-paying city's trade page, " : "no city door (06 seated), "}${keys.includes("leader") ? "the trade next door off 02" : "no trade next door (02 holds no other member in scope)"} and the compare pill last`;
+};
+export function pickIndustryCloseInstances(industry: IndustryPlacesInstance[]): Instance[] {
+  return industry.filter((i) => industryServes(i.key, "close")).map((i) => ({ i, doors: buildIndustryCloseDoors(i.id, buildIndustryPlaces(i.id, i.across), buildBenchmark(i.id)) })).filter((x) => x.doors.length > 0).map(({ i, doors }) => ({ iso2: industryCloseKey(i), why: industryCloseWhy(doors) }));
+}
+export function TerminusStories({ instances = pickTerminusInstances(), city = [], cell = [], industry = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[]; industry?: IndustryPlacesInstance[] }) {
   return (
     <div data-stories="terminus">
+      {industry.filter((i) => industryServes(i.key, "close")).map((i) => {
+        const doors = buildIndustryCloseDoors(i.id, buildIndustryPlaces(i.id, i.across), buildBenchmark(i.id));
+        if (doors.length === 0) return null;
+        return <Story kind="terminus" key={industryCloseKey(i)} iso2={industryCloseKey(i)} why={industryCloseWhy(doors)}><div style={{ maxWidth: 1072 }}><IndustryCloseCard id={`close-industry-${i.key}`} doors={doors} /></div></Story>;
+      })}
       {cell.filter((c) => cellServes(c.key, "close")).map((c) => {
         const doors = buildTradeCloseDoors(c.seed);
         if (doors.length === 0) return null;
@@ -959,9 +1015,19 @@ const industryMixWhy = (m: NonNullable<ReturnType<typeof buildMix>>) => `industr
 export function pickIndustryChannelsInstances(): Instance[] {
   return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "channels")).map(([h, i]) => ({ h, m: buildMix(i.id, "world") })).filter((x) => x.m).map(({ h, m }) => ({ iso2: industryKey(h, "channels"), why: industryMixWhy(m!) }));
 }
+/** WHO TRADES ALONGSIDE YOU, `10 field` (MODEL.md 8.7; plan step 34's fourth dispatch, 2026-09-19), keyed industry:<handle>:field, the trade's market builder at the world altitude (market_rows.ts `buildMarket(id, "world")`, the lasts idiom, only the bases change) on KvGrid, built by id off the shard and drawn by the page's own card (industry/turn-three.tsx FieldCard) at the 347 the narrow seat of its 2-1 band takes at 1280: three of the builder's four cells (the density leading the card's width on COMPLETE ROWS, the chain share and the swing under it; the churn cell built and not drawn, 8.7's cut), every cell at the head rung (the focal cell is candidate 1 awaiting his click): the exemplar (restaurants, 16 firms per 10,000, chains 30, a 20 percent swing, the swing held) and the thinnest live density (shoe repair, 0.1 printed as read, chains 5, the swing 30). */
+const industryFieldWhy = (m: NonNullable<ReturnType<typeof buildMarket>>) => `industry block 10: ${"figure" in m.firms ? m.firms.figure : "no"} firms per 10,000 people, chains ${"part" in m.chains ? m.chains.part : "withheld"} of 100, the swing ${"figure" in m.swing ? m.swing.figure : "withheld"}${"figure" in m.swing && m.swing.tag === "held" ? " (held)" : ""}; three cells of the builder's four, the churn not drawn`;
+export function pickIndustryFieldInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "field")).map(([h, i]) => ({ h, m: buildMarket(i.id, "world") })).filter((x) => x.m).map(({ h, m }) => ({ iso2: industryKey(h, "field"), why: industryFieldWhy(m!) }));
+}
 export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="kv-grid">
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "field")).map(([h, i]) => {
+        const m = buildMarket(i.id, "world");
+        if (!m) return null;
+        return <Story kind="kv-grid" key={industryKey(h, "field")} iso2={industryKey(h, "field")} why={industryFieldWhy(m)}><div style={{ maxWidth: 347 }}><FieldCard id={`field-industry-${h}`} market={m} /></div></Story>;
+      })}
       {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "channels")).map(([h, i]) => {
         const m = buildMix(i.id, "world");
         if (!m) return null;
@@ -1928,9 +1994,9 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why })), ...pickCellSpreadInstances(cellHero), ...pickCellWorthInstances(cellHero)],
     "spectra-table": pickSpectraTableInstances(),
     "note-list": pickNoteListInstances(),
-    "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero)],
+    "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero), ...pickIndustryCloseInstances(industryPlaces)],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances(), ...pickIndustryOpenInstances(), ...pickIndustryChannelsInstances()],
+    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances(), ...pickIndustryOpenInstances(), ...pickIndustryChannelsInstances(), ...pickIndustryFieldInstances()],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],

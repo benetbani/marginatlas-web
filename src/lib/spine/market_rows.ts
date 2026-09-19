@@ -52,10 +52,30 @@
  * cluster itself is null only where the trade holds no shard (a
  * sector-average cell): then the subject does not exist for this entity,
  * turn three has no card, and its chapter break waits with it.
+ *
+ * ONE BUILDER AT TWO ALTITUDES (MODEL.md 8.7 `10 field`; plan step 34's
+ * fourth dispatch, 2026-09-19): the industry page's `10` is this same
+ * builder over this same shard, the trade's market anywhere, and the only
+ * thing that changes is the basis of the three cells whose trade basis
+ * carries a city clause (the density and the two counts say "not this
+ * city's"; the swing's names no city and is one literal at both altitudes),
+ * so `altitude: "world"` swaps those three for `COPY.industryField.cellBasis`
+ * (lasts_rows.ts and mix_rows.ts do exactly this). The four cells, their
+ * figures, their tags and their order are one computation on both pages, so
+ * the density a reader meets on the trade page and the one on its industry
+ * page can never be two figures. The industry card DRAWS THREE of the four
+ * (the churn cell is 8.7's own cut: beside `01 lasts` it is a second view of
+ * one reading); the cut is the card's (industry/turn-three.tsx `fieldCells`),
+ * never this builder's, which always builds four so the gate can prove the
+ * churn cell is built and not drawn.
  */
 import { industryFigure, type IndustryBankFigure } from "@/lib/facts/industry_shard";
 import type { FactTag } from "@/lib/facts/types";
+import type { LastsAltitude } from "@/lib/spine/lasts_rows";
 import { COPY } from "@/lib/spine/copy";
+
+/** Where the cluster stands: "place" on a trade in a city (the basis says what is not this city's), "world" on the industry page (no city to name). The survival card's own type, so the cards cannot spell an altitude two ways. */
+export type MarketAltitude = LastsAltitude;
 
 export const MARKET_METRICS = {
   firms: "competition.firms_per_10k_typical",
@@ -71,6 +91,7 @@ export type MarketCount = { part: number; whole: 100; basis: string; tag: FactTa
 
 export type MarketData = {
   industryId: string;
+  altitude: MarketAltitude;
   firms: MarketMetric;
   chains: MarketCount;
   close: MarketCount;
@@ -102,7 +123,7 @@ function count(fig: IndustryBankFigure | null, basis: string, withheld: string, 
   return { part: Math.round(fig.value), whole: 100, basis, tag: fig.tag, value: fig.value };
 }
 
-export function buildMarket(industryId: string | undefined): MarketData | null {
+export function buildMarket(industryId: string | undefined, altitude: MarketAltitude = "place"): MarketData | null {
   if (!industryId) return null;
   const read = (metric: string) => industryFigure(industryId, metric);
   const firmsFig = read(MARKET_METRICS.firms);
@@ -111,7 +132,8 @@ export function buildMarket(industryId: string | undefined): MarketData | null {
   const swingFig = read(MARKET_METRICS.swing);
   /* No shard, no cluster: the door answers null on every field when the trade holds nothing. */
   if (!firmsFig && !chainsFig && !closeFig && !swingFig) return null;
-  const B = COPY.tradeMarket.basis;
+  /* The world altitude drops the city clause from the three bases that carry one; the swing's is one literal at both. */
+  const B = altitude === "world" ? { ...COPY.industryField.cellBasis, swing: COPY.tradeMarket.basis.swing } : COPY.tradeMarket.basis;
   const W = COPY.tradeMarket.withheld;
   const firms = metric(firmsFig, B.firms, densityText, W.firms);
   const chains = count(chainsFig, B.chains, W.chains, W.chainsNotAShare);
@@ -121,5 +143,5 @@ export function buildMarket(industryId: string | undefined): MarketData | null {
   for (const c of [firms, swing]) if ("figure" in c) printed.push(c.tag);
   for (const c of [chains, close]) if ("part" in c) printed.push(c.tag);
   const tag = printed.reduce<FactTag>((w, t) => weaker(w, t), "held");
-  return { industryId, firms, chains, close, swing, withheld: 4 - printed.length, tag, confidence: "modeled" };
+  return { industryId, altitude, firms, chains, close, swing, withheld: 4 - printed.length, tag, confidence: "modeled" };
 }

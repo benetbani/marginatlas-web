@@ -34,7 +34,11 @@ import { COPY } from "@/lib/spine/copy";
 import { buildPeerTable, buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "@/lib/spine/margin_rows";
 import { buildLocalsNotes, countriesWithNotes, NOTE_CAP, LABEL_WORDS_CAP, FACT_CHARS_CAP } from "@/lib/spine/locals_rows";
-import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor, buildTradeCloseDoors } from "@/lib/spine/close_rows";
+import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor, buildTradeCloseDoors, buildIndustryCloseDoors, industryLeader } from "@/lib/spine/close_rows";
+import { buildKnow, countKnow, failureRows, KNOW_FAILURE_MODES_CAP } from "@/lib/spine/know_rows";
+import { getActivityCharacter } from "@/lib/content/activity_character";
+import { getFailureModes } from "@/lib/qa/industry_failure_modes";
+import { FIELD_CELLS, fieldCells, fieldWithheld } from "@/components/spine/industry/turn-three";
 import { buildChecks, CHECKS_BANK, WAIT_DAYS_THRESHOLD } from "@/lib/spine/checks_rows";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { getFormationRowByTier } from "@/lib/tax/country_rates";
@@ -2017,6 +2021,198 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     ban(`industry channels ${id}`, [w.basis, w.foot]);
   }
   console.log(`industry turn two: the places table's laws held on fixtures (eight cities of their own, seven not their own by four reasons, the seat at 0, 1, 2 and 3 own cities, the floor at four, the slate ${slate}); the formats on ${formatsCards} of ${ids.length} trades (${JSON.stringify(formatsCount.byCount)} by format count, ${formatsCount.rows} rows, ${formatsCount.ladder} on the ladder and ${formatsCount.profile} on the sector profile's residual, ${zeroDelta} rows at a delta of zero printing the hero's figure; ${formatsCount.longNames} names over three words and ${formatsCount.wideNames} over ${FORMAT_NAME_FITS} characters on ${formatsCount.wideShards} shards, the shard's own names, counted and not redded); the mix at the world altitude on ${worldMix}`);
+
+  /* THE INDUSTRY PAGE'S TURN THREE AND ITS EXIT (MODEL.md 8.7 `09 know`, `10
+     field`, `11 close`; plan step 34's fourth and last dispatch, 2026-09-19),
+     over every one of the 243 ids, without the database. THE NOTES: EVERY
+     FACT IS AUTHORED TEXT (the character's edge or watch-out through the
+     merged lookup, or one of the trade's first two failure modes' explanations,
+     or the one not-gathered line where nothing is authored) and nothing
+     composed: a computed sentence let into the rows reds here (planted and
+     watched 2026-09-19: the old adapter's "A high gross margin is misleading
+     ..." pushed into buildKnow's rows); the two character rows under the trade
+     page's own labels, the failure rows under their file's, in that order, at
+     most five, at most two failure modes; the not-gathered row exactly when
+     nothing is authored, never beside a note; a label within the note cap's
+     seven words, no empty fact, no placeholder ({}) and no letter standing
+     where a figure goes ("$X", the failure-modes file's own fault before this
+     dispatch), no em dash, the register ban on every label and every fact
+     (in scope redded, a retired id counted, the suits gate's rule); the basis
+     within fourteen words; the facts over the locals notes' 140 characters
+     counted, not cut. THE FIELD: one builder at two altitudes, the world
+     cluster's figures, tags and withheld count the trade cluster's to the
+     digit, only the three bases with a city clause swapped for the copy
+     table's world lines (none naming a city), the swing's one literal; the
+     card's cells exactly FIELD_CELLS in order, NEVER THE CHURN CELL (planted
+     and watched 2026-09-19: the close cell pushed into fieldCells), each
+     value the builder's own printed figure (the density as the file holds
+     it, the chain share as a whole percent, the swing as printed), each
+     label the trade market's own opener, each note under 48 characters,
+     every cell modelled; the kicker within four words, the basis and the
+     foot within fourteen, the foot saying modelled. THE CLOSE on every id
+     with no slate resolved (the live page's state today: `06` seated, no
+     city door): the trade next door exactly when `02` holds another member
+     whose page exists, its href that member's own `/industries/<slug>` and
+     never a retired or merged id's, the pill last to /compare, the country's
+     own checkDoors (the cap, one pill, distinct first words, every href a
+     route, no "with Pro", no banned word), the counts printed; then the
+     three-door branch on the table's own fixture (eight cities of their own:
+     the city door first, its href the top row's own link, a route), the seat
+     fixture (three own cities: no city door) and a withheld `02` (the pill
+     alone); no sector door on any. */
+  {
+    const ban = (where: string, texts: string[]) => {
+      for (const t of texts) {
+        for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+        if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+        if (/—/.test(t)) reds.push(`${where}: an em dash in "${t}"`);
+      }
+    };
+    const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+    const ids = ALL_INDUSTRIES.map((i) => i.id);
+    const inScope = new Set(INDUSTRIES.map((i) => i.id));
+    const knowCount = countKnow(ids);
+    let knowCards = 0, retiredBanned = 0;
+    const retiredQueue: string[] = [];
+    for (const id of ids) {
+      const k = buildKnow(id);
+      if (!k) { reds.push(`industry know ${id}: no card for a taxonomy id`); continue; }
+      knowCards++;
+      const c = getActivityCharacter(id);
+      const authored = new Set<string>([c?.edge?.trim() ?? "", c?.watchOut?.trim() ?? "", ...(getFailureModes(id) ?? []).slice(0, KNOW_FAILURE_MODES_CAP).map((m) => m.explanation.trim())].filter(Boolean));
+      if (k.rows.length > NOTE_CAP) reds.push(`industry know ${id}: ${k.rows.length} rows, over ${NOTE_CAP}`);
+      if (k.rows.filter((r) => r.key === "failure").length > KNOW_FAILURE_MODES_CAP) reds.push(`industry know ${id}: more than ${KNOW_FAILURE_MODES_CAP} failure modes drawn`);
+      const order = k.rows.map((r) => r.key).join(",");
+      const expected = k.notGathered ? "notGathered" : [...(k.hasCharacter ? ["suits", "thinkTwice"] : []), ...failureRows(id).map(() => "failure")].join(",");
+      if (order !== expected) reds.push(`industry know ${id}: the rows are not in the card's order (${order})`);
+      if (k.notGathered !== (authored.size === 0)) reds.push(`industry know ${id}: the not-gathered state (${k.notGathered}) disagrees with what is authored (${authored.size} facts)`);
+      for (const r of k.rows) {
+        if (r.key === "notGathered") {
+          if (r.fact !== COPY.industryKnow.notGathered || !r.fact.startsWith("Not gathered yet: ")) reds.push(`industry know ${id}: the not-gathered row is not the copy table's line in the idiom ("${r.fact}")`);
+          if (k.rows.length !== 1) reds.push(`industry know ${id}: the not-gathered row beside another row`);
+          continue;
+        }
+        if (!authored.has(r.fact)) reds.push(`industry know ${id}: AUTHORED ONLY: the fact under "${r.label}" is not the character's edge, its watch-out or a failure mode's explanation ("${r.fact.slice(0, 60)}")`);
+        if (r.key === "suits" && (r.label !== COPY.tradeSuits.labels.suits || r.fact !== c?.edge?.trim())) reds.push(`industry know ${id}: the suits row is not the edge under the trade page's label`);
+        if (r.key === "thinkTwice" && (r.label !== COPY.tradeSuits.labels.thinkTwice || r.fact !== c?.watchOut?.trim())) reds.push(`industry know ${id}: the think-twice row is not the watch-out under the trade page's label`);
+        if (r.key === "failure" && !(getFailureModes(id) ?? []).slice(0, KNOW_FAILURE_MODES_CAP).some((m) => m.label.trim() === r.label && m.explanation.trim() === r.fact)) reds.push(`industry know ${id}: a failure row is not one of the file's first two under its own label ("${r.label}")`);
+        if (wordsOf(r.label) > LABEL_WORDS_CAP) reds.push(`industry know ${id}: label over ${LABEL_WORDS_CAP} words: "${r.label}"`);
+        if (!r.fact.trim()) reds.push(`industry know ${id}: an empty fact under "${r.label}"`);
+        if (/\$[A-Z]\b/.test(r.fact) || /\$[A-Z]\b/.test(r.label)) reds.push(`industry know ${id}: NO WORD: a letter stands where a figure goes ("${r.fact.slice(0, 60)}")`);
+        for (const t of [r.label, r.fact]) {
+          if (/[{}]/.test(t)) reds.push(`industry know ${id}: a placeholder was never filled ("${t}")`);
+          if (/—/.test(t)) reds.push(`industry know ${id}: an em dash in "${t}"`);
+          for (const b of COPY.banned) if (t.toLowerCase().includes(b)) { if (inScope.has(id)) reds.push(`industry know ${id}: banned word "${b}" in "${t}"`); else { retiredBanned++; retiredQueue.push(`${id} ("${b}")`); } }
+        }
+      }
+      if (wordsOf(k.basis) > 14 || k.basis !== COPY.industryKnow.basis) reds.push(`industry know ${id}: the basis is not the copy table's within fourteen words ("${k.basis}")`);
+      if (k.sample !== true) reds.push(`industry know ${id}: the notes are authored and the opener's mark is off`);
+    }
+    if (knowCount.total !== knowCards || knowCount.notes + knowCount.oneRow !== knowCards) reds.push(`industry know: the count (${knowCount.total}: ${knowCount.notes} with notes, ${knowCount.oneRow} one-row) and the sweep (${knowCards}) disagree`);
+    const planted = buildKnow("no_such_trade"); // allow-industry-ref: the planted id no file holds, the not-gathered story's whole point
+    if (!planted || !planted.notGathered || planted.rows.length !== 1 || planted.rows[0].key !== "notGathered" || planted.rows[0].label !== COPY.industryKnow.notGatheredLabel) reds.push("industry know: an id no file holds does not take the one not-gathered row under its own label");
+    if (buildKnow(undefined) !== null) reds.push("industry know: no id builds a card");
+    ban("industry know copy", [COPY.industryKnow.kicker, COPY.industryKnow.notGatheredLabel, COPY.industryKnow.notGathered, COPY.industryKnow.basis]);
+    if (wordsOf(COPY.industryKnow.kicker) > 4) reds.push(`industry know: the kicker runs over four words: "${COPY.industryKnow.kicker}"`);
+    if (wordsOf(COPY.industryKnow.notGathered) > 14 || wordsOf(COPY.industryKnow.notGatheredLabel) > LABEL_WORDS_CAP) reds.push("industry know: the not-gathered row runs over its caps");
+
+    /* THE FIELD over 243 ids. */
+    let fieldCards = 0, swingHeld = 0;
+    for (const id of ids) {
+      const w = buildMarket(id, "world");
+      const p = buildMarket(id);
+      if (!w || !p) { reds.push(`industry field ${id}: no cluster off a shard that holds the four fields`); continue; }
+      fieldCards++;
+      if (w.altitude !== "world" || p.altitude !== "place") reds.push(`industry field ${id}: the altitude is not carried`);
+      if (w.withheld !== p.withheld || w.tag !== p.tag) reds.push(`industry field ${id}: the world cluster and the trade cluster disagree off one builder (withheld ${w.withheld}/${p.withheld}, tag ${w.tag}/${p.tag})`);
+      for (const key of MARKET_CELLS) {
+        const a = w[key], b = p[key];
+        const strip = (c: typeof a) => ("withheld" in c ? { withheld: c.withheld } : { ...c, basis: undefined });
+        if (JSON.stringify(strip(a)) !== JSON.stringify(strip(b))) reds.push(`industry field ${id}: the ${key} cell differs between altitudes`);
+        if ("withheld" in a) continue;
+        const expectedBasis = key === "swing" ? COPY.tradeMarket.basis.swing : COPY.industryField.cellBasis[key];
+        if (a.basis !== expectedBasis) reds.push(`industry field ${id}: the ${key} world basis is not the copy table's ("${a.basis}")`);
+        if (/city|London/i.test(a.basis)) reds.push(`industry field ${id}: the ${key} world basis names a city ("${a.basis}")`);
+        if (!/modelled/.test(a.basis)) reds.push(`industry field ${id}: the ${key} world basis does not say modelled (R12)`);
+      }
+      const cells = fieldCells(w);
+      const keys = cells.map((c) => c.key);
+      if (keys.some((k) => k === "close")) reds.push(`industry field ${id}: NO CHURN: the churn cell is drawn on the industry card (8.7: beside 01 lasts it is a second view of one reading)`);
+      const drawnExpected = FIELD_CELLS.filter((k) => !("withheld" in w[k]));
+      if (keys.join(",") !== drawnExpected.join(",")) reds.push(`industry field ${id}: the cells are not FIELD_CELLS in order (${keys.join(",")})`);
+      if (fieldWithheld(w).length !== FIELD_CELLS.length - drawnExpected.length) reds.push(`industry field ${id}: the withheld lines do not match the cells not drawn`);
+      for (const c of cells) {
+        const cell = w[c.key as (typeof FIELD_CELLS)[number]];
+        const value = typeof c.value === "string" ? c.value : "";
+        if (c.key === "firms" && "figure" in cell && value !== cell.figure) reds.push(`industry field ${id}: the density prints "${value}", not the builder's ${cell.figure}`);
+        if (c.key === "chains" && "part" in cell && value !== `${cell.part}%`) reds.push(`industry field ${id}: the chain share prints "${value}", not ${cell.part}%`);
+        if (c.key === "swing" && "figure" in cell && value !== cell.figure) reds.push(`industry field ${id}: the swing prints "${value}", not the builder's ${cell.figure}`);
+        if (!/\d/.test(value)) reds.push(`industry field ${id}: NO WORD: the cell ${c.key} prints "${value}" where a figure goes`);
+        if (c.label !== COPY.tradeMarket.kickers[c.key as keyof typeof COPY.tradeMarket.kickers]) reds.push(`industry field ${id}: the ${c.key} label is not the trade market's opener ("${c.label}")`);
+        if (wordsOf(c.label) > 4) reds.push(`industry field ${id}: label over four words: "${c.label}"`);
+        if (c.note && c.note.length > 48) reds.push(`industry field ${id}: note over 48 characters: "${c.note}"`);
+        if (c.confidence !== "modeled") reds.push(`industry field ${id}: the cell ${c.key} is not marked modelled (R12)`);
+        ban(`industry field ${id}`, [c.label, c.note ?? ""]);
+      }
+      if ("figure" in w.swing && w.swing.tag === "held") swingHeld++;
+    }
+    if (buildMarket("no_such_trade", "world") !== null) reds.push("industry field: a trade with no shard builds a cluster at the world altitude");
+    ban("industry field copy", [COPY.industryField.kicker, COPY.industryField.basis, COPY.industryField.foot, ...Object.values(COPY.industryField.notes), ...Object.values(COPY.industryField.cellBasis)]);
+    if (wordsOf(COPY.industryField.kicker) > 4) reds.push(`industry field: the kicker runs over four words: "${COPY.industryField.kicker}"`);
+    if (wordsOf(COPY.industryField.basis) > 14 || wordsOf(COPY.industryField.foot) > 14 || !/modelled/.test(COPY.industryField.foot)) reds.push("industry field: the basis or the foot runs over fourteen words, or the foot does not say modelled");
+    for (const [key, b] of Object.entries(COPY.industryField.cellBasis)) if (wordsOf(b) > 14) reds.push(`industry field ${key}: a world basis over fourteen words: "${b}"`);
+
+    /* THE CLOSE over 243 ids with no slate resolved, then the fixtures. */
+    let closes = 0, leaderDoors = 0, leaderTop = 0, leaderNext = 0, pillAlone = 0, pillAloneInScope = 0;
+    for (const id of ids) {
+      const b = buildBenchmark(id);
+      const doors = buildIndustryCloseDoors(id, null, b);
+      if (doors.length === 0) { reds.push(`industry close ${id}: no door for a taxonomy id`); continue; }
+      closes++;
+      checkDoors(id, doors, "industry close");
+      if (doors[doors.length - 1].kind !== "pill" || doors[doors.length - 1].href !== "/compare" || doors[doors.length - 1].label !== COPY.tradeClose.compareDoor.replace("{trade}", INDUSTRY_BY_ID[id].name.toLowerCase())) reds.push(`industry close ${id}: the compare pill is not last, not the trade page's literal, or does not go to /compare`);
+      if (doors.some((d) => d.key === "city")) reds.push(`industry close ${id}: a city door with no slate resolved`);
+      if (doors.some((d) => d.href === "/pricing" || d.key === "sector")) reds.push(`industry close ${id}: a pricing or sector door is drawn`);
+      const leader = industryLeader(id, b);
+      const leaderDoor = doors.find((d) => d.key === "leader");
+      const others = b && b.state !== "withheld" ? b.rows.filter((r) => r.key !== id) : [];
+      const expectedLeader = others.find((r) => inScope.has(r.key)) ?? null;
+      if ((leader?.id ?? null) !== (expectedLeader?.key ?? null)) reds.push(`industry close ${id}: the trade next door (${leader?.id ?? "none"}) is not the highest other row of 02 in scope (${expectedLeader?.key ?? "none"})`);
+      if (!!leaderDoor !== !!leader) reds.push(`industry close ${id}: the leader door (${leaderDoor ? "drawn" : "absent"}) disagrees with the leader (${leader ? leader.id : "none"})`);
+      if (leader && leaderDoor) {
+        leaderDoors++;
+        if (!inScope.has(leader.id)) reds.push(`industry close ${id}: PROMISE: the trade next door is a retired or merged id (${leader.id}), a page that redirects`);
+        if (leaderDoor.href !== `/industries/${industryToSlug(leader.id)}`) reds.push(`industry close ${id}: the leader door goes to ${leaderDoor.href}, not the leader's own page`);
+        if (!leaderDoor.label.startsWith(INDUSTRY_BY_ID[leader.id].name)) reds.push(`industry close ${id}: the leader door does not open on the leader's name ("${leaderDoor.label}")`);
+        if (/highest|most|best/i.test(leaderDoor.label)) reds.push(`industry close ${id}: the leader door claims a superlative ("${leaderDoor.label}")`);
+        if (others[0] && others[0].key === leader.id) leaderTop++; else leaderNext++;
+      } else { pillAlone++; if (inScope.has(id)) pillAloneInScope++; }
+      if (doors.length !== (leader ? 2 : 1)) reds.push(`industry close ${id}: ${doors.length} doors with no slate, expected ${leader ? 2 : 1}`);
+    }
+    /* The three-door branch on the table's fixture, the seat, a withheld 02. */
+    const rev0 = 400000; let revN = rev0;
+    const colx = (slug: string, country: string, takeHome: number, net: number): CityColumn => ({ name: slug.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" "), slug, country, href: `/${country}/${slug}/restaurants`, revenue: (revN += 12345.67), revP10: null, revP90: null, takeHome, netMarginFraction: net, densityPer10k: null, startupCostUsd: null, breakevenDaily: null, typicalDaily: null, survivalYr5: null, breakInScore: null, breakInBand: null, revenueFilled: false, economics: "estimator", netMarginFloored: false });
+    const eightOwn = [colx("new-york", "us", 25263, 0.0549), colx("london", "gb", 36000, 0.05), colx("paris", "fr", 12995, 0.031), colx("madrid", "es", 12800, 0.032), colx("barcelona", "es", 12700, 0.033), colx("berlin", "de", 16477, 0.038), colx("amsterdam", "nl", 18482, 0.0427), colx("tokyo", "jp", 13077, 0.0302)];
+    const tabled = buildIndustryPlaces("restaurants", eightOwn);
+    const three = buildIndustryCloseDoors("restaurants", tabled, buildBenchmark("restaurants"));
+    if (!tabled || tabled.state !== "table" || !tabled.top || tabled.top.slug !== "london") reds.push(`industry close (fixture): the eight-city table does not name London as its top row (${tabled?.top?.slug ?? "none"})`);
+    if (three.length !== 3 || three[0].key !== "city" || three[1].key !== "leader" || three[2].kind !== "pill") reds.push(`industry close (fixture): the table does not draw three doors, city first, the pill last (${three.map((d) => d.key).join(", ")})`);
+    else {
+      checkDoors("restaurants", three, "industry close (table)");
+      if (three[0].href !== eightOwn[1].href || three[0].href !== "/gb/london/restaurants") reds.push(`industry close (fixture): the city door goes to ${three[0].href}, not the top row's own link`);
+      if (three[0].label !== COPY.industryClose.cityDoor.replace("{trade}", "restaurants").replace("{city}", "London")) reds.push(`industry close (fixture): the city door's label is not the copy table's composed ("${three[0].label}")`);
+      if (!resolves(three[0].href)) reds.push(`industry close (fixture): the city door's link is not a route (${three[0].href})`);
+    }
+    const seated = buildIndustryPlaces("restaurants", eightOwn.slice(0, 3));
+    const two = buildIndustryCloseDoors("restaurants", seated, buildBenchmark("restaurants"));
+    if (!seated || seated.state !== "blocked" || seated.top !== null || two.length !== 2 || two.some((d) => d.key === "city")) reds.push(`industry close (fixture): the seat at three own cities draws a city door or the wrong count (${two.map((d) => d.key).join(", ")})`);
+    const withheldBench = buildBenchmark("telecom");
+    const one = buildIndustryCloseDoors("telecom", null, withheldBench);
+    if (!withheldBench || withheldBench.state !== "withheld" || one.length !== 1 || one[0].kind !== "pill") reds.push(`industry close (fixture): a withheld 02 does not leave the pill alone (${one.map((d) => d.key).join(", ")})`);
+    if (buildIndustryCloseDoors("no_such_trade", null, null).length || buildIndustryCloseDoors(undefined, null, null).length) reds.push("industry close: a trade not in the taxonomy draws a door");
+    ban("industry close copy", [COPY.industryClose.cityDoor.replace("{trade}", "restaurants").replace("{city}", "London"), COPY.industryClose.leaderDoor.replace("{leader}", "Food trucks")]);
+    console.log(`industry turn three and the exit: the notes on ${knowCards} of ${ids.length} trades (${knowCount.notes} draw notes, ${knowCount.oneRow} the one row, ${knowCount.withFailures} with failure modes, ${JSON.stringify(knowCount.byRows)} by row count; ${knowCount.longFacts} authored facts over the locals notes' ${FACT_CHARS_CAP}-character cap, the longest ${knowCount.longestFact}, a copy fault in the source files and not cut here; ${retiredBanned} banned word(s) on retired or merged ids that reach no reader${retiredBanned ? ` (${retiredQueue.join(", ")})` : ""}); the field at the world altitude on ${fieldCards} (three cells of four, the churn never drawn; the swing held on ${swingHeld}); the close on ${closes} with no slate (${leaderDoors} draw the trade next door, ${leaderTop} on the highest other row of 02 and ${leaderNext} on the next in scope past a retired leader; ${pillAlone} the pill alone, ${pillAloneInScope} of them in scope), the three-door branch proven on the table's fixture`);
+  }
 }
 console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

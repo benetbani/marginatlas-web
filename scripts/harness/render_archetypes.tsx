@@ -38,7 +38,7 @@ import { AnswerCardStories, RankedBarsStories, pickCityDistrictInstances, Compar
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
 import { CELL_INSTANCES, loadCellHeroInstances, type CellHeroInstance } from "../../src/lib/spine/trade_hero_facts";
-import { INDUSTRY_INSTANCES, industryServes, loadIndustryPlacesInstances, type IndustryPlacesInstance } from "../../src/lib/spine/industry_hero_facts";
+import { INDUSTRY_INSTANCES, servesSlate, SLATE_BLOCKS, loadIndustryPlacesInstances, type IndustryPlacesInstance } from "../../src/lib/spine/industry_hero_facts";
 import { SpineShell } from "../../src/components/spine/shell";
 import { preflight } from "./preflight.mjs";
 
@@ -118,8 +118,8 @@ const SHEET: Entry[] = [
   { kind: "range-strip", city: "none", cell: "keyed", render: (c) => <RangeStripStories instances={pickRangeStripInstances()} city={pickCityStripInstances()} cell={c.cellHero} /> },
   { kind: "spectra-table", city: "none", render: () => <SpectraTableStories instances={pickSpectraTableInstances()} /> },
   { kind: "note-list", city: "none", render: (c) => <NoteListStories instances={c.instances["note-list"]} /> },
-  /* The trade's close (cell/exit.tsx CloseCard) reads a cell seed since plan step 33's sixth dispatch (2026-09-18). */
-  { kind: "terminus", city: "keyed", cell: "keyed", render: (c) => <TerminusStories instances={pickTerminusInstances()} city={pickCityCloseInstances(c.cityHero)} cell={c.cellHero} /> },
+  /* The trade's close (cell/exit.tsx CloseCard) reads a cell seed since plan step 33's sixth dispatch (2026-09-18); the industry's close (industry/turn-three.tsx) reads the slate the sheet resolves since plan step 34's fourth dispatch (2026-09-19), so its city door is drawn exactly where the places table is. */
+  { kind: "terminus", city: "keyed", cell: "keyed", industry: "places", render: (c) => <TerminusStories instances={pickTerminusInstances()} city={pickCityCloseInstances(c.cityHero)} cell={c.cellHero} industry={c.industryPlaces} /> },
   { kind: "pay-bars", city: "none", render: (c) => <PayBarsStories instances={c.instances["pay-bars"]} /> },
   /* The permits (cell/turn-one.tsx) read a cell seed since the same dispatch. */
   { kind: "kv-grid", city: "none", cell: "keyed", render: (c) => <KvGridStories instances={c.instances["kv-grid"]} cell={c.cellHero} /> },
@@ -197,15 +197,17 @@ if (ONLY != null) {
     : key == null ? await loadCellHeroInstances()
     : cellHandle != null && cellHandle in CELL_INSTANCES ? await loadCellHeroInstances([cellHandle])
     : [];
-  /* THE SLATE THIS STORY NEEDS (plan step 34's third dispatch): a key whose
-     first segment is "industry" and whose block is "places" resolves the one
-     handle its second segment names against the database; a whole keyed
-     kind resolves every handle serving the block; the rest load nothing. */
-  const industryHandle = key != null && key.startsWith("industry:") && key.endsWith(":places") ? key.split(":")[1] : null;
+  /* THE SLATE THIS STORY NEEDS (plan step 34's third dispatch, the close
+     added by the fourth): a key whose first segment is "industry" and whose
+     block reads the slate ("places", or "close", whose city door is the
+     table's top row) resolves the one handle its second segment names
+     against the database; a whole keyed kind resolves every handle serving
+     either block; the rest load nothing. */
+  const industryHandle = key != null && key.startsWith("industry:") && SLATE_BLOCKS.some((b) => key.endsWith(`:${b}`)) ? key.split(":")[1] : null;
   const industryPlaces: IndustryPlacesInstance[] =
     entry!.industry !== "places" ? []
     : key == null ? await loadIndustryPlacesInstances()
-    : industryHandle != null && industryHandle in INDUSTRY_INSTANCES && industryServes(industryHandle, "places") ? await loadIndustryPlacesInstances([industryHandle])
+    : industryHandle != null && industryHandle in INDUSTRY_INSTANCES && servesSlate(industryHandle) ? await loadIndustryPlacesInstances([industryHandle])
     : [];
   const all = pickAllInstances(cityHero, cellHero, industryPlaces);
   const held = all[kind] ?? [];

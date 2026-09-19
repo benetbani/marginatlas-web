@@ -1743,6 +1743,65 @@ export const COPY = {
   industryMix: {
     basis: "Typical for the trade anywhere.",
   },
+  /** `09 know` (MODEL.md 8.7; plan step 34's fourth dispatch, 2026-09-19),
+   *  THE PAGE'S ONE PROSE SECTION on NoteList (R9). The kicker is 8.7's
+   *  question in three words a person says ("what a working owner would tell
+   *  you before you sign"); the two character notes take the trade page's
+   *  own labels (`tradeSuits.labels`, one literal on both pages), the
+   *  failure modes their file's own labels, so nothing here names them. The
+   *  not-gathered row is the brief's line in the site's idiom (M19), under
+   *  its own label, the shape the trade page's 240 would take; the basis
+   *  says whose words the notes are and that nothing on the card is a
+   *  measurement, within fourteen words (PART 7: what it is, never what it
+   *  means). No foot: PART 7's foot holds a coverage statement or a
+   *  companion figure, and the close's doors navigate. */
+  industryKnow: {
+    kicker: "Before you sign",
+    notGatheredLabel: "What owners know",
+    notGathered: "Not gathered yet: what a working owner would tell you about this trade.",
+    basis: "Written for the trade anywhere, not one place; nothing here is measured.",
+  },
+  /** `10 field` (8.7; the same dispatch): the trade's market builder at the
+   *  world altitude (market_rows.ts, the lasts idiom), on KvGrid. The kicker
+   *  is 8.7's question in four words ("who you would be trading alongside");
+   *  the three cell labels are the trade market's own openers by key
+   *  (`tradeMarket.kickers`, one literal at two altitudes), the chains and
+   *  swing cells carrying a note under the figure that says the whole in a
+   *  person's words (the hero cells' idiom, under 48 characters); the basis
+   *  is the world idiom the survival grid, the licence card and the mix use
+   *  here; the foot says the three are modelled in words (R12), because the
+   *  sample mark is behind his switch. The builder's world bases, one per
+   *  cell, are the trade's without their city clause (the swing's carries
+   *  none and is the trade's literal); the churn cell is built at both
+   *  altitudes and drawn on the trade page alone (8.7: beside `01 lasts` it
+   *  is a second view of one reading). */
+  industryField: {
+    kicker: "Who trades alongside you",
+    notes: { chains: "of all firms", swing: "busiest month over the quietest" },
+    basis: "Typical for the trade anywhere.",
+    foot: "The density, the chain share and the swing are modelled.",
+    cellBasis: {
+      firms: "Typical for the trade anywhere; modelled.",
+      chains: "Of every 100 firms; typical for the trade anywhere; modelled.",
+      close: "Of every 100 firms; typical for the trade anywhere; modelled.",
+    },
+  },
+  /** `11 close` (8.7; the same dispatch), on Terminus, the kicker the
+   *  site's `close.kicker`. Three doors at most, the pill last (M21): the
+   *  best-paying city's trade page off `06`'s top row ("See {trade} in
+   *  {city}", the trade page's own verb; drawn only where the table draws,
+   *  no trade today), the trade next door off `02`'s rows ("{Leader}, the
+   *  trade next door": the highest other member of the sector whose page
+   *  exists, named after `02`'s own kicker and claiming no superlative,
+   *  because a retired leader's page is a redirect and the door then goes
+   *  to the next member in scope), and the compare pill, the trade page's
+   *  own literal (`tradeClose.compareDoor`). No sector door: no sector route
+   *  exists in the app folder. No two doors share a first word: "See",
+   *  the leader's name, "Compare". */
+  industryClose: {
+    cityDoor: "See {trade} in {city}",
+    leaderDoor: "{leader}, the trade next door",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

@@ -149,11 +149,34 @@ export const INDUSTRY_INSTANCES: Record<string, { id: string; why: string; block
   restaurants: { id: "restaurants", why: "the exemplar: the ladder's net at 40, the three companions, the sector's five bars with two members withheld" },
   "alarm-systems": { id: "alarm_systems_install", why: "the ladder is the file's fill and the cost is the table's default: the sector profile's residual as the answer with its own basis, the cost withheld in the foot", blocks: ["take"] },
   telecom: { id: "telecom", why: "a two-member sector with both members on the fill: the benchmark withheld, the not-gathered line where the rows would stand (a retired trade, drawn by id)", blocks: ["benchmark"] },
-  "game-dev": { id: "game_dev_studios", why: "a three-member sector, every member holding a figure: the short table under the floor line", blocks: ["benchmark"] },
+  "game-dev": { id: "game_dev_studios", why: "a three-member sector, every member holding a figure: the short table under the floor line; and the close with the pill alone, the sector's other two members retired", blocks: ["benchmark", "close"] },
   /* Plan step 34's second dispatch (2026-09-18): turn one's thin shards. */
   chiropractic: { id: "chiropractic", why: "the split withheld: the sector profile's lines and the ladder's net come to more than a hundred, the net still at 30, the stated line where the bar would stand", blocks: ["split"] },
   plumbers: { id: "plumbers", why: "a five-licence shard: the plus at its fullest, five rows by name with their days", blocks: ["open"] },
   "watch-repair": { id: "watch_jewelry_repair", why: "the thin shard: two licences (the plus at its floor), a crew of three, two years to pay back, the profile's lines", blocks: ["open", "pays"] },
+  /* Plan step 34's fourth dispatch (2026-09-19): turn three and the exit.
+     Shoe repair is the thinnest live density (0.1 firms per 10,000, counted
+     over the 138 in scope; chains at 5, the swing 30), the field card's thin
+     shard, printed as read. Game development studios also serves `close`:
+     one of the five in-scope trades whose `02` rows hold no other member in
+     scope (its three-member sector's other two are retired), so the close
+     draws the pill alone. The not-gathered know card is planted on the
+     sheet by an id no file holds (`industry:none:know`, stories.tsx), the
+     suits card's own precedent; no live trade takes it. */
+  "shoe-repair": { id: "shoe_repair", why: "the thinnest live density: 0.1 firms per 10,000 printed as read, chains at 5 of 100, the swing 30", blocks: ["field"] },
+  /* THE TWO-NOTE KNOW CARD (227 of 243 trades: the character's edge and
+     watch-out, no failure mode on file) is drawn on hostels, one of the three
+     hand-written character entries, and NOT on a trade whose authored facts
+     run past NoteList's four lines at a phone's width: measured 2026-09-19
+     over all 243 cards (scratchpad/step34d/measure_know.txt), 108 cards hold
+     a fact over four lines at 375 (64 in scope; plumbers' two run five each)
+     and 91 at the 693 seat's two columns (54 in scope), the longest six,
+     the authored files' fault (the facts run 78 to 237 characters against
+     the locals notes' 140 cap; the same facts the trade page's `02 suits`
+     prints), the data track's, counted in the copy gate and not a card's;
+     a permanently red story would stop the chain for a fault no card can
+     fix (the formats' precedent). Restaurants, the exemplar, fits at both. */
+  hostels: { id: "hostels", why: "the two-note card: the hand-written edge and watch-out with no failure mode on file, the shape 227 of 243 trades draw", blocks: ["know"] },
   /* Plan step 34's third dispatch (2026-09-19): turn two's shards, counted
      against the database (scratchpad/step34c/places-count3.json) and the
      shards. THE PLACES TABLE HAS NO DATA INSTANCE: under the own-row law
@@ -199,12 +222,16 @@ export type IndustryPlacesInstance = { key: string; id: string; why: string; acr
  * one handle or every handle serving `places`. A handle the resolver cannot
  * answer self-omits from the sheet.
  */
-export async function loadIndustryPlacesInstances(handles: string[] = Object.keys(INDUSTRY_INSTANCES).filter((h) => industryServes(h, "places"))): Promise<IndustryPlacesInstance[]> {
+/** The blocks whose stories read the resolved slate: the places block, and the close since the fourth dispatch (its city door is the table's top row, so the doors are built off the same resolution the seat is). */
+export const SLATE_BLOCKS = ["places", "close"] as const;
+export const servesSlate = (handle: string) => SLATE_BLOCKS.some((b) => industryServes(handle, b));
+
+export async function loadIndustryPlacesInstances(handles: string[] = Object.keys(INDUSTRY_INSTANCES).filter(servesSlate)): Promise<IndustryPlacesInstance[]> {
   const { resolveAcrossColumns } = await import("@/lib/markets/across_cities");
   const out: IndustryPlacesInstance[] = [];
   for (const key of handles) {
     const inst = INDUSTRY_INSTANCES[key];
-    if (!inst || !industryServes(key, "places")) continue;
+    if (!inst || !servesSlate(key)) continue;
     try {
       out.push({ key, id: inst.id, why: inst.why, across: await resolveAcrossColumns(inst.id) });
     } catch { /* a trade the resolver cannot answer self-omits from the stories */ }
