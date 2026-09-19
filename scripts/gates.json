@@ -15,6 +15,20 @@
       "claims": []
     },
     {
+      "name": "doors",
+      "script": "scripts/verify_doors.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "scripts/verify_doors.ts , THE DOORS LAND WHERE THEY PROMISE (plan-2026-09-17/ 04-PAGES.md step 39, 2026-09-19; MODEL.md PART 8's \"THE DOORS\" paragraphs on 8.2, 8.3, 8.6, 8.7 and 8.8, M23, and the cohe",
+      "reads": [
+        "scratchpad/harness/doors.txt",
+        "src/app",
+        "src/app/[country]/[geo]/[industry]/page.tsx",
+        "src/lib/spine/door_kinds.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-archetypes",
       "script": "scripts/harness/harness.mjs",
       "args": [

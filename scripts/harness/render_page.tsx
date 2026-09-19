@@ -21,9 +21,15 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { writeFileSync, readFileSync, mkdirSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
-/* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
+/* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out.
+   A FILE, NEVER A PAGE (plan step 39, 2026-09-19): `src` is always an asset, but `href="/cities/london"` is a door to a page, and
+   until this line the mapping rewrote every such door into a file URL under public/, so a render lied about where its city
+   doors went and the `doors` gate could not read them. An href is mapped only when it names a file (an extension). */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
-const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
+const mapAssets = (html: string) =>
+  html
+    .replace(/src="\/(cities|spine|flags)\//g, (_m, d) => `src="${PUBLIC_URL}${d}/`)
+    .replace(/href="\/(cities|spine|flags)\/([^"]*\.[a-z0-9]{2,5})"/g, (_m, d, file) => `href="${PUBLIC_URL}${d}/${file}"`);
 import { buildSpineCountrySeed } from "../../src/lib/spine/adapt_country";
 import { buildSpineCitySeed } from "../../src/lib/spine/adapt_city";
 import { buildSpineCellSeed } from "../../src/lib/spine/adapt_cell";
