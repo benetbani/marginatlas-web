@@ -2014,6 +2014,15 @@
       "claims": []
     },
     {
+      "name": "sample-switch",
+      "script": "scripts/verify_sample_switch.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Prebuild gate, plan step 48 (2026-09-19): THE SAMPLE SWITCH IS A LAUNCH GATE.",
+      "reads": [],
+      "claims": []
+    },
+    {
       "name": "country-seed-confidence",
       "script": "scripts/verify_country_seed_confidence.mjs",
       "args": [],

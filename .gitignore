@@ -32,6 +32,8 @@ yarn-error.log*
 .env*
 !.env.local.example
 !.env.example
+# .env.production is committed: public flags only, never a secret (plan step 48, the sample switch)
+!.env.production
 
 # vercel
 .vercel

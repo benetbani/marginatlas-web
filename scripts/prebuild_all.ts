@@ -572,6 +572,12 @@ const GATES: Gate[] = [
   { name: "subsection-icons", script: "scripts/verify_subsection_icons.ts" },
   { name: "trade-set", script: "scripts/verify_trade_set.ts" },
   { name: "sample-tags", script: "scripts/verify_sample_tags.ts" },
+  /* Plan step 48 (2026-09-19): the sample switch is a launch gate. The marks
+     are hidden by his switch while he is the only reader; this fails a build
+     with the marks off unless .env.production (committed, public flags only)
+     or the environment declares NEXT_PUBLIC_SITE_PRIVATE=1, with the one
+     sentence "the site is not private and the sample marks are off". */
+  { name: "sample-switch", script: "scripts/verify_sample_switch.ts" },
   /* Finding C1a, 2026-08-28 review round on src/lib/spine/adapt_country.ts.
      buildSpineCountrySeed needs the database for its money block, so it can
      never be called from a gate (this chain must never need the network). A

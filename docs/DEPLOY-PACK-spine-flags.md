@@ -70,3 +70,21 @@ Both are recorded in the project's own notes and neither is urgent for how the p
 **Two database tables do not exist**, and the forms that write to them tell the reader it worked. Every newsletter signup and every reader correction submitted so far has been discarded. Two ready-made, safe-to-rerun scripts are sitting in the project; they need pasting into your database console. Not urgent for correctness of the pages, and urgent for anything a reader took the trouble to send.
 
 **Nine design decisions are waiting for you.** They are listed in full in the handoff document. The three that matter most: whether the accent colour is banned on hover (a written rule says it is, and ten controls use it); nine figures on the pay card that only a screen reader can hear; and how to handle the peer-city strip crowding at phone width.
+
+---
+
+## Launch day: the sample marks come back (plan step 48, 2026-09-19)
+
+The modelled-figure marks are hidden today because you are the only reader
+(your 2026-09-11 switch). The site says so in one committed file,
+`.env.production`, which holds `NEXT_PUBLIC_SITE_PRIVATE=1` and nothing
+secret. A gate in the build chain, `sample-switch`, fails any build where the
+marks are off and that line is missing, with the sentence "the site is not
+private and the sample marks are off".
+
+**The day the site opens, one commit does both:** delete the
+`NEXT_PUBLIC_SITE_PRIVATE=1` line from `.env.production` and add
+`NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1` in its place. A Vercel variable of the same
+name does the same job if you prefer the dashboard; the gate reads the
+environment first and prints which one it read. Doing one without the other
+turns the gate red, on purpose.
