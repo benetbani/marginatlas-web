@@ -752,9 +752,16 @@ const QUIET = argv.includes("--quiet");
    twenty-three minutes and nothing said so). A gate past the limit is killed
    with its process tree and reported as a red that says TIMEOUT, which is a
    finding about the machine or the gate, never a pass. `--timeout=<seconds>`,
-   default 120; 0 disables. */
+   default 240; 0 disables. THE DEFAULT ROSE 120 TO 240 ON 2026-09-19 (plan
+   step 50's first run): archetype-copy builds every trade builder over the
+   243 shards and runs 95 s on a free machine, 128 s beside the harness and
+   225 s while other programs held most of the CPU, and was killed at 120 s
+   twice in one afternoon as a TIMEOUT that was the machine's load, not the
+   gate's. A budget is not a ratchet (nothing is judged by it but a hang), and
+   the hang this rule exists for ran twenty-three minutes; 240 still catches
+   it. A Vercel build machine is not this one, which is the other reason. */
 const timeoutArg = argv.find((a) => a.startsWith("--timeout="));
-const TIMEOUT_MS = (timeoutArg ? Math.max(0, parseInt(timeoutArg.split("=")[1], 10)) : 120) * 1000;
+const TIMEOUT_MS = (timeoutArg ? Math.max(0, parseInt(timeoutArg.split("=")[1], 10)) : 240) * 1000;
 /* A SUBSET, `--only=<name,name>`: exact gate names, so a crashed or timed-out
    gate can be rerun alone by the same runner instead of by hand. The GATES
    array is untouched, so the counts and the single-chain gate read the same
