@@ -58,42 +58,16 @@ import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
 import { timeToOpenWeeks } from "@/lib/markets/opening_archetypes";
 
 /**
- * The curated major-world-city slate the comparison draws from. Each entry is
- * the city's friendly URL slug (the geo part of a cell URL, e.g. /us/miami/...)
- * plus the country it sits in and the resident population used for the density
- * read. Drawn from the canonical top-cities list (top100.json ids); a deliberate
- * spread across regions and price tiers so a business reads honestly worldwide,
- * not just across one continent. Cities that do not resolve cleanly for a given
- * activity self-omit, so over-providing here is safe.
+ * The curated major-world-city slate the comparison draws from lives in
+ * ./major_cities.ts since plan step 34's third dispatch (2026-09-19), with no
+ * imports of its own, so the industry page's places builder can read the
+ * slate's size inside the prebuild chain without loading the database
+ * client this file loads; it is re-exported here unchanged, the same
+ * fifteen entries in the same order, for every caller that always read it
+ * from this module.
  */
-export interface CityRef {
-  /** Friendly geo slug, the {geo} segment of /{country}/{geo}/{activity}. */
-  slug: string;
-  /** ISO2 country slug, lowercased for the cell lookup. */
-  country: string;
-  /** Display fallback when a resolved cell carries no geo_name. */
-  name: string;
-  /** Resident population (metro), for the firms-per-10k density read. */
-  population: number;
-}
-
-export const MAJOR_CITIES: CityRef[] = [
-  { slug: "new-york", country: "us", name: "New York", population: 19_500_000 },
-  { slug: "los-angeles", country: "us", name: "Los Angeles", population: 13_200_000 },
-  { slug: "chicago", country: "us", name: "Chicago", population: 9_400_000 },
-  { slug: "miami", country: "us", name: "Miami", population: 6_300_000 },
-  { slug: "toronto", country: "ca", name: "Toronto", population: 6_400_000 },
-  { slug: "london", country: "gb", name: "London", population: 9_500_000 },
-  { slug: "paris", country: "fr", name: "Paris", population: 11_200_000 },
-  { slug: "madrid", country: "es", name: "Madrid", population: 6_700_000 },
-  { slug: "barcelona", country: "es", name: "Barcelona", population: 5_600_000 },
-  { slug: "berlin", country: "de", name: "Berlin", population: 3_700_000 },
-  { slug: "amsterdam", country: "nl", name: "Amsterdam", population: 2_500_000 },
-  { slug: "tokyo", country: "jp", name: "Tokyo", population: 37_400_000 },
-  { slug: "sydney", country: "au", name: "Sydney", population: 5_400_000 },
-  { slug: "dubai", country: "ae", name: "Dubai", population: 3_500_000 },
-  { slug: "singapore", country: "sg", name: "Singapore", population: 5_900_000 },
-];
+import { MAJOR_CITIES, type CityRef } from "./major_cities";
+export { MAJOR_CITIES, type CityRef };
 
 /** A finite, positive real. */
 function isPos(n: number | null | undefined): n is number {
@@ -133,17 +107,21 @@ function typicalRevenueOf(cell: Cell): number | null {
 function ownerEconomicsOf(cell: Cell): {
   takeHome: number | null;
   netMarginFraction: number | null;
+  economics: "curated" | "estimator" | null;
+  netMarginFloored: boolean;
 } {
   const revenue = typicalRevenueOf(cell);
-  if (revenue == null) return { takeHome: null, netMarginFraction: null };
+  if (revenue == null) return { takeHome: null, netMarginFraction: null, economics: null, netMarginFloored: false };
 
   const london = getLondonEntry(cell)?.economics ?? null;
   if (london) {
+    const raw = Number.isFinite(london.net_margin_pct) ? london.net_margin_pct : null;
+    const clamped = raw != null ? clampNetMarginPct(raw, cell.industry_id ?? null) : null;
     return {
       takeHome: isPos(london.owner_take_home) ? london.owner_take_home : null,
-      netMarginFraction: Number.isFinite(london.net_margin_pct)
-        ? clampNetMarginPct(london.net_margin_pct, cell.industry_id ?? null) / 100
-        : null,
+      netMarginFraction: clamped != null ? clamped / 100 : null,
+      economics: "curated",
+      netMarginFloored: raw != null && clamped != null && clamped > raw,
     };
   }
 
@@ -168,7 +146,14 @@ function ownerEconomicsOf(cell: Cell): {
     net.net_margin != null
       ? clampMargin(net.net_margin, "net", cell.industry_id || null)
       : null;
-  return { takeHome, netMarginFraction };
+  /* THE FLOOR IS RECORDED, NOT HIDDEN (plan step 34's third dispatch,
+     2026-09-19): the clamp raises a sub-floor margin to 3% ("a business with
+     sub-3% net margin has already failed", margin_floor.ts), and the
+     take-home resolved above is that floor times the revenue. The figure
+     printed is unchanged; the column now says when it is the floor's, so a
+     reader of the column (the industry page's places table) can withhold
+     it, as PART 5 rules for a figure the clip cannot distinguish. */
+  return { takeHome, netMarginFraction, economics: "estimator", netMarginFloored: net.net_margin != null && netMarginFraction != null && netMarginFraction > net.net_margin };
 }
 
 /**
@@ -244,6 +229,25 @@ export interface CityColumn {
   breakInScore: number | null;
   /** The break-in band word driving the badge tone, or null when unscored. */
   breakInBand: BreakInBand | null;
+  /**
+   * WHERE THE HEADLINE REVENUE CAME FROM (plan step 34's third dispatch,
+   * 2026-09-19): true when the cell's `_revenueFilled` marker is set, that
+   * is, when the row held a firm count but no revenue of its own and
+   * fillMissingFields supplied the headline from a per-industry, per-country
+   * anchor (src/lib/cells/fill_defaults.ts; deriveCoverageTier refuses
+   * "measured" for such a cell). The trust gate above does not read it:
+   * measured 2026-09-19 over the 243 trades, every European city, Tokyo,
+   * Toronto, Los Angeles, Chicago and Miami resolve on a filled headline
+   * (one ladder of city constants times a trade base, or one global median
+   * shared to the cent), and New York alone on a read one. The figure is
+   * left as it was for the across route; the marker lets the industry page's
+   * places table withhold a row whose figures are not the city's own.
+   */
+  revenueFilled: boolean;
+  /** Where the take-home and the margin came from: the curated London entry, or the shared estimator over the cell's revenue. */
+  economics: "curated" | "estimator" | null;
+  /** True when the margin printed is the clamp's floor and not the estimator's own reading (the take-home is then the floor times the revenue). */
+  netMarginFloored: boolean;
 }
 
 /**
@@ -423,7 +427,7 @@ async function resolveCity(
   const revenue = typicalRevenueOf(cell);
   if (revenue == null) return null;
 
-  const { takeHome, netMarginFraction } = ownerEconomicsOf(cell);
+  const { takeHome, netMarginFraction, economics, netMarginFloored } = ownerEconomicsOf(cell);
   const tier = getCityTier(city.slug);
   const be = cell.industry_id ? computeBreakeven(cell.industry_id, revenue, tier) : null;
 
@@ -460,6 +464,9 @@ async function resolveCity(
     // comparison) reads the identical number.
     breakInScore: null,
     breakInBand: null,
+    revenueFilled: cell._revenueFilled === true,
+    economics,
+    netMarginFloored,
   };
 
   // The single break-in rating, computed from this column's own entry cost,
@@ -573,15 +580,25 @@ function pickBreakIn(
 }
 
 /**
- * Build the full across-cities comparison for an activity, or null when fewer
- * than three cities resolve cleanly (the page self-omits gracefully rather than
- * showing a one- or two-column "comparison"). Resolves the curated slate
- * concurrently; each city self-omits on a miss. Cities are ordered richest
- * typical revenue first so the strongest market reads at the left.
+ * THE SLATE RESOLVED, WITH NO FLOOR (MODEL.md 8.7 `06 places`; plan step 34's
+ * third dispatch, 2026-09-19): every city of the curated slate that resolves
+ * to a real, trusted local measurement of this activity, richest typical
+ * revenue first, and NOTHING ELSE decided. `buildAcrossCities` below has
+ * always applied a floor of three inside itself and returned null under it,
+ * which is right for the across route (a one- or two-column "comparison"
+ * is not one) and blind for the industry page's table: its drawn blocked
+ * seat has to NAME the count it holds ("2 of 15 cities hold a figure; a
+ * table needs four"), and a null cannot say whether that count is nought,
+ * one or two. So the resolution is one function the two callers share, and
+ * the floor stays where it was, in `buildAcrossCities`, unchanged for the
+ * route. Null only when the taxonomy holds no such trade; an empty list is
+ * a trade the slate does not measure anywhere, which is a count of zero
+ * and not an absence of an answer. Resolves the slate concurrently; each
+ * city self-omits on a miss (the trust gate in `resolveCity`).
  */
-export async function buildAcrossCities(
+export async function resolveAcrossColumns(
   industryId: string,
-): Promise<AcrossCitiesData | null> {
+): Promise<CityColumn[] | null> {
   const ind = INDUSTRY_BY_ID[industryId];
   if (!ind) return null;
   const activitySlug = industryToSlug(industryId);
@@ -594,9 +611,26 @@ export async function buildAcrossCities(
       resolveCity(city, activitySlug, industryId, survivalYr5),
     ),
   );
-  const cities = resolved
+  return resolved
     .filter((c): c is CityColumn => c !== null)
     .sort((a, b) => (b.revenue ?? 0) - (a.revenue ?? 0));
+}
+
+/**
+ * Build the full across-cities comparison for an activity, or null when fewer
+ * than three cities resolve cleanly (the page self-omits gracefully rather than
+ * showing a one- or two-column "comparison"). Resolves the curated slate
+ * concurrently; each city self-omits on a miss. Cities are ordered richest
+ * typical revenue first so the strongest market reads at the left.
+ */
+export async function buildAcrossCities(
+  industryId: string,
+): Promise<AcrossCitiesData | null> {
+  const ind = INDUSTRY_BY_ID[industryId];
+  if (!ind) return null;
+  const activitySlug = industryToSlug(industryId);
+  const cities = await resolveAcrossColumns(industryId);
+  if (!cities) return null;
 
   // Self-omit on thin data: a comparison needs at least three real places.
   if (cities.length < 3) return null;

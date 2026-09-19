@@ -1683,6 +1683,66 @@ export const COPY = {
       share: "Not gathered yet: the share of a day that clears the costs.",
     },
   },
+  /** `06 places` (MODEL.md 8.7; plan step 34's third dispatch, 2026-09-19),
+   *  the page's one table, on CompareTable. The kicker is 8.7's title in four
+   *  words, read aloud over the rows ("Where it pays best: New York, $25K,
+   *  5%"); the two column heads say the unit once each, the money column as
+   *  a year's take-home and the margin as a net margin, the country money
+   *  card's own head (M20); the basis says what the two figures are (after
+   *  tax, the share of sales kept, each city's own cell) and that they are
+   *  modelled (the estimator's model over the cell's read revenue, the trade
+   *  page's own engine branch), within fourteen words, because the sample
+   *  mark is behind his switch. The withheld lines under the table count the
+   *  resolved cities that are not rows and say why in a person's words (the
+   *  revenue an average filled in for a row that held none of its own, or
+   *  the margin the model's floor), digits as the withheld lines have them
+   *  (the money card's "1 trade withheld: the model returns a loss or a
+   *  floor", M20); today every trade's slate is seated, so the lines are
+   *  reachable on fixtures alone. The seat's lines (under four cities of
+   *  their own, the drawn blocked seat at the table's full width) open "Not
+   *  gathered yet:" (M19), name the count of own figures the trade holds
+   *  among the slate's cities and that a table needs four, each fourteen
+   *  words with the slate's size composed in (never typed); the foot names
+   *  the requirement (DATA-REQUIREMENTS item 69). */
+  industryPlaces: {
+    kicker: "Where it pays best",
+    cols: { city: "City", takeHome: "Take-home a year", netMargin: "Net margin" },
+    basis: "After-tax take-home and the share of sales kept, from each city's own figures; modelled.",
+    withheldOne: "1 city withheld: its revenue is a filled-in average, or its margin a floor.",
+    withheldMany: "{n} cities withheld: their revenue is a filled-in average, or their margin a floor.",
+    blocked: {
+      none: "Not gathered yet: this trade in the {slate} cities compared; a table needs four.",
+      one: "Not gathered yet: own figures in one of {slate} cities; a table needs four.",
+      some: "Not gathered yet: own figures in {n} of {slate} cities; a table needs four.",
+      foot: "Waits on DATA-REQUIREMENTS item 69.",
+    },
+  },
+  /** `07 formats` (8.7; the same dispatch), the mark list with no marks. The
+   *  kicker is 8.7's title in four words, read aloud over the rows ("What
+   *  each format keeps: fast casual, 8%"); the two heads are the list's, the
+   *  value head the money card's own name for the figure (M20); the two
+   *  bases name the branch the one net builder printed the trade's net on,
+   *  in the hero's own words for each ("the trade's typical" off the shard's
+   *  ladder, "the sector's typical" off the profile's residual on the 38
+   *  fill shards), and say modelled (R12), within fourteen words. The state
+   *  line stands where the list would under four formats (no shard today),
+   *  counting them the rivals' way. */
+  industryFormats: {
+    kicker: "What each format keeps",
+    head: { name: "Format", value: "Net margin" },
+    basisShard: "Kept of every $100 a customer spends, by format; the trade's typical, modelled.",
+    basisProfile: "Kept of every $100 a customer spends, by format; the sector's typical, modelled.",
+    state: "Not gathered yet: what each format keeps; {k} of four hold a figure.",
+  },
+  /** `08 channels` at the world altitude (8.7; the same dispatch): the same
+   *  builder and card as the trade's `11 mix` (mix_rows.ts, cell/turn-two.tsx
+   *  MixCard), the basis without the city clause because there is no city
+   *  here, the same words the survival grid and the licence card use at
+   *  this altitude; the kicker, the foot and the withheld line are the
+   *  trade's, one literal each. */
+  industryMix: {
+    basis: "Typical for the trade anywhere.",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

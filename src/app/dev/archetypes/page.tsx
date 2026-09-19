@@ -5,6 +5,7 @@
  */
 import * as React from "react";
 import { loadCityHeroInstances } from "@/lib/spine/city_hero_facts";
+import { loadIndustryPlacesInstances } from "@/lib/spine/industry_hero_facts";
 import { AnswerCardStories, RankedBarsStories, pickRankedBarsInstances, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "@/components/spine/archetypes/stories";
 
 export const dynamic = "force-static";
@@ -13,7 +14,9 @@ const h = "mb-8 mt-16 text-[length:var(--t-head)] font-semibold text-[var(--c-in
 
 export default async function ArchetypesPage() {
   const cityHero = await loadCityHeroInstances();
-  const instances = pickAllInstances(cityHero);
+  /* The industry's places stories resolve the slate against the database (plan step 34's third dispatch, 2026-09-19), the way the renderer does. */
+  const industryPlaces = await loadIndustryPlacesInstances();
+  const instances = pickAllInstances(cityHero, [], industryPlaces);
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-10">
       <h1 data-typography="custom" className={h}>Archetypes, every instance</h1>
@@ -23,7 +26,7 @@ export default async function ArchetypesPage() {
       <h2 data-typography="custom" className={h}>The ranked bars</h2>
       <RankedBarsStories city={pickCityDistrictInstances(cityHero)} />
       <h2 data-typography="custom" className={h}>The comparison table</h2>
-      <CompareTableStories city={pickCityPeerInstances(cityHero)} />
+      <CompareTableStories city={pickCityPeerInstances(cityHero)} industry={industryPlaces} />
       <h2 data-typography="custom" className={h}>The card pager</h2>
       <CardPagerStories />
       <h2 data-typography="custom" className={h}>The city cards, three looks to choose between</h2>
@@ -46,7 +49,7 @@ export default async function ArchetypesPage() {
       <h2 data-typography="custom" className={h}>The mark list</h2>
       <MarkListStories />
       <h2 data-typography="custom" className={h}>The drawn blocked seat</h2>
-      <BlockedSeatStories />
+      <BlockedSeatStories industry={industryPlaces} />
       <CityHeroStories instances={cityHero} />
     </main>
   );

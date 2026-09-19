@@ -40,10 +40,28 @@
  * that path today. A part with no name or no share is not a part and is
  * dropped from the sum before it is judged. Null only where the trade holds
  * no shard (a sector-average cell), which draws none of turn two's cards.
+ *
+ * ONE BUILDER AT TWO ALTITUDES (MODEL.md 8.7 `08 channels`; plan step 34's
+ * third dispatch, 2026-09-19), the survival card's idiom (lasts_rows.ts):
+ * the industry page's `08` is this same card off this same builder, the
+ * shard's parts for the trade anywhere, and the only thing that changes is
+ * the basis line, which drops its city clause because there is no city on
+ * that page (`altitude: "world"`). The kicker, the cells, their order, the
+ * foot and the withheld line are one literal each on both pages, so the mix
+ * a reader meets on the trade page and the one on its industry page can
+ * never be two sets of figures or two sets of words. On the industry page
+ * the seat is 8.7's third accent, the donut's; the accent waits for the
+ * donut with the form, so the page carries two loud moments until his
+ * click, and the card stands there as it stands on the trade page: every
+ * cell at the head rung, no 30, no accent.
  */
 import { industryRows } from "@/lib/facts/industry_shard";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
+import type { LastsAltitude } from "@/lib/spine/lasts_rows";
 import { COPY } from "@/lib/spine/copy";
+
+/** Where the card stands: "place" on a trade in a city (the basis says what is not this city's), "world" on the industry page (no city to name). The survival card's own type, so the two cards cannot spell an altitude two ways. */
+export type MixAltitude = LastsAltitude;
 
 export const MIX_METRICS = { name: "channel_mix.channels.*.name", share: "channel_mix.channels.*.pct_of_revenue" } as const;
 
@@ -55,6 +73,7 @@ export type MixPart = { key: string; name: string; share: number };
 
 export type MixData = {
   industryId: string;
+  altitude: MixAltitude;
   /** The leader first, then the rest by share; empty where the parts are withheld. */
   cells: KvCell[];
   parts: MixPart[];
@@ -71,7 +90,7 @@ export type MixData = {
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-export function buildMix(industryId: string | undefined): MixData | null {
+export function buildMix(industryId: string | undefined, altitude: MixAltitude = "place"): MixData | null {
   if (!industryId) return null;
   const names = industryRows(industryId, MIX_METRICS.name);
   if (names.length === 0) return null;
@@ -91,12 +110,13 @@ export function buildMix(industryId: string | undefined): MixData | null {
   const cells: KvCell[] = whole ? ordered.map((p) => ({ key: p.key, label: p.name, value: `${Math.round(p.share)}%`, confidence: "modeled" })) : [];
   return {
     industryId,
+    altitude,
     cells,
     parts: ordered,
     leader: whole ? ordered[0] : null,
     sum,
     withheld: whole ? null : COPY.tradeMix.withheld,
-    basis: COPY.tradeMix.basis,
+    basis: altitude === "world" ? COPY.industryMix.basis : COPY.tradeMix.basis,
     foot: COPY.tradeMix.foot,
     confidence: "modeled",
   };

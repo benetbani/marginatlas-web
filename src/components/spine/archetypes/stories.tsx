@@ -74,13 +74,16 @@ import { buildTradePeers } from "@/lib/spine/trade_peer_rows";
 import { buildClears } from "@/lib/spine/clears_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
 import { ALL_INDUSTRIES } from "@/lib/taxonomy";
-import { industryHeroFacts, INDUSTRY_INSTANCES, industryServes } from "@/lib/spine/industry_hero_facts";
+import { industryHeroFacts, INDUSTRY_INSTANCES, industryServes, type IndustryPlacesInstance } from "@/lib/spine/industry_hero_facts";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { Masthead as IndustryMasthead, BenchmarkCard } from "@/components/spine/industry/opening";
 import { OpenCard as IndustryOpenCard, paysCells } from "@/components/spine/industry/turn-one";
+import { PlacesTable, FormatsCard, ChannelsCard } from "@/components/spine/industry/turn-two";
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
 import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
 import { buildPays } from "@/lib/spine/pays_rows";
+import { buildIndustryPlaces } from "@/lib/spine/industry_places_rows";
+import { buildFormats } from "@/lib/spine/formats_rows";
 
 export type Instance = { iso2: string; why: string };
 
@@ -371,15 +374,29 @@ const peersWhy = (p: NonNullable<ReturnType<typeof buildTradePeers>>) =>
 export function pickCellPeersInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "peers")).map((c) => ({ c, p: buildTradePeers(c.seed) })).filter((x) => x.p).map(({ c, p }) => ({ iso2: cellPeersKey(c), why: peersWhy(p!) }));
 }
-export function CompareTableStories({ instances = pickCompareTableInstances(), city = [], cell = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[] }) {
+/** WHERE THIS TRADE PAYS BEST, `06 places` (MODEL.md 8.7; plan step 34's third dispatch, 2026-09-19), keyed industry:<handle>:places off the slate the sheet resolves for each handle (industry_hero_facts.ts `loadIndustryPlacesInstances`, the database, the way the cell seeds load) and drawn by the page's own card (industry/turn-two.tsx PlacesTable) at the full width the table takes on the page. Two kinds, as the trade's rivals have: the TABLE on compare-table (two columns, the best cell of each ticked, no home row, flags on), which NO TRADE DRAWS TODAY under the own-row law (industry_places_rows.ts: 0 of 243 hold four cities of their own, the slate's rows being filled headlines and the clamp's floor), so the kind holds no places story until the data track lands rows of their own (the table's law is held on fixtures by the archetype copy gate); the SEAT on blocked-seat, in its three lines (restaurants: two own figures of eight resolved; grocery stores: one of twelve; pet training: nothing resolves). */
+export const industryPlacesKey = (i: IndustryPlacesInstance) => industryKey(i.key, "places");
+const placesWhy = (p: NonNullable<ReturnType<typeof buildIndustryPlaces>>) =>
+  p.state === "table" ? `industry block 06: ${p.rows.length} cities of the slate's ${p.slate} are their own, two columns, the best cell of each ticked, no home row${p.note ? `, ${p.withheld} withheld with the note` : ""}`
+    : `industry block 06 seated: ${p.holding} of the slate's ${p.slate} cities hold figures of their own (${p.resolved} resolve; ${p.reasons.filled} on a filled headline, ${p.reasons.floored} on the floor), under the floor of four; the drawn blocked seat at the table's full width, its line naming the count`;
+export function pickIndustryPlacesInstances(industry: IndustryPlacesInstance[], kind: "compare-table" | "blocked-seat"): Instance[] {
+  return industry.map((i) => ({ i, p: buildIndustryPlaces(i.id, i.across) })).filter((x) => x.p && (kind === "compare-table" ? x.p.state === "table" : x.p.state === "blocked")).map(({ i, p }) => ({ iso2: industryPlacesKey(i), why: placesWhy(p!) }));
+}
+export function CompareTableStories({ instances = pickCompareTableInstances(), city = [], cell = [], industry = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[]; industry?: IndustryPlacesInstance[] }) {
   return (
     <div data-stories="compare-table">
+      {industry.map((i) => {
+        const p = buildIndustryPlaces(i.id, i.across);
+        if (!p || p.state !== "table") return null;
+        return <Story kind="compare-table" key={industryPlacesKey(i)} iso2={industryPlacesKey(i)} why={placesWhy(p)}><PlacesTable id={`places-industry-${i.key}`} places={p} /></Story>;
+      })}
       {cell.filter((c) => cellServes(c.key, "peers")).map((c) => {
         const p = buildTradePeers(c.seed);
         if (!p) return null;
         return <Story kind="compare-table" key={cellPeersKey(c)} iso2={cellPeersKey(c)} why={peersWhy(p)}><PeersCard id={`peers-cell-${c.key}`} peers={p} /></Story>;
       })}
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
+      {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
         const t = buildPeerTable(i.iso2);
         const el = t ? <CompareTable id={`peers-${i.iso2.toLowerCase()}`} kicker={`${COPY.peers.kicker}, ${nameOf(i.iso2)}`} icon="benchmark" rows={t.rows} columns={t.columns} caveat={t.caveat} /> : null;
         return <Story kind="compare-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
@@ -937,9 +954,19 @@ const industryOpenWhy = (o: NonNullable<ReturnType<typeof buildIndustryOpen>>) =
 export function pickIndustryOpenInstances(): Instance[] {
   return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => ({ h, o: buildIndustryOpen(i.id) })).filter((x) => x.o).map(({ h, o }) => ({ iso2: industryKey(h, "open"), why: industryOpenWhy(o!) }));
 }
+/** WHAT THE REVENUE IS MADE OF, `08 channels` (MODEL.md 8.7; plan step 34's third dispatch, 2026-09-19), keyed industry:<handle>:channels, THE TRADE PAGE'S OWN CARD (cell/turn-two.tsx MixCard) off the same builder at the world altitude (mix_rows.ts, the basis without the city clause), built by id off the shard and drawn at the 347 the narrow seat of its 2-1 band takes at 1280: the exemplar's three parts (restaurants, dine-in leading at 60) and a four-part mix (cabinet making). THE SEAT AWAITING HIS CLICK ON CANDIDATE 5, the donut, its mockup owed to the review sheet: every cell at the head rung, no 30, no accent, so the page's third accent (8.7's, on the largest line's figure) waits with the form and the page carries two loud moments until then. */
+const industryMixWhy = (m: NonNullable<ReturnType<typeof buildMix>>) => `industry block 08: ${mixWhy(m).replace(/^trade block 11: /, "")}, the basis for the trade anywhere; the seat of the page's third accent, unlit until the donut`;
+export function pickIndustryChannelsInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "channels")).map(([h, i]) => ({ h, m: buildMix(i.id, "world") })).filter((x) => x.m).map(({ h, m }) => ({ iso2: industryKey(h, "channels"), why: industryMixWhy(m!) }));
+}
 export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="kv-grid">
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "channels")).map(([h, i]) => {
+        const m = buildMix(i.id, "world");
+        if (!m) return null;
+        return <Story kind="kv-grid" key={industryKey(h, "channels")} iso2={industryKey(h, "channels")} why={industryMixWhy(m)}><div style={{ maxWidth: 347 }}><ChannelsCard id={`channels-industry-${h}`} mix={m} /></div></Story>;
+      })}
       {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "lasts")).map(([h, i]) => {
         const l = buildLasts(i.id, "world");
         if (!l) return null;
@@ -1674,15 +1701,26 @@ function rivalsWhy(r: NonNullable<ReturnType<typeof buildRivals>>): string {
 export function pickCellRivalsInstances(cell: CellHeroInstance[], kind: "mark-list" | "bento-metric"): Instance[] {
   return cell.filter((c) => cellServes(c.key, "rivals")).map((c) => ({ c, r: buildRivals(c.seed) })).filter((x) => x.r && (kind === "mark-list" ? x.r.state === "list" : x.r.state !== "list")).map(({ c, r }) => ({ iso2: cellRivalsKey(c), why: rivalsWhy(r!) }));
 }
+/** WHAT EACH FORMAT OF THIS TRADE KEEPS, `07 formats` (MODEL.md 8.7; plan step 34's third dispatch, 2026-09-19), keyed industry:<handle>:formats, built by id off the shard and the one net builder (formats_rows.ts) and drawn by the page's own card (industry/turn-two.tsx FormatsCard) at the 693 the wide seat of its 2-1 band takes at 1280 (the list in two columns of rows there, PART 5; one column under 600px of container): the mark list with no marks and no doors, the headline the set's middle at 30 in ink. Two shards: the exemplar (restaurants, five formats on the ladder's net, the trade's own 7% among them at a delta of zero) and a fill shard (cabinet making, four formats on the sector profile's residual under the profile basis). No shard holds under four, so the withheld state (bento-metric) has no story; and no extreme-name story, because a format name that wraps spills the declared row by 3px on 55 of 243 shards at this seat (industry_hero_facts.ts says why, with the count), the data track's fault and not a card's. */
+const formatsWhy = (f: NonNullable<ReturnType<typeof buildFormats>>) =>
+  f.state === "list" ? `industry block 07: ${f.rows.length} formats on the trade's net (${f.net.text}, the ${f.net.branch === "profile" ? "sector profile's residual" : "shard's ladder"}) plus each format's difference, highest first, the middle at 30 in ink, no marks, no doors` : `industry block 07 withheld: ${f.formats} of the four the list needs, the line where the list would stand`;
+export function pickIndustryFormatsInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "formats")).map(([h, i]) => ({ h, f: buildFormats(i.id) })).filter((x) => x.f && x.f.state === "list").map(({ h, f }) => ({ iso2: industryKey(h, "formats"), why: formatsWhy(f!) }));
+}
 export function MarkListStories({ instances = pickMarkListInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="mark-list">
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "formats")).map(([h, i]) => {
+        const f = buildFormats(i.id);
+        if (!f || f.state !== "list") return null;
+        return <Story kind="mark-list" key={industryKey(h, "formats")} iso2={industryKey(h, "formats")} why={formatsWhy(f)}><div style={{ maxWidth: 693 }}><FormatsCard id={`formats-industry-${h}`} formats={f} /></div></Story>;
+      })}
       {cell.filter((c) => cellServes(c.key, "rivals")).map((c) => {
         const r = buildRivals(c.seed);
         if (!r || r.state !== "list") return null;
         return <Story kind="mark-list" key={cellRivalsKey(c)} iso2={cellRivalsKey(c)} why={rivalsWhy(r)}><div style={{ maxWidth: 693 }}><RivalsCard id={`rivals-cell-${c.key}`} rivals={r} /></div></Story>;
       })}
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
         const cfg = MARK_LIST_STORIES[i.iso2];
         const d = cfg ? buildMarkList(cfg.key) : null;
         /* THE FLAG COMES FROM `CountryFlag` AND NOWHERE ELSE (its own law:
@@ -1767,10 +1805,20 @@ const CITY_SEAT_FORM: Record<"locals" | "neighbourhoods", { icon: "locals-know" 
   locals: { icon: "locals-know", maxWidth: 520 },
   neighbourhoods: { icon: "neighborhood", maxWidth: 693 },
 };
-export function pickBlockedSeatInstances(): Instance[] {
+export function pickBlockedSeatInstances(industry: IndustryPlacesInstance[] = []): Instance[] {
   const out: Instance[] = [
     { iso2: "GB:workforce", why: "block 07, the seat beside what staff cost; items 40 and 17 not gathered" },
     { iso2: "GB:easiest", why: "block 11, the seat beside the footing; item 8's addendum not gathered" },
+    /* THE INDUSTRY PAGE'S SEATED TABLE (MODEL.md 8.7 `06 places`; plan step
+       34's third dispatch, 2026-09-19), keyed industry:<handle>:places off
+       the slate the sheet resolves (the database), drawn by the page's own
+       card (industry/turn-two.tsx PlacesTable) at the table's full width
+       under the table's own sanction: the line names the count of own
+       figures the trade holds among the slate's cities and the floor of
+       four, the foot item 69. 243 of 243 trades stand seated under the
+       own-row law; the sheet draws the line's three forms (restaurants at
+       two, grocery stores at one, pet training at none). */
+    ...pickIndustryPlacesInstances(industry, "blocked-seat"),
   ];
   for (const block of ["setup", "peers", "money", "locals"] as SeatBlock[]) {
     const c = ["AF", ...codes()].find((x) => SEATED[block](x) != null);
@@ -1787,11 +1835,18 @@ export function pickBlockedSeatInstances(): Instance[] {
   out.push({ iso2: "cell:london:watch", why: "trade block 10 on the exemplar: the seat beside where sales come from; item 53 (causes of closure with shares) not gathered for any trade" });
   return out;
 }
-export function BlockedSeatStories({ instances = pickBlockedSeatInstances() }: { instances?: Instance[] }) {
+export function BlockedSeatStories({ instances = pickBlockedSeatInstances(), industry = [] }: { instances?: Instance[]; industry?: IndustryPlacesInstance[] }) {
   return (
     <div data-stories="blocked-seat">
       {instances.map((i) => {
         const parts = i.iso2.split(":");
+        if (parts[0] === "industry") {
+          /* The seated places table, drawn by the page's own card off the slate the sheet resolved for the handle (the picker holds only the seated ones). */
+          const inst = industry.find((x) => x.key === parts[1]);
+          const p = inst ? buildIndustryPlaces(inst.id, inst.across) : null;
+          const el = p && p.state === "blocked" ? <PlacesTable id={`places-industry-${parts[1]}`} places={p} /> : null;
+          return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
         if (parts[0] === "cell") {
           const el = parts[2] === "watch" ? (
             <div style={{ maxWidth: 520 }}>
@@ -1860,13 +1915,13 @@ export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }
    lists every archetype, its instance keys and the reason each was picked,
    each key a link to its story's section by id. Outside any stories wrapper,
    so the checker does not read it as a story. */
-export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHeroInstance[] = []): Record<string, Instance[]> {
+export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHeroInstance[] = [], industryPlaces: IndustryPlacesInstance[] = []): Record<string, Instance[]> {
   const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
     "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero), ...pickIndustryTakeInstances()],
     "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars")],
-    "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero)],
+    "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero), ...pickIndustryPlacesInstances(industryPlaces, "compare-table")],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
     "tiers-table": [...pickTiersTableInstances(), ...pickCellTeamInstances(cellHero)],
@@ -1875,13 +1930,13 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero)],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances(), ...pickIndustryOpenInstances()],
+    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances(), ...pickIndustryOpenInstances(), ...pickIndustryChannelsInstances()],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
-    "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list")],
-    "blocked-seat": pickBlockedSeatInstances(),
+    "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances()],
+    "blocked-seat": pickBlockedSeatInstances(industryPlaces),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
   };
 }

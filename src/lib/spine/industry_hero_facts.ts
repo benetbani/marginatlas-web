@@ -46,6 +46,7 @@
  */
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import type { AtlasIconId } from "@/components/brand/icons";
+import type { CityColumn } from "@/lib/markets/across_cities";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import { resolveTradeNet, type TradeNet } from "@/lib/spine/trade_net";
@@ -153,12 +154,62 @@ export const INDUSTRY_INSTANCES: Record<string, { id: string; why: string; block
   chiropractic: { id: "chiropractic", why: "the split withheld: the sector profile's lines and the ladder's net come to more than a hundred, the net still at 30, the stated line where the bar would stand", blocks: ["split"] },
   plumbers: { id: "plumbers", why: "a five-licence shard: the plus at its fullest, five rows by name with their days", blocks: ["open"] },
   "watch-repair": { id: "watch_jewelry_repair", why: "the thin shard: two licences (the plus at its floor), a crew of three, two years to pay back, the profile's lines", blocks: ["open", "pays"] },
+  /* Plan step 34's third dispatch (2026-09-19): turn two's shards, counted
+     against the database (scratchpad/step34c/places-count3.json) and the
+     shards. THE PLACES TABLE HAS NO DATA INSTANCE: under the own-row law
+     (industry_places_rows.ts) no trade holds four cities of their own, so
+     the block is seated on 243 of 243 and the sheet draws the seat in its
+     three lines: restaurants (two own figures of eight resolved, New York
+     read and London curated), grocery stores (one own of twelve resolved,
+     the most withheld) and pet training (nothing resolves, the none line).
+     Cabinet making is one of the 38 fill shards whose route resolves to
+     itself, with four formats and a four-part mix, so it serves the formats
+     on the profile's residual and the mix at four parts. NO EXTREME-NAME
+     STORY FOR THE FORMATS, and the reason is measured: a format name that
+     wraps to a second line spills MarkList's declared row by 3px (the
+     archetype's UNEQUAL, watched red on tiling's 65-character name at every
+     width), which is the copy fault PART 5 names ("a label over three words
+     is a copy fault reported by the harness, not a taller row"), the data
+     track's to shorten (QUEUE industry:format-names-over-three, item 71's
+     class); a red story on the sheet would stop the chain for a fault no
+     card can fix, so the count stands in the copy gate's line and the
+     report instead: 55 of 243 shards (70 rows) spill at the 693 seat and 81
+     (101 rows) at 375, the shortest spilling name 35 characters
+     (scratchpad/step34c/formats-spill.json, 2026-09-19). */
+  cabinets: { id: "cabinet_making", why: "a fill shard on the sector profile's residual: the formats on residual plus delta under the profile basis, and a four-part mix", blocks: ["formats", "channels"] },
+  grocery: { id: "grocery_stores", why: "twelve cities of the slate resolve and one is its own (London's curated entry): the seat naming one of fifteen, the most cities withheld", blocks: ["places"] },
+  "pet-training": { id: "pet_training", why: "no city of the slate resolves: the seat's none line", blocks: ["places"] },
 };
 
 /** Whether a handle serves a block's story: every block unless the handle names its own. */
 export function industryServes(handle: string, block: string): boolean {
   const inst = INDUSTRY_INSTANCES[handle];
   return !!inst && (!inst.blocks || inst.blocks.includes(block));
+}
+
+/** A places story's instance: the handle, its id and the slate resolved for it (the columns, or null for a trade the taxonomy does not hold). */
+export type IndustryPlacesInstance = { key: string; id: string; why: string; across: CityColumn[] | null };
+
+/**
+ * THE SLATE RESOLVED FOR THE PLACES STORIES (MODEL.md 8.7 `06 places`; plan
+ * step 34's third dispatch, 2026-09-19): the one industry block whose feed is
+ * the database, so its stories load the way the trade page's cell seeds do
+ * (trade_hero_facts.ts `loadCellHeroInstances`): async, the resolver imported
+ * on demand so this module's static graph stays free of the database client,
+ * one handle or every handle serving `places`. A handle the resolver cannot
+ * answer self-omits from the sheet.
+ */
+export async function loadIndustryPlacesInstances(handles: string[] = Object.keys(INDUSTRY_INSTANCES).filter((h) => industryServes(h, "places"))): Promise<IndustryPlacesInstance[]> {
+  const { resolveAcrossColumns } = await import("@/lib/markets/across_cities");
+  const out: IndustryPlacesInstance[] = [];
+  for (const key of handles) {
+    const inst = INDUSTRY_INSTANCES[key];
+    if (!inst || !industryServes(key, "places")) continue;
+    try {
+      out.push({ key, id: inst.id, why: inst.why, across: await resolveAcrossColumns(inst.id) });
+    } catch { /* a trade the resolver cannot answer self-omits from the stories */ }
+  }
+  return out;
 }
 
 /** How the 243 fall, counted rather than remembered, for the gates and the record. */

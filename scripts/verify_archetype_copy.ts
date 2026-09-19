@@ -81,6 +81,11 @@ import { buildBenchmark, countBenchmarkStates, BENCHMARK_FLOOR, BENCHMARK_ROWS_C
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
 import { buildIndustryOpen, countIndustryOpen, INDUSTRY_OPEN_CELLS } from "@/lib/spine/industry_open_rows";
 import { buildPays, countPays, PAYS_CELLS } from "@/lib/spine/pays_rows";
+import { buildIndustryPlaces, countIndustryPlaces, holdsBoth, withheldReason, PLACES_FLOOR } from "@/lib/spine/industry_places_rows";
+import { buildFormats, countFormats, FORMATS_METRICS, FORMAT_NAME_FITS } from "@/lib/spine/formats_rows";
+import { industryRows } from "@/lib/facts/industry_shard";
+import { MAJOR_CITIES } from "@/lib/markets/major_cities";
+import type { CityColumn } from "@/lib/markets/across_cities";
 import { monthsFigure, yearsFigure } from "@/lib/spine/open_rows";
 import { shareFigure } from "@/lib/spine/clears_rows";
 import { shardRoles } from "@/lib/spine/team_rows";
@@ -1833,6 +1838,185 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   ban("industry copy", [COPY.industryOpen.kicker, ...Object.values(COPY.industryPays.kickers), ...Object.values(COPY.industryOpen.cells)]);
   for (const k of [COPY.industryOpen.kicker, ...Object.values(COPY.industryPays.kickers)]) if (wordsOf(k) > 4) reds.push(`industry copy: a kicker runs over four words: "${k}"`);
   console.log(`industry turn one: the split on ${splits} of ${ids.length} trades (${splitDrawn} drawn, ${splitWithheld} withheld, every net the hero's); the open card on ${opens} (${openCount.threeCells} with three cells, ${openCount.withheldCells} cells withheld, the plus rows ${JSON.stringify(openCount.plusRows)}, ${plusRows} licences by name, ${openCount.zeroDay} with a licence's wait withheld); the bento on ${clusters} (${paysCount.withheldCells} cells withheld, ${rounded} crews rounded from a fraction: ${paysCount.rounded.join(", ")}; crews ${paysCount.crewMin} to ${paysCount.crewMax}, ${paysCount.over8} over eight, ${paysCount.under4} under four; the fixed part ${paysCount.fixedMin} to ${paysCount.fixedMax} of 100)`);
+}
+/* THE INDUSTRY PAGE'S TURN TWO (MODEL.md 8.7 `06 places`, `07 formats`, `08
+   channels`; plan step 34's third dispatch, 2026-09-19). THE PLACES TABLE is
+   pure over the slate's resolved columns and the slate is the database, so
+   its law is held on FIXTURES shaped as the resolver's columns (eight cities
+   of their own; cities short of a figure; a filled headline, a revenue
+   shared to the cent, a floored margin; the curated London entry; the seat
+   at three, two, one, none): A ROW IS THE CITY'S OWN (a city holding no
+   take-home or no margin, a headline revenue supplied from an anchor
+   (`revenueFilled`), a revenue shared to the cent with another city of the
+   slate, or a margin the clamp's floor (`netMarginFloored`) is never let
+   into the rows, is counted by reason, and the card says so once; the
+   curated London entry, whose figures rest on no revenue, is its own), the
+   rows the take-home highest first in the table's two units with the
+   country's flag code upper-cased and NO HOME ROW, the two heads and the
+   basis within their caps, the seat under four own cities with its line in
+   the idiom (opening "Not gathered yet:", naming the count of own figures
+   and the floor of four, fourteen words at most, the slate's size composed
+   in) and its foot naming item 69, and the floor the mark list's own
+   number. THE FORMATS over every one of the 243 ids, without the database:
+   ONE NET (R7), each row's figure the one net builder's figure with the
+   engine absent plus that format's own delta off the shard, the trade's net
+   the hero's to the digit, a format at a delta of zero printing the hero's
+   own figure, never a second net; every shard's formats drawn (four or
+   five, none under the floor today), highest first, the middle a figure
+   some row holds with its label counting the rows, the basis naming the
+   branch that printed the net and ending on modelled, the one printed form
+   the builder's whole percent. THE MIX at the world altitude: the same
+   cells, parts, leader and foot as the trade's card off one builder, only
+   the basis changed, naming no city. Every string through the register ban
+   and the placeholder check; the format names counted over three words and
+   over the row's width, never redded (the shard's own, the data track's).
+   Planted and watched go red 2026-09-19: a city without a margin let into
+   the rows, then a filled headline let in (the OWN ROW check), a format
+   ranked on the net plus one (the ONE NET check). */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+  const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+  const ids = ALL_INDUSTRIES.map((i) => i.id);
+  const slate = MAJOR_CITIES.length;
+  /* A column as the resolver shapes it: the fields the builder reads filled, the rest null; a distinct revenue per city unless one is given. */
+  type Opt = { revenue?: number; filled?: boolean; floored?: boolean; economics?: "curated" | "estimator" | null };
+  let rev = 400000;
+  const col = (slug: string, country: string, takeHome: number | null, net: number | null, o: Opt = {}): CityColumn => ({ name: slug.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" "), slug, country, href: `/${country}/${slug}/restaurants`, revenue: o.revenue ?? (rev += 12345.67), revP10: null, revP90: null, takeHome, netMarginFraction: net, densityPer10k: null, startupCostUsd: null, breakevenDaily: null, typicalDaily: null, survivalYr5: null, breakInScore: null, breakInBand: null, revenueFilled: o.filled ?? false, economics: o.economics === undefined ? "estimator" : o.economics, netMarginFloored: o.floored ?? false });
+  const eight = [col("new-york", "us", 25263, 0.0549), col("london", "gb", 36000, 0.05, { economics: "curated", filled: true }), col("paris", "fr", 12995, 0.031), col("madrid", "es", 12800, 0.032), col("barcelona", "es", 12700, 0.033), col("berlin", "de", 16477, 0.038), col("amsterdam", "nl", 18482, 0.0427), col("tokyo", "jp", 13077, 0.0302)];
+  const table = buildIndustryPlaces("restaurants", eight);
+  if (!table || table.state !== "table") reds.push("industry places: eight cities of their own do not draw the table");
+  else {
+    if (table.rows.length !== 8 || table.holding !== 8 || table.resolved !== 8 || table.withheld !== 0 || table.note !== null || table.line !== null || table.foot !== null) reds.push(`industry places: the eight-city table's counts are off (${table.rows.length} rows, ${table.holding} holding, ${table.withheld} withheld, note ${table.note ? "present" : "absent"})`);
+    if (table.rows.some((r) => r.home)) reds.push("industry places: a home row on a page with no home");
+    if (table.rows[0]?.key !== "london" || table.rows[1]?.key !== "new-york") reds.push(`industry places: the rows are not take-home highest first (${table.rows.map((r) => r.key).join(", ")})`);
+    for (let r = 1; r < table.rows.length; r++) if ((table.rows[r].values.takeHome ?? 0) > (table.rows[r - 1].values.takeHome ?? 0)) reds.push(`industry places: the rows are not take-home highest first at ${table.rows[r].key}`);
+    const ny = table.rows.find((r) => r.key === "new-york");
+    if (!ny || ny.values.takeHome !== 25263 || ny.values.netMargin !== 5 || ny.iso2 !== "US" || ny.name !== "New York") reds.push(`industry places: New York's row is not the column's figures in the table's units (${JSON.stringify(ny)})`);
+    if (table.columns.map((c) => `${c.key}:${c.unit}:${c.best}`).join(",") !== "takeHome:usd:max,netMargin:pct:max") reds.push(`industry places: the columns are not take-home in currency and net margin in percent, both best at max (${table.columns.map((c) => c.key).join(", ")})`);
+    for (const c of table.columns) if (wordsOf(c.head) > 4) reds.push(`industry places: the head "${c.head}" runs over four words`);
+    if (table.entityHead !== COPY.industryPlaces.cols.city) reds.push("industry places: the entity head is not the copy table's");
+    if (wordsOf(table.caveat) > 14 || !/modelled\.$/.test(table.caveat)) reds.push(`industry places: the basis runs ${wordsOf(table.caveat)} words or does not end on modelled ("${table.caveat}")`);
+    if (table.confidence !== "modeled") reds.push("industry places: the table is not marked modelled (the estimator's model over the cell's revenue)");
+    ban("industry places", [table.caveat, table.entityHead, ...table.columns.map((c) => c.head), ...table.rows.map((r) => r.name)]);
+  }
+  /* A ROW IS THE CITY'S OWN: a city short of a figure, on a filled headline, on a shared revenue or on the floor is counted by reason and said once, never drawn. */
+  const notOwn = [
+    col("miami", "us", 30000, null),
+    col("chicago", "us", null, 0.04),
+    col("toronto", "ca", 0, 0.04),
+    col("los-angeles", "us", 40000, 0.05, { filled: true }),
+    col("sydney", "au", 41000, 0.05, { revenue: 777777.77 }),
+    col("dubai", "ae", 42000, 0.05, { revenue: 777777.77 }),
+    col("singapore", "sg", 15000, 0.03, { floored: true }),
+  ];
+  const mixed = buildIndustryPlaces("restaurants", [...eight, ...notOwn]);
+  if (!mixed || mixed.state !== "table") reds.push("industry places: the eight-city table with seven cities not their own does not draw");
+  else {
+    for (const c of notOwn) if (mixed.rows.some((r) => r.key === c.slug)) reds.push(`industry places: OWN ROW: ${c.slug} is let into the rows (${withheldReason(c, [...eight, ...notOwn]) ?? "its own?"})`);
+    if (mixed.rows.some((r) => !isNum(r.values.takeHome) || !isNum(r.values.netMargin))) reds.push("industry places: OWN ROW: a row prints a dash where the builder should have let the city out");
+    if (mixed.resolved !== 15 || mixed.holding !== 8 || mixed.withheld !== 7) reds.push(`industry places: the cities not their own are not counted (${mixed.resolved} resolved, ${mixed.holding} holding, ${mixed.withheld} withheld)`);
+    if (mixed.reasons.missing !== 3 || mixed.reasons.filled !== 1 || mixed.reasons.shared !== 2 || mixed.reasons.floored !== 1) reds.push(`industry places: the reasons are miscounted (${JSON.stringify(mixed.reasons)})`);
+    if (mixed.note !== COPY.industryPlaces.withheldMany.replace("{n}", "7")) reds.push(`industry places: the note does not count the seven cities withheld ("${mixed.note}")`);
+    if (mixed.note && wordsOf(mixed.note) > 14) reds.push(`industry places: the note runs ${wordsOf(mixed.note)} words ("${mixed.note}")`);
+    ban("industry places", [mixed.note ?? ""]);
+  }
+  if (withheldReason(col("x", "gb", 36000, 0.05, { economics: "curated", filled: true }), []) !== null) reds.push("industry places: the curated London entry is not its own");
+  if (withheldReason(col("x", "us", 100, 0.05, { filled: true }), []) !== "filled") reds.push("industry places: a filled headline is not withheld as filled");
+  if (withheldReason(col("x", "us", 100, 0.05, { floored: true }), []) !== "floored") reds.push("industry places: a floored margin is not withheld as floored");
+  const one = buildIndustryPlaces("restaurants", [...eight, col("miami", "us", 30000, null)]);
+  if (!one || one.note !== COPY.industryPlaces.withheldOne) reds.push(`industry places: one city withheld does not take the one-city note ("${one?.note}")`);
+  /* THE SEAT under four own cities, and its line at each count; a filled slate seats the block whatever it resolves. */
+  const seatLine = (n: number) => (n === 0 ? COPY.industryPlaces.blocked.none.replace("{slate}", String(slate)) : n === 1 ? COPY.industryPlaces.blocked.one.replace("{slate}", String(slate)) : COPY.industryPlaces.blocked.some.replace("{n}", String(n)).replace("{slate}", String(slate)));
+  for (const n of [0, 1, 2, 3]) {
+    const p = buildIndustryPlaces("restaurants", [...eight.slice(0, n), ...notOwn.slice(3)]);
+    if (!p || p.state !== "blocked") { reds.push(`industry places: ${n} own cities do not seat the block`); continue; }
+    if (p.rows.length !== 0 || p.holding !== n || p.withheld !== 4) reds.push(`industry places: the seat at ${n} draws rows or miscounts (${p.rows.length} rows, ${p.holding} holding, ${p.withheld} withheld)`);
+    if (p.line !== seatLine(n)) reds.push(`industry places: the seat's line at ${n} is not the copy table's composed ("${p.line}")`);
+    if (!p.line || !p.line.startsWith("Not gathered yet: ")) reds.push(`industry places: the seat's line at ${n} is not in the idiom ("${p.line}")`);
+    if (p.line && wordsOf(p.line) > 14) reds.push(`industry places: the seat's line at ${n} runs ${wordsOf(p.line)} words, over fourteen ("${p.line}")`);
+    if (p.line && !p.line.includes(String(slate))) reds.push(`industry places: the seat's line at ${n} does not name the slate's size ${slate}`);
+    if (n > 0 && p.line && !p.line.includes(n === 1 ? "one of" : `${n} of`)) reds.push(`industry places: the seat's line at ${n} does not name the count it holds ("${p.line}")`);
+    if (p.line && !/a table needs four\.$/.test(p.line)) reds.push(`industry places: the seat's line at ${n} does not say a table needs four ("${p.line}")`);
+    if (p.foot !== COPY.industryPlaces.blocked.foot || !/item 69\.$/.test(p.foot ?? "")) reds.push(`industry places: the seat's foot does not name item 69 ("${p.foot}")`);
+    ban(`industry places seat ${n}`, [p.line ?? "", p.foot ?? ""]);
+  }
+  const four = buildIndustryPlaces("restaurants", eight.slice(0, 4));
+  if (!four || four.state !== "table" || four.rows.length !== 4) reds.push("industry places: four own cities do not draw the table (the floor is four)");
+  if (PLACES_FLOOR !== MARK_LIST_FLOOR || PLACES_FLOOR !== 4) reds.push(`industry places: the floor is ${PLACES_FLOOR}, not the mark list's four`);
+  if (buildIndustryPlaces("restaurants", undefined) !== null) reds.push("industry places: no lookup (undefined) builds a card");
+  if (buildIndustryPlaces("restaurants", null) !== null) reds.push("industry places: a trade the taxonomy does not hold (null) builds a card");
+  if (buildIndustryPlaces(undefined, eight) !== null) reds.push("industry places: no id builds a card");
+  if (!holdsBoth(eight[0]) || holdsBoth(col("x", "us", null, 0.1)) || holdsBoth(col("x", "us", 100, null)) || holdsBoth(col("x", "us", 0, 0.1))) reds.push("industry places: holdsBoth does not hold both");
+  const counted = countIndustryPlaces([{ id: "restaurants", across: eight }, { id: "cafes_coffee", across: eight.slice(0, 3) }, { id: "bakeries", across: [] }, { id: "no_such_trade", across: null }, { id: "bars_nightclubs", across: notOwn }]);
+  if (counted.total !== 4 || counted.table !== 1 || counted.blocked !== 3 || counted.none !== 1 || counted.withheld !== 7 || counted.reasons.shared !== 2) reds.push(`industry places: the counter is off (${JSON.stringify(counted)})`);
+  ban("industry copy", [COPY.industryPlaces.kicker, COPY.industryFormats.kicker, ...Object.values(COPY.industryPlaces.cols), ...Object.values(COPY.industryFormats.head), COPY.industryMix.basis]);
+  if (wordsOf(COPY.industryPlaces.kicker) > 4 || wordsOf(COPY.industryFormats.kicker) > 4) reds.push("industry copy: a kicker runs over four words");
+
+  /* THE FORMATS over 243 ids. */
+  const formatsCount = countFormats(ids);
+  let formatsCards = 0, zeroDelta = 0, profileBasis = 0;
+  for (const id of ids) {
+    const f = buildFormats(id);
+    const n = resolveTradeNet(id, { moneyShown: false, netMarginPct: null });
+    const hero = industryHeroFacts(id);
+    if (!f || !n || !hero) { reds.push(`industry formats ${id}: no card, no net or no hero for a taxonomy id`); continue; }
+    formatsCards++;
+    const names = industryRows(id, FORMATS_METRICS.name);
+    const deltas = new Map(industryRows(id, FORMATS_METRICS.delta).map((d) => [d.rowKey, d.value] as const));
+    if (f.net.pct !== n.pct || f.net.text !== n.text || f.net.branch !== n.branch) reds.push(`industry formats ${id}: ONE NET: the card's net (${f.net.text}, ${f.net.branch}) is not the one builder's (${n.text}, ${n.branch})`);
+    if (!hero.answer || hero.answer.value !== f.net.text) reds.push(`industry formats ${id}: ONE NET: the card's net (${f.net.text}) is not the hero's (${hero.answer?.value ?? "absent"})`);
+    if (f.state !== "list" || f.rows.length !== names.length || f.formats !== names.length) reds.push(`industry formats ${id}: ${f.rows.length} rows drawn of ${names.length} formats on file (state ${f.state})`);
+    if (f.rows.length < MARK_LIST_FLOOR) reds.push(`industry formats ${id}: ${f.rows.length} rows, under the floor of four`);
+    for (const r of f.rows) {
+      const delta = deltas.get(r.key);
+      if (!isNum(delta) || r.delta !== delta || r.value !== n.pct + delta) reds.push(`industry formats ${id}: ONE NET: the row ${r.key} (${r.value}) is not the one net (${n.pct}) plus the shard's delta (${delta})`);
+      if (delta === 0) { zeroDelta++; if (f.fmt(r.value) !== hero.answer?.value) reds.push(`industry formats ${id}: a format at a delta of zero prints ${f.fmt(r.value)}, not the hero's ${hero.answer?.value}`); }
+      if (!r.name) reds.push(`industry formats ${id}: a row with no name`);
+      if (/^[-+]/.test(f.fmt(r.value))) reds.push(`industry formats ${id}: a signed figure in a row ("${f.fmt(r.value)}")`);
+    }
+    for (let r = 1; r < f.rows.length; r++) if (f.rows[r].value > f.rows[r - 1].value) reds.push(`industry formats ${id}: the rows are not highest first (${f.rows[r - 1].name} before ${f.rows[r].name})`);
+    if (f.middle == null || !f.rows.some((r) => r.value === f.middle)) reds.push(`industry formats ${id}: the middle (${f.middle}) is not a figure some row holds`);
+    const sorted = [...f.rows.map((r) => r.value)].sort((a, b) => a - b);
+    if (f.middle !== sorted[Math.floor((sorted.length - 1) / 2)]) reds.push(`industry formats ${id}: the middle (${f.middle}) is not the lower median`);
+    if (f.middleLabel !== COPY.markList.middleOfDrawn.replace("{n}", f.rows.length === 4 ? "four" : "five")) reds.push(`industry formats ${id}: the middle's label does not count the rows ("${f.middleLabel}")`);
+    if (f.fmt(n.pct) !== n.text) reds.push(`industry formats ${id}: the formatter is not the one builder's printed form (${f.fmt(n.pct)} against ${n.text})`);
+    const expectedBasis = n.branch === "profile" ? COPY.industryFormats.basisProfile : COPY.industryFormats.basisShard;
+    if (f.basis !== expectedBasis) reds.push(`industry formats ${id}: the basis does not name the branch that printed the net (${n.branch})`);
+    if (n.branch === "profile") profileBasis++;
+    if (wordsOf(f.basis) > 14 || !/modelled\.$/.test(f.basis)) reds.push(`industry formats ${id}: the basis runs ${wordsOf(f.basis)} words or does not end on modelled ("${f.basis}")`);
+    if (/city|London/i.test(f.basis)) reds.push(`industry formats ${id}: the basis names a city ("${f.basis}")`);
+    if (f.head.name !== COPY.industryFormats.head.name || f.head.value !== COPY.industryFormats.head.value) reds.push(`industry formats ${id}: the heads are not the copy table's`);
+    if (f.sample !== true || f.confidence !== "modeled") reds.push(`industry formats ${id}: the card is not marked modelled (R12)`);
+    if (f.stateLine != null) reds.push(`industry formats ${id}: a state line in the list state`);
+    ban(`industry formats ${id}`, [f.basis, f.kicker, f.head.name, f.head.value, f.middleLabel, ...f.rows.map((r) => r.name)]);
+  }
+  if (formatsCount.cards !== formatsCards || formatsCount.profile !== profileBasis) reds.push(`industry formats: the count (${formatsCount.cards} cards, ${formatsCount.profile} on the profile) and the sweep (${formatsCards}, ${profileBasis}) disagree`);
+  if (buildFormats("no_such_trade") !== null || buildFormats(undefined) !== null) reds.push("industry formats: a trade with no shard builds a card");
+  /* The withheld state, on a fixture no shard reaches: the copy table's line with the count in words, opening the idiom. */
+  const stateOne = COPY.industryFormats.state.replace("{k}", "one");
+  if (!stateOne.startsWith("Not gathered yet: ") || wordsOf(stateOne) > 14) reds.push(`industry formats: the state line is not in the idiom or runs over fourteen words ("${stateOne}")`);
+  ban("industry formats state", [stateOne, COPY.industryFormats.basisShard, COPY.industryFormats.basisProfile]);
+
+  /* THE MIX at the world altitude, over 243 ids: one builder, one card, only the basis changed. */
+  let worldMix = 0;
+  for (const id of ids) {
+    const w = buildMix(id, "world");
+    const p = buildMix(id);
+    if (!w || !p) { reds.push(`industry channels ${id}: no card off a shard that holds channels`); continue; }
+    worldMix++;
+    if (w.basis !== COPY.industryMix.basis || /city/i.test(w.basis)) reds.push(`industry channels ${id}: the world basis names a city or is not the copy table's ("${w.basis}")`);
+    if (w.foot !== p.foot || w.withheld !== p.withheld || JSON.stringify(w.cells) !== JSON.stringify(p.cells) || JSON.stringify(w.parts) !== JSON.stringify(p.parts) || JSON.stringify(w.leader) !== JSON.stringify(p.leader)) reds.push(`industry channels ${id}: the world card and the trade card disagree off one builder`);
+    if (w.altitude !== "world" || p.altitude !== "place") reds.push(`industry channels ${id}: the altitude is not carried`);
+    if (wordsOf(w.basis) > 14) reds.push(`industry channels ${id}: the basis runs ${wordsOf(w.basis)} words`);
+    ban(`industry channels ${id}`, [w.basis, w.foot]);
+  }
+  console.log(`industry turn two: the places table's laws held on fixtures (eight cities of their own, seven not their own by four reasons, the seat at 0, 1, 2 and 3 own cities, the floor at four, the slate ${slate}); the formats on ${formatsCards} of ${ids.length} trades (${JSON.stringify(formatsCount.byCount)} by format count, ${formatsCount.rows} rows, ${formatsCount.ladder} on the ladder and ${formatsCount.profile} on the sector profile's residual, ${zeroDelta} rows at a delta of zero printing the hero's figure; ${formatsCount.longNames} names over three words and ${formatsCount.wideNames} over ${FORMAT_NAME_FITS} characters on ${formatsCount.wideShards} shards, the shard's own names, counted and not redded); the mix at the world altitude on ${worldMix}`);
 }
 console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);

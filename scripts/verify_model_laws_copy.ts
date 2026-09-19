@@ -118,6 +118,8 @@ import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
 import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
 import { buildPays, PAYS_CELLS } from "@/lib/spine/pays_rows";
+import { buildFormats, FORMAT_NAME_FITS } from "@/lib/spine/formats_rows";
+import { MAJOR_CITIES } from "@/lib/markets/major_cities";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { ALL_INDUSTRIES } from "@/lib/taxonomy";
 import { readdirSync } from "node:fs";
@@ -912,6 +914,47 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     for (const [text, id] of openLines) heads.push([`buildIndustryOpen(${id})`, text]);
     for (const [text, id] of paysLines) heads.push([`buildPays(${id})`, text]);
     console.log(`industry turn one: ${splitLines.size} split lines, ${openLines.size} open lines, ${paysLines.size} bento lines over ${ids.length} trades`);
+  }
+
+  /* THE INDUSTRY PAGE'S TURN TWO (MODEL.md 8.7 `06 places`, `07 formats`, `08
+     channels`; plan step 34's third dispatch, 2026-09-19). The places table's
+     kicker, its three column heads and its basis by key; its seat's three
+     lines composed with the slate's size and a count, its foot and its two
+     notes (the many form composed), because the slate is the database and
+     the composed forms are what a reader meets. The formats' kicker, the two
+     heads, the two bases and the state line (composed with a count) by key,
+     and the bases the 243 compose off the shipped builder (deduplicated:
+     two, one per branch). THE FORMAT NAMES ARE THE SHARDS' OWN and are
+     counted here as the benchmark's taxonomy names are, never redded: the
+     distinct names over three words, and the distinct names over the row's
+     width (FORMAT_NAME_FITS, the width measured to spill the mark list's
+     one-line row), both the data track's (item 71's class). The mix's world
+     basis by key. */
+  {
+    const ids = ALL_INDUSTRIES.map((i) => i.id);
+    const slate = String(MAJOR_CITIES.length);
+    heads.push(["COPY.industryPlaces.kicker", COPY.industryPlaces.kicker], ["COPY.industryPlaces.basis", COPY.industryPlaces.basis], ["COPY.industryPlaces.withheldOne", COPY.industryPlaces.withheldOne], ["COPY.industryPlaces.withheldMany(2)", COPY.industryPlaces.withheldMany.replace("{n}", "2")]);
+    for (const [key, text] of Object.entries(COPY.industryPlaces.cols)) heads.push([`COPY.industryPlaces.cols.${key}`, text]);
+    heads.push(["COPY.industryPlaces.blocked.none", COPY.industryPlaces.blocked.none.replace("{slate}", slate)], ["COPY.industryPlaces.blocked.one", COPY.industryPlaces.blocked.one.replace("{slate}", slate)], ["COPY.industryPlaces.blocked.some(3)", COPY.industryPlaces.blocked.some.replace("{n}", "3").replace("{slate}", slate)], ["COPY.industryPlaces.blocked.foot", COPY.industryPlaces.blocked.foot]);
+    heads.push(["COPY.industryFormats.kicker", COPY.industryFormats.kicker], ["COPY.industryFormats.head.name", COPY.industryFormats.head.name], ["COPY.industryFormats.head.value", COPY.industryFormats.head.value], ["COPY.industryFormats.state(one)", COPY.industryFormats.state.replace("{k}", "one")]);
+    heads.push(["COPY.industryMix.basis", COPY.industryMix.basis]);
+    const formatBases = new Map<string, string>();
+    const labels = new Map<string, string>();
+    const longNames = new Set<string>();
+    const wideNames = new Set<string>();
+    for (const id of ids) {
+      const f = buildFormats(id);
+      if (!f) continue;
+      if (!formatBases.has(f.basis)) formatBases.set(f.basis, id);
+      if (!labels.has(f.middleLabel)) labels.set(f.middleLabel, id);
+      for (const r of f.rows) {
+        if (r.name.trim().split(/\s+/).filter(Boolean).length > 3) longNames.add(r.name);
+        if (r.name.length > FORMAT_NAME_FITS) wideNames.add(r.name);
+      }
+    }
+    for (const [text, id] of formatBases) heads.push([`buildFormats(${id}).basis`, text]);
+    for (const [text, id] of labels) heads.push([`buildFormats(${id}).middleLabel`, text]);
+    console.log(`industry turn two: ${formatBases.size} format bases (one per branch) and ${labels.size} middle labels over ${ids.length} trades; ${longNames.size} distinct format names over three words and ${wideNames.size} over ${FORMAT_NAME_FITS} characters stand in the formats' rows, a copy fault in the shards the rendered laws list and the archetype harness report page by page, not redded here`);
   }
 
   for (const [where, text] of heads) {
