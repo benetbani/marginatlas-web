@@ -149,6 +149,10 @@ export const INDUSTRY_INSTANCES: Record<string, { id: string; why: string; block
   "alarm-systems": { id: "alarm_systems_install", why: "the ladder is the file's fill and the cost is the table's default: the sector profile's residual as the answer with its own basis, the cost withheld in the foot", blocks: ["take"] },
   telecom: { id: "telecom", why: "a two-member sector with both members on the fill: the benchmark withheld, the not-gathered line where the rows would stand (a retired trade, drawn by id)", blocks: ["benchmark"] },
   "game-dev": { id: "game_dev_studios", why: "a three-member sector, every member holding a figure: the short table under the floor line", blocks: ["benchmark"] },
+  /* Plan step 34's second dispatch (2026-09-18): turn one's thin shards. */
+  chiropractic: { id: "chiropractic", why: "the split withheld: the sector profile's lines and the ladder's net come to more than a hundred, the net still at 30, the stated line where the bar would stand", blocks: ["split"] },
+  plumbers: { id: "plumbers", why: "a five-licence shard: the plus at its fullest, five rows by name with their days", blocks: ["open"] },
+  "watch-repair": { id: "watch_jewelry_repair", why: "the thin shard: two licences (the plus at its floor), a crew of three, two years to pay back, the profile's lines", blocks: ["open", "pays"] },
 };
 
 /** Whether a handle serves a block's story: every block unless the handle names its own. */

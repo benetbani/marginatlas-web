@@ -119,15 +119,38 @@ export const HATCH: string[] = [
  *  founder's hardest rule on this task is that a breakdown which does not
  *  add up is worse than none. Floor every share, then hand the leftover
  *  whole points to the largest fractional remainders first (the largest-
- *  remainder method): the DISPLAYED digits always sum to exactly 100,
- *  without touching the underlying shares the bar and the harness both
- *  measure. */
-function roundToHundred(values: Array<{ key: string; value: number }>): Record<string, number> {
+ *  remainder method): the DISPLAYED digits always sum to exactly the total
+ *  asked for, without touching the underlying shares the bar and the
+ *  harness both measure.
+ *
+ *  THE NET IS NOT IN THIS SET ANY MORE (plan step 34's second dispatch,
+ *  2026-09-18). It was, and the rounding could land the spare point on a
+ *  cost line and leave the net a point under its own printed form: the
+ *  restaurants shard's ladder net is 6.5, the one net builder prints it as
+ *  7% on the industry hero (trade_net.ts, `netText`, a plain round), and
+ *  this card printed 6% in its focal and its legend, one figure at two
+ *  values on one page, the exact fault R7 exists to stop (MODEL.md PART 9
+ *  clause 42); measured on the 230 drawn industry pages, 30 disagreed by a
+ *  point. The trade page's copy gate compared the builders' strings and
+ *  never the card's digits, so it passed. Now the net prints as the one
+ *  builder does (`Math.round`, the same arithmetic as `netText`) and the
+ *  COST shares reconcile to what is left of the hundred, so the net a
+ *  reader meets on the opening card and on this one is one figure and the
+ *  digits still sum to 100. A surplus (integer shares whose sum runs a
+ *  point past the target, possible only inside the residual law's
+ *  half-point tolerance) comes off the largest share, the smallest relative
+ *  distortion; no shard reaches it today, counted. */
+function roundToTotal(values: Array<{ key: string; value: number }>, total: number): Record<string, number> {
   const floored = values.map((v) => ({ key: v.key, floor: Math.floor(v.value), rem: v.value - Math.floor(v.value) }));
-  const deficit = Math.max(0, 100 - floored.reduce((a, f) => a + f.floor, 0));
-  const bump = new Set([...floored].sort((a, b) => b.rem - a.rem).slice(0, deficit).map((f) => f.key));
+  const sum = floored.reduce((a, f) => a + f.floor, 0);
   const out: Record<string, number> = {};
-  for (const f of floored) out[f.key] = f.floor + (bump.has(f.key) ? 1 : 0);
+  if (sum <= total) {
+    const bump = new Set([...floored].sort((a, b) => b.rem - a.rem).slice(0, total - sum).map((f) => f.key));
+    for (const f of floored) out[f.key] = f.floor + (bump.has(f.key) ? 1 : 0);
+  } else {
+    const trim = new Set([...floored].sort((a, b) => b.floor - a.floor).slice(0, sum - total).map((f) => f.key));
+    for (const f of floored) out[f.key] = f.floor - (trim.has(f.key) ? 1 : 0);
+  }
   return out;
 }
 
@@ -136,8 +159,9 @@ export function IncomeBreakdown({ id, kicker, netPct, segments, basis, icon, net
   if (!Number.isFinite(netPct)) return null;
   if (!withheld && live.length < 2) return null;
 
-  const rounded = roundToHundred([...live.map((s) => ({ key: s.key, value: s.share })), { key: NET_KEY, value: netPct }]);
-  const netShown = withheld ? Math.round(netPct) : rounded[NET_KEY];
+  /* The net's printed form is the one builder's (a plain round); the cost shares take what is left of the hundred. */
+  const netShown = Math.round(netPct);
+  const rounded: Record<string, number> = { ...roundToTotal(live.map((s) => ({ key: s.key, value: s.share })), 100 - netShown), [NET_KEY]: netShown };
   const ariaLabel = `${netLabel} ${netShown} percent. ${withheld ? withheld : live.map((s) => `${s.label} ${rounded[s.key]} percent`).join(", ") + "."}`;
 
   return (

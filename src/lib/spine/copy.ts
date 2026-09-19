@@ -1615,6 +1615,74 @@ export const COPY = {
     where: "Where it pays, and what to sell",
     trade: TRADE_CHAPTER,
   },
+  /** `03 split` at the world altitude (8.7; plan step 34's second dispatch,
+   *  2026-09-18) carries NO strings of its own: it is the trade's card off
+   *  the trade's builder (split_rows.ts, `buildIndustrySplit`), so the
+   *  kicker (his name for the B6 seat, M15), the two basis lines, the
+   *  withheld line, the foot and the plus are `tradeSplit`'s, one literal on
+   *  both pages, as `01 lasts` shares `tradeLasts`'s.
+   *
+   *  `04 open` (8.7): the kicker is four words in a person's mouth for the
+   *  spine's question ("what it takes to be allowed to open the doors"); the
+   *  three cell labels are read aloud under it ("Opening the doors: licences
+   *  to hold, 4; the slowest licence, 75 days; to break even, 6 months"), a
+   *  noun phrase each, the unit in the figure, never a word where a figure
+   *  goes (the cost band word is not printed, PART 5); the basis is the
+   *  shard-fed cards' sentence with no city clause, the brief's own; the foot
+   *  says the three are modelled in words (R12), because the sample mark is
+   *  behind his switch. The plus's summary is one line a person says; its
+   *  rows are the licences by name with their days, the permits' own cells,
+   *  and its withheld line counts a licence with no wait on file (the
+   *  permits' one). A cell whose figure is not on file is withheld with its
+   *  line in the site's idiom (M19; no shard today, 243 hold all three). */
+  industryOpen: {
+    kicker: "Opening the doors",
+    cells: { licences: "Licences to hold", slowest: "The slowest licence", breakEven: "To break even" },
+    basis: "Typical for the trade anywhere.",
+    foot: "The count, the waits and the months are modelled.",
+    detail: {
+      summary: "The licences, by name",
+      withheldOne: "One licence has no wait on file and is not listed.",
+      withheldMany: "{n} licences have no wait on file and are not listed.",
+    },
+    withheld: {
+      licences: "Not gathered yet: the licences to hold.",
+      slowest: "Not gathered yet: how long the slowest licence takes.",
+      breakEven: "Not gathered yet: the months to break even.",
+    },
+  },
+  /** `05 pays` (8.7; the same dispatch): the bento's openers, each within
+   *  PART 7's four words and read aloud over its figure ("Until it pays
+   *  back, 2.5 years"; "The starting crew, 11"; "Fixed costs, 30 of 100";
+   *  the share cell takes the trade page's own opener for the same field,
+   *  `tradeClears`'s "When it clears costs", one literal for one figure at
+   *  two altitudes, M20). Each cell's basis says what its figure is and that
+   *  it is modelled (R12), within fourteen words, because the cluster has no
+   *  line of its own and the sample mark is behind his switch; the crew's
+   *  second basis is the premises' idiom for a whole the drawing had to
+   *  round (a fraction of a person on three shards). The withheld lines
+   *  stand where a figure would when the shard does not hold it (no shard
+   *  today, 243 of 243 hold all four); the crew's is for a shard whose
+   *  roles add to nothing, the fixed part's second for a share over 100
+   *  that is not a share (the market's guard). */
+  industryPays: {
+    kickers: { crew: "The starting crew", payback: "Until it pays back", fixed: "Fixed costs" },
+    basis: {
+      crew: "The people a typical one opens with; modelled.",
+      crewRounded: "The people a typical one opens with, rounded to whole people; modelled.",
+      payback: "Years until the capital put in comes back; typical for the trade, modelled.",
+      /** The whole is said the way the market's count cells say it ("of every 100"); the part is what stands whatever it sells. */
+      fixed: "Of every $100 of costs, the part paid whatever it sells; modelled.",
+      share: "Of a typical day's takings, the share that clears the costs; modelled.",
+    },
+    withheld: {
+      crew: "Not gathered yet: who a typical one opens with.",
+      payback: "Not gathered yet: the years until the capital comes back.",
+      fixed: "Not gathered yet: the fixed part of the costs.",
+      fixedNotAShare: "The fixed part of the costs on file is not a share of 100.",
+      share: "Not gathered yet: the share of a day that clears the costs.",
+    },
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

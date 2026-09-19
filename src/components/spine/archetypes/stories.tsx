@@ -77,6 +77,10 @@ import { ALL_INDUSTRIES } from "@/lib/taxonomy";
 import { industryHeroFacts, INDUSTRY_INSTANCES, industryServes } from "@/lib/spine/industry_hero_facts";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { Masthead as IndustryMasthead, BenchmarkCard } from "@/components/spine/industry/opening";
+import { OpenCard as IndustryOpenCard, paysCells } from "@/components/spine/industry/turn-one";
+import { buildIndustrySplit } from "@/lib/spine/split_rows";
+import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
+import { buildPays } from "@/lib/spine/pays_rows";
 
 export type Instance = { iso2: string; why: string };
 
@@ -928,6 +932,11 @@ const industryLastsWhy = (l: NonNullable<ReturnType<typeof buildLasts>>) => `ind
 export function pickIndustryLastsInstances(): Instance[] {
   return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "lasts")).map(([h, i]) => ({ h, l: buildLasts(i.id, "world") })).filter((x) => x.l).map(({ h, l }) => ({ iso2: industryKey(h, "lasts"), why: industryLastsWhy(l!) }));
 }
+/** THE INDUSTRY'S LICENCE CARD, `04 open` (MODEL.md 8.7; plan step 34's second dispatch, 2026-09-18), keyed industry:<handle>:open, built by id off the shard through the trade's permits and open builders (industry_open_rows.ts) and drawn by the page's own card (industry/turn-one.tsx OpenCard) at the 347 the narrow seat of its 2-1 band takes at 1280: the exemplar (restaurants, four licences, the liquor licence's 75 days the slowest, six months to break even, the plus with four rows), a five-licence shard (plumbers, the plus at its fullest) and the two-licence shard (watch repair, the plus at its two-row floor). */
+const industryOpenWhy = (o: NonNullable<ReturnType<typeof buildIndustryOpen>>) => `industry block 04: ${o.cells.length} cells at the head rung (${o.cells.map((c) => `${c.label.toLowerCase()} ${c.value}`).join(", ")}), the plus with ${o.detail?.rows.length ?? 0} licences by name${o.detail?.withheldLine ? " and one withheld" : ""}${o.withheld.length ? `, ${o.withheld.length} cell(s) withheld with a line` : ""}`;
+export function pickIndustryOpenInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => ({ h, o: buildIndustryOpen(i.id) })).filter((x) => x.o).map(({ h, o }) => ({ iso2: industryKey(h, "open"), why: industryOpenWhy(o!) }));
+}
 export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="kv-grid">
@@ -935,6 +944,11 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
         const l = buildLasts(i.id, "world");
         if (!l) return null;
         return <Story kind="kv-grid" key={industryKey(h, "lasts")} iso2={industryKey(h, "lasts")} why={industryLastsWhy(l)}><div style={{ maxWidth: 347 }}><LastsCard id={`lasts-industry-${h}`} lasts={l} /></div></Story>;
+      })}
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => {
+        const o = buildIndustryOpen(i.id);
+        if (!o) return null;
+        return <Story kind="kv-grid" key={industryKey(h, "open")} iso2={industryKey(h, "open")} why={industryOpenWhy(o)}><div style={{ maxWidth: 347 }}><IndustryOpenCard id={`open-industry-${h}`} open={o} /></div></Story>;
       })}
       {cell.filter((c) => cellServes(c.key, "permits")).map((c) => {
         const p = buildPermits(c.seed?.meta?.industry_id);
@@ -1189,6 +1203,11 @@ export function pickCellSplitInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "split")).map((c) => ({ c, s: buildSplit(c.seed) })).filter((x) => x.s).map(({ c, s }) => ({ iso2: cellSplitKey(c), why: splitWhy(s!) }));
 }
 
+/** THE INDUSTRY'S SPLIT, `03 split` (MODEL.md 8.7; plan step 34's second dispatch, 2026-09-18), keyed industry:<handle>:split, THE TRADE PAGE'S OWN CARD (SplitCard) off the trade's builder at the world altitude (split_rows.ts `buildIndustrySplit`: the one net builder with the engine absent, the hero's own figure), built by id with no seed and drawn at the 693 the wide seat of its 2-1 band takes at 1280: the exemplar (restaurants, the shard's held drivers, the ladder's 7 pinned last, the residual named) and chiropractic withheld (the sector's lines and the ladder's 22 come to more than a hundred: the net at 30, the stated line where the bar would stand, the plus at the foot). */
+const industrySplitWhy = (s: NonNullable<ReturnType<typeof buildIndustrySplit>>) => `industry block 03: ${splitWhy(s).replace(/^trade block 05 /, "")}; the one net builder's figure with the engine absent, the hero's own`;
+export function pickIndustrySplitInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "split")).map(([h, i]) => ({ h, s: buildIndustrySplit(i.id) })).filter((x) => x.s).map(({ h, s }) => ({ iso2: industryKey(h, "split"), why: industrySplitWhy(s!) }));
+}
 export function IncomeBreakdownStories({ instances = pickIncomeBreakdownInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="income-breakdown">
@@ -1197,8 +1216,13 @@ export function IncomeBreakdownStories({ instances = pickIncomeBreakdownInstance
         if (!sp) return null;
         return <Story kind="income-breakdown" key={cellSplitKey(c)} iso2={cellSplitKey(c)} why={splitWhy(sp)}><div style={{ maxWidth: 624 }}><SplitCard id={`split-cell-${c.key}`} split={sp} /></div></Story>;
       })}
-      {/* The cell keys are drawn above off their seeds; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "split")).map(([h, i]) => {
+        const sp = buildIndustrySplit(i.id);
+        if (!sp) return null;
+        return <Story kind="income-breakdown" key={industryKey(h, "split")} iso2={industryKey(h, "split")} why={industrySplitWhy(sp)}><div style={{ maxWidth: 693 }}><SplitCard id={`split-industry-${h}`} split={sp} /></div></Story>;
+      })}
+      {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
         const d = buildIncomeBreakdown(i.iso2);
         const el = d ? (
           <div style={{ maxWidth: 416 }}>
@@ -1300,6 +1324,11 @@ export const cellMarketKey = (c: CellHeroInstance) => `cell:${c.key}:market`;
 const marketWhy = (m: NonNullable<ReturnType<typeof buildMarket>>) => `trade block 12, the page's only bento: four cells tiling 2+1 over 1+2 on three columns, each its own 30 in ink, zero accent (${"figure" in m.firms ? `${m.firms.figure} firms per 10,000` : "firms withheld"}, ${"part" in m.chains ? `${m.chains.part} of 100 held by chains` : "chains withheld"}, ${"part" in m.close ? `${m.close.part} of 100 close in a year` : "close withheld"}, ${"figure" in m.swing ? `a ${m.swing.figure} swing` : "the swing withheld"}), every figure modelled${m.withheld ? `, ${m.withheld} withheld with its line` : ""}`;
 export function pickCellMarketInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "market")).map((c) => ({ c, m: buildMarket(c.seed?.meta?.industry_id) })).filter((x) => x.m).map(({ c, m }) => ({ iso2: cellMarketKey(c), why: marketWhy(m!) }));
+}
+/** WHAT CARRIES IT UNTIL IT PAYS BACK, `05 pays` (MODEL.md 8.7; plan step 34's second dispatch, 2026-09-18), keyed industry:<handle>:pays, built by id off the shard (pays_rows.ts) and drawn exactly as the industry view draws it (industry/turn-one.tsx paysCells: the trade market's tiling, the payback two by one at the top left, the crew and the fixed part of the costs one by one on the other diagonal, the day's share two by one at the bottom right, three columns; four cells and not 8.7's three, pays_rows.ts says why), the page's own bento at the band's 1072, ONE lit cell (the payback, turn one's accent): the exemplar (restaurants, 2.5 years, a crew of eleven drawn as units, 30 of every 100 of costs fixed, 70 percent of a day) and the thin shard (watch repair, two years, a crew of three, 40 fixed, 60 percent). */
+export const industryPaysWhy = (p: NonNullable<ReturnType<typeof buildPays>>) => `industry block 05, the page's bento: four cells tiling 2+1 over 1+2 on three columns, the payback lit and the rest ink (${"figure" in p.payback ? `${p.payback.figure} to pay back` : "the payback withheld"}, ${"part" in p.crew ? `a crew of ${p.crew.whole}${p.crew.rounded ? ` rounded from ${p.crew.sum}` : ""} drawn as units` : "the crew withheld"}, ${"part" in p.fixed ? `${p.fixed.part} of every 100 of costs fixed` : "the fixed part withheld"}, ${"figure" in p.share ? `${p.share.figure} of a day clears the costs` : "the share withheld"}), every figure modelled${p.withheld ? `, ${p.withheld} withheld with its line` : ""}`;
+export function pickIndustryPaysInstances(): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "pays")).map(([h, i]) => ({ h, p: buildPays(i.id) })).filter((x) => x.p).map(({ h, p }) => ({ iso2: industryKey(h, "pays"), why: industryPaysWhy(p!) }));
 }
 export function BentoBandStories({ instances = pickBentoBandInstances(), city = [], cell = [] }: { instances?: Instance[]; city?: CityHeroInstance[]; cell?: CellHeroInstance[] }) {
   const london = city.find((c) => c.slug === "london") ?? city[0];
@@ -1462,7 +1491,19 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
           </Story>
         );
       })}
-      {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
+      {/* The industry page's bento, drawn from the view's own cell function by id; the kind's list carries the keys too (pickAllInstances), so they are skipped below. */}
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "pays")).map(([h, i]) => {
+        const p = buildPays(i.id);
+        if (!p) return null;
+        return (
+          <Story kind="bento-band" key={industryKey(h, "pays")} iso2={industryKey(h, "pays")} why={industryPaysWhy(p)}>
+            <div style={{ maxWidth: 1072 }}>
+              <BentoBand cols={3} cells={paysCells(p)} />
+            </div>
+          </Story>
+        );
+      })}
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
         const c = cluster(i.iso2);
         const el = c ? (
           <div style={{ maxWidth: 1072 }}>
@@ -1834,10 +1875,10 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero)],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances()],
+    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances(), ...pickIndustryOpenInstances()],
     "detail-panel": pickDetailPanelInstances(),
-    "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero)],
-    "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero)],
+    "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
+    "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
     "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list")],
     "blocked-seat": pickBlockedSeatInstances(),

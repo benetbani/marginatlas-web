@@ -115,6 +115,9 @@ import { buildMarket, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth } from "@/lib/spine/worth_rows";
 import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
+import { buildIndustrySplit } from "@/lib/spine/split_rows";
+import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
+import { buildPays, PAYS_CELLS } from "@/lib/spine/pays_rows";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { ALL_INDUSTRIES } from "@/lib/taxonomy";
 import { readdirSync } from "node:fs";
@@ -870,6 +873,45 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     heads.push(["COPY.industryLasts.basis", COPY.industryLasts.basis], ["COPY.industryBenchmark.topLabel", COPY.industryBenchmark.topLabel]);
     for (const [key, text] of Object.entries(COPY.industryChapters)) heads.push([`COPY.industryChapters.${key}`, text]);
     console.log(`industry opening: ${feet.size} foot shapes, ${bases.size} benchmark bases (one per sector), ${lines.size} line shapes over ${ids.length} trades; ${longNames.size} distinct taxonomy names over three words stand in the benchmark's rows, a copy fault in the taxonomy the rendered laws list reports page by page, not redded here`);
+  }
+
+  /* THE INDUSTRY PAGE'S TURN ONE (MODEL.md 8.7 `03 split`, `04 open`, `05
+     pays`; plan step 34's second dispatch, 2026-09-18), pushed by name and
+     composed off the shipped builders over every one of the 243 ids, no
+     seed, no database. The split is the trade's card off the trade's
+     builder, so its strings are `tradeSplit`'s, swept above; its composed
+     basis and withheld line are pushed again off every id (deduplicated) in
+     case a branch the trade fixtures never reach prints here. The open
+     card's kicker and basis the static sweep takes by key; its three cell
+     labels, its foot, the plus's summary, its two withheld lines (the many
+     form composed) and the three not-gathered lines by name; the licence
+     names behind its plus are the permits' own cells, swept above off every
+     shard. The bento's two openers and the share cell's (the trade's own
+     `tradeClears.kicker`, by key) and every basis and withheld line by name,
+     and the lines the 243 compose (deduplicated). */
+  {
+    const ids = ALL_INDUSTRIES.map((i) => i.id);
+    for (const [key, text] of Object.entries(COPY.industryOpen.cells)) heads.push([`COPY.industryOpen.cells.${key}`, text]);
+    heads.push(["COPY.industryOpen.foot", COPY.industryOpen.foot], ["COPY.industryOpen.detail.summary", COPY.industryOpen.detail.summary], ["COPY.industryOpen.detail.withheldOne", COPY.industryOpen.detail.withheldOne], ["COPY.industryOpen.detail.withheldMany(2)", COPY.industryOpen.detail.withheldMany.replace("{n}", "2")]);
+    for (const [key, text] of Object.entries(COPY.industryOpen.withheld)) heads.push([`COPY.industryOpen.withheld.${key}`, text]);
+    for (const [key, text] of Object.entries(COPY.industryPays.kickers)) heads.push([`COPY.industryPays.kickers.${key}`, text]);
+    for (const [key, text] of Object.entries(COPY.industryPays.basis)) heads.push([`COPY.industryPays.basis.${key}`, text]);
+    for (const [key, text] of Object.entries(COPY.industryPays.withheld)) heads.push([`COPY.industryPays.withheld.${key}`, text]);
+    const splitLines = new Map<string, string>();
+    const openLines = new Map<string, string>();
+    const paysLines = new Map<string, string>();
+    for (const id of ids) {
+      const sp = buildIndustrySplit(id);
+      if (sp) { for (const t of [sp.basis, sp.withheld ?? "", sp.foot]) if (t && !splitLines.has(t)) splitLines.set(t, id); }
+      const o = buildIndustryOpen(id);
+      if (o) { for (const t of [o.basis, o.foot, ...o.withheldLines, o.detail?.summary ?? "", o.detail?.withheldLine ?? ""]) if (t && !openLines.has(t)) openLines.set(t, id); }
+      const p = buildPays(id);
+      if (p) for (const key of PAYS_CELLS) { const cell = p[key]; const t = "withheld" in cell ? cell.withheld : cell.basis; if (!paysLines.has(t)) paysLines.set(t, id); }
+    }
+    for (const [text, id] of splitLines) heads.push([`buildIndustrySplit(${id})`, text]);
+    for (const [text, id] of openLines) heads.push([`buildIndustryOpen(${id})`, text]);
+    for (const [text, id] of paysLines) heads.push([`buildPays(${id})`, text]);
+    console.log(`industry turn one: ${splitLines.size} split lines, ${openLines.size} open lines, ${paysLines.size} bento lines over ${ids.length} trades`);
   }
 
   for (const [where, text] of heads) {

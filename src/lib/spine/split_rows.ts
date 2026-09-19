@@ -61,7 +61,7 @@
 import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
 import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
 import { composeIncomeSegments, profileCostLines, sectorProfile, type CostLine, type IncomeSegment } from "@/lib/spine/income_rows";
-import type { TradeNet } from "@/lib/spine/trade_net";
+import { resolveTradeNet, type TradeNet } from "@/lib/spine/trade_net";
 import { INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { COPY } from "@/lib/spine/copy";
 
@@ -191,6 +191,33 @@ export function buildSplit(seed: any): SplitData | null {
   const net = seed?.net as TradeNet | undefined;
   if (!industryId || !net || !isNum(net.pct) || typeof net.text !== "string") return null;
   return resolveSplit(industryId, net);
+}
+
+/**
+ * THE SAME CARD AT THE WORLD ALTITUDE, the industry page's `03 split`
+ * (MODEL.md 8.7; plan step 34's second dispatch, 2026-09-18), the way
+ * lasts_rows.ts serves `01 lasts` off the trade's builder: the same lines
+ * (the shard's held drivers, else the sector profile), the same law
+ * (`composeIncomeSegments`, the residual named, the over-a-hundred case
+ * withheld) and the same net, THE ONE BUILDER'S with the engine absent,
+ * which is the figure the industry hero prints at 40
+ * (industry_hero_facts.ts calls `resolveTradeNet` the same way), so `00`
+ * and `03` on that page can never disagree (R7). Nothing changes with the
+ * altitude: the basis names the trade or the sector and no city, so the
+ * strings are one literal on both pages. Null only for an id the taxonomy
+ * does not hold, which no route reaches.
+ *
+ * COUNTED 2026-09-18 by this dispatch over the 243 ids with the engine
+ * absent (the copy gate re-counts it): 230 draw and 13 are withheld, the
+ * same thirteen the header counts for the trade page off `moneyShown`,
+ * because off the engine the two pages are one feed; 8.7's row counted two
+ * over-a-hundred shards on the shard's drivers for every trade, and on this
+ * feed those two are profile-fed and balance.
+ */
+export function buildIndustrySplit(industryId: string | undefined): SplitData | null {
+  if (!industryId) return null;
+  const net = resolveTradeNet(industryId, { moneyShown: false, netMarginPct: null });
+  return net ? resolveSplit(industryId, net) : null;
 }
 
 /** The states over a list of trade ids with a net for each, counted rather than remembered, for the gates and the record. */

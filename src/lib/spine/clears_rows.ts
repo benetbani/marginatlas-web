@@ -57,6 +57,15 @@ export type ClearsData = {
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
+/** THE ONE FORMATTER FOR THE SHARE (plan step 34's second dispatch,
+ *  2026-09-18): a whole percent, never under one, the way this card has
+ *  always printed it. The industry page's `05 pays` prints the same shard
+ *  field (`cost_structure.breakeven_utilization_pct`) at the world altitude
+ *  through these two functions (pays_rows.ts), so one figure can never show
+ *  two roundings on the two pages. */
+export const shareValue = (v: number) => Math.max(1, Math.round(v));
+export const shareFigure = (v: number) => `${shareValue(v)}%`;
+
 /** The engine's share off the seed, or null where money is not shown or the seed holds none. */
 function engineShare(seed: any): number | null {
   if (seed?.meta?.money_shown !== true) return null;
@@ -78,6 +87,6 @@ export function buildClears(seed: any): ClearsData | null {
     if (f && f.value > 0) { value = f.value; branch = "shard"; }
   }
   if (value == null) return null;
-  const pct = Math.max(1, Math.round(value));
-  return { value: pct, figure: `${pct}%`, branch, basis: COPY.tradeClears.basis, foot: COPY.tradeClears.foot, accent: true, sample: true };
+  const pct = shareValue(value);
+  return { value: pct, figure: shareFigure(value), branch, basis: COPY.tradeClears.basis, foot: COPY.tradeClears.foot, accent: true, sample: true };
 }

@@ -550,6 +550,16 @@ export function BentoMetric({
  * on either side of the figure falls to a few dozen pixels at every width.
  * Left out, the cell draws exactly what it drew before; the three older
  * stories pass nothing.
+ *
+ * A COUNT THAT IS THE WHOLE SAYS NO "of N" (plan step 34's second dispatch,
+ * 2026-09-18, the industry page's starting crew, MODEL.md 8.7 `05 pays`:
+ * "4 to 8 people drawn as units, the part inked"). A crew of eleven is
+ * eleven units, every one of them the part: the whole is the count itself,
+ * so "11 of 11" would say one number twice and read as a share of nothing.
+ * When the part equals the whole the figure alone says the whole, the
+ * drawing shows it, and the aria label counts it once; a part short of its
+ * whole prints "of N" exactly as before, so the three older callers (chains
+ * of 100, closures of 100, shops of 100) draw what they drew.
  */
 export function BentoCount({
   kicker,
@@ -581,8 +591,10 @@ export function BentoCount({
   if (!Number.isFinite(part) || !Number.isFinite(whole) || whole < 1 || part < 0 || part > whole) return null;
   const units = Array.from({ length: Math.round(whole) });
   const filled = Math.round(part);
+  /* The count is the whole: the figure says it once (the note above). */
+  const isWhole = filled === Math.round(whole);
   return (
-    <Box className="flex h-full flex-col" data-bento-kind="count">
+    <Box className="flex h-full flex-col" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
@@ -592,14 +604,15 @@ export function BentoCount({
         <div className="flex items-baseline gap-1.5">
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{filled}</Fig>
           {/* THE WHOLE IS SAID AS WELL AS DRAWN. The grid below carries it for
-              the eye; a reader who counts nothing still reads "of 8" here. */}
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of {Math.round(whole)}</span>
+              the eye; a reader who counts nothing still reads "of 8" here.
+              Unless the count IS the whole, when the figure has already said it. */}
+          {isWhole ? null : <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of {Math.round(whole)}</span>}
         </div>
         <div
           className={columns ? "mt-2.5 grid gap-[4px]" : "mt-2.5 flex flex-wrap gap-[4px]"}
           style={columns ? { gridTemplateColumns: `repeat(${Math.max(1, Math.round(columns))}, minmax(0, 1fr))` } : undefined}
           role="img"
-          aria-label={`${filled} out of ${Math.round(whole)}, ${label ?? kicker}`}
+          aria-label={isWhole ? `${filled}, ${label ?? kicker}` : `${filled} out of ${Math.round(whole)}, ${label ?? kicker}`}
         >
           {units.map((_, i) => (
             <span

@@ -354,12 +354,27 @@ function inPage(ctx) {
   /* SKIPPED ON PURPOSE, the same shape check_readability.mjs uses: an
      element (or an ancestor) collapsed to the sr-only box never reaches a
      reader's eye, so it must never produce a duplicate phantom finding
-     beside the one visible copy. */
+     beside the one visible copy.
+     AND THE ROWS BEHIND A CLOSED PLUS (plan step 34's second dispatch,
+     2026-09-18). The header above has always said of DetailPanel's `dt`
+     "unmeasured while the panel is closed, which is its law", and it was
+     not: Chromium reports client rects for the content of a closed
+     <details>, so the `getClientRects().length` guard every rule uses let
+     the rows through, and the day the industry page's `04 open` put the
+     shard's licence names behind its plus, ROW SENTENCE reported four
+     labels a reader cannot see until he clicks. This measurement could not
+     distinguish a closed plus's row from a drawn one. An ancestor that is a
+     closed <details> hides everything but its summary, the art-direction
+     gate's own inDeadDetails; the archetype checker still opens every panel
+     and reads what it holds, which is that instrument's law. Planted and
+     watched: with the panel opened in the render the four rows fire, closed
+     they do not. */
   const hiddenFromSight = (el) => {
     let n = el;
     while (n && n !== document.documentElement) {
       const cs = getComputedStyle(n);
       if (cs.position === "absolute" && parseFloat(cs.width) <= 1 && parseFloat(cs.height) <= 1 && cs.overflow === "hidden") return true;
+      if (n.tagName === "DETAILS" && !n.open) { const sum = n.querySelector(":scope > summary"); if (!sum || !sum.contains(el)) return true; }
       n = n.parentElement;
     }
     return false;

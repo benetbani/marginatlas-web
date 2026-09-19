@@ -78,6 +78,13 @@ import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_arch
 import { buildMarket, densityText, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { industryHeroFacts, countIndustryHeroStates, INDUSTRY_HERO_CELLS, INDUSTRY_HERO_METRICS } from "@/lib/spine/industry_hero_facts";
 import { buildBenchmark, countBenchmarkStates, BENCHMARK_FLOOR, BENCHMARK_ROWS_CAP } from "@/lib/spine/benchmark_rows";
+import { buildIndustrySplit } from "@/lib/spine/split_rows";
+import { buildIndustryOpen, countIndustryOpen, INDUSTRY_OPEN_CELLS } from "@/lib/spine/industry_open_rows";
+import { buildPays, countPays, PAYS_CELLS } from "@/lib/spine/pays_rows";
+import { monthsFigure, yearsFigure } from "@/lib/spine/open_rows";
+import { shareFigure } from "@/lib/spine/clears_rows";
+import { shardRoles } from "@/lib/spine/team_rows";
+import { daysFigure } from "@/lib/spine/entry_bill_rows";
 import { industryFigure } from "@/lib/facts/industry_shard";
 import { INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -1686,6 +1693,146 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   ban("industry copy", [COPY.industryBenchmark.kicker, COPY.industryBenchmark.topLabel, COPY.industryHero.answerLabel, ...Object.values(COPY.industryChapters)]);
   if (wordsOf(COPY.industryBenchmark.kicker) > 4 || wordsOf(COPY.industryHero.answerLabel) > 4) reds.push("industry copy: a kicker or the answer label runs over four words");
   console.log(`industry opening: the take draws on ${takes} of ${ids.length} trades (${hero.ladder} on the ladder, ${hero.profile} on the sector profile, ${hero.absent} with the state word), the cost keyed on ${costDrawn} and withheld on ${hero.costWithheld}, spend withheld on ${hero.spendWithheld} and visits on ${hero.visitsWithheld}, the not-gathered foot on ${notGathered}; the survival grid at the world altitude on ${worldLasts}; the benchmark on ${benchCards}: ${bench.ranked} ranked (${tenRows} at the cap of ${BENCHMARK_ROWS_CAP} rows), ${bench.short} short, ${bench.withheld} withheld, the trade itself on the profile on ${bench.selfWithheld}, a member withheld on ${bench.anyWithheld}`);
+}
+/* THE INDUSTRY PAGE'S TURN ONE (MODEL.md 8.7 `03 split`, `04 open`, `05
+   pays`; plan step 34's second dispatch, 2026-09-18), on every one of the 243
+   ids, without the database. THE SPLIT: ONE NET (R7): the split's net is the
+   one net builder's figure with the engine absent, in its one printed form,
+   and it is the string the hero prints at 40 on the same page; and the CARD'S
+   arithmetic is pinned to it (IncomeBreakdown prints `Math.round(netPct)`,
+   the builder's own rounding, and reconciles the cost shares to the rest),
+   so the digits a reader meets on `00` and `03` are one figure; the states
+   counted (230 drawn, 13 withheld with the line, the trade page's own count
+   off `moneyShown`); the basis names the trade or the sector and never a
+   city. THE OPEN CARD: three cells in 8.7's order on every shard that holds
+   them, the licence count the permits builder's own count (the zero-day
+   licence counted, its wait withheld), the slowest wait the permits' longest
+   in the permits' unit, the months open_rows.ts's own formatter; every cell
+   a figure with a digit and NEVER A WORD (the cost band, clause 46's cousin,
+   PART 5); labels of four words or fewer; the plus holding every printed
+   licence by name with its days (two to five rows, the permits' own) and its
+   withheld line exactly when a licence has no wait; the basis and the foot
+   within fourteen words. THE BENTO: four cells in declared order (the
+   payback, the crew, the fixed part of the costs, the share; four and not
+   8.7's three, pays_rows.ts says why), the crew the sum of the shard's role
+   headcounts rounded to whole people (the part the whole, `rounded` exactly
+   when the sum is a fraction), the fixed part the shard's share of 100, the
+   payback and the share through the trade page's formatters (one formatter
+   per field, `yearsFigure`, `shareFigure`), every basis within fourteen
+   words and ending on the word modelled. Every string through the register ban
+   and the placeholder check. Planted and watched go red 2026-09-18: a cell
+   value replaced by the cost band word (the NO WORD check), the split's net
+   fed from the margins file's clamp instead of the one builder (the ONE NET
+   check). */
+{
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+    }
+  };
+  const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+  const ids = ALL_INDUSTRIES.map((i) => i.id);
+  let splits = 0, splitWithheld = 0, splitDrawn = 0;
+  for (const id of ids) {
+    const sp = buildIndustrySplit(id);
+    const f = industryHeroFacts(id);
+    const n = resolveTradeNet(id, { moneyShown: false, netMarginPct: null });
+    if (!sp || !f || !n) { reds.push(`industry split ${id}: no card, no hero or no net for a taxonomy id`); continue; }
+    splits++;
+    if (sp.state === "withheld") splitWithheld++; else splitDrawn++;
+    /* ONE NET, three ways: the builder's figure, its printed form, and the card's own rounding of it. */
+    if (sp.netPct !== n.pct || sp.netText !== n.text) reds.push(`industry split ${id}: ONE NET: the split's net (${sp.netText}) is not the one builder's (${n.text})`);
+    if (!f.answer || f.answer.value !== sp.netText) reds.push(`industry split ${id}: ONE NET: the split's net (${sp.netText}) is not the hero's (${f.answer?.value ?? "absent"})`);
+    if (`${Math.round(sp.netPct)}%` !== sp.netText) reds.push(`industry split ${id}: ONE NET: the card's rounding (${Math.round(sp.netPct)}) is not the printed form (${sp.netText})`);
+    if (/city|London/i.test(sp.basis)) reds.push(`industry split ${id}: the basis names a city ("${sp.basis}")`);
+    if (sp.state === "withheld" && (sp.segments.length || !sp.withheld)) reds.push(`industry split ${id}: withheld with segments or without its line`);
+    if (sp.state === "drawn" && (sp.segments.length < 2 || sp.withheld)) reds.push(`industry split ${id}: drawn with under two segments or with a withheld line`);
+    ban(`industry split ${id}`, [sp.basis, sp.withheld ?? "", sp.foot, ...sp.segments.map((x) => x.label)]);
+  }
+
+  const openCount = countIndustryOpen(ids);
+  let opens = 0, plusRows = 0;
+  for (const id of ids) {
+    const o = buildIndustryOpen(id);
+    const p = buildPermits(id);
+    if (!o) { reds.push(`industry open ${id}: no card for a shard`); continue; }
+    opens++;
+    const order = o.cells.map((c) => c.key).join(",");
+    if (order !== INDUSTRY_OPEN_CELLS.filter((k) => !o.withheld.includes(k)).join(",")) reds.push(`industry open ${id}: the cells are not in 8.7's order (${order})`);
+    if (o.cells.length + o.withheld.length !== 3 || o.withheld.length !== o.withheldLines.length) reds.push(`industry open ${id}: ${o.cells.length} cells and ${o.withheld.length} withheld do not make three, or the lines do not match`);
+    for (const c of o.cells) {
+      if (wordsOf(c.label) > 4) reds.push(`industry open ${id}: label over four words: "${c.label}"`);
+      const v = typeof c.value === "string" ? c.value : "";
+      if (!/\d/.test(v)) reds.push(`industry open ${id}: NO WORD: the cell ${c.key} prints "${v}" where a figure goes (the cost band word is never printed)`);
+      if (/\b(low|medium|high)\b/i.test(v)) reds.push(`industry open ${id}: NO WORD: the cost band word in the cell ${c.key} ("${v}")`);
+      if (c.confidence !== "modeled") reds.push(`industry open ${id}: the cell ${c.key} is not marked modelled (R12)`);
+    }
+    const lic = o.cells.find((c) => c.key === "licences"), slow = o.cells.find((c) => c.key === "slowest"), ramp = o.cells.find((c) => c.key === "breakEven");
+    if (p && lic && lic.value !== String(p.count)) reds.push(`industry open ${id}: the licence count (${lic.value}) is not the permits builder's (${p.count})`);
+    if (p?.longest && slow && slow.value !== daysFigure(p.longest.days)) reds.push(`industry open ${id}: the slowest wait (${slow.value}) is not the permits' longest (${p.longest.days})`);
+    const rampFig = industryFigure(id, "first_year.ramp_to_breakeven_months");
+    if (rampFig && rampFig.value > 0 && (!ramp || ramp.value !== monthsFigure(rampFig.value))) reds.push(`industry open ${id}: the months cell is not the shard's ramp through open_rows' formatter`);
+    if (!rampFig && ramp) reds.push(`industry open ${id}: a months cell with no ramp on file`);
+    if (p && p.cells.length >= 2) {
+      if (!o.detail) reds.push(`industry open ${id}: no plus over ${p.cells.length} licences`);
+      else {
+        plusRows += o.detail.rows.length;
+        if (o.detail.rows.length !== p.cells.length) reds.push(`industry open ${id}: the plus holds ${o.detail.rows.length} rows against ${p.cells.length} licences`);
+        for (const r of o.detail.rows) if (!/\d/.test(r.value) || !r.label) reds.push(`industry open ${id}: a plus row without a figure or a name ("${r.label}" ${r.value})`);
+        if ((p.withheld != null) !== (o.detail.withheldLine != null)) reds.push(`industry open ${id}: the plus's withheld line (${o.detail.withheldLine ? "present" : "absent"}) disagrees with the permits' (${p.withheld ? "present" : "absent"})`);
+        if (wordsOf(o.detail.summary) > 6) reds.push(`industry open ${id}: the plus's summary runs ${wordsOf(o.detail.summary)} words`);
+      }
+    }
+    if (wordsOf(o.basis) > 14 || wordsOf(o.foot) > 14) reds.push(`industry open ${id}: the basis or the foot runs over fourteen words`);
+    if (!/modelled/.test(o.foot)) reds.push(`industry open ${id}: the foot does not say modelled (R12)`);
+    ban(`industry open ${id}`, [o.basis, o.foot, ...o.withheldLines, ...o.cells.map((c) => c.label), ...(o.detail ? [o.detail.summary, o.detail.withheldLine ?? ""] : [])]);
+  }
+  if (openCount.cards !== opens) reds.push(`industry open: the count (${openCount.cards}) and the sweep (${opens}) disagree`);
+  if (buildIndustryOpen("no_such_trade") !== null || buildIndustryOpen(undefined) !== null) reds.push("industry open: a trade with no shard builds a card");
+
+  const paysCount = countPays(ids);
+  let clusters = 0, rounded = 0;
+  for (const id of ids) {
+    const p = buildPays(id);
+    if (!p) { reds.push(`industry pays ${id}: no cluster for a shard`); continue; }
+    clusters++;
+    const roles = shardRoles(id);
+    const sum = roles.reduce((a, r) => a + r.headcount, 0);
+    if (roles.length > 0 && sum > 0) {
+      if (!("part" in p.crew)) reds.push(`industry pays ${id}: the crew is withheld though the shard holds ${roles.length} roles`);
+      else {
+        if (p.crew.part !== p.crew.whole || p.crew.whole !== Math.round(sum) || p.crew.sum !== sum) reds.push(`industry pays ${id}: the crew (${p.crew.part} of ${p.crew.whole}, sum ${p.crew.sum}) is not the roles' sum (${sum}) rounded with the part the whole`);
+        if (p.crew.rounded !== !Number.isInteger(sum)) reds.push(`industry pays ${id}: rounded (${p.crew.rounded}) disagrees with the sum (${sum})`);
+        if (p.crew.rounded) rounded++;
+        if (p.crew.rounded !== /rounded/.test(p.crew.basis)) reds.push(`industry pays ${id}: the basis says ${/rounded/.test(p.crew.basis) ? "rounded" : "nothing"} of a sum of ${sum}`);
+      }
+    } else if ("part" in p.crew) reds.push(`industry pays ${id}: a crew drawn off no roles`);
+    const pb = industryFigure(id, "first_year.payback_years");
+    if (pb && pb.value > 0 && (!("figure" in p.payback) || p.payback.figure !== yearsFigure(pb.value))) reds.push(`industry pays ${id}: the payback is not the shard's through open_rows' formatter`);
+    if ((!pb || pb.value <= 0) && "figure" in p.payback) reds.push(`industry pays ${id}: a payback drawn off no figure`);
+    const sh = industryFigure(id, "cost_structure.breakeven_utilization_pct");
+    if (sh && sh.value > 0 && (!("figure" in p.share) || p.share.figure !== shareFigure(sh.value))) reds.push(`industry pays ${id}: the share is not the shard's through clears_rows' formatter`);
+    if ((!sh || sh.value <= 0) && "figure" in p.share) reds.push(`industry pays ${id}: a share drawn off no figure`);
+    const fx = industryFigure(id, "cost_structure.fixed_pct");
+    if (fx && fx.value > 0 && fx.value <= 100 && (!("part" in p.fixed) || p.fixed.part !== Math.round(fx.value) || p.fixed.whole !== 100)) reds.push(`industry pays ${id}: the fixed part is not the shard's share of 100`);
+    if ((!fx || fx.value <= 0 || fx.value > 100) && "part" in p.fixed) reds.push(`industry pays ${id}: a fixed part drawn off no share`);
+    const withheld = [p.payback, p.crew, p.fixed, p.share].filter((c) => "withheld" in c).length;
+    if (withheld !== p.withheld) reds.push(`industry pays ${id}: ${withheld} cells withheld against a count of ${p.withheld}`);
+    for (const key of PAYS_CELLS) {
+      const cell = p[key];
+      const line = "withheld" in cell ? cell.withheld : cell.basis;
+      if (wordsOf(line) > 14) reds.push(`industry pays ${id}: the ${key} line runs ${wordsOf(line)} words: "${line}"`);
+      if (!("withheld" in cell) && !/modelled\.$/.test(cell.basis)) reds.push(`industry pays ${id}: the ${key} basis does not end on modelled ("${cell.basis}")`);
+      if ("withheld" in cell && !cell.withheld.startsWith("Not gathered yet: ")) reds.push(`industry pays ${id}: the ${key} withheld line is not in the idiom ("${cell.withheld}")`);
+      ban(`industry pays ${id} ${key}`, [line]);
+    }
+  }
+  if (paysCount.clusters !== clusters || paysCount.rounded.length !== rounded) reds.push(`industry pays: the count (${paysCount.clusters}, ${paysCount.rounded.length} rounded) and the sweep (${clusters}, ${rounded}) disagree`);
+  if (buildPays("no_such_trade") !== null || buildPays(undefined) !== null) reds.push("industry pays: a trade with no shard builds a cluster");
+  ban("industry copy", [COPY.industryOpen.kicker, ...Object.values(COPY.industryPays.kickers), ...Object.values(COPY.industryOpen.cells)]);
+  for (const k of [COPY.industryOpen.kicker, ...Object.values(COPY.industryPays.kickers)]) if (wordsOf(k) > 4) reds.push(`industry copy: a kicker runs over four words: "${k}"`);
+  console.log(`industry turn one: the split on ${splits} of ${ids.length} trades (${splitDrawn} drawn, ${splitWithheld} withheld, every net the hero's); the open card on ${opens} (${openCount.threeCells} with three cells, ${openCount.withheldCells} cells withheld, the plus rows ${JSON.stringify(openCount.plusRows)}, ${plusRows} licences by name, ${openCount.zeroDay} with a licence's wait withheld); the bento on ${clusters} (${paysCount.withheldCells} cells withheld, ${rounded} crews rounded from a fraction: ${paysCount.rounded.join(", ")}; crews ${paysCount.crewMin} to ${paysCount.crewMax}, ${paysCount.over8} over eight, ${paysCount.under4} under four; the fixed part ${paysCount.fixedMin} to ${paysCount.fixedMax} of 100)`);
 }
 console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
