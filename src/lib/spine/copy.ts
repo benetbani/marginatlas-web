@@ -239,6 +239,19 @@ export const COPY = {
       line: "Not gathered yet: the neighbourhoods of {city} by name.",
       foot: "Waits on DATA-REQUIREMENTS item 30.",
     },
+    /** THE NEIGHBOURHOOD PAGE'S ONE DRAWN BLOCKED SEAT, `04 works` (MODEL.md
+     *  8.8; plan step 35, 2026-09-19, the controller's ruling (d)): what lifts
+     *  revenue most in each district waits on item 70 (the engine's district
+     *  coefficients are within 30 percent of the measured turnover on 4 of
+     *  21 London rows), not on the slug fault; printing the engine's lists
+     *  would put figures the measurement says are wrong on 17 of 21 rows.
+     *  The kicker is 8.8's title within four words; the line is the
+     *  controller's, ten words. */
+    hoodWorks: {
+      kicker: "What lifts revenue most",
+      line: "Not gathered yet: what lifts revenue most in each district.",
+      foot: "Waits on DATA-REQUIREMENTS item 70.",
+    },
   },
   /** THE FOOTING SEAT (MODEL.md 8.2, `17 footing`): the calibrated meter is a
    *  form he has not clicked, so the catalogued form nearest it, KvGrid, holds
@@ -778,6 +791,10 @@ export const COPY = {
     prev: "Previous neighbourhoods",
     next: "More neighbourhoods",
     foot: "{n} named areas, each a door to the neighbourhoods page.",
+    /** Where every card lands on the district's own page (the cities the
+     *  hub's gate admits, London today; plan step 35, 2026-09-19), the foot
+     *  says that instead: the door goes to the district, not to the hub. */
+    footPages: "{n} named areas, each with a page of its own.",
   },
   /** The city cards in their three looks (B11, 2026-09-10). The unit is said
    *  ONCE for the whole row, never in a card (PART 5). `plain` says what the
@@ -1801,6 +1818,75 @@ export const COPY = {
   industryClose: {
     cityDoor: "See {trade} in {city}",
     leaderDoor: "{leader}, the trade next door",
+  },
+  /** THE NEIGHBOURHOOD PAGES (MODEL.md 8.8; plan step 35, 2026-09-19), the
+   *  hub and the district page, every string read aloud. The rent figure's
+   *  words are the city's district card's own wherever the two print one
+   *  thing (`cityDistricts`: the kicker, the head "Rent, against {district}",
+   *  the basis naming the cheapest, "Dearest district"), referenced there and
+   *  never retyped, so a reader who came down from the city page meets the
+   *  same words for the same table (M16, M20).
+   *
+   *  THE TAKE. The label names both ends of the set and the figure is the
+   *  spread between them ("Rent, West End against South London: 2.50x");
+   *  hood_take_rows.ts says why the 40 is not the cheapest district's own
+   *  figure. The cells' labels are the district's name and its place in the
+   *  set, in the city card's own two words, "cheapest" and "dearest"; a
+   *  three-word district name runs the label to five, the reference-name
+   *  exception. The basis says the figure is modelled shop rent; the foot is
+   *  the provenance line the old masthead printed under itself. "against the"
+   *  is on the banned list below, so no string here carries it: the
+   *  comparator always names the district.
+   *
+   *  THE VISITOR FIGURE is `tourism_intensity`, annual visitors per resident,
+   *  overnight and day trips (the intensity file's own convention): the head
+   *  says the unit once in three words, the basis says the year and that the
+   *  counts are at district level or finer (source quality A or B; a C among
+   *  them swaps the clause for "some estimated from the city's size").
+   *
+   *  THE CHARACTER CARD's first row is the note's opening sentence
+   *  (hood_character_rows.ts says why a paragraph cannot stand as a fact),
+   *  under the label "In a sentence", which is what it is; the basis says so.
+   *  Never "foot traffic" (8.8: it reads as the cut footfall metric). */
+  hoodTake: {
+    subtitle: "Shop rent, district by district",
+    labelSpread: "Rent, {dearest} against {cheapest}",
+    basis: "Shop rent, modelled from each district's character, not read off leases.",
+    cells: { cheapest: "{district}, cheapest", dearest: "{district}, dearest", count: "Districts ranked" },
+    foot: "The city's {count} broad districts; rents modelled, not read off leases.",
+    footYear: "The city's {count} broad districts; visitor counts are {year} figures.",
+  },
+  hoodRank: {
+    clipOne: "{district}: the figure is the model's ceiling, not a reading.",
+    clipMany: "{districts}: the figures are the model's bounds, not readings.",
+  },
+  hoodPremium: {
+    kicker: "Where visitors crowd in",
+    head: { name: "District", value: "Visitors per resident" },
+    basis: "Visitors a year for every resident, overnight and day trips.",
+    basisYear: "Visitors a year for every resident; {year} counts at district level or finer.",
+    basisYearEstimate: "Visitors a year for every resident; {year} figures, some estimated from the city's size.",
+    withheldOne: "{n} district withheld: no visitor figure is on file.",
+    withheldMany: "{n} districts withheld: no visitor figure is on file.",
+  },
+  hoodCompare: {
+    kicker: "Districts, side by side",
+    cols: { visitors: "Visitors per resident" },
+    caveat: "Rent against {cheapest}, modelled; visitors a year for every resident.",
+    caveatYear: "Rent against {cheapest}, modelled; visitors a year for every resident, {year} counts.",
+    dash: "A dash: no visitor figure is on file for that district.",
+  },
+  hoodChapters: {
+    rent: "What rent costs, district by district",
+    works: "What lifts revenue, and what the place is like",
+  },
+  hoodCharacter: {
+    kicker: "What it is like",
+    kickerNamed: "What {district} is like",
+    rows: { sentence: "In a sentence", who: "Who is here", price: "Price tier", description: "In brief" },
+    sentenceWithheld: "Not printed: the note's opening sentence runs past the card's four lines.",
+    basis: "Written by hand for this district; the first line is how its note opens.",
+    foot: "The other {n} districts' notes are on their own pages.",
   },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the

@@ -86,7 +86,21 @@ import { buildPays } from "@/lib/spine/pays_rows";
 import { buildIndustryPlaces } from "@/lib/spine/industry_places_rows";
 import { buildFormats } from "@/lib/spine/formats_rows";
 import { buildKnow } from "@/lib/spine/know_rows";
-import { buildIndustryCloseDoors } from "@/lib/spine/close_rows";
+import { buildIndustryCloseDoors, buildHoodCloseDoors } from "@/lib/spine/close_rows";
+/* THE NEIGHBOURHOOD PAGES (MODEL.md 8.8; plan step 35, 2026-09-19), keyed
+   hood:<city>[:<district>]:<block> over hood_instances.ts's handles, every
+   builder pure over the files by the slug (no seed, no database), drawn by
+   the pages' own cards (hood/blocks.tsx) at the widths their seats take at
+   1280: the take full width, the rank at the 693 of its 2-1, the visitor
+   list at the 347 beside it, the table full width, the seat at the 347 of
+   its 1-2, the notes at the 693 beside it, the close full width. */
+import { HOOD_INSTANCES, hoodHandles, hoodKey, hoodServes } from "@/lib/spine/hood_instances";
+import { buildHoodTake } from "@/lib/spine/hood_take_rows";
+import { buildHoodRank } from "@/lib/spine/hood_rank_rows";
+import { buildHoodPremium } from "@/lib/spine/hood_premium_rows";
+import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
+import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
+import { HoodTake, RankCard, PremiumCard, CompareCard, WorksSeat, CharacterCard, HoodClose } from "@/components/spine/hood/blocks";
 
 export type Instance = { iso2: string; why: string };
 
@@ -287,11 +301,16 @@ export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell 
         return <Story kind="answer-card" key={industryKey(h, "take")} iso2={industryKey(h, "take")} why={i.why}><IndustryMasthead id={`take-industry-${h}`} facts={f} /></Story>;
       })}
       {/* The country half draws the two-letter keys alone: the kind's list also carries the cell and industry keys (pickAllInstances), and the country builder handed "cell:london:take" returns a bogus code with no answer, which drew a second, false card for each cell on the first full run. */}
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}
       {cell.filter((c) => cellServes(c.key, "take")).map((c) => {
         const f = tradeHeroFacts(c.seed);
         const el = f ? <AnswerCard id={`take-cell-${c.key}`} name={f.name} iso2={f.iso2} crumb={f.crumb} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} /> : null;
         return <Story kind="answer-card" key={cellTakeKey(c)} iso2={cellTakeKey(c)} why={c.why}>{el}</Story>;
+      })}
+      {pickHoodTakeInstances().map((i) => {
+        const h = i.iso2.slice("hood:".length, -":take".length);
+        const t = buildHoodTake(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus);
+        return <Story kind="answer-card" key={i.iso2} iso2={i.iso2} why={i.why}>{t ? <HoodTake id={`take-hood-${h.replace(/:/g, "-")}`} take={t} /> : null}</Story>;
       })}
     </div>
   );
@@ -349,7 +368,7 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances(), city 
         return <Story kind="ranked-bars" key={cellOpenKey(c)} iso2={cellOpenKey(c)} why={openWhy(o)}><div style={{ maxWidth: 693 }}><OpenCard id={`open-cell-${c.key}`} open={o} /></div></Story>;
       })}
       <p className="mb-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">Margins from the engine snapshot of {SNAPSHOT_TAKEN}.</p>
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
         const card = marginCardFromSnapshot(i.iso2);
         const el = card && card.rows.length >= 2 ? (
           <RankedBars id={`money-${i.iso2.toLowerCase()}`} kicker={`${COPY.margin.kicker}, ${nameOf(i.iso2)}`} icon="owner-keeps" tagged basis={COPY.margin.basis} withheldLine={card.withheldLine} rows={card.rows.map((r) => ({ key: r.key, name: r.name, value: r.margin, flagged: r.flagged }))} worldMax={card.worldMax} fmt={(v) => `${Math.round(v * 100)}%`} phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }} />
@@ -360,6 +379,11 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances(), city 
         const b = buildCityDistrictBars(c.seed);
         const el = b ? <RankedBars id={`districts-${c.slug}`} kicker={COPY.cityDistricts.kicker} icon="best-areas" tagged={b.tagged} basis={b.basis} rows={b.rows} worldMax={b.worldMax} ceiling="set" feature="none" best="min" topLabel={COPY.cityDistricts.dearest} fmt={rentMult} phoneHead={b.phoneHead} /> : null;
         return <Story kind="ranked-bars" key={`${c.slug}:districts`} iso2={`${c.slug}:districts`} why={c.why}>{el ? <div style={{ maxWidth: 693 }}>{el}</div> : null}</Story>;
+      })}
+      {pickHoodRankInstances().map((i) => {
+        const h = i.iso2.slice("hood:".length, -":rank".length);
+        const r = buildHoodRank(HOOD_INSTANCES[h].city);
+        return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{r ? <div style={{ maxWidth: 693 }}><RankCard id={`rank-hood-${h}`} rank={r} /></div> : null}</Story>;
       })}
     </div>
   );
@@ -400,7 +424,7 @@ export function CompareTableStories({ instances = pickCompareTableInstances(), c
         return <Story kind="compare-table" key={cellPeersKey(c)} iso2={cellPeersKey(c)} why={peersWhy(p)}><PeersCard id={`peers-cell-${c.key}`} peers={p} /></Story>;
       })}
       {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
         const t = buildPeerTable(i.iso2);
         const el = t ? <CompareTable id={`peers-${i.iso2.toLowerCase()}`} kicker={`${COPY.peers.kicker}, ${nameOf(i.iso2)}`} icon="benchmark" rows={t.rows} columns={t.columns} caveat={t.caveat} /> : null;
         return <Story kind="compare-table" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
@@ -409,6 +433,11 @@ export function CompareTableStories({ instances = pickCompareTableInstances(), c
         const t = buildCityPeerTable(c.seed);
         const el = t ? <CompareTable id={`peers-${c.slug}`} kicker={`${COPY.cityPeers.kicker}, ${String(c.seed?.meta?.city ?? c.slug)}`} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} /> : null;
         return <Story kind="compare-table" key={`${c.slug}:peers`} iso2={`${c.slug}:peers`} why={c.why}>{el}</Story>;
+      })}
+      {pickHoodCompareInstances().map((i) => {
+        const h = i.iso2.slice("hood:".length, -":compare".length);
+        const c = buildHoodCompare(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus);
+        return <Story kind="compare-table" key={i.iso2} iso2={i.iso2} why={i.why}>{c ? <CompareCard id={`compare-hood-${h.replace(/:/g, "-")}`} compare={c} /> : null}</Story>;
       })}
     </div>
   );
@@ -669,6 +698,11 @@ export function pickNoteListInstances(): Instance[] {
      live trade is in (an id no file holds: the not-gathered line under its
      own label), so every branch is looked at. */
   for (const i of pickIndustryKnowInstances()) take(i.iso2, i.why);
+  /* WHAT THE DISTRICT IS LIKE, the neighbourhood pages' `05 character`
+     (MODEL.md 8.8; plan step 35, 2026-09-19), keyed hood:<handle>:character,
+     pure over the files: the hub (the cheapest district's rows, its opening
+     sentence cut at the colon) and the City of London's page (its own rows). */
+  for (const i of pickHoodCharacterInstances()) take(i.iso2, i.why);
   return out;
 }
 
@@ -708,6 +742,17 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
           const el = k ? (
             <div style={{ maxWidth: 693 }}>
               <KnowCard id={`know-industry-${i.iso2.split(":")[1]}`} know={k} />
+            </div>
+          ) : null;
+          return <Story kind="note-list" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        if (iso2 === "hood") {
+          /* The character card as hood-view.tsx draws it (hood/blocks.tsx CharacterCard), at the 693 the wide seat of its 1-2 band takes at 1280. */
+          const h = i.iso2.slice("hood:".length, -":character".length);
+          const c = buildHoodCharacter(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus);
+          const el = c ? (
+            <div style={{ maxWidth: 693 }}>
+              <CharacterCard id={`character-hood-${h.replace(/:/g, "-")}`} character={c} />
             </div>
           ) : null;
           return <Story kind="note-list" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
@@ -823,7 +868,12 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
         if (doors.length === 0) return null;
         return <Story kind="terminus" key={cellCloseKey(c)} iso2={cellCloseKey(c)} why={pickCellCloseInstances([c])[0]?.why ?? c.why}><div style={{ maxWidth: 1072 }}><CloseCard id={`close-cell-${c.key}`} doors={doors} /></div></Story>;
       })}
-      {instances.map((i) => {
+      {pickHoodCloseInstances().map((i) => {
+        const h = i.iso2.slice("hood:".length, -":close".length);
+        const doors = buildHoodCloseDoors(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus);
+        return <Story kind="terminus" key={i.iso2} iso2={i.iso2} why={i.why}>{doors.length ? <div style={{ maxWidth: 1072 }}><HoodClose id={`close-hood-${h.replace(/:/g, "-")}`} doors={doors} /></div> : null}</Story>;
+      })}
+      {instances.filter((i) => !i.iso2.startsWith("hood:")).map((i) => {
         const [iso2, form] = i.iso2.split(":");
         if (form === "compare") {
           const doors = buildCompareDoor(nameOf(iso2));
@@ -1059,7 +1109,7 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
         return <Story kind="kv-grid" key={cellMixKey(c)} iso2={cellMixKey(c)} why={mixWhy(m)}><div style={{ maxWidth: 520 }}><MixCard id={`mix-cell-${c.key}`} mix={m} /></div></Story>;
       })}
       {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
         const parts = i.iso2.split(":");
         if (parts[0] === "city") {
           /* The city's seats, drawn as city-view.tsx draws them (Glance, AmongCities): the country's KvSeatStory markup, the kicker naming the city. */
@@ -1315,7 +1365,7 @@ export function IncomeBreakdownStories({ instances = pickIncomeBreakdownInstance
         return <Story kind="income-breakdown" key={industryKey(h, "split")} iso2={industryKey(h, "split")} why={industrySplitWhy(sp)}><div style={{ maxWidth: 693 }}><SplitCard id={`split-industry-${h}`} split={sp} /></div></Story>;
       })}
       {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
         const d = buildIncomeBreakdown(i.iso2);
         const el = d ? (
           <div style={{ maxWidth: 416 }}>
@@ -1596,7 +1646,7 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
           </Story>
         );
       })}
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
         const c = cluster(i.iso2);
         const el = c ? (
           <div style={{ maxWidth: 1072 }}>
@@ -1672,7 +1722,7 @@ export function BentoMetricStories({ instances = pickBentoMetricInstances(), cel
         if (!r || r.state === "list") return null;
         return <Story kind="bento-metric" key={cellRivalsKey(c)} iso2={cellRivalsKey(c)} why={rivalsWhy(r)}><div style={{ maxWidth: 693 }}><RivalsCard id={`rivals-cell-${c.key}`} rivals={r} /></div></Story>;
       })}
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
         if (i.iso2.startsWith("city:")) {
           const slug = i.iso2.split(":")[1];
           const d = buildCityDemand(slug);
@@ -1786,7 +1836,12 @@ export function MarkListStories({ instances = pickMarkListInstances(), cell = []
         if (!r || r.state !== "list") return null;
         return <Story kind="mark-list" key={cellRivalsKey(c)} iso2={cellRivalsKey(c)} why={rivalsWhy(r)}><div style={{ maxWidth: 693 }}><RivalsCard id={`rivals-cell-${c.key}`} rivals={r} /></div></Story>;
       })}
-      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:")).map((i) => {
+      {pickHoodPremiumInstances().map((i) => {
+        const h = i.iso2.slice("hood:".length, -":premium".length);
+        const p = buildHoodPremium(HOOD_INSTANCES[h].city);
+        return <Story kind="mark-list" key={i.iso2} iso2={i.iso2} why={i.why}>{p ? <div style={{ maxWidth: 347 }}><PremiumCard id={`premium-hood-${h}`} premium={p} /></div> : null}</Story>;
+      })}
+      {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
         const cfg = MARK_LIST_STORIES[i.iso2];
         const d = cfg ? buildMarkList(cfg.key) : null;
         /* THE FLAG COMES FROM `CountryFlag` AND NOWHERE ELSE (its own law:
@@ -1899,6 +1954,10 @@ export function pickBlockedSeatInstances(industry: IndustryPlacesInstance[] = []
      page's own card (cell/turn-two.tsx WatchSeat) at the 520 of its 1-1
      band at 1280, beside where sales come from. It needs no seed. */
   out.push({ iso2: "cell:london:watch", why: "trade block 10 on the exemplar: the seat beside where sales come from; item 53 (causes of closure with shares) not gathered for any trade" });
+  /* THE NEIGHBOURHOOD PAGE'S ONE SEAT (MODEL.md 8.8 `04 works`; plan step
+     35, 2026-09-19), keyed hood:london:works, drawn by the page's own card
+     (hood/blocks.tsx WorksSeat) at the 347 of its 1-2 band at 1280. */
+  out.push(...pickHoodWorksInstances());
   return out;
 }
 export function BlockedSeatStories({ instances = pickBlockedSeatInstances(), industry = [] }: { instances?: Instance[]; industry?: IndustryPlacesInstance[] }) {
@@ -1917,6 +1976,14 @@ export function BlockedSeatStories({ instances = pickBlockedSeatInstances(), ind
           const el = parts[2] === "watch" ? (
             <div style={{ maxWidth: 520 }}>
               <WatchSeat id={`seat-cell-${parts[1]}-watch`} />
+            </div>
+          ) : null;
+          return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        }
+        if (parts[0] === "hood") {
+          const el = parts[parts.length - 1] === "works" ? (
+            <div style={{ maxWidth: 347 }}>
+              <WorksSeat id={`seat-hood-${parts[1]}-works`} />
             </div>
           ) : null;
           return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
@@ -1981,27 +2048,52 @@ export function CityHeroStories({ instances }: { instances: CityHeroInstance[] }
    lists every archetype, its instance keys and the reason each was picked,
    each key a link to its story's section by id. Outside any stories wrapper,
    so the checker does not read it as a story. */
+/** THE HOOD PICKERS, one per block, each handle's why composed from the builder it draws so the caption cannot drift from the card. */
+const hoodTakeWhy = (t: NonNullable<ReturnType<typeof buildHoodTake>>) =>
+  `hood block 00${t.focus ? ` on ${t.name}` : " on the hub"}: ${t.figure === "spread" ? `the spread at 40, ${t.dearest.name} against ${t.cheapest.name}` : `the district's own rent against ${t.cheapest.name} at 40`}, ${t.cells.length} companion${t.cells.length === 1 ? "" : "s"}, modelled`;
+export function pickHoodTakeInstances(): Instance[] {
+  return hoodHandles().filter((h) => hoodServes(h, "take")).map((h) => ({ h, t: buildHoodTake(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus) })).filter((x) => x.t).map(({ h, t }) => ({ iso2: hoodKey(h, "take"), why: hoodTakeWhy(t!) }));
+}
+export function pickHoodRankInstances(): Instance[] {
+  return hoodHandles().filter((h) => hoodServes(h, "rank")).map((h) => ({ h, r: buildHoodRank(HOOD_INSTANCES[h].city) })).filter((x) => x.r).map(({ h, r }) => ({ iso2: hoodKey(h, "rank"), why: `hood block 01: ${r!.districts} districts by rent against ${r!.cheapest}, the cheapest first printing its own figure, nobody featured, the set's dearest the ceiling${r!.clipped.length ? `, ${r!.clipped.join(", ")} on the model's bound with the line` : ""}` }));
+}
+export function pickHoodPremiumInstances(): Instance[] {
+  return hoodHandles().filter((h) => hoodServes(h, "premium")).map((h) => ({ h, p: buildHoodPremium(HOOD_INSTANCES[h].city) })).filter((x) => x.p).map(({ h, p }) => ({ iso2: hoodKey(h, "premium"), why: `hood block 02: ${p!.rows.length} districts by visitors a year per resident (${p!.year ?? "undated"}, quality ${p!.qualities.join(" and ")}), the middle in ink, no marks, every row a door${p!.withheld ? `, ${p!.withheld} withheld with the line` : ""}` }));
+}
+export function pickHoodCompareInstances(): Instance[] {
+  return hoodHandles().filter((h) => hoodServes(h, "compare")).map((h) => ({ h, c: buildHoodCompare(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus) })).filter((x) => x.c).map(({ h, c }) => ({ iso2: hoodKey(h, "compare"), why: `hood block 03: ${c!.rows.length} districts, two columns (rent against ${c!.cheapest}, visitors per resident), the best cell of each ticked${c!.home ? `, ${c!.home} the home row, tinted` : ", no home row"}, no flags` }));
+}
+export function pickHoodWorksInstances(): Instance[] {
+  return hoodHandles().filter((h) => hoodServes(h, "works") && !HOOD_INSTANCES[h].focus).map((h) => ({ iso2: hoodKey(h, "works"), why: "hood block 04 on the hub: the seat beside the notes; item 70 (the engine's district coefficients against the measured turnover) not gathered" }));
+}
+export function pickHoodCharacterInstances(): Instance[] {
+  return hoodHandles().filter((h) => hoodServes(h, "character")).map((h) => ({ h, c: buildHoodCharacter(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus) })).filter((x) => x.c).map(({ h, c }) => ({ iso2: hoodKey(h, "character"), why: `hood block 05${HOOD_INSTANCES[h].focus ? "" : " on the hub"}: ${c!.district.name}, ${c!.rows.length} notes, the first ${c!.cut === "sentence" ? "the note's opening sentence" : c!.cut === "clause" ? "the note's opening clause before its colon" : "withheld with the line"}; the page's one prose section` }));
+}
+export function pickHoodCloseInstances(): Instance[] {
+  return hoodHandles().filter((h) => hoodServes(h, "close")).map((h) => ({ h, d: buildHoodCloseDoors(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus) })).filter((x) => x.d.length > 0).map(({ h, d }) => ({ iso2: hoodKey(h, "close"), why: `hood block 06${HOOD_INSTANCES[h].focus ? "" : " on the hub"}: ${d.length} doors, ${d.map((x) => x.label).join("; ")}, the pill last` }));
+}
+
 export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHeroInstance[] = [], industryPlaces: IndustryPlacesInstance[] = []): Record<string, Instance[]> {
   const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
-    "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero), ...pickIndustryTakeInstances()],
-    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars")],
-    "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero), ...pickIndustryPlacesInstances(industryPlaces, "compare-table")],
+    "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero), ...pickIndustryTakeInstances(), ...pickHoodTakeInstances()],
+    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars"), ...pickHoodRankInstances()],
+    "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero), ...pickIndustryPlacesInstances(industryPlaces, "compare-table"), ...pickHoodCompareInstances()],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
     "tiers-table": [...pickTiersTableInstances(), ...pickCellTeamInstances(cellHero)],
     "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why })), ...pickCellSpreadInstances(cellHero), ...pickCellWorthInstances(cellHero)],
     "spectra-table": pickSpectraTableInstances(),
     "note-list": pickNoteListInstances(),
-    "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero), ...pickIndustryCloseInstances(industryPlaces)],
+    "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero), ...pickIndustryCloseInstances(industryPlaces), ...pickHoodCloseInstances()],
     "pay-bars": pickPayBarsInstances(),
     "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickCellMixInstances(cellHero), ...pickIndustryLastsInstances(), ...pickIndustryOpenInstances(), ...pickIndustryChannelsInstances(), ...pickIndustryFieldInstances()],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellClearsInstances(cellHero), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
-    "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances()],
+    "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances(), ...pickHoodPremiumInstances()],
     "blocked-seat": pickBlockedSeatInstances(industryPlaces),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
   };

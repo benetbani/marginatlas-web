@@ -96,6 +96,13 @@ import { buildMarkList } from "@/lib/spine/mark_list_rows";
 import { buildCityDemand, buildCityLiving, buildCityRunway, buildCitySeason } from "@/lib/spine/fact_rows";
 import { buildCityPeopleTable } from "@/lib/spine/character_rows";
 import { buildCityNeighbourhoods } from "@/lib/spine/hood_rows";
+import { spineHoodCities, spineHoodDistricts } from "@/lib/spine/hood_scheme";
+import { buildHoodTake } from "@/lib/spine/hood_take_rows";
+import { buildHoodRank } from "@/lib/spine/hood_rank_rows";
+import { buildHoodPremium } from "@/lib/spine/hood_premium_rows";
+import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
+import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
+import { buildHoodCloseDoors } from "@/lib/spine/close_rows";
 import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { buildGlance } from "@/lib/spine/glance_rows";
@@ -991,6 +998,45 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     for (const [text, id] of doorLabels) heads.push([`buildIndustryCloseDoors(${id}).label`, text]);
     heads.push(["COPY.industryClose.cityDoor(restaurants, London)", COPY.industryClose.cityDoor.replace("{trade}", "restaurants").replace("{city}", "London")]);
     console.log(`industry turn three and the exit: ${noteLabels.size} note labels and ${doorLabels.size} door labels over ${ids.length} trades`);
+  }
+
+  /* THE NEIGHBOURHOOD PAGES (MODEL.md 8.8; plan step 35, 2026-09-19), every
+     composed string a reader meets on the hub and on every district page of
+     every admitted city, off the six hood builders reading the files by the
+     slug (no seed, no database): the take's label, basis, cell labels and
+     foot; the rank's clip line (the basis and the head are the city district
+     builder's, swept on its fixture above); the visitor list's headline
+     label and withheld line; the table's heads, caveat and dash note; the
+     notes' kicker, labels and facts, basis and foot; the doors' labels; the
+     two chapter headings and the seat's three strings. The static ones
+     (hoodPremium.kicker, .basis, .head; hoodCompare.kicker, .cols;
+     hoodCharacter.kicker, .basis; hoodTake.basis; blocked.hoodWorks.kicker)
+     the sweep above takes by key. */
+  {
+    let hoodPages = 0;
+    for (const city of spineHoodCities()) {
+      const districts = spineHoodDistricts(city) ?? [];
+      const rank = buildHoodRank(city);
+      if (rank?.clipLine) heads.push([`buildHoodRank(${city}).clipLine`, rank.clipLine]);
+      const premium = buildHoodPremium(city);
+      if (premium) {
+        heads.push([`buildHoodPremium(${city}).headline.label`, premium.headline.label], [`buildHoodPremium(${city}).basis`, premium.basis]);
+        if (premium.withheldLine) heads.push([`buildHoodPremium(${city}).withheldLine`, premium.withheldLine]);
+      }
+      for (const focus of [null, ...districts.map((d) => d.slug)]) {
+        const where = `hood ${city}${focus ? `:${focus}` : ""}`;
+        hoodPages++;
+        const take = buildHoodTake(city, focus);
+        if (take) heads.push([`${where} take.label`, take.answer.label], [`${where} take.basis`, take.answer.basis], [`${where} take.subtitle`, take.subtitle], [`${where} take.foot`, take.foot.text], ...take.cells.map((c) => [`${where} take.cell.${c.key}`, c.label] as [string, string]));
+        const compare = buildHoodCompare(city, focus);
+        if (compare) heads.push([`${where} compare.entityHead`, compare.entityHead], [`${where} compare.caveat`, compare.caveat], ...compare.columns.map((c) => [`${where} compare.head.${c.key}`, c.head] as [string, string]), ...(compare.note ? [[`${where} compare.note`, compare.note] as [string, string]] : []));
+        const character = buildHoodCharacter(city, focus);
+        if (character) heads.push([`${where} character.kicker`, character.kicker], [`${where} character.basis`, character.basis], [`${where} character.foot`, character.foot], ...character.rows.flatMap((r) => [[`${where} character.label.${r.key}`, r.label], [`${where} character.fact.${r.key}`, r.fact]] as Array<[string, string]>));
+        for (const d of buildHoodCloseDoors(city, focus)) heads.push([`${where} close.door.${d.key}`, d.label]);
+      }
+    }
+    heads.push(["COPY.hoodChapters.rent", COPY.hoodChapters.rent], ["COPY.hoodChapters.works", COPY.hoodChapters.works], ["COPY.blocked.hoodWorks.line", COPY.blocked.hoodWorks.line], ["COPY.blocked.hoodWorks.foot", COPY.blocked.hoodWorks.foot], ["COPY.hoodPremium.withheldOne", COPY.hoodPremium.withheldOne.replace("{n}", "One")], ["COPY.hoodCompare.dash", COPY.hoodCompare.dash], ["COPY.hoodCharacter.sentenceWithheld", COPY.hoodCharacter.sentenceWithheld], ["COPY.cityNeighbourhoods.footPages", COPY.cityNeighbourhoods.footPages.replace("{n}", "Seven")]);
+    console.log(`hood pages: every composed string swept on ${hoodPages} page(s) of ${spineHoodCities().length} admitted city(ies)`);
   }
 
   for (const [where, text] of heads) {

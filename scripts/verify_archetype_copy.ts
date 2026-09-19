@@ -50,6 +50,14 @@ import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
 import { buildCityPeopleTable } from "@/lib/spine/character_rows";
 import { buildCityNeighbourhoods, PLACEHOLDER_SCHEME } from "@/lib/spine/hood_rows";
+import { districtPageTarget } from "@/lib/geo/page_targets";
+import { spineHoodCities, spineHoodDistricts, HOOD_BENCHMARK_TRADE } from "@/lib/spine/hood_scheme";
+import { buildHoodTake, againstCheapest, byRent } from "@/lib/spine/hood_take_rows";
+import { buildHoodRank } from "@/lib/spine/hood_rank_rows";
+import { buildHoodPremium, visitorsFmt } from "@/lib/spine/hood_premium_rows";
+import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
+import { buildHoodCharacter, openingLine, CHARACTER_FACT_CHARS_CAP } from "@/lib/spine/hood_character_rows";
+import { buildHoodCloseDoors } from "@/lib/spine/close_rows";
 import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { usd } from "@/components/spine/kit";
@@ -107,6 +115,8 @@ function shardCostLineNames(id: string): string[] {
 }
 
 const reds: string[] = [];
+/** The city's name as the list holds it, for the hood take's crumb check. */
+const hoodCityName = (slug: string) => (cityListJson as { cities: Array<{ slug: string; name: string }> }).cities.find((c) => c.slug === slug)?.name ?? slug;
 const codes = (COUNTRIES as any[]).map((c) => String(c.code ?? c.iso2 ?? "").toUpperCase()).filter((c) => c.length === 2);
 let rendered = 0;
 let noAnswer = 0;
@@ -806,11 +816,19 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (h.foot && !h.foot.startsWith(word.charAt(0).toUpperCase() + word.slice(1))) reds.push(`city neighbourhoods ${c.slug}: the foot does not open with the count as a word: "${h.foot}"`);
       for (const k of h.cards) {
         if (!k.name.trim()) reds.push(`city neighbourhoods ${c.slug}: a card with no name`);
-        if (k.href !== `${h.allHref}#${k.id}`) reds.push(`city neighbourhoods ${c.slug}: the card "${k.name}" points at ${k.href}, not the hub's anchor`);
+        /* THE CARD LANDS ON THE DISTRICT'S OWN PAGE WHERE ONE EXISTS (plan step
+           35, 2026-09-19, MODEL.md 8.8) through the one resolver, and on the
+           hub's anchor otherwise; the foot's words follow the destination. */
+        const page = districtPageTarget(c.slug, k.id);
+        if (k.href !== (page ? page.href : `${h.allHref}#${k.id}`)) reds.push(`city neighbourhoods ${c.slug}: the card "${k.name}" points at ${k.href}, not ${page ? "the district's own page" : "the hub's anchor"}`);
+        if (page && !resolves(page.href)) reds.push(`city neighbourhoods ${c.slug}: the district page ${page.href} is not a route`);
         if (k.sub) reds.push(`city neighbourhoods ${c.slug}: the card "${k.name}" carries a sub-line ("${k.sub}"), a one-word summary of a place`);
         if (k.image) reds.push(`city neighbourhoods ${c.slug}: the card "${k.name}" carries an image`);
       }
       if (!resolves(h.allHref)) reds.push(`city neighbourhoods ${c.slug}: the all link points at ${h.allHref}, which is not a route`);
+      const onPages = h.cards.every((k) => districtPageTarget(c.slug, k.id) != null);
+      if (h.onPages !== onPages) reds.push(`city neighbourhoods ${c.slug}: onPages says ${h.onPages} and the cards say ${onPages}`);
+      if (h.foot && onPages !== h.foot.endsWith(COPY.cityNeighbourhoods.footPages.slice(COPY.cityNeighbourhoods.footPages.indexOf(" named")))) reds.push(`city neighbourhoods ${c.slug}: the foot's words do not follow where the cards land ("${h.foot}")`);
       ban(`city neighbourhoods ${c.slug}`, [h.foot ?? "", ...h.cards.map((k) => k.name)]);
     } else {
       seated++;
@@ -2214,6 +2232,195 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     console.log(`industry turn three and the exit: the notes on ${knowCards} of ${ids.length} trades (${knowCount.notes} draw notes, ${knowCount.oneRow} the one row, ${knowCount.withFailures} with failure modes, ${JSON.stringify(knowCount.byRows)} by row count; ${knowCount.longFacts} authored facts over the locals notes' ${FACT_CHARS_CAP}-character cap, the longest ${knowCount.longestFact}, a copy fault in the source files and not cut here; ${retiredBanned} banned word(s) on retired or merged ids that reach no reader${retiredBanned ? ` (${retiredQueue.join(", ")})` : ""}); the field at the world altitude on ${fieldCards} (three cells of four, the churn never drawn; the swing held on ${swingHeld}); the close on ${closes} with no slate (${leaderDoors} draw the trade next door, ${leaderTop} on the highest other row of 02 and ${leaderNext} on the next in scope past a retired leader; ${pillAlone} the pill alone, ${pillAloneInScope} of them in scope), the three-door branch proven on the table's fixture`);
   }
 }
+/* THE NEIGHBOURHOOD PAGES (MODEL.md 8.8; plan step 35, 2026-09-19): the hub
+   and every district page of every admitted city, built by the slug off the
+   files through the six hood builders, no seed and no database, every string
+   a reader meets read here. THE LAWS, each the builder's own:
+    TAKE: the 40 is the spread (the dearest against the cheapest) on the hub
+      and on the cheapest district's own page, and the district's own rent
+      against the cheapest elsewhere, in rentMult's notation and never
+      "1.00x"; the companions are the cheapest's own figure, the dearest's and
+      the count less whichever the 40 prints, never a duplicate; a cell label
+      within four words of its own past the district's name; the crumb names
+      the city once on a district page and nothing on the hub; the foot names
+      the year where held; modelled, always.
+    RANK: the figures are the city district builder's own over the same rows
+      (one builder, one figure); the clip line names exactly the districts on
+      the engine's rent bound.
+    PREMIUM: highest first, four or more, every row a figure, the headline the
+      lower median, the withheld count and its line agreeing both ways, the
+      head within three words, every row's href the district page's.
+    COMPARE: exactly two columns, rent (mult, min) and visitors (per, max),
+      the rent head naming the cheapest; NEVER a column keyed character,
+      walkability or price_tier (PART 9 clause 19, item 66; the fault was
+      planted, a "character" column let in, and watched go red); rows carry
+      no href (M23); the home row is the focused district and only it; the
+      caveat within fourteen words.
+    WORKS: the seat's three strings, the line under fifteen words in the
+      site's idiom, the foot naming item 70, the kicker within four words.
+    CHARACTER: at most four rows; the first row's fact a verbatim prefix of
+      the paragraph within the four-line cap, ending at a sentence end or a
+      colon, never mid-sentence; the description row only where no paragraph
+      is held; never "foot traffic", never the walkability word; the kicker
+      names the district on the hub and not on its page; the foot counts the
+      other districts as a word.
+    CLOSE: the country's own checkDoors (the cap, one pill, distinct first
+      words, every href a route); the hub's doors the city page, the benchmark
+      trade's page here and the pill; a district's the hub, the city page and
+      the pill; a fourth door planted (a second trade door) and watched red.
+   No banned word and no unfilled placeholder in any of it. */
+{
+  const wordsOf = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+  const ban = (where: string, texts: string[]) => {
+    for (const t of texts) {
+      for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" in "${t}"`);
+      if (/[{}]/.test(t)) reds.push(`${where}: a placeholder was never filled ("${t}")`);
+      if (/foot traffic|walkab/i.test(t)) reds.push(`${where}: a phrase the spine bars ("${t}")`);
+    }
+  };
+  const cities = spineHoodCities();
+  if (cities.length === 0) reds.push("hood: no city is admitted (London holds seven curated districts with centroids)");
+  let pages = 0, takes = 0, spreads = 0, owns = 0;
+  for (const city of cities) {
+    const districts = spineHoodDistricts(city)!;
+    const ranked = byRent(districts);
+    const cheapest = ranked[0], dearest = ranked[ranked.length - 1];
+    /* THE RANK, once per city. */
+    const rank = buildHoodRank(city);
+    const cityBars = buildCityDistrictBars({ where_to_trade: { list: districts.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult })) } });
+    if (!rank || !cityBars) reds.push(`hood rank ${city}: builds nothing`);
+    else {
+      if (JSON.stringify(rank.rows) !== JSON.stringify(cityBars.rows) || rank.basis !== cityBars.basis || rank.phoneHead.value !== cityBars.phoneHead.value) reds.push(`hood rank ${city}: the rows or the words differ from the city district builder's over the same rows`);
+      const clipped = districts.filter((d) => d.rent_clipped).map((d) => d.name);
+      if (JSON.stringify(rank.clipped) !== JSON.stringify(clipped)) reds.push(`hood rank ${city}: the clipped list is ${rank.clipped.join(", ")}, the rows say ${clipped.join(", ")}`);
+      if ((clipped.length > 0) !== (rank.clipLine != null)) reds.push(`hood rank ${city}: a clip line ${rank.clipLine ? "with nothing clipped" : "missing with a district on the bound"}`);
+      for (const n of clipped) if (!rank.clipLine!.includes(n)) reds.push(`hood rank ${city}: the clip line does not name ${n}`);
+      if (rank.clipLine && wordsOf(rank.clipLine) > 14) reds.push(`hood rank ${city}: the clip line runs ${wordsOf(rank.clipLine)} words`);
+      ban(`hood rank ${city}`, [rank.basis, rank.phoneHead.name, rank.phoneHead.value, ...(rank.clipLine ? [rank.clipLine] : [])]);
+    }
+    /* THE PREMIUM, once per city. */
+    const premium = buildHoodPremium(city);
+    const held = districts.filter((d) => d.tourism != null);
+    if (!premium) { if (held.length >= MARK_LIST_FLOOR) reds.push(`hood premium ${city}: builds nothing with ${held.length} districts holding a figure`); }
+    else {
+      if (premium.rows.length !== held.length || premium.rows.length < MARK_LIST_FLOOR) reds.push(`hood premium ${city}: ${premium.rows.length} rows against ${held.length} districts holding a figure`);
+      for (let i = 1; i < premium.rows.length; i++) if (premium.rows[i].value > premium.rows[i - 1].value) reds.push(`hood premium ${city}: the rows are not highest first at ${premium.rows[i].name}`);
+      const sorted = held.map((d) => d.tourism!.value).sort((a, b) => a - b);
+      if (premium.headline.value !== sorted[Math.floor((sorted.length - 1) / 2)]) reds.push(`hood premium ${city}: the headline ${premium.headline.value} is not the lower median`);
+      if (premium.withheld !== districts.length - held.length) reds.push(`hood premium ${city}: withheld ${premium.withheld} against ${districts.length - held.length} rows without a figure`);
+      if ((premium.withheld > 0) !== (premium.withheldLine != null)) reds.push(`hood premium ${city}: the withheld count and its line disagree`);
+      if (wordsOf(premium.head.value) > 3 || wordsOf(premium.head.name) > 3) reds.push(`hood premium ${city}: a head over three words ("${premium.head.name}", "${premium.head.value}")`);
+      if (wordsOf(premium.kicker) > 4) reds.push(`hood premium ${city}: the kicker runs over four words ("${premium.kicker}")`);
+      if (wordsOf(premium.basis) > 14) reds.push(`hood premium ${city}: the basis runs ${wordsOf(premium.basis)} words`);
+      if (premium.year != null && !premium.basis.includes(String(premium.year))) reds.push(`hood premium ${city}: the basis does not say the year ${premium.year}`);
+      for (const r of premium.rows) {
+        const page = districtPageTarget(city, r.key);
+        if (!page || r.href !== page.href) reds.push(`hood premium ${city}: the row ${r.name} points at ${r.href ?? "nothing"}, not the district page`);
+        if (r.href && !resolves(r.href)) reds.push(`hood premium ${city}: the row ${r.name}'s link is not a route (${r.href})`);
+        if (typeof premium.fmt(r.value) !== "string" || !/^\d+(\.\d)?$/.test(premium.fmt(r.value))) reds.push(`hood premium ${city}: the figure prints as "${premium.fmt(r.value)}"`);
+      }
+      const decimals = new Set(premium.rows.map((r) => (premium.fmt(r.value).split(".")[1] ?? "").length));
+      if (decimals.size > 1) reds.push(`hood premium ${city}: the column mixes decimal counts`);
+      ban(`hood premium ${city}`, [premium.kicker, premium.basis, premium.head.name, premium.head.value, premium.headline.label, ...(premium.withheldLine ? [premium.withheldLine] : [])]);
+    }
+    /* THE HUB AND EVERY DISTRICT PAGE: the take, the table, the notes, the doors. */
+    for (const focus of [null, ...districts.map((d) => d.slug)]) {
+      pages++;
+      const where = `hood ${city}${focus ? `:${focus}` : ""}`;
+      const take = buildHoodTake(city, focus);
+      if (!take) { reds.push(`${where}: the take builds nothing`); continue; }
+      takes++;
+      const own = focus && focus !== cheapest.slug ? districts.find((d) => d.slug === focus)! : null;
+      const expect = own ? againstCheapest(own, cheapest) : againstCheapest(dearest, cheapest);
+      if (take.answer.value !== rentMult(expect)) reds.push(`${where}: the 40 prints ${take.answer.value}, expected ${rentMult(expect)}`);
+      if (take.answer.value === rentMult(1)) reds.push(`${where}: the 40 is one times itself`);
+      if ((take.figure === "spread") !== !own) reds.push(`${where}: the figure is ${take.figure} where ${own ? "own" : "spread"} was expected`);
+      if (take.figure === "spread") spreads++; else owns++;
+      if (take.answer.confidence !== "modeled") reds.push(`${where}: the answer is not marked modelled`);
+      if (wordsOf(take.answer.basis) > 14) reds.push(`${where}: the answer's basis runs ${wordsOf(take.answer.basis)} words`);
+      const cellValues = take.cells.map((c) => String(c.value));
+      if (cellValues.includes(take.answer.value)) reds.push(`${where}: a companion repeats the 40 (${take.answer.value})`);
+      if (new Set(cellValues).size !== cellValues.length) reds.push(`${where}: two companions print one figure`);
+      if (take.cells.length < 1 || take.cells.length > 3) reds.push(`${where}: ${take.cells.length} companions`);
+      if (!take.cells.some((c) => c.key === "count" && c.value === String(districts.length))) reds.push(`${where}: the count cell does not print ${districts.length}`);
+      for (const c of take.cells) {
+        const own = c.label.replace(cheapest.name, "").replace(dearest.name, "");
+        if (wordsOf(own) > 4) reds.push(`${where}: the cell label "${c.label}" runs over four words past the district's name`);
+      }
+      if (focus ? take.crumb.length !== 2 || take.crumb[0] !== hoodCityName(city) : take.crumb.length !== 0) reds.push(`${where}: the crumb is [${take.crumb.join(", ")}]`);
+      if (focus && take.name === hoodCityName(city)) reds.push(`${where}: a district page's h1 is the city`);
+      const year = districts.map((d) => d.tourism?.year).find((y) => y != null);
+      if (year != null && !take.foot.text.includes(String(year))) reds.push(`${where}: the foot does not say the year ${year}`);
+      ban(where, [take.subtitle, take.answer.label, take.answer.basis, take.foot.text, ...take.cells.map((c) => c.label)]);
+      /* THE TABLE. */
+      const compare = buildHoodCompare(city, focus);
+      if (!compare) { reds.push(`${where}: the table builds nothing`); continue; }
+      const keys = compare.columns.map((c) => c.key);
+      if (keys.length !== 2 || keys[0] !== "rent" || keys[1] !== "visitors") reds.push(`${where}: the table's columns are ${keys.join(", ")}, not rent and visitors`);
+      for (const k of keys) if (/character|walk|price|tier/i.test(k)) reds.push(`${where}: a column keyed "${k}", a word where a figure goes (clause 19, item 66)`);
+      for (const c of compare.columns) if (/character|walk|price|tier/i.test(c.head)) reds.push(`${where}: a column head "${c.head}", a word where a figure goes`);
+      if (compare.columns[0]?.unit !== "mult" || compare.columns[0]?.best !== "min" || compare.columns[1]?.unit !== "per" || compare.columns[1]?.best !== "max") reds.push(`${where}: the columns' units or directions are off`);
+      if (!compare.columns[0]?.head.includes(cheapest.name)) reds.push(`${where}: the rent head does not name ${cheapest.name}`);
+      if (compare.rows.length !== districts.length) reds.push(`${where}: ${compare.rows.length} rows against ${districts.length} districts`);
+      for (const r of compare.rows) {
+        if ((r as { href?: string }).href) reds.push(`${where}: the row ${r.name} carries a door (M23)`);
+        for (const c of compare.columns) { const v = r.values[c.key]; if (v != null && typeof v !== "number") reds.push(`${where}: the cell ${r.name}/${c.key} holds a ${typeof v}`); }
+        if (r.values.rent == null) reds.push(`${where}: the row ${r.name} holds no rent figure`);
+      }
+      const homes = compare.rows.filter((r) => r.home).map((r) => r.key);
+      if (JSON.stringify(homes) !== JSON.stringify(focus ? [focus] : [])) reds.push(`${where}: the home rows are [${homes.join(", ")}]`);
+      if (wordsOf(compare.caveat) > 14) reds.push(`${where}: the caveat runs ${wordsOf(compare.caveat)} words`);
+      if ((compare.rows.some((r) => r.values.visitors == null)) !== (compare.note != null)) reds.push(`${where}: the dash note and the dashed cells disagree`);
+      ban(where, [compare.entityHead, compare.caveat, ...compare.columns.map((c) => c.head), ...(compare.note ? [compare.note] : [])]);
+      /* THE NOTES. */
+      const character = buildHoodCharacter(city, focus);
+      const drawn = focus ? districts.find((d) => d.slug === focus)! : cheapest;
+      if (!character) { if (drawn.paragraph || drawn.skew || drawn.priceTier) reds.push(`${where}: the notes build nothing on a district holding authored rows`); }
+      else {
+        if (character.district.slug !== drawn.slug) reds.push(`${where}: the notes draw ${character.district.slug}, not ${drawn.slug}`);
+        if (character.rows.length < 1 || character.rows.length > 4) reds.push(`${where}: ${character.rows.length} notes`);
+        const first = character.rows.find((r) => r.key === "sentence");
+        if (drawn.paragraph && !first) reds.push(`${where}: no sentence row on a district holding a paragraph`);
+        if (first && drawn.paragraph) {
+          const line = openingLine(drawn.paragraph);
+          if (line && first.fact !== line.text) reds.push(`${where}: the sentence row prints "${first.fact}", not the note's opening`);
+          if (line && first.fact.length > CHARACTER_FACT_CHARS_CAP) reds.push(`${where}: the sentence row runs ${first.fact.length} characters, over the four-line cap`);
+          if (line && !(drawn.paragraph.startsWith(first.fact) || drawn.paragraph.startsWith(first.fact.slice(0, -1)))) reds.push(`${where}: the sentence row is not a verbatim prefix of the paragraph`);
+          if (line && !/[.!?]$/.test(first.fact)) reds.push(`${where}: the sentence row does not close on a full stop`);
+          if (!line && first.fact !== COPY.hoodCharacter.sentenceWithheld) reds.push(`${where}: the sentence row is neither the opening nor the stated line`);
+        }
+        if (character.rows.some((r) => r.key === "description") && drawn.paragraph) reds.push(`${where}: the description row draws beside a paragraph (a second telling)`);
+        for (const r of character.rows) if (wordsOf(r.label) > LABEL_WORDS_CAP) reds.push(`${where}: the note label "${r.label}" runs over ${LABEL_WORDS_CAP} words`);
+        if (focus ? character.kicker.includes(drawn.name) : !character.kicker.includes(drawn.name)) reds.push(`${where}: the kicker ${focus ? "names the district under its own h1" : "does not name the district"} ("${character.kicker}")`);
+        if (wordsOf(character.kicker.replace(drawn.name, "")) > 4) reds.push(`${where}: the kicker runs over four words past the name ("${character.kicker}")`);
+        if (wordsOf(character.basis) > 14) reds.push(`${where}: the notes' basis runs ${wordsOf(character.basis)} words`);
+        if (!character.foot.includes(countWord(districts.length - 1))) reds.push(`${where}: the foot does not count the other districts ("${character.foot}")`);
+        ban(where, [character.kicker, character.basis, character.foot, ...character.rows.flatMap((r) => [r.label, r.fact])]);
+      }
+      /* THE DOORS. */
+      const doors = buildHoodCloseDoors(city, focus);
+      checkDoors(where, doors, "hood close");
+      const expectKeys = focus ? ["districts", "city", "compare"] : ["city", "trade", "compare"];
+      if (JSON.stringify(doors.map((d) => d.key)) !== JSON.stringify(expectKeys)) reds.push(`${where}: the doors are ${doors.map((d) => d.key).join(", ")}, expected ${expectKeys.join(", ")}`);
+      const trade = doors.find((d) => d.key === "trade");
+      if (trade && trade.href !== `/gb/${city}/${HOOD_BENCHMARK_TRADE.slug}` && !trade.href.endsWith(`/${city}/${HOOD_BENCHMARK_TRADE.slug}`)) reds.push(`${where}: the trade door goes to ${trade.href}`);
+      if (doors[doors.length - 1]?.kind !== "pill") reds.push(`${where}: the pill is not last`);
+    }
+  }
+  /* THE SEAT'S STRINGS, once. */
+  const seat = COPY.blocked.hoodWorks;
+  if (wordsOf(seat.line) > SEAT_LINE_WORDS_CAP) reds.push(`hood works: the seat's line runs ${wordsOf(seat.line)} words, over ${SEAT_LINE_WORDS_CAP}`);
+  if (!seat.line.startsWith("Not gathered yet:")) reds.push(`hood works: the seat's line is not in the site's idiom`);
+  if (!/DATA-REQUIREMENTS item \d+/.test(seat.foot)) reds.push(`hood works: the seat's foot names no requirement`);
+  if (wordsOf(seat.kicker) > 4) reds.push(`hood works: the kicker runs over four words`);
+  ban("hood works", [seat.kicker, seat.line, seat.foot]);
+  /* A DISTRICT THE SCHEME DOES NOT HOLD builds nothing anywhere. */
+  if (buildHoodTake("london", "mayfair") || buildHoodCompare("london", "mayfair") || buildHoodCharacter("london", "mayfair") || buildHoodCloseDoors("london", "mayfair").length) reds.push("hood: a district the scheme does not hold builds a card");
+  if (buildHoodTake("paris") || buildHoodRank("paris") || buildHoodPremium("paris") || buildHoodCompare("paris") || buildHoodCloseDoors("paris").length) reds.push("hood: a city the gate does not admit builds a card");
+  ban("hood chapters", [COPY.hoodChapters.rent, COPY.hoodChapters.works]);
+  console.log(`hood: ${cities.length} admitted city(ies), ${pages} pages (${takes} takes: ${spreads} the spread, ${owns} a district's own rent), the rank, the visitor list, the table, the notes and the doors held on every one`);
+}
+
 console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
 if (reds.length) process.exit(1);

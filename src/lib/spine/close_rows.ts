@@ -16,6 +16,7 @@ import { inSentence } from "@/lib/spine/place_names";
 import { industryToSlug, INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import type { IndustryPlacesData } from "@/lib/spine/industry_places_rows";
 import type { BenchmarkData } from "@/lib/spine/benchmark_rows";
+import { hoodCity, spineHoodDistricts, hoodHubHref, HOOD_BENCHMARK_TRADE } from "@/lib/spine/hood_scheme";
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
 
@@ -74,6 +75,38 @@ export function buildCityCloseDoors(seed: any): Door[] {
   const country = iso2.length === 2 ? countryPageTarget(iso2) : null;
   if (country) doors.push({ key: "country", label: fill(COPY.cityClose.countryDoor, { country: inSentence(String(meta.country_name ?? country.label)) }), href: country.href, kind: "link" });
   doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city }), href: "/compare", kind: "pill" });
+  return doors;
+}
+
+/** THE NEIGHBOURHOOD PAGES' DOORS (MODEL.md 8.8 `06 close`; plan step 35,
+ *  2026-09-19, the controller's ruling (f)), three at Terminus's cap, the pill
+ *  last (M21), no two sharing a first word, none promising what is not on
+ *  sale. ON THE HUB: the city page up one altitude, "Opening a business in
+ *  {city}" (the city masthead's answer, the trade close's own literal); the
+ *  trade page in this city for the ONE benchmark trade the adapter reconciles
+ *  its revenue with (hood_scheme.ts `HOOD_BENCHMARK_TRADE`, restaurants), "See
+ *  restaurants in {city}" through the trade route (`/[country]/[geo]/
+ *  [industry]`, the copy gate proves it against the app folder), one door and
+ *  never `CANONICAL_TRADES`' four, which the old funnel band drew and the
+ *  archetype's cap could not hold; and the compare pill, "Compare {city} with
+ *  other cities" (the city's own). ON A DISTRICT PAGE: the hub, "Every
+ *  district of {city}" (the city page's districts door, the same words for
+ *  the same page), the city page, the compare pill. Built from the scheme
+ *  alone, pure, so the copy gate proves every admitted city's doors without
+ *  the adapter. The last-checked line and the report-an-error link 8.8 names
+ *  are NOT built: no fact on these pages carries a year but the visitor count
+ *  and no correction route exists (QUEUE close:furniture-lines, the city's
+ *  and the trade's closes found the same). */
+export function buildHoodCloseDoors(citySlug: string, focus: string | null = null): Door[] {
+  const city = hoodCity(citySlug);
+  const districts = spineHoodDistricts(citySlug);
+  if (!city || !districts) return [];
+  if (focus && !districts.some((d) => d.slug === focus)) return [];
+  const doors: Door[] = [];
+  if (focus) doors.push({ key: "districts", label: fill(COPY.cityClose.districtsDoor, { city: city.name }), href: hoodHubHref(city.slug), kind: "link" });
+  doors.push({ key: "city", label: fill(COPY.tradeClose.cityDoor, { city: city.name }), href: `/cities/${city.slug}`, kind: "link" });
+  if (!focus) doors.push({ key: "trade", label: fill(COPY.industryClose.cityDoor, { trade: HOOD_BENCHMARK_TRADE.name, city: city.name }), href: `/${city.iso2.toLowerCase()}/${city.slug}/${HOOD_BENCHMARK_TRADE.slug}`, kind: "link" });
+  doors.push({ key: "compare", label: fill(COPY.cityClose.compareDoor, { city: city.name }), href: "/compare", kind: "pill" });
   return doors;
 }
 

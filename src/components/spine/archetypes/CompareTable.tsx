@@ -77,6 +77,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { CountryFlag } from "@/components/CountryFlag";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "./copy";
+import { rentMult } from "@/lib/spine/district_rows";
 
 /** THE UNITS: "pct", "usd" and "days" are the country table's figures, each
  *  column an absolute, never a difference. "m" joined 2026-09-08 (task 9) for
@@ -88,8 +89,21 @@ import { COPY } from "./copy";
  *  income you say minus 10%, and for Los Angeles you say plus 3%. So you have
  *  made a mishmash of all of these things."): "index", "pctdiff" and "x" were
  *  signed differences against the home row and are deleted with this comment,
- *  not renamed, so a stale reference cannot silently keep compiling. */
-export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m"; best: "min" | "max" };
+ *  not renamed, so a stale reference cannot silently keep compiling.
+ *
+ *  TWO MORE JOINED 2026-09-19 (MODEL.md 8.8 `03 compare`, plan step 35, the
+ *  controller's ruling (c)), neither a difference against the home row:
+ *  "mult", a district's shop rent against the cheapest district of its set,
+ *  the set's own member named in the column head ("Rent, against South
+ *  London"), printed in `rentMult`'s notation ("2.50x", district_rows.ts, the
+ *  one place that notation lives; the reference row prints its own 1.00x,
+ *  PART 5's reference-row correction of 2026-09-10), which is NOT the
+ *  deleted "x": that one was a multiple of the home row, this one is a
+ *  multiple of a named member the table also prints; and "per", a plain
+ *  count per one (visitors a year per resident), whole numbers when the
+ *  column's values are whole and one decimal otherwise, the column's one
+ *  decimal count (PART 5). */
+export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "mult" | "per"; best: "min" | "max" };
 /** `iso2` draws the flag; `key` names the row when two rows share a flag (two cities in one country). */
 export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null> };
 export type CompareTableProps = {
@@ -115,10 +129,12 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 /** Every branch prints the absolute figure the row holds; none carries a
  *  home-row special case anymore, because the home row is a row like any
  *  other now, not a zero this function used to manufacture. */
-function fmt(unit: CompareColumn["unit"], v: number): string {
+function fmt(unit: CompareColumn["unit"], v: number, whole = true): string {
   if (unit === "pct") return `${v}%`;
   if (unit === "usd") return v === 0 ? COPY.free : usd(v);
   if (unit === "m") return `${v.toFixed(1)}M`;
+  if (unit === "mult") return rentMult(v);
+  if (unit === "per") return whole ? String(Math.round(v)) : v.toFixed(1);
   return `${v} ${v === 1 ? "day" : "days"}`;
 }
 const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
@@ -135,6 +151,10 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
   }
   const isBestVal = (c: CompareColumn, v: number | null): boolean => isNum(v) && bestOf[c.key] != null && v === bestOf[c.key];
   const cellClass = (c: CompareColumn, v: number | null) => (isBestVal(c, v) ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]");
+  /* ONE DECIMAL COUNT PER COLUMN (PART 5): a "per" column prints whole numbers when every value it holds is whole, one decimal otherwise, decided once for the column and never per cell. */
+  const wholeOf: Record<string, boolean> = {};
+  for (const c of columns) wholeOf[c.key] = rows.map((r) => r.values[c.key]).filter(isNum).every((v) => Number.isInteger(v));
+  const print = (c: CompareColumn, v: number) => fmt(c.unit, v, wholeOf[c.key]);
   /** Desktop colgroup shares only; the phone form stacks the name above its
    *  own figures and never shares this row, so it needs no share at all. */
   const nameColPct = (1.2 / (1.2 + columns.length)) * 100;
@@ -159,10 +179,10 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
     ) : best ? (
       <span className="inline-flex items-center gap-1 text-[var(--c-ink)]">
         <StateMark kind="yes" />
-        <Fig className="text-[length:var(--t-body)] font-semibold">{fmt(c.unit, v)}</Fig>
+        <Fig className="text-[length:var(--t-body)] font-semibold">{print(c, v)}</Fig>
       </span>
     ) : (
-      <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{fmt(c.unit, v)}</Fig>
+      <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{print(c, v)}</Fig>
     );
     return <span className="inline-flex min-h-4 items-center justify-end align-middle">{inner}</span>;
   };

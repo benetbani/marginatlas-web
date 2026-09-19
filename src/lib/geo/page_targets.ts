@@ -21,9 +21,34 @@
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getCityIdentity } from "@/lib/cities/city_tier";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
+import { spineHoodDistrict, districtPageHref } from "@/lib/spine/hood_scheme";
+import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 
 export type GeoPageTarget = { href: string; name: string; kind: "city" | "region" };
 export type CountryPageTarget = { href: string; label: string };
+export type DistrictPageTarget = { href: string; name: string };
+
+/**
+ * The page for a district of a city, or null when none exists (MODEL.md 8.8;
+ * plan step 35, 2026-09-19, the controller's route ruling: the district page
+ * is `/cities/[slug]/neighborhoods/[district]`, under the hub, never the trade
+ * route's third segment, where every unknown slug answers 404 by design).
+ *
+ * A page exists for exactly the districts the hub's admission gate admits
+ * (hood_scheme.ts: four or more curated districts with an authored centroid,
+ * London's seven today), and only while the neighbourhood spine is on: with
+ * `NEXT_PUBLIC_SPINE_REFORM_HOOD=0` the hub serves the legacy page, whose
+ * cards carry the district anchors, and the district route answers 404, so
+ * the city's cards must land on the anchors again. Reading the flag here
+ * keeps the two in step from one place. Where this returns null the caller
+ * links the hub's anchor or omits the link; it never assembles the URL.
+ */
+export function districtPageTarget(citySlug: string, districtSlug: string): DistrictPageTarget | null {
+  if (!isSpineReformEnabledFor("hood")) return null;
+  const city = (citySlug ?? "").toLowerCase();
+  const district = spineHoodDistrict(city, districtSlug);
+  return district ? { href: districtPageHref(city, district.slug), name: district.name } : null;
+}
 
 /**
  * The country page, or null when we do not publish one.
