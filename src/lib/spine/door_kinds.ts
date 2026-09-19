@@ -102,7 +102,7 @@ export const SURFACE_ANSWERS: Record<LandingSurface, DoorKind> = {
   country: "government-take",
   city: "customer-pay",
   cell: "owner-keeps",
-  industry: "trade-keeps-per-100",
+  industry: "trade-keeps-per-100", // allow-industry-ref: the industry SURFACE and its answer kind, not a trade
   hood: "rent-lightest",
   district: "rent-lightest",
   "hub-legacy": "districts",
