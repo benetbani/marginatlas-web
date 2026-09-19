@@ -60,9 +60,10 @@ type Gate = {
   /** Optional CLI args appended after the script path. */
   args?: string[];
   /** The script launches a Playwright browser: it counts against the memory
-      floor, and a memory death of it is retried once, alone. Twelve today: nine
-     since plan step 14 retired blueprint-conformance, and the three harness
-     gates step 14b added. */
+      floor, and a memory death of it is retried once, alone. Thirteen today: nine
+     since plan step 14 retired blueprint-conformance, the three harness
+     gates step 14b added, and loud-seats (step 40); scripts/gates.json
+     carries the count. */
   browser?: true;
   /** `first`: the gate runs to completion, serially, before the pool starts,
       because other gates read what it writes (plan step 14b: `pages-fresh`
@@ -115,10 +116,23 @@ const GATES: Gate[] = [
      the model-laws list over the same renders (--ratchet against
      scripts/harness/model_laws_baseline.json, seeded at 99 rows on
      2026-09-17). All three read what pages-fresh wrote, which is why it runs
-     first. Browser gates, three more of them: twelve in the chain. */
+     first. Browser gates, three more of them: twelve in the chain then,
+     thirteen with loud-seats below. */
   { name: "harness-archetypes", script: "scripts/harness/harness.mjs", args: ["archetypes"], browser: true },
   { name: "harness-page-filter", script: "scripts/harness/check_page_holes.mjs", args: ["--list"], browser: true },
   { name: "harness-laws", script: "scripts/harness/check_model_laws.mjs", args: ["--list", "--ratchet"], browser: true },
+  /* THE LOUD-MOMENTS LEDGER AND THE RENDER AGREE (plan step 40, 2026-09-19;
+     MODEL.md PART 6 and PART 8's seat tables). Each surface's view declares
+     its three loud seats (`LOUD_SEATS`; the census prints them into
+     docs/loop/CENSUS.md and PAGES.md), and this gate opens every render in
+     scripts/harness/pages.json at 1280 with the page filter's own accent walk
+     (scripts/lib/accent_walk.mjs, one function for both) and reds a seat
+     declared LIT that carries no accent on a card that prints its figure, and
+     any accent in a card no LIT seat names. A browser gate that measures for
+     itself: the filter writes its count to scratchpad/harness/accents.json,
+     but in this pool the two run at once, so a read of that file would race
+     its write. Planted twice and watched red. A thirteenth browser gate. */
+  { name: "loud-seats", script: "scripts/verify_loud_seats.mjs", browser: true },
   { name: "taxonomy", script: "scripts/verify_taxonomy.ts" },
   { name: "no-em-dashes", script: "scripts/verify_no_em_dashes.ts" },
   { name: "no-source-agencies", script: "scripts/verify_no_source_agencies.ts" },

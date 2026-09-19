@@ -46,10 +46,11 @@
  *   card carries stops with exit 2 and the ids the page holds.
  */
 import { chromium } from "playwright";
-import { mkdirSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, existsSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
+import { accentWalk } from "../lib/accent_walk.mjs";
 
 /* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
 preflight({ browser: true, name: "check_page_holes" });
@@ -175,16 +176,10 @@ function inPage() {
      order for the eye; WALL finds a card whose text runs over 0.55 characters
      per pixel of card width per 100 pixels of height, a wall of prose
      (ruling 15).
-     THE INSTRUMENT'S BLIND SPOT, stated before it is trusted: the accent is
-     read by resolving the token on a probe element, and an unresolved token
-     computes to the inherited ink, which would make every word on the page an
-     accent. A second probe with a token that cannot exist says what
-     unresolved looks like; when the two agree the count is not taken and the
-     page says so, rather than reporting a page of false accents. */
-  const probe = (token) => { const d = document.createElement("div"); d.style.color = "var(" + token + ")"; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; };
-  const accentRgb = probe("--terra-text");
-  const accentReadable = accentRgb !== probe("--no-such-token-xyz");
-  const accents = !accentReadable ? [] : [...document.querySelectorAll("main *")].filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && getComputedStyle(el).color === accentRgb).map((el) => (el.closest('[class*="rounded-[14px]"]')?.id || el.closest(CLUSTER)?.id || "card") + ": " + (el.textContent || "").trim().slice(0, 16));
+     THE ACCENT WALK IS ONE FUNCTION (plan step 40, 2026-09-19): it lives in
+     scripts/lib/accent_walk.mjs with its blind spot stated there, and this
+     filter evaluates it beside this walk (below, after the cards), so the
+     loud-seats gate counts with the same instrument. */
   const hierarchy = [];
   for (const card of cards) {
     const id = card.id || card.querySelector("[id]")?.id || "card";
@@ -194,11 +189,14 @@ function inPage() {
     const cb = card.getBoundingClientRect(); const chars = (card.textContent || "").replace(/\s+/g, " ").trim().length; const density = chars / (cb.width * cb.height / 100);
     if (density > 0.55) hierarchy.push({ id, rule: "WALL", detail: `${chars} characters in a ${Math.round(cb.width)}x${Math.round(cb.height)} card, ${density.toFixed(2)} per pixel of width per 100 of height` });
   }
-  return { out, cut, accents, accentReadable, hierarchy, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };
+  return { out, cut, hierarchy, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };
 }
 
 const reds = [];
 const red = (page, w, id, msg) => reds.push({ page, w, id, msg });
+/* The accents measured this run at the widest width, by page, written to ACCENTS_OUT after the loop (merged over the file's other pages, each entry naming its render and its time). */
+const ACCENTS_OUT = "scratchpad/harness/accents.json";
+const measured = {};
 const browser = await chromium.launch();
 for (const file of files) {
   const name = basename(file).replace(/\.html$/, "");
@@ -210,6 +208,19 @@ for (const file of files) {
     await page.evaluate(() => document.fonts && document.fonts.ready);
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
     const walk = await page.evaluate(inPage);
+    /* The accents, by the one walk (scripts/lib/accent_walk.mjs), printed in
+       the shape this filter always printed them, "card: text". */
+    const acc = await page.evaluate(accentWalk, { ids: [] });
+    const accents = acc.accents.map((a) => `${a.card}: ${a.text}`);
+    const accentReadable = acc.accentReadable;
+    /* THE COUNT IS WRITTEN DOWN (plan step 40): the accents at the widest
+       width, per page, with the render they were read off, so the number the
+       ACCENT BUDGET line reports is on disk for a reader after the run. The
+       loud-seats gate does NOT read this file: in the chain's pool it and
+       this filter run at once, so a read here would race the write and
+       report the previous run; the gate walks the same renders with the same
+       function instead. */
+    if (w === WIDTHS[0]) { const st = statSync(file); measured[name] = { accents, accentReadable, render: file, renderMtime: st.mtime.toISOString(), renderBytes: st.size, measuredAt: new Date().toISOString() }; }
     /* THE FILTER, at the point the walk hands its cards back: the card rules
        read only the named card; the page rules below read the page. */
     if (SECTION != null && !walk.out.some((c) => c.id === SECTION)) {
@@ -220,7 +231,7 @@ for (const file of files) {
     const out = SECTION == null ? walk.out : walk.out.filter((c) => c.id === SECTION);
     const cut = SECTION == null ? walk.cut : walk.cut.filter((c) => c.id === SECTION);
     const hierarchy = SECTION == null ? walk.hierarchy : walk.hierarchy.filter((h) => h.id === SECTION);
-    const { accents, accentReadable, pageScroll } = walk;
+    const { pageScroll } = walk;
     for (const c of cut) red(name, w, c.id, `ROWS CUT: the chart declares ${c.expect} rows and draws ${c.drawn}`);
     const BUDGET = 3;
     if (w === WIDTHS[0] && !accentReadable) red(name, w, "page", "ACCENT UNREADABLE: the accent token does not resolve in this render, so the page's accents were not counted");
@@ -243,6 +254,14 @@ for (const file of files) {
   }
 }
 await browser.close();
+{
+  let have = {};
+  try { have = JSON.parse(readFileSync(ACCENTS_OUT, "utf8")); } catch { have = {}; }
+  mkdirSync("scratchpad/harness", { recursive: true });
+  const { why: _old, ...rest } = have;
+  writeFileSync(ACCENTS_OUT, JSON.stringify({ why: "The page filter's ACCENT BUDGET count, written every run (plan step 40): each page's accent figures at 1280 by card, with the render they were read off. The loud-seats gate measures the renders itself with the same walk (scripts/lib/accent_walk.mjs) and never reads this file.", ...rest, ...measured }, null, 2) + "\n");
+  console.log(`accents: ${Object.keys(measured).length} page(s) at ${WIDTHS[0]} written to ${ACCENTS_OUT} (${Object.entries(measured).map(([k, v]) => `${k} ${v.accents.length}`).join(", ") || "none"})`);
+}
 console.log(`page holes${SECTION == null ? "" : ` (--section=${SECTION}, page rules on the whole page)`}: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r.page}@${r.w} #${r.id}: ${r.msg}`);
 

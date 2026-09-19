@@ -58,6 +58,8 @@
       "browser": true,
       "asserts": "THE WHITE-SPACE FILTER FOR A RENDERED PAGE.",
       "reads": [
+        "scratchpad/harness",
+        "scratchpad/harness/accents.json",
         "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scratchpad/harness/shots",
         "scratchpad/harness/shots/page-${name}${SECTION == null ? \"\" : ",
@@ -108,6 +110,21 @@
           "via": "BANNED"
         }
       ]
+    },
+    {
+      "name": "loud-seats",
+      "script": "scripts/verify_loud_seats.mjs",
+      "args": [],
+      "browser": true,
+      "asserts": "scripts/verify_loud_seats.mjs , THE LEDGER AND THE RENDER AGREE (plan- 2026-09-17/04-PAGES.md step 40, 2026-09-19; MODEL.md PART 6, \"three loud moments or fewer, two quiet cards between loud ones\", an",
+      "reads": [
+        "scratchpad/harness",
+        "scratchpad/harness/loud_seats.txt",
+        "scripts/lib/loud_seats.ts",
+        "src/components/spine",
+        "src/lib/spine/loud_seats.ts"
+      ],
+      "claims": []
     },
     {
       "name": "taxonomy",
