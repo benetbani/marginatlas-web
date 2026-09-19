@@ -81,6 +81,24 @@ import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
 import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
 import { buildHoodCloseDoors } from "@/lib/spine/close_rows";
 import { HoodTake, RankCard, PremiumCard, CompareCard, WorksSeat, CharacterCard, HoodClose } from "./blocks";
+import type { LoudSeat } from "@/lib/spine/loud_seats";
+
+/**
+ * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.8's
+ * seat table, its seat one re-ruled 2026-09-19 to the spread; plan step 40).
+ * Seat one is the take's AnswerCard in ./blocks.tsx (`tone="accent"`; the hub
+ * prints the spread, a district page the district's own rent, one 40 either
+ * way, so the hub and the district render each carry one accent), seat two is
+ * turn one's, with no honest candidate under the no-featuring ruling and
+ * MarkList's law, seat three the works seat, held empty on item 70. The census
+ * prints this ledger; the loud-seats gate holds both renders to it. Literals
+ * only, read from source (src/lib/spine/loud_seats.ts says why).
+ */
+export const LOUD_SEATS = [
+  { seat: 1, card: "00 take", figure: "the spread, the dearest against the cheapest, 40; on a district page the district's own rent", state: "LIT", condition: "8.8's seat table, its 2026-09-19 bracket (RULED: 2.50x on London; the table's first words, the lightest district's multiple, are the 1.00x base the ruling replaced, printed as a companion); real data, one city, `--terra-text` at 40, the page's only 40" },
+  { seat: 2, card: "turn one", figure: "none", state: "NO HONEST CANDIDATE", condition: "8.8: the 2026-09-10 no-featuring ruling forbids marking any one district loud in `01 rank` (every bar one neutral, every figure one ink), and MarkList's law keeps `02`'s headline at ink" },
+  { seat: 3, card: "04 works", figure: "the leading trade's lift figure", state: "HELD EMPTY", condition: "8.8: HELD EMPTY on DATA-REQUIREMENTS item 70 (the calibration, 4 of 21 London rows within 30 percent); best_trades is real on the seven since the 2026-09-17 boundary fix, so the seat no longer waits on the slug fault; the drawn blocked seat until then" },
+] as const satisfies readonly LoudSeat[];
 
 export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: any; focus?: string | null }) {
   const d = data ?? spineHoodSeed;

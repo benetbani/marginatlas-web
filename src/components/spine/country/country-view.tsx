@@ -60,6 +60,7 @@ import { buildWorldSeat, type WorldSeatData } from "@/lib/spine/world_seat_rows"
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { buildEntryBill, type EntryBillData } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts, type RunningCostsData } from "@/lib/spine/running_costs_rows";
+import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 /**
  * The on-this-page rail's entries, in page order, and the ONE list that says
@@ -96,6 +97,22 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "checks", label: "Before you commit" },
   { id: "compare", label: "Compare countries" },
 ];
+
+/**
+ * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.2's
+ * seat table; plan step 40, 2026-09-19). Seat one is the masthead's AnswerCard
+ * below (`tone` defaults to the accent), seat two the staff card's PayBars
+ * (`Hiring`, the average's bar `--terra`, the minimum hatched), seat three the
+ * money card's leader, unlit by his 2026-09-08 "quiet". The census prints this
+ * ledger; the loud-seats gate holds every render to it. The table's word for
+ * seat three, RESERVED, is this vocabulary's HELD EMPTY. Literals only, read
+ * from source (src/lib/spine/loud_seats.ts says why).
+ */
+export const LOUD_SEATS = [
+  { seat: 1, card: "00 take", figure: "the effective rate, 40", state: "LIT", condition: "8.2: the page's only 40, in `--terra-text`, before anything else is read; the regime is held for 58 of 195 and where it is not the card prints the state word and no accent (the AnswerCard's data-state no-answer), the withheld state the gate reads off the render" },
+  { seat: 2, card: "08 hiring", figure: "the average salary; its bar `--terra`, the minimum bar hatched", state: "LIT", condition: "8.2: 195 pairs, 2 withheld (PayBars' data-withheld); the placement sentence beside each; the accent is the AVERAGE, not the wage floor" },
+  { seat: 3, card: "12 money", figure: "the leading net margin", state: "HELD EMPTY", condition: "8.2: RESERVED, unlit, named; lit the day R7's one builder holds a per-country figure and he lifts his own 2026-09-08 'quiet' (DATA-REQUIREMENTS item 8); the budget is spent at two and openly short of three" },
+] as const satisfies readonly LoudSeat[];
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 

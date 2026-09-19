@@ -149,6 +149,27 @@ import { buildKnow } from "@/lib/spine/know_rows";
 import { buildMarket } from "@/lib/spine/market_rows";
 import { buildIndustryCloseDoors } from "@/lib/spine/close_rows";
 import { COPY } from "@/lib/spine/copy";
+import type { LoudSeat } from "@/lib/spine/loud_seats";
+
+/**
+ * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.7's
+ * seat table, read against its BUILT brackets; plan step 40, 2026-09-19).
+ * Seat one is the masthead's AnswerCard in ./opening.tsx (`tone="accent"`),
+ * seat two the pays cluster's payback cell in ./turn-one.tsx (the one `accent`
+ * in the cluster), seat three the channels card in ./turn-two.tsx, which is
+ * the seat awaiting his B9 donut and carries no accent today. The table is
+ * stale on two rows and the declaration writes what is true: seat one is lit
+ * on every trade (the builder falls through to the sector profile's residual
+ * on the 38 ladder-fill shards, plan step 34's first dispatch), and seat three
+ * is HELD EMPTY until the donut lands (the `08 channels` bracket), so the page
+ * carries two. The census prints this ledger; the loud-seats gate holds the
+ * render to it. Literals only, read from source (src/lib/spine/loud_seats.ts).
+ */
+export const LOUD_SEATS = [
+  { seat: 1, card: "00 take", figure: "the net of every $100, 40", state: "LIT", condition: "8.7: the page's only 40 in `--terra-text`, lit on every trade; the table's '(withheld on the 38 ladder-fill shards)' is stale, trade_net.ts falls through to the sector profile's residual on the 38 (plan step 34's first dispatch, 2026-09-18) and the state word is reachable on no trade today" },
+  { seat: 2, card: "05 pays", figure: "years until the capital comes back, the bento's one loud cell", state: "LIT", condition: "8.7: the BentoMetric with accent=true, first_year.payback_years on 243 of 243 (3 held); the cluster's law gives the band one accent and this is it" },
+  { seat: 3, card: "08 channels", figure: "the largest revenue line's share", state: "HELD EMPTY", condition: "8.7's table says LIT and is stale: accent three is UNLIT until his B9 donut lands (FORM-CATALOG candidate 5 awaiting his click and its mockup; the seat is the trade's MixCard, the leader first, no 30, no accent, 2026-09-19), so the page carries two" },
+] as const satisfies readonly LoudSeat[];
 
 /**
  * The industry spine page body. `data` defaults to the bundled illustrative seed so

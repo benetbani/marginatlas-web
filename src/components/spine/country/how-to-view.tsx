@@ -15,6 +15,21 @@ import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { COPY } from "@/lib/spine/copy";
 import { buildHowTo } from "@/lib/spine/howto_rows";
+import type { LoudSeat } from "@/lib/spine/loud_seats";
+
+/**
+ * THE THREE LOUD MOMENTS: none, by design (MODEL.md 8.9, "Loud today: 0 of 3";
+ * plan step 40, 2026-09-19). The country page's hero answered; this page is its
+ * appendix and carries no accent and no 40 (its cells sit at the hero fact
+ * rung, 20). The three seats are declared so the census prints the page's
+ * ledger and the loud-seats gate holds the render to zero accents; nobody
+ * "fixes" this page by inventing a focal for a page with no answer of its own.
+ */
+export const LOUD_SEATS = [
+  { seat: 1, card: "none", figure: "none", state: "NO HONEST CANDIDATE", condition: "8.9: this page carries no accent and no 40, a working page under the country's answer; 0 of 3 by design" },
+  { seat: 2, card: "none", figure: "none", state: "NO HONEST CANDIDATE", condition: "8.9: the same, by design" },
+  { seat: 3, card: "none", figure: "none", state: "NO HONEST CANDIDATE", condition: "8.9: the same, by design" },
+] as const satisfies readonly LoudSeat[];
 
 export function HowToBody({ iso2 }: { iso2: string }) {
   const d = buildHowTo(iso2);

@@ -119,6 +119,24 @@ import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { Premises } from "./premises";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { COPY } from "@/lib/spine/copy";
+import type { LoudSeat } from "@/lib/spine/loud_seats";
+
+/**
+ * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.3's
+ * seat table, "Loud today: 2 of 3"; plan step 40, 2026-09-19). Seat one is the
+ * masthead's AnswerCard in ./masthead.tsx (`id="city-take"`, `tone="accent"`),
+ * seat two the premises cluster's rent cell in ./premises.tsx (the one
+ * `accent` in the cluster, unlit where withheld), seat three turn two's, held
+ * empty until a per-trade figure exists that is not a banned one. The table's
+ * word for seat one, SPENT, is this vocabulary's LIT. The census prints this
+ * ledger; the loud-seats gate holds the render to it. Literals only, read from
+ * source (src/lib/spine/loud_seats.ts says why).
+ */
+export const LOUD_SEATS = [
+  { seat: 1, card: "00 masthead", id: "city-take", figure: "the average customer pay, 40", state: "LIT", condition: "8.3: SPENT; real for 252 of 252 (avg_gross_salary_usd_year, city_list_v1.json), the one figure every card under it is read against, the page's only 40" },
+  { seat: 2, card: "04 premises", figure: "the prime shop rent cell, `--terra-text`", state: "LIT", condition: "8.3, M9: lit in the held and the modelled states by the role it plays (the shop's biggest cost, the turn's first figure), unlit only where withheld (the cell's data-withheld-line); one loud cell a cluster, the count cell accent={false}" },
+  { seat: 3, card: "turn two, `03` or `09`", figure: "the leading trade figure", state: "HELD EMPTY", condition: "8.3: named; a per-trade figure that is not one of the banned ones, or ruling 30 lifting the ban; the day both figures exist one takes this seat and the other stays ink, decided then against the figures" },
+] as const satisfies readonly LoudSeat[];
 
 /* ================= THE OPENING ================= */
 /**

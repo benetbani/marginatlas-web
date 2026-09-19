@@ -152,8 +152,28 @@ import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { buildSuits } from "@/lib/spine/suits_rows";
 import { COPY } from "@/lib/spine/copy";
+import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 const X: any = spineCellSeed;
+
+/**
+ * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.6's
+ * seat table; plan step 40, 2026-09-19). Seat one is the masthead's AnswerCard
+ * in ./masthead.tsx (`tone="accent"`, the answer withheld off `moneyShown`),
+ * seat two the open card in ./turn-one.tsx (`open.accent`, true in the held
+ * and baseline states of open_rows.ts and false in the withheld one), seat
+ * three the clears card in ./turn-two.tsx (`clears.accent`, always on). All
+ * three lit on the exemplar, London restaurants; the two data-conditional
+ * seats are unlit where their figure is withheld, which the loud-seats gate
+ * reads off each render (the state markers, never a missing accent alone).
+ * The census prints this ledger. Literals only, read from source
+ * (src/lib/spine/loud_seats.ts says why).
+ */
+export const LOUD_SEATS = [
+  { seat: 1, card: "00 take", figure: "the take-home, 40", state: "LIT", condition: "8.6: the page's only rung-40 figure where moneyShown (London's curated entry and trusted-local cells: 16 of the 31 walked routes, 87 of the slate's 3,670, under trust:revenue-filled 2026-09-19); off it the answer is withheld with a stated line (the AnswerCard's data-state no-answer) and the page carries two" },
+  { seat: 2, card: "04 open", figure: "the total to open, 30; its biggest bar `--terra`", state: "LIT", condition: "8.6: LIT where held or baseline; UNLIT where withheld (a cell without setup_costs on the 90 trades on the 80,000 default; the BentoMetric's data-withheld-line), and the page carries two; the accent never moves to 05's net or to 03's longest wait" },
+  { seat: 3, card: "08 clears", figure: "the needed share of a day, the sweep `--terra`", state: "LIT", condition: "8.6: always on, 243 of 243 (computeBreakeven where moneyShown, else the shard's breakeven_utilization_pct); the ring is FORM-CATALOG candidate 4 awaiting his click, the share at 30 in `--terra-text` on BentoMetric until then" },
+] as const satisfies readonly LoudSeat[];
 
 /* The .celltop terracotta top-edge hover motif is DELETED (rulebook v1 section 37,
  * founder G3, 2026-07-11): the accent never appears on hover. The quiet grey .hov
