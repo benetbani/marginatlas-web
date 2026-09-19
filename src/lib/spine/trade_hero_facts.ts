@@ -134,11 +134,28 @@ export type CellHeroInstance = { key: string; route: [string, string, string]; w
  * named and the team's five roles; shoe repair is profile-fed (the repair
  * sector's shares, the drivers on its shard tagged modelled) and holds two
  * roles, the table's floor; London chiropractic is the split's withheld
- * state on a live cell (the sector's lines and the engine's net come to
- * 108); Cairo restaurants is the team with no median (Egypt's pay pair is
- * withheld, item 9), the pay column in dashes. The seven-row team is drawn
- * off the one seven-row shard by id (a retired trade no route reaches;
- * stories.tsx says so) and needs no seed.
+ * state on a live cell (the sector's lines and the net come to more than a
+ * hundred: 108 with the engine's net on 2026-09-18, 106.5 with the ladder's
+ * 22 since 2026-09-19, when the trust gate's sixth guard stopped money
+ * showing on a filled London row without a curated entry); Cairo
+ * restaurants is the team with no median (Egypt's pay pair is withheld,
+ * item 9), the pay column in dashes. The seven-row team is drawn off the
+ * one seven-row shard by id (a retired trade no route reaches; stories.tsx
+ * says so) and needs no seed.
+ *
+ * THE STATES RE-MEASURED 2026-09-19 (QUEUE trust:revenue-filled, the sixth
+ * guard and the floor; scratchpad/steptrust/states-after.txt): money shows
+ * on London restaurants, California restaurants, London dental practices,
+ * London nail salons and London barbershops (the exemplar and California
+ * through the gate and the entry, the other three through the curated entry
+ * alone: their rows are filled), and no longer on Berlin restaurants, London
+ * shoe repair, London bookshops and London chiropractic (filled rows, no
+ * curated entry); Mumbai cafes and Cairo restaurants were never shown. No
+ * handle changes its block: Berlin serves the rivals (six keyed siblings,
+ * money not read); shoe repair's split is profile-fed either way, its net
+ * now the ladder's 12 in place of the engine's 9.5; chiropractic's split is
+ * withheld either way. The held exemplars of the money blocks are London
+ * (the curated entry) and California (the gate); the withheld one Mumbai.
  *
  * THE FOURTH DISPATCH (2026-09-18), `07 peers` and the band `08 clears | 09
  * lasts`, widens three handles and adds none: California serves the peers
@@ -180,7 +197,7 @@ export const CELL_INSTANCES: Record<string, { route: [string, string, string]; w
   "london-dental": { route: ["gb", "london", "dental-practices"], why: "a shard whose sale figures rest on operating earnings, one of 38: the worth's stated line where the strip would stand, money shown", blocks: ["worth"] },
   "london-shoe-repair": { route: ["gb", "london", "shoe-repair"], why: "a trade on the archetype's default with no setup lines: the cost to open withheld, and a three-licence shard", blocks: ["permits", "open", "split", "team", "lasts", "market"] },
   "london-bookshops": { route: ["gb", "london", "indie-bookstores"], why: "a five-licence shard, the trade on the archetype's default", blocks: ["permits"] },
-  "london-chiropractic": { route: ["gb", "london", "chiropractic"], why: "the split withheld on a live cell: the sector's lines and the engine's net come to more than a hundred", blocks: ["split"] },
+  "london-chiropractic": { route: ["gb", "london", "chiropractic"], why: "the split withheld on a live cell: the sector's lines and the ladder's net come to more than a hundred (money not shown: the London row is filled and the trade has no curated entry)", blocks: ["split"] },
   "cairo-restaurants": { route: ["eg", "cairo", "restaurants"], why: "the team with no median pay: Egypt's pair is withheld, so the pay column prints dashes and the card says so once", blocks: ["team"] },
   "london-nail-salons": { route: ["gb", "london", "nail-salons"], why: "a five-part shard, the most the channel mix holds: three rows on the grid, the leader first", blocks: ["mix"] },
   "london-barbershops": { route: ["gb", "london", "barbershops"], why: "the one two-part shard: one row of two, the leader first", blocks: ["mix"] },

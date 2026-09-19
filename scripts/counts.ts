@@ -477,7 +477,16 @@ function main() {
       missing.push(file);
       continue;
     }
-    const text = fs.readFileSync(file, "utf8");
+    /* Line endings normalised before the block is compared, the same rule the
+       registry below has had since it was born. Found 2026-09-19 (QUEUE
+       trust:revenue-filled): a `git stash pop` re-checked the three carriers
+       out with CRLF (autocrlf), the block rendered with LF no longer matched
+       byte for byte, and the chain redded here on a count that had not moved
+       and a file git saw no change in. A Windows checkout would red the same
+       way; a stale count still reds, because a changed digit survives the
+       normalisation. On --write the file is written back with LF, which is
+       what git stores. */
+    const text = fs.readFileSync(file, "utf8").replace(/\r\n/g, "\n");
     const next = replaceBlock(text, block);
     if (next === null) {
       missing.push(file);

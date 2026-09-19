@@ -182,9 +182,18 @@ export const INDUSTRY_INSTANCES: Record<string, { id: string; why: string; block
      shards. THE PLACES TABLE HAS NO DATA INSTANCE: under the own-row law
      (industry_places_rows.ts) no trade holds four cities of their own, so
      the block is seated on 243 of 243 and the sheet draws the seat in its
-     three lines: restaurants (two own figures of eight resolved, New York
-     read and London curated), grocery stores (one own of twelve resolved,
-     the most withheld) and pet training (nothing resolves, the none line).
+     lines. RE-MEASURED 2026-09-19 (QUEUE trust:revenue-filled): the trust
+     gate's sixth guard refuses a filled row before the resolver returns
+     it, so the slate resolves New York alone (83 trades) or nothing (160),
+     and London's curated entry no longer reaches the places builder (its
+     row is filled; the builder's curated exception is unreachable until the
+     resolver reads the entry, the controller's row). The seat's `some` line
+     (two or three own figures) has no live trade now; the sheet draws the
+     `one` line on restaurants (New York read, one of one resolved; two of
+     eight before) and the `none` line on pet training. Grocery stores left
+     the sheet: its one own figure was London's curated entry, and with
+     twelve filled rows refused it draws the same none line pet training
+     draws (scratchpad/steptrust/compare-slate.txt).
      Cabinet making is one of the 38 fill shards whose route resolves to
      itself, with four formats and a four-part mix, so it serves the formats
      on the profile's residual and the mix at four parts. NO EXTREME-NAME
@@ -200,7 +209,6 @@ export const INDUSTRY_INSTANCES: Record<string, { id: string; why: string; block
      (101 rows) at 375, the shortest spilling name 35 characters
      (scratchpad/step34c/formats-spill.json, 2026-09-19). */
   cabinets: { id: "cabinet_making", why: "a fill shard on the sector profile's residual: the formats on residual plus delta under the profile basis, and a four-part mix", blocks: ["formats", "channels"] },
-  grocery: { id: "grocery_stores", why: "twelve cities of the slate resolve and one is its own (London's curated entry): the seat naming one of fifteen, the most cities withheld", blocks: ["places"] },
   "pet-training": { id: "pet_training", why: "no city of the slate resolves: the seat's none line", blocks: ["places"] },
 };
 
