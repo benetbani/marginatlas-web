@@ -40,6 +40,22 @@ export function cityPageSlug(iso2: string, cityName: string): string | undefined
 export function coveredCities(iso2: string): Array<{ slug: string; name: string; pop_m?: number }> {
   return (CITY_PAGE_BY_ISO[iso2.toUpperCase()] ?? []).map((c) => ({ slug: c.slug, name: c.name, pop_m: typeof c.pop_m === "number" ? c.pop_m : undefined }));
 }
+const CITY_PAGE_SLUGS = new Set(Object.values(CITY_PAGE_BY_ISO).flat().map((c) => String(c.slug ?? "").toLowerCase()).filter(Boolean));
+/**
+ * WHETHER THE CITY ROUTE SERVES A SLUG, mirrored purely from
+ * `src/app/(site)/cities/[slug]/page.tsx` (read 2026-09-19, QUEUE
+ * country:cities-covered-list): the route resolves `CITIES_BY_SLUG.get(slug)`
+ * over this same list and answers `notFound()` for anything else; its
+ * `generateStaticParams` prerenders tier 1 only and the rest render on demand
+ * (`revalidate`, no `dynamicParams = false`), and the spine adapter
+ * (`buildSpineCitySeed`) resolves the same map. So a page exists for exactly
+ * the slugs the list holds, whatever the tier. The doors gate
+ * (scripts/verify_doors.ts) mirrors the same rule from the same file, so a
+ * card that passes here lands where the gate says it lands.
+ */
+export function cityRouteServes(slug: string | null | undefined): boolean {
+  return typeof slug === "string" && CITY_PAGE_SLUGS.has(slug.toLowerCase());
+}
 /** The metropolis-page href for a covered city, or undefined when none joins. */
 export function cityPageHref(iso2: string, cityName: string): string | undefined {
   const slug = cityPageSlug(iso2, cityName);

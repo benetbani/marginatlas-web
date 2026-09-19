@@ -965,8 +965,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const cities = iso2 ? buildCityCards(iso2) : null;
   /* THE CITIES SEAT (plan step 49, 2026-09-19): built only where no card
      draws, and the builder itself returns null for a country that holds a
-     covered city (52 of 195 hold one and draw no card, the card builder's
-     draft-list intersection, queued), so the seat's line is never false. */
+     covered city, so the seat's line is never false. Since the card builder
+     walks the covered list (QUEUE country:cities-covered-list, the same day)
+     the cards draw on all 105 countries the list holds a city for, largest
+     first, eight at most, the pager paging (the United Kingdom seven on two
+     pages), and the seat on the 90 it holds none for; no country draws
+     neither. */
   const citiesSeat = !cities && iso2 ? buildCitiesSeat(iso2) : null;
   const customers = iso2 ? buildCustomersStrip(iso2) : null;
   const margin = marginCardFromRows(Array.isArray(d.money?.list) ? d.money.list : []);

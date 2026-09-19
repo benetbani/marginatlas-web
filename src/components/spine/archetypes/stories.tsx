@@ -181,20 +181,28 @@ export function pickCardPagerInstances(): Instance[] {
 
 /* THE CITY CARDS, B11, 2026-09-10. Three looks of one card, built as
    ALTERNATIVES for the founder to choose between, so the instance key is
-   "<iso2>:<look>" and the same countries are drawn in each look: the exemplar,
-   the longest city name in the whole set, and a country holding exactly one
-   covered city (where neither the tint nor the mark has a set to scale within,
-   so both must draw nothing rather than an empty track). */
+   "<iso2>:<look>" and the same countries are drawn in each look: the exemplar
+   (seven cards on two pages since the builder walks the covered list, QUEUE
+   country:cities-covered-list, 2026-09-19), the longest city name in the
+   whole set, a country holding exactly one covered city (where neither the
+   tint nor the mark has a set to scale within, so both must draw nothing
+   rather than an empty track), the three-city country (the last set under
+   the row's four tracks, drawn as rows: the threshold measured on New
+   Zealand) and the four-city country (the row filled, no pager). */
 export const CITY_CARD_LOOKS: CityCardsLook[] = ["field", "plate", "column"];
 export function pickCityCardsInstances(): Instance[] {
   const all = codes().map((c) => ({ c, cards: buildCityCards(c) })).filter((x) => x.cards);
-  const seeds: Instance[] = [{ iso2: "GB", why: "the exemplar" }];
+  const seeds: Instance[] = [{ iso2: "GB", why: `the exemplar: ${buildCityCards("GB")?.cards.length ?? 0} cards, the pager paging four` }];
   const seen = new Set(["GB"]);
   const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); seeds.push({ iso2, why }); } };
   const longest = [...all].sort((a, b) => Math.max(...b.cards!.cards.map((k) => k.name.length)) - Math.max(...a.cards!.cards.map((k) => k.name.length)))[0];
   if (longest) take(longest.c, `extreme name: ${longest.cards!.cards.reduce((m, k) => (k.name.length > m.length ? k.name : m), "")}`);
   const one = all.find((x) => x.cards!.cards.length === 1);
   if (one) take(one.c, "one city, so nothing is drawn against a set");
+  const three = all.find((x) => x.cards!.cards.length === 3);
+  if (three) take(three.c, "three cities, the last set under the row's four tracks, drawn as rows");
+  const four = all.find((x) => x.cards!.cards.length === 4);
+  if (four) take(four.c, "four cities, the row filled, no pager");
   return CITY_CARD_LOOKS.flatMap((look) => seeds.map((s) => ({ iso2: `${s.iso2}:${look}`, why: `${look}, ${s.why}` })));
 }
 

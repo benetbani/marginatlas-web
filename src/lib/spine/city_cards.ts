@@ -8,6 +8,25 @@
  * eight cities, a city without a page is dropped, a trailing parenthetical is
  * dropped from the name.
  *
+ * THE LIST IT WALKS IS THE COVERED LIST, since 2026-09-19 (QUEUE
+ * country:cities-covered-list, ruled by the controller under MODEL.md 8.2
+ * row `10 cities`). Until then the builder walked `src/lib/cities/top100.json`
+ * (102 rows over 53 countries, "1.0.0-draft") and kept the rows with a page,
+ * while the page index is `data/cities/city_list_v1.json` (252 rows over 105
+ * countries): 52 countries held a covered city whose close door went to that
+ * city's page and whose `10 cities` drew nothing, and 32 more drew fewer cards
+ * than they hold (the United Kingdom four of seven). Now the rows are the
+ * covered list's own for the country, LARGEST METRO FIRST by the list's
+ * `pop_m` (ties by name), eight at most (the cap stands), and only a row the
+ * city route serves (`cityRouteServes`, the route's `notFound()` rule mirrored
+ * purely in city_pages.ts, never guessed). The draft list is read for ONE
+ * thing: the region sub-line, where it holds a row for the city (joined by
+ * country and normalised name, the inverse of `cityPageSlug`); a city the
+ * draft does not hold prints no sub-line, and the count of each is the
+ * archetype copy gate's to print. The figure and the door's promise are
+ * unchanged: `avg_gross_salary_usd_year` off the same list through
+ * `getCityAveragePayUsd`, and `CITY_CARD_LANDS`.
+ *
  * WHY A FIGURE AT ALL (founder, 2026-09-10, on the coloured destination cards:
  * "those coloured beautiful vertical cards of cities should be used by us for
  * cities too", the current ones "stale and bland"). A card carrying a name and
@@ -29,7 +48,7 @@
  * nothing rather than an empty track, which would read as zero.
  */
 import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
-import { cityPageHref, cityPageSlug } from "@/lib/cities/city_pages";
+import { cityRouteServes, coveredCities, normalizePlaceName } from "@/lib/cities/city_pages";
 import { cityImageSrc } from "@/lib/cities/city_images";
 import { getCityAveragePayUsd } from "@/lib/cities/city_tier";
 import type { DoorKind } from "@/lib/spine/door_kinds";
@@ -146,28 +165,49 @@ function keepRegion(name: string, region: string | undefined): string | null {
   return a.includes(b) || b.includes(a) ? null : r;
 }
 
+/** The cap: eight cards, the pager paging them four a page. */
+export const CITY_CARDS_CAP = 8;
+
+/** The draft list's row for a covered city, joined by country and normalised
+ *  name (the inverse of `cityPageSlug`), for the region sub-line alone. */
+function draftRowFor(iso2: string, name: string): CityEntry | undefined {
+  const target = normalizePlaceName(name);
+  return (getCitiesForCountry(iso2) as CityEntry[]).find((d) => normalizePlaceName(d.name) === target);
+}
+
+/** The covered rows the cards draw, in the cards' order: the route-served
+ *  rows of the country, largest metro first by `pop_m` (a row with no figure
+ *  last, ties by name), cut to the cap. Exported so the gate can hold the
+ *  builder to it from its own reading of the list. */
+export function cityCardRows(iso2In: string): Array<{ slug: string; name: string; pop_m?: number }> {
+  const iso2 = iso2In.toUpperCase();
+  return coveredCities(iso2)
+    .filter((c) => cityRouteServes(c.slug))
+    .sort((a, b) => (typeof b.pop_m === "number" ? b.pop_m : -1) - (typeof a.pop_m === "number" ? a.pop_m : -1) || a.name.localeCompare(b.name))
+    .slice(0, CITY_CARDS_CAP);
+}
+
 /** Null when the country has no covered city with a page. */
 export function buildCityCards(iso2In: string): CityCards | null {
   const iso2 = iso2In.toUpperCase();
-  const rows = getCitiesForCountry(iso2).slice(0, 8);
   const cards: CityCard[] = [];
-  for (const c of rows as CityEntry[]) {
-    const href = cityPageHref(iso2, c.name);
-    if (!href) continue;
-    const slug = cityPageSlug(iso2, c.name);
+  for (const c of cityCardRows(iso2)) {
+    const slug = c.slug;
+    const href = `/cities/${slug}`;
     const pay = getCityAveragePayUsd(slug);
     const name = String(c.name).replace(/\s*\([^)]*\)\s*$/, "");
     const photo = cityCardImage(slug);
+    const draft = draftRowFor(iso2, c.name);
     cards.push({
-      id: c.id,
+      id: slug,
       name,
-      sub: c.region_name?.trim() || undefined,
-      /* A REGION THAT REPEATS THE CITY IS NOT A SECOND DETAIL. The city set
+      sub: draft?.region_name?.trim() || undefined,
+      /* A REGION THAT REPEATS THE CITY IS NOT A SECOND DETAIL. The draft set
          gives Berlin the region "Berlin", Ho Chi Minh City "Ho Chi Minh",
          Lagos "Lagos State" and Tokyo "Tokyo Metropolis", and a card that
          prints the name and then almost the name again has spent one of its
          two details on nothing. Dropped when either name contains the other. */
-      region: keepRegion(name, c.region_name) ?? undefined,
+      region: keepRegion(name, draft?.region_name) ?? undefined,
       href,
       lands: CITY_CARD_LANDS,
       image: cityImageSrc(slug),

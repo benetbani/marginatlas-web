@@ -26,6 +26,11 @@
  *    a kicker within four words that is the drawn card's own; and the four
  *    thin-country seats' conditions counted over the taxonomy from the
  *    builders the view reads, so the count a comment quotes is measured.
+ *  CITY CARDS (QUEUE country:cities-covered-list, 2026-09-19): every
+ *    country's cards are the covered list's rows largest first, eight at
+ *    most, every href a slug the city route serves, every figure the list's
+ *    own, every card promising customer pay with a photograph, the region
+ *    sub-line the draft's where it holds one; counted over the taxonomy.
  * BLIND SPOT: it cannot see a wrap or a hole; the browser half does that.
  */
 import { COUNTRIES } from "@/lib/taxonomy";
@@ -69,7 +74,8 @@ import { buildCityDistrictBars, rentMult, countWord } from "@/lib/spine/district
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { SEAT_LINE_WORDS_CAP } from "@/components/spine/archetypes/BlockedSeat";
-import { buildCityCards } from "@/lib/spine/city_cards";
+import { buildCityCards, CITY_CARDS_CAP, CITY_CARD_LANDS, CITY_CARD_PLACEHOLDER_IMAGE } from "@/lib/spine/city_cards";
+import { normalizePlaceName } from "@/lib/cities/city_pages";
 import { buildCitiesSeat, cutCitiesSeatTables, sayNames, LIVE_CITIES_SEAT_TABLES, PROFILE_REGIONS, CITIES_SEAT_NAMES_CAP } from "@/lib/spine/country_cities_seat";
 import { buildSetupRows } from "@/lib/spine/setup_rows";
 import { buildMarkList, MARK_LIST_CAP } from "@/lib/spine/mark_list_rows";
@@ -109,6 +115,7 @@ import { INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
+import top100Json from "../src/lib/cities/top100.json";
 
 /** Every cost driver name a shard holds, whatever its tag, for the short-label census (plan step 33's third dispatch). */
 function shardCostLineNames(id: string): string[] {
@@ -1487,8 +1494,10 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     THE CUTS the sheet draws (two names, one, none) compose under the same
       law, and the none line is COPY's own.
    Counted over the taxonomy: how many draw cards, how many the seat, how many
-   hold a covered city and draw no card (the card builder's draft-list
-   intersection, QUEUE'd on 2026-09-19), and the forms. Planted twice on
+   hold a covered city and draw no card (52 the day the seat landed, the card
+   builder's draft-list intersection; 0 since the builder walks the covered
+   list, QUEUE country:cities-covered-list, and a red from then on), and the
+   forms. Planted twice on
    2026-09-19 and watched red before it was trusted: a door let into the line
    (a path after the names) and the continent code carried as the region. */
 {
@@ -1525,6 +1534,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (covered && !drawn) coveredNoCard++;
     if (covered && seat) reds.push(`cities seat ${iso2}: the list holds a covered city here and the seat still stands (its line would be false)`);
     if (!covered && !seat) reds.push(`cities seat ${iso2}: no covered city and no seat, so the page falls to 20 blocks`);
+    /* Since the builder walks the covered list (QUEUE country:cities-covered-list, 2026-09-19) a covered city with no card is the third state the page can fall to, 20 blocks and no seat; it was 52 countries the day the seat landed. */
+    if (covered && !drawn) reds.push(`cities ${iso2}: the list holds a covered city here and the card builder draws nothing, so the page falls to 20 blocks with no seat`);
     if (!seat) continue;
     seatedCities++;
     forms[seat.form] = (forms[seat.form] ?? 0) + 1;
@@ -1558,7 +1569,106 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (buildCitiesSeat("GB") != null) reds.push("cities seat: the United Kingdom builds a seat");
   }
   lineLaw("COPY.blocked.cities.lineNone", COPY.blocked.cities.lineNone);
-  console.log(`cities seat: of ${codes.length} countries ${cards} draw cards, ${seatedCities} the seat (${forms.three} naming three, ${forms.fewer} fewer, ${forms.none} the none line; by region ${Object.entries(perRegion).map(([r, n]) => `${r} ${n}`).join(", ")}) and ${coveredNoCard} hold a covered city and draw no card (the card builder's draft-list intersection, queued); every line in the idiom under ${SEAT_LINE_WORDS_CAP + 1} words, no figure, no door, no code`);
+  console.log(`cities seat: of ${codes.length} countries ${cards} draw cards, ${seatedCities} the seat (${forms.three} naming three, ${forms.fewer} fewer, ${forms.none} the none line; by region ${Object.entries(perRegion).map(([r, n]) => `${r} ${n}`).join(", ")}) and ${coveredNoCard} hold a covered city and draw no card; every line in the idiom under ${SEAT_LINE_WORDS_CAP + 1} words, no figure, no door, no code`);
+}
+/* THE CITY CARDS (MODEL.md 8.2 row `10 cities`; QUEUE
+   country:cities-covered-list, ruled 2026-09-19: the builder walks the
+   covered list, largest first, eight at most, the pager paging). The
+   builder's law, held over every country in the taxonomy from this gate's
+   OWN reading of the two files (data/cities/city_list_v1.json, the page
+   index; src/lib/cities/top100.json, the draft, for the region sub-line
+   alone), never from the builder's helpers:
+    DRAWN EXACTLY WHERE THE LIST HOLDS A CITY, both ways (the seat block
+      above reds the other two states).
+    THE ROWS: the list's rows for the country, largest metro first by
+      `pop_m` (ties by name), cut to the cap; the count is the smaller of the
+      cap and the rows held; the order is checked against an independent sort.
+    THE PAGE: every card's href is `/cities/<slug>` for a slug the route
+      serves, which is exactly a slug the list holds (the route's own
+      `notFound()` rule, mirrored in city_pages.ts and again here from the
+      JSON); the doors gate walks the same hrefs off the render.
+    THE FIGURE: the list's own `avg_gross_salary_usd_year` for the slug, the
+      city page's opening answer, or withheld where the list holds no positive
+      figure; never another number.
+    THE PROMISE: `lands` is CITY_CARD_LANDS on every card.
+    THE PHOTOGRAPH: every card carries one (the placeholder or its own); the
+      harness measures the drawn page, this holds the set.
+    THE NAME: the list's, a trailing parenthetical dropped, no digit, no em
+      dash, no banned word.
+    THE REGION SUB-LINE: the draft's `region_name` where the draft holds a
+      row for the city (by country and normalised name) and it does not repeat
+      the city's name; absent otherwise; both counts printed.
+    THE SHARES: `payShare` and `payOfTop` set exactly when two or more cards
+      hold distinct positive figures, in [0, 1], the top at 1.
+   PLANTED ONCE, 2026-09-19, and watched red: a city without a page let into
+   the cards (a row with slug "nowhere" pushed on the United Kingdom; red
+   "points at /cities/nowhere, which the city route does not serve"),
+   unplanted before the commit. */
+{
+  type Row = { slug: string; name: string; iso2: string; pop_m?: number; avg_gross_salary_usd_year?: number };
+  const listRows = (cityListJson as { cities: Row[] }).cities;
+  const served = new Set(listRows.map((r) => String(r.slug).toLowerCase()));
+  const draft = (top100Json as { cities: Array<{ name: string; country: string; region_name?: string }> }).cities;
+  const bare = (s: string) => s.toLowerCase().replace(/[^a-z]/g, "");
+  const cleanName = (s: string) => String(s).replace(/\s*\([^)]*\)\s*$/, "");
+  let drawnCountries = 0, cardsAll = 0, withRegion = 0, withoutRegion = 0, withheldFigure = 0, paged = 0, atCap = 0;
+  const byCount: Record<number, number> = {};
+  for (const iso2 of codes) {
+    const rows = listRows.filter((r) => String(r.iso2).toUpperCase() === iso2);
+    const c = buildCityCards(iso2);
+    if (rows.length === 0) { if (c) reds.push(`city cards ${iso2}: cards drawn for a country the list holds no city for`); continue; }
+    if (!c) continue; // the seat block above reds this state
+    drawnCountries++;
+    const expect = rows
+      .slice()
+      .sort((a, b) => (typeof b.pop_m === "number" ? b.pop_m : -1) - (typeof a.pop_m === "number" ? a.pop_m : -1) || a.name.localeCompare(b.name))
+      .slice(0, CITY_CARDS_CAP);
+    const where = `city cards ${iso2}`;
+    byCount[c.cards.length] = (byCount[c.cards.length] ?? 0) + 1;
+    cardsAll += c.cards.length;
+    if (c.cards.length > 4) paged++;
+    if (rows.length > CITY_CARDS_CAP) atCap++;
+    if (c.cards.length !== Math.min(CITY_CARDS_CAP, rows.length)) reds.push(`${where}: ${c.cards.length} cards against ${rows.length} covered cities and a cap of ${CITY_CARDS_CAP}`);
+    if (c.cards.length > CITY_CARDS_CAP) reds.push(`${where}: over the cap of ${CITY_CARDS_CAP}`);
+    if (JSON.stringify(c.cards.map((k) => k.id)) !== JSON.stringify(expect.map((r) => r.slug))) reds.push(`${where}: the cards ${JSON.stringify(c.cards.map((k) => k.id))} are not the list's largest first ${JSON.stringify(expect.map((r) => r.slug))}`);
+    if (c.allHref !== `/cities#c-${iso2.toLowerCase()}`) reds.push(`${where}: the all link points at ${c.allHref}`);
+    const pays = c.cards.map((k) => k.payUsd).filter((v): v is number => typeof v === "number" && v > 0);
+    const scaled = pays.length >= 2 && Math.max(...pays) > Math.min(...pays);
+    for (const k of c.cards) {
+      const row = listRows.find((r) => r.slug === k.id);
+      const slugOfHref = k.href.startsWith("/cities/") ? k.href.slice("/cities/".length).toLowerCase() : "";
+      if (!slugOfHref || !served.has(slugOfHref)) reds.push(`${where}: the card "${k.name}" points at ${k.href}, which the city route does not serve (no such slug in data/cities/city_list_v1.json)`);
+      if (!row) { reds.push(`${where}: the card "${k.name}" (id ${k.id}) is no row of the list`); continue; }
+      if (k.href !== `/cities/${row.slug}`) reds.push(`${where}: the card "${k.name}" points at ${k.href}, not the list's /cities/${row.slug}`);
+      if (k.name !== cleanName(row.name)) reds.push(`${where}: the card's name "${k.name}" is not the list's "${row.name}"`);
+      if (/\d/.test(k.name)) reds.push(`${where}: a digit in the name "${k.name}"`);
+      if (/—/.test(`${k.name} ${k.region ?? ""}`)) reds.push(`${where}: an em dash on the card "${k.name}"`);
+      for (const b of COPY.banned) if (`${k.name} ${k.region ?? ""}`.toLowerCase().includes(b)) reds.push(`${where}: banned word "${b}" on the card "${k.name}"`);
+      if (k.lands !== CITY_CARD_LANDS) reds.push(`${where}: the card "${k.name}" promises ${k.lands}, not ${CITY_CARD_LANDS}`);
+      if (!k.photo || !k.photo.src) reds.push(`${where}: the card "${k.name}" carries no photograph (the field look needs one on every card)`);
+      else if (k.photo.placeholder && k.photo.src !== CITY_CARD_PLACEHOLDER_IMAGE) reds.push(`${where}: the card "${k.name}" marks a placeholder that is not the one placeholder (${k.photo.src})`);
+      const held = typeof row.avg_gross_salary_usd_year === "number" && Number.isFinite(row.avg_gross_salary_usd_year) && row.avg_gross_salary_usd_year > 0;
+      if (held && k.payUsd !== row.avg_gross_salary_usd_year) reds.push(`${where}: the card "${k.name}" prints ${k.payUsd}, not the list's avg_gross_salary_usd_year ${row.avg_gross_salary_usd_year}`);
+      if (!held) { withheldFigure++; if (k.payUsd != null) reds.push(`${where}: the card "${k.name}" prints ${k.payUsd} where the list holds no figure`); }
+      /* the region sub-line, from the gate's own join of the draft */
+      const d = draft.find((x) => x.country.toUpperCase() === iso2 && normalizePlaceName(x.name) === normalizePlaceName(row.name));
+      const dr = d?.region_name?.trim();
+      const keep = dr && !(bare(k.name).includes(bare(dr)) || bare(dr).includes(bare(k.name))) ? dr : undefined;
+      if ((k.region ?? undefined) !== keep) reds.push(`${where}: the card "${k.name}" carries the region ${JSON.stringify(k.region)} against the draft's ${JSON.stringify(keep)}`);
+      if (k.region) withRegion++; else withoutRegion++;
+      /* the shares */
+      const hasShare = typeof k.payShare === "number" || typeof k.payOfTop === "number";
+      if (hasShare && !scaled) reds.push(`${where}: the card "${k.name}" carries a share with no set to scale within`);
+      if (scaled && typeof k.payUsd === "number" && k.payUsd > 0 && !hasShare) reds.push(`${where}: the card "${k.name}" carries no share where the set scales`);
+      if (typeof k.payShare === "number" && (k.payShare < 0 || k.payShare > 1)) reds.push(`${where}: payShare ${k.payShare} off [0, 1] on "${k.name}"`);
+      if (typeof k.payOfTop === "number" && (k.payOfTop <= 0 || k.payOfTop > 1)) reds.push(`${where}: payOfTop ${k.payOfTop} off (0, 1] on "${k.name}"`);
+    }
+    if (scaled && !c.cards.some((k) => k.payOfTop === 1)) reds.push(`${where}: no card sits at the top of its own set`);
+  }
+  const gb = buildCityCards("GB");
+  if (!gb || gb.cards.length !== Math.min(CITY_CARDS_CAP, listRows.filter((r) => r.iso2 === "GB").length)) reds.push(`city cards: the United Kingdom draws ${gb?.cards.length ?? 0} cards against its ${listRows.filter((r) => r.iso2 === "GB").length} covered cities`);
+  if (drawnCountries === 0) reds.push("city cards: no country draws cards");
+  console.log(`city cards: ${drawnCountries} of ${codes.length} countries draw cards (${Object.entries(byCount).map(([n, k]) => `${k} with ${n}`).join(", ")}; ${paged} on the pager's second page, ${atCap} cut at the cap of ${CITY_CARDS_CAP}), ${cardsAll} cards in all, ${withRegion} with a region sub-line off the draft and ${withoutRegion} without, ${withheldFigure} with the figure withheld; every href a slug the city route serves, every figure the list's own, every card promising ${CITY_CARD_LANDS} with a photograph; the United Kingdom ${gb?.cards.map((k) => k.name).join(", ")}`);
 }
 /* THE TRADE'S EXIT (MODEL.md 8.6 `13 rivals`, `14 worth`, `15 close`; plan
    step 33's sixth dispatch, 2026-09-18). THE RIVALS on fixture seeds in the

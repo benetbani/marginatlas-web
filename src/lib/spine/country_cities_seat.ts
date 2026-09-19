@@ -37,12 +37,14 @@
  * cities a region holds is twelve, Sub-Saharan Africa; measured 2026-09-19).
  *
  * WHO STANDS ON THE SEAT: a country the city list holds NO row for (90 of
- * 195). A country that holds a covered city but draws no card (52 of 195 on
- * 2026-09-19: `buildCityCards` walks the top-100 draft list and keeps those
- * with a page, while the list of covered cities is the page index itself,
- * so Bangladesh holds Dhaka's page, its close door goes there, and no card
- * draws) is NOT seated: the seat's line would be false on it. That gap is
- * the card builder's and is queued, not papered over here.
+ * 195). A country that holds a covered city is NOT seated, whatever the
+ * cards draw: the seat's line would be false on it. For one day (2026-09-19,
+ * the day the seat landed) 52 such countries drew no card either, because
+ * `buildCityCards` walked the top-100 draft list; since QUEUE
+ * country:cities-covered-list landed the same day the card builder walks
+ * the covered list, so every country the list holds a city for draws cards
+ * (105) and the third state, a covered city and no card, is a red in
+ * scripts/verify_archetype_copy.ts.
  *
  * NO DOOR IN A SEAT (PART 7): the names are text. The city pages exist, and
  * a reader reaches them from the cities index; a seat carries no href.

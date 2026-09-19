@@ -177,7 +177,21 @@ export function CityCards({
   nextLabel?: string;
 }) {
   const [page, setPage] = React.useState(0);
-  const rows = cards.length < 3;
+  /* BELOW FOUR, THE ROW FORM (the threshold measured 2026-09-19, QUEUE
+     country:cities-covered-list, on New Zealand's three covered cities through
+     the harness renderer and the page filter). The threshold stood at three
+     ("three or more fill a row of tall cards") and three do not: the grid's
+     row holds PER_PAGE tracks, four, and three tall cards leave the fourth
+     empty, 164 by 200 at 1280 (the unfilled right edge of PART 9 clause 25,
+     under the page filter's 173 floor there), and on the two-up grid at 768
+     and 375 they stand 2 + 1 with a 155 by 200 blank beside the third, over
+     the floor, which the filter reds. Closing the grid to three tracks is
+     barred by this card's own laws: at 1280 a 212px card at 200 tall reads
+     0.94 against NOT TALL's 1.15, and at 768 and 375 three tracks of 95px cut
+     the names. So the set that cannot fill the row takes the row form, which
+     is what the paragraph below already reasons for one and two; the number
+     is the row's own track count, not a guess. */
+  const rows = cards.length < PER_PAGE;
   const pays = cards.map((c) => c.payUsd).filter((v): v is number => typeof v === "number");
   const fmt = moneyFor(pays);
   /* ONLY THE COLUMN LOOK DRAWS THE FIGURE NOW. The field look's tint stopped
@@ -202,13 +216,14 @@ export function CityCards({
       {/* 9rem is the measured minimum that keeps two tracks in a 302px tablet
           card; two up on a phone is the founder's own (2026-08-30).
 
-          BELOW THREE CITIES THE FORM CHANGES, AND IT IS NOT A FALLBACK WITH AN
+          BELOW FOUR CITIES THE FORM CHANGES, AND IT IS NOT A FALLBACK WITH AN
           APOLOGY UNDER IT (rule 22 bans that; this is what the range strip
           already does at one mark). Four tall cards fill a 653px row; ONE tall
           card leaves 500px of white beside it, which is the unfilled right edge
           he raised against this very section (rule 25), measured at 502 by 216
-          by the harness before this line existed. So a set of one or two draws
-          the model's own full-width row instead: same content, same name size,
+          by the harness before this line existed, and three leave the fourth
+          track (measured above). So a set of one, two or three draws the
+          model's own full-width row instead: same content, same name size,
           same figure, the arrow at the right edge, and no hole. */}
       <div className={rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]"}>
         {slice.map((c) => (rows ? <Row key={c.id} card={c} look={look} fmt={fmt} /> : <Card key={c.id} card={c} look={look} fmt={fmt} />))}

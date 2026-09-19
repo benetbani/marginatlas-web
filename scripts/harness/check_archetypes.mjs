@@ -269,17 +269,28 @@ function inPage(storySelector) {
       r.cityRows = [...rowsMap.values()];
       r.cityNamesCut = cards.filter((el) => { const n = el.querySelector("[data-city-name]"); return n && (n.scrollWidth > n.clientWidth + 1 || n.scrollHeight > n.clientHeight + 1); }).length;
       /* NOT TALL is asked of the GRID form only, and the component declares
-         which form it drew. A country holding one or two covered cities cannot
-         fill a row of tall cards without leaving the unfilled right edge he
-         raised against this very section, so below three the component draws
-         the model's own full-width rows; a row is not a card that failed to be
-         tall. The declaration is checked in both directions below, so the wide
-         form cannot creep onto a set that could have filled its row. */
+         which form it drew. A country holding one, two or three covered cities
+         cannot fill a row of four tall cards without leaving the unfilled right
+         edge he raised against this very section, so below four the component
+         draws the model's own full-width rows; a row is not a card that failed
+         to be tall. The declaration is checked in both directions below, so the
+         wide form cannot creep onto a set that could have filled its row. */
       r.cityForm = card.getAttribute("data-form") || "";
       /* WHICH LOOK THIS STORY IS, read off the card rather than parsed out of
          the instance key: the photograph rule below differs by look. */
       r.cityLook = card.getAttribute("data-look") || "";
       r.cityCount = Number(card.getAttribute("data-count"));
+      /* THE CARDS DRAWN ON THIS PAGE OF THE PAGER, against the set the card
+         declares. Since the builder walks the covered list (QUEUE
+         country:cities-covered-list, 2026-09-19) the United Kingdom holds
+         seven cards on two pages, and the pager draws four of them: a rule
+         that counts photographs against `data-count` cannot distinguish a
+         card without a photograph from a card on the second page, and it
+         redded the exemplar 4 of 7 the first time a paged set was measured.
+         The photograph rule reads the drawn cards; every card's photograph
+         over the whole set is the builder's law, held over 195 countries by
+         scripts/verify_archetype_copy.ts (THE CITY CARDS). */
+      r.cityDrawn = cards.length;
       r.cityFlat = r.cityForm === "rows" ? [] : cards.map((el) => Math.round((el.getBoundingClientRect().height / el.getBoundingClientRect().width) * 100) / 100).filter((ratio) => ratio < 1.15);
       /* THE PHOTOGRAPH, 2026-09-11, and the rule inverted with the ruling: the
          "field" look must carry one on EVERY card, the other two looks on none.
@@ -780,8 +791,14 @@ for (const w of WIDTHS) {
       for (const row of r.cityRows || []) if (Math.max(...row) - Math.min(...row) > 2) red(r.inst, w, "UNEQUAL", `city cards in one row at heights ${row.join(", ")}`);
       if (r.cityNamesCut) red(r.inst, w, "BOTCHED MOBILE", `${r.cityNamesCut} city name(s) cut`);
       if (r.cityFlat && r.cityFlat.length) red(r.inst, w, "NOT TALL", `${r.cityFlat.length} card(s) drawn wider than tall enough to read as a vertical card: ratios ${r.cityFlat.join(", ")}`);
-      if (r.cityForm === "rows" && r.cityCount >= 3) red(r.inst, w, "WRONG FORM", `${r.cityCount} cities drawn as wide rows; three or more fill a row of tall cards and must take it`);
-      if (r.cityForm === "grid" && r.cityCount < 3) red(r.inst, w, "WRONG FORM", `${r.cityCount} city card(s) in the tall grid; below three they leave the unfilled right edge`);
+      /* THE THRESHOLD IS THE ROW'S TRACK COUNT, FOUR (measured 2026-09-19 on
+         New Zealand's three cards: three tall cards leave the fourth track
+         empty at 1280, 164 by 200, and stand 2 + 1 with a 155 by 200 blank on
+         the two-up grid at 768 and 375, which the page filter reds). The
+         rule read "three or more fill a row" for the eight days no country
+         drew exactly three through the filter; a row holds four. */
+      if (r.cityForm === "rows" && r.cityCount >= 4) red(r.inst, w, "WRONG FORM", `${r.cityCount} cities drawn as wide rows; four or more fill a row of tall cards and must take it`);
+      if (r.cityForm === "grid" && r.cityCount < 4) red(r.inst, w, "WRONG FORM", `${r.cityCount} city card(s) in the tall grid; below four they leave the unfilled right edge (three leave the fourth track)`);
       if (r.cityNameLoud) red(r.inst, w, "NO HIERARCHY", `${r.cityNameLoud} card(s) draw something larger than the city's own name`);
       /* IMAGE, INVERTED 2026-09-11. This rule read: "no city card carries an
          image; no page and no card on this site carries a photograph", his
@@ -793,13 +810,15 @@ for (const w of WIDTHS) {
          the column would collapse three different questions into one. */
       const look = r.cityLook || "";
       const photos = r.cityPhotos || [];
-      if (look === "field" && photos.length !== r.cityCount) red(r.inst, w, "IMAGE", `${photos.length} of ${r.cityCount} city card(s) carry a photograph; the field look carries one on every card (his ruling of 2026-09-11)`);
+      /* Against the cards DRAWN on this page of the pager (r.cityDrawn), never
+         against the declared set: the pager draws four of a seven-card set. */
+      if (look === "field" && photos.length !== r.cityDrawn) red(r.inst, w, "IMAGE", `${photos.length} of ${r.cityDrawn} city card(s) drawn carry a photograph (${r.cityCount} in the set); the field look carries one on every card (his ruling of 2026-09-11)`);
       if (look !== "field" && photos.length) red(r.inst, w, "IMAGE", `${photos.length} city card(s) carry a photograph in the "${look}" look; the photograph belongs to the field look alone`);
       if (r.cityStrayImages && r.cityStrayImages.length) red(r.inst, w, "IMAGE", `${r.cityStrayImages.length} city card(s) carry an image that is not the declared photograph: ${r.cityStrayImages.join(", ")}`);
       if (r.cityNameRatio != null && r.cityNameRatio < 4.5) red(r.inst, w, "CONTRAST", `the city name reads ${r.cityNameRatio} to 1 over the photograph's darkest region (backdrop rgb(${(r.cityBackdrop || []).join(", ")})), under the 4.5 floor; the veil and the wash over the picture are what set this`);
       /* FOR THE DATA TRACK, NOT THE DRAWING: the placeholder closes the hole on
          the page and must not close the open question. Counted at one width. */
-      if (w === WIDTHS[0] && r.cityPhotoPlaceholders > 0) data(r.inst, "IMAGE MISSING", `${r.cityPhotoPlaceholders} of ${r.cityCount} card(s) show the stand-in photograph, not that city's own`);
+      if (w === WIDTHS[0] && r.cityPhotoPlaceholders > 0) data(r.inst, "IMAGE MISSING", `${r.cityPhotoPlaceholders} of ${r.cityDrawn} card(s) drawn (${r.cityCount} in the set) show the stand-in photograph, not that city's own`);
     }
     if (r.kind === "range-strip") {
       if (r.stripOverlaps) red(r.inst, w, "NO HIERARCHY", `${r.stripOverlaps} overlapping label(s) on the strip`);
