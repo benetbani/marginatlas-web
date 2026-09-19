@@ -129,7 +129,13 @@ code puts on the page>`.
 
 ## Latest handoff
 
-- **`docs/handoff/HANDOFF-marginatlas-2026-08-01.md` IS THE CURRENT HANDOFF , READ IT FIRST.**
+- **`docs/handoff/HANDOFF-marginatlas-2026-09-19.md` IS THE CURRENT HANDOFF, READ IT FIRST.**
+  One page: where both repos and production stand at the end of the fifty-step
+  plan, the next session's first commands, the founder's open answers, the day's
+  traps. It points at `E:/atlas/design/loop/build/STATE.md` as the state of record
+  and at the checkup of the same day for the measured picture.
+- `docs/handoff/HANDOFF-marginatlas-2026-08-01.md` is the PRIOR long handoff, still
+  the reference for the Loop 3 site work and the twenty ratified decisions.
   Covers the Loop 3 site work, the founder's 2026-07-31 redirect (build mechanisms,
   stop hunting defects), the twenty ratified decisions, the three mechanisms built
   (district wealth as bands, POPs at district level, business subtypes), the 53-gate
