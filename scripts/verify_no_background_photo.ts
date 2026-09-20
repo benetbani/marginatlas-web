@@ -26,6 +26,20 @@
  * bring a photograph back from outside this repository any more, and a gate
  * reads only the site's own inputs, so the second root is gone.
  *
+ * A SECOND EXCEPTION SINCE 2026-09-20: THE COUNTRY HERO'S PICTURE. His design
+ * for the hero, verbatim in rules/FOUNDER-VERDICTS.md under that date: "on the
+ * center, there has to be an image. But we wish you can put a placeholder. At
+ * this moment, or maybe the only image that we have. So I can only see the
+ * United Kingdom." So `src/lib/spine/hero_board.ts` is the second module
+ * allowed to name a photograph, the one placeholder the repository holds,
+ * stamped `placeholder: true` and drawn by HeroBoard.tsx as data with the
+ * placeholder chip over it; the component spells no filename. It is a picture
+ * IN a card of his design, not a photograph painted behind a page, which is
+ * what the ban below is about. The chain caught this the evening the board
+ * landed (the morning's subset never ran this gate), which is the gate doing
+ * its job: a photograph in live code needs his words beside it, and here they
+ * are.
+ *
  * ONE EXCEPTION, AND ONLY ONE, SINCE 2026-09-11: THE CITY CARD. The founder
  * reversed himself for that card and stated the scope in the same breath: "the
  * cities should have their placeholder image ... just keep a placeholder image,
@@ -88,7 +102,7 @@ const PAINTING = /background|backgroundImage|url\(|src=|DEFAULT_BG/;
    from the repo root with forward slashes, the same form `relative()` produces
    for the report lines below. Adding a path here is a design decision about what
    the site paints, so it needs his words beside it, as this one has. */
-const ALLOWED_TO_NAME_A_PHOTOGRAPH = new Set(["src/lib/spine/city_cards.ts"]);
+const ALLOWED_TO_NAME_A_PHOTOGRAPH = new Set(["src/lib/spine/city_cards.ts", "src/lib/spine/hero_board.ts"]);
 
 const files = globSync("src/**/*.{ts,tsx,css}", { cwd: ROOT }).map((f) => join(ROOT, f));
 
@@ -111,7 +125,7 @@ for (const file of files) {
   });
 }
 
-console.log(`no background photo: ${files.length} source file(s) scanned, ${exempt} exempt (the city card's placeholder, his ruling of 2026-09-11), ${reds.length} red(s)`);
+console.log(`no background photo: ${files.length} source file(s) scanned, ${exempt} exempt (the city card's placeholder, his ruling of 2026-09-11; the country hero's placeholder, his design of 2026-09-20), ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r}`);
 if (reds.length) {
   console.log("");

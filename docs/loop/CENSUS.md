@@ -117,6 +117,6 @@ Loud today: 2 of 3, as `LOUD_SEATS` in industry-view.tsx declares (a LIT seat is
 |---|---|---|---|---|
 | 1 | 00 take | the net of every $100, 40 | LIT | 8.7: the page's only 40 in `--terra-text`, lit on every trade; the table's '(withheld on the 38 ladder-fill shards)' is stale, trade_net.ts falls through to the sector profile's residual on the 38 (plan step 34's first dispatch, 2026-09-18) and the state word is reachable on no trade today |
 | 2 | 05 pays | years until the capital comes back, the bento's one loud cell | LIT | 8.7: the BentoMetric with accent=true, first_year.payback_years on 243 of 243 (3 held); the cluster's law gives the band one accent and this is it |
-| 3 | 08 channels | the largest revenue line's share | HELD EMPTY | 8.7's table says LIT and is stale: accent three is UNLIT until his B9 donut lands (FORM-CATALOG candidate 5 awaiting his click and its mockup; the seat is the trade's MixCard, the leader first, no 30, no accent, 2026-09-19), so the page carries two |
+| 3 | 08 channels | the largest revenue line's share | HELD EMPTY | 8.7's table says LIT and is stale: the donut landed on 2026-09-20 (Donut.tsx, his B9) with the leader's share in INK at its centre and the wedge the accent's colour on a drawing, which the accent budget does not count; accent three stays UNLIT by the trade spine's own sentence (a terracotta figure one band under the payback would out-rank it), so the page carries two |
 
 <!-- census:end -->
