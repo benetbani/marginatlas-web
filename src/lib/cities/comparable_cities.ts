@@ -110,8 +110,15 @@ function rankBySimilarity(seed: CityEntry, pool: CityEntry[]): CityEntry[] {
     .map((x) => x.c);
 }
 
+/** `limit` (2026-09-20 evening, his "more"): the three roles first, then the
+ *  nearest by similarity until the set holds `limit`, so the city page's
+ *  comparison table can stand at half the page beside the people table with
+ *  enough rows to fill its height (his word on that table: "it should just
+ *  not be that wide for three columns"); three is the ribbon's number and
+ *  the default, so no other caller changes. */
 export function getCityPeerSet(
   citySlug: string | null | undefined,
+  limit = 3,
 ): CityPeerPick[] {
   if (!citySlug) return [];
   const seed = BY_SLUG[citySlug.toLowerCase()];
@@ -168,10 +175,12 @@ export function getCityPeerSet(
     ) ?? rankBySimilarity(seed, pool.filter((c) => c.iso2 !== seed.iso2)).find(canTake);
   if (intl) take(intl, "international");
 
-  // Backfill to three if a role could not be filled.
-  if (picks.length < 3) {
+  // Backfill by similarity to the limit (three by default) if a role could
+  // not be filled or more rows are asked for.
+  const want = Math.max(3, limit);
+  if (picks.length < want) {
     for (const c of rankBySimilarity(seed, pool)) {
-      if (picks.length >= 3) break;
+      if (picks.length >= want) break;
       if (canTake(c)) take(c, "international");
     }
   }
@@ -179,5 +188,5 @@ export function getCityPeerSet(
   // Display in the founder's order regardless of selection order: a local
   // competitor, then the classic rival, then the peer abroad.
   const order: Record<PeerRole, number> = { competitor: 0, rival: 1, international: 2 };
-  return picks.sort((a, b) => order[a.role] - order[b.role]).slice(0, 3);
+  return picks.sort((a, b) => order[a.role] - order[b.role]).slice(0, want);
 }

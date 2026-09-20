@@ -80,6 +80,7 @@
  */
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { COPY } from "@/lib/spine/copy";
+import { districtPageTarget } from "@/lib/geo/page_targets";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -149,11 +150,26 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
   const at = (r: any) => +(r.rent_mult / base).toFixed(2);
   /* ONE KEY FUNCTION, so every row is keyed the same way wherever it is read. */
   const keyOf = (r: any) => String(r.slug ?? r.name).toLowerCase();
-  const rows: BarRow[] = list.map((r) => ({
-    key: keyOf(r),
-    name: String(r.name),
-    value: at(r),
-  }));
+  /* THE NAMES NAVIGATE (his word after the push of 2026-09-20, "it doesn't even
+     have the neighbourhoods being clickable, which is wrong"; MODEL PART 9
+     clause 61): each district's name is a link to the district's own page
+     where one exists, through the one resolver that says which place pages
+     exist (page_targets.ts `districtPageTarget`: London's seven today, and
+     only while the neighbourhood spine is on); where none exists the row
+     stays a row, never an assembled URL. The link carries what its page
+     answers (`lands`) for the chain's doors gate. This is a name that is a
+     link, not a featured district: the 2026-09-10 ruling struck a
+     cheapest-district door and one-word summaries, and both stay struck. */
+  const citySlug = typeof seed?.meta?.slug === "string" ? seed.meta.slug : "";
+  const rows: BarRow[] = list.map((r) => {
+    const page = citySlug && typeof r.slug === "string" ? districtPageTarget(citySlug, r.slug) : null;
+    return {
+      key: keyOf(r),
+      name: String(r.name),
+      value: at(r),
+      ...(page ? { href: page.href, lands: page.answers } : {}),
+    };
+  });
   const dear = ascending[ascending.length - 1];
   /* The lower middle for an even count, said here rather than left to a
      reader to wonder about: with six districts this is the third cheapest.

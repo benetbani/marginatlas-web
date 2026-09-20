@@ -54,7 +54,8 @@
  * The cluster's `sample` is true when any printed figure is not held.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
-import { cityFigure, loadCityShard, type BankFigure } from "@/lib/facts/city_shard";
+import { cityFigure, cityEntityId, loadCityShard, type BankFigure } from "@/lib/facts/city_shard";
+import { factValue } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
@@ -63,8 +64,10 @@ type CityRow = { slug: string; name: string; iso2: string };
 const CITIES = (cityListJson as { cities: CityRow[] }).cities;
 const BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 
-/** A metric cell: the figure as printed with its basis and tag, or the stated line where the figure would stand. */
-export type PremisesMetric = { figure: string; basis: string; tag: FactTag; sample: boolean; value: number } | { withheld: string };
+/** One row of the details behind a figure (his plus): a label under three words, a figure with its unit. */
+export type PremisesDetailRow = { key: string; label: string; value: string; tag: FactTag };
+/** A metric cell: the figure as printed with its basis and tag, or the stated line where the figure would stand. `detail` holds the rows the shard has around the figure (two or more, else none), for his plus. */
+export type PremisesMetric = { figure: string; basis: string; tag: FactTag; sample: boolean; value: number; detail?: { summary: string; rows: PremisesDetailRow[] } } | { withheld: string };
 /** The count cell: the part in 100 with the rate it was rounded from, or the stated line. */
 export type PremisesCount = { part: number; whole: 100; rate: number; basis: string; tag: FactTag; sample: boolean } | { withheld: string };
 
@@ -118,12 +121,43 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
 
   const rent = metric(cityFigure(iso2, slug, "realestate.rent_prime_usd_sqm_yr"), B.rent, usd, W.rent);
   const fitOut = metric(cityFigure(iso2, slug, "realestate.fit_out_cost_usd_sqm"), B.fitOut, usd, W.fitOut);
+  /* THE DETAILS BEHIND THE RENT AND THE DEPOSIT (his plus; MODEL PART 9 clause
+     60, 2026-09-20 evening): the shard's own neighbouring fields, each a row
+     where it is on file, the panel drawn from two rows (DetailPanel's floor).
+     The fit-out and the empty shops have no neighbouring field on any shard
+     (item 85), so their cells carry the figure and its basis alone. */
+  const D = COPY.premisesBento.detail;
+  const money = (v: number) => usd(v);
+  const signedPct = (v: number) => `${v > 0 ? "+" : ""}${Number.isInteger(v) ? v : v.toFixed(1)}%`;
+  const count = (v: number, unit: { one: string; many: string }) => `${Number.isInteger(v) ? v : v.toFixed(1)} ${v === 1 ? unit.one : unit.many}`;
+  /* A signed figure: cityFigure() refuses a negative (a cost cannot be one), and a falling rent trend is a figure too, so the trend is read off the raw fact. */
+  const signedFigure = (metric: string): BankFigure | null => {
+    const f = factValue(cityEntityId(iso2, slug), metric);
+    return f && typeof f.value === "number" && Number.isFinite(f.value) ? { value: f.value, tag: f.tag } : null;
+  };
+  const detailRows = (spec: Array<{ key: string; metric: string; label: string; print: (v: number) => string; allowZero?: boolean; signed?: boolean }>): PremisesDetailRow[] =>
+    spec.flatMap((r) => {
+      const f = r.signed ? signedFigure(r.metric) : cityFigure(iso2, slug, r.metric);
+      if (!f || (!r.allowZero && f.value <= 0)) return [];
+      return [{ key: r.key, label: r.label, value: r.print(f.value), tag: f.tag }];
+    });
+  const rentRows = detailRows([
+    { key: "secondary", metric: "realestate.rent_secondary_usd_sqm_yr", label: D.rent.rows.secondary, print: (v) => `${money(v)} ${D.units.sqmYear}` },
+    { key: "service", metric: "realestate.service_charge_usd_sqm_yr", label: D.rent.rows.service, print: (v) => `${money(v)} ${D.units.sqmYear}` },
+    { key: "trend", metric: "realestate.rent_trend_pct_yoy", label: D.rent.rows.trend, print: (v) => `${signedPct(v)} ${D.units.aYear}`, allowZero: true, signed: true },
+  ]);
+  const depositRows = detailRows([
+    { key: "lease", metric: "realestate.lease_term_years", label: D.deposit.rows.lease, print: (v) => count(v, D.units.years) },
+    { key: "rentFree", metric: "realestate.rent_free_months", label: D.deposit.rows.rentFree, print: (v) => count(v, D.units.months), allowZero: true },
+  ]);
+  if ("figure" in rent && rentRows.length >= 2) rent.detail = { summary: D.rent.summary, rows: rentRows };
   const deposit = metric(
     cityFigure(iso2, slug, "realestate.deposit_months"),
     B.deposit,
     (v) => `${Math.round(v)} ${Math.round(v) === 1 ? COPY.premisesBento.months.one : COPY.premisesBento.months.many}`,
     W.deposit,
   );
+  if ("figure" in deposit && depositRows.length >= 2) deposit.detail = { summary: D.deposit.summary, rows: depositRows };
 
   /* The count: a rate in 100 is a count only between 0 and 100; a rate over
      100 is not a share of the shops and is withheld with its own line rather

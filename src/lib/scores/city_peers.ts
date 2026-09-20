@@ -80,7 +80,7 @@ export type CityPeer = {
  * the same path the city page uses for its own score. Deterministic and pure.
  */
 export function buildCityPeers(citySlug: string, limit = 3): CityPeer[] {
-  const peers = getCityPeerSet(citySlug).slice(0, limit);
+  const peers = getCityPeerSet(citySlug, limit).slice(0, limit);
   const out: CityPeer[] = [];
 
   for (const peer of peers) {

@@ -14,6 +14,21 @@
  * declaration that does not sum (BentoBand.tsx, law 3), so a wrong span
  * fails in the first gate and never reaches a reader.
  *
+ * RE-TILED 2026-09-20 EVENING FOR HIS PLUS (MODEL PART 9 clause 60, "prime
+ * shop rent $5,000, the fit-out cost, all of these things need details"):
+ * the rent and the deposit carry their details on DetailPanel, closed on
+ * arrival, which makes each a row taller than a bare figure; with the old
+ * tiling the deposit's plus stretched the fit-out cell beside it to 381 with
+ * a 228 by 120 blank (the page filter). So the two cells with a plus share
+ * row one (rent 2 by 1, deposit 1 by 1), and row two holds the count cell
+ * WIDE (shops standing empty 2 by 1, the hundred units in twenty-five
+ * columns, four rows) beside the fit-out 1 by 1: 2 + 1 + 2 + 1 = 6 of 6 at
+ * 1280; at 768 the rent caps to two columns on row one, the deposit and the
+ * fit-out share row two, the count takes row three at two columns, 6 of 6;
+ * under 768 one column in declared order. The fit-out and the empty shops
+ * have no neighbouring field on any shard (DATA-REQUIREMENTS item 85), so
+ * they stand without a plus until the data lands.
+ *
  * LOUD 2 (M9): the rent cell's figure in `--terra-text`, lit in the held and
  * the modelled states by the role it plays, unlit only where withheld; the
  * other three cells ink, the count cell `accent={false}` so its units draw in
@@ -38,29 +53,42 @@
  */
 import * as React from "react";
 import { BentoBand, BentoCount, BentoMetric, type BentoCell } from "@/components/spine/archetypes/BentoBand";
+import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import type { PremisesBento, PremisesMetric } from "@/lib/spine/premises_bento_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { AtlasIconId } from "@/components/brand/icons";
 
-/** The count cell's grid: 100 in fifteen columns is seven rows, about 140px at the cell's 300px, the height that lets the tall cell stand beside two metric cells without a hole (BentoCount's `columns` note; measured on Abidjan at 768, where the default wrap left a 234 by 120 blank). */
-export const PREMISES_COUNT_COLUMNS = 15;
+/** The count cell's grid since the re-tiling of 2026-09-20: 100 in twenty-five columns is four rows of units, about 100px at the cell's 650px, so the wide count cell stands about as tall as the fit-out cell beside it (BentoCount's `columns` note; fifteen columns and seven rows were the tall 1 by 2 cell's number). */
+export const PREMISES_COUNT_COLUMNS = 25;
 
 /** The four cells in declared order, each a figure or its stated line. A metric cell draws one of the two, never neither and never both (BentoMetric's law 2); the accent reaches a printed figure only, a withheld line is never lit. */
 export function premisesCells(bento: PremisesBento): BentoCell[] {
   const K = COPY.premisesBento.kickers;
-  const metric = (cell: PremisesMetric, icon: AtlasIconId, kicker: string, accent = false) =>
+  /* HIS PLUS UNDER A FIGURE (MODEL PART 9 clause 60, 2026-09-20 evening): the
+     rows the shard holds around the figure, on DetailPanel, closed on arrival;
+     the cell's key names the panel so two open panels never share a name. */
+  const metric = (cell: PremisesMetric, icon: AtlasIconId, kicker: string, accent = false, key = "") =>
     "figure" in cell ? (
-      <BentoMetric icon={icon} kicker={kicker} figure={cell.figure} basis={cell.basis} sample={cell.sample} accent={accent} />
+      <BentoMetric
+        icon={icon}
+        kicker={kicker}
+        figure={cell.figure}
+        basis={cell.basis}
+        sample={cell.sample}
+        accent={accent}
+        detail={cell.detail ? <DetailPanel name={`premises-${key}`} summary={cell.detail.summary} rows={cell.detail.rows.map((r) => ({ label: r.label, value: r.value }))} /> : undefined}
+      />
     ) : (
       <BentoMetric icon={icon} kicker={kicker} withheld={cell.withheld} />
     );
   const empty = bento.empty;
   return [
-    { key: "rent", cols: 2, rows: 1, node: metric(bento.rent, "commercial-rent", K.rent, true) },
+    { key: "rent", cols: 2, rows: 1, node: metric(bento.rent, "commercial-rent", K.rent, true, "rent") },
+    { key: "deposit", cols: 1, rows: 1, node: metric(bento.deposit, "startup-cost", K.deposit, false, "deposit") },
     {
       key: "empty",
-      cols: 1,
-      rows: 2,
+      cols: 2,
+      rows: 1,
       node:
         "part" in empty ? (
           <BentoCount icon="vacancy" kicker={K.empty} part={empty.part} whole={empty.whole} basis={empty.basis} sample={empty.sample} accent={false} columns={PREMISES_COUNT_COLUMNS} />
@@ -72,7 +100,6 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
         ),
     },
     { key: "fit-out", cols: 1, rows: 1, node: metric(bento.fitOut, "high-street", K.fitOut) },
-    { key: "deposit", cols: 1, rows: 1, node: metric(bento.deposit, "startup-cost", K.deposit) },
   ];
 }
 

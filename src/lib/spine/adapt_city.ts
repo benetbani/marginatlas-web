@@ -224,7 +224,13 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   });
 
   // The peers (real set + real per-peer score), and the peer scores for the view.
-  const peers = buildCityPeers(city.slug, 4);
+  // SIX since 2026-09-20 evening (his words on the comparison table, "it should
+  // just not be that wide for three columns"): the table stands at half the page
+  // beside the people table now, and seven rows fill that height where four left
+  // it short (measured: seven peers stood 517 beside the table's 486 at 1280 and
+  // 553 beside 502 at a tablet's halves, 51 over the foot's 48; six peers stand
+  // level at both); the three roles first, then the nearest by similarity.
+  const peers = buildCityPeers(city.slug, 6);
   const scoredPeers = peers.filter(
     (p): p is typeof p & { score: number } => typeof p.score === "number",
   );

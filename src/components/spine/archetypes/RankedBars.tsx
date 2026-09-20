@@ -479,7 +479,12 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
               const figPill = isLeader && marks;
               const row = (
                 <>
-                  <span data-label className={NAME_CLS}>{r.name}</span>
+                  {/* LINKS LOOK LIKE LINKS (PART 5; his word after the push of
+                      2026-09-20, "the neighbourhoods being clickable"): a row
+                      that navigates carries the list's arrow after its name
+                      and the list's hover, so a name that is a door reads as
+                      one; a row without a destination carries neither. */}
+                  <span data-label className={NAME_CLS}>{r.name}{r.href ? <span aria-hidden="true" className="ml-1.5 text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">&#8594;</span> : null}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share
@@ -512,7 +517,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                  The attribute is the component's own declaration, which is the
                  rule's blind spot and is stated where the rule is written. */
               return r.href
-                ? <a key={r.key} href={r.href} data-lands={r.lands} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</a>
+                ? <a key={r.key} href={r.href} data-lands={r.lands} className={`${cls} no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value}>{row}</a>
                 : <div key={r.key} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</div>;
             })}
           </div>

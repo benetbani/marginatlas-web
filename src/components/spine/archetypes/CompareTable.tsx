@@ -122,6 +122,13 @@ export type CompareTableProps = {
   flags?: boolean;
   /** The opener's sample mark. Defaults off. */
   sample?: boolean;
+  /** IN A BAND (2026-09-20 evening, his word on the city's comparison table:
+   *  "it should just not be that wide for three columns"): the table stands
+   *  in a level beside another card, so it draws no full-width wrapper and no
+   *  band margin of its own (the Band carries both), and the lone-card and
+   *  full-width gates read it as an ordinary card. Off, the table is the
+   *  page's full-width table under its own `data-wide-table` sanction. */
+  inBand?: boolean;
 };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -139,7 +146,7 @@ function fmt(unit: CompareColumn["unit"], v: number, whole = true): string {
 }
 const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
 
-export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false }: CompareTableProps) {
+export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false, inBand = false }: CompareTableProps) {
   const phoneCols = PHONE_COLS[Math.min(4, Math.max(1, columns.length))];
   /* The two-row floor for every caller that states no line; a seated table
      (a `withheld` line) draws from one row, the home row alone (the header). */
@@ -188,8 +195,8 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
   };
   const head = "text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]";
   return (
-    <div data-wide-table className="mt-8">
-      <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"}>
+    <div {...(inBand ? { className: "h-full" } : { "data-wide-table": "", className: "mt-8" })}>
+      <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} className={inBand ? "h-full" : undefined}>
         <Rail icon={icon} kicker={kicker} sample={sample} />
         <div className="hidden md:block">
           <Table className="table-fixed text-[length:var(--t-micro)]">

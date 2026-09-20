@@ -737,6 +737,20 @@ export const COPY = {
     modelled: "modelled for this city",
     /** The deposit's unit words, beside its figure: "6 months", "1 month". */
     months: { one: "month", many: "months" },
+    /** THE DETAILS BEHIND A FIGURE, his plus (his word after the push of
+     *  2026-09-20: "prime shop rent $5,000, the fit-out cost, all of these
+     *  things need details"; MODEL PART 9 clause 60): the fields the shard
+     *  holds around the figure, drawn on DetailPanel under the cell, closed
+     *  on arrival. The rent's three: the secondary-street rent, the service
+     *  charge, the rent's yearly trend. The deposit's two: the lease term and
+     *  the rent-free months. The fit-out and the empty shops hold no second
+     *  field on any shard today (DATA-REQUIREMENTS item 85). Labels under
+     *  three words; a value is a figure with its unit. */
+    detail: {
+      rent: { summary: "What the rent comes with", rows: { secondary: "Secondary street", service: "Service charge", trend: "Rent trend" } },
+      deposit: { summary: "The lease terms", rows: { lease: "Lease term", rentFree: "Rent-free months" } },
+      units: { sqmYear: "a square metre, a year", aYear: "a year", years: { one: "year", many: "years" }, months: { one: "month", many: "months" } },
+    },
     /** PART 5's stated line, standing where the figure would, one per cell the bank does not hold. */
     withheld: {
       rent: "The prime rent is not on file for this city yet.",

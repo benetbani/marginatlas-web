@@ -395,9 +395,12 @@ function Demand({ demand }: { demand: CityDemandData | null }) {
 function Earnings({ strip }: { strip: CityEarningsData | null }) {
   if (!strip) return null;
   return (
-    <Box id="earnings">
+    /* The strip centred in the height its level lends the card (the trade's worth card's composition, 2026-09-18): on the level of three it stands 211 in 253 at 1280, and the air splits above and below the strip instead of piling at the foot. */
+    <Box id="earnings" className="flex h-full flex-col">
       <Rail icon="spread" kicker={COPY.cityCustomers.kicker} sample={strip.sample} />
-      <RangeStrip marks={strip.marks} scale="linear" fmt={usd} basis={strip.basis} note={strip.note} extra={strip.extra} />
+      <div className="flex flex-1 flex-col justify-center">
+        <RangeStrip marks={strip.marks} scale="linear" fmt={usd} basis={strip.basis} note={strip.note} extra={strip.extra} />
+      </div>
     </Box>
   );
 }
@@ -561,7 +564,7 @@ function TradesHere({ d }: { d: any }) {
 function CityPeers({ d }: { d: any }) {
   const t = buildCityPeerTable(d);
   if (!t) return null;
-  return <CompareTable id="peers" kicker={COPY.cityPeers.kicker} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} />;
+  return <CompareTable id="peers" kicker={COPY.cityPeers.kicker} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} inBand />;
 }
 
 /* ================= TURN THREE , WHAT THE PLACE IS LIKE ================= */
@@ -733,10 +736,14 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const living = slug ? buildCityLiving(slug) : null;
   const runway = slug ? buildCityRunway(slug) : null;
   const demand = slug ? buildCityDemand(slug) : null;
+  /* The spend card draws only with its figure (the band's note under chapter two); a withheld line is not a card in front of him. */
+  const demandDrawn = !!demand && demand.figure != null;
   const earnings = slug ? buildCityEarningsStrip(slug) : null;
   const districts = buildCityDistrictBars(d) != null;
   const trades = hasTradesHere(d);
   const people = slug ? buildCityPeopleTable(slug) : null;
+  /* The peers table draws where the seed holds two rows and a column (peer_rows.ts); the band under chapter three is gated on it and the people table together. */
+  const peersDrawn = buildCityPeerTable(d) != null;
   const hoods = slug ? buildCityNeighbourhoods(slug) : null;
   const season = slug ? buildCitySeason(slug) : null;
 
@@ -790,7 +797,25 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           floor, and the filter finds no hole in either card at any width.
           The old kit cards stood level at 244, so the band's height did not
           move. */}
-      {living || runway ? (
+      {/* THE STRIP JOINS THIS LEVEL WHERE THE SPEND CARD IS WITHHELD (2026-09-20
+          evening, his words on the London page: a card that is one withheld
+          sentence, "The spend is withheld: the figure on file for London is a
+          placeholder", is a bland section in front of him, and the seated
+          reading of 2026-09-08 he overruled on 2026-09-19 covers a withheld
+          line as it covers a "not gathered" one). Where `08 demand` holds no
+          figure (London alone today, item 23) the card does not draw, and `07
+          earnings` stands third on this level, `05 | 06 | 07` at the kit's
+          three thirds: the living cells, the ring, the strip; two visuals
+          (clause 53). Where the spend is a figure (251 cities) the two bands
+          below stand as before. Measured on the fresh render, the numbers in
+          the commit. */}
+      {living && runway && earnings && !demandDrawn ? (
+        <Band split="1-1-1">
+          <Living living={living} />
+          <Runway runway={runway} />
+          <Earnings strip={earnings} />
+        </Band>
+      ) : living || runway ? (
         <Band split="1-1">
           <Living living={living} />
           <Runway runway={runway} />
@@ -820,11 +845,15 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           opener at the top, the basis at the foot and the 30 centred in what
           is left (Frankfurt's air at 1280: 26 above the opener, 21 under the
           foot), so the stretched card reads as composed. */}
-      {demand || earnings ? (
+      {demandDrawn && earnings ? (
         <Band split="1-1">
           <Demand demand={demand} />
           <Earnings strip={earnings} />
         </Band>
+      ) : demandDrawn ? (
+        <Band split="1-1"><Demand demand={demand} /></Band>
+      ) : earnings && !(living && runway) ? (
+        <Band split="1-1"><Earnings strip={earnings} /></Band>
       ) : null}
       {/* `03 districts | 09 trades` (8.3): rent by district, the page's one
           fill-bar card, LEFT; the trades with local figures RIGHT, at 2-1
@@ -860,14 +889,39 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <Band split="2-1" stack="lg">{trades ? <TradesHere d={d} /> : <TradesSeat d={d} />}</Band>
         </>
       )}
-      {/* `11 peers`, FULL WIDTH, the seam of turns two and three (8.3, R1). */}
-      <CityPeers d={d} />
       {/* CHAPTER TURN THREE (8.3, "What the place is like"): zero accent from
-          here to the exit. It draws whenever a card under it draws, and one
-          always does: the locals seat stands on every city (item 6), so the
-          heading never sits over nothing; the index stays "03" because the
-          two turns above always draw. */}
+          here to the exit. The heading stands over the peers and the people
+          since 2026-09-20 (below); the index stays "03" because the two turns
+          above always draw. */}
       <Movement index="03" heading={COPY.chapters.place} />
+      {/* `11 peers | 12 character-people` AT 1-1 SINCE THE EVENING OF 2026-09-20,
+          his words on the London page as served: the comparison table "should
+          just not be that wide for three columns", "the middle part is quite
+          empty", and the lone people table under chapter three was "a strange
+          blank space on the right of the section number three" (MODEL PART 9
+          clauses 59 and 62). The table leaves its full width (8.3's seam, R1's
+          second full width, both withdrawn by his word) for half the page,
+          and takes SEVEN peers instead of three so eight rows fill the half
+          beside the five-trait table (adapt_city.ts, comparable_cities.ts:
+          the three roles first, then the nearest by similarity). Measured on
+          the fresh render, the numbers in the commit and MODEL 8.3's brackets.
+          Where only one of the two draws it stands alone at two thirds, the
+          band's own rule. */}
+      {people && peersDrawn ? (
+        <Band split="1-1">
+          <CityPeers d={d} />
+          <CharacterPeople people={people} />
+        </Band>
+      ) : (
+        <>
+          {peersDrawn ? <Band split="2-1" stack="lg"><CityPeers d={d} /></Band> : null}
+          {people ? (
+            <Band split="2-1" stack="lg">
+              <CharacterPeople people={people} />
+            </Band>
+          ) : null}
+        </>
+      )}
       {/* `12 character-people | 13 locals`, 1-1 in 8.3 (plan step 32, sixth
           dispatch, 2026-09-18): the people table at full form beside the
           locals seat. THE PAIR CANNOT BE SEATED, MEASURED on London with the
@@ -885,11 +939,6 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           1280), the seat at two thirds at its own 150, LONE CARD twice,
           expected, until the notes land (item 6) or the composition
           re-decides the split; both bands stack until lg. */}
-      {people ? (
-        <Band split="2-1" stack="lg">
-          <CharacterPeople people={people} />
-        </Band>
-      ) : null}
       {/* `13 locals` WITHHELD since the evening of 2026-09-20: the seat printed
           "Not gathered yet: what locals know about opening here." on the
           London page he is shown, the line he refused on 2026-09-19 ("will
