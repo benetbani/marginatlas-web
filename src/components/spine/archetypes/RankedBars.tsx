@@ -153,7 +153,7 @@
  * gets a section built from that file, not a lookup dressed as knowledge.
  */
 import * as React from "react";
-import { Box, Rail, Fig } from "@/components/spine/kit";
+import { Box, Rail, Fig, Ico } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import { COPY } from "./copy";
@@ -172,6 +172,8 @@ import { HATCH } from "./IncomeBreakdown";
 import { CompanionRow, type Companion } from "./BentoBand";
 
 export type BarRow = { key: string; name: string; href?: string;
+  /** A tile before the name (the site's trade-rows grammar, PART 5), for a ranking of trades: the city's market card since 2026-09-20 late evening. Rows with a tile make the card's `data-look="icons"`, the difference his clause 55 asks of two ranked-bars cards on one page. */
+  icon?: AtlasIconId;
   /** What a row that navigates promises: the kind its page's masthead answers (src/lib/spine/door_kinds.ts), set by the builder with the href and stamped as `data-lands` for the chain's `doors` gate (plan step 39, 2026-09-19). */
   lands?: DoorKind;
   value: number; flagged?: boolean;
@@ -226,6 +228,8 @@ export type RankedBarsProps = {
    *  Drawn by BentoMetric's own CompanionRow so the trade card's foot is one
    *  markup in all three of its states. */
   foot?: { items: Companion[]; line?: string | null } | null;
+  /** His plus at the card's end (a DetailPanel, closed on arrival): the rows behind the drawing, PART 9 clause 60; the city's market card since 2026-09-20 late evening. */
+  detail?: React.ReactNode;
 };
 
 /* The bar band's MINIMUM height, and the figure rung reserved above the
@@ -325,7 +329,7 @@ const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail }: RankedBarsProps) {
   if (rows.length < 2) return null;
   const ascending = [...rows].sort((a, b) => a.value - b.value);
   /* THE LEADER IS ALWAYS THE RIGHT-MOST BAR: the highest for a margin, the lowest for a burden. */
@@ -366,7 +370,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
   const figChars = Math.max(1, ...sorted.map((r) => fmt(r.value).length));
   const GEO = wideColumns(figChars);
   return (
-    <Box id={id} className={drawWide || drawMidTable ? "flex flex-col" : ""} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature}>
+    <Box id={id} className={drawWide || drawMidTable ? "flex flex-col" : ""} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
       {/* THE FOCAL, when the card holds one: the only element on this card
           above 16, and the only one that may wear the accent (see the prop). */}
@@ -488,7 +492,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                       the name: the model laws' DISTRICT ADJECTIVE reads any
                       span nested in a district's name as free text about the
                       district, and a glyph is not a word. */}
-                  <span data-label className={`${NAME_CLS}${r.href ? " after:ml-1.5 after:text-[length:var(--t-micro)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.name}</span>
+                  <span data-label className={`${NAME_CLS}${r.icon ? " flex items-center gap-2" : ""}${r.href ? " after:ml-1.5 after:text-[length:var(--t-micro)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.icon ? <Ico id={r.icon} tone="terra" /> : null}{r.name}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share
@@ -579,6 +583,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
       ) : foot && foot.line ? (
         <p data-foot className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{foot.line}</p>
       ) : null}
+      {detail}
     </Box>
   );
 }

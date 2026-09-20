@@ -355,6 +355,37 @@ export const COPY = {
     units: { aYear: "a year", per10k: "businesses" },
     levelBasis: "Among the covered cities; the cost of living runs 1 at the cheapest to 100 at the dearest.",
   },
+  /** THE CITY'S OWN PERMITS, GATE BY GATE (city_gates_rows.ts, `17 gates`,
+   *  2026-09-20 late evening; his "more sections" from what the files hold).
+   *  The kicker names the subject; the heads are one word each; the focal's
+   *  label says what the fee total is; a gate the city does not require says
+   *  so under its name. */
+  cityGates: {
+    kicker: "The city's own permits",
+    heads: { gate: "Permit", wait: "Wait", fee: "Fee" },
+    units: { day: "day", days: "days" },
+    notRequired: "Not required here",
+    focalLabel: "All the city's fees",
+    basis: "Local gates on top of the country's registration; the slowest sets the opening date.",
+    footModelled: "Modelled for this city.",
+  },
+  /** WHO IS ALREADY TRADING HERE (city_market_rows.ts, `18 market`, the same
+   *  evening): businesses for every 10,000 residents by trade as his bars,
+   *  each row with its trade's tile; the market in figures behind his plus. */
+  cityMarket: {
+    kicker: "Who is already trading",
+    /** The focal's words when the count of every business stands at 30 above the bars; the bars' own basis otherwise. */
+    basisWithFocal: "Businesses in the city; for every 10,000 residents, by trade, below.",
+    basis: "Businesses for every 10,000 residents, by trade.",
+    footModelled: "Modelled for this city.",
+    phoneHead: { trade: "Trade", value: "Per 10,000" },
+    /** The ceiling's name at the far end of every track (the districts card's "Dearest district"). */
+    densest: "Densest trade",
+    detail: {
+      summary: "The market in figures",
+      rows: { all: "All businesses", newYear: "New each year", closeYear: "Close each year", independents: "Independents" },
+    },
+  },
   /** AT A GLANCE (MODEL.md 8.2, `01 glance`; plan step 31, second dispatch,
    *  2026-09-17): the country's own figures, each in its own unit, no rank
    *  and no verdict. The pay cells take the pay bars' own words above

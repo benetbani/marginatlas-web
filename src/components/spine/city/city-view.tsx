@@ -119,6 +119,9 @@ import { CityHero } from "./masthead";
 import { HeroBoard } from "@/components/spine/archetypes/HeroBoard";
 import { buildCityHeroBoard } from "@/lib/spine/city_hero_board";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
+import { GatesCard, MarketCard } from "./opening";
+import { buildCityGates } from "@/lib/spine/city_gates_rows";
+import { buildCityMarket } from "@/lib/spine/city_market_rows";
 import { WhereToTrade } from "./where-to-trade";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { Premises } from "./premises";
@@ -734,6 +737,9 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
      by the seed's slug; the strips, the districts, the peers and the character
      tables read the seed the adapter built. */
   const cityBoard = slug ? buildCityHeroBoard(slug) : null;
+  /* `17 gates | 18 market` (opening.tsx), the two sections his "more sections" added from the shard, 2026-09-20 late evening. */
+  const gates = slug ? buildCityGates(slug) : null;
+  const cityMarket = slug ? buildCityMarket(slug) : null;
   /* The glance and the seat are read for the gates' sake and drawn by nothing since the board took their figures (the masthead's note). */
   const glance = slug ? buildCityGlance(slug) : null;
   void glance;
@@ -826,6 +832,27 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <Living living={living} />
           <Runway runway={runway} />
         </Band>
+      ) : null}
+      {/* `17 gates | 18 market` AT 1-1 (2026-09-20 late evening, his "more
+          sections" from what the file holds; opening.tsx): the city's own
+          permits gate by gate LEFT, the table with the fee total at 30 in
+          ink, and who is already trading RIGHT, his bars with each trade's
+          tile and the market's figures behind his plus, the level's one
+          visual. Both draw on every city whose shard holds the rows (London:
+          five gates, six trades); a survivor stands alone at two thirds.
+          Measured on London, the numbers in the commit: 475 beside 476 at
+          1280; `stack="lg"` because at a tablet's halves the bars' head
+          ("Densest trade 9.1") ran 39px past a 344 card, so each stands full
+          width there at its own height. */}
+      {gates && cityMarket ? (
+        <Band split="1-1" stack="lg">
+          <GatesCard gates={gates} />
+          <MarketCard market={cityMarket} />
+        </Band>
+      ) : gates ? (
+        <Band split="2-1" stack="lg"><GatesCard gates={gates} /></Band>
+      ) : cityMarket ? (
+        <Band split="2-1" stack="lg"><MarketCard market={cityMarket} /></Band>
       ) : null}
       {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market
           sized before the street is picked. */}
