@@ -552,6 +552,8 @@ export const COPY = {
     minimum: "Minimum salary",
     average: "Average salary",
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
+    /** THE ON-COST ON THE BAR (section 9's plan, 2026-09-20): the darker piece at the average bar's end, said under the track; `{pct}` is the employer's payroll on-cost as printed. */
+    employerAdds: "The employer adds {pct} on top.",
   },
   /** THE PLACEMENT SENTENCE (MODEL.md PART 6, decision 2; PART 9 clause 37,
    *  R2): one fixed wording, one direction, on every page of the site, beside

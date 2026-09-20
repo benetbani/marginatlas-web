@@ -71,6 +71,12 @@ export type PayRow = {
   value: number;
   /** The placement sentence for this figure, from the builder; null or absent draws no line. */
   placement?: string | null;
+  /** THE ON-COST ON THE BAR (his plan for section 9, 2026-09-20, uncorrected): what
+   *  the employer adds on top of this pay, as a percent of it, drawn as a darker
+   *  piece added to the bar's end so the on-cost is seen as extra length, with
+   *  its words under the track; null or absent draws nothing. The piece is
+   *  clipped at the track's end, and the words say the figure regardless. */
+  extra?: { pct: number; label: string } | null;
 };
 export type PayBarsProps = {
   rows: PayRow[];
@@ -124,8 +130,14 @@ export function PayBars({ rows, worldMax, withheld, fmt }: PayBarsProps) {
                     sits under it in the same column. */}
                 <span data-track="world" className="relative mt-1 block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]" role="img" aria-label={`${r.label} ${fmt(r.value)} a year, against the world's highest ${fmt(max)}`}>
                   <span data-bar={r.key} aria-hidden className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(share * 100).toFixed(1)}%`, background: accent ? "var(--terra)" : "var(--terra-border)" }} />
+                  {r.extra && r.extra.pct > 0 ? <span data-extra={r.key} aria-hidden className="absolute inset-y-0" style={{ left: `${(share * 100).toFixed(1)}%`, width: `${Math.min(100 - share * 100, share * r.extra.pct).toFixed(1)}%`, background: "var(--terra-text)" }} /> : null}
                 </span>
-                {r.placement ? <span data-placement className="mt-1.5 block text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">{r.placement}</span> : null}
+                {r.placement || r.extra ? (
+                  <span data-placement className="mt-1.5 block text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">
+                    {r.placement ?? ""}
+                    {r.extra ? <>{r.placement ? " " : ""}<span data-extra-label className="text-[var(--c-ink)]">{r.extra.label}</span></> : null}
+                  </span>
+                ) : null}
               </span>
             </React.Fragment>
           );

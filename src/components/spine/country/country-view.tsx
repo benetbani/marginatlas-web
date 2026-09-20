@@ -674,14 +674,11 @@ function Hiring({ hiring, iso2 }: { hiring: any; iso2?: string }) {
           minimum and average salary on one track that ends at the world's
           highest average, unnamed since his 2026-09-07 ruling; a pair under
           ten percent apart withheld. */}
-      {pay ? <PayBars rows={pay.rows} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
-      {isNum(addPct) ? (
-        <div className="mt-4 flex flex-wrap items-baseline gap-x-1.5">
-          <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">On top of gross pay, employers add</span>
-          <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">+{addPct}%</Fig>
-          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">(pension auto-enrolment and insurance sit on top)</span>
-        </div>
-      ) : null}
+      {/* THE ON-COST IS SEEN, NOT READ (section 9's plan of 2026-09-20, his
+          corrections owed): what the employer adds on top of wages is a darker
+          piece at the average bar's end, its words under the track, in place
+          of the sentence that stood here. */}
+      {pay ? <PayBars rows={pay.rows.map((r) => (r.key === "average" && isNum(addPct) ? { ...r, extra: { pct: addPct, label: COPY.pay.employerAdds.replace("{pct}", `${addPct}%`) } } : r))} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
       {isNum(labour) || isNum(informal) ? (
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-4">
           {isNum(labour) ? (
@@ -1071,6 +1068,15 @@ export function SpineCountryBody({ data }: { data?: any }) {
             on this band) and BLOCK FLOOR counts it. A seat needs no 600px, so
             `10 | 13` could pair on these 90 where the cards cannot; that is
             8.4 rule 1's to measure, not this dispatch's to guess. */}
+        {/* `10 cities | 13 customers` STILL CANNOT SHARE A LEVEL, re-measured
+            2026-09-20 under his page laws on the live render at 8.2's 3-2:
+            the four city cards wrap to two rows in the 584px seat and the
+            card runs 543 tall with a 389 by 216 blank, and the strip
+            stretched to it carries 376 by 366 of air (the page filter's two
+            WHITE SPACE reds). So each still stands alone, which clause 52 reds
+            as LEVEL UNFILLED; the composition of this turn is his corrections'
+            (COUNTRY-PAGE-SECTIONS-PLAN-2026-09-20.md, sections 11 and 12),
+            and the reds are held in the baseline until then. */}
         {cities || citiesSeat ? (
           <Band split="2-1">
             <Cities cards={cities} seat={citiesSeat} />
