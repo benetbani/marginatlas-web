@@ -82,12 +82,13 @@ export function PlacesTable({ id = "places", places }: { id?: string; places: In
   );
 }
 
-export function FormatsCard({ id = "formats", formats }: { id?: string; formats: FormatsData | null }) {
+export function FormatsCard({ id = "formats", formats, oneColumn = false }: { id?: string; formats: FormatsData | null; /** The list stays one column on its wide seat (MarkList's word): beside the donut, whose card is taller than the one-column list (the senior review of 2026-09-20: two columns left 78 of air under the list). */ oneColumn?: boolean }) {
   if (!formats) return null;
   if (formats.state === "list" && formats.middle != null) {
     return (
       <MarkList
         id={id}
+        oneColumn={oneColumn}
         icon="subtype"
         kicker={formats.kicker}
         tagged={formats.sample}

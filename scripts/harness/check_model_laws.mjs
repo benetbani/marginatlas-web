@@ -356,7 +356,8 @@ if (listArg && args.includes("--render")) {
    says so. */
 /* cell 14 since 2026-09-20: `10 watch`, the drawn blocked seat, left the trade page (no seat in front of him; item 53), and `07 peers` draws only where a peer resolves (off the United States none does, item 57; the one-row table under "Not gathered yet" was the line he refused), so 8.6 is fourteen blocks on London and fifteen where the peers stand. */
 /* city 16 since 2026-09-20 (evening): `13 locals`, the drawn blocked seat, left the city page until its notes (item 6; the "Not gathered yet" line he refused), so 8.3 is sixteen blocks, and London stands at 15 of them on ruling 30 alone (`10 easiest`, HIS). */
-const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 14, industry: 12, hood: 7, howto: 6 };
+/* industry 11 since 2026-09-20 (evening): `06 places` draws only as the table, never as the seat whose "Not gathered yet" line he refused, and no trade holds four cities with their own figures today (the own-row law), so 8.7 is eleven blocks on every trade until the slate fills (item 57's cousin, the industry's own count). */
+const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 14, industry: 11, hood: 7, howto: 6 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

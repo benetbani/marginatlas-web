@@ -225,7 +225,9 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
 
   /* The turns, by whether a card stands under each. */
   const turnOne = (!!split && !!open) || !!pays;
-  const turnTwo = !!places || (!!formats && !!mix);
+  /* `06 places` draws only as the table (four cities holding their own figures): the drawn blocked seat printed "Not gathered yet: own figures in 2 of 15 cities" on the restaurants page he is shown, the line he refused on 2026-09-19 (the senior review of 2026-09-20; the trade's peers and the city's locals seats left the same way). The component keeps its seated branch for the sheet's story; the page draws the seat on no trade. */
+  const placesDrawn = !!places && places.state === "table";
+  const turnTwo = placesDrawn || (!!formats && !!mix);
   const turnThree = !!know && !!field;
 
   return (
@@ -307,7 +309,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
       {turnTwo ? (
         <>
           <Movement index="02" heading={COPY.industryChapters.where} />
-          <PlacesTable places={places} />
+          {placesDrawn ? <PlacesTable places={places} /> : null}
           {/* `07 formats | 08 channels` (8.7): which format of the trade to
               open, beside which lines of it you would mostly be selling. The
               list LEFT (the mark list, quiet by its form's law, the middle at
@@ -317,10 +319,19 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
               below this comment's last line (8.4 rule 1, the closed set), at
               three widths on restaurants, a four-format shard with a
               four-part mix and the fill shard; the dispatch's report carries
-              the numbers. Both cards draw on every trade holding a shard. */}
+              the numbers. Both cards draw on every trade holding a shard.
+              SINCE THE DONUT (2026-09-20, the senior review of that evening):
+              the list stays ONE column on the wide seat (MarkList's
+              `oneColumn`), because the donut's card at a third stands 409
+              (the ring above its rows) and the two-column list stood 332
+              with 78 of air under it (the page laws' CARD FOOT BLANK); one
+              column of five rows stands level with the donut, the trade
+              page's `11 | 13` precedent. No `stack`: at a tablet's halves the
+              two stand at their own heights, the donut stacked and the list
+              one column. */}
           {formats && mix ? (
-            <Band split="2-1" stack="lg">
-              <FormatsCard formats={formats} />
+            <Band split="2-1">
+              <FormatsCard formats={formats} oneColumn />
               <ChannelsCard id="channels" mix={mix} />
             </Band>
           ) : null}
