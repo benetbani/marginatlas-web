@@ -122,8 +122,9 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
   }
   if (isPos(city.cost_of_living_index)) {
     const onScale = costOfLivingOnCityScale(city.cost_of_living_index);
-    /* No unit after the figure: "of 100" stands on the premises bento's empty-shops cell in the same first screen (the art-direction gate's H4), and the basis under the column says the scale's ends. */
-    if (onScale != null) rows.push({ key: "living", icon: "cost-breakdown", label: C.rows.living, value: String(onScale), unit: "", level: levelOf(city.cost_of_living_index, s.living), confidence: /city-level/i.test(city.sources?.cost_of_living_index ?? "") && !/hand-anchor/i.test(city.sources?.cost_of_living_index ?? "") ? "measured" : "modeled" });
+    /* No unit after the figure: "of 100" stands on the premises bento's empty-shops cell in the same first screen (the art-direction gate's H4), and the basis under the column says the scale's ends. THE CHIP READS THE SCALE, not the rank: the figure IS a place between the cheapest and the dearest covered city, so its thirds are the chip (48 is "medium"); the rank's thirds said "high" for 48 because most covered cities sit low, and the two beside each other read as a contradiction (the first photograph). */
+    const scaleLevel = onScale == null ? null : onScale >= 67 ? "high" : onScale >= 34 ? "medium" : "low";
+    if (onScale != null) rows.push({ key: "living", icon: "cost-breakdown", label: C.rows.living, value: String(onScale), unit: "", level: scaleLevel, confidence: /city-level/i.test(city.sources?.cost_of_living_index ?? "") && !/hand-anchor/i.test(city.sources?.cost_of_living_index ?? "") ? "measured" : "modeled" });
   }
 
   const typical = cityTypicalIncome(slug);
