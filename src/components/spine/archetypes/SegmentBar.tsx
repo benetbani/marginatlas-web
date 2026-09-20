@@ -27,7 +27,7 @@ import * as React from "react";
 
 export const SEGMENT_BAR_CELLS = 25;
 
-export function SegmentBar({ label, value, total = 100, figure, unit, chip, segments = SEGMENT_BAR_CELLS }: { label: string; value: number; total?: number; figure: string; unit: string; chip?: React.ReactNode; segments?: number }) {
+export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest, segments = SEGMENT_BAR_CELLS }: { label: string; value: number; total?: number; figure: string; unit: string; chip?: React.ReactNode; /** The unfilled part named, one micro line under the segments at the right ("Visitors 38%"), for a share of a whole whose remainder has a name. */ rest?: string; segments?: number }) {
   const share = total > 0 ? Math.max(0, Math.min(1, value / total)) : 0;
   const filled = Math.round(share * segments);
   return (
@@ -47,6 +47,7 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, segm
           <span key={i} className="h-3 min-w-0 flex-1 rounded-[2px]" style={{ background: i < filled ? "var(--terra)" : "var(--terra-soft)" }} />
         ))}
       </div>
+      {rest ? <div data-rest className="mt-1 text-right text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{rest}</div> : null}
     </div>
   );
 }

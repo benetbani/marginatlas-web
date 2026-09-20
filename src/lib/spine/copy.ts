@@ -864,6 +864,8 @@ export const COPY = {
   citySeason: {
     kicker: "Residents and visitors",
     cells: { residents: "Residents", visitors: "Visitors" },
+    /** The unit beside the residents' share on the segmented bar (2026-09-20). */
+    unit: "of footfall",
     basis: "Of the year's footfall, the share who live here and the share visiting.",
     footModelled: "Both shares are modelled for this city.",
     footSlope: "Both shares are modelled from a year's arrivals and the resident count.",

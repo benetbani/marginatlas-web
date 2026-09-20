@@ -102,6 +102,7 @@ import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCityPeopleTable, type CityPeopleTable } from "@/lib/spine/character_rows";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
+import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { CardPager } from "@/components/spine/archetypes/CardPager";
 import { buildCityNeighbourhoods, type CityNeighbourhoodsData } from "@/lib/spine/hood_rows";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
@@ -601,13 +602,26 @@ function Neighbourhoods({ hoods }: { hoods: CityNeighbourhoodsData | null }) {
  * page's first I3) is retired with the block.
  */
 function Season({ season }: { season: CitySeasonData | null }) {
+  /* A SHARE OF A WHOLE IS DRAWN (his ruling of 2026-09-19 on this very card:
+     "residents and visitors, you have just slapped a percentage thing, no
+     visualization"): the year's footfall as one segmented bar of 100 (his
+     gold standard's B27, SegmentBar.tsx), the residents filled in the
+     accent, the visitors the rest, the visitors' share named under the bar.
+     The two cells stay in the builder for the gates that count the feed;
+     the card draws the bar where both shares are held and the withheld line
+     where they are not. */
   if (!season) return null;
+  const r = season.figures.resident, v = season.figures.visitor;
+  const drawn = r != null && v != null && Number.isFinite(r) && Number.isFinite(v);
   return (
     <Box id="season">
       <Rail icon="seasonality" kicker={COPY.citySeason.kicker} sample={season.confidence !== "measured"} />
-      <KvGrid cells={season.cells} />
+      {drawn ? (
+        <SegmentBar label={COPY.citySeason.cells.residents} value={r} figure={`${Math.round(r)}%`} unit={COPY.citySeason.unit} rest={`${COPY.citySeason.cells.visitors} ${Math.round(v)}%`} />
+      ) : null}
       {season.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.withheld}</p> : null}
-      {season.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.basis}</p> : null}
+      {/* The basis sentence is the bar's own words now ("Residents 84% of footfall", "Visitors 16%"); it prints only where the bar does not (his law of labels over sentences). */}
+      {season.basis && !drawn ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.basis}</p> : null}
       {season.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.foot}</p> : null}
     </Box>
   );
