@@ -66,8 +66,8 @@ const BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 
 /** One row of the details behind a figure (his plus): a label under three words, a figure with its unit. */
 export type PremisesDetailRow = { key: string; label: string; value: string; tag: FactTag };
-/** A metric cell: the figure as printed with its basis and tag, or the stated line where the figure would stand. `detail` holds the rows the shard has around the figure (two or more, else none), for his plus. */
-export type PremisesMetric = { figure: string; basis: string; tag: FactTag; sample: boolean; value: number; detail?: { summary: string; rows: PremisesDetailRow[] } } | { withheld: string };
+/** A metric cell: the figure as printed with its basis and tag, or the stated line where the figure would stand. `detail` holds the rows the shard has around the figure (two or more, else none), for his plus; `second` one companion figure beside it (a cell is never one number, clause 65). */
+export type PremisesMetric = { figure: string; basis: string; tag: FactTag; sample: boolean; value: number; detail?: { summary: string; rows: PremisesDetailRow[] }; second?: { figure: string; words: string } } | { withheld: string };
 /** The count cell: the part in 100 with the rate it was rounded from, or the stated line. */
 export type PremisesCount = { part: number; whole: 100; rate: number; basis: string; tag: FactTag; sample: boolean } | { withheld: string };
 
@@ -146,10 +146,15 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
     { key: "service", metric: "realestate.service_charge_usd_sqm_yr", label: D.rent.rows.service, print: (v) => `${money(v)} ${D.units.sqmYear}` },
     { key: "trend", metric: "realestate.rent_trend_pct_yoy", label: D.rent.rows.trend, print: (v) => `${signedPct(v)} ${D.units.aYear}`, allowZero: true, signed: true },
   ]);
-  const depositRows = detailRows([
-    { key: "lease", metric: "realestate.lease_term_years", label: D.deposit.rows.lease, print: (v) => count(v, D.units.years) },
-    { key: "rentFree", metric: "realestate.rent_free_months", label: D.deposit.rows.rentFree, print: (v) => count(v, D.units.months), allowZero: true },
-  ]);
+  /* THE COMPANIONS (2026-09-20 night, his "a subsection cannot be only with
+     one number", clause 65): the fit-out's companion is the rent-free months
+     (the months a landlord gives to fit out, the shard's `rent_free_months`),
+     the deposit's the lease term (the years the deposit is held against);
+     each field prints once on the cluster, so the deposit's plus of the
+     afternoon (lease term, rent-free months) is these two companions now. */
+  const leaseFig = cityFigure(iso2, slug, "realestate.lease_term_years");
+  const rentFreeFig = signedFigure("realestate.rent_free_months");
+  if ("figure" in fitOut && rentFreeFig && rentFreeFig.value >= 0) fitOut.second = { figure: count(rentFreeFig.value, D.units.months), words: D.companions.rentFree };
   if ("figure" in rent && rentRows.length >= 2) rent.detail = { summary: D.rent.summary, rows: rentRows };
   const deposit = metric(
     cityFigure(iso2, slug, "realestate.deposit_months"),
@@ -157,7 +162,7 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
     (v) => `${Math.round(v)} ${Math.round(v) === 1 ? COPY.premisesBento.months.one : COPY.premisesBento.months.many}`,
     W.deposit,
   );
-  if ("figure" in deposit && depositRows.length >= 2) deposit.detail = { summary: D.deposit.summary, rows: depositRows };
+  if ("figure" in deposit && leaseFig && leaseFig.value > 0) deposit.second = { figure: count(leaseFig.value, D.units.years), words: D.companions.lease };
 
   /* The count: a rate in 100 is a count only between 0 and 100; a rate over
      100 is not a share of the shops and is withheld with its own line rather

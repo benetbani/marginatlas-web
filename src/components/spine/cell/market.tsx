@@ -45,7 +45,7 @@ import { BentoBand, BentoCount, BentoMetric, type BentoCell } from "@/components
 import { MonthLine } from "@/components/spine/archetypes/MonthLine";
 import { ShareBar } from "@/components/spine/archetypes/ShareBar";
 import { Box, Fig, Ico, SampleTag } from "@/components/spine/kit";
-import type { MarketData, MarketMetric, MarketCount } from "@/lib/spine/market_rows";
+import { densityText, type MarketData, type MarketMetric, type MarketCount } from "@/lib/spine/market_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { AtlasIconId } from "@/components/brand/icons";
 
@@ -68,26 +68,42 @@ export function marketCells(market: MarketData): BentoCell[] {
       /* The count withheld stands as the same opener over its stated line, the drawn withheld seat in the metric cell's withheld form: no figure, no grid, one line saying why. */
       <BentoMetric icon={icon} kicker={kicker} withheld={cell.withheld} />
     );
-  /* FIVE CELLS SINCE 2026-09-20 LATE EVENING (his gold standard's five-card
-     bento; his word after the push: more sections, the details behind a
-     figure, a visual built to the statistic's shape): row one the three
-     counts side by side, 1 by 1 each (firms per 10,000, held by chains,
-     close in a year); row two the year's swing WITH ITS TWELVE MONTHS as the
-     small line chart (his B30) at 2 by 1, and when the week pays as the
-     stacked share bar (his B29) at 1 by 1. 1 + 1 + 1 + 2 + 1 = 6 of 6 at
-     1280; at 768 the counts take rows one and two (two, then one beside the
-     dayparts), the line row three at two columns, 6 of 6; under 768 one
-     column in declared order. The swing cell keeps its figure at 30 and
-     draws the line under it where all twelve months are on file (every
-     shard today); the dayparts cell draws the bar where two or more parts
-     are on file, its stated line otherwise. */
+  /* FOUR CELLS SINCE 2026-09-20 NIGHT, his words on the five-cell photograph
+     ("two subsections that have the same sort of graphic close to each
+     other"; "a subsection cannot be only with one number": MODEL PART 9
+     clauses 64 and 65). THE RIVALS CELL, 2 by 1 at the top left: the trade's
+     typical density at 30 with two companions in one row, this city's own
+     density where the city shard names the trade exactly (London
+     restaurants: 9.1 beside the typical 16) and the share that closes each
+     year (20 of 100), so the cell is never one number and the churn's unit
+     grid, which stood beside the chains' grid as its twin, is gone; the
+     chains' grid stays the cluster's one count drawing at the top right.
+     Row two the year's swing with its twelve months as the line (his B30)
+     at 2 by 1 and when the week pays as the share bar (his B29) at 1 by 1:
+     the grid above the bar are two different sorts, and no two of a sort
+     stand in this cluster. 2 + 1 + 2 + 1 = 6 of 6 at 1280; at 768 the
+     rivals row one at two columns, the chains and the dayparts row two, the
+     line row three, 6 of 6; under 768 one column in declared order. WHERE A
+     PERSON EXPECTS THEM (clause 66): how many rivals and how fast they turn
+     over first, who owns them beside, then the year and the week under. */
   return [
-    { key: "firms", cols: 1, rows: 1, node: metric(market.firms, "competition", K.firms) },
+    { key: "rivals", cols: 2, rows: 1, node: <RivalsCell market={market} /> },
     { key: "chains", cols: 1, rows: 1, node: count(market.chains, "anchor", K.chains) },
-    { key: "close", cols: 1, rows: 1, node: count(market.close, "vacancy", K.close) },
     { key: "swing", cols: 2, rows: 1, node: <SwingCell market={market} /> },
     { key: "dayparts", cols: 1, rows: 1, node: <DaypartsCell market={market} /> },
   ];
+}
+
+/** THE RIVALS: the trade's typical density at 30, this city's own and the yearly closures as its companions (BentoMetric's `second` row); where the density is withheld the cell states its line and the closures stand as the companion alone. */
+export function RivalsCell({ market }: { market: MarketData }) {
+  const K = COPY.tradeMarket.kickers;
+  const R = COPY.tradeMarket.rivals;
+  const firms = market.firms;
+  const second: Array<{ figure: string; words: string }> = [];
+  if (market.here) second.push({ figure: densityText(market.here.value), words: R.here });
+  if ("part" in market.close) second.push({ figure: String(market.close.part), words: R.close });
+  if (!("figure" in firms)) return <BentoMetric icon="competition" kicker={K.firms} withheld={firms.withheld} second={second.length > 0 ? second : undefined} />;
+  return <BentoMetric icon="competition" kicker={K.firms} figure={firms.figure} basis={market.here ? R.basisHere : firms.basis} sample accent={false} second={second.length > 0 ? second : undefined} />;
 }
 
 /** THE SWING WITH ITS YEAR: the metric cell's own composition (opener, figure at 30 in ink, basis) with the month line between the figure and the basis; the figure's withheld line where the swing is not on file, and no line where a month is missing. */

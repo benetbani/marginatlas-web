@@ -1761,7 +1761,7 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
         return (
           <Story kind="bento-band" key={industryKey(h, "pays")} iso2={industryKey(h, "pays")} why={industryPaysWhy(p)}>
             <div style={{ maxWidth: 1072 }}>
-              <BentoBand cols={3} cells={paysCells(p)} />
+              <BentoBand cols={2} cells={paysCells(p)} />
             </div>
           </Story>
         );

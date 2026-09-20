@@ -40,6 +40,13 @@
  *                         read as a repeated kind; corrected 2026-09-20)
  *   55 KIND TWINS         one visual archetype on two cards with the same
  *                         variant
+ *   64 KIND ADJACENT      two visual cards of one kind on one level, in one
+ *                         cluster, or on neighbouring levels (his words on
+ *                         the market bento, 2026-09-20 night: "two similar
+ *                         graphics should have a considerable distance")
+ *   65 LONE FIGURE        a card whose readings are one figure: no second
+ *                         figure, no drawing, no rows, no details ("a
+ *                         subsection cannot be only with one number")
  * 54 (a text-only card's declared form) and 57 (the first question, the
  * family in the catalogue) are the composition's and the sheet's; the machine
  * holds 54 only as `data-text-form` where a card declares it.
@@ -85,7 +92,7 @@ if (files.length === 0) { console.error("usage: node scripts/harness/check_page_
 /* THE IN-PAGE WALK. Everything below runs inside the browser; it takes the
    viewport width so the level and measure rules know whether they apply. */
 function inPage(width) {
-  const VISUAL = new Set(["ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board", "donut", "ring", "month-line", "share-bar"]);
+  const VISUAL = new Set(["ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board", "donut", "ring", "month-line", "share-bar", "bento-count"]);
   const VARIANT_KEYS = ["data-variant", "data-form", "data-marks", "data-columns", "data-look", "data-feature", "data-dot", "data-shape", "data-orientation"];
   const CARD = 'main [class*="rounded-[14px]"]';
   const main = document.querySelector("main");
@@ -198,14 +205,36 @@ function inPage(width) {
     if (width >= 1280 && parts > 1 && !card.querySelector("details, [role='tablist'], [data-popup]")) red(id, "PARTS NOT REVEALED", `the card declares ${parts} parts and shows them all at once; no plus, tab or popup inside it (clause 58)`);
   }
 
-  /* THE PAGE, once at 1280: kinds and twins. */
+  /* THE PAGE, once at 1280: kinds, twins and distance. */
   if (width >= 1280) {
     const byKind = new Map();
     for (const card of cards) { if (!isVisual(card)) continue; const k = archetypeOf(card); if (!byKind.has(k)) byKind.set(k, []); byKind.get(k).push(card); }
+    /* THE LEVELS IN ORDER, so "neighbouring" is a fact of the page and not of the DOM's depth: a card's level is its nearest band or hero; a bento's cells share their cluster's level. */
+    const levels = [...document.querySelectorAll("main [data-band], main [data-hero]")].filter((b) => b.getClientRects().length && !b.parentElement.closest("[data-band], [data-hero]"));
+    const levelOf = (card) => card.closest("[data-band], [data-hero]");
     for (const [kind, list] of byKind) {
       if (kind === "kit") continue;
       if (list.length > 2) red(list.map(idOf).join(" | "), "KIND REPEATED", `${kind} on ${list.length} cards; two is the cap (clause 55)`);
       else if (list.length === 2 && variantOf(list[0]) === variantOf(list[1])) red(list.map(idOf).join(" | "), "KIND TWINS", `${kind} twice with the same variant "${variantOf(list[0]) || "(none declared)"}"; two of one kind must look different (clause 55)`);
+      /* 64 KIND ADJACENT: every pair of the kind, by the distance of their levels. */
+      for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) {
+        const la = levelOf(list[i]), lb = levelOf(list[j]);
+        if (!la || !lb) continue;
+        const ia = levels.indexOf(la), ib = levels.indexOf(lb);
+        const gap = la === lb ? 0 : Math.abs(ia - ib);
+        if (gap === 0) red(`${idOf(list[i])} | ${idOf(list[j])}`, "KIND ADJACENT", `${kind} twice on one level or in one cluster; two of one kind keep a level between them (clause 64)`);
+        else if (gap === 1) red(`${idOf(list[i])} | ${idOf(list[j])}`, "KIND ADJACENT", `${kind} on neighbouring levels; two of one kind keep a level between them (clause 64)`);
+      }
+    }
+    /* 65 LONE FIGURE: a card whose readings are one figure and nothing else.
+       A reading is a figure (`.fig`), a grid cell, a row, a drawing, a plus,
+       a table or a companion row; a card with exactly one figure and none of
+       the rest is one number in a box. A card with no figure (a seat, a
+       terminus, prose) is not this rule's. */
+    for (const card of cards) {
+      const figs = card.querySelectorAll(".fig").length;
+      const others = card.querySelectorAll("[data-kv-cell], [data-row], [data-visual], details, table, [data-second], [data-track], [data-mark], [data-note], li").length;
+      if (figs === 1 && others === 0) red(idOf(card), "LONE FIGURE", `one figure and nothing beside it: a second reading, a drawing or its details (clause 65)`);
     }
   }
   return { reds, cards: cards.length, contentW: Math.round(contentW) };

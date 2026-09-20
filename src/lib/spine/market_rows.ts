@@ -70,6 +70,8 @@
  * churn cell is built and not drawn.
  */
 import { industryFigure, industryRows, type IndustryBankFigure } from "@/lib/facts/industry_shard";
+import { cityEntityId, loadCityShard } from "@/lib/facts/city_shard";
+import { queryFacts } from "@/lib/facts/store";
 import type { MonthPoint } from "@/components/spine/archetypes/MonthLine";
 import type { SharePart } from "@/components/spine/archetypes/ShareBar";
 import type { FactTag } from "@/lib/facts/types";
@@ -107,7 +109,21 @@ export type MarketData = {
   months: MonthPoint[] | null;
   /** WHEN THE WEEK'S TAKINGS COME IN (the same evening, his B29): `dayparts.pattern.*` (part, pct), two to four parts of the week's takings, drawn as the stacked share bar in the bento's fifth cell; null under two parts. */
   dayparts: SharePart[] | null;
+  /** THIS CITY'S OWN DENSITY FOR THE TRADE (2026-09-20 night, his "a subsection cannot be only with one number"): the city shard's `comp.by_trade.*.per_10k_residents` on the row whose `trade` is the trade's own name, exactly; null where the city holds no such row, or at the world altitude. The rivals cell prints it beside the trade's typical. */
+  here: { value: number; tag: FactTag } | null;
 };
+
+/** The city's own row for this trade, by the exact name the shard writes; never a near match (a near match is a fabricated place figure). */
+export function cityOwnDensity(iso2: string | undefined, slug: string | undefined, tradeName: string | undefined): { value: number; tag: FactTag } | null {
+  if (!iso2 || !slug || !tradeName) return null;
+  if (!loadCityShard(iso2.toUpperCase(), slug)) return null;
+  const id = cityEntityId(iso2.toUpperCase(), slug);
+  const want = tradeName.trim().toLowerCase();
+  const nameRow = queryFacts({ entityId: id }).find((f) => f.metric === "comp.by_trade.*.trade" && typeof f.value === "string" && f.value.trim().toLowerCase() === want);
+  if (!nameRow) return null;
+  const share = queryFacts({ entityId: id }).find((f) => f.metric === "comp.by_trade.*.per_10k_residents" && f.rowKey === nameRow.rowKey);
+  return share && typeof share.value === "number" && Number.isFinite(share.value) && share.value > 0 ? { value: share.value, tag: share.tag } : null;
+}
 
 /** The four figure cells' keys in declared order, the order the cluster tiles and a phone reads; the fifth cell (the dayparts, 2026-09-20 late evening) is a share bar and not a figure cell, read off `dayparts`. */
 export const MARKET_CELLS = ["firms", "chains", "close", "swing"] as const;
@@ -129,8 +145,9 @@ function count(fig: IndustryBankFigure | null, basis: string, withheld: string, 
   return { part: Math.round(fig.value), whole: 100, basis, tag: fig.tag, value: fig.value };
 }
 
-export function buildMarket(industryId: string | undefined, altitude: MarketAltitude = "place"): MarketData | null {
+export function buildMarket(industryId: string | undefined, altitude: MarketAltitude = "place", place?: { iso2?: string; slug?: string; tradeName?: string }): MarketData | null {
   if (!industryId) return null;
+  const here = altitude === "place" && place ? cityOwnDensity(place.iso2, place.slug, place.tradeName) : null;
   const read = (metric: string) => industryFigure(industryId, metric);
   const firmsFig = read(MARKET_METRICS.firms);
   const chainsFig = read(MARKET_METRICS.chains);
@@ -158,5 +175,5 @@ export function buildMarket(industryId: string | undefined, altitude: MarketAlti
   const dayparts: SharePart[] = partShares
     .map((f) => ({ key: `part-${f.rowKey}`, name: partNames.get(f.rowKey) ?? "", share: typeof f.value === "number" ? f.value : NaN }))
     .filter((p) => p.name && Number.isFinite(p.share) && p.share > 0);
-  return { industryId, altitude, firms, chains, close, swing, withheld: 4 - printed.length, tag, confidence: "modeled", months, dayparts: dayparts.length >= 2 ? dayparts : null };
+  return { industryId, altitude, firms, chains, close, swing, withheld: 4 - printed.length, tag, confidence: "modeled", months, dayparts: dayparts.length >= 2 ? dayparts : null, here };
 }

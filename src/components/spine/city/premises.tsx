@@ -76,6 +76,7 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
         basis={cell.basis}
         sample={cell.sample}
         accent={accent}
+        second={cell.second}
         detail={cell.detail ? <DetailPanel name={`premises-${key}`} summary={cell.detail.summary} rows={cell.detail.rows.map((r) => ({ label: r.label, value: r.value }))} /> : undefined}
       />
     ) : (
@@ -99,7 +100,7 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
           <BentoMetric icon="vacancy" kicker={K.empty} withheld={empty.withheld} />
         ),
     },
-    { key: "fit-out", cols: 1, rows: 1, node: metric(bento.fitOut, "high-street", K.fitOut) },
+    { key: "fit-out", cols: 1, rows: 1, node: metric(bento.fitOut, "high-street", K.fitOut, false, "fit-out") },
   ];
 }
 

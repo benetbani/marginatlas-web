@@ -97,14 +97,16 @@ export const PAYS_CELLS = ["payback", "crew", "fixed", "share"] as const;
 
 /** The crew: the part is the whole (every unit drawn and inked), the sum as the file holds it and as rounded; or the stated line. */
 export type PaysCrew = { part: number; whole: number; sum: number; rounded: boolean; roles: number; basis: string; tag: FactTag } | { withheld: string };
-/** A count in 100: the part with its basis and tag, or the stated line. */
-export type PaysCount = { part: number; whole: 100; value: number; basis: string; tag: FactTag } | { withheld: string };
+/** A count in 100: the part with its basis and tag, or the stated line. `variable` (2026-09-20 night) is the other part of the same hundred, `cost_structure.variable_pct`, drawn as the second bar of the fixed-costs cell where the shard holds it. */
+export type PaysCount = { part: number; whole: 100; value: number; basis: string; tag: FactTag; variable?: number } | { withheld: string };
 /** A metric cell: the figure as printed with its basis and tag, or the stated line where the figure would stand. */
 export type PaysMetric = { figure: string; value: number; basis: string; tag: FactTag } | { withheld: string };
 
 export type PaysData = {
   industryId: string;
   payback: PaysMetric;
+  /** THE PAYBACK'S COMPANION (2026-09-20 night, clause 65: a cell is never one number): `first_year.ramp_to_breakeven_months`, the months until a typical day clears its costs, printed beside the years until the capital comes back; null where the shard holds none. */
+  ramp: { figure: string; value: number; tag: FactTag } | null;
   crew: PaysCrew;
   fixed: PaysCount;
   share: PaysMetric;
@@ -143,10 +145,13 @@ export function buildPays(industryId: string | undefined): PaysData | null {
         return { part: whole, whole, sum: crewFig.sum, rounded, roles: crewFig.roles, basis: rounded ? B.crewRounded : B.crew, tag: crewFig.tag };
       })()
     : { withheld: W.crew };
-  const fixed: PaysCount = !fixedFig || fixedFig.value <= 0 ? { withheld: W.fixed } : fixedFig.value > 100 ? { withheld: W.fixedNotAShare } : { part: Math.round(fixedFig.value), whole: 100, value: fixedFig.value, basis: B.fixed, tag: fixedFig.tag };
+  const variableFig = industryFigure(industryId, SPLIT_METRICS.variable);
+  const fixed: PaysCount = !fixedFig || fixedFig.value <= 0 ? { withheld: W.fixed } : fixedFig.value > 100 ? { withheld: W.fixedNotAShare } : { part: Math.round(fixedFig.value), whole: 100, value: fixedFig.value, basis: B.fixed, tag: fixedFig.tag, ...(variableFig && variableFig.value > 0 && variableFig.value <= 100 ? { variable: Math.round(variableFig.value) } : {}) };
   const share: PaysMetric = shareFig && shareFig.value > 0 ? { figure: shareFigure(shareFig.value), value: shareValue(shareFig.value), basis: B.share, tag: shareFig.tag } : { withheld: W.share };
+  const rampFig = industryFigure(industryId, "first_year.ramp_to_breakeven_months");
+  const ramp = rampFig && rampFig.value > 0 ? { figure: `${Math.round(rampFig.value)} ${Math.round(rampFig.value) === 1 ? COPY.industryPays.ramp.month : COPY.industryPays.ramp.months}`, value: rampFig.value, tag: rampFig.tag } : null;
   const withheld = ["withheld" in payback, "withheld" in crew, "withheld" in fixed, "withheld" in share].filter(Boolean).length;
-  return { industryId, payback, crew, fixed, share, withheld, confidence: "modeled" };
+  return { industryId, payback, ramp, crew, fixed, share, withheld, confidence: "modeled" };
 }
 
 /** How the ids fall, counted rather than remembered, for the gates and the record. */

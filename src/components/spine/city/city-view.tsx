@@ -809,6 +809,33 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           floor, and the filter finds no hole in either card at any width.
           The old kit cards stood level at 244, so the band's height did not
           move. */}
+      {/* `17 gates | 18 market` AT 1-1 (2026-09-20 late evening, his "more
+          sections" from what the file holds; opening.tsx): the city's own
+          permits gate by gate LEFT, the table with the fee total at 30 in
+          ink, and who is already trading RIGHT, his bars with each trade's
+          tile and the market's figures behind his plus, the level's one
+          visual. Both draw on every city whose shard holds the rows (London:
+          five gates, six trades); a survivor stands alone at two thirds.
+          Measured on London: 490 beside 491 at 1280; `stack="lg"` because at
+          a tablet's halves the bars' head ("Densest trade 9.1") ran 39px past
+          a 344 card, so each stands full width there at its own height.
+          SEATED BEFORE THE LIVING LEVEL since the night of 2026-09-20 (his
+          words on the market bento, clause 64: two drawings of one sort
+          keep a level between them): the market's bars stood on the level
+          right above the districts' bars; the living level now stands
+          between them. Where a person expects them (clause 66): what the
+          city charges to open, then who is already there, then what living
+          here costs. */}
+      {gates && cityMarket ? (
+        <Band split="1-1" stack="lg">
+          <GatesCard gates={gates} />
+          <MarketCard market={cityMarket} />
+        </Band>
+      ) : gates ? (
+        <Band split="2-1" stack="lg"><GatesCard gates={gates} /></Band>
+      ) : cityMarket ? (
+        <Band split="2-1" stack="lg"><MarketCard market={cityMarket} /></Band>
+      ) : null}
       {/* THE STRIP JOINS THIS LEVEL WHERE THE SPEND CARD IS WITHHELD (2026-09-20
           evening, his words on the London page: a card that is one withheld
           sentence, "The spend is withheld: the figure on file for London is a
@@ -832,27 +859,6 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <Living living={living} />
           <Runway runway={runway} />
         </Band>
-      ) : null}
-      {/* `17 gates | 18 market` AT 1-1 (2026-09-20 late evening, his "more
-          sections" from what the file holds; opening.tsx): the city's own
-          permits gate by gate LEFT, the table with the fee total at 30 in
-          ink, and who is already trading RIGHT, his bars with each trade's
-          tile and the market's figures behind his plus, the level's one
-          visual. Both draw on every city whose shard holds the rows (London:
-          five gates, six trades); a survivor stands alone at two thirds.
-          Measured on London, the numbers in the commit: 475 beside 476 at
-          1280; `stack="lg"` because at a tablet's halves the bars' head
-          ("Densest trade 9.1") ran 39px past a 344 card, so each stands full
-          width there at its own height. */}
-      {gates && cityMarket ? (
-        <Band split="1-1" stack="lg">
-          <GatesCard gates={gates} />
-          <MarketCard market={cityMarket} />
-        </Band>
-      ) : gates ? (
-        <Band split="2-1" stack="lg"><GatesCard gates={gates} /></Band>
-      ) : cityMarket ? (
-        <Band split="2-1" stack="lg"><MarketCard market={cityMarket} /></Band>
       ) : null}
       {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market
           sized before the street is picked. */}

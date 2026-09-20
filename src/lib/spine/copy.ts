@@ -794,6 +794,8 @@ export const COPY = {
     detail: {
       rent: { summary: "What the rent comes with", rows: { secondary: "Secondary street", service: "Service charge", trend: "Rent trend" } },
       deposit: { summary: "The lease terms", rows: { lease: "Lease term", rentFree: "Rent-free months" } },
+      /** The companions beside a figure (2026-09-20 night, clause 65): the fit-out's rent-free months, the deposit's lease term; each in the companion row's words. */
+      companions: { rentFree: "rent-free to fit out", lease: "the lease it is held on" },
       units: { sqmYear: "a square metre, a year", aYear: "a year", years: { one: "year", many: "years" }, months: { one: "month", many: "months" } },
     },
     /** PART 5's stated line, standing where the figure would, one per cell the bank does not hold. */
@@ -1640,6 +1642,8 @@ export const COPY = {
    *  over 100 that is not a count of firms (none on file: 3 to 92, 1 to 30). */
   tradeMarket: {
     kickers: { firms: "Firms per 10,000 people", chains: "Held by chains", close: "Close in a year", swing: "The year's swing", dayparts: "When the week pays" },
+    /** THE RIVALS CELL (2026-09-20 night, clause 65): the trade's typical density at 30 with its companions in one row: this city's own where the city shard names the trade ("here"), and the share that closes each year, so the cell is never one number. The kicker is the firms'. */
+    rivals: { here: "here, this city's own", close: "of 100 close a year", basisHere: "Firms for every 10,000 people, the trade's typical; beside it this city's own, modelled." },
     /** The dayparts cell's basis (2026-09-20 late evening, the bento's fifth cell): the parts are of the week's takings, the trade's figure. */
     daypartsBasis: "Of every $100 taken in a week; typical for the trade anywhere, modelled.",
     /** The month line's own line under the swing figure: what the twelve points are. */
@@ -1852,6 +1856,11 @@ export const COPY = {
    *  that is not a share (the market's guard). */
   industryPays: {
     kickers: { crew: "The starting crew", payback: "Until it pays back", fixed: "Fixed costs" },
+    /** The payback's companion (2026-09-20 night, clause 65): "6 months until a day clears its costs". */
+    ramp: { month: "month", months: "months", words: "until a day clears its costs" },
+    /** The fixed-costs bar's words (the segmented bar, his B27) and the share ring's caption (his B31), the same night. */
+    fixedBar: { label: "Fixed", variableLabel: "Variable", unit: "of 100", basisPair: "Of every $100 of costs, the part paid whatever it sells and the part that moves with sales; modelled." },
+    shareCaption: "of a day's takings",
     basis: {
       crew: "The people a typical one opens with; modelled.",
       crewRounded: "The people a typical one opens with, rounded to whole people; modelled.",

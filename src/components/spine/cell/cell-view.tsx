@@ -307,7 +307,8 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      day: see the turn-two band's note). `12 market` (market.tsx): the four
      cells off the same shard, the cluster its own band. */
   const mix = buildMix(d.meta?.industry_id);
-  const market = buildMarket(d.meta?.industry_id);
+  /* The place goes with the id (2026-09-20 night): the rivals cell prints this city's own density beside the trade's typical where the city shard names the trade exactly. */
+  const market = buildMarket(d.meta?.industry_id, "place", { iso2: d.meta?.iso2, slug: d.meta?.geo, tradeName: d.meta?.trade });
   /* `13 rivals` and `14 worth` (exit.tsx): the rivals off the seed's siblings
      on every resolving cell (the list where four or more hold a figure, the
      structure and the line otherwise), the worth off the shard's sale

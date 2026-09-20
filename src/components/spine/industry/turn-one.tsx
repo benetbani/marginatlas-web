@@ -71,6 +71,9 @@ import { Box, Rail } from "@/components/spine/kit";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { BentoBand, BentoCount, BentoMetric, type BentoCell } from "@/components/spine/archetypes/BentoBand";
+import { Ring } from "@/components/spine/archetypes/Ring";
+import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
+import { Ico, SampleTag } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { IndustryOpenData } from "@/lib/spine/industry_open_rows";
 import type { PaysData, PaysMetric, PaysCount } from "@/lib/spine/pays_rows";
@@ -141,8 +144,25 @@ export function paysCells(pays: PaysData): BentoCell[] {
       <BentoMetric icon={icon} kicker={kicker} withheld={cell.withheld} />
     );
   const crew = pays.crew;
+  /* RE-DRAWN 2026-09-20 NIGHT on his words about the trade's market bento
+     (MODEL PART 9 clauses 64 and 65, the same faults here: two unit grids
+     side by side, the payback and the share each one number): the payback
+     keeps its accent and takes the months until a day clears its costs as
+     its companion; the crew stays the cluster's one count drawing; the share
+     of a day is the ring (his B31, the trade page's own form for this
+     figure, `08 clears`), in ink, beside its caption; the fixed part of the
+     costs is the segmented bar (his B27), a share of a hundred of costs,
+     with the variable part as its second bar (the shard's own
+     `variable_pct`) so the cell reads the whole split. ON TWO COLUMNS, four
+     cells of one size (measured: on three columns the ring's cell at two
+     thirds left 235 by 222 of air and the bar's cell at two thirds 484 by
+     126; at a half each stands about as tall as its row's neighbour, the
+     payback with its companion beside the crew's grid, the two bars beside
+     the ring); at 768 the same two columns, under 768 one. Where a person
+     expects them (clause 66): how long until it pays back and with whom
+     first, then what a day must clear and what part of the costs is fixed. */
   return [
-    { key: "payback", cols: 2, rows: 1, node: metric(pays.payback, "startup-cost", K.payback, true) },
+    { key: "payback", cols: 1, rows: 1, node: "figure" in pays.payback ? <BentoMetric icon="startup-cost" kicker={K.payback} figure={pays.payback.figure} basis={pays.payback.basis} sample accent second={pays.ramp ? { figure: pays.ramp.figure, words: COPY.industryPays.ramp.words } : undefined} /> : metric(pays.payback, "startup-cost", K.payback, true) },
     {
       key: "crew",
       cols: 1,
@@ -154,12 +174,51 @@ export function paysCells(pays: PaysData): BentoCell[] {
           <BentoMetric icon="staffing-rota" kicker={K.crew} withheld={crew.withheld} />
         ),
     },
-    { key: "fixed", cols: 1, rows: 1, node: count(pays.fixed, "cost-breakdown", K.fixed) },
-    { key: "share", cols: 2, rows: 1, node: metric(pays.share, "break-even", COPY.tradeClears.kicker) },
+    { key: "share", cols: 1, rows: 1, node: <PaysShareCell share={pays.share} /> },
+    { key: "fixed", cols: 1, rows: 1, node: <PaysFixedCell fixed={pays.fixed} /> },
   ];
 }
 
 export function PaysBand({ pays }: { pays: PaysData | null }) {
   if (!pays) return null;
-  return <BentoBand id="pays" cols={3} cells={paysCells(pays)} />;
+  return <BentoBand id="pays" cols={2} cells={paysCells(pays)} />;
 }
+
+/** THE SHARE OF A DAY AS THE RING (his B31; the trade page's `08 clears` form at the world altitude), in ink beside its words; the stated line where the shard holds no share. */
+export function PaysShareCell({ share }: { share: PaysMetric }) {
+  if (!("figure" in share)) return <BentoMetric icon="break-even" kicker={COPY.tradeClears.kicker} withheld={share.withheld} />;
+  return (
+    <Box className="flex h-full flex-col [container-type:inline-size]" data-archetype="ring" data-visual="1">
+      <div className="mb-1.5 flex items-center gap-2">
+        <Ico id="break-even" tone="terra" />
+        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.tradeClears.kicker}</h3>
+        <SampleTag />
+      </div>
+      <div className="grid flex-1 grid-cols-1 items-center gap-4 py-2 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
+        <Ring value={share.value} figure={share.figure} caption={COPY.industryPays.shareCaption} />
+        <p className="max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{share.basis}</p>
+      </div>
+    </Box>
+  );
+}
+
+/** THE FIXED PART OF THE COSTS AS THE SEGMENTED BAR (his B27): a share of a hundred of costs, filled to the part; the stated line where the shard holds none or the figure is not a share. */
+export function PaysFixedCell({ fixed }: { fixed: PaysCount }) {
+  const K = COPY.industryPays.kickers;
+  if (!("part" in fixed)) return <BentoMetric icon="cost-breakdown" kicker={K.fixed} withheld={fixed.withheld} />;
+  return (
+    <Box className="flex h-full flex-col" data-archetype="segment-bar" data-visual="1">
+      <div className="mb-1.5 flex items-center gap-2">
+        <Ico id="cost-breakdown" tone="terra" />
+        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.fixed}</h3>
+        <SampleTag />
+      </div>
+      <div className="flex flex-1 flex-col justify-center py-2">
+        <SegmentBar label={COPY.industryPays.fixedBar.label} value={fixed.part} total={100} figure={String(fixed.part)} unit={COPY.industryPays.fixedBar.unit} />
+        {fixed.variable != null ? <SegmentBar label={COPY.industryPays.fixedBar.variableLabel} value={fixed.variable} total={100} figure={String(fixed.variable)} unit={COPY.industryPays.fixedBar.unit} /> : null}
+      </div>
+      <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{fixed.variable != null ? COPY.industryPays.fixedBar.basisPair : fixed.basis}</p>
+    </Box>
+  );
+}
+

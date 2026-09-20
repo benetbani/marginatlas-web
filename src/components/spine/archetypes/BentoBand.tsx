@@ -599,7 +599,7 @@ export function BentoCount({
   /* The count is the whole: the figure says it once (the note above). */
   const isWhole = filled === Math.round(whole);
   return (
-    <Box className="flex h-full flex-col" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
+    <Box className="flex h-full flex-col" data-archetype="bento-count" data-visual="1" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
@@ -614,6 +614,8 @@ export function BentoCount({
           {isWhole ? null : <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of {Math.round(whole)}</span>}
         </div>
         <div
+          data-units={units.length}
+          data-visual="1"
           className={columns ? "mt-2.5 grid gap-[4px]" : "mt-2.5 flex flex-wrap gap-[4px]"}
           style={columns ? { gridTemplateColumns: `repeat(${Math.max(1, Math.round(columns))}, minmax(0, 1fr))` } : undefined}
           role="img"
