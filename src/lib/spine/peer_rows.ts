@@ -18,11 +18,12 @@ import { PEER_GROUPS } from "@/lib/countries/country_view";
 import { getCountryRates, getFormationRowByTier } from "@/lib/tax/country_rates";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { COPY } from "@/lib/spine/copy";
+import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
 export type PeerRow = { iso2: string; key?: string; name: string; home: boolean; values: Record<string, number | null> };
-export type PeerColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m"; best: "min" | "max" };
+export type PeerColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "per"; best: "min" | "max" };
 
 export const PEER_COLUMNS: PeerColumn[] = [
   { key: "effective_tax_pct", head: COPY.peers.cols.tax, unit: "pct", best: "min" },
@@ -115,13 +116,14 @@ export function buildCityPeerTable(seed: any): CityPeerTable | null {
     name: String(r.name),
     home: !!r.home,
     values: {
-      living: isNum(r.rent_index) ? Math.round(r.rent_index) : null,
+      /* ON THE CITY SCALE since 2026-09-20 evening (his ruling on the cost of living: 1 at the cheapest covered city, 100 at the dearest, neither named), the same figure the page's `02 among-cities` bar prints, so one page never shows London as 75 on one card and 48 on another. */
+      living: isNum(r.rent_index) ? costOfLivingOnCityScale(r.rent_index) : null,
       income: isNum(r.median_income_usd) && r.median_income_usd > 0 ? Math.round(r.median_income_usd) : null,
       visitors: isNum(r.visitors_m) && r.visitors_m > 0 ? Math.round(r.visitors_m * 10) / 10 : null,
     },
   }));
   const all: PeerColumn[] = [
-    { key: "living", head: COPY.cityPeers.cols.living, unit: "pct", best: "min" },
+    { key: "living", head: COPY.cityPeers.cols.living, unit: "per", best: "min" },
     { key: "income", head: COPY.cityPeers.cols.income, unit: "usd", best: "max" },
     { key: "visitors", head: COPY.cityPeers.cols.visitors, unit: "m", best: "max" },
   ];

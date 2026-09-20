@@ -971,7 +971,8 @@ export const COPY = {
      *  dispatch, 2026-09-18): every row's income is `cityTypicalIncome(slug)`
      *  for that city, the same figure the home city's masthead prints, so the
      *  caveat says "typical pay" and one basis serves the column. */
-    caveat: "Cost of living against a leading metro; typical pay and visitors a year.",
+    /** The living column on the city scale since 2026-09-20 (his ruling: the ends are the cheapest and dearest covered cities, never named). */
+    caveat: "Cost of living with rent, cheapest city 1, dearest 100; typical pay and visitors a year.",
   },
   /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13,
    *  reworded and unfeatured task 14, 2026-09-10). Every district's shop rent

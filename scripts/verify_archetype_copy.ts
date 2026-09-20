@@ -116,6 +116,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import cityListJson from "../data/cities/city_list_v1.json";
 import top100Json from "../src/lib/cities/top100.json";
+import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
 
 /** Every cost driver name a shard holds, whatever its tag, for the short-label census (plan step 33's third dispatch). */
 function shardCostLineNames(id: string): string[] {
@@ -280,10 +281,15 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (t.rows.length !== 4) reds.push(`city peers: ${t.rows.length} rows from a home row and three peers`);
     if (t.columns.map((c) => c.head).join("|") !== [COPY.cityPeers.cols.living, COPY.cityPeers.cols.income, COPY.cityPeers.cols.visitors].join("|")) reds.push(`city peers: the heads are "${t.columns.map((c) => c.head).join("|")}"`);
     if (t.entityHead !== COPY.cityPeers.cols.city) reds.push(`city peers: the name head is "${t.entityHead}"`);
-    /* EVERY CELL IS THE ROW'S OWN ABSOLUTE: the tied peer prints the index
-       itself, the home row prints its own figures, no zero and no "same". */
+    /* EVERY CELL IS THE ROW'S OWN ABSOLUTE: the tied peer prints the same
+       figure as the home row, no zero and no "same". Since 2026-09-20 the
+       living column is the source index put on the city scale (1 the
+       cheapest covered city, 100 the dearest; his ruling), so the check
+       asks for the scale's figure of 75, the same on both rows and a whole
+       number between 1 and 100, never the raw 75. */
     const b = t.rows.find((r) => r.key === "b")!, a = t.rows.find((r) => r.home)!;
-    if (b.values.living !== 75 || a.values.living !== 75) reds.push(`city peers: a tied index prints ${b.values.living} beside the home row's ${a.values.living}`);
+    const onScale = costOfLivingOnCityScale(75);
+    if (onScale == null || b.values.living !== onScale || a.values.living !== onScale || onScale < 1 || onScale > 100) reds.push(`city peers: a tied index prints ${b.values.living} beside the home row's ${a.values.living} (the scale's figure for 75 is ${onScale})`);
     if (a.values.income !== 48756 || a.values.visitors !== 16) reds.push("city peers: the home row does not print its own figures");
     for (const r of t.rows) for (const c of t.columns) { const v = r.values[c.key]; if (v != null && v <= 0) reds.push(`city peers: row "${r.name}" prints ${v} under "${c.head}", a zero or a difference where an absolute goes`); }
     for (const txt of [t.caveat, ...t.columns.map((c) => c.head), t.entityHead]) {
