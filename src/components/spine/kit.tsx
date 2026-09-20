@@ -812,7 +812,7 @@ export function Head({ children, sample, icon }: { children: React.ReactNode; sa
     // written fix: take Head and Rail bottom margin to the slot rung 8.
     // City finding #4 (2026-08-30), S1.
     <div className="mb-2 flex items-center gap-2">
-      {icon ? <Ico id={icon} /> : null}
+      {icon ? <Ico id={icon} tone="terra" /> : null}
       {/* the other section opener, same level, same reasoning as Rail above */}
       <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{children}</h3>
       {sample ? <SampleTag /> : null}
@@ -1104,7 +1104,8 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample }: { icon?: A
     // ladder holds no 12). City finding #4 (2026-08-30), S1.
     <div className="mb-2">
       <div className="mb-1.5 flex items-center gap-2">
-        {icon ? <Ico id={icon} /> : null}
+        {/* THE ICON IS TERRACOTTA ON EVERY CARD (his ruling of 2026-09-19: "the big missed chance is to put it at the icons"); one tile, one tone, site-wide. The accent budget counts text, so the tiles are not accents. */}
+        {icon ? <Ico id={icon} tone="terra" /> : null}
         {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
             section opener in the spine, which means a page's heading outline
             stopped at its chapters. Counted on the two flagship pages: 8 heading

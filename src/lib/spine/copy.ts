@@ -423,6 +423,9 @@ export const COPY = {
     kicker: "The bill to register",
     /** After the second figure, on its line: "21 days until you can trade". */
     daysWords: "until you can trade",
+    /** HIS PLUS on the bill (correction 5 of 2026-09-20): the LLC's own facts behind a click, the summary line and the four row labels, each under three words. */
+    detailSummary: "What the LLC involves",
+    detailRows: { form: "The form here", fee: "Government fee", filing: "Filing time", paperwork: "Paperwork" },
     /** The basis clauses, joined with "; " where both figures print, each alone otherwise. */
     basisBill: "fees and a first licence, all in",
     basisDays: "days run until the last step clears",
@@ -460,12 +463,23 @@ export const COPY = {
    *  never typed), and living costs where no covered city holds a reading.
    *  Every string here was read aloud first. */
   runningCosts: {
-    kicker: "Power and living costs",
+    /** RUNNING COSTS (his corrections 6 and 7 of 2026-09-20): the costs that
+     *  are the same everywhere in the country, placed among the countries;
+     *  "premises" and "power and living costs" are gone as names. The rows
+     *  print a label under three words (PART 9 clause 13) with the unit beside
+     *  the figure; the cost of living stands on the city scale, 1 at the
+     *  cheapest covered city and 100 at the dearest, and the basis says so
+     *  without naming either city (his ruling). The cells and the old basis
+     *  stay for the copy gate's sweep and the builder's other readers. */
+    kicker: "Running costs",
+    rows: { electricity: "Electricity", living: "Cost of living" },
+    units: { kwh: "a kilowatt hour", of100: "of 100" },
     cells: { electricity: "Electricity per kilowatt hour", living: "Cost of living" },
     /** The basis clauses, joined with "; " where both cells print, each alone otherwise. */
-    basisElectricity: "the commercial rate, 2024",
-    basisLiving: "living costs with rent, where New York is 100",
+    basisElectricity: "commercial rate, 2024",
+    basisLiving: "living costs with rent, cheapest city 1, dearest 100",
     footElectricityModelled: "The electricity rate is modelled for this country.",
+    footLevels: "Levels are among the countries.",
     /** `{n}` is the count of covered cities the figure is weighted from, spelled out to ten. */
     footLivingModelled: "The cost of living is modelled from {n} cities here, weighted by population.",
     footLivingOneCity: "The cost of living is modelled from one city here.",

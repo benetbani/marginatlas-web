@@ -30,7 +30,8 @@ import { stripCommentLines } from "./lib/strip_comments";
 const ROOT = "src/components/spine";
 const SKIP_DIRS = new Set(["archetypes"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx"]);
-const ARCHETYPES = ["AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel"];
+/* HeroBoard, SegmentBar (2026-09-20): his hero and his gold standard's segmented unit bar, both catalogued by his word (rules/FORM-CATALOG.md VERSION 6 and the reference of that date). */
+const ARCHETYPES = ["AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel", "HeroBoard", "SegmentBar", "BentoMetric", "BlockedSeat"];
 const EXCEPTIONS_PATH = "data/archetypes/coverage_exceptions.json";
 const INIT = process.argv.includes("--init");
 

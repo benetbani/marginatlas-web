@@ -65,7 +65,7 @@
  */
 import { countryFigure, type CountryBankFigure } from "@/lib/facts/country_shard";
 import type { FactTag } from "@/lib/facts/types";
-import { getFormationRowByTier } from "@/lib/tax/country_rates";
+import { getFormationRowByTier, getFormationRows } from "@/lib/tax/country_rates";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 
@@ -186,4 +186,30 @@ export function buildEntryBill(iso2In: string): EntryBillData | null {
     sample,
     confidence: sample ? "modeled" : "measured",
   };
+}
+
+
+/**
+ * THE BILL'S PLUS (his correction 5 of 2026-09-20: "the bill to register
+ * should also exist, but you should add some more context ... if a subsection
+ * can only have one number, it should not exist"). The rows behind the plus
+ * are the LLC's own facts the formation file already holds, never a split of
+ * the bill the file does not itemise: the form's name in its country, the
+ * government fee alone (the bill's basis says the bill adds a first licence),
+ * the filing turnaround, and the paperwork level of the registering table's
+ * dots. Fewer than two rows draw nothing (DetailPanel's own floor).
+ */
+export type EntryBillDetailRow = { label: string; value: string; note?: string };
+export function buildEntryBillDetail(iso2In: string): EntryBillDetailRow[] {
+  const iso2 = iso2In.toUpperCase();
+  const llc = getFormationRowByTier(iso2, "LLC");
+  if (!llc) return [];
+  const rows: EntryBillDetailRow[] = [];
+  const D = COPY.entryBill.detailRows;
+  if (llc.localTerm) rows.push({ label: D.form, value: llc.localTerm });
+  if (typeof llc.costUsd === "number" && Number.isFinite(llc.costUsd)) rows.push({ label: D.fee, value: llc.costUsd === 0 ? COPY.free : usd(llc.costUsd) });
+  if (typeof llc.days === "number" && Number.isFinite(llc.days) && llc.days > 0) rows.push({ label: D.filing, value: llc.days === 1 ? "1 day" : `${llc.days} days` });
+  const paperwork = getFormationRows(iso2).find((r) => r.tier === "LLC")?.complexity_score;
+  if (typeof paperwork === "number" && Number.isFinite(paperwork)) rows.push({ label: D.paperwork, value: `${Math.round(paperwork)} of 5` });
+  return rows;
 }

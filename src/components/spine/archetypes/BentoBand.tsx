@@ -436,6 +436,7 @@ export function BentoMetric({
   sample = false,
   accent = false,
   lean = false,
+  detail,
 }: {
   /** The section's id when the cell stands alone as a block; a cluster cell passes none. */
   id?: string;
@@ -460,6 +461,8 @@ export function BentoMetric({
   basis?: string;
   /** PART 7's foot, where earned: one line under the basis, never a verdict. */
   foot?: string;
+  /** HIS PLUS (2026-09-08; clause 58, not everything at once): a DetailPanel at the card's foot, closed on arrival, for the context a figure needs and the face should not carry (the bill card's LLC rows, his correction 5 of 2026-09-20: never a card of one number). */
+  detail?: React.ReactNode;
   sample?: boolean;
   accent?: boolean;
   /** The kit's lone-survivor rule: a one-figure card takes the narrow column when it stands alone in a band. */
@@ -495,6 +498,7 @@ export function BentoMetric({
       ) : null}
       {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
       {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+      {detail ?? null}
     </Box>
   );
 }

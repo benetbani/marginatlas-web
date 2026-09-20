@@ -233,6 +233,37 @@ export function getCountryCostOfLivingIndex(iso2: string): number | null {
   return COL_BY_ISO2.get(iso2.toUpperCase()) ?? null;
 }
 
+/**
+ * THE CITY SCALE (his ruling of 2026-09-20, verbatim: "the cost of living
+ * should be put on a scale where the cheapest city is one and the most
+ * expensive city is 100 ... we don't say that 100 is for that city"). The
+ * ends are the lowest and the highest cost-of-living index among the covered
+ * cities in city_list_v1.json, read once; a figure on the source scale (where
+ * New York is 100) is placed between them, 1 at the cheapest city, 100 at the
+ * dearest, and neither city is ever named beside the figure. The country's
+ * figure is the same population-weighted mean, rescaled, so the country and
+ * the city pages still read on one scale.
+ */
+const CITY_COL_ENDS: { min: number; max: number } | null = (() => {
+  let min = Infinity, max = -Infinity;
+  for (const c of CITIES.cities) {
+    const v = (c as { cost_of_living_index?: number }).cost_of_living_index;
+    if (typeof v !== "number" || !Number.isFinite(v) || v <= 0) continue;
+    if (v < min) min = v;
+    if (v > max) max = v;
+  }
+  return Number.isFinite(min) && Number.isFinite(max) && max > min ? { min, max } : null;
+})();
+export function costOfLivingOnCityScale(sourceIndex: number): number | null {
+  if (!CITY_COL_ENDS || !Number.isFinite(sourceIndex)) return null;
+  const share = (sourceIndex - CITY_COL_ENDS.min) / (CITY_COL_ENDS.max - CITY_COL_ENDS.min);
+  return Math.round(1 + 99 * Math.max(0, Math.min(1, share)));
+}
+/** Every country's cost-of-living index on the source scale, for a placement among the countries. */
+export function allCountryCostOfLivingIndices(): number[] {
+  return [...COL_BY_ISO2.values()].filter((v) => Number.isFinite(v));
+}
+
 // ---------------------------------------------------------------------------
 // Region inference (for fallbacks). Uses the brain country master.
 // ---------------------------------------------------------------------------

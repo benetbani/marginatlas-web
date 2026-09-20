@@ -66,7 +66,9 @@
  * glance's idiom).
  */
 import { getCountryProfile } from "@/lib/economic_profile";
-import { getCountryCostOfLivingIndex } from "@/lib/economics/country_metrics";
+import { getCountryCostOfLivingIndex, costOfLivingOnCityScale, allCountryCostOfLivingIndices } from "@/lib/economics/country_metrics";
+import { levelOf, type HeroLevel } from "@/lib/spine/hero_board";
+import { listCountryProfiles } from "@/lib/economic_profile";
 import { usdCents } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
@@ -109,6 +111,9 @@ export type RunningCostsData = {
   cells: KvCell[];
   /** The raw figures behind the cells, null where withheld or not held; the gate reads these. */
   figures: { electricity: number | null; living: number | null };
+  /** THE PLACED READING (his rulings of 2026-09-20): each figure's level among the countries (hero_board.ts levelOf, thirds of the placement rank), and the cost of living on the city scale, 1 at the cheapest covered city and 100 at the dearest, the ends never named. */
+  levels: { electricity: HeroLevel | null; living: HeroLevel | null };
+  livingOnCityScale: number | null;
   /** Why each withheld figure is withheld, one sentence each, in cell order; empty when both print. */
   withheld: string[];
   /** One unit clause per printed cell; null when neither prints. */
@@ -153,13 +158,21 @@ export function buildRunningCosts(iso2In: string): RunningCostsData | null {
     withheld.push(COPY.runningCosts.withheld.livingNotOnFile);
   }
 
+  /* The placement sets, once per process: every country's electricity rate off the fill, every country's cost-of-living index. */
+  const electricitySet = listCountryProfiles().map((p) => p.electricity_usd_per_kwh_commercial).filter((v): v is number => isPos(v) && !isElectricityFill(v));
+  const livingSet = allCountryCostOfLivingIndices();
   const basis = clauses.length > 0 ? `${clauses.join("; ")}.`.replace(/^./, (ch) => ch.toUpperCase()) : null;
+  /* The level words are read among the countries, and the foot says so once, because the cost of living's own scale is the cities' and a reader would otherwise read "41 of 100, high" as a contradiction. */
+  const levelsDrawn = (electricity != null && levelOf(electricity, electricitySet) != null) || (livingHeld != null && levelOf(livingHeld, livingSet) != null);
+  if (levelsDrawn) footParts.push(COPY.runningCosts.footLevels);
   const foot = footParts.length > 0 ? footParts.join(" ") : null;
 
   return {
     iso2,
     cells,
     figures: { electricity, living },
+    levels: { electricity: electricity != null ? levelOf(electricity, electricitySet) : null, living: livingHeld != null ? levelOf(livingHeld, livingSet) : null },
+    livingOnCityScale: isPos(livingHeld) ? costOfLivingOnCityScale(livingHeld) : null,
     withheld,
     basis,
     foot,

@@ -79,7 +79,7 @@ if (files.length === 0) { console.error("usage: node scripts/harness/check_page_
 /* THE IN-PAGE WALK. Everything below runs inside the browser; it takes the
    viewport width so the level and measure rules know whether they apply. */
 function inPage(width) {
-  const VISUAL = new Set(["ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards"]);
+  const VISUAL = new Set(["ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board"]);
   const VARIANT_KEYS = ["data-variant", "data-form", "data-marks", "data-columns", "data-look", "data-feature", "data-dot", "data-shape", "data-orientation"];
   const CARD = 'main [class*="rounded-[14px]"]';
   const main = document.querySelector("main");

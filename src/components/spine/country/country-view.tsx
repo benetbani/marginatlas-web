@@ -29,7 +29,7 @@
  * exemption that recorded the gap is gone with the gap.
  */
 import * as React from "react";
-import { Band, Box, Fig, Movement, Rail, SampleTag, usd } from "@/components/spine/kit";
+import { Band, Box, Fig, Ico, Movement, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
@@ -46,7 +46,7 @@ import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { buildChecks, type ChecksData } from "@/lib/spine/checks_rows";
 import { PayBars } from "@/components/spine/archetypes/PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
-import { buildPremisesStrip, buildCustomersStrip, type StripData } from "@/lib/spine/range_rows";
+import { buildCustomersStrip, type StripData } from "@/lib/spine/range_rows";
 import { howToOpenDoor } from "@/lib/spine/setup_rows";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { buildCitiesSeat, type CitiesSeat } from "@/lib/spine/country_cities_seat";
@@ -55,10 +55,12 @@ import { marginCardFromRows, type MarginCard } from "@/lib/spine/margin_rows";
 import { buildPeerTable, type PeerTable } from "@/lib/spine/peer_rows";
 import { buildHeroBoard } from "@/lib/spine/hero_board";
 import { HeroBoard } from "@/components/spine/archetypes/HeroBoard";
+import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
+import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
-import { buildEntryBill, type EntryBillData } from "@/lib/spine/entry_bill_rows";
+import { buildEntryBill, buildEntryBillDetail, type EntryBillData } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts, type RunningCostsData } from "@/lib/spine/running_costs_rows";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 
@@ -80,9 +82,7 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The tax burden" },
   { id: "setup", label: "Registering, by legal form" },
   { id: "entry-bill", label: "The bill to register" },
-  { id: "premises", label: "What premises cost" },
-  { id: "running-costs", label: "What else the month costs" },
-  { id: "workforce", label: "Who you can hire" },
+  { id: "running-costs", label: "Running costs" },
   { id: "hiring", label: "What staff cost" },
   { id: "peers", label: "Against the peers" },
   { id: "cities", label: "The cities" },
@@ -526,7 +526,13 @@ function Setup({ setup, iso2 }: { setup: any; iso2?: string }) {
  * country rows do not list. Its form to the checkers is `bento-metric`.
  */
 function EntryBill({ bill }: { bill: EntryBillData | null }) {
+  /* THE PLUS (his correction 5 of 2026-09-20, "add some more context ... if a
+     subsection can only have one number, it should not exist"): the LLC's
+     own facts from the formation file behind a click, closed on arrival
+     (entry_bill_rows.ts buildEntryBillDetail), so the card carries the bill,
+     the days and the four rows that say what the LLC involves. */
   if (!bill) return null;
+  const rows = buildEntryBillDetail(bill.iso2);
   return (
     <BentoMetric
       id="entry-bill"
@@ -539,81 +545,8 @@ function EntryBill({ bill }: { bill: EntryBillData | null }) {
       basis={bill.basis ?? undefined}
       foot={bill.foot ?? undefined}
       lean
+      detail={rows.length >= 2 ? <DetailPanel name="entry-bill" summary={COPY.entryBill.detailSummary} rows={rows} /> : undefined}
     />
-  );
-}
-
-/**
- * What premises cost , a STANDING of the address tiers since C11 (2026-09-02).
- *
- * WHAT WAS HERE, AND WHY IT WAS A REPLACEMENT RATHER THAN A DECLARATION. The
- * three rents sat as ticks on one hairline, which is an undeclared I1 horizontal
- * track on a page already at the I1 cap of two, and the track was wrong twice
- * over. Its two ends are the BOTTOM AND TOP OF AN ORDER, which A1 and C10 both
- * settled is not a position between two named poles. And the axis was LOGARITHMIC
- * with nothing in the drawing saying so: measured on the render, the middle mark
- * stood at 41.7 percent of the way between the outer two where the true linear
- * fraction of those same figures is 20.0 percent, so the picture published DOUBLE
- * the distance the data holds. That is C10's invented-position fault class, in a
- * card that had no other reading: nothing in it was larger than 14px, so there
- * was no first thing to see and no ratio to state (C6's measurement, here again).
- *
- * WHAT THE INFORMATION IS: a ranking of named things, three of them, one figure
- * each. NOT a spread, which is the customers card two bands up: "Ordinary street"
- * is not the typical of a distribution, it is a third named place, and a tenant
- * chooses a tier rather than landing at a percentile.
- *
- * EVERY DRAWN FORM WAS ELIMINATED BEFORE THE TYPOGRAPHIC ONE WAS TAKEN, which is
- * A8's own path through step 3. I1 is at cap and is the wrong drawing, above. I2
- * LollipopColumn refuses fewer than four entries in code, verified rather than
- * assumed, and the card directly below this one in reading order is the hiring
- * bar set, so an I2 here would also breach rule 25. I3 StackBar asserts a total,
- * and three rents do not sum to a quantity. I4 is a level reached or a running
- * total and this is neither. I5 is a count of identical marks, and the setup card
- * beside it already draws pips. I6 OptionCards needs 478px of inner width (run 7
- * measured it) and this card has 396, and the band cannot widen because B8
- * measured 624 as the narrowest width its own table stays a table at. I7 has
- * nothing to clear. I12 is spent two bands up on a different information type,
- * and drawing three entities as a span would be the fuse this loop is forbidden.
- * So the catalogue holds NO drawn form for a three-entry ranking on this page,
- * and RankedTiles is the form its index names for a ranking that is few.
- *
- * WHICH LEAVES THE FOUNDER'S OWN OBJECTION TO ANSWER, "this is just a list of
- * numbers, so it doesn't feel well at all" (second batch). What he rejected was
- * figures with no reading, and the tick scale answered it with a drawing that
- * lies. The card answers it instead with the reading itself: a computed finding
- * at the section rung saying how many times the dearest address costs the
- * cheapest, with the standing beneath it as its evidence. The finding is COMPUTED
- * and never typed, which is C6's rule and matters here for C6's reason: the tiers
- * and their spread differ in every country.
- *
- * NO ACCENT ANYWHERE. The accent register closed by the founder on 2026-08-30 is
- * exhaustive and this card is not in it, so RankedTiles takes `accent={false}`;
- * the order, the numerals and the leader's semibold name carry the rank, which is
- * A3's own settled reading for a form whose colour is turned off.
- *
- * THE ELECTRICITY LINE CAME OFF THIS CARD on plan step 31's fourth dispatch
- * (2026-09-18): MODEL.md 8.2's row for `05` says its `extra` comes off
- * because `06 running-costs` carries the reading, and PART 5's bento clause
- * names the fault of a band saying one thing twice. The builder still
- * returns `extra` for the city's premises strip, which draws it until the
- * city's own `04 premises` bento retires that strip (8.3); this card does
- * not pass it.
- */
-function Premises({ strip }: { strip: StripData | null }) {
-  /* THE RANGE-STRIP ARCHETYPE (premises, founder rulings 10 to 12 of
-     2026-09-04): rent for a square metre of shop a year, by address, on one
-     log scale with the figure over each mark and the name under it, in
-     practical words, no conclusion sentence. The profile holds three
-     national tiers today; the five metrics he named are a data requirement
-     the strip is built to hold. The strip comes from the body, built once,
-     so its band is drawn only when it is. */
-  if (!strip || strip.marks.length === 0) return null;
-  return (
-    <Box id="premises">
-      <Rail icon="commercial-rent" kicker={COPY.premises.kicker} sample={strip.confidence !== "measured"} />
-      <RangeStrip marks={strip.marks} scale="log" fmt={usd} basis={COPY.premises.basis} />
-    </Box>
   );
 }
 
@@ -648,8 +581,22 @@ function Premises({ strip }: { strip: StripData | null }) {
  * printed cell the lines sit under the grid at the micro rung, the glance's.
  */
 function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
+  /* RUNNING COSTS TO HIS CORRECTIONS 6 AND 7 OF 2026-09-20 (COUNTRY-PAGE-
+     SECTIONS-PLAN-2026-09-20.md) AND HIS GOLD STANDARD (design/references/
+     founder-2026-09-20-gold-standard-sections.md): the costs that are the
+     same everywhere in the country, each placed among the countries with a
+     level word, drawn to the gold standard's forms. Today two of them: the
+     electricity price as a row with its level chip, and the cost of living as
+     the segmented unit bar (B27) on the city scale, 1 at the cheapest covered
+     city and 100 at the dearest, neither named (his ruling). The price of oil,
+     insurance and the typical costs by category he asked for are the data
+     track's (DATA-REQUIREMENTS items 83 and 84) and join as rows when held;
+     a figure the file does not hold is not a row and not a "not gathered
+     yet" line. The rent tiers left for the city page. */
   if (!costs) return null;
-  const bare = costs.cells.length === 0;
+  const e = costs.cells.find((c) => c.key === "electricity") ?? null;
+  const level = (l: "high" | "medium" | "low" | null) => (l ? <span data-level={l} className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{COPY.heroBoard.levels[l]}</span> : null);
+  const bare = !e && costs.livingOnCityScale == null;
   return (
     <Box id="running-costs">
       <Rail icon="cost-breakdown" kicker={COPY.runningCosts.kicker} sample={costs.confidence !== "measured"} />
@@ -658,11 +605,24 @@ function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
           <p key={line} data-withheld-line="cell" className="mt-2 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{line}</p>
         ))
       ) : (
-        <>
-          <KvGrid cells={costs.cells} />
-          {costs.withheld.length > 0 ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.withheld.join(" ")}</p> : null}
-        </>
+        <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+          {e ? (
+            <div data-row="electricity" className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-x-3 py-2">
+              <Ico id="unit-economics" tone="terra" />
+              <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{COPY.runningCosts.rows.electricity}</span>
+              <span className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
+                {e.value}
+                <span className="ml-1 text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{COPY.runningCosts.units.kwh}</span>
+              </span>
+              {level(costs.levels.electricity) ?? <span aria-hidden="true" />}
+            </div>
+          ) : null}
+          {costs.livingOnCityScale != null ? (
+            <SegmentBar label={COPY.runningCosts.rows.living} value={costs.livingOnCityScale} figure={String(costs.livingOnCityScale)} unit={COPY.runningCosts.units.of100} chip={level(costs.levels.living)} />
+          ) : null}
+        </div>
       )}
+      {costs.withheld.length > 0 && !bare ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.withheld.join(" ")}</p> : null}
       {costs.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.basis}</p> : null}
       {costs.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.foot}</p> : null}
     </Box>
@@ -916,11 +876,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const margin = marginCardFromRows(Array.isArray(d.money?.list) ? d.money.list : []);
   const hasMoney = margin.rows.length >= 2;
   const locals = iso2 ? buildLocalsNotes(iso2) : null;
-  const premises = iso2 ? buildPremisesStrip(iso2) : null;
   const hasSetup = Array.isArray(d.setup?.tiers) && d.setup.tiers.length > 0;
   const bill = iso2 ? buildEntryBill(iso2) : null;
   const costs = iso2 ? buildRunningCosts(iso2) : null;
-  const hasPremises = premises != null && premises.marks.length > 0;
   const checks = iso2 ? buildChecks(iso2) : null;
   const peers = iso2 ? buildPeerTable(iso2) : null;
 
@@ -1038,14 +996,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
           )}
           <EntryBill bill={bill} />
         </Band>
-        {/* `05 premises | 06 running-costs`, 1-1 (8.2; plan step 31, fourth
-            dispatch, 2026-09-18). MEASURED BEFORE IT WAS PAIRED. */}
-        {hasPremises || costs ? (
-          <Band split="1-1">
-            <Premises strip={premises} />
-            <RunningCosts costs={costs} />
-          </Band>
-        ) : null}
+        {/* `05 premises` LEFT THE PAGE on 2026-09-20 by his word (COUNTRY-PAGE-
+            SECTIONS-PLAN-2026-09-20.md, correction 6: "premises" is the wrong
+            word and the wrong concept for a country page; rent per square
+            metre goes to the CITY cards; the country page holds the costs that
+            are the same everywhere in the country). `06 running-costs` now
+            holds those and pairs with `08 hiring` below. */}
         {/* `07 workforce | 08 hiring`, 1-1 in 8.2, the seat on the left and the
             loud staff card on the right (its order list, its rhythm line
             "blocked-seat · pay-bars", its ledger "08, band 4, right"). THE PAIR
@@ -1073,12 +1029,23 @@ export function SpineCountryBody({ data }: { data?: any }) {
             draws PART 5's phone row (the card is under 420) with the
             placement line under each full-width track and carries an 89 by
             102 blank, under the floor. One Band at 1-1 the day the plus lands. */}
-        <Band split="1-1">
-          <BlockedSeat id="workforce" icon="staffing-rota" kicker={COPY.blocked.workforce.kicker} line={COPY.blocked.workforce.line} foot={COPY.blocked.workforce.foot} />
-        </Band>
-        <Band split="1-1">
-          <Hiring hiring={d.hiring} iso2={iso2} />
-        </Band>
+        {/* `06 running-costs | 08 hiring`, 1-1 (2026-09-20): what it costs to
+            run beside what staff cost, the two cost cards on one level. The
+            workforce seat (`07`) is off the page by his word of 2026-09-19 (no
+            "not gathered yet" card in front of him; its three figures wait on
+            DATA-REQUIREMENTS items 40 and 17 and the card returns with them,
+            under a title he will name: "Who you can hire" is wrong, correction
+            8). */}
+        {costs ? (
+          <Band split="1-1">
+            <RunningCosts costs={costs} />
+            <Hiring hiring={d.hiring} iso2={iso2} />
+          </Band>
+        ) : (
+          <Band split="1-1">
+            <Hiring hiring={d.hiring} iso2={iso2} />
+          </Band>
+        )}
         <Peers table={peers} />
         {/* CHAPTER TURN TWO (8.2, "Where to open it, and what to open"): the
             page's biggest volume jump, the break and the area band in one
