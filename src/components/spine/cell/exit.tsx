@@ -60,11 +60,12 @@ import { COPY } from "@/lib/spine/copy";
 import type { RivalsData } from "@/lib/spine/rivals_rows";
 import type { WorthData } from "@/lib/spine/worth_rows";
 
-export function RivalsCard({ id = "rivals", rivals }: { id?: string; rivals: RivalsData | null }) {
+export function RivalsCard({ id = "rivals", rivals, oneColumn = false }: { id?: string; rivals: RivalsData | null; /** The list stays one column on its wide seat (MarkList's word): beside the donut, whose card is taller than the one-column list. */ oneColumn?: boolean }) {
   if (!rivals) return null;
   if (rivals.state === "list" && rivals.middle != null) {
     return (
       <MarkList
+        oneColumn={oneColumn}
         id={id}
         icon="subtype"
         kicker={rivals.kicker}

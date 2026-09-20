@@ -5,9 +5,11 @@
  * dispatches): the opening full width (`00 take`), then the band `01 spread
  * | 02 suits`; chapter turn one, what it costs to open and to run (`03
  * permits | 04 open`, `05 split | 06 team`, `07 peers` full width); turn two,
- * what it takes to keep it open (`08 clears | 09 lasts`, `10 watch | 11
- * mix`); turn three, what the trade is like (`12 market`, the bento); the
- * exit (`13 rivals | 14 worth`, `15 close` full width). The country view's
+ * what it takes to keep it open (`08 clears | 09 lasts | 14 worth` at three
+ * thirds since 2026-09-20; before that `08 | 09` and `10 watch | 11 mix`);
+ * turn three, what the trade is like (`12 market`, the bento, then `11 mix |
+ * 13 rivals` as the exit's pair since the same day; before that `13 rivals
+ * | 14 worth`), `15 close` full width. The country view's
  * idiom, exactly: the builders built once at the top of the body, a band
  * seated only when a card exists, `Movement` with an index and a heading and
  * nothing else, no rail (the trade page carries none). Three full widths,
@@ -132,7 +134,7 @@ import { spineCellSeed } from "@/lib/spine-seeds";
 import { Box, Rail, Movement, usd, Band } from "@/components/spine/kit";
 import { Masthead } from "./masthead";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "./turn-one";
-import { ClearsCard, LastsCard, WatchSeat, MixCard } from "./turn-two";
+import { ClearsCard, LastsCard, MixCard } from "./turn-two";
 import { MarketBand } from "./market";
 import { RivalsCard, WorthCard, CloseCard } from "./exit";
 import { buildRivals } from "@/lib/spine/rivals_rows";
@@ -299,30 +301,32 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      does not draw (the same condition as `03 | 04`). */
   const clears = buildClears(d);
   const lasts = buildLasts(d.meta?.industry_id);
-  /* `10 watch | 11 mix` (turn-two.tsx): the seat stands on every cell (it
-     holds no data), the mix off the shard's channels on every trade that
-     holds a shard; the band is gated on the mix alone so it holds two
-     children or does not draw, and a sector-average cell never seats a lone
-     card beside nothing. `12 market` (market.tsx): the four cells off the
-     same shard, the cluster its own band. */
+  /* `11 mix` (turn-two.tsx): the donut off the shard's channels on every
+     trade that holds a shard, seated in the exit beside `13 rivals` since
+     2026-09-20 (`10 watch`, the seat that stood beside it, left the page that
+     day: see the turn-two band's note). `12 market` (market.tsx): the four
+     cells off the same shard, the cluster its own band. */
   const mix = buildMix(d.meta?.industry_id);
   const market = buildMarket(d.meta?.industry_id);
-  /* `13 rivals | 14 worth` (exit.tsx): the rivals off the seed's siblings on
-     every resolving cell (the list where four or more hold a figure, the
+  /* `13 rivals` and `14 worth` (exit.tsx): the rivals off the seed's siblings
+     on every resolving cell (the list where four or more hold a figure, the
      structure and the line otherwise), the worth off the shard's sale
      figures and the take-home on every trade that holds a shard (the strip,
-     or the line off `moneyShown` and on the operating-earnings shards); the
-     band is gated on both so it holds two children or does not draw, and a
-     sector-average cell (no shard) never seats a lone `13`. `15 close`: the
-     doors off the meta, on every resolving cell. */
+     or the line off `moneyShown` and on the operating-earnings shards). Since
+     2026-09-20 the worth stands on turn two's level of three and the rivals
+     beside the donut; each band is gated on both its cards so it holds its
+     children or does not draw, and a sector-average cell (no shard) never
+     seats a lone `13`. `15 close`: the doors off the meta, on every resolving
+     cell. */
   const rivals = buildRivals(d);
   const worth = buildWorth(d);
   const doors = buildTradeCloseDoors(d);
   /* The turns, by whether a card stands under each: turn one holds the
-     money cards and the peers, turn two the share, the survival grid, the
-     seat and the mix, turn three the bento. */
-  const turnOne = !!(permits && open) || !!(split && team) || !!peers;
-  const turnTwo = !!(clears && lasts) || !!mix;
+     money cards and the peers (the peers only where a peer resolves, the
+     band's note), turn two the share, the survival grid and the strip, turn
+     three the bento and then the exit's pair. */
+  const turnOne = !!(permits && open) || !!(split && team) || !!(peers && peers.peers > 0);
+  const turnTwo = [clears, lasts, worth].filter(Boolean).length >= 2;
   const turnThree = !!market;
 
   return (
@@ -391,7 +395,16 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               section-bands baseline for this page moved 0 to 1 with it, the
               city's precedent (its history entry says so). Quiet by table
               law, no colour; the rows never navigate (M23). */}
-          {peers ? <PeersCard peers={peers} /> : null}
+          {/* WITHHELD WHEN NO PEER RESOLVES (his word of 2026-09-19, "will you
+              say not gathered yet?", verbatim in rules/FOUNDER-VERDICTS.md,
+              over the 2026-09-08 seated reading): off the United States the
+              table held the home row alone under "Not gathered yet: the same
+              trade in other places", one row of a comparison, on the London
+              page he is shown. The builder still builds the seated shape (its
+              copy gate reads it, the sheet draws it as the form's own story);
+              the page draws the table only where a peer stands in it, and it
+              returns with the peers (DATA-REQUIREMENTS item 57). */}
+          {peers && peers.peers > 0 ? <PeersCard peers={peers} /> : null}
         </>
       ) : null}
 
@@ -407,41 +420,54 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               and Mumbai cafes (the dispatch's report carries the numbers): a
               one-figure card against three cells, 0 holes. Both cards draw on
               every cell whose trade holds a shard. */}
-          {clears && lasts ? (
-            <Band split="1-1">
+          {/* RE-PAIRED 2026-09-20 UNDER HIS PAGE LAWS AND THE GOLD STANDARD (the
+              loop's composition, reversible; the readings in
+              scratchpad/step23 and the plan's log): `08 clears | 09 lasts | 14
+              worth` AT THREE THIRDS, the kit's `1-1-1` (clause 50 allows
+              three), the ring beside its words LEFT (the page's third accent),
+              the survival cells in the middle, the two-mark strip RIGHT:
+              221, 254 and 241 tall at a third, one level with no card
+              short of its neighbour by more than the foot's 48, two visuals
+              (the ring, the strip). `10 watch`, the drawn blocked seat, LEFT
+              THE PAGE: no "not gathered yet" card in front of him (his word
+              of 2026-09-19), its data 0 of 243 (item 53), and beside the
+              donut it stretched to 271 and fell to 56 percent ink (the
+              art-direction gate's E2 on the first render); it returns with
+              its data as his B1 bars. `11 mix` moved down to the exit beside
+              `13 rivals` (below). MEASURED ON THE WAY, the pairings refused:
+              the ring beside the donut at 1-1 (the donut's card 50 taller,
+              and stacked at 768 the ring's words left 255 by 180 of air); the
+              donut beside the list at 1-2 with the list in two columns (the
+              list 84 short); `14` alone at two thirds (LEVEL UNFILLED, 65
+              percent); every 2 + 2 + 1 of five cards leaves one alone. */}
+          {clears && lasts && worth ? (
+            <Band split="1-1-1">
               <ClearsCard clears={clears} />
               <LastsCard lasts={lasts} />
+              <WorthCard worth={worth} />
             </Band>
-          ) : null}
-          {/* `10 watch | 11 mix`, the drawn blocked seat LEFT (his B1's seat
-              until item 53 lands, the page's visual floor beside the fullest
-              quiet card in its band) and the parts of the trade's sales RIGHT
-              on KvGrid (the donut's seat, candidate 5 awaiting his click), AT
-              1-2, RULED BY MEASUREMENT 2026-09-18 (8.4 rule 1: the taller card
-              takes the wide side): at 8.6's expected 1-1 the seat stood 520
-              by 222 with 149 of content against the mix's 221 on London, 0
-              holes at three widths, but 59 percent ink of its 222, one under
-              the art-direction gate's E2 floor of 60 (a seat beside a taller
-              card, the precedent the country's seats measured), and the
-              five-part mix stands taller still; at 1-2 the seat's line wraps
-              to two at 347 (171 of content, 130 of ink) and the seat reads 71
-              percent beside a two-row mix (222 tall on London, California and
-              Mumbai cafes, 0 holes at three widths), 98 beside the one-row
-              two-part mix (barbershops, 172), and 54 beside the three-row
-              five-part mix (nail salons, 278; 25 of 243 trades), which no
-              split in the closed set mends because a seat cannot be narrower
-              than a third; that residual is in the dispatch's report, not in
-              a padded seat. `stack="lg"` because at a tablet's equal halves
-              the five-part mix stands 357 and opened a 304 by 186 hole under
-              the seat's 171 (measured; the `03 | 04` precedent); stacked,
-              the seat stands at its own 172. The seat draws on every cell;
-              the band is gated on the mix so it never holds one child. */}
-          {mix ? (
-            <Band split="1-2" stack="lg">
-              <WatchSeat />
-              <MixCard mix={mix} />
-            </Band>
-          ) : null}
+          ) : (
+            <>
+              {clears && lasts ? (
+                <Band split="1-1">
+                  <ClearsCard clears={clears} />
+                  <LastsCard lasts={lasts} />
+                </Band>
+              ) : null}
+              {clears && !lasts && worth ? (
+                <Band split="1-1">
+                  <ClearsCard clears={clears} />
+                  <WorthCard worth={worth} />
+                </Band>
+              ) : null}
+              {!clears && lasts && worth ? (
+                <Band split="1-1">
+                  <LastsCard lasts={lasts} />
+                  <WorthCard worth={worth} />
+                </Band>
+              ) : null}
+            </>
+          )}
         </>
       ) : null}
 
@@ -455,23 +481,33 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
         </>
       ) : null}
 
-      {/* THE EXIT (no chapter break, PART 1): `13 rivals | 14 worth`, the
-          rivals LEFT (the list, quiet by its form's law) and the worth RIGHT
-          (the second strip, the dot family's seat, M10), AT 2-1, THE ROW'S
-          OWN FALLBACK, RULED BY MEASUREMENT 2026-09-18 (8.4 rule 1): air
-          opened under `14` at the expected 1-1 (a 480 by 228 blank), and at
-          2-1 the list takes its two-column form on the wide seat (PART 5) so
-          the band stands 308 tall on London and California; exit.tsx carries
-          the four readings and the six-row residual. `stack="lg"` because at
-          a tablet's equal halves the strip's card stood 414 with air above
-          and below the strip. Both cards draw on every cell whose trade holds
-          a shard; the band is gated on both. */}
-      {rivals && worth ? (
-        <Band split="2-1" stack="lg">
-          <RivalsCard rivals={rivals} />
-          <WorthCard worth={worth} />
+      {/* THE EXIT (no chapter break, PART 1). Until 2026-09-20 it was `13
+          rivals | 14 worth` at 2-1, ruled by measurement on 2026-09-18 (air
+          under `14` at 1-1, the list's two-column form on the wide seat;
+          exit.tsx carries the four readings and the six-row residual); the
+          strip now stands on turn two's level of three, and the list's
+          partner is the donut. */}
+      {/* `11 mix | 13 rivals` AT 1-2 (2026-09-20, the exit's new pair): the
+          donut's card LEFT at a third, where the ring stands above its three
+          rows (409 tall, measured), and the list of other trades RIGHT in ONE
+          column (MarkList's `oneColumn`, 397 tall at 693 by the 2026-09-18
+          reading): 12 apart, the closest pair on the page. The two-column
+          form the list took beside the strip stood 308 and left 100 of air
+          under it beside the donut. No `stack`: at a tablet's equal halves
+          the donut stacks to 409 and the one-column list to 413, the same
+          match. Under the chapter's own heading, "What the trade is like":
+          how the money comes in, and what the other trades here keep. */}
+      {mix && rivals ? (
+        <Band split="1-2">
+          <MixCard mix={mix} />
+          <RivalsCard rivals={rivals} oneColumn />
         </Band>
-      ) : null}
+      ) : (
+        <>
+          {mix ? <Band split="1-2" stack="lg"><MixCard mix={mix} /></Band> : null}
+          {rivals ? <Band split="2-1" stack="lg"><RivalsCard rivals={rivals} /></Band> : null}
+        </>
+      )}
       {/* `15 close`, FULL WIDTH (8.6, R1), the page's third of three: the
           terminus on the hero band the old close stood on, the sanction the
           full-width gate, the lone-card rule and the section-bands baseline

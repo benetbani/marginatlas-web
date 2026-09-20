@@ -354,7 +354,8 @@ if (listArg && args.includes("--render")) {
    (`05 premises`) to the city page and the workforce seat (`07`) off the page
    until its figures exist; so 8.2 is seventeen blocks and the FLOOR paragraph
    says so. */
-const FLOOR_BY_SURFACE = { country: 13, city: 17, cell: 16, industry: 12, hood: 7, howto: 6 };
+/* cell 14 since 2026-09-20: `10 watch`, the drawn blocked seat, left the trade page (no seat in front of him; item 53), and `07 peers` draws only where a peer resolves (off the United States none does, item 57; the one-row table under "Not gathered yet" was the line he refused), so 8.6 is fourteen blocks on London and fifteen where the peers stand. */
+const FLOOR_BY_SURFACE = { country: 13, city: 17, cell: 14, industry: 12, hood: 7, howto: 6 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

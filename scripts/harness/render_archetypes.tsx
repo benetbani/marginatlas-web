@@ -34,7 +34,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, HeroBoardStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
+import { AnswerCardStories, HeroBoardStories, DonutStories, RingStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
 import { CELL_INSTANCES, loadCellHeroInstances, type CellHeroInstance } from "../../src/lib/spine/trade_hero_facts";
@@ -107,6 +107,10 @@ const SHEET: Entry[] = [
   { kind: "answer-card", city: "none", cell: "keyed", render: (c) => <AnswerCardStories instances={c.instances["answer-card"]} cell={c.cellHero} /> },
   /* The country masthead to his design of 2026-09-20 (HeroBoard.tsx), over the answer card's country instances. */
   { kind: "hero-board", city: "none", render: (c) => <HeroBoardStories instances={c.instances["hero-board"]} /> },
+  /* The donut, his B9 and the gold standard's B28 (Donut.tsx, 2026-09-20): the trade's mix and the industry's channels off the cell seeds and the shards. */
+  { kind: "donut", city: "none", cell: "keyed", render: (c) => <DonutStories cell={c.cellHero} /> },
+  /* The ring, his B4 and the gold standard's B31 (Ring.tsx, 2026-09-20): the trade's share of a day off the cell seeds. */
+  { kind: "ring", city: "none", cell: "keyed", render: (c) => <RingStories cell={c.cellHero} /> },
   /* The cost to open's held state (cell/turn-one.tsx) reads a cell seed since plan step 33's second dispatch (2026-09-18). */
   { kind: "ranked-bars", city: "keyed", cell: "keyed", render: (c) => <RankedBarsStories instances={pickRankedBarsInstances()} city={pickCityDistrictInstances(c.cityHero)} cell={c.cellHero} /> },
   /* The trade's peers table (cell/turn-one.tsx PeersCard) reads a cell seed since plan step 33's fourth dispatch (2026-09-18). */

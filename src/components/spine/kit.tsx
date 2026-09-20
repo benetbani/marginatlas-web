@@ -576,8 +576,19 @@ export function Band({
   /** How the row divides. Founder, 2026-08-25: "not all divides in width should
    *  be 50/50, there can be cases when a section only needs 30% and another 70%."
    *  The set is closed on purpose: four ratios is a rhythm, an open number is the
-   *  fourteen-white-alphas problem again. */
-  split?: "1-1" | "1-2" | "2-1" | "2-3" | "3-2";
+   *  fourteen-white-alphas problem again.
+   *  THREE THIRDS, `1-1-1`, since 2026-09-20: his page laws (MODEL PART 9
+   *  clause 50, "in a single horizontal level there cannot be more than three
+   *  subsections") allow a level of three, and the trade page needed one: five
+   *  cards on its two closing turns pair 2 + 2 + 1 however they are ordered,
+   *  and the one left over stands at two thirds with air beside it, which
+   *  clause 52 forbids (LEVEL UNFILLED). Three short cards of about one height
+   *  (the ring, the survival cells, the two-mark strip: 221, 254 and 241 at a
+   *  third, measured) fill a level between them. At 768 the three take two
+   *  columns and the third spans the row (a strip is a wide form); a level of
+   *  three that is not about one height is a level to re-pair, not a split to
+   *  reach for. */
+  split?: "1-1" | "1-2" | "2-1" | "2-3" | "3-2" | "1-1-1";
   /** ONE COLUMN UNTIL lg, for an uneven band whose short card would sit three
    *  fifths blank in a tablet's equal halves. Founder, 2026-09-05, on the
    *  staff-cost card beside the note list: "massive white space". At 768 the
@@ -640,6 +651,7 @@ export function Band({
     "2-1": stack === "lg" ? "lg:grid-cols-[2fr_1fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_1fr]",
     "2-3": stack === "lg" ? "lg:grid-cols-[2fr_3fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_3fr]",
     "3-2": stack === "lg" ? "lg:grid-cols-[3fr_2fr]" : "md:grid-cols-2 lg:grid-cols-[3fr_2fr]",
+    "1-1-1": "md:grid-cols-2 lg:grid-cols-3 [&>*:nth-child(3)]:md:col-span-2 [&>*:nth-child(3)]:lg:col-span-1",
   }[split];
   /* A BAND LEFT HOLDING ONE CARD TAKES A DELIBERATE TWO THIRDS. Several sections
      have a partner that renders for some cities and trades and not others, and

@@ -82,6 +82,8 @@
 import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
+import { Donut } from "@/components/spine/archetypes/Donut";
+import { Ring } from "@/components/spine/archetypes/Ring";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { COPY } from "@/lib/spine/copy";
@@ -90,18 +92,42 @@ import type { LastsData } from "@/lib/spine/lasts_rows";
 import type { MixData } from "@/lib/spine/mix_rows";
 
 export function ClearsCard({ id = "clears", clears }: { id?: string; clears: ClearsData | null }) {
+  /* THE RING (his B4, the gold standard's B31; Ring.tsx, 2026-09-20): the
+     share of a typical day that clears the costs as a sweep around a ring,
+     the figure inside it in the accent (the page's third loud moment, 8.6),
+     the basis as the caption under the ring, the foot under that. The metric
+     card that held candidate 4's seat leaves; his gold standard shows the
+     ring with its figure and asks for it to be replicated, which is the
+     click the catalogue waited on. */
   if (!clears) return null;
   return (
-    <BentoMetric
-      id={id}
-      icon="break-even"
-      kicker={COPY.tradeClears.kicker}
-      sample={clears.sample}
-      accent={clears.accent}
-      figure={clears.figure}
-      basis={clears.basis}
-      foot={clears.foot}
-    />
+    /* THE EMPTINESS IS DISTRIBUTED, NOT GATHERED (BentoMetric's own rule, the
+       worth card's composition): the level stretches this card to its
+       tallest neighbour (ruling 7), 34 over its content at 1280 and 49 at a
+       tablet's halves (measured 2026-09-20), and piled at the foot the 49
+       is the blank he names (clause 52's 48). The ring's row takes the
+       spare height and centres in it, so the air splits above and below. */
+    <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
+      <Rail icon="break-even" kicker={COPY.tradeClears.kicker} sample={clears.sample} />
+      {/* THE RING BESIDE ITS WORDS from 280px of container, above them under it
+          (the archetype harness's LONE STAT on the centred ring, 149 by 186 of
+          air each side at 478; the gold standard's ring stands beside its
+          row of cards, never alone in a field). 280 and not the donut's 440:
+          the words wrap where the donut's part names cannot, so at a third of
+          the column (336 at 1280 less the card's 40 of padding, 296 of
+          container, the `08 | 09 | 14` level) the ring keeps its words beside
+          it, 120 wide, and the card stands near the survival cells' height;
+          stacked, it stood 333 and the level broke (a first cut at 300 missed
+          the third by four pixels). The container query is written out in
+          full, the kit's rule. */}
+      <div className="grid flex-1 grid-cols-1 items-center gap-4 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
+        <Ring value={clears.value} figure={clears.figure} accent={clears.accent} />
+        <div>
+          <p className="max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{clears.basis}</p>
+          <p className="mt-2 max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{clears.foot}</p>
+        </div>
+      </div>
+    </Box>
   );
 }
 
@@ -132,7 +158,13 @@ export function MixCard({ id = "mix", mix }: { id?: string; mix: MixData | null 
       {mix.withheld ? (
         <p data-withheld-line="mix" className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{mix.withheld}</p>
       ) : (
-        <KvGrid cells={mix.cells} labelReserve="row" />
+        /* THE DONUT (his B9, the gold standard's B28; Donut.tsx, 2026-09-20): the
+           parts as a ring, the leader's share in its centre as the card's
+           figure, each part's share in a pill beside its name. The plain fact
+           grid that held candidate 5's seat leaves: his gold standard of
+           2026-09-20 shows the split donut beside its figure and asks for it
+           to be replicated, which is the click the catalogue waited on. */
+        <Donut parts={mix.parts} />
       )}
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mix.basis}</p>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mix.foot}</p>

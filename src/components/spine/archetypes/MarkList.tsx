@@ -166,6 +166,15 @@ export type MarkListProps = {
    *  harness reads it against the presence of the line below. */
   withheld?: number;
   withheldLine?: string | null;
+  /** THE COMPOSER'S WORD THAT THE WIDE SEAT OPENS NO HOLE (2026-09-20): the
+   *  two-column form below exists for a wide card beside a SHORTER partner
+   *  (PART 5's clause is about the hole a tall one-column list opens beside
+   *  it). Beside a TALLER partner the one-column list is the fit, and two
+   *  columns would leave the list's own card short: the trade page's `13
+   *  rivals` at 693 stands 397 in one column beside the donut's 409, and 308
+   *  in two columns with 100 of air under it. The caller says which partner
+   *  it has; the component cannot see the band. */
+  oneColumn?: boolean;
 };
 
 /* THE MARK COLUMN, and why it is a constant. See clause 5 of the header: one
@@ -210,7 +219,7 @@ function geometry(figChars: number, marks: boolean, doors: boolean): React.CSSPr
   return { gridTemplateColumns: cols.join(" ") };
 }
 
-export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows, fmt, withheld = 0, withheldLine = null }: MarkListProps) {
+export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows, fmt, withheld = 0, withheldLine = null, oneColumn = false }: MarkListProps) {
   /* The component repeats the builder's floor rather than trusting every
      future caller to honour it, the same guard IncomeBreakdown.tsx keeps. */
   if (rows.length < MARK_LIST_FLOOR || !Number.isFinite(headline.value)) return null;
@@ -271,7 +280,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           line), and the harness's ROWS CUT, NO FIGURE and UNEQUAL read the
           rows wherever they stand. */}
       {(() => {
-        const twoCols = rows.length < TWO_COLUMN_CAP;
+        const twoCols = rows.length < TWO_COLUMN_CAP && !oneColumn;
         const perCol = Math.ceil(rows.length / 2);
         const headRow = (hidden: boolean) => (
           <div className={`${ROW} items-baseline pb-2 ${hidden ? "hidden [@container(min-width:600px)]:grid" : ""}`} style={GEO} aria-hidden={hidden ? "true" : undefined}>
