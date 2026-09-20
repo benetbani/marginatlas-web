@@ -316,7 +316,8 @@
       "asserts": "NO BACKGROUND PHOTOGRAPH, ANYWHERE (the founder, 2026-09-07: \"this image standing on the background makes the whole thing less readable.",
       "reads": [
         "src/**/*.{ts,tsx,css}",
-        "src/lib/spine/city_cards.ts"
+        "src/lib/spine/city_cards.ts",
+        "src/lib/spine/hero_board.ts"
       ],
       "claims": [
         {
