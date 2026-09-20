@@ -166,7 +166,7 @@ export const COPY = {
      *  country's" is what a person says. Fourteen words at most, measured on
      *  the longest case (three own reads and a two-word city). */
     city: {
-      basisOwn: "All six reads are {city}'s own, modelled.",
+      basisOwn: "All five reads are {city}'s own, modelled.",
       basisMixed: "{traits} {verb} {city}'s own; the rest are the country's, modelled.",
       basisCountry: "The country's reads, modelled; {city}'s own are not gathered yet.",
     },

@@ -43,7 +43,6 @@ import { buildLocalsNotes, type LocalsNotes } from "@/lib/spine/locals_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCloseDoors, buildCompareDoor } from "@/lib/spine/close_rows";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
-import { buildChecks, type ChecksData } from "@/lib/spine/checks_rows";
 import { PayBars } from "@/components/spine/archetypes/PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildCustomersStrip, type StripData } from "@/lib/spine/range_rows";
@@ -90,10 +89,6 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "money", label: "Net profit margin" },
   { id: "locals", label: "What locals know" },
   { id: "character", label: "The character" },
-  { id: "footing", label: "The ground under you" },
-  { id: "easiest", label: "Easiest to break in" },
-  { id: "checks", label: "Before you commit" },
-  { id: "compare", label: "Compare countries" },
 ];
 
 /**
@@ -721,106 +716,8 @@ function LocalsKnow({ notes }: { notes: LocalsNotes | null }) {
   );
 }
 
-/**
- * The ground under you, `17 footing` (MODEL.md 8.2). THE SEAT IS HELD BY
- * KvGrid: the calibrated linear meter 8.2 draws for this block (a straight 0
- * to 100 track, a marker and the whole number, two readings on one card) is a
- * form he has not clicked, and a form not in the catalogue is a candidate
- * awaiting his click; so the catalogued form nearest it holds the seat, two
- * cells on one row, until the meter is his. The census reads this Box as
- * KvGrid, which is the truth of it today. No 30 in it: the FOCAL finding on
- * this card stands until his click, and `footing` joins EVEN_BY_RULING the
- * day the meter is built, not before.
- *
- * DATA, by file and field: `ground` in src/lib/spine/adapt_country.ts (the
- * block at its lines 1086 to 1108), computed since task 17 and read by
- * nothing until this card: `corruption_perception_index` and
- * `ease_of_doing_business_index` from
- * data/economic_indicators/country_profile_v2.json through getCountryProfile,
- * 197 of 197, 50 measured (the hand-anchored tier A) and 147 interpolated.
- * `prof()` hands a figure over only when this country's own row is held, and
- * profileConfidence tags the block measured for tier A and modeled otherwise;
- * each cell carries that tag, so an interpolated row is marked modelled
- * (the mark draws nothing behind his switch, and the basis line says it in
- * words instead). Both print as WHOLE NUMBERS, 0 to 100: the adapter rounds
- * the second reading to one decimal and the first to a whole number, the
- * precision mismatch 8.2 names on 112 countries, fixed here where it is
- * drawn rather than in the adapter this dispatch does not touch.
- */
-function Footing({ ground }: { ground: any }) {
-  const clean = isNum(ground?.clean_dealing_0_100) ? Math.round(ground.clean_dealing_0_100) : undefined;
-  const admin = isNum(ground?.easy_admin_0_100) ? Math.round(ground.easy_admin_0_100) : undefined;
-  if (clean == null && admin == null) return null;
-  const confidence: KvCell["confidence"] = ground?._meta?.confidence === "measured" ? "measured" : "modeled";
-  const cells: KvCell[] = [];
-  if (clean != null) cells.push({ key: "clean", label: COPY.footing.cells.clean, value: String(clean), confidence });
-  if (admin != null) cells.push({ key: "admin", label: COPY.footing.cells.admin, value: String(admin), confidence });
-  return (
-    <Box id="footing">
-      <Rail icon="ease-of-business" kicker={COPY.footing.kicker} sample={confidence !== "measured"} />
-      <KvGrid cells={cells} />
-      <p className="mt-3 text-[length:var(--t-micro)] text-[var(--c-muted)]">{COPY.footing.basis}</p>
-    </Box>
-  );
-}
 
-/**
- * Before you commit, `18 checks` (MODEL.md 8.2; plan step 31, fifth dispatch,
- * 2026-09-18). THE QUESTION LIST on NoteList's law (a label over one line,
- * hairlines between, no figure, no paragraph, no tap state) WITHOUT the
- * editorial exemption: `16 locals` is the page's one prose section (PART 9
- * clause 44, R9), so this card passes `editorial={false}` and stands under
- * the art-direction gate's 220-character ceiling by its own arithmetic
- * (worst case 176, checks_rows.ts). It prints ZERO figures by design: the
- * subject is the reader's own plan, and the two held figures behind it, the
- * hero's regime lookup and the hero's LLC registration time through
- * buildHeroFacts(), only steer which pre-written question appears and are
- * never printed (checks_rows.ts says which file and field each is). The
- * third row self-omits where the page holds no registration time (R10), and
- * the basis says "Two questions" there. Quiet, zero accent, nothing from the
- * bar ledger; a NoteList holds no figure by its law, so FOCAL and NO LEAD
- * have nothing to find on it. The old engraved GutCheck (tap-to-answer, a
- * control the page never scored) retired in this dispatch. The census reads
- * this Box as NoteList, which is the truth of it.
- */
-function Checks({ checks }: { checks: ChecksData | null }) {
-  if (!checks || checks.rows.length === 0) return null;
-  return (
-    <Box id="checks">
-      <Rail icon="gut-check" kicker={COPY.checks.kicker} />
-      <NoteList notes={checks.rows} editorial={false} />
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{checks.basis}</p>
-    </Box>
-  );
-}
 
-/**
- * Compare countries, `19 compare` (MODEL.md 8.2; the same dispatch). ONE
- * PILL DOOR on the terminus archetype, built by buildCompareDoor exactly as
- * the city's compare door is built, the name through inSentence(); the
- * opener is the kit's Rail with the `compare` tile the cell and neighbourhood
- * pages already ship, so Terminus draws no kicker of its own (its optional
- * kicker, this dispatch). No figure by design (`terminus` is in
- * EVEN_BY_RULING, so FOCAL and NO LEAD do not judge it), no basis line (the
- * card measures nothing), no accent. `data-form="door"` says what the card
- * IS to the census and to any adjacency check: a door card standing on
- * Terminus, not a second terminus; the full-width sanction `data-terminus`
- * stays on `20 close` alone. Measured on every country in checks_rows'
- * dispatch: the door holds one line at 1280 on 194 of 195 (the longest name
- * wraps by one pixel) and on 193 at 1024; the band declares stack="lg"
- * because at 768's equal halves 148 of 195 would wrap (8.4: a card that
- * cannot survive 344px declares it), and stacked at 768 none does.
- */
-function Compare({ name }: { name: string }) {
-  const doors = buildCompareDoor(name);
-  if (doors.length === 0) return null;
-  return (
-    <Box id="compare" data-form="door">
-      <Rail icon="compare" kicker={COPY.compare.kicker} />
-      <Terminus doors={doors} />
-    </Box>
-  );
-}
 
 /**
  * Where to next, through the terminus archetype: the doors from close_rows
@@ -828,10 +725,21 @@ function Compare({ name }: { name: string }) {
  * promise it keeps today), the wrapper keeping data-terminus so the
  * full-width and blueprint gates read the sanction. No doors, no card.
  */
-function Close({ meta }: { meta: any }) {
+function Close({ meta, name }: { meta: any; name: string }) {
+  /* THE EXIT IS ONE CARD (2026-09-20, the loop's composition under his page
+     laws): the city door and the trades door, then the compare pill (M21: the
+     pill on every page is the compare tool; `19 compare` no longer stands as
+     its own card at two thirds of a level), the pricing pill gone to the
+     chrome as the trade page's already is (8.6). `18 checks` LEFT THE PAGE
+     the same evening: three questions and no figure, sentences where his law
+     of 2026-09-20 wants labels ("if we write so many sentences, nobody will
+     read them"); tried first as this card's plus, which opened a 183 by 132
+     blank beside the summary row at 375 (the page filter). The question bank
+     stays in code for the trade page's `02 suits`, which reads the same
+     keys (M20). */
   const iso2 = typeof meta?.iso2 === "string" ? meta.iso2 : undefined;
   if (!iso2) return null;
-  const doors = buildCloseDoors(iso2);
+  const doors = [...buildCloseDoors(iso2).filter((d) => d.kind !== "pill"), ...buildCompareDoor(name)];
   if (doors.length === 0) return null;
   return (
     <div data-terminus className="mt-8">
@@ -876,7 +784,6 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const hasSetup = Array.isArray(d.setup?.tiers) && d.setup.tiers.length > 0;
   const bill = iso2 ? buildEntryBill(iso2) : null;
   const costs = iso2 ? buildRunningCosts(iso2) : null;
-  const checks = iso2 ? buildChecks(iso2) : null;
   const peers = iso2 ? buildPeerTable(iso2) : null;
 
   /* THE THIN COUNTRY, SEATED (MODEL.md 8.2's paragraph of that name; plan
@@ -1068,119 +975,81 @@ export function SpineCountryBody({ data }: { data?: any }) {
             on this band) and BLOCK FLOOR counts it. A seat needs no 600px, so
             `10 | 13` could pair on these 90 where the cards cannot; that is
             8.4 rule 1's to measure, not this dispatch's to guess. */}
-        {/* `10 cities | 13 customers` STILL CANNOT SHARE A LEVEL, re-measured
-            2026-09-20 under his page laws on the live render at 8.2's 3-2:
-            the four city cards wrap to two rows in the 584px seat and the
-            card runs 543 tall with a 389 by 216 blank, and the strip
-            stretched to it carries 376 by 366 of air (the page filter's two
-            WHITE SPACE reds). So each still stands alone, which clause 52 reds
-            as LEVEL UNFILLED; the composition of this turn is his corrections'
-            (COUNTRY-PAGE-SECTIONS-PLAN-2026-09-20.md, sections 11 and 12),
-            and the reds are held in the baseline until then. */}
-        {cities || citiesSeat ? (
-          <Band split="2-1">
+        {/* THE SECOND TURN TO HIS PAGE LAWS OF 2026-09-20 (clauses 50 to 58) and
+            the loop's own composition, since his corrections on sections 10
+            to 21 are not in yet (DOCTRINE 16: the loop decides, records it as
+            reversible, and never asks him to look). Three pairings were
+            measured on the live render this evening and two refused: 8.2's
+            `10 | 13` at 3-2 (the four city cards wrap in a 584px seat, 389 by
+            216 of air; the strip beside them 376 by 366) and `13 | 16` at 1-1
+            (the strip stretched to the notes' 323 carries 480 by 150). What
+            holds: `10 cities | 16 locals` at 2-1, the four field cards wide
+            beside the notes, which stand about as tall (the notes at 307
+            inside, under half the page, clause 51); and `12 money | 13
+            customers` at 2-1, the margin bars wide beside the strip in its
+            phone form at the narrow third. Each level holds one visual card
+            and one text card, or two visuals. Where a card is a seat the two
+            stand in their own bands, the precedent for a drawn card beside a
+            seat. */}
+        {(cities || citiesSeat) && locals ? (
+          <Band split="2-1" stack="lg">
             <Cities cards={cities} seat={citiesSeat} />
+            <LocalsKnow notes={locals} />
           </Band>
-        ) : null}
-        {customers ? (
-          <Band split="2-1">
+        ) : (
+          <>
+            {cities || citiesSeat ? (
+              <Band split="2-1">
+                <Cities cards={cities} seat={citiesSeat} />
+              </Band>
+            ) : null}
+            {locals ? (
+              <Band split="2-3" stack="lg">
+                <LocalsKnow notes={locals} />
+              </Band>
+            ) : (
+              <Band split="2-3" stack="lg">
+                <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
+              </Band>
+            )}
+          </>
+        )}
+        {hasMoney && customers ? (
+          <Band split="2-1" stack="lg">
+            <Money money={d.money} card={margin} />
             <Customers strip={customers} />
           </Band>
-        ) : null}
-        {/* `12 money | 16 locals`, 2-3 (8.2's own note on the split: the notes
-            are the taller card, so they take the wide side), money on the
-            left either way, stacked until lg. EITHER SEAT STANDS WHERE ITS
-            CARD WOULD (the seventh dispatch, 2026-09-18): the money seat on
-            the 173 countries whose engine holds under two credible margins,
-            the locals seat on the 194 without authored notes, so on the thin
-            country the band holds two seats at its 2-3 and on the United
-            Kingdom the two drawn cards, and the band is always drawn.
-            Measured on Afghanistan with the probe and the page filter: at
-            1280 the money seat at 416 wants 171 (its line wraps to two) and
-            the locals seat at 624 wants 149, so the band stands at 172 with
-            the wide seat carrying 109 of ink in 132 inside, 83 percent, no
-            hole; at 768 each stacks at its own 150; at 375 at 172. On the
-            United Kingdom the drawn pair is unchanged, 0 holes on 21 cards
-            at three widths. */}
-        {hasMoney && !locals ? (
-          /* THE ONE PAIRING THAT CANNOT BE SEATED: a DRAWN money card beside a
-             SEATED locals, on the 21 countries (AD AU AT BB BN DE GY IE IL IT
-             JP LA LI ME NZ PH PL PT TR AE US) whose engine holds two or more
-             credible margins and whose notes are not authored. Measured on
-             DE (two rows) and AT (four) at 1280 with the probe and the page
-             filter: at the band's 2-3 the seat at 624 stretched to the bars'
-             244 (DE) or 338 (AT) opens a 584 by 126 or 584 by 222 hole; at
-             3-2, the bars wide by 8.4 rule 1, the seat at 416 stretched to
-             244 passes on DE (131 of ink in 204 inside, 64 percent, a 376 by
-             73 blank) and opens a 376 by 168 hole on AT at 342; no split in
-             the closed set holds a 171-tall seat level with a 342-tall card.
-             So each stands in its own band, the first dispatch's precedent
-             for `07 | 08`: the money card at the survivor's two thirds (693
-             by 244 on DE, 693 by 342 on AT, no hole in either), the seat at
-             two thirds at its own 150. LONE CARD fires twice on these 21,
-             which are not on the harness list; the pair seats the day the
-             notes land (item 6) or the composition re-decides it. */
-          <>
-            <Band split="2-3" stack="lg">
-              <Money money={d.money} card={margin} />
-            </Band>
-            <Band split="2-3" stack="lg">
-              <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
-            </Band>
-          </>
         ) : (
-        <Band split="2-3" stack="lg">
-          {hasMoney ? (
-            <Money money={d.money} card={margin} />
-          ) : (
-            <BlockedSeat id="money" icon="owner-keeps" kicker={COPY.blocked.money.kicker} line={COPY.blocked.money.line} foot={COPY.blocked.money.foot} />
-          )}
-          {locals ? (
-            <LocalsKnow notes={locals} />
-          ) : (
-            <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
-          )}
-        </Band>
+          <>
+            {hasMoney ? (
+              <Band split="2-1" stack="lg">
+                <Money money={d.money} card={margin} />
+              </Band>
+            ) : (
+              <Band split="2-1" stack="lg">
+                <BlockedSeat id="money" icon="owner-keeps" kicker={COPY.blocked.money.kicker} line={COPY.blocked.money.line} foot={COPY.blocked.money.foot} />
+              </Band>
+            )}
+            {customers ? (
+              <Band split="2-1">
+                <Customers strip={customers} />
+              </Band>
+            ) : null}
+          </>
         )}
-        {/* CHAPTER TURN THREE (8.2, "What the place is like"): a further
-            narrowing that goes quieter; zero accent from here to the exit. The
-            exit below carries no break (PART 1). */}
+        {/* CHAPTER TURN THREE (8.2, "What the place is like"): the character
+            pair, five traits each by his ruling of 2026-09-19, then the exit.
+            `17 footing` LEFT THE PAGE on 2026-09-20: its two scores are the
+            hero board's first two rows (clean dealing, admin ease), and a
+            figure does not print twice on one page. `11 easiest` is off the
+            page until its six figures exist (no "not gathered yet" card, his
+            word of 2026-09-19). `18 checks` left the page (three sentences,
+            no figure; the close card says why) and `19 compare` is the close
+            card's pill (M21: the pill on every page is the compare tool), so
+            the exit is one card. */}
         <Movement index="03" heading={COPY.chapters.place} />
         <Character iso2={iso2} />
-        {/* `17 footing | 11 easiest`, 2-1, the footing wide because it is the
-            band's only live content (8.4 rule 1), the easiest seat narrow. */}
-        <Band split="2-1">
-          <Footing ground={d.ground} />
-          <BlockedSeat id="easiest" icon="where-it-pays" kicker={COPY.blocked.easiest.kicker} line={COPY.blocked.easiest.line} foot={COPY.blocked.easiest.foot} />
-        </Band>
-        {/* `18 checks | 19 compare`, 1-1 in 8.2, the exit's one paired band
-            before the close: THE PAIR CANNOT BE SEATED TODAY, measured on
-            2026-09-18 (plan step 31, fifth dispatch) with the page filter on
-            GB at every width. At 1-1 and 1280 the checks card's three rows
-            stand 217px tall inside and the compare card's whole content is
-            about 85 (opener, hairline, one pill), so the card stretched to its
-            partner carries a 480 by 132 blank under the pill, over the
-            filter's floor. No other split in the closed set holds: the pill
-            needs 430px of card (350 of text in its rendered font plus 80 of
-            padding), so every narrow side wraps it past one line, and every
-            wide side deepens the hole; the checks rows are one-liners at 376
-            and up and do not shorten. So each stands in its own band, in 8.2's
-            order, unpadded, the way 07|08 and 10|13 stand this week: the
-            checks at the survivor's two thirds at their own height, and the
-            compare at two thirds too (a lean card's narrow third, 347, wraps
-            the pill), its band stacked until lg because at 768's equal halves
-            148 of 195 door strings wrap and stacked none does (8.4: a card
-            that cannot survive 344px declares stack="lg"). The filter reports
-            LONE CARD on both, expected; the pair seats the day the compare
-            card holds something honest under its door or the composition
-            re-decides the split. Both cards draw for every country. */}
-        <Band split="1-1">
-          <Checks checks={checks} />
-        </Band>
-        <Band split="1-1" stack="lg">
-          <Compare name={name} />
-        </Band>
-        <Close meta={d.meta} />
+        <Close meta={d.meta} name={name} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>

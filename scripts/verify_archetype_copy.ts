@@ -783,15 +783,16 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   for (const c of cities) {
     const p = buildCityPeopleTable(c.slug);
     if (!p) { reds.push(`city people ${c.slug}: builds nothing (every listed city's country holds the six reads)`); continue; }
-    if (p.rows.length !== 6) reds.push(`city people ${c.slug}: ${p.rows.length} rows, not six`);
-    if (p.own === 6) ownAll++; else if (p.own === 0) countryOnly++; else mixed++;
+    /* five traits since 2026-09-20 (his ruling of 2026-09-19; character_rows.ts PEOPLE_KEYS) */
+    if (p.rows.length !== 5) reds.push(`city people ${c.slug}: ${p.rows.length} rows, not five`);
+    if (p.own === 5) ownAll++; else if (p.own === 0) countryOnly++; else mixed++;
     if (!p.foot) reds.push(`city people ${c.slug}: no foot (every listed city's country holds the share born abroad, and a table with no foot has no lead)`);
     else if (p.foot.label === COPY.character.people.foot) feet++; else if (p.foot.label === COPY.character.people.footCountry) nationalFeet++; else reds.push(`city people ${c.slug}: a foot label off the copy table: "${p.foot.label}"`);
     if (wordsOf(p.basis) > 14) reds.push(`city people ${c.slug}: a basis over fourteen words: "${p.basis}"`);
     if (!/modelled/.test(p.basis)) reds.push(`city people ${c.slug}: the basis does not say modelled: "${p.basis}"`);
     if ((p.own === 0) !== p.basis.startsWith("The country's reads")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
-    if ((p.own === 6) !== p.basis.startsWith("All six reads")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
-    if (p.own > 0 && p.own < 6 && !/ own; the rest are the country's, modelled\.$/.test(p.basis)) reds.push(`city people ${c.slug}: a mixed table under the basis "${p.basis}"`);
+    if ((p.own === 5) !== p.basis.startsWith("All five reads")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
+    if (p.own > 0 && p.own < 5 && !/ own; the rest are the country's, modelled\.$/.test(p.basis)) reds.push(`city people ${c.slug}: a mixed table under the basis "${p.basis}"`);
     ban(`city people ${c.slug}`, [p.basis, ...p.rows.map((r) => r.name)]);
 
     const se = buildCitySeason(c.slug);

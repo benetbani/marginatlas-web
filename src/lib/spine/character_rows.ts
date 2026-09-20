@@ -38,7 +38,7 @@ const STATE_KEYS: Array<[keyof typeof COPY.character.state.rows, string]> = [
   ["tasks", "task_efficiency"],
   ["time", "time_efficiency"],
   ["courts", "judicial_impartiality"],
-  ["new", "innovation_capacity"],
+  /* FIVE TRAITS, NOT SIX (his ruling of 2026-09-19, "dealing with people, there have to be five categories, six is a little bit too much", applied to both tables): "openness to the new" leaves the state table, since the people table's "innovation" reads the same thing from the other side; "ambition" leaves the people table, the one trait with no pole a stranger can act on. The keys stay in the copy for the gate's sweep. */
 ];
 const PEOPLE_KEYS: Array<[keyof typeof COPY.character.people.rows, string]> = [
   ["open", "openness_to_foreigners"],
@@ -46,7 +46,6 @@ const PEOPLE_KEYS: Array<[keyof typeof COPY.character.people.rows, string]> = [
   ["direct", "communication_directness"],
   ["punctual", "punctuality"],
   ["straight", "corruption_rejection"],
-  ["ambition", "ambition_chest_beating"],
 ];
 
 const clamp01 = (t: number) => Math.max(0, Math.min(1, t));

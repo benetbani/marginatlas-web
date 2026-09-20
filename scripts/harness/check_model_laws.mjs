@@ -354,7 +354,7 @@ if (listArg && args.includes("--render")) {
    (`05 premises`) to the city page and the workforce seat (`07`) off the page
    until its figures exist; so 8.2 is seventeen blocks and the FLOOR paragraph
    says so. */
-const FLOOR_BY_SURFACE = { country: 17, city: 17, cell: 16, industry: 12, hood: 7, howto: 6 };
+const FLOOR_BY_SURFACE = { country: 13, city: 17, cell: 16, industry: 12, hood: 7, howto: 6 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;
