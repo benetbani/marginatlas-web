@@ -346,6 +346,15 @@ export const COPY = {
     levelBasis: "Among the countries; the cost and the days are an LLC's.",
     placeholder: "Placeholder photograph",
   },
+  /** THE CITY'S HERO BOARD (city_hero_board.ts, 2026-09-20 evening): his
+   *  country hero at the city altitude. Labels under three words; the units
+   *  beside the figures; the level basis says the chips are among the
+   *  covered cities. */
+  cityHeroBoard: {
+    rows: { visitors: "Visitors", permits: "City permits", density: "Per 10,000 residents", gdp: "Metro GDP", living: "Cost of living" },
+    units: { aYear: "a year", per10k: "businesses" },
+    levelBasis: "Among the covered cities; the cost of living runs 1 at the cheapest to 100 at the dearest.",
+  },
   /** AT A GLANCE (MODEL.md 8.2, `01 glance`; plan step 31, second dispatch,
    *  2026-09-17): the country's own figures, each in its own unit, no rank
    *  and no verdict. The pay cells take the pay bars' own words above

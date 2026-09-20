@@ -67,9 +67,14 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
               <div data-answer="1">
                 <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{board.answer.label}</div>
                 <div data-hero-figure className="fig mt-1 text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{board.answer.value}</div>
+                {/* The words under the figure are the board's own where it says them (a city's "Pay, a year."), the country's basis with its regime otherwise: one archetype at two altitudes since 2026-09-20 evening. */}
                 <p data-subtitle className="mt-2 max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
-                  {COPY.answer.basis}
-                  {board.answer.regime ? <>{" "}{COPY.answer.basisUnder} <span className="text-[var(--c-ink)]">{board.answer.regime}</span></> : null}
+                  {board.answerBasis != null ? board.answerBasis : (
+                    <>
+                      {COPY.answer.basis}
+                      {board.answer.regime ? <>{" "}{COPY.answer.basisUnder} <span className="text-[var(--c-ink)]">{board.answer.regime}</span></> : null}
+                    </>
+                  )}
                 </p>
               </div>
               {board.subtitle ? <p className="mt-4 max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.subtitle}</p> : null}
@@ -112,7 +117,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                 </div>
               ))}
             </div>
-            <div className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.heroBoard.levelBasis}</div>
+            <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.levelBasis ?? COPY.heroBoard.levelBasis}</p>
           </div>
         </div>
       </Box>

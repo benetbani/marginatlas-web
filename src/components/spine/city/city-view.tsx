@@ -116,6 +116,9 @@ import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { buildCityEarningsStrip, type CityEarningsData } from "@/lib/spine/range_rows";
 import { CityHero } from "./masthead";
+import { HeroBoard } from "@/components/spine/archetypes/HeroBoard";
+import { buildCityHeroBoard } from "@/lib/spine/city_hero_board";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { WhereToTrade } from "./where-to-trade";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { Premises } from "./premises";
@@ -730,8 +733,12 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
      rung of air behind it. The two seats read the city list and the city shard
      by the seed's slug; the strips, the districts, the peers and the character
      tables read the seed the adapter built. */
+  const cityBoard = slug ? buildCityHeroBoard(slug) : null;
+  /* The glance and the seat are read for the gates' sake and drawn by nothing since the board took their figures (the masthead's note). */
   const glance = slug ? buildCityGlance(slug) : null;
+  void glance;
   const seat = slug ? buildCitySeat(slug) : null;
+  void seat;
   const premises = slug ? buildPremisesBento(slug) : null;
   const living = slug ? buildCityLiving(slug) : null;
   const runway = slug ? buildCityRunway(slug) : null;
@@ -749,23 +756,22 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
-      {/* `00 masthead`, FULL WIDTH, the page's only 40 (8.3, loud 1): the answer
-          "Average customer pay" off the city list's mean, the archetype's own hero
-          band carrying the attribute the full-width gate reads. */}
-      <CityHero d={d} />
-      {/* `01 glance | 02 among-cities`, 1-1, the opening's one band (8.3; plan
-          step 32, first dispatch): what the city is in figures, and where it
-          stands among the cities, both quiet, both on KvGrid while their
-          clicked forms wait. Both cards exist for every covered city (the
-          permit days, the business count, the metro GDP and the cost of living
-          are held for all 252), so the band holds two children; a city missing
-          one would show the survivor alone, honestly, as LONE CARD. */}
-      {glance || seat ? (
-        <Band split="1-1">
-          <Glance glance={glance} />
-          <AmongCities seat={seat} />
-        </Band>
-      ) : null}
+      {/* `00 masthead`, FULL WIDTH, the page's only 40 (8.3, loud 1). SINCE THE
+          EVENING OF 2026-09-20 THE BOARD OF HIS DESIGN, the country's hero at
+          the city altitude (HeroBoard.tsx, city_hero_board.ts; his word after
+          the push: the pages "cohesive, fitting to each other", and the London
+          masthead as served stood with its right half blank): the flag and
+          the city's name, the typical customer pay as the main figure off the
+          one income builder, the placeholder picture in the centre, five of
+          the city's own figures placed among the covered cities on the right
+          with a level chip each. `01 glance` and `02 among-cities` DISSOLVE
+          INTO IT, the country's own precedent on his word ("at a glance is
+          irrelevant; among the countries bundled by category"): the glance's
+          three cells and the seat's two figures are the board's rows, so
+          neither card draws; their components and builders stay for the
+          sheet and the gates, and the old answer card stands where the
+          board cannot build (a city off the list). */}
+      {cityBoard ? <HeroBoard id="city-take" board={cityBoard} answers={SURFACE_ANSWERS.city} /> : <CityHero d={d} />}
       {/* CHAPTER TURN ONE (8.3, "What it costs to open, and to run"): the kit's
           Movement, the muted index and one plain heading, no eyebrow and no icon
           (8.4). 48 above and 12 below, the next Band's own 32 absorbing the 12

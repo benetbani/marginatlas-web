@@ -66,7 +66,8 @@ import type { AtlasIconId } from "@/components/brand/icons";
 export type HeroLevel = "high" | "medium" | "low";
 
 export type HeroBoardRow = {
-  key: "clean" | "admin" | "llc-days" | "salary-month" | "llc-cost";
+  /** The country's five keys, or a city's (city_hero_board.ts) since 2026-09-20 evening: the board is one archetype at two altitudes. */
+  key: string;
   icon: AtlasIconId;
   label: string;
   /** The figure as printed. */
@@ -81,9 +82,13 @@ export type HeroBoardData = {
   iso2: string;
   name: string;
   answer: HeroFacts["answer"];
+  /** The words under the answer's figure. Absent, the country's: `COPY.answer.basis` with the regime named (HeroBoard.tsx). A city's board says its own ("Pay, a year."). */
+  answerBasis?: string | null;
   /** The basis line under the answer, the masthead's own words. */
   subtitle: string | null;
   rows: HeroBoardRow[];
+  /** The line under the column saying what the chips are among. Absent, the country's (`COPY.heroBoard.levelBasis`). */
+  levelBasis?: string;
   image: { src: string; alt: string; placeholder: boolean };
 };
 

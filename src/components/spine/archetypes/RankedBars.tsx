@@ -483,8 +483,12 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                       2026-09-20, "the neighbourhoods being clickable"): a row
                       that navigates carries the list's arrow after its name
                       and the list's hover, so a name that is a door reads as
-                      one; a row without a destination carries neither. */}
-                  <span data-label className={NAME_CLS}>{r.name}{r.href ? <span aria-hidden="true" className="ml-1.5 text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">&#8594;</span> : null}</span>
+                      one; a row without a destination carries neither. The
+                      arrow is drawn by CSS (`after:`), never as a node inside
+                      the name: the model laws' DISTRICT ADJECTIVE reads any
+                      span nested in a district's name as free text about the
+                      district, and a glyph is not a word. */}
+                  <span data-label className={`${NAME_CLS}${r.href ? " after:ml-1.5 after:text-[length:var(--t-micro)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.name}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share
