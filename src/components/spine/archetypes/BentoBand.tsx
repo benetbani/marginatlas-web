@@ -473,7 +473,7 @@ export function BentoMetric({
   return (
     <Box id={id} data-lean={lean ? "1" : undefined} className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric">
       <div className="mb-1.5 flex items-center gap-2">
-        {icon ? <Ico id={icon} /> : null}
+        {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
         {sample ? <SampleTag /> : null}
       </div>
@@ -600,7 +600,7 @@ export function BentoCount({
   return (
     <Box className="flex h-full flex-col" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
       <div className="mb-1.5 flex items-center gap-2">
-        {icon ? <Ico id={icon} /> : null}
+        {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
         {sample ? <SampleTag /> : null}
       </div>
