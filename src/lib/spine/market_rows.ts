@@ -69,7 +69,9 @@
  * never this builder's, which always builds four so the gate can prove the
  * churn cell is built and not drawn.
  */
-import { industryFigure, type IndustryBankFigure } from "@/lib/facts/industry_shard";
+import { industryFigure, industryRows, type IndustryBankFigure } from "@/lib/facts/industry_shard";
+import type { MonthPoint } from "@/components/spine/archetypes/MonthLine";
+import type { SharePart } from "@/components/spine/archetypes/ShareBar";
 import type { FactTag } from "@/lib/facts/types";
 import type { LastsAltitude } from "@/lib/spine/lasts_rows";
 import { COPY } from "@/lib/spine/copy";
@@ -101,9 +103,13 @@ export type MarketData = {
   /** The weakest tag among the printed figures; "held" when nothing prints. Every figure prints as modelled regardless (R12). */
   tag: FactTag;
   confidence: "modeled";
+  /** THE YEAR, MONTH BY MONTH (2026-09-20 late evening, his gold standard's B30 on the swing cell): `seasonality_months.months[0..11]`, an index of the busiest month at 100, drawn as the month line under the swing figure; null unless all twelve are on file. */
+  months: MonthPoint[] | null;
+  /** WHEN THE WEEK'S TAKINGS COME IN (the same evening, his B29): `dayparts.pattern.*` (part, pct), two to four parts of the week's takings, drawn as the stacked share bar in the bento's fifth cell; null under two parts. */
+  dayparts: SharePart[] | null;
 };
 
-/** The cells' keys in declared order, the order the cluster tiles and a phone reads. */
+/** The four figure cells' keys in declared order, the order the cluster tiles and a phone reads; the fifth cell (the dayparts, 2026-09-20 late evening) is a share bar and not a figure cell, read off `dayparts`. */
 export const MARKET_CELLS = ["firms", "chains", "close", "swing"] as const;
 
 const TRUST: readonly FactTag[] = ["held", "modeled", "extrapolated", "placeholder"];
@@ -143,5 +149,14 @@ export function buildMarket(industryId: string | undefined, altitude: MarketAlti
   for (const c of [firms, swing]) if ("figure" in c) printed.push(c.tag);
   for (const c of [chains, close]) if ("part" in c) printed.push(c.tag);
   const tag = printed.reduce<FactTag>((w, t) => weaker(w, t), "held");
-  return { industryId, altitude, firms, chains, close, swing, withheld: 4 - printed.length, tag, confidence: "modeled" };
+  /* The twelve months: one figure each, `seasonality_months.months[i]`, read one by one; a year missing a month draws no line. */
+  const monthFigs = Array.from({ length: 12 }, (_, i) => read(`seasonality_months.months[${i}]`));
+  const months: MonthPoint[] | null = monthFigs.every((f): f is IndustryBankFigure => f != null) ? monthFigs.map((f, i) => ({ month: i, value: f.value })) : null;
+  /* The dayparts: the shard's rows, name and share, in the shard's order (the week's order). */
+  const partNames = new Map(industryRows(industryId, "dayparts.pattern.*.part").map((f) => [f.rowKey, typeof f.value === "string" ? f.value.trim() : ""] as const));
+  const partShares = industryRows(industryId, "dayparts.pattern.*.pct");
+  const dayparts: SharePart[] = partShares
+    .map((f) => ({ key: `part-${f.rowKey}`, name: partNames.get(f.rowKey) ?? "", share: typeof f.value === "number" ? f.value : NaN }))
+    .filter((p) => p.name && Number.isFinite(p.share) && p.share > 0);
+  return { industryId, altitude, firms, chains, close, swing, withheld: 4 - printed.length, tag, confidence: "modeled", months, dayparts: dayparts.length >= 2 ? dayparts : null };
 }

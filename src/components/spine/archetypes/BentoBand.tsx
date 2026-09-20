@@ -113,7 +113,8 @@ import { Box, Fig, Ico, SampleTag } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 
 export const BENTO_MIN_CELLS = 3;
-export const BENTO_MAX_CELLS = 4;
+/** FIVE since 2026-09-20 late evening: his gold standard for a part of a page is a five-card bento (design/references/founder-2026-09-20-gold-standard-sections.md, "a subscription-billing product's five-card feature grid"), and the trade's market cluster took its fifth cell (the dayparts) that evening; the packer's ceiling of eight rows still holds five cells of at most two rows. Six is a list. */
+export const BENTO_MAX_CELLS = 5;
 
 /** The columns a cluster may declare at the widest width. Closed on purpose,
  *  the same reason `Band`'s five ratios are closed: an open number is a
@@ -216,7 +217,7 @@ function proveTiling(placements: Placement[], cols: number, rows: number, where:
 /** Every tiling this cluster needs, proven, or a throw naming the width. */
 function layoutBento(cells: BentoCell[], cols: BentoCols) {
   if (cells.length < BENTO_MIN_CELLS || cells.length > BENTO_MAX_CELLS) {
-    throw new Error(`BentoBand: ${cells.length} cells. A cluster holds ${BENTO_MIN_CELLS} or ${BENTO_MAX_CELLS}: two cards in a row is Band, five is a list.`);
+    throw new Error(`BentoBand: ${cells.length} cells. A cluster holds ${BENTO_MIN_CELLS} to ${BENTO_MAX_CELLS}: two cards in a row is Band, six is a list.`);
   }
   const keys = cells.map((c) => c.key);
   if (new Set(keys).size !== keys.length) throw new Error(`BentoBand: two cells share a key (${keys.join(", ")})`);

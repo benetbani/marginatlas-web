@@ -69,7 +69,7 @@
  *    point of the form he pointed at), NO HIERARCHY (nothing on a card is
  *    drawn larger than that city's own name), IMAGE (no card carries a
  *    photograph, his ruling of 2026-09-08).
- *  BENTO BAND (2026-09-10): CELL COUNT (three or four drawn, and the same
+ *  BENTO BAND (2026-09-10): CELL COUNT (three to five drawn since 2026-09-20, and the same
  *    number the cluster declares, at every width); TILING (the drawn cells
  *    cover their rectangle with no gap and no overlap, measured from the
  *    rendered boxes and never from the declared spans, because the
@@ -1029,8 +1029,9 @@ for (const w of WIDTHS) {
        discards patches under a pixel to survive subpixel rounding, and the
        area does not. */
     if (r.kind === "bento-band") {
-      const MIN = 3, MAX = 4;
-      if (r.bentoDrawn < MIN || r.bentoDrawn > MAX) red(r.inst, w, "CELL COUNT", `${r.bentoDrawn} cells drawn; a cluster holds ${MIN} or ${MAX} (two is a band, five is a list)`);
+      /* FIVE since 2026-09-20 late evening, BentoBand.tsx's own cap (BENTO_MAX_CELLS): his gold standard for a part of a page is a five-card bento, and the trade's market cluster took its fifth cell that evening. */
+      const MIN = 3, MAX = 5;
+      if (r.bentoDrawn < MIN || r.bentoDrawn > MAX) red(r.inst, w, "CELL COUNT", `${r.bentoDrawn} cells drawn; a cluster holds ${MIN} to ${MAX} (two is a band, six is a list)`);
       else if (r.bentoDeclared && r.bentoDrawn !== r.bentoDeclared) red(r.inst, w, "CELL COUNT", `${r.bentoDrawn} cells drawn against ${r.bentoDeclared} declared; a cell stopped drawing at this width`);
       if (r.bentoGaps && r.bentoGaps.length) red(r.inst, w, "TILING", `${r.bentoGaps.length} hole(s) between the drawn cells: ${r.bentoGaps.slice(0, 3).join("; ")}`);
       if (r.bentoOverlaps && r.bentoOverlaps.length) red(r.inst, w, "TILING", `${r.bentoOverlaps.length} overlap(s): ${r.bentoOverlaps.slice(0, 3).join("; ")}`);

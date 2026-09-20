@@ -19,7 +19,12 @@
  * cells (clause 22 does not bind it).
  *
  * WHAT IS NOT PRINTED. `typical_cost_band` is a word (low, medium, high) and
- * a word never stands where a figure goes (PART 5); the burden score
+ * a word never stands where a figure goes (PART 5), so it is not the cell's
+ * figure; SINCE 2026-09-20 LATE EVENING it is the cell's NOTE under the
+ * days ("Low fee", "High fee"), a category label and not a figure, because
+ * his word after the push of that day was that a figure without its
+ * details is surface (MODEL PART 9 clause 60) and the fee band is the one
+ * detail the shard holds beside the wait; the burden score
  * (`licensing.compliance_burden_0_100`) is a coined index (clause 17). A
  * licence whose wait is on file as ZERO days is not a wait (one row on one
  * shard, engineering_architecture's "Continuing education upkeep", an
@@ -45,7 +50,7 @@ import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import { COPY } from "@/lib/spine/copy";
 import { daysFigure } from "@/lib/spine/entry_bill_rows";
 
-export const PERMITS_METRICS = { name: "licensing.licences.*.name", days: "licensing.licences.*.typical_days" } as const;
+export const PERMITS_METRICS = { name: "licensing.licences.*.name", days: "licensing.licences.*.typical_days", band: "licensing.licences.*.typical_cost_band" } as const;
 
 export type PermitsData = {
   industryId: string;
@@ -67,19 +72,21 @@ export function buildPermits(industryId: string): PermitsData | null {
   const names = industryRows(industryId, PERMITS_METRICS.name);
   if (names.length === 0) return null;
   const days = new Map(industryRows(industryId, PERMITS_METRICS.days).map((f) => [f.rowKey, f.value] as const));
-  const rows: Array<{ key: string; name: string; days: number }> = [];
+  const bands = new Map(industryRows(industryId, PERMITS_METRICS.band).map((f) => [f.rowKey, typeof f.value === "string" ? f.value.trim().toLowerCase() : ""] as const));
+  const rows: Array<{ key: string; name: string; days: number; band: "low" | "medium" | "high" | null }> = [];
   let zero = 0;
   for (const n of names) {
     const name = typeof n.value === "string" ? n.value.trim() : "";
     const d = days.get(n.rowKey);
     if (!name || !isNum(d) || d < 0) continue;
     if (d === 0) { zero++; continue; }
-    rows.push({ key: n.rowKey, name, days: Math.round(d) });
+    const b = bands.get(n.rowKey);
+    rows.push({ key: n.rowKey, name, days: Math.round(d), band: b === "low" || b === "medium" || b === "high" ? b : null });
   }
   /* The longest wait first, the rest in the shard's order (a stable sort on one key). */
   const longest = rows.reduce<typeof rows[number] | null>((best, r) => (best == null || r.days > best.days ? r : best), null);
   const ordered = longest ? [longest, ...rows.filter((r) => r !== longest)] : rows;
-  const cells: KvCell[] = ordered.map((r) => ({ key: r.key, label: r.name, value: daysFigure(r.days), confidence: "modeled" }));
+  const cells: KvCell[] = ordered.map((r) => ({ key: r.key, label: r.name, value: daysFigure(r.days), note: r.band ? COPY.tradePermits.feeBand[r.band] : undefined, confidence: "modeled" }));
   if (cells.length === 0 && zero === 0) return null;
   const withheld = zero === 0 ? null : zero === 1 ? COPY.tradePermits.withheldOne : COPY.tradePermits.withheldMany.replace("{n}", String(zero));
   return {

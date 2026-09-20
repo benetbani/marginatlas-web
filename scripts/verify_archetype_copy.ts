@@ -1427,7 +1427,26 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       } else if (!Number.isInteger(cell.part) || cell.part < 0 || cell.part > 100 || cell.whole !== 100) reds.push(`market ${id}: the ${key} count is ${cell.part} of ${cell.whole}, not a whole part in 100`);
     }
   }
+  /* THE FIFTH CELL AND THE LINE (2026-09-20 late evening): the twelve months
+     are all on file or the line is not drawn; the dayparts are two to four
+     named parts whose shares sum near 100, or the cell states its line. */
+  let monthsDrawn = 0, daypartsDrawn = 0, daypartsOff = 0;
+  for (const id of ids) {
+    const m = buildMarket(id);
+    if (!m) continue;
+    if (m.months) { monthsDrawn++; if (m.months.length !== 12 || m.months.some((p, i) => p.month !== i || !Number.isFinite(p.value))) reds.push(`market ${id}: the month line is not twelve months in order`); }
+    if (m.dayparts) {
+      daypartsDrawn++;
+      const sum = m.dayparts.reduce((s, p) => s + p.share, 0);
+      if (m.dayparts.length < 2 || m.dayparts.length > 4) reds.push(`market ${id}: ${m.dayparts.length} dayparts, not two to four`);
+      if (Math.abs(sum - 100) > 5) daypartsOff++;
+      for (const p of m.dayparts) if (!p.name || wordsOf(p.name) > 4) reds.push(`market ${id}: a daypart named "${p.name}"`);
+    }
+  }
+  if (wordsOf(COPY.tradeMarket.daypartsBasis) > 14 || wordsOf(COPY.tradeMarket.monthsBasis) > 14) reds.push("market: the dayparts or the months basis runs over fourteen words");
+  ban("market fifth cell", [COPY.tradeMarket.daypartsBasis, COPY.tradeMarket.monthsBasis, COPY.tradeMarket.kickers.dayparts]);
   if (buildMarket("no_such_trade") !== null || buildMarket(undefined) !== null) reds.push("market: a trade with no shard builds a cluster");
+  console.log(`market's fifth cell and line: the month line on ${monthsDrawn} of ${ids.length} shards, the dayparts on ${daypartsDrawn} (${daypartsOff} summing over five off a hundred, drawn to their own sum)`);
   console.log(`trade turn two's second band and turn three: the mix draws on ${mixCards} of ${ids.length} shard ids (parts ${Object.entries(partCounts).map(([n, c]) => `${n}: ${c}`).join(", ")}; ${mixSum100} sum to 100 exactly); the market on ${marketCards} of ${ids.length} (firms ${range.firms.join(" to ")}, ${fractions} with a fraction, ${held.firms} held; chains ${range.chains.join(" to ")}, ${held.chains} held; close ${range.close.join(" to ")}, ${held.close} held; swing ${range.swing.join(" to ")}, ${held.swing} held)`);
 }
 

@@ -42,6 +42,9 @@
  */
 import * as React from "react";
 import { BentoBand, BentoCount, BentoMetric, type BentoCell } from "@/components/spine/archetypes/BentoBand";
+import { MonthLine } from "@/components/spine/archetypes/MonthLine";
+import { ShareBar } from "@/components/spine/archetypes/ShareBar";
+import { Box, Fig, Ico, SampleTag } from "@/components/spine/kit";
 import type { MarketData, MarketMetric, MarketCount } from "@/lib/spine/market_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { AtlasIconId } from "@/components/brand/icons";
@@ -65,12 +68,71 @@ export function marketCells(market: MarketData): BentoCell[] {
       /* The count withheld stands as the same opener over its stated line, the drawn withheld seat in the metric cell's withheld form: no figure, no grid, one line saying why. */
       <BentoMetric icon={icon} kicker={kicker} withheld={cell.withheld} />
     );
+  /* FIVE CELLS SINCE 2026-09-20 LATE EVENING (his gold standard's five-card
+     bento; his word after the push: more sections, the details behind a
+     figure, a visual built to the statistic's shape): row one the three
+     counts side by side, 1 by 1 each (firms per 10,000, held by chains,
+     close in a year); row two the year's swing WITH ITS TWELVE MONTHS as the
+     small line chart (his B30) at 2 by 1, and when the week pays as the
+     stacked share bar (his B29) at 1 by 1. 1 + 1 + 1 + 2 + 1 = 6 of 6 at
+     1280; at 768 the counts take rows one and two (two, then one beside the
+     dayparts), the line row three at two columns, 6 of 6; under 768 one
+     column in declared order. The swing cell keeps its figure at 30 and
+     draws the line under it where all twelve months are on file (every
+     shard today); the dayparts cell draws the bar where two or more parts
+     are on file, its stated line otherwise. */
   return [
-    { key: "firms", cols: 2, rows: 1, node: metric(market.firms, "competition", K.firms) },
+    { key: "firms", cols: 1, rows: 1, node: metric(market.firms, "competition", K.firms) },
     { key: "chains", cols: 1, rows: 1, node: count(market.chains, "anchor", K.chains) },
     { key: "close", cols: 1, rows: 1, node: count(market.close, "vacancy", K.close) },
-    { key: "swing", cols: 2, rows: 1, node: metric(market.swing, "seasonality", K.swing) },
+    { key: "swing", cols: 2, rows: 1, node: <SwingCell market={market} /> },
+    { key: "dayparts", cols: 1, rows: 1, node: <DaypartsCell market={market} /> },
   ];
+}
+
+/** THE SWING WITH ITS YEAR: the metric cell's own composition (opener, figure at 30 in ink, basis) with the month line between the figure and the basis; the figure's withheld line where the swing is not on file, and no line where a month is missing. */
+export function SwingCell({ market }: { market: MarketData }) {
+  const K = COPY.tradeMarket.kickers;
+  const cell = market.swing;
+  if (!("figure" in cell)) return <BentoMetric icon="seasonality" kicker={K.swing} withheld={cell.withheld} />;
+  return (
+    <Box className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric" data-visual={market.months ? "1" : undefined}>
+      <div className="mb-1.5 flex items-center gap-2">
+        <Ico id="seasonality" tone="terra" />
+        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.swing}</h3>
+        <SampleTag />
+      </div>
+      <div className="flex flex-1 flex-col justify-center py-2">
+        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{cell.figure}</Fig>
+        {market.months ? (
+          <div className="mt-3">
+            <MonthLine points={market.months} />
+            <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.monthsBasis}</p>
+          </div>
+        ) : null}
+      </div>
+      <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cell.basis}</p>
+    </Box>
+  );
+}
+
+/** WHEN THE WEEK PAYS: the stacked share bar over its parts, the opener above and the basis under; the stated line where the shard holds no parts. */
+export function DaypartsCell({ market }: { market: MarketData }) {
+  const K = COPY.tradeMarket.kickers;
+  if (!market.dayparts) return <BentoMetric icon="daily-takings" kicker={K.dayparts} withheld={COPY.tradeMarket.withheld.dayparts} />;
+  return (
+    <Box className="flex h-full flex-col" data-archetype="share-bar" data-visual="1">
+      <div className="mb-1.5 flex items-center gap-2">
+        <Ico id="daily-takings" tone="terra" />
+        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.dayparts}</h3>
+        <SampleTag />
+      </div>
+      <div className="flex flex-1 flex-col justify-center py-2">
+        <ShareBar parts={market.dayparts} />
+      </div>
+      <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.daypartsBasis}</p>
+    </Box>
+  );
 }
 
 export function MarketBand({ market }: { market: MarketData | null }) {

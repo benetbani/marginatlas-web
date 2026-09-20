@@ -350,6 +350,11 @@ export const COPY = {
    *  country hero at the city altitude. Labels under three words; the units
    *  beside the figures; the level basis says the chips are among the
    *  covered cities. */
+  /** THE MONTH LINE (MonthLine.tsx, his gold standard's B30): the twelve initials along the foot, the aria sentence. */
+  monthLine: {
+    initials: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+    aria: "The year month by month, busiest in {peak}, quietest in {trough}",
+  },
   cityHeroBoard: {
     rows: { visitors: "Visitors", permits: "City permits", density: "Per 10,000 residents", gdp: "Metro GDP", living: "Cost of living" },
     units: { aYear: "a year", per10k: "businesses" },
@@ -1283,6 +1288,8 @@ export const COPY = {
    *  line, counted (one licence on one shard today). */
   tradePermits: {
     kicker: "The permits you need",
+    /** The fee band under each wait, a category label (2026-09-20 late evening, clause 60): the shard's `typical_cost_band`. */
+    feeBand: { low: "Low fee", medium: "Medium fee", high: "High fee" },
     basis: "Typical for the trade anywhere, not measured for this city.",
     foot: "The waits are modelled.",
     withheldOne: "One licence has no wait on file and is not shown.",
@@ -1632,7 +1639,11 @@ export const COPY = {
    *  all four); the count cells' second line is the guard's, for a share
    *  over 100 that is not a count of firms (none on file: 3 to 92, 1 to 30). */
   tradeMarket: {
-    kickers: { firms: "Firms per 10,000 people", chains: "Held by chains", close: "Close in a year", swing: "The year's swing" },
+    kickers: { firms: "Firms per 10,000 people", chains: "Held by chains", close: "Close in a year", swing: "The year's swing", dayparts: "When the week pays" },
+    /** The dayparts cell's basis (2026-09-20 late evening, the bento's fifth cell): the parts are of the week's takings, the trade's figure. */
+    daypartsBasis: "Of every $100 taken in a week; typical for the trade anywhere, modelled.",
+    /** The month line's own line under the swing figure: what the twelve points are. */
+    monthsBasis: "Each month as a share of the busiest, which is 100.",
     basis: {
       /** The opener says the unit, so the basis says whose figure it is (the clears foot's own sentence). */
       firms: "Typical for the trade anywhere, not measured for this city; modelled.",
@@ -1648,6 +1659,7 @@ export const COPY = {
       close: "How many close in a year is not on file for this trade yet.",
       closeNotAShare: "The closures on file are not a share of 100 firms.",
       swing: "The year's swing is not on file for this trade yet.",
+      dayparts: "When the week pays is not on file for this trade yet.",
     },
   },
   /** `13 rivals` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18):

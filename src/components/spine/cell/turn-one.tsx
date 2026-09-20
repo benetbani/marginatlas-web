@@ -97,10 +97,16 @@ import type { TradePeersData } from "@/lib/spine/trade_peer_rows";
 export function PermitsCard({ id = "permits", permits }: { id?: string; permits: PermitsData | null }) {
   if (!permits) return null;
   return (
-    <Box id={id}>
+    /* The spare height the level lends this card (the bill beside it stands
+       431 to its 358 at 1280, measured 2026-09-20) splits above and below the
+       grid, the basis and the foot on the floor (BentoMetric's rule, the
+       ring card's composition), so the foot is never a blank of 73. */
+    <Box id={id} className="flex h-full flex-col">
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
       <Rail icon="licence-specific" kicker={COPY.tradePermits.kicker} sample />
-      <KvGrid cells={permits.cells} labelReserve="row" />
+      <div className="flex flex-1 flex-col justify-center">
+        <KvGrid cells={permits.cells} labelReserve="row" />
+      </div>
       {permits.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.withheld}</p> : null}
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.basis}</p>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p>
