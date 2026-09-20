@@ -426,8 +426,9 @@ export const cellPeersKey = (c: CellHeroInstance) => `cell:${c.key}:peers`;
 const peersWhy = (p: NonNullable<ReturnType<typeof buildTradePeers>>) =>
   p.peers > 0 ? `trade block 07: the home row and ${p.peers} peer${p.peers === 1 ? "" : "s"} off the per-state slate, one figure column, no flags${p.homeWithheld ? ", the home row's takings a dash with the line said once" : ""}`
     : `trade block 07 seated: no peer resolves off the United States, the home row ${p.homeFigure != null ? "printing its own figure" : "with its takings a dash, the dash said once"} under the stated line`;
+/** Only instances with a peer standing in the table (2026-09-20 evening): the page draws `07 peers` as the table alone, never the seated one-row form under "Not gathered yet" (his word of 2026-09-19), so the seated stories left the sheet with the form. */
 export function pickCellPeersInstances(cell: CellHeroInstance[]): Instance[] {
-  return cell.filter((c) => cellServes(c.key, "peers")).map((c) => ({ c, p: buildTradePeers(c.seed) })).filter((x) => x.p).map(({ c, p }) => ({ iso2: cellPeersKey(c), why: peersWhy(p!) }));
+  return cell.filter((c) => cellServes(c.key, "peers")).map((c) => ({ c, p: buildTradePeers(c.seed) })).filter((x) => x.p && x.p.peers > 0).map(({ c, p }) => ({ iso2: cellPeersKey(c), why: peersWhy(p!) }));
 }
 /** WHERE THIS TRADE PAYS BEST, `06 places` (MODEL.md 8.7; plan step 34's third dispatch, 2026-09-19), keyed industry:<handle>:places off the slate the sheet resolves for each handle (industry_hero_facts.ts `loadIndustryPlacesInstances`, the database, the way the cell seeds load) and drawn by the page's own card (industry/turn-two.tsx PlacesTable) at the full width the table takes on the page. Two kinds, as the trade's rivals have: the TABLE on compare-table (two columns, the best cell of each ticked, no home row, flags on), which NO TRADE DRAWS TODAY under the own-row law (industry_places_rows.ts: 0 of 243 hold four cities of their own, the slate's rows being filled headlines and the clamp's floor), so the kind holds no places story until the data track lands rows of their own (the table's law is held on fixtures by the archetype copy gate); the SEAT on blocked-seat, in the lines the slate draws today (re-measured 2026-09-19 under the trust gate's sixth guard, industry_hero_facts.ts says how the count fell): restaurants, the some line (New York read and the curated London entry, admitted by the resolver since QUEUE across:london-entry, 2026-09-19; the one line stood between the sixth guard and that ruling), and pet training, the none line. */
 export const industryPlacesKey = (i: IndustryPlacesInstance) => industryKey(i.key, "places");
@@ -448,7 +449,7 @@ export function CompareTableStories({ instances = pickCompareTableInstances(), c
       })}
       {cell.filter((c) => cellServes(c.key, "peers")).map((c) => {
         const p = buildTradePeers(c.seed);
-        if (!p) return null;
+        if (!p || p.peers === 0) return null;
         return <Story kind="compare-table" key={cellPeersKey(c)} iso2={cellPeersKey(c)} why={peersWhy(p)}><PeersCard id={`peers-cell-${c.key}`} peers={p} /></Story>;
       })}
       {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}

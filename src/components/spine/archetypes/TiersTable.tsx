@@ -149,7 +149,8 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
           );
         })}
       </div>
-      {anyDots ? <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tiers.legend}</div> : null}
+      {/* The legend's text on the prose measure (his clause 51, 2026-09-20); the rule above it keeps the table's width. */}
+      {anyDots ? <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"><span className="block [max-width:var(--measure-prose)]">{COPY.tiers.legend}</span></div> : null}
       {door && howTo ? (
         <div className="mt-2.5 text-right">
           <a href={howTo.href} className="text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{howTo.label} <span aria-hidden>&#8594;</span></a>

@@ -2288,8 +2288,23 @@
      reader-facing code: at 14px body type that is roughly 96 characters, so the
      paragraphs that LOOKED capped were among the widest on the page. `ch` is
      the width of the digit zero and follows the font size wherever it is
-     reused, which a rem cap cannot do. */
-  --measure-prose: 68ch;
+     reused, which a rem cap cannot do.
+
+     AND NEVER MORE THAN HALF THE PAGE, since the evening of 2026-09-20: his
+     page law of that day (MODEL PART 9 clause 51, "a block of text lives in
+     the left half or the right half, never across; its measure is at most
+     half the page's content width"; the harness's TEXT WIDE reads it at 768
+     and up). `--measure-half` is that half: the page is `max-w-[1120px]`
+     with 24px gutters from md, so its content is the viewport less 48px up
+     to 1072px, and half of that is `50vw - 24px` capped at 536px. Under md
+     the token is the full width, because a phone's card IS the page's half
+     and his law is about the desktop's eye sweep. The prose measure is the
+     smaller of the two: 68ch where the page has room for it, the half where
+     it does not (a 68ch basis in 12px type is about 450px, over the 360 a
+     tablet's half allows; measured on 32 runs of basis text across the
+     eight renders before this rule). */
+  --measure-half: 100%;
+  --measure-prose: min(68ch, var(--measure-half));
 
   /* ============ THE CHART RAMP, for the shadcn chart primitive =============
      src/components/ui/chart.tsx reads --chart-1 through --chart-5. They did not
@@ -2460,5 +2475,10 @@
    own internals. */
 main :where(p, li, blockquote, dd) {
   max-width: var(--measure-prose);
+}
+@media (min-width: 768px) {
+  :root {
+    --measure-half: min(calc(50vw - 24px), 536px);
+  }
 }
 

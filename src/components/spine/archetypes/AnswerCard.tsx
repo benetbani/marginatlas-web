@@ -179,7 +179,8 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
         {foot ? (
           <div data-foot className="mt-4 flex items-start gap-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
             {foot.modeled ? <AtlasMark id="modeled" size={14} className="mt-px shrink-0" /> : null}
-            <span className="max-w-[56ch]">{foot.text}</span>
+            {/* A block, on the prose measure (his clause 51, 2026-09-20): the old `max-w-[56ch]` sat on an inline span, where a max-width does nothing, so the foot ran 434px at 768 on the city's masthead; the measure is the site's one token, 68ch or half the page, whichever is smaller. */}
+            <span className="block [max-width:var(--measure-prose)]">{foot.text}</span>
           </div>
         ) : null}
         {detail}

@@ -376,8 +376,16 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{focal.figure}</Fig>
         </div>
       ) : null}
-      <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
-      {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{withheldLine}</p> : null}
+      {/* THE BASIS AND THE WITHHELD LINE SIDE BY SIDE FROM md (his clause 51,
+          2026-09-20): each is a block of text and lives in one half; stacked,
+          the two at the half measure stood four lines tall under the opener
+          on the country's money card at 768 and left 312 by 120 of air beside
+          them (the page filter). One column on a phone, where the card is the
+          page's half. */}
+      <div className={withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
+        <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+        {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)] md:mt-0">{withheldLine}</p> : null}
+      </div>
       {drawBars ? <div className="relative mt-2.5 hidden lg:block" data-idea="I2">
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-border)]" style={{ top: PILL }} />
         {/* THE CEILING'S NAME STANDS AT THE END NO MEMBER TOUCHES (plan step 33's

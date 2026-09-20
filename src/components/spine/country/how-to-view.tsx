@@ -48,7 +48,7 @@ export function HowToBody({ iso2 }: { iso2: string }) {
       <Band hero>
         <Box id="howto">
           <h1 data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-tight tracking-tight text-[var(--c-ink)]">{d.title}</h1>
-          <p className="mt-2 max-w-[60ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.lead}</p>
+          <p className="mt-2 [max-width:var(--measure-prose)] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.lead}</p>
           {d.cells.length > 0 ? (
             <div className="mt-5 border-t border-[var(--c-border)] pt-4">
               <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.howto.cells}</div>
