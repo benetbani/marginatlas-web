@@ -53,11 +53,10 @@ import { buildCitiesSeat, type CitiesSeat } from "@/lib/spine/country_cities_sea
 import { COPY } from "@/lib/spine/copy";
 import { marginCardFromRows, type MarginCard } from "@/lib/spine/margin_rows";
 import { buildPeerTable, type PeerTable } from "@/lib/spine/peer_rows";
-import { buildHeroFacts } from "@/lib/spine/hero_facts";
+import { buildHeroBoard } from "@/lib/spine/hero_board";
+import { HeroBoard } from "@/components/spine/archetypes/HeroBoard";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
-import { buildGlance, type GlanceData } from "@/lib/spine/glance_rows";
-import { buildWorldSeat, type WorldSeatData } from "@/lib/spine/world_seat_rows";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { buildEntryBill, type EntryBillData } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts, type RunningCostsData } from "@/lib/spine/running_costs_rows";
@@ -79,8 +78,6 @@ import type { LoudSeat } from "@/lib/spine/loud_seats";
  */
 const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "take", label: "The tax burden" },
-  { id: "glance", label: "At a glance" },
-  { id: "world-seat", label: "Among the countries" },
   { id: "setup", label: "Registering, by legal form" },
   { id: "entry-bill", label: "The bill to register" },
   { id: "premises", label: "What premises cost" },
@@ -259,8 +256,12 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
      falls back to the seed's answer alone. Gated by the archetype harness
      (scripts/harness) across nine countries at three widths. */
   if (iso2) {
-    const facts = buildHeroFacts(iso2);
-    return <AnswerCard id="take" name={name} iso2={iso2} subtitle={facts.subtitle} answer={facts.answer} cells={facts.cells} answers={SURFACE_ANSWERS.country} />;
+    /* THE BOARD, his design of 2026-09-20 (HeroBoard.tsx, hero_board.ts):
+       the flag and the name on one line, the total tax burden as the main
+       figure, the placeholder image in the centre, the placed figures in one
+       column on the right. The answer card stays the masthead of the other
+       pages until he rules on theirs. */
+    return <HeroBoard id="take" board={buildHeroBoard(iso2)} answers={SURFACE_ANSWERS.country} />;
   }
   const eb = hero?.effective_burden;
   const rate = isNum(eb?.rate_pct) ? eb.rate_pct : undefined;
@@ -277,67 +278,6 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
   );
 }
 
-/**
- * At a glance, `01 glance` (MODEL.md 8.2; plan step 31, second dispatch,
- * 2026-09-17). THE SEAT IS HELD BY KvGrid AS CATALOGUED: the fact card with a
- * focal (a first cell at 30 taking the card's width, complete rows beneath)
- * is candidate 1 of FORM-CATALOG's CANDIDATES AWAITING HIS CLICK, and a form
- * not in the catalogue is a candidate awaiting his click; so the cells draw
- * at the head rung, nothing at 30, and the FOCAL finding on this card stands
- * until he clicks. The census reads this Box as KvGrid, which is the truth
- * of it today.
- *
- * The rows come from glance_rows.ts, pure over the files, every figure's
- * file and field in its header: the published GDP snapshot with its year
- * (the profile only for TW and YE, step 42), the pay pair's average and
- * minimum from the staff-cost card's own builder (the minimum withheld
- * wherever it is the 0.45 fill or the row is not tier A, step 43, gated by
- * verify_min_wage_not_fill), the curated net wealth (the regional fill
- * withheld), and the hero's own LLC registration time. Five cells at most;
- * the withheld line names what the card does not hold, with the count. The
- * mark on the opener reads the weakest cell, which today draws nothing; the
- * foot says the year and names the modelled cells in words instead.
- */
-function Glance({ glance }: { glance: GlanceData | null }) {
-  if (!glance) return null;
-  return (
-    <Box id="glance">
-      <Rail icon="scorecard" kicker={COPY.glance.kicker} sample={glance.confidence !== "measured"} />
-      <KvGrid cells={glance.cells} />
-      {glance.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.withheld}</p> : null}
-      {glance.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.basis}</p> : null}
-      {glance.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.foot}</p> : null}
-    </Box>
-  );
-}
-
-/**
- * Among the countries, `02 world-seat` (MODEL.md 8.2; the same dispatch).
- * THE SEAT IS HELD BY KvGrid: the composition's card is the placed-figures
- * form, a figure with the sentence "Higher than {n} countries in ten" under
- * it, which is candidate 1 in FORM-CATALOG's CANDIDATES AWAITING HIS CLICK
- * (the placement line under a fact) and not clicked; the placement sentences
- * are not drawn, nothing is at 30 (the FOCAL finding is expected), and the
- * foot says the placement is not shown yet. The census reads this Box as
- * KvGrid. The rows come from world_seat_rows.ts: the major-cities shop rent
- * (the profile's second tier, the composition's "major cities") and the
- * hero's own payroll rate (the rates file, 130 of 195, withheld on 65); the
- * bank lending rate is held for every country and printed for none, because
- * DATA-REQUIREMENTS item 38 says in its own words that the field has no
- * published definition, and the withheld line says so.
- */
-function WorldSeat({ seat }: { seat: WorldSeatData | null }) {
-  if (!seat) return null;
-  return (
-    <Box id="world-seat">
-      <Rail icon="vs-world" kicker={COPY.worldSeat.kicker} sample={seat.confidence !== "measured"} />
-      <KvGrid cells={seat.cells} />
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.withheld}</p>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.basis}</p>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.foot}</p>
-    </Box>
-  );
-}
 
 /**
  * THE CITIES, through the city-cards archetype in its "field" look, since
@@ -978,8 +918,6 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const locals = iso2 ? buildLocalsNotes(iso2) : null;
   const premises = iso2 ? buildPremisesStrip(iso2) : null;
   const hasSetup = Array.isArray(d.setup?.tiers) && d.setup.tiers.length > 0;
-  const glance = iso2 ? buildGlance(iso2) : null;
-  const seat = iso2 ? buildWorldSeat(iso2) : null;
   const bill = iso2 ? buildEntryBill(iso2) : null;
   const costs = iso2 ? buildRunningCosts(iso2) : null;
   const hasPremises = premises != null && premises.marks.length > 0;
@@ -1037,19 +975,17 @@ export function SpineCountryBody({ data }: { data?: any }) {
     <>
       <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
         <Masthead name={name} iso2={iso2} hero={d.hero} />
-        {/* `01 glance | 02 world-seat`, 1-1, the opening's one band (8.2; plan
-            step 31, second dispatch): what the country is in figures, and what
-            it charges a shop against the world, both quiet, both on KvGrid
-            while their clicked forms wait. Both cards exist for every country
-            in the taxonomy (the GDP has a profile fallback and the rent is held
-            for all 195), so the band holds two children; a country missing one
-            would show the survivor alone, honestly, as LONE CARD. */}
-        {glance || seat ? (
-          <Band split="1-1">
-            <Glance glance={glance} />
-            <WorldSeat seat={seat} />
-          </Band>
-        ) : null}
+        {/* `01 glance | 02 world-seat` LEFT THE PAGE on 2026-09-20 by his word
+            (rules/FOUNDER-VERDICTS.md, that date; MODEL.md 8.2 row 00's
+            bracket): "at a glance becomes irrelevant because we already put it
+            at the hero section", and "among the countries" is not drawn as a
+            card of unrelated figures; its rent goes to the city cards, its
+            payroll on-cost is the staff card's, its lending rate waits on the
+            financing section he asked for. The builders stay (glance_rows.ts,
+            world_seat_rows.ts) because the copy gates read their strings and
+            the board reads the same modules; the components below draw
+            nothing today and are kept until his corrections on the rest of
+            the page land, then retired with the others they take with them. */}
         {/* CHAPTER TURN ONE (8.2, "What it costs to open, and to run"; plan step
             31's sixth dispatch, 2026-09-18): the kit's Movement, the muted index
             and one plain heading, no eyebrow and no icon (8.4; the cell page

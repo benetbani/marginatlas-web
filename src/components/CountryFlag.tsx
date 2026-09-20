@@ -110,7 +110,7 @@ type Props = {
    *  `--flag-row` (20 by 30, a table row or a city card). Height AND width come
    *  from the rung, two of each, no third. Defaults to "row", the shape of
    *  nearly every call site today. */
-  size?: "hero" | "row";
+  size?: "hero" | "row" | "board";
 };
 
 /** Drop every radius utility a caller passes. See the note above. */
@@ -125,13 +125,17 @@ export function CountryFlag({ iso2, className = "", label, size = "row" }: Props
   const code = (iso2 || "").toLowerCase();
   if (code.length !== 2) return null;
   const alt = `${label ?? iso2ToName(iso2.toUpperCase()) ?? iso2.toUpperCase()} flag`;
-  const height = size === "row" ? "var(--flag-row)" : "var(--flag-hero)";
-  const width = size === "row" ? "var(--flag-row-w, 30px)" : "var(--flag-hero-w, 60px)";
+  const height = size === "row" ? "var(--flag-row)" : size === "board" ? "var(--flag-board)" : "var(--flag-hero)";
+  const width = size === "row" ? "var(--flag-row-w, 30px)" : size === "board" ? "var(--flag-board-w, 84px)" : "var(--flag-hero-w, 60px)";
+  /* THE BOARD RUNG DRAWS NO OUTLINE (his hero of 2026-09-20: "the flag should
+     have no borders"); the two older rungs keep theirs until he says. A third
+     rung by his word, the country masthead's alone. */
+  const outline = size === "board" ? "" : "outline outline-1 outline-[var(--c-border)]";
   return (
     <img
       src={`https://flagcdn.com/${code}.svg`}
       alt={alt}
-      className={`inline-block object-contain rounded-none outline outline-1 outline-[var(--c-border)] align-middle ${withoutRadius(className)}`}
+      className={`inline-block object-contain rounded-none ${outline} align-middle ${withoutRadius(className)}`}
       style={{ height, width }}
       loading="lazy"
     />

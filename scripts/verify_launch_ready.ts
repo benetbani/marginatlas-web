@@ -253,7 +253,7 @@ function itemA(): void {
   let decision = "MODEL.md 8.2 not read";
   let optionA = false;
   if (existsSync(MODEL_MD)) {
-    const floorPara = readFileSync(MODEL_MD, "utf8").split(/\r?\n/).find((l) => l.startsWith("**FLOOR: 21.**")) ?? "";
+    const floorPara = readFileSync(MODEL_MD, "utf8").split(/\r?\n/).find((l) => /^\*\*FLOOR: \d+\.\*\*/.test(l)) ?? "";
     const d = floorPara.match(/PLAN STEP 49, DECIDED[^\]]*?OPTION ([A-Z])/);
     if (d) { optionA = d[1] === "A"; decision = `MODEL 8.2's FLOOR bracket: plan step 49 decided option ${d[1]}${optionA ? " (the 90 ship with the cities seat drawn and counted toward the floor)" : " (a country with no covered city is held)"}`; }
     else decision = "MODEL 8.2's FLOOR paragraph carries no plan-step-49 decision";

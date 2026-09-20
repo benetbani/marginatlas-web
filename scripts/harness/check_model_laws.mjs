@@ -348,7 +348,10 @@ if (listArg && args.includes("--render")) {
 /* howto 6 since 2026-09-18: PART 8.9 (plan step 36) wrote the how-to page's
    spine and named its floor, six blocks; until then this function returned
    null for it and BLOCK FLOOR printed "no floor is named". */
-const FLOOR_BY_SURFACE = { country: 21, city: 17, cell: 16, industry: 12, hood: 7, howto: 6 };
+/* country 19 since 2026-09-20: his hero (MODEL 8.2 row 00's bracket) took
+   `01 glance` into itself and dissolved `02 world-seat` into the sections its
+   figures belong to, so 8.2 is nineteen blocks; the FLOOR paragraph says so. */
+const FLOOR_BY_SURFACE = { country: 19, city: 17, cell: 16, industry: 12, hood: 7, howto: 6 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

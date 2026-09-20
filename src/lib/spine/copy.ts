@@ -323,6 +323,29 @@ export const COPY = {
     cells: { clean: CLEAN_DEALING, admin: "Admin ease" },
     basis: "Two published indices, 0 to 100; interpolated for most countries.",
   },
+  /** THE HERO BOARD (his design of 2026-09-20, MODEL.md 8.2 row `00 take`'s
+   *  bracket; hero_board.ts): the column of supporting figures on the right of
+   *  the country's masthead, each a label, a figure, its unit, and a level
+   *  word that says where the country stands among the countries. The row
+   *  labels are the site's own names for the figures they print (the footing
+   *  card's "Clean dealing" and "Admin ease" referenced, never retyped; the
+   *  pay pair's "Average salary" said monthly). The level words are three
+   *  literals and say the level only, never good or bad. The placeholder line
+   *  under the image says what the image is until a real photograph lands
+   *  (his word: "put a placeholder at this moment"). Every string read aloud. */
+  heroBoard: {
+    rows: {
+      clean: CLEAN_DEALING,
+      admin: "Admin ease",
+      llcDays: "Days to trade",
+      salaryMonth: "Average salary",
+      llcCost: "Cost to register",
+    },
+    units: { of100: "of 100", day: "day", days: "days", aMonth: "a month", allIn: "all in" },
+    levels: { high: "High", medium: "Medium", low: "Low" },
+    levelBasis: "Among the countries; the cost and the days are an LLC's.",
+    placeholder: "Placeholder photograph",
+  },
   /** AT A GLANCE (MODEL.md 8.2, `01 glance`; plan step 31, second dispatch,
    *  2026-09-17): the country's own figures, each in its own unit, no rank
    *  and no verdict. The pay cells take the pay bars' own words above

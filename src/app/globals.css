@@ -2415,6 +2415,14 @@
      "the flag which is distorted"). Two rungs, and no third. */
   --flag-hero: 40px;
   --flag-row: 20px;
+  /* THE BOARD RUNG (his hero of 2026-09-20): the country page's masthead
+     flag, no outline, nothing to its left, the country name beside it with
+     letters of this same height. HELD AT 40, THE LADDER'S TOP: he asked for
+     a bigger flag, and the name's letters must match it, and PART 4 lets no
+     text stand above the page's 40 answer figure; so the rung is the ladder's
+     top and his ruling on the two laws is owed (COUNTRY-PAGE-SECTIONS-PLAN-
+     2026-09-20.md). A third rung by his word; the two above stay. */
+  --flag-board: 40px;
   /* EVERY FLAG IS THE SAME WIDTH (founder, 2026-09-11, verbatim:
      "all-flags-same-width-please-madatory-always"). A flag at its own ratio
      gives a column of them a ragged edge, because Switzerland is square and
@@ -2428,6 +2436,7 @@
      the harness can read the number straight off :root. */
   --flag-hero-w: 60px;
   --flag-row-w: 30px;
+  --flag-board-w: 60px;
 }
 
 /* ================== THE WORDS ARE NARROW, THE PICTURES ARE WIDE ==========

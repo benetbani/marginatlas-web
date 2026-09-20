@@ -148,7 +148,8 @@ function inPage(width) {
            container measured 389px past the card, and the eye saw a table
            that scrolls. The rect is cut to every clipping ancestor inside the
            card before it is judged. */
-        for (let p = el.parentElement; p && p !== card; p = p.parentElement) {
+        /* the element's own box clips too: a truncated label (overflow hidden, an ellipsis) keeps its full text in the range rect */
+        for (let p = el; p && p !== card; p = p.parentElement) {
           const ps = getComputedStyle(p);
           if (ps.overflowX !== "visible" || ps.overflowY !== "visible") { const pb = p.getBoundingClientRect(); rect = { left: Math.max(rect.left, pb.left), right: Math.min(rect.right, pb.right), top: Math.max(rect.top, pb.top), bottom: Math.min(rect.bottom, pb.bottom) }; }
         }

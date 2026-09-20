@@ -253,7 +253,8 @@ function doorsOf(page: string, html: string): { doors: Walked[]; termini: Array<
   for (const a of doc.querySelectorAll("[data-archetype] a[href], [data-form] a[href]")) if (!seen.has(a)) push(a, "link", "", text(a));
   const termini = [...doc.querySelectorAll('[data-archetype="terminus"]')].map((t) => ({ card: cardOf(t), labels: [...t.querySelectorAll("a[data-door]")].map((a) => text(a)) }));
   const tableAnchors = [...doc.querySelectorAll('[data-archetype="compare-table"] a[href]')].map((a) => ({ card: cardOf(a), href: a.getAttribute("href") ?? "" }));
-  const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"]')].map((m) => ({ card: `answer-card#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div")) }));
+  /* The country's masthead is the hero board since 2026-09-20 (HeroBoard.tsx, his design); it declares its answer and its markers the way the answer card does. */
+  const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"], [data-archetype="hero-board"][data-level="page"]')].map((m) => ({ card: `${m.getAttribute("data-archetype")}#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div")) }));
   return { doors, termini, tableAnchors, mastheads };
 }
 
@@ -308,7 +309,7 @@ for (const e of entries) {
     }
   }
   if (expected && mastheads.length === 0) {
-    reds.push({ file: e.path, detail: `${e.name}: no page-level masthead in the render`, remedy: "the surface's view must draw AnswerCard at level page" });
+    reds.push({ file: e.path, detail: `${e.name}: no page-level masthead in the render`, remedy: "the surface's view must draw AnswerCard or HeroBoard at level page" });
     say(`  x  no page-level masthead`);
   }
 

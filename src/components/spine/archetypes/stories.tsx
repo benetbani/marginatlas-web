@@ -12,6 +12,8 @@ import { marginCardFromSnapshot, snapshotCountries, SNAPSHOT_TAKEN } from "@/lib
 import { buildPeerTable, buildCityPeerTable } from "@/lib/spine/peer_rows";
 import { COPY } from "@/lib/spine/copy";
 import { AnswerCard } from "./AnswerCard";
+import { HeroBoard } from "./HeroBoard";
+import { buildHeroBoard } from "@/lib/spine/hero_board";
 import { KvGrid } from "./KvGrid";
 import { cityHeroFacts, type CityHeroInstance } from "@/lib/spine/city_hero_facts";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
@@ -301,6 +303,22 @@ export const industryKey = (handle: string, block: string) => `industry:${handle
 export function pickIndustryTakeInstances(): Instance[] {
   return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "take")).filter(([, i]) => industryHeroFacts(i.id)).map(([h, i]) => ({ iso2: industryKey(h, "take"), why: i.why }));
 }
+/** THE HERO BOARD, the country masthead to his design of 2026-09-20 (HeroBoard.tsx, hero_board.ts), over the answer card's own country instances (the exemplar, the data-poor, the extreme names, one per profile tier): the board draws on every country the answer card draws on, with as many rows as the files hold for it, so the sheet shows the column at five rows, at fewer, and with a row's level missing where the set is thin. */
+export function pickHeroBoardInstances(): Instance[] {
+  return pickAnswerCardInstances();
+}
+export function HeroBoardStories({ instances = pickHeroBoardInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="hero-board">
+      {instances.filter((i) => /^[A-Z]{2}$/.test(i.iso2)).map((i) => (
+        <Story kind="hero-board" key={i.iso2} iso2={i.iso2} why={i.why}>
+          <HeroBoard id={`take-board-${i.iso2.toLowerCase()}`} board={buildHeroBoard(i.iso2)} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+
 export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell = [] }: { instances?: Instance[]; cell?: CellHeroInstance[] }) {
   return (
     <div data-stories="answer-card">
@@ -2126,6 +2144,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
   const cityCloses = pickCityCloseInstances(cityHero);
   return {
     "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero), ...pickIndustryTakeInstances(), ...pickHoodTakeInstances()],
+    "hero-board": pickHeroBoardInstances(),
     "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars"), ...pickHoodRankInstances()],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero), ...pickIndustryPlacesInstances(industryPlaces, "compare-table"), ...pickHoodCompareInstances()],
     "card-pager": pickCardPagerInstances(),
