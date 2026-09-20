@@ -1067,7 +1067,19 @@ for (const w of WIDTHS) {
   if (shots) {
     mkdirSync("scratchpad/harness/shots", { recursive: true });
     const shotName = ONLY == null ? "archetypes" : `only-${onlyKind}${onlyKey == null ? "" : `-${onlyKey.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}`;
-    await page.screenshot({ path: `scratchpad/harness/shots/${shotName}-${w}.jpeg`, type: "jpeg", quality: 85, fullPage: true });
+    /* THE PHOTOGRAPH IS A RECORD, NOT A CHECK (2026-09-20 evening): every rule
+       above has already read the drawn boxes by the time this line runs. A
+       full-page capture of the whole sheet (241 instances, tens of thousands
+       of pixels tall at 375) needs a bitmap the browser cannot always get on
+       this machine, and twice in one evening the chain read "Page.captureScreenshot:
+       Unable to capture screenshot" at 700 to 1,100 MB free as a failed gate
+       while the same run alone was green. A photo that cannot be taken is
+       said, and the checks stand on their own reds. */
+    try {
+      await page.screenshot({ path: `scratchpad/harness/shots/${shotName}-${w}.jpeg`, type: "jpeg", quality: 85, fullPage: true });
+    } catch (e) {
+      console.log(`  photo skipped at ${w}: the browser could not capture the sheet (${String(e && e.message ? e.message : e).replace(/\s+/g, " ").slice(0, 120)}); the checks above stand`);
+    }
   }
   await ctx.close();
 }
