@@ -17,7 +17,8 @@
  *   50 LEVEL OVER THREE   more than three cards on one level
  *   52 LEVEL UNFILLED     the cards cover under 95 percent of the level's width
  *                         (a lone card at two thirds with air beside it reds)
- *   53 LEVEL VISUALS      no visual card on a level, or three
+ *   53 LEVEL VISUALS      no visual card on a level, or three (a level that
+ *                         is the terminus alone is exempt: doors, no data)
  * THE CARD RULES read every card at every width:
  *   51 TEXT WIDE          a run of text (60 characters or more) whose lines
  *                         measure over half the page's content width (1280 and
@@ -123,7 +124,14 @@ function inPage(width) {
       const fill = usable > 0 ? covered / usable : 1;
       if (fill < 0.95) red(label, "LEVEL UNFILLED", `the cards cover ${Math.round(fill * 100)} percent of the level's ${Math.round(br.width)}px; ${kids.length === 1 ? "a lone card with air beside it" : "air between or beside the cards"} (clause 52)`);
       const visuals = kids.filter((k) => isVisual(k.matches(CARD) ? k : (k.querySelector(CARD) || k))).length;
-      if (visuals === 0) red(label, "LEVEL VISUALS", `no visual card on this level (clause 53); the cards are ${kids.map((k) => archetypeOf(k.matches(CARD) ? k : (k.querySelector(CARD) || k))).join(", ")}`);
+      /* THE TERMINUS LEVEL HOLDS NO DATA (2026-09-20 evening): a level whose
+         only card is the terminus is three doors out of the page, nothing to
+         draw; clause 53 is his rule for the levels that carry a section's
+         data ("at least one visualization" of the statistics on that level).
+         The hero level is NOT exempt: the answer is data, and his design for
+         the country's hero puts a picture and placed figures in it. */
+      const terminusOnly = kids.length === 1 && archetypeOf(kids[0].matches(CARD) ? kids[0] : (kids[0].querySelector(CARD) || kids[0])) === "terminus";
+      if (visuals === 0 && !terminusOnly) red(label, "LEVEL VISUALS", `no visual card on this level (clause 53); the cards are ${kids.map((k) => archetypeOf(k.matches(CARD) ? k : (k.querySelector(CARD) || k))).join(", ")}`);
       if (visuals > 2) red(label, "LEVEL VISUALS", `${visuals} visual cards on one level; two is the cap (clause 53)`);
     }
   }
