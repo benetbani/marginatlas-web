@@ -690,13 +690,15 @@ export const COPY = {
   citySeat: {
     kicker: "Among the cities",
     cells: { gdp: "Metro GDP" },
-    /** One unit clause per printed cell, joined with "; " (both print on every city today: "GDP across the metro area in a year; living costs with rent, where New York is 100."). */
-    units: { gdp: "GDP across the metro area in a year", living: "living costs with rent, where New York is 100" },
+    /** One unit clause per printed figure, joined with "; " (both print on every city today: "GDP across the metro area in a year; living costs with rent, cheapest city 1, dearest 100."). The living clause is the country card's since 2026-09-20 (his ruling: the scale's ends are never named). */
+    units: { gdp: "GDP across the metro area in a year", living: "living costs with rent, cheapest city 1, dearest 100" },
     /** The foot is composed: the modelled clauses that apply (the GDP on every city; the cost of living on the 239 hand-anchored rows, not on the 13 read city-level), joined with " and ", then the placement sentence, whose pronoun follows the count of cells ("each" over two, "it" over one). On the exemplar: "The metro GDP is approximate and the cost of living is anchored by hand; where each sits among the cities is not shown yet." The word "index" never prints: BANNED CONSTRUCTION names it as machinery. */
     footGdp: "the metro GDP is approximate",
     footLiving: "the cost of living is anchored by hand",
     footPlacement: "where each sits among the cities is not shown yet.",
     footPlacementOne: "where it sits among the cities is not shown yet.",
+    /** Since 2026-09-20 the cost of living stands on the city scale (the bar), so only the GDP's placement is unshown and the sentence names it. */
+    footPlacementGdp: "the GDP's place among the cities is not shown yet.",
   },
   /** The city's terminus (city:close, run 19): the doors out of a city page; the kicker is the close's.
    *  THE DISTRICT DOOR NAMES NO DISTRICT (plan step 32's sixth dispatch,

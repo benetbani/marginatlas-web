@@ -78,8 +78,16 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines" }: { 
     else groups.push({ group: c.group, cells: [c] });
   }
   const anyHeading = groups.some((g) => g.group);
+  /* THE GRID'S TWO SHAPES, DECLARED (his clause 55, the page laws' KIND TWINS,
+     2026-09-20): a group of an odd count above one leads with a cell across
+     both columns ("lead"), an even count is a plain grid of pairs ("grid"), a
+     lone cell takes the width ("one"). Two grids on one page are twins only
+     when they are the same shape; the shape is read off the first group, the
+     one the eye meets. */
+  const first = groups[0].cells.length;
+  const form = first === 1 ? "one" : first % 2 === 1 ? "lead" : "grid";
   return (
-    <div data-idea="I8" data-archetype="kv-grid" data-groups={String(groups.length)} className={`[container-type:inline-size] ${className}`}>
+    <div data-idea="I8" data-archetype="kv-grid" data-groups={String(groups.length)} data-form={form} className={`[container-type:inline-size] ${className}`}>
       {/* THE GROUPS: stacked below 900px, side by side above it, equal widths. */}
       <div className="grid gap-x-10 gap-y-4 [@container(min-width:900px)]:grid-flow-col [@container(min-width:900px)]:auto-cols-fr">
         {groups.map((g, gi) => (

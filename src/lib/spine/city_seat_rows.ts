@@ -27,9 +27,16 @@
  *    GDP ... cross-reference of public city statistics; not authoritative
  *    but consistent" (DATA-REQUIREMENTS item 31). Marked modelled on every
  *    city, and the foot says approximate in words.
- *  - COST OF LIVING: `cost_of_living_index`, the index as held, whole, where
- *    New York is 100 (the basis says so; the country's running-costs cell
- *    prints the same index under the same label, one name for one index).
+ *  - COST OF LIVING: `cost_of_living_index`, the index as held, PUT ON THE
+ *    CITY SCALE since the evening of 2026-09-20 (his ruling of that day on
+ *    the country's running-costs card, applied at this altitude: 1 at the
+ *    cheapest covered city, 100 at the dearest, neither named; the card
+ *    printed "where New York is 100" before, a named city). The view draws
+ *    it as the segmented bar the country's card draws, `SegmentBar`, so
+ *    the figure `living` here is the scale figure (`costOfLivingOnCityScale`
+ *    over the same file's ends) and the source index stays in
+ *    `figures.livingIndex` for the gates; the cell is no longer in `cells`
+ *    (the grid holds the GDP alone).
  *    Per row (item 31): "Numbeo COL (city-level)" is a direct reading on 13
  *    cities and prints measured; "hand-anchor" on 239 is an analyst's
  *    estimate against the index and prints modelled, the foot naming it.
@@ -45,6 +52,7 @@
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
+import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 
 type CityRow = {
@@ -69,7 +77,9 @@ export type CitySeatData = {
   iso2: string;
   name: string;
   cells: KvCell[];
-  figures: { gdp: number | null; living: number | null };
+  /** `living` is the figure on the city scale (1 to 100), `livingIndex` the source index it was read from; `livingMeasured` says whether the row's index was read at city level. */
+  figures: { gdp: number | null; living: number | null; livingIndex: number | null };
+  livingMeasured: boolean;
   basis: string;
   foot: string;
   confidence: "measured" | "modeled";
@@ -83,11 +93,11 @@ export function buildCitySeat(slug: string): CitySeatData | null {
   const gdp = isPos(city.gdp_b) ? city.gdp_b : null;
   if (gdp != null) cells.push({ key: "gdp", label: COPY.citySeat.cells.gdp, value: usd(gdp * 1e9), confidence: "modeled" });
 
-  const living = isPos(city.cost_of_living_index) ? Math.round(city.cost_of_living_index) : null;
+  const livingIndex = isPos(city.cost_of_living_index) ? Math.round(city.cost_of_living_index) : null;
+  const living = livingIndex != null ? costOfLivingOnCityScale(city.cost_of_living_index as number) : null;
   const livingMeasured = living != null && isLivingRead(city.sources?.cost_of_living_index);
-  if (living != null) cells.push({ key: "living", label: COPY.runningCosts.cells.living, value: String(living), confidence: livingMeasured ? "measured" : "modeled" });
 
-  if (cells.length === 0) return null;
+  if (cells.length === 0 && living == null) return null;
 
   /* The basis names a unit for every cell the card prints and for none it does not (the glance's rule). */
   const unitParts: string[] = [];
@@ -99,7 +109,8 @@ export function buildCitySeat(slug: string): CitySeatData | null {
   const modelled: string[] = [];
   if (gdp != null) modelled.push(COPY.citySeat.footGdp);
   if (living != null && !livingMeasured) modelled.push(COPY.citySeat.footLiving);
-  const placement = cells.length > 1 ? COPY.citySeat.footPlacement : COPY.citySeat.footPlacementOne;
+  /* The bar places the cost of living among the cities (the scale's ends are the covered cities' cheapest and dearest), so the unshown placement is the GDP's alone where both print. */
+  const placement = living != null && gdp != null ? COPY.citySeat.footPlacementGdp : cells.length > 1 ? COPY.citySeat.footPlacement : COPY.citySeat.footPlacementOne;
   const foot = (modelled.length > 0 ? `${modelled.join(" and ")}; ${placement}` : placement).replace(/^./, (ch) => ch.toUpperCase());
 
   return {
@@ -107,7 +118,8 @@ export function buildCitySeat(slug: string): CitySeatData | null {
     iso2: String(city.iso2).toUpperCase(),
     name: city.name,
     cells,
-    figures: { gdp, living },
+    figures: { gdp, living, livingIndex },
+    livingMeasured,
     basis,
     foot,
     confidence: modelled.length > 0 ? "modeled" : "measured",

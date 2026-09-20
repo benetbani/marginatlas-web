@@ -32,8 +32,13 @@
  *   58 PARTS NOT REVEALED a card declaring `data-parts` over 1 with no
  *                         disclosure inside it (details, a tab list, a popup)
  * THE PAGE RULES read the page once at 1280:
- *   55 KIND REPEATED      one archetype on more than two cards
- *   55 KIND TWINS         one archetype on two cards with the same variant
+ *   55 KIND REPEATED      one VISUAL archetype on more than two cards (his
+ *                         words: "one kind of visual"; a figure card or a
+ *                         fact grid is not a visual, and the first run
+ *                         counted them, four kv-grids and four bento cells
+ *                         read as a repeated kind; corrected 2026-09-20)
+ *   55 KIND TWINS         one visual archetype on two cards with the same
+ *                         variant
  * 54 (a text-only card's declared form) and 57 (the first question, the
  * family in the catalogue) are the composition's and the sheet's; the machine
  * holds 54 only as `data-text-form` where a card declares it.
@@ -188,7 +193,7 @@ function inPage(width) {
   /* THE PAGE, once at 1280: kinds and twins. */
   if (width >= 1280) {
     const byKind = new Map();
-    for (const card of cards) { const k = archetypeOf(card); if (!byKind.has(k)) byKind.set(k, []); byKind.get(k).push(card); }
+    for (const card of cards) { if (!isVisual(card)) continue; const k = archetypeOf(card); if (!byKind.has(k)) byKind.set(k, []); byKind.get(k).push(card); }
     for (const [kind, list] of byKind) {
       if (kind === "kit") continue;
       if (list.length > 2) red(list.map(idOf).join(" | "), "KIND REPEATED", `${kind} on ${list.length} cards; two is the cap (clause 55)`);

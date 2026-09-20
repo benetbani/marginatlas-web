@@ -19,7 +19,11 @@
  *    line ("66 of 100"), the figure at the body rung in ink and the total in
  *    grey; an optional level chip after them.
  *  - `data-archetype="segment-bar"` on the row, `data-visual="1"`; the page
- *    laws read the card that holds it as a visual card.
+ *    laws read the card that holds it as a visual card. `data-form` says
+ *    which of the bar's two readings this is, "split" (a whole in two named
+ *    parts, the rest named under the bar) or "scale" (a position on a scale
+ *    of 100, nothing under it), so two bars on one page are twins only when
+ *    they are the same reading (clause 55).
  *  - no accent text: the fill is colour on a drawing, not a figure in the
  *    accent, so the accent budget does not count it.
  */
@@ -31,7 +35,7 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
   const share = total > 0 ? Math.max(0, Math.min(1, value / total)) : 0;
   const filled = Math.round(share * segments);
   return (
-    <div data-archetype="segment-bar" data-visual="1" data-filled={String(filled)} data-segments={String(segments)} className="py-2">
+    <div data-archetype="segment-bar" data-visual="1" data-form={rest ? "split" : "scale"} data-filled={String(filled)} data-segments={String(segments)} className="py-2">
       <div className="mb-1.5 flex items-center justify-between gap-3">
         <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{label}</span>
         <span className="flex items-center gap-2 whitespace-nowrap">

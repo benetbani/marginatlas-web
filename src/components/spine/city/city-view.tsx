@@ -103,6 +103,7 @@ import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCityPeopleTable, type CityPeopleTable } from "@/lib/spine/character_rows";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
+import { Ring } from "@/components/spine/archetypes/Ring";
 import { CardPager } from "@/components/spine/archetypes/CardPager";
 import { buildCityNeighbourhoods, type CityNeighbourhoodsData } from "@/lib/spine/hood_rows";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
@@ -192,13 +193,29 @@ function Glance({ glance }: { glance: CityGlanceData | null }) {
  * metro GDP and the cost of living, 252 of 252, the GDP marked modelled on
  * every row (no row carries a source, item 31) and the cost of living
  * measured on the 13 city-level pulls, modelled on the 239 hand anchors.
+ *
+ * THE COST OF LIVING IS THE SEGMENTED BAR ON THE CITY SCALE since the evening
+ * of 2026-09-20 (plan step 4 of that evening): his ruling on the country's
+ * running-costs card, "cost of living on a scale, the cheapest city 1, the
+ * dearest 100, the city never named", applied at this altitude, where the
+ * cell printed the raw index "where New York is 100". The same `SegmentBar`
+ * the country card draws, the same words (`COPY.runningCosts`), the figure
+ * off `costOfLivingOnCityScale` over the same file's ends; the metro GDP
+ * stays the grid's one cell, under the bar (the bar first: the card's kind
+ * to the checkers is its first archetype, and the drawing is what the card
+ * is). The card is the level's visual (his clause 53: the glance beside it
+ * is figures). Exported for the sheet, which draws the page's own card and
+ * never a copy of its markup.
  */
-function AmongCities({ seat }: { seat: CitySeatData | null }) {
+export function AmongCities({ seat, id = "among-cities" }: { seat: CitySeatData | null; id?: string }) {
   if (!seat) return null;
+  const living = seat.figures.living;
   return (
-    <Box id="among-cities">
+    <Box id={id}>
       <Rail icon="vs-world" kicker={COPY.citySeat.kicker} sample={seat.confidence !== "measured"} />
-      <KvGrid cells={seat.cells} />
+      {/* No unit after the figure: "of 100" stands on the premises bento's empty-shops cell in the same first screen, and the art-direction gate's H4 reads a phrase twice there; the basis under the bar says the scale's ends. */}
+      {living != null ? <SegmentBar label={COPY.runningCosts.rows.living} value={living} figure={String(living)} unit="" /> : null}
+      {seat.cells.length > 0 ? <div className={living != null ? "mt-3" : ""}><KvGrid cells={seat.cells} /></div> : null}
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.basis}</p>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.foot}</p>
     </Box>
@@ -274,15 +291,51 @@ function Living({ living }: { living: CityLivingData | null }) {
  * rows that printed the rent a second time in the band) is retired with
  * this dispatch.
  */
-function Runway({ runway }: { runway: CityRunwayData | null }) {
+/**
+ * Rent against income, `06 runway`: THE SHARE IS THE RING since the evening of
+ * 2026-09-20 (plan step 4 of that evening; Ring.tsx, his B4 and the gold
+ * standard's B31): a year of one-bed rent as a share of a year's typical
+ * income is a share of a whole, and his ruling of 2026-09-19 draws every
+ * share of a whole. The ring in ink (quiet: the city's three accents are
+ * spent above), the figure inside it, the typical income and its unit as
+ * the words beside the ring with the basis and the foot under them; the
+ * grid that held the two cells leaves this card (the page's fourth kv-grid,
+ * clause 55's KIND REPEATED). Where the share is withheld (over 100, or no
+ * rent on file) the card keeps the income cell on the grid under the line,
+ * the builder's shape. The card is its level's visual (clause 53: the living
+ * costs beside it are figures). Exported for the sheet.
+ */
+export function Runway({ runway, id = "runway" }: { runway: CityRunwayData | null; id?: string }) {
   if (!runway) return null;
+  const pct = runway.figures.pct;
+  const income = runway.cells.find((c) => c.key === "income");
+  if (pct == null || !income) {
+    return (
+      <Box id={id}>
+        <Rail icon="commercial-rent" kicker={COPY.cityRunway.kicker} sample={runway.confidence !== "measured"} />
+        <KvGrid cells={runway.cells} />
+        {runway.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.withheld}</p> : null}
+        <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.basis}</p>
+        {runway.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
+      </Box>
+    );
+  }
   return (
-    <Box id="runway">
+    /* The spare height the level lends this card splits above and below the ring's row (the trade's `08 clears`, BentoMetric's rule), so the foot is never a blank. */
+    <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
       <Rail icon="commercial-rent" kicker={COPY.cityRunway.kicker} sample={runway.confidence !== "measured"} />
-      <KvGrid cells={runway.cells} />
-      {runway.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.withheld}</p> : null}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.basis}</p>
-      {runway.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
+      <div className="grid flex-1 grid-cols-1 items-center gap-4 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
+        <Ring value={pct} figure={`${pct}%`} caption={COPY.cityRunway.cells.share} />
+        <div>
+          <div data-row="income" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{income.label}</div>
+          <div className="fig mt-1 text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">
+            {income.value}
+            {income.note ? <span className="ml-1 text-[length:var(--t-micro)] font-normal normal-case tracking-normal text-[var(--c-muted)]">{income.note}</span> : null}
+          </div>
+          <p className="mt-3 max-w-[30ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.basis}</p>
+          {runway.foot ? <p className="mt-1 max-w-[30ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
+        </div>
+      </div>
     </Box>
   );
 }
@@ -554,7 +607,8 @@ function CharacterPeople({ people }: { people: CityPeopleTable | null }) {
  * with the seed's block. The day the notes land the NoteList takes this
  * seat with `editorial` on (`data-editorial="1"`).
  */
-function LocalsSeat() {
+/** The seat the page held until 2026-09-20 (the band's note); kept for the sheet's blocked-seat story and the day the notes land. */
+export function LocalsSeat() {
   return <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />;
 }
 
@@ -601,7 +655,7 @@ function Neighbourhoods({ hoods }: { hoods: CityNeighbourhoodsData | null }) {
  * `SeasonSplit` (the stacked bar off the adapter's `demand` block, the
  * page's first I3) is retired with the block.
  */
-function Season({ season }: { season: CitySeasonData | null }) {
+export function Season({ season, id = "season" }: { season: CitySeasonData | null; id?: string }) {
   /* A SHARE OF A WHOLE IS DRAWN (his ruling of 2026-09-19 on this very card:
      "residents and visitors, you have just slapped a percentage thing, no
      visualization"): the year's footfall as one segmented bar of 100 (his
@@ -614,7 +668,7 @@ function Season({ season }: { season: CitySeasonData | null }) {
   const r = season.figures.resident, v = season.figures.visitor;
   const drawn = r != null && v != null && Number.isFinite(r) && Number.isFinite(v);
   return (
-    <Box id="season">
+    <Box id={id}>
       <Rail icon="seasonality" kicker={COPY.citySeason.kicker} sample={season.confidence !== "measured"} />
       {drawn ? (
         <SegmentBar label={COPY.citySeason.cells.residents} value={r} figure={`${Math.round(r)}%`} unit={COPY.citySeason.unit} rest={`${COPY.citySeason.cells.visitors} ${Math.round(v)}%`} />
@@ -836,9 +890,15 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <CharacterPeople people={people} />
         </Band>
       ) : null}
-      <Band split="2-1" stack="lg">
-        <LocalsSeat />
-      </Band>
+      {/* `13 locals` WITHHELD since the evening of 2026-09-20: the seat printed
+          "Not gathered yet: what locals know about opening here." on the
+          London page he is shown, the line he refused on 2026-09-19 ("will
+          you say not gathered yet?", over the 2026-09-08 seated reading). The
+          seat component stays for the sheet's story; the card returns with
+          the notes (item 6), and the floor with it. The people table stands
+          alone at two thirds until then (LEVEL UNFILLED, recorded for his
+          corrections: no card on this page pairs with a 487-tall table by
+          measurement, the plan's step 4 readings). */}
       {/* `14 neighbourhoods | 15 season`, 2-1, the neighbourhoods wide (8.3):
           the pager or its seat beside the two shares. Both cards exist for
           every listed city (the scheme for 252, the shares for 252), so the

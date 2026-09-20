@@ -44,6 +44,7 @@ import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
+import { AmongCities, Runway, Season } from "@/components/spine/city/city-view";
 import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason } from "@/lib/spine/fact_rows";
 import { buildCityNeighbourhoods, citiesWithScheme } from "@/lib/spine/hood_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
@@ -1015,7 +1016,7 @@ export function pickKvGridInstances(): Instance[] {
      list and the city shard and nothing else. */
   take("city:london:glance", "city block 01 on the exemplar: three cells, the human development index withheld, the business count modelled in the foot");
   take("city:abidjan:glance", "city block 01 thin: two cells, the visitor count not on file, every cell held so no foot");
-  take("city:london:among", "city block 02 on the exemplar: the metro GDP and the living index, both modelled, the placement not drawn");
+  /* `city:london:among` is a segment-bar story since 2026-09-20 (pickCitySegmentBarInstances). */
   /* THE CITY'S LIVING AND RUNWAY SEATS (MODEL.md 8.3 `05 living` and `06
      runway`; plan step 32's third dispatch, 2026-09-18), keyed
      "city:<slug>:living" and "city:<slug>:runway", the seats of candidates 1
@@ -1031,9 +1032,9 @@ export function pickKvGridInstances(): Instance[] {
   const citySlugs = listedCitySlugs();
   const modelledLiving = citySlugs.find((s) => buildCityLiving(s)?.confidence === "modeled");
   if (modelledLiving) take(`city:${modelledLiving}:living`, "city block 05 modelled: every cell modelled, the foot naming all four");
-  take("city:london:runway", "city block 06 on the exemplar: the share and the typical income, both held");
+  /* `city:<slug>:runway` are ring stories since 2026-09-20 (pickCityRingInstances); the withheld state keeps the grid and stays here. */
   const overs = citySlugs.map((s) => ({ s, r: buildCityRunway(s) })).filter((x) => x.r?.figures.overPct != null).sort((a, b) => b.r!.figures.overPct! - a.r!.figures.overPct! || a.s.localeCompare(b.s));
-  if (overs[0]) take(`city:${overs[0].s}:runway`, `city block 06 withheld: the share over 100 (${overs[0].r!.figures.overPct} percent) withheld with its line, the typical income alone`);
+  if (overs[0]) take(`city:${overs[0].s}:runway`, `city block 06 withheld: the share over 100 (${overs[0].r!.figures.overPct} percent) withheld with its line, the typical income alone on the grid`);
   /* THE SEASON PAIR (MODEL.md 8.3 `15 season`; plan step 32's sixth dispatch,
      2026-09-18), keyed "city:<slug>:season", at the narrow side of its 2-1
      band (347 at 1280): the exemplar (the slope over arrivals, London's shard
@@ -1042,11 +1043,35 @@ export function pickKvGridInstances(): Instance[] {
      are modelled in the shard (the foot saying so), and the first withheld,
      if any: none today, and a story is never typed, so the withheld lines
      are proven by the copy gates alone until a city reaches them. */
-  take("city:london:season", "city block 15 on the exemplar: the two shares from the slope over arrivals, modelled, the foot saying so");
+  /* `city:<slug>:season` are segment-bar stories since 2026-09-20 (pickCitySegmentBarInstances); the withheld state stays here, a line where the bar would stand. */
   const seasons = citySlugs.map((s) => ({ s, d: buildCitySeason(s) })).filter((x) => x.d);
-  const heldSeason = seasons.find((x) => x.d!.from === "shard" && x.d!.confidence === "measured"); if (heldSeason) take(`city:${heldSeason.s}:season`, "city block 15 held: both shares from the shard, no foot");
-  const modelledSeason = seasons.find((x) => x.d!.from === "shard" && x.d!.confidence === "modeled"); if (modelledSeason) take(`city:${modelledSeason.s}:season`, "city block 15 modelled: both shares from the shard, the foot saying modelled");
   const withheldSeason = seasons.find((x) => x.d!.withheld); if (withheldSeason) take(`city:${withheldSeason.s}:season`, "city block 15 withheld: the line where the shares would stand");
+  return out;
+}
+
+/** THE SEGMENTED BAR'S CITY INSTANCES (SegmentBar.tsx, his gold standard's B27; plan step 4 of 2026-09-20 evening), keyed "city:<slug>:among" and "city:<slug>:season", drawn by the page's own cards (city-view.tsx AmongCities, Season): the exemplar's cost of living on the city scale beside its metro GDP; the exemplar's footfall shares (the slope over arrivals, modelled), the first city by slug whose shares are held in the shard, the first whose shares are modelled there. */
+export function pickCitySegmentBarInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (key: string, why: string) => { if (!seen.has(key)) { seen.add(key); out.push({ iso2: key, why }); } };
+  take("city:london:among", "city block 02 on the exemplar: the cost of living as the bar on the city scale, the metro GDP the grid's one cell, both modelled, the placement not drawn");
+  take("city:london:season", "city block 15 on the exemplar: the two shares from the slope over arrivals as one bar of 100, modelled, the foot saying so");
+  const citySlugs = listedCitySlugs();
+  const seasons = citySlugs.map((s) => ({ s, d: buildCitySeason(s) })).filter((x) => x.d);
+  const heldSeason = seasons.find((x) => x.d!.from === "shard" && x.d!.confidence === "measured"); if (heldSeason) take(`city:${heldSeason.s}:season`, "city block 15 held: both shares from the shard as one bar, no foot");
+  const modelledSeason = seasons.find((x) => x.d!.from === "shard" && x.d!.confidence === "modeled"); if (modelledSeason) take(`city:${modelledSeason.s}:season`, "city block 15 modelled: both shares from the shard as one bar, the foot saying modelled");
+  return out;
+}
+
+/** THE RING'S CITY INSTANCES (Ring.tsx; the same step), keyed "city:<slug>:runway", drawn by the page's own card (city-view.tsx Runway): the exemplar's share of income beside its typical income, and the first city by slug whose share is under a quarter, if any. */
+export function pickCityRingInstances(): Instance[] {
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (key: string, why: string) => { if (!seen.has(key)) { seen.add(key); out.push({ iso2: key, why }); } };
+  take("city:london:runway", "city block 06 on the exemplar: rent's share of income as the ring, the typical income beside it, both held");
+  const citySlugs = listedCitySlugs();
+  const small = citySlugs.map((s) => ({ s, r: buildCityRunway(s) })).filter((x) => x.r?.figures.pct != null && x.r.figures.pct < 25).sort((a, b) => a.r!.figures.pct! - b.r!.figures.pct! || a.s.localeCompare(b.s))[0];
+  if (small) take(`city:${small.s}:runway`, `city block 06 small: a share under a quarter (${small.r!.figures.pct} percent) as a short sweep`);
   return out;
 }
 
@@ -1116,13 +1141,37 @@ export function DonutStories({ cell = [] }: { cell?: CellHeroInstance[] }) {
 }
 
 /** THE RING (his B4 and the gold standard's B31, Ring.tsx, 2026-09-20), the trade's `08 clears` over the instances it held on the metric card: London off the engine, Mumbai cafes off the shard; drawn by the page's own card at the 520 its seat takes. */
-export function RingStories({ cell = [] }: { cell?: CellHeroInstance[] }) {
+export function RingStories({ cell = [], city = pickCityRingInstances() }: { cell?: CellHeroInstance[]; city?: Instance[] }) {
   return (
     <div data-stories="ring">
       {cell.filter((c) => cellServes(c.key, "clears")).map((c) => {
         const cl = buildClears(c.seed);
         if (!cl) return null;
         return <Story kind="ring" key={cellClearsKey(c)} iso2={cellClearsKey(c)} why={clearsWhy(cl)}><div style={{ maxWidth: 520 }}><ClearsCard id={`clears-cell-${c.key}`} clears={cl} /></div></Story>;
+      })}
+      {/* The city's `06 runway` (city-view.tsx Runway, exported): the page's own card at the 520 its 1-1 seat takes. */}
+      {city.map((i) => {
+        const slug = i.iso2.split(":")[1];
+        const r = buildCityRunway(slug);
+        if (!r || r.figures.pct == null) return null;
+        return <Story kind="ring" key={i.iso2} iso2={i.iso2} why={i.why}><div style={{ maxWidth: 520 }}><Runway id={`city-runway-${slug}`} runway={r} /></div></Story>;
+      })}
+    </div>
+  );
+}
+
+/** THE SEGMENTED BAR (SegmentBar.tsx, his gold standard's B27): the city's `02 among-cities` and `15 season`, the page's own cards (city-view.tsx AmongCities, Season, exported) at the widths their seats take (520 in the 1-1 band, 347 at the narrow third). The country's running-costs card draws the same bar under its own kind. */
+export function SegmentBarStories({ city = pickCitySegmentBarInstances() }: { city?: Instance[] }) {
+  return (
+    <div data-stories="segment-bar">
+      {city.map((i) => {
+        const [, slug, form] = i.iso2.split(":");
+        if (form === "among") {
+          const s = buildCitySeat(slug);
+          return <Story kind="segment-bar" key={i.iso2} iso2={i.iso2} why={i.why}><div style={{ maxWidth: 520 }}><AmongCities id={`city-among-${slug}`} seat={s} /></div></Story>;
+        }
+        const d = buildCitySeason(slug);
+        return <Story kind="segment-bar" key={i.iso2} iso2={i.iso2} why={i.why}><div style={{ maxWidth: 347 }}><Season id={`city-season-${slug}`} season={d} /></div></Story>;
       })}
     </div>
   );
@@ -1173,30 +1222,19 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
             const el = l ? <KvSeatStory id={`city-living-${slug}`} icon="cost-breakdown" kicker={`${COPY.cityLiving.kicker}, ${l.name}`} sample={l.confidence !== "measured"} cells={l.cells} withheld={l.withheld} basis={l.basis} foot={l.foot} /> : null;
             return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
           }
+          /* The runway's withheld state keeps the grid (the page's own card, its grid branch); its drawn state is a ring story. */
           if (cityForm === "runway") {
             const r = buildCityRunway(slug);
-            const el = r ? <KvSeatStory id={`city-runway-${slug}`} icon="commercial-rent" kicker={`${COPY.cityRunway.kicker}, ${r.name}`} sample={r.confidence !== "measured"} cells={r.cells} withheld={r.withheld} basis={r.basis} foot={r.foot} /> : null;
+            const el = r ? <div style={{ maxWidth: 520 }}><Runway id={`city-runway-${slug}`} runway={r} /></div> : null;
             return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
           }
+          /* The season's withheld state: the line where the bar would stand, the page's own card. */
           if (cityForm === "season") {
-            /* The season pair as city-view.tsx draws it (Season): the same markup, at the narrow third of its band. */
             const d = buildCitySeason(slug);
-            const el = d ? (
-              <div style={{ maxWidth: 347 }}>
-                <Box id={`city-season-${slug}`}>
-                  <Rail icon="seasonality" kicker={`${COPY.citySeason.kicker}, ${d.name}`} sample={d.confidence !== "measured"} />
-                  <KvGrid cells={d.cells} />
-                  {d.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.withheld}</p> : null}
-                  {d.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.basis}</p> : null}
-                  {d.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.foot}</p> : null}
-                </Box>
-              </div>
-            ) : null;
+            const el = d ? <div style={{ maxWidth: 347 }}><Season id={`city-season-${slug}`} season={d} /></div> : null;
             return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
           }
-          const s = buildCitySeat(slug);
-          const el = s ? <KvSeatStory id={`city-among-${slug}`} icon="vs-world" kicker={`${COPY.citySeat.kicker}, ${s.name}`} sample={s.confidence !== "measured"} cells={s.cells} withheld={null} basis={s.basis} foot={s.foot} /> : null;
-          return <Story kind="kv-grid" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+          return null;
         }
         const [iso2, form] = parts;
         if (form === "glance") {
@@ -2177,7 +2215,8 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
-    "ring": pickCellClearsInstances(cellHero),
+    "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
+    "segment-bar": pickCitySegmentBarInstances(),
     "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances(), ...pickHoodPremiumInstances()],
     "blocked-seat": pickBlockedSeatInstances(industryPlaces),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
