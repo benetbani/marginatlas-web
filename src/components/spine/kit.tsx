@@ -1108,7 +1108,7 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
  * no-op (the finding lives ON the visual), and no eyebrow returns. `tone` and `verdict`
  * stay in the prop type as tolerated no-ops so existing call sites keep compiling , do not
  * delete either from the type. */
-export function Rail({ icon, kicker, verdict, tone = "ink", sample }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra"; sample?: boolean }) {
+export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra"; gloss?: string; sample?: boolean }) {
   void tone;
   void verdict;
   return (
@@ -1135,6 +1135,16 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample }: { icon?: A
         >
           {kicker}
         </h3>
+        {/* HIS POP-UP, AT THE ONE SEAT IT TAKES (2026-09-22, QUEUE ui:the-gloss;
+            his words after the push of 2026-09-20: "the pop up effect that you
+            said you would do... is not executed", and it was on none of the 49
+            rendered pages). The "?" sits beside the words it explains and
+            nowhere else: one a card, never on a figure, never on the page's
+            answer. What it says is the WORD's meaning; what the figure is made
+            of stays on the basis line under the figure, which is a different
+            job (clause 66, the same thing is not said twice). Gated by the
+            page laws (GLOSS) and the model-laws copy sweep. */}
+        {gloss ? <InfoTip gloss={gloss} className="ml-0.5" /> : null}
         {sample ? <SampleTag /> : null}
       </div>
     </div>

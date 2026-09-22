@@ -67,11 +67,12 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
   /* HIS PLUS UNDER A FIGURE (MODEL PART 9 clause 60, 2026-09-20 evening): the
      rows the shard holds around the figure, on DetailPanel, closed on arrival;
      the cell's key names the panel so two open panels never share a name. */
-  const metric = (cell: PremisesMetric, icon: AtlasIconId, kicker: string, accent = false, key = "") =>
+  const metric = (cell: PremisesMetric, icon: AtlasIconId, kicker: string, accent = false, key = "", gloss?: string) =>
     "figure" in cell ? (
       <BentoMetric
         icon={icon}
         kicker={kicker}
+        gloss={gloss}
         figure={cell.figure}
         basis={cell.basis}
         sample={cell.sample}
@@ -80,7 +81,7 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
         detail={cell.detail ? <DetailPanel name={`premises-${key}`} summary={cell.detail.summary} rows={cell.detail.rows.map((r) => ({ label: r.label, value: r.value }))} /> : undefined}
       />
     ) : (
-      <BentoMetric icon={icon} kicker={kicker} withheld={cell.withheld} />
+      <BentoMetric icon={icon} kicker={kicker} gloss={gloss} withheld={cell.withheld} />
     );
   const empty = bento.empty;
   return [
@@ -100,7 +101,8 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
           <BentoMetric icon="vacancy" kicker={K.empty} withheld={empty.withheld} />
         ),
     },
-    { key: "fit-out", cols: 1, rows: 1, node: metric(bento.fitOut, "high-street", K.fitOut, false, "fit-out") },
+    /* ONE GLOSS ON THIS CARD (2026-09-22, QUEUE ui:the-gloss): "fit-out" is the term on the premises cluster a person taking their first lease will not know, and the cell is named for it. The other three openers are plain words. */
+    { key: "fit-out", cols: 1, rows: 1, node: metric(bento.fitOut, "high-street", K.fitOut, false, "fit-out", COPY.glossary.fitOut) },
   ];
 }
 

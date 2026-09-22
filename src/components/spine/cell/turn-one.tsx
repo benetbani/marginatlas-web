@@ -161,6 +161,8 @@ export function SplitCard({ id = "split", split }: { id?: string; split: SplitDa
       id={id}
       icon="cost-breakdown"
       kicker={COPY.tradeSplit.kicker}
+      /* THE SITE'S FIRST GLOSS (2026-09-22, QUEUE ui:the-gloss): "net profit margin" is the one term on this page a first-time owner is most likely not to hold, and the card is named for it. */
+      gloss={COPY.glossary.netMargin}
       netLabel={split.netLabel}
       netPct={split.netPct}
       segments={split.segments}

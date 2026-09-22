@@ -44,6 +44,9 @@
  *                         cluster, or on neighbouring levels (his words on
  *                         the market bento, 2026-09-20 night: "two similar
  *                         graphics should have a considerable distance")
+ *   -- GLOSS            at most one "?" a card, and never on a figure or on
+ *                         the page's answer (his pop-up, 2026-09-22; the law
+ *                         of the mechanism, not one of his numbered clauses)
  *   65 LONE FIGURE        a card whose readings are one figure: no second
  *                         figure, no drawing, no rows, no details ("a
  *                         subsection cannot be only with one number")
@@ -231,6 +234,20 @@ function inPage(width) {
        a table or a companion row; a card with exactly one figure and none of
        the rest is one number in a box. A card with no figure (a seat, a
        terminus, prose) is not this rule's. */
+    /* THE GLOSS, HIS POP-UP (2026-09-22, QUEUE ui:the-gloss). Not one of his
+       numbered clauses: a law of the mechanism, written the run the mechanism
+       was built, so it cannot spread into decoration. A card carries at most
+       one "?", and it never hangs on a figure or on the page's answer, where
+       it would read as doubt about the number instead of help with the word.
+       The trigger is InfoTip's own button, found by its accessible name. */
+    const TIP = '[aria-label="What this means"]';
+    for (const card of cards) {
+      const tips = [...card.querySelectorAll(TIP)];
+      if (tips.length > 1) red(idOf(card), "GLOSS", `${tips.length} glosses on one card; one card, one word explained`);
+      for (const t of tips) {
+        if (t.closest(".fig") || t.closest("[data-answer]")) red(idOf(card), "GLOSS", "a gloss on a figure or on the page's answer; it belongs beside the words, not the number");
+      }
+    }
     for (const card of cards) {
       const figs = card.querySelectorAll(".fig").length;
       const others = card.querySelectorAll("[data-kv-cell], [data-row], [data-visual], details, table, [data-second], [data-track], [data-mark], [data-note], li").length;

@@ -80,6 +80,8 @@ import type { IncomeSegment } from "@/lib/spine/income_rows";
 export type IncomeBreakdownProps = {
   id: string;
   kicker: string;
+  /** HIS POP-UP (2026-09-22, QUEUE ui:the-gloss): what the opener's term means, one sentence, at the rail. */
+  gloss?: string;
   netPct: number;
   segments: IncomeSegment[];
   basis: string;
@@ -154,7 +156,7 @@ function roundToTotal(values: Array<{ key: string; value: number }>, total: numb
   return out;
 }
 
-export function IncomeBreakdown({ id, kicker, netPct, segments, basis, icon, netLabel = COPY.incomeBreakdown.netLabel, withheld = null, foot = null, detail = null }: IncomeBreakdownProps) {
+export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, icon, netLabel = COPY.incomeBreakdown.netLabel, withheld = null, foot = null, detail = null }: IncomeBreakdownProps) {
   const live = withheld ? [] : segments.filter((s) => Number.isFinite(s.share) && s.share > 0);
   if (!Number.isFinite(netPct)) return null;
   if (!withheld && live.length < 2) return null;
@@ -170,7 +172,7 @@ export function IncomeBreakdown({ id, kicker, netPct, segments, basis, icon, net
           figure this card ever prints is the same modelled split for every
           country (income_rows.ts explains why), so there is no "measured"
           variant of this card for the tag to distinguish it from. */}
-      <Rail icon={icon} kicker={kicker} sample />
+      <Rail icon={icon} kicker={kicker} gloss={gloss} sample />
       <div data-answer="1">
         <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
         <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>

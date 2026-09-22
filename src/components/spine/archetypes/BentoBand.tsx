@@ -109,7 +109,7 @@
  * not from these numbers, because these numbers are the thing under test.
  */
 import * as React from "react";
-import { Box, Fig, Ico, SampleTag } from "@/components/spine/kit";
+import { Box, Fig, Ico, SampleTag, InfoTip } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 
 export const BENTO_MIN_CELLS = 3;
@@ -438,6 +438,7 @@ export function BentoMetric({
   accent = false,
   lean = false,
   detail,
+  gloss,
 }: {
   /** The section's id when the cell stands alone as a block; a cluster cell passes none. */
   id?: string;
@@ -468,6 +469,8 @@ export function BentoMetric({
   accent?: boolean;
   /** The kit's lone-survivor rule: a one-figure card takes the narrow column when it stands alone in a band. */
   lean?: boolean;
+  /** HIS POP-UP (2026-09-22, QUEUE ui:the-gloss): one sentence saying what the opener's TERM means, beside the opener. One a card, never on a figure, and never what the basis line already says. */
+  gloss?: string;
 }) {
   if (figure == null && withheld == null) throw new Error(`BentoMetric "${kicker}": neither a figure nor a withheld line. A figure withheld without a stated line is a silent drop (PART 5); pass one of the two.`);
   if (figure != null && withheld != null) throw new Error(`BentoMetric "${kicker}": a figure and a withheld line together. A line beside a printed figure apologises for nothing; pass one of the two.`);
@@ -476,6 +479,8 @@ export function BentoMetric({
       <div className="mb-1.5 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
+        {/* HIS POP-UP, at the cell's opener (2026-09-22, QUEUE ui:the-gloss). */}
+        {gloss ? <InfoTip gloss={gloss} className="ml-0.5" /> : null}
         {sample ? <SampleTag /> : null}
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">

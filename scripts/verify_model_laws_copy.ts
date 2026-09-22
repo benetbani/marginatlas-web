@@ -844,6 +844,8 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     heads.push(["COPY.tradeRivals.basis", COPY.tradeRivals.basis], ["COPY.tradeRivals.head.name", COPY.tradeRivals.head.name], ["COPY.tradeRivals.head.value", COPY.tradeRivals.head.value]);
     heads.push(["COPY.tradeWorth.basis", COPY.tradeWorth.basis], ["COPY.tradeWorth.note", COPY.tradeWorth.note], ["COPY.tradeWorth.marks.low", COPY.tradeWorth.marks.low], ["COPY.tradeWorth.marks.high", COPY.tradeWorth.marks.high]);
     /* `16 customers` (2026-09-20 night): its two bases, its foot, its labels and units, and the exemplar's built lines. */
+    /* The glossary, his pop-up (2026-09-22): every gloss is swept like any other line the reader sees. */
+    for (const [gk, gv] of Object.entries(COPY.glossary)) heads.push([`COPY.glossary.${gk}`, gv]);
     heads.push(["COPY.tradeCustomers.basis", COPY.tradeCustomers.basis], ["COPY.tradeCustomers.foot", COPY.tradeCustomers.foot], ["COPY.tradeCustomers.yearLabel", COPY.tradeCustomers.yearLabel], ["COPY.tradeCustomers.cells.spend", COPY.tradeCustomers.cells.spend], ["COPY.tradeCustomers.cells.visits", COPY.tradeCustomers.cells.visits]);
     const customers = buildTradeCustomers("restaurants");
     if (customers) for (const c of customers.cells) heads.push([`buildTradeCustomers(restaurants).cells.${c.key}`, `${c.label} ${c.value} ${c.note ?? ""}`]);

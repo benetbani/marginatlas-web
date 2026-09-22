@@ -1704,6 +1704,11 @@ export const COPY = {
    *  the wrong base, so none prints; the word the shape gate bans
    *  ("multiple") is not used. */
   /** WHAT A CUSTOMER SPENDS, the trade's `16 customers` (trade_customers_rows.ts, 2026-09-20 night, his "more sections"): the kicker names the subject; the cells are one figure with its unit; the year is the computation, named in the basis (his standard of 2026-09-19); the foot says modelled. */
+  /** THE GLOSSARY, his pop-up (2026-09-22, QUEUE ui:the-gloss). One entry per term of art a first-time owner meets in an opener; each says what the WORD means in a sentence a person would say out loud, never what the figure is measured on (the basis line under the figure keeps that job) and never where a number came from. Under 140 characters, so the panel stays one short paragraph beside the "?". */
+  glossary: {
+    netMargin: "The share of every $100 of sales that is still there once every cost of running the business has been paid.",
+    fitOut: "What it costs to turn an empty shop into your shop: counters, wiring, a kitchen, signs, the work before the doors open.",
+  },
   tradeCustomers: {
     kicker: "What a customer spends",
     yearLabel: "A regular's year",
