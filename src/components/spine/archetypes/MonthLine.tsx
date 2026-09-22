@@ -58,8 +58,17 @@ export function MonthLine({ points, unit = "" }: { points: MonthPoint[]; unit?: 
      the year, hung to the left of a December peak and to the right of a
      January one, so a peak at either end never pushes its figure past the
      card's edge (London restaurants peak in December). */
-  const peakShare = x(peak) / W;
-  const pillShift = peakShare > 0.85 ? "-translate-x-full" : peakShare < 0.15 ? "translate-x-0" : "-translate-x-1/2";
+  const peakPct = (x(peak) / W) * 100;
+  const pillShift = peakPct > 85 ? "-translate-x-full" : peakPct < 15 ? "translate-x-0" : "-translate-x-1/2";
+  /* AND THE POINTS STAY IN THE BOX TOO (`verify_scale_end_clamps`, the most
+     repeated visual fault in this codebase: a mark centred on its own value at
+     the very end of a scale, half of it outside the card). The clamp is
+     written AT each placement, not once above them, because a clamp three
+     hundred characters away from the thing it protects is how this fault kept
+     coming back and the checker only reads the placement's own neighbourhood.
+     At today's padding it never fires: the first and last month already sit at
+     2.5 and 97.5 percent of the width. It is here so a later change to PAD_X
+     cannot push a dot off the end without anyone noticing. */
   return (
     <div data-archetype="month-line" data-visual="1" data-points={String(live.length)} data-peak={String(peak)} data-trough={String(trough)} className="w-full">
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} preserveAspectRatio="none" role="img" aria-label={COPY.monthLine.aria.replace("{peak}", months[peak]).replace("{trough}", months[trough])} className="block w-full overflow-visible">
@@ -74,9 +83,9 @@ export function MonthLine({ points, unit = "" }: { points: MonthPoint[]; unit?: 
           while the line stretches to its cell (the SVG's aspect is free), and
           the pill's figure is a text leaf the checkers read. */}
       <div className="relative -mt-[84px] h-[84px] w-full" aria-hidden="true">
-        <span data-trough-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-[var(--terra)] bg-[var(--c-card)]" style={{ left: `${((x(trough) / W) * 100).toFixed(2)}%`, top: `${((y(min) / H) * 100).toFixed(2)}%` }} />
-        <span data-peak-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--terra)]" style={{ left: `${((x(peak) / W) * 100).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%` }} />
-        <span data-peak-pill className={`absolute ${pillShift} -translate-y-full whitespace-nowrap rounded-md border border-[var(--terra-border)] bg-[var(--terra-soft)] px-1.5 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]`} style={{ left: `${(peakShare * 100).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%`, marginTop: -7 }}>{peakLabel}</span>
+        <span data-trough-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-[var(--terra)] bg-[var(--c-card)]" style={{ left: `${Math.min(98, Math.max(2, (x(trough) / W) * 100)).toFixed(2)}%`, top: `${((y(min) / H) * 100).toFixed(2)}%` }} />
+        <span data-peak-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--terra)]" style={{ left: `${Math.min(98, Math.max(2, (x(peak) / W) * 100)).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%` }} />
+        <span data-peak-pill className={`absolute ${pillShift} -translate-y-full whitespace-nowrap rounded-md border border-[var(--terra-border)] bg-[var(--terra-soft)] px-1.5 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]`} style={{ left: `${Math.min(98, Math.max(2, peakPct)).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%`, marginTop: -7 }}>{peakLabel}</span>
       </div>
       <div className="mt-1 flex justify-between px-[2px] text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
         {months.map((m, i) => <span key={i} data-month={i} className={i === peak ? "font-semibold text-[var(--c-ink2)]" : ""}>{m}</span>)}
