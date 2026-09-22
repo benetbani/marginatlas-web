@@ -136,7 +136,8 @@ import { Masthead } from "./masthead";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "./turn-one";
 import { ClearsCard, LastsCard, MixCard } from "./turn-two";
 import { MarketBand } from "./market";
-import { RivalsCard, WorthCard, CloseCard } from "./exit";
+import { RivalsCard, WorthCard, CloseCard, CustomersCard } from "./exit";
+import { buildTradeCustomers } from "@/lib/spine/trade_customers_rows";
 import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth } from "@/lib/spine/worth_rows";
 import { buildTradeCloseDoors } from "@/lib/spine/close_rows";
@@ -321,13 +322,15 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      cell. */
   const rivals = buildRivals(d);
   const worth = buildWorth(d);
+  /* `16 customers` (exit.tsx): one regular customer's year off the shard's spend and visits, on every trade holding either (2026-09-20 night). */
+  const customers = buildTradeCustomers(d.meta?.industry_id);
   const doors = buildTradeCloseDoors(d);
   /* The turns, by whether a card stands under each: turn one holds the
      money cards and the peers (the peers only where a peer resolves, the
      band's note), turn two the share, the survival grid and the strip, turn
      three the bento and then the exit's pair. */
   const turnOne = !!(permits && open) || !!(split && team) || !!(peers && peers.peers > 0);
-  const turnTwo = [clears, lasts, worth].filter(Boolean).length >= 2;
+  const turnTwo = !!(clears && lasts);
   const turnThree = !!market;
 
   return (
@@ -441,34 +444,16 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               donut beside the list at 1-2 with the list in two columns (the
               list 84 short); `14` alone at two thirds (LEVEL UNFILLED, 65
               percent); every 2 + 2 + 1 of five cards leaves one alone. */}
-          {clears && lasts && worth ? (
-            <Band split="1-1-1">
+          {/* BACK TO THE PAIR the night of 2026-09-20: `14 worth` left this level
+              for the exit's second pair beside `16 customers` (below), the
+              section his "more sections" added; the ring beside the survival
+              cells, 221 / 221 at 1280, measured on 2026-09-20. */}
+          {clears && lasts ? (
+            <Band split="1-1">
               <ClearsCard clears={clears} />
               <LastsCard lasts={lasts} />
-              <WorthCard worth={worth} />
             </Band>
-          ) : (
-            <>
-              {clears && lasts ? (
-                <Band split="1-1">
-                  <ClearsCard clears={clears} />
-                  <LastsCard lasts={lasts} />
-                </Band>
-              ) : null}
-              {clears && !lasts && worth ? (
-                <Band split="1-1">
-                  <ClearsCard clears={clears} />
-                  <WorthCard worth={worth} />
-                </Band>
-              ) : null}
-              {!clears && lasts && worth ? (
-                <Band split="1-1">
-                  <LastsCard lasts={lasts} />
-                  <WorthCard worth={worth} />
-                </Band>
-              ) : null}
-            </>
-          )}
+          ) : null}
         </>
       ) : null}
 
@@ -509,6 +494,24 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           {rivals ? <Band split="2-1" stack="lg"><RivalsCard rivals={rivals} /></Band> : null}
         </>
       )}
+      {/* `16 customers | 14 worth` AT 1-1 (2026-09-20 night, his "more
+          sections" from what the shard holds): what one regular customer is
+          worth a year LEFT, the fact card with its computation at 30, and
+          what the whole business sells for RIGHT, the two-mark strip, the
+          level's visual; the exit's second pair, one reading of worth beside
+          the other. Both draw on every trade holding a shard; a survivor
+          stands alone at two thirds. Measured on London, the numbers in the
+          commit. */}
+      {customers && worth ? (
+        <Band split="1-1">
+          <CustomersCard customers={customers} />
+          <WorthCard worth={worth} />
+        </Band>
+      ) : customers ? (
+        <Band split="2-1" stack="lg"><CustomersCard customers={customers} /></Band>
+      ) : worth ? (
+        <Band split="2-1" stack="lg"><WorthCard worth={worth} /></Band>
+      ) : null}
       {/* `15 close`, FULL WIDTH (8.6, R1), the page's third of three: the
           terminus on the hero band the old close stood on, the sanction the
           full-width gate, the lone-card rule and the section-bands baseline

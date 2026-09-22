@@ -34,7 +34,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, HeroBoardStories, DonutStories, RingStories, SegmentBarStories, MonthLineStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
+import { AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, SegmentBarStories, MonthLineStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
 import { CELL_INSTANCES, loadCellHeroInstances, type CellHeroInstance } from "../../src/lib/spine/trade_hero_facts";
@@ -111,6 +111,8 @@ const SHEET: Entry[] = [
   { kind: "donut", city: "none", cell: "keyed", render: (c) => <DonutStories cell={c.cellHero} /> },
   /* The ring, his B4 and the gold standard's B31 (Ring.tsx, 2026-09-20): the trade's share of a day off the cell seeds. */
   { kind: "ring", city: "none", cell: "keyed", render: (c) => <RingStories cell={c.cellHero} /> },
+  /* The worked figure (WorkedFigure.tsx, 2026-09-20 night): the trade's `16 customers`, one customer's year over the pair it is worked out from, off the cell seeds. */
+  { kind: "worked-figure", city: "none", cell: "keyed", render: (c) => <WorkedFigureStories cell={c.cellHero} /> },
   /* The segmented bar, his gold standard's B27 (SegmentBar.tsx): the city's among-cities and season cards, drawn by the page's own components. */
   { kind: "segment-bar", city: "none", render: () => <SegmentBarStories /> },
   /* The month line and the share bar, his gold standard's B30 and B29 (MonthLine.tsx, ShareBar.tsx, 2026-09-20 late evening): the trade market bento's swing and dayparts cells off the cell seeds. */

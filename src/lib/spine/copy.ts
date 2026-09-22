@@ -1703,6 +1703,14 @@ export const COPY = {
    *  earnings (item 52): a figure worked from an owner's take-home would be
    *  the wrong base, so none prints; the word the shape gate bans
    *  ("multiple") is not used. */
+  /** WHAT A CUSTOMER SPENDS, the trade's `16 customers` (trade_customers_rows.ts, 2026-09-20 night, his "more sections"): the kicker names the subject; the cells are one figure with its unit; the year is the computation, named in the basis (his standard of 2026-09-19); the foot says modelled. */
+  tradeCustomers: {
+    kicker: "What a customer spends",
+    yearLabel: "A regular's year",
+    cells: { spend: "a visit", visits: "visits a year" },
+    basis: "The visit times the visits; the trade's typical customer anywhere, not counted for this city.",
+    foot: "What one regular is worth in a year, before rent and wages come out of it; modelled.",
+  },
   tradeWorth: {
     kicker: "What one sells for",
     marks: { low: "Low end", high: "High end" },

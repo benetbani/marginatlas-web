@@ -134,6 +134,7 @@ import { ALL_INDUSTRIES, COUNTRIES } from "@/lib/taxonomy";
 import { buildCitiesSeat, cutCitiesSeatTables } from "@/lib/spine/country_cities_seat";
 import { readdirSync } from "node:fs";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
+import { buildTradeCustomers } from "@/lib/spine/trade_customers_rows";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
@@ -842,6 +843,10 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     }
     heads.push(["COPY.tradeRivals.basis", COPY.tradeRivals.basis], ["COPY.tradeRivals.head.name", COPY.tradeRivals.head.name], ["COPY.tradeRivals.head.value", COPY.tradeRivals.head.value]);
     heads.push(["COPY.tradeWorth.basis", COPY.tradeWorth.basis], ["COPY.tradeWorth.note", COPY.tradeWorth.note], ["COPY.tradeWorth.marks.low", COPY.tradeWorth.marks.low], ["COPY.tradeWorth.marks.high", COPY.tradeWorth.marks.high]);
+    /* `16 customers` (2026-09-20 night): its two bases, its foot, its labels and units, and the exemplar's built lines. */
+    heads.push(["COPY.tradeCustomers.basis", COPY.tradeCustomers.basis], ["COPY.tradeCustomers.foot", COPY.tradeCustomers.foot], ["COPY.tradeCustomers.yearLabel", COPY.tradeCustomers.yearLabel], ["COPY.tradeCustomers.cells.spend", COPY.tradeCustomers.cells.spend], ["COPY.tradeCustomers.cells.visits", COPY.tradeCustomers.cells.visits]);
+    const customers = buildTradeCustomers("restaurants");
+    if (customers) for (const c of customers.cells) heads.push([`buildTradeCustomers(restaurants).cells.${c.key}`, `${c.label} ${c.value} ${c.note ?? ""}`]);
     let worthStrips = 0, worthOther = 0, worthWithheld = 0;
     for (const id of readdirSync("data/facts/industry").filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, ""))) {
       const shown = buildWorth({ meta: { industry_id: id, money_shown: true }, owner: { take_home_usd: 36000 } });

@@ -59,6 +59,8 @@ import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { RivalsData } from "@/lib/spine/rivals_rows";
 import type { WorthData } from "@/lib/spine/worth_rows";
+import type { TradeCustomersData } from "@/lib/spine/trade_customers_rows";
+import { WorkedFigure } from "@/components/spine/archetypes/WorkedFigure";
 
 export function RivalsCard({ id = "rivals", rivals, oneColumn = false }: { id?: string; rivals: RivalsData | null; /** The list stays one column on its wide seat (MarkList's word): beside the donut, whose card is taller than the one-column list. */ oneColumn?: boolean }) {
   if (!rivals) return null;
@@ -154,6 +156,37 @@ export function WorthCard({ id = "worth", worth }: { id?: string; worth: WorthDa
           {worth.note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{worth.note}</p> : null}
         </div>
       ) : null}
+    </Box>
+  );
+}
+
+/**
+ * WHAT A CUSTOMER SPENDS, `16 customers` (2026-09-20 night; the builder's
+ * header says which fields these are and how the year is computed): what one
+ * regular customer is worth in a year, on WorkedFigure, the archetype this
+ * section brought into the kit. The year is the card's one focal at 30 and
+ * the two figures it is made of stand under it at 16, the visit and how many
+ * of them, in the order they multiply: the answer first, the arithmetic
+ * second, and no sentence explaining either (his words of 2026-09-20 night:
+ * place things where the reader expects them, do not say the obvious twice).
+ * Never one number (clause 65): three, with the basis naming the computation
+ * and the foot saying what the year is worth before the costs. Quiet, the
+ * page's three accents being spent; the level's drawing is the strip beside
+ * it (`14 worth`), the exit's pair, one customer's year beside what the whole
+ * business sells for.
+ */
+export function CustomersCard({ id = "customers", customers }: { id?: string; customers: TradeCustomersData | null }) {
+  if (!customers) return null;
+  const C = COPY.tradeCustomers;
+  return (
+    <Box id={id} className="flex h-full flex-col">
+      {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
+      <Rail icon="spending-power" kicker={C.kicker} sample />
+      <div className="flex flex-1 flex-col justify-center">
+        <WorkedFigure label={C.yearLabel} figure={customers.year.figure} working={customers.cells.map((c) => ({ figure: String(c.value), words: c.label }))} />
+      </div>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.basis}</p>
+      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.foot}</p>
     </Box>
   );
 }

@@ -64,7 +64,8 @@ import { buildPermits } from "@/lib/spine/permits_rows";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "@/components/spine/cell/turn-one";
 import { ClearsCard, LastsCard, WatchSeat, MixCard } from "@/components/spine/cell/turn-two";
-import { RivalsCard, WorthCard, CloseCard } from "@/components/spine/cell/exit";
+import { RivalsCard, WorthCard, CloseCard, CustomersCard } from "@/components/spine/cell/exit";
+import { buildTradeCustomers } from "@/lib/spine/trade_customers_rows";
 import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth } from "@/lib/spine/worth_rows";
 import { marketCells, SwingCell, DaypartsCell } from "@/components/spine/cell/market";
@@ -1136,6 +1137,24 @@ export function DonutStories({ cell = [] }: { cell?: CellHeroInstance[] }) {
         const m = buildMix(i.id, "world");
         if (!m) return null;
         return <Story kind="donut" key={industryKey(h, "channels")} iso2={industryKey(h, "channels")} why={industryMixWhy(m)}><div style={{ maxWidth: 347 }}><ChannelsCard id={`channels-industry-${h}`} mix={m} /></div></Story>;
+      })}
+    </div>
+  );
+}
+
+/** THE WORKED FIGURE (WorkedFigure.tsx, 2026-09-20 night), the trade's `16 customers`: one regular customer's year over the visit and the visits it is worked out from, drawn by the page's own card (cell/exit.tsx CustomersCard) at the 520 its 1-1 seat takes. Keyed cell:<handle>:customers off the cell seeds; the exemplar is London restaurants ($22 a visit, 60 visits, $1,320 a year). */
+export const cellCustomersKey = (c: CellHeroInstance) => `cell:${c.key}:customers`;
+const customersWhy = (t: NonNullable<ReturnType<typeof buildTradeCustomers>>) => `trade block 16: one regular customer's year ${t.year.figure}, the visit times the visits, ${t.cells.length} working figures off the shard, modelled`;
+export function pickCellCustomersInstances(cell: CellHeroInstance[]): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "lasts")).map((c) => ({ c, t: buildTradeCustomers(c.seed?.meta?.industry_id) })).filter((x) => x.t).map(({ c, t }) => ({ iso2: cellCustomersKey(c), why: customersWhy(t!) }));
+}
+export function WorkedFigureStories({ cell = [] }: { cell?: CellHeroInstance[] }) {
+  return (
+    <div data-stories="worked-figure">
+      {cell.filter((c) => cellServes(c.key, "lasts")).map((c) => {
+        const t = buildTradeCustomers(c.seed?.meta?.industry_id);
+        if (!t) return null;
+        return <Story kind="worked-figure" key={cellCustomersKey(c)} iso2={cellCustomersKey(c)} why={customersWhy(t)}><div style={{ maxWidth: 520 }}><CustomersCard id={`customers-cell-${c.key}`} customers={t} /></div></Story>;
       })}
     </div>
   );
@@ -2250,6 +2269,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
     "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
+    "worked-figure": pickCellCustomersInstances(cellHero),
     "month-line": pickCellSwingInstances(cellHero),
     "share-bar": pickCellDaypartsInstances(cellHero),
     "segment-bar": pickCitySegmentBarInstances(),
