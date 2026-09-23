@@ -93,7 +93,7 @@ import { spineCitySeed } from "@/lib/spine-seeds";
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Movement, Box, Rail, Ico, SampleTag, Band, usd } from "@/components/spine/kit";
+import { Movement, Box, Rail, Ico, SampleTag, Band, usd, Fig } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 import { countWord } from "@/lib/spine/district_rows";
@@ -122,6 +122,8 @@ import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { GatesCard, MarketCard } from "./opening";
 import { buildCityGates } from "@/lib/spine/city_gates_rows";
 import { buildCityMarket } from "@/lib/spine/city_market_rows";
+import { buildCityCalendar, type CityCalendarData } from "@/lib/spine/city_calendar_rows";
+import { MonthBars } from "@/components/spine/archetypes/MonthBars";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildCityCrumbs } from "@/lib/spine/crumb_rows";
 import { WhereToTrade } from "./where-to-trade";
@@ -666,6 +668,35 @@ function Neighbourhoods({ hoods }: { hoods: CityNeighbourhoodsData | null }) {
  * `SeasonSplit` (the stacked bar off the adapter's `demand` block, the
  * page's first I3) is retired with the block.
  */
+/**
+ * WHEN THIS CITY SPENDS, `19 calendar` (2026-09-23, brief NEW-SECTIONS row Y1;
+ * the builder's header names the field and its coverage). Twelve columns from
+ * the city's own demand calendar, held by 252 of 252 cities and drawn by
+ * nothing until now, with the swing as the card's one focal.
+ *
+ * FULL WIDTH AND OUTSIDE A BAND, the peers card's precedent: twelve columns
+ * are the one shape that gains from width (each column widens, none wraps),
+ * and there is no second card on this page whose subject belongs beside a
+ * calendar. A lone card inside a band would be a level with air beside it
+ * (clauses 52 and 53); a card outside one is not a level at all.
+ */
+export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCalendarData | null; id?: string }) {
+  if (!calendar) return null;
+  const C = COPY.cityCalendar;
+  return (
+    <Box id={id} className="mt-8">
+      <Rail icon="seasonality" kicker={C.kicker} sample />
+      <div className="mb-4">
+        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.swingLabel}</div>
+        <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
+      </div>
+      <MonthBars points={calendar.months} />
+      <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.basis}</p>
+      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p>
+    </Box>
+  );
+}
+
 export function Season({ season, id = "season" }: { season: CitySeasonData | null; id?: string }) {
   /* A SHARE OF A WHOLE IS DRAWN (his ruling of 2026-09-19 on this very card:
      "residents and visitors, you have just slapped a percentage thing, no
@@ -761,6 +792,8 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const peersDrawn = buildCityPeerTable(d) != null;
   const hoods = slug ? buildCityNeighbourhoods(slug) : null;
   const season = slug ? buildCitySeason(slug) : null;
+  /* `19 calendar` (2026-09-23): the city's own twelve months, held by 252 of 252 and read by nothing before this. */
+  const calendar = slug ? buildCityCalendar(slug) : null;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
@@ -864,6 +897,10 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <Runway runway={runway} />
         </Band>
       ) : null}
+      {/* `19 calendar`, FULL WIDTH (2026-09-23): when the city spends, twelve
+          columns off its own calendar, closing the first chapter with the
+          shape of the year before the street is picked. */}
+      <SpendCalendar calendar={calendar} />
       {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market
           sized before the street is picked. */}
       <Movement index="02" heading={COPY.chapters.where} />

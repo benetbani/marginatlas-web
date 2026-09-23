@@ -1714,6 +1714,13 @@ export const COPY = {
     basis: "The order and the figures are this country's own. Steps can run at the same time, so the whole takes less than the steps added up.",
     foot: "Times and fees are modelled.",
   },
+  /** WHEN THIS CITY SPENDS, the city's `19 calendar` (city_calendar_rows.ts, 2026-09-23, brief row Y1): the kicker names the subject, the label names the figure, the basis says what the twelve columns are and what the swing is, and the foot says the figures are the city's own calendar. */
+  cityCalendar: {
+    kicker: "When this city spends",
+    swingLabel: "Busiest over quietest",
+    basis: "Each month against this city's busiest, which is 100; the swing is the busiest less the quietest, as a share of the busiest.",
+    foot: "This city's own calendar, modelled.",
+  },
   crumbs: {
     districts: "Districts",
     howTo: "How to open a business",
