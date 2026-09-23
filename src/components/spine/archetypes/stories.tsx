@@ -1570,7 +1570,7 @@ export function pickPremisesBentoInstances(): Instance[] {
 
 /** THE MARKET FOR IT, `12 market` (MODEL.md 8.6; plan step 33's fifth dispatch, 2026-09-18), keyed cell:<handle>:market off the seeds the sheet loads and drawn exactly as the trade view draws it (cell/market.tsx marketCells: the same four cells in the same declared order and spans, firms 2 by 1, chains 1 by 1, close 1 by 1, the swing 2 by 1, three columns), the page's only bento at the band's 1072, zero accent: the exemplar (restaurants, 16 firms per 10,000, chains 30, close 20, a 20 percent swing, the swing held and the rest modelled) and London shoe repair, the thin shard (every field modelled, 0.1 firms per 10,000 printed as read, chains 5 and close 8 as sparse grids). */
 export const cellMarketKey = (c: CellHeroInstance) => `cell:${c.key}:market`;
-/** THE MONTH LINE AND THE SHARE BAR (MonthLine.tsx, ShareBar.tsx, his gold standard's B30 and B29, 2026-09-20 late evening): the market bento's swing cell with its twelve months and its dayparts cell, drawn by the page's own cells (cell/market.tsx SwingCell, DaypartsCell) at the widths their cells take (693 and 347 at 1280), keyed cell:<handle>:swing and cell:<handle>:dayparts over the cell seeds. */
+/** THE MONTH COLUMNS AND THE SHARE BAR (MonthBars.tsx, ShareBar.tsx; his gold standard's B30 and B29, 2026-09-20, the line replaced by columns on his ruling of 2026-09-23): the market bento's swing cell with its twelve months and its dayparts cell, drawn by the page's own cells (cell/market.tsx SwingCell, DaypartsCell) at the widths their cells take (693 and 347 at 1280), keyed cell:<handle>:swing and cell:<handle>:dayparts over the cell seeds. */
 export const cellSwingKey = (c: CellHeroInstance) => `cell:${c.key}:swing`;
 export const cellDaypartsKey = (c: CellHeroInstance) => `cell:${c.key}:dayparts`;
 const swingWhy = (m: NonNullable<ReturnType<typeof buildMarket>>) => `trade block 12's swing cell: ${"figure" in m.swing ? `a ${m.swing.figure} swing` : "the swing withheld"} over the twelve months as the line, the busiest month pinned (${m.months ? `peak month ${m.months.reduce((a, b) => (b.value > a.value ? b : a), m.months[0]).month + 1}` : "no line, a month missing"})`;
@@ -1581,13 +1581,13 @@ export function pickCellSwingInstances(cell: CellHeroInstance[]): Instance[] {
 export function pickCellDaypartsInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "market")).map((c) => ({ c, m: buildMarket(c.seed?.meta?.industry_id) })).filter((x) => x.m && x.m.dayparts).map(({ c, m }) => ({ iso2: cellDaypartsKey(c), why: daypartsWhy(m!) }));
 }
-export function MonthLineStories({ cell = [] }: { cell?: CellHeroInstance[] }) {
+export function MonthBarsStories({ cell = [] }: { cell?: CellHeroInstance[] }) {
   return (
-    <div data-stories="month-line">
+    <div data-stories="month-bars">
       {cell.filter((c) => cellServes(c.key, "market")).map((c) => {
         const m = buildMarket(c.seed?.meta?.industry_id);
         if (!m || !m.months) return null;
-        return <Story kind="month-line" key={cellSwingKey(c)} iso2={cellSwingKey(c)} why={swingWhy(m)}><div style={{ maxWidth: 693 }}><SwingCell market={m} /></div></Story>;
+        return <Story kind="month-bars" key={cellSwingKey(c)} iso2={cellSwingKey(c)} why={swingWhy(m)}><div style={{ maxWidth: 693 }}><SwingCell market={m} /></div></Story>;
       })}
     </div>
   );
@@ -2270,7 +2270,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
     "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
     "worked-figure": pickCellCustomersInstances(cellHero),
-    "month-line": pickCellSwingInstances(cellHero),
+    "month-bars": pickCellSwingInstances(cellHero),
     "share-bar": pickCellDaypartsInstances(cellHero),
     "segment-bar": pickCitySegmentBarInstances(),
     "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances(), ...pickHoodPremiumInstances()],

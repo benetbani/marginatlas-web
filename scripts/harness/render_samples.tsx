@@ -30,7 +30,7 @@ import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
 import { Box, Rail } from "@/components/spine/kit";
-import { MonthLine } from "@/components/spine/archetypes/MonthLine";
+import { MonthBars } from "@/components/spine/archetypes/MonthBars";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { IncomeBreakdown } from "@/components/spine/archetypes/IncomeBreakdown";
 import { LastsCard } from "@/components/spine/cell/turn-two";
@@ -191,14 +191,14 @@ async function main() {
           left={
             <Box id="sample-swing-today">
               <Rail icon="seasonality" kicker={COPY.tradeMarket.kickers.swing} />
-              <MonthLine points={monthPoints} />
+              <MonthBars points={monthPoints} />
               <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{COPY.tradeMarket.monthsBasis}</p>
             </Box>
           }
           right={
             <Box id="sample-swing-proposed">
               <Rail icon="seasonality" kicker={COPY.tradeMarket.kickers.swing} />
-              <MonthLine points={monthPoints} />
+              <MonthBars points={monthPoints} />
               <div style={{ marginTop: -80, marginLeft: 120, position: "relative", zIndex: 2 }}>
                 <PointPanel month="March" figure={String(monthPoints[2].value)} words="of the busiest month" />
               </div>

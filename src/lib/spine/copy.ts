@@ -350,7 +350,7 @@ export const COPY = {
    *  country hero at the city altitude. Labels under three words; the units
    *  beside the figures; the level basis says the chips are among the
    *  covered cities. */
-  /** THE MONTH LINE (MonthLine.tsx, his gold standard's B30): the twelve initials along the foot, the aria sentence. */
+  /** THE MONTH COLUMNS (MonthBars.tsx; his gold standard's B30 drawn as columns since his ruling of 2026-09-23): the twelve initials along the foot, the aria sentence. */
   monthLine: {
     initials: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
     aria: "The year month by month, busiest in {peak}, quietest in {trough}",
@@ -1643,7 +1643,7 @@ export const COPY = {
   tradeMarket: {
     kickers: { firms: "Firms per 10,000 people", chains: "Held by chains", close: "Close in a year", swing: "The year's swing", dayparts: "When the week pays" },
     /** THE RIVALS CELL (2026-09-20 night, clause 65): the trade's typical density at 30 with its companions in one row: this city's own where the city shard names the trade ("here"), and the share that closes each year, so the cell is never one number. The kicker is the firms'. */
-    rivals: { here: "here, this city's own", close: "of 100 close a year", basisHere: "Firms for every 10,000 people, the trade's typical; beside it this city's own, modelled." },
+    rivals: { here: "here, this city's own", close: "of 100 close a year", hereMark: "Here", typicalMark: "The trade anywhere", typicalWords: "the trade anywhere", basisHere: "Firms for every 10,000 people, this city's own; the trade's typical beside it, both modelled." },
     /** The dayparts cell's basis (2026-09-20 late evening, the bento's fifth cell): the parts are of the week's takings, the trade's figure. */
     daypartsBasis: "Of every $100 taken in a week; typical for the trade anywhere, modelled.",
     /** The month line's own line under the swing figure: what the twelve points are. */

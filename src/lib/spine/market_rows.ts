@@ -72,7 +72,7 @@
 import { industryFigure, industryRows, type IndustryBankFigure } from "@/lib/facts/industry_shard";
 import { cityEntityId, loadCityShard } from "@/lib/facts/city_shard";
 import { queryFacts } from "@/lib/facts/store";
-import type { MonthPoint } from "@/components/spine/archetypes/MonthLine";
+import type { MonthPoint } from "@/components/spine/archetypes/MonthBars";
 import type { SharePart } from "@/components/spine/archetypes/ShareBar";
 import type { FactTag } from "@/lib/facts/types";
 import type { LastsAltitude } from "@/lib/spine/lasts_rows";
