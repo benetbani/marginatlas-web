@@ -52,7 +52,7 @@ export function ShareBar({ parts, unit = "%" }: { parts: SharePart[]; unit?: str
           <span key={p.key} data-wedge={p.key} className="block h-full min-w-[3px] first:rounded-l-full last:rounded-r-full" style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
         ))}
       </div>
-      <div className="mt-3 grid gap-1.5" data-expect-rows={live.length}>
+      <div className="mt-3 grid gap-2" data-expect-rows={live.length}>
         {live.map((p) => (
           <div key={p.key} data-row={p.key} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2">
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px]" style={{ background: colourOf(p) }} />

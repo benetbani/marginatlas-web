@@ -219,7 +219,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
               {rows.map((r) => (
                 <TableRow key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`h-12 border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
                   <TableCell className="px-0 py-0 align-middle">
-                    <span className="flex min-w-0 items-center gap-2.5">
+                    <span className="flex min-w-0 items-center gap-3">
                       {flags ? <CountryFlag iso2={r.iso2} className="w-7 shrink-0" /> : null}
                       <span data-label className={`truncate text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
                     </span>
@@ -245,8 +245,8 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
           </div>
           <div className="divide-y divide-[var(--c-border)]">
             {rows.map((r) => (
-              <div key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`py-2.5 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
-                <span className="flex items-center gap-2.5">
+              <div key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`py-2 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
+                <span className="flex items-center gap-3">
                   {flags ? <CountryFlag iso2={r.iso2} className="w-6 shrink-0" /> : null}
                   <span data-label className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
                 </span>
@@ -266,8 +266,8 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
         </div>
         {/* The stated line for the rows the table does not hold, at the lead rung where those rows would stand (the header's SEATED TABLE). */}
         {withheld ? <p data-withheld-line="rows" className="mt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p> : null}
-        {note ? <p className="mt-2.5 text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
-        {caveat ? <p className={`${note ? "mt-1" : "mt-2.5"} text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]`}>{caveat}</p> : null}
+        {note ? <p className="mt-3 text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
+        {caveat ? <p className={`${note ? "mt-1" : "mt-3"} text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]`}>{caveat}</p> : null}
       </Box>
     </div>
   );

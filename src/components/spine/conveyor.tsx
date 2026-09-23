@@ -140,7 +140,7 @@ export function Conveyor({
           </button>
 
           {pageCount <= 7 ? (
-            <div className="flex items-center gap-1.5" role="tablist" aria-label="pages">
+            <div className="flex items-center gap-2" role="tablist" aria-label="pages">
               {Array.from({ length: pageCount }).map((_, i) => (
                 <button
                   key={i}

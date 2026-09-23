@@ -139,7 +139,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
             `data-crumb`. Nothing is drawn when a caller passes none, so
             the country and city cards are byte for byte what they were. */}
         {crumb && crumb.length > 0 ? <p data-crumb className="mt-1 text-[length:var(--t-body)] text-[var(--c-ink2)]">{crumb.join(COPY.tradeHero.crumbJoin)}</p> : null}
-        {subtitle ? <p data-subtitle className="mt-1.5 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p> : null}
+        {subtitle ? <p data-subtitle className="mt-2 max-w-[52ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{subtitle}</p> : null}
         {/* THE SPLIT ONLY WHEN THERE ARE CELLS. Measured by the harness at 768:
             a 1-1 split put a 130px answer beside a 250px grid and left a
             363x120 hole under the answer (E6). At tablet the answer takes a
@@ -155,7 +155,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
                 {tagged ? <SampleTag /> : null}
               </div>
               <div className={`fig text-[length:var(--t-answer)] leading-none ${tone === "ink" ? "text-[var(--c-ink)]" : "text-[var(--terra-text)]"}`}>{answer.value}</div>
-              <div className="mt-2.5 max-w-[40ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">
+              <div className="mt-3 max-w-[40ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">
                 {answer.basis != null ? answer.basis : COPY.answer.basis}
                 {answer.regime ? (
                   <>
@@ -171,14 +171,14 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
             <div data-answer-absent="1">
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{absent?.label ?? COPY.answer.label}</div>
               <div className="mt-1 text-[length:var(--t-head)] font-medium leading-none text-[var(--c-ink)]">{absent?.word ?? COPY.answer.absent}</div>
-              <div className="mt-2.5 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{absent?.note ?? COPY.answer.absentNote}</div>
+              <div className="mt-3 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{absent?.note ?? COPY.answer.absentNote}</div>
             </div>
           )}
           {live.length > 0 ? <KvGrid cells={live} /> : null}
         </div>
         {foot ? (
-          <div data-foot className="mt-4 flex items-start gap-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
-            {foot.modeled ? <AtlasMark id="modeled" size={14} className="mt-px shrink-0" /> : null}
+          <div data-foot className="mt-4 flex items-start gap-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+            {foot.modeled ? <AtlasMark id="modeled" size={14} className="mt-0.5 shrink-0" /> : null}
             {/* A block, on the prose measure (his clause 51, 2026-09-20): the old `max-w-[56ch]` sat on an inline span, where a max-width does nothing, so the foot ran 434px at 768 on the city's masthead; the measure is the site's one token, 68ch or half the page, whichever is smaller. */}
             <span className="block [max-width:var(--measure-prose)]">{foot.text}</span>
           </div>

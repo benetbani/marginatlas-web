@@ -42,7 +42,7 @@ export function Crumbs({ items }: { items: SpineCrumb[] }) {
   const collapsed = trail.length > MAX_VISIBLE;
   const shown = collapsed ? [trail[0], ...trail.slice(trail.length - (MAX_VISIBLE - 1))] : trail;
   return (
-    <nav aria-label="Breadcrumb" data-crumbs={String(trail.length)} className="mb-2 flex flex-nowrap items-center gap-1.5 overflow-hidden whitespace-nowrap text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">
+    <nav aria-label="Breadcrumb" data-crumbs={String(trail.length)} className="mb-2 flex flex-nowrap items-center gap-2 overflow-hidden whitespace-nowrap text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]">
       {shown.map((c, i) => {
         const last = i === shown.length - 1;
         return (

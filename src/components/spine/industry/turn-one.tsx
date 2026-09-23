@@ -189,7 +189,7 @@ export function PaysShareCell({ share }: { share: PaysMetric }) {
   if (!("figure" in share)) return <BentoMetric icon="break-even" kicker={COPY.tradeClears.kicker} withheld={share.withheld} />;
   return (
     <Box className="flex h-full flex-col [container-type:inline-size]" data-archetype="ring" data-visual="1">
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         <Ico id="break-even" tone="terra" />
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.tradeClears.kicker}</h3>
         <SampleTag />
@@ -208,7 +208,7 @@ export function PaysFixedCell({ fixed }: { fixed: PaysCount }) {
   if (!("part" in fixed)) return <BentoMetric icon="cost-breakdown" kicker={K.fixed} withheld={fixed.withheld} />;
   return (
     <Box className="flex h-full flex-col" data-archetype="segment-bar" data-visual="1">
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         <Ico id="cost-breakdown" tone="terra" />
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.fixed}</h3>
         <SampleTag />

@@ -27,7 +27,7 @@ export function CityHero({ d }: { d: any }) {
   if (!f) return null;
   return (
     <div id="masthead">
-      <a href="/cities" className="mb-4 inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]">&#8592; {COPY.cityHero.allCities}</a>
+      <a href="/cities" className="mb-4 inline-flex cursor-pointer items-center gap-2 rounded-full border border-[var(--c-border)] bg-white/70 px-3 py-1 text-xs font-semibold text-[var(--c-ink2)] transition hover:border-[var(--c-line-strong)] hover:text-[var(--c-ink)]">&#8592; {COPY.cityHero.allCities}</a>
       <AnswerCard id="city-take" name={f.name} iso2={f.iso2} image={f.image} subtitle={f.subtitle} answer={f.answer} cells={f.cells} tone="accent" foot={f.foot} answers={SURFACE_ANSWERS.city} />
     </div>
   );

@@ -36,7 +36,7 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
   const filled = Math.round(share * segments);
   return (
     <div data-archetype="segment-bar" data-visual="1" data-form={rest ? "split" : "scale"} data-filled={String(filled)} data-segments={String(segments)} className="py-2">
-      <div className="mb-1.5 flex items-center justify-between gap-3">
+      <div className="mb-2 flex items-center justify-between gap-3">
         <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{label}</span>
         <span className="flex items-center gap-2 whitespace-nowrap">
           <span className="text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">

@@ -113,7 +113,7 @@ export function SwingCell({ market }: { market: MarketData }) {
   if (!("figure" in cell)) return <BentoMetric icon="seasonality" kicker={K.swing} withheld={cell.withheld} />;
   return (
     <Box className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric" data-visual={market.months ? "1" : undefined}>
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         <Ico id="seasonality" tone="terra" />
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.swing}</h3>
         <SampleTag />
@@ -123,7 +123,7 @@ export function SwingCell({ market }: { market: MarketData }) {
         {market.months ? (
           <div className="mt-3">
             <MonthLine points={market.months} />
-            <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.monthsBasis}</p>
+            <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.monthsBasis}</p>
           </div>
         ) : null}
       </div>
@@ -138,7 +138,7 @@ export function DaypartsCell({ market }: { market: MarketData }) {
   if (!market.dayparts) return <BentoMetric icon="daily-takings" kicker={K.dayparts} withheld={COPY.tradeMarket.withheld.dayparts} />;
   return (
     <Box className="flex h-full flex-col" data-archetype="share-bar" data-visual="1">
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         <Ico id="daily-takings" tone="terra" />
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.dayparts}</h3>
         <SampleTag />

@@ -47,7 +47,7 @@ export function NoteList({ notes, columns = 1, editorial = true }: { notes: Loca
     <div data-archetype="note-list" {...(editorial ? { "data-editorial": "1" } : {})} data-notes={String(live.length)} data-columns={String(columns)} className="[container-type:inline-size]">
       <ol className={columns === 2 ? "grid [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6" : "grid"}>
         {live.map((n, i) => (
-          <li key={i} data-note={i} className={"border-t border-[var(--c-border)] py-2.5 first:border-t-0 first:pt-0 last:pb-0" + (columns === 2 ? " [@container(min-width:600px)]:[&:nth-child(2)]:border-t-0 [@container(min-width:600px)]:[&:nth-child(2)]:pt-0 [@container(min-width:600px)]:[&:nth-child(odd):last-child]:col-span-2" : "")}>
+          <li key={i} data-note={i} className={"border-t border-[var(--c-border)] py-2 first:border-t-0 first:pt-0 last:pb-0" + (columns === 2 ? " [@container(min-width:600px)]:[&:nth-child(2)]:border-t-0 [@container(min-width:600px)]:[&:nth-child(2)]:pt-0 [@container(min-width:600px)]:[&:nth-child(odd):last-child]:col-span-2" : "")}>
             <div data-note-label className="text-[length:var(--t-micro)] font-semibold leading-tight text-[var(--c-ink)]">{n.label}</div>
             <p data-note-fact className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{n.fact}</p>
           </li>

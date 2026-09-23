@@ -2290,9 +2290,9 @@ export function StoriesIndex({ instances }: { instances: Record<string, Instance
           <tbody>
             {kinds.map((k) => instances[k].map((i, n) => (
               <tr key={`${k}:${i.iso2}`} data-index-row className="border-t border-[var(--c-border)] align-top">
-                <td className="whitespace-nowrap py-1.5 pr-4 font-semibold text-[var(--c-ink)]">{n === 0 ? `${k} (${instances[k].length})` : ""}</td>
-                <td className="whitespace-nowrap py-1.5 pr-4"><a href={`#${storyId(k, i.iso2)}`} className="text-[var(--c-ink2)] underline decoration-[var(--c-border)] underline-offset-2 hover:text-[var(--c-ink)]">{i.iso2}</a></td>
-                <td className="py-1.5 text-[var(--c-muted)]">{i.why}</td>
+                <td className="whitespace-nowrap py-2 pr-4 font-semibold text-[var(--c-ink)]">{n === 0 ? `${k} (${instances[k].length})` : ""}</td>
+                <td className="whitespace-nowrap py-2 pr-4"><a href={`#${storyId(k, i.iso2)}`} className="text-[var(--c-ink2)] underline decoration-[var(--c-border)] underline-offset-2 hover:text-[var(--c-ink)]">{i.iso2}</a></td>
+                <td className="py-2 text-[var(--c-muted)]">{i.why}</td>
               </tr>
             )))}
           </tbody>

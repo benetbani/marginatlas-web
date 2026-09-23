@@ -207,7 +207,7 @@ export function CityCards({
   return (
     <div data-archetype="city-cards" data-look={look} data-form={rows ? "rows" : "grid"} data-count={cards.length}>
       {pages > 1 ? (
-        <div className="mb-2 flex items-center justify-end gap-1.5">
+        <div className="mb-2 flex items-center justify-end gap-2">
           <span className="mr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
           <button type="button" aria-label={prevLabel} disabled={cur === 0} onClick={() => setPage((p) => Math.max(0, p - 1))} className={btn}><span aria-hidden>&#8592;</span></button>
           <button type="button" aria-label={nextLabel} disabled={cur >= pages - 1} onClick={() => setPage((p) => Math.min(pages - 1, p + 1))} className={btn}><span aria-hidden>&#8594;</span></button>
@@ -228,8 +228,8 @@ export function CityCards({
       <div className={rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]"}>
         {slice.map((c) => (rows ? <Row key={c.id} card={c} look={look} fmt={fmt} /> : <Card key={c.id} card={c} look={look} fmt={fmt} />))}
       </div>
-      <p className="mt-2.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{drawn && basisDrawn ? basisDrawn : basis}</p>
-      <div className="mt-1.5 text-right">
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{drawn && basisDrawn ? basisDrawn : basis}</p>
+      <div className="mt-2 text-right">
         <a href={allHref} className="text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
       </div>
     </div>
@@ -275,7 +275,7 @@ function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[14px] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
+      className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[14px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
     >
       {field ? <Photo card={card} /> : null}
       {look === "column" ? <Mark part={card.payOfTop} /> : null}
@@ -350,7 +350,7 @@ function Row({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative grid h-full items-center gap-3 overflow-hidden rounded-[14px] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto] ${field ? "border border-transparent" : "border border-[var(--c-border)]"}`}
+      className={`group relative grid h-full items-center gap-3 overflow-hidden rounded-[14px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto] ${field ? "border border-transparent" : "border border-[var(--c-border)]"}`}
     >
       {field ? <Photo card={card} /> : null}
       {look === "column" ? <Mark part={card.payOfTop} /> : null}

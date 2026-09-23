@@ -99,9 +99,9 @@ export function PayBars({ rows, worldMax, withheld, fmt }: PayBarsProps) {
   if (live.length === 0) return null;
   if (live.length === 1 || !worldMax || !(worldMax.value > 0)) {
     return (
-      <div data-archetype="pay-bars" data-bars="0" className="flex flex-wrap gap-x-6 gap-y-1.5">
+      <div data-archetype="pay-bars" data-bars="0" className="flex flex-wrap gap-x-6 gap-y-2">
         {live.map((r) => (
-          <span key={r.key} data-pay={r.key} className="flex items-baseline gap-1.5">
+          <span key={r.key} data-pay={r.key} className="flex items-baseline gap-2">
             <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{fmt(r.value)}</Fig>
             <span data-label className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.label}</span>
           </span>
@@ -133,7 +133,7 @@ export function PayBars({ rows, worldMax, withheld, fmt }: PayBarsProps) {
                   {r.extra && r.extra.pct > 0 ? <span data-extra={r.key} aria-hidden className="absolute inset-y-0" style={{ left: `${(share * 100).toFixed(1)}%`, width: `${Math.min(100 - share * 100, share * r.extra.pct).toFixed(1)}%`, background: "var(--terra-text)" }} /> : null}
                 </span>
                 {r.placement || r.extra ? (
-                  <span data-placement className="mt-1.5 block text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">
+                  <span data-placement className="mt-2 block text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">
                     {r.placement ?? ""}
                     {r.extra ? <>{r.placement ? " " : ""}<span data-extra-label className="text-[var(--c-ink)]">{r.extra.label}</span></> : null}
                   </span>

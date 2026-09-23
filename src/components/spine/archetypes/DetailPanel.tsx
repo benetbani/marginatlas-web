@@ -38,7 +38,7 @@ import { Fig, InlineDisclosure } from "@/components/spine/kit";
  *  - THE PLUS IS COMFORTABLE TO HIT AT 375 (the harness's BOTCHED MOBILE
  *    floor of 44px), AND STILL ONE LINE. `InlineDisclosure`'s own summary is
  *    a bare ~24px text row, sized for the desktop-first cards it already
- *    sits in; ordinary vertical padding (`py-2.5`, the row padding this file
+ *    sits in; ordinary vertical padding (`py-2`, the row padding this file
  *    uses everywhere else) closes the gap to 44px on this instance only, via
  *    the `[&>summary]` arbitrary variant on the `className` handed to
  *    InlineDisclosure. No other call site is touched. (An earlier version of

@@ -147,7 +147,7 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
   return (
     <nav aria-label="On this page" className="fixed right-6 top-1/2 hidden -translate-y-1/2 2xl:block">
       <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">On this page</div>
-      <ol className="mt-2 space-y-1.5">
+      <ol className="mt-2 space-y-2">
         {sections.map((s) => (
           <li key={s.id}>
             <a
@@ -675,15 +675,15 @@ function Hiring({ hiring, iso2 }: { hiring: any; iso2?: string }) {
           of the sentence that stood here. */}
       {pay ? <PayBars rows={pay.rows.map((r) => (r.key === "average" && isNum(addPct) ? { ...r, extra: { pct: addPct, label: COPY.pay.employerAdds.replace("{pct}", `${addPct}%`) } } : r))} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
       {isNum(labour) || isNum(informal) ? (
-        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1.5 border-t border-[var(--c-border)] pt-4">
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--c-border)] pt-4">
           {isNum(labour) ? (
-            <span className="flex items-baseline gap-1.5">
+            <span className="flex items-baseline gap-2">
               <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{labour}%</Fig>
               <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of adults are in the labour force</span>
             </span>
           ) : null}
           {isNum(informal) ? (
-            <span className="flex items-baseline gap-1.5">
+            <span className="flex items-baseline gap-2">
               <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{informal}%</Fig>
               <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of the economy runs informal</span>
             </span>

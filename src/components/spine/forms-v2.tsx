@@ -131,7 +131,7 @@ import { Fig } from "@/components/spine/kit";
    ITS PADDING IS PASSED INLINE, and that is not a style preference. The v2
    scope carries `.av2, .av2 * {margin:0;padding:0}` (atlas-spine.css:142), a
    descendant selector at the same specificity as any utility class and later in
-   source order, so a Badge dropped into a v2 route loses its px-2.5 py-0.5 and
+   source order, so a Badge dropped into a v2 route loses its px-2 py-0.5 and
    collapses to a text-sized sliver with a border. The header above says every
    structural space in this file is inline for exactly this reason; the bought
    component's own padding is no exception to it. */
@@ -360,7 +360,7 @@ export function BenchmarkPair({
               ? "border-[var(--terra-border)] bg-[var(--terra-soft)] text-[var(--terra-text)] hover:bg-[var(--terra-soft)]"
               : "border-[var(--c-line-strong)] bg-[var(--c-soft2)] text-[var(--c-ink2)] hover:bg-[var(--c-soft2)]"
           }
-          /* Inline, not px-2.5 py-0.5: see the import note. The hover classes
+          /* Inline, not px-2 py-0.5: see the import note. The hover classes
              above restate the resting fill rather than dropping it, because the
              bought variants all change colour on hover and nothing in a form is
              interactive. */

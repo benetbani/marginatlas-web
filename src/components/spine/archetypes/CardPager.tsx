@@ -53,7 +53,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
   return (
     <div data-archetype="card-pager" data-images={images}>
       {pages > 1 ? (
-        <div className="mb-2 flex items-center justify-end gap-1.5">
+        <div className="mb-2 flex items-center justify-end gap-2">
           <span className="mr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
           <button type="button" aria-label={prevLabel} disabled={cur === 0} onClick={() => setPage((p) => Math.max(0, p - 1))} className={btn}><span aria-hidden>&#8592;</span></button>
           <button type="button" aria-label={nextLabel} disabled={cur >= pages - 1} onClick={() => setPage((p) => Math.min(pages - 1, p + 1))} className={btn}><span aria-hidden>&#8594;</span></button>
@@ -66,7 +66,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
              at 375: a two-up card is 151px wide, and a 48px image beside a name
              left 39px for "London". So below md the image runs the card's width
              above the name; from md it sits on the left as the founder chose. */
-          <a key={c.id} href={c.href} data-card={c.id} data-lands={c.lands} className="group flex h-full flex-col gap-2 rounded-[14px] border border-[var(--c-border)] px-3 py-2.5 transition-colors hover:border-[var(--c-ink2)] md:flex-row md:items-center md:gap-2.5">
+          <a key={c.id} href={c.href} data-card={c.id} data-lands={c.lands} className="group flex h-full flex-col gap-2 rounded-[14px] border border-[var(--c-border)] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] md:flex-row md:items-center md:gap-2.5">
             {images !== "none" && c.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={c.image} alt="" width={48} height={48} loading="lazy" className="h-16 w-full shrink-0 rounded-lg object-cover md:h-12 md:w-12" />
@@ -81,7 +81,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
           </a>
         ))}
       </div>
-      <div className="mt-2.5 text-right">
+      <div className="mt-3 text-right">
         <a href={allHref} className="text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
       </div>
     </div>

@@ -183,7 +183,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           {/* THE WITHHELD STATE: the stated line at the lead rung where the
               bar would stand (the cost-to-open card's own idiom), so the seat
               keeps its height and the reader is told why there is no bar. */}
-          <p data-withheld-line={id} className="mt-3.5 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p>
+          <p data-withheld-line={id} className="mt-4 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p>
           {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           {detail}
         </>
@@ -195,7 +195,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               mechanism (RankedBars, PayBars already use it); it is reused here
               rather than reinvented, and it already runs at every width. */}
           <div
-            className="mt-3.5 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]"
+            className="mt-4 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]"
             data-expect-rows={live.length + 1}
             role="img"
             aria-label={ariaLabel}
@@ -228,7 +228,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               on a phone is clause 31's fault; a tablet's 344 half gets one
               column the same way, which is also why the trade page stacks the
               band until lg. */}
-          <div className="mt-2.5 [container-type:inline-size]">
+          <div className="mt-3 [container-type:inline-size]">
           {/* One column is the phone row form (PART 5: below 420 the row is
               [1fr auto] and the gap is the card's own inner width), so the
               rows take hairlines between them the way every phone row does,
@@ -237,13 +237,13 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               measured). */}
           <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
             {live.map((s, i) => (
-              <span key={s.key} data-legend-key={s.key} className="inline-flex min-w-0 items-center gap-1.5 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+              <span key={s.key} data-legend-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
                 <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
                 <span data-label className="truncate">{s.label}</span>
                 <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
               </span>
             ))}
-            <span data-legend-key={NET_KEY} className="inline-flex min-w-0 items-center gap-1.5 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+            <span data-legend-key={NET_KEY} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
               <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
               <span data-label className="truncate">{netLabel}</span>
               <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>

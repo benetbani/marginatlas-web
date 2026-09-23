@@ -171,7 +171,7 @@ export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, num
  * gate reads, which is B7's own escape and is not a defence.
  *
  * NO LIVE PAGE DREW THREE OF THESE, verified rather than assumed: `Dots`'s own
- * markup signature (`gap-[3px]` plus an "N out of M" accessible name) appears in
+ * markup signature (`gap-1` plus an "N out of M" accessible name) appears in
  * ZERO of the eight rendered pages, and the one `data-idea="I5"` on the country
  * page is the legal-form table's own pip column, which already declares on its
  * set. So this is prevention plus two dev cards corrected, not a visible fault
@@ -179,7 +179,7 @@ export function Donut({ segs, centerBig, centerSub }: { segs: Array<[string, num
  *
  * IT IS A WRAPPER AND NOT A LAYOUT, deliberately, for KVGrid's reason: the two
  * call sites want two different sets, a `space-y-2` scorecard beside a focal
- * average and a `space-y-2.5` hover list with an end-label row beneath it. One
+ * average and a `space-y-3` hover list with an end-label row beneath it. One
  * imposed layout would break whichever card it was not written for, so the
  * caller keeps its own rows and this supplies the declaration. */
 export function DotsSet({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -194,7 +194,7 @@ export function DotsSet({ children, className = "" }: { children: React.ReactNod
  * The row keeps its own `role="img"` and its "N out of M" name, because a screen
  * reader reads a ROW's score and the set has no score of its own to announce. */
 export function Dots({ score, max = 10, accent = false, showTrack = true }: { score: number; max?: number; accent?: boolean; showTrack?: boolean }) {
-  return <div className="flex gap-[3px]" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : showTrack ? TRACK : "transparent" }} />)}</div>;
+  return <div className="flex gap-1" role="img" aria-label={`${score} out of ${max}`}>{Array.from({ length: max }).map((_, i) => <span key={i} className="h-[7px] w-[7px] rounded-full" style={{ background: i < score ? (accent ? TERRA : "#1a1a1a") : showTrack ? TRACK : "transparent" }} />)}</div>;
 }
 /* single 0-100 bar. Neutral grey by default; terracotta only when `accent` marks
  * the one focal figure in the box. */
@@ -220,7 +220,7 @@ export function IndexBar({ value, kind = "pct", accent = false }: { value: numbe
   const pos = (v: number) => Math.max(0, Math.min(100, (v / domainMax) * 100));
   const shape = isIndex ? "rounded-sm" : "rounded-full";
   return (
-    <span data-idea="I1" className="flex items-center gap-2.5">
+    <span data-idea="I1" className="flex items-center gap-3">
       <span className={`relative block h-2 flex-1 overflow-hidden ${shape}`} role="img" aria-label={isIndex ? `index ${Math.round(value)}, top group is 100` : `${Math.round(value)} percent`} style={{ background: TRACK }}>
         <span className={`absolute inset-y-0 left-0 block ${shape}`} style={{ width: `${pos(value)}%`, background: accent ? TERRA : "var(--c-line-strong)" }} />
         {isIndex ? <span className="absolute -top-[2px] -bottom-[2px] w-px" style={{ left: `${pos(100)}%`, background: "var(--c-ink2)" }} /> : null}
@@ -339,7 +339,7 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
         <div className={legendClassName}>{ordered.map((s) => {
           const labelled = onBar && (share(s) >= 12 || (isKept(s) && share(s) >= 4));
           return (
-            <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+            <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
               <span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
               {s.label}
               {labelled ? null : <> <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></>}
@@ -381,7 +381,7 @@ export function ShareStack({ segments }: { segments: ShareSeg[] }) {
     <div data-idea="I3">
       <div className="flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
         {colored.map((s) => (
-          <div key={s.label} className="flex h-full items-center justify-center overflow-hidden border-r border-white/70 px-1.5 last:border-0" style={{ width: `${(s.pct / sum) * 100}%`, background: s.color }}>
+          <div key={s.label} className="flex h-full items-center justify-center overflow-hidden border-r border-white/70 px-2 last:border-0" style={{ width: `${(s.pct / sum) * 100}%`, background: s.color }}>
             {inline ? <span className="truncate text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">{s.label} <Fig>{s.pct}%</Fig></span> : null}
           </div>
         ))}
@@ -389,7 +389,7 @@ export function ShareStack({ segments }: { segments: ShareSeg[] }) {
       {!inline ? (
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
           {colored.map((s) => (
-            <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+            <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
               <span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
               {s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig>
             </span>
@@ -402,7 +402,7 @@ export function ShareStack({ segments }: { segments: ShareSeg[] }) {
 /* margin waterfall , each row a share of revenue, the kept slice terracotta. Cap 2 uses/page. */
 export function Waterfall({ rows }: { rows: Array<[string, number, boolean?]> }) {
   return (
-    <div data-idea="I2" className="space-y-2.5">{rows.map(([label, pct, kept]) => (
+    <div data-idea="I2" className="space-y-3">{rows.map(([label, pct, kept]) => (
       <div key={label} className="grid grid-cols-[120px_1fr_44px] items-center gap-3">
         <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</span>
         <div className="h-5 overflow-hidden rounded" style={{ background: "#f0f0f0" }}><div className="h-full rounded" style={{ width: `${Math.max(0, Math.min(100, pct))}%`, background: kept ? TERRA : "#bdbdbd" }} role="img" aria-label={`${label} ${pct}%`} /></div>
@@ -487,7 +487,7 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow?: 
   void icon;
   return (
     <div className="mb-3 mt-12">
-      <div className="mb-1.5 flex items-center gap-2.5">
+      <div className="mb-2 flex items-center gap-3">
         {index ? <span className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{index}</span> : null}
         {sample ? <SampleTag /> : null}
       </div>
@@ -509,7 +509,7 @@ export function Movement({ eyebrow, heading, sample, icon, index }: { eyebrow?: 
  * unchanged since; the inset paper top-highlight it once composed with came off 2026-09-07
  * (MODEL.md PART 2) with the glass it was simulating. `elevation` is kept in the prop type as a
  * tolerated no-op (both call sites, home2-view.tsx:261/309, keep compiling). */
-const DENSITY_PAD: Record<"dense" | "default" | "lead", string> = { dense: "p-4", default: "p-5", lead: "p-7" };
+const DENSITY_PAD: Record<"dense" | "default" | "lead", string> = { dense: "p-4", default: "p-5", lead: "p-6" };
 /**
  * CARD_SURFACE , THE ONE CARD SURFACE, AND THERE IS EXACTLY ONE.
  *
@@ -748,7 +748,7 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
        to go back up and read them again knowing what the sides meant.
        A chart's key is furniture and stays quiet, but quiet is about weight, not
        about order. */
-    <div data-idea="I1" className="space-y-3.5">
+    <div data-idea="I1" className="space-y-4">
       {endLabels ? (
         <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
           <span />
@@ -756,7 +756,7 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
         </div>
       ) : null}
       {rows.map(([label, pos, word, sub]) => (
-      <div key={label} className="hov -mx-2 grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 rounded-md px-2 py-1.5 sm:grid-cols-[150px_1fr]">
+      <div key={label} className="hov -mx-2 grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 rounded-md px-2 py-2 sm:grid-cols-[150px_1fr]">
         <span className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</span> : null}</span>
         <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: TRACK }}>
           <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
@@ -804,7 +804,7 @@ export function Meter({ value, left, right }: { value: number; left: string; rig
 export function SampleTag({ note }: { note?: string }) {
   if (!areSampleMarksVisible()) return null;
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-[var(--c-line-strong)] bg-[var(--c-soft)] px-2.5 py-0.5">
+    <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-[var(--c-line-strong)] bg-[var(--c-soft)] px-2 py-0.5">
       <AtlasMark id="sample" size={12} />
       <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span>
       {note ? <span className="text-[length:var(--t-micro)] normal-case tracking-normal text-[var(--c-muted)]">{note}</span> : null}
@@ -919,12 +919,12 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
         );
         if (r.name) {
           return (
-            <div key={i} className="py-2.5 first:pt-0 last:pb-0">
+            <div key={i} className="py-2 first:pt-0 last:pb-0">
               <div className={`flex items-center ${nameCls} font-medium text-[var(--c-ink)]`}>
-                {gloss ? <InfoTip gloss={gloss} className="mr-1.5" /> : null}
+                {gloss ? <InfoTip gloss={gloss} className="mr-2" /> : null}
                 {r.name}
               </div>
-              <div className="mt-1.5">{track}</div>
+              <div className="mt-2">{track}</div>
               <div className={`mt-1 flex justify-between gap-3 leading-tight ${poleCls}`}>
                 <span>{r.left_label}</span>
                 <span className="text-right">{r.right_label}</span>
@@ -935,7 +935,7 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
         return (
           <div key={i} className="hov -mx-2 grid grid-cols-[130px_1fr_118px] items-center gap-2 rounded-md px-2 py-2">
             <span className={`flex items-center text-[length:var(--t-micro)] leading-tight ${gradient ? "text-[var(--c-muted)]" : "text-[var(--c-ink2)]"}`}>
-              {gloss ? <InfoTip gloss={gloss} className="mr-1.5" /> : null}
+              {gloss ? <InfoTip gloss={gloss} className="mr-2" /> : null}
               {r.left_label}
             </span>
             {track}
@@ -951,7 +951,7 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
  * neutral variant onto the spine CSS vars via tailwind-merge. */
 export function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <Pill variant="neutral" className="border-[color:var(--c-border)] bg-[color:var(--c-soft)] px-2.5 py-0.5 text-[length:var(--t-micro)] font-normal text-[color:var(--c-ink2)]">
+    <Pill variant="neutral" className="border-[color:var(--c-border)] bg-[color:var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-normal text-[color:var(--c-ink2)]">
       {children}
     </Pill>
   );
@@ -1022,7 +1022,7 @@ export function InlineDisclosure({ name, summary, className = "group mt-3", chil
   assertNoGraphics(children, "InlineDisclosure");
   return (
     <details name={name} className={className}>
-      <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><span className="text-[length:var(--t-lead)] text-[var(--c-muted)] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span> {summary}</summary>
+      <summary className="flex cursor-pointer list-none items-center gap-2 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"><span className="text-[length:var(--t-lead)] text-[var(--c-muted)] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span> {summary}</summary>
       {children}
     </details>
   );
@@ -1035,11 +1035,11 @@ export function Expand({ name, title, right, children, open }: { name: string; t
   assertNoGraphics(children, "Expand");
   return (
     <details name={name} open={open} className="group overflow-hidden rounded-lg border border-[var(--c-border)] open:border-[var(--c-line-strong)] open:shadow-[0_1px_2px_rgba(27,24,22,0.04)]">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 bg-[var(--c-soft)] px-3.5 py-2.5 transition hover:bg-[var(--c-soft2)] group-open:bg-[var(--terra-soft)]">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 bg-[var(--c-soft)] px-3 py-2 transition hover:bg-[var(--c-soft2)] group-open:bg-[var(--terra-soft)]">
         <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)] group-open:text-[var(--terra-text)]">{title}</span>
         <span className="flex items-center gap-3">{right}<span className="text-[length:var(--t-lead)] text-[#c9c9c9] transition group-open:rotate-45 group-open:text-[var(--terra-text)]">+</span></span>
       </summary>
-      <div className="px-3.5 pb-3 pt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{children}</div>
+      <div className="px-3 pb-3 pt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{children}</div>
     </details>
   );
 }
@@ -1096,7 +1096,7 @@ export function Spectrum({ rows }: { rows: any[] }) {
       <div className="relative h-1.5 rounded-full" role="img" aria-label={`${r.left_label} to ${r.right_label}`} style={{ background: "linear-gradient(90deg,#fb8469,#d4d4d4 52%,#737373)" }}><div className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[var(--c-ink)]" style={{ left: `${Math.round((r.position_0_1 || 0) * 100)}%`, boxShadow: "0 0 0 1px #e3e3e3" }} /></div></div>))}</div>;
 }
 export function CatRows({ rows }: { rows: Array<[string, any]> }) {
-  return <div data-idea="I8" className="divide-y divide-[var(--c-border)]">{rows.map(([k, v]) => v ? <div key={k} className="hov -mx-2 flex gap-3 rounded-md px-2 py-1.5"><span className="w-28 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{v}</span></div> : null)}</div>;
+  return <div data-idea="I8" className="divide-y divide-[var(--c-border)]">{rows.map(([k, v]) => v ? <div key={k} className="hov -mx-2 flex gap-3 rounded-md px-2 py-2"><span className="w-28 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{v}</span></div> : null)}</div>;
 }
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
@@ -1115,7 +1115,7 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss }: { i
     // mb-2, the slot rung: same written kit fix as Head above (the spacing
     // ladder holds no 12). City finding #4 (2026-08-30), S1.
     <div className="mb-2">
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         {/* THE ICON IS TERRACOTTA ON EVERY CARD (his ruling of 2026-09-19: "the big missed chance is to put it at the icons"); one tile, one tone, site-wide. The accent budget counts text, so the tiles are not accents. */}
         {icon ? <Ico id={icon} tone="terra" /> : null}
         {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
@@ -1169,7 +1169,7 @@ export function Stat({ value, label, sub, size = "support", accent = false }: { 
           focal branch; the support branch sits on the body rung and needs no
           opt-out. City finding #3 (2026-08-30), T1. */}
       <div data-typography={focal ? "custom" : undefined} className={`fig leading-none ${focal ? "text-[38px] md:text-[42px]" : "text-[length:var(--t-body)]"}`} style={{ color: accent ? "var(--terra-text)" : "var(--c-ink)" }}>{value}</div>
-      {sub ? <div className={`text-[var(--c-muted)] ${focal ? "mt-1.5 text-[length:var(--t-body)]" : "mt-0.5 text-[length:var(--t-micro)]"}`}>{sub}</div> : null}
+      {sub ? <div className={`text-[var(--c-muted)] ${focal ? "mt-2 text-[length:var(--t-body)]" : "mt-0.5 text-[length:var(--t-micro)]"}`}>{sub}</div> : null}
     </div>
   );
 }
@@ -1405,7 +1405,7 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
         })}
       </ol>
 
-      {read ? <div className="mt-3 line-clamp-2 border-t border-[var(--c-border)] pt-2.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{read}</div> : null}
+      {read ? <div className="mt-3 line-clamp-2 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{read}</div> : null}
     </Box>
   );
 }
@@ -1467,7 +1467,7 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
   const ariaLabel = `${segs.map((s) => `${s.label} ${wk(s.from)} to ${wk(s.to)}`).join(", ")}; break-even ${wk(breakevenWeek)}`;
   return (
     <div data-idea="I4">
-      <div className="relative pt-7">
+      <div className="relative pt-6">
         {/* INK, NOT THE ACCENT (plan step 33's first dispatch, 2026-09-18): the
             trade page's three loud moments are its `00 take`, `04 open` and
             `08 clears` (MODEL.md 8.6's seat ledger), and PART 6 sends anything
@@ -1495,10 +1495,10 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
         {/* BOTH ENDS OF A RULER ARE WRITTEN ALIKE. This one read "0" at the left and
             "WEEK 52" at the right, one bare and one carrying its unit, so a reader
             had to work out that the bare end was also weeks. Notation N6. */}
-        <div className="mt-1.5 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
+        <div className="mt-2 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
       </div>
-      <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2.5">
-        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-1.5 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
+      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2">
+        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
       </div>
     </div>
   );

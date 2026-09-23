@@ -82,7 +82,7 @@ function Sample({ n, title, ask, from, left, right, leftNote, rightNote, leftLab
   left: React.ReactNode; right: React.ReactNode; leftNote: string; rightNote: string;
   leftLabel?: string; rightLabel?: string;
 }) {
-  const label = (text: string, accent = false): React.CSSProperties => ({
+  const label = (accent = false): React.CSSProperties => ({
     fontSize: "var(--t-micro)", textTransform: "uppercase", letterSpacing: "0.12em",
     color: accent ? "var(--terra-text)" : "var(--c-muted)", marginBottom: 12,
   });

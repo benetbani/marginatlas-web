@@ -331,7 +331,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           );
         };
         return (
-          <div className="mt-3.5 [container-type:inline-size]">
+          <div className="mt-4 [container-type:inline-size]">
             <div
               className={twoCols ? "grid [@container(min-width:600px)]:grid-flow-col [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6 [@container(min-width:600px)]:grid-rows-[auto_repeat(var(--ml-rows),2.75rem)]" : "grid"}
               style={twoCols ? ({ "--ml-rows": String(perCol) } as React.CSSProperties) : undefined}
@@ -351,7 +351,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           and it reads after the list rather than before it. PART 7's fourth
           part is exactly this: "THE FOOT, where earned. One line, a coverage
           statement." */}
-      {withheldLine ? <p data-withheld-line="1" className="mt-2.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{withheldLine}</p> : null}
+      {withheldLine ? <p data-withheld-line="1" className="mt-3 text-[length:var(--t-micro)] text-[var(--c-muted)]">{withheldLine}</p> : null}
     </Box>
   );
 }

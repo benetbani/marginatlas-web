@@ -59,7 +59,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }
           const pct = Math.round(pos * 1000) / 10;
           const lean = pct < 50 ? r.left : pct > 50 ? r.right : null;
           return (
-            <div key={r.key} data-spectrum-row={r.key} className="py-2.5">
+            <div key={r.key} data-spectrum-row={r.key} className="py-2">
               <div data-label className={scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
               {/* THE TRACK DECLARES WHAT ITS FAR END IS (plan step 12, 2026-09-17).
                   A spectrum runs between two poles; neither end is a maximum,
@@ -75,7 +75,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }
                 data-track="scale"
                 role="img"
                 aria-label={`${r.name}: ${r.left} to ${r.right}: ${lean ? `leans ${lean}` : "in the middle"}`}
-                className="relative mt-1.5 block h-[6px] rounded-full bg-[var(--c-soft2)]"
+                className="relative mt-2 block h-[6px] rounded-full bg-[var(--c-soft2)]"
               >
                 <span aria-hidden className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px bg-[var(--c-border)]" />
                 {/* THE DOT'S CENTRE runs from a radius in at the left to a radius in at the right, so a read of 0 or 1 sits inside the track and nothing is clamped. */}

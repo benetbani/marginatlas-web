@@ -415,7 +415,7 @@ export function CompanionRow({ items }: { items: Companion[] }) {
   return (
     <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
       {items.map((c, i) => (
-        <span key={`${c.figure}-${i}`} data-companion className="inline-flex flex-wrap items-baseline gap-x-1.5">
+        <span key={`${c.figure}-${i}`} data-companion className="inline-flex flex-wrap items-baseline gap-x-2">
           <Fig className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{c.figure}</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{c.words}</span>
         </span>
@@ -476,7 +476,7 @@ export function BentoMetric({
   if (figure != null && withheld != null) throw new Error(`BentoMetric "${kicker}": a figure and a withheld line together. A line beside a printed figure apologises for nothing; pass one of the two.`);
   return (
     <Box id={id} data-lean={lean ? "1" : undefined} className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric">
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
         {/* HIS POP-UP, at the cell's opener (2026-09-22, QUEUE ui:the-gloss). */}
@@ -605,13 +605,13 @@ export function BentoCount({
   const isWhole = filled === Math.round(whole);
   return (
     <Box className="flex h-full flex-col" data-archetype="bento-count" data-visual="1" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
         {sample ? <SampleTag /> : null}
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">
-        <div className="flex items-baseline gap-1.5">
+        <div className="flex items-baseline gap-2">
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{filled}</Fig>
           {/* THE WHOLE IS SAID AS WELL AS DRAWN. The grid below carries it for
               the eye; a reader who counts nothing still reads "of 8" here.
@@ -621,7 +621,7 @@ export function BentoCount({
         <div
           data-units={units.length}
           data-visual="1"
-          className={columns ? "mt-2.5 grid gap-[4px]" : "mt-2.5 flex flex-wrap gap-[4px]"}
+          className={columns ? "mt-3 grid gap-[4px]" : "mt-3 flex flex-wrap gap-[4px]"}
           style={columns ? { gridTemplateColumns: `repeat(${Math.max(1, Math.round(columns))}, minmax(0, 1fr))` } : undefined}
           role="img"
           aria-label={isWhole ? `${filled}, ${label ?? kicker}` : `${filled} out of ${Math.round(whole)}, ${label ?? kicker}`}
@@ -641,7 +641,7 @@ export function BentoCount({
             />
           ))}
         </div>
-        {label ? <div className="mt-2.5 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
+        {label ? <div className="mt-3 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
       <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
     </Box>

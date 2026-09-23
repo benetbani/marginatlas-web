@@ -150,7 +150,7 @@ function ReadCard({
   if (!row) return null;
   return (
     <Box className="flex flex-col">
-      <div className="mb-1.5 flex items-center gap-2">
+      <div className="mb-2 flex items-center gap-2">
         <Ico id={icon} tone="terra" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--terra-text)]">{kicker}</span>
       </div>
@@ -162,7 +162,7 @@ function ReadCard({
         <span className="text-[15px] font-semibold text-[var(--c-ink)] group-hover:text-[var(--terra-text)]">{row.name}</span>
         <Fig className="text-[14px] text-[var(--terra-text)]">{figure}</Fig>
       </a>
-      <p className="mt-1.5 text-[12px] leading-snug text-[var(--c-ink2)]">{why}</p>
+      <p className="mt-2 text-[12px] leading-snug text-[var(--c-ink2)]">{why}</p>
     </Box>
   );
 }
@@ -408,14 +408,14 @@ export function AtlasIndex({
 
       {/* masthead , the list IS the answer */}
       <header className="pb-4 pt-2">
-        <div className="mb-1.5 flex items-center gap-2">
+        <div className="mb-2 flex items-center gap-2">
           <Ico id="ranking" tone="terra" />
           <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">The list</span>
         </div>
         <h1 data-typography="custom" className="max-w-[34ch] text-2xl font-bold leading-tight tracking-tight text-[var(--c-ink)] md:text-[2rem]">
           {title}
         </h1>
-        <p className="mt-1.5 max-w-prose text-[13px] leading-snug text-[var(--c-ink2)]">
+        <p className="mt-2 max-w-prose text-[13px] leading-snug text-[var(--c-ink2)]">
           Re-rank the whole list by the signal you care about. Every row carries its own decision figure; a blank reads
           as a dash, never a guess.
         </p>
@@ -440,7 +440,7 @@ export function AtlasIndex({
           never read as filed. The focal is always modeled here; sample support
           signals carry the same chip. */}
       {sampleSignalLabels.length > 0 ? (
-        <div className="mt-2 flex flex-wrap items-center gap-1.5 px-1 text-[11px] text-[var(--c-muted)]">
+        <div className="mt-2 flex flex-wrap items-center gap-2 px-1 text-[11px] text-[var(--c-muted)]">
           <span>Modeled, not filed:</span>
           {sampleSignalLabels.map((label) => (
             <span

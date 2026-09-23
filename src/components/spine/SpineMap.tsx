@@ -407,8 +407,8 @@ export function SpineMap({
       {ready && legendLabel ? (
         // Dot-size legend , a small white kit card, TOP-left: the bottom strip stays
         // clear for the CARTO attribution (they collided on narrow cards).
-        <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2.5 rounded-[10px] border border-[var(--c-border)] bg-[var(--c-card)]/95 px-2.5 py-1.5 shadow-[0_1px_2px_rgba(43,28,22,0.10)]">
-          <span className="flex items-end gap-1.5" aria-hidden="true">
+        <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-3 rounded-[10px] border border-[var(--c-border)] bg-[var(--c-card)]/95 px-2 py-2 shadow-[0_1px_2px_rgba(43,28,22,0.10)]">
+          <span className="flex items-end gap-2" aria-hidden="true">
             <span className="block h-[8px] w-[8px] rounded-full" style={{ background: TERRA_ACCENT }} />
             <span className="block h-[16px] w-[16px] rounded-full" style={{ background: TERRA_ACCENT }} />
           </span>
@@ -434,7 +434,7 @@ export function SpineMap({
                 type="button"
                 onClick={() => activate(p)}
                 style={{ touchAction: "manipulation" }}
-                className="cityhov rounded-full border border-[var(--c-border)] bg-[var(--c-card)] px-3 py-1.5 text-[13px] font-medium text-[var(--c-ink)] transition hover:border-[var(--terra-border)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--terra-text)]"
+                className="cityhov rounded-full border border-[var(--c-border)] bg-[var(--c-card)] px-3 py-2 text-[13px] font-medium text-[var(--c-ink)] transition hover:border-[var(--terra-border)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--terra-text)]"
               >
                 {p.name}
                 {p.sub ? <span className="text-[var(--c-muted)]"> ({p.sub})</span> : null}

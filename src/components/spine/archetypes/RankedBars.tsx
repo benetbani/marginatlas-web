@@ -390,7 +390,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
         <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
         {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)] md:mt-0">{withheldLine}</p> : null}
       </div>
-      {drawBars ? <div className="relative mt-2.5 hidden lg:block" data-idea="I2">
+      {drawBars ? <div className="relative mt-3 hidden lg:block" data-idea="I2">
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-border)]" style={{ top: PILL }} />
         {/* THE CEILING'S NAME STANDS AT THE END NO MEMBER TOUCHES (plan step 33's
             second dispatch, 2026-09-18, the first bars card with a SET ceiling:
@@ -420,7 +420,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                         and the two colours change. */}
                     <span
                       data-pill={figPill ? "1" : undefined}
-                      className={`inline-flex items-center justify-center rounded-full px-1.5 py-0.5 ${figPill ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
+                      className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${figPill ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
                     >
                       <Fig className="font-medium">{fmt(r.value)}</Fig>
                     </span>
@@ -442,7 +442,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
         </ol>
       </div> : null}
       {drawWide || drawMidTable ? (
-        <div className={drawWide ? "mt-2.5 hidden flex-1 flex-col sm:flex" : "mt-2.5 hidden flex-1 flex-col sm:flex lg:hidden"} data-idea="I2">
+        <div className={drawWide ? "mt-3 hidden flex-1 flex-col sm:flex" : "mt-3 hidden flex-1 flex-col sm:flex lg:hidden"} data-idea="I2">
           {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS (task 13
               alignment fix): same `GEO`, so its first two cells begin exactly
               where every name and every figure below them begins. Its own two
@@ -531,7 +531,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           </div>
         </div>
       ) : null}
-      <div className={drawBars || drawWide ? "mt-2.5 sm:hidden" : "mt-2.5"}>
+      <div className={drawBars || drawWide ? "mt-3 sm:hidden" : "mt-3"}>
         <div className="flex items-baseline justify-between pb-2">
           <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.name}</span>
           <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
@@ -561,7 +561,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                 </Fig>
               </>
             );
-            const cls = "flex items-baseline justify-between gap-x-3 py-2.5";
+            const cls = "flex items-baseline justify-between gap-x-3 py-2";
             /* The phone row draws no bar and still declares its value, so the
                rule that reads drawn length against value keeps working the day
                this form grows one. */
@@ -578,7 +578,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
       {foot && foot.items.length > 0 ? (
         <div data-foot className="mt-3 border-t border-[var(--c-border)] pt-3">
           <CompanionRow items={foot.items} />
-          {foot.line ? <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
+          {foot.line ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
         </div>
       ) : foot && foot.line ? (
         <p data-foot className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{foot.line}</p>

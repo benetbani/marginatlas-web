@@ -518,7 +518,7 @@ function TradesHere({ d }: { d: any }) {
           </a>
         ))}
       </div>
-      <p className="mt-2.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p>
     </Box>
   );
 }

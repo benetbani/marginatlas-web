@@ -83,7 +83,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
       <div data-archetype="range-strip" data-idea="I12" data-marks="1">
         <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{m.label}</div>
         <Fig className={`mt-1 block font-semibold leading-none ${m.lead ? "text-[length:var(--t-focal)]" : "text-[length:var(--t-head)]"} ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(m.value)}</Fig>
-        {basis ? <p className="mt-1.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+        {basis ? <p className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
         {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
         {extra ? <Extra extra={extra} /> : null}
       </div>
