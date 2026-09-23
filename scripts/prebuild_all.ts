@@ -340,6 +340,8 @@ const GATES: Gate[] = [
      literal 0.12 typed back in. Registered 2026-09-17. */
   { name: "district-engine-boundary", script: "scripts/verify_district_engine_boundary.ts" },
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
+  /* The distance ladder (2026-09-23, briefs/DISTANCES.md section 1: 0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64). A ratchet seeded at the 152 uses the spine held the day it was written; the count may only fall. */
+  { name: "distance-ladder", script: "scripts/verify_distance_ladder.mjs" },
   /* WCAG AA on every token that carries text. The colour tokens are edited by
      eye in the founder's design file, where a shade nudged lighter still
      compiles and still typechecks. Measured clean before it was written, 247 of

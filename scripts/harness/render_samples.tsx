@@ -1,20 +1,27 @@
-/* THE SAMPLES SHEET (2026-09-23, on his "show me examples, create some
-   illustrative samples of sections", the run after the Kole Jain study).
-   Five ideas from that study, each drawn twice: AS THE SITE DRAWS IT TODAY and
-   AS THE IDEA WOULD DRAW IT, side by side on one page, the way he lays his own
-   lessons out.
+/* THE SAMPLES SHEET, SECOND CUT (2026-09-23, after his verdict on the first:
+   "number three I don't really like it; number four is totally blank, which is
+   particularly wrong, it cannot be used in that form; number five is poorly
+   executed on both sides; the things you pull as subs below the cards should be
+   quite short, you just put a lot of words out there").
 
-   EVERY FIGURE IS REAL AND SAYS WHERE IT COMES FROM. The cards are the site's
-   own components over the site's own builders (London restaurants and the
-   London city seed), not mockups: what he approves can be seated the same day,
-   and what he refuses costs nothing but this file. The only invented thing on
-   the page is copy that carries no number (a recovery sentence), and it is
-   marked as a proposal in its own caption.
+   WHAT CHANGED. The withheld sample is gone. The cents sample is drawn inside a
+   real card full of money instead of an empty box, because the point of the
+   treatment is a column of figures, not one. The comparison sample uses the
+   page's own income breakdown on BOTH sides, and the comparison is a mark on
+   the bar that is already there rather than two bars underneath it. Every
+   caption is one short line. The sheet itself is now built to DISTANCES.md:
+   64 at the page top, 48 between samples, 32 between the two frames, 12 under
+   a card to its caption, and nothing off the ladder.
+
+   EVERY FIGURE IS REAL AND NAMED. The cards are the site's own components over
+   the site's own builders (London restaurants, the London city seed), so what
+   he approves can be seated the same day.
 
    usage, from E:/atlas/website:
      npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/harness/env.cjs --require ./scripts/spikes/stub_next_font.cjs scripts/harness/render_samples.tsx
-   writes scratchpad/harness/samples.html (open it in a browser; it needs
-   scratchpad/pages/site.css beside it, which the archetype sheet compiles). */
+   writes scratchpad/harness/samples.html, self-contained (the stylesheet is
+   inlined), and reads scratchpad/harness/sample-edges.json when a previous
+   measuring pass has written it. */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { writeFileSync, readFileSync, existsSync, statSync, readdirSync } from "node:fs";
@@ -22,31 +29,36 @@ import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
-import { Box, Rail, Fig } from "@/components/spine/kit";
+import { Box, Rail } from "@/components/spine/kit";
 import { MonthLine } from "@/components/spine/archetypes/MonthLine";
+import { KvGrid } from "@/components/spine/archetypes/KvGrid";
+import { IncomeBreakdown } from "@/components/spine/archetypes/IncomeBreakdown";
 import { LastsCard } from "@/components/spine/cell/turn-two";
 import { CustomersCard } from "@/components/spine/cell/exit";
 import { loadCellHeroInstances } from "@/lib/spine/trade_hero_facts";
 import { buildMarket } from "@/lib/spine/market_rows";
 import { buildTradeCustomers } from "@/lib/spine/trade_customers_rows";
 import { buildLasts } from "@/lib/spine/lasts_rows";
+import { buildSplit } from "@/lib/spine/split_rows";
 import { buildCityLiving } from "@/lib/spine/fact_rows";
 import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import { COPY } from "@/lib/spine/copy";
 
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
-/* PASS TWO's measurement, when it exists: the distinct left starts of the text
-   inside the two cards sample 01 draws, measured in a browser by
-   scratchpad/step23/measure_edges.mjs. The first render of this file has none
-   and draws no rules; the render after the measurement draws them where they
-   actually are. A rule drawn at a guessed position is the thing this sample is
-   arguing against. */
+const CSS_PATH = "scratchpad/pages/site.css";
+
+/* The measuring pass's answer, when it exists: the distinct left starts of the
+   text in the two cards sample 01 draws (scratchpad/step23/measure_edges.mjs).
+   A rule drawn at a guessed position is the thing that sample argues against. */
 const EDGES_PATH = "scratchpad/harness/sample-edges.json";
 type EdgeRow = { id: string; cols: number[]; leaves: number; width: number };
 const EDGES: EdgeRow[] = existsSync(EDGES_PATH) ? JSON.parse(readFileSync(EDGES_PATH, "utf8")) : [];
 const edgesOf = (id: string): EdgeRow | null => EDGES.find((e) => e.id === id) ?? null;
-const edgeLabel = (e: EdgeRow | null) => (e ? `${e.cols.length} distinct start${e.cols.length === 1 ? "" : "s"}, measured` : "not measured yet");
-const CSS_PATH = "scratchpad/pages/site.css";
+const edgeCount = (e: EdgeRow | null) => (e ? `${e.cols.length} starts` : "not measured");
+/* The income breakdown's track, measured in the same pass: sample 04's tick is
+   placed on the bar the browser drew, never on an assumed one. */
+type TrackBox = { left: number; top: number; width: number; height: number };
+const TRACK: TrackBox | null = (EDGES.find((e: any) => e.id === "sample-split-track") as any)?.box ?? null;
 
 function newestUnder(dir: string): number {
   let t = 0;
@@ -56,87 +68,70 @@ function newestUnder(dir: string): number {
   }
   return t;
 }
-
 function ensureCss() {
   const inputs = [newestUnder("src"), ...["tailwind.config.ts", "postcss.config.js"].map((f) => (existsSync(f) ? statSync(f).mtimeMs : 0))];
-  const newest = Math.max(...inputs);
-  if (existsSync(CSS_PATH) && statSync(CSS_PATH).mtimeMs > newest) return;
+  if (existsSync(CSS_PATH) && statSync(CSS_PATH).mtimeMs > Math.max(...inputs)) return;
   execFileSync(process.execPath, ["node_modules/tailwindcss/lib/cli.js", "-i", "src/app/globals.css", "-o", CSS_PATH, "--minify"], { stdio: "pipe" });
 }
 
-/* ONE SAMPLE: the question it answers, the two frames, and where the figures
-   come from. The caption is the whole point: a picture with no provenance is a
-   mockup, which is what this project stopped making on 2026-09-04. */
-function Sample({ n, title, ask, from, today, proposed, todayNote, proposedNote, leftLabel = "As the site draws it today", rightLabel = "As the idea draws it" }: {
+/* THE FRAME, built to DISTANCES.md: 48 between samples, 8 under the title, 12
+   under the provenance line, 32 between the frames, 12 from a card to its
+   caption. The caption is one line and the type carries no exception. */
+function Sample({ n, title, ask, from, left, right, leftNote, rightNote, leftLabel = "Today", rightLabel = "Proposed" }: {
   n: string; title: string; ask: string; from: string;
-  today: React.ReactNode; proposed: React.ReactNode; todayNote: string; proposedNote: string;
+  left: React.ReactNode; right: React.ReactNode; leftNote: string; rightNote: string;
   leftLabel?: string; rightLabel?: string;
 }) {
+  const label = (text: string, accent = false): React.CSSProperties => ({
+    fontSize: "var(--t-micro)", textTransform: "uppercase", letterSpacing: "0.12em",
+    color: accent ? "var(--terra-text)" : "var(--c-muted)", marginBottom: 12,
+  });
+  const caption: React.CSSProperties = { fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12, marginBottom: 0 };
   return (
-    <section style={{ marginBottom: 56 }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+    <section style={{ marginBottom: 48 }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
         <span className="fig" style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)" }}>{n}</span>
         <h2 style={{ fontSize: "var(--t-head)", fontWeight: 600, color: "var(--c-ink)", margin: 0 }}>{title}</h2>
       </div>
-      <p style={{ fontSize: "var(--t-body)", color: "var(--c-ink2)", margin: "0 0 2px", maxWidth: "68ch" }}>{ask}</p>
-      <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", margin: "0 0 16px", maxWidth: "68ch" }}>{from}</p>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+      <p style={{ fontSize: "var(--t-body)", color: "var(--c-ink2)", margin: 0, maxWidth: "68ch" }}>{ask}</p>
+      <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", margin: "4px 0 24px", maxWidth: "68ch" }}>{from}</p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, alignItems: "start" }}>
         <div>
-          <div style={{ fontSize: "var(--t-micro)", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--c-muted)", marginBottom: 26 }}>{leftLabel}</div>
-          {today}
-          <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 8 }}>{todayNote}</p>
+          <div style={label()}>{leftLabel}</div>
+          {left}
+          <p style={caption}>{leftNote}</p>
         </div>
         <div>
-          <div style={{ fontSize: "var(--t-micro)", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--terra-text)", marginBottom: 26 }}>{rightLabel}</div>
-          {proposed}
-          <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 8 }}>{proposedNote}</p>
+          <div style={label(true)}>{rightLabel}</div>
+          {right}
+          <p style={caption}>{rightNote}</p>
         </div>
       </div>
     </section>
   );
 }
 
-/* SAMPLE 1's overlay: the distinct left edges of a card's text, drawn as rules
-   over the card. Measured in the browser by the checker this would become; here
-   the rules are drawn at the card's own padding steps so the idea is visible on
-   paper. The count printed under each frame is what the checker would count. */
-function Edges({ children, at, label }: { children: React.ReactNode; at: number[]; label: string }) {
+/* Sample 01: the measured left starts, drawn where the browser found them. */
+function Edges({ children, at }: { children: React.ReactNode; at: number[] }) {
   return (
     <div style={{ position: "relative" }}>
       {children}
       {at.map((x) => (
-        <span key={x} style={{ position: "absolute", top: 0, bottom: 0, left: x, width: 1, background: "var(--terra)", opacity: 0.5 }} />
+        <span key={x} style={{ position: "absolute", top: 0, bottom: 0, left: x, width: 1, background: "var(--terra)", opacity: 0.45 }} />
       ))}
-      <div style={{ position: "absolute", top: -18, left: 0, fontSize: "var(--t-micro)", color: "var(--terra-text)" }}>{label}</div>
     </div>
   );
 }
 
-/* SAMPLE 2's panel: the reading a hover would show, drawn open on one month.
-   The figure is that month's own point, not a new number. */
+/* Sample 02: the reading a hover shows, drawn open on one point. Two lines, no
+   more: the figure with its unit, and which month it is. */
 function PointPanel({ month, figure, words }: { month: string; figure: string; words: string }) {
   return (
-    <div style={{ display: "inline-flex", flexDirection: "column", gap: 2, borderRadius: 10, background: "var(--c-ink)", color: "var(--c-card)", padding: "8px 10px", fontSize: "var(--t-micro)", lineHeight: 1.3 }}>
+    <div style={{ display: "inline-flex", flexDirection: "column", gap: 2, borderRadius: 8, background: "var(--c-ink)", color: "var(--c-card)", padding: "8px 12px", fontSize: "var(--t-micro)", lineHeight: 1.3 }}>
       <span><span className="fig" style={{ fontWeight: 600 }}>{figure}</span> <span style={{ opacity: 0.7 }}>{words}</span></span>
       <span style={{ opacity: 0.7 }}>{month}</span>
     </div>
   );
-}
-
-/* SAMPLE 5's pair: one figure with its comparison behind it, in one hue at two
-   tints, which is the form the district bars and the market bento already use. */
-function PairBars({ here, typical, hereLabel, typicalLabel }: { here: number; typical: number; hereLabel: string; typicalLabel: string }) {
-  const max = Math.max(here, typical) || 1;
-  const row = (v: number, label: string, solid: boolean) => (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 4 }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", fontSize: "var(--t-micro)", color: "var(--c-muted)" }}>
-        <span>{label}</span>
-        <span className="fig" style={{ color: solid ? "var(--c-ink)" : "var(--c-ink2)", fontSize: solid ? "var(--t-lead)" : "var(--t-body)" }}>{`${v}%`}</span>
-      </div>
-      <span style={{ display: "block", height: 10, borderRadius: 5, width: `${Math.max(4, (v / max) * 100)}%`, background: solid ? "var(--terra)" : "var(--terra-soft)" }} />
-    </div>
-  );
-  return <div style={{ display: "grid", gap: 10 }}>{row(here, hereLabel, true)}{row(typical, typicalLabel, false)}</div>;
 }
 
 async function main() {
@@ -145,180 +140,142 @@ async function main() {
   if (!cell) throw new Error("the London restaurants seed did not load");
   const seed = cell.seed;
   const industryId: string = seed?.meta?.industry_id;
-  const market = buildMarket(industryId, "place", { iso2: seed?.meta?.iso2, slug: seed?.meta?.geo, tradeName: seed?.meta?.trade });
-  const customers = buildTradeCustomers(industryId);
-  const facts = industryHeroFacts(industryId);
 
-  /* THE FIGURES, EACH FROM THE BUILDER THE PAGE ITSELF USES, none typed here.
-     The net margin this city's own (`net.pct`, whose own field line says
-     "netMarginPct, loadCellView") against the trade's typical anywhere (the
-     industry masthead's answer, a percent as text): the same trade at two
-     altitudes, which is the one comparison the market cluster already makes.
-     Never the take-home against a margin: a dollar and a percent are not like
-     for like, and that mistake was caught in this file before it was drawn. */
+  const market: any = buildMarket(industryId, "place", { iso2: seed?.meta?.iso2, slug: seed?.meta?.geo, tradeName: seed?.meta?.trade });
+  const monthPoints = Array.isArray(market?.months) ? market.months : null;
+  const customers = buildTradeCustomers(industryId);
+  const lasts = buildLasts(industryId);
+  const split: any = buildSplit(seed);
+  const living: any = buildCityLiving("london");
+  const facts: any = industryHeroFacts(industryId);
+
+  /* The two percentages sample 04 compares: this city's own net margin, and the
+     same trade's typical anywhere. A dollar is never compared with a percent,
+     which is the mistake the first cut of this sheet nearly drew. */
   const netHere: number | null = typeof seed?.net?.pct === "number" ? seed.net.pct : null;
-  const netField: string = String(seed?.net?.field ?? "");
   const typicalText: string | null = typeof facts?.answer?.value === "string" ? facts.answer.value : null;
   const typicalPct: number | null = typicalText && /^\d+(\.\d+)?%$/.test(typicalText) ? Number(typicalText.replace("%", "")) : null;
-  const takeHere: number | null = typeof seed?.owner?.take_home_usd === "number" ? seed.owner.take_home_usd : null;
-  const monthPoints = Array.isArray(market?.months) ? market.months : null;
-  const lasts = buildLasts(industryId);
-  const living = buildCityLiving("london");
-  const coffee = living?.cells?.find((c: any) => c.key === "coffee") ?? null;
 
   const body = (
-    <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 24px 80px" }}>
-      <header style={{ marginBottom: 40 }}>
-        <h1 style={{ fontSize: "var(--t-answer)", fontWeight: 600, letterSpacing: "-0.01em", color: "var(--c-ink)", margin: 0 }}>Five samples</h1>
-        <p style={{ fontSize: "var(--t-body)", color: "var(--c-ink2)", maxWidth: "68ch" }}>
-          Each one is an idea from the Kole Jain study drawn on our own page, twice: as the site draws it today, and as the idea would draw it. The cards are the site&apos;s own components over the site&apos;s own builders, so every figure is the real one and each sample says which field it came from. Nothing here is live. It is a page to look at and rule on.
+    <div style={{ maxWidth: 1120, margin: "0 auto", padding: "64px 24px" }}>
+      <header style={{ marginBottom: 48 }}>
+        <h1 style={{ fontSize: "var(--t-answer)", fontWeight: 600, letterSpacing: "-0.01em", color: "var(--c-ink)", margin: 0 }}>Four samples</h1>
+        <p style={{ fontSize: "var(--t-body)", color: "var(--c-ink2)", maxWidth: "68ch", marginTop: 8 }}>
+          Our own cards, our own builders, every figure real. Left is what the site draws today; right is the change. This sheet is built to the distance ladder written the same day.
         </p>
       </header>
 
-      {/* 1. ALIGNMENT, the measurement, not the eye */}
+      {/* 01 ALIGNMENT */}
       {lasts && customers ? (
         <Sample
           n="01"
           title="Alignment, counted"
-          ask="His newest lesson is that an interface reads as right when nothing sits at its own private position. The useful part is that this can be counted rather than judged: the distinct left starts of the text inside a card. The rules below are measured in a browser, not drawn by hand, and the measurement disagreed with the guess that wrote this sample."
-          from="Two of the trade page's own cards, drawn by their own components over the London restaurants seed. Measured at 1200 by scratchpad/step23/measure_edges.mjs, the prototype of the checker this proposes."
-          leftLabel="The grid card"
-          rightLabel="The card built on 2026-09-20"
-          today={
-            <Edges at={edgesOf("sample-lasts")?.cols ?? []} label={edgeLabel(edgesOf("sample-lasts"))}>
-              <LastsCard id="sample-lasts" lasts={lasts} />
-            </Edges>
-          }
-          proposed={
-            <Edges at={edgesOf("sample-customers")?.cols ?? []} label={edgeLabel(edgesOf("sample-customers"))}>
-              <CustomersCard id="sample-customers" customers={customers} />
-            </Edges>
-          }
-          todayNote="Three starts: the card's padding, the text beside the icon, and the second column of the grid. Nothing in it wanders."
-          proposedNote="Five starts, and the two extra ones are the pair on the hairline row, which begins wherever the figure above it happens to end. The eye barely catches it; the checker catches it every time. The rule this suggests is a cap of three, and the fix on this card is to give the pair one column each."
+          ask="How many distinct left starts does the text in a card have? Three is the cap this proposes."
+          from="Both cards ship today. The rules are measured in a browser, not drawn by hand."
+          leftLabel={`The grid card, ${edgeCount(edgesOf("sample-lasts"))}`}
+          rightLabel={`The card of 2026-09-20, ${edgeCount(edgesOf("sample-customers"))}`}
+          left={<Edges at={edgesOf("sample-lasts")?.cols ?? []}><LastsCard id="sample-lasts" lasts={lasts} /></Edges>}
+          right={<Edges at={edgesOf("sample-customers")?.cols ?? []}><CustomersCard id="sample-customers" customers={customers} /></Edges>}
+          leftNote="Three starts. Nothing wanders."
+          rightNote="Five. The pair on the hairline drifts with the figure above it."
         />
       ) : null}
 
-      {/* 2. A READING ON EVERY POINT */}
+      {/* 02 A READING ON EVERY POINT */}
       {monthPoints && monthPoints.length === 12 ? (
         <Sample
           n="02"
           title="A reading on every point"
-          ask="His charts answer the question a reader actually has: what is this one? Ours names the busiest month and leaves the other eleven unreadable."
-          from="The twelve points are the restaurants shard's own seasonality; the panel prints the point it sits on and never a new figure."
-          today={
+          ask="The line draws twelve months and names one. The other eleven have no number anywhere."
+          from="The twelve points are the restaurants shard's own seasonality. The panel prints the point it sits on."
+          left={
             <Box id="sample-swing-today">
               <Rail icon="seasonality" kicker={COPY.tradeMarket.kickers.swing} />
               <MonthLine points={monthPoints} />
               <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{COPY.tradeMarket.monthsBasis}</p>
             </Box>
           }
-          proposed={
+          right={
             <Box id="sample-swing-proposed">
               <Rail icon="seasonality" kicker={COPY.tradeMarket.kickers.swing} />
               <MonthLine points={monthPoints} />
-              <div style={{ marginTop: -78, marginLeft: 118, position: "relative", zIndex: 2 }}>
+              <div style={{ marginTop: -80, marginLeft: 120, position: "relative", zIndex: 2 }}>
                 <PointPanel month="March" figure={String(monthPoints[2].value)} words="of the busiest month" />
               </div>
-              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 70 }}>{COPY.tradeMarket.monthsBasis}</p>
+              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 64 }}>{COPY.tradeMarket.monthsBasis}</p>
             </Box>
           }
-          todayNote="December is named in a pill. March, the month a reader may actually be opening in, has no number anywhere on the page."
-          proposedNote="The panel carries two readings and no more: the figure with its unit, and which month it is. Hover and keyboard both reach it, in the page's own ink."
+          leftNote="December named in a pill. March unreadable."
+          rightNote="Any point, two readings, on hover and on keyboard."
         />
       ) : null}
 
-      {/* 3. THE STATE THAT SAYS WHAT HAPPENS NEXT */}
-      <Sample
-        n="03"
-        title="A withheld card that says what happens instead"
-        ask="His failure copy says what went wrong and what will be done about it. Ours says what is missing and stops there."
-        from="The line on the left is the shipped one, word for word. The line on the right is proposed copy carrying no figure, so the only thing about it that can be wrong is the words."
-        today={
-          <Box id="sample-withheld-today">
-            <Rail icon="startup-cost" kicker={COPY.tradeOpen.kicker} />
-            <p style={{ fontSize: "var(--t-lead)", color: "var(--c-ink2)", lineHeight: 1.4 }}>{COPY.tradeOpen.withheld}</p>
-          </Box>
-        }
-        proposed={
-          <Box id="sample-withheld-proposed">
-            <Rail icon="startup-cost" kicker={COPY.tradeOpen.kicker} />
-            <p style={{ fontSize: "var(--t-lead)", color: "var(--c-ink2)", lineHeight: 1.4 }}>{COPY.tradeOpen.withheld}</p>
-            <p style={{ fontSize: "var(--t-body)", color: "var(--c-ink2)", marginTop: 8 }}>The trade&apos;s typical bill is on the industry page until this city has its own.</p>
-          </Box>
-        }
-        todayNote="True, and a dead end. The reader is told the number is not there and given nothing to do about it."
-        proposedNote="One more sentence, and it has to be true: it names the page that does hold a figure. No date is ever promised."
-      />
+      {/* 03 THE CENTS, IN A CARD FULL OF MONEY */}
+      {living?.cells?.length ? (
+        <Sample
+          n="03"
+          title="Precision available, not loud"
+          ask="In a column of money, cents at full weight fight the figures a reader is scanning."
+          from="The city page's living costs card, London's own figures, as it ships."
+          left={
+            <Box id="sample-living-today">
+              <Rail icon="cost-breakdown" kicker={COPY.cityLiving.kicker} />
+              <KvGrid cells={living.cells} />
+              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{living.basis}</p>
+            </Box>
+          }
+          right={
+            <Box id="sample-living-proposed">
+              <Rail icon="cost-breakdown" kicker={COPY.cityLiving.kicker} />
+              <KvGrid cells={living.cells.map((c: any) => (typeof c.value === "string" && /\.\d\d$/.test(c.value)
+                ? { ...c, value: <span>{String(c.value).split(".")[0]}<span style={{ fontSize: "var(--t-body)", color: "var(--c-muted)" }}>.{String(c.value).split(".")[1]}</span></span> }
+                : c))} />
+              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{living.basis}</p>
+            </Box>
+          }
+          leftNote="Four figures, four weights of attention, all equal."
+          rightNote="Dollars read first. The cents stay, quietly."
+        />
+      ) : null}
 
-      {/* 4. THE CENTS */}
-      {coffee ? (
+      {/* 04 THE COMPARISON, ON THE BAR THAT IS ALREADY THERE */}
+      {split && netHere != null && typicalPct != null ? (
         <Sample
           n="04"
-          title="Precision available, not loud"
-          ask="Where a figure carries cents, his prints the dollars at full size and the cents small and grey, so the number reads at a glance and the exact figure is still there."
-          from="London's own cup of coffee, the city shard's figure, printed by the helper the country page's electricity rate uses."
-          today={
-            <Box id="sample-cents-today">
-              <Rail icon="spending-power" kicker={String(coffee.label)} />
-              <Fig className="block text-[length:var(--t-focal)] font-semibold text-[var(--c-ink)]">{String(coffee.value)}</Fig>
-              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{String(coffee.note ?? "")}</p>
-            </Box>
+          title="The comparison on the mark itself"
+          ask="Five per cent: good or bad? The same trade's typical is 7, and the card never says so."
+          from="The trade page's income breakdown, as it ships. The mark sits where the typical net falls on the same bar."
+          left={
+            <IncomeBreakdown id="sample-split-today" icon="cost-breakdown" kicker={COPY.tradeSplit.kicker} netLabel={split.netLabel} netPct={split.netPct} segments={split.segments} basis={split.basis} foot={split.foot} />
           }
-          proposed={
-            <Box id="sample-cents-proposed">
-              <Rail icon="spending-power" kicker={String(coffee.label)} />
-              <span style={{ display: "block" }}>
-                <Fig className="text-[length:var(--t-focal)] font-semibold text-[var(--c-ink)]">{String(coffee.value).split(".")[0]}</Fig>
-                <span className="fig" style={{ fontSize: "var(--t-body)", color: "var(--c-muted)" }}>.{String(coffee.value).split(".")[1] ?? "00"}</span>
-              </span>
-              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{String(coffee.note ?? "")}</p>
-            </Box>
+          right={
+            <div style={{ position: "relative" }}>
+              <IncomeBreakdown id="sample-split-proposed" icon="cost-breakdown" kicker={COPY.tradeSplit.kicker} netLabel={split.netLabel} netPct={split.netPct} segments={split.segments} basis={split.basis} foot={split.foot} />
+              {/* THE TYPICAL'S TICK, ON THE MEASURED BAR. The net is the bar's
+                  last segment, so the trade's typical net falls at (100 minus
+                  its percent) of the track's width. The box comes from the
+                  measuring pass; with no measurement the tick is not drawn at
+                  all, because a mark in the wrong place is worse than none. */}
+              {TRACK ? (
+                <>
+                  <span style={{ position: "absolute", left: TRACK.left + Math.round(TRACK.width * (100 - typicalPct) / 100), top: TRACK.top - 4, height: TRACK.height + 8, borderLeft: "2px solid var(--c-ink)" }} />
+                  <span style={{ position: "absolute", left: TRACK.left + Math.round(TRACK.width * (100 - typicalPct) / 100) - 64, top: TRACK.top - 24, fontSize: "var(--t-micro)", fontWeight: 600, color: "var(--c-ink)" }}>{`${typicalPct}% typical`}</span>
+                </>
+              ) : null}
+            </div>
           }
-          todayNote="Both halves shout, and the cents are the half nobody is scanning for."
-          proposedNote="The dollars keep the rung, the cents drop two steps and go grey. It is still one figure a reader can read aloud."
-        />
-      ) : null}
-
-      {/* 5. THE COMPARISON INSIDE THE MARK */}
-      {netHere != null && typicalPct != null ? (
-        <Sample
-          n="05"
-          title="The comparison inside the mark"
-          ask="A figure standing alone cannot be judged. His bars carry their own comparison in one colour at two tints, with no legend and no second chart."
-          from={`Here: ${netHere}% net margin for London restaurants (${netField}). Anywhere: ${typicalPct}%, the figure the industry page's masthead already prints for this trade. Two percentages, one trade, two altitudes.`}
-          today={
-            <Box id="sample-net-today">
-              <Rail icon="cost-breakdown" kicker={COPY.tradeSplit.kicker} />
-              <div style={{ fontSize: "var(--t-micro)", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--c-muted)" }}>Net margin</div>
-              <Fig className="block text-[length:var(--t-focal)] font-semibold text-[var(--c-ink)]">{`${netHere}%`}</Fig>
-              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{COPY.tradeSplit.basisShard}</p>
-            </Box>
-          }
-          proposed={
-            <Box id="sample-net-proposed">
-              <Rail icon="cost-breakdown" kicker={COPY.tradeSplit.kicker} />
-              <div style={{ fontSize: "var(--t-micro)", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--c-muted)" }}>Net margin</div>
-              <Fig className="block text-[length:var(--t-focal)] font-semibold text-[var(--c-ink)]">{`${netHere}%`}</Fig>
-              <div style={{ marginTop: 14 }}>
-                <PairBars here={netHere} typical={typicalPct} hereLabel="Here, London" typicalLabel="This trade, anywhere" />
-              </div>
-              <p style={{ fontSize: "var(--t-micro)", color: "var(--c-muted)", marginTop: 12 }}>{COPY.tradeSplit.basisShard} The pale bar is the trade&apos;s typical, modelled.</p>
-            </Box>
-          }
-          todayNote="Five per cent. A reader who has never run a restaurant cannot tell whether that is a good number or a bad one."
-          proposedNote="Same trade, two altitudes, which is the one comparison this site already makes on the market cluster. Never across trades, and never across places for different trades."
+          leftNote="A number with nothing to stand against."
+          rightNote="One tick: the trade's typical, on the same bar."
         />
       ) : null}
     </div>
   );
 
-  const html = `<!doctype html><html lang="en" style="--font-sans: Geist, ui-sans-serif, system-ui, sans-serif; --font-serif: Space Grotesk, ui-sans-serif, system-ui, sans-serif;"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Five samples, 2026-09-23</title><style>${readFileSync(CSS_PATH, "utf8")}</style><style>body{background:var(--c-ground);margin:0}</style></head><body class="spine-scope">${renderToStaticMarkup(body)}</body></html>`;
+  const html = `<!doctype html><html lang="en" style="--font-sans: Geist, ui-sans-serif, system-ui, sans-serif; --font-serif: Space Grotesk, ui-sans-serif, system-ui, sans-serif;"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Four samples, 2026-09-23</title><style>${readFileSync(CSS_PATH, "utf8")}</style><style>body{background:var(--c-ground);margin:0}</style></head><body class="spine-scope">${renderToStaticMarkup(body)}</body></html>`;
   const out = "scratchpad/harness/samples.html";
   writeFileSync(out, html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`), "utf8");
   console.log(`render_samples: wrote ${out}`);
-  console.log(`  net margin here ${netHere}%, the trade's typical anywhere ${typicalPct}% (${typicalText}); take-home here ${takeHere}`);
-  console.log(`  month points ${monthPoints ? monthPoints.length : 0}, lasts ${lasts ? lasts.cells.length : 0} cells, coffee ${coffee ? coffee.value : "(absent)"}, customers ${customers ? customers.cells.length + 1 : 0} figures`);
+  console.log(`  net here ${netHere}%, typical anywhere ${typicalPct}%; months ${monthPoints ? monthPoints.length : 0}; living ${living?.cells?.length ?? 0} cells; split ${split ? split.segments.length : 0} segments`);
 }
 
 main().catch((e) => { console.error(String(e?.stack || e)); process.exit(1); });

@@ -794,6 +794,18 @@
       "claims": []
     },
     {
+      "name": "distance-ladder",
+      "script": "scripts/verify_distance_ladder.mjs",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_distance_ladder , THE LADDER IS THE LAW AND THE COUNT MAY ONLY FALL (2026-09-23; the ladder is `E:/atlas/design/loop/build/briefs/DISTANCES.md` section 1, written on his ruling that the distanc",
+      "reads": [
+        "scripts/distance_ladder_baseline.json",
+        "src/components/spine"
+      ],
+      "claims": []
+    },
+    {
       "name": "token-contrast",
       "script": "scripts/verify_token_contrast.mjs",
       "args": [],
