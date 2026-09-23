@@ -1706,6 +1706,14 @@ export const COPY = {
   /** WHAT A CUSTOMER SPENDS, the trade's `16 customers` (trade_customers_rows.ts, 2026-09-20 night, his "more sections"): the kicker names the subject; the cells are one figure with its unit; the year is the computation, named in the basis (his standard of 2026-09-19); the foot says modelled. */
   /** THE GLOSSARY, his pop-up (2026-09-22, QUEUE ui:the-gloss). One entry per term of art a first-time owner meets in an opener; each says what the WORD means in a sentence a person would say out loud, never what the figure is measured on (the basis line under the figure keeps that job) and never where a number came from. Under 140 characters, so the panel stays one short paragraph beside the "?". */
 /** THE TRAIL'S OWN WORDS (crumb_rows.ts, 2026-09-22): the steps that are not a place's or a trade's name. Each is what the page it points at is called, never a label invented for the trail. */
+  /** THE STEPS TO REGISTER, the how-to page's `01 steps` (howto_steps_rows.ts, 2026-09-23). The kicker names the sequence; the total says how long the whole thing takes, which is the shard's own figure and NOT the sum of the steps, because steps overlap; the basis says so in a person's words. */
+  howToSteps: {
+    kicker: "The steps, in order",
+    totalLabel: "Start to finish",
+    units: { day: "day", days: "days" },
+    basis: "The order and the figures are this country's own. Steps can run at the same time, so the whole takes less than the steps added up.",
+    foot: "Times and fees are modelled.",
+  },
   crumbs: {
     districts: "Districts",
     howTo: "How to open a business",

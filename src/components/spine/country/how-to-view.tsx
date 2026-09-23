@@ -19,6 +19,8 @@ import { buildHowTo } from "@/lib/spine/howto_rows";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildHowToCrumbs } from "@/lib/spine/crumb_rows";
+import { Fig } from "@/components/spine/kit";
+import { Stepper } from "@/components/spine/archetypes/Stepper";
 
 /**
  * THE THREE LOUD MOMENTS: none, by design (MODEL.md 8.9, "Loud today: 0 of 3";
@@ -42,7 +44,7 @@ export function HowToBody({ iso2 }: { iso2: string }) {
   const dots = (
     <Box id="dots">
       <Rail icon="register-cost" kicker={COPY.howto.dots} />
-      <NoteList notes={d.dots} />
+      <NoteList notes={d.dots} columns={2} />
     </Box>
   );
   return (
@@ -61,50 +63,81 @@ export function HowToBody({ iso2 }: { iso2: string }) {
           ) : null}
         </Box>
       </Band>
-      {d.tiers.length > 0 || d.forms.length > 0 ? (
-        <Band split="1-1" stack="lg">
+      {/* `01 steps`, THE SEQUENCE THIS PAGE IS ABOUT (2026-09-23, QUEUE
+          ui:how-to-as-a-stepper): the country's own registration steps in the
+          file's own order, on the rail that makes them a sequence. FULL WIDTH
+          AND OUTSIDE A BAND, the trade page's `07 peers` precedent: a lone
+          card inside a band is a level with air beside it (clauses 52 and 53),
+          and this card has no partner because nothing on this page belongs
+          beside the process itself. The width is filled by the card's own two
+          columns: the sequence left, what it comes to and where it comes from
+          right, which is the one composition that does not leave a column of
+          nothing at 768. */}
+      {/* `01 steps | 02 forms` (2026-09-23, QUEUE ui:how-to-as-a-stepper): what
+          you do, in order, beside which legal form you pick, which is the same
+          decision asked from two sides. THE STEPS ARE NOT FULL WIDTH, and that
+          was measured rather than assumed: a sequence is an intrinsically
+          narrow column, about 560px of content, and in a 1032px card every
+          arrangement of it left 400px or more of nothing (the holes checker
+          found 258 by 354, then 495 by 408). A card whose content cannot fill
+          a width does not take that width. The notes that explain each form
+          move down to the dots' band, where they belong anyway: both are
+          glossaries. */}
+      {d.steps || d.tiers.length > 0 ? (
+        <Band split="2-1" stack="lg">
+          {d.steps ? (
+            <Box id="steps">
+              <Rail icon="red-tape" kicker={COPY.howToSteps.kicker} />
+              {d.steps.totalDays ? (
+                <div className="mb-4">
+                  <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.howToSteps.totalLabel}</div>
+                  <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{d.steps.totalDays}</Fig>
+                </div>
+              ) : null}
+              <Stepper steps={d.steps.steps} />
+              <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.basis}</p>
+              <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.foot}</p>
+            </Box>
+          ) : null}
           {d.tiers.length > 0 ? (
             <Box id="forms">
               <Rail icon="register-cost" kicker={COPY.tiers.kicker} />
               <TiersTable rows={d.tiers} />
             </Box>
           ) : null}
+        </Band>
+      ) : null}
+      {/* `03 what | 04 dots | 05 locals`, A LEVEL OF THREE (2026-09-23, clause
+          50's cap, and the first one on this page). The three cards are the
+          page's glossaries: what each legal form is, what the paperwork dots
+          mean, and what locals know. Measured at 1280 before it was seated:
+          335, 365 and 350 tall, which is why they sit together; the tiers
+          table and the steps, at 285 and 519, do not belong beside any of
+          them. Off the countries with authored notes the level is the two
+          that remain, and the seat that used to stand alone (its history is in
+          MODEL.md 8.9 and QUEUE launch:howto-locals-seat) keeps its own band. */}
+      {d.forms.length > 0 || d.locals ? (
+        <Band split={d.locals ? "1-1-1" : "1-1"} stack="lg">
           {d.forms.length > 0 ? (
             <Box id="what">
               <Rail icon="bank" kicker={COPY.howto.forms} />
               <NoteList notes={d.forms} columns={2} />
             </Box>
           ) : null}
+          {dots}
+          {d.locals ? (
+            <Box id="locals">
+              <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
+              <NoteList notes={d.locals} columns={2} />
+            </Box>
+          ) : null}
         </Band>
       ) : null}
-      {/* `03 dots | 04 locals` (MODEL.md 8.9): GB's authored notes beside the
-          dots at 1-1; elsewhere `04` is THE DRAWN BLOCKED SEAT with the country
-          page's own line and item (its `16 locals`, DATA-REQUIREMENTS item 6),
-          the same seat form, which 8.9 said from the day it was written and
-          the code never drew (QUEUE launch:howto-locals-seat, 2026-09-19: DE
-          and IN rendered 5 of 6 with the dots card alone in this band). The
-          seat cannot share the band with the five notes: stretched to their
-          height it carried a 480 by 246 blank inside a 480 by 361 card at 1280
-          and 304 by 270 at 768, the page filter's WHITE SPACE red, MEASURED
-          2026-09-19 on DE and IN; so off GB each stands in its own band at
-          two thirds, the country's precedent for a drawn card beside a seat
-          (`12 money | 16 locals`), LONE CARD twice, expected. */}
-      {d.locals ? (
-        <Band split="1-1">
-          {dots}
-          <Box id="locals">
-            <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
-            <NoteList notes={d.locals} />
-          </Box>
+      {!d.locals ? (
+        <Band split="2-1" stack="lg">
+          <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
         </Band>
-      ) : (
-        <>
-          <Band split="2-1" stack="lg">{dots}</Band>
-          <Band split="2-1" stack="lg">
-            <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
-          </Band>
-        </>
-      )}
+      ) : null}
       <div data-terminus className="mt-8">
         <Box id="close">
           <Terminus kicker={COPY.close.kicker} doors={d.doors} />

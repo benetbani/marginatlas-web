@@ -4,6 +4,8 @@
  * exemplar, the data-poor cases, the extreme names and the self-omit state on
  * one page. Widths are the harness's business.
  */
+import { Stepper } from "@/components/spine/archetypes/Stepper";
+import { buildHowToSteps } from "@/lib/spine/howto_steps_rows";
 import * as React from "react";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getCountryProfile } from "@/lib/economic_profile";
@@ -758,6 +760,31 @@ export function suitsInputsFor(key: string): { industryId: string; iso2: string 
   if (handle === "london") return { industryId: "restaurants", iso2: "GB" };
   if (handle === "none") return { industryId: "no_such_trade", iso2: "GB" }; // allow-industry-ref: the planted id no lookup holds, the not-gathered story's whole point (the industry-refs gate reads a literal industryId as a trade reference)
   return null;
+}
+
+/** THE STEPS TO REGISTER (Stepper.tsx, 2026-09-23), the how-to page's `01 steps` as the page draws it: Spain at the sequence's longest (seven steps), the United Kingdom at the common four, Guinea at one, which draws nothing because one step is an instruction and not a process (the form's own floor). */
+export function pickStepperInstances(): Instance[] {
+  return [
+    { iso2: "ES", why: "the longest sequence on file, seven steps" },
+    { iso2: "GB", why: "the common shape, four steps, one of them free and one 21 days" },
+    { iso2: "GN", why: "one step on file: the form draws nothing, by its own floor" },
+  ];
+}
+export function StepperStories({ instances = pickStepperInstances() }: { instances?: Instance[] }) {
+  return (
+    <div data-stories="stepper">
+      {instances.map((i) => {
+        const d = buildHowToSteps(i.iso2);
+        return (
+          <Story kind="stepper" key={i.iso2} iso2={i.iso2} why={i.why}>
+            <div style={{ maxWidth: 693 }}>
+              {d ? <Stepper steps={d.steps} /> : <p>no steps on file</p>}
+            </div>
+          </Story>
+        );
+      })}
+    </div>
+  );
 }
 
 export function NoteListStories({ instances = pickNoteListInstances() }: { instances?: Instance[] }) {
@@ -2270,6 +2297,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
     "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
     "worked-figure": pickCellCustomersInstances(cellHero),
+    "stepper": pickStepperInstances(),
     "month-bars": pickCellSwingInstances(cellHero),
     "share-bar": pickCellDaypartsInstances(cellHero),
     "segment-bar": pickCitySegmentBarInstances(),

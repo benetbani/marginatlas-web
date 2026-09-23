@@ -13,6 +13,7 @@
 import { COUNTRIES } from "@/lib/taxonomy";
 import { buildHeroFacts } from "@/lib/spine/hero_facts";
 import { buildSetupRows } from "@/lib/spine/setup_rows";
+import { buildHowToSteps, type HowToStepsData } from "@/lib/spine/howto_steps_rows";
 import { buildLocalsNotes, type LocalNote } from "@/lib/spine/locals_rows";
 import { buildCloseDoors } from "@/lib/spine/close_rows";
 import { COPY } from "@/lib/spine/copy";
@@ -30,6 +31,8 @@ export type HowToData = {
   lead: string;
   cells: ReturnType<typeof buildHeroFacts>["cells"];
   tiers: TierRow[];
+  /** THE ORDERED STEPS (2026-09-23): the country shard's own sequence, or null where it holds none. */
+  steps: HowToStepsData | null;
   forms: LocalNote[];
   dots: LocalNote[];
   locals: LocalNote[] | null;
@@ -65,6 +68,7 @@ export function buildHowTo(iso2: string): HowToData | null {
     lead: COPY.howto.lead,
     cells: facts.cells,
     tiers,
+    steps: buildHowToSteps(code),
     forms,
     dots,
     locals: localsBuilt ? localsBuilt.notes : null,

@@ -358,7 +358,7 @@ if (listArg && args.includes("--render")) {
 /* city 16 since 2026-09-20 (evening): `13 locals`, the drawn blocked seat, left the city page until its notes (item 6; the "Not gathered yet" line he refused), so 8.3 is sixteen blocks, and London stands at 15 of them on ruling 30 alone (`10 easiest`, HIS). */
 /* industry 11 since 2026-09-20 (evening): `06 places` draws only as the table, never as the seat whose "Not gathered yet" line he refused, and no trade holds four cities with their own figures today (the own-row law), so 8.7 is eleven blocks on every trade until the slate fills (item 57's cousin, the industry's own count). */
 /* city 16 since the late evening of 2026-09-20 (`17 gates` and `18 market` added from the shard, his "more sections"); 14 for an hour before that: `01 glance` and `02 among-cities` dissolved into the hero board of his design (their figures are its rows), so 8.3 names fourteen blocks; London draws 12 of them, `10 easiest` on ruling 30 (HIS) and `08 demand` on London's placeholder spend (item 23), both named causes. */
-const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 7, howto: 6 };
+const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 7, howto: 7 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

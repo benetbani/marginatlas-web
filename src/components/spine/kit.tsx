@@ -651,7 +651,7 @@ export function Band({
     "2-1": stack === "lg" ? "lg:grid-cols-[2fr_1fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_1fr]",
     "2-3": stack === "lg" ? "lg:grid-cols-[2fr_3fr]" : "md:grid-cols-2 lg:grid-cols-[2fr_3fr]",
     "3-2": stack === "lg" ? "lg:grid-cols-[3fr_2fr]" : "md:grid-cols-2 lg:grid-cols-[3fr_2fr]",
-    "1-1-1": "md:grid-cols-2 lg:grid-cols-3 [&>*:nth-child(3)]:md:col-span-2 [&>*:nth-child(3)]:lg:col-span-1",
+    "1-1-1": stack === "lg" ? "lg:grid-cols-3" : "md:grid-cols-2 lg:grid-cols-3 [&>*:nth-child(3)]:md:col-span-2 [&>*:nth-child(3)]:lg:col-span-1",
   }[split];
   /* A BAND LEFT HOLDING ONE CARD TAKES A DELIBERATE TWO THIRDS. Several sections
      have a partner that renders for some cities and trades and not others, and
