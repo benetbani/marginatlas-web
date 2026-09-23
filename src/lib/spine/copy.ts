@@ -1762,6 +1762,42 @@ export const COPY = {
        is the standard of 2026-09-19 (every figure says what was computed). */
     basis: "Modelled shares of what a household spends here. The figure above is eating out against all the money that goes on food, at home and out.",
   },
+  /** WHAT THE CREW COSTS, the city's `20 crew` (city_crew_rows.ts, 2026-09-23,
+   *  brief row Y3). The role names are the shard's own and are not here; what
+   *  is here is the column heads (the unit said once, PART 5), the words over
+   *  the set's middle, and the basis naming whose figures these are. */
+  cityCrew: {
+    kicker: "What the crew costs",
+    middle: "Middle of the {n}",
+    head: { name: "The role", value: "A month, gross" },
+    week: "hours in the usual week",
+    basis: "Gross pay a month for the five roles a small business hires, this city's own figures, modelled where they are not gathered.",
+  },
+  /** HOW THIS CITY DOES BUSINESS, the city's `21 texture` (city_texture_rows.ts,
+   *  2026-09-23). The poles are the shard's own words; these are the SUBJECTS,
+   *  keyed by the pair so a name cannot drift from the ends it names, and the
+   *  order is the card's reading order: how a deal is done, how money is taken,
+   *  how the rules are enforced, whose document the lease is, how work is won,
+   *  then the pace, which is the sixth and drops under his five-row cap. */
+  cityTexture: {
+    kicker: "How this city does business",
+    /* THE SUBJECT AND ITS TWO ENDS, keyed by the pair as the shard writes it.
+       The ends are the shard's own words except one: "Slow to open up" is four
+       words, and a pole of four words is a sentence by the model laws' own
+       measure (ROW SENTENCE), so this site says "Slow to trust", which is what
+       the shard's takeaway lines mean by it. Every other end is verbatim. */
+    traits: {
+      "Slow to open up | Quick to deal": { name: "Doing a deal", left: "Slow to trust", right: "Quick to deal" },
+      "Cash-friendly | Card-first": { name: "Taking payment", left: "Cash-friendly", right: "Card-first" },
+      "Loose on rules | Strict compliance": { name: "The rules", left: "Loose on rules", right: "Strict compliance" },
+      "Landlord-friendly | Tenant-friendly": { name: "The lease", left: "Landlord-friendly", right: "Tenant-friendly" },
+      "Relationship-led | Transactional": { name: "Winning work", left: "Relationship-led", right: "Transactional" },
+      "Relaxed pace | Always-on": { name: "The pace", left: "Relaxed pace", right: "Always-on" },
+    },
+    /** The card's one figure: how often somebody official walks in, off `reg.inspections_per_yr`. */
+    visits: { one: "Official visit a year", many: "Official visits a year" },
+    basis: "How often an inspector calls, and where this city sits between the two ends; the reads are modelled.",
+  },
   cityCalendar: {
     kicker: "When this city spends",
     swingLabel: "Busiest over quietest",

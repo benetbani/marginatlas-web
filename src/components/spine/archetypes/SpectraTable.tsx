@@ -29,7 +29,16 @@ export type SpectraTableProps = {
   rows: SpectraRow[];
   dot?: "ink" | "terra";
   /** THE FOUNDER'S RECORDED CORRECTION (2026-07-11, rule 34, on the city's quick reads: "text too small"). The named form sets the trait name and the pole words at micro in muted grey; on the quick reads he rejected exactly that, and the card has read at body size since. `scale="body"` lifts the name and the poles a rung and takes the poles to ink2. It defaults to micro so the character tables render what he kept on 2026-08-30. The build loop's run 16 moved it from the kit's table into this archetype, so the correction is a construction the caller chooses once, not a default a caller can undo by forgetting. */
-  scale?: "micro" | "body";
+  scale?: "micro" | "body" | "lead";
+  /* `lead` (2026-09-23, the city's `21 texture`): the trait NAME a rung above
+   *  its poles, at `--t-lead`, with the poles staying at body. A table that is
+   *  a section of its own, rather than one of a pair, draws one text size from
+   *  top to bottom otherwise, which the page filter reds as NO LEAD: "a card
+   *  drawing one text size and nothing above it has no order for the eye". The
+   *  country's character pair escapes that only because it carries a foot
+   *  figure at body over poles at micro, and his correction of 2026-07-11
+   *  ("text too small") says a city card does not go to micro to buy a rung.
+   *  So the rung comes from the subject, which is what a row's name is. */
   /** One figure under a hairline (foreign-owned firms, born abroad). */
   foot?: { value: string; label: string } | null;
   /** ONE BASIS LINE, PART 7's third part, between the rows and the foot (the
@@ -60,7 +69,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }
           const lean = pct < 50 ? r.left : pct > 50 ? r.right : null;
           return (
             <div key={r.key} data-spectrum-row={r.key} className="py-2">
-              <div data-label className={scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
+              <div data-label className={scale === "lead" ? "truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]" : scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
               {/* THE TRACK DECLARES WHAT ITS FAR END IS (plan step 12, 2026-09-17).
                   A spectrum runs between two poles; neither end is a maximum,
                   so it is neither a world track nor a set's own heaviest
@@ -86,7 +95,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }
                   style={{ left: `calc(${DOT / 2}px + (100% - ${DOT}px) * ${pos})`, width: DOT, height: DOT, background: dotBg, boxShadow: "0 0 0 1px var(--c-border)" }}
                 />
               </div>
-              <div className={scale === "body" ? "mt-1 flex justify-between gap-3 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]" : "mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]"}>
+              <div className={scale === "body" || scale === "lead" ? "mt-1 flex justify-between gap-3 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]" : "mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]"}>
                 <span data-pole="left">{r.left}</span>
                 <span data-pole="right" className="text-right">{r.right}</span>
               </div>
@@ -102,7 +111,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }
       {foot ? (
         <div data-foot className={`${basis ? "mt-3 " : ""}border-t border-[var(--c-border)] pt-3 leading-snug`}>
           <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{foot.value}</Fig>{" "}
-          <span className={scale === "body" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-micro)] text-[var(--c-muted)]"}>{foot.label}</span>
+          <span className={scale === "body" || scale === "lead" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-micro)] text-[var(--c-muted)]"}>{foot.label}</span>
         </div>
       ) : null}
     </div>

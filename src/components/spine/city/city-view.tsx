@@ -100,6 +100,9 @@ import { countWord } from "@/lib/spine/district_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
 import { buildCityCloseDoors } from "@/lib/spine/close_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
+import { MarkList } from "@/components/spine/archetypes/MarkList";
+import { buildCityCrew, type CityCrewData } from "@/lib/spine/city_crew_rows";
+import { buildCityTexture, type CityTextureData } from "@/lib/spine/city_texture_rows";
 import { buildCityPeopleTable, type CityPeopleTable } from "@/lib/spine/character_rows";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
@@ -596,6 +599,70 @@ function CityPeers({ d }: { d: any }) {
  * the city's own share born abroad where held (55 cities), never the
  * country's. Quiet: turn three carries zero accent.
  */
+/**
+ * WHAT THE CREW COSTS, `20 crew` (city_crew_rows.ts, 2026-09-23, brief row Y3):
+ * the five roles a small business hires and what each is paid a month here,
+ * dearest first, with the set's own middle as the card's one figure at 30.
+ *
+ * THE FORM IS THE LIST AND NOT BARS, and the builder's header says why: this
+ * page spends both of the ranked-bars seats (clause 55), and a ranking without
+ * its bars keeps its order and its figures, which is the answer the drawing
+ * brief's own third question prescribes when the right form is taken.
+ *
+ * No mark column and no door: a role is not a place and lands nowhere.
+ */
+export function Crew({ crew }: { crew: CityCrewData | null }) {
+  if (!crew) return null;
+  const C = COPY.cityCrew;
+  return (
+    <MarkList
+      id="crew"
+      kicker={C.kicker}
+      icon="wages"
+      tagged={crew.tag !== "held"}
+      headline={{ label: crew.middle.label, value: crew.middle.value }}
+      basis={crew.basis}
+      head={{ name: C.head.name, value: C.head.value }}
+      rows={crew.rows.map((r) => ({ key: r.key, name: r.name, value: r.value }))}
+      fmt={usd}
+      withheld={0}
+      oneColumn
+      foot={crew.week ? { items: [{ figure: crew.week.figure, words: crew.week.words }] } : null}
+    />
+  );
+}
+
+/**
+ * HOW THIS CITY DOES BUSINESS, `21 texture` (city_texture_rows.ts, 2026-09-23):
+ * five of the city's own six texture reads, each a dot between two named ends,
+ * on the spectra form his character tables have used since 2026-08-30.
+ *
+ * THE SECOND SPECTRA TABLE ON THE PAGE, and it is allowed to be: clause 55 caps
+ * a kind at two, clause 64 keeps a level between them, and this one sits three
+ * levels above `14 character-people`. The two must LOOK different, which is the
+ * same clause's second half, so this one takes the ink dot and the body scale
+ * and the people's table keeps the terracotta dot it has by his exemption.
+ * ITS SUBJECT IS THE CITY'S OWN, which the people's table is not on 217 of 252
+ * cities (it resolves the country's reads); that is the strongest argument for
+ * the pair standing together on one page at all.
+ */
+export function Texture({ texture }: { texture: CityTextureData | null }) {
+  if (!texture) return null;
+  return (
+    <Box id="texture">
+      <Rail icon="honest-take" kicker={COPY.cityTexture.kicker} sample={texture.tag !== "held"} />
+      {/* THE CARD'S ONE FIGURE stands where the spend calendar's swing stands,
+          over the drawing and under the opener: a spectrum holds no figure of
+          its own, and PART 4 gives every section card exactly one. */}
+      <div className="mb-4">
+        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{texture.visits.label}</div>
+        <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{texture.visits.figure}</Fig>
+      </div>
+      <SpectraTable rows={texture.rows} dot="ink" scale="lead" basis={texture.basis} />
+    </Box>
+  );
+}
+
 function CharacterPeople({ people }: { people: CityPeopleTable | null }) {
   if (!people) return null;
   return (
@@ -806,6 +873,11 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const season = slug ? buildCitySeason(slug) : null;
   /* `19 calendar` (2026-09-23): the city's own twelve months, held by 252 of 252 and read by nothing before this. */
   const calendar = slug ? buildCityCalendar(slug) : null;
+  /* `20 crew` and `21 texture` (2026-09-23 evening): the five roles' pay and the
+     city's own six texture reads, both held by 252 of 252 and read by nothing
+     before this; each builder's header names its fields and what withholds it. */
+  const crew = slug ? buildCityCrew(slug) : null;
+  const texture = slug ? buildCityTexture(slug) : null;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
@@ -908,6 +980,33 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <Living living={living} />
           <Runway runway={runway} />
         </Band>
+      ) : null}
+      {/* `20 crew | 21 texture`, 1-1 (2026-09-23 evening, on his "continue with
+          the city page sections"). What five roles are paid a month here, and
+          how the city deals: the two sections the city bank still held that
+          nothing drew, that carry no coined index, no placeholder on the
+          exemplar and no figure the page already prints. The builders' headers
+          name their fields and their coverage.
+          THEY ARRIVE AS A PAIR because one card cannot be seated at all: this
+          page's band cards come in pairs on every city, and the twelfth breaks
+          the level (the brief's section 6, learned the hard way this
+          afternoon). The level stands in the first chapter, after what living
+          costs and what the money lasts, because what the crew costs is the
+          same question and the texture is what a person meets in the same week.
+          The two new kinds are free on this page: the list of figures spends no
+          ranked-bars seat (both are taken), and the spectra table is the
+          page's second, three levels clear of `14 character-people` (clause
+          64), with the ink dot against that table's terracotta so the pair
+          looks different (clause 55). */}
+      {crew && texture ? (
+        <Band split="1-1">
+          <Crew crew={crew} />
+          <Texture texture={texture} />
+        </Band>
+      ) : crew ? (
+        <Band split="2-1"><Crew crew={crew} /></Band>
+      ) : texture ? (
+        <Band split="2-1"><Texture texture={texture} /></Band>
       ) : null}
       {/* `19 calendar | 07 earnings`, 2-1 (2026-09-23 afternoon). THE CALENDAR
           DOES NOT STAND FULL WIDTH, and the reason is his, twice: "for every

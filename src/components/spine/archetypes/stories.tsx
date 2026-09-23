@@ -109,6 +109,9 @@ import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
 import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
 import { HoodTake, RankCard, PremiumCard, CompareCard, WorksSeat, CharacterCard, HoodClose } from "@/components/spine/hood/blocks";
 import { buildCountrySpend } from "@/lib/spine/country_spend_rows";
+import { buildCityCrew } from "@/lib/spine/city_crew_rows";
+import { buildCityTexture } from "@/lib/spine/city_texture_rows";
+import { Crew, Texture } from "@/components/spine/city/city-view";
 import { SpendCard } from "@/components/spine/country/country-view";
 
 export type Instance = { iso2: string; why: string };
@@ -675,6 +678,13 @@ export function pickSpectraTableInstances(): Instance[] {
 export function SpectraTableStories({ instances = pickSpectraTableInstances() }: { instances?: Instance[] }) {
   return (
     <div data-stories="spectra-table">
+      {/* THE CITY'S TEXTURE (2026-09-23): the archetype's `lead` scale is new
+          with this card, and so is a spectra table carrying its own figure. */}
+      {pickCityTextureInstances().map((i) => {
+        const slug = i.iso2.slice(0, -":texture".length);
+        const d = buildCityTexture(slug);
+        return <Story kind="spectra-table" key={i.iso2} iso2={i.iso2} why={i.why}>{d ? <div style={{ maxWidth: 520 }}><Texture texture={d} /></div> : null}</Story>;
+      })}
       {instances.map((i) => {
         const parts = i.iso2.split(":");
         const isCity = parts[0] === "city";
@@ -2010,6 +2020,13 @@ export function MarkListStories({ instances = pickMarkListInstances(), cell = []
         if (!r || r.state !== "list") return null;
         return <Story kind="mark-list" key={cellRivalsKey(c)} iso2={cellRivalsKey(c)} why={rivalsWhy(r)}><div style={{ maxWidth: 693 }}><RivalsCard id={`rivals-cell-${c.key}`} rivals={r} /></div></Story>;
       })}
+      {/* THE CITY'S CREW, at the width its level gives it (2026-09-23): the
+          archetype's foot is new with this card and this is where it is held. */}
+      {pickCityCrewInstances().map((i) => {
+        const slug = i.iso2.slice(0, -":crew".length);
+        const d = buildCityCrew(slug);
+        return <Story kind="mark-list" key={i.iso2} iso2={i.iso2} why={i.why}>{d ? <div style={{ maxWidth: 520 }}><Crew crew={d} /></div> : null}</Story>;
+      })}
       {pickHoodPremiumInstances().map((i) => {
         const h = i.iso2.slice("hood:".length, -":premium".length);
         const p = buildHoodPremium(HOOD_INSTANCES[h].city);
@@ -2267,6 +2284,30 @@ const hoodTakeWhy = (t: NonNullable<ReturnType<typeof buildHoodTake>>) =>
 export function pickHoodTakeInstances(): Instance[] {
   return hoodHandles().filter((h) => hoodServes(h, "take")).map((h) => ({ h, t: buildHoodTake(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus) })).filter((x) => x.t).map(({ h, t }) => ({ iso2: hoodKey(h, "take"), why: hoodTakeWhy(t!) }));
 }
+/** THE CITY'S CREW (city_crew_rows.ts, 2026-09-23, brief row Y3) and ITS TEXTURE
+ *  (city_texture_rows.ts, the same evening), keyed <slug>:crew and <slug>:texture.
+ *  Three cities each, picked for what they prove: the exemplar; a city whose
+ *  figures are modelled rather than gathered, since 85 of the 252 are; and one
+ *  more off the loaded seeds. The whys are composed from the builders, so a
+ *  caption cannot drift from the card. */
+export function pickCityCrewInstances(): Instance[] {
+  const out: Instance[] = [];
+  for (const slug of ["london", "frankfurt", "abidjan"]) {
+    const d = buildCityCrew(slug);
+    if (!d) continue;
+    out.push({ iso2: `${slug}:crew`, why: `${d.rows.length} roles, ${d.rows[0].name.toLowerCase()} the dearest, the middle of the ${d.rows.length} at 30${d.week ? `, the week's ${d.week.figure} hours in the foot` : ""}, ${d.tag === "held" ? "gathered" : "modelled"}` });
+  }
+  return out;
+}
+export function pickCityTextureInstances(): Instance[] {
+  const out: Instance[] = [];
+  for (const slug of ["london", "frankfurt", "abidjan"]) {
+    const d = buildCityTexture(slug);
+    if (!d) continue;
+    out.push({ iso2: `${slug}:texture`, why: `${d.rows.length} of the bank's six reads (the cap is five), ${d.visits.figure} ${d.visits.label.toLowerCase()} at 30, the ink dot against the people table's terracotta` });
+  }
+  return out;
+}
 /** THE COUNTRY'S HOUSEHOLD BUDGET (country_spend_rows.ts, 2026-09-23, brief row
  *  C5), keyed <ISO2>:spend. Four countries, each for what it proves: the
  *  exemplar; the thin country the page filter also renders; the shard where
@@ -2319,7 +2360,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "city-cards": pickCityCardsInstances(),
     "tiers-table": [...pickTiersTableInstances(), ...pickCellTeamInstances(cellHero)],
     "range-strip": [...pickRangeStripInstances(), ...cityStrips.map((c) => ({ iso2: cityStripKey(c), why: c.why })), ...pickCellSpreadInstances(cellHero), ...pickCellWorthInstances(cellHero)],
-    "spectra-table": pickSpectraTableInstances(),
+    "spectra-table": [...pickSpectraTableInstances(), ...pickCityTextureInstances()],
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero), ...pickIndustryCloseInstances(industryPlaces), ...pickHoodCloseInstances()],
     "pay-bars": pickPayBarsInstances(),
@@ -2335,7 +2376,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "month-bars": pickCellSwingInstances(cellHero),
     "share-bar": pickCellDaypartsInstances(cellHero),
     "segment-bar": pickCitySegmentBarInstances(),
-    "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances(), ...pickHoodPremiumInstances()],
+    "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances(), ...pickHoodPremiumInstances(), ...pickCityCrewInstances()],
     "blocked-seat": pickBlockedSeatInstances(industryPlaces),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
   };

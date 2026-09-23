@@ -121,6 +121,7 @@ import * as React from "react";
 import { Box, Fig, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
+import { CompanionRow, type Companion } from "./BentoBand";
 
 /** PART 9 rule 22's floor, the model's and not this file's: "a ranked
  *  comparison with fewer than four members". Under four the card draws
@@ -175,6 +176,13 @@ export type MarkListProps = {
    *  in two columns with 100 of air under it. The caller says which partner
    *  it has; the component cannot see the band. */
   oneColumn?: boolean;
+  /** THE FOOT, PART 7's fourth part, where earned (2026-09-23, the city's `20
+   *  crew`): companion figures at 16 under a hairline after the list, drawn by
+   *  the same `CompanionRow` RankedBars' foot uses, so the two list cards' feet
+   *  are one markup. The crew card's is the week's usual hours, which is the
+   *  other half of a wage bill and belongs to this card rather than to one of
+   *  its own. */
+  foot?: { items: Companion[]; line?: string | null } | null;
 };
 
 /* THE MARK COLUMN, and why it is a constant. See clause 5 of the header: one
@@ -219,7 +227,7 @@ function geometry(figChars: number, marks: boolean, doors: boolean): React.CSSPr
   return { gridTemplateColumns: cols.join(" ") };
 }
 
-export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows, fmt, withheld = 0, withheldLine = null, oneColumn = false }: MarkListProps) {
+export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows, fmt, withheld = 0, withheldLine = null, oneColumn = false, foot = null }: MarkListProps) {
   /* The component repeats the builder's floor rather than trusting every
      future caller to honour it, the same guard IncomeBreakdown.tsx keeps. */
   if (rows.length < MARK_LIST_FLOOR || !Number.isFinite(headline.value)) return null;
@@ -352,6 +360,12 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           part is exactly this: "THE FOOT, where earned. One line, a coverage
           statement." */}
       {withheldLine ? <p data-withheld-line="1" className="mt-3 text-[length:var(--t-micro)] text-[var(--c-muted)]">{withheldLine}</p> : null}
+      {foot && foot.items.length > 0 ? (
+        <div data-foot className="mt-3 border-t border-[var(--c-border)] pt-3">
+          <CompanionRow items={foot.items} />
+          {foot.line ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
+        </div>
+      ) : null}
     </Box>
   );
 }
