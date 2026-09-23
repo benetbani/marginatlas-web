@@ -38,6 +38,7 @@ import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { CompanionRow } from "@/components/spine/archetypes/BentoBand";
 import { buildCountryExit, exitMonthsText, type CountryExitData } from "@/lib/spine/country_exit_rows";
+import { buildCountrySpend, SPEND_RESIDUAL, SPEND_WHOLE, type CountrySpendData } from "@/lib/spine/country_spend_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
@@ -91,6 +92,10 @@ const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
   { id: "money", label: "Net profit margin" },
   { id: "locals", label: "What locals know" },
   { id: "character", label: "The character" },
+  /* The two sections of 2026-09-23, in the order the page draws them. The
+     exit's row is the one this list was missing the day it was built. */
+  { id: "spend", label: "What households spend on" },
+  { id: "exit", label: "How long it takes to sell" },
 ];
 
 /**
@@ -739,17 +744,35 @@ function LocalsKnow({ notes }: { notes: LocalsNotes | null }) {
 function ExitCard({ exit }: { exit: CountryExitData | null }) {
   if (!exit) return null;
   const C = COPY.countryExit;
-  const second: Array<{ figure: string; words: string }> = [];
+  /* THE WORLD'S TWO FIGURES, from the builder (2026-09-23 afternoon): the
+     usual band anywhere on file and how many countries can take longer, so
+     the months on the track have something to stand against. The slot was an
+     empty array from the morning, when the sale PRICE left the card; it holds
+     the placement now instead of holding nothing. */
+  const second = exit.second;
   return (
-    <Box id="exit" className="mt-8 [container-type:inline-size]">
+    <Box id="exit" className="flex flex-col [container-type:inline-size]">
       <Rail icon="ranking" kicker={C.kicker} />
-      <RangeStrip marks={exit.marks} scale="linear" fmt={exitMonthsText} basis="" />
-      {/* THE FOOT IN TWO COLUMNS where the card is wide enough for them
+      {/* THE DRAWING TAKES THE SLACK (2026-09-23 afternoon, the band): a card
+          in a band is stretched to its level's height, and clause 52 reds a
+          card whose last ink stops more than 48px above its floor. RankedBars
+          answers that by letting its rows share whatever height the band hands
+          them (PART 5's height law); this card answers it the same way, with
+          the strip centred in a slot that grows, so the slack is split above
+          and below the drawing instead of sitting in one lump at the foot. */}
+      <div className="flex flex-1 flex-col justify-center">
+        <RangeStrip marks={exit.marks} scale="linear" fmt={exitMonthsText} basis="" />
+      </div>
+      {/* THE FOOT IN TWO EQUAL COLUMNS where the card is wide enough for them
           (measured: at 768 the sale's length and the buyers' sentence sat in
           the left half and left a 312 by 126 rectangle of nothing beside
-          them). The container decides, not the window. */}
+          them). The container decides, not the window. EQUAL, not `auto`: with
+          the world's two figures in the first column an `auto` track took the
+          whole width on the stacked 720px card and squeezed the buyers'
+          sentence into 20px, where it ran 34px past the card's own box (the
+          page laws' TEXT OUT OF BOX on Afghanistan, clause 56). */}
       {second.length > 0 || exit.climate ? (
-        <div className="mt-4 grid gap-x-8 gap-y-3 border-t border-[var(--c-border)] pt-3 [@container(min-width:520px)]:grid-cols-[auto_minmax(0,1fr)]">
+        <div className="mt-4 grid gap-x-8 gap-y-3 border-t border-[var(--c-border)] pt-3 [@container(min-width:520px)]:grid-cols-2">
           {second.length > 0 ? (
             <div data-second>
               <CompanionRow items={second} />
@@ -761,6 +784,54 @@ function ExitCard({ exit }: { exit: CountryExitData | null }) {
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.basis}</p>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.foot}</p>
     </Box>
+  );
+}
+
+/**
+ * WHAT HOUSEHOLDS SPEND ON, `18 spend` (country_spend_rows.ts, 2026-09-23,
+ * brief NEW-SECTIONS-2026-09-23.md row C5). Seven parts of a hundred through
+ * the ranked-bars archetype, biggest first, the leftover pinned last, on a
+ * track whose far end is the whole budget.
+ *
+ * WHY IT IS HERE. Chapter three is what the place is like, and how a household
+ * divides its money is the plainest portrait of a country this bank holds:
+ * groceries are 11 of every 100 in the United Kingdom and 62 in Afghanistan.
+ * It stands AFTER the character pair and BEFORE the exit, which puts two
+ * levels between it and the money card, the other ranked-bars card on this
+ * page: clause 64 keeps a level between two drawings of one kind, and clause
+ * 55 caps the kind at two on a page and asks the pair to look different. They
+ * do, and the difference is declared rather than eyeballed: the money card
+ * features its leader (a black pill, a terracotta bar), this one features
+ * nobody, `data-feature="leader"` against `data-feature="none"`, which is what
+ * the page-laws checker reads.
+ *
+ * THE CARD IS QUIET ON PURPOSE. The page's three loud moments are spent (the
+ * hero's answer, the hiring bar, the money card), so no accent stands here:
+ * the focal is ink and every bar is one neutral.
+ *
+ * FULL WIDTH AND OUTSIDE A BAND, the exit's precedent directly above: a
+ * seven-row table wants the width, and nothing on this page belongs beside it.
+ */
+export function SpendCard({ spend }: { spend: CountrySpendData | null }) {
+  if (!spend) return null;
+  const C = COPY.countrySpend;
+  return (
+    <RankedBars
+      id="spend"
+      kicker={C.kicker}
+      icon="spending-power"
+      tagged={spend.tag !== "held"}
+      basis={spend.basis}
+      rows={spend.rows.map((r) => ({ key: r.key, name: r.name, value: r.value }))}
+      residualKey={SPEND_RESIDUAL}
+      worldMax={SPEND_WHOLE}
+      ceiling="whole"
+      topLabel={C.topLabel}
+      feature="none"
+      focal={{ figure: spend.out.figure, words: C.outWords }}
+      fmt={(v) => `${v}%`}
+      phoneHead={{ name: C.phoneHead.name, value: C.phoneHead.value }}
+    />
   );
 }
 
@@ -1094,9 +1165,26 @@ export function SpineCountryBody({ data }: { data?: any }) {
             the exit is one card. */}
         <Movement index="03" heading={COPY.chapters.place} />
         <Character iso2={iso2} />
-        {/* `17 exit`, FULL WIDTH (2026-09-23): what the thing is worth at the
-            end, two levels clear of the earnings strip. */}
-        <ExitCard exit={buildCountryExit(iso2 ?? "")} />
+        {/* `18 spend | 17 exit`, 2-1 (2026-09-23): where a household's money
+            goes, seven parts of a hundred, beside how long a sale takes.
+            NEITHER STANDS FULL WIDTH, and the reason is his, twice stated
+            (2026-08-25, verify_section_bands' own header): "for every
+            subsection that stretches left to right full width, I think we
+            should ban it except hero section". The exit card shipped full
+            width this morning and the gate counted it, which is how the rule
+            was found again; the spend card was written the same way and both
+            are paired here. The page's full widths stay the three the model
+            allows: the opening, the peers table and the close.
+            THE PAIR IS THE ONLY ONE AVAILABLE, and that is a measurement, not
+            a preference: at 1280 the page's other short cards are the margin
+            bars (235) and the earnings strip (211), and the exit is a range
+            strip, which clause 64 keeps a level clear of the other strip. So
+            the tall new card and the short new card take one level, the table
+            on the wide side by 8.4 rule 1. */}
+        <Band split="2-1" stack="lg">
+          <SpendCard spend={buildCountrySpend(iso2 ?? "")} />
+          <ExitCard exit={buildCountryExit(iso2 ?? "")} />
+        </Band>
         <Close meta={d.meta} name={name} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />

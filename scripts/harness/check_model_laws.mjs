@@ -760,7 +760,13 @@ function inPage(ctx) {
        either end; MODEL.md 8.2 says of a fixed-ended track "not a world
        track ... clause 5 and the PLACEMENT check do not reach it". */
     if (ceiling === "scale") continue;
-    if (ceiling === "" || ceiling == null) push(cardIdOf(track), "PLACEMENT", "a track that declares no ceiling (every data-track says world, set or scale; plan step 12)");
+    /* "whole" (2026-09-23, the country page's `18 spend`): the rows are parts
+       of one whole and the track's far end IS that whole, a hundred. A hundred
+       is not a world maximum, so rule 5 reaches it no more than it reaches a
+       set's own heaviest member, and the same declare-or-be-measured logic
+       applies: the word is taken at its word, silence is not. */
+    if (ceiling === "whole") continue;
+    if (ceiling === "" || ceiling == null) push(cardIdOf(track), "PLACEMENT", "a track that declares no ceiling (every data-track says world, set, whole or scale; plan step 12)");
     const hasPlacement = track.parentElement && track.parentElement.querySelector("[data-placement]");
     if (!hasPlacement) push(cardIdOf(track), "PLACEMENT", "a track with no placement line beside it");
   }

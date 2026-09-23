@@ -684,15 +684,27 @@ export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCal
   if (!calendar) return null;
   const C = COPY.cityCalendar;
   return (
-    <Box id={id} className="mt-8">
+    <Box id={id} className="[container-type:inline-size]">
       <Rail icon="seasonality" kicker={C.kicker} sample />
-      <div className="mb-4">
-        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.swingLabel}</div>
-        <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
+      {/* THE HEAD GOES TWO ABREAST, the swing on the left and the two lines of
+          words on the right (2026-09-23 afternoon, the same move RankedBars
+          made the same day for the country's spend card). Stacked they cost
+          the card 48px of height it could not afford once it was paired: on
+          its level the strip beside it wants 211 and the card wanted 331, and
+          clause 52 reds a card whose ink stops more than 48px above its floor.
+          Side by side the head fills the width and the two cards stand level.
+          THE CARD'S OWN WIDTH DECIDES, never the window. */}
+      <div className="mb-4 gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start">
+        <div>
+          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.swingLabel}</div>
+          <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
+        </div>
+        <div className="mt-2 [@container(min-width:560px)]:mt-0">
+          <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.basis}</p>
+          <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p>
+        </div>
       </div>
       <MonthBars points={calendar.months} />
-      <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.basis}</p>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p>
     </Box>
   );
 }
@@ -885,11 +897,11 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           (clause 53). Where the spend is a figure (251 cities) the two bands
           below stand as before. Measured on the fresh render, the numbers in
           the commit. */}
-      {living && runway && earnings && !demandDrawn ? (
+      {living && runway && demandDrawn ? (
         <Band split="1-1-1">
           <Living living={living} />
           <Runway runway={runway} />
-          <Earnings strip={earnings} />
+          <Demand demand={demand} />
         </Band>
       ) : living || runway ? (
         <Band split="1-1">
@@ -897,10 +909,37 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           <Runway runway={runway} />
         </Band>
       ) : null}
-      {/* `19 calendar`, FULL WIDTH (2026-09-23): when the city spends, twelve
-          columns off its own calendar, closing the first chapter with the
-          shape of the year before the street is picked. */}
-      <SpendCalendar calendar={calendar} />
+      {/* `19 calendar | 07 earnings`, 2-1 (2026-09-23 afternoon). THE CALENDAR
+          DOES NOT STAND FULL WIDTH, and the reason is his, twice: "for every
+          subsection that stretches left to right full width, I think we should
+          ban it except hero section" (2026-08-25, carried in
+          verify_full_width_sitewide's own header). It shipped full width this
+          morning and the sitewide gate counted it, which is how the rule was
+          found again.
+          THE LEVEL IS THE ONLY ONE AVAILABLE, and that is arithmetic, not
+          taste: without the calendar this page's band cards come in pairs on
+          every city, so a twelfth card cannot be added without breaking a
+          level and re-pairing. The calendar's nearest partner by height is the
+          earnings strip (331 against 254 at 1280 on London), so the two take
+          one level, the twelve columns on the wide side by 8.4 rule 1, and the
+          strip takes the slack inside its own card the way RankedBars' rows do.
+          WHAT MOVED WITH IT: `08 demand` was the earnings strip's partner in
+          chapter two on the 251 cities that hold a spend figure; it joins the
+          living level as its third, where it is among the other money-of-the-
+          city cards, and chapter two now opens on the districts and the trades,
+          which is what "where to open it" means. On London, where the spend is
+          withheld (item 23), the living level stays the pair it was. */}
+      {calendar && earnings ? (
+        <Band split="2-1" stack="lg">
+          <SpendCalendar calendar={calendar} />
+          <Earnings strip={earnings} />
+        </Band>
+      ) : calendar ? (
+        /* A SURVIVOR STANDS ALONE AT TWO THIRDS, this page's own idiom for a
+           card whose partner is absent, never at the full width. No city
+           reaches this branch today: all 252 hold both. */
+        <Band split="2-1" stack="lg"><SpendCalendar calendar={calendar} /></Band>
+      ) : null}
       {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market
           sized before the street is picked. */}
       <Movement index="02" heading={COPY.chapters.where} />
@@ -925,15 +964,17 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           opener at the top, the basis at the foot and the 30 centred in what
           is left (Frankfurt's air at 1280: 26 above the opener, 21 under the
           foot), so the stretched card reads as composed. */}
-      {demandDrawn && earnings ? (
-        <Band split="1-1">
-          <Demand demand={demand} />
-          <Earnings strip={earnings} />
-        </Band>
-      ) : demandDrawn ? (
-        <Band split="1-1"><Demand demand={demand} /></Band>
-      ) : earnings && !(living && runway) ? (
-        <Band split="1-1"><Earnings strip={earnings} /></Band>
+      {/* `08 demand` AND `07 earnings` BOTH LEFT THIS BAND on 2026-09-23 (the
+          calendar's level above says why): the spend card stands third on the
+          living level where it holds a figure, and the strip stands beside the
+          calendar. Nothing is dropped; the two cards moved up one chapter, and
+          this band draws only on a city with no calendar to seat the strip,
+          which no city is today. */}
+      {!calendar && earnings ? (
+        /* The spend card is already on the living level where it draws, so the
+           strip stands alone at two thirds here rather than beside a second
+           copy of it. */
+        <Band split="2-1"><Earnings strip={earnings} /></Band>
       ) : null}
       {/* `03 districts | 09 trades` (8.3): rent by district, the page's one
           fill-bar card, LEFT; the trades with local figures RIGHT, at 2-1

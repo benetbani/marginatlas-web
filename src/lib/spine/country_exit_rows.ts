@@ -40,7 +40,23 @@
  *
  * WITHHOLDING: the track draws only when both ends are held and the high is
  * not below the low.
+ *
+ * THE WORLD'S OWN FIGURES STAND IN THE FOOT (2026-09-23, the afternoon after
+ * this card shipped). "6 to 12 months" with nothing beside it is the fault
+ * briefs/VISUAL-CHOICE.md section 0 names in its second example: a figure with
+ * no reference is not a fact a reader can use, because twelve months is
+ * neither long nor short until something says so. So the foot carries two
+ * companions worked from the same field across the whole bank, scanned once
+ * per process and held: the world's usual band (the median of the 198 quick
+ * ends and the median of the 198 slow ends, 9 to 18 months) and how many
+ * countries can take longer than this one (182 of 198 for the United Kingdom,
+ * which is what makes its 6 to 12 a fast market rather than a number).
+ * The scan reads the shard files directly rather than through the store: the
+ * store keeps every fact it is handed, and loading 198 countries to read two
+ * numbers each would carry the whole bank for the sake of four figures.
  */
+import { readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { countryFigure, loadCountryShard, countryEntityId } from "@/lib/facts/country_shard";
 import { queryFacts } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
@@ -58,6 +74,8 @@ export type CountryExitData = {
   iso2: string;
   /** How long a sale takes, as two marks on one track: the quick end and the slow end, in months. */
   marks: Array<{ key: string; label: string; value: number; lead?: boolean }>;
+  /** The world's own figures under the hairline, so the months above have something to stand against. */
+  second: Array<{ figure: string; words: string }>;
   /** The market for buyers as one sentence (never a word in a figure's slot, PART 5), or null. */
   climate: string | null;
   basis: string;
@@ -67,6 +85,40 @@ export type CountryExitData = {
 
 /** Months as a person says them: "6 months", "1 month". */
 const monthsText = (v: number) => `${Math.round(v)} ${Math.round(v) === 1 ? COPY.countryExit.month : COPY.countryExit.months}`;
+
+/** THE WORLD'S SALE TIMES, scanned once per process and held. */
+type WorldExit = { usualLow: number; usualHigh: number; highs: number[]; count: number };
+let WORLD: WorldExit | null | undefined;
+function worldExit(): WorldExit | null {
+  if (WORLD !== undefined) return WORLD;
+  WORLD = null;
+  try {
+    const dir = resolve(process.cwd(), "data", "facts", "country");
+    const lows: number[] = [];
+    const highs: number[] = [];
+    for (const name of readdirSync(dir)) {
+      if (!name.endsWith(".json")) continue;
+      const shard = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { facts?: Array<{ metric?: string; value?: unknown }> };
+      if (!Array.isArray(shard?.facts)) continue;
+      let lo: number | null = null;
+      let hi: number | null = null;
+      for (const f of shard.facts) {
+        if (f?.metric === COUNTRY_EXIT_METRICS.monthsLow && typeof f.value === "number") lo = f.value;
+        if (f?.metric === COUNTRY_EXIT_METRICS.monthsHigh && typeof f.value === "number") hi = f.value;
+      }
+      if (lo != null && hi != null && lo > 0 && hi >= lo) { lows.push(lo); highs.push(hi); }
+    }
+    /* A SCAN THAT FOUND ALMOST NOTHING SAYS NOTHING: a median of three shards
+       is not the world, and the card draws its foot only where the scan read
+       a real bank. */
+    if (lows.length < 20) return WORLD;
+    const median = (a: number[]) => { const v = [...a].sort((x, y) => x - y); return v[Math.floor(v.length / 2)]; };
+    WORLD = { usualLow: median(lows), usualHigh: median(highs), highs: highs.sort((a, b) => a - b), count: lows.length };
+  } catch {
+    WORLD = null;
+  }
+  return WORLD;
+}
 
 function word(iso2: string, metric: string): string | null {
   if (!loadCountryShard(iso2)) return null;
@@ -83,8 +135,16 @@ export function buildCountryExit(iso2: string): CountryExitData | null {
   if (!mLo || !mHi || !(mLo.value > 0) || !(mHi.value >= mLo.value)) return null;
   const climateWord = word(code, COUNTRY_EXIT_METRICS.climate);
   const tag: FactTag = [mLo.tag, mHi.tag].some((t) => t !== "held") ? "modeled" : "held";
+  const w = worldExit();
+  const second = w
+    ? [
+        { figure: `${Math.round(w.usualLow)} to ${monthsText(w.usualHigh)}`, words: C.world.usual },
+        { figure: `${w.highs.filter((h) => h > mHi.value).length} of ${w.count}`, words: C.world.longer },
+      ]
+    : [];
   return {
     iso2: code,
+    second,
     marks: [
       { key: "quick", label: C.marks.quick, value: mLo.value, lead: true },
       { key: "slow", label: C.marks.slow, value: mHi.value },

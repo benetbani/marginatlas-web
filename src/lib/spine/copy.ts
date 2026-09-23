@@ -1723,8 +1723,44 @@ export const COPY = {
     month: "month",
     months: "months",
     climateLine: { active: "Buyers are about: a business here usually finds one.", steady: "Buyers are around, and a sale takes patience.", thin: "Buyers are few, and a sale can take a year or more." },
+    /* THE WORLD'S OWN FIGURES, under the hairline (2026-09-23 afternoon): what
+       the months above stand against, without which they are a number nobody
+       can place (VISUAL-CHOICE section 0). Both are worked from the same field
+       across the whole bank and the builder says how. */
+    world: { usual: "the usual anywhere on file", longer: "countries where a sale can take longer" },
     basis: "From listing to money, for a small business changing hands.",
     foot: "Gathered figures, not modelled.",
+  },
+  /** WHAT HOUSEHOLDS SPEND ON, the country's `18 spend` (country_spend_rows.ts,
+   *  2026-09-23, brief row C5). The categories are the file's seven machine
+   *  keys said in a person's words, and a key with no words here withholds the
+   *  whole card rather than printing "household_goods". The focal is not one of
+   *  the rows: it is eating out measured against all the food money, and the
+   *  basis names that division in the words a person would use. The ceiling is
+   *  the whole budget, so the same line names it at the head of the track. */
+  countrySpend: {
+    kicker: "What households spend on",
+    categories: {
+      housing_utilities: "Housing and bills",
+      transport: "Getting around",
+      food_drink: "Groceries",
+      recreation: "Leisure and holidays",
+      dining_out: "Eating out",
+      /* THREE WORDS, NOT FOUR: "Things for the home" is the natural phrase and
+         the model laws read a four-word row label as a sentence (ROW SENTENCE,
+         measured on both country pages the day this card was built). */
+      household_goods: "Furniture and appliances",
+      other: "Everything else",
+    },
+    outWords: "of the food money goes on eating out",
+    topLabel: "the whole budget",
+    phoneHead: { name: "What it goes on", value: "Share" },
+    /* THE BASIS CARRIES THE WORD "modelled" rather than a foot line of its own:
+       RankedBars' foot is a companion row at 16 and this card has no companion
+       figures, so a bare sentence there would stand louder than the figures it
+       qualifies. The card's second sentence names the focal's division, which
+       is the standard of 2026-09-19 (every figure says what was computed). */
+    basis: "Modelled shares of what a household spends here. The figure above is eating out against all the money that goes on food, at home and out.",
   },
   cityCalendar: {
     kicker: "When this city spends",

@@ -108,6 +108,8 @@ import { buildHoodPremium } from "@/lib/spine/hood_premium_rows";
 import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
 import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
 import { HoodTake, RankCard, PremiumCard, CompareCard, WorksSeat, CharacterCard, HoodClose } from "@/components/spine/hood/blocks";
+import { buildCountrySpend } from "@/lib/spine/country_spend_rows";
+import { SpendCard } from "@/components/spine/country/country-view";
 
 export type Instance = { iso2: string; why: string };
 
@@ -415,6 +417,17 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances(), city 
         const h = i.iso2.slice("hood:".length, -":rank".length);
         const r = buildHoodRank(HOOD_INSTANCES[h].city);
         return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{r ? <div style={{ maxWidth: 693 }}><RankCard id={`rank-hood-${h}`} rank={r} /></div> : null}</Story>;
+      })}
+      {/* WHAT HOUSEHOLDS SPEND ON (country_spend_rows.ts, 2026-09-23), at the
+          full width the country page gives it. This family is where the two
+          laws the card brought are locked: the residual drawn LAST however big
+          it is, and a ceiling that is the whole the parts divide rather than a
+          world maximum or the set's own heaviest member. Four countries, each
+          picked for what it proves (pickCountrySpendInstances). */}
+      {pickCountrySpendInstances().map((i) => {
+        const iso = i.iso2.slice(0, -":spend".length);
+        const d = buildCountrySpend(iso);
+        return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{d ? <div style={{ maxWidth: 1072 }}><SpendCard spend={d} /></div> : null}</Story>;
       })}
     </div>
   );
@@ -2254,6 +2267,27 @@ const hoodTakeWhy = (t: NonNullable<ReturnType<typeof buildHoodTake>>) =>
 export function pickHoodTakeInstances(): Instance[] {
   return hoodHandles().filter((h) => hoodServes(h, "take")).map((h) => ({ h, t: buildHoodTake(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus) })).filter((x) => x.t).map(({ h, t }) => ({ iso2: hoodKey(h, "take"), why: hoodTakeWhy(t!) }));
 }
+/** THE COUNTRY'S HOUSEHOLD BUDGET (country_spend_rows.ts, 2026-09-23, brief row
+ *  C5), keyed <ISO2>:spend. Four countries, each for what it proves: the
+ *  exemplar; the thin country the page filter also renders; the shard where
+ *  eating out takes the largest share of the food money on the whole bank; and
+ *  the one shard that holds a zero there, which draws no card at all. The whys
+ *  are composed from the builder, so a caption cannot drift from the card. */
+export function pickCountrySpendInstances(): Instance[] {
+  const spendOf = (iso2: string) => buildCountrySpend(iso2);
+  const out: Instance[] = [];
+  const seen = new Set<string>();
+  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2: `${iso2}:spend`, why }); } };
+  const said = (iso2: string) => {
+    const d = spendOf(iso2);
+    return d ? `${d.rows.length} parts of a hundred, ${d.rows[0].name.toLowerCase()} the biggest at ${d.rows[0].value} and the leftover last at ${d.rows[d.rows.length - 1].value}, ${d.out.figure} of the food money eaten out` : "no card: a category unnamed, a sum off a hundred, or a zero on either half of the food question";
+  };
+  take("GB", `the exemplar, ${said("GB")}`);
+  take("AF", `the thin country, ${said("AF")}`);
+  take("SG", `the bank's highest share eaten out, ${said("SG")}`);
+  take("LK", `self-omits: ${said("LK")}`);
+  return out;
+}
 export function pickHoodRankInstances(): Instance[] {
   return hoodHandles().filter((h) => hoodServes(h, "rank")).map((h) => ({ h, r: buildHoodRank(HOOD_INSTANCES[h].city) })).filter((x) => x.r).map(({ h, r }) => ({ iso2: hoodKey(h, "rank"), why: `hood block 01: ${r!.districts} districts by rent against ${r!.cheapest}, the cheapest first printing its own figure, nobody featured, the set's dearest the ceiling${r!.clipped.length ? `, ${r!.clipped.join(", ")} on the model's bound with the line` : ""}` }));
 }
@@ -2279,7 +2313,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
   return {
     "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero), ...pickIndustryTakeInstances(), ...pickHoodTakeInstances()],
     "hero-board": pickHeroBoardInstances(),
-    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars"), ...pickHoodRankInstances()],
+    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars"), ...pickHoodRankInstances(), ...pickCountrySpendInstances()],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero), ...pickIndustryPlacesInstances(industryPlaces, "compare-table"), ...pickHoodCompareInstances()],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),

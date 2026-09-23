@@ -204,9 +204,40 @@ export type RankedBarsProps = {
   topLabel?: string;
   /** WHAT THE CEILING IS, and the caller alone knows: "world" when `worldMax` is
    *  the world's highest value for the metric, "set" when it is this set's own
-   *  heaviest member. The table form stamps it as `data-track`. Defaults to
-   *  "world" so a caller who forgets it gets a gate finding, never silence. */
-  ceiling?: "world" | "set";
+   *  heaviest member, "whole" when the rows are PARTS OF ONE WHOLE and the far
+   *  end is that whole (a hundred, for shares of a household's spending). The
+   *  table form stamps it as `data-track`. Defaults to "world" so a caller who
+   *  forgets it gets a gate finding, never silence.
+   *
+   *  "whole" arrived with the country page's `18 spend` (2026-09-23). A track
+   *  whose far end is the whole is not a world maximum, so PART 9 rule 5's
+   *  placement line does not apply to it, exactly as it does not apply to a
+   *  set's own heaviest member; `check_model_laws.mjs`'s PLACEMENT check skips
+   *  the word for that reason, written there beside the reason "set" is
+   *  skipped. It is a DECLARATION, not silence: a track that says nothing is
+   *  still measured. */
+  ceiling?: "world" | "set" | "whole";
+  /** THE RESIDUAL ROW, PINNED LAST WHATEVER ITS SIZE (2026-09-23, the country
+   *  page's `18 spend`, brief VISUAL-CHOICE.md section 2: "PARTS of a whole,
+   *  more than 5: ranked bars, biggest first, with a residual row").
+   *
+   *  A residual is the leftover the categories do not name, and on the spend
+   *  card it is the BIGGEST number on the file (32 of every 100 in the United
+   *  Kingdom). Sorted with the rest it would lead the ranking, and "everything
+   *  else" leading a ranking is not a finding: it is the card announcing that
+   *  its own subject is the part it cannot name. So the row named here is
+   *  lifted out of the ranking, excluded from the leader, and drawn at the end
+   *  of the reading order, which is the same "pinned last regardless of rank"
+   *  idiom IncomeBreakdown and kit.tsx's StackBar already use for net income.
+   *  Its bar still draws its own value against the same ceiling, so nothing
+   *  about the drawing is softened; only its POSITION is fixed.
+   *
+   *  A CARD WITH A RESIDUAL NEVER DRAWS THE COLUMNS FORM. The columns read left
+   *  to right with the leader standing at the right end, so the end of that
+   *  form's reading order is its loudest position, and a residual pinned there
+   *  would read as the winner. The table reads downward, where the last row is
+   *  the quietest, so a residual card takes the table at every width. */
+  residualKey?: string;
   /** Whether this card MARKS its leading row (the black pill and the terracotta
    *  bar) or features nobody. "none" is for a ranking whose leading row is not
    *  an answer worth sending anyone to; see the header. Defaults to "leader",
@@ -221,7 +252,12 @@ export type RankedBarsProps = {
    *  pill (task 12), and check_archetypes.mjs reads the two apart by this slot's
    *  `data-focal`. Under PART 6 the fills follow it: the leader's bar `--terra`
    *  and the rest hatched, exactly as a featured card already draws. */
-  focal?: { figure: string; accent?: boolean };
+  /*  `words` (2026-09-23, the country page's `18 spend`): one micro line under
+   *  the figure saying what it is. The cost to open needs none, because its
+   *  card is called "The cost to open" and the focal is that cost; a focal that
+   *  is NOT what the kicker names has to say what it is, or it is a number
+   *  floating over a list. A label, never a sentence (PART 9). */
+  focal?: { figure: string; accent?: boolean; words?: string };
   /** THE FOOT, PART 7's fourth part, where earned: companion figures at 16
    *  under a hairline after the drawing (the cost to open's months to break
    *  even and years to pay back), then one micro line saying what they are.
@@ -329,26 +365,41 @@ const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey }: RankedBarsProps) {
   if (rows.length < 2) return null;
-  const ascending = [...rows].sort((a, b) => a.value - b.value);
+  /* THE RESIDUAL IS LIFTED OUT OF THE RANKING BEFORE ANYTHING IS SORTED (see
+     the prop): it takes no part in the order and cannot be the leader. A key
+     that matches no row leaves every line below exactly as it was. */
+  const residual = residualKey ? rows.find((r) => r.key === residualKey) ?? null : null;
+  const ranks = residual ? rows.filter((r) => r.key !== residual.key) : rows;
+  const ascending = [...ranks].sort((a, b) => a.value - b.value);
   /* THE LEADER IS ALWAYS THE RIGHT-MOST BAR: the highest for a margin, the lowest for a burden. */
-  const sorted = best === "min" ? ascending.slice().reverse() : ascending;
-  const leader = sorted[sorted.length - 1];
+  const ordered = best === "min" ? ascending.slice().reverse() : ascending;
+  const leader = ordered[ordered.length - 1];
+  /* THE RESIDUAL GOES FIRST IN THE ASCENDING LIST, WHICH IS LAST IN THE TABLE,
+     because every table form below draws `[...sorted].reverse()`. One place
+     decides the position, so the wide table and the phone list cannot disagree
+     about where the leftover sits. */
+  const sorted = residual ? [residual, ...ordered] : ordered;
   /* WHETHER THE LEADING ROW IS MARKED AT ALL. The card still KNOWS its leader
      and still declares it on the root, because the harness's widened ACCENT
      rule reads that declaration to prove a pill, when there is one, sits on
      the right row. An unfeatured card simply draws none. */
   const marks = feature === "leader";
-  const top = Math.max(worldMax, ascending[ascending.length - 1].value);
+  /* THE CEILING COUNTS THE RESIDUAL TOO: it is out of the RANKING, not off the
+     card, and a bar that overshot the track would be clipped to it. */
+  const top = Math.max(worldMax, ...sorted.map((r) => r.value));
   /* FEWER THAN FOUR ROWS RECONFIGURE TO THE TABLE AT EVERY WIDTH. Measured by
      the harness: two bars across a card leave a 480x144 hole (E6), the
      sparse-but-wide fault the founder names most often; the table holds two
      rows as honestly as six. The constitution recorded this rule in run 10. */
-  const drawBars = sorted.length >= 4 && sorted.length < WIDE_ROWS;
+  /* A RESIDUAL CARD IS NEVER COLUMNS, whatever its row count: the columns' last
+     reading position is their loudest and a leftover cannot stand there (see
+     `residualKey`). */
+  const drawBars = sorted.length >= 4 && sorted.length < WIDE_ROWS && !residual;
   /* SIX OR MORE READ TOP TO BOTTOM AT EVERY WIDTH (rule 20), which is why
      this is not another breakpoint: the columns are wrong at 1280 as well. */
-  const drawWide = sorted.length >= WIDE_ROWS;
+  const drawWide = sorted.length >= WIDE_ROWS || Boolean(residual);
   /* THE BARS CARD'S MIDDLE FORM (plan step 33's second dispatch, 2026-09-18).
      The bars stand from lg; below it the card drew the PHONE list, whose rows
      are `[1fr auto]` justify-between, which PART 5 licenses only on a card of
@@ -369,15 +420,28 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
      a `ch` width and what that unit cannot see. */
   const figChars = Math.max(1, ...sorted.map((r) => fmt(r.value).length));
   const GEO = wideColumns(figChars);
+  /* THE HEAD GOES TWO ABREAST ON A CARD THAT CARRIES A LABELLED FOCAL
+     (2026-09-23, the country page's `18 spend`). Measured on the first render:
+     on a full-width card the focal and the basis stack in the left half and
+     leave about 510 by 110 of nothing to their right, eleven pixels under the
+     page filter's hole floor, which is a fault passing on a technicality. Side
+     by side they fill the width and read as a deck under the opener.
+     THE CARD'S OWN WIDTH DECIDES, NOT THE WINDOW: the cost-to-open card sits
+     in a narrow third at 1280, where a `md:` breakpoint would have split a
+     347px card into two columns. Only a card with `focal.words` becomes a
+     query container, so no card that stood before this change is touched. */
+  const headTwoUp = Boolean(focal?.words);
   return (
-    <Box id={id} className={drawWide || drawMidTable ? "flex flex-col" : ""} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
+    <Box id={id} className={`${drawWide || drawMidTable ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
+      <div className={headTwoUp ? "gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start" : undefined}>
       {/* THE FOCAL, when the card holds one: the only element on this card
           above 16, and the only one that may wear the accent (see the prop). */}
       {focal ? (
         /* The slot is a div because the kit's Fig carries no data attributes; the checkers read `[data-focal]` on the slot. */
         <div data-focal="1" className="mb-2">
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{focal.figure}</Fig>
+          {focal.words ? <span className="mt-1 block max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
         </div>
       ) : null}
       {/* THE BASIS AND THE WITHHELD LINE SIDE BY SIDE FROM md (his clause 51,
@@ -389,6 +453,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
       <div className={withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
         <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
         {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)] md:mt-0">{withheldLine}</p> : null}
+      </div>
       </div>
       {drawBars ? <div className="relative mt-3 hidden lg:block" data-idea="I2">
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-border)]" style={{ top: PILL }} />
