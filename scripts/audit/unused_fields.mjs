@@ -7,7 +7,7 @@
  * THE ONE HONEST STARTING POINT for "what else could a page say" is what the
  * files already hold, because a section built on a field we have is defensible
  * the day it is drawn, and a section built on a field we wish we had is a
- * research project wearing a design. This walks the three shard folders,
+ * research project wearing a design. This walks one shard folder a run,
  * collects every metric name with the number of entities that hold it, then
  * greps `src/lib` for that metric to see whether anything reads it.
  *
@@ -18,9 +18,16 @@
  * WHAT IT CANNOT SEE, STATED: a metric read through a variable rather than a
  * literal (a builder that composes `setup.steps.*.${field}`) reads as unused.
  * Every hit is therefore a candidate to confirm by opening the file, never a
- * finding on its own.
+ * finding on its own. AND THE OTHER WAY (2026-09-23 night): the read test is a
+ * substring, so a metric whose name sits inside a longer one reads as used by
+ * the longer one's reader (`cost_drivers.*.name` "read by" split_rows.ts,
+ * which reads `cost_structure.cost_drivers.*.name`, a different block).
  *
- *   node scripts/audit/unused_fields.mjs [country|city|industry] [--all]
+ * THERE ARE FOUR SHARD FOLDERS, not three: `neighborhood` (243 district
+ * shards, 36 cities) was found on 2026-09-23 night, read by nothing; the tool
+ * walks any folder under data/facts named as its argument.
+ *
+ *   node scripts/audit/unused_fields.mjs [country|city|industry|neighborhood] [--all]
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
