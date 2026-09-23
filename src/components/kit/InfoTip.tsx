@@ -86,7 +86,12 @@ export function InfoTip({
         {/* max-w in ch, not rem: the old panel was a fixed 11rem, which is a
             width rather than a measure and reads differently at every type
             size it is dropped beside. */}
-        <TooltipContent className="max-w-[38ch] text-[length:var(--t-micro)] leading-snug">
+        {/* THE PANEL IN THE SITE'S OWN INK (2026-09-23, from the Kole Jain study:
+            his tooltips are dark panels by choice and ours was dark by accident,
+            painted in `bg-ink-900`, a pre-spine token that no spine page may use).
+            Same look, right source: the ink and the card colours the rest of the
+            page is built from. */}
+        <TooltipContent className="max-w-[38ch] border border-[var(--c-ink)] bg-[var(--c-ink)] text-[length:var(--t-micro)] leading-snug text-[var(--c-card)]">
           {gloss}
         </TooltipContent>
       </Tooltip>
