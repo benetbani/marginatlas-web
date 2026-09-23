@@ -42,8 +42,11 @@ const LIST = "scripts/harness/pages.json";
 
 /* THE FLOOR, one per surface, seeded at what the pages offered the day the walk
    was written (2026-09-22) and raised as the links land. Never lowered: a page
-   type that loses a way out has lost something a reader used. */
-const LINK_FLOOR = { country: 2, city: 16, cell: 7, industry: 2, hood: 10, howto: 3 };
+   type that loses a way out has lost something a reader used. RAISED THE SAME
+   DAY, when the trail back up landed (Crumbs.tsx): trade 7 to 8, district and
+   hub 10 to 11, industry 2 to 3. The city and the how-to did not move, because
+   their trail's one link (the country page) was already on them. */
+const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3 };
 
 const surfaceOf = (name) =>
   name.startsWith("country-") ? "country" :
@@ -130,7 +133,23 @@ for (const f of files) {
     else if (/[A-Z ]/.test(path)) bad.push([h, "an upper-case letter or a space in the path"]);
     else if (!routeExists(path)) bad.push([h, "no route in src/app answers this shape"]);
   }
+  /* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): every surface below the country
+     shows where the reader is standing, its last step is the page itself and
+     never a link, and it holds at least two steps (one is the page's own name
+     said once, which is not a trail). The country page is the top of the
+     hierarchy and correctly shows none. */
   const surface = surfaceOf(name);
+  const crumbNav = /<nav[^>]*aria-label="Breadcrumb"[^>]*>([\s\S]*?)<\/nav>/.exec(html);
+  const NEEDS_TRAIL = new Set(["city", "cell", "hood", "howto", "industry"]);
+  if (NEEDS_TRAIL.has(surface)) {
+    if (!crumbNav) bad.push(["(no trail)", "no trail back up on a page below the country"]);
+    else {
+      const steps = Number(/data-crumbs="(\d+)"/.exec(crumbNav[0])?.[1] || 0);
+      if (steps < 2) bad.push([`(trail of ${steps})`, "a trail of fewer than two steps"]);
+      const tail = crumbNav[1].slice(crumbNav[1].lastIndexOf("</a>") + 4);
+      if (!tail.trim() || /<a/.test(tail)) bad.push(["(trail)", "the last step of the trail is a link; the last step is the page"]);
+    }
+  }
   const floor = LINK_FLOOR[surface];
   rows.push({ name, surface, n: distinct.length, floor, bad });
   if (COUNTS_ONLY) continue;

@@ -122,6 +122,8 @@ import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { GatesCard, MarketCard } from "./opening";
 import { buildCityGates } from "@/lib/spine/city_gates_rows";
 import { buildCityMarket } from "@/lib/spine/city_market_rows";
+import { Crumbs } from "@/components/spine/Crumbs";
+import { buildCityCrumbs } from "@/lib/spine/crumb_rows";
 import { WhereToTrade } from "./where-to-trade";
 import { buildCityDistrictBars } from "@/lib/spine/district_rows";
 import { Premises } from "./premises";
@@ -762,6 +764,8 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+      {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
+      <Crumbs items={buildCityCrumbs(slug)} />
       {/* `00 masthead`, FULL WIDTH, the page's only 40 (8.3, loud 1). SINCE THE
           EVENING OF 2026-09-20 THE BOARD OF HIS DESIGN, the country's hero at
           the city altitude (HeroBoard.tsx, city_hero_board.ts; his word after

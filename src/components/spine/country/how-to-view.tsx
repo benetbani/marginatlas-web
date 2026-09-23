@@ -17,6 +17,8 @@ import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { COPY } from "@/lib/spine/copy";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
+import { Crumbs } from "@/components/spine/Crumbs";
+import { buildHowToCrumbs } from "@/lib/spine/crumb_rows";
 
 /**
  * THE THREE LOUD MOMENTS: none, by design (MODEL.md 8.9, "Loud today: 0 of 3";
@@ -45,6 +47,8 @@ export function HowToBody({ iso2 }: { iso2: string }) {
   );
   return (
     <div>
+      {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the country page above, this page below. */}
+      <Crumbs items={buildHowToCrumbs(iso2)} />
       <Band hero>
         <Box id="howto">
           <h1 data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-tight tracking-tight text-[var(--c-ink)]">{d.title}</h1>

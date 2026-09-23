@@ -138,6 +138,8 @@ import { ClearsCard, LastsCard, MixCard } from "./turn-two";
 import { MarketBand } from "./market";
 import { RivalsCard, WorthCard, CloseCard, CustomersCard } from "./exit";
 import { buildTradeCustomers } from "@/lib/spine/trade_customers_rows";
+import { Crumbs } from "@/components/spine/Crumbs";
+import { buildCellCrumbs } from "@/lib/spine/crumb_rows";
 import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth } from "@/lib/spine/worth_rows";
 import { buildTradeCloseDoors } from "@/lib/spine/close_rows";
@@ -335,6 +337,9 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+      {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): country, place, this
+          trade. Above the masthead, outside the levels, no figure. */}
+      <Crumbs items={buildCellCrumbs(d.meta)} />
       {/* `00 take`, FULL WIDTH, the page's only 40 (8.6, loud one): the answer
           card draws its own hero band, the attribute the full-width gate reads. */}
       <Masthead d={d} />

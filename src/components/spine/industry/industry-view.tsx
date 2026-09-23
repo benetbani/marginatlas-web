@@ -150,6 +150,8 @@ import { buildMarket } from "@/lib/spine/market_rows";
 import { buildIndustryCloseDoors } from "@/lib/spine/close_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
+import { Crumbs } from "@/components/spine/Crumbs";
+import { buildIndustryCrumbs } from "@/lib/spine/crumb_rows";
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.7's
@@ -232,6 +234,8 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+      {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
+      <Crumbs items={buildIndustryCrumbs(industryId)} />
       {/* `00 take`, FULL WIDTH, the page's only 40 (8.7, loud one): the answer
           card draws its own hero band, the attribute the full-width gate reads. */}
       <Masthead facts={hero} />
