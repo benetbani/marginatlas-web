@@ -27,6 +27,9 @@
  *    process, and it belongs in a sentence.
  *  - THE NUMBERS ARE MARKS, at the micro rung on the rail, never figures: they
  *    are ordinals, and a reader who reads them as quantities has been misled.
+ *    They still carry tabular numerals, because a column of ordinals is read
+ *    down like any other column and the art-direction rule counts every bare
+ *    digit on the page, ordinal or not.
  *  - A MISSING FIGURE IS A SILENCE, not a dash and not a zero. A step whose
  *    days or cost the file does not hold draws the other one and says nothing
  *    where the missing one would be.
@@ -69,7 +72,7 @@ export function Stepper({ steps }: { steps: Step[] }) {
             {!last ? <span aria-hidden className="absolute left-3 top-6 h-[calc(100%-16px)] w-px bg-[var(--c-border)]" /> : null}
             <span
               aria-hidden
-              className="relative z-[1] flex h-6 w-6 items-center justify-center rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]"
+              className="tabular-figures relative z-[1] flex h-6 w-6 items-center justify-center rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]"
             >
               {i + 1}
             </span>

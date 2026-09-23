@@ -774,9 +774,15 @@ const QUIET = argv.includes("--quiet");
    twice in one afternoon as a TIMEOUT that was the machine's load, not the
    gate's. A budget is not a ratchet (nothing is judged by it but a hang), and
    the hang this rule exists for ran twenty-three minutes; 240 still catches
-   it. A Vercel build machine is not this one, which is the other reason. */
+   it. A Vercel build machine is not this one, which is the other reason.
+   AND ROSE AGAIN, 240 TO 360, ON 2026-09-23, for the same gate and the same
+   reason measured twice in one run: 240.4 s inside the chain (a TIMEOUT) and
+   186 s alone, minutes apart, on a machine holding 1.3 GB of somebody else's
+   browser. A gate that legitimately needs three minutes should not sit four
+   seconds under its own ceiling, because the failure it produces is a lie
+   about the code. 360 still catches the hang, which ran twenty-three. */
 const timeoutArg = argv.find((a) => a.startsWith("--timeout="));
-const TIMEOUT_MS = (timeoutArg ? Math.max(0, parseInt(timeoutArg.split("=")[1], 10)) : 240) * 1000;
+const TIMEOUT_MS = (timeoutArg ? Math.max(0, parseInt(timeoutArg.split("=")[1], 10)) : 360) * 1000;
 /* A SUBSET, `--only=<name,name>`: exact gate names, so a crashed or timed-out
    gate can be rerun alone by the same runner instead of by hand. The GATES
    array is untouched, so the counts and the single-chain gate read the same

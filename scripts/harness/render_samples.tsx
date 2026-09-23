@@ -28,6 +28,7 @@ import { writeFileSync, readFileSync, existsSync, statSync, readdirSync } from "
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
+import { preflight } from "./preflight.mjs";
 
 import { Box, Rail } from "@/components/spine/kit";
 import { MonthBars } from "@/components/spine/archetypes/MonthBars";
@@ -43,6 +44,9 @@ import { buildSplit } from "@/lib/spine/split_rows";
 import { buildCityLiving } from "@/lib/spine/fact_rows";
 import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import { COPY } from "@/lib/spine/copy";
+
+/* The ground first (the harness contract): this renderer compiles a stylesheet and writes into scratchpad, so a drifted working directory writes nowhere. */
+preflight({ name: "render_samples" });
 
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const CSS_PATH = "scratchpad/pages/site.css";

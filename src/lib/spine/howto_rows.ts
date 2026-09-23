@@ -66,7 +66,13 @@ export function buildHowTo(iso2: string): HowToData | null {
     name,
     title: fill(COPY.howto.title, { country: inSentence(name) }),
     lead: COPY.howto.lead,
-    cells: facts.cells,
+    /* THE LLC'S TIME AND COST LEAVE THE MASTHEAD (2026-09-23): `01 steps` now
+       prints the registration step by step with its own days and fee, so the
+       masthead's "To register an LLC: 1 day, $16" was the same fact said twice
+       on one screen, which is clause 66 and which the art-direction gate
+       caught as a figure repeated across two cards in the first screen. What
+       stays is what the steps do not carry: what a business pays. */
+    cells: facts.cells.filter((c) => c.key !== "llc-time" && c.key !== "llc-cost"),
     tiers,
     steps: buildHowToSteps(code),
     forms,

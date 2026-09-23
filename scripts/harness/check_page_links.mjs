@@ -35,7 +35,11 @@
  *   node scripts/harness/check_page_links.mjs --list --counts   (print, judge nothing)
  */
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { preflight } from "./preflight.mjs";
 import { join, basename, resolve } from "node:path";
+
+/* The ground first, before argv and before any read (the harness contract). This walk launches no browser, so it takes no floor. */
+preflight({ name: "check_page_links" });
 
 const PAGES_DIR = "scratchpad/harness/pages";
 const LIST = "scripts/harness/pages.json";
