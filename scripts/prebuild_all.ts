@@ -132,6 +132,8 @@ const GATES: Gate[] = [
      measurement of each page and falling only. A browser gate, one more. */
   { name: "harness-page-laws", script: "scripts/harness/check_page_laws.mjs", args: ["--list"], browser: true },
   { name: "harness-laws", script: "scripts/harness/check_model_laws.mjs", args: ["--list", "--ratchet"], browser: true },
+  /* The walk over the links the rendered pages offer (2026-09-22, QUEUE ui:links-and-the-dead-link-walk): the shape of every internal href against src/app, the hygiene, and the floor of ways out per page type. No browser: it reads the same renders `pages-fresh` writes. `dead-links` beside it reads SOURCE literals and cannot see a link composed from data, which is every link on a spine page. */
+  { name: "harness-links", script: "scripts/harness/check_page_links.mjs", args: ["--list"] },
   /* THE LOUD-MOMENTS LEDGER AND THE RENDER AGREE (plan step 40, 2026-09-19;
      MODEL.md PART 6 and PART 8's seat tables). Each surface's view declares
      its three loud seats (`LOUD_SEATS`; the census prints them into

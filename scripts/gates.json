@@ -127,6 +127,21 @@
       ]
     },
     {
+      "name": "harness-links",
+      "script": "scripts/harness/check_page_links.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": false,
+      "asserts": "check_page_links , THE WALK OVER THE LINKS THE PAGES ACTUALLY OFFER (2026-09-22, QUEUE ui:links-and-the-dead-link-walk; his words after the push of 2026-09-20: \"the names of the neighbourhoods are not",
+      "reads": [
+        "scratchpad/harness/pages",
+        "scripts/harness/pages.json",
+        "src/app"
+      ],
+      "claims": []
+    },
+    {
       "name": "loud-seats",
       "script": "scripts/verify_loud_seats.mjs",
       "args": [],
