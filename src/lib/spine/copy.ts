@@ -1715,6 +1715,17 @@ export const COPY = {
     foot: "Times and fees are modelled.",
   },
   /** WHEN THIS CITY SPENDS, the city's `19 calendar` (city_calendar_rows.ts, 2026-09-23, brief row Y1): the kicker names the subject, the label names the figure, the basis says what the twelve columns are and what the swing is, and the foot says the figures are the city's own calendar. */
+  /** WHAT A BUSINESS HERE SELLS FOR, the country's `17 exit` (country_exit_rows.ts, 2026-09-23, brief row C3). The marks are the usual band as a multiple of EARNINGS, never of sales; the basis says so in a person's words, and the climate word is the file's own, rewritten for a reader. */
+  /** HOW LONG IT TAKES TO SELL, the country's `17 exit` (country_exit_rows.ts, 2026-09-23, brief row C3). THE SALE PRICE IS NOT HERE: the file holds it as a multiple of earnings and clause 15 says a price is currency and never a multiple, so it waits on an earnings base. The buyers line is a sentence because the file's value is a word, and PART 5 keeps a word out of a figure's slot. */
+  countryExit: {
+    kicker: "How long it takes to sell",
+    marks: { quick: "A quick sale", slow: "A slow one" },
+    month: "month",
+    months: "months",
+    climateLine: { active: "Buyers are about: a business here usually finds one.", steady: "Buyers are around, and a sale takes patience.", thin: "Buyers are few, and a sale can take a year or more." },
+    basis: "From listing to money, for a small business changing hands.",
+    foot: "Gathered figures, not modelled.",
+  },
   cityCalendar: {
     kicker: "When this city spends",
     swingLabel: "Busiest over quietest",

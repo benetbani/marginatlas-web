@@ -36,6 +36,8 @@ import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { CityCards } from "@/components/spine/archetypes/CityCards";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
+import { CompanionRow } from "@/components/spine/archetypes/BentoBand";
+import { buildCountryExit, exitMonthsText, type CountryExitData } from "@/lib/spine/country_exit_rows";
 import { SpectraTable } from "@/components/spine/archetypes/SpectraTable";
 import { buildCharacterTables } from "@/lib/spine/character_rows";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
@@ -720,6 +722,49 @@ function LocalsKnow({ notes }: { notes: LocalsNotes | null }) {
 
 
 /**
+ * HOW LONG IT TAKES TO SELL, `17 exit` (2026-09-23, brief row C3; the
+ * builder's header names every field, its coverage, and why the sale PRICE is
+ * not on this card). Two marks on one track, the quick sale and the slow one,
+ * with the buyers' market as a sentence beside them.
+ *
+ * WHY IT IS HERE AND NOT EARLIER: it is the last question a reader asks and
+ * the one no free page answers. It sits after the character pair, two levels
+ * clear of the earnings strip, because two tracks with marks on neighbouring
+ * levels is the sameness his rule of 2026-09-20 refuses (clause 64).
+ *
+ * FULL WIDTH AND OUTSIDE A BAND (the peers precedent): there is no card left
+ * on this page whose subject belongs beside an exit, and a lone card inside a
+ * band is a level with air beside it.
+ */
+function ExitCard({ exit }: { exit: CountryExitData | null }) {
+  if (!exit) return null;
+  const C = COPY.countryExit;
+  const second: Array<{ figure: string; words: string }> = [];
+  return (
+    <Box id="exit" className="mt-8 [container-type:inline-size]">
+      <Rail icon="ranking" kicker={C.kicker} />
+      <RangeStrip marks={exit.marks} scale="linear" fmt={exitMonthsText} basis="" />
+      {/* THE FOOT IN TWO COLUMNS where the card is wide enough for them
+          (measured: at 768 the sale's length and the buyers' sentence sat in
+          the left half and left a 312 by 126 rectangle of nothing beside
+          them). The container decides, not the window. */}
+      {second.length > 0 || exit.climate ? (
+        <div className="mt-4 grid gap-x-8 gap-y-3 border-t border-[var(--c-border)] pt-3 [@container(min-width:520px)]:grid-cols-[auto_minmax(0,1fr)]">
+          {second.length > 0 ? (
+            <div data-second>
+              <CompanionRow items={second} />
+            </div>
+          ) : null}
+          {exit.climate ? <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{exit.climate}</p> : null}
+        </div>
+      ) : null}
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.basis}</p>
+      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.foot}</p>
+    </Box>
+  );
+}
+
+/**
  * Where to next, through the terminus archetype: the doors from close_rows
  * (the largest covered city, the country's trades, the pricing page with the
  * promise it keeps today), the wrapper keeping data-terminus so the
@@ -1049,6 +1094,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
             the exit is one card. */}
         <Movement index="03" heading={COPY.chapters.place} />
         <Character iso2={iso2} />
+        {/* `17 exit`, FULL WIDTH (2026-09-23): what the thing is worth at the
+            end, two levels clear of the earnings strip. */}
+        <ExitCard exit={buildCountryExit(iso2 ?? "")} />
         <Close meta={d.meta} name={name} />
       </main>
       <OnThisPage sections={RAIL_SECTIONS} />
