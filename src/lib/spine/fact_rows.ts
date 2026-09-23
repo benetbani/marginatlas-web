@@ -71,7 +71,7 @@ import cityListJson from "../../../data/cities/city_list_v1.json";
 import { cityFigure, weakerTag, type BankFigure } from "@/lib/facts/city_shard";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { visitorShareSlope } from "@/lib/cities/city_view";
-import type { FactTag } from "@/lib/facts/types";
+import type { FactTag, PlaceholderOption } from "@/lib/facts/types";
 import { usd, usdCents } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
@@ -108,9 +108,9 @@ function footOf(modelled: string[], placeholders: string[], cityName: string): s
   return parts.length ? parts.join(" ") : null;
 }
 
-/** A shard figure above zero, or null; `zeroOk` keeps a zero (the transport pass). */
-function figure(iso2: string, slug: string, metric: string, zeroOk = false): BankFigure | null {
-  const fig = cityFigure(iso2, slug, metric);
+/** A shard figure above zero, or null; `zeroOk` keeps a zero (the transport pass); a placeholder only where `opts` asks (the store's law). */
+function figure(iso2: string, slug: string, metric: string, zeroOk = false, opts: PlaceholderOption = {}): BankFigure | null {
+  const fig = cityFigure(iso2, slug, metric, opts);
   return fig && (zeroOk || fig.value > 0) ? fig : null;
 }
 
@@ -354,7 +354,11 @@ export function buildCityDemand(slug: string): CityDemandData | null {
   if (!city) return null;
   const iso2 = String(city.iso2).toUpperCase();
   const C = COPY.cityDemand;
-  const spend = figure(iso2, slug, "demand.spend_per_capita_usd");
+  /* THE ONE ASK FOR A PLACEHOLDER ON THE SITE (2026-09-23 night; the chain's
+     `placeholder-never-printed` gate lists it): London's spend is the set's
+     one placeholder, read here only to withhold it with the line that says
+     what it is, which is truer than "not on file". It is never printed. */
+  const spend = figure(iso2, slug, "demand.spend_per_capita_usd", false, { placeholders: "include" });
   const base = { slug, iso2, name: city.name };
   if (!spend) return { ...base, figure: null, value: null, withheld: C.withheld.notOnFile, basis: null, foot: null, tag: null, sample: false };
   if (spend.tag === "placeholder") return { ...base, figure: null, value: null, withheld: fill(C.withheld.placeholder, { city: city.name }), basis: null, foot: null, tag: spend.tag, sample: true };

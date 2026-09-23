@@ -39,4 +39,14 @@ export type FactQuery = {
   period?: string;
   /** Drop anything below this confidence. Omit to take everything. */
   minConfidence?: number;
+  /**
+   * A PLACEHOLDER IS DROPPED UNLESS THIS ASKS FOR IT (2026-09-23 night; the
+   * law is in store.ts's header). A caller asks only to withhold a figure
+   * with the line that says what it is, and the chain's
+   * `placeholder-never-printed` gate holds every ask to a named list.
+   */
+  placeholders?: "include";
 };
+
+/** The one option a figure's accessor passes through to the store: whether it may see a placeholder. */
+export type PlaceholderOption = Pick<FactQuery, "placeholders">;

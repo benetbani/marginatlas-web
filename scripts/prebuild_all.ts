@@ -507,6 +507,14 @@ const GATES: Gate[] = [
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },
   { name: "facts-confidence", script: "tests/facts/confidence.test.ts" },
+  /* A placeholder is not a figure (2026-09-23 night): two new builders read one
+     each as "modelled" the same evening (London's calendar, printed on
+     production; North Korea's household budget, unserved only because /kp is a
+     404). The store now drops a placeholder unless
+     a query asks; this proves the refusal on the bank's real holders and a
+     plant, holds every ask to a named list, and every read around the store to
+     a named list that filters its own. Planted three ways, each watched red. */
+  { name: "placeholder-never-printed", script: "scripts/verify_placeholder_never_printed.ts" },
   /* Two live routes were invisible to crawlers: a client island read
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */

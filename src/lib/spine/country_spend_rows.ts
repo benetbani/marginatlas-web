@@ -48,9 +48,12 @@
  * nobody eats out, so it draws no card at all. AND A PLACEHOLDER IS NOT A
  * FIGURE (the bank's word for a slot waiting on research; the city crew
  * builder's rule): North Korea's seven are tagged placeholder, and until
- * 2026-09-23 night this builder read them as modelled and its country page
- * printed them. 196 of 198 draw; where the card is withheld the exit card
- * beside it stands at the survivor's two thirds, the country page's own idiom.
+ * 2026-09-23 night this builder read them as modelled and built the card. No
+ * page printed it only because /kp is a 404 (North Korea is not in the site's
+ * country list), which was luck; the store has refused a placeholder unasked
+ * since the same night. 196 of 198 build; where the card is withheld the exit
+ * card beside it stands at the survivor's two thirds, the country page's own
+ * idiom.
  *
  * THE DISPLAYED SHARES ARE RECONCILED TO SUM TO EXACTLY 100, by the same
  * largest-remainder rounding IncomeBreakdown uses and for the same reason:

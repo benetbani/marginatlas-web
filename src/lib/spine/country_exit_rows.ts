@@ -98,11 +98,17 @@ function worldExit(): WorldExit | null {
     const highs: number[] = [];
     for (const name of readdirSync(dir)) {
       if (!name.endsWith(".json")) continue;
-      const shard = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { facts?: Array<{ metric?: string; value?: unknown }> };
+      const shard = JSON.parse(readFileSync(resolve(dir, name), "utf8")) as { facts?: Array<{ metric?: string; value?: unknown; tag?: string }> };
       if (!Array.isArray(shard?.facts)) continue;
       let lo: number | null = null;
       let hi: number | null = null;
       for (const f of shard.facts) {
+        /* THIS READ GOES AROUND THE STORE (one scan of every shard, which the
+           store would hold for every query after it), so it keeps the store's
+           law itself: a placeholder is not a sale time and never enters the
+           world's band. The chain's `placeholder-never-printed` gate lists
+           this file and reds it if the filter goes. */
+        if (f?.tag === "placeholder") continue;
         if (f?.metric === COUNTRY_EXIT_METRICS.monthsLow && typeof f.value === "number") lo = f.value;
         if (f?.metric === COUNTRY_EXIT_METRICS.monthsHigh && typeof f.value === "number") hi = f.value;
       }

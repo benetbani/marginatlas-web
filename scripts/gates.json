@@ -1314,6 +1314,22 @@
       "claims": []
     },
     {
+      "name": "placeholder-never-printed",
+      "script": "scripts/verify_placeholder_never_printed.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A PLACEHOLDER IS NOT A FIGURE, AND NOTHING READS ONE UNASKED (2026-09-23 night, QUEUE sys:placeholder-never-printed).",
+      "reads": [
+        "data/facts/${folder}/${name}",
+        "scripts/verify_placeholder_never_printed.ts (the plant)",
+        "src/lib/facts/",
+        "src/lib/facts/store.ts",
+        "src/lib/spine/country_exit_rows.ts",
+        "src/lib/spine/fact_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "search-params-suspense",
       "script": "scripts/verify_search_params_suspense.mjs",
       "args": [],

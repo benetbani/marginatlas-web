@@ -16,8 +16,22 @@
  * store on demand, and src/lib/spine/fact_rows.ts asks it, through factValue,
  * for the living costs, the rent-to-pay ratio and the spend per resident the
  * city page draws. Nothing else reads it yet.
+ *
+ * A PLACEHOLDER NEVER LEAVES THIS MODULE UNASKED (2026-09-23 night). The bank
+ * tags a slot waiting on research `placeholder`; it is not a figure and the
+ * site never prints one. Two new builders read one each as "modelled" in a
+ * single evening, because each mapped every tag that is not `held` to
+ * "modeled" and nothing here stopped them: London's twelve-month calendar,
+ * printed on the exemplar and on production, and North Korea's household
+ * budget, built but never served because /kp is a 404 (North Korea is not in
+ * the site's country list), which was luck, not law. So the refusal lives at
+ * the one seam every builder reads through: `queryFacts` drops a placeholder
+ * unless the query asks with `placeholders: "include"`, and `factValue` and
+ * every shard accessor inherit it. A caller asks only to withhold a figure
+ * with the line that says what it is; `scripts/verify_placeholder_never_printed.ts`
+ * holds every ask to a named list and proves the refusal on the real bank.
  */
-import type { Fact, FactQuery } from "./types";
+import type { Fact, FactQuery, PlaceholderOption } from "./types";
 
 let FACTS: Fact[] = [];
 
@@ -32,12 +46,16 @@ export function allFacts(): readonly Fact[] {
 }
 
 /**
- * Answer a query. Every field narrows; an omitted field means "any".
+ * Answer a query. Every field narrows; an omitted field means "any", except
+ * a placeholder, which is dropped unless the query carries
+ * `placeholders: "include"` (the header says why).
  * A metric ending in "." is a PREFIX and takes the whole domain under it.
  * Always returns an array: no caller ever has to null-check.
  */
 export function queryFacts(q: FactQuery): Fact[] {
+  const withPlaceholders = q.placeholders === "include";
   return FACTS.filter((f) => {
+    if (!withPlaceholders && f.tag === "placeholder") return false;
     if (q.entityType && f.entityType !== q.entityType) return false;
     if (q.entityId && f.entityId !== q.entityId) return false;
     if (q.rowKey !== undefined && f.rowKey !== q.rowKey) return false;
@@ -53,8 +71,8 @@ export function queryFacts(q: FactQuery): Fact[] {
   });
 }
 
-/** The single value for a scalar metric on one entity, or null. */
-export function factValue(entityId: string, metric: string): Fact | null {
-  const hits = queryFacts({ entityId, metrics: [metric], rowKey: "" });
+/** The single value for a scalar metric on one entity, or null; a placeholder only when asked (queryFacts' law). */
+export function factValue(entityId: string, metric: string, opts: PlaceholderOption = {}): Fact | null {
+  const hits = queryFacts({ entityId, metrics: [metric], rowKey: "", ...opts });
   return hits.length > 0 ? hits[0] : null;
 }

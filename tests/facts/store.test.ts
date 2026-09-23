@@ -31,6 +31,19 @@ check("no match is an empty array, never null", Array.isArray(queryFacts({ entit
 check("factValue finds a scalar", factValue("GB", "tax.total_pct")?.value === 30.5);
 check("factValue returns null when absent", factValue("GB", "nope.at.all") === null);
 
+/* A PLACEHOLDER NEVER LEAVES THE STORE UNASKED (2026-09-23 night; store.ts's
+   header). One placeholder beside the set: every read drops it by default,
+   the ask returns it, and nothing else in the set moves. */
+const PLACEHOLDER: Fact = { entityType: "city", entityId: "GB-london", rowKey: "", metric: "demand.spend_per_capita_usd", value: 22000, unit: "usd", tag: "placeholder", c: 0.1, period: "2026", methodId: "placeholder" };
+loadFacts([...SAMPLE, PLACEHOLDER]);
+check("a placeholder is dropped by default", queryFacts({ entityId: "GB-london" }).length === 0);
+check("a placeholder is dropped from an empty query", queryFacts({}).length === 3);
+check("a placeholder comes back when asked", queryFacts({ entityId: "GB-london", placeholders: "include" }).length === 1);
+check("the ask takes the whole set with it", queryFacts({ placeholders: "include" }).length === 4);
+check("factValue refuses a placeholder by default", factValue("GB-london", "demand.spend_per_capita_usd") === null);
+check("factValue returns a placeholder when asked", factValue("GB-london", "demand.spend_per_capita_usd", { placeholders: "include" })?.tag === "placeholder");
+check("a held figure beside it is untouched", factValue("GB", "tax.total_pct")?.value === 30.5);
+
 if (failed > 0) {
   console.error(`facts/store: ${failed} failures`);
   process.exit(1);

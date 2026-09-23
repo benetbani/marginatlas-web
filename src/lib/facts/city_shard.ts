@@ -32,7 +32,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { shardToFacts, type Shard } from "./shard";
 import { allFacts, factValue, loadFacts } from "./store";
-import type { FactTag } from "./types";
+import type { FactTag, PlaceholderOption } from "./types";
 
 /** The entity id a city shard is filed under: the country code and the slug. */
 export const cityEntityId = (iso2: string, slug: string) => `${iso2.toUpperCase()}-${slug}`;
@@ -75,10 +75,13 @@ export type BankFigure = { value: number; tag: FactTag };
  * and Richmond both hold 0, tagged held, and both cities run fare-free
  * transit), and a guard here that read zero as "not held" dropped two whole
  * cities from the living card over the one figure that was true.
+ * A PLACEHOLDER COMES BACK ONLY WHEN ASKED (store.ts's law, 2026-09-23
+ * night): `opts` passes the ask through to the store, and the chain holds
+ * every caller that makes it to a named list.
  */
-export function cityFigure(iso2: string, slug: string, metric: string): BankFigure | null {
+export function cityFigure(iso2: string, slug: string, metric: string, opts: PlaceholderOption = {}): BankFigure | null {
   if (!loadCityShard(iso2, slug)) return null;
-  const f = factValue(cityEntityId(iso2, slug), metric);
+  const f = factValue(cityEntityId(iso2, slug), metric, opts);
   if (!f || typeof f.value !== "number" || !Number.isFinite(f.value) || f.value < 0) return null;
   return { value: f.value, tag: f.tag };
 }
