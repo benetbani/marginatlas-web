@@ -17,8 +17,10 @@
  * (`data/facts/country/<ISO2>.json`). All 198 shards hold all seven categories,
  * one set of names across the whole bank (housing_utilities, transport,
  * food_drink, recreation, dining_out, household_goods, other), and their
- * percentages sum to 99.9, 100 or 100.2 depending on the shard. Every figure
- * carries the tag `modeled` on 195 of the 198, so the card wears the sample
+ * percentages sum to 99.9, 100 or 100.2 depending on the shard. The tags,
+ * counted 2026-09-23 night: `modeled` on 194, `held` on 3 (Albania, Bulgaria,
+ * Lithuania), `placeholder` on 1 (North Korea, withheld below; the header's
+ * first count of "modeled on 195" folded it in). So the card wears the sample
  * mark and its basis line says modelled in its first word (the mark itself is
  * behind his switch and prints nothing in production, so the word carries it).
  *
@@ -39,11 +41,16 @@
  * countries harder than anything else on the card: 68 in Singapore, 65 in
  * Ireland, 39 in the United Kingdom, 2 in Afghanistan.
  *
- * WITHHOLDING, and one country falls to it: all seven categories, every one of
+ * WITHHOLDING, and two countries fall to it: all seven categories, every one of
  * them named in the copy, a sum within a point of a hundred, and a figure above
  * zero for both halves of the food question. Sri Lanka's shard holds 0 for
  * eating out, which is a gap wearing a number rather than a country where
- * nobody eats out, so it draws no card at all. 197 of 198 draw.
+ * nobody eats out, so it draws no card at all. AND A PLACEHOLDER IS NOT A
+ * FIGURE (the bank's word for a slot waiting on research; the city crew
+ * builder's rule): North Korea's seven are tagged placeholder, and until
+ * 2026-09-23 night this builder read them as modelled and its country page
+ * printed them. 196 of 198 draw; where the card is withheld the exit card
+ * beside it stands at the survivor's two thirds, the country page's own idiom.
  *
  * THE DISPLAYED SHARES ARE RECONCILED TO SUM TO EXACTLY 100, by the same
  * largest-remainder rounding IncomeBreakdown uses and for the same reason:
@@ -107,6 +114,7 @@ export function buildCountrySpend(iso2: string): CountrySpendData | null {
     const row = byKey.get(key) ?? { key };
     if (field === "category" && typeof f.value === "string") row.category = f.value.trim();
     if (field === "pct" && typeof f.value === "number" && Number.isFinite(f.value) && f.value >= 0) row.pct = f.value;
+    if (f.tag === "placeholder") return null;
     if (f.tag && f.tag !== "held") row.tag = "modeled";
     byKey.set(key, row);
   }
