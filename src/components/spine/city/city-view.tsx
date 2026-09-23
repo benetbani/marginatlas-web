@@ -738,14 +738,14 @@ function Neighbourhoods({ hoods }: { hoods: CityNeighbourhoodsData | null }) {
 /**
  * WHEN THIS CITY SPENDS, `19 calendar` (2026-09-23, brief NEW-SECTIONS row Y1;
  * the builder's header names the field and its coverage). Twelve columns from
- * the city's own demand calendar, held by 252 of 252 cities and drawn by
- * nothing until now, with the swing as the card's one focal.
+ * the city's own demand calendar, modelled on 251 cities and drawn by nothing
+ * until now, with the swing as the card's one focal; withheld on London,
+ * whose twelve are the bank's one placeholder calendar (2026-09-23 night).
  *
- * FULL WIDTH AND OUTSIDE A BAND, the peers card's precedent: twelve columns
- * are the one shape that gains from width (each column widens, none wraps),
- * and there is no second card on this page whose subject belongs beside a
- * calendar. A lone card inside a band would be a level with air beside it
- * (clauses 52 and 53); a card outside one is not a level at all.
+ * SEATED AT 2-1 BESIDE THE EARNINGS STRIP since the afternoon of 2026-09-23.
+ * The morning's seat, full width and outside a band, was his banned full
+ * width (2026-08-25), counted by `verify_full_width_sitewide`; the level's
+ * comment in the view carries the measurement.
  */
 export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCalendarData | null; id?: string }) {
   if (!calendar) return null;
@@ -878,6 +878,15 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
      before this; each builder's header names its fields and what withholds it. */
   const crew = slug ? buildCityCrew(slug) : null;
   const texture = slug ? buildCityTexture(slug) : null;
+  /* WHERE THE CALENDAR AND THE SPEND CARD ARE BOTH WITHHELD, the earnings strip
+     is the living level's third card, the composition London stood on before
+     the calendar arrived (measured green on 2026-09-20 evening). London is that
+     city: its calendar is the one placeholder of 252 and its spend the set's
+     one placeholder (DATA-REQUIREMENTS 23), and without this the strip would
+     stand alone at two thirds in chapter two, a level with air beside it
+     (clause 52). Found 2026-09-23 night, when the calendar stopped printing a
+     placeholder. */
+  const earningsOnLiving = !calendar && !demandDrawn && !!living && !!runway && !!earnings;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
@@ -963,17 +972,25 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           placeholder", is a bland section in front of him, and the seated
           reading of 2026-09-08 he overruled on 2026-09-19 covers a withheld
           line as it covers a "not gathered" one). Where `08 demand` holds no
-          figure (London alone today, item 23) the card does not draw, and `07
-          earnings` stands third on this level, `05 | 06 | 07` at the kit's
-          three thirds: the living cells, the ring, the strip; two visuals
-          (clause 53). Where the spend is a figure (251 cities) the two bands
-          below stand as before. Measured on the fresh render, the numbers in
-          the commit. */}
+          figure (London alone today, item 23) the card does not draw. THE
+          THIRD SEAT, since 2026-09-23: on the 251 cities whose spend is a
+          figure it is the spend card (the calendar level below takes the
+          strip); where the spend AND the calendar are withheld (London alone,
+          both the bank's one placeholder of 252) it is `07 earnings`, `05 | 06
+          | 07` at the kit's three thirds: the living cells, the ring, the
+          strip; two visuals (clause 53). Measured on the fresh render, the
+          numbers in the commit. */}
       {living && runway && demandDrawn ? (
         <Band split="1-1-1">
           <Living living={living} />
           <Runway runway={runway} />
           <Demand demand={demand} />
+        </Band>
+      ) : earningsOnLiving ? (
+        <Band split="1-1-1">
+          <Living living={living} />
+          <Runway runway={runway} />
+          <Earnings strip={earnings} />
         </Band>
       ) : living || runway ? (
         <Band split="1-1">
@@ -1026,8 +1043,12 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           chapter two on the 251 cities that hold a spend figure; it joins the
           living level as its third, where it is among the other money-of-the-
           city cards, and chapter two now opens on the districts and the trades,
-          which is what "where to open it" means. On London, where the spend is
-          withheld (item 23), the living level stays the pair it was. */}
+          which is what "where to open it" means. ON LONDON THIS LEVEL DOES NOT
+          DRAW (2026-09-23 night): the calendar's twelve months are the one
+          placeholder of 252 and the builder withholds them, and the spend is
+          withheld too (item 23), so the strip takes the living level's third
+          seat, the composition London stood on before the calendar came
+          (`earningsOnLiving` above). */}
       {calendar && earnings ? (
         <Band split="2-1" stack="lg">
           <SpendCalendar calendar={calendar} />
@@ -1069,7 +1090,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           calendar. Nothing is dropped; the two cards moved up one chapter, and
           this band draws only on a city with no calendar to seat the strip,
           which no city is today. */}
-      {!calendar && earnings ? (
+      {!calendar && earnings && !earningsOnLiving ? (
         /* The spend card is already on the living level where it draws, so the
            strip stands alone at two thirds here rather than beside a second
            copy of it. */
