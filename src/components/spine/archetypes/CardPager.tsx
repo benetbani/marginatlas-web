@@ -49,7 +49,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
   const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
   const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
-  const btn = "flex h-8 w-8 items-center justify-center rounded-[14px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
+  const btn = "flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
     <div data-archetype="card-pager" data-images={images}>
       {pages > 1 ? (
@@ -66,7 +66,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
              at 375: a two-up card is 151px wide, and a 48px image beside a name
              left 39px for "London". So below md the image runs the card's width
              above the name; from md it sits on the left as the founder chose. */
-          <a key={c.id} href={c.href} data-card={c.id} data-lands={c.lands} className="group flex h-full flex-col gap-2 rounded-[14px] border border-[var(--c-border)] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] md:flex-row md:items-center md:gap-2.5">
+          <a key={c.id} href={c.href} data-card={c.id} data-lands={c.lands} className="group flex h-full flex-col gap-2 rounded-[12px] border border-[var(--c-border)] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] md:flex-row md:items-center md:gap-2.5">
             {images !== "none" && c.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={c.image} alt="" width={48} height={48} loading="lazy" className="h-16 w-full shrink-0 rounded-lg object-cover md:h-12 md:w-12" />

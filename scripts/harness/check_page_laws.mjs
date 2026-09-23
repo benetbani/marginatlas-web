@@ -97,7 +97,7 @@ if (files.length === 0) { console.error("usage: node scripts/harness/check_page_
 function inPage(width) {
   const VISUAL = new Set(["ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board", "donut", "ring", "month-line", "share-bar", "bento-count"]);
   const VARIANT_KEYS = ["data-variant", "data-form", "data-marks", "data-columns", "data-look", "data-feature", "data-dot", "data-shape", "data-orientation"];
-  const CARD = 'main [class*="rounded-[14px]"]';
+  const CARD = 'main [data-card]';
   const main = document.querySelector("main");
   const mainRect = main ? main.getBoundingClientRect() : document.body.getBoundingClientRect();
   const ms = main ? getComputedStyle(main) : null;
@@ -147,7 +147,7 @@ function inPage(width) {
   }
 
   /* THE CARDS, at every width. */
-  const heroCard = document.querySelector("main [data-hero] " + CARD.replace("main ", "")) || document.querySelector("main [data-hero]")?.querySelector('[class*="rounded-[14px]"]');
+  const heroCard = document.querySelector("main [data-hero] " + CARD.replace("main ", "")) || document.querySelector("main [data-hero]")?.querySelector('[data-card]');
   for (const card of cards) {
     const id = idOf(card);
     const cb = card.getBoundingClientRect(); const cs = getComputedStyle(card);

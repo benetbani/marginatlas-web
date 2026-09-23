@@ -72,7 +72,7 @@ const DASH = <span className="text-[length:var(--t-body)] text-[var(--c-muted)]"
 function Dots({ n }: { n: number }) {
   return (
     <span aria-label={`paperwork ${n} of 5`} role="img" className="flex items-center justify-end gap-1">
-      {[1, 2, 3, 4, 5].map((i) => <span key={i} aria-hidden className="h-1.5 w-1.5 rounded-full" style={{ background: i <= n ? "var(--terra)" : "var(--c-soft2)" }} />)}
+      {[1, 2, 3, 4, 5].map((i) => <span key={i} aria-hidden className="h-2 w-2 rounded-full" style={{ background: i <= n ? "var(--terra)" : "var(--c-soft2)" }} />)}
     </span>
   );
 }

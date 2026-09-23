@@ -340,7 +340,7 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
           const labelled = onBar && (share(s) >= 12 || (isKept(s) && share(s) >= 4));
           return (
             <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-              <span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
+              <span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />
               {s.label}
               {labelled ? null : <> <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></>}
             </span>
@@ -390,7 +390,7 @@ export function ShareStack({ segments }: { segments: ShareSeg[] }) {
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
           {colored.map((s) => (
             <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-              <span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
+              <span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />
               {s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig>
             </span>
           ))}
@@ -439,7 +439,7 @@ export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: n
   return (
     <div data-idea="I1">
       <div className="relative h-2 rounded-full" role="img" aria-label={aria} style={{ background: TRACK }}>
-        <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
+        <div className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
       </div>
       {/* THE THREE FIGURES WRAP RATHER THAN COLLIDE. Pushed to the two ends with
           the typical in the middle, they had nothing stopping them meeting on a
@@ -715,7 +715,14 @@ export function Box({ children, className = "", elevation = "card", density = "d
     <div
       {...rest}
       data-block={block}
-      className={`rounded-[14px] border border-[var(--c-line-strong)] ${DENSITY_PAD[density]} ${className}`}
+      /* THE CARD'S OWN HOOK (2026-09-23). Five checkers used to find a card by
+         `[class*="rounded-[14px]"]`, its corner radius, so the moment
+         DISTANCES.md moved the corner to 12 every one of them reported "no
+         section card found under main" on all eight pages: a checker keyed to
+         a styling value cannot see the thing it checks the day the styling
+         changes. The hook is what they read now, and it is not a style. */
+      data-card=""
+      className={`rounded-[12px] border border-[var(--c-line-strong)] ${DENSITY_PAD[density]} ${className}`}
       style={{
         ...CARD_SURFACE,
       }}
@@ -777,7 +784,7 @@ export function Meter({ value, left, right }: { value: number; left: string; rig
     <div data-idea="I1">
       <div className="relative h-2 rounded-full" role="img" aria-label={`${value} out of 100`} style={{ background: "#e6e6e6" }}>
         <div className="h-full rounded-full" style={{ width: `${value}%`, background: TERRA }} />
-        <div className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${value}%`, background: "#1a1a1a" }} />
+        <div className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${value}%`, background: "#1a1a1a" }} />
       </div>
       <div className="mt-1 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>{left}</span><span>{right}</span></div>
     </div>
@@ -1490,7 +1497,7 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
               {segs.map((s) => <div key={s.label} className="h-full border-r border-white/70 last:border-0" style={{ width: `${pct(s.to - s.from)}%`, background: s.color }} />)}
             </div>
           </div>
-          <span aria-hidden className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
+          <span aria-hidden className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
         </div>
         {/* BOTH ENDS OF A RULER ARE WRITTEN ALIKE. This one read "0" at the left and
             "WEEK 52" at the right, one bare and one carrying its unit, so a reader
@@ -1498,7 +1505,7 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
         <div className="mt-2 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
       </div>
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2">
-        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
+        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
       </div>
     </div>
   );

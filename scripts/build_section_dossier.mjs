@@ -11,7 +11,7 @@
  * record is scored against.
  *
  * THE LEGACY THREE HAVE NO SPINE MARKUP. The four rebuilt pages carry cards
- * (`main [class*="rounded-[14px]"]`, the harness's own definition, in
+ * (`main [data-card]`, the harness's own definition, in
  * scripts/harness/check_page_holes.mjs; carried as a `backdrop-filter` before
  * the glass was removed 2026-09-08, see the note beside the card query below)
  * as their section unit, and subsections fall out of a card's direct
@@ -319,10 +319,10 @@ function harvest() {
      names, and this branch was finding zero cards on every non-legacy page
      while reporting success. Repointed at the harness's own single
      definition of a card (scripts/harness/check_page_holes.mjs): a
-     `main [class*="rounded-[14px]"]` element with client rects, not nested
+     `main [data-card]` element with client rects, not nested
      inside another one. */
-  const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
-    (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+  const cards = [...document.querySelectorAll('main [data-card]')].filter(
+    (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
   );
   const outer = cards;
 

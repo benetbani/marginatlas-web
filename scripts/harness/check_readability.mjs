@@ -83,7 +83,7 @@
  *   and would stop holding the day an image returns.
  *
  *   THE SCOPE. MEASURE, LEADING and READ SIZE only ever look inside a card
- *   (`main [class*="rounded-[14px]"]`). A caption under a figure, a
+ *   (`main [data-card]`). A caption under a figure, a
  *   wayfinding label, a section eyebrow, anything outside a card, is
  *   invisible to those three rules no matter how it renders: too tight a
  *   wrap, too small a size, too long a line. Only CONTRAST was widened,
@@ -237,8 +237,8 @@ function inPage() {
   };
 
   const out = [];
-  const CARD = 'main [class*="rounded-[14px]"]';
-  const cards = [...document.querySelectorAll(CARD)].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));
+  const CARD = 'main [data-card]';
+  const cards = [...document.querySelectorAll(CARD)].filter((c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'));
   for (const card of cards) {
     const id = card.id || card.querySelector("[id]")?.id || "card";
     for (const el of card.querySelectorAll("*")) {

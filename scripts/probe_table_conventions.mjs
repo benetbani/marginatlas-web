@@ -55,7 +55,7 @@ function collect() {
        Repointed at the harness's own single definition of a card
        (scripts/harness/check_page_holes.mjs): the nearest ancestor carrying
        `class*="rounded-[14px]"`. */
-    const card = t.parentElement ? t.parentElement.closest('[class*="rounded-[14px]"]') : null;
+    const card = t.parentElement ? t.parentElement.closest('[data-card]') : null;
     const cardW = card ? card.getBoundingClientRect().width : 0;
 
     const rail = card ? card.querySelector("h2, h3, [class*=rail]") : null;

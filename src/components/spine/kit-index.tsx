@@ -534,7 +534,7 @@ export function CompareTray({ items, onRemove, onClear, onCompare, max = 3 }: { 
   const overflow = items.length - shown.length;
   return (
     <div className="fixed inset-x-0 bottom-0 z-20 px-4 pb-3">
-      <div className="mx-auto flex max-w-[1120px] flex-wrap items-center gap-2 rounded-[14px] border border-[var(--c-border)] bg-[var(--c-card)] px-3 py-2" style={{ boxShadow: "0 -2px 8px -4px rgba(43,28,22,0.10), 0 8px 24px -12px rgba(43,28,22,0.18)" }}>
+      <div className="mx-auto flex max-w-[1120px] flex-wrap items-center gap-2 rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] px-3 py-2" style={{ boxShadow: "0 -2px 8px -4px rgba(43,28,22,0.10), 0 8px 24px -12px rgba(43,28,22,0.18)" }}>
         <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Compare</span>
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           {shown.map((it) => (
@@ -565,7 +565,7 @@ export function WinnerCard({ kicker, winner, keptPct, keptLabel = "owner keeps",
   kicker: string; winner: string; keptPct: number; keptLabel?: string; why: string; catch?: string; strip: [WinnerStrip, WinnerStrip, WinnerStrip]; icon?: AtlasIconId;
 }) {
   return (
-    <div className="overflow-hidden rounded-[14px] border border-[var(--terra-border)] bg-[var(--c-card)]">
+    <div className="overflow-hidden rounded-[12px] border border-[var(--terra-border)] bg-[var(--c-card)]">
       <div className="p-5 md:p-6">
         <div className="mb-2 flex items-center gap-2"><Ico id={icon} tone="terra" /><span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--terra-text)]">{kicker}</span></div>
         <div className="grid gap-5 md:grid-cols-[1.5fr_1fr] md:items-end">

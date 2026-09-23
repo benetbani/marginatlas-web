@@ -40,7 +40,7 @@ export const MONTH_LINE_POINTS = 12;
 
 export type MonthPoint = { month: number; value: number };
 
-const W = 240, H = 84, PAD_X = 6, PAD_TOP = 22, PAD_BOTTOM = 14;
+const W = 240, H = 96, PAD_X = 6, PAD_TOP = 22, PAD_BOTTOM = 14;
 
 export function MonthLine({ points, unit = "" }: { points: MonthPoint[]; unit?: string }) {
   const live = points.filter((p) => p && Number.isFinite(p.value) && Number.isInteger(p.month) && p.month >= 0 && p.month < MONTH_LINE_POINTS).sort((a, b) => a.month - b.month);
@@ -82,7 +82,7 @@ export function MonthLine({ points, unit = "" }: { points: MonthPoint[]; unit?: 
           point's share of the width and the height, so they keep their shape
           while the line stretches to its cell (the SVG's aspect is free), and
           the pill's figure is a text leaf the checkers read. */}
-      <div className="relative -mt-[84px] h-[84px] w-full" aria-hidden="true">
+      <div className="relative -mt-[96px] h-[96px] w-full" aria-hidden="true">
         <span data-trough-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-[var(--terra)] bg-[var(--c-card)]" style={{ left: `${Math.min(98, Math.max(2, (x(trough) / W) * 100)).toFixed(2)}%`, top: `${((y(min) / H) * 100).toFixed(2)}%` }} />
         <span data-peak-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--terra)]" style={{ left: `${Math.min(98, Math.max(2, (x(peak) / W) * 100)).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%` }} />
         <span data-peak-pill className={`absolute ${pillShift} -translate-y-full whitespace-nowrap rounded-md border border-[var(--terra-border)] bg-[var(--terra-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]`} style={{ left: `${Math.min(98, Math.max(2, peakPct)).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%`, marginTop: -7 }}>{peakLabel}</span>

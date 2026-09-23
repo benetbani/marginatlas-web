@@ -34,7 +34,7 @@
  */
 export function accentWalk({ ids = [] } = {}) {
   const CLUSTER = "[data-archetype='bento-band'][id]";
-  const CARD = '[class*="rounded-[14px]"]';
+  const CARD = '[data-card]';
   const probe = (token) => { const d = document.createElement("div"); d.style.color = "var(" + token + ")"; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; };
   const accentRgb = probe("--terra-text");
   const accentReadable = accentRgb !== probe("--no-such-token-xyz");

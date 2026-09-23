@@ -217,7 +217,7 @@ export function CityCardsStories({ instances = pickCityCardsInstances() }: { ins
         const [iso2, look] = i.iso2.split(":") as [string, CityCardsLook];
         const c = buildCityCards(iso2);
         const el = c ? (
-          <div className="rounded-[14px] border border-[var(--c-line-strong)] p-5" style={{ maxWidth: 693, ...CARD_SURFACE }}>
+          <div className="rounded-[12px] border border-[var(--c-line-strong)] p-5" style={{ maxWidth: 693, ...CARD_SURFACE }}>
             <Rail icon="best-areas" kicker={COPY.cities.kicker} />
             <CityCards cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} basis={COPY.cityCards.plain.basis} basisDrawn={COPY.cityCards[look].basis} look={look} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
           </div>
@@ -482,7 +482,7 @@ export function CardPagerStories({ instances = pickCardPagerInstances() }: { ins
           /* The neighbourhoods pager as city-view.tsx draws it, at the wide side of its 2-1 band (693 at 1280): the kicker, the pager with no image, the coverage foot. */
           const h = buildCityNeighbourhoods(parts[1]);
           const el = h?.cards ? (
-            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
+            <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
               <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.cityNeighbourhoods.kicker}, {h.name}</div>
               <CardPager cards={h.cards} allHref={h.allHref} allLabel={COPY.cityNeighbourhoods.allLabel} prevLabel={COPY.cityNeighbourhoods.prev} nextLabel={COPY.cityNeighbourhoods.next} images="none" />
               {h.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{h.foot}</p> : null}
@@ -492,7 +492,7 @@ export function CardPagerStories({ instances = pickCardPagerInstances() }: { ins
         }
         const c = buildCityCards(i.iso2);
         const el = c ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 693 }}>
             <CardPager cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
           </div>
         ) : null;
@@ -516,7 +516,7 @@ export function TiersTableStories({ instances = pickTiersTableInstances(), cell 
       {instances.filter((i) => !i.iso2.startsWith("cell:")).map((i) => {
         const rows = buildSetupRows(i.iso2);
         const el = rows.length ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 624 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 624 }}>
             <TiersTable rows={rows} howTo={howToOpenDoor(i.iso2)} />
           </div>
         ) : null;
@@ -599,7 +599,7 @@ export function RangeStripStories({ instances = pickRangeStripInstances(), city 
         const [iso2, kind] = i.iso2.split(":");
         const d = kind === "premises" ? buildPremisesStrip(iso2) : buildCustomersStrip(iso2);
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: kind === "premises" ? 347 : 536 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: kind === "premises" ? 347 : 536 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kind === "premises" ? COPY.premises.kicker : COPY.customers.kicker}, {nameOf(iso2)}</div>
             <RangeStrip marks={d.marks} scale={kind === "premises" ? "log" : "linear"} fmt={usd} basis={kind === "premises" ? COPY.premises.basis : COPY.customers.basis} note={d.note} extra={d.extra} />
           </div>
@@ -667,7 +667,7 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances() }:
           /* The city's people table as city-view.tsx draws it: the rows, the basis under them, the foot. */
           const c = buildCityPeopleTable(parts[1]);
           const el = c ? (
-            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+            <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
               <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.character.people.kicker}, {c.name}</div>
               <SpectraTable rows={c.rows} dot={c.dot} foot={c.foot} basis={c.basis} />
             </div>
@@ -678,7 +678,7 @@ export function SpectraTableStories({ instances = pickSpectraTableInstances() }:
         const t = buildCharacterTables(iso2);
         const d = side === "people" ? t.people : t.state;
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{side === "people" ? COPY.character.people.kicker : COPY.character.state.kicker}, {nameOf(iso2)}</div>
             <SpectraTable rows={d.rows} dot={d.dot} foot={d.foot} />
           </div>
@@ -807,7 +807,7 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
              kicker, the rows on NoteList's law with no exemption, the basis. */
           const c = buildChecks(iso2);
           const el = (
-            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+            <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
               <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.checks.kicker}, {nameOf(iso2)}</div>
               <NoteList notes={c.rows} editorial={false} />
               <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{c.basis}</p>
@@ -817,7 +817,7 @@ export function NoteListStories({ instances = pickNoteListInstances() }: { insta
         }
         const d = buildLocalsNotes(iso2);
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: wide ? 693 : 305 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: wide ? 693 : 305 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.locals.kicker}, {nameOf(iso2)}</div>
             <NoteList notes={d.notes} columns={wide ? 2 : 1} />
           </div>
@@ -908,7 +908,7 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
         if (form === "compare") {
           const doors = buildCompareDoor(nameOf(iso2));
           const el = doors.length ? (
-            <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+            <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
               <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.compare.kicker}, {nameOf(iso2)}</div>
               <Terminus doors={doors} />
             </div>
@@ -917,7 +917,7 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
         }
         const doors = buildCloseDoors(iso2);
         const el = doors.length ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
             <Terminus kicker={`${COPY.close.kicker}, ${nameOf(iso2)}`} doors={doors} />
           </div>
         ) : null;
@@ -926,7 +926,7 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
       {city.map((c) => {
         const doors = buildCityCloseDoors(c.seed);
         const el = doors.length ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 1072 }}>
             <Terminus kicker={`${COPY.close.kicker}, ${String(c.seed?.meta?.city ?? c.slug)}`} doors={doors} />
           </div>
         ) : null;
@@ -963,7 +963,7 @@ export function PayBarsStories({ instances = pickPayBarsInstances() }: { instanc
            stood alone; the placement lines and PART 5's row geometry are what
            fill the wider card, so the story is drawn where they are judged. */
         const el = d ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 520 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.pay.kicker}, {nameOf(i.iso2)}</div>
             <PayBars rows={d.rows} worldMax={d.worldMax} withheld={d.withheld} fmt={usd} />
           </div>
@@ -1274,7 +1274,7 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
         }
         const f = buildHeroFacts(iso2);
         const el = f.cells.length ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: form === "wide" ? 1072 : 520 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: form === "wide" ? 1072 : 520 }}>
             <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.howto.cells}, {nameOf(iso2)}</div>
             <KvGrid cells={f.cells} />
           </div>
@@ -1416,7 +1416,7 @@ export function DetailPanelStories({ instances = pickDetailPanelInstances() }: {
         }
         const d = detailPanelRows(i.iso2);
         const el = d && d.rows.length >= 2 ? (
-          <div className="rounded-[14px] border border-[var(--c-border)] p-5" style={{ maxWidth: 416 }}>
+          <div className="rounded-[12px] border border-[var(--c-border)] p-5" style={{ maxWidth: 416 }}>
             <DetailPanel name={`detail-${i.iso2.replace(":", "-")}`} summary={d.summary} rows={d.rows} withheldLine={d.withheldLine} />
           </div>
         ) : null;
@@ -2283,7 +2283,7 @@ export function StoriesIndex({ instances }: { instances: Record<string, Instance
   const kinds = Object.keys(instances);
   const total = kinds.reduce((n, k) => n + instances[k].length, 0);
   return (
-    <nav id="stories-index" data-stories-index aria-label="Every archetype and its instances" className="mb-12 rounded-[14px] border border-[var(--c-border)] p-5">
+    <nav id="stories-index" data-stories-index aria-label="Every archetype and its instances" className="mb-12 rounded-[12px] border border-[var(--c-border)] p-5">
       <div className="mb-3 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kinds.length} archetypes, {total} instances, each picked from the data for a reason</div>
       <div className="overflow-x-auto">
         <table className="w-full text-[length:var(--t-micro)] leading-snug">

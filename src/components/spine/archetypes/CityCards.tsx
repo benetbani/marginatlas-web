@@ -203,7 +203,7 @@ export function CityCards({
   const cur = Math.min(page, pages - 1);
   const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
   const btn =
-    "flex h-8 w-8 items-center justify-center rounded-[14px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
+    "flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
     <div data-archetype="city-cards" data-look={look} data-form={rows ? "rows" : "grid"} data-count={cards.length}>
       {pages > 1 ? (
@@ -275,7 +275,7 @@ function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[14px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
+      className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
     >
       {field ? <Photo card={card} /> : null}
       {look === "column" ? <Mark part={card.payOfTop} /> : null}
@@ -350,7 +350,7 @@ function Row({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative grid h-full items-center gap-3 overflow-hidden rounded-[14px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto] ${field ? "border border-transparent" : "border border-[var(--c-border)]"}`}
+      className={`group relative grid h-full items-center gap-3 overflow-hidden rounded-[12px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto] ${field ? "border border-transparent" : "border border-[var(--c-border)]"}`}
     >
       {field ? <Photo card={card} /> : null}
       {look === "column" ? <Mark part={card.payOfTop} /> : null}

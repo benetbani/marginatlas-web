@@ -93,8 +93,8 @@ function measure() {
      harness's own single definition of a card
      (scripts/harness/check_page_holes.mjs): a `main [class*="rounded-[14px]"]`
      element with client rects, not nested inside another one. */
-  const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
-    (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+  const cards = [...document.querySelectorAll('main [data-card]')].filter(
+    (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
   );
   const outer = cards;
 

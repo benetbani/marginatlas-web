@@ -66,8 +66,8 @@ const collect = () => {
      the harness's own single definition of a card
      (scripts/harness/check_page_holes.mjs): a `main [class*="rounded-[14px]"]`
      element that has client rects and is not nested inside another one. */
-  const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
-    (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+  const cards = [...document.querySelectorAll('main [data-card]')].filter(
+    (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
   );
   const outer = cards;
 
@@ -410,8 +410,8 @@ const collect = () => {
     const bandGap = Math.max(0, ...bandEls.map((e) => px(getComputedStyle(e).marginTop)));
     /* Card definition repointed 2026-09-08, fix wave Finding 2 (see the note
        above `collect`'s own `cards` for the reason). */
-    const cardsAll = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
-      (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+    const cardsAll = [...document.querySelectorAll('main [data-card]')].filter(
+      (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
     );
     const outerCards = cardsAll;
     const maxPad = Math.max(0, ...outerCards.map((e) => px(getComputedStyle(e).paddingTop)));

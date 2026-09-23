@@ -72,8 +72,8 @@ const run = async () => {
     await p.evaluate(() => document.fonts.ready);
     await p.waitForTimeout(300);
     const result = await p.evaluate(() => {
-      const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
-        (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+      const cards = [...document.querySelectorAll('main [data-card]')].filter(
+        (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
       );
       return cards.map((c) => {
         const s = getComputedStyle(c);

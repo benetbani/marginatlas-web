@@ -390,7 +390,7 @@ function inPage(storySelector) {
       r.tierShape = root ? root.getAttribute("data-shape") : null;
       r.tierDashes = [...card.querySelectorAll("[data-col]")].filter((el) => el.getClientRects().length && (el.textContent || "").trim() === "–").length;
       /* The line is the card's, not the table's: the enclosing section card (the Box the table sits in), or the table when it stands alone. */
-      const box = card.closest('[class*="rounded-[14px]"]') || card;
+      const box = card.closest('[data-card]') || card;
       r.tierDashLine = /dash/i.test(box.textContent || "");
     }
     if (r.kind === "spectra-table") {

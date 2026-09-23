@@ -75,7 +75,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }
                 data-track="scale"
                 role="img"
                 aria-label={`${r.name}: ${r.left} to ${r.right}: ${lean ? `leans ${lean}` : "in the middle"}`}
-                className="relative mt-2 block h-[6px] rounded-full bg-[var(--c-soft2)]"
+                className="relative mt-2 block h-2 rounded-full bg-[var(--c-soft2)]"
               >
                 <span aria-hidden className="absolute -bottom-[3px] -top-[3px] left-1/2 w-px bg-[var(--c-border)]" />
                 {/* THE DOT'S CENTRE runs from a radius in at the left to a radius in at the right, so a read of 0 or 1 sits inside the track and nothing is clamped. */}

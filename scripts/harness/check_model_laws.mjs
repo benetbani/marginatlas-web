@@ -400,7 +400,7 @@ function inPage(ctx) {
     }
     return false;
   };
-  const CARD = 'main [class*="rounded-[14px]"]';
+  const CARD = 'main [data-card]';
   const cards = [...document.querySelectorAll(CARD)].filter((c) => c.getClientRects().length && !c.parentElement.closest(CARD));
   /* A card is addressed by its id, else by its block name (plan step 11: a
      Box drawn without an id now names its block, so "demand" or "living"

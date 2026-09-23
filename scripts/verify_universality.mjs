@@ -183,8 +183,8 @@ const run = async () => {
          (scripts/harness/check_page_holes.mjs): a
          `main [class*="rounded-[14px]"]` element with client rects, not
          nested inside another one. */
-      const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
-        (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+      const cards = [...document.querySelectorAll('main [data-card]')].filter(
+        (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
       );
       const outer = cards;
       return {
@@ -246,8 +246,8 @@ const run = async () => {
       {
         /* Card definition repointed 2026-09-08, fix wave Finding 2 (see the
            note above, in this same file, on the 768px pass). */
-        const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter(
-          (c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'),
+        const cards = [...document.querySelectorAll('main [data-card]')].filter(
+          (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
         );
         const outer = cards;
         for (const c of outer) {

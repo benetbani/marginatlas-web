@@ -122,7 +122,7 @@ function inPage() {
      word; the model's sentence is the controller's to amend. */
   const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat"]);
   const out = [];
-  const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));
+  const cards = [...document.querySelectorAll('main [data-card]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'));
   /* A CELL OF A BENTO IS ADDRESSED BY ITS CLUSTER (plan step 32, second
      dispatch, 2026-09-18): the cells carry no id of their own and the cluster
      is the section (MODEL.md 8.3, "the cluster IS the band"), so `--section=
@@ -178,7 +178,7 @@ function inPage() {
   }
   /* ROWS CUT: a chart that declares how many rows it holds must draw them all
      at this width (the district ranking drew five of seven on a phone). */
-  const cut = [...document.querySelectorAll("[data-expect-rows]")].filter((el) => el.getClientRects().length).map((el) => { const expect = Number(el.getAttribute("data-expect-rows")); const drawn = [...el.querySelectorAll("[data-row]")].filter((r) => r.getClientRects().length).length; const card = el.closest('[class*="rounded-[14px]"]'); return { id: card?.id || card?.querySelector("[id]")?.id || "chart", expect, drawn }; }).filter((c) => c.drawn < c.expect);
+  const cut = [...document.querySelectorAll("[data-expect-rows]")].filter((el) => el.getClientRects().length).map((el) => { const expect = Number(el.getAttribute("data-expect-rows")); const drawn = [...el.querySelectorAll("[data-row]")].filter((r) => r.getClientRects().length).length; const card = el.closest('[data-card]'); return { id: card?.id || card?.querySelector("[id]")?.id || "chart", expect, drawn }; }).filter((c) => c.drawn < c.expect);
   /* THE PAGE'S HIERARCHY (the founder's art-direction ruling of 2026-09-07):
      ACCENT BUDGET counts every text element in the accent colour on the page
      (a mark the founder ruled, like the people table's dots, carries

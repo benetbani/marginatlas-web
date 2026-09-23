@@ -386,14 +386,14 @@ export function SpineMap({
   return (
     <div
       /* THE MAP ROOT IS A CARD, per the harness's own definition (an un-nested
-         `rounded-[14px]` box) and this file used to leave it transparent, which
+         `rounded-[12px]` box) and this file used to leave it transparent, which
          verify_frost_reads read as glass's alpha-0 cousin: a card whose own
          background is not opaque. CARD_SURFACE is the one card surface (kit.tsx
          §36), reused rather than redeclared; the border moves from `--c-border`
          to `--c-line-strong` because THE EDGE LAW says a card's OUTER border is
          one step stronger than a hairline, and this box sits directly on the
          page ground rather than inside another card. */
-      className={`spinemap-root relative overflow-hidden rounded-[14px] border border-[var(--c-line-strong)] bg-[var(--c-card)] ${className}`}
+      className={`spinemap-root relative overflow-hidden rounded-[12px] border border-[var(--c-line-strong)] bg-[var(--c-card)] ${className}`}
       style={CARD_SURFACE}
     >
       <style>{SCOPED_CSS}</style>

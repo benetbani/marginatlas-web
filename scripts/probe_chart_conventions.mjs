@@ -46,7 +46,7 @@ function collect() {
      (scripts/harness/check_page_holes.mjs): the nearest ancestor carrying
      `class*="rounded-[14px]"`. */
   function cardOf(el) {
-    return el.parentElement ? el.parentElement.closest('[class*="rounded-[14px]"]') : null;
+    return el.parentElement ? el.parentElement.closest('[data-card]') : null;
   }
   function labelOf(card, el) {
     const rail = card ? card.querySelector("h2, h3, [class*=rail]") : null;
@@ -118,8 +118,8 @@ function collect() {
      same nesting chain, and only the primitive that answers "is this
      element a card" needed to change. */
   for (const card of document.querySelectorAll("div")) {
-    if (!card.matches('[class*="rounded-[14px]"]')) continue;
-    if ([...card.querySelectorAll("div")].some((d) => d.matches('[class*="rounded-[14px]"]'))) continue;
+    if (!card.matches('[data-card]')) continue;
+    if ([...card.querySelectorAll("div")].some((d) => d.matches('[data-card]'))) continue;
     if (card.querySelector("svg")) continue;
     const marks = [];
     for (const e of card.querySelectorAll("span, div")) {

@@ -35,12 +35,12 @@
  * caught spine cards anyway because `Box`'s outer border survived the glass
  * removal. (b) now reads the harness's own single definition of a card
  * (scripts/harness/check_page_holes.mjs): does the element itself carry
- * `class*="rounded-[14px]"`. This is the one intentional exception to "not
+ * `[data-card]`, the card's own hook since 2026-09-23. This is the one intentional exception to "not
  * scoped to class name" in the sentence above, named directly because it is
  * the harness's own card marker, not an invented tenth one.
  *
  * THE SANCTIONED SET. Three shapes, and nothing else:
- *   - 14px, the spine card radius.
+ *   - 12px, the spine card radius (14 before 2026-09-23).
  *   - <= 8px, small controls: inputs, thumbnails, chips, tight corners nobody
  *     reads as "the card radius" at all.
  *   - a fully-round pill, radius >= half the element's own rendered height
@@ -101,7 +101,8 @@ const MISSING = ENTRIES.filter((e) => !e.exists);
 
 /* Runs inside the page. Nothing from this scope is visible to it. */
 function measure() {
-  const SPINE_RADIUS = 14;
+  /* 12 since 2026-09-23: DISTANCES.md section 3.2 fixes the card corner at 12, half the ordinary padding, and the cards moved the same day. It was 14 from the four pages that settled on it in the glass era. */
+  const SPINE_RADIUS = 12;
   const SMALL_MAX = 8;
   /* THE DECLARED md STEP. tailwind.config sets rounded-md to var(--radius) minus
      0.25rem, and globals.css pins --radius at 1rem, so every hover-wash row the
@@ -146,7 +147,7 @@ function measure() {
     if (!isVisible(el)) continue;
     const s = getComputedStyle(el);
     /* Repointed 2026-09-08, fix wave Finding 2: see the header comment. */
-    const isSpineCard = el.matches('[class*="rounded-[14px]"]');
+    const isSpineCard = el.matches('[data-card]');
     if (!hasVisibleBorder(s) && !isSpineCard) continue;
     candidates.push(el);
   }

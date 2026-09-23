@@ -22,7 +22,7 @@ for (const w of widthsArg.split(",").map(Number)) {
   await p.goto(pathToFileURL(resolve(file)).href, { waitUntil: "load" });
   await p.evaluate(() => document.fonts && document.fonts.ready);
   const rows = await p.evaluate(() => {
-    const cards = [...document.querySelectorAll('main [class*="rounded-[14px]"]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[class*="rounded-[14px]"]'));
+    const cards = [...document.querySelectorAll('main [data-card]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'));
     const bands = new Map();
     for (const c of cards) {
       const band = c.parentElement; if (!bands.has(band)) bands.set(band, []);

@@ -238,13 +238,13 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
             {live.map((s, i) => (
               <span key={s.key} data-legend-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
-                <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
+                <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
                 <span data-label className="truncate">{s.label}</span>
                 <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
               </span>
             ))}
             <span data-legend-key={NET_KEY} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
-              <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
+              <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
               <span data-label className="truncate">{netLabel}</span>
               <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>
             </span>
