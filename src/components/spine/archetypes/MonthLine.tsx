@@ -71,7 +71,14 @@ export function MonthLine({ points, unit = "" }: { points: MonthPoint[]; unit?: 
      cannot push a dot off the end without anyone noticing. */
   return (
     <div data-archetype="month-line" data-visual="1" data-points={String(live.length)} data-peak={String(peak)} data-trough={String(trough)} className="w-full">
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} preserveAspectRatio="none" role="img" aria-label={COPY.monthLine.aria.replace("{peak}", months[peak]).replace("{trough}", months[trough])} className="block w-full overflow-visible">
+      {/* THE DRAWING AND ITS MARKS SHARE ONE BOX (2026-09-23). They used to be
+          two siblings with the second pulled back over the first by a negative
+          margin the height of the chart, which is not a distance in any ladder:
+          it is a layout mechanic wearing a margin's clothes, and the distance
+          gate counted it as an offender every run. One relative box, both
+          children absolute, no margin at all. */}
+      <div className="relative w-full" style={{ height: H }}>
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} className="absolute inset-0 block h-full w-full overflow-visible" preserveAspectRatio="none" role="img" aria-label={COPY.monthLine.aria.replace("{peak}", months[peak]).replace("{trough}", months[trough])} >
         {/* the baseline, the drawing's one rule */}
         <line x1={0} x2={W} y1={H - PAD_BOTTOM} y2={H - PAD_BOTTOM} stroke="var(--c-border)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         {/* the dotted guide from the peak to the baseline */}
@@ -82,10 +89,11 @@ export function MonthLine({ points, unit = "" }: { points: MonthPoint[]; unit?: 
           point's share of the width and the height, so they keep their shape
           while the line stretches to its cell (the SVG's aspect is free), and
           the pill's figure is a text leaf the checkers read. */}
-      <div className="relative -mt-[96px] h-[96px] w-full" aria-hidden="true">
+      <div className="absolute inset-0 w-full" aria-hidden="true">
         <span data-trough-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-[var(--terra)] bg-[var(--c-card)]" style={{ left: `${Math.min(98, Math.max(2, (x(trough) / W) * 100)).toFixed(2)}%`, top: `${((y(min) / H) * 100).toFixed(2)}%` }} />
         <span data-peak-point className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--terra)]" style={{ left: `${Math.min(98, Math.max(2, (x(peak) / W) * 100)).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%` }} />
         <span data-peak-pill className={`absolute ${pillShift} -translate-y-full whitespace-nowrap rounded-md border border-[var(--terra-border)] bg-[var(--terra-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]`} style={{ left: `${Math.min(98, Math.max(2, peakPct)).toFixed(2)}%`, top: `${((y(max) / H) * 100).toFixed(2)}%`, marginTop: -7 }}>{peakLabel}</span>
+      </div>
       </div>
       <div className="mt-1 flex justify-between px-[2px] text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
         {months.map((m, i) => <span key={i} data-month={i} className={i === peak ? "font-semibold text-[var(--c-ink2)]" : ""}>{m}</span>)}
