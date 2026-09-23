@@ -44,6 +44,9 @@
  *                         cluster, or on neighbouring levels (his words on
  *                         the market bento, 2026-09-20 night: "two similar
  *                         graphics should have a considerable distance")
+ *   -- ALIGNMENT        centred text that is not a mark's label, a sentence on
+ *                         the right, or a column of figures with more than one
+ *                         right edge (his ruling of 2026-09-23)
  *   -- GLOSS            at most one "?" a card, and never on a figure or on
  *                         the page's answer (his pop-up, 2026-09-22; the law
  *                         of the mechanism, not one of his numbered clauses)
@@ -234,6 +237,47 @@ function inPage(width) {
        a table or a companion row; a card with exactly one figure and none of
        the rest is one number in a box. A card with no figure (a seat, a
        terminus, prose) is not this rule's. */
+    /* ALIGNMENT (2026-09-23, his ruling: "solidify rules about text alignment,
+       as I see that in some cases the alignment is not good, so either left,
+       center or right, and it damages the readability"). The law is
+       DISTANCES.md section 5.7, and three of its rules are mechanical:
+         a. NOTHING IS CENTRED but a mark's own label, and a mark's label says
+            so with `data-mark-label` (a month initial, a bar's name, a ring's
+            caption). Centring a sentence or a figure costs the reader the one
+            edge they were scanning down.
+         b. A SENTENCE IS NEVER RIGHT ALIGNED. Right is for a figure in a
+            column of figures; a run of five words or more on the right has no
+            edge to line up with.
+         c. FIGURES IN ONE COLUMN SHARE ONE RIGHT EDGE. Measured on the country
+            hero board the day this was written: three figures in one column
+            ending at 1094, 1074 and 1098, because every row was its own grid.
+       The blind spot, stated: alignment made with a flex `justify-*` rather
+       than `text-align` is invisible here; that is the model laws' LABEL GAP. */
+    /* WHAT MAY BE CENTRED: a mark's own label or figure (`data-mark-label`, `data-mark`:
+   a month initial, a bar's name, a strip's figure over its tick), the inside of a
+   ring or a donut, and the glyph inside a control (a pager arrow, the gloss's
+   question mark, a pill). Everything else that is centred is a fault. */
+const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [data-archetype='donut'], button, a";
+    for (const card of cards) {
+      for (const el of card.querySelectorAll("*")) {
+        if (el.children.length || !(el.textContent || "").trim() || !el.getClientRects().length) continue;
+        const align = getComputedStyle(el).textAlign;
+        const words = (el.textContent || "").trim().split(/\s+/).length;
+        if (align === "center" && !el.closest(ALIGN_EXEMPT)) red(idOf(card), "ALIGNMENT", `centred text that is not a mark's label: "${(el.textContent || "").trim().slice(0, 32)}"`);
+        if ((align === "right" || align === "end") && words >= 5) red(idOf(card), "ALIGNMENT", `a sentence of ${words} words on the right: "${(el.textContent || "").trim().slice(0, 32)}"`);
+      }
+    }
+    for (const host of new Set([...document.querySelectorAll("main [data-row]")].map((r) => r.parentElement))) {
+      const rs = [...host.children].filter((c) => c.matches("[data-row]"));
+      if (rs.length < 2) continue;
+      const cols = Math.max(...rs.map((r) => r.children.length));
+      for (let i = 0; i < cols; i++) {
+        const cells = rs.map((r) => r.children[i]).filter(Boolean).filter((c) => getComputedStyle(c).textAlign === "right");
+        if (cells.length < 2) continue;
+        const edges = [...new Set(cells.map((c) => Math.round(c.getBoundingClientRect().right)))];
+        if (edges.length > 1) red(idOf(host.closest(CARD) || host), "ALIGNMENT", `a column of figures ending at ${edges.join(", ")}; one column, one right edge`);
+      }
+    }
     /* THE GLOSS, HIS POP-UP (2026-09-22, QUEUE ui:the-gloss). Not one of his
        numbered clauses: a law of the mechanism, written the run the mechanism
        was built, so it cannot spread into decoration. A card carries at most

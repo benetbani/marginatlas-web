@@ -430,7 +430,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                 {/* THE UNDERLINE IS A LINK'S, so a name with no door wears none (the
                     district photograph of run 25 showed seven underlined names and
                     no destination, a promise the card could not keep). */}
-                <div data-label className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
+                <div data-label data-mark-label className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
               </>
             );
             return (

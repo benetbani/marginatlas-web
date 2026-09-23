@@ -88,7 +88,7 @@ export function MonthBars({ points, unit = "" }: { points: MonthPoint[]; unit?: 
       </div>
       <div className="mt-2 flex w-full gap-1 text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
         {months.map((m, i) => (
-          <span key={i} data-month={i} className={`min-w-0 flex-1 text-center ${i === peak ? "font-semibold text-[var(--c-ink2)]" : ""}`}>
+          <span key={i} data-month={i} data-mark-label className={`min-w-0 flex-1 text-center ${i === peak ? "font-semibold text-[var(--c-ink2)]" : ""}`}>
             {m}
           </span>
         ))}

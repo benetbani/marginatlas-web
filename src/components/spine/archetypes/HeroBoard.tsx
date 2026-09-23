@@ -100,9 +100,15 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
             </div>
           )}
           <div className={`flex flex-col ${board.answer ? "md:col-span-2 lg:col-span-1" : ""}`}>
-            <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+            {/* ONE GRID FOR THE WHOLE BOARD, NOT ONE PER ROW (2026-09-23, his
+                ruling on alignment, measured first). Each row used to be its own
+                grid, so every row sized its own columns and the figures ended at
+                1094, 1074 and 1098: three right edges in a column that exists to
+                be read down. The rows are subgrids of this one now, so the four
+                columns are the same four columns on every row. */}
+            <div className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
               {rows.map((r) => (
-                <div key={r.key} data-row={r.key} className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-x-3 py-2">
+                <div key={r.key} data-row={r.key} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
                   <Ico id={r.icon} tone="terra" />
                   <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
                   <span className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">

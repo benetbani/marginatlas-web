@@ -40,7 +40,7 @@ export function Ring({ value, figure, caption, accent = false }: { value: number
           <span className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</span>
         </div>
       </div>
-      {caption ? <div className="mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{caption}</div> : null}
+      {caption ? <div data-mark-label className="mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{caption}</div> : null}
     </div>
   );
 }
