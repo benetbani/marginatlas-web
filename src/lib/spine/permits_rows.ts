@@ -63,6 +63,10 @@ export type PermitsData = {
   foot: string;
   /** The licences the shard holds, printed and withheld together. */
   count: number;
+  /** Of `count`, withheld because their wait is on file as zero days. */
+  zeroDay: number;
+  /** Of `count`, withheld because they are named for a US jurisdiction (off a US page only). */
+  usNamed: number;
   confidence: "modeled";
 };
 
@@ -81,6 +85,9 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
  * permit" names both and prints anywhere. The UK's own licences are research
  * (DATA-REQUIREMENTS item 92), never a renamed US one.
  */
+/** THE WORLD PAGE IS NOT A US PAGE (the goal's A9b): the industry page's licences read at this token, "typical for the trade anywhere". */
+export const WORLD = "world";
+
 export function isUsJurisdictionLicence(name: string): boolean {
   if (/\bfederal\b/i.test(name)) return true;
   return /\bstate\b/i.test(name) && !/\b(?:state or national|national or state)\b/i.test(name);
@@ -121,6 +128,8 @@ export function buildPermits(industryId: string, iso2?: string | null): PermitsD
     basis: COPY.tradePermits.basis,
     foot: COPY.tradePermits.foot,
     count: rows.length + zero + foreign,
+    zeroDay: zero,
+    usNamed: foreign,
     confidence: "modeled",
   };
 }

@@ -1971,6 +1971,9 @@ export const COPY = {
       summary: "The licences, by name",
       withheldOne: "One licence has no wait on file and is not listed.",
       withheldMany: "{n} licences have no wait on file and are not listed.",
+      /* The goal's A9b: a licence named for a United States jurisdiction, not listed at the world altitude. */
+      usNamedOne: "One licence is named for the United States and is not listed.",
+      usNamedMany: "{n} licences are named for the United States and are not listed.",
     },
     withheld: {
       licences: "Not gathered yet: the licences to hold.",

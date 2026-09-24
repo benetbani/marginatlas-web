@@ -18,7 +18,10 @@
  *   3. a name that says "state or national" is not US-named and prints
  *      anywhere;
  *   4. the pinned case: craft breweries on a UK page withholds exactly its two
- *      and says so.
+ *      and says so;
+ *   5. the world page (the industry page's `04 open`, the goal's A9b) lists no
+ *      US-named licence in its plus, says how many it leaves out, and keeps
+ *      them in its count.
  *
  * BLIND SPOT: the predicate reads the words "federal" and "state"; a US-only
  * name without either (a "DMV permit", a county form) passes here, and the
@@ -27,7 +30,8 @@
  */
 import { red } from "./lib/red";
 import { INDUSTRIES } from "../src/lib/taxonomy";
-import { buildPermits, isUsJurisdictionLicence } from "../src/lib/spine/permits_rows";
+import { buildPermits, isUsJurisdictionLicence, WORLD } from "../src/lib/spine/permits_rows";
+import { buildIndustryOpen } from "../src/lib/spine/industry_open_rows";
 import { industryRows } from "../src/lib/facts/industry_shard";
 import { COPY } from "../src/lib/spine/copy";
 
@@ -61,6 +65,18 @@ for (const ind of INDUSTRIES) {
   const usLabels = new Set((us?.cells ?? []).map((c) => String(c.label)));
   for (const n of ours) if (!usLabels.has(n)) fail(`${ind.id} on a US page does not print "${n}", which is true there`, "withhold US-named licences only off a US page");
   void names;
+
+  /* 5. The world altitude: the plus lists none, its line counts them, the count keeps them. */
+  const world = buildIndustryOpen(ind.id);
+  const plus = world?.detail?.rows ?? [];
+  for (const r of plus) if (isUsJurisdictionLicence(String(r.label))) fail(`${ind.id} at the world altitude lists "${r.label}" in its plus, a licence named for the United States`, "build the industry card's licences at WORLD, which withholds US-named ones");
+  if (ours.length && world?.detail) {
+    const want = ours.length === 1 ? COPY.industryOpen.detail.usNamedOne : COPY.industryOpen.detail.usNamedMany.replace("{n}", String(ours.length));
+    if (!(world.detail.withheldLine ?? "").includes(want)) fail(`${ind.id} at the world altitude leaves ${ours.length} US-named licence(s) out of its plus and its line reads "${world.detail.withheldLine ?? ""}"`, "state the count in the plus's withheld line (COPY.industryOpen.detail.usNamedOne or usNamedMany)");
+  }
+  const wp = buildPermits(ind.id, WORLD);
+  const lic = world?.cells.find((c) => c.key === "licences");
+  if (lic && wp && lic.value !== String(wp.count)) fail(`${ind.id} at the world altitude counts ${lic.value} licences, not the permits builder's ${wp.count}`, "keep the US-named licences in the count");
 }
 
 const hedged = ["State or national pharmacy premises permit", "Therapist professional licence (state or national board)"];

@@ -84,7 +84,7 @@ import { buildSuits } from "@/lib/spine/suits_rows";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
 import { ALL_INDUSTRIES, INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
-import { buildPermits } from "@/lib/spine/permits_rows";
+import { buildPermits, WORLD } from "@/lib/spine/permits_rows";
 import { buildOpen, buildOpenFoot, buildOpenFormats, countOpenStates, OPEN_FORMATS_WORKING_MIN } from "@/lib/spine/open_rows";
 import { resolveSplit, countSplitStates, shardCostLines, driverLabel, LABEL_WORDS_CAP as SPLIT_LABEL_WORDS_CAP } from "@/lib/spine/split_rows";
 import { buildTeam, countTeamRows, roleLines, TEAM_ROWS_CAP } from "@/lib/spine/team_rows";
@@ -2050,7 +2050,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   let opens = 0, plusRows = 0;
   for (const id of ids) {
     const o = buildIndustryOpen(id);
-    const p = buildPermits(id);
+    /* The same call the card makes: the world altitude withholds US-named licences (the goal's A9b). */
+    const p = buildPermits(id, WORLD);
     if (!o) { reds.push(`industry open ${id}: no card for a shard`); continue; }
     opens++;
     const order = o.cells.map((c) => c.key).join(",");

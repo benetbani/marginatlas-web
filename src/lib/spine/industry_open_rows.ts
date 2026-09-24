@@ -49,7 +49,7 @@
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
 import { industryFigure } from "@/lib/facts/industry_shard";
-import { buildPermits, PERMITS_METRICS } from "@/lib/spine/permits_rows";
+import { buildPermits, PERMITS_METRICS, WORLD } from "@/lib/spine/permits_rows";
 import { monthsFigure, OPEN_METRICS } from "@/lib/spine/open_rows";
 import { daysFigure } from "@/lib/spine/entry_bill_rows";
 import { COPY } from "@/lib/spine/copy";
@@ -80,7 +80,13 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 
 export function buildIndustryOpen(industryId: string | undefined): IndustryOpenData | null {
   if (!industryId) return null;
-  const permits = buildPermits(industryId);
+  /* AT THE WORLD ALTITUDE (the goal's A9b, 2026-09-24): a licence named for a
+     US jurisdiction is not "typical for the trade anywhere", so the plus lists
+     it no more than a UK page does and the slowest wait is read without it;
+     the count keeps it, because a "State dental licence" is the US form of a
+     licence every dentist holds. /industries/craft-breweries-taprooms listed
+     a "Federal brewer's notice" in its plus. */
+  const permits = buildPermits(industryId, WORLD);
   const ramp = industryFigure(industryId, INDUSTRY_OPEN_METRICS.ramp);
   const rampMonths = ramp && ramp.value > 0 ? ramp.value : null;
   const licences = permits && permits.count > 0 ? permits.count : null;
@@ -101,8 +107,11 @@ export function buildIndustryOpen(industryId: string | undefined): IndustryOpenD
 
   /* THE PLUS: the permits' own cells as rows, the longest wait first as the permits builder orders them; the zero-day licence is the panel's withheld line, counted. */
   const rows: DetailRow[] = (permits?.cells ?? []).map((c) => ({ label: c.label, value: typeof c.value === "string" ? c.value : String(c.value ?? "") })).filter((r) => r.label && r.value);
-  const zero = permits ? permits.count - rows.length : 0;
-  const withheldLine = zero <= 0 ? null : zero === 1 ? COPY.industryOpen.detail.withheldOne : COPY.industryOpen.detail.withheldMany.replace("{n}", String(zero));
+  const zero = permits ? permits.zeroDay : 0;
+  const usNamed = permits ? permits.usNamed : 0;
+  const zeroLine = zero <= 0 ? null : zero === 1 ? COPY.industryOpen.detail.withheldOne : COPY.industryOpen.detail.withheldMany.replace("{n}", String(zero));
+  const usLine = usNamed <= 0 ? null : usNamed === 1 ? COPY.industryOpen.detail.usNamedOne : COPY.industryOpen.detail.usNamedMany.replace("{n}", String(usNamed));
+  const withheldLine = [zeroLine, usLine].filter((l): l is string => l != null).join(" ") || null;
   const detail = rows.length >= 2 ? { summary: COPY.industryOpen.detail.summary, rows, withheldLine } : null;
 
   return {
