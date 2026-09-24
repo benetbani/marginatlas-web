@@ -189,6 +189,8 @@ export type RankedBarsProps = {
   kicker: string;
   icon?: AtlasIconId;
   tagged?: boolean;
+  /** HIS POP-UP (2026-09-22, QUEUE ui:the-gloss): what the opener's term means, one sentence, at the rail; never on a figure. */
+  gloss?: string;
   basis: string;
   withheldLine?: string | null;
   rows: BarRow[];
@@ -365,7 +367,7 @@ const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey }: RankedBarsProps) {
   if (rows.length < 2) return null;
   /* THE RESIDUAL IS LIFTED OUT OF THE RANKING BEFORE ANYTHING IS SORTED (see
      the prop): it takes no part in the order and cannot be the leader. A key
@@ -452,7 +454,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
   const headTwoUp = Boolean(focal?.words);
   return (
     <Box id={id} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
-      <Rail icon={icon} kicker={kicker} sample={tagged} />
+      <Rail icon={icon} kicker={kicker} sample={tagged} gloss={gloss} />
       <div className={headTwoUp ? "gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start" : undefined}>
       {/* THE FOCAL, when the card holds one: the only element on this card
           above 16, and the only one that may wear the accent (see the prop). */}

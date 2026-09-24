@@ -64,6 +64,7 @@ export function RankCard({ id = "rank", rank }: { id?: string; rank: HoodRankDat
       kicker={COPY.cityDistricts.kicker}
       icon="best-areas"
       tagged={rank.tagged}
+      gloss={COPY.glossary.rentAgainst}
       basis={rank.basis}
       withheldLine={rank.clipLine}
       rows={rank.rows}

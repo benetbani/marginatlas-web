@@ -498,7 +498,12 @@ function Setup({ setup, iso2 }: { setup: any; iso2?: string }) {
   if (tiers.length === 0) return null;
   return (
     <Box id="setup">
-      <Rail icon="register-cost" kicker={COPY.tiers.kicker} />
+      {/* THE COUNTRY PAGE'S GLOSS (2026-09-24, the goal's B4): "legal form", the
+          term a first-time owner meets here before any other; the money card
+          takes none, because its basis line already says what net margin is
+          and a gloss there would say it twice (clause 66). The how-to page's
+          card of the same name carries the same sentence. */}
+      <Rail icon="register-cost" kicker={COPY.tiers.kicker} gloss={COPY.glossary.legalForm} />
       <TiersTable rows={tiers} howTo={iso2 ? howToOpenDoor(iso2) : null} />
     </Box>
   );

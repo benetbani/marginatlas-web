@@ -1827,6 +1827,9 @@ export const COPY = {
   glossary: {
     netMargin: "The share of every $100 of sales that is still there once every cost of running the business has been paid.",
     fitOut: "What it costs to turn an empty shop into your shop: counters, wiring, a kitchen, signs, the work before the doors open.",
+    /* 2026-09-24, the goal's B4 (QUEUE ui:the-gloss): the registering card (the country and how-to pages) and the district rent card (the city and the district hub), the pages that carried none. */
+    legalForm: "The shape a business takes in law: who owns it, who answers for its debts, and what it must file each year.",
+    rentAgainst: "Each district's shop rent divided by the cheapest district's, so the cheapest reads one and every dearer district reads more.",
   },
   tradeCustomers: {
     kicker: "What a customer spends",

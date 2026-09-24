@@ -47,6 +47,7 @@ import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { AmongCities, Runway, Season } from "@/components/spine/city/city-view";
+import { WhereToTrade } from "@/components/spine/city/where-to-trade";
 import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason } from "@/lib/spine/fact_rows";
 import { buildCityNeighbourhoods, citiesWithScheme } from "@/lib/spine/hood_rows";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
@@ -417,8 +418,8 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances(), city 
         return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{el ? <div style={{ maxWidth: 624 }}>{el}</div> : null}</Story>;
       })}
       {city.map((c) => {
-        const b = buildCityDistrictBars(c.seed);
-        const el = b ? <RankedBars id={`districts-${c.slug}`} kicker={COPY.cityDistricts.kicker} icon="best-areas" tagged={b.tagged} basis={b.basis} rows={b.rows} worldMax={b.worldMax} ceiling="set" feature="none" best="min" topLabel={COPY.cityDistricts.dearest} fmt={rentMult} phoneHead={b.phoneHead} /> : null;
+        /* THE PAGE'S OWN CARD (the renderers-agree rule, plan step 25; 2026-09-24): this story built its own RankedBars and so missed the clip line the page's card carries since B7. */
+        const el = buildCityDistrictBars(c.seed) ? <WhereToTrade d={c.seed} id={`districts-${c.slug}`} /> : null;
         return <Story kind="ranked-bars" key={`${c.slug}:districts`} iso2={`${c.slug}:districts`} why={c.why}>{el ? <div style={{ maxWidth: 693 }}>{el}</div> : null}</Story>;
       })}
       {pickHoodRankInstances().map((i) => {

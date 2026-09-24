@@ -101,7 +101,7 @@ export function HowToBody({ iso2 }: { iso2: string }) {
           ) : null}
           {d.tiers.length > 0 ? (
             <Box id="forms">
-              <Rail icon="register-cost" kicker={COPY.tiers.kicker} />
+              <Rail icon="register-cost" kicker={COPY.tiers.kicker} gloss={COPY.glossary.legalForm} />
               <TiersTable rows={d.tiers} />
             </Box>
           ) : null}

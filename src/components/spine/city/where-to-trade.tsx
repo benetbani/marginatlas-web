@@ -49,15 +49,16 @@ import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { COPY } from "@/lib/spine/copy";
 
-export function WhereToTrade({ d }: { d: any }) {
+export function WhereToTrade({ d, id = "districts" }: { d: any; id?: string }) {
   const b = buildCityDistrictBars(d);
   if (!b) return null;
   return (
     <RankedBars
-      id="districts"
+      id={id}
       kicker={COPY.cityDistricts.kicker}
       icon="best-areas"
       tagged={b.tagged}
+      gloss={COPY.glossary.rentAgainst}
       basis={b.basis}
       withheldLine={b.clipLine ?? undefined}
       rows={b.rows}
