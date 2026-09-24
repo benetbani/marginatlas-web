@@ -331,9 +331,12 @@ function Masthead({ name, iso2, hero }: { name: string; iso2?: string; hero: any
 function Cities({ cards, seat }: { cards: CityCardsData | null; seat: CitiesSeat | null }) {
   if (cards) {
     return (
-      <Box id="cities">
+      /* A COLUMN, SO THE CARDS TAKE THE HEIGHT (2026-09-24): beside the locals' four notes the level lent this card 54 of air under
+         its last link (the page laws' CARD FOOT BLANK, clause 52); the pager's row now grows into it (CityCards `fill`). */
+      <Box id="cities" className="flex h-full flex-col">
         <Rail icon="best-areas" kicker={COPY.cities.kicker} />
         <CityCards
+          fill
           cards={cards.cards}
           allHref={cards.allHref}
           allLabel={COPY.cities.allLabel}
