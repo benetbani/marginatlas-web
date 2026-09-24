@@ -112,9 +112,10 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
     <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
       <Rail icon="licence-specific" kicker={COPY.tradePermits.kicker} sample />
-      <div className="flex flex-1 flex-col justify-center">
+      {/* THREE LICENCES FILL (2026-09-24, the long-tail sweep): the slowest and two more stood centred in 132 of air beside the cost to open's chart on /gb/london/bakeries-retail once the copy rewrite took the card's lines; at the working's minimum the rows grow into the card (WorkedFigure `fill`), four or more stand centred as before. */}
+      <div className={`flex flex-1 flex-col ${worked && rest.length === WORKING_MIN ? "" : "justify-center"}`}>
         {worked ? (
-          <WorkedFigure list label={lead.label} figure={String(lead.value)} working={rest.map((c) => ({ figure: String(c.value), words: c.label }))} />
+          <WorkedFigure list fill={rest.length === WORKING_MIN} label={lead.label} figure={String(lead.value)} working={rest.map((c) => ({ figure: String(c.value), words: c.label }))} />
         ) : (
           <KvGrid cells={permits.cells} labelReserve="row" />
         )}

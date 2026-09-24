@@ -53,23 +53,35 @@ import { CompanionRow, type Companion } from "@/components/spine/archetypes/Bent
 export const WORKING_MIN = 2;
 export const WORKING_MAX = 4;
 
-export function WorkedFigure({ label, figure, working, accent = false, list = false }: { label: string; figure: string; working: Companion[]; accent?: boolean; list?: boolean }) {
+/** `fill` (the list form only, 2026-09-24): the rows grow into a card the level stretches, a hairline between them, the team table's remedy (B12's fifth row) for a short list beside a tall partner; the licences card's three waits stood in 132 of air beside the cost to open's chart on the long tail. Under 560 of the card only; from 560 the working stands in its own column and takes no height from the level. */
+export function WorkedFigure({ label, figure, working, accent = false, list = false, fill = false }: { label: string; figure: string; working: Companion[]; accent?: boolean; list?: boolean; fill?: boolean }) {
   if (!figure || working.length < WORKING_MIN) return null;
   const shown = working.slice(0, WORKING_MAX);
+  const grow = list && fill;
   return (
-    <div data-archetype="worked-figure" data-working={String(shown.length)} data-form={list ? "list" : "row"} className="[container-type:inline-size]">
+    <div data-archetype="worked-figure" data-working={String(shown.length)} data-form={list ? "list" : "row"} data-fill={grow ? "1" : undefined} className={`[container-type:inline-size] ${grow ? "flex flex-1 flex-col" : ""}`}>
       {/* THE WORKING'S COLUMN BY ITS FORM (2026-09-24, the goal's A5): the list
           carries long words (a licence's name) and keeps the wider column; the
           row carries two or three short companions and takes an equal one,
           because at 1.5 parts a row of two left 170 by 180 blank at its right
           end (the customers card seated full width at 768, 24 London trades). */}
-      <div className={`[@container(min-width:560px)]:grid ${list ? "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]" : "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"} [@container(min-width:560px)]:items-center [@container(min-width:560px)]:gap-x-8`}>
+      <div className={`[@container(min-width:560px)]:grid ${list ? "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]" : "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"} [@container(min-width:560px)]:items-center [@container(min-width:560px)]:gap-x-8 ${grow ? "flex flex-1 flex-col" : ""}`}>
         <div>
           <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div>
           <Fig className={`mt-1 block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</Fig>
         </div>
-        <div data-second className="mt-4 border-t border-[var(--c-border)] pt-3 [@container(min-width:560px)]:mt-0 [@container(min-width:560px)]:border-l [@container(min-width:560px)]:border-t-0 [@container(min-width:560px)]:pl-6 [@container(min-width:560px)]:pt-0">
-          {list ? (
+        <div data-second className={`mt-4 border-t border-[var(--c-border)] pt-3 [@container(min-width:560px)]:mt-0 [@container(min-width:560px)]:border-l [@container(min-width:560px)]:border-t-0 [@container(min-width:560px)]:pl-6 [@container(min-width:560px)]:pt-0 ${grow ? "flex flex-1 flex-col" : ""}`}>
+          {grow ? (
+            /* THE ROWS GROW: ONE GRID, its rows sharing the slack equally (`auto-rows-fr`), each row a subgrid of the two columns so the figures stand in one column as the plain list's do (the hero board's pattern), a hairline between them. */
+            <div className="grid flex-1 auto-rows-fr grid-cols-[auto_minmax(0,1fr)] divide-y divide-[var(--c-border)]">
+              {shown.map((c, i) => (
+                <div key={`${c.figure}-${i}`} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
+                  <Fig className="text-right text-[length:var(--t-lead)] font-semibold leading-none tabular-nums text-[var(--c-ink)]">{c.figure}</Fig>
+                  <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.words}</span>
+                </div>
+              ))}
+            </div>
+          ) : list ? (
             <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-3 gap-y-2">
               {shown.map((c, i) => (
                 <React.Fragment key={`${c.figure}-${i}`}>
