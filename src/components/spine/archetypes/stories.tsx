@@ -87,7 +87,7 @@ import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { Masthead as IndustryMasthead, BenchmarkCard } from "@/components/spine/industry/opening";
 import { OpenCard as IndustryOpenCard, industryOpenForm, paysCells } from "@/components/spine/industry/turn-one";
 import { PlacesTable, FormatsCard, ChannelsCard } from "@/components/spine/industry/turn-two";
-import { KnowCard, FieldCard, CloseCard as IndustryCloseCard } from "@/components/spine/industry/turn-three";
+import { KnowCard, FieldCard, fieldForm, CloseCard as IndustryCloseCard } from "@/components/spine/industry/turn-three";
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
 import { buildIndustryOpen } from "@/lib/spine/industry_open_rows";
 import { buildPays } from "@/lib/spine/pays_rows";
@@ -1177,8 +1177,8 @@ export function pickIndustryChannelsInstances(): Instance[] {
 }
 /** WHO TRADES ALONGSIDE YOU, `10 field` (MODEL.md 8.7; plan step 34's fourth dispatch, 2026-09-19), keyed industry:<handle>:field, the trade's market builder at the world altitude (market_rows.ts `buildMarket(id, "world")`, the lasts idiom, only the bases change) on KvGrid, built by id off the shard and drawn by the page's own card (industry/turn-three.tsx FieldCard) at the 347 the narrow seat of its 2-1 band takes at 1280: three of the builder's four cells (the density leading the card's width on COMPLETE ROWS, the chain share and the swing under it; the churn cell built and not drawn, 8.7's cut), every cell at the head rung (the focal cell is candidate 1 awaiting his click): the exemplar (restaurants, 16 firms per 10,000, chains 30, a 20 percent swing, the swing held) and the thinnest live density (shoe repair, 0.1 printed as read, chains 5, the swing 30). */
 const industryFieldWhy = (m: NonNullable<ReturnType<typeof buildMarket>>) => `industry block 10: ${"figure" in m.firms ? m.firms.figure : "no"} firms per 10,000 people, chains ${"part" in m.chains ? m.chains.part : "withheld"} of 100, the swing ${"figure" in m.swing ? m.swing.figure : "withheld"}${"figure" in m.swing && m.swing.tag === "held" ? " (held)" : ""}; three cells of the builder's four, the churn not drawn`;
-export function pickIndustryFieldInstances(): Instance[] {
-  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "field")).map(([h, i]) => ({ h, m: buildMarket(i.id, "world") })).filter((x) => x.m).map(({ h, m }) => ({ iso2: industryKey(h, "field"), why: industryFieldWhy(m!) }));
+export function pickIndustryFieldInstances(form: "metric" | "kv-grid" = "kv-grid"): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "field")).map(([h, i]) => ({ h, m: buildMarket(i.id, "world") })).filter((x) => x.m && fieldForm(x.m) === form).map(({ h, m }) => ({ iso2: industryKey(h, "field"), why: industryFieldWhy(m!) }));
 }
 /** THE DONUT (his B9 and the gold standard's B28, Donut.tsx, 2026-09-20), the trade's `11 mix` and the industry's `08 channels` over the same instances they held on the fact grid: the exemplar's three parts, a five-part shard and a two-part shard; drawn by the pages' own cards at the widths their seats take. */
 export function DonutStories({ cell = [] }: { cell?: CellHeroInstance[] }) {
@@ -1279,7 +1279,7 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
     <div data-stories="kv-grid">
       {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "field")).map(([h, i]) => {
         const m = buildMarket(i.id, "world");
-        if (!m) return null;
+        if (!m || fieldForm(m) !== "kv-grid") return null;
         return <Story kind="kv-grid" key={industryKey(h, "field")} iso2={industryKey(h, "field")} why={industryFieldWhy(m)}><div style={{ maxWidth: 347 }}><FieldCard id={`field-industry-${h}`} market={m} /></div></Story>;
       })}
       {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => {
@@ -1908,6 +1908,12 @@ export function BentoMetricStories({ instances = pickBentoMetricInstances(), cel
   return (
     <div data-stories="bento-metric">
       <IndustryBenchmarkStories kind="bento-metric" />
+      {/* The industry page's `10 field` on its figure form (the goal's B6), at the 347 of its 2-1 seat. */}
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "field")).map(([h, i]) => {
+        const m = buildMarket(i.id, "world");
+        if (!m || fieldForm(m) !== "metric") return null;
+        return <Story kind="bento-metric" key={industryKey(h, "field")} iso2={industryKey(h, "field")} why={industryFieldWhy(m)}><div style={{ maxWidth: 347 }}><FieldCard id={`field-industry-${h}`} market={m} /></div></Story>;
+      })}
       {/* The industry page's `04 open` on its figure form (the goal's B6), at the 347 of its 2-1 seat. */}
       {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => {
         const o = buildIndustryOpen(i.id);
@@ -2382,12 +2388,12 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero), ...pickIndustryCloseInstances(industryPlaces), ...pickHoodCloseInstances()],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickIndustryOpenInstances("kv-grid"), ...pickIndustryFieldInstances()],
+    "kv-grid": [...pickKvGridInstances(), ...pickIndustryOpenInstances("kv-grid"), ...pickIndustryFieldInstances("kv-grid")],
     "donut": [...pickCellMixInstances(cellHero), ...pickIndustryChannelsInstances()],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
-    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric"), ...pickIndustryOpenInstances("metric")],
+    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric"), ...pickIndustryOpenInstances("metric"), ...pickIndustryFieldInstances("metric")],
     "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
     "worked-figure": [...pickCellCustomersInstances(cellHero), ...pickIndustryLastsInstances(), ...pickCellOpenInstances(cellHero, "worked-figure"), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero)],
     "stepper": pickStepperInstances(),

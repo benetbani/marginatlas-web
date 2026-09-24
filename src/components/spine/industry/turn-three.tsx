@@ -48,6 +48,7 @@ import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
+import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { COPY } from "@/lib/spine/copy";
 import type { KnowData } from "@/lib/spine/know_rows";
 import type { MarketData } from "@/lib/spine/market_rows";
@@ -87,10 +88,45 @@ export function fieldWithheld(market: MarketData): string[] {
   return out;
 }
 
+/**
+ * THE FORM THE CARD DRAWS (the goal's B6, 2026-09-24): the figure card where
+ * the density is on file and no cell is withheld, the grid otherwise. The
+ * model laws read FOCAL on this card on every industry page (three cells at
+ * the head rung, none at 30). The trade page's own market cell answers "who
+ * trades here" with the trade's density at 30 and its companions (clause 65),
+ * so this card does too: firms per 10,000 people at 30 under its label, the
+ * chains' share and the year's swing under the hairline. The cells and their
+ * figures are the builder's, unchanged.
+ */
+export type FieldForm = "metric" | "kv-grid";
+export function fieldForm(market: MarketData): FieldForm {
+  return "figure" in market.firms && fieldWithheld(market).length === 0 ? "metric" : "kv-grid";
+}
+
 export function FieldCard({ id = "field", market }: { id?: string; market: MarketData | null }) {
   if (!market) return null;
   const cells = fieldCells(market);
   if (cells.length === 0) return null;
+  if (fieldForm(market) === "metric") {
+    const firms = cells.find((c) => c.key === "firms")!;
+    const C = COPY.industryField.companions;
+    const companions = cells
+      .filter((c) => c.key !== "firms")
+      .map((c) => ({ figure: String(c.value), words: c.key === "chains" ? C.chains : C.swing }));
+    return (
+      <BentoMetric
+        id={id}
+        icon="competition"
+        kicker={COPY.industryField.kicker}
+        sample
+        figure={String(firms.value)}
+        label={COPY.tradeMarket.kickers.firms}
+        second={companions.length > 0 ? companions : undefined}
+        basis={COPY.industryField.basis}
+        foot={COPY.industryField.foot}
+      />
+    );
+  }
   return (
     <Box id={id}>
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}

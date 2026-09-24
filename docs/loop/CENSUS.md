@@ -150,7 +150,7 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 | #2 | PaysShareCell |  | Ring |  |
 | #3 | PaysFixedCell |  | SegmentBar |  |
 | know | KnowCard | Before you sign | NoteList |  |
-| field | FieldCard | Who trades alongside you | KvGrid |  |
+| field | FieldCard | Who trades alongside you | BentoMetric or KvGrid |  |
 | places | PlacesTable | Where it pays best | CompareTable or BlockedSeat |  |
 | formats | FormatsCard | formats.kicker | MarkList or BentoMetric |  |
 

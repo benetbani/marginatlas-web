@@ -2115,6 +2115,8 @@ export const COPY = {
   industryField: {
     kicker: "Who trades alongside you",
     notes: { chains: "of all firms", swing: "busiest month over the quietest" },
+    /* The companions under the density (the goal's B6): the figure then its words, read aloud ("32% held by chains", "1.4x busiest month over the quietest"). */
+    companions: { chains: "held by chains", swing: "busiest month over the quietest" },
     basis: "Typical for the trade anywhere.",
     foot: "The density, the chain share and the swing are modelled.",
     cellBasis: {
