@@ -90,6 +90,13 @@ export type IncomeBreakdownProps = {
   withheld?: string | null;
   foot?: string | null;
   detail?: React.ReactNode;
+  /** THE WITHHELD STATE'S SECOND DRAWING (2026-09-24, the goal's B8): the
+   *  costs split among themselves, every $100 spent, with no net segment,
+   *  under its own basis line. Drawn only when `withheld` is set and two or
+   *  more segments come; its marks are `data-mix-*`, never `data-seg-*`, so
+   *  "a withheld breakdown draws no segment of sales" still holds and the
+   *  harness reads the two drawings apart. */
+  mix?: { basis: string; segments: IncomeSegment[] } | null;
 };
 
 const NET_KEY = "net";
@@ -156,7 +163,7 @@ function roundToTotal(values: Array<{ key: string; value: number }>, total: numb
   return out;
 }
 
-export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, icon, netLabel = COPY.incomeBreakdown.netLabel, withheld = null, foot = null, detail = null }: IncomeBreakdownProps) {
+export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, icon, netLabel = COPY.incomeBreakdown.netLabel, withheld = null, foot = null, detail = null, mix = null }: IncomeBreakdownProps) {
   const live = withheld ? [] : segments.filter((s) => Number.isFinite(s.share) && s.share > 0);
   if (!Number.isFinite(netPct)) return null;
   if (!withheld && live.length < 2) return null;
@@ -165,25 +172,74 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
   const netShown = Math.round(netPct);
   const rounded: Record<string, number> = { ...roundToTotal(live.map((s) => ({ key: s.key, value: s.share })), 100 - netShown), [NET_KEY]: netShown };
   const ariaLabel = `${netLabel} ${netShown} percent. ${withheld ? withheld : live.map((s) => `${s.label} ${rounded[s.key]} percent`).join(", ") + "."}`;
+  /* The withheld state's mix: its shares are of the costs, so they round to a hundred of their own. */
+  const mixLive = withheld && mix ? mix.segments.filter((s) => Number.isFinite(s.share) && s.share > 0) : [];
+  const mixRounded: Record<string, number> = mixLive.length ? roundToTotal(mixLive.map((s) => ({ key: s.key, value: s.share })), 100) : {};
 
   return (
-    <Box id={id} data-archetype="income-breakdown" data-withheld={withheld ? "1" : undefined}>
+    <Box id={id} data-archetype="income-breakdown" data-withheld={withheld ? "1" : undefined} className={withheld ? "[container-type:inline-size]" : undefined}>
       {/* THE SAMPLE MARK IS UNCONDITIONAL (his ruling, 2026-09-08): every
           figure this card ever prints is the same modelled split for every
           country (income_rows.ts explains why), so there is no "measured"
           variant of this card for the tag to distinguish it from. */}
       <Rail icon={icon} kicker={kicker} gloss={gloss} sample />
-      <div data-answer="1">
-        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
-        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
-      </div>
-      <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
       {withheld ? (
-        <>
+        /* THE WITHHELD HEAD TWO ABREAST FROM 640 OF THE CARD (the goal's B8,
+           2026-09-24): stacked at 768 the card is 680 inside, and the net and
+           its basis in the left half left 312 by 120 of nothing beside them
+           (the page filter, London barbershops and chiropractic); the stated
+           line now stands in that half. The 1280 seat is 584 inside and keeps
+           the column, where the band's height is set by the team beside it. */
+        <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-2 [@container(min-width:560px)]:items-start [@container(min-width:560px)]:gap-x-8">
+          <div>
+            <div data-answer="1">
+              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
+              <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
+            </div>
+            <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+          </div>
           {/* THE WITHHELD STATE: the stated line at the lead rung where the
               bar would stand (the cost-to-open card's own idiom), so the seat
               keeps its height and the reader is told why there is no bar. */}
-          <p data-withheld-line={id} className="mt-4 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p>
+          <p data-withheld-line={id} className="mt-4 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)] [@container(min-width:560px)]:mt-0">{withheld}</p>
+        </div>
+      ) : (
+        <>
+          <div data-answer="1">
+            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
+            <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
+          </div>
+          <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+        </>
+      )}
+      {withheld ? (
+        <>
+          {mixLive.length >= 2 ? (
+            <>
+              {/* THE COSTS ON THEIR OWN BASE (the goal's B8): the same bar and
+                  legend as the drawn state, the same tones and hatches in the
+                  same order, with no net in it and a hundred of cost as its
+                  whole; its basis line says so before the bar is read. */}
+              <p data-mix-basis className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">{mix!.basis}</p>
+              <div className="mt-2 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={`${mix!.basis} ${mixLive.map((s) => `${s.label} ${mixRounded[s.key]} percent`).join(", ")}.`}>
+                {mixLive.map((s, i) => (
+                  <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
+                ))}
+              </div>
+              <div className="mt-3 [container-type:inline-size]">
+                {/* THREE COLUMNS FROM 560 (the goal's B8): a five-line mix stood three rows tall in two, one row more than the short team tables beside it could meet at 1280, and left its last row half empty at 768. */}
+                <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0 [@container(min-width:560px)]:grid-cols-3">
+                  {mixLive.map((s, i) => (
+                    <span key={s.key} data-mix-legend-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+                      <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
+                      <span data-label className="truncate">{s.label}</span>
+                      <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{mixRounded[s.key]}%</Fig>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </>
+          ) : null}
           {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           {detail}
         </>

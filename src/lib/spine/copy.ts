@@ -1359,6 +1359,8 @@ export const COPY = {
     /** The withheld state draws no shares, so its basis names the net alone and the foot is not printed. */
     basisWithheld: "Of every $100 of sales, the net as on the opening card.",
     withheld: "The cost lines on file and the net come to more than $100.",
+    /** The withheld state's second drawing (2026-09-24, the goal's B8): the lines on file split among themselves; the base said, so no share of sales is claimed. */
+    mixBasis: "How every $100 it spends splits, by the cost lines on file; modelled.",
     foot: "The shares are modelled.",
     detail: {
       summary: "How much of the cost is fixed",

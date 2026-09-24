@@ -1192,6 +1192,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if ((sp.feed === "shard") !== (shard.held && shard.lines.length > 0)) reds.push(`split ${id}: fed by the ${sp.feed} while the shard's drivers are ${shard.held ? "held" : "not held"}`);
     if (sp.state === "drawn") {
       if (sp.withheld) reds.push(`split ${id}: a drawn card with a withheld line`);
+      if (sp.mix.length) reds.push(`split ${id}: a drawn card carries the withheld state's cost mix`);
       const sum = sp.segments.reduce((a, g) => a + g.share, 0) + sp.netPct;
       if (Math.abs(sum - 100) > 0.5) reds.push(`split ${id}: the segments and the net come to ${sum.toFixed(2)}, not a hundred`);
       if (sp.segments.some((g) => !(g.share > 0))) reds.push(`split ${id}: a segment at or under zero is drawn`);
@@ -1207,6 +1208,15 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (sp.segments.length) reds.push(`split ${id}: a withheld card with segments`);
       if (sp.withheld !== COPY.tradeSplit.withheld) reds.push(`split ${id}: a withheld card without the stated line`);
       if (sp.linesPct + sp.netPct <= 100.5) reds.push(`split ${id}: withheld at ${(sp.linesPct + sp.netPct).toFixed(1)}, not over a hundred`);
+      /* THE COSTS ON THEIR OWN BASE (the goal's B8): a hundred of cost, no net in it, two or more named, every label within three words. */
+      if (sp.mix.length) {
+        const mixSum = sp.mix.reduce((a, g) => a + g.share, 0);
+        if (Math.abs(mixSum - 100) > 0.5) reds.push(`split ${id}: the withheld card's cost mix comes to ${mixSum.toFixed(2)}, not a hundred`);
+        if (sp.mix.some((g) => !(g.share > 0))) reds.push(`split ${id}: a cost-mix share at or under zero`);
+        if (sp.mix.some((g) => g.key === "net" || g.key === "unallocated")) reds.push(`split ${id}: the cost mix carries the net or a residual`);
+        for (const g of sp.mix) if (g.label.split(/\s+/).filter(Boolean).length > SPLIT_LABEL_WORDS_CAP) reds.push(`split ${id}: a cost-mix label over ${SPLIT_LABEL_WORDS_CAP} words: "${g.label}"`);
+        ban(`split ${id}`, sp.mix.map((g) => g.label));
+      }
     }
     if (sp.state === "drawn" && sp.basis !== (sp.feed === "shard" ? COPY.tradeSplit.basisShard : COPY.tradeSplit.basisProfile)) reds.push(`split ${id}: the basis does not name the feed`);
     if (sp.state === "withheld" && (sp.basis !== COPY.tradeSplit.basisWithheld || sp.foot)) reds.push(`split ${id}: a withheld card's basis or foot speaks of shares it does not draw`);

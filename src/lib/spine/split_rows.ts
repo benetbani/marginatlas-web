@@ -47,6 +47,19 @@
  * engine's net replaces the ladder's, so a trade withheld here can draw
  * there and the reverse; the state is the cell's, measured on the seed.
  *
+ * THE WITHHELD STATE DRAWS THE COSTS ON THEIR OWN BASE (2026-09-24, the goal's
+ * B8). Withheld, the card held the net at 30 and the stated line and nothing
+ * else, and the team table beside it set the band's height: on London
+ * barbershops a blank 572 by 186 at 1280 and 312 by 138 at 768 (the page
+ * filter), on eight London trades that day. What the lines on file can still
+ * say honestly is how they split AMONG THEMSELVES: each line's share of the
+ * lines' own sum, a split of every $100 the trade spends (`mix`), composed by
+ * the same law as the sales split (the largest named, the rest one bucket,
+ * never a bucket over a named line) with no net in it. That is not the bar
+ * scaled to fit the refusal above names: no share of SALES is claimed, the
+ * base is stated in the card's own words (COPY.tradeSplit.mixBasis), and the
+ * sales split stays withheld with its line. The drawn state carries none.
+ *
  * THE PLUS at the foot (DetailPanel, closed on arrival) holds the two shares
  * the plus's law calls its floor: fixed costs and variable costs, the shard's
  * `cost_structure.fixed_pct / variable_pct` (243 of 243, 79 held), printed as
@@ -91,6 +104,8 @@ export type SplitData = {
   netLabel: string;
   /** The bar's cost segments in the law's order (drawn only; empty when withheld). */
   segments: IncomeSegment[];
+  /** WITHHELD ONLY: the lines on file split by every $100 the trade spends (each line over the lines' own sum), composed by the same law, no net; empty in the drawn state and where fewer than two lines can be named. */
+  mix: IncomeSegment[];
   /** The named residual's share when the lines and the net fall short, else null. */
   residual: number | null;
   /** The lines' sum in percentage points before composition, for the gates. */
@@ -178,11 +193,19 @@ export function resolveSplit(industryId: string, net: TradeNet): SplitData | nul
   const detail = buildSplitDetail(industryId);
   const common = { feed, net, netPct: net.pct, netText: net.text, netLabel: COPY.tradeHero.cells.net, linesPct, basis, foot: COPY.tradeSplit.foot, detail, sample: true as const, confidence: "modeled" as const };
   if (!segments) {
-    /* No shares drawn, so the basis names the net alone and there is no foot to say the shares are modelled. */
-    return { ...common, state: "withheld", segments: [], residual: null, withheld: COPY.tradeSplit.withheld, basis: COPY.tradeSplit.basisWithheld, foot: "" };
+    /* No share of sales is drawn, so the basis names the net alone. The costs
+       split among themselves (see the header): each line over the lines' own
+       sum, through the same law with a net of nought, so the mix comes to a
+       hundred by construction; the mix's own basis says its shares are
+       modelled, so the state keeps no foot (one line fewer beside a short
+       team table, measured on four London trades at 1280). */
+    const lineSum = lines.reduce((a, l) => a + (Number.isFinite(l.share) && l.share > 0 ? l.share : 0), 0);
+    const mix = lineSum > 0 ? composeIncomeSegments(lines.map((l) => ({ ...l, share: l.share / lineSum })), 0) ?? [] : [];
+    const drawn = mix.length >= 2 ? mix : [];
+    return { ...common, state: "withheld", segments: [], mix: drawn, residual: null, withheld: COPY.tradeSplit.withheld, basis: COPY.tradeSplit.basisWithheld, foot: "" };
   }
   const residual = segments.find((s) => s.key === "unallocated")?.share ?? null;
-  return { state: "drawn", segments, residual, withheld: null, ...common };
+  return { state: "drawn", segments, mix: [], residual, withheld: null, ...common };
 }
 
 /** The split for one cell off its seed: the trade's id and the one builder's net block, both carried by the adapter. */

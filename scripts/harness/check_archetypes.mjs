@@ -456,6 +456,9 @@ function inPage(storySelector) {
          root declares it and the stated line stands where the bar would. */
       const root = card.matches("[data-archetype='income-breakdown']") ? card : card.querySelector("[data-archetype='income-breakdown']");
       r.incomeWithheld = !!root && root.getAttribute("data-withheld") === "1";
+      /* THE WITHHELD STATE'S COST MIX (2026-09-24, the goal's B8): its own marks, read apart from the sales segments. */
+      r.incomeMix = [...card.querySelectorAll("[data-mix-key]")].map((el) => ({ key: el.getAttribute("data-mix-key"), share: parseFloat(el.getAttribute("data-mix-share")), widthPx: el.getBoundingClientRect().width }));
+      r.incomeMixLegendKeys = [...card.querySelectorAll("[data-mix-legend-key]")].map((el) => el.getAttribute("data-mix-legend-key"));
       r.incomeLine = [...card.querySelectorAll("[data-withheld-line]")].filter((el) => el.getClientRects().length && (el.textContent || "").trim()).length;
     }
     /* THE MARK LIST (B3, 2026-09-10). Read off the DRAWN boxes, except where
@@ -908,6 +911,17 @@ for (const w of WIDTHS) {
       if (r.incomeWithheld && !r.incomeLine) red(r.inst, w, "PROMISE", "a withheld breakdown with no stated line where the bar would stand");
       if (!r.incomeWithheld && !segs.length) red(r.inst, w, "PROMISE", "a breakdown with no segments and no withheld line");
       if (!r.incomeWithheld && r.incomeLine) red(r.inst, w, "PROMISE", "a stated withheld line on a breakdown that draws its bar");
+      /* THE COST MIX, withheld only (the goal's B8): a hundred of cost, no sliver, the legend the bar's own keys. */
+      const mixSegs = r.incomeMix || [];
+      if (mixSegs.length && !r.incomeWithheld) red(r.inst, w, "PROMISE", "a cost mix on a breakdown that draws its sales split");
+      if (mixSegs.length) {
+        const mixSum = mixSegs.reduce((a, s) => a + (Number.isFinite(s.share) ? s.share : 0), 0);
+        if (Math.abs(mixSum - 100) > 0.5) red(r.inst, w, "DOES NOT ADD UP", `the cost mix sums to ${mixSum.toFixed(2)}, not 100`);
+        const mixWidths = mixSegs.map((s) => s.widthPx).filter((n) => Number.isFinite(n));
+        if (mixWidths.length) { const thin = Math.min(...mixWidths); if (thin < 6) red(r.inst, w, "SLIVER", `a cost-mix segment renders ${thin.toFixed(1)}px wide, under 6`); }
+        const mk = mixSegs.map((s) => s.key).sort().join(","), lk = (r.incomeMixLegendKeys || []).slice().sort().join(",");
+        if (mk !== lk) red(r.inst, w, "LEGEND", `the cost mix's legend keys (${lk}) are not its bar's (${mk})`);
+      }
       // RULE 1, PLANTED FAULT PROVED (task-11-report.md): a segment set
       // summing to 130 was fed through a temporary story and reded here
       // before this line was trusted.

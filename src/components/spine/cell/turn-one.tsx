@@ -192,6 +192,7 @@ export function SplitCard({ id = "split", split }: { id?: string; split: SplitDa
       withheld={split.withheld}
       foot={split.foot}
       detail={split.detail ? <DetailPanel name={`detail-${id}`} summary={split.detail.summary} rows={split.detail.rows} /> : null}
+      mix={split.mix.length ? { basis: COPY.tradeSplit.mixBasis, segments: split.mix } : null}
     />
   );
 }
