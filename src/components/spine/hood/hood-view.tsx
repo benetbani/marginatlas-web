@@ -77,10 +77,9 @@ import { COPY } from "@/lib/spine/copy";
 import { buildHoodTake } from "@/lib/spine/hood_take_rows";
 import { buildHoodRank } from "@/lib/spine/hood_rank_rows";
 import { buildHoodPremium } from "@/lib/spine/hood_premium_rows";
-import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
 import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
 import { buildHoodCloseDoors } from "@/lib/spine/close_rows";
-import { HoodTake, RankCard, PremiumCard, CompareCard, CharacterCard, HoodClose } from "./blocks";
+import { HoodTake, RankCard, PremiumCard, CharacterCard, HoodClose } from "./blocks";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildHoodCrumbs } from "@/lib/spine/crumb_rows";
@@ -112,7 +111,6 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
   const take = buildHoodTake(slug, focus);
   const rank = buildHoodRank(slug);
   const premium = buildHoodPremium(slug);
-  const compare = buildHoodCompare(slug, focus);
   const character = buildHoodCharacter(slug, focus);
   const doors = buildHoodCloseDoors(slug, focus);
 
@@ -146,10 +144,14 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
             <PremiumCard premium={premium} />
           </Band>
         ) : null}
-        {/* `03 compare`, FULL WIDTH, the page's second of three (8.8, R1),
-            resting turn one: the table on CompareTable, which draws its own
-            `data-wide-table` wrapper. */}
-        <CompareCard compare={compare} />
+        {/* `03 compare` LEFT THE PAGE (2026-09-24, the goal's A18 and its
+            NEVER list, "print one figure twice"): the side-by-side table held
+            the seven rent multiples of `01 rank` and the seven visitor figures
+            of `02 premium` and nothing else, fourteen second prints on one
+            page, a full width his ban of 2026-08-25 allows the page one of.
+            The two readings stand in the level above, each with its drawing;
+            the builder and the card stay for the day a column of its own
+            arrives (a district-level figure no other card holds). */}
         {/* CHAPTER TURN TWO (8.8, "What lifts revenue, and what the place is
             like"): one band, the blocked seat beside the prose. */}
         <Movement index="02" heading={COPY.hoodChapters.works} />
