@@ -1330,9 +1330,9 @@ export const COPY = {
     tailMany: "The {n} smaller costs, {sum} together, are in the total.",
     basisBaseline: "",
     basisBaselineAlone: "",
-    /** The baseline state with the kinds of shop (2026-09-24, the goal's B10): each kind worked from the typical and its own difference. */
-    basisFormats: "For each kind of shop.",
-    basisFormatsAlone: "For each kind of shop.",
+    /** The baseline state with the kinds of shop (2026-09-24, the goal's B10): each kind worked from the typical and its own difference. NO LINE (A20, the same evening): the rows name each kind of shop, and "For each kind of shop." said it again. */
+    basisFormats: "",
+    basisFormatsAlone: "",
     /** The withheld state earns it back (the same day, the goal's A4): the two figures the card holds, no stated line. */
     kickerRecover: "Earning it back",
     basisRecover: "",
@@ -1632,6 +1632,8 @@ export const COPY = {
     working: { yr1: "after one year", yr3: "after three years" },
     basis: "",
     foot: "Out of every 100 that open.",
+    /** The drawn hundred's name for a screen reader, after the count: "50 of every 100 still open after five years". */
+    drawn: "of every 100 still open after five years",
   },
   /** `11 mix` (MODEL.md 8.6; plan step 33's fifth dispatch, 2026-09-18):
    *  the kicker is 8.6's title; each part's label is the shard's own channel

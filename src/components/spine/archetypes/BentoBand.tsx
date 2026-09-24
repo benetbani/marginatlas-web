@@ -589,6 +589,50 @@ export function BentoMetric({
  * whole prints "of N" exactly as before, so the three older callers (chains
  * of 100, closures of 100, shops of 100) draw what they drew.
  */
+/**
+ * THE COUNT'S UNITS, the drawing of a part of a whole as that many units
+ * filled out of the whole (the count's own grid, lifted out of BentoCount on
+ * 2026-09-24 so the survival card draws its "out of every 100 that open"
+ * with the same units and not a copy of them). `columns` sizes each unit to
+ * the width; left out, 10px units wrap. `columnsWide` is the count of columns
+ * where the nearest inline-size container is 560 or wider (a card that runs
+ * the width of a tablet), so a hundred reads as two rows of fifty there and
+ * five of twenty in a third of a desktop level, never a grid that fills half
+ * a wide card and leaves the other half blank (measured on the survival card
+ * at 768, 312 by 138). Filled units in the accent (or ink2 where the card is
+ * not loud), the rest in the soft tint.
+ */
+export function CountUnits({ whole, filled, accent = true, columns, columnsWide, aria, className = "" }: { whole: number; filled: number; accent?: boolean; columns?: number; columnsWide?: number; aria: string; className?: string }) {
+  const units = Array.from({ length: Math.max(0, Math.round(whole)) });
+  const cols = columns ? Math.max(1, Math.round(columns)) : 0;
+  const wide = columns && columnsWide ? Math.max(1, Math.round(columnsWide)) : 0;
+  return (
+    <div
+      data-units={units.length}
+      data-visual="1"
+      className={`${columns ? "grid gap-[4px]" : "flex flex-wrap gap-[4px]"} ${wide ? "grid-cols-[repeat(var(--units-cols),minmax(0,1fr))] [@container(min-width:560px)]:grid-cols-[repeat(var(--units-cols-wide),minmax(0,1fr))]" : ""} ${className}`.trim()}
+      style={wide ? ({ "--units-cols": String(cols), "--units-cols-wide": String(wide) } as React.CSSProperties) : columns ? { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } : undefined}
+      role="img"
+      aria-label={aria}
+    >
+      {units.map((_, i) => (
+        <span
+          key={i}
+          aria-hidden
+          className={columns ? "aspect-square w-full rounded-[2px] border" : "h-[10px] w-[10px] rounded-[2px] border"}
+          style={
+            i < filled
+              ? accent
+                ? { background: "var(--terra)", borderColor: "var(--terra)" }
+                : { background: "var(--c-ink2)", borderColor: "var(--c-ink2)" }
+              : { background: "var(--c-soft2)", borderColor: "var(--c-border)" }
+          }
+        />
+      ))}
+    </div>
+  );
+}
+
 export function BentoCount({
   kicker,
   icon,
@@ -636,29 +680,7 @@ export function BentoCount({
               Unless the count IS the whole, when the figure has already said it. */}
           {isWhole ? null : <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of {Math.round(whole)}</span>}
         </div>
-        <div
-          data-units={units.length}
-          data-visual="1"
-          className={columns ? "mt-3 grid gap-[4px]" : "mt-3 flex flex-wrap gap-[4px]"}
-          style={columns ? { gridTemplateColumns: `repeat(${Math.max(1, Math.round(columns))}, minmax(0, 1fr))` } : undefined}
-          role="img"
-          aria-label={isWhole ? `${filled}, ${label ?? kicker}` : `${filled} out of ${Math.round(whole)}, ${label ?? kicker}`}
-        >
-          {units.map((_, i) => (
-            <span
-              key={i}
-              aria-hidden
-              className={columns ? "aspect-square w-full rounded-[2px] border" : "h-[10px] w-[10px] rounded-[2px] border"}
-              style={
-                i < filled
-                  ? accent
-                    ? { background: "var(--terra)", borderColor: "var(--terra)" }
-                    : { background: "var(--c-ink2)", borderColor: "var(--c-ink2)" }
-                  : { background: "var(--c-soft2)", borderColor: "var(--c-border)" }
-              }
-            />
-          ))}
-        </div>
+        <CountUnits className="mt-3" whole={units.length} filled={filled} accent={accent} columns={columns} aria={isWhole ? `${filled}, ${label ?? kicker}` : `${filled} out of ${Math.round(whole)}, ${label ?? kicker}`} />
         {label ? <div className="mt-3 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
       {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}

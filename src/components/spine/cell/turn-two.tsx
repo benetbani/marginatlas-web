@@ -83,7 +83,7 @@ import { Box, Rail } from "@/components/spine/kit";
 import { WorkedFigure } from "@/components/spine/archetypes/WorkedFigure";
 import { Donut } from "@/components/spine/archetypes/Donut";
 import { Ring } from "@/components/spine/archetypes/Ring";
-import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
+import { BentoMetric, CountUnits } from "@/components/spine/archetypes/BentoBand";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
 import { COPY } from "@/lib/spine/copy";
 import type { ClearsData } from "@/lib/spine/clears_rows";
@@ -141,7 +141,7 @@ export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; 
     <Box id={id} className="flex h-full flex-col">
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
       <Rail icon="first-year" kicker={W.kicker} sample />
-      <div className="flex flex-1 flex-col justify-center">
+      <div className={`flex flex-1 flex-col ${list ? "[container-type:inline-size]" : "justify-center"}`}>
         <WorkedFigure
           label={W.cells.yr5}
           figure={`${lasts.values.yr5}%`}
@@ -151,6 +151,8 @@ export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; 
           ]}
           list={list}
         />
+        {/* THE SHARE DRAWN (his law of 2026-09-19, "a share of a whole is drawn"; the goal's B14, 2026-09-24): in the list form, beside the benchmark's taller card, the hundred that open as a hundred units and the five-year share of them filled, where the figure had stood centred in 150 of air above and 100 below. The foot says what the units are ("Out of every 100 that open."). */}
+        {list ? <CountUnits className="mt-auto pt-5" whole={100} filled={lasts.values.yr5} columns={20} columnsWide={50} aria={`${lasts.values.yr5} ${COPY.tradeLasts.drawn}`} /> : null}
       </div>
       {lasts.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.basis}</p> : null}
       {lasts.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.foot}</p> : null}
