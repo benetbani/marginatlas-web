@@ -1966,7 +1966,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       const n = resolveTradeNet(row.key, { moneyShown: false, netMarginPct: null });
       if (!n || n.branch !== "shard" || n.pct !== row.value) reds.push(`industry benchmark ${id}: ROW NET: the row ${row.key} is not that member's own ladder net through the one builder (${n?.branch ?? "none"})`);
       if (INDUSTRY_BY_ID[row.key]?.sector_id !== ind.sector_id) reds.push(`industry benchmark ${id}: the row ${row.key} is not in the sector`);
-      if (row.name.split(/\s+/).length > 4) { /* the taxonomy's own name, judged by ROW SENTENCE in the model-laws gate, never shortened here */ }
+      /* The row prints the trade's row name, three words at most (the goal's A11, taxonomy.ts `tradeRowName`); gate trade-row-names holds it over the 138. */
     }
     const own = resolveTradeNet(id, { moneyShown: false, netMarginPct: null });
     const ownRanked = b.rows.some((r) => r.key === id);

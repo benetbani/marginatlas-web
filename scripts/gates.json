@@ -1391,6 +1391,18 @@
       "claims": []
     },
     {
+      "name": "trade-row-names",
+      "script": "scripts/verify_trade_row_names.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_trade_row_names: a trade's name printed as a row is a label, three words or fewer and no parenthetical (the goal's A11, 2026-09-24; DATA-REQUIREMENTS item 71).",
+      "reads": [
+        "src/lib/spine/adapt_city.ts",
+        "src/lib/taxonomy/industries.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "search-params-suspense",
       "script": "scripts/verify_search_params_suspense.mjs",
       "args": [],

@@ -888,8 +888,13 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      page that draws it. Over 243 trades' ten rows the same name would be
      counted hundreds of times, and a ratchet that may only fall cannot
      seed hundreds of reds for one copy fault. The distinct names over
-     three words are COUNTED and printed as the queue line instead. The
-     chapter headings, read aloud like a kicker. */
+     three words are COUNTED and printed as the queue line instead. SINCE
+     THE GOAL'S A11 (2026-09-24) the rows print the trade's row name
+     (taxonomy.ts `tradeRowName`, item 71's short name on the 62 live
+     trades that need one) and gate trade-row-names reds a long one on a
+     live row, so what this count still finds is a retired or merged
+     member's name in a set. The chapter headings, read aloud like a
+     kicker. */
   {
     const ids = ALL_INDUSTRIES.map((i) => i.id);
     heads.push(["COPY.industryHero.answerLabel", COPY.industryHero.answerLabel], ["COPY.industryHero.answerBasisShard", COPY.industryHero.answerBasisShard], ["COPY.industryHero.answerBasisProfile", COPY.industryHero.answerBasisProfile], ["COPY.industryHero.absent", COPY.industryHero.absent], ["COPY.industryHero.absentNote", COPY.industryHero.absentNote]);

@@ -93,7 +93,7 @@ import { countWord } from "@/lib/spine/district_rows";
 import { COPY } from "@/lib/spine/copy";
 import { resolveTradeNet } from "@/lib/spine/trade_net";
 import { sectorPhrase } from "@/lib/spine/industry_hero_facts";
-import { ALL_INDUSTRIES, INDUSTRY_BY_ID } from "@/lib/taxonomy";
+import { ALL_INDUSTRIES, INDUSTRY_BY_ID, tradeRowName } from "@/lib/taxonomy";
 
 /** The rows the card holds at most: the trade and the highest four of its sector (the header says why not 8.7's ten). */
 export const BENCHMARK_ROWS_CAP = 5;
@@ -144,7 +144,8 @@ function buildBenchmarkOnce(industryId: string): BenchmarkData | null {
   let selfWithheld = false;
   for (const m of sector) {
     const n = resolveTradeNet(m.id, { moneyShown: false, netMarginPct: null });
-    if (n && n.branch === "shard") holding.push({ id: m.id, name: m.name, pct: n.pct });
+    /* The row prints the trade's row name, three words at most (the goal's A11; taxonomy.ts `tradeRowName`). */
+    if (n && n.branch === "shard") holding.push({ id: m.id, name: tradeRowName(m.id, m.name), pct: n.pct });
     else { withheldCount++; if (m.id === industryId) selfWithheld = true; }
   }
   /* Highest first, a stable sort, so a tie keeps the taxonomy's order. */

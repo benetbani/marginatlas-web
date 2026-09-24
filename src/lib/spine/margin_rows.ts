@@ -18,7 +18,7 @@
  */
 import snapshotJson from "../../../data/archetypes/net_margin_snapshot.json";
 import { COPY } from "@/lib/spine/copy";
-import { industryToSlug } from "@/lib/taxonomy";
+import { industryToSlug, tradeRowName } from "@/lib/taxonomy";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 
 export const MARGIN_FLOOR = 0.03;
@@ -57,7 +57,8 @@ export function marginCardFromRows(rows: Array<{ slug?: string; name?: string; h
   const credible: MarginRow[] = [];
   let withheld = 0;
   for (const r of rows) {
-    if (isMarginCredible(r.net_margin, !!r.net_margin_clamped)) credible.push({ key: r.slug ?? String(r.name), name: String(r.name ?? r.slug), href: r.href, lands: r.lands, margin: r.net_margin as number, flagged: !!r.net_margin_flagged });
+    /* The bar's label is the trade's row name, three words at most (the goal's A11; taxonomy.ts `tradeRowName`); the page's sentences keep the full name. */
+    if (isMarginCredible(r.net_margin, !!r.net_margin_clamped)) credible.push({ key: r.slug ?? String(r.name), name: tradeRowName(r.slug, String(r.name ?? r.slug)), href: r.href, lands: r.lands, margin: r.net_margin as number, flagged: !!r.net_margin_flagged });
     else withheld++;
   }
   credible.sort((a, b) => a.margin - b.margin);

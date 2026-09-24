@@ -550,6 +550,15 @@ const GATES: Gate[] = [
      United States' own. Off a US page they are withheld with a stated line;
      on a US page they print. Planted (the withholding removed), watched red. */
   { name: "licence-jurisdiction", script: "scripts/verify_licence_jurisdiction.ts" },
+  /* Restaurants' trades next door read "Ice cream & frozen dessert shops" and
+     "Catering & food service contractors" as row labels, and the UK and London
+     pages "Cafés & coffee shops": a label over three words, or with a
+     parenthetical, is a copy fault (MODEL PART 5's label law and 8.5's ROW
+     SENTENCE), and 62 of the 138 live names are one (the goal's A11). The rows
+     print the taxonomy's short name. Planted twice (the benchmark's row name
+     reverted to the full name; a short name and the city's helper removed),
+     watched red. */
+  { name: "trade-row-names", script: "scripts/verify_trade_row_names.ts" },
   /* Two live routes were invisible to crawlers: a client island read
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */

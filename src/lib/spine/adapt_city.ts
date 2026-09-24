@@ -81,7 +81,7 @@
  * Constraint-safe: no em-dashes, no source-agency names, USD-only figures.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
-import { COUNTRIES } from "@/lib/taxonomy";
+import { COUNTRIES, tradeRowName } from "@/lib/taxonomy";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import {
   buildCityActivities,
@@ -599,7 +599,8 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   const tradesHere = (trades?.list ?? [])
     .filter((t: any) => t.local && t.slug && EVERYDAY_TRADES.has(String(t.slug)))
     .map((t: any) => ({
-      name: t.name,
+      /* The door's label is the trade's row name, three words at most (the goal's A11; taxonomy.ts `tradeRowName`). */
+      name: tradeRowName(String(t.slug), t.name),
       slug: t.slug,
       href: `/${String(city.iso2).toLowerCase()}/${city.slug}/${t.slug}`,
       lands: SURFACE_ANSWERS.cell,

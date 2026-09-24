@@ -64,6 +64,13 @@ export type Industry = {
   non_smb?: boolean;
   /** For SMB sub-niches: parent industry ID with actual measurements. */
   parent_id?: string;
+  /**
+   * The trade's name as a row label (the goal's A11, 2026-09-24), set only
+   * where `name` runs over three words or carries a parenthetical, the two
+   * faults MODEL PART 5's label law names. Read through `tradeRowName`.
+   * Never the slug's source: industryToSlug reads `name`, so no URL moves.
+   */
+  short_name?: string;
 };
 
 export const SECTORS = (sectorsJson as { sectors: Sector[] }).sectors;
@@ -185,6 +192,28 @@ export function liveIndustryFor(id: string | null | undefined): Industry | null 
   const survivorId = survivorOf(id);
   const survivor = SLUG_TO_INDUSTRY[industryToSlug(survivorId)];
   return survivor && survivor.id === survivorId ? survivor : null;
+}
+
+/**
+ * THE TRADE'S NAME AS A ROW LABEL (the goal's A11, 2026-09-24; DATA-REQUIREMENTS
+ * item 71). MODEL PART 5's label law, "three words maximum ... no
+ * parenthetical", and 8.5's ROW SENTENCE, "a label over three words ... is a
+ * copy fault". The model laws count words by whitespace, so the ampersand in
+ * "Cafés & coffee shops" is one: 54 of the 138 live names run over three, and
+ * 8 more carry a parenthetical ("Bakeries (retail)", "Pest control (local)").
+ * Three cards print a trade's name as a row: the industry page's `02
+ * benchmark` ("Ice cream & frozen dessert shops" and "Catering & food service
+ * contractors" among restaurants' trades next door), the country page's `12
+ * money` and the city page's trade doors ("Cafés & coffee shops" on both).
+ * `short_name` in industries.json carries the row form, the first-named
+ * business and its head noun ("Ice cream shops", "Cafés", "Watch repair"), or
+ * the name's own shorter phrase where that reads wrong ("Leather goods"); a
+ * trade without one keeps the name it was given. The page title, the URL and
+ * every sentence keep the full name. Gate: trade-row-names.
+ */
+export function tradeRowName(idOrSlug: string | null | undefined, name: string): string {
+  const ind = idOrSlug ? INDUSTRY_BY_ID[idOrSlug] ?? SLUG_TO_INDUSTRY[idOrSlug] : undefined;
+  return ind?.short_name ?? name;
 }
 
 /**
