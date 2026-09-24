@@ -522,6 +522,14 @@ const GATES: Gate[] = [
      page and to no other country's path. Planted once (the redirect moved
      after notFound), watched red. */
   { name: "city-path-redirect", script: "scripts/verify_city_path_redirect.ts" },
+  /* A trade's address named an activity the atlas retired (the goal's A6,
+     2026-09-24, fetched on production): /industries/consulting printed
+     "Management consulting", /gb/london/plumber "residential construction",
+     /gb/london/chemicals-mfg Custom jewelers. Every word, id and old slug the
+     resolvers read answers a live trade or nothing, a fuzzy answer carries
+     every word, and the legacy crosswalk names no retired activity. Planted
+     twice (the old alias step, the old fuzzy sum), each watched red. */
+  { name: "trade-resolution", script: "scripts/verify_trade_resolution.ts" },
   /* Two live routes were invisible to crawlers: a client island read
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */

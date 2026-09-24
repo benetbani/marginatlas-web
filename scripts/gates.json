@@ -1346,6 +1346,18 @@
       "claims": []
     },
     {
+      "name": "trade-resolution",
+      "script": "scripts/verify_trade_resolution.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_trade_resolution: every word, id and old slug the site resolves to a trade lands on a trade the atlas covers, or on nothing (the goal's A6, 2026-09-24).",
+      "reads": [
+        "src/lib/cells/industry_resolution.ts",
+        "src/lib/taxonomy.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "search-params-suspense",
       "script": "scripts/verify_search_params_suspense.mjs",
       "args": [],

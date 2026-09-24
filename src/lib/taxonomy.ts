@@ -8,7 +8,8 @@ import sectorsJson from "./taxonomy/sectors.json";
 import industriesJson from "./taxonomy/industries.json";
 import { isInScope } from "./taxonomy/scope_rules";
 import { RETIRED } from "./taxonomy/retired";
-import { isMerged } from "./taxonomy/merges";
+import { isMerged, survivorOf } from "./taxonomy/merges";
+import { TAXONOMY_REDIRECTS } from "./taxonomy/legacy_redirects";
 
 export type Sector = {
   id: string;
@@ -171,13 +172,29 @@ export const SLUG_TO_INDUSTRY: Record<string, Industry> = (() => {
 })();
 
 /**
+ * THE LIVE ACTIVITY AN ID NAMES, OR NOTHING (the goal's A6, 2026-09-24). A merged id
+ * lands on its survivor, as the middleware lands its URL (src/lib/taxonomy/
+ * merges.ts); a retired id, or an id that does not exist, is an activity this
+ * atlas does not cover, and the honest answer for it is nothing. Every
+ * resolver that turns a word or a legacy id into an activity to DISPLAY goes
+ * through this, so no page can be titled for an activity the founder retired
+ * on 2026-08-21.
+ */
+export function liveIndustryFor(id: string | null | undefined): Industry | null {
+  if (!id) return null;
+  const survivorId = survivorOf(id);
+  const survivor = SLUG_TO_INDUSTRY[industryToSlug(survivorId)];
+  return survivor && survivor.id === survivorId ? survivor : null;
+}
+
+/**
  * Hand-curated aliases for shortened or alternate slugs that appear in URLs,
  * outbound links, or user typings. Keys are slug-form (lowercase + dashes);
  * values are canonical industry ids.
  */
 export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   // Shortened manufacturing slugs
-  "metal-products-mfg": "metal_products_mfg",
+  "metal-products-mfg": "metal_fab_machine_shops",
   "food-beverage-mfg": "food_mfg",
   "food_beverage_mfg": "food_mfg",
   "textile-apparel-mfg": "textile_apparel_mfg",
@@ -221,18 +238,26 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "dental": "dental_practices",
   "hairdresser": "hairdressers_beauty",
   "hairdressers": "hairdressers_beauty",
-  "hair-salon": "hair_salons",
+  "hair-salon": "hairdressers_beauty",
   "barber": "barbershops",
   "barbers": "barbershops",
-  "salon": "hair_salons",
+  "salon": "hairdressers_beauty",
   "spa": "day_spas",
   "spas": "day_spas",
   "vet": "veterinary_pet_care",
   "veterinarian": "veterinary_pet_care",
-  "plumber": "residential_construction",
-  "plumbers": "residential_construction",
-  "electrician": "residential_construction",
-  "electricians": "residential_construction",
+  /* WORDS THAT NAME A LIVE TRADE POINT AT IT (the goal's A6, 2026-09-24). These
+     aliases were written before the trade had its own entry, and each one
+     sent the word to the catch-all the 2026-08-21 scope ruling then retired:
+     /gb/london/plumber printed "residential construction", /industries/
+     bakeries "food manufacturing", /gb/london/florist "specialty food
+     production", all three retired. Re-pointed where the live trade is the
+     same business under its own name; a word for an activity the ruling
+     retired keeps its entry and resolves to nothing (see liveIndustryFor). */
+  "plumber": "plumbers",
+  "plumbers": "plumbers",
+  "electrician": "electricians",
+  "electricians": "electricians",
   "trucking": "trucking_freight",
   "freight": "trucking_freight",
   "logistics": "trucking_freight",
@@ -242,12 +267,12 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "grocery": "grocery_stores",
   "supermarket": "grocery_stores",
   "supermarkets": "grocery_stores",
-  "bakery": "food_mfg",
-  "bakeries": "food_mfg",
+  "bakery": "bakeries_retail",
+  "bakeries": "bakeries_retail",
   "real-estate": "real_estate_agencies",
   "realtor": "real_estate_agencies",
   "realtors": "real_estate_agencies",
-  "insurance-agent": "insurance",
+  "insurance-agent": "insurance_brokers",
   "fitness": "sports_fitness",
   "gym": "sports_fitness",
   "gyms": "sports_fitness",
@@ -268,18 +293,18 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "advertising": "marketing_design",
   "agency": "marketing_design",
   "creative-agency": "marketing_design",
-  "architect": "architecture_engineering",
-  "architects": "architecture_engineering",
-  "engineer": "architecture_engineering",
-  "engineering": "architecture_engineering",
+  "architect": "engineering_architecture",
+  "architects": "engineering_architecture",
+  "engineer": "engineering_architecture",
+  "engineering": "engineering_architecture",
   "construction": "residential_construction",
   "builder": "residential_construction",
   "general-contractor": "residential_construction",
   "contractor": "residential_construction",
   "remodeling": "residential_construction",
   "renovation": "residential_construction",
-  "landscaping": "residential_construction",
-  "hvac": "residential_construction",
+  "landscaping": "landscaping_lawn",
+  "hvac": "hvac_services",
   "auto-repair": "auto_repair_shops",
   "garage": "auto_repair_shops",
   "mechanic": "auto_repair_shops",
@@ -290,14 +315,14 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "footwear": "clothing_stores",
   "shoes": "clothing_stores",
   "jewelry": "clothing_stores",
-  "florist": "specialty_food_production",
+  "florist": "florist_shops",
   "wine": "specialty_food_production",
   "winery": "specialty_food_production",
-  "brewery": "beverage_mfg",
+  "brewery": "craft_beer_mfg",
   "distillery": "beverage_mfg",
-  "butcher": "specialty_food_production",
-  "deli": "specialty_food_production",
-  "patisserie": "food_mfg",
+  "butcher": "specialty_grocery",
+  "deli": "specialty_grocery",
+  "patisserie": "bakeries_retail",
   "pizzeria": "restaurants",
   "diner": "restaurants",
   "bistro": "restaurants",
@@ -323,9 +348,9 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "broker": "real_estate_agencies",
   "property-management": "real_estate_agencies",
   "rental-agency": "real_estate_agencies",
-  "insurance-broker": "insurance",
+  "insurance-broker": "insurance_brokers",
   "trucker": "trucking_freight",
-  "courier": "trucking_freight",
+  "courier": "courier_messenger",
   "delivery": "trucking_freight",
   "warehouse": "wholesale_food",
   "wholesale": "wholesale_general",
@@ -336,7 +361,7 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "groomer": "veterinary_pet_care",
   "childcare": "childcare_social",
   "daycare": "childcare_social",
-  "preschool": "primary_secondary_schools",
+  "preschool": "daycare_preschool",
   "school": "primary_secondary_schools",
   "tutor": "vocational_training",
   "tutoring": "vocational_training",
@@ -354,14 +379,35 @@ export const INDUSTRY_SLUG_ALIASES: Record<string, string> = {
   "photographer": "marketing_design",
   "photography": "marketing_design",
   "videographer": "marketing_design",
-  "tailor": "textile_apparel_mfg",
-  "seamstress": "textile_apparel_mfg",
-  "carpenter": "wood_paper_mfg",
-  "furniture-maker": "wood_paper_mfg",
+  "tailor": "tailoring_alterations",
+  "seamstress": "tailoring_alterations",
+  "carpenter": "carpenters_finish",
+  "furniture-maker": "custom_furniture_makers",
   "winemaker": "beverage_mfg",
   "farm": "forestry_logging",
   "agriculture": "forestry_logging",
 };
+
+/** Every live trade's keywords and examples in slug form, each kept only when
+ *  exactly one live trade claims it (slugToIndustry's step 2c). */
+const PHRASE_TO_INDUSTRY: Record<string, Industry> = (() => {
+  const claims = new Map<string, Set<string>>();
+  const slugOf = (s: string) =>
+    stripDiacritics(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  for (const ind of INDUSTRIES) {
+    for (const phrase of [...(ind.keywords ?? []), ...(ind.examples ?? [])]) {
+      const key = slugOf(phrase);
+      if (!key) continue;
+      if (!claims.has(key)) claims.set(key, new Set());
+      claims.get(key)!.add(ind.id);
+    }
+  }
+  const m: Record<string, Industry> = {};
+  for (const [key, ids] of claims) {
+    if (ids.size === 1) m[key] = INDUSTRY_BY_ID[[...ids][0]];
+  }
+  return m;
+})();
 
 /**
  * Tighter fuzzy fallback. Splits both candidate and target into tokens and
@@ -390,12 +436,19 @@ function fuzzyIndustryFallback(slugWords: string): Industry | null {
       }
     }
     let score = 0;
+    let everyToken = true;
     for (const q of queryTokens) {
       if (nameTokens.has(q)) score += 3;
       else if (kwTokens.has(q)) score += 1;
+      else everyToken = false;
     }
-    // Require ALL query tokens to land somewhere; otherwise drop.
-    if (score < queryTokens.length) continue;
+    /* Require ALL query tokens to land somewhere; otherwise drop. This read
+       `if (score < queryTokens.length) continue`, a sum, so one word found in
+       a NAME (worth 3) carried two words found nowhere: "chemicals-mfg",
+       "pharmaceuticals-mfg" and "wood-paper-mfg" each resolved to Custom
+       jewelers (mfg) on its one shared token, and /gb/london/chemicals-mfg
+       printed that page (fetched on production, the goal's A6, 2026-09-24). */
+    if (!everyToken) continue;
     if (score > bestScore) {
       bestScore = score;
       bestInd = ind;
@@ -416,11 +469,11 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
   // 1. Canonical slug exact match
   if (SLUG_TO_INDUSTRY[norm]) return SLUG_TO_INDUSTRY[norm];
 
-  // 2. Alias map exact match
-  const aliasId = INDUSTRY_SLUG_ALIASES[norm];
-  if (aliasId && INDUSTRY_BY_ID[aliasId]) return INDUSTRY_BY_ID[aliasId];
-
-  /* 2b. A RETIRED SLUG RESOLVES TO NOTHING. It must never reach the fuzzy
+  /* 1a. A RETIRED SLUG RESOLVES TO NOTHING, before any other step reads it
+     (moved up from after the aliases, the goal's A6, 2026-09-24: the id
+     step below would otherwise hand a merged slug such as wine-bars its
+     survivor, and what those addresses answer is the founder's open
+     ruling, QUEUE launch:retired-trades-live). It must never reach the fuzzy
      fallback below, and this is not a theoretical hazard: measured the moment
      the 2026-08-21 scope retirement landed, "management-consulting" fuzzy
      matched to SHORT-TERM RENTAL MANAGEMENT and "residential-construction" to
@@ -432,6 +485,48 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
      the honest answer is that we do not hold it. The middleware redirects the
      URL; callers get null and self-omit. */
   if (RETIRED[norm]) return null;
+
+  /* 1b. AN ID IS EXACT TOO, as written or hyphenated (craft_beer_mfg,
+     craft-beer-mfg), the way resolveIndustryIdExact below reads one; a merged
+     id answers its survivor and a retired one nothing (the goal's A6,
+     2026-09-24). Ids reached this function only through the fuzzy step, which
+     found six live ones by luck, missed the rest once it required every word,
+     and sent specialty_grocery to Specialty trades. */
+  const byId = INDUSTRY_BY_ID[norm.replace(/-/g, "_")];
+  if (byId) return liveIndustryFor(byId.id);
+
+  /* 1c. A RENAMED SLUG IS THE PAGE ITS URL NOW LANDS ON: the middleware
+     answers it with a 308 to the target (src/lib/taxonomy/legacy_redirects.ts),
+     so the resolver names the same activity or, for a target the 2026-08-21
+     ruling retired, nothing. One hop only; a target is a canonical slug. */
+  const moved = TAXONOMY_REDIRECTS[norm];
+  if (moved && moved !== norm) return SLUG_TO_INDUSTRY[moved] ?? null;
+
+  /* 2. Alias map exact match, and only ever to a LIVE activity (the goal's A6, 2026-09-24).
+     This returned INDUSTRY_BY_ID[aliasId], which holds all 243 activities, the
+     retired ones included, so 53 aliases handed a retired activity to every
+     page that asked: /industries/consulting printed "Management consulting",
+     the one the ruling named. An alias hit now answers the live activity, a
+     merged one's survivor, or nothing; it never falls to the fuzzy step
+     below, for the reason 2b gives. */
+  const aliasId = INDUSTRY_SLUG_ALIASES[norm];
+  const aliasLive = aliasId ? liveIndustryFor(aliasId) : null;
+  if (aliasLive) return aliasLive;
+
+  /* 2c. A LIVE TRADE'S OWN KEYWORD OR EXAMPLE, WHOLE ("dry-cleaners",
+     "youth-hostels", "tattoo-parlors"), is that trade when no other live
+     trade claims the same phrase (the goal's A6, 2026-09-24). These reached
+     their trade through the fuzzy step's old sum, which let one strong word
+     carry the rest; the every-word rule below cannot see a plural the name
+     does not carry, so the phrases the taxonomy itself lists are read
+     exactly instead. */
+  const byPhrase = PHRASE_TO_INDUSTRY[norm];
+  if (byPhrase) return byPhrase;
+
+  /* An alias to an activity this atlas does not cover stops here: a live
+     trade's own phrase above may still claim the word ("delivery" is a
+     courier's), the fuzzy step below may not. */
+  if (aliasId) return null;
 
   // 3. Tight fuzzy fallback (word-boundary token match, every token required)
   return fuzzyIndustryFallback(norm.replace(/-/g, " "));
