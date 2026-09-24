@@ -39,6 +39,15 @@
       "since": "plan step 3, 2026-09-17: the trade page joins the filter with its spine (MODEL.md 8.6, floor 16); its sections are ad-hoc until file 04"
     },
     {
+      "surface": "cell",
+      "slugs": [
+        "gb",
+        "london",
+        "barbershops"
+      ],
+      "since": "the goal of 2026-09-24, E5 (QUEUE harness:thin-trade-exemplar): the trade page a reader meets in the rebuilt form (/gb/london/restaurants serves the July page, QUEUE launch:exemplar-url-serves-the-july-page) and a thin trade, as AF stands beside GB: no cost breakdown (the cost to open on BentoMetric) and the net margin card withheld, so the composition is measured where the data is thin and never on restaurants alone; listed once its holes reached zero (website 1a47b5e1)"
+    },
+    {
       "surface": "industry",
       "slugs": [
         "restaurants"
