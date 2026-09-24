@@ -58,7 +58,12 @@ export function WorkedFigure({ label, figure, working, accent = false, list = fa
   const shown = working.slice(0, WORKING_MAX);
   return (
     <div data-archetype="worked-figure" data-working={String(shown.length)} data-form={list ? "list" : "row"} className="[container-type:inline-size]">
-      <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-center [@container(min-width:560px)]:gap-x-8">
+      {/* THE WORKING'S COLUMN BY ITS FORM (2026-09-24, the goal's A5): the list
+          carries long words (a licence's name) and keeps the wider column; the
+          row carries two or three short companions and takes an equal one,
+          because at 1.5 parts a row of two left 170 by 180 blank at its right
+          end (the customers card seated full width at 768, 24 London trades). */}
+      <div className={`[@container(min-width:560px)]:grid ${list ? "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]" : "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"} [@container(min-width:560px)]:items-center [@container(min-width:560px)]:gap-x-8`}>
         <div>
           <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div>
           <Fig className={`mt-1 block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</Fig>

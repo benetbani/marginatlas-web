@@ -278,7 +278,13 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      never sits over nothing. The opening's two cards build for every
      resolving cell (the strip stands withheld off `moneyShown`, the notes
      draw on every trade), so the band always holds two children. */
-  const hasSpread = buildTradeSpread(d) != null;
+  const spreadData = buildTradeSpread(d);
+  const hasSpread = spreadData != null;
+  /* THE SPREAD DRAWS ONLY WHERE MONEY IS SHOWN (the goal's A5, 2026-09-24): off
+     `moneyShown` it printed "Not measured yet: a year's takings for this trade
+     in this city." (120 of the 138 live London trades), the absence card he
+     refused; there `16 customers` takes its seat below. */
+  const spreadDrawn = (spreadData?.marks.length ?? 0) > 0;
   const hasSuits = typeof d.meta?.industry_id === "string" && typeof d.meta?.iso2 === "string";
   /* `03 permits | 04 open` (turn-one.tsx): both builders on every resolving
      cell whose trade holds a shard (243), the permits off the licences and
@@ -326,6 +332,9 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const worth = buildWorth(d);
   /* `16 customers` (exit.tsx): one regular customer's year off the shard's spend and visits, on every trade holding either (2026-09-20 night). */
   const customers = buildTradeCustomers(d.meta?.industry_id);
+  /* A5's two seats: the customers card in the exit only where the spread drew (it moved to the opening otherwise), the worth only as its strip. */
+  const exitCustomers = spreadDrawn ? customers : null;
+  const worthDrawn = worth && worth.state === "strip" ? worth : null;
   const doors = buildTradeCloseDoors(d);
   /* The turns, by whether a card stands under each: turn one holds the
      money cards and the peers (the peers only where a peer resolves, the
@@ -350,7 +359,25 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           the numbers): 8.6's own expectation was that five notes would open
           air under the strip and the split would move to 2-3 with `02` wide;
           the card holds four notes, and the measurement decided the split. */}
-      {hasSpread || hasSuits ? (
+      {/* WHERE THE SPREAD IS WITHHELD, WHAT A CUSTOMER SPENDS TAKES ITS SEAT
+          (the goal's A5, 2026-09-24): the opening asks "is the money in the
+          range I pictured", and where the trust gate withholds a year's
+          takings (a filled London row without a curated entry) the card that
+          still answers money coming in is a regular's year, the trade's own,
+          which every page holds; it stood in the exit beside the worth, and
+          the worth leaves with the spread (below), so nothing prints twice
+          and no absence card stands. Money-shown pages keep the spread. */}
+      {spreadDrawn ? (
+        <Band split="1-2" stack="lg">
+          <Spread d={d} />
+          <Suits d={d} />
+        </Band>
+      ) : customers && hasSuits ? (
+        <Band split="1-2" stack="lg">
+          <CustomersCard customers={customers} />
+          <Suits d={d} />
+        </Band>
+      ) : hasSpread || hasSuits ? (
         <Band split="1-2" stack="lg">
           <Spread d={d} />
           <Suits d={d} />
@@ -507,15 +534,20 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           the other. Both draw on every trade holding a shard; a survivor
           stands alone at two thirds. Measured on London, the numbers in the
           commit. */}
-      {customers && worth ? (
+      {/* THE WORTH DRAWS ONLY ITS STRIP (the goal's A5): its withheld state
+          ("Not measured yet: the take-home here that a sale price is worked
+          from.", 117 of the 138 live London trades) and its other-basis state
+          ("Not worked out yet", 4) are absence cards, and they leave; the
+          customers card stands here only where it did not move up. */}
+      {exitCustomers && worthDrawn ? (
         <Band split="1-1">
-          <CustomersCard customers={customers} />
-          <WorthCard worth={worth} />
+          <CustomersCard customers={exitCustomers} />
+          <WorthCard worth={worthDrawn} />
         </Band>
-      ) : customers ? (
-        <Band split="2-1" stack="lg"><CustomersCard customers={customers} /></Band>
-      ) : worth ? (
-        <Band split="2-1" stack="lg"><WorthCard worth={worth} /></Band>
+      ) : exitCustomers ? (
+        <Band split="2-1" stack="lg"><CustomersCard customers={exitCustomers} /></Band>
+      ) : worthDrawn ? (
+        <Band split="2-1" stack="lg"><WorthCard worth={worthDrawn} /></Band>
       ) : null}
       {/* `15 close`, FULL WIDTH (8.6, R1), the page's third of three: the
           terminus on the hero band the old close stood on, the sanction the

@@ -367,7 +367,15 @@ function floorFor(name) {
 }
 
 function inPage(ctx) {
-  const { floor, wide } = ctx;
+  const { floor: surfaceFloor, wide, noAnswerRelief = 0 } = ctx;
+  /* THE TRADE PAGE WHOSE ANSWER IS WITHHELD (the goal's A5, 2026-09-24): off
+     `moneyShown` (the trust gate's sixth guard) the spread and the worth leave
+     the page instead of printing "Not measured yet", so its floor is the
+     spine a money-shown page draws less those two, and the answer card says
+     which page it is (`data-state="no-answer"` on its grid). A money-shown page keeps
+     the whole floor. */
+  const noAnswer = noAnswerRelief > 0 && !!document.querySelector('[data-archetype="answer-card"] [data-state="no-answer"], [data-archetype="answer-card"][data-state="no-answer"]');
+  const floor = surfaceFloor != null && noAnswer ? surfaceFloor - noAnswerRelief : surfaceFloor;
   const out = [];
   const unmeasured = [];
   const push = (id, rule, detail) => out.push({ id, rule, detail });
@@ -877,7 +885,7 @@ function inPage(ctx) {
     }
   }
 
-  return { found: out, unmeasured, blocks };
+  return { found: out, unmeasured, blocks, floor };
 }
 
 const reds = [];
@@ -904,6 +912,7 @@ for (const file of files) {
   const perFile = new Map();
   const unmeasured = new Set();
   let blocksAtWide = null;
+  let floorAtWide = floor;
   for (const w of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 1200 }, deviceScaleFactor: 1, reducedMotion: "reduce" });
     const page = await ctx.newPage();
@@ -912,8 +921,8 @@ for (const file of files) {
     /* Real flag images need a decode to report a true natural size; a
        data-URI fixture image needs no network for this and still benefits. */
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
-    const { found, unmeasured: um, blocks } = await page.evaluate(inPage, { floor, wide: w === WIDTHS[0] });
-    if (blocks != null) blocksAtWide = blocks;
+    const { found, unmeasured: um, blocks, floor: pageFloor } = await page.evaluate(inPage, { floor, wide: w === WIDTHS[0], noAnswerRelief: name.startsWith("cell-") ? 2 : 0 });
+    if (blocks != null) { blocksAtWide = blocks; floorAtWide = pageFloor; }
     const countThisWidth = new Map();
     for (const f of found) {
       const key = `${f.id}␟${f.rule}␟${f.detail}`;
@@ -935,7 +944,7 @@ for (const file of files) {
   }
   for (const u of unmeasured) console.log(`  ${name}: ${u}`);
   /* The floor line on every page, met or not (plan step 50): the reds above carry a breach; this line carries the count. */
-  if (blocksAtWide != null && floor != null && blocksAtWide >= floor) console.log(`  ${name}: BLOCK FLOOR: ${blocksAtWide} blocks against a floor of ${floor}, met`);
+  if (blocksAtWide != null && floorAtWide != null && blocksAtWide >= floorAtWide) console.log(`  ${name}: BLOCK FLOOR: ${blocksAtWide} blocks against a floor of ${floorAtWide}${floorAtWide !== floor ? " (the no-answer trade page's: the spread and the worth withheld)" : ""}, met`);
 }
 await browser.close();
 console.log(`model laws: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
