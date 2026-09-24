@@ -92,16 +92,15 @@ export function PremiumCard({ id = "premium", premium }: { id?: string; premium:
 
 /**
  * `03 compare`, FULL WIDTH by the wide-table sanction (the archetype draws
- * its own `data-wide-table` wrapper): the seven districts side by side, what
- * a shop takes there for three trades, MEASURED since 2026-09-24
- * (hood_compare_rows.ts says why the rent and visitor columns left), the
- * home row tinted on a district page and no row home on the hub, no flags
- * (every row is in one city, MarkList's own law for a mark that would say
- * the same thing seven times). Measured figures carry no sample mark.
+ * its own `data-wide-table` wrapper): the seven districts side by side, two
+ * columns, the home row tinted on a district page and no row home on the
+ * hub, no flags (every row is in one city, MarkList's own law for a mark
+ * that would say the same thing seven times), the rent column modelled so
+ * the opener carries the mark.
  */
 export function CompareCard({ id = "compare", compare }: { id?: string; compare: HoodCompareData | null }) {
   if (!compare) return null;
-  return <CompareTable id={id} icon="benchmark" kicker={COPY.hoodCompare.kicker} entityHead={compare.entityHead} rows={compare.rows} columns={compare.columns} note={compare.note ?? undefined} caveat={compare.caveat} flags={false} />;
+  return <CompareTable id={id} icon="benchmark" kicker={COPY.hoodCompare.kicker} entityHead={compare.entityHead} rows={compare.rows} columns={compare.columns} note={compare.note ?? undefined} caveat={compare.caveat} flags={false} sample />;
 }
 
 /** `04 works`: the drawn blocked seat (M19), waiting on DATA-REQUIREMENTS item 70. */
