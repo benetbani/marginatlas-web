@@ -839,9 +839,11 @@ export function Head({ children, sample, icon }: { children: React.ReactNode; sa
   );
 }
 /* InfoTip , THE educational "?" gloss (rule 24: teach as you inform; rule 7: jargon gets
- * a gloss). A focusable button trigger, so it works on TAP at 390px (focus shows the tip),
- * not just hover; the gloss also rides the aria-label for screen readers. Educational copy
- * only , never sole-source data (that stays visible text). Promoted from the country page. */
+ * a gloss). A focusable button trigger that opens on a TAP at 390px, on hover and on
+ * keyboard focus; the gloss is the trigger's description for screen readers. The tap was
+ * lost from 2026-08-21 (the Radix move) to 2026-09-24 and is held by
+ * scripts/verify_gloss_tap.mjs since. Educational copy only , never sole-source data (that
+ * stays visible text). Promoted from the country page. */
 /* InfoTip MOVED to src/components/kit/InfoTip.tsx and re-exported here, so all
    thirteen call sites keep importing it from the kit unchanged.
 

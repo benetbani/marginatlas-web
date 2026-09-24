@@ -31,6 +31,23 @@
  * The button also keeps `cursor-help` and the 3.5 x 3.5 ring, so nothing about
  * the mark a reader sees changes.
  *
+ * ================== A TAP OPENS IT (2026-09-24, the goal's A8) ================
+ *
+ * The move onto Radix cost the phone. A Radix TOOLTIP opens on hover and on
+ * keyboard focus and deliberately never from a touch: its trigger marks a
+ * pointer press, ignores the focus that follows it, and closes on the click.
+ * So from 2026-08-21 a tapped "?" took focus and showed nothing, on every page
+ * at every phone width, while the kit's own note still said "it works on TAP
+ * at 390px" (measured on production with a touch device: the tip on the city's
+ * premises, the district rent card and the country's registering card, each
+ * focused, none open). The tip is now CONTROLLED: hover and keyboard focus
+ * still open it through Radix; a press toggles it from the state it was in
+ * when the press began, so a first tap opens it and a second closes it; a
+ * keyboard Enter toggles it from where it stands; the click's default is
+ * prevented so Radix's close-on-click does not undo the tap. A tap anywhere
+ * else, Escape, a blur or a scroll closes it, as before.
+ * scripts/verify_gloss_tap.mjs bundles this component and taps it.
+ *
  * ================== WHY THE PROVIDER IS INSIDE THIS COMPONENT ===============
  *
  * Radix wants one `TooltipProvider` above any tooltip. Putting it in the root
@@ -56,12 +73,25 @@ export function InfoTip({
   gloss: string;
   className?: string;
 }) {
+  const [open, setOpen] = React.useState(false);
+  /* The state at the moment a press began: Radix closes an open tip on the
+     press itself, so the click that follows must toggle from here, not from
+     the state Radix has just set. */
+  const openAtPress = React.useRef(false);
   return (
     <TooltipProvider delayDuration={150}>
-      <Tooltip>
+      <Tooltip open={open} onOpenChange={setOpen}>
         <TooltipTrigger asChild>
           <button
             type="button"
+            onPointerDown={() => {
+              openAtPress.current = open;
+            }}
+            onClick={(event) => {
+              event.preventDefault();
+              /* detail 0: a click from the keyboard, with no press before it. */
+              setOpen(event.detail === 0 ? !open : !openAtPress.current);
+            }}
             /* The accessible NAME stays generic and the gloss becomes the
                DESCRIPTION, which Radix wires up. The old component put the
                whole gloss in aria-label, so a screen reader read a paragraph

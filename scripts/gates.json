@@ -1358,6 +1358,17 @@
       "claims": []
     },
     {
+      "name": "gloss-tap",
+      "script": "scripts/verify_gloss_tap.mjs",
+      "args": [],
+      "browser": true,
+      "asserts": "verify_gloss_tap: the \"?\"",
+      "reads": [
+        "src/components/kit/InfoTip.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "search-params-suspense",
       "script": "scripts/verify_search_params_suspense.mjs",
       "args": [],

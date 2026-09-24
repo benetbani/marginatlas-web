@@ -530,6 +530,13 @@ const GATES: Gate[] = [
      every word, and the legacy crosswalk names no retired activity. Planted
      twice (the old alias step, the old fuzzy sum), each watched red. */
   { name: "trade-resolution", script: "scripts/verify_trade_resolution.ts" },
+  /* The "?" gloss opened on hover and keyboard only from 2026-08-21, when it
+     moved onto a Radix tooltip, to 2026-09-24: a tap on a phone focused it and
+     showed nothing (fetched on production with a touch device; the goal's A8).
+     Bundles InfoTip and drives a browser: a tap opens and a second tap closes
+     it at 375, hover at 1280, focus and Escape from the keyboard. Planted twice
+     (the old component, and the fix without preventDefault), each watched red. */
+  { name: "gloss-tap", script: "scripts/verify_gloss_tap.mjs", browser: true },
   /* Two live routes were invisible to crawlers: a client island read
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */
