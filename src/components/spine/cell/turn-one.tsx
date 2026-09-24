@@ -103,6 +103,7 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
   const [lead, ...rest] = permits.cells;
   const worked = !!lead && rest.length >= WORKING_MIN;
   const fees = permits.cells.filter((c) => c.note).map((c) => ({ label: c.label, value: String(c.note) }));
+  const plus = worked && fees.length >= 2;
   return (
     /* The spare height the level lends this card (the bill beside it stands
        431 to its 358 at 1280, measured 2026-09-20) splits above and below the
@@ -126,11 +127,22 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
           under the basis left a 312 by 120 blank beside them (the filter). */}
       <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
         <div>
-          {permits.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.withheld}</p> : null}
           <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.basis}</p>
           <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p>
         </div>
-        {worked && fees.length >= 2 ? <div className="[@container(min-width:560px)]:pl-6"><DetailPanel name={`${id}-fees`} summary={COPY.tradePermits.feeSummary} rows={fees} /></div> : null}
+        {/* THE WITHHELD LINE STANDS IN THE RIGHT COLUMN, over the plus where
+            there is one (the goal's A9, 2026-09-24): stacked over the basis on
+            the left it lengthened that column beside the waits' short right
+            one, a blank of 340 by 120 the page filter read on three London
+            trades once their US-named licences left the card. Under 560 the
+            floor stacks in reading order: the basis, the foot, the line, the
+            plus. */}
+        {permits.withheld || plus ? (
+          <div className="[@container(min-width:560px)]:pl-6">
+            {permits.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.withheld}</p> : null}
+            {plus ? <DetailPanel name={`${id}-fees`} summary={COPY.tradePermits.feeSummary} rows={fees} /> : null}
+          </div>
+        ) : null}
       </div>
     </Box>
   );

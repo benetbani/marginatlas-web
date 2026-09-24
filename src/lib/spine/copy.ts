@@ -1301,6 +1301,9 @@ export const COPY = {
     foot: "The waits are modelled.",
     withheldOne: "One licence has no wait on file and is not shown.",
     withheldMany: "{n} licences have no wait on file and are not shown.",
+    /* The goal's A9 (permits_rows.ts `isUsJurisdictionLicence`): a licence named for a United States jurisdiction, withheld off a US page. */
+    foreignOne: "One licence is named for the United States and is not shown here.",
+    foreignMany: "{n} licences are named for the United States and are not shown here.",
   },
   /** `04 open` (MODEL.md 8.6; the same dispatch): one card, three states. The
    *  held basis says what the total is (the whole bill here) and what the

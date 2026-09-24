@@ -357,7 +357,7 @@ export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell 
 export const cellPermitsKey = (c: CellHeroInstance) => `cell:${c.key}:permits`;
 const permitsWhy = (p: NonNullable<ReturnType<typeof buildPermits>>) => `trade block 03: ${p.cells.length} licences over their typical days${p.withheld ? ", one withheld" : ""}, the longest wait at 30 under its name over the others' waits at 16 (the worked figure since 2026-09-24), the fee bands behind the plus`;
 export function pickCellPermitsInstances(cell: CellHeroInstance[]): Instance[] {
-  return cell.filter((c) => cellServes(c.key, "permits")).map((c) => ({ c, p: buildPermits(c.seed?.meta?.industry_id) })).filter((x) => x.p).map(({ c, p }) => ({ iso2: cellPermitsKey(c), why: permitsWhy(p!) }));
+  return cell.filter((c) => cellServes(c.key, "permits")).map((c) => ({ c, p: buildPermits(c.seed?.meta?.industry_id, c.seed?.meta?.iso2) })).filter((x) => x.p).map(({ c, p }) => ({ iso2: cellPermitsKey(c), why: permitsWhy(p!) }));
 }
 export const cellOpenKey = (c: CellHeroInstance) => `cell:${c.key}:open`;
 const openWhy = (o: NonNullable<ReturnType<typeof buildOpen>>) =>
@@ -1224,7 +1224,7 @@ export function WorkedFigureStories({ cell = [] }: { cell?: CellHeroInstance[] }
         return <Story kind="worked-figure" key={cellOpenKey(c)} iso2={cellOpenKey(c)} why={openWhy(o)}><div style={{ maxWidth: 693 }}><OpenCard id={`open-cell-${c.key}`} open={o} /></div></Story>;
       })}
       {cell.filter((c) => cellServes(c.key, "permits")).map((c) => {
-        const p = buildPermits(c.seed?.meta?.industry_id);
+        const p = buildPermits(c.seed?.meta?.industry_id, c.seed?.meta?.iso2);
         if (!p) return null;
         return <Story kind="worked-figure" key={cellPermitsKey(c)} iso2={cellPermitsKey(c)} why={permitsWhy(p)}><div style={{ maxWidth: 347 }}><PermitsCard id={`permits-cell-${c.key}`} permits={p} /></div></Story>;
       })}

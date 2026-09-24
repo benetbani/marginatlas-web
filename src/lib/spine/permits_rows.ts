@@ -68,18 +68,40 @@ export type PermitsData = {
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-export function buildPermits(industryId: string): PermitsData | null {
+/**
+ * A LICENCE NAMED FOR A UNITED STATES JURISDICTION (the goal's A9, 2026-09-24).
+ * The shard's licences are the trade's, not a country's, and the card's basis
+ * says "typical for the trade anywhere"; nine of the live trades' names are
+ * not: a "Federal brewer's notice", a "State dental licence", a "State clinical
+ * licence (LCSW, LPC, LMFT, psychologist)". Photographed on production on
+ * /gb/london/craft-breweries-taprooms, where a London brewery was told to file
+ * a Federal notice. A name carrying "federal", or "state" without "or
+ * national" beside it, is that country's own: printed on a United States page,
+ * withheld with its line everywhere else. "State or national pharmacy premises
+ * permit" names both and prints anywhere. The UK's own licences are research
+ * (DATA-REQUIREMENTS item 92), never a renamed US one.
+ */
+export function isUsJurisdictionLicence(name: string): boolean {
+  if (/\bfederal\b/i.test(name)) return true;
+  return /\bstate\b/i.test(name) && !/\b(?:state or national|national or state)\b/i.test(name);
+}
+
+export function buildPermits(industryId: string, iso2?: string | null): PermitsData | null {
   const names = industryRows(industryId, PERMITS_METRICS.name);
   if (names.length === 0) return null;
   const days = new Map(industryRows(industryId, PERMITS_METRICS.days).map((f) => [f.rowKey, f.value] as const));
   const bands = new Map(industryRows(industryId, PERMITS_METRICS.band).map((f) => [f.rowKey, typeof f.value === "string" ? f.value.trim().toLowerCase() : ""] as const));
   const rows: Array<{ key: string; name: string; days: number; band: "low" | "medium" | "high" | null }> = [];
   let zero = 0;
+  let foreign = 0;
+  /* A country given and not the United States: its page withholds the US-named licences (above). No country: every name, as the copy sweeps read them. */
+  const offUs = typeof iso2 === "string" && iso2.trim() !== "" && iso2.trim().toUpperCase() !== "US";
   for (const n of names) {
     const name = typeof n.value === "string" ? n.value.trim() : "";
     const d = days.get(n.rowKey);
     if (!name || !isNum(d) || d < 0) continue;
     if (d === 0) { zero++; continue; }
+    if (offUs && isUsJurisdictionLicence(name)) { foreign++; continue; }
     const b = bands.get(n.rowKey);
     rows.push({ key: n.rowKey, name, days: Math.round(d), band: b === "low" || b === "medium" || b === "high" ? b : null });
   }
@@ -87,8 +109,10 @@ export function buildPermits(industryId: string): PermitsData | null {
   const longest = rows.reduce<typeof rows[number] | null>((best, r) => (best == null || r.days > best.days ? r : best), null);
   const ordered = longest ? [longest, ...rows.filter((r) => r !== longest)] : rows;
   const cells: KvCell[] = ordered.map((r) => ({ key: r.key, label: r.name, value: daysFigure(r.days), note: r.band ? COPY.tradePermits.feeBand[r.band] : undefined, confidence: "modeled" }));
-  if (cells.length === 0 && zero === 0) return null;
-  const withheld = zero === 0 ? null : zero === 1 ? COPY.tradePermits.withheldOne : COPY.tradePermits.withheldMany.replace("{n}", String(zero));
+  if (cells.length === 0 && zero === 0 && foreign === 0) return null;
+  const zeroLine = zero === 0 ? null : zero === 1 ? COPY.tradePermits.withheldOne : COPY.tradePermits.withheldMany.replace("{n}", String(zero));
+  const foreignLine = foreign === 0 ? null : foreign === 1 ? COPY.tradePermits.foreignOne : COPY.tradePermits.foreignMany.replace("{n}", String(foreign));
+  const withheld = [zeroLine, foreignLine].filter((l): l is string => l != null).join(" ") || null;
   return {
     industryId,
     cells,
@@ -96,7 +120,7 @@ export function buildPermits(industryId: string): PermitsData | null {
     withheld,
     basis: COPY.tradePermits.basis,
     foot: COPY.tradePermits.foot,
-    count: rows.length + zero,
+    count: rows.length + zero + foreign,
     confidence: "modeled",
   };
 }

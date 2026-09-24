@@ -544,6 +544,12 @@ const GATES: Gate[] = [
      local module, must call it. No browser, no network: a source read.
      Planted (the guard removed from gloss-tap), watched red. */
   { name: "browser-gates-skip", script: "scripts/verify_browser_gates_skip.ts" },
+  /* A London craft brewery was told to file a "Federal brewer's notice" (the
+     goal's A9, fetched on production 2026-09-24): the trade's licences are the
+     shard's, not a country's, and nine names across eight live trades are the
+     United States' own. Off a US page they are withheld with a stated line;
+     on a US page they print. Planted (the withholding removed), watched red. */
+  { name: "licence-jurisdiction", script: "scripts/verify_licence_jurisdiction.ts" },
   /* Two live routes were invisible to crawlers: a client island read
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */

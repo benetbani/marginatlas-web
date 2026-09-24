@@ -291,7 +291,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      the cost to open in whichever of its three states the cell is in, so the
      band always holds two children; a sector-average cell (industry_id
      `default`, no shard) draws neither and the band does not draw. */
-  const permits = buildPermits(d.meta?.industry_id);
+  const permits = buildPermits(d.meta?.industry_id, d.meta?.iso2);
   const open = buildOpen(d);
   /* `05 split | 06 team` (turn-one.tsx): the split off the seed's one-builder
      net and the trade's lines, the team off the shard's roles and the
