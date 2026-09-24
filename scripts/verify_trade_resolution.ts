@@ -24,7 +24,10 @@
  *   6. a word the fuzzy step resolves has every one of its words in the
  *      trade's name or keywords (the rule its own comment states);
  *   7. the legacy crosswalk names a live activity or nothing;
- *   8. the cases that were live faults answer as ruled.
+ *   8. the cases that were live faults answer as ruled;
+ *   9. an alias the taxonomy's own phrases give to a live trade lands on that
+ *      trade or on one more exact beneath it (the goal's A7: "hostel" printed
+ *      Hotels & lodging while Hostels is live).
  *
  * BLIND SPOT: it reads the resolvers, not the pages. A route that names a page
  * from a database row without asking a resolver would pass here; the live
@@ -73,6 +76,32 @@ for (const [word, target] of aliases) {
   const want = liveIndustryFor(target)?.id ?? null;
   const claimedFirst = !!SLUG_TO_INDUSTRY[word] || !!INDUSTRY_BY_ID[word.replace(/-/g, "_")] || !!(TAXONOMY_REDIRECTS as Record<string, string>)[word];
   if (want && got !== want && !claimedFirst) fail(TAX, `the alias "${word}" points at ${target} (live as ${want}) and resolves to ${shown(got)}`, "resolve an alias to its target's live activity before any other step");
+}
+
+// 9. An alias the taxonomy's own phrases claim lands on the claimant or a trade beneath it.
+const claims = new Map<string, Set<string>>();
+for (const i of INDUSTRIES) {
+  for (const p of [i.name, ...(i.keywords ?? []), ...(i.examples ?? [])]) {
+    const k = slugify(p);
+    if (!claims.has(k)) claims.set(k, new Set());
+    claims.get(k)!.add(i.id);
+  }
+}
+const ancestry = (id: string): string[] => {
+  const out: string[] = [];
+  for (let at: string | undefined = id, n = 0; at && n < 8; n++) {
+    out.push(at);
+    at = (INDUSTRY_BY_ID[at] as { parent_id?: string } | undefined)?.parent_id;
+  }
+  return out;
+};
+let claimed = 0;
+for (const [word] of aliases) {
+  const owners = claims.get(word);
+  const got = idOf(word);
+  if (!owners || !got) continue;
+  claimed++;
+  if (!ancestry(got).some((a) => owners.has(a))) fail(TAX, `the alias "${word}" lands on ${got}, and the taxonomy's own phrase "${word}" belongs to ${[...owners].join(", ")}`, "point the alias at the trade the word names, or at one more exact beneath it");
 }
 
 // 3. Every retired slug, to nothing.
@@ -138,6 +167,14 @@ const PINNED: Array<[string, string | null]> = [
   ["delivery", "courier_messenger"],
   ["specialty_grocery", "specialty_grocery"],
   ["zz-not-a-trade", null],
+  ["hostel", "hostels"],
+  ["jewelry", "jewelry_stores"],
+  ["pub", "pubs_taverns"],
+  ["yoga", "yoga_pilates"],
+  ["bnb", "hotels_lodging"],
+  ["photographer", "photography_studios"],
+  ["videographer", "photography_studios"],
+  ["barbers", "barbershops"],
 ];
 for (const [input, want] of PINNED) {
   const got = idOf(input);
@@ -150,4 +187,4 @@ if (reds.length) {
   console.error(`verify_trade_resolution: ${reds.length} red(s) above`);
   process.exit(1);
 }
-console.log(`verify_trade_resolution: ${INDUSTRIES.length} live trades resolve to themselves by slug and by id; ${aliases.length} aliases, ${Object.keys(RETIRED).length} retired slugs and every renamed slug answer a live trade or nothing; ${corpus.size} names, keywords, examples and slugs checked, ${resolved} resolve, none to an activity the atlas does not cover, and the ${fuzzy} the fuzzy step answers carry every word; the legacy crosswalk names a live activity or nothing; ${PINNED.length + 1} pinned addresses answer as ruled.`);
+console.log(`verify_trade_resolution: ${INDUSTRIES.length} live trades resolve to themselves by slug and by id; ${aliases.length} aliases, ${Object.keys(RETIRED).length} retired slugs and every renamed slug answer a live trade or nothing; ${corpus.size} names, keywords, examples and slugs checked, ${resolved} resolve, none to an activity the atlas does not cover, and the ${fuzzy} the fuzzy step answers carry every word; the legacy crosswalk names a live activity or nothing; ${claimed} aliases the taxonomy's phrases claim land on the claimant or beneath it; ${PINNED.length + 1} pinned addresses answer as ruled.`);
