@@ -80,7 +80,7 @@ import { buildHoodPremium } from "@/lib/spine/hood_premium_rows";
 import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
 import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
 import { buildHoodCloseDoors } from "@/lib/spine/close_rows";
-import { HoodTake, RankCard, PremiumCard, CompareCard, WorksSeat, CharacterCard, HoodClose } from "./blocks";
+import { HoodTake, RankCard, PremiumCard, CompareCard, CharacterCard, HoodClose } from "./blocks";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildHoodCrumbs } from "@/lib/spine/crumb_rows";
@@ -99,7 +99,7 @@ import { buildHoodCrumbs } from "@/lib/spine/crumb_rows";
 export const LOUD_SEATS = [
   { seat: 1, card: "00 take", figure: "the spread, the dearest against the cheapest, 40; on a district page the district's own rent", state: "LIT", condition: "8.8's seat table, its 2026-09-19 bracket (RULED: 2.50x on London; the table's first words, the lightest district's multiple, are the 1.00x base the ruling replaced, printed as a companion); real data, one city, `--terra-text` at 40, the page's only 40" },
   { seat: 2, card: "turn one", figure: "none", state: "NO HONEST CANDIDATE", condition: "8.8: the 2026-09-10 no-featuring ruling forbids marking any one district loud in `01 rank` (every bar one neutral, every figure one ink), and MarkList's law keeps `02`'s headline at ink" },
-  { seat: 3, card: "04 works", figure: "the leading trade's lift figure", state: "HELD EMPTY", condition: "8.8: HELD EMPTY on DATA-REQUIREMENTS item 70 (the calibration, 4 of 21 London rows within 30 percent); best_trades is real on the seven since the 2026-09-17 boundary fix, so the seat no longer waits on the slug fault; the drawn blocked seat until then" },
+  { seat: 3, card: "04 works", figure: "the leading trade's lift figure", state: "NO HONEST CANDIDATE", condition: "8.8: the card LEFT THE PAGE 2026-09-24 (the goal's NEVER list, no 'not gathered yet' card on a UK page); the lift figure waits on DATA-REQUIREMENTS item 70 (the calibration, 4 of 21 London rows within 30 percent) and the card returns with it" },
 ] as const satisfies readonly LoudSeat[];
 
 export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: any; focus?: string | null }) {
@@ -169,13 +169,23 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
             (London's seven), so the band holds two children; a city whose
             cheapest district holds no row would show the seat alone, LONE CARD
             by the rule. */}
-        <Band split="1-2" stack="lg">
-          <WorksSeat />
-          <CharacterCard character={character} />
-        </Band>
-        {/* `06 close`, FULL WIDTH on the hero band (8.8, R1; the trade's
-            precedent): the exit carries no break (PART 1). */}
-        <Band hero><HoodClose doors={doors} /></Band>
+        {/* THE WORKS SEAT LEFT THE PAGE (the goal of 2026-09-24, its NEVER
+            list: "a 'not gathered yet' card on a UK page"; every admitted city
+            is London today): "We don't know yet what lifts sales most" was that
+            card in other words, the lift figure waiting on DATA-REQUIREMENTS
+            item 70. Its level re-seats as the notes beside the exit, 2-1
+            (measured 2026-09-24 at 1280: the notes 693 by 187, the exit's three
+            doors stacked in the third about as tall), stacked until lg as the
+            band before. A district with no notes keeps the exit on the hero
+            band, full width, as before. */}
+        {character ? (
+          <Band split="2-1" stack="lg">
+            <CharacterCard character={character} />
+            <HoodClose doors={doors} />
+          </Band>
+        ) : (
+          <Band hero><HoodClose doors={doors} /></Band>
+        )}
       </div>
     </SpineShell>
   );

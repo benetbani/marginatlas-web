@@ -2209,7 +2209,7 @@ export const COPY = {
   },
   hoodChapters: {
     rent: "What rent costs, district by district",
-    works: "What lifts revenue, and what the place is like",
+    works: "What the place is like",
   },
   hoodCharacter: {
     kicker: "What it is like",

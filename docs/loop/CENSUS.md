@@ -101,7 +101,7 @@ Loud today: 1 of 3, as `LOUD_SEATS` in hood-view.tsx declares (a LIT seat is unl
 |---|---|---|---|---|
 | 1 | 00 take | the spread, the dearest against the cheapest, 40; on a district page the district's own rent | LIT | 8.8's seat table, its 2026-09-19 bracket (RULED: 2.50x on London; the table's first words, the lightest district's multiple, are the 1.00x base the ruling replaced, printed as a companion); real data, one city, `--terra-text` at 40, the page's only 40 |
 | 2 | turn one | none | NO HONEST CANDIDATE | 8.8: the 2026-09-10 no-featuring ruling forbids marking any one district loud in `01 rank` (every bar one neutral, every figure one ink), and MarkList's law keeps `02`'s headline at ink |
-| 3 | 04 works | the leading trade's lift figure | HELD EMPTY | 8.8: HELD EMPTY on DATA-REQUIREMENTS item 70 (the calibration, 4 of 21 London rows within 30 percent); best_trades is real on the seven since the 2026-09-17 boundary fix, so the seat no longer waits on the slug fault; the drawn blocked seat until then |
+| 3 | 04 works | the leading trade's lift figure | NO HONEST CANDIDATE | 8.8: the card LEFT THE PAGE 2026-09-24 (the goal's NEVER list, no 'not gathered yet' card on a UK page); the lift figure waits on DATA-REQUIREMENTS item 70 (the calibration, 4 of 21 London rows within 30 percent) and the card returns with it |
 
 ### cell (cell-view.tsx, exit.tsx, market.tsx, masthead.tsx, turn-one.tsx, turn-two.tsx): 19 sections, 19 on archetypes
 
