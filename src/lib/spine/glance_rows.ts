@@ -159,11 +159,11 @@ export function buildGlance(iso2In: string): GlanceData | null {
   const basis = unitParts.length > 0 ? `${unitParts.join("; ")}.`.replace(/^./, (ch) => ch.toUpperCase()) : null;
 
   const withheldCount = missing.reduce((n, m) => n + m.cells, 0);
-  const withheld = missing.length > 0 ? fill(COPY.glance.withheld, { n: String(withheldCount), reasons: missing.map((m) => m.reason).join("; ") }) : null;
+  const withheld = missing.length > 0 ? fill(COPY.glance.withheld, { n: String(withheldCount), reasons: missing.map((m) => m.reason).join(", ") }) : null;
 
   const footParts: string[] = [];
   if (gdpYear != null) footParts.push(fill(COPY.glance.footYear, { year: String(gdpYear) }));
-  if (modelled.length > 0) {
+  if (modelled.length > 0 && COPY.glance.footModelled) {
     const what = modelled.length === 1 ? modelled[0] : `${modelled.slice(0, -1).join(", ")} and ${modelled[modelled.length - 1]}`;
     const sentence = fill(COPY.glance.footModelled, { what, verb: modelled.length === 1 ? "is" : "are" });
     footParts.push(sentence.charAt(0).toUpperCase() + sentence.slice(1));

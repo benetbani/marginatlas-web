@@ -69,7 +69,8 @@ export function buildCustomersStrip(iso2: string): StripData | null {
   const marks: StripData["marks"] = spread
     ? [{ key: "p10", label: COPY.customers.marks.bottom, value: p10 as number }, { key: "typical", label: COPY.customers.marks.typical, value: med, lead: true }, { key: "p90", label: COPY.customers.marks.top, value: p90 as number }]
     : [{ key: "typical", label: COPY.customers.marks.typical, value: med, lead: true }];
-  return { marks, confidence: conf, note: spread ? null : COPY.customers.noSpread, extra: null };
+  /* No line under a strip without its tenths (his correction of 2026-09-24, evening): the strip draws the typical it has. */
+  return { marks, confidence: conf, note: null, extra: null };
 }
 
 /** THE CITY'S EARNINGS STRIP, `07 earnings` (MODEL.md 8.3; M3, M5; plan step

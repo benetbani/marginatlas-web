@@ -49,7 +49,8 @@ export type HeroCell = {
 export type HeroFacts = {
   iso2: string;
   name: string;
-  answer: { label: string; value: string; regime: string | null; confidence: Confidence } | null;
+  /** `share` is the effective rate as a fraction of profit (0.2 for 20%), for the board's drawing of it; `value` is the one printed form. */
+  answer: { label: string; value: string; regime: string | null; confidence: Confidence; share?: number } | null;
   cells: HeroCell[];
   /** Composed from what resolved, never promising an absent cell. */
   subtitle: string | null;
@@ -84,7 +85,7 @@ export function buildHeroFacts(iso2In: string): HeroFacts {
   const llc = getFormationRowByTier(iso2, "LLC");
 
   const answer = regime && isNum(regime.effective_rate)
-    ? { label: COPY.answer.label, value: pct(regime.effective_rate), regime: regime.local_name || null, confidence: "modeled" as Confidence }
+    ? { label: COPY.answer.label, value: pct(regime.effective_rate), regime: regime.local_name || null, confidence: "modeled" as Confidence, share: regime.effective_rate }
     : null;
 
   const cells: HeroCell[] = [];
@@ -103,10 +104,8 @@ export function buildHeroFacts(iso2In: string): HeroFacts {
     cells.push({ key: "llc-cost", group: COPY.cells.llcGroup, label: COPY.cells.llcCost.label, value: llc.costUsd === 0 ? COPY.free : usd(llc.costUsd), note: COPY.cells.llcCost.note, confidence: "measured" });
   }
 
-  const promises: string[] = [];
-  if (answer) promises.push(COPY.subtitle.pays);
-  if (cells.some((c) => c.key === "llc-cost")) promises.push(COPY.subtitle.register);
-  const subtitle = promises.length > 0 ? `${promises.join(", and ").replace(/^./, (c) => c.toUpperCase())}.` : null;
+  /* THE PROMISE LINE LEFT THE HERO (his correction of 2026-09-24, evening: a subtitle, an undertitle and a disclaimer "all competing"): the figure's label and the rows say what the card holds, so the card prints no line promising it. */
+  const subtitle: string | null = null;
 
   const order: Confidence[] = ["measured", "modeled", "placeholder"];
   const all: Confidence[] = [...(answer ? [answer.confidence] : []), ...cells.map((c) => c.confidence)];

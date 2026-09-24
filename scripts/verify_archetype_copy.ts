@@ -142,8 +142,8 @@ for (const iso2 of codes) {
     if (c.note && c.note.length > 48) reds.push(`${iso2}: note over 48 characters: "${c.note}"`);
     if (c.value === "" || c.value == null) reds.push(`${iso2}: empty cell ${c.key}`);
   }
-  const promisesRegister = /register/i.test(f.subtitle ?? "");
-  if (promisesRegister !== f.cells.some((c) => c.key === "llc-cost")) reds.push(`${iso2}: the subtitle's promise does not match the cells ("${f.subtitle}")`);
+  /* No promise line (his correction of 2026-09-24, evening): the figure's label and the rows say what the card holds. */
+  if (f.subtitle != null) reds.push(`${iso2}: the hero prints a promise line again ("${f.subtitle}")`);
   if (f.answer && f.answer.confidence === "measured") reds.push(`${iso2}: the effective rate is a modelled figure and is not marked so`);
 }
 /* THE COMPARISON TABLE: every country's rows build without a throw; the
@@ -882,12 +882,14 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (/[{}]/.test(t)) reds.push(`entry-bill ${iso2}: a placeholder was never filled ("${t}")`);
     }
     if (COPY.entryBill.kicker.split(/\s+/).length > 4) reds.push(`entry-bill: the kicker runs over four words: "${COPY.entryBill.kicker}"`);
-    if (d.basis && d.basis.split(/\s+/).filter(Boolean).length > 14) reds.push(`entry-bill ${iso2}: the basis runs over fourteen words: "${d.basis}"`);
+    if (d.basis && d.basis.split(/\s+/).filter(Boolean).length > 12) reds.push(`entry-bill ${iso2}: the basis runs over twelve words (COPY-STYLE.md): "${d.basis}"`);
+    if (d.basis && d.basis.includes(";")) reds.push(`entry-bill ${iso2}: the basis holds a semicolon; one line is one sentence: "${d.basis}"`);
     if ((d.figure == null) === (d.withheld == null)) reds.push(`entry-bill ${iso2}: the focal slot holds ${d.figure == null ? "neither a figure nor a line" : "a figure and a line"}`);
     if (!("figure" in d.second) && !("withheld" in d.second)) reds.push(`entry-bill ${iso2}: the second slot holds neither a figure nor a line`);
-    if (d.sample !== /modelled/.test(d.foot ?? "")) reds.push(`entry-bill ${iso2}: ${d.sample ? "a printed figure is modelled and the foot does not say so" : "nothing printed is modelled and the foot says modelled"}`);
+    /* The method word left the card (his correction of 2026-09-24, evening): the estimate is said once, at the hero's foot. */
+    for (const t of [d.basis ?? "", d.foot ?? "", d.withheld ?? "", secondText]) if (/\bmodell?ed\b|\bwithheld\b|\bon file\b/i.test(t)) reds.push(`entry-bill ${iso2}: a method word in "${t}"`);
   }
-  console.log(`entry bill: ${bills} cards build; no banned word, the kicker and basis within their caps, every slot a figure or a line, modelled said in the foot`);
+  console.log(`entry bill: ${bills} cards build; no banned word, the kicker within four words and the basis one sentence of twelve, every slot a figure or a line, no method word`);
 }
 
 /* POWER AND LIVING COSTS (MODEL.md 8.2 `06 running-costs`; plan step 31's
@@ -918,14 +920,15 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (c.value === "" || c.value == null) reds.push(`running-costs ${iso2}: empty cell ${c.key}`);
     }
     if (COPY.runningCosts.kicker.split(/\s+/).length > 4) reds.push(`running-costs: the kicker runs over four words: "${COPY.runningCosts.kicker}"`);
-    if (r.basis && r.basis.split(/\s+/).filter(Boolean).length > 14) reds.push(`running-costs ${iso2}: the basis runs over fourteen words: "${r.basis}"`);
+    if (r.basis && r.basis.split(/\s+/).filter(Boolean).length > 12) reds.push(`running-costs ${iso2}: the basis runs over twelve words (COPY-STYLE.md): "${r.basis}"`);
+    if (r.basis && r.basis.includes(";")) reds.push(`running-costs ${iso2}: the basis holds a semicolon: "${r.basis}"`);
     if (r.cells.length + r.withheld.length !== 2) reds.push(`running-costs ${iso2}: ${r.cells.length} cell(s) and ${r.withheld.length} withheld line(s); two slots, each a cell or a line`);
     const living = r.cells.find((c) => c.key === "living");
     if (living && living.confidence !== "modeled") reds.push(`running-costs ${iso2}: the cost of living is a weighting and is not marked modelled`);
-    const modelled = r.cells.some((c) => c.confidence === "modeled");
-    if (modelled !== /modelled/.test(r.foot ?? "")) reds.push(`running-costs ${iso2}: ${modelled ? "a printed cell is modelled and the foot does not say so" : "nothing printed is modelled and the foot says modelled"}`);
+    /* The method word left the card (his correction of 2026-09-24, evening): the tag stays on the cell for the gates, the words stay off the page. */
+    for (const t of [r.basis ?? "", r.foot ?? "", ...r.withheld]) if (/\bmodell?ed\b|\bwithheld\b|\bon file\b/i.test(t)) reds.push(`running-costs ${iso2}: a method word in "${t}"`);
   }
-  console.log(`running costs: ${cards} cards build; no banned word, the kicker and basis within their caps, two slots each a cell or a line, modelled said in the foot`);
+  console.log(`running costs: ${cards} cards build; no banned word, the kicker within four words and the basis within twelve, two slots each a cell or a line, no method word`);
 }
 /* BEFORE YOU COMMIT (MODEL.md 8.2 `18 checks`; plan step 31's fifth dispatch,
    2026-09-18), on every country: two or three rows and the basis that counts

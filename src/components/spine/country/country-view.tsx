@@ -1065,8 +1065,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
             DATA-REQUIREMENTS items 40 and 17 and the card returns with them,
             under a title he will name: "Who you can hire" is wrong, correction
             8). */}
+        {/* ONE COLUMN UNTIL lg (2026-09-24): the running costs hold two rows and one line since the copy rewrite, and at 768's equal halves they stood 90 short of what staff cost (the page laws, CARD FOOT BLANK; Afghanistan's, one row and one line, 132). */}
         {costs ? (
-          <Band split="1-1">
+          <Band split="1-1" stack="lg">
             <RunningCosts costs={costs} />
             <Hiring hiring={d.hiring} iso2={iso2} />
           </Band>

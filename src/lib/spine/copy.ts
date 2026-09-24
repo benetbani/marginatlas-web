@@ -17,7 +17,7 @@ const CUSTOMERS_KICKER = "What customers earn";
 /** The net-margin metric's one name, held once for the same reason: the money
  *  card and the mark list both open with it, and a second literal would drift
  *  the day either one is reworded. */
-const MARGIN_KICKER = "Net profit margin";
+const MARGIN_KICKER = "Profit margin by trade";
 /** "Clean dealing" is the state table's bribery row AND the footing card's
  *  first cell (MODEL.md 8.2, `17 footing`: "reused from copy.ts line 98"); one
  *  literal, so the two never drift. */
@@ -61,12 +61,8 @@ export const COPY = {
     basis: "on profit, for a small business",
     basisUnder: "under",
     /** The state word when no small-business regime row is held (catalogue I9). */
-    absent: "Not measured yet",
-    absentNote: "no small-business regime is on file for this country",
-  },
-  subtitle: {
-    pays: "what a small business effectively pays the state",
-    register: "what it costs to register one",
+    absent: "Not known yet",
+    absentNote: "we have no small-business tax regime for this country yet",
   },
   cells: {
     payroll: { label: "Payroll on wages", note: "charged on wages, on top of the rate on profit" },
@@ -81,10 +77,10 @@ export const COPY = {
   /** The net-margin card (founder ruling 6, 2026-09-04: "net profit margin in %, vertical bars"). */
   margin: {
     kicker: MARGIN_KICKER,
-    basis: "Of every $100 a typical shop sells here, what it keeps after all costs and tax.",
+    basis: "",
     worldBest: "world's best",
-    withheldOne: "1 trade withheld: the model returns a loss or a floor for a typical shop.",
-    withheldMany: "{n} trades withheld: the model returns a loss or a floor for a typical shop.",
+    withheldOne: "1 trade left out: our figure for it isn't reliable.",
+    withheldMany: "{n} trades left out: our figures for them aren't reliable.",
     phoneHead: { trade: "Trade", value: "Net margin" },
   },
   /** The tiers table (registering, by legal form). The explainers are definitional, true in every country (rule 21). */
@@ -122,7 +118,6 @@ export const COPY = {
     kicker: CUSTOMERS_KICKER,
     basis: "Full-time pay, a year.",
     marks: { bottom: "Bottom tenth", typical: "Typical", top: "Top tenth" },
-    noSpread: "bottom and top tenth not researched yet for this country",
   },
   /** The spectra tables (the character): the founder's personal keep since 2026-06-18, two six-spectra tables, his six orders of 2026-08-30 (explanatory poles, best on the right, ink dots for the state and terracotta for people, a foot figure under each). The words are his kept build's. */
   character: {
@@ -344,8 +339,10 @@ export const COPY = {
     },
     units: { of100: "of 100", day: "day", days: "days", aMonth: "a month", allIn: "all in" },
     levels: { high: "High", medium: "Medium", low: "Low" },
-    levelBasis: "Among the countries; the cost and the days are an LLC's.",
-    placeholder: "Placeholder photograph",
+    levelBasis: "Levels compare countries. Costs are for a limited company.",
+    /** The answer drawn: the two parts under the cells (labels, never a sentence), and the bar's name for a screen reader after the figure ("20% of profit"). */
+    share: { part: "Tax", rest: "You keep", of: "of profit" },
+    placeholder: "Illustrative photo",
   },
   /** THE CITY'S HERO BOARD (city_hero_board.ts, 2026-09-20 evening): his
    *  country hero at the city altitude. Labels under three words; the units
@@ -414,16 +411,16 @@ export const COPY = {
     /** `{year}` is the snapshot's own year, read from the file, never typed. */
     footYear: "GDP per person is the published {year} figure.",
     /** `{what}` is a list of cell names; `{verb}` is "is" or "are". */
-    footModelled: "{what} {verb} modelled for this country.",
+    footModelled: "",
     /** `{n}` of the five cells, `{reasons}` the joined reasons below. */
-    withheld: "{n} of 5 withheld: {reasons}.",
+    withheld: "{n} of 5 left out: {reasons}.",
     reasons: {
-      salary: "the average salary is not on file",
+      salary: "no average salary yet",
       /** The staff-cost card's own verdict (`pay.withheld`), two cells at once. */
-      payDisagree: "the average and minimum salary on file disagree",
-      wealth: "net wealth per adult is not curated for this country",
-      minimum: "the minimum salary on file is not the legal floor",
-      time: "the registration time is not on file",
+      payDisagree: "our salary figures disagree",
+      wealth: "no wealth figure yet",
+      minimum: "our minimum salary isn't the legal one",
+      time: "no registration time yet",
     },
   },
   /** AMONG THE COUNTRIES (MODEL.md 8.2, `02 world-seat`; the same dispatch).
@@ -472,19 +469,19 @@ export const COPY = {
     /** HIS PLUS on the bill (correction 5 of 2026-09-20): the LLC's own facts behind a click, the summary line and the four row labels, each under three words. */
     detailSummary: "What the LLC involves",
     detailRows: { form: "The form here", fee: "Government fee", filing: "Filing time", paperwork: "Paperwork" },
-    /** The basis clauses, joined with "; " where both figures print, each alone otherwise. */
-    basisBill: "fees and a first licence, all in",
-    basisDays: "days run until the last step clears",
-    foot: "Share capital, where the law asks for one, is not in the bill.",
+    /** The one line: the bill's where it prints, the days' otherwise (entry_bill_rows.ts). */
+    basisBill: "Fees and a first licence, not share capital.",
+    basisDays: "Days until the last step clears.",
+    foot: "",
     /** `{what}` is "the bill", "the days" or "the bill and the days"; `{verb}` is "is" or "are". */
-    footModelled: "{what} {verb} modelled for this country.",
+    footModelled: "",
     names: { bill: "the bill", days: "the days" },
     withheld: {
-      bill: "The bill is withheld: two figures on record disagree.",
-      days: "The days are withheld: two figures on record disagree.",
-      billNotOnFile: "The bill is not on file for this country yet.",
+      bill: "No reliable figure for the bill yet.",
+      days: "No reliable count of the days yet.",
+      billNotOnFile: "No figure for the bill yet.",
       /** Reachable by the guard's shape and by no country today (the days are held for 195 of 195). */
-      daysNotOnFile: "The days are not on file for this country yet.",
+      daysNotOnFile: "No count of the days yet.",
     },
   },
   /** POWER AND LIVING COSTS (MODEL.md 8.2, `06 running-costs`; plan step 31,
@@ -518,21 +515,21 @@ export const COPY = {
      *  without naming either city (his ruling). The cells and the old basis
      *  stay for the copy gate's sweep and the builder's other readers. */
     kicker: "Running costs",
-    rows: { electricity: "Electricity", living: "Cost of living" },
+    rows: { electricity: "Business electricity", living: "Cost of living" },
     units: { kwh: "a kilowatt hour", of100: "of 100" },
     cells: { electricity: "Electricity per kilowatt hour", living: "Cost of living" },
-    /** The basis clauses, joined with "; " where both cells print, each alone otherwise. */
-    basisElectricity: "commercial rate, 2024",
-    basisLiving: "living costs with rent, cheapest city 1, dearest 100",
-    footElectricityModelled: "The electricity rate is modelled for this country.",
-    footLevels: "Levels are among the countries.",
+    /** The one line explains the cost of living's 1-to-100 scale; the electricity row names its own rate ("Business electricity"), so it adds no clause. */
+    basisElectricity: "",
+    basisLiving: "Cost of living: cheapest city 1, dearest 100.",
+    footElectricityModelled: "",
+    footLevels: "",
     /** `{n}` is the count of covered cities the figure is weighted from, spelled out to ten. */
-    footLivingModelled: "The cost of living is modelled from {n} cities here, weighted by population.",
-    footLivingOneCity: "The cost of living is modelled from one city here.",
+    footLivingModelled: "",
+    footLivingOneCity: "",
     withheld: {
       /** `{n}` is the number of countries whose file row holds the fill value, counted at build. */
-      electricityFill: "The electricity rate is withheld: the figure on file cannot be told from the placeholder {n} countries share.",
-      livingNotOnFile: "Living costs are not on file for this country yet; no city here is covered.",
+      electricityFill: "No reliable electricity rate for this country yet.",
+      livingNotOnFile: "No living costs yet: we cover no city here.",
     },
   },
   /** The terminus (where to next): doors that leave the page. Run 4 of the architecture loop refused "with Pro" while Pro cannot be bought and "the deepest city" as jargon; the city door says a figure the list holds. */
@@ -981,7 +978,7 @@ export const COPY = {
   peers: {
     kicker: PEERS_KICKER,
     cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC fee", llcDays: "LLC time" },
-    caveat: "Peers are picked for comparable size and market, not for sharing a border. Effective tax is what a small business typically pays under each country's own small-business rules. LLC fee is the government fee only and LLC time runs until the company is registered.",
+    caveat: "Countries of similar size and market, not neighbours.",
   },
   /** The city's peers table (city:peers, run 22): cities as rows, three measures as columns, every figure read beside the home city; no unit word a reader has to know.
    *  CAVEAT TRIMMED 2026-09-08 (E1, found once the card-detection repoint could finally see this
@@ -1740,7 +1737,7 @@ export const COPY = {
   /** WHAT A BUSINESS HERE SELLS FOR, the country's `17 exit` (country_exit_rows.ts, 2026-09-23, brief row C3). The marks are the usual band as a multiple of EARNINGS, never of sales; the basis says so in a person's words, and the climate word is the file's own, rewritten for a reader. */
   /** HOW LONG IT TAKES TO SELL, the country's `17 exit` (country_exit_rows.ts, 2026-09-23, brief row C3). THE SALE PRICE IS NOT HERE: the file holds it as a multiple of earnings and clause 15 says a price is currency and never a multiple, so it waits on an earnings base. The buyers line is a sentence because the file's value is a word, and PART 5 keeps a word out of a figure's slot. */
   countryExit: {
-    kicker: "How long it takes to sell",
+    kicker: "Time to sell",
     marks: { quick: "A quick sale", slow: "A slow one" },
     month: "month",
     months: "months",
@@ -1749,9 +1746,9 @@ export const COPY = {
        the months above stand against, without which they are a number nobody
        can place (VISUAL-CHOICE section 0). Both are worked from the same field
        across the whole bank and the builder says how. */
-    world: { usual: "the usual anywhere on file", longer: "countries where a sale can take longer" },
+    world: { usual: "the usual anywhere", longer: "countries where a sale can take longer" },
     basis: "From listing to money, for a small business changing hands.",
-    foot: "Gathered figures, not modelled.",
+    foot: "",
   },
   /** WHAT HOUSEHOLDS SPEND ON, the country's `18 spend` (country_spend_rows.ts,
    *  2026-09-23, brief row C5). The categories are the file's seven machine
@@ -1777,12 +1774,12 @@ export const COPY = {
     outWords: "of the food money goes on eating out",
     topLabel: "the whole budget",
     phoneHead: { name: "What it goes on", value: "Share" },
-    /* THE BASIS CARRIES THE WORD "modelled" rather than a foot line of its own:
-       RankedBars' foot is a companion row at 16 and this card has no companion
-       figures, so a bare sentence there would stand louder than the figures it
-       qualifies. The card's second sentence names the focal's division, which
-       is the standard of 2026-09-19 (every figure says what was computed). */
-    basis: "Modelled shares of what a household spends here. The figure above is eating out against all the money that goes on food, at home and out.",
+    /* NO LINE (his correction of 2026-09-24, evening): the title asks the
+       question, the rows' heads say "What it goes on" and "Share", and the
+       focal's words name its division ("of the food money goes on eating
+       out"); a line under them ("Shares of a household's spending") said the
+       title again. */
+    basis: "",
   },
   /** WHAT THE CREW COSTS, the city's `20 crew` (city_crew_rows.ts, 2026-09-23,
    *  brief row Y3). The role names are the shard's own and are not here; what

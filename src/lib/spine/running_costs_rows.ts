@@ -140,7 +140,7 @@ export function buildRunningCosts(iso2In: string): RunningCostsData | null {
   if (electricity != null) {
     const c: KvCell["confidence"] = profile.tier === "A" ? "measured" : "modeled";
     cells.push({ key: "electricity", label: COPY.runningCosts.cells.electricity, value: usdCents(electricity), confidence: c });
-    clauses.push(COPY.runningCosts.basisElectricity);
+    if (COPY.runningCosts.basisElectricity) clauses.push(COPY.runningCosts.basisElectricity);
     if (c === "modeled") footParts.push(COPY.runningCosts.footElectricityModelled);
   } else {
     withheld.push(fill(COPY.runningCosts.withheld.electricityFill, { n: String(FILL_ROW_COUNT) }));
@@ -161,11 +161,12 @@ export function buildRunningCosts(iso2In: string): RunningCostsData | null {
   /* The placement sets, once per process: every country's electricity rate off the fill, every country's cost-of-living index. */
   const electricitySet = listCountryProfiles().map((p) => p.electricity_usd_per_kwh_commercial).filter((v): v is number => isPos(v) && !isElectricityFill(v));
   const livingSet = allCountryCostOfLivingIndices();
-  const basis = clauses.length > 0 ? `${clauses.join("; ")}.`.replace(/^./, (ch) => ch.toUpperCase()) : null;
+  /* Each clause is its own short sentence now (his correction of 2026-09-24, evening): joined by a space, never a semicolon. */
+  const basis = clauses.length > 0 ? clauses.join(" ") : null;
   /* The level words are read among the countries, and the foot says so once, because the cost of living's own scale is the cities' and a reader would otherwise read "41 of 100, high" as a contradiction. */
   const levelsDrawn = (electricity != null && levelOf(electricity, electricitySet) != null) || (livingHeld != null && levelOf(livingHeld, livingSet) != null);
   if (levelsDrawn) footParts.push(COPY.runningCosts.footLevels);
-  const foot = footParts.length > 0 ? footParts.join(" ") : null;
+  const foot = footParts.filter((t) => t).length > 0 ? footParts.filter((t) => t).join(" ") : null;
 
   return {
     iso2,

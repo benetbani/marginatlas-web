@@ -154,15 +154,16 @@ export function buildEntryBill(iso2In: string): EntryBillData | null {
   const clauses: string[] = [];
   if (verdict.bill.state === "printed") clauses.push(COPY.entryBill.basisBill);
   if (verdict.days.state === "printed") clauses.push(COPY.entryBill.basisDays);
-  const basis = clauses.length > 0 ? `${capFirst(clauses.join("; "))}.` : null;
+  /* One line (his correction of 2026-09-24, evening): the bill's sentence where it prints, the days' otherwise. */
+  const basis = clauses.length > 0 ? clauses[0] : null;
 
   /* The foot: the exclusion where the bill prints, then the modelled sentence. */
   const footParts: string[] = [];
-  if (verdict.bill.state === "printed") footParts.push(COPY.entryBill.foot);
+  if (verdict.bill.state === "printed" && COPY.entryBill.foot) footParts.push(COPY.entryBill.foot);
   const modelled: string[] = [];
   if (verdict.bill.state === "printed" && verdict.bill.tag !== "held") modelled.push(COPY.entryBill.names.bill);
   if (verdict.days.state === "printed" && verdict.days.tag !== "held") modelled.push(COPY.entryBill.names.days);
-  if (modelled.length > 0) {
+  if (modelled.length > 0 && COPY.entryBill.footModelled) {
     /* The verb follows the noun, not the count: "the bill is", "the days are", "the bill and the days are". */
     const verb = modelled.length === 1 && modelled[0] === COPY.entryBill.names.bill ? "is" : "are";
     footParts.push(capFirst(fill(COPY.entryBill.footModelled, { what: modelled.join(" and "), verb })));

@@ -82,7 +82,9 @@ function inPage() {
     const title = card.querySelector("h3");
     if (title && !hidden(title) && words(title.textContent) > TITLE_MAX) red(id, "TITLE LONG", `"${title.textContent.trim()}", ${words(title.textContent)} words`);
     const lines = [...card.querySelectorAll("p")].filter((p) => !hidden(p) && !p.closest("table,li,dl,[role='table'],[data-note]") && parseFloat(getComputedStyle(p).fontSize) <= MICRO_MAX && p.textContent.trim());
-    lines.slice(1).forEach((p) => red(id, "LINES", `a supporting line past the first: "${p.textContent.trim().slice(0, 70)}"`));
+    /* The page's hero is two or three columns, and a line under the figure and one under the rows do not stand in one place: it may hold two. */
+    const cap = card.getAttribute("data-level") === "page" ? 2 : 1;
+    lines.slice(cap).forEach((p) => red(id, "LINES", `a supporting line past the ${cap === 2 ? "hero's two" : "first"}: "${p.textContent.trim().slice(0, 70)}"`));
     for (const p of lines) {
       const t = p.textContent.trim();
       if (words(t) > LINE_MAX) red(id, "LINE LONG", `${words(t)} words: "${t.slice(0, 70)}"`);
