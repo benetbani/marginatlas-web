@@ -22,7 +22,8 @@
  * basis), so the band never holds a lone `14`. The old `#related` card (the
  * Related links, `d.related`, which no live route ever fed because a
  * keep-percent column has no honest per-sibling source) retired into this
- * card. The census does not read this card: both forms draw their own Box.
+ * card. Both forms draw their own Box, and the census reads the card by its
+ * id since 2026-09-24 (it read `<Box` alone before).
  *
  * `14 worth`, WHAT ONE SELLS FOR: the range strip with two marks, linear, the
  * low and the high of what a business like this sells for, in currency and

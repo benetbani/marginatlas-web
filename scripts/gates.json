@@ -626,6 +626,7 @@
       "browser": false,
       "asserts": "THE SECTION CENSUS: PAGES.md's generated block, written from the code, so the loop's map of every page's sections never drifts from the views.",
       "reads": [
+        "src/${spec.slice(2)}",
         "src/components/spine"
       ],
       "claims": []

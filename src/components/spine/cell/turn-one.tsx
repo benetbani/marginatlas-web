@@ -26,9 +26,9 @@
  * years to pay back, one basis line naming them as the trade's where the
  * card prints a figure. The form to the checkers
  * is the body's `data-archetype`: `ranked-bars` held, `bento-metric` in the
- * other two. RankedBars and BentoMetric draw their own Box, so the census
- * does not read this card (the country's entry bill, the same note); it is
- * a block on the page all the same (`data-block="open"`, BLOCK FLOOR counts
+ * other two. RankedBars and BentoMetric draw their own Box, and the census
+ * reads the card by its id since 2026-09-24 (it read `<Box` alone before);
+ * it is a block on the page (`data-block="open"`, BLOCK FLOOR counts
  * it). LOUD in the held and baseline states, turn one's accent, the page's
  * second of three; unaccented where withheld, and the page carries two.
  *
@@ -72,8 +72,8 @@
  * peer; off `moneyShown` the home row's takings show a dash and the card
  * says so once. No flags: every row is in one country. CompareTable draws
  * its own Box inside the `data-wide-table` wrapper the full-width and
- * lone-card gates read, so the census does not read this card (the country's
- * peers table, the same note); it is a block on the page all the same
+ * lone-card gates read; the census reads the card by its id since
+ * 2026-09-24 (it read `<Box` alone before), and it is a block on the page
  * (`data-block="peers"`, BLOCK FLOOR counts it). The old Nearby table (a
  * sortable client island with the four invented UK cities) retired with it.
  */

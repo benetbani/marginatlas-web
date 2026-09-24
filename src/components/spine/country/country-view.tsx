@@ -521,11 +521,11 @@ function Setup({ setup, iso2 }: { setup: any; iso2?: string }) {
  * builder (R2) the `05 | 06` dispatch forces, and the days carry none by the
  * composition's own row.
  *
- * THE CENSUS DOES NOT READ THIS CARD. census.ts (and the coverage gate) read
- * `<Box` in this file, and BentoMetric draws its own Box the way BlockedSeat
- * and AnswerCard do, so the bill joins the two seats as a block on the page
- * (`data-block="entry-bill"`, BLOCK FLOOR counts it) that the census's twelve
- * country rows do not list. Its form to the checkers is `bento-metric`.
+ * BentoMetric draws its own Box the way BlockedSeat and AnswerCard do, so the
+ * bill is a block on the page (`data-block="entry-bill"`, BLOCK FLOOR counts
+ * it), which the census reads by its id since 2026-09-24; the coverage gate
+ * still reads `<Box` alone and does not list it. Its form to the checkers is
+ * `bento-metric`.
  */
 function EntryBill({ bill }: { bill: EntryBillData | null }) {
   /* THE PLUS (his correction 5 of 2026-09-20, "add some more context ... if a
@@ -914,20 +914,20 @@ export function SpineCountryBody({ data }: { data?: any }) {
      credible margins (`hasMoney`, 173) and `16 locals` where no notes are
      authored (`locals`, 194). The counts are verify_archetype_copy's,
      measured over the taxonomy every run. The seats' words are COPY.blocked's
-     and their kickers the drawn cards' own. THE CENSUS DOES NOT LIST THEM:
-     census.ts reads `<Box` in this file, and BlockedSeat draws its own Box
-     the way BentoMetric and AnswerCard do, so the four join `07` and `11` as
-     blocks on the page (`data-blocked="1"`, BLOCK FLOOR counts them) that
-     the census's country rows do not name; their form to the checkers is
-     `blocked-seat`, exempt from FOCAL and NO LEAD by its law.
+     and their kickers the drawn cards' own. BlockedSeat draws its own Box
+     the way BentoMetric and AnswerCard do, so the four are blocks on the page
+     (`data-blocked="1"`, BLOCK FLOOR counts them), and the census prints
+     each as its card's other state since 2026-09-24 ("RankedBars or
+     BlockedSeat" on `money`); their form to the checkers is `blocked-seat`,
+     exempt from FOCAL and NO LEAD by its law.
 
      AND THE FIFTH THIN-COUNTRY SEAT, `10 cities` (plan step 49, 2026-09-19,
      the FLOOR bracket's option A): PART 7's one omission is withdrawn for
      this row; on the 90 countries the city list holds no row for, the seat
      stands in the cards' band with its composed line (`citiesSeat`, above),
      so Afghanistan reads 21 blocks where it read 20. The census's `cities`
-     row is the drawn card's Box; the seat is a fifth Box the census does not
-     name, like the four above. */
+     row carries both states since 2026-09-24 ("CityCards or BlockedSeat"),
+     like the four above. */
 
   /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
      first of six dispatches), with the twelve blocks that exist today seated

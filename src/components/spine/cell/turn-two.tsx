@@ -23,9 +23,9 @@
  * saying what it is and the foot that it is the trade's, modelled. The
  * figure comes from clears_rows.ts: the engine's share where money is shown,
  * else the shard's (243 of 243), and the builder's header says why both are
- * the trade's figure. BentoMetric draws its own Box, so the census does not
- * read this card (the cost to open's note); it is a block on the page all
- * the same (`data-block="clears"`, BLOCK FLOOR counts it). The old
+ * the trade's figure. The card is a Box holding the Ring since 2026-09-20
+ * (it stood on BentoMetric before), and the census reads it; it is a block on
+ * the page (`data-block="clears"`, BLOCK FLOOR counts it). The old
  * `#breakeven` card (the ClearanceRing off the seed's two rounded covers,
  * money-chapter.tsx) retired into this card.
  *

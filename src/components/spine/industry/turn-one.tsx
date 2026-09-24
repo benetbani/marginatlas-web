@@ -61,8 +61,8 @@
  * cell repeats a neighbour or `04`: a payback, a headcount, a share of the
  * cost stack and a share of a day are four readings of what carries a
  * trade until it pays back. This file holds no `<Box` for the cluster: the
- * cells draw their own, so the census does not list it (the city premises'
- * precedent); the cluster's root carries `id="pays"` and
+ * cells draw their own and the band stamps the block, which the census reads
+ * by the band's id since 2026-09-24; the cluster's root carries `id="pays"` and
  * `data-block="pays"`, so BLOCK FLOOR counts it once and the checkers
  * address its cells by that id.
  */

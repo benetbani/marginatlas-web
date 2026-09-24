@@ -369,10 +369,10 @@ export function Runway({ runway, id = "runway" }: { runway: CityRunwayData | nul
  * holds a line where its 30 would stand and reds FOCAL on purpose until
  * London's spend is researched (item 23). Left of the band, 8.3's column.
  *
- * THE CENSUS DOES NOT READ THIS CARD (the bill's own note): BentoMetric draws
- * its own Box, so the card is a block on the page (`data-block="demand"`,
- * BLOCK FLOOR counts it) that the census's city rows do not list; its form
- * to the checkers is `bento-metric`.
+ * BentoMetric draws its own Box, so the card is a block on the page
+ * (`data-block="demand"`, BLOCK FLOOR counts it), which the census reads by
+ * its id since 2026-09-24 (it read `<Box` alone before); its form to the
+ * checkers is `bento-metric`.
  */
 function Demand({ demand }: { demand: CityDemandData | null }) {
   if (!demand) return null;

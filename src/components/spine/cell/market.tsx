@@ -35,8 +35,8 @@
  * ONE FUNCTION COMPOSES THE CELLS, `marketCells`, and the story sheet reads
  * it too (stories.tsx, `cell:<handle>:market`), so the story is the card and
  * not a copy of it that can drift. This file holds no `<Box`: the cells draw
- * their own, so the census does not list the cluster, the city premises'
- * precedent. The cluster's root carries `id="market"` and
+ * their own and the band stamps the block, which the census reads by the
+ * band's id since 2026-09-24. The cluster's root carries `id="market"` and
  * `data-block="market"`, so BLOCK FLOOR counts it once and the checkers
  * address its cells by that id.
  */
