@@ -120,11 +120,14 @@ for (const iso2 of codes) {
   const heroDays = buildHeroFacts(iso2).cells.find((c) => c.key === "llc-time")?.value ?? null;
   const heroParsed = heroDays ? parseInt(heroDays, 10) : null;
   if ((d.table?.days ?? null) !== heroParsed) faults.push(`${iso2}: the guard read ${d.table?.days ?? "no"} filing days and the masthead prints ${heroDays ?? "none"}`);
-  /* The basis names a unit for every printed figure and for none withheld. */
-  if (billPrints !== (d.basis ?? "").toLowerCase().includes(COPY.entryBill.basisBill)) faults.push(`${iso2}: the bill ${billPrints ? "prints" : "is withheld"} and the basis ${billPrints ? "does not say what it is" : "describes it"}`);
-  if (daysPrints !== (d.basis ?? "").toLowerCase().includes(COPY.entryBill.basisDays)) faults.push(`${iso2}: the days ${daysPrints ? "print" : "are withheld"} and the basis ${daysPrints ? "does not say what they are" : "describes them"}`);
-  if (billPrints !== (d.foot ?? "").includes(COPY.entryBill.foot)) faults.push(`${iso2}: the bill ${billPrints ? "prints" : "is withheld"} and the share-capital foot is ${billPrints ? "missing" : "printed"}`);
-  if (d.sample !== /modelled/.test(d.foot ?? "")) faults.push(`${iso2}: the card is ${d.sample ? "modelled and the foot does not say so" : "held and the foot says modelled"}`);
+  /* THE CARD'S ONE LINE (his copy correction of 2026-09-24, evening; TURNED OVER from "a clause per printed figure, the share-capital
+     foot, the modelled foot"): the bill's sentence where the bill prints, which also says share capital is not in it; the days'
+     sentence where only the days print; no line where neither does. The days' own words sit beside their figure ("until you can
+     trade"). No foot says how a figure was made. */
+  const wantBasis = billPrints ? COPY.entryBill.basisBill : daysPrints ? COPY.entryBill.basisDays : null;
+  if ((d.basis ?? null) !== wantBasis) faults.push(`${iso2}: the basis reads "${d.basis}", not "${wantBasis}" (the bill ${billPrints ? "prints" : "is withheld"}, the days ${daysPrints ? "print" : "are withheld"})`);
+  if (billPrints && !/not share capital/.test(d.basis ?? "")) faults.push(`${iso2}: the bill prints and the line does not say share capital is not in it`);
+  if (/\bmodell?ed\b|\bwithheld\b|\bon file\b/i.test(`${d.basis ?? ""} ${d.foot ?? ""}`)) faults.push(`${iso2}: a method word under the card ("${d.basis ?? ""} ${d.foot ?? ""}")`);
   if (billPrints && daysPrints) both++; else if (billPrints) billOnly++; else if (daysPrints) daysOnly++; else neither++;
   if (d.withheld === W.bill) billWithheld++;
   if ("withheld" in d.second && d.second.withheld === W.days) daysWithheld++;
