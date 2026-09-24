@@ -46,7 +46,7 @@ import { placeText, type BenchmarkData } from "@/lib/spine/benchmark_rows";
 
 export function Masthead({ id = "take", facts }: { id?: string; facts: IndustryHeroFacts | null }) {
   if (!facts) return null;
-  return <AnswerCard id={id} name={facts.name} tile={facts.tile} crumb={facts.crumb} subtitle={null} answer={facts.answer} absent={facts.absent} cells={facts.cells} tone="accent" foot={facts.foot} answers={SURFACE_ANSWERS.industry} />;
+  return <AnswerCard id={id} name={facts.name} tile={facts.tile} crumb={facts.crumb} subtitle={null} answer={facts.answer} answerBar={facts.answerBar} absent={facts.absent} cells={facts.cells} tone="accent" foot={facts.foot} answers={SURFACE_ANSWERS.industry} />;
 }
 
 export function BenchmarkCard({ id = "benchmark", benchmark }: { id?: string; benchmark: BenchmarkData | null }) {

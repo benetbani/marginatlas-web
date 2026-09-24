@@ -74,6 +74,8 @@ export type IndustryHeroFacts = {
   crumb: string[];
   /** The net of every $100, or null where neither the ladder nor the profile holds one. */
   answer: { label: string; value: string; basis: string; confidence: Conf } | null;
+  /** The answer drawn: the net as a share of every $100 of sales (AnswerCard's `answerBar`); null with no answer. */
+  answerBar: { value: number; part: string; rest: string; aria: string } | null;
   /** The state word's strings, drawn where `answer` is null. */
   absent: { label: string; word: string; note: string };
   cells: KvCell[];
@@ -122,6 +124,7 @@ export function industryHeroFacts(industryId: string | null | undefined): Indust
     tile: tradeIconFor(industryId),
     crumb: sector ? [sector] : [],
     answer,
+    answerBar: net && net.pct > 0 && net.pct < 100 ? { value: net.pct, part: COPY.industryHero.bar.part, rest: COPY.industryHero.bar.rest, aria: `${net.text} ${COPY.industryHero.bar.of}` } : null,
     absent: { label: COPY.industryHero.answerLabel, word: COPY.industryHero.absent, note: COPY.industryHero.absentNote },
     cells,
     withheld,

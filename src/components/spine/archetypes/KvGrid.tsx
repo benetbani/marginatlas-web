@@ -67,7 +67,8 @@ export type KvCell = {
  */
 export type KvLabelReserve = "two-lines" | "row";
 
-export function KvGrid({ cells, className = "", labelReserve = "two-lines" }: { cells: KvCell[]; className?: string; labelReserve?: KvLabelReserve }) {
+/** `stack` (2026-09-24): the cells one under the other at every width, for a pair beside a taller neighbour (the answer card whose answer draws its share and whose companions are two: the industry hero with its cost withheld stood 480 by 162 of air beside the drawn answer, side by side). */
+export function KvGrid({ cells, className = "", labelReserve = "two-lines", stack = false }: { cells: KvCell[]; className?: string; labelReserve?: KvLabelReserve; stack?: boolean }) {
   const byRow = labelReserve === "row";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   if (live.length === 0) return null;
@@ -85,7 +86,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines" }: { 
      when they are the same shape; the shape is read off the first group, the
      one the eye meets. */
   const first = groups[0].cells.length;
-  const form = first === 1 ? "one" : first % 2 === 1 ? "lead" : "grid";
+  const form = stack ? "stack" : first === 1 ? "one" : first % 2 === 1 ? "lead" : "grid";
   return (
     <div data-idea="I8" data-archetype="kv-grid" data-groups={String(groups.length)} data-form={form} className={`[container-type:inline-size] ${className}`}>
       {/* THE GROUPS: stacked below 900px, side by side above it, equal widths. */}
@@ -104,10 +105,10 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines" }: { 
                 countries that hold one companion fact: a two-column grid with one
                 cell left its second column as a 232x144 hole at 768 and 170x132
                 at 375. The column count follows the cells, never the other way. */}
-            <div className={`grid ${g.cells.length > 1 ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
+            <div className={`grid ${g.cells.length > 1 && !stack ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
               {g.cells.map((c, ci) => (
                 /* COMPLETE ROWS: in an odd group above one, the first cell spans both columns. */
-                <div key={c.key} data-kv-cell={c.key} className={`${g.cells.length > 1 && g.cells.length % 2 === 1 && ci === 0 ? "col-span-2" : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
+                <div key={c.key} data-kv-cell={c.key} className={`${!stack && g.cells.length > 1 && g.cells.length % 2 === 1 && ci === 0 ? "col-span-2" : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
                   {/* THE RESERVE IS EXACTLY TWO LINES BY CONSTRUCTION (plan step 31's
                       second dispatch, 2026-09-17, the first cards whose labels wrap at
                       375 and 768, "Net wealth per adult" and "Shop rent, major cities").

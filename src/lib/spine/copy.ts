@@ -1901,6 +1901,8 @@ export const COPY = {
     footAll: "Estimates for a typical {noun}, not any one place.",
     footOne: "Estimates for a typical {noun}, not any one place.",
     names: { cost: "cost", spend: "spend", visits: "visits" },
+    /** The answer drawn under the net: its two parts, labels only, and the drawing's name for a screen reader after the figure. */
+    bar: { part: "Kept", rest: "Costs", of: "of every $100 of sales kept" },
   },
   /** `01 lasts` at the world altitude (8.7): the same builder and card as the
    *  trade's `09 lasts` (lasts_rows.ts, R5), the basis without the city

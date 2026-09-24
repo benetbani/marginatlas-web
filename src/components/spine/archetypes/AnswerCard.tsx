@@ -38,6 +38,7 @@ import type { DoorKind } from "@/lib/spine/door_kinds";
 import { AtlasMark } from "@/components/spine/marks";
 import { CountryFlag } from "@/components/CountryFlag";
 import { KvGrid, type KvCell } from "./KvGrid";
+import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { COPY } from "./copy";
 
 export type AnswerCardProps = {
@@ -49,6 +50,8 @@ export type AnswerCardProps = {
   subtitle: string | null;
   /** `basis` replaces the country's composed basis line when the caller has its own (a city's "of the workforce"). */
   answer: { label: string; value: string; regime?: string | null; basis?: string | null; confidence: "measured" | "modeled" | "placeholder" } | null;
+  /** THE ANSWER DRAWN (2026-09-24, HeroBoard's `answerBar` one altitude down): a share of a whole under the answer's line on SegmentBar's bare form, the figure never printed twice (his law of 2026-09-19, "a share of a whole is drawn"). `value` out of 100. */
+  answerBar?: { value: number; part?: string; rest?: string; ends?: readonly [string, string]; aria: string } | null;
   cells: KvCell[];
   /** The answer wears the accent unless the page keeps its one accent elsewhere (the city blueprint: the verdict card's). */
   tone?: "accent" | "ink";
@@ -95,12 +98,13 @@ export type AnswerCardProps = {
   answers?: DoorKind;
 };
 
-export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail, crumb, absent, tile, answers }: AnswerCardProps) {
+export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, cells, tone = "accent", foot, level = "page", icon, detail, crumb, absent, tile, answers, answerBar }: AnswerCardProps) {
   const tagged = answer != null && answer.confidence !== "measured";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   return (
     <Band hero>
-      <Box id={id} data-archetype="answer-card" data-level={level} data-answers={answers}>
+      {/* A card that draws its answer is a visual card (the page laws' clause 53 reads the stamp, as HeroBoard's). */}
+      <Box id={id} data-archetype="answer-card" data-level={level} data-answers={answers} data-visual={answerBar ? "1" : undefined}>
         {level === "section" ? (
           <Rail icon={icon} kicker={name} />
         ) : (
@@ -163,6 +167,11 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
                   </>
                 ) : null}
               </div>
+              {answerBar ? (
+                <div data-answer-bar className="mt-4 max-w-[40ch]">
+                  <SegmentBar bare label={answerBar.aria} value={answerBar.value} figure={answer.value} unit="" part={answerBar.part} rest={answerBar.rest} ends={answerBar.ends} />
+                </div>
+              ) : null}
             </div>
           ) : (
             /* THE STATE WORD (catalogue I9): absence said as a word at figure
@@ -174,7 +183,8 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
               <div className="mt-3 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{absent?.note ?? COPY.answer.absentNote}</div>
             </div>
           )}
-          {live.length > 0 ? <KvGrid cells={live} /> : null}
+          {/* Two companions beside a drawn answer stand one under the other, so the column reaches the answer's height (KvGrid `stack`). */}
+          {live.length > 0 ? <KvGrid cells={live} stack={!!answerBar && live.length === 2} /> : null}
         </div>
         {foot ? (
           <div data-foot className="mt-4 flex items-start gap-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
