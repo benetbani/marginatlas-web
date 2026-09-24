@@ -54,7 +54,7 @@ export function HowToBody({ iso2 }: { iso2: string }) {
       <Band hero>
         <Box id="howto">
           <h1 data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-tight tracking-tight text-[var(--c-ink)]">{d.title}</h1>
-          <p className="mt-2 [max-width:var(--measure-prose)] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.lead}</p>
+          {d.lead ? <p className="mt-2 [max-width:var(--measure-prose)] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.lead}</p> : null}
           {d.cells.length > 0 ? (
             <div className="mt-5 border-t border-[var(--c-border)] pt-4">
               <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.howto.cells}</div>
@@ -95,8 +95,8 @@ export function HowToBody({ iso2 }: { iso2: string }) {
                 </div>
               ) : null}
               <Stepper steps={d.steps.steps} />
-              <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.basis}</p>
-              <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.foot}</p>
+              {d.steps.basis ? <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.basis}</p> : null}
+              {d.steps.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.foot}</p> : null}
             </Box>
           ) : null}
           {d.tiers.length > 0 ? (

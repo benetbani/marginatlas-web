@@ -98,7 +98,8 @@ export function buildHoodCharacter(citySlug: string, focus: string | null = null
   if (district.paragraph) {
     const line = openingLine(district.paragraph);
     cut = line?.cut ?? "withheld";
-    notes.push({ key: "sentence", label: COPY.hoodCharacter.rows.sentence, fact: line ? line.text : COPY.hoodCharacter.sentenceWithheld });
+    /* A first sentence too long for the card is left out, never replaced by a line about it (his correction of 2026-09-24, evening). */
+    if (line) notes.push({ key: "sentence", label: COPY.hoodCharacter.rows.sentence, fact: line.text });
   }
   if (district.skew) notes.push({ key: "who", label: COPY.hoodCharacter.rows.who, fact: closed(capFirst(district.skew)) });
   if (district.priceTier) notes.push({ key: "price", label: COPY.hoodCharacter.rows.price, fact: capFirst(district.priceTier) });

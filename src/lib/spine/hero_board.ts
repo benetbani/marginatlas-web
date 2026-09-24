@@ -86,8 +86,8 @@ export type HeroBoardData = {
   answerBasis?: string | null;
   /** The basis line under the answer, the masthead's own words. */
   subtitle: string | null;
-  /** THE ANSWER DRAWN (his law of 2026-09-19, "a share of a whole is drawn"): the tax on profit as a fraction of the profit, drawn under the figure as the whole filled to the share, the figure never printed a second time. Absent where the answer is not a share (a city's pay). */
-  answerShare?: number | null;
+  /** THE ANSWER DRAWN at the answer column's foot (2026-09-24), the figure never printed a second time: the country's tax on profit as the whole filled to the share (his law of 2026-09-19, "a share of a whole is drawn"), its two parts named; a city's typical pay as its place among the covered cities, the two ends named. `value` is out of 100; `aria` names the drawing for a screen reader. */
+  answerBar?: { value: number; part?: string; rest?: string; ends?: readonly [string, string]; aria: string } | null;
   rows: HeroBoardRow[];
   /** The line under the column saying what the chips are among. Absent, the country's (`COPY.heroBoard.levelBasis`). */
   levelBasis?: string;
@@ -176,5 +176,6 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
   }
 
   const share = facts.answer && isNum(facts.answer.share) && facts.answer.share > 0 && facts.answer.share < 1 ? facts.answer.share : null;
-  return { iso2, name: facts.name, answer: facts.answer, subtitle: facts.subtitle, answerShare: share, rows, image: heroImageFor(iso2) };
+  const answerBar = share != null && facts.answer ? { value: share * 100, part: COPY.heroBoard.share.part, rest: COPY.heroBoard.share.rest, aria: `${facts.answer.value} ${COPY.heroBoard.share.of}` } : null;
+  return { iso2, name: facts.name, answer: facts.answer, subtitle: facts.subtitle, answerBar, rows, image: heroImageFor(iso2) };
 }

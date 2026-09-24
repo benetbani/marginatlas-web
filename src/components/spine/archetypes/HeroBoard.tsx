@@ -80,10 +80,10 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                 </p>
               </div>
               {board.subtitle ? <p className="mt-4 max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.subtitle}</p> : null}
-              {/* THE ANSWER DRAWN (his law of 2026-09-19, "a share of a whole is drawn"; 2026-09-24): the tax on profit as the whole filled to the share, at the column's foot where the promise line stood, its two parts named and the figure never printed twice. */}
-              {board.answerShare != null ? (
-                <div data-answer-share className="mt-auto max-w-[28ch] pt-6">
-                  <SegmentBar bare label={`${board.answer.value} ${COPY.heroBoard.share.of}`} value={board.answerShare * 100} figure={board.answer.value} unit="" part={COPY.heroBoard.share.part} rest={COPY.heroBoard.share.rest} />
+              {/* THE ANSWER DRAWN (2026-09-24), at the column's foot where the promise line stood, the figure never printed twice: the country's tax on profit as the whole filled to the share (his law of 2026-09-19, "a share of a whole is drawn"), a city's pay as its place among the cities. */}
+              {board.answerBar ? (
+                <div data-answer-bar className="mt-auto max-w-[28ch] pt-6">
+                  <SegmentBar bare label={board.answerBar.aria} value={board.answerBar.value} figure={board.answer.value} unit="" part={board.answerBar.part} rest={board.answerBar.rest} ends={board.answerBar.ends} />
                 </div>
               ) : null}
             </div>

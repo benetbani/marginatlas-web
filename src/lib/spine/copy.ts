@@ -87,7 +87,7 @@ export const COPY = {
   tiers: {
     kicker: TIERS_KICKER,
     heads: { fee: "Fee", time: "Time", paperwork: "Paperwork" },
-    legend: "Dots are the paperwork: one is an online form, five is a notary and a lawyer.",
+    legend: "More dots, more paperwork: one is an online form, five a lawyer.",
     /** Founder ruling 8, 2026-09-04: the section leads to this page. */
     door: "How to open a business in {country}",
     explainers: {
@@ -161,9 +161,9 @@ export const COPY = {
      *  country's" is what a person says. Fourteen words at most, measured on
      *  the longest case (three own reads and a two-word city). */
     city: {
-      basisOwn: "All five reads are {city}'s own, modelled.",
-      basisMixed: "{traits} {verb} {city}'s own; the rest are the country's, modelled.",
-      basisCountry: "The country's reads, modelled; {city}'s own are not gathered yet.",
+      basisOwn: "",
+      basisMixed: "{traits} {verb} {city}'s own. The rest are the country's.",
+      basisCountry: "These describe the country, not {city} alone.",
     },
   },
   /** The note list (what locals know): authored notes, the page's one editorial section. */
@@ -356,7 +356,9 @@ export const COPY = {
   cityHeroBoard: {
     rows: { visitors: "Visitors", permits: "City permits", density: "Per 10,000 residents", gdp: "Metro GDP", living: "Cost of living" },
     units: { aYear: "a year", per10k: "businesses" },
-    levelBasis: "Among the covered cities; the cost of living runs 1 at the cheapest to 100 at the dearest.",
+    levelBasis: "Levels compare cities. Cost of living: cheapest city 1, dearest 100.",
+    /** The answer drawn: the typical pay's place among the covered cities, its two ends named (labels, never a city). */
+    pay: { low: "Lowest pay", high: "Highest pay", aria: "Typical pay among the cities we cover" },
   },
   /** THE CITY'S OWN PERMITS, GATE BY GATE (city_gates_rows.ts, `17 gates`,
    *  2026-09-20 late evening; his "more sections" from what the files hold).
@@ -369,8 +371,8 @@ export const COPY = {
     units: { day: "day", days: "days" },
     notRequired: "Not required here",
     focalLabel: "All the city's fees",
-    basis: "Local gates on top of the country's registration; the slowest sets the opening date.",
-    footModelled: "Modelled for this city.",
+    basis: "On top of registering the company. The slowest sets your opening date.",
+    footModelled: "",
   },
   /** WHO IS ALREADY TRADING HERE (city_market_rows.ts, `18 market`, the same
    *  evening): businesses for every 10,000 residents by trade as his bars,
@@ -378,9 +380,9 @@ export const COPY = {
   cityMarket: {
     kicker: "Who is already trading",
     /** The focal's words when the count of every business stands at 30 above the bars; the bars' own basis otherwise. */
-    basisWithFocal: "Businesses in the city; for every 10,000 residents, by trade, below.",
+    basisWithFocal: "Businesses trading in the city.",
     basis: "Businesses for every 10,000 residents, by trade.",
-    footModelled: "Modelled for this city.",
+    footModelled: "",
     phoneHead: { trade: "Trade", value: "Per 10,000" },
     /** The ceiling's name at the far end of every track (the districts card's "Dearest district"). */
     densest: "Densest trade",
@@ -655,10 +657,10 @@ export const COPY = {
   /** The how-to page, "How to open a business in [country name]" (founder ruling 8, 2026-09-04). */
   howto: {
     title: "How to open a business in {country}",
-    lead: "The legal forms on offer, what each costs and takes to register, what each one is in plain words, and what the paperwork dots mean.",
+    lead: "",
     cells: "What a business pays",
     forms: "What each form is",
-    dots: "What the paperwork dots mean",
+    dots: "What the dots mean",
     dotLabels: ["One dot", "Two dots", "Three dots", "Four dots", "Five dots"],
     back: "Back to {country}",
   },
@@ -677,11 +679,11 @@ export const COPY = {
    *  the builder falls back to the country's typical it is
    *  `cityCustomers.countryBasis`, naming the country (no city today). */
   cityHero: {
-    subtitle: "Opening a business in {country}",
+    subtitle: "",
     allCities: "All cities",
     answerLabel: "Typical customer pay",
     answerBasis: "Pay, a year.",
-    answerBasisModelled: "Pay, a year; modelled.",
+    answerBasisModelled: "Pay, a year.",
   },
   /** AT A GLANCE, the city's (MODEL.md 8.3, `01 glance`; plan step 32's
    *  first dispatch, 2026-09-18): the country's form one altitude down (R8,
@@ -772,12 +774,12 @@ export const COPY = {
       rent: "A square metre of prime shop space, a year",
       /** `{rate}` is the shard's rate as read. The count draws it to a whole shop; the second line says so, and only where the rate had to be rounded. */
       empty: "{rate} in every 100 shops",
-      emptyRounded: "{rate} in every 100 shops, rounded to a whole shop",
+      emptyRounded: "{rate} in every 100 shops",
       fitOut: "To fit out a square metre of shop space",
       deposit: "Months of rent held as the deposit on a shop",
     },
     /** Joined to a basis with "; " where a printed figure's tag is not held. */
-    modelled: "modelled for this city",
+    modelled: "",
     /** The deposit's unit words, beside its figure: "6 months", "1 month". */
     months: { one: "month", many: "months" },
     /** THE DETAILS BEHIND A FIGURE, his plus (his word after the push of
@@ -798,12 +800,12 @@ export const COPY = {
     },
     /** PART 5's stated line, standing where the figure would, one per cell the bank does not hold. */
     withheld: {
-      rent: "The prime rent is not on file for this city yet.",
-      empty: "The empty-shop rate is not on file for this city yet.",
+      rent: "No prime rent figure for this city yet.",
+      empty: "No empty-shop rate for this city yet.",
       /** Reachable by the guard's shape and by no city today (every rate on file sits between 0.5 and 41.3). */
-      emptyNotAShare: "The empty-shop rate on file is not a share of 100 shops.",
-      fitOut: "The fit-out cost is not on file for this city yet.",
-      deposit: "The deposit is not on file for this city yet.",
+      emptyNotAShare: "No reliable empty-shop rate for this city yet.",
+      fitOut: "No fit-out cost for this city yet.",
+      deposit: "No deposit figure for this city yet.",
     },
   },
   /** WHAT CUSTOMERS EARN, the city's `07 earnings` (MODEL.md 8.3; plan step
@@ -821,12 +823,12 @@ export const COPY = {
    *  "take-home" (item 24), never "median". */
   cityCustomers: {
     kicker: CUSTOMERS_KICKER,
-    basis: "Typical pay here, a year; the spread is the country's.",
+    basis: "Typical pay here, a year. Both tenths are for the whole country.",
     basisAlone: "Typical pay here, a year.",
-    noSpread: "The country's bottom and top tenth are not researched yet.",
-    outside: "The country's spread is not drawn: the typical pay here sits outside it.",
-    modelled: "The typical pay is modelled, not measured.",
-    countryBasis: "Full-time pay a year across {country}; {city} not researched on its own yet.",
+    noSpread: "",
+    outside: "",
+    modelled: "",
+    countryBasis: "Full-time pay a year across {country}.",
   },
   /** THE THREE CARDS THE CITY FACT BANK FEEDS (2026-09-17, CITY-PROGRAMME step
    *  1a, research item 21): one person's living costs, a year of rent against
@@ -854,17 +856,17 @@ export const COPY = {
     units: { month: "a month", cup: "a cup" },
     basis: "Prices for one person living here, not for the shop.",
     /** `{what}` is a list of the names below; `{verb}` is "is" or "are". */
-    footModelled: "{what} {verb} modelled.",
+    footModelled: "",
     footPlaceholder: "{what} {verb} placeholders until {city} is researched.",
     /** The cells as the foot names them: "The one-bed rent, groceries, the transit pass and the coffee are modelled." */
     footNames: { rent: "the one-bed rent", groceries: "groceries", transit: "the transit pass", coffee: "the coffee" },
     /** `{n}` of the four cells, `{reasons}` the joined reasons below. */
-    withheld: "{n} of 4 withheld: {reasons}.",
+    withheld: "{n} of 4 left out: {reasons}.",
     reasons: {
-      rent: "the one-bed rent is not on file",
-      groceries: "groceries are not on file",
-      transit: "the transit pass is not on file",
-      coffee: "a coffee is not on file",
+      rent: "no one-bed rent yet",
+      groceries: "no grocery prices yet",
+      transit: "no transit pass price yet",
+      coffee: "no coffee price yet",
     },
   },
   /** RENT AGAINST INCOME, the city's `06 runway` (MODEL.md 8.3; the same
@@ -883,14 +885,14 @@ export const COPY = {
     kicker: "Rent against income",
     cells: { share: "Rent's share of income", income: "Typical income" },
     units: { year: "a year" },
-    basis: "A year of one-bed rent, against a typical income here for a year.",
-    footModelled: "{what} {verb} modelled.",
+    basis: "One-bed rent for a year, against a typical income.",
+    footModelled: "",
     footPlaceholder: "{what} {verb} placeholders until {city} is researched.",
     /** The inputs as the foot names them: "The rent and the typical income are modelled." */
     footNames: { rent: "the rent", income: "the typical income" },
     withheld: {
-      over: "The share is withheld: a year of one-bed rent here is more than a year of typical income.",
-      noRent: "The share is withheld: the one-bed rent is not on file for this city.",
+      over: "A year's rent here is more than a typical year's income.",
+      noRent: "No one-bed rent figure for this city yet.",
     },
   },
   /** WHAT RESIDENTS SPEND, the city's `08 demand` (MODEL.md 8.3; plan step
@@ -903,11 +905,11 @@ export const COPY = {
   cityDemand: {
     kicker: "What residents spend",
     basis: "What one resident spends in a year, on everything.",
-    footModelled: "The spend is modelled for this city.",
+    footModelled: "",
     withheld: {
-      placeholder: "The spend is withheld: the figure on file for {city} is a placeholder.",
+      placeholder: "No reliable spend figure for {city} yet.",
       /** Reachable by the builder's shape and by no city today (252 of 252 hold the figure). */
-      notOnFile: "The spend per resident is not on file for this city yet.",
+      notOnFile: "No spend figure for this city yet.",
     },
   },
   /** RESIDENTS AND VISITORS, the city's `15 season` (MODEL.md 8.3; plan step
@@ -928,11 +930,11 @@ export const COPY = {
     /** The unit beside the residents' share on the segmented bar (2026-09-20). */
     unit: "of footfall",
     basis: "Of the year's footfall, the share who live here and the share visiting.",
-    footModelled: "Both shares are modelled for this city.",
-    footSlope: "Both shares are modelled from a year's arrivals and the resident count.",
+    footModelled: "",
+    footSlope: "",
     withheld: {
-      clamp: "The split is withheld: the modelled share for this city sits at the model's limit.",
-      noCount: "The split is withheld: no visitor count is on file for this city.",
+      clamp: "No reliable split for this city yet.",
+      noCount: "No visitor count for this city yet.",
     },
   },
   /** The card pager (the cities). */
@@ -950,11 +952,11 @@ export const COPY = {
     allLabel: "Every neighbourhood",
     prev: "Previous neighbourhoods",
     next: "More neighbourhoods",
-    foot: "{n} named areas, each a door to the neighbourhoods page.",
+    foot: "",
     /** Where every card lands on the district's own page (the cities the
      *  hub's gate admits, London today; plan step 35, 2026-09-19), the foot
      *  says that instead: the door goes to the district, not to the hub. */
-    footPages: "{n} named areas, each with a page of its own.",
+    footPages: "",
   },
   /** The city cards in their three looks (B11, 2026-09-10). The unit is said
    *  ONCE for the whole row, never in a card (PART 5). `plain` says what the
@@ -1017,7 +1019,7 @@ export const COPY = {
      *  for that city, the same figure the home city's masthead prints, so the
      *  caveat says "typical pay" and one basis serves the column. */
     /** The living column on the city scale since 2026-09-20 (his ruling: the ends are the cheapest and dearest covered cities, never named). */
-    caveat: "Cost of living with rent, cheapest city 1, dearest 100; typical pay and visitors a year.",
+    caveat: "Pay and visitors, a year.",
   },
   /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13,
    *  reworded and unfeatured task 14, 2026-09-10). Every district's shop rent
@@ -1047,7 +1049,7 @@ export const COPY = {
        of dozens. Two plain sentences instead, the first naming the reference
        and the size of the set it is cheapest OF, the second saying where the
        figures come from. */
-    basis: "{district} is the cheapest of the {count} districts we cover. Rents are modelled, not read off leases.",
+    basis: "",
     /* THE FAR END OF EVERY TRACK, in the words a person would use for it. It
        read "heaviest in the city", from an internal phrase for a burden ("rent
        load") that no shopkeeper has ever said out loud; and it was measured
@@ -1071,7 +1073,7 @@ export const COPY = {
    *  easiest`: it has no seat here until ruling 30 lands. Both read aloud. */
   cityTrades: {
     kicker: CITY_TRADES_KICKER,
-    foot: "Local figures for {n} trades. Which is easiest to open here is not yet known.",
+    foot: "",
   },
   /** THE FOUNDER'S PLUS (2026-09-08): the detail panel's summary lines, one for
    * each query a reader clicks open. Reused, not invented per instance: the
@@ -1730,8 +1732,8 @@ export const COPY = {
     kicker: "The steps, in order",
     totalLabel: "Start to finish",
     units: { day: "day", days: "days" },
-    basis: "The order and the figures are this country's own. Steps can run at the same time, so the whole takes less than the steps added up.",
-    foot: "Times and fees are modelled.",
+    basis: "Some steps run at the same time, so the total is shorter.",
+    foot: "",
   },
   /** WHEN THIS CITY SPENDS, the city's `19 calendar` (city_calendar_rows.ts, 2026-09-23, brief row Y1): the kicker names the subject, the label names the figure, the basis says what the twelve columns are and what the swing is, and the foot says the figures are the city's own calendar. */
   /** WHAT A BUSINESS HERE SELLS FOR, the country's `17 exit` (country_exit_rows.ts, 2026-09-23, brief row C3). The marks are the usual band as a multiple of EARNINGS, never of sales; the basis says so in a person's words, and the climate word is the file's own, rewritten for a reader. */
@@ -1790,7 +1792,7 @@ export const COPY = {
     middle: "Middle of the {n}",
     head: { name: "The role", value: "A month, gross" },
     week: "hours in the usual week",
-    basis: "Gross pay a month for the five roles a small business hires, this city's own figures, modelled where they are not gathered.",
+    basis: "Five roles a small business hires.",
   },
   /** HOW THIS CITY DOES BUSINESS, the city's `21 texture` (city_texture_rows.ts,
    *  2026-09-23). The poles are the shard's own words; these are the SUBJECTS,
@@ -1799,7 +1801,7 @@ export const COPY = {
    *  how the rules are enforced, whose document the lease is, how work is won,
    *  then the pace, which is the sixth and drops under his five-row cap. */
   cityTexture: {
-    kicker: "How this city does business",
+    kicker: "Doing business here",
     /* THE SUBJECT AND ITS TWO ENDS, keyed by the pair as the shard writes it.
        The ends are the shard's own words except one: "Slow to open up" is four
        words, and a pole of four words is a sentence by the model laws' own
@@ -1815,13 +1817,13 @@ export const COPY = {
     },
     /** The card's one figure: how often somebody official walks in, off `reg.inspections_per_yr`. */
     visits: { one: "Official visit a year", many: "Official visits a year" },
-    basis: "How often an inspector calls, and where this city sits between the two ends; the reads are modelled.",
+    basis: "",
   },
   cityCalendar: {
     kicker: "When this city spends",
     swingLabel: "Busiest over quietest",
-    basis: "Each month against this city's busiest, which is 100; the swing is the busiest less the quietest, as a share of the busiest.",
-    foot: "This city's own calendar, modelled.",
+    basis: "Spending each month, with the busiest set to 100.",
+    foot: "",
   },
   crumbs: {
     districts: "Districts",
@@ -2177,32 +2179,33 @@ export const COPY = {
    *  where the seat read 54 percent ink under the art-direction gate's 60.
    *  Never "foot traffic" (8.8: it reads as the cut footfall metric). */
   hoodTake: {
-    subtitle: "Shop rent, district by district",
+    subtitle: "",
     labelSpread: "Rent, {dearest} against {cheapest}",
-    basis: "Shop rent, modelled from each district's character, not read off leases.",
+    basis: "Estimates from each district's character, not from leases.",
     cells: { cheapest: "{district}, cheapest", dearest: "{district}, dearest", count: "Districts ranked" },
-    foot: "The city's {count} broad districts; rents modelled, not read off leases.",
-    footYear: "The city's {count} broad districts; visitor counts are {year} figures.",
+    foot: "",
+    footYear: "",
   },
   hoodRank: {
-    clipOne: "{district}: the figure is the model's ceiling, not a reading.",
-    clipMany: "{districts}: the figures are the model's bounds, not readings.",
+    clipOne: "{district} may be dearer than shown.",
+    clipOneLow: "{district} may be cheaper than shown.",
+    clipMany: "{districts} may be dearer or cheaper than shown.",
   },
   hoodPremium: {
     kicker: "Where visitors crowd in",
     head: { name: "District", value: "Visitors per resident" },
     basis: "Visitors a year for every resident, overnight and day trips.",
-    basisYear: "Visitors a year for every resident; {year} counts at district level or finer.",
-    basisYearEstimate: "Visitors a year for every resident; {year} figures, some estimated from the city's size.",
-    withheldOne: "{n} district withheld: no visitor figure is on file.",
-    withheldMany: "{n} districts withheld: no visitor figure is on file.",
+    basisYear: "Visitors a year for every resident, {year}.",
+    basisYearEstimate: "Visitors a year for every resident, {year}. Some are estimates.",
+    withheldOne: "{n} district left out: no visitor figure yet.",
+    withheldMany: "{n} districts left out: no visitor figures yet.",
   },
   hoodCompare: {
     kicker: "Districts, side by side",
     cols: { visitors: "Visitors per resident" },
-    caveat: "Rent against {cheapest}, modelled; visitors a year for every resident.",
-    caveatYear: "Rent against {cheapest}, modelled; visitors a year for every resident, {year} counts.",
-    dash: "A dash: no visitor figure is on file for that district.",
+    caveat: "",
+    caveatYear: "",
+    dash: "A dash means no visitor figure yet.",
   },
   hoodChapters: {
     rent: "What rent costs, district by district",
@@ -2210,10 +2213,9 @@ export const COPY = {
   },
   hoodCharacter: {
     kicker: "What it is like",
-    kickerNamed: "What {district} is like",
-    rows: { sentence: "The note's first line", who: "Who is here", price: "Price tier", description: "In brief" },
-    sentenceWithheld: "Not printed: the note's opening sentence runs past the card's four lines.",
-    foot: "The other {n} districts' notes are on their own pages.",
+    kickerNamed: "About {district}",
+    rows: { sentence: "In short", who: "Who is here", price: "Price tier", description: "In brief" },
+    foot: "",
   },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the

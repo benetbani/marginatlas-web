@@ -33,7 +33,7 @@ Loud today: 2 of 3, as `LOUD_SEATS` in country-view.tsx declares (a LIT seat is 
 
 | section id | component | kicker | archetype | builder |
 |---|---|---|---|---|
-| dots | HowToBody | What the paperwork dots mean | NoteList | buildHowTo |
+| dots | HowToBody | What the dots mean | NoteList | buildHowTo |
 | howto | HowToBody |  | KvGrid | buildHowTo |
 | steps | HowToBody | The steps, in order | Stepper | buildHowTo |
 | forms | HowToBody | Registering, by legal form | TiersTable | buildHowTo |
@@ -63,7 +63,7 @@ Loud today: 0 of 3, as `LOUD_SEATS` in how-to-view.tsx declares (a LIT seat is u
 | trades | Earnings / TradesHere | Trades with local figures | BlockedSeat or kit (trade-rows) |  |
 | peers | CityPeers | Against other cities | CompareTable | buildCityPeerTable |
 | crew | Crew | What the crew costs | MarkList |  |
-| texture | Texture | How this city does business | SpectraTable |  |
+| texture | Texture | Doing business here | SpectraTable |  |
 | character-people | CharacterPeople | Dealing with people | SpectraTable |  |
 | locals | LocalsSeat | What locals know | BlockedSeat |  |
 | neighbourhoods | Neighbourhoods | The city's neighbourhoods | CardPager |  |

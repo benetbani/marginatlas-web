@@ -182,13 +182,16 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
      silence. The row says it is clipped (`rent_clipped`, from the engine on
      the city, from the scheme on the hub) and the line names it in the hub's
      words; no clipped row, no line. */
-  const clippedNames = list.filter((r) => r.rent_clipped === true).map((r) => String(r.name));
+  const clipped = list.filter((r) => r.rent_clipped === true);
+  const clippedNames = clipped.map((r) => String(r.name));
+  /* Which way the one clipped district may run (2026-09-24, the plain words): the cheapest sits on the low bound, anything else on the high one. */
+  const clippedLow = clipped.length === 1 && Number(clipped[0].rent_mult) <= Math.min(...list.map((r) => Number(r.rent_mult)));
   const clipLine =
     clippedNames.length === 0
       ? null
       : clippedNames.length === 1
-        ? COPY.hoodRank.clipOne.replace("{district}", clippedNames[0])
-        : COPY.hoodRank.clipMany.replace("{districts}", clippedNames.join(", "));
+        ? (clippedLow ? COPY.hoodRank.clipOneLow : COPY.hoodRank.clipOne).replace("{district}", clippedNames[0])
+        : COPY.hoodRank.clipMany.replace("{districts}", clippedNames.join(" and "));
   /* The lower middle for an even count, said here rather than left to a
      reader to wonder about: with six districts this is the third cheapest.
      With TWO the same expression returns index 0, the cheapest itself, which

@@ -103,7 +103,7 @@ const listOf = (names: string[]) => (names.length === 1 ? names[0] : `${names.sl
 /** The foot: the modelled cells named in words, then the placeholder cells, each its own sentence; null when every cell is held. */
 function footOf(modelled: string[], placeholders: string[], cityName: string): string | null {
   const parts: string[] = [];
-  if (modelled.length) parts.push(capFirst(fill(COPY.cityLiving.footModelled, { what: listOf(modelled), verb: modelled.length === 1 ? "is" : "are" })));
+  if (modelled.length && COPY.cityLiving.footModelled) parts.push(capFirst(fill(COPY.cityLiving.footModelled, { what: listOf(modelled), verb: modelled.length === 1 ? "is" : "are" })));
   if (placeholders.length) parts.push(capFirst(fill(COPY.cityLiving.footPlaceholder, { what: listOf(placeholders), verb: placeholders.length === 1 ? "is" : "are", city: cityName })));
   return parts.length ? parts.join(" ") : null;
 }
@@ -191,7 +191,7 @@ export function buildCityLiving(slug: string): CityLivingData | null {
     name: city.name,
     cells,
     figures: { rent: rent?.value ?? null, groceries: groceries?.value ?? null, transit: transit?.value ?? null, coffee: coffee?.value ?? null },
-    withheld: missing.length ? fill(C.withheld, { n: String(missing.length), reasons: missing.join("; ") }) : null,
+    withheld: missing.length ? fill(C.withheld, { n: String(missing.length), reasons: missing.join(", ") }) : null,
     basis: C.basis,
     foot: footOf(modelled, placeholders, city.name),
     confidence: cardConfidence(cells),

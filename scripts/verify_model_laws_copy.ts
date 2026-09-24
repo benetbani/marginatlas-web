@@ -1070,7 +1070,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
         for (const d of buildHoodCloseDoors(city, focus)) heads.push([`${where} close.door.${d.key}`, d.label]);
       }
     }
-    heads.push(["COPY.hoodChapters.rent", COPY.hoodChapters.rent], ["COPY.hoodChapters.works", COPY.hoodChapters.works], ["COPY.blocked.hoodWorks.line", COPY.blocked.hoodWorks.line], ["COPY.blocked.hoodWorks.foot", COPY.blocked.hoodWorks.foot], ["COPY.hoodPremium.withheldOne", COPY.hoodPremium.withheldOne.replace("{n}", "One")], ["COPY.hoodCompare.dash", COPY.hoodCompare.dash], ["COPY.hoodCharacter.sentenceWithheld", COPY.hoodCharacter.sentenceWithheld], ["COPY.cityNeighbourhoods.footPages", COPY.cityNeighbourhoods.footPages.replace("{n}", "Seven")]);
+    heads.push(["COPY.hoodChapters.rent", COPY.hoodChapters.rent], ["COPY.hoodChapters.works", COPY.hoodChapters.works], ["COPY.blocked.hoodWorks.line", COPY.blocked.hoodWorks.line], ["COPY.blocked.hoodWorks.foot", COPY.blocked.hoodWorks.foot], ["COPY.hoodPremium.withheldOne", COPY.hoodPremium.withheldOne.replace("{n}", "One")], ["COPY.hoodCompare.dash", COPY.hoodCompare.dash], ["COPY.cityNeighbourhoods.footPages", COPY.cityNeighbourhoods.footPages.replace("{n}", "Seven")]);
     console.log(`hood pages: every composed string swept on ${hoodPages} page(s) of ${spineHoodCities().length} admitted city(ies)`);
   }
 

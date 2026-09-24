@@ -301,7 +301,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   for (let n = 4; n <= 7; n++) {
     const foot = COPY.cityTrades.foot.replace("{n}", countWord(n));
     if (/[{}]/.test(foot) || /\d/.test(foot)) reds.push(`trade rows: the foot for ${n} trades carries a placeholder or a digit ("${foot}")`);
-    if (!foot.startsWith("Local figures for ") || !foot.includes("not yet known")) reds.push(`trade rows: the foot is not the coverage form ("${foot}")`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the trades card prints no coverage line; the rows are the coverage. */
+    if (foot !== "") reds.push(`trade rows: the card prints a coverage line again ("${foot}")`);
     for (const bw of COPY.banned) if (foot.toLowerCase().includes(bw)) reds.push(`trade rows: banned word "${bw}" in "${foot}"`);
   }
   for (const [where, kicker] of [["cityDistricts", COPY.cityDistricts.kicker], ["cityTrades", COPY.cityTrades.kicker], ["cityPeers", COPY.cityPeers.kicker]] as const) {
@@ -327,7 +328,9 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
        are actually rebased on. The old assertion proved a key pointed at a
        drawn row; this proves the words point at the right district, which is
        the only thing left carrying the reference. */
-    if (!b.basis.includes("A")) reds.push(`districts: the basis line does not name the district every figure is measured against ("${b.basis}")`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the column head names the district every figure is against; the card's line says nothing the head says. */
+    if (b.basis && !b.basis.includes("A")) reds.push(`districts: a basis line that does not name the district every figure is measured against ("${b.basis}")`);
+    if (/\bmodell?ed\b|\bthe model\b/i.test(b.basis)) reds.push(`districts: a method word in the basis ("${b.basis}")`);
     if (!b.phoneHead.value.includes("A")) reds.push(`districts: the column head does not name the district the figures are against ("${b.phoneHead.value}")`);
     if (/[{}]/.test(b.basis + b.phoneHead.value + b.phoneHead.name)) reds.push(`districts: a placeholder was never filled ("${b.basis}" / "${b.phoneHead.value}")`);
     /* EVERY ROW CARRIES A FIGURE, THE REFERENCE'S INCLUDED, and the
@@ -598,7 +601,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (transit && (l.figures.transit === 0) !== (transit.value === COPY.free)) reds.push(`city living ${c.slug}: a transit pass of ${l.figures.transit} prints "${String(transit.value)}"`);
       if (transit && transit.value === COPY.free) fareFree++;
       const weakCells = l.cells.filter((x) => x.confidence !== "measured").length;
-      if ((weakCells > 0) !== (l.foot != null)) reds.push(`city living ${c.slug}: ${weakCells} cell(s) not held and the foot is ${l.foot ? "printed" : "absent"}`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the tag stays on the cells; no foot says how they were made. */
+      if (l.foot != null && /\bmodell?ed\b/i.test(l.foot)) reds.push(`city living ${c.slug}: a method line in the foot ("${l.foot}")`);
     }
     const r = buildCityRunway(c.slug);
     if (!r) reds.push(`city runway ${c.slug}: builds nothing (every city holds a typical income)`);
@@ -618,7 +622,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if ((r.figures.overPct != null) !== (r.withheld === COPY.cityRunway.withheld.over)) reds.push(`city runway ${c.slug}: the ratio ${r.figures.overPct ?? "is not over 100"} and the line reads "${r.withheld ?? ""}"`);
       if (share) sharesDrawn++; else sharesWithheld++;
       const weakCells = r.cells.filter((x) => x.confidence !== "measured").length;
-      if ((weakCells > 0) !== (r.foot != null)) reds.push(`city runway ${c.slug}: ${weakCells} cell(s) not held and the foot is ${r.foot ? "printed" : "absent"}`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): as the living card's. */
+      if (r.foot != null && /\bmodell?ed\b/i.test(r.foot)) reds.push(`city runway ${c.slug}: a method line in the foot ("${r.foot}")`);
     }
   }
   console.log(`city living and runway: ${livingBuilt} living cards build (${livingHeld} held, ${livingModelled} modelled, ${livingPlaceholder} placeholder; ${fareFree} fare-free) and ${runwayBuilt} runway cards (${sharesDrawn} shares drawn, ${sharesWithheld} withheld over 100; ${runwayModelled} modelled) over ${cities.length} cities; labels, withheld lines and the foot held`);
@@ -658,12 +663,14 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       const figure = "figure" in cell ? cell.figure : `${cell.part} of ${cell.whole}`;
       if (!figure || figure === "undefined") reds.push(`premises ${c.slug}: an empty figure`);
       if (cell.basis.split(/\s+/).filter(Boolean).length > 14) reds.push(`premises ${c.slug}: a basis over fourteen words: "${cell.basis}"`);
-      if ((cell.tag !== "held") !== /modelled/.test(cell.basis)) reds.push(`premises ${c.slug}: ${cell.tag !== "held" ? "a modelled figure and the basis does not say so" : "a held figure and the basis says modelled"}: "${cell.basis}"`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the basis says the unit, never how the figure was made. */
+      if (/\bmodell?ed\b/i.test(cell.basis)) reds.push(`premises ${c.slug}: a method word in the basis: "${cell.basis}"`);
       if ("part" in cell) {
         if (!Number.isInteger(cell.part) || cell.part < 0 || cell.part > 100) reds.push(`premises ${c.slug}: the count's part is ${cell.part}, not a whole number in 0 to 100`);
         const didRound = cell.part !== cell.rate;
         if (didRound) rounded++;
-        if (didRound !== /rounded/.test(cell.basis)) reds.push(`premises ${c.slug}: the part ${cell.part} against the rate ${cell.rate} and the basis ${didRound ? "does not say rounded" : "says rounded"}: "${cell.basis}"`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the drawing is a picture of the rate, and the basis prints the rate as read (the law below); it no longer says "rounded". */
+        if (/\brounded\b/i.test(cell.basis)) reds.push(`premises ${c.slug}: the basis says how the drawing was made: "${cell.basis}"`);
         if (!cell.basis.includes(String(cell.rate))) reds.push(`premises ${c.slug}: the basis does not print the rate ${cell.rate}: "${cell.basis}"`);
       }
     }
@@ -734,10 +741,10 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (strip.from === "city" && strip.basis !== COPY.cityCustomers.basisAlone) reds.push(`city earnings ${c.slug}: one mark under the basis "${strip.basis}"`);
       if (strip.figures.outside) outside++; else noDeciles++;
       const note = strip.note ?? "";
-      if (strip.figures.outside !== note.includes(COPY.cityCustomers.outside)) reds.push(`city earnings ${c.slug}: the typical is ${strip.figures.outside ? "" : "not "}outside the deciles and the note ${note.includes(COPY.cityCustomers.outside) ? "says it is" : "does not say so"}`);
-      if (!strip.figures.outside && strip.from === "city" && !note.includes(COPY.cityCustomers.noSpread)) reds.push(`city earnings ${c.slug}: one mark, no deciles, and the note does not say the tenths are not researched: "${note}"`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): a strip with one mark draws the typical it has; no note says why the tenths are missing. */
+      if (/not researched|not drawn|outside it/i.test(note)) reds.push(`city earnings ${c.slug}: a note explaining the missing tenths ("${note}")`);
     } else reds.push(`city earnings ${c.slug}: ${strip.marks.length} marks`);
-    if (income.sample !== (strip.note ?? "").includes(COPY.cityCustomers.modelled)) reds.push(`city earnings ${c.slug}: the typical is ${income.sample ? "" : "not "}modelled and the note ${(strip.note ?? "").includes(COPY.cityCustomers.modelled) ? "says modelled" : "does not"}`);
+    if (/\bmodell?ed\b/i.test(strip.note ?? "")) reds.push(`city earnings ${c.slug}: a method word in the note ("${strip.note}")`);
     ban(`city earnings ${c.slug}`, [strip.basis, strip.note ?? "", ...strip.marks.map((m) => m.label)]);
     const spend = buildCityDemand(c.slug);
     if (!spend) { reds.push(`city demand ${c.slug}: builds nothing (every listed city holds a shard)`); continue; }
@@ -795,10 +802,11 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (!p.foot) reds.push(`city people ${c.slug}: no foot (every listed city's country holds the share born abroad, and a table with no foot has no lead)`);
     else if (p.foot.label === COPY.character.people.foot) feet++; else if (p.foot.label === COPY.character.people.footCountry) nationalFeet++; else reds.push(`city people ${c.slug}: a foot label off the copy table: "${p.foot.label}"`);
     if (wordsOf(p.basis) > 14) reds.push(`city people ${c.slug}: a basis over fourteen words: "${p.basis}"`);
-    if (!/modelled/.test(p.basis)) reds.push(`city people ${c.slug}: the basis does not say modelled: "${p.basis}"`);
-    if ((p.own === 0) !== p.basis.startsWith("The country's reads")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
-    if ((p.own === 5) !== p.basis.startsWith("All five reads")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
-    if (p.own > 0 && p.own < 5 && !/ own; the rest are the country's, modelled\.$/.test(p.basis)) reds.push(`city people ${c.slug}: a mixed table under the basis "${p.basis}"`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the line says whose each row is and nothing about how it was made; all the city's own needs no line. */
+    if (/\bmodell?ed\b|not gathered/i.test(p.basis)) reds.push(`city people ${c.slug}: a method word in the basis: "${p.basis}"`);
+    if ((p.own === 0) !== p.basis.startsWith("These describe the country")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
+    if ((p.own === 5) !== (p.basis === "")) reds.push(`city people ${c.slug}: ${p.own} own read(s) under the basis "${p.basis}"`);
+    if (p.own > 0 && p.own < 5 && !/ own\. The rest are the country's\.$/.test(p.basis)) reds.push(`city people ${c.slug}: a mixed table under the basis "${p.basis}"`);
     ban(`city people ${c.slug}`, [p.basis, ...p.rows.map((r) => r.name)]);
 
     const se = buildCitySeason(c.slug);
@@ -827,9 +835,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if ((h.scheme === PLACEHOLDER_SCHEME) !== (h.cards == null)) reds.push(`city neighbourhoods ${c.slug}: the scheme is ${h.scheme} and the card ${h.cards ? "draws" : "is seated"}`);
     if (h.cards) {
       curated++; cards += h.cards.length;
-      if (!h.foot) reds.push(`city neighbourhoods ${c.slug}: cards with no foot`);
-      const word = countWord(h.cards.length);
-      if (h.foot && !h.foot.startsWith(word.charAt(0).toUpperCase() + word.slice(1))) reds.push(`city neighbourhoods ${c.slug}: the foot does not open with the count as a word: "${h.foot}"`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the cards are the doors; no line under them says so. */
+      if (h.foot) reds.push(`city neighbourhoods ${c.slug}: a pointer line under the cards ("${h.foot}")`);
       for (const k of h.cards) {
         if (!k.name.trim()) reds.push(`city neighbourhoods ${c.slug}: a card with no name`);
         /* THE CARD LANDS ON THE DISTRICT'S OWN PAGE WHERE ONE EXISTS (plan step
@@ -2642,7 +2649,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (focus ? take.crumb.length !== 2 || take.crumb[0] !== hoodCityName(city) : take.crumb.length !== 0) reds.push(`${where}: the crumb is [${take.crumb.join(", ")}]`);
       if (focus && take.name === hoodCityName(city)) reds.push(`${where}: a district page's h1 is the city`);
       const year = districts.map((d) => d.tourism?.year).find((y) => y != null);
-      if (year != null && !take.foot.text.includes(String(year))) reds.push(`${where}: the foot does not say the year ${year}`);
+/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the take has no foot; the visitor figures' year is said where they print (the premium card's basis). */
+      if (take.foot.text) reds.push(`${where}: the take prints a foot again ("${take.foot.text}")`);
       ban(where, [take.subtitle, take.answer.label, take.answer.basis, take.foot.text, ...take.cells.map((c) => c.label)]);
       /* THE TABLE. */
       const compare = buildHoodCompare(city, focus);
@@ -2672,20 +2680,22 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
         if (character.district.slug !== drawn.slug) reds.push(`${where}: the notes draw ${character.district.slug}, not ${drawn.slug}`);
         if (character.rows.length < 1 || character.rows.length > 4) reds.push(`${where}: ${character.rows.length} notes`);
         const first = character.rows.find((r) => r.key === "sentence");
-        if (drawn.paragraph && !first) reds.push(`${where}: no sentence row on a district holding a paragraph`);
+        /* TURNED OVER 2026-09-24 (his correction of that evening): an opening too long for the card is left out, never replaced by a line about it. */
+        if (drawn.paragraph && openingLine(drawn.paragraph) && !first) reds.push(`${where}: no sentence row on a district whose opening fits`);
         if (first && drawn.paragraph) {
           const line = openingLine(drawn.paragraph);
           if (line && first.fact !== line.text) reds.push(`${where}: the sentence row prints "${first.fact}", not the note's opening`);
           if (line && first.fact.length > CHARACTER_FACT_CHARS_CAP) reds.push(`${where}: the sentence row runs ${first.fact.length} characters, over the four-line cap`);
           if (line && !(drawn.paragraph.startsWith(first.fact) || drawn.paragraph.startsWith(first.fact.slice(0, -1)))) reds.push(`${where}: the sentence row is not a verbatim prefix of the paragraph`);
           if (line && !/[.!?]$/.test(first.fact)) reds.push(`${where}: the sentence row does not close on a full stop`);
-          if (!line && first.fact !== COPY.hoodCharacter.sentenceWithheld) reds.push(`${where}: the sentence row is neither the opening nor the stated line`);
+          if (!line) reds.push(`${where}: a sentence row drawn where the opening runs past the card`);
         }
         if (character.rows.some((r) => r.key === "description") && drawn.paragraph) reds.push(`${where}: the description row draws beside a paragraph (a second telling)`);
         for (const r of character.rows) if (wordsOf(r.label) > LABEL_WORDS_CAP) reds.push(`${where}: the note label "${r.label}" runs over ${LABEL_WORDS_CAP} words`);
         if (focus ? character.kicker.includes(drawn.name) : !character.kicker.includes(drawn.name)) reds.push(`${where}: the kicker ${focus ? "names the district under its own h1" : "does not name the district"} ("${character.kicker}")`);
         if (wordsOf(character.kicker.replace(drawn.name, "")) > 4) reds.push(`${where}: the kicker runs over four words past the name ("${character.kicker}")`);
-        if (!character.foot.includes(countWord(districts.length - 1))) reds.push(`${where}: the foot does not count the other districts ("${character.foot}")`);
+        /* TURNED OVER 2026-09-24: no pointer line under the notes; the doors below say where the other districts are. */
+        if (character.foot) reds.push(`${where}: the notes carry a pointer line again ("${character.foot}")`);
         ban(where, [character.kicker, character.foot, ...character.rows.flatMap((r) => [r.label, r.fact])]);
       }
       /* THE DOORS. */
@@ -2715,4 +2725,14 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
 
 console.log(`archetype copy: the district ranking's laws held on its fixture; ${cityTermini} city termini; ${rendered} countries render the answer card, ${noAnswer} of them with no regime row (the state word); ${peerTables} peer tables; ${barCards} margin cards with two or more credible rows; ${noteLists} note lists; ${termini} termini against ${ROUTES.length} routes; ${payCards} pay cards, ${payWithheld} withheld; ${howtos} how-to pages; ${reds.length} red(s)`);
 for (const r of reds.slice(0, 40)) console.log("  " + r);
+/* THE REDS BY KIND (2026-09-24): past the first forty a count per law, the place codes and quoted strings folded out, so a rewrite that trips one law on 1,400 pages reads as one line, not as forty of the same. */
+if (reds.length > 40) {
+  const kinds = new Map<string, number>();
+  for (const r of reds) {
+    const k = r.replace(/"[^"]*"/g, '"…"').replace(/\b[A-Z]{2}\b/g, "XX").replace(/^([a-z -]+?) [a-z0-9-]+(?=:)/, "$1 …").replace(/\d+/g, "N");
+    kinds.set(k, (kinds.get(k) ?? 0) + 1);
+  }
+  console.log(`archetype copy: ${reds.length} red(s) in ${kinds.size} kind(s):`);
+  for (const [k, n] of [...kinds].sort((x, y) => y[1] - x[1])) console.log(`  ${String(n).padStart(5)} x ${k}`);
+}
 if (reds.length) process.exit(1);

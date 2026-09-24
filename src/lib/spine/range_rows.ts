@@ -149,7 +149,8 @@ export function buildCityEarningsStrip(slug: string): CityEarningsData | null {
     ...base,
     marks,
     confidence: income.sample ? "modeled" : "measured",
-    note: notes.length ? notes.join(" ") : null,
+    /* Only the notes that say something (his correction of 2026-09-24, evening, emptied the method notes). */
+    note: notes.filter(Boolean).length ? notes.filter(Boolean).join(" ") : null,
     extra: null,
     basis: brackets ? COPY.cityCustomers.basis : COPY.cityCustomers.basisAlone,
     sample: income.sample,

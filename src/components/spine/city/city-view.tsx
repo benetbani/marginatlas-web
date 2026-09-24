@@ -770,8 +770,8 @@ export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCal
           <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
         </div>
         <div className="mt-2 [@container(min-width:560px)]:mt-0">
-          <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.basis}</p>
-          <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p>
+          {calendar.basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.basis}</p> : null}
+          {calendar.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p> : null}
         </div>
       </div>
       <MonthBars points={calendar.months} />

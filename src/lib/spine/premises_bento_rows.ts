@@ -99,7 +99,8 @@ const weaker = (a: FactTag, b: FactTag): FactTag => (TRUST.indexOf(a) >= TRUST.i
 
 /** A basis line: the unit clause, then "; modelled for this city" where the tag is not held, then the full stop. */
 function basisOf(clause: string, tag: FactTag): string {
-  return notHeld(tag) ? `${clause}; ${COPY.premisesBento.modelled}.` : `${clause}.`;
+  /* The tag stays on the cell for the gates; the words stay off the card (his correction of 2026-09-24, evening). */
+  return notHeld(tag) && COPY.premisesBento.modelled ? `${clause}; ${COPY.premisesBento.modelled}.` : `${clause}.`;
 }
 
 /** The shard's rate as a person reads it: whole where whole, one decimal otherwise (no rate on file carries more). */

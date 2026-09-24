@@ -48,7 +48,8 @@ import { cityFigure, loadCityShard } from "@/lib/facts/city_shard";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { isVisitorsRead } from "@/lib/spine/city_glance_rows";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
-import { levelOf, heroImageFor, type HeroBoardData, type HeroBoardRow } from "@/lib/spine/hero_board";
+import { levelOf, heroImageFor, LEVEL_SET_FLOOR, type HeroBoardData, type HeroBoardRow } from "@/lib/spine/hero_board";
+import { placementRank } from "@/lib/spine/placement";
 import { inSentence } from "@/lib/spine/place_names";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { usd } from "@/components/spine/kit";
@@ -77,10 +78,10 @@ const visitorsM = (m: number) => `${m.toFixed(1)}M`;
    level is a place among the cities that hold the figure. The two shard
    figures are read city by city through the store; the three list figures
    off the list. */
-let sweep: { visitors: number[]; days: number[]; density: number[]; gdp: number[]; living: number[] } | null = null;
+let sweep: { visitors: number[]; days: number[]; density: number[]; gdp: number[]; living: number[]; pay: number[] } | null = null;
 function sweeps() {
   if (sweep) return sweep;
-  const visitors: number[] = [], days: number[] = [], density: number[] = [], gdp: number[] = [], living: number[] = [];
+  const visitors: number[] = [], days: number[] = [], density: number[] = [], gdp: number[] = [], living: number[] = [], pay: number[] = [];
   for (const c of CITIES) {
     const iso2 = String(c.iso2).toUpperCase();
     if (isPos(c.tourist_arrivals_m) && isVisitorsRead(c.sources?.tourist_arrivals_m)) visitors.push(c.tourist_arrivals_m);
@@ -93,7 +94,12 @@ function sweeps() {
       if (n && n.value > 0) density.push(n.value);
     }
   }
-  sweep = { visitors, days, density, gdp, living };
+  /* The typical pay of every covered city, through the one builder the answer reads (city_income.ts), for the answer's own place among them. */
+  for (const c of CITIES) {
+    const t = cityTypicalIncome(c.slug);
+    if (t && isPos(t.value)) pay.push(t.value);
+  }
+  sweep = { visitors, days, density, gdp, living, pay };
   return sweep;
 }
 
@@ -140,11 +146,16 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
         : COPY.cityHero.answerBasis
     : null;
 
+  /* THE ANSWER DRAWN (2026-09-24): the pay's place among the covered cities, the rank the rows' chips read, as the whole filled to the share of cities paid less; the two ends named, never a city (his ruling on the cost of living's ends). */
+  const placed = typical && s.pay.length >= LEVEL_SET_FLOOR ? placementRank(typical.value, s.pay) : null;
+  const answerBar = placed && placed.total > 0 ? { value: (placed.strictlyLower / placed.total) * 100, ends: [C.pay.low, C.pay.high] as const, aria: C.pay.aria } : null;
+
   return {
     iso2,
     name: city.name,
     answer,
     answerBasis,
+    answerBar,
     subtitle: COPY.cityHero.subtitle.replace("{country}", inSentence(countryName)),
     levelBasis: C.levelBasis,
     rows,
