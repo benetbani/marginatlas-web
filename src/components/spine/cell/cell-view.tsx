@@ -144,7 +144,7 @@ import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth } from "@/lib/spine/worth_rows";
 import { buildTradeCloseDoors } from "@/lib/spine/close_rows";
 import { buildPermits } from "@/lib/spine/permits_rows";
-import { buildOpen } from "@/lib/spine/open_rows";
+import { buildOpen, openForm } from "@/lib/spine/open_rows";
 import { buildSplit } from "@/lib/spine/split_rows";
 import { buildTeam } from "@/lib/spine/team_rows";
 import { buildTradePeers } from "@/lib/spine/trade_peer_rows";
@@ -406,7 +406,12 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
               (measured). Both cards draw on every cell whose trade holds a
               shard. */}
           {permits && open ? (
-            <Band split={open.recover ? "2-1" : "1-2"} stack="lg">
+            /* A FIGURE CARD TAKES THE NARROW THIRD (the goal's B12, 2026-09-24):
+               the months to earn it back since A4, and now the lone total too,
+               which sat in the wide two thirds with a blank of about 613 by 126
+               round its figure on 40 London trades at 1280 (E7's sweep); the
+               kinds-of-shop list and the bill keep the wide side. */
+            <Band split={openForm(open) === "metric" ? "2-1" : "1-2"} stack="lg">
               <PermitsCard permits={permits} />
               <OpenCard open={open} />
             </Band>

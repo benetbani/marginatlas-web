@@ -93,7 +93,7 @@ import { CompareTable } from "@/components/spine/archetypes/CompareTable";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { PermitsData } from "@/lib/spine/permits_rows";
-import type { OpenData } from "@/lib/spine/open_rows";
+import { openForm, type OpenData } from "@/lib/spine/open_rows";
 import type { SplitData } from "@/lib/spine/split_rows";
 import type { TeamData } from "@/lib/spine/team_rows";
 import type { TradePeersData } from "@/lib/spine/trade_peer_rows";
@@ -138,11 +138,13 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
 
 export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | null }) {
   if (!open) return null;
+  /* ONE ANSWER FOR THE FORM (open_rows.ts `openForm`), the one the view seats by. */
+  const form = openForm(open);
   /* THE BASELINE WITH THE KINDS OF SHOP (open_rows.ts, the goal's B10): the
      typical at 30 under the kind it is, the other kinds as the working, the
      licences card's own composition beside it (spare height split round the
      figure, the floor on the figure's columns from 560 of the card). */
-  if (open.state === "baseline" && open.formats.length > 0) {
+  if (form === "list") {
     const [lead, ...rest] = open.formats;
     return (
       <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
@@ -172,7 +174,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
       />
     );
   }
-  if (open.state === "held") {
+  if (form === "bill") {
     return (
       <RankedBars
         id={id}

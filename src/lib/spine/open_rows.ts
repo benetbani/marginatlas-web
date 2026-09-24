@@ -181,6 +181,24 @@ export function buildOpenFormats(industryId: string | null | undefined, typical:
   return rest.length >= OPEN_FORMATS_WORKING_MIN ? [lead, ...rest] : [];
 }
 
+/**
+ * THE FORM THE CARD DRAWS, SAID ONCE (the goal's B12, 2026-09-24): the list for
+ * the kinds of shop, the bars for the bill, and the figure card (BentoMetric)
+ * for the months to earn it back and for a lone total. `OpenCard` branches on
+ * it and the view seats by it: a figure card takes the band's narrow third
+ * beside the licences, the list and the bill the wide two thirds. Measured by
+ * E7's sweep: the lone total sat in the wide two thirds on 40 of the 138 London
+ * trades at 1280, stretched to the licence grid's height with a blank of about
+ * 613 by 126 above and below its figure (craft breweries).
+ */
+export type OpenForm = "list" | "bill" | "metric";
+export function openForm(open: OpenData): OpenForm {
+  if (open.state === "baseline" && open.formats.length > 0) return "list";
+  if (open.recover) return "metric";
+  if (open.state === "held") return "bill";
+  return "metric";
+}
+
 export function buildOpen(seed: any): OpenData | null {
   const meta = seed?.meta ?? {};
   const industryId: string | null = typeof meta.industry_id === "string" ? meta.industry_id : null;
