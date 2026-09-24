@@ -24,7 +24,10 @@
  *
  * BLIND SPOT: it tests the component alone, not a page's placement of it; a
  * card that clips its overflow could still hide an open panel. No network: the
- * bundle and the browser are local.
+ * bundle and the browser are local. A BUILD SERVER HAS NO BROWSER, so it skips
+ * loudly there through requireBrowser, as every browser gate does (its first
+ * push lacked the call and failed batch eight's deploy on Vercel: "Executable
+ * doesn't exist at /vercel/.cache/ms-playwright/...").
  */
 import { build } from "esbuild";
 import { chromium } from "playwright";
@@ -33,6 +36,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { red } from "./lib/red.mjs";
+import { requireBrowser } from "./lib/local_only.mjs";
 
 const RULE = "gloss-tap";
 const FILE = "src/components/kit/InfoTip.tsx";
@@ -40,6 +44,8 @@ const COMPONENT = resolve(process.argv[2] ?? FILE);
 const GLOSS = "The share of every $100 of sales that is still there once every cost has been paid.";
 const reds = [];
 const fail = (detail, remedy) => reds.push(red({ rule: RULE, file: FILE, detail, remedy }));
+
+await requireBrowser(RULE, "whether the \"?\" gloss opens on a tap at 375, on hover at 1280 and from the keyboard (InfoTip bundled and driven in a real browser)");
 
 const dir = mkdtempSync(join(tmpdir(), "gloss-tap-"));
 const entry = join(dir, "entry.tsx");

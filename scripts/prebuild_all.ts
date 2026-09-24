@@ -537,6 +537,13 @@ const GATES: Gate[] = [
      it at 375, hover at 1280, focus and Escape from the keyboard. Planted twice
      (the old component, and the fix without preventDefault), each watched red. */
   { name: "gloss-tap", script: "scripts/verify_gloss_tap.mjs", browser: true },
+  /* A browser gate that forgets requireBrowser dies on Vercel's build machine,
+     which has no browser, and fails the deploy after a local chain passed
+     every gate: three did on 2026-08-27, gloss-tap did on 2026-09-24 (batch
+     eight). Every chain script that launches a browser, directly or through a
+     local module, must call it. No browser, no network: a source read.
+     Planted (the guard removed from gloss-tap), watched red. */
+  { name: "browser-gates-skip", script: "scripts/verify_browser_gates_skip.ts" },
   /* Two live routes were invisible to crawlers: a client island read
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */
