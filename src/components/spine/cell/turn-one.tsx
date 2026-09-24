@@ -127,8 +127,8 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
           under the basis left a 312 by 120 blank beside them (the filter). */}
       <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
         <div>
-          <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.basis}</p>
-          <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p>
+          {permits.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.basis}</p> : null}
+          {permits.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p> : null}
         </div>
         {/* THE WITHHELD LINE STANDS IN THE RIGHT COLUMN, over the plus where
             there is one (the goal's A9, 2026-09-24): stacked over the basis on
@@ -165,7 +165,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
           <WorkedFigure list accent={open.accent} label={lead.name} figure={open.figure ?? lead.figure} working={rest.map((f) => ({ figure: f.figure, words: f.name }))} />
         </div>
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
-          <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.basis}</p>
+          {open.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.basis}</p> : null}
           {open.foot.length > 0 ? <div data-foot className="mt-3 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.footLine}</p>}
         </div>
       </Box>
@@ -258,8 +258,8 @@ export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | 
         <TiersTable heads={team.heads} figures={team.rows} fill />
       </div>
       {team.noMedian ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.noMedian}</p> : null}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.basis}</p>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.foot}</p>
+      {team.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.basis}</p> : null}
+      {team.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.foot}</p> : null}
     </Box>
   );
 }

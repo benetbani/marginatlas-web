@@ -122,8 +122,8 @@ export function ClearsCard({ id = "clears", clears }: { id?: string; clears: Cle
       <div className="grid flex-1 grid-cols-1 items-center gap-4 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
         <Ring value={clears.value} figure={clears.figure} accent={clears.accent} />
         <div>
-          <p className="max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{clears.basis}</p>
-          <p className="mt-2 max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{clears.foot}</p>
+          {clears.basis ? <p className="max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{clears.basis}</p> : null}
+          {clears.foot ? <p className="mt-2 max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{clears.foot}</p> : null}
         </div>
       </div>
     </Box>

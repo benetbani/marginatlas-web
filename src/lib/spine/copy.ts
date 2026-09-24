@@ -196,33 +196,33 @@ export const COPY = {
   blocked: {
     workforce: {
       kicker: "Who you can hire",
-      line: "Not gathered yet: how many are looking for work, and paid leave a year.",
-      foot: "Waits on DATA-REQUIREMENTS items 40 and 17.",
+      line: "We don't have job-seeker or paid-leave figures here yet.",
+      foot: "",
     },
     easiest: {
       kicker: "Easiest to break in",
-      line: "Not gathered yet: the payback, in years, for each of the six trades.",
-      foot: "Waits on DATA-REQUIREMENTS item 8's addendum.",
+      line: "We don't have payback times for the six trades here yet.",
+      foot: "",
     },
     setup: {
       kicker: TIERS_KICKER,
-      line: "Not gathered yet: the legal forms here and what each costs to register.",
-      foot: "Waits on DATA-REQUIREMENTS item 10.",
+      line: "We don't have this country's legal forms and their costs yet.",
+      foot: "",
     },
     peers: {
       kicker: PEERS_KICKER,
-      line: "Not gathered yet: the four countries most like this one, side by side.",
-      foot: "Waits on DATA-REQUIREMENTS item 57.",
+      line: "We don't have countries to compare this one with yet.",
+      foot: "",
     },
     money: {
       kicker: MARGIN_KICKER,
-      line: "Not gathered yet: what a shop in the six everyday trades keeps here.",
-      foot: "Waits on DATA-REQUIREMENTS item 8.",
+      line: "We don't have profit figures for everyday shops here yet.",
+      foot: "",
     },
     locals: {
       kicker: LOCALS_KICKER,
-      line: "Not gathered yet: what locals know about opening here.",
-      foot: "Waits on DATA-REQUIREMENTS item 6.",
+      line: "We don't have local tips for this country yet.",
+      foot: "",
     },
     /** THE CITIES SEAT, `10 cities` on the 90 countries with no covered city
      *  (MODEL.md 8.2's FLOOR bracket; plan step 49, decided 2026-09-19 by the
@@ -243,9 +243,9 @@ export const COPY = {
      *  city per country in data/cities/city_list_v1.json. */
     cities: {
       kicker: CITIES_KICKER,
-      line: "Not gathered yet: any city here. Nearby: {cities}.",
-      lineNone: "Not gathered yet: any city here, or nearby.",
-      foot: "Waits on DATA-REQUIREMENTS item 82.",
+      line: "No city here yet. Nearby: {cities}.",
+      lineNone: "No city here or nearby yet.",
+      foot: "",
     },
     /** THE TRADE PAGE'S ONE DRAWN BLOCKED SEAT, `10 watch` (MODEL.md 8.6;
      *  plan step 33's fifth dispatch, 2026-09-18): his B1 bars wait on item
@@ -256,8 +256,8 @@ export const COPY = {
      *  cause: `12 market` prints churn as what it is. */
     watch: {
       kicker: "What closes one",
-      line: "Not gathered yet: what closes one of these.",
-      foot: "Waits on DATA-REQUIREMENTS item 53.",
+      line: "We don't know yet what closes these shops.",
+      foot: "",
     },
     /** THE CITY'S SEATS (MODEL.md 8.3; plan step 32's sixth dispatch,
      *  2026-09-18). `13 locals` stands as the seat on every city, the same
@@ -272,8 +272,8 @@ export const COPY = {
      *  item 29 is the season slope). */
     cityNeighbourhoods: {
       kicker: "The city's neighbourhoods",
-      line: "Not gathered yet: the neighbourhoods of {city} by name.",
-      foot: "Waits on DATA-REQUIREMENTS item 30.",
+      line: "We don't have {city}'s neighbourhoods yet.",
+      foot: "",
     },
     /** THE NEIGHBOURHOOD PAGE'S ONE DRAWN BLOCKED SEAT, `04 works` (MODEL.md
      *  8.8; plan step 35, 2026-09-19, the controller's ruling (d)): what lifts
@@ -284,9 +284,10 @@ export const COPY = {
      *  The kicker is 8.8's title within four words; the line is the
      *  controller's, ten words. */
     hoodWorks: {
-      kicker: "What lifts revenue most",
-      line: "Not gathered yet: what lifts revenue most in each district.",
-      foot: "Waits on DATA-REQUIREMENTS item 70.",
+      kicker: "What lifts sales most",
+      line: "We don't know yet what lifts sales most in each district.",
+      /* What the page has instead (the goal's D3 law, his correction of 2026-09-24): true on the hub and on every district page, where rent and visitors stand above this seat. */
+      foot: "Rent and visitors by district are above.",
     },
     /** THE CITY PAGE'S TWO SEATS OFF LONDON, `03 districts` and `09 trades`
      *  (MODEL.md 8.3; QUEUE launch:city-seats-off-london, 2026-09-19, the
@@ -302,13 +303,13 @@ export const COPY = {
      *  151 cities hold none). Both read aloud. */
     cityDistricts: {
       kicker: CITY_DISTRICTS_KICKER,
-      line: "Not gathered yet: rent by district in {city}.",
-      foot: "Waits on DATA-REQUIREMENTS item 15.",
+      line: "We don't have rent by district for {city} yet.",
+      foot: "",
     },
     cityTrades: {
       kicker: CITY_TRADES_KICKER,
-      line: "Not gathered yet: local figures for four trades in {city}.",
-      foot: "Waits on DATA-REQUIREMENTS item 69.",
+      line: "We don't have local trade figures for {city} yet.",
+      foot: "",
     },
   },
   /** THE FOOTING SEAT (MODEL.md 8.2, `17 footing`): the calibrated meter is a
@@ -1246,15 +1247,18 @@ export const COPY = {
   tradeHero: {
     answerLabel: "A typical owner keeps",
     answerBasis: "a year, after every cost is paid",
-    absent: "Not measured yet",
-    absentNote: "the take-home is not measured for this trade in this city",
+    absent: "Not known yet",
+    absentNote: "we have no take-home for this trade here yet",
     cells: {
       net: "Net margin",
       firms: "Firms trading here",
-      takings: "A typical year's takings",
-      takingsNote: "sales, before any cost comes out",
+      takings: "Sales a year",
+      takingsNote: "before any costs",
     },
-    withheld: "Not measured yet for this trade here: how many trade, and a year's takings.",
+    withheld: "No figures yet for this trade here.",
+    /* THE PAGE'S ONE WORD ON ESTIMATES (his correction of 2026-09-24, evening: "the disclaimers are so disgusting"): said once, at the hero's foot, in plain words; no card repeats it (COPY-STYLE.md). */
+    honest: "Estimates for a typical {noun}.",
+    honestFrom: "Estimates for a typical {noun}, from {source}.",
     /** The crumb's separator, the identity row's own since the first masthead. */
     crumbJoin: " · ",
   },
@@ -1264,10 +1268,10 @@ export const COPY = {
    *  measured basis says whose figures they are on a trusted local cell; the
    *  withheld line stands where the figure would off `moneyShown`. */
   tradeSpread: {
-    kicker: "A year's takings",
-    basisModelled: "A modelled spread around the typical; measured where the city holds its own.",
-    basisMeasured: "A year's turnover here, the bottom tenth to the top tenth.",
-    withheld: "Not measured yet: a year's takings for this trade in this city.",
+    kicker: "Sales a year",
+    basisModelled: "From a quiet shop to a busy one.",
+    basisMeasured: "From a quiet shop to a busy one.",
+    withheld: "No sales figures for this trade here yet.",
   },
   /** `02 suits`: the page's one prose section. Two notes off the trade's
    *  authored character (edge and watch-out, one each; the file holds one of
@@ -1278,8 +1282,8 @@ export const COPY = {
   tradeSuits: {
     kicker: "Who this suits",
     labels: { suits: "Who does well", thinkTwice: "Think twice", notGathered: "The people it suits" },
-    notGathered: "Not gathered yet: who this trade suits, and who should think twice.",
-    basis: "Written for the trade anywhere, not this city. Two questions, nothing scored.",
+    notGathered: "No notes on who this suits yet.",
+    basis: "",
   },
   /** `03 permits` (MODEL.md 8.6; plan step 33's second dispatch, 2026-09-18):
    *  the kicker is 8.6's title; each licence is a label over its typical days
@@ -1289,7 +1293,7 @@ export const COPY = {
    *  wait is on file as zero days is not a wait, so it is withheld with the
    *  line, counted (one licence on one shard today). */
   tradePermits: {
-    kicker: "The permits you need",
+    kicker: "Licences you need",
     /** The fee band under each wait, a category label (2026-09-20 late evening, clause 60): the shard's `typical_cost_band`. */
     feeBand: { low: "Low fee", medium: "Medium fee", high: "High fee" },
     /** The plus under the waits (2026-09-24, goal B1): each licence's fee band, a category and never a figure, behind a click so the waits read first. */
@@ -1297,13 +1301,13 @@ export const COPY = {
     /* The card's shape says the longest wait leads (the figure at 30 over the
        rest at 16); a sentence saying so pushed the card to 240 characters of
        prose against the art-direction budget of 220 (E1, 2026-09-24). */
-    basis: "Typical for the trade anywhere, not measured for this city.",
-    foot: "The waits are modelled.",
-    withheldOne: "One licence has no wait on file and is not shown.",
-    withheldMany: "{n} licences have no wait on file and are not shown.",
+    basis: "",
+    foot: "",
+    withheldOne: "Plus 1 licence with no known wait.",
+    withheldMany: "Plus {n} licences with no known wait.",
     /* The goal's A9 (permits_rows.ts `isUsJurisdictionLicence`): a licence named for a United States jurisdiction, withheld off a US page. */
-    foreignOne: "One licence is named for the United States and is not shown here.",
-    foreignMany: "{n} licences are named for the United States and are not shown here.",
+    foreignOne: "1 US-only licence left out.",
+    foreignMany: "{n} US-only licences left out.",
   },
   /** `04 open` (MODEL.md 8.6; the same dispatch): one card, three states. The
    *  held basis says what the total is (the whole bill here) and what the
@@ -1317,25 +1321,25 @@ export const COPY = {
   tradeOpen: {
     kicker: "The cost to open",
     /** One basis per card in every state (the baseline's rule): what the total is, what the bars are, and that the foot's two figures are the trade's, modelled. No order word: the vertical form stands its leader at the right. */
-    basisHeld: "The whole bill here and its lines; months and years modelled for the trade.",
-    basisHeldCapped: "The whole bill here, its five biggest lines; months and years modelled for the trade.",
+    basisHeld: "",
+    basisHeldCapped: "",
     /** Where the trade holds no shard for the foot: the total's own line, the foot withheld with its own. */
-    basisHeldAlone: "The whole bill to open here, and its lines.",
-    basisHeldCappedAlone: "The whole bill to open here, and its five biggest lines.",
+    basisHeldAlone: "",
+    basisHeldCappedAlone: "",
     /** Under the bars where the bill runs past the five the vertical form holds (RankedBars turns six or more into a table): the rest counted and summed, never dropped. */
-    tailOne: "The smallest line, {sum}, is in the total.",
-    tailMany: "The {n} smallest lines, {sum} together, are in the total.",
-    basisBaseline: "All three figures are typical for the trade, modelled, not this city's own.",
-    basisBaselineAlone: "Typical for the trade, modelled; not this city's own figure.",
+    tailOne: "The smallest cost, {sum}, is in the total.",
+    tailMany: "The {n} smaller costs, {sum} together, are in the total.",
+    basisBaseline: "",
+    basisBaselineAlone: "",
     /** The baseline state with the kinds of shop (2026-09-24, the goal's B10): each kind worked from the typical and its own difference. */
-    basisFormats: "Typical for the trade and each kind of shop, worked from the trade's own cost differences; all modelled, not this city's own.",
-    basisFormatsAlone: "Typical for the trade and each kind of shop, worked from its own cost differences; modelled, not this city's own.",
+    basisFormats: "For each kind of shop.",
+    basisFormatsAlone: "For each kind of shop.",
     /** The withheld state earns it back (the same day, the goal's A4): the two figures the card holds, no stated line. */
     kickerRecover: "Earning it back",
-    basisRecover: "Both typical for the trade anywhere, modelled; not this city's own.",
-    withheld: "Not gathered yet: what it costs to open here.",
-    foot: "Months and years are typical for the trade, modelled.",
-    footWithheld: "Not gathered yet: the months to break even and the years to pay back.",
+    basisRecover: "",
+    withheld: "No cost figures for this trade here yet.",
+    foot: "",
+    footWithheld: "No break-even figures yet.",
     breakEven: "to break even",
     payBack: "to pay back",
     biggest: "The biggest line",
@@ -1362,20 +1366,20 @@ export const COPY = {
    *  shares in words a person says. Every figure is modelled (R12) and the
    *  foot says so, because the sample mark is behind his switch. */
   tradeSplit: {
-    kicker: "Net profit margin",
-    basisShard: "Of every $100 of sales. Shares typical for the trade; net as on the opening card.",
-    basisProfile: "Of every $100 of sales. Shares typical for the sector; net as on the opening card.",
+    kicker: "Where each $100 goes",
+    basisShard: "Out of every $100 in sales.",
+    basisProfile: "Out of every $100 in sales.",
     /** The withheld state draws no shares, so its basis names the net alone and the foot is not printed. */
-    basisWithheld: "Of every $100 of sales, the net as on the opening card.",
-    withheld: "The cost lines on file and the net come to more than $100.",
+    basisWithheld: "Out of every $100 in sales.",
+    withheld: "Our cost figures add up to more than $100, so only costs are shown.",
     /** The withheld state's second drawing (2026-09-24, the goal's B8): the lines on file split among themselves; the base said, so no share of sales is claimed. */
-    mixBasis: "How every $100 it spends splits, by the cost lines on file; modelled.",
-    foot: "The shares are modelled.",
+    mixBasis: "",
+    foot: "",
     detail: {
       summary: "How much of the cost is fixed",
       fixed: "Fixed costs",
       variable: "Variable costs",
-      note: "of the trade's costs, modelled",
+      note: "of the costs",
     },
     /** THE SHARD'S DRIVER NAMES, SHORTENED FOR THE LEGEND (PART 5: a label is
      *  three words at most, a copy fault fixed in copy and never a taller
@@ -1582,9 +1586,9 @@ export const COPY = {
   tradeTeam: {
     kicker: "What staff cost",
     heads: { name: "Role", count: "How many", pay: "Pay a year" },
-    basis: "Pay from the country's median; roles typical for the trade.",
-    foot: "Headcounts and pay are modelled.",
-    noMedian: "Pay shows a dash: the country holds no credible median pay.",
+    basis: "",
+    foot: "",
+    noMedian: "A dash means no pay figure for this country yet.",
   },
   /** `07 peers` (MODEL.md 8.6; plan step 33's fourth dispatch, 2026-09-18):
    *  the kicker is M12's, the compare table opening on the same word on
@@ -1599,10 +1603,10 @@ export const COPY = {
    *  so the card says once what its one dash means (PART 5). */
   tradePeers: {
     kicker: "Against other places",
-    cols: { place: "Place", takings: "A year's takings" },
-    basis: "A typical year's takings, before any cost comes out.",
-    notGathered: "Not gathered yet: the same trade in other places.",
-    homeWithheld: "Takings show a dash: not measured yet for this trade in this city.",
+    cols: { place: "Place", takings: "Sales a year" },
+    basis: "",
+    notGathered: "No other places to compare yet.",
+    homeWithheld: "A dash means no figure for this city yet.",
   },
   /** `08 clears` (MODEL.md 8.6; the same dispatch): the kicker is 8.6's
    *  title; the basis says what the figure is, in a person's words, and
@@ -1612,9 +1616,9 @@ export const COPY = {
    *  share is the trade's cost shares over its gross margin, the city's
    *  takings cancel out of it; the shard's is the trade's researched share). */
   tradeClears: {
-    kicker: "When it clears costs",
-    basis: "Of a typical day's takings, the share that clears the costs.",
-    foot: "Typical for the trade anywhere, not measured for this city; modelled.",
+    kicker: "Covering the costs",
+    basis: "Of each day's sales, the part that pays the costs.",
+    foot: "",
   },
   /** `09 lasts` (MODEL.md 8.6; the same dispatch): the kicker is 8.6's
    *  title; the three cell labels are one phrase each, read aloud under the
@@ -1623,12 +1627,12 @@ export const COPY = {
    *  item 16: `03`, `09`, `11`, `12`); the foot says what the figures are
    *  and that they are modelled (R12). No slope, no myth sentence (R5). */
   tradeLasts: {
-    kicker: "How many last",
+    kicker: "How many survive",
     cells: { yr5: "After five years", yr1: "After one year", yr3: "After three years" },
     /** The two readings under year five on the worked-figure card (2026-09-24, goal B1), in the working row's lower case, as the customers card writes "a visit". */
     working: { yr1: "after one year", yr3: "after three years" },
-    basis: "Typical for the trade anywhere, not measured for this city.",
-    foot: "Of every 100 that open, the share still trading; modelled.",
+    basis: "",
+    foot: "Out of every 100 that open.",
   },
   /** `11 mix` (MODEL.md 8.6; plan step 33's fifth dispatch, 2026-09-18):
    *  the kicker is 8.6's title; each part's label is the shard's own channel
@@ -1642,9 +1646,9 @@ export const COPY = {
    *  click; the seat is KvGrid. */
   tradeMix: {
     kicker: "Where sales come from",
-    basis: "Typical for the trade anywhere, not measured for this city.",
-    foot: "Of every $100 of sales, the share from each; modelled.",
-    withheld: "The parts on file do not make a whole and are not shown.",
+    basis: "",
+    foot: "Out of every $100 in sales.",
+    withheld: "Our figures here don't add up to a whole, so they're not shown.",
   },
   /** `12 market` (MODEL.md 8.6; the same dispatch): the bento's four openers,
    *  each within PART 7's four words and read aloud; the composition's
@@ -1659,29 +1663,29 @@ export const COPY = {
    *  all four); the count cells' second line is the guard's, for a share
    *  over 100 that is not a count of firms (none on file: 3 to 92, 1 to 30). */
   tradeMarket: {
-    kickers: { firms: "Firms per 10,000 people", chains: "Held by chains", close: "Close in a year", swing: "The year's swing", dayparts: "When the week pays" },
+    kickers: { firms: "Firms per 10,000 people", chains: "Chain-owned", close: "Close in a year", swing: "Busy and quiet months", dayparts: "When the week pays" },
     /** THE RIVALS CELL (2026-09-20 night, clause 65): the trade's typical density at 30 with its companions in one row: this city's own where the city shard names the trade ("here"), and the share that closes each year, so the cell is never one number. The kicker is the firms'. */
-    rivals: { here: "here, this city's own", close: "of 100 close a year", hereMark: "Here", typicalMark: "The trade anywhere", typicalWords: "the trade anywhere", basisHere: "Firms for every 10,000 people, this city's own; the trade's typical beside it, both modelled." },
+    rivals: { here: "here, this city's own", close: "of 100 close a year", hereMark: "Here", typicalMark: "The trade anywhere", typicalWords: "the trade anywhere", basisHere: "Firms per 10,000 people here, beside the usual for this trade" },
     /** The dayparts cell's basis (2026-09-20 late evening, the bento's fifth cell): the parts are of the week's takings, the trade's figure. */
-    daypartsBasis: "Of every $100 taken in a week; typical for the trade anywhere, modelled.",
+    daypartsBasis: "Out of every $100 taken in a week.",
     /** The month line's own line under the swing figure: what the twelve points are. */
-    monthsBasis: "Each month as a share of the busiest, which is 100.",
+    monthsBasis: "",
     basis: {
       /** The opener says the unit, so the basis says whose figure it is (the clears foot's own sentence). */
-      firms: "Typical for the trade anywhere, not measured for this city; modelled.",
-      chains: "Of every 100 firms; typical for the trade anywhere, not this city's; modelled.",
-      close: "Of every 100 firms; typical for the trade anywhere, not this city's; modelled.",
+      firms: "",
+      chains: "Out of every 100 firms.",
+      close: "Out of every 100 firms.",
       /** Fourteen words, at the cap: the unit clause is the composition's phrase in a person's words. */
-      swing: "How much more the busiest month sells than the quietest; the trade's figure, modelled.",
+      swing: "The busiest month over the quietest.",
     },
     withheld: {
-      firms: "The number of firms is not on file for this trade yet.",
-      chains: "The share held by chains is not on file for this trade yet.",
-      chainsNotAShare: "The share held by chains on file is not a share of 100 firms.",
-      close: "How many close in a year is not on file for this trade yet.",
-      closeNotAShare: "The closures on file are not a share of 100 firms.",
-      swing: "The year's swing is not on file for this trade yet.",
-      dayparts: "When the week pays is not on file for this trade yet.",
+      firms: "No firm count for this trade yet.",
+      chains: "No chain figure for this trade yet.",
+      chainsNotAShare: "Our chain figure doesn't add up, so it's not shown.",
+      close: "No closure figure for this trade yet.",
+      closeNotAShare: "Our closure figure doesn't add up, so it's not shown.",
+      swing: "No monthly figures for this trade yet.",
+      dayparts: "No weekly pattern for this trade yet.",
     },
   },
   /** `13 rivals` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18):
@@ -1702,11 +1706,11 @@ export const COPY = {
   tradeRivals: {
     kicker: "Other trades to open",
     head: { name: "Trade", value: "To open" },
-    basis: "Typical for each trade, modelled; not this city's own figures.",
-    withheldOne: "One trade withheld: no cost to open is on file.",
-    withheldMany: "{n} trades withheld: no cost to open is on file.",
-    state: "Not gathered yet: what it costs to open the other trades here; {k} of the four the list needs hold a figure.",
-    stateNone: "Not gathered yet: the other trades measured here.",
+    basis: "",
+    withheldOne: "1 trade left out: no cost figures yet.",
+    withheldMany: "{n} trades left out: no cost figures yet.",
+    state: "Only {k} other trades here have cost figures, too few to compare.",
+    stateNone: "No other trades here have cost figures yet.",
   },
   /** `14 worth` (the same dispatch): the kicker is 8.6's title; the two marks
    *  are the ends of what a business like this sells for, in a person's
@@ -1838,16 +1842,16 @@ export const COPY = {
     kicker: "What a customer spends",
     yearLabel: "A regular's year",
     cells: { spend: "a visit", visits: "visits a year" },
-    basis: "The visit times the visits; the trade's typical customer anywhere, not counted for this city.",
-    foot: "What one regular is worth in a year, before rent and wages come out of it; modelled.",
+    basis: "Spend per visit, times visits a year.",
+    foot: "",
   },
   tradeWorth: {
     kicker: "What one sells for",
     marks: { low: "Low end", high: "High end" },
-    basis: "What a buyer would pay, worked from a year's owner take-home.",
-    note: "The two ends are the trade's typical figures, modelled; the take-home is this city's.",
-    withheld: "Not measured yet: the take-home here that a sale price is worked from.",
-    otherBasis: "Not worked out yet: this trade's sale figures on file rest on operating earnings, not an owner's take-home.",
+    basis: "What a buyer might pay, based on a year's profit.",
+    note: "",
+    withheld: "No sale price yet: we have no take-home for this trade here.",
+    otherBasis: "No sale price yet for this trade.",
   },
   /** `15 close` (the same dispatch): the trade's three doors, 8.6's and
    *  M21's own words. Across to the industry page, up to the city page (the
@@ -1880,21 +1884,21 @@ export const COPY = {
    *  crumb is the sector, the altitude above the trade, named once. */
   industryHero: {
     answerLabel: "What this trade keeps",
-    answerBasisShard: "Of every $100 a customer spends, after every cost; modelled for the trade anywhere.",
-    answerBasisProfile: "Of every $100 a customer spends, after every cost; the sector's typical, modelled.",
-    absent: "Not gathered yet",
-    absentNote: "what this trade keeps of every $100 is not on file",
+    answerBasisShard: "Out of every $100 a customer spends, after all costs.",
+    answerBasisProfile: "Out of every $100 a customer spends, typical for its sector.",
+    absent: "Not known yet",
+    absentNote: "we have no figure for what this trade keeps",
     cells: {
-      cost: { label: "Cost to open", note: "typical for the trade, no one place" },
+      cost: { label: "Cost to open", note: "" },
       spend: { label: "Spend per visit", note: "one customer, one visit" },
       visits: { label: "Visits a year", note: "a typical customer" },
     },
     /** The not-gathered line's parts, joined by the builder in the order the cells stand. */
-    notGathered: "Not gathered yet: {parts}.",
+    notGathered: "We don't have {parts} yet.",
     parts: { cost: "what it costs to open", spend: "what a customer spends", visits: "how often a customer buys" },
     /** The coverage sentence over the printed companions, their names filled in the cells' order. */
-    footAll: "The {names} are typical for the trade anywhere, modelled.",
-    footOne: "The {names} is typical for the trade anywhere, modelled.",
+    footAll: "Estimates for a typical {noun}, not any one place.",
+    footOne: "Estimates for a typical {noun}, not any one place.",
     names: { cost: "cost", spend: "spend", visits: "visits" },
   },
   /** `01 lasts` at the world altitude (8.7): the same builder and card as the
@@ -1902,7 +1906,7 @@ export const COPY = {
    *  clause because there is no city here; the kicker and the foot are the
    *  trade's, one literal each. */
   industryLasts: {
-    basis: "Typical for the trade anywhere.",
+    basis: "",
   },
   /** `02 benchmark` (8.7): the trades next door, on RankedBars with a set
    *  ceiling. The kicker is four words; the basis says the rows are the
@@ -1918,19 +1922,19 @@ export const COPY = {
    *  count (clause 22; 8.7's own row); with none or one it holds the
    *  not-gathered line where the rows would stand (M19). */
   industryBenchmark: {
-    kicker: "The trades next door",
+    kicker: "Similar trades",
     /* The words under the focal, the trade's place in the set (the goal's B6): "9th", "by what it keeps". */
     rankWords: "by what it keeps",
-    basis: "Kept of every $100; the highest of {n} in {sector}; modelled.",
+    basis: "The top of {n} {sector} trades, per $100 of sales.",
     topLabel: "The highest",
-    withheldOne: "1 trade withheld: its keep is the sector's typical, not its own.",
-    withheldMany: "{n} trades withheld: their keep is the sector's typical, not their own.",
-    withheldSelf: "This trade is not ranked: its keep is the sector's typical, not its own.",
-    withheldSelfAmong: "{n} trades withheld, this one among them: their keep is the sector's typical.",
-    underFloorAll: "Only {rows} trades are in this sector; a ranking needs four.",
-    underFloor: "{rows} of {members} trades in this sector hold a figure; a ranking needs four.",
-    oneRow: "One of {members} trades in this sector holds a figure; a ranking needs four.",
-    noRows: "Not gathered yet: what the {members} trades in this sector keep of every $100.",
+    withheldOne: "1 trade left out: we only have its sector's figure.",
+    withheldMany: "{n} trades left out: we only have their sector's figure.",
+    withheldSelf: "This trade is not ranked: we only have its sector's figure.",
+    withheldSelfAmong: "{n} trades left out, this one too: we only have their sector's figure.",
+    underFloorAll: "Only {rows} trades in this sector, too few to rank.",
+    underFloor: "Only {rows} of {members} trades here have figures, too few to rank.",
+    oneRow: "Only 1 of {members} trades here has a figure.",
+    noRows: "No figures yet for the {members} trades in this sector.",
   },
   /** THE INDUSTRY PAGE'S THREE CHAPTER HEADINGS (8.7's own titles, the
    *  first dispatch): turn one is the spine's string and not yet the site's
@@ -1965,24 +1969,24 @@ export const COPY = {
    *  permits' one). A cell whose figure is not on file is withheld with its
    *  line in the site's idiom (M19; no shard today, 243 hold all three). */
   industryOpen: {
-    kicker: "Opening the doors",
+    kicker: "Licences you need",
     cells: { licences: "Licences to hold", slowest: "The slowest licence", breakEven: "To break even" },
     /* The companions under the slowest wait (the goal's B6): the figure then its words, read aloud ("4 licences to hold", "6 months to break even"). */
     companions: { licences: "licences to hold", breakEven: "to break even" },
-    basis: "Typical for the trade anywhere.",
-    foot: "The count, the waits and the months are modelled.",
+    basis: "",
+    foot: "",
     detail: {
       summary: "The licences, by name",
-      withheldOne: "One licence has no wait on file and is not listed.",
-      withheldMany: "{n} licences have no wait on file and are not listed.",
+      withheldOne: "Plus 1 licence with no known wait.",
+      withheldMany: "Plus {n} licences with no known wait.",
       /* The goal's A9b: a licence named for a United States jurisdiction, not listed at the world altitude. */
-      usNamedOne: "One licence is named for the United States and is not listed.",
-      usNamedMany: "{n} licences are named for the United States and are not listed.",
+      usNamedOne: "1 US-only licence left out.",
+      usNamedMany: "{n} US-only licences left out.",
     },
     withheld: {
-      licences: "Not gathered yet: the licences to hold.",
-      slowest: "Not gathered yet: how long the slowest licence takes.",
-      breakEven: "Not gathered yet: the months to break even.",
+      licences: "No licence list for this trade yet.",
+      slowest: "No licence waits for this trade yet.",
+      breakEven: "No break-even figure yet.",
     },
   },
   /** `05 pays` (8.7; the same dispatch): the bento's openers, each within
@@ -2000,26 +2004,26 @@ export const COPY = {
    *  roles add to nothing, the fixed part's second for a share over 100
    *  that is not a share (the market's guard). */
   industryPays: {
-    kickers: { crew: "The starting crew", payback: "Until it pays back", fixed: "Fixed costs" },
+    kickers: { crew: "The starting crew", payback: "Payback", fixed: "Fixed costs" },
     /** The payback's companion (2026-09-20 night, clause 65): "6 months until a day clears its costs". */
     ramp: { month: "month", months: "months", words: "until a day clears its costs" },
     /** The fixed-costs bar's words (the segmented bar, his B27) and the share ring's caption (his B31), the same night. */
-    fixedBar: { label: "Fixed", variableLabel: "Variable", unit: "of 100", basisPair: "Of every $100 of costs, the part paid whatever it sells and the part that moves with sales; modelled." },
-    shareCaption: "of a day's takings",
+    fixedBar: { label: "Fixed", variableLabel: "Variable", unit: "of 100", basisPair: "Out of every $100 of costs." },
+    shareCaption: "of a day's sales",
     basis: {
-      crew: "The people a typical one opens with; modelled.",
-      crewRounded: "The people a typical one opens with, rounded to whole people; modelled.",
-      payback: "Years until the capital put in comes back; typical for the trade, modelled.",
+      crew: "",
+      crewRounded: "Rounded to whole people.",
+      payback: "Years to earn back the money put in.",
       /** The whole is said the way the market's count cells say it ("of every 100"); the part is what stands whatever it sells. */
-      fixed: "Of every $100 of costs, the part paid whatever it sells; modelled.",
-      share: "Of a typical day's takings, the share that clears the costs; modelled.",
+      fixed: "Costs you pay whatever you sell, out of $100.",
+      share: "The part of a day's sales that pays the costs.",
     },
     withheld: {
-      crew: "Not gathered yet: who a typical one opens with.",
-      payback: "Not gathered yet: the years until the capital comes back.",
-      fixed: "Not gathered yet: the fixed part of the costs.",
-      fixedNotAShare: "The fixed part of the costs on file is not a share of 100.",
-      share: "Not gathered yet: the share of a day that clears the costs.",
+      crew: "No crew figures for this trade yet.",
+      payback: "No payback figure for this trade yet.",
+      fixed: "No fixed-cost figure for this trade yet.",
+      fixedNotAShare: "Our fixed-cost figure doesn't add up, so it's not shown.",
+      share: "No figure yet for the part of a day that pays the costs.",
     },
   },
   /** `06 places` (MODEL.md 8.7; plan step 34's third dispatch, 2026-09-19),
@@ -2046,14 +2050,14 @@ export const COPY = {
   industryPlaces: {
     kicker: "Where it pays best",
     cols: { city: "City", takeHome: "Take-home a year", netMargin: "Net margin" },
-    basis: "After-tax take-home and the share of sales kept, from each city's own figures; modelled.",
-    withheldOne: "1 city withheld: its revenue is a filled-in average, or its margin a floor.",
-    withheldMany: "{n} cities withheld: their revenue is a filled-in average, or their margin a floor.",
+    basis: "Take-home after tax, and the share of sales kept.",
+    withheldOne: "1 city left out: its figures aren't reliable enough.",
+    withheldMany: "{n} cities left out: their figures aren't reliable enough.",
     blocked: {
-      none: "Not gathered yet: this trade in the {slate} cities compared; a table needs four.",
-      one: "Not gathered yet: own figures in one of {slate} cities; a table needs four.",
-      some: "Not gathered yet: own figures in {n} of {slate} cities; a table needs four.",
-      foot: "Waits on DATA-REQUIREMENTS item 69.",
+      none: "No city of {slate} has its own figures yet, so nothing to compare.",
+      one: "Only 1 of {slate} cities has its own figures, too few to compare.",
+      some: "Only {n} of {slate} cities have their own figures, too few to compare.",
+      foot: "",
     },
   },
   /** `07 formats` (8.7; the same dispatch), the mark list with no marks. The
@@ -2067,11 +2071,11 @@ export const COPY = {
    *  line stands where the list would under four formats (no shard today),
    *  counting them the rivals' way. */
   industryFormats: {
-    kicker: "What each format keeps",
+    kicker: "Which format keeps most",
     head: { name: "Format", value: "Net margin" },
-    basisShard: "Kept of every $100 a customer spends, by format; the trade's typical, modelled.",
-    basisProfile: "Kept of every $100 a customer spends, by format; the sector's typical, modelled.",
-    state: "Not gathered yet: what each format keeps; {k} of four hold a figure.",
+    basisShard: "Out of every $100 a customer spends.",
+    basisProfile: "Out of every $100 a customer spends.",
+    state: "Only {k} formats have figures, too few to compare.",
   },
   /** `08 channels` at the world altitude (8.7; the same dispatch): the same
    *  builder and card as the trade's `11 mix` (mix_rows.ts, cell/turn-two.tsx
@@ -2080,7 +2084,7 @@ export const COPY = {
    *  this altitude; the kicker, the foot and the withheld line are the
    *  trade's, one literal each. */
   industryMix: {
-    basis: "Typical for the trade anywhere.",
+    basis: "",
   },
   /** `09 know` (MODEL.md 8.7; plan step 34's fourth dispatch, 2026-09-19),
    *  THE PAGE'S ONE PROSE SECTION on NoteList (R9). The kicker is 8.7's
@@ -2095,10 +2099,10 @@ export const COPY = {
    *  means). No foot: PART 7's foot holds a coverage statement or a
    *  companion figure, and the close's doors navigate. */
   industryKnow: {
-    kicker: "Before you sign",
+    kicker: "Lessons from owners",
     notGatheredLabel: "What owners know",
-    notGathered: "Not gathered yet: what a working owner would tell you about this trade.",
-    basis: "Written for the trade anywhere, not one place; nothing here is measured.",
+    notGathered: "No owner notes for this trade yet.",
+    basis: "",
   },
   /** `10 field` (8.7; the same dispatch): the trade's market builder at the
    *  world altitude (market_rows.ts, the lasts idiom), on KvGrid. The kicker
@@ -2115,16 +2119,16 @@ export const COPY = {
    *  altitudes and drawn on the trade page alone (8.7: beside `01 lasts` it
    *  is a second view of one reading). */
   industryField: {
-    kicker: "Who trades alongside you",
+    kicker: "The competition",
     notes: { chains: "of all firms", swing: "busiest month over the quietest" },
     /* The companions under the density (the goal's B6): the figure then its words, read aloud ("32% held by chains", "1.4x busiest month over the quietest"). */
     companions: { chains: "held by chains", swing: "busiest month over the quietest" },
-    basis: "Typical for the trade anywhere.",
-    foot: "The density, the chain share and the swing are modelled.",
+    basis: "",
+    foot: "",
     cellBasis: {
-      firms: "Typical for the trade anywhere; modelled.",
-      chains: "Of every 100 firms; typical for the trade anywhere; modelled.",
-      close: "Of every 100 firms; typical for the trade anywhere; modelled.",
+      firms: "",
+      chains: "Out of every 100 firms.",
+      close: "Out of every 100 firms.",
     },
   },
   /** `11 close` (8.7; the same dispatch), on Terminus, the kicker the

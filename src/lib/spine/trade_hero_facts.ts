@@ -43,6 +43,7 @@
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
+import { tradeNounFor } from "@/lib/taxonomy";
 import type { TradeNet } from "@/lib/spine/trade_net";
 
 type Conf = "measured" | "modeled" | "placeholder";
@@ -85,7 +86,16 @@ export function tradeHeroFacts(seed: any): TradeHeroFacts | null {
   if (moneyShown && isNum(takings) && takings > 0) cells.push({ key: "takings", label: COPY.tradeHero.cells.takings, value: usd(takings), note: COPY.tradeHero.cells.takingsNote, confidence: "measured" });
   const withheld = moneyShown ? null : COPY.tradeHero.withheld;
   const provenance = typeof meta.provenance_line === "string" && meta.provenance_line ? meta.provenance_line : null;
-  const footText = [withheld, provenance].filter((t): t is string => !!t).join(" ");
+  /* THE FOOT IS THE PAGE'S ONE WORD ON ESTIMATES (his correction of
+     2026-09-24, evening): one plain sentence naming the trade and the source,
+     where the cards used to say "modelled" and "typical for the trade anywhere"
+     sixteen times. The absent answer already says what is missing, so the
+     withheld line no longer stands here too. */
+  const noun = tradeNounFor(meta.trade) || "shop";
+  const source = provenance ? provenance.replace(/\.$/, "").replace(/^modell?ed from /i, "").trim() : "";
+  const footText = source
+    ? COPY.tradeHero.honestFrom.replace("{noun}", noun).replace("{source}", source.charAt(0).toLowerCase() + source.slice(1))
+    : COPY.tradeHero.honest.replace("{noun}", noun);
   return {
     name: meta.trade,
     iso2: typeof meta.iso2 === "string" ? meta.iso2.toLowerCase() : undefined,

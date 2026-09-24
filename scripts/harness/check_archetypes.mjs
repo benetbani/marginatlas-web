@@ -507,7 +507,7 @@ function inPage(storySelector) {
       r.seatLines = lines.length;
       r.seatWords = lines.length ? (lines[0].textContent || "").trim().split(/\s+/).filter(Boolean).length : 0;
       r.seatFigs = [...card.querySelectorAll(".fig")].filter((f) => f.getClientRects().length).length;
-      r.seatFoot = [...card.querySelectorAll("[data-foot]")].some((f) => f.getClientRects().length && (f.textContent || "").trim());
+      r.seatFoot = [...card.querySelectorAll("[data-foot]")].filter((f) => f.getClientRects().length).map((f) => (f.textContent || "").trim()).join(" ");
     }
     /* THE BENTO CLUSTER, MEASURED FROM THE BOXES THE BROWSER DREW (2026-09-10).
        BentoBand.tsx proves its own DECLARED spans tile before it renders a
@@ -890,7 +890,7 @@ for (const w of WIDTHS) {
     if (r.kind === "blocked-seat") {
       /* One rule, its clauses the seat's own law (BlockedSeat.tsx's header):
          a seat states one line, under fifteen words, prints no figure at any
-         rung, and names in its foot what it waits on. The 30/40 clause is
+         rung, and names no internal item in its foot (2026-09-24). The 30/40 clause is
          what makes "no figure" measurable when a future edit reaches for a
          Fig-less loud number: a size on the focal or answer rung is a figure
          whatever the class says. */
@@ -899,7 +899,8 @@ for (const w of WIDTHS) {
       if (r.seatFigs) red(r.inst, w, "BLOCKED SEAT", `${r.seatFigs} figure(s) on a seat whose law is no figure`);
       const loud = r.sizes.filter((s) => Math.abs(s - 30) < 0.5 || Math.abs(s - 40) < 0.5).length;
       if (loud) red(r.inst, w, "BLOCKED SEAT", `${loud} element(s) at 30 or 40 on a seat that holds no figure`);
-      if (!r.seatFoot) red(r.inst, w, "BLOCKED SEAT", "no foot naming the requirement the seat waits on");
+      /* TURNED OVER 2026-09-24 (his correction of that evening): the foot used to have to name the DATA-REQUIREMENTS item the seat waits on, which put our work queue in front of every reader. Now a foot may be absent, and never names an internal item. */
+      if (r.seatFoot && /DATA-REQUIREMENTS|\bitem \d+/.test(r.seatFoot)) red(r.inst, w, "BLOCKED SEAT", `the foot names our work queue ("${r.seatFoot}"); a reader never sees it`);
     }
     if (r.kind === "income-breakdown") {
       const segs = r.incomeSegs || [];

@@ -196,7 +196,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
               <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
             </div>
-            <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+            {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
           </div>
           {/* THE WITHHELD STATE: the stated line at the lead rung where the
               bar would stand (the cost-to-open card's own idiom), so the seat
@@ -212,7 +212,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
                   legend as the drawn state, the same tones and hatches in the
                   same order, with no net in it and a hundred of cost as its
                   whole; its basis line says so before the bar is read. */}
-              <p data-mix-basis className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">{mix!.basis}</p>
+              {mix!.basis ? <p data-mix-basis className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">{mix!.basis}</p> : null}
               <div className="mt-2 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={`${mix!.basis} ${mixLive.map((s) => `${s.label} ${mixRounded[s.key]} percent`).join(", ")}.`}>
                 {mixLive.map((s, i) => (
                   <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
@@ -256,7 +256,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
             <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
             <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
           </div>
-          <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+          {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
           {/* THE BAR: one track, full width, cost segments in the builder's
               descending order, net pinned last. `data-expect-rows` on the track
               plus `data-row` on every child is the site's existing rows-cut

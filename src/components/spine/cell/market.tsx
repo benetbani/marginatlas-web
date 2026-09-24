@@ -130,11 +130,11 @@ export function SwingCell({ market }: { market: MarketData }) {
         {market.months ? (
           <div className="mt-3">
             <MonthBars points={market.months} />
-            <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.monthsBasis}</p>
+            {COPY.tradeMarket.monthsBasis ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.monthsBasis}</p> : null}
           </div>
         ) : null}
       </div>
-      <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cell.basis}</p>
+      {cell.basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cell.basis}</p> : null}
     </Box>
   );
 }
@@ -153,7 +153,7 @@ export function DaypartsCell({ market }: { market: MarketData }) {
       <div className="flex flex-1 flex-col justify-center py-2">
         <ShareBar parts={market.dayparts} />
       </div>
-      <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.daypartsBasis}</p>
+      {COPY.tradeMarket.daypartsBasis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.daypartsBasis}</p> : null}
     </Box>
   );
 }

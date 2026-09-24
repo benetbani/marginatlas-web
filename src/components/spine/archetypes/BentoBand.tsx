@@ -661,7 +661,7 @@ export function BentoCount({
         </div>
         {label ? <div className="mt-3 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
-      <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+      {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
     </Box>
   );
 }

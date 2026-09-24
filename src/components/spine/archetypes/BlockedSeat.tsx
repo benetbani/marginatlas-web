@@ -55,7 +55,8 @@ export function BlockedSeat({ id, icon, kicker, line, foot }: { id: string; icon
     <Box id={id} data-archetype="blocked-seat" data-blocked="1">
       <Rail icon={icon} kicker={kicker} />
       <p data-seat-line className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{line}</p>
-      <div data-foot className="mt-5 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</div>
+      {/* NO FOOT NAMING OUR WORK QUEUE (his correction of 2026-09-24, evening): "Waits on DATA-REQUIREMENTS item 8" reached readers on every drawn seat; the foot draws only when it has words for a reader. */}
+      {foot ? <div data-foot className="mt-5 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</div> : null}
     </Box>
   );
 }

@@ -153,7 +153,7 @@ export function WorthCard({ id = "worth", worth }: { id?: string; worth: WorthDa
           states the line above says everything and the foot is empty. */}
       {worth.state === "strip" && worth.basis ? (
         <div className="mt-3">
-          <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{worth.basis}</p>
+          {worth.basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{worth.basis}</p> : null}
           {worth.note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{worth.note}</p> : null}
         </div>
       ) : null}
@@ -186,8 +186,8 @@ export function CustomersCard({ id = "customers", customers }: { id?: string; cu
       <div className="flex flex-1 flex-col justify-center">
         <WorkedFigure label={C.yearLabel} figure={customers.year.figure} working={customers.cells.map((c) => ({ figure: String(c.value), words: c.label }))} />
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.basis}</p>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.foot}</p>
+      {customers.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.basis}</p> : null}
+      {customers.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.foot}</p> : null}
     </Box>
   );
 }

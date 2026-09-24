@@ -849,7 +849,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     } else {
       seated++;
       if (wordsOf(h.seatLine!) > SEAT_LINE_WORDS_CAP) reds.push(`city neighbourhoods ${c.slug}: the seat's line runs ${wordsOf(h.seatLine!)} words, over ${SEAT_LINE_WORDS_CAP}: "${h.seatLine}"`);
-      if (!h.seatLine!.startsWith("Not gathered yet:")) reds.push(`city neighbourhoods ${c.slug}: the seat's line is not in the site's idiom: "${h.seatLine}"`);
+      if (/not gathered|modell?ed|withheld|on file/i.test(h.seatLine!) || !/\byet\b/.test(h.seatLine!)) reds.push(`city neighbourhoods ${c.slug}: the seat's line is not plain, or does not say the gap is for now: "${h.seatLine}"`);
       ban(`city neighbourhoods ${c.slug}`, [h.seatLine!]);
     }
   }
@@ -1047,14 +1047,14 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const notHeld = buildSuits("restaurants", "AF").rows.find((r) => r.key === "margin");
   if (!notHeld || notHeld.fact !== CHECKS_BANK.margin.notHeld!.fact) reds.push(`trade suits: the margin check on a country with no regime is not the bank's not-held row`);
   const none = buildSuits("no_such_trade", "GB");
-  if (none.hasCharacter || none.rows.length !== 3 || none.rows[0].key !== "notGathered" || !none.rows[0].fact.startsWith("Not gathered yet:")) reds.push(`trade suits: a trade with no character does not take the one not-gathered row over the two checks`);
+  if (none.hasCharacter || none.rows.length !== 3 || none.rows[0].key !== "notGathered" || none.rows[0].fact !== COPY.tradeSuits.notGathered) reds.push(`trade suits: a trade with no character does not take the one not-gathered row over the two checks`);
   const engine = resolveTradeNet("restaurants", { moneyShown: true, netMarginPct: 5 });
   if (!engine || engine.branch !== "engine" || engine.text !== "5%") reds.push(`trade net: with money shown the engine's 5 does not print as 5% on the engine branch`);
   const shown = { meta: { trade: "Restaurants", city: "London", country_name: "United Kingdom", iso2: "GB", industry_id: "restaurants", money_shown: true, provenance_line: "National business statistics" }, owner: { take_home_usd: 36000 }, headline: { n_firms: 13000, rev_p10_usd: 360000, rev_p50_usd: 720000, rev_p90_usd: 1296000, rev_spread_basis: "modelled" }, net: engine };
   const hidden = { meta: { trade: "Caf\u00e9s & coffee shops", city: "Mumbai", country_name: "India", iso2: "IN", industry_id: "cafes_coffee", money_shown: false, provenance_line: "Modeled from national business statistics." }, headline: { n_firms: 100, rev_p50_usd: 5215000 }, net: resolveTradeNet("cafes_coffee", { moneyShown: false, netMarginPct: 11.3 }) };
   const fs = tradeHeroFacts(shown), fh = tradeHeroFacts(hidden);
   if (!fs || !fs.answer || fs.answer.value !== usd(36000) || fs.cells.length !== 3 || fs.withheld) reds.push(`trade take (money shown): the answer and three companions do not print as expected`);
-  if (!fh || fh.answer || fh.cells.length !== 1 || fh.cells[0].key !== "net" || !fh.withheld || !fh.foot?.text.startsWith(COPY.tradeHero.withheld)) reds.push(`trade take (money not shown): the state word, the net alone and the withheld foot do not print as expected`);
+  if (!fh || fh.answer || fh.cells.length !== 1 || fh.cells[0].key !== "net" || !fh.withheld || !fh.foot?.text.startsWith(COPY.tradeHero.honest.split("{noun}")[0])) reds.push(`trade take (money not shown): the state word, the net alone and the foot's one line on estimates do not print as expected`);
   for (const f of [fs, fh]) if (f) { for (const c of f.cells) { if (c.label.split(/\s+/).length > 4) reds.push(`trade take: label over four words: "${c.label}"`); if (c.note && c.note.length > 48) reds.push(`trade take: note over 48 characters: "${c.note}"`); } if (f.crumb.length !== 2) reds.push(`trade take: the crumb holds ${f.crumb.length} segments, not the city and the country`); ban("trade take", [f.absent.label, f.absent.word, f.absent.note, f.answer?.label ?? "", f.answer?.basis ?? "", f.foot?.text ?? "", ...f.cells.flatMap((c) => [c.label, c.note ?? ""])]); }
   const ss = buildTradeSpread(shown), sh = buildTradeSpread(hidden);
   if (!ss || ss.marks.length !== 3 || !ss.marks.find((m) => m.key === "typical")?.lead || ss.basis !== COPY.tradeSpread.basisModelled || ss.withheld) reds.push(`trade spread (money shown, modelled): three marks with the typical as the lead under the modelled basis do not build`);
@@ -1127,12 +1127,12 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
      and no tail line; a six-line bill states its one smallest line singular. */
   const nine = { items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Initial inventory", usd: 20000 }, { name: "Lease deposit", usd: 40000 }, { name: "Pre-opening marketing", usd: 12000 }, { name: "Business registration", usd: 20 }, { name: "Industry licences", usd: 1500 }, { name: "Insurance and bonds", usd: 2000 }, { name: "Certifications", usd: 500 }] };
   const capped = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: nine });
-  if (!capped || capped.rows.length !== 5 || capped.lines.length !== 9 || capped.value !== 426020 || !capped.tail || capped.tail.count !== 4 || capped.tail.sum !== 4020 || capped.tailLine !== "The four smallest lines, $4,020 together, are in the total." || capped.basis !== COPY.tradeOpen.basisHeldCapped) reds.push(`open (held, nine lines): the five biggest do not draw with the four smallest stated ("${capped?.tailLine}")`);
+  if (!capped || capped.rows.length !== 5 || capped.lines.length !== 9 || capped.value !== 426020 || !capped.tail || capped.tail.count !== 4 || capped.tail.sum !== 4020 || capped.tailLine !== "The four smaller costs, $4,020 together, are in the total." || capped.basis !== COPY.tradeOpen.basisHeldCapped) reds.push(`open (held, nine lines): the five biggest do not draw with the four smallest stated ("${capped?.tailLine}")`);
   if (capped && capped.rows.some((r) => r.value < 12000)) reds.push("open (held, nine lines): a line under the fifth biggest is drawn");
   const five = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items.slice(0, 5) } });
   if (!five || five.rows.length !== 5 || five.tail !== null || five.basis !== COPY.tradeOpen.basisHeld) reds.push("open (held, five lines): five lines draw with a tail or the capped basis");
   const six = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items.slice(0, 6) } });
-  if (!six || six.rows.length !== 5 || six.tail?.count !== 1 || six.tailLine !== "The smallest line, $20, is in the total.") reds.push(`open (held, six lines): the one smallest line is not stated singular ("${six?.tailLine}")`);
+  if (!six || six.rows.length !== 5 || six.tail?.count !== 1 || six.tailLine !== "The smallest cost, $20, is in the total.") reds.push(`open (held, six lines): the one smallest line is not stated singular ("${six?.tailLine}")`);
   const base = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" } });
   if (!base || base.state !== "baseline" || base.value !== 300000 || !base.accent || !base.sample || base.basis !== COPY.tradeOpen.basisFormats || base.footLine !== null || base.foot.length !== 2 || base.formats.length < 1 + OPEN_FORMATS_WORKING_MIN) reds.push("open (baseline): a keyed trade with no lines does not build the table's figure, the accent, the kinds of shop, the one basis and the foot as expected");
   /* THE KINDS OF SHOP (the goal's B10, 2026-09-24), on every keyed shard: the lead at nought and at the typical, every other kind the typical times one plus its difference, printed by the kit's one form, dearest first. */
@@ -1333,7 +1333,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const dashPeer = buildTradePeers({ meta: { city: "California", iso2: "US", industry_id: "restaurants", money_shown: true }, headline: { rev_p50_usd: 1100000 }, nearby: { places: [{ name: "Georgia", home: false }, { name: "Nevada", home: false, rev_p50_usd: "n/a" }] } });
   if (!dashPeer || dashPeer.peers !== 2 || dashPeer.rows.slice(1).some((r) => r.values.takings !== null)) reds.push("trade peers (a peer without a figure): the row does not print a dash for its takings");
   const seated = buildTradePeers({ meta: { city: "London", iso2: "GB", industry_id: "restaurants", money_shown: true }, headline: { rev_p50_usd: 620000 } });
-  if (!seated || seated.peers !== 0 || seated.rows.length !== 1 || !seated.rows[0].home || seated.rows[0].values.takings !== 620000 || seated.notGathered !== COPY.tradePeers.notGathered || !seated.notGathered.startsWith("Not gathered yet:") || seated.homeWithheld) reds.push("trade peers (seated): the home row alone with its figure under the not-gathered line does not build");
+  if (!seated || seated.peers !== 0 || seated.rows.length !== 1 || !seated.rows[0].home || seated.rows[0].values.takings !== 620000 || seated.notGathered !== COPY.tradePeers.notGathered || seated.homeWithheld) reds.push("trade peers (seated): the home row alone with its figure under the not-gathered line does not build");
   const dashed = buildTradePeers({ meta: { city: "Mumbai", iso2: "IN", industry_id: "cafes_coffee", money_shown: false }, headline: { rev_p50_usd: 5215000 } });
   if (!dashed || dashed.rows.length !== 1 || dashed.rows[0].values.takings !== null || dashed.homeWithheld !== COPY.tradePeers.homeWithheld || dashed.notGathered !== COPY.tradePeers.notGathered) reds.push("trade peers (off moneyShown, no slate): the home row's dash with both lines does not build");
   const dashedSlate = buildTradePeers({ meta: { city: "Nevada", iso2: "US", industry_id: "restaurants", money_shown: false }, headline: { rev_p50_usd: 900000 }, nearby: { places: slateRows.slice(0, 3) } });
@@ -1487,7 +1487,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
 /* THE DRAWN BLOCKED SEATS (MODEL.md 8.2, `07 workforce`, `11 easiest` and the
    four of "THE THIN COUNTRY, SEATED"; plan step 31's seventh dispatch,
    2026-09-18). The seat's law is BlockedSeat.tsx's: one stated line in the
-   idiom "Not gathered yet: ...", under fifteen words (the cap is the
+   plain words saying the gap is for now (the old "Not gathered yet: ..." idiom went with his correction of 2026-09-24), under fifteen words (the cap is the
    component's own constant, fourteen), no figure (a digit in the line would
    be one), a foot naming the requirement by its DATA-REQUIREMENTS item, no
    banned word and no em dash in either, the kicker within PART 7's four
@@ -1506,10 +1506,12 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const seats = Object.entries(COPY.blocked) as Array<[string, { kicker: string; line: string; foot: string }]>;
   for (const [key, seat] of seats) {
     const words = seat.line.trim().split(/\s+/).filter(Boolean).length;
-    if (!seat.line.startsWith("Not gathered yet: ")) reds.push(`seat ${key}: the line is not in the idiom "Not gathered yet: ...": "${seat.line}"`);
+    /* THE SEAT'S LINE IS PLAIN (his correction of 2026-09-24, evening): no method word, and it says the gap is for now ("yet"); the old idiom "Not gathered yet: ..." is gone. */
+    if (/not gathered|modell?ed|withheld|on file/i.test(seat.line) || !/\byet\b/.test(seat.line)) reds.push(`seat ${key}: the line is not plain, or does not say the gap is for now: "${seat.line}"`);
     if (words > SEAT_LINE_WORDS_CAP) reds.push(`seat ${key}: the line runs ${words} words, over the cap of ${SEAT_LINE_WORDS_CAP}: "${seat.line}"`);
     if (/\d/.test(seat.line)) reds.push(`seat ${key}: a digit in a line whose law is no figure: "${seat.line}"`);
-    if (!/^Waits on DATA-REQUIREMENTS items? \d+/.test(seat.foot)) reds.push(`seat ${key}: the foot does not name a DATA-REQUIREMENTS item: "${seat.foot}"`);
+    /* TURNED OVER 2026-09-24 (his correction of that evening): the foot named the DATA-REQUIREMENTS item the seat waits on, our work queue in front of every reader; now it never does. */
+    if (/DATA-REQUIREMENTS|\bitem \d+/.test(seat.foot)) reds.push(`seat ${key}: the foot names our work queue: "${seat.foot}"`);
     if (seat.kicker.split(/\s+/).length > 4) reds.push(`seat ${key}: the kicker runs over four words: "${seat.kicker}"`);
     for (const t of [seat.line, seat.foot]) {
       for (const b of COPY.banned) if (t.toLowerCase().includes(b)) reds.push(`seat ${key}: banned word "${b}" in "${t}"`);
@@ -1540,7 +1542,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       list holds a row for builds no seat (its line would be false: Bangladesh
       holds Dhaka's page and the close door goes there, whatever the cards
       draw), and a country it holds none for builds one.
-    THE LINE: the idiom ("Not gathered yet: "), under fifteen words (the cap
+    THE LINE: plain words saying the gap is for now (his correction of 2026-09-24 retired "Not gathered yet: "), under fifteen words (the cap
       is the component's), no digit, no placeholder left, no banned word, no
       em dash, and NO DOOR: no path, no markup, no "See", no arrow; a seat
       carries none (PART 7).
@@ -1568,7 +1570,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const door = (t: string) => /\/|<|>|https?:|\bSee\b|→|href/i.test(t);
   const lineLaw = (where: string, line: string) => {
     const words = wordsOf(line);
-    if (!line.startsWith("Not gathered yet: ")) reds.push(`${where}: the line is not in the idiom "Not gathered yet: ...": "${line}"`);
+    if (/not gathered|modell?ed|withheld|on file/i.test(line) || !/\byet\b/.test(line)) reds.push(`${where}: the line is not plain, or does not say the gap is for now: "${line}"`);
     if (words > SEAT_LINE_WORDS_CAP) reds.push(`${where}: the line runs ${words} words, over the cap of ${SEAT_LINE_WORDS_CAP}: "${line}"`);
     if (/\d/.test(line)) reds.push(`${where}: a digit in a line whose law is no figure: "${line}"`);
     if (/[{}]/.test(line)) reds.push(`${where}: a placeholder was never filled: "${line}"`);
@@ -1797,7 +1799,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   for (const [name, rivals, siblingsN, keyedN] of under) {
     const r = buildRivals({ meta: { trade: "Restaurants" }, rivals });
     if (!r || r.state !== "withheld" || r.rows.length !== 0 || !r.stateLine || r.withheldLine != null || r.siblings !== siblingsN || r.keyed !== keyedN) { reds.push(`rivals (${name}): the withheld state with its line and no rows does not build (under the floor of ${MARK_LIST_FLOOR})`); continue; }
-    if (!r.stateLine.startsWith("Not gathered yet:")) reds.push(`rivals (${name}): the state line is not in the site's idiom ("${r.stateLine}")`);
+    if (!r.stateLine.endsWith("too few to compare.") && r.stateLine !== COPY.tradeRivals.stateNone) reds.push(`rivals (${name}): the state line is not one of the copy table's plain lines ("${r.stateLine}")`);
     if (siblingsN > 0 && !r.stateLine.includes(countWord(keyedN))) reds.push(`rivals (${name}): the state line does not count the siblings with a figure in words ("${r.stateLine}")`);
     ban(`rivals (${name})`, [r.stateLine, r.basis]);
   }
@@ -1821,7 +1823,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
         if (lo.value !== Math.round(shown.figures.multipleLow * 36000) || hi.value !== Math.round(shown.figures.multipleHigh * 36000)) reds.push(`worth (${id}): a mark is not the shard's figure times the take-home to the dollar`);
         if (!(lo.value < hi.value)) reds.push(`worth (${id}): the low end is not under the high end`);
         for (const m of shown.marks) { if (m.label.trim().split(/\s+/).length > 3) reds.push(`worth (${id}): a mark label over three words ("${m.label}")`); if (m.lead || m.accent) reds.push(`worth (${id}): a mark carries a lead or an accent; a low and a high are siblings`); }
-        if (!shown.basis || !shown.note) reds.push(`worth (${id}): the strip stands without its basis or its note`);
+        if (!shown.basis) reds.push(`worth (${id}): the strip stands without its one line`);
       }
       if (hidden.state !== "withheld" || hidden.marks.length || !hidden.withheld) reds.push(`worth (${id}): off moneyShown the card does not stand withheld with its line`);
       else withheldLines++;
@@ -1923,10 +1925,10 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     const foot = f.foot?.text ?? "";
     if (f.withheld.length > 0) {
       notGathered++;
-      if (!foot.startsWith("Not gathered yet: ")) reds.push(`industry take ${id}: ${f.withheld.length} companion(s) withheld and the foot does not open "Not gathered yet:" ("${foot}")`);
+      if (!foot.startsWith(COPY.industryHero.notGathered.split("{parts}")[0])) reds.push(`industry take ${id}: ${f.withheld.length} companion(s) withheld and the foot does not open on the copy table's plain line ("${foot}")`);
       for (const k of f.withheld) if (!foot.includes(COPY.industryHero.parts[k])) reds.push(`industry take ${id}: the foot does not name the withheld ${k}`);
-    } else if (foot.startsWith("Not gathered yet")) reds.push(`industry take ${id}: nothing withheld and the foot apologises`);
-    if (f.cells.length > 0 && !/typical for the trade anywhere, modelled\.$/.test(foot)) reds.push(`industry take ${id}: the foot does not end on the coverage sentence ("${foot}")`);
+    } else if (foot.startsWith(COPY.industryHero.notGathered.split("{parts}")[0])) reds.push(`industry take ${id}: nothing withheld and the foot apologises`);
+    if (f.cells.length > 0 && !foot.endsWith(COPY.industryHero.footAll.split("{noun}")[1])) reds.push(`industry take ${id}: the foot does not end on the page's one line on estimates ("${foot}")`);
     if (f.foot && !f.foot.modeled) reds.push(`industry take ${id}: the foot is not marked modelled`);
     ban(`industry take ${id}`, [f.absent.label, f.absent.word, f.absent.note, f.answer?.label ?? "", f.answer?.basis ?? "", foot, ...f.cells.flatMap((c) => [c.label, c.note ?? ""])]);
   }
@@ -1995,8 +1997,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (wordsOf(b.basis) > 14) reds.push(`industry benchmark ${id}: the basis runs ${wordsOf(b.basis)} words, over fourteen: "${b.basis}"`);
     if (!b.basis.includes(String(b.members))) reds.push(`industry benchmark ${id}: the basis does not name the sector's count ${b.members}`);
     if (b.line && wordsOf(b.line) > 14) reds.push(`industry benchmark ${id}: the line runs ${wordsOf(b.line)} words, over fourteen: "${b.line}"`);
-    if (b.state === "withheld" && (!b.line || (b.holding === 0 && !b.line.startsWith("Not gathered yet: ")))) reds.push(`industry benchmark ${id}: the withheld state has no line, or no not-gathered line with nothing held`);
-    if (b.state === "short" && (!b.line || !/a ranking needs four\.$/.test(b.line))) reds.push(`industry benchmark ${id}: the short state's line does not name the floor ("${b.line}")`);
+    if (b.state === "withheld" && (!b.line || (b.holding === 0 && !b.line.startsWith(COPY.industryBenchmark.noRows.split("{members}")[0])))) reds.push(`industry benchmark ${id}: the withheld state has no line, or not the copy table's plain line with nothing held`);
+    if (b.state === "short" && (!b.line || !/too few to rank\.$/.test(b.line))) reds.push(`industry benchmark ${id}: the short state's line does not name the floor ("${b.line}")`);
     if (b.state === "ranked" && (b.withheldCount > 0) !== !!b.line) reds.push(`industry benchmark ${id}: ${b.withheldCount} withheld and ${b.line ? "a" : "no"} line`);
     if (isLive && b.state === "ranked" && b.line && own?.branch !== "shard" && !/this (trade|one)/i.test(b.line)) reds.push(`industry benchmark ${id}: the trade itself is withheld and the line does not say so ("${b.line}")`);
     ban(`industry benchmark ${id}`, [b.basis, b.line ?? "", ...b.rows.map((r) => r.name), ...(b.rank != null ? [COPY.industryBenchmark.rankWords] : [])]);
@@ -2099,7 +2101,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       }
     }
     if (wordsOf(o.basis) > 14 || wordsOf(o.foot) > 14) reds.push(`industry open ${id}: the basis or the foot runs over fourteen words`);
-    if (!/modelled/.test(o.foot)) reds.push(`industry open ${id}: the foot does not say modelled (R12)`);
+    if (/modell?ed/i.test(o.foot)) reds.push(`industry open ${id}: the foot says how the figures are made, which the page's one line says once (COPY-STYLE.md)`);
     ban(`industry open ${id}`, [o.basis, o.foot, ...o.withheldLines, ...o.cells.map((c) => c.label), ...(o.detail ? [o.detail.summary, o.detail.withheldLine ?? ""] : [])]);
   }
   if (openCount.cards !== opens) reds.push(`industry open: the count (${openCount.cards}) and the sweep (${opens}) disagree`);
@@ -2119,7 +2121,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
         if (p.crew.part !== p.crew.whole || p.crew.whole !== Math.round(sum) || p.crew.sum !== sum) reds.push(`industry pays ${id}: the crew (${p.crew.part} of ${p.crew.whole}, sum ${p.crew.sum}) is not the roles' sum (${sum}) rounded with the part the whole`);
         if (p.crew.rounded !== !Number.isInteger(sum)) reds.push(`industry pays ${id}: rounded (${p.crew.rounded}) disagrees with the sum (${sum})`);
         if (p.crew.rounded) rounded++;
-        if (p.crew.rounded !== /rounded/.test(p.crew.basis)) reds.push(`industry pays ${id}: the basis says ${/rounded/.test(p.crew.basis) ? "rounded" : "nothing"} of a sum of ${sum}`);
+        if (p.crew.rounded !== /rounded/i.test(p.crew.basis)) reds.push(`industry pays ${id}: the basis says ${/rounded/i.test(p.crew.basis) ? "rounded" : "nothing"} of a sum of ${sum}`);
       }
     } else if ("part" in p.crew) reds.push(`industry pays ${id}: a crew drawn off no roles`);
     const pb = industryFigure(id, "first_year.payback_years");
@@ -2137,8 +2139,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       const cell = p[key];
       const line = "withheld" in cell ? cell.withheld : cell.basis;
       if (wordsOf(line) > 14) reds.push(`industry pays ${id}: the ${key} line runs ${wordsOf(line)} words: "${line}"`);
-      if (!("withheld" in cell) && !/modelled\.$/.test(cell.basis)) reds.push(`industry pays ${id}: the ${key} basis does not end on modelled ("${cell.basis}")`);
-      if ("withheld" in cell && !cell.withheld.startsWith("Not gathered yet: ")) reds.push(`industry pays ${id}: the ${key} withheld line is not in the idiom ("${cell.withheld}")`);
+      if (!("withheld" in cell) && /modell?ed/i.test(cell.basis)) reds.push(`industry pays ${id}: the ${key} basis says how the figure is made ("${cell.basis}"), which the page's one line says once`);
+      if ("withheld" in cell && !(Object.values(COPY.industryPays.withheld) as string[]).includes(cell.withheld)) reds.push(`industry pays ${id}: the ${key} withheld line is not one of the copy table's plain lines ("${cell.withheld}")`);
       ban(`industry pays ${id} ${key}`, [line]);
     }
   }
@@ -2163,7 +2165,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
    rows the take-home highest first in the table's two units with the
    country's flag code upper-cased and NO HOME ROW, the two heads and the
    basis within their caps, the seat under four own cities with its line in
-   the idiom (opening "Not gathered yet:", naming the count of own figures
+   plain words (his correction of 2026-09-24 retired "Not gathered yet:"), naming the count of own figures
    and the floor of four, fourteen words at most, the slate's size composed
    in) and its foot naming item 69, and the floor the mark list's own
    number. THE FORMATS over every one of the 243 ids, without the database:
@@ -2210,7 +2212,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (table.columns.map((c) => `${c.key}:${c.unit}:${c.best}`).join(",") !== "takeHome:usd:max,netMargin:pct:max") reds.push(`industry places: the columns are not take-home in currency and net margin in percent, both best at max (${table.columns.map((c) => c.key).join(", ")})`);
     for (const c of table.columns) if (wordsOf(c.head) > 4) reds.push(`industry places: the head "${c.head}" runs over four words`);
     if (table.entityHead !== COPY.industryPlaces.cols.city) reds.push("industry places: the entity head is not the copy table's");
-    if (wordsOf(table.caveat) > 14 || !/modelled\.$/.test(table.caveat)) reds.push(`industry places: the basis runs ${wordsOf(table.caveat)} words or does not end on modelled ("${table.caveat}")`);
+    if (wordsOf(table.caveat) > 14 || /modell?ed/i.test(table.caveat)) reds.push(`industry places: the basis runs ${wordsOf(table.caveat)} words or says how the figures are made ("${table.caveat}")`);
     if (table.confidence !== "modeled") reds.push("industry places: the table is not marked modelled (the estimator's model over the cell's revenue)");
     ban("industry places", [table.caveat, table.entityHead, ...table.columns.map((c) => c.head), ...table.rows.map((r) => r.name)]);
   }
@@ -2247,12 +2249,12 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (!p || p.state !== "blocked") { reds.push(`industry places: ${n} own cities do not seat the block`); continue; }
     if (p.rows.length !== 0 || p.holding !== n || p.withheld !== 4) reds.push(`industry places: the seat at ${n} draws rows or miscounts (${p.rows.length} rows, ${p.holding} holding, ${p.withheld} withheld)`);
     if (p.line !== seatLine(n)) reds.push(`industry places: the seat's line at ${n} is not the copy table's composed ("${p.line}")`);
-    if (!p.line || !p.line.startsWith("Not gathered yet: ")) reds.push(`industry places: the seat's line at ${n} is not in the idiom ("${p.line}")`);
+    if (!p.line || !p.line.endsWith("to compare.")) reds.push(`industry places: the seat's line at ${n} is not the copy table's plain line ("${p.line}")`);
     if (p.line && wordsOf(p.line) > 14) reds.push(`industry places: the seat's line at ${n} runs ${wordsOf(p.line)} words, over fourteen ("${p.line}")`);
     if (p.line && !p.line.includes(String(slate))) reds.push(`industry places: the seat's line at ${n} does not name the slate's size ${slate}`);
-    if (n > 0 && p.line && !p.line.includes(n === 1 ? "one of" : `${n} of`)) reds.push(`industry places: the seat's line at ${n} does not name the count it holds ("${p.line}")`);
-    if (p.line && !/a table needs four\.$/.test(p.line)) reds.push(`industry places: the seat's line at ${n} does not say a table needs four ("${p.line}")`);
-    if (p.foot !== COPY.industryPlaces.blocked.foot || !/item 69\.$/.test(p.foot ?? "")) reds.push(`industry places: the seat's foot does not name item 69 ("${p.foot}")`);
+    if (n > 0 && p.line && !p.line.includes(`${n} of`)) reds.push(`industry places: the seat's line at ${n} does not name the count it holds ("${p.line}")`);
+    if (p.line && !/(too few|nothing) to compare\.$/.test(p.line)) reds.push(`industry places: the seat's line at ${n} does not say why nothing is compared ("${p.line}")`);
+    if (p.foot !== COPY.industryPlaces.blocked.foot || /DATA-REQUIREMENTS|\bitem \d+/.test(p.foot ?? "")) reds.push(`industry places: the seat's foot names an internal item or is not the copy table's ("${p.foot}"); a reader never sees our work queue (his correction of 2026-09-24)`);
     ban(`industry places seat ${n}`, [p.line ?? "", p.foot ?? ""]);
   }
   const four = buildIndustryPlaces("restaurants", eight.slice(0, 4));
@@ -2298,7 +2300,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     const expectedBasis = n.branch === "profile" ? COPY.industryFormats.basisProfile : COPY.industryFormats.basisShard;
     if (f.basis !== expectedBasis) reds.push(`industry formats ${id}: the basis does not name the branch that printed the net (${n.branch})`);
     if (n.branch === "profile") profileBasis++;
-    if (wordsOf(f.basis) > 14 || !/modelled\.$/.test(f.basis)) reds.push(`industry formats ${id}: the basis runs ${wordsOf(f.basis)} words or does not end on modelled ("${f.basis}")`);
+    if (wordsOf(f.basis) > 14 || /modell?ed/i.test(f.basis)) reds.push(`industry formats ${id}: the basis runs ${wordsOf(f.basis)} words or says how the figures are made ("${f.basis}")`);
     if (/city|London/i.test(f.basis)) reds.push(`industry formats ${id}: the basis names a city ("${f.basis}")`);
     if (f.head.name !== COPY.industryFormats.head.name || f.head.value !== COPY.industryFormats.head.value) reds.push(`industry formats ${id}: the heads are not the copy table's`);
     if (f.sample !== true || f.confidence !== "modeled") reds.push(`industry formats ${id}: the card is not marked modelled (R12)`);
@@ -2309,7 +2311,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (buildFormats("no_such_trade") !== null || buildFormats(undefined) !== null) reds.push("industry formats: a trade with no shard builds a card");
   /* The withheld state, on a fixture no shard reaches: the copy table's line with the count in words, opening the idiom. */
   const stateOne = COPY.industryFormats.state.replace("{k}", "one");
-  if (!stateOne.startsWith("Not gathered yet: ") || wordsOf(stateOne) > 14) reds.push(`industry formats: the state line is not in the idiom or runs over fourteen words ("${stateOne}")`);
+  if (!stateOne.endsWith("too few to compare.") || wordsOf(stateOne) > 14) reds.push(`industry formats: the state line is not the copy table's plain line or runs over fourteen words ("${stateOne}")`);
   ban("industry formats state", [stateOne, COPY.industryFormats.basisShard, COPY.industryFormats.basisProfile]);
 
   /* THE MIX at the world altitude, over 243 ids: one builder, one card, only the basis changed. */
@@ -2393,7 +2395,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (k.notGathered !== (authored.size === 0)) reds.push(`industry know ${id}: the not-gathered state (${k.notGathered}) disagrees with what is authored (${authored.size} facts)`);
       for (const r of k.rows) {
         if (r.key === "notGathered") {
-          if (r.fact !== COPY.industryKnow.notGathered || !r.fact.startsWith("Not gathered yet: ")) reds.push(`industry know ${id}: the not-gathered row is not the copy table's line in the idiom ("${r.fact}")`);
+          if (r.fact !== COPY.industryKnow.notGathered) reds.push(`industry know ${id}: the not-gathered row is not the copy table's line ("${r.fact}")`);
           if (k.rows.length !== 1) reds.push(`industry know ${id}: the not-gathered row beside another row`);
           continue;
         }
@@ -2438,7 +2440,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
         const expectedBasis = key === "swing" ? COPY.tradeMarket.basis.swing : COPY.industryField.cellBasis[key];
         if (a.basis !== expectedBasis) reds.push(`industry field ${id}: the ${key} world basis is not the copy table's ("${a.basis}")`);
         if (/city|London/i.test(a.basis)) reds.push(`industry field ${id}: the ${key} world basis names a city ("${a.basis}")`);
-        if (!/modelled/.test(a.basis)) reds.push(`industry field ${id}: the ${key} world basis does not say modelled (R12)`);
+        if (/modell?ed/i.test(a.basis)) reds.push(`industry field ${id}: the ${key} world basis says how the figure is made, which the page's one line says once`);
       }
       const cells = fieldCells(w);
       const keys = cells.map((c) => c.key);
@@ -2464,7 +2466,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (buildMarket("no_such_trade", "world") !== null) reds.push("industry field: a trade with no shard builds a cluster at the world altitude");
     ban("industry field copy", [COPY.industryField.kicker, COPY.industryField.basis, COPY.industryField.foot, ...Object.values(COPY.industryField.notes), ...Object.values(COPY.industryField.cellBasis)]);
     if (wordsOf(COPY.industryField.kicker) > 4) reds.push(`industry field: the kicker runs over four words: "${COPY.industryField.kicker}"`);
-    if (wordsOf(COPY.industryField.basis) > 14 || wordsOf(COPY.industryField.foot) > 14 || !/modelled/.test(COPY.industryField.foot)) reds.push("industry field: the basis or the foot runs over fourteen words, or the foot does not say modelled");
+    if (wordsOf(COPY.industryField.basis) > 14 || wordsOf(COPY.industryField.foot) > 14 || /modell?ed/i.test(COPY.industryField.foot)) reds.push("industry field: the basis or the foot runs over fourteen words, or the foot says how the figures are made");
     for (const [key, b] of Object.entries(COPY.industryField.cellBasis)) if (wordsOf(b) > 14) reds.push(`industry field ${key}: a world basis over fourteen words: "${b}"`);
 
     /* THE CLOSE over 243 ids with no slate resolved, then the fixtures. */
@@ -2696,8 +2698,9 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   /* THE SEAT'S STRINGS, once. */
   const seat = COPY.blocked.hoodWorks;
   if (wordsOf(seat.line) > SEAT_LINE_WORDS_CAP) reds.push(`hood works: the seat's line runs ${wordsOf(seat.line)} words, over ${SEAT_LINE_WORDS_CAP}`);
-  if (!seat.line.startsWith("Not gathered yet:")) reds.push(`hood works: the seat's line is not in the site's idiom`);
-  if (!/DATA-REQUIREMENTS item \d+/.test(seat.foot)) reds.push(`hood works: the seat's foot names no requirement`);
+  if (/not gathered|modell?ed|withheld|on file/i.test(seat.line) || !/\byet\b/.test(seat.line)) reds.push(`hood works: the seat's line is not plain, or does not say the gap is for now`);
+  /* TURNED OVER 2026-09-24 (his correction of that evening): the hub's seat never shows our work queue. */
+  if (/DATA-REQUIREMENTS|\bitem \d+/.test(seat.foot)) reds.push(`hood works: the seat's foot names our work queue ("${seat.foot}")`);
   if (wordsOf(seat.kicker) > 4) reds.push(`hood works: the kicker runs over four words`);
   ban("hood works", [seat.kicker, seat.line, seat.foot]);
   /* A DISTRICT THE SCHEME DOES NOT HOLD builds nothing anywhere. */

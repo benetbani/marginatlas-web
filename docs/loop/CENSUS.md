@@ -91,7 +91,7 @@ Loud today: 2 of 3, as `LOUD_SEATS` in city-view.tsx declares (a LIT seat is unl
 | rank | RankCard | Rent by district | RankedBars |  |
 | premium | PremiumCard | premium.kicker | MarkList |  |
 | compare | CompareCard | Districts, side by side | CompareTable |  |
-| works | WorksSeat | What lifts revenue most | BlockedSeat |  |
+| works | WorksSeat | What lifts sales most | BlockedSeat |  |
 | character | CharacterCard | character.kicker | NoteList |  |
 | close | HoodClose |  | Terminus |  |
 
@@ -107,7 +107,7 @@ Loud today: 1 of 3, as `LOUD_SEATS` in hood-view.tsx declares (a LIT seat is unl
 
 | section id | component | kicker | archetype | builder |
 |---|---|---|---|---|
-| spread | Spread | A year's takings | RangeStrip | buildTradeSpread |
+| spread | Spread | Sales a year | RangeStrip | buildTradeSpread |
 | suits | Suits | Who this suits | NoteList | buildSuits |
 | rivals | RivalsCard | rivals.kicker | MarkList or BentoMetric |  |
 | worth | WorthCard | What one sells for | RangeStrip |  |
@@ -117,13 +117,13 @@ Loud today: 1 of 3, as `LOUD_SEATS` in hood-view.tsx declares (a LIT seat is unl
 | #2 | DaypartsCell |  | ShareBar |  |
 | market | MarketBand |  | BentoBand |  |
 | take | Masthead |  | AnswerCard |  |
-| permits | PermitsCard | The permits you need | WorkedFigure |  |
+| permits | PermitsCard | Licences you need | WorkedFigure |  |
 | open | OpenCard | The cost to open | WorkedFigure or BentoMetric or RankedBars |  |
-| split | SplitCard | Net profit margin | IncomeBreakdown |  |
+| split | SplitCard | Where each $100 goes | IncomeBreakdown |  |
 | team | TeamCard | What staff cost | TiersTable |  |
 | peers | PeersCard | Against other places | CompareTable |  |
-| clears | ClearsCard | When it clears costs | Ring |  |
-| lasts | LastsCard | How many last | WorkedFigure |  |
+| clears | ClearsCard | Covering the costs | Ring |  |
+| lasts | LastsCard | How many survive | WorkedFigure |  |
 | watch | WatchSeat | What closes one | BlockedSeat |  |
 | mix | MixCard | Where sales come from | Donut |  |
 
@@ -139,18 +139,18 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 
 | section id | component | kicker | archetype | builder |
 |---|---|---|---|---|
-| lasts | LastsCard | How many last | WorkedFigure |  |
-| split | SplitCard | Net profit margin | IncomeBreakdown |  |
+| lasts | LastsCard | How many survive | WorkedFigure |  |
+| split | SplitCard | Where each $100 goes | IncomeBreakdown |  |
 | channels | ChannelsCard (MixCard) | Where sales come from | Donut |  |
 | close | CloseCard |  | Terminus |  |
 | take | Masthead |  | AnswerCard |  |
-| benchmark | BenchmarkCard | The trades next door | BentoMetric or RankedBars |  |
-| open | OpenCard | Opening the doors | BentoMetric or KvGrid |  |
+| benchmark | BenchmarkCard | Similar trades | BentoMetric or RankedBars |  |
+| open | OpenCard | Licences you need | BentoMetric or KvGrid |  |
 | pays | PaysBand |  | BentoBand |  |
 | #2 | PaysShareCell |  | Ring |  |
 | #3 | PaysFixedCell |  | SegmentBar |  |
-| know | KnowCard | Before you sign | NoteList |  |
-| field | FieldCard | Who trades alongside you | BentoMetric or KvGrid |  |
+| know | KnowCard | Lessons from owners | NoteList |  |
+| field | FieldCard | The competition | BentoMetric or KvGrid |  |
 | places | PlacesTable | Where it pays best | CompareTable or BlockedSeat |  |
 | formats | FormatsCard | formats.kicker | MarkList or BentoMetric |  |
 

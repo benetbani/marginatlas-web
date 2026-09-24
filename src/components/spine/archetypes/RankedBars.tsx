@@ -472,7 +472,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
           them (the page filter). One column on a phone, where the card is the
           page's half. */}
       <div className={withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
-        <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+        {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
         {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)] md:mt-0">{withheldLine}</p> : null}
       </div>
       </div>

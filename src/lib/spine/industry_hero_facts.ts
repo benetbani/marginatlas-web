@@ -53,7 +53,7 @@ import { resolveTradeNet, type TradeNet } from "@/lib/spine/trade_net";
 import { tradeIconFor } from "@/lib/spine/trade_icon";
 import { industryFigure } from "@/lib/facts/industry_shard";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
-import { INDUSTRY_BY_ID, SECTOR_BY_ID, industryToSlug } from "@/lib/taxonomy";
+import { INDUSTRY_BY_ID, SECTOR_BY_ID, industryToSlug, tradeNounFor } from "@/lib/taxonomy";
 
 type Conf = "measured" | "modeled" | "placeholder";
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -112,7 +112,8 @@ export function industryHeroFacts(industryId: string | null | undefined): Indust
   if (isNum(visits) && visits > 0) cells.push({ key: "visits", label: C.visits.label, value: String(Math.round(visits)), note: C.visits.note, confidence: "modeled" }); else withheld.push("visits");
   const notGathered = withheld.length ? COPY.industryHero.notGathered.replace("{parts}", joinParts(withheld.map((k) => COPY.industryHero.parts[k]))) : null;
   const printed = INDUSTRY_HERO_CELLS.filter((k) => !withheld.includes(k)).map((k) => COPY.industryHero.names[k]);
-  const coverage = printed.length === 0 ? null : (printed.length === 1 ? COPY.industryHero.footOne : COPY.industryHero.footAll).replace("{names}", joinParts(printed));
+  /* THE PAGE'S ONE WORD ON ESTIMATES (his correction of 2026-09-24, evening): one plain sentence at the hero's foot, the trade's noun in it; no card repeats it. */
+  const coverage = printed.length === 0 ? null : (printed.length === 1 ? COPY.industryHero.footOne : COPY.industryHero.footAll).replace("{names}", joinParts(printed)).replace("{noun}", tradeNounFor(ind.name) || "shop");
   const footText = [notGathered, coverage].filter((t): t is string => !!t).join(" ");
   const sector = SECTOR_BY_ID[ind.sector_id]?.name;
   return {

@@ -264,7 +264,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
         <div className={HEAD_CLS}>{headline.label}</div>
         <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{fmt(headline.value)}</Fig>
       </div>
-      <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
+      {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
       {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS: the same `GEO`, an
           empty cell over the marks, and then one span across the name and
           figure columns holding the two heads at its ends. The value head is

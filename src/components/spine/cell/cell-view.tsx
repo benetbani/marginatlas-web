@@ -245,7 +245,7 @@ function Suits({ d }: { d: any }) {
     <Box id="suits">
       <Rail icon="who-for" kicker={COPY.tradeSuits.kicker} sample />
       <NoteList notes={s.rows} columns={2} />
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{s.basis}</p>
+      {s.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{s.basis}</p> : null}
     </Box>
   );
 }
