@@ -515,6 +515,13 @@ const GATES: Gate[] = [
      plant, holds every ask to a named list, and every read around the store to
      a named list that filters its own. Planted three ways, each watched red. */
   { name: "placeholder-never-printed", script: "scripts/verify_placeholder_never_printed.ts" },
+  /* /gb/london answered "Not found" while /cities/london served (QUEUE
+     launch:gb-london-404; the goal's D4, 2026-09-24): the region route
+     redirects a city its country holds to the city's page, after its own
+     region lookup and before notFound(); every listed city is held to its
+     page and to no other country's path. Planted once (the redirect moved
+     after notFound), watched red. */
+  { name: "city-path-redirect", script: "scripts/verify_city_path_redirect.ts" },
   /* Two live routes were invisible to crawlers: a client island read
      useSearchParams with no Suspense boundary, which opts the WHOLE route into
      client rendering while still reporting as prerendered. Negative-tested. */

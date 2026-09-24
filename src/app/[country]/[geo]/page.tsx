@@ -17,7 +17,8 @@
  * Previously /us/california returned 404 because no route matched the
  * [country]/[geo] 2-segment pattern. This page adds that.
  */
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
+import { cityPathFor } from "@/lib/cities/city_path";
 import Link from "next/link";
 import { COUNTRIES, INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
 import { getTopIndustriesForCountry, getCellBySlug, withBudget } from "@/lib/cells";
@@ -150,7 +151,15 @@ async function RegionLandingPageBody({
   const countryName = countryMeta.name;
   const regions = getRegionsForCountry(iso2, countryName);
   const regionEntry = regions.find((r) => r.value === geo.toLowerCase());
-  if (!regionEntry) notFound();
+  if (!regionEntry) {
+    /* THE CITY UNDER ITS COUNTRY'S PATH (the goal's D4, 2026-09-24; QUEUE
+       launch:gb-london-404): not a region, but a city this country holds, so
+       the reader goes to its page, permanently (/gb/london to /cities/london).
+       A region of the same name has already won above; no URL moves. */
+    const cityHref = cityPathFor(iso2, geo);
+    if (cityHref) permanentRedirect(cityHref);
+    notFound();
+  }
 
   const regionLabel = regionEntry.label;
   const curatedCities = CITIES_BY_STATE[iso2]?.[geo.toLowerCase()] || [];
