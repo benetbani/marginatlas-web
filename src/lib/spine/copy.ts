@@ -1919,6 +1919,8 @@ export const COPY = {
    *  not-gathered line where the rows would stand (M19). */
   industryBenchmark: {
     kicker: "The trades next door",
+    /* The words under the focal, the trade's place in the set (the goal's B6): "9th", "by what it keeps". */
+    rankWords: "by what it keeps",
     basis: "Kept of every $100; the highest of {n} in {sector}; modelled.",
     topLabel: "The highest",
     withheldOne: "1 trade withheld: its keep is the sector's typical, not its own.",

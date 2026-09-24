@@ -128,6 +128,8 @@ export type BenchmarkData = {
   withheldCount: number;
   /** The set's highest figure, the ceiling. */
   top: number;
+  /** THE TRADE'S PLACE IN THE SET, the card's focal (the goal's B6): one plus the members whose PRINTED figure is higher, so a tie on the card shares the better place and says it is joint; on the ranked state with the trade's own figure only, else null. */
+  rank: { place: number; joint: boolean } | null;
   basis: string;
   /** The one line under the basis: the withheld count, the floor, or the not-gathered line; null when every member ranks. */
   line: string | null;
@@ -189,6 +191,7 @@ function buildBenchmarkOnce(industryId: string): BenchmarkData | null {
     holding: holding.length,
     withheldCount,
     top: ranked.length ? ranked[0].pct : 0,
+    rank: state === "ranked" && self ? placeOf(self, holding) : null,
     basis: B.basis.replace("{n}", String(sector.length)).replace("{sector}", sectorPhrase(ind.sector_id)),
     line,
     confidence: "modeled",
@@ -196,6 +199,45 @@ function buildBenchmarkOnce(industryId: string): BenchmarkData | null {
 }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/**
+ * THE PLACE AS THE CARD PRINTS IT: "1st", "2nd", "3rd", "9th", "11th", "21st".
+ * The card's focal (the goal's B6, 2026-09-24), measured before it was drawn:
+ * of the 134 cards this builder draws over the 138 live trades, the trade
+ * holds a figure on 132, and its place in the set sits past the five drawn
+ * rows on 59 and differs from its place among the drawn rows on 69, so on
+ * half the pages the bars cannot say where the trade stands (restaurants
+ * draws fifth of five and is ninth of 14). The set's middle was measured and
+ * refused: it prints a figure a drawn row already prints on 67 of 134. The
+ * trade's own net is the hero's, never this card's (one figure once). No
+ * place under the floor (clause 22: a ranking needs four) and none for a
+ * trade the set withholds, whose line says so.
+ */
+export function rankText(n: number): string {
+  const tens = n % 100;
+  if (tens >= 11 && tens <= 13) return `${n}th`;
+  return `${n}${n % 10 === 1 ? "st" : n % 10 === 2 ? "nd" : n % 10 === 3 ? "rd" : "th"}`;
+}
+
+/* THE PLACE IS READ OFF THE FIGURES THE CARD PRINTS, whole percents (netText),
+   so a reader can check it against the bars: two members at 8.5 and 8.6
+   both print "9%" and share a place. Measured 2026-09-24: the shard ladders
+   draw on a short run of values (6.5, 7.2, 7.9, 8.6, 9.4 ...), so of the 122
+   places 74 share their printed figure with another member (56 exactly), and
+   an unmarked "9th" beside another 7% bar would be a place the card cannot
+   show; a shared place says "Joint". */
+function placeOf(self: { id: string; pct: number }, holding: Array<{ id: string; pct: number }>): { place: number; joint: boolean } {
+  const shown = (p: number) => Math.round(p);
+  return {
+    place: 1 + holding.filter((h) => shown(h.pct) > shown(self.pct)).length,
+    joint: holding.some((h) => h.id !== self.id && shown(h.pct) === shown(self.pct)),
+  };
+}
+
+/** The focal as the card prints it: "9th", or "Joint 9th" where the place is shared. */
+export function placeText(rank: { place: number; joint: boolean }): string {
+  return rank.joint ? `Joint ${rankText(rank.place)}` : rankText(rank.place);
+}
 
 /** The states over a list of ids, counted rather than remembered, for the gates and the record. */
 export function countBenchmarkStates(ids: string[]): { total: number; ranked: number; short: number; withheld: number; selfWithheld: number; anyWithheld: number; tenRows: number; shortIds: string[]; withheldIds: string[] } {

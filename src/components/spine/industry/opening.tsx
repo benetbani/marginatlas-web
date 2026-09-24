@@ -42,7 +42,7 @@ import { COPY } from "@/lib/spine/copy";
 import { netText } from "@/lib/spine/trade_net";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import type { IndustryHeroFacts } from "@/lib/spine/industry_hero_facts";
-import type { BenchmarkData } from "@/lib/spine/benchmark_rows";
+import { placeText, type BenchmarkData } from "@/lib/spine/benchmark_rows";
 
 export function Masthead({ id = "take", facts }: { id?: string; facts: IndustryHeroFacts | null }) {
   if (!facts) return null;
@@ -67,6 +67,7 @@ export function BenchmarkCard({ id = "benchmark", benchmark }: { id?: string; be
       tagged
       basis={benchmark.basis}
       withheldLine={benchmark.line}
+      focal={benchmark.rank != null ? { figure: placeText(benchmark.rank), words: COPY.industryBenchmark.rankWords } : undefined}
       rows={benchmark.rows}
       worldMax={benchmark.top}
       ceiling="set"

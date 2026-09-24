@@ -97,7 +97,7 @@ import { buildWorth, countWorthBases } from "@/lib/spine/worth_rows";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { buildMarket, densityText, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { industryHeroFacts, countIndustryHeroStates, INDUSTRY_HERO_CELLS, INDUSTRY_HERO_METRICS } from "@/lib/spine/industry_hero_facts";
-import { buildBenchmark, countBenchmarkStates, BENCHMARK_FLOOR, BENCHMARK_ROWS_CAP } from "@/lib/spine/benchmark_rows";
+import { buildBenchmark, countBenchmarkStates, placeText, BENCHMARK_FLOOR, BENCHMARK_ROWS_CAP } from "@/lib/spine/benchmark_rows";
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
 import { buildIndustryOpen, countIndustryOpen, INDUSTRY_OPEN_CELLS } from "@/lib/spine/industry_open_rows";
 import { buildPays, countPays, PAYS_CELLS } from "@/lib/spine/pays_rows";
@@ -1979,6 +1979,18 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (isLive && own?.branch === "shard" && b.state !== "withheld" && !ownRanked) reds.push(`industry benchmark ${id}: the trade holds a figure and is not among the rows`);
     if (own?.branch !== "shard" && ownRanked) reds.push(`industry benchmark ${id}: the trade's own row is drawn on a profile figure`);
     if (isLive && (b.selfKey === id) !== (own?.branch === "shard" && b.state !== "withheld")) reds.push(`industry benchmark ${id}: selfKey does not match the trade's branch and the state`);
+    /* THE PLACE, the card's focal (the goal's B6): re-counted here over the sector's live trades through the one net builder, on the
+       figures the card prints (whole percents): one plus those printing more, joint where another prints the same; none under the
+       floor or for a trade the set withholds. */
+    if (isLive && b.state === "ranked" && own?.branch === "shard") {
+      const shown = (p: number) => Math.round(p);
+      const ownShown = shown(own.pct);
+      const others = INDUSTRIES.filter((m) => m.sector_id === ind.sector_id && m.id !== id).map((m) => resolveTradeNet(m.id, { moneyShown: false, netMarginPct: null })).filter((n): n is NonNullable<typeof n> => n?.branch === "shard");
+      const higher = others.filter((n) => n.branch === "shard" && shown(n.pct) > ownShown).length;
+      const joint = others.some((n) => n.branch === "shard" && shown(n.pct) === ownShown);
+      if (b.rank?.place !== higher + 1 || b.rank?.joint !== joint) reds.push(`industry benchmark ${id}: PLACE: the focal reads ${b.rank ? placeText(b.rank) : "none"}, the set puts the trade ${placeText({ place: higher + 1, joint })}`);
+      if (b.rank && b.rank.place > b.holding) reds.push(`industry benchmark ${id}: PLACE: ${b.rank.place} of ${b.holding} holding a figure`);
+    } else if (b.rank != null) reds.push(`industry benchmark ${id}: PLACE: a place is drawn on the ${b.state} state${own?.branch !== "shard" ? " for a trade the set withholds" : ""}`);
     if (b.rows.length && b.top !== Math.max(...b.rows.map((r) => r.value))) reds.push(`industry benchmark ${id}: the ceiling is not the set's highest row`);
     if (wordsOf(b.basis) > 14) reds.push(`industry benchmark ${id}: the basis runs ${wordsOf(b.basis)} words, over fourteen: "${b.basis}"`);
     if (!b.basis.includes(String(b.members))) reds.push(`industry benchmark ${id}: the basis does not name the sector's count ${b.members}`);
@@ -1987,7 +1999,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (b.state === "short" && (!b.line || !/a ranking needs four\.$/.test(b.line))) reds.push(`industry benchmark ${id}: the short state's line does not name the floor ("${b.line}")`);
     if (b.state === "ranked" && (b.withheldCount > 0) !== !!b.line) reds.push(`industry benchmark ${id}: ${b.withheldCount} withheld and ${b.line ? "a" : "no"} line`);
     if (isLive && b.state === "ranked" && b.line && own?.branch !== "shard" && !/this (trade|one)/i.test(b.line)) reds.push(`industry benchmark ${id}: the trade itself is withheld and the line does not say so ("${b.line}")`);
-    ban(`industry benchmark ${id}`, [b.basis, b.line ?? "", ...b.rows.map((r) => r.name)]);
+    ban(`industry benchmark ${id}`, [b.basis, b.line ?? "", ...b.rows.map((r) => r.name), ...(b.rank != null ? [COPY.industryBenchmark.rankWords] : [])]);
   }
   for (const [sector, n] of sectors) if (n < BENCHMARK_FLOOR) { for (const i of ALL_INDUSTRIES.filter((x) => x.sector_id === sector)) { const b = buildBenchmark(i.id); if (b && b.state === "ranked") reds.push(`industry benchmark ${i.id}: ranked in a sector of ${n}, under the floor`); } }
   if (buildBenchmark("no_such_trade") !== null || buildBenchmark(undefined) !== null) reds.push("industry benchmark: a trade not in the taxonomy builds a card");
