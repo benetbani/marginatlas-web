@@ -66,7 +66,7 @@ Loud today: 0 of 3, as `LOUD_SEATS` in how-to-view.tsx declares (a LIT seat is u
 | texture | Texture | How this city does business | SpectraTable |  |
 | character-people | CharacterPeople | Dealing with people | SpectraTable |  |
 | locals | LocalsSeat | What locals know | BlockedSeat |  |
-| neighbourhoods | Neighbourhoods | The city's neighbourhoods | BlockedSeat or CardPager |  |
+| neighbourhoods | Neighbourhoods | The city's neighbourhoods | CardPager |  |
 | calendar | SpendCalendar | When this city spends | MonthBars |  |
 | season | Season | Residents and visitors | SegmentBar |  |
 | close | CityClose |  | Terminus | buildCityCloseDoors |

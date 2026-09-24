@@ -496,8 +496,8 @@ const seatLine = (line: string, d: any) => line.replace("{city}", typeof d?.meta
 /* The two seats of the `03 | 09` band (QUEUE launch:city-seats-off-london,
    2026-09-19): the drawn cards' own ids, icons and kickers, so the block
    keeps one name whether it is drawn or seated; the line names the city. */
-const DistrictsSeat = ({ d }: { d: any }) => <BlockedSeat id="districts" icon="best-areas" kicker={COPY.blocked.cityDistricts.kicker} line={seatLine(COPY.blocked.cityDistricts.line, d)} foot={COPY.blocked.cityDistricts.foot} />;
-const TradesSeat = ({ d }: { d: any }) => <BlockedSeat id="trades" icon="high-street" kicker={COPY.blocked.cityTrades.kicker} line={seatLine(COPY.blocked.cityTrades.line, d)} foot={COPY.blocked.cityTrades.foot} />;
+export const DistrictsSeat = ({ d }: { d: any }) => <BlockedSeat id="districts" icon="best-areas" kicker={COPY.blocked.cityDistricts.kicker} line={seatLine(COPY.blocked.cityDistricts.line, d)} foot={COPY.blocked.cityDistricts.foot} />;
+export const TradesSeat = ({ d }: { d: any }) => <BlockedSeat id="trades" icon="high-street" kicker={COPY.blocked.cityTrades.kicker} line={seatLine(COPY.blocked.cityTrades.line, d)} foot={COPY.blocked.cityTrades.foot} />;
 function TradesHere({ d }: { d: any }) {
   /* `lands` is the adapter's declaration of what each row promises (adapt_city.ts, the trade page's own answer), stamped here and never chosen here. */
   const list: Array<{ name: string; slug: string; href: string; lands?: string }> = d.trades_here?.list ?? [];
@@ -708,9 +708,12 @@ export function LocalsSeat() {
  */
 function Neighbourhoods({ hoods }: { hoods: CityNeighbourhoodsData | null }) {
   if (!hoods) return null;
-  if (!hoods.cards) {
-    return <BlockedSeat id="neighbourhoods" icon="neighborhood" kicker={COPY.blocked.cityNeighbourhoods.kicker} line={hoods.seatLine ?? COPY.blocked.cityNeighbourhoods.line} foot={COPY.blocked.cityNeighbourhoods.foot} />;
-  }
+  /* THE PLACEHOLDER SCHEME DRAWS NOTHING SINCE 2026-09-24 (the goal's A4b):
+     the seat's "Not gathered yet" line stood on 209 cities, Manchester,
+     Birmingham and Leeds among them; the season card beside it stands alone
+     at two thirds (the band's rule). NeighbourhoodsSeat keeps the drawing
+     for the sheet and the day the curated names land (item 30). */
+  if (!hoods.cards) return null;
   return (
     <Box id="neighbourhoods">
       <Rail icon="neighborhood" kicker={COPY.cityNeighbourhoods.kicker} />
@@ -1119,17 +1122,24 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           its own band at the survivor's two thirds, the country's precedent
           for `12 money | 16 locals` and this page's own for `12 | 13`
           below, LONE CARD twice, expected. */}
-      {(districts && trades) || (!districts && !trades) ? (
+      {/* THE SEATS LEFT THE PAGE ON 2026-09-24 (the goal's A4b; QUEUE
+          city:uk-not-gathered-seats): his word of 2026-09-19 ("will you say
+          not gathered yet?") took the seats off London on 2026-09-20, and the
+          same two lines still stood on every city off London, three a page on
+          Manchester, Birmingham and Leeds on production (the NEVER list's card
+          on a UK page). Where both cards draw they share the band; where one
+          draws it stands alone at two thirds (the band's rule, LONE CARD,
+          expected); where neither draws the band leaves with them. The block
+          floor (16, the spine where its data exists) is met on London and
+          read short on a city that holds neither; the checker names the cause. */}
+      {districts && trades ? (
         <Band split="2-1" stack="lg">
-          {districts ? <WhereToTrade d={d} /> : <DistrictsSeat d={d} />}
-          {trades ? <TradesHere d={d} /> : <TradesSeat d={d} />}
+          <WhereToTrade d={d} />
+          <TradesHere d={d} />
         </Band>
-      ) : (
-        <>
-          <Band split="2-1" stack="lg">{districts ? <WhereToTrade d={d} /> : <DistrictsSeat d={d} />}</Band>
-          <Band split="2-1" stack="lg">{trades ? <TradesHere d={d} /> : <TradesSeat d={d} />}</Band>
-        </>
-      )}
+      ) : districts || trades ? (
+        <Band split="2-1" stack="lg">{districts ? <WhereToTrade d={d} /> : <TradesHere d={d} />}</Band>
+      ) : null}
       {/* CHAPTER TURN THREE (8.3, "What the place is like"): zero accent from
           here to the exit. The heading stands over the peers and the people
           since 2026-09-20 (below); the index stays "03" because the two turns
