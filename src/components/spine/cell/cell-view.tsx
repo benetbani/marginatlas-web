@@ -177,7 +177,7 @@ const X: any = spineCellSeed;
 export const LOUD_SEATS = [
   { seat: 1, card: "00 take", figure: "the take-home, 40", state: "LIT", condition: "8.6: the page's only rung-40 figure where moneyShown (London's curated entry and trusted-local cells: 16 of the 31 walked routes, 87 of the slate's 3,670, under trust:revenue-filled 2026-09-19); off it the answer is withheld with a stated line (the AnswerCard's data-state no-answer) and the page carries two" },
   { seat: 2, card: "04 open", figure: "the total to open, 30; its biggest bar `--terra`", state: "LIT", condition: "8.6: LIT where held or baseline; UNLIT where withheld (a cell without setup_costs on the 90 trades on the 80,000 default; the BentoMetric's data-withheld-line), and the page carries two; the accent never moves to 05's net or to 03's longest wait" },
-  { seat: 3, card: "08 clears", figure: "the needed share of a day, the sweep `--terra`", state: "LIT", condition: "8.6: always on, 243 of 243 (computeBreakeven where moneyShown, else the shard's breakeven_utilization_pct); the ring is FORM-CATALOG candidate 4 awaiting his click, the share at 30 in `--terra-text` on BentoMetric until then" },
+  { seat: 3, card: "08 clears", figure: "the needed share of a day, the sweep `--terra`", state: "LIT", condition: "8.6: always on, 243 of 243 (computeBreakeven where moneyShown, else the shard's breakeven_utilization_pct); the Ring since 2026-09-20 (candidate 4, clicked by his gold standard), the share at 30 in `--terra-text` inside the sweep" },
 ] as const satisfies readonly LoudSeat[];
 
 /* The .celltop terracotta top-edge hover motif is DELETED (rulebook v1 section 37,

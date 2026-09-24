@@ -133,7 +133,7 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 |---|---|---|---|---|
 | 1 | 00 take | the take-home, 40 | LIT | 8.6: the page's only rung-40 figure where moneyShown (London's curated entry and trusted-local cells: 16 of the 31 walked routes, 87 of the slate's 3,670, under trust:revenue-filled 2026-09-19); off it the answer is withheld with a stated line (the AnswerCard's data-state no-answer) and the page carries two |
 | 2 | 04 open | the total to open, 30; its biggest bar `--terra` | LIT | 8.6: LIT where held or baseline; UNLIT where withheld (a cell without setup_costs on the 90 trades on the 80,000 default; the BentoMetric's data-withheld-line), and the page carries two; the accent never moves to 05's net or to 03's longest wait |
-| 3 | 08 clears | the needed share of a day, the sweep `--terra` | LIT | 8.6: always on, 243 of 243 (computeBreakeven where moneyShown, else the shard's breakeven_utilization_pct); the ring is FORM-CATALOG candidate 4 awaiting his click, the share at 30 in `--terra-text` on BentoMetric until then |
+| 3 | 08 clears | the needed share of a day, the sweep `--terra` | LIT | 8.6: always on, 243 of 243 (computeBreakeven where moneyShown, else the shard's breakeven_utilization_pct); the Ring since 2026-09-20 (candidate 4, clicked by his gold standard), the share at 30 in `--terra-text` inside the sweep |
 
 ### industry (turn-two.tsx (cell), turn-one.tsx (cell), exit.tsx (cell), opening.tsx, turn-one.tsx, turn-three.tsx, turn-two.tsx): 14 sections, 14 on archetypes
 
