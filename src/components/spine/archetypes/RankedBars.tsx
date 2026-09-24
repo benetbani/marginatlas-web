@@ -413,6 +413,25 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
      list stays for the phone. The Box is flex-col for this form too, so the
      table can take a stretched card's height as the wide form already does. */
   const drawMidTable = drawBars;
+  /* UNDER FOUR, THE SAME ROWS FROM sm (the goal's B3, 2026-09-24). A card of
+     two or three members drew the phone list at every width, and the phone
+     list's rows are `[1fr auto]` justify-between, which PART 5 licenses only
+     on a card of 420px or under: the country's money card, two trades left
+     after four are withheld, stood 693 wide at 1280 and 720 at 768 with each
+     name 469 to 529 px from its figure (four LABEL GAP rows and two
+     justify-between rows, measured). So from sm the short card draws the row
+     grid the six-or-more table draws (PART 5's three columns, the track
+     absorbing the leftover width, the ceiling named over it), and the phone
+     list stays for the phone. Never columns: three bars across a wide card
+     are the sparse form rule 20 already steers away from. AND NO TRACK: the
+     third column stands empty (PART 5: "a bar, a placement line, or
+     nothing"), because a track against the world's best owes a placement
+     line beside it (PART 9 rule 5) and no builder composes one for these
+     rows; drawn without it, the country's money card read a PLACEMENT row
+     at 1280 and 768 (measured). The ceiling's name goes with the track, and
+     the rows keep the phone list's own heights instead of stretching into
+     the card, so the form is the phone list's content on PART 5's columns. */
+  const drawShort = sorted.length < 4 && !residual;
   const ranked = [...sorted].reverse();
   /* THE WIDEST FIGURE THE CARD ACTUALLY DRAWS, counted once, in characters:
      every row contributes the length of its own formatted figure, because
@@ -432,7 +451,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
      query container, so no card that stood before this change is touched. */
   const headTwoUp = Boolean(focal?.words);
   return (
-    <Box id={id} className={`${drawWide || drawMidTable ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
+    <Box id={id} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
       <div className={headTwoUp ? "gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start" : undefined}>
       {/* THE FOCAL, when the card holds one: the only element on this card
@@ -506,8 +525,8 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           })}
         </ol>
       </div> : null}
-      {drawWide || drawMidTable ? (
-        <div className={drawWide ? "mt-3 hidden flex-1 flex-col sm:flex" : "mt-3 hidden flex-1 flex-col sm:flex lg:hidden"} data-idea="I2">
+      {drawWide || drawMidTable || drawShort ? (
+        <div className={drawWide || drawShort ? "mt-3 hidden flex-1 flex-col sm:flex" : "mt-3 hidden flex-1 flex-col sm:flex lg:hidden"} data-idea="I2">
           {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS (task 13
               alignment fix): same `GEO`, so its first two cells begin exactly
               where every name and every figure below them begins. Its own two
@@ -539,10 +558,10 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                   the bars form prints beside its hairline, in the same words, so
                   the two forms say the ceiling identically. Right aligned,
                   because the ceiling is the right end of every track below. */}
-              <span className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{topLabel ?? COPY.margin.worldBest} {fmt(top)}</span>
+              {drawShort ? null : <span className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{topLabel ?? COPY.margin.worldBest} {fmt(top)}</span>}
             </div>
           </div>
-          <div className="grid flex-1 divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length} style={{ gridAutoRows: "minmax(2.5rem,1fr)" }}>
+          <div className={`grid ${drawShort ? "" : "flex-1 "}divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]`} data-expect-rows={sorted.length} style={{ gridAutoRows: drawShort ? "minmax(2.5rem,auto)" : "minmax(2.5rem,1fr)" }}>
             {ranked.map((r) => {
               const isLeader = r.key === leader.key;
               const figPill = isLeader && marks;
@@ -577,9 +596,11 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
                   {/* THE TRACK DECLARES ITS CEILING (task 13 fix wave): the
                       attribute is what the harness iterates, and its value is
                       whether the far end is the world's or this set's own. */}
-                  <span aria-hidden="true" data-track={ceiling} className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]">
-                    <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(Math.max(0, Math.min(1, r.value / top)) * 100).toFixed(1)}%`, ...barFill(isLeader, marks) }} />
-                  </span>
+                  {drawShort ? null : (
+                    <span aria-hidden="true" data-track={ceiling} className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]">
+                      <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(Math.max(0, Math.min(1, r.value / top)) * 100).toFixed(1)}%`, ...barFill(isLeader, marks) }} />
+                    </span>
+                  )}
                 </>
               );
               const cls = `${ROW} items-center`;
@@ -596,7 +617,7 @@ export function RankedBars({ id, kicker, icon, tagged, basis, withheldLine, rows
           </div>
         </div>
       ) : null}
-      <div className={drawBars || drawWide ? "mt-3 sm:hidden" : "mt-3"}>
+      <div className={drawBars || drawWide || drawShort ? "mt-3 sm:hidden" : "mt-3"}>
         <div className="flex items-baseline justify-between pb-2">
           <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.name}</span>
           <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
