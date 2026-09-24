@@ -177,7 +177,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
   const mixRounded: Record<string, number> = mixLive.length ? roundToTotal(mixLive.map((s) => ({ key: s.key, value: s.share })), 100) : {};
 
   return (
-    <Box id={id} data-archetype="income-breakdown" data-withheld={withheld ? "1" : undefined} className={withheld ? "[container-type:inline-size]" : undefined}>
+    <Box id={id} data-archetype="income-breakdown" data-withheld={withheld ? "1" : undefined} className="[container-type:inline-size]">
       {/* THE SAMPLE MARK IS UNCONDITIONAL (his ruling, 2026-09-08): every
           figure this card ever prints is the same modelled split for every
           country (income_rows.ts explains why), so there is no "measured"
@@ -203,15 +203,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               keeps its height and the reader is told why there is no bar. */}
           <p data-withheld-line={id} className="mt-4 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)] [@container(min-width:560px)]:mt-0">{withheld}</p>
         </div>
-      ) : (
-        <>
-          <div data-answer="1">
-            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
-            <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
-          </div>
-          <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
-        </>
-      )}
+      ) : null}
       {withheld ? (
         <>
           {mixLive.length >= 2 ? (
@@ -245,6 +237,26 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
         </>
       ) : (
         <>
+          {/* THE DRAWN CARD TWO ABREAST FROM 640 OF IT (the goal's B12, first
+              row, 2026-09-24): the trade page stacks this band until lg, so at
+              768 the card is 680 inside, and the two-column legend put each
+              right-hand figure about 200 from a short name and, on an odd count,
+              left its last cell empty over the foot: the page filter's `#split`
+              hole on 78 of the 138 London trades. From 640 the net, its basis
+              and the bar stand in the left half and the legend in the right, one
+              column, so no figure stands far from its name and no cell is empty.
+              The foot and the plus join the left half under the bar (the
+              legend spans both rows), because a seven-line legend stands about
+              50 taller than the net and its bar and the foot below both halves
+              left that as air under the bar. The 1280 and 1024 seats are about
+              580 inside and keep the column; the phone keeps it too. */}
+          <div className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
+          <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
+          <div data-answer="1">
+            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
+            <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
+          </div>
+          <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p>
           {/* THE BAR: one track, full width, cost segments in the builder's
               descending order, net pinned last. `data-expect-rows` on the track
               plus `data-row` on every child is the site's existing rows-cut
@@ -274,6 +286,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               style={{ width: `${netPct}%`, background: "var(--c-ink)" }}
             />
           </div>
+          </div>
           {/* THE LEGEND: every drawn segment, no more, each swatch painted with
               the exact tone+hatch its bar segment carries so the two can never
               visually disagree. TWO COLUMNS BY THE CARD'S OWN WIDTH, ONE UNDER
@@ -284,7 +297,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               on a phone is clause 31's fault; a tablet's 344 half gets one
               column the same way, which is also why the trade page stacks the
               band until lg. */}
-          <div className="mt-3 [container-type:inline-size]">
+          <div className="mt-3 [container-type:inline-size] [@container(min-width:640px)]:col-start-2 [@container(min-width:640px)]:row-span-2 [@container(min-width:640px)]:row-start-1 [@container(min-width:640px)]:mt-0">
           {/* One column is the phone row form (PART 5: below 420 the row is
               [1fr auto] and the gap is the card's own inner width), so the
               rows take hairlines between them the way every phone row does,
@@ -306,8 +319,13 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
             </span>
           </div>
           </div>
-          {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
-          {detail}
+          {foot || detail ? (
+            <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-2">
+              {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+              {detail}
+            </div>
+          ) : null}
+          </div>
         </>
       )}
     </Box>
