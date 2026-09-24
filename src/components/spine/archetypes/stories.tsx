@@ -354,7 +354,7 @@ export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell 
 
 /** THE TRADE'S PERMITS AND ITS COST TO OPEN (MODEL.md 8.6 `03 permits | 04 open`; plan step 33's second dispatch, 2026-09-18), keyed cell:<handle>:permits and cell:<handle>:open off the seeds the sheet loads, drawn by the page's own cards (cell/turn-one.tsx) at the widths their seats take at 1280: the permits at the narrow 416 of the 2-3, the cost to open at its wide 624. The permits on three shards: the exemplar's four licences, a three-licence shard and a five-licence one. The cost to open in its three states across two kinds: held on ranked-bars (London, nine lines), baseline and withheld on bento-metric (California restaurants keyed, London shoe repair on the default). */
 export const cellPermitsKey = (c: CellHeroInstance) => `cell:${c.key}:permits`;
-const permitsWhy = (p: NonNullable<ReturnType<typeof buildPermits>>) => `trade block 03: ${p.cells.length} licences over their typical days${p.withheld ? ", one withheld" : ""}, the longest wait first at the head rung (the focal cell is a candidate awaiting his click)`;
+const permitsWhy = (p: NonNullable<ReturnType<typeof buildPermits>>) => `trade block 03: ${p.cells.length} licences over their typical days${p.withheld ? ", one withheld" : ""}, the longest wait at 30 under its name over the others' waits at 16 (the worked figure since 2026-09-24), the fee bands behind the plus`;
 export function pickCellPermitsInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "permits")).map((c) => ({ c, p: buildPermits(c.seed?.meta?.industry_id) })).filter((x) => x.p).map(({ c, p }) => ({ iso2: cellPermitsKey(c), why: permitsWhy(p!) }));
 }
@@ -1144,7 +1144,7 @@ function KvSeatStory({ id, icon, kicker, sample, cells, withheld, basis, foot }:
 
 /** THE TRADE'S SURVIVAL, `09 lasts` (MODEL.md 8.6; plan step 33's fourth dispatch, 2026-09-18), keyed cell:<handle>:lasts off the seeds the sheet loads and drawn by the page's own card (cell/turn-two.tsx LastsCard) at the 520 the card takes in its 1-1 band at 1280: the exemplar's shard (restaurants, 80 / 60 / 50, held) and London shoe repair's (a modelled triple), year five first at the head rung (the focal cell is candidate 1 awaiting his click). */
 export const cellLastsKey = (c: CellHeroInstance) => `cell:${c.key}:lasts`;
-const lastsWhy = (l: NonNullable<ReturnType<typeof buildLasts>>) => `trade block 09: still trading after five, one and three years (${l.values.yr5} / ${l.values.yr1} / ${l.values.yr3}) off the shard, year five first at the head rung (the focal cell is a candidate awaiting his click), no slope, no myth sentence`;
+const lastsWhy = (l: NonNullable<ReturnType<typeof buildLasts>>) => `trade block 09: still trading after five, one and three years (${l.values.yr5} / ${l.values.yr1} / ${l.values.yr3}) off the shard, year five at 30 over years one and three at 16 (the worked figure since 2026-09-24), no slope, no myth sentence`;
 export function pickCellLastsInstances(cell: CellHeroInstance[]): Instance[] {
   return cell.filter((c) => cellServes(c.key, "lasts")).map((c) => ({ c, l: buildLasts(c.seed?.meta?.industry_id) })).filter((x) => x.l).map(({ c, l }) => ({ iso2: cellLastsKey(c), why: lastsWhy(l!) }));
 }
@@ -1206,6 +1206,21 @@ export function WorkedFigureStories({ cell = [] }: { cell?: CellHeroInstance[] }
         if (!t) return null;
         return <Story kind="worked-figure" key={cellCustomersKey(c)} iso2={cellCustomersKey(c)} why={customersWhy(t)}><div style={{ maxWidth: 520 }}><CustomersCard id={`customers-cell-${c.key}`} customers={t} /></div></Story>;
       })}
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "lasts")).map(([h, i]) => {
+        const l = buildLasts(i.id, "world");
+        if (!l) return null;
+        return <Story kind="worked-figure" key={industryKey(h, "lasts")} iso2={industryKey(h, "lasts")} why={industryLastsWhy(l)}><div style={{ maxWidth: 347 }}><LastsCard id={`lasts-industry-${h}`} lasts={l} /></div></Story>;
+      })}
+      {cell.filter((c) => cellServes(c.key, "permits")).map((c) => {
+        const p = buildPermits(c.seed?.meta?.industry_id);
+        if (!p) return null;
+        return <Story kind="worked-figure" key={cellPermitsKey(c)} iso2={cellPermitsKey(c)} why={permitsWhy(p)}><div style={{ maxWidth: 347 }}><PermitsCard id={`permits-cell-${c.key}`} permits={p} /></div></Story>;
+      })}
+      {cell.filter((c) => cellServes(c.key, "lasts")).map((c) => {
+        const l = buildLasts(c.seed?.meta?.industry_id);
+        if (!l) return null;
+        return <Story kind="worked-figure" key={cellLastsKey(c)} iso2={cellLastsKey(c)} why={lastsWhy(l)}><div style={{ maxWidth: 520 }}><LastsCard id={`lasts-cell-${c.key}`} lasts={l} /></div></Story>;
+      })}
     </div>
   );
 }
@@ -1255,25 +1270,10 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
         if (!m) return null;
         return <Story kind="kv-grid" key={industryKey(h, "field")} iso2={industryKey(h, "field")} why={industryFieldWhy(m)}><div style={{ maxWidth: 347 }}><FieldCard id={`field-industry-${h}`} market={m} /></div></Story>;
       })}
-      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "lasts")).map(([h, i]) => {
-        const l = buildLasts(i.id, "world");
-        if (!l) return null;
-        return <Story kind="kv-grid" key={industryKey(h, "lasts")} iso2={industryKey(h, "lasts")} why={industryLastsWhy(l)}><div style={{ maxWidth: 347 }}><LastsCard id={`lasts-industry-${h}`} lasts={l} /></div></Story>;
-      })}
       {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => {
         const o = buildIndustryOpen(i.id);
         if (!o) return null;
         return <Story kind="kv-grid" key={industryKey(h, "open")} iso2={industryKey(h, "open")} why={industryOpenWhy(o)}><div style={{ maxWidth: 347 }}><IndustryOpenCard id={`open-industry-${h}`} open={o} /></div></Story>;
-      })}
-      {cell.filter((c) => cellServes(c.key, "permits")).map((c) => {
-        const p = buildPermits(c.seed?.meta?.industry_id);
-        if (!p) return null;
-        return <Story kind="kv-grid" key={cellPermitsKey(c)} iso2={cellPermitsKey(c)} why={permitsWhy(p)}><div style={{ maxWidth: 347 }}><PermitsCard id={`permits-cell-${c.key}`} permits={p} /></div></Story>;
-      })}
-      {cell.filter((c) => cellServes(c.key, "lasts")).map((c) => {
-        const l = buildLasts(c.seed?.meta?.industry_id);
-        if (!l) return null;
-        return <Story kind="kv-grid" key={cellLastsKey(c)} iso2={cellLastsKey(c)} why={lastsWhy(l)}><div style={{ maxWidth: 520 }}><LastsCard id={`lasts-cell-${c.key}`} lasts={l} /></div></Story>;
       })}
       {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
       {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => {
@@ -2364,14 +2364,14 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero), ...pickIndustryCloseInstances(industryPlaces), ...pickHoodCloseInstances()],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero), ...pickIndustryLastsInstances(), ...pickIndustryOpenInstances(), ...pickIndustryFieldInstances()],
+    "kv-grid": [...pickKvGridInstances(), ...pickIndustryOpenInstances(), ...pickIndustryFieldInstances()],
     "donut": [...pickCellMixInstances(cellHero), ...pickIndustryChannelsInstances()],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
     "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
-    "worked-figure": pickCellCustomersInstances(cellHero),
+    "worked-figure": [...pickCellCustomersInstances(cellHero), ...pickIndustryLastsInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero)],
     "stepper": pickStepperInstances(),
     "month-bars": pickCellSwingInstances(cellHero),
     "share-bar": pickCellDaypartsInstances(cellHero),

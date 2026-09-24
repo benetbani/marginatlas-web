@@ -29,17 +29,16 @@
  * `#breakeven` card (the ClearanceRing off the seed's two rounded covers,
  * money-chapter.tsx) retired into this card.
  *
- * `09 lasts`, HOW MANY LAST: survival as a series on KvGrid, three cells,
- * still trading after five, one and three years, off the shard's triple
- * (lasts_rows.ts, 243 of 243), quiet, ink, no slope and no myth sentence
- * (R5). THE SEAT IS HELD BY KvGrid AS CATALOGUED: the composition's year
- * five at 30 in ink is the fact card with a focal, candidate 1 of
- * FORM-CATALOG's CANDIDATES AWAITING HIS CLICK, so every cell draws at the
- * head rung, nothing at 30, and the FOCAL finding on this card stands until
- * he clicks, exactly as the permits' and the country's and the city's seats
- * stand; the builder puts year five first, the silhouette the focal would
- * take (KvGrid's COMPLETE ROWS gives an odd group's first cell the width).
- * The census reads this Box as KvGrid. The old `#myth` card (the London
+ * `09 lasts`, HOW MANY LAST: still trading after five, one and three years,
+ * off the shard's triple (lasts_rows.ts, 243 of 243), quiet, ink, no slope
+ * and no myth sentence (R5). ON THE WORKED FIGURE SINCE 2026-09-24 (the
+ * goal's B1; FORM-CATALOG VERSION 6 names this card among the three that
+ * move onto it): year five at 30 in ink, the composition's own answer, and
+ * years one and three under the hairline at 16, a catalogued archetype and
+ * not candidate 1, so no click is owed. The industry page's `01 lasts` is
+ * this card at the world altitude and moves with it. Until that day the
+ * seat was a KvGrid at the head rung with nothing at 30, the FOCAL finding
+ * on both pages. The old `#myth` card (the London
  * file's triple as a slope with "9 in 10 fail" struck across it, both
  * banned by R5) retired into this card.
  *
@@ -81,7 +80,7 @@
  */
 import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
-import { KvGrid } from "@/components/spine/archetypes/KvGrid";
+import { WorkedFigure } from "@/components/spine/archetypes/WorkedFigure";
 import { Donut } from "@/components/spine/archetypes/Donut";
 import { Ring } from "@/components/spine/archetypes/Ring";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
@@ -133,11 +132,25 @@ export function ClearsCard({ id = "clears", clears }: { id?: string; clears: Cle
 
 export function LastsCard({ id = "lasts", lasts }: { id?: string; lasts: LastsData | null }) {
   if (!lasts) return null;
+  const W = COPY.tradeLasts;
   return (
-    <Box id={id}>
+    /* The level lends this card its partner's height (the ring beside it on
+       the trade page, the benchmark on the industry page): the figure takes
+       the slack above and below it, the basis and the foot on the floor, so
+       the foot is never a blank (the permits card's composition). */
+    <Box id={id} className="flex h-full flex-col">
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
-      <Rail icon="first-year" kicker={COPY.tradeLasts.kicker} sample />
-      <KvGrid cells={lasts.cells} />
+      <Rail icon="first-year" kicker={W.kicker} sample />
+      <div className="flex flex-1 flex-col justify-center">
+        <WorkedFigure
+          label={W.cells.yr5}
+          figure={`${lasts.values.yr5}%`}
+          working={[
+            { figure: `${lasts.values.yr1}%`, words: W.working.yr1 },
+            { figure: `${lasts.values.yr3}%`, words: W.working.yr3 },
+          ]}
+        />
+      </div>
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.basis}</p>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.foot}</p>
     </Box>

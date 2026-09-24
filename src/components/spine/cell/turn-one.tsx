@@ -5,16 +5,19 @@
  * stories on the sheet, so the card a story is judged on is the card the
  * page draws (the renderers-agree rule, plan step 25).
  *
- * `03 permits`, THE SEAT IS HELD BY KvGrid AS CATALOGUED: each licence a
- * label over its typical days, two columns, no group heading, on the
- * archetype's "row" reserve because a licence's name is the shard's and runs
- * to twelve words. The composition's longest wait at 30 in ink is the fact
- * card with a focal, candidate 1 of FORM-CATALOG's CANDIDATES AWAITING HIS
- * CLICK, and a form not in the catalogue is a candidate awaiting his click;
- * so every cell draws at the head rung, nothing at 30, and the FOCAL finding
- * on this card stands until he clicks, exactly as the country's and the
- * city's seats stand (permits_rows.ts puts the longest wait first, the
- * silhouette the focal would take). The census reads this Box as KvGrid.
+ * `03 permits`, ON THE WORKED FIGURE SINCE 2026-09-24 (the goal's B1; QUEUE
+ * cell:fact-cards-onto-worked-figure; FORM-CATALOG VERSION 6 names this
+ * card among the three that move onto it). The longest wait at 30 in ink
+ * under its licence's own name, the one to plan for (MODEL 8.6 row 03's own
+ * words), and the other licences' waits under the hairline at 16, in the
+ * builder's order: a catalogued archetype, not candidate 1, so no click is
+ * owed. The fee bands leave the waits for the plus, a category per licence
+ * and never a figure (his "a figure carries the fields the file holds around
+ * it behind his plus", 2026-09-20), after the foot (DISTANCES 5.2). Two
+ * trades print two licences (pipeline transport, watch and jewellery repair,
+ * counted 2026-09-24 over 243): one wait cannot be a working row, so those
+ * keep the grid of the waits and their FOCAL row stands with this reason.
+ * Until that day the seat was a KvGrid at the head rung with nothing at 30.
  *
  * `04 open`, ONE CARD, THREE STATES BY DATA (open_rows.ts decides which):
  * held on RankedBars, vertical bars of the bill's five biggest lines with
@@ -80,6 +83,7 @@
 import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
+import { WorkedFigure, WORKING_MIN } from "@/components/spine/archetypes/WorkedFigure";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { IncomeBreakdown } from "@/components/spine/archetypes/IncomeBreakdown";
@@ -96,20 +100,38 @@ import type { TradePeersData } from "@/lib/spine/trade_peer_rows";
 
 export function PermitsCard({ id = "permits", permits }: { id?: string; permits: PermitsData | null }) {
   if (!permits) return null;
+  const [lead, ...rest] = permits.cells;
+  const worked = !!lead && rest.length >= WORKING_MIN;
+  const fees = permits.cells.filter((c) => c.note).map((c) => ({ label: c.label, value: String(c.note) }));
   return (
     /* The spare height the level lends this card (the bill beside it stands
        431 to its 358 at 1280, measured 2026-09-20) splits above and below the
-       grid, the basis and the foot on the floor (BentoMetric's rule, the
-       ring card's composition), so the foot is never a blank of 73. */
-    <Box id={id} className="flex h-full flex-col">
+       figure, the basis, the foot and the plus on the floor (BentoMetric's
+       rule, the ring card's composition), so the foot is never a blank. */
+    <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
       <Rail icon="licence-specific" kicker={COPY.tradePermits.kicker} sample />
       <div className="flex flex-1 flex-col justify-center">
-        <KvGrid cells={permits.cells} labelReserve="row" />
+        {worked ? (
+          <WorkedFigure list label={lead.label} figure={String(lead.value)} working={rest.map((c) => ({ figure: String(c.value), words: c.label }))} />
+        ) : (
+          <KvGrid cells={permits.cells} labelReserve="row" />
+        )}
       </div>
-      {permits.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.withheld}</p> : null}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.basis}</p>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p>
+      {/* THE FLOOR ON THE FIGURE'S COLUMNS FROM 560 OF THE CARD (2026-09-24):
+          the basis and the foot keep to the left column (half the page at
+          most, clause 51) and the plus stands in the right one, under the
+          waits it belongs to; under 560 the three stack in reading order.
+          At 768 the level stacks and the card stands 720 wide, and a plus
+          under the basis left a 312 by 120 blank beside them (the filter). */}
+      <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
+        <div>
+          {permits.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.withheld}</p> : null}
+          <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.basis}</p>
+          <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p>
+        </div>
+        {worked && fees.length >= 2 ? <div className="[@container(min-width:560px)]:pl-6"><DetailPanel name={`${id}-fees`} summary={COPY.tradePermits.feeSummary} rows={fees} /></div> : null}
+      </div>
     </Box>
   );
 }

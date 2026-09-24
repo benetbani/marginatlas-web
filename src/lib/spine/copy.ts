@@ -1292,6 +1292,11 @@ export const COPY = {
     kicker: "The permits you need",
     /** The fee band under each wait, a category label (2026-09-20 late evening, clause 60): the shard's `typical_cost_band`. */
     feeBand: { low: "Low fee", medium: "Medium fee", high: "High fee" },
+    /** The plus under the waits (2026-09-24, goal B1): each licence's fee band, a category and never a figure, behind a click so the waits read first. */
+    feeSummary: "The fees, by licence",
+    /* The card's shape says the longest wait leads (the figure at 30 over the
+       rest at 16); a sentence saying so pushed the card to 240 characters of
+       prose against the art-direction budget of 220 (E1, 2026-09-24). */
     basis: "Typical for the trade anywhere, not measured for this city.",
     foot: "The waits are modelled.",
     withheldOne: "One licence has no wait on file and is not shown.",
@@ -1609,6 +1614,8 @@ export const COPY = {
   tradeLasts: {
     kicker: "How many last",
     cells: { yr5: "After five years", yr1: "After one year", yr3: "After three years" },
+    /** The two readings under year five on the worked-figure card (2026-09-24, goal B1), in the working row's lower case, as the customers card writes "a visit". */
+    working: { yr1: "after one year", yr3: "after three years" },
     basis: "Typical for the trade anywhere, not measured for this city.",
     foot: "Of every 100 that open, the share still trading; modelled.",
   },

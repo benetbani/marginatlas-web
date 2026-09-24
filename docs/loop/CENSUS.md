@@ -117,13 +117,13 @@ Loud today: 1 of 3, as `LOUD_SEATS` in hood-view.tsx declares (a LIT seat is unl
 | #2 | DaypartsCell |  | ShareBar |  |
 | market | MarketBand |  | BentoBand |  |
 | take | Masthead |  | AnswerCard |  |
-| permits | PermitsCard | The permits you need | KvGrid |  |
+| permits | PermitsCard | The permits you need | WorkedFigure |  |
 | open | OpenCard | The cost to open | RankedBars or BentoMetric |  |
 | split | SplitCard | Net profit margin | IncomeBreakdown |  |
 | team | TeamCard | What staff cost | TiersTable |  |
 | peers | PeersCard | Against other places | CompareTable |  |
 | clears | ClearsCard | When it clears costs | Ring |  |
-| lasts | LastsCard | How many last | KvGrid |  |
+| lasts | LastsCard | How many last | WorkedFigure |  |
 | watch | WatchSeat | What closes one | BlockedSeat |  |
 | mix | MixCard | Where sales come from | Donut |  |
 
@@ -139,7 +139,7 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 
 | section id | component | kicker | archetype | builder |
 |---|---|---|---|---|
-| lasts | LastsCard | How many last | KvGrid |  |
+| lasts | LastsCard | How many last | WorkedFigure |  |
 | split | SplitCard | Net profit margin | IncomeBreakdown |  |
 | channels | ChannelsCard (MixCard) | Where sales come from | Donut |  |
 | close | CloseCard |  | Terminus |  |
