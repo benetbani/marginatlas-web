@@ -890,6 +890,19 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
      (clause 52). Found 2026-09-23 night, when the calendar stopped printing a
      placeholder. */
   const earningsOnLiving = !calendar && !demandDrawn && !!living && !!runway && !!earnings;
+  /* THE SEASON CARD'S PARTNER WHERE THE NEIGHBOURHOODS DO NOT DRAW (the goal's
+     B13, 2026-09-24). Since A4b the neighbourhoods seat draws nothing on the
+     209 cities on the placeholder scheme, and `15 season` stood alone at two
+     thirds at the page's foot: clause 54's LEVEL UNFILLED on Manchester,
+     Birmingham, Frankfurt and Abidjan. There the spend card leaves the living
+     level for the season's side: what a resident spends a year beside who the
+     footfall is, residents or visitors, two cards about the people who buy,
+     one figure and one drawing, directly under what living here costs; the
+     living level keeps its two. Where the pager draws (the 43 curated cities,
+     London among them) nothing moves. */
+  const hoodsDrawn = !!hoods?.cards;
+  const demandBesideSeason = !hoodsDrawn && !!season && demandDrawn;
+  const seasonAtFoot = demandBesideSeason ? null : season;
 
   return (
     <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
@@ -983,7 +996,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           | 07` at the kit's three thirds: the living cells, the ring, the
           strip; two visuals (clause 53). Measured on the fresh render, the
           numbers in the commit. */}
-      {living && runway && demandDrawn ? (
+      {living && runway && demandDrawn && !demandBesideSeason ? (
         <Band split="1-1-1">
           <Living living={living} />
           <Runway runway={runway} />
@@ -999,6 +1012,14 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
         <Band split="1-1">
           <Living living={living} />
           <Runway runway={runway} />
+        </Band>
+      ) : null}
+      {/* `08 demand | 15 season`, 1-1, only where the neighbourhoods draw
+          nothing (`demandBesideSeason` above, the goal's B13). */}
+      {demandBesideSeason ? (
+        <Band split="1-1">
+          <Demand demand={demand} />
+          <Season season={season} />
         </Band>
       ) : null}
       {/* `20 crew | 21 texture`, 1-1 (2026-09-23 evening, on his "continue with
@@ -1206,10 +1227,10 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           cards keep a row of four at the wide side and the pair is never
           two slivers at 768. MEASURED after it was seated, the numbers in
           the dispatch's report. */}
-      {hoods || season ? (
+      {hoodsDrawn || seasonAtFoot ? (
         <Band split="2-1" stack="lg">
           <Neighbourhoods hoods={hoods} />
-          <Season season={season} />
+          <Season season={seasonAtFoot} />
         </Band>
       ) : null}
       {/* `16 close`, FULL WIDTH (8.3, R1): the exit carries no break (PART 1). */}
