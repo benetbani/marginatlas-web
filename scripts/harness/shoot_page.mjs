@@ -73,6 +73,14 @@ for (const w of widths) {
     return { card: r(card), band: band ? r(band) : null, id: card.id || null, cls: String(card.className || "").slice(0, 120) };
   }, needle);
   if (!found) { console.log(w, "NOT FOUND"); await ctx.close(); continue; }
+  /* A LIVE PAGE'S CHROME (2026-09-24): a URL carries the site's sticky header
+     (`header.sticky`, top 0), and a capture that scrolls the card to the top
+     of the window shoots the header over the card's opener (measured on the
+     live trade page: the licence card's kicker covered at 1280, its lead's
+     label at 375). A render has no chrome. So on a URL every `header` whose
+     position is sticky or fixed is hidden before the shutter, in place, and
+     nothing inside the page's cards is touched. */
+  if (/^https?:/i.test(target)) await p.evaluate(() => { for (const el of document.querySelectorAll("header")) { const pos = getComputedStyle(el).position; if (pos === "sticky" || pos === "fixed") el.style.visibility = "hidden"; } });
   const tall = Math.ceil(Math.max(found.card.height, found.band ? found.band.height : 0) + PAD * 4);
   await p.setViewportSize({ width: w, height: Math.min(6000, Math.max(900, tall)) });
   const shoot = async (rect, file) => {
