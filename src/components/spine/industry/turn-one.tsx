@@ -81,8 +81,45 @@ import type { AtlasIconId } from "@/components/brand/icons";
 
 export { SplitCard } from "@/components/spine/cell/turn-one";
 
+/**
+ * THE FORM THE CARD DRAWS (the goal's B6, 2026-09-24): the figure card where
+ * the slowest wait is on file and no cell is withheld (243 of 243 today), the
+ * grid otherwise. The model laws read FOCAL on this card on every industry
+ * page: three cells at the head rung and none at 30. The trade page's own
+ * `04 open` answers the same question with one figure and its companions, so
+ * this card does too: the slowest licence's wait is the figure a reader plans
+ * the opening by, at 30 under its label, and the count and the months to break
+ * even stand under the hairline as its companions; the plus keeps the
+ * licences by name. The cells' order and figures are the builder's, unchanged.
+ */
+export type IndustryOpenForm = "metric" | "kv-grid";
+export function industryOpenForm(open: IndustryOpenData): IndustryOpenForm {
+  return open.withheld.length === 0 && open.cells.some((c) => c.key === "slowest") ? "metric" : "kv-grid";
+}
+
 export function OpenCard({ id = "open", open }: { id?: string; open: IndustryOpenData | null }) {
   if (!open) return null;
+  if (industryOpenForm(open) === "metric") {
+    const slow = open.cells.find((c) => c.key === "slowest")!;
+    const C = COPY.industryOpen.companions;
+    const companions = open.cells
+      .filter((c) => c.key !== "slowest")
+      .map((c) => ({ figure: String(c.value), words: c.key === "licences" ? C.licences : C.breakEven }));
+    return (
+      <BentoMetric
+        id={id}
+        icon="licence-specific"
+        kicker={COPY.industryOpen.kicker}
+        sample
+        figure={String(slow.value)}
+        label={COPY.industryOpen.cells.slowest}
+        second={companions.length > 0 ? companions : undefined}
+        basis={open.basis}
+        foot={open.foot}
+        detail={open.detail ? <DetailPanel name={`detail-${id}`} summary={open.detail.summary} rows={open.detail.rows} withheldLine={open.detail.withheldLine} /> : undefined}
+      />
+    );
+  }
   return (
     <Box id={id}>
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}

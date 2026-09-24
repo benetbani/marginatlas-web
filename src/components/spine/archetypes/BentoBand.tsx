@@ -475,7 +475,7 @@ export function BentoMetric({
   if (figure == null && withheld == null) throw new Error(`BentoMetric "${kicker}": neither a figure nor a withheld line. A figure withheld without a stated line is a silent drop (PART 5); pass one of the two.`);
   if (figure != null && withheld != null) throw new Error(`BentoMetric "${kicker}": a figure and a withheld line together. A line beside a printed figure apologises for nothing; pass one of the two.`);
   return (
-    <Box id={id} data-lean={lean ? "1" : undefined} className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric">
+    <Box id={id} data-lean={lean ? "1" : undefined} className={`flex h-full flex-col${detail ? " [container-type:inline-size]" : ""}`} data-archetype="bento-metric" data-bento-kind="metric">
       <div className="mb-2 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
@@ -502,9 +502,27 @@ export function BentoMetric({
           )}
         </div>
       ) : null}
-      {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
-      {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
-      {detail ?? null}
+      {/* THE PLUS BESIDE THE BASIS FROM 560 OF THE CARD (the goal's B6,
+          2026-09-24), the permits card's floor rule: a card with a plus that
+          stands wide (the industry page's `04 open` when its level stacks at a
+          tablet's width, 720) put the basis, the foot and the plus down its
+          left side over an empty right half, a 312 by 138 blank the page filter
+          read on every industry page at 768. Under 560, and on every card
+          without a plus, the floor stacks as it did. */}
+      {detail ? (
+        <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
+          <div>
+            {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
+            {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+          </div>
+          <div>{detail}</div>
+        </div>
+      ) : (
+        <>
+          {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
+          {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+        </>
+      )}
     </Box>
   );
 }

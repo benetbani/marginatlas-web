@@ -1965,6 +1965,8 @@ export const COPY = {
   industryOpen: {
     kicker: "Opening the doors",
     cells: { licences: "Licences to hold", slowest: "The slowest licence", breakEven: "To break even" },
+    /* The companions under the slowest wait (the goal's B6): the figure then its words, read aloud ("4 licences to hold", "6 months to break even"). */
+    companions: { licences: "licences to hold", breakEven: "to break even" },
     basis: "Typical for the trade anywhere.",
     foot: "The count, the waits and the months are modelled.",
     detail: {

@@ -145,7 +145,7 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 | close | CloseCard |  | Terminus |  |
 | take | Masthead |  | AnswerCard |  |
 | benchmark | BenchmarkCard | The trades next door | BentoMetric or RankedBars |  |
-| open | OpenCard | Opening the doors | KvGrid |  |
+| open | OpenCard | Opening the doors | BentoMetric or KvGrid |  |
 | pays | PaysBand |  | BentoBand |  |
 | #2 | PaysShareCell |  | Ring |  |
 | #3 | PaysFixedCell |  | SegmentBar |  |

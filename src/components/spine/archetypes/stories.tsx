@@ -85,7 +85,7 @@ import { ALL_INDUSTRIES } from "@/lib/taxonomy";
 import { industryHeroFacts, INDUSTRY_INSTANCES, industryServes, type IndustryPlacesInstance } from "@/lib/spine/industry_hero_facts";
 import { buildBenchmark } from "@/lib/spine/benchmark_rows";
 import { Masthead as IndustryMasthead, BenchmarkCard } from "@/components/spine/industry/opening";
-import { OpenCard as IndustryOpenCard, paysCells } from "@/components/spine/industry/turn-one";
+import { OpenCard as IndustryOpenCard, industryOpenForm, paysCells } from "@/components/spine/industry/turn-one";
 import { PlacesTable, FormatsCard, ChannelsCard } from "@/components/spine/industry/turn-two";
 import { KnowCard, FieldCard, CloseCard as IndustryCloseCard } from "@/components/spine/industry/turn-three";
 import { buildIndustrySplit } from "@/lib/spine/split_rows";
@@ -1167,8 +1167,8 @@ export function pickIndustryLastsInstances(): Instance[] {
 }
 /** THE INDUSTRY'S LICENCE CARD, `04 open` (MODEL.md 8.7; plan step 34's second dispatch, 2026-09-18), keyed industry:<handle>:open, built by id off the shard through the trade's permits and open builders (industry_open_rows.ts) and drawn by the page's own card (industry/turn-one.tsx OpenCard) at the 347 the narrow seat of its 2-1 band takes at 1280: the exemplar (restaurants, four licences, the liquor licence's 75 days the slowest, six months to break even, the plus with four rows), a five-licence shard (plumbers, the plus at its fullest) and the two-licence shard (watch repair, the plus at its two-row floor). */
 const industryOpenWhy = (o: NonNullable<ReturnType<typeof buildIndustryOpen>>) => `industry block 04: ${o.cells.length} cells at the head rung (${o.cells.map((c) => `${c.label.toLowerCase()} ${c.value}`).join(", ")}), the plus with ${o.detail?.rows.length ?? 0} licences by name${o.detail?.withheldLine ? " and one withheld" : ""}${o.withheld.length ? `, ${o.withheld.length} cell(s) withheld with a line` : ""}`;
-export function pickIndustryOpenInstances(): Instance[] {
-  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => ({ h, o: buildIndustryOpen(i.id) })).filter((x) => x.o).map(({ h, o }) => ({ iso2: industryKey(h, "open"), why: industryOpenWhy(o!) }));
+export function pickIndustryOpenInstances(form: "metric" | "kv-grid" = "kv-grid"): Instance[] {
+  return Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => ({ h, o: buildIndustryOpen(i.id) })).filter((x) => x.o && industryOpenForm(x.o) === form).map(({ h, o }) => ({ iso2: industryKey(h, "open"), why: industryOpenWhy(o!) }));
 }
 /** WHAT THE REVENUE IS MADE OF, `08 channels` (MODEL.md 8.7; plan step 34's third dispatch, 2026-09-19), keyed industry:<handle>:channels, THE TRADE PAGE'S OWN CARD (cell/turn-two.tsx MixCard) off the same builder at the world altitude (mix_rows.ts, the basis without the city clause), built by id off the shard and drawn at the 347 the narrow seat of its 2-1 band takes at 1280: the exemplar's three parts (restaurants, dine-in leading at 60) and a four-part mix (cabinet making). THE SEAT AWAITING HIS CLICK ON CANDIDATE 5, the donut, its mockup owed to the review sheet: every cell at the head rung, no 30, no accent, so the page's third accent (8.7's, on the largest line's figure) waits with the form and the page carries two loud moments until then. */
 const industryMixWhy = (m: NonNullable<ReturnType<typeof buildMix>>) => `industry block 08: ${mixWhy(m).replace(/^trade block 11: /, "")}, the basis for the trade anywhere; the seat of the page's third accent, unlit until the donut`;
@@ -1284,7 +1284,7 @@ export function KvGridStories({ instances = pickKvGridInstances(), cell = [] }: 
       })}
       {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => {
         const o = buildIndustryOpen(i.id);
-        if (!o) return null;
+        if (!o || industryOpenForm(o) !== "kv-grid") return null;
         return <Story kind="kv-grid" key={industryKey(h, "open")} iso2={industryKey(h, "open")} why={industryOpenWhy(o)}><div style={{ maxWidth: 347 }}><IndustryOpenCard id={`open-industry-${h}`} open={o} /></div></Story>;
       })}
       {/* The cell and industry keys are drawn above; the kind's list carries them too (pickAllInstances), so they are skipped here as the answer card skips its own. */}
@@ -1908,6 +1908,12 @@ export function BentoMetricStories({ instances = pickBentoMetricInstances(), cel
   return (
     <div data-stories="bento-metric">
       <IndustryBenchmarkStories kind="bento-metric" />
+      {/* The industry page's `04 open` on its figure form (the goal's B6), at the 347 of its 2-1 seat. */}
+      {Object.entries(INDUSTRY_INSTANCES).filter(([h]) => industryServes(h, "open")).map(([h, i]) => {
+        const o = buildIndustryOpen(i.id);
+        if (!o || industryOpenForm(o) !== "metric") return null;
+        return <Story kind="bento-metric" key={industryKey(h, "open")} iso2={industryKey(h, "open")} why={industryOpenWhy(o)}><div style={{ maxWidth: 347 }}><IndustryOpenCard id={`open-industry-${h}`} open={o} /></div></Story>;
+      })}
       {cell.filter((c) => cellServes(c.key, "open")).map((c) => {
         const o = buildOpen(c.seed);
         if (!o || openFormOf(o) !== "bento-metric") return null;
@@ -2376,12 +2382,12 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "note-list": pickNoteListInstances(),
     "terminus": [...pickTerminusInstances(), ...cityCloses.map((c) => ({ iso2: `${c.slug}:close`, why: c.why })), ...pickCellCloseInstances(cellHero), ...pickIndustryCloseInstances(industryPlaces), ...pickHoodCloseInstances()],
     "pay-bars": pickPayBarsInstances(),
-    "kv-grid": [...pickKvGridInstances(), ...pickIndustryOpenInstances(), ...pickIndustryFieldInstances()],
+    "kv-grid": [...pickKvGridInstances(), ...pickIndustryOpenInstances("kv-grid"), ...pickIndustryFieldInstances()],
     "donut": [...pickCellMixInstances(cellHero), ...pickIndustryChannelsInstances()],
     "detail-panel": pickDetailPanelInstances(),
     "income-breakdown": [...pickIncomeBreakdownInstances(), ...pickCellSplitInstances(cellHero), ...pickIndustrySplitInstances()],
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
-    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
+    "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric"), ...pickIndustryOpenInstances("metric")],
     "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
     "worked-figure": [...pickCellCustomersInstances(cellHero), ...pickIndustryLastsInstances(), ...pickCellOpenInstances(cellHero, "worked-figure"), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero)],
     "stepper": pickStepperInstances(),
