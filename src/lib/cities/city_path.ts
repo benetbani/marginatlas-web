@@ -3,33 +3,28 @@
  *
  * THE CITY UNDER ITS COUNTRY'S PATH (QUEUE launch:gb-london-404; the goal's
  * D4, 2026-09-24). A reader on `/gb/london/barbershops` who trims the last part
- * of the address lands on `/gb/london`, and the region route answered "Not
- * found" there (fetched on production 2026-09-22): London is a city, not a
- * region of the United Kingdom, and the city's page lives at `/cities/london`.
- * The slug rule says add, never rename, so the two-segment path REDIRECTS to
- * the city's page, permanently, wherever the country holds a city of that
- * slug. No existing URL moves: a region of the same name still wins, because
- * the region route asks this only after its own lookup fails.
+ * of the address lands on `/gb/london`, which answered "Not found" (fetched on
+ * production 2026-09-22 and again after the first fix, which put the redirect in
+ * the region route: the edge middleware's not-held rewrite pinned a 404 before
+ * the route ran). London is a city, not a region of the United Kingdom, and its
+ * page lives at `/cities/london`. The slug rule says add, never rename, so the
+ * two-segment path REDIRECTS to the city's page, permanently, wherever the
+ * country holds a city of that slug; the middleware asks this before its
+ * rewrite, and the region route asks it after its own region lookup, so a
+ * region of the same name always wins.
  *
- * Pure over the city list the city route itself reads
- * (`data/cities/city_list_v1.json`), so the gate
- * scripts/verify_city_path_redirect.ts can hold every city to its page.
+ * Reads the generated slug table (src/lib/routing/city_paths_generated.ts,
+ * written by scripts/gen_city_paths.ts from data/cities/city_list_v1.json), a
+ * few kilobytes, because the middleware runs at the edge on every request and
+ * the list itself is 216 KB of fields it never reads.
  */
-import cityListJson from "../../../data/cities/city_list_v1.json";
+import { CITY_SLUGS_BY_COUNTRY } from "@/lib/routing/city_paths_generated";
 
-type ListedCity = { slug: string; iso2: string };
-
-const CITIES = (cityListJson as { cities: ListedCity[] }).cities;
-const BY_SLUG = new Map(CITIES.map((c) => [String(c.slug).toLowerCase(), c]));
+const SLUGS = new Map<string, Set<string>>(Object.entries(CITY_SLUGS_BY_COUNTRY).map(([cc, slugs]) => [cc, new Set(slugs)]));
 
 /** `/cities/<slug>` where the country (ISO 3166 alpha-2, any case) holds a listed city of that slug; null otherwise. */
 export function cityPathFor(iso2: string, geo: string): string | null {
-  const city = BY_SLUG.get(String(geo ?? "").trim().toLowerCase());
-  if (!city) return null;
-  return String(city.iso2).toUpperCase() === String(iso2 ?? "").trim().toUpperCase() ? `/cities/${city.slug}` : null;
-}
-
-/** Every listed city with its country, for the gate. */
-export function listedCities(): ReadonlyArray<ListedCity> {
-  return CITIES;
+  const cc = String(iso2 ?? "").trim().toLowerCase();
+  const slug = String(geo ?? "").trim().toLowerCase();
+  return slug && SLUGS.get(cc)?.has(slug) ? `/cities/${slug}` : null;
 }

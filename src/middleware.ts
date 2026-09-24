@@ -27,6 +27,7 @@ import { redirectFor } from "@/lib/taxonomy/retired";
 import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
+import { cityPathFor } from "@/lib/cities/city_path";
 
 /**
  * TRAINING harvesters, blocked at the door with a 451.
@@ -266,6 +267,23 @@ function isPlaceWeDoNotHold(path: string): boolean {
   return !regionSlugsFor(countrySlug, countryName).has(geoSlug);
 }
 
+/**
+ * `/cities/<slug>` when a two-segment path names a city its country holds and
+ * not one of that country's regions (the region page wins) nor a static child
+ * of the country route; null otherwise (QUEUE launch:gb-london-404; the goal's
+ * D4, 2026-09-24). Expects the canonical path, as isPlaceWeDoNotHold does.
+ */
+function cityPathUnderCountry(path: string): string | null {
+  const segments = path.split("/").filter(Boolean);
+  if (segments.length !== 2) return null;
+  const [countrySlug, geoSlug] = segments;
+  if (!/^[a-z]{2}$/.test(countrySlug)) return null;
+  const countryName = COUNTRY_NAME_BY_SLUG.get(countrySlug);
+  if (countryName === undefined || COUNTRY_STATIC_CHILDREN.has(geoSlug)) return null;
+  if (regionSlugsFor(countrySlug, countryName).has(geoSlug)) return null;
+  return cityPathFor(countrySlug, geoSlug);
+}
+
 function clientIp(req: NextRequest): string {
   // Vercel/Cloudflare set these; fallback to req.ip if available
   return (
@@ -413,6 +431,16 @@ export function middleware(req: NextRequest) {
     // before the streaming shell can flush a 200. Returned here, above the
     // edge-cache header below, so a wrong URL is never held at the CDN for six
     // hours; the moment coverage lands, the next request resolves normally.
+    // 3a. A city this country holds, under the country's path: `/gb/london`
+    // sends the reader to `/cities/london`, permanently, instead of meeting the
+    // not-held 404 below (the goal's D4, 2026-09-24; the region route's own
+    // redirect never ran, because this rewrite pinned the status first).
+    const cityHref = cityPathUnderCountry(path);
+    if (cityHref) {
+      const url = req.nextUrl.clone();
+      url.pathname = cityHref;
+      return NextResponse.redirect(url, 308);
+    }
     if (isPlaceWeDoNotHold(path)) {
       return NextResponse.rewrite(req.nextUrl, {
         status: 404,

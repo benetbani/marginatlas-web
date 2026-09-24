@@ -1339,7 +1339,9 @@
       "reads": [
         "data/cities/city_list_v1.json",
         "src/app/[country]/[geo]/page.tsx",
-        "src/lib/cities/city_path.ts"
+        "src/lib/cities/city_path.ts",
+        "src/lib/routing/city_paths_generated.ts",
+        "src/middleware.ts"
       ],
       "claims": []
     },
