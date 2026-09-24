@@ -427,9 +427,8 @@
      .atlas-card-soft   Secondary card within a card section.
      .atlas-card-band   Lighter touch for cards sitting on a solid white band.
 
-     Hover behavior: a 2px vermillion top edge fades in, the card lifts 1px,
-     shadow deepens warmly. Editorial gesture — magazine page being picked
-     up. No 4-sided border-color flash, no glass-blur, no ring.
+     Hover behavior: the card lifts 1px and its shadow deepens. No red edge
+     (removed 2026-09-25, the founder's word), no 4-sided colour flash, no ring.
      ========================================================================== */
 
   /* Founder direction 2026-05-26 tightened radius to 6px ("editorial, not
@@ -509,41 +508,19 @@
     }
   }
 
-  /* Vermillion top edge that appears on hover — like dog-earing a page.
-     Inset matches the 16px corner radius so the edge never clips the curve. */
-  .atlas-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 1rem;
-    right: 1rem;
-    height: 2px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgb(var(--primary) / 0) 10%,
-      rgb(var(--primary) / 0.85) 50%,
-      rgb(var(--primary) / 0) 90%,
-      transparent 100%
-    );
-    border-radius: 1px;
-    opacity: 0;
-    transition: opacity 220ms ease-out;
-    pointer-events: none;
-  }
-
-  /* Hover state — applies to <a>, <button>, and elements explicitly marked. */
+  /* THE RED EDGE ON HOVER IS GONE (founder, 2026-09-25, on the home page: "the
+     cards have that strange red over bar when I hover over them, and that's
+     just wrong"). A 2px vermillion line faded in across the top of every linked
+     card; it was the site's only hover that drew a new mark, and a card that
+     grows a red rule when the pointer crosses it reads as an error state. The
+     hover is the lift alone now: the hairline firms, the shadow deepens, the
+     card rises a pixel. */
   a.atlas-card:hover,
   button.atlas-card:hover,
   .atlas-card.is-hover {
     border-color: var(--atlas-hairline-strong);
     box-shadow: var(--atlas-elev-2);
     transform: translateY(-1px);
-  }
-  a.atlas-card:hover::before,
-  button.atlas-card:hover::before,
-  .atlas-card.is-hover::before {
-    opacity: 1;
   }
 
   /* Soft variant — for "secondary content within a primary card section",
@@ -560,7 +537,7 @@
 
   /* Band variant — for cards sitting on a solid white section background.
      Slightly lighter shadow because the surrounding contrast does the
-     seating work. Still uses the top-edge hover accent. */
+     seating work. The same lift on hover, no edge. */
   .atlas-card-band {
     position: relative;
     background: #ffffff;

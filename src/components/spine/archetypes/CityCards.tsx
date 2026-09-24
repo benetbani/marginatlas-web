@@ -139,6 +139,10 @@ const PER_PAGE = 4;
    number here fails the build rather than the reader. */
 const PHOTO_VEIL = 0.55;
 const PHOTO_WASH = 0.45;
+/* The grey form's veil (`DuotonePhoto`'s `tint={false}`): no name is printed over
+   that picture, so it answers to no contrast floor, only to keeping the grey soft
+   beside the cards' ink. */
+const PHOTO_VEIL_GREY = 0.3;
 
 /* ONE GRAMMAR FOR THE WHOLE COLUMN, decided by the set and not by each figure
    (PART 5: every figure in a column shares one font, one size, one weight and
@@ -241,26 +245,54 @@ export function CityCards({
 }
 
 /** THE PICTURE AND THE TWO LAYERS OVER IT, drawn once and used by both forms so
- *  a tall card and a wide row can never drift into two different recipes. */
-function Photo({ card }: { card: CityCard }) {
+ *  a tall card and a wide row can never drift into two different recipes.
+ *
+ *  EXPORTED 2026-09-25 so the home page's post cards draw this recipe and not a
+ *  copy of it (the founder: the blog blocks need a placeholder image). `crop`
+ *  zooms into one region of the picture, so cards that share the single
+ *  placeholder show different parts of it rather than one image six times. The
+ *  parent must be `relative` and `overflow-hidden`.
+ *
+ *  `tint={false}` drops the terracotta wash and keeps a lighter veil: the
+ *  picture in grey. For a grid of several photographs with no name printed over
+ *  them (the post cards), where six washed pictures made a wall of the accent
+ *  (the founder's reference of 2026-09-20: one warm card per grid). */
+export function DuotonePhoto({
+  src,
+  placeholder,
+  crop,
+  tint = true,
+}: {
+  src: string;
+  placeholder: boolean;
+  crop?: { x: number; y: number; zoom: number };
+  tint?: boolean;
+}) {
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={card.photo.src}
+        src={src}
         alt=""
         loading="lazy"
         aria-hidden
-        data-photo={card.photo.placeholder ? "placeholder" : "own"}
+        data-photo={placeholder ? "placeholder" : "own"}
         className="absolute inset-0 h-full w-full object-cover"
         /* DESATURATED, so the wash above it reads as a duotone rather than as a
            filter left on by accident. See the stack note. */
-        style={{ filter: "grayscale(1)" }}
+        style={{
+          filter: "grayscale(1)",
+          ...(crop ? { transform: `scale(${crop.zoom})`, transformOrigin: `${crop.x}% ${crop.y}%` } : {}),
+        }}
       />
-      <span aria-hidden data-veil className="absolute inset-0 bg-white" style={{ opacity: PHOTO_VEIL }} />
-      <span aria-hidden data-tint className="absolute inset-0" style={{ background: "var(--terra)", opacity: PHOTO_WASH }} />
+      <span aria-hidden data-veil className="absolute inset-0 bg-white" style={{ opacity: tint ? PHOTO_VEIL : PHOTO_VEIL_GREY }} />
+      {tint ? <span aria-hidden data-tint className="absolute inset-0" style={{ background: "var(--terra)", opacity: PHOTO_WASH }} /> : null}
     </>
   );
+}
+
+function Photo({ card }: { card: CityCard }) {
+  return <DuotonePhoto src={card.photo.src} placeholder={card.photo.placeholder} />;
 }
 
 function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v: number) => string }) {

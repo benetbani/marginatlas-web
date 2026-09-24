@@ -1,15 +1,12 @@
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
-import { WorldMapSection } from "@/components/home/WorldMapSection";
 import { AtlasLedger } from "@/components/home/AtlasLedger";
 import { CatalogPlates } from "@/components/home/CatalogPlates";
 import { ExampleTiles } from "@/components/home/ExampleTiles";
 import { Specimen } from "@/components/home/Specimen";
 import { loadSpecimen } from "@/lib/home/specimen";
 import { loadExampleTiles } from "@/lib/home/example_tiles";
-import { StateComparison } from "@/components/home/StateComparison";
-import { loadStateComparisons } from "@/lib/home/state_comparison";
 import { AudienceBand } from "@/components/home/AudienceBand";
 import { UpgradeTeaser } from "@/components/home/UpgradeTeaser";
 import { HomeNewsletter } from "@/components/home/HomeNewsletter";
@@ -17,7 +14,8 @@ import { WebSite } from "@/components/StructuredData";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, GRADIENT_PALETTE, type BlogPost } from "@/lib/blog";
 import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
-import { BlogCover } from "@/components/blog/BlogCover";
+import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
+import { CITY_CARD_PLACEHOLDER_IMAGE } from "@/lib/spine/city_cards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 // Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
 // Mirrors src/components/home/home2-view.tsx, which holds the rebuilt body.
@@ -209,59 +207,40 @@ const BLOG_FALLBACK: BlogPost[] = [
   },
 ];
 
-/**
- * Spread the derived covers across the rail, so six cards do not show three
- * colours.
- *
- * MEASURED OFF THE RENDERED PAGE, not guessed. With the covers finally drawing,
- * the six live posts painted only THREE distinct gradients: three cards were
- * byte-identical cocoa-700 to cocoa-300, two more were identical ink-700 to
- * ink-500, and NEITHER terracotta ramp appeared at all. The brand's own colour
- * was absent from the brand's own homepage while three tan plates sat in a row.
- *
- * The cause is not a bad palette, it is `h % 6` over six slugs. A hash spreads
- * evenly only in the large; on a rail of exactly six, collisions are the normal
- * case rather than bad luck. That is invisible on /blog, where seventy posts
- * average it out, and unmissable here.
- *
- * So the hash still chooses first, and only a REPEAT is moved: a post whose
- * cover is already used in this rail takes the next unused ramp instead. Most
- * posts therefore keep the colour they carry everywhere else, which is what
- * BlogCover's contract promises, and the rail is guaranteed six distinct covers
- * whenever the palette holds at least six.
- *
- * Deliberately local to this rail. /blog keeps pure per-slug hashing, because
- * across seventy cards a repeat is invisible and stability is worth more there.
- */
-function spreadCovers(posts: BlogPost[]): BlogPost[] {
-  const used = new Set<string>();
-  const pool = posts
-    .map((p) => (p.image.kind === "gradient" ? p.image.gradient : null))
-    .filter((g): g is string => g !== null);
-  const palette = Array.from(new Set([...pool, ...GRADIENT_PALETTE]));
-
-  return posts.map((post) => {
-    if (post.image.kind !== "gradient") return post; // a real cover is never moved
-    if (!used.has(post.image.gradient)) {
-      used.add(post.image.gradient);
-      return post;
-    }
-    const free = palette.find((g) => !used.has(g));
-    if (!free) return post; // more cards than ramps: leave it rather than invent one
-    used.add(free);
-    return { ...post, image: { ...post.image, gradient: free } };
-  });
-}
-
+/* THE COVER SPREAD IS GONE (2026-09-25). `spreadCovers` moved repeated
+   gradients along this rail so six cards showed six colours; the rail no
+   longer draws a gradient (see POST_PHOTO_CROPS below), so there was nothing
+   left for it to spread. /blog keeps its per-slug gradients untouched. */
 function loadBlogRail(): { posts: BlogPost[]; sourced: boolean } {
   try {
     const live = getAllPosts();
-    if (live.length >= 6) return { posts: spreadCovers(live.slice(0, 6)), sourced: true };
+    if (live.length >= 6) return { posts: live.slice(0, 6), sourced: true };
   } catch {
     // fall through to placeholder
   }
-  return { posts: spreadCovers(BLOG_FALLBACK), sourced: false };
+  return { posts: BLOG_FALLBACK, sourced: false };
 }
+
+/* THE POST CARD'S PHOTOGRAPH, A PLACEHOLDER BY THE FOUNDER'S WORD (2026-09-25:
+   "there is no placeholder image at the blocks, which is wrong. We like put some
+   placeholder so we can just know it for now"). The repository holds one
+   photograph, the stand-in the city cards and the country hero already use
+   (`CITY_CARD_PLACEHOLDER_IMAGE`), drawn in grey (the city cards' recipe
+   without its terracotta wash: six washed pictures made a wall of the accent)
+   so it reads as a stand-in and never as a picture of the post's subject. Six
+   cards share it, so each zooms into a different part of it (the boats, the
+   town, the flowers, the ridge, the harbour, the islands): six views, one
+   file, one download. A post that carries its own cover (`image.kind ===
+   "url"`) shows that instead. The origins are percentages of the picture, not
+   layout values. */
+const POST_PHOTO_CROPS = [
+  { x: 18, y: 84, zoom: 2.4 },
+  { x: 86, y: 66, zoom: 2.2 },
+  { x: 98, y: 30, zoom: 2.6 },
+  { x: 70, y: 20, zoom: 1.8 },
+  { x: 62, y: 96, zoom: 2.6 },
+  { x: 4, y: 64, zoom: 2.8 },
+] as const;
 
 function formatPostDate(iso: string): string {
   try {
@@ -321,10 +300,6 @@ export default async function HomePage() {
   // flavor entry is dropped, and the section self-omits below four cards, so the
   // homepage never shows a thin or fabricated panel.
   const neighborhoodCards = loadNeighborhoodCards();
-  // Like-for-like US-states revenue comparison, resolved live and trusted-local
-  // only (synthetic / extrapolated / national reads self-omit). Empty when
-  // nothing resolves, which drops the section rather than showing fabricated rows.
-  const stateComparisons = await loadStateComparisons();
   const exampleTiles = await loadExampleTiles();
   const specimen = await loadSpecimen();
   /* THE MASTHEAD, PUT BACK. The founder, 2026-08-09: "the page at this moment
@@ -463,8 +438,8 @@ export default async function HomePage() {
              hero copy. Tightened top spacing so it reads as one
              continuous section, not two stacked. relative z-30 lifts the
              form (and its ComboField dropdown, which extends below the
-             card) above the following world-map band so the open list
-             stays fully visible and scrollable. */}
+             card) above the band that follows so the open list stays
+             fully visible and scrollable. */}
           {/* The id is read by HeaderSearch. While this card is on screen the
               header keeps its search hidden, because two search affordances on
               one screen is what got the header one switched off here in the
@@ -532,23 +507,17 @@ export default async function HomePage() {
         <CatalogPlates />
       </ToneBand>
 
-      {/* Plan v30 hotfix v3 - world map moved to the absolute top of
-          the page, directly under the hero + navigator form. Founder
-          wants it "just below the actual table at the start". */}
-      <ToneBand band="world-map" tone="home-city-picker">
-        <div id="pick-a-country" className="scroll-mt-20">
-          <WorldMapSection />
-        </div>
-      </ToneBand>
-
-      {/* Like-for-like US-states comparison (homepage v2 Pass A): the SAME trade
-          across four large US states, real revenue resolved live and trusted-local
-          only. Uses only the clean-resolving US slugs; a trade with fewer than
-          three resolving states is dropped and the section self-omits when nothing
-          resolves, so every number is real or the row is absent. */}
-      <ToneBand band="state-comparison" tone="home-featured">
-        <StateComparison comparisons={stateComparisons} />
-      </ToneBand>
+      {/* THE MAP AND THE STATE TABLE ARE ARCHIVED (founder, 2026-09-25).
+          The map: "for now, you can archive the map because it's just bad",
+          which carries out his ruling of 2026-09-04 (the map is removed from the
+          home page; QUEUE home:map, CUT) that the page never received.
+          `WorldMapSection` stays on disk, unmounted, in case it returns
+          elsewhere; nothing linked to its `#pick-a-country` anchor.
+          The state table ("What a typical business brings in, state by state"):
+          "catastrophically bad", software firms in California its worst row. It
+          compared four US states on a page whose rebuilt pages are the UK's, in
+          a trade no one sees from the street. `StateComparison` and its loader
+          stay on disk, unmounted. */}
 
       {/* Browse-by-sector retired: the SectorMasterMenu grid (a grid of
          /sectors/[id] tiles) was removed when sector pages were retired. A
@@ -707,33 +676,42 @@ export default async function HomePage() {
                             ten already carry.
                 hover       the manual border-colour swap -> the canonical
                             a.atlas-card:hover, which this element gets for free
-                            by being an <a>: hairline-strong, elev-2, a 1px lift
-                            and the vermillion top edge.
+                            by being an <a>: hairline-strong, elev-2 and a 1px
+                            lift (the red top edge it also drew went 2026-09-25).
 
               `group` stays, the h3 hover hangs off it. `transition-colors` goes
               from the anchor only: the h3 carries its own. */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-            {blogPosts.map((post) => (
+            {blogPosts.map((post, i) => (
               <a
                 key={post.slug}
                 href={`/blog/${post.slug}`}
                 className="atlas-card group flex flex-col overflow-hidden"
               >
-                {/* THE COVER, which this rail was building and then throwing
-                    away. placeholderImage() a hundred lines up derives a
-                    gradient and an initial for every fallback post, and
-                    src/lib/blog.ts states the rule on the type itself: "Cover
-                    image. Required by site convention." Every card here had
-                    one and none of them rendered it, so six posts arrived as a
-                    date, a title and a paragraph.
-
-                    It is the same BlogCover /blog uses, now shared rather than
-                    copied, so a post looks like itself in both places.
-
-                    Padding moved off the anchor and onto this inner div. The
-                    cover has to run edge to edge, and `overflow-hidden` is
-                    what keeps it inside the 16px corner. */}
-                <BlogCover image={post.image} slim />
+                {/* THE PHOTOGRAPH, edge to edge above the text: the post's own
+                    cover where it carries one, the placeholder otherwise (see
+                    POST_PHOTO_CROPS). It replaces the 6px gradient bar the rail
+                    drew until 2026-09-25, which the founder read as no image at
+                    all. `overflow-hidden` on the anchor keeps it inside the
+                    16px corner; its own keeps the zoomed crop inside the frame. */}
+                <div className="relative aspect-[16/9] overflow-hidden" data-post-photo>
+                  {post.image.kind === "url" ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={post.image.src}
+                      alt={post.image.alt}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <DuotonePhoto
+                      src={CITY_CARD_PLACEHOLDER_IMAGE}
+                      placeholder
+                      tint={false}
+                      crop={POST_PHOTO_CROPS[i % POST_PHOTO_CROPS.length]}
+                    />
+                  )}
+                </div>
                 <div className="flex flex-1 flex-col p-5 md:p-6">
                   <div className="text-xs text-ink-500 tabular-nums">
                     {formatPostDate(post.date)}
