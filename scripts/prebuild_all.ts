@@ -131,6 +131,16 @@ const GATES: Gate[] = [
      (scripts/harness/page_laws_baseline.json), seeded at the first honest
      measurement of each page and falling only. A browser gate, one more. */
   { name: "harness-page-laws", script: "scripts/harness/check_page_laws.mjs", args: ["--list"], browser: true },
+  /* HIS CORRECTION OF 2026-09-24, EVENING: "bullshit subtitles, bullshit
+     mechanical sentences", "the disclaimers are so disgusting", "subtitle,
+     undertitle, disclaimer, body text all competing". Every card on the harness
+     pages, at 1280 and 375: no method word (modelled, withheld, on file, not
+     gathered...), one supporting line under the figure, a title of four words,
+     a line of twelve and no semicolon. A per-page ratchet seeded at 548 reds
+     over nine pages and two widths, falling to zero as the pages are rewritten
+     to design/loop/build/goal-2026-09-24/COPY-STYLE.md. Reads the renders
+     pages-fresh wrote. */
+  { name: "harness-copy-plain", script: "scripts/harness/check_copy_plain.mjs", args: ["--list"], browser: true },
   { name: "harness-laws", script: "scripts/harness/check_model_laws.mjs", args: ["--list", "--ratchet"], browser: true },
   /* The walk over the links the rendered pages offer (2026-09-22, QUEUE ui:links-and-the-dead-link-walk): the shape of every internal href against src/app, the hygiene, and the floor of ways out per page type. No browser: it reads the same renders `pages-fresh` writes. `dead-links` beside it reads SOURCE literals and cannot see a link composed from data, which is every link on a spine page. */
   { name: "harness-links", script: "scripts/harness/check_page_links.mjs", args: ["--list"] },

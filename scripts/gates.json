@@ -84,6 +84,21 @@
       "claims": []
     },
     {
+      "name": "harness-copy-plain",
+      "script": "scripts/harness/check_copy_plain.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": true,
+      "asserts": "check_copy_plain: a card talks plainly (his correction of 2026-09-24, evening; design/loop/build/goal-2026-09-24/COPY-STYLE.md).",
+      "reads": [
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scripts/harness/copy_plain_baseline.json",
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-laws",
       "script": "scripts/harness/check_model_laws.mjs",
       "args": [
