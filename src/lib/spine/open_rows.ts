@@ -41,6 +41,31 @@
  *    and turn one goes quiet on those pages, the page carrying two loud
  *    moments (8.6 says so plainly).
  *
+ * THE BASELINE STATE NAMES THE KINDS OF SHOP (2026-09-24, the goal's B10).
+ * One centred total stood in a card the licences beside it made 362 tall:
+ * on London barbershops a blank 476 by 132 at 1280 and 1440 (the
+ * gathered-emptiness gate, E6) and the level's no-visual row. Every shard
+ * holds its formats with `subtypes.list.*.capital_delta_pct`, each format's
+ * opening cost against the trade's typical (243 of 243, four or five a trade,
+ * modelled), and the formats card's own header gives the only reason it never
+ * printed them: "its base, the cost to open, is withheld on 90 of the 243" (a
+ * figure worked from the default would stand on a fill). In THIS state the
+ * base is the keyed table's figure, not the fill, so each format's cost is the
+ * typical times one plus its difference, printed as an absolute (clause 15),
+ * the format at nought the lead under its own name (the typical IS that shop),
+ * the others the working, dearest first (`formats`). Under two other formats,
+ * or with no format at nought, the card keeps the one total.
+ *
+ * THE WITHHELD STATE EARNS IT BACK INSTEAD (the same day, the goal's A4): it
+ * printed "Not gathered yet: what it costs to open here." on 44 of the 138
+ * live trades in London (counted on the renders of every one) and on the same
+ * trades in every other British city, the NEVER list's card on a UK page.
+ * What the card holds there is the foot's two figures, the months to break
+ * even and the years to pay back, both the trade's, on all 243 shards; so
+ * the card leads with them under its own opener ("Earning it back") and
+ * says nothing about a cost it does not hold (`recover`). A cell whose trade
+ * holds no shard (a retired trade on the `default` cell) keeps the old state.
+ *
  * In every state the foot is two companion figures under a hairline at 16,
  * months to break even and years to pay back, from the trade's shard
  * (`first_year.ramp_to_breakeven_months`, `first_year.payback_years`, 243 of
@@ -54,12 +79,19 @@
  */
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import type { Companion } from "@/components/spine/archetypes/BentoBand";
-import { industryFigure } from "@/lib/facts/industry_shard";
+import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 
 export const OPEN_METRICS = { ramp: "first_year.ramp_to_breakeven_months", payback: "first_year.payback_years" } as const;
+/** The formats' names and their opening cost against the trade's typical, in percent (the shard's own fields). */
+export const OPEN_FORMAT_METRICS = { name: "subtypes.list.*.name", delta: "subtypes.list.*.capital_delta_pct" } as const;
+/** The working's floor: WorkedFigure draws its working from two items (its WORKING_MIN); fewer and the card keeps the one total. */
+export const OPEN_FORMATS_WORKING_MIN = 2;
+
+/** One kind of shop and what it costs to open: the typical times one plus its difference, rounded to the dollar. */
+export type OpenFormat = { key: string; name: string; delta: number; value: number; figure: string };
 
 export type OpenState = "held" | "baseline" | "withheld";
 
@@ -94,6 +126,10 @@ export type OpenData = {
   accent: boolean;
   /** True when the printed focal is modelled (baseline); the held total is the cell's own. */
   sample: boolean;
+  /** BASELINE ONLY: the format at nought first (the typical under its own name), then the others dearest first; empty elsewhere and where fewer than OPEN_FORMATS_WORKING_MIN others can be worked. */
+  formats: OpenFormat[];
+  /** WITHHELD ONLY: the card leads with the foot's two figures under "Earning it back" and prints no stated line; false where the trade holds no shard (the old withheld state stands). */
+  recover: boolean;
   confidence: "measured" | "modeled";
 };
 
@@ -118,6 +154,31 @@ export function buildOpenFoot(industryId: string | null | undefined): Companion[
   const pay = industryFigure(industryId, OPEN_METRICS.payback);
   if (pay && pay.value > 0) out.push({ figure: yearsFigure(pay.value), words: COPY.tradeOpen.payBack });
   return out;
+}
+
+/**
+ * The kinds of shop off the trade's shard, worked from the typical total the
+ * baseline state prints: the format whose difference is nought leads (the first
+ * in the file's order where two are), the rest follow dearest first. Empty where
+ * the shard holds no format at nought or fewer than two others with a figure.
+ */
+export function buildOpenFormats(industryId: string | null | undefined, typical: number): OpenFormat[] {
+  if (!industryId || !(typical > 0)) return [];
+  const names = industryRows(industryId, OPEN_FORMAT_METRICS.name);
+  const deltas = new Map(industryRows(industryId, OPEN_FORMAT_METRICS.delta).map((f) => [f.rowKey, f.value] as const));
+  const all: OpenFormat[] = [];
+  for (const n of names) {
+    const delta = deltas.get(n.rowKey);
+    const name = typeof n.value === "string" ? n.value.trim() : "";
+    if (!name || !isNum(delta)) continue;
+    const value = Math.round(typical * (1 + delta / 100));
+    if (!(value > 0)) continue;
+    all.push({ key: String(n.rowKey), name, delta, value, figure: usd(value) });
+  }
+  const lead = all.find((f) => f.delta === 0);
+  if (!lead) return [];
+  const rest = all.filter((f) => f !== lead).sort((a, b) => b.value - a.value);
+  return rest.length >= OPEN_FORMATS_WORKING_MIN ? [lead, ...rest] : [];
 }
 
 export function buildOpen(seed: any): OpenData | null {
@@ -148,6 +209,7 @@ export function buildOpen(seed: any): OpenData | null {
     return {
       state: "held", rows: drawn, tail, tailLine, lines, biggestKey: lines[0].key, figure: usd(total), value: total, withheld: null,
       basis, foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: false, confidence: "measured",
+      formats: [], recover: false,
     };
   }
 
@@ -155,15 +217,26 @@ export function buildOpen(seed: any): OpenData | null {
   const keyed = startupCapitalArchetypeKeyed(slug);
   if (keyed != null) {
     /* One sentence for the three figures where the companions print (all of them the trade's, modelled); the total's own sentence and the withheld foot where they do not. */
+    const formats = buildOpenFormats(industryId, keyed);
     return {
       state: "baseline", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: usd(keyed), value: keyed, withheld: null,
-      basis: foot.length > 0 ? COPY.tradeOpen.basisBaseline : COPY.tradeOpen.basisBaselineAlone,
+      basis: formats.length > 0 ? (foot.length > 0 ? COPY.tradeOpen.basisFormats : COPY.tradeOpen.basisFormatsAlone) : foot.length > 0 ? COPY.tradeOpen.basisBaseline : COPY.tradeOpen.basisBaselineAlone,
       foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: true, confidence: "modeled",
+      formats, recover: false,
+    };
+  }
+  /* EARNING IT BACK where the foot holds both figures (see the header); the old stated line only where the trade holds no shard. */
+  if (foot.length === 2) {
+    return {
+      state: "withheld", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: null, value: null, withheld: null,
+      basis: COPY.tradeOpen.basisRecover, foot, footLine: null, accent: false, sample: true, confidence: "modeled",
+      formats: [], recover: true,
     };
   }
   return {
     state: "withheld", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: null, value: null, withheld: COPY.tradeOpen.withheld,
     basis: null, foot, footLine, accent: false, sample: false, confidence: "modeled",
+    formats: [], recover: false,
   };
 }
 

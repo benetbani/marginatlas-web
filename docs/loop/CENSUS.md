@@ -118,7 +118,7 @@ Loud today: 1 of 3, as `LOUD_SEATS` in hood-view.tsx declares (a LIT seat is unl
 | market | MarketBand |  | BentoBand |  |
 | take | Masthead |  | AnswerCard |  |
 | permits | PermitsCard | The permits you need | WorkedFigure |  |
-| open | OpenCard | The cost to open | RankedBars or BentoMetric |  |
+| open | OpenCard | The cost to open | WorkedFigure or BentoMetric or RankedBars |  |
 | split | SplitCard | Net profit margin | IncomeBreakdown |  |
 | team | TeamCard | What staff cost | TiersTable |  |
 | peers | PeersCard | Against other places | CompareTable |  |
@@ -132,7 +132,7 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 | seat | card | figure | state | condition |
 |---|---|---|---|---|
 | 1 | 00 take | the take-home, 40 | LIT | 8.6: the page's only rung-40 figure where moneyShown (London's curated entry and trusted-local cells: 16 of the 31 walked routes, 87 of the slate's 3,670, under trust:revenue-filled 2026-09-19); off it the answer is withheld with a stated line (the AnswerCard's data-state no-answer) and the page carries two |
-| 2 | 04 open | the total to open, 30; its biggest bar `--terra` | LIT | 8.6: LIT where held or baseline; UNLIT where withheld (a cell without setup_costs on the 90 trades on the 80,000 default; the BentoMetric's data-withheld-line), and the page carries two; the accent never moves to 05's net or to 03's longest wait |
+| 2 | 04 open | the total to open, 30; its biggest bar `--terra` where the bill is held; on the baseline the typical at 30 on WorkedFigure under its own kind of shop (2026-09-24, the goal's B10) | LIT | 8.6: LIT where held or baseline; UNLIT where withheld (a cell without setup_costs on the 90 trades on the 80,000 default: since 2026-09-24 the card earns it back, the months to break even at 30 in ink under 'Earning it back', and the stated line only where the trade holds no shard), and the page carries two; the accent never moves to 05's net or to 03's longest wait |
 | 3 | 08 clears | the needed share of a day, the sweep `--terra` | LIT | 8.6: always on, 243 of 243 (computeBreakeven where moneyShown, else the shard's breakeven_utilization_pct); the Ring since 2026-09-20 (candidate 4, clicked by his gold standard), the share at 30 in `--terra-text` inside the sweep |
 
 ### industry (turn-two.tsx (cell), turn-one.tsx (cell), exit.tsx (cell), opening.tsx, turn-one.tsx, turn-three.tsx, turn-two.tsx): 14 sections, 14 on archetypes

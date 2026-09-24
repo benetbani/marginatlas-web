@@ -85,7 +85,7 @@ import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
 import { ALL_INDUSTRIES, INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
 import { buildPermits } from "@/lib/spine/permits_rows";
-import { buildOpen, buildOpenFoot, countOpenStates } from "@/lib/spine/open_rows";
+import { buildOpen, buildOpenFoot, buildOpenFormats, countOpenStates, OPEN_FORMATS_WORKING_MIN } from "@/lib/spine/open_rows";
 import { resolveSplit, countSplitStates, shardCostLines, driverLabel, LABEL_WORDS_CAP as SPLIT_LABEL_WORDS_CAP } from "@/lib/spine/split_rows";
 import { buildTeam, countTeamRows, roleLines, TEAM_ROWS_CAP } from "@/lib/spine/team_rows";
 import { buildTradePeers, TRADE_PEERS_CAP } from "@/lib/spine/trade_peer_rows";
@@ -1134,14 +1134,38 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const six = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items.slice(0, 6) } });
   if (!six || six.rows.length !== 5 || six.tail?.count !== 1 || six.tailLine !== "The smallest line, $20, is in the total.") reds.push(`open (held, six lines): the one smallest line is not stated singular ("${six?.tailLine}")`);
   const base = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" } });
-  if (!base || base.state !== "baseline" || base.value !== 300000 || !base.accent || !base.sample || base.basis !== COPY.tradeOpen.basisBaseline || base.footLine !== null || base.foot.length !== 2) reds.push("open (baseline): a keyed trade with no lines does not build the table's figure, the accent, the one basis and the foot as expected");
+  if (!base || base.state !== "baseline" || base.value !== 300000 || !base.accent || !base.sample || base.basis !== COPY.tradeOpen.basisFormats || base.footLine !== null || base.foot.length !== 2 || base.formats.length < 1 + OPEN_FORMATS_WORKING_MIN) reds.push("open (baseline): a keyed trade with no lines does not build the table's figure, the accent, the kinds of shop, the one basis and the foot as expected");
+  /* THE KINDS OF SHOP (the goal's B10, 2026-09-24), on every keyed shard: the lead at nought and at the typical, every other kind the typical times one plus its difference, printed by the kit's one form, dearest first. */
+  let formatsCards = 0, formatsNone = 0;
+  for (const id of ids) {
+    const typical = startupCapitalArchetypeKeyed(industryToSlug(id));
+    if (typical == null) continue;
+    const f = buildOpenFormats(id, typical);
+    if (f.length === 0) { formatsNone++; continue; }
+    formatsCards++;
+    const [lead, ...rest] = f;
+    if (lead.delta !== 0 || lead.value !== Math.round(typical)) reds.push(`open ${id}: the lead kind of shop is not the typical at nought (${lead.name}, ${lead.delta})`);
+    if (rest.length < OPEN_FORMATS_WORKING_MIN) reds.push(`open ${id}: ${rest.length} other kinds, under the working's floor`);
+    for (const k of f) {
+      if (k.value !== Math.round(typical * (1 + k.delta / 100))) reds.push(`open ${id}: ${k.name} prints ${k.value}, not the typical times one plus ${k.delta} percent`);
+      if (k.figure !== usd(k.value)) reds.push(`open ${id}: ${k.name}'s figure is not the kit's form`);
+      if (!k.name.trim()) reds.push(`open ${id}: a kind of shop with no name`);
+    }
+    for (let i = 1; i < rest.length; i++) if (rest[i].value > rest[i - 1].value) reds.push(`open ${id}: the other kinds are not dearest first`);
+    ban(`open ${id}`, f.map((k) => k.name));
+  }
   const withheld = buildOpen({ meta: { industry: "shoe-repair", industry_id: "shoe_repair" } });
-  if (!withheld || withheld.state !== "withheld" || withheld.figure !== null || withheld.accent || withheld.withheld !== COPY.tradeOpen.withheld || !withheld.withheld.startsWith("Not gathered yet:") || withheld.basis !== null || withheld.foot.length !== 2) reds.push("open (withheld): a default trade with no lines does not build the stated line, no figure and the foot as expected");
+  /* EARNING IT BACK (the goal's A4): a default trade with its shard prints no stated line, only the foot's two figures under their own opener. */
+  if (!withheld || withheld.state !== "withheld" || withheld.figure !== null || withheld.accent || withheld.withheld !== null || !withheld.recover || withheld.basis !== COPY.tradeOpen.basisRecover || withheld.foot.length !== 2 || withheld.footLine !== null) reds.push("open (withheld): a default trade with its shard does not earn it back (no stated line, the two figures, the recover basis)");
+  const noShardDefault = buildOpen({ meta: { industry: "no-such-trade", industry_id: "no_such_trade" } });
+  if (!noShardDefault || noShardDefault.recover || noShardDefault.withheld !== COPY.tradeOpen.withheld) reds.push("open (withheld, no shard): the old stated line does not stand where the trade holds no shard");
   const noShard = buildOpen({ meta: { industry: "restaurants", industry_id: "no_such_trade" } });
   if (!noShard || noShard.foot.length !== 0 || noShard.footLine !== COPY.tradeOpen.footWithheld || noShard.basis !== COPY.tradeOpen.basisBaselineAlone) reds.push("open (no shard): the withheld foot line and the total's own basis do not build");
   const heldNoShard = buildOpen({ meta: { industry: "restaurants", industry_id: "no_such_trade" }, setup: nine });
   if (!heldNoShard || heldNoShard.basis !== COPY.tradeOpen.basisHeldCappedAlone || heldNoShard.footLine !== COPY.tradeOpen.footWithheld) reds.push("open (held, no shard): the total's own capped basis and the withheld foot do not build");
   for (const [name, o] of [["held", held], ["held, nine lines", capped], ["held, six lines", six], ["held, no shard", heldNoShard], ["baseline", base], ["withheld", withheld], ["no shard", noShard]] as const) if (o) ban(`open (${name})`, [o.basis ?? "", o.withheld ?? "", o.footLine ?? "", o.tailLine ?? "", ...o.foot.flatMap((c) => [c.figure, c.words]), ...o.rows.map((r) => r.name)]);
+  ban("open (copy)", [COPY.tradeOpen.kickerRecover, COPY.tradeOpen.basisRecover, COPY.tradeOpen.basisFormats, COPY.tradeOpen.basisFormatsAlone]);
+  console.log(`trade turn one: the cost to open names its kinds of shop on ${formatsCards} keyed shards (${formatsNone} keep the one total), and earns it back on the default wherever the shard holds both figures`);
   for (const o of [held, base, withheld]) if (o) for (const c of o.foot) if (!/^(1 month|\d+ months)$/.test(c.figure) && !/^(1 year|\d+(\.\d)? years)$/.test(c.figure)) reds.push(`open: a companion off the months or years form: "${c.figure}"`);
   console.log(`trade turn one: the permits build on ${ids.length} shards, ${cellsTotal} cells (${Object.entries(perShard).sort().map(([k, v]) => `${v} with ${k}`).join(", ")}), ${withheldCards} with a zero-day licence withheld; the cost to open is keyed on ${states.keyed} of ${states.total} shard ids and on the default for ${states.default} (item 48), the foot's two companions on ${footFull}; the three states build off fixtures`);
 }

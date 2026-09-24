@@ -1324,6 +1324,12 @@ export const COPY = {
     tailMany: "The {n} smallest lines, {sum} together, are in the total.",
     basisBaseline: "All three figures are typical for the trade, modelled, not this city's own.",
     basisBaselineAlone: "Typical for the trade, modelled; not this city's own figure.",
+    /** The baseline state with the kinds of shop (2026-09-24, the goal's B10): each kind worked from the typical and its own difference. */
+    basisFormats: "Typical for the trade and each kind of shop, worked from the trade's own cost differences; all modelled, not this city's own.",
+    basisFormatsAlone: "Typical for the trade and each kind of shop, worked from its own cost differences; modelled, not this city's own.",
+    /** The withheld state earns it back (the same day, the goal's A4): the two figures the card holds, no stated line. */
+    kickerRecover: "Earning it back",
+    basisRecover: "Both typical for the trade anywhere, modelled; not this city's own.",
     withheld: "Not gathered yet: what it costs to open here.",
     foot: "Months and years are typical for the trade, modelled.",
     footWithheld: "Not gathered yet: the months to break even and the years to pay back.",

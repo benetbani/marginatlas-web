@@ -361,10 +361,15 @@ export function pickCellPermitsInstances(cell: CellHeroInstance[]): Instance[] {
 export const cellOpenKey = (c: CellHeroInstance) => `cell:${c.key}:open`;
 const openWhy = (o: NonNullable<ReturnType<typeof buildOpen>>) =>
   o.state === "held" ? `trade block 04 held: ${o.rows.length} setup lines as one set, the total at 30 in terracotta over them, the biggest line lit, the two companions in the foot`
+    : o.state === "baseline" && o.formats.length > 0 ? `trade block 04 baseline with the kinds of shop (the goal's B10): the typical at 30 in terracotta under its own kind (${o.formats[0].name}), ${o.formats.length - 1} other kinds as the working, dearest first, the companions and the basis on the floor`
     : o.state === "baseline" ? "trade block 04 baseline: no setup lines, the trade's typical cost to open at 30 in terracotta, modelled, the two companions in the foot"
-    : "trade block 04 withheld: the trade on the archetype's default, the stated line at 16 where the total would stand, unaccented, the two companions in the foot";
-export function pickCellOpenInstances(cell: CellHeroInstance[], kind: "ranked-bars" | "bento-metric"): Instance[] {
-  return cell.filter((c) => cellServes(c.key, "open")).map((c) => ({ c, o: buildOpen(c.seed) })).filter((x) => x.o && (kind === "ranked-bars" ? x.o.state === "held" : x.o.state !== "held")).map(({ c, o }) => ({ iso2: cellOpenKey(c), why: openWhy(o!) }));
+    : o.recover ? "trade block 04 withheld, earning it back (the goal's A4): the trade on the archetype's default, the months to break even at 30 in ink and the years to pay back beside it, no stated line"
+    : "trade block 04 withheld: the trade on the default and no shard, the stated line at 16 where the total would stand, unaccented";
+/** The form each state of the cost to open draws on: the held bill on RankedBars, the baseline with its kinds of shop on WorkedFigure, the rest on BentoMetric. */
+export const openFormOf = (o: NonNullable<ReturnType<typeof buildOpen>>): "ranked-bars" | "worked-figure" | "bento-metric" =>
+  o.state === "held" ? "ranked-bars" : o.state === "baseline" && o.formats.length > 0 ? "worked-figure" : "bento-metric";
+export function pickCellOpenInstances(cell: CellHeroInstance[], kind: "ranked-bars" | "bento-metric" | "worked-figure"): Instance[] {
+  return cell.filter((c) => cellServes(c.key, "open")).map((c) => ({ c, o: buildOpen(c.seed) })).filter((x) => x.o && openFormOf(x.o) === kind).map(({ c, o }) => ({ iso2: cellOpenKey(c), why: openWhy(o!) }));
 }
 /** The city district rankings (city:districts, run 25): the city with ranked districts, and one with none, which self-omits. */
 export function pickCityDistrictInstances(cities: CityHeroInstance[]): CityHeroInstance[] {
@@ -1211,6 +1216,12 @@ export function WorkedFigureStories({ cell = [] }: { cell?: CellHeroInstance[] }
         if (!l) return null;
         return <Story kind="worked-figure" key={industryKey(h, "lasts")} iso2={industryKey(h, "lasts")} why={industryLastsWhy(l)}><div style={{ maxWidth: 347 }}><LastsCard id={`lasts-industry-${h}`} lasts={l} /></div></Story>;
       })}
+      {/* THE COST TO OPEN'S BASELINE WITH ITS KINDS OF SHOP (the goal's B10), at the 693 the wide seat of `03 | 04` takes at 1280, the page's own card. */}
+      {cell.filter((c) => cellServes(c.key, "open")).map((c) => {
+        const o = buildOpen(c.seed);
+        if (!o || openFormOf(o) !== "worked-figure") return null;
+        return <Story kind="worked-figure" key={cellOpenKey(c)} iso2={cellOpenKey(c)} why={openWhy(o)}><div style={{ maxWidth: 693 }}><OpenCard id={`open-cell-${c.key}`} open={o} /></div></Story>;
+      })}
       {cell.filter((c) => cellServes(c.key, "permits")).map((c) => {
         const p = buildPermits(c.seed?.meta?.industry_id);
         if (!p) return null;
@@ -1898,7 +1909,7 @@ export function BentoMetricStories({ instances = pickBentoMetricInstances(), cel
       <IndustryBenchmarkStories kind="bento-metric" />
       {cell.filter((c) => cellServes(c.key, "open")).map((c) => {
         const o = buildOpen(c.seed);
-        if (!o || o.state === "held") return null;
+        if (!o || openFormOf(o) !== "bento-metric") return null;
         return <Story kind="bento-metric" key={cellOpenKey(c)} iso2={cellOpenKey(c)} why={openWhy(o)}><div style={{ maxWidth: 693 }}><OpenCard id={`open-cell-${c.key}`} open={o} /></div></Story>;
       })}
       {cell.filter((c) => cellServes(c.key, "rivals")).map((c) => {
@@ -2371,7 +2382,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "bento-band": [...pickBentoBandInstances(), ...pickCellMarketInstances(cellHero), ...pickIndustryPaysInstances()],
     "bento-metric": [...pickBentoMetricInstances(), ...pickCellOpenInstances(cellHero, "bento-metric"), ...pickCellRivalsInstances(cellHero, "bento-metric"), ...pickIndustryBenchmarkInstances("bento-metric")],
     "ring": [...pickCellClearsInstances(cellHero), ...pickCityRingInstances()],
-    "worked-figure": [...pickCellCustomersInstances(cellHero), ...pickIndustryLastsInstances(), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero)],
+    "worked-figure": [...pickCellCustomersInstances(cellHero), ...pickIndustryLastsInstances(), ...pickCellOpenInstances(cellHero, "worked-figure"), ...pickCellPermitsInstances(cellHero), ...pickCellLastsInstances(cellHero)],
     "stepper": pickStepperInstances(),
     "month-bars": pickCellSwingInstances(cellHero),
     "share-bar": pickCellDaypartsInstances(cellHero),

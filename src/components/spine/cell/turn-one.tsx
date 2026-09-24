@@ -85,7 +85,7 @@ import { Box, Rail } from "@/components/spine/kit";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { WorkedFigure, WORKING_MIN } from "@/components/spine/archetypes/WorkedFigure";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
-import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
+import { BentoMetric, CompanionRow } from "@/components/spine/archetypes/BentoBand";
 import { IncomeBreakdown } from "@/components/spine/archetypes/IncomeBreakdown";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
@@ -138,6 +138,40 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
 
 export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | null }) {
   if (!open) return null;
+  /* THE BASELINE WITH THE KINDS OF SHOP (open_rows.ts, the goal's B10): the
+     typical at 30 under the kind it is, the other kinds as the working, the
+     licences card's own composition beside it (spare height split round the
+     figure, the floor on the figure's columns from 560 of the card). */
+  if (open.state === "baseline" && open.formats.length > 0) {
+    const [lead, ...rest] = open.formats;
+    return (
+      <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
+        <Rail icon="startup-cost" kicker={COPY.tradeOpen.kicker} sample={open.sample} />
+        <div className="flex flex-1 flex-col justify-center">
+          <WorkedFigure list accent={open.accent} label={lead.name} figure={open.figure ?? lead.figure} working={rest.map((f) => ({ figure: f.figure, words: f.name }))} />
+        </div>
+        <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
+          <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.basis}</p>
+          {open.foot.length > 0 ? <div data-foot className="mt-3 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.footLine}</p>}
+        </div>
+      </Box>
+    );
+  }
+  /* EARNING IT BACK (the goal's A4): the months to break even at 30 and the years to pay back beside it, under their own opener; no stated line. */
+  if (open.recover) {
+    return (
+      <BentoMetric
+        id={id}
+        icon="startup-cost"
+        kicker={COPY.tradeOpen.kickerRecover}
+        sample={open.sample}
+        figure={open.foot[0].figure}
+        label={open.foot[0].words}
+        second={open.foot.slice(1)}
+        basis={open.basis ?? undefined}
+      />
+    );
+  }
   if (open.state === "held") {
     return (
       <RankedBars
