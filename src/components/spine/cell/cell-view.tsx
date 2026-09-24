@@ -409,9 +409,13 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
             /* A FIGURE CARD TAKES THE NARROW THIRD (the goal's B12, 2026-09-24):
                the months to earn it back since A4, and now the lone total too,
                which sat in the wide two thirds with a blank of about 613 by 126
-               round its figure on 40 London trades at 1280 (E7's sweep); the
-               kinds-of-shop list and the bill keep the wide side. */
-            <Band split={openForm(open) === "metric" ? "2-1" : "1-2"} stack="lg">
+               round its figure on 40 London trades at 1280 (E7's sweep). THE
+               KINDS-OF-SHOP LIST STANDS AT HALVES: at 1-2 the licences at a third
+               wrapped to their phone grid and outgrew it, a 613 by 120 to 150
+               blank round the list on 11 of its 41 pages; at 1-1 the licences
+               widen and shorten, measured on the 41 (the numbers in the
+               commit). The bill keeps the wide side (the 2026-09-18 reading). */
+            <Band split={openForm(open) === "metric" ? "2-1" : openForm(open) === "list" ? "1-1" : "1-2"} stack="lg">
               <PermitsCard permits={permits} />
               <OpenCard open={open} />
             </Band>
