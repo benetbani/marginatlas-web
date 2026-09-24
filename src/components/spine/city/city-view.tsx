@@ -339,13 +339,9 @@ export function Runway({ runway, id = "runway" }: { runway: CityRunwayData | nul
       <Rail icon="commercial-rent" kicker={COPY.cityRunway.kicker} sample={runway.confidence !== "measured"} />
       <div className="grid flex-1 grid-cols-1 items-center gap-4 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
         <Ring value={pct} figure={`${pct}%`} caption={COPY.cityRunway.cells.share} />
+        {/* THE INCOME LEFT THE CARD (2026-09-24, the goal's A18 and its NEVER list, "print one figure twice"): the typical income beside the ring was the page's answer a third time (the masthead, `07 earnings`, the peers' home row); the ring says the share and the one line what it is a share of. */}
         <div>
-          <div data-row="income" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{income.label}</div>
-          <div className="fig mt-1 text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">
-            {income.value}
-            {income.note ? <span className="ml-1 text-[length:var(--t-micro)] font-normal normal-case tracking-normal text-[var(--c-muted)]">{income.note}</span> : null}
-          </div>
-          <p className="mt-3 max-w-[30ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.basis}</p>
+          <p className="max-w-[30ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{runway.basis}</p>
           {runway.foot ? <p className="mt-1 max-w-[30ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
         </div>
       </div>
