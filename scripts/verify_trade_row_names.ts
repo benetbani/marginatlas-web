@@ -17,8 +17,8 @@
  *   2. `short_name` is set only where the name breaks the law, has fewer words
  *      than the name, is shared by no other live trade and is no trade's full
  *      name, and is set on live trades only;
- *   3. the industry page's `02 benchmark` prints the row name on every live row,
- *      over the 138;
+ *   3. the industry page's `02 benchmark` prints the row name on every row, over
+ *      the 138 (every row a live trade since the goal's A10);
  *   4. the country page's `12 money` prints the short name on every bar whose
  *      trade holds one, and every bar keeps the law, over every country in the
  *      harness snapshot;
@@ -72,14 +72,12 @@ for (const ind of INDUSTRIES) {
 const liveIds = new Set(INDUSTRIES.map((i) => i.id));
 for (const ind of ALL_INDUSTRIES) if (ind.short_name != null && !liveIds.has(ind.id)) fail(`${ind.id} is not a live trade and carries a short name`, "set short names on live trades only; a retired trade prints no row");
 
-/* 3. Over the live rows: a retired or merged member still ranks in the set
-   until the goal's A10 takes it out, and it holds no row name (rule 2 forbids
-   one on a trade that prints no row of its own). */
+/* 3. Every row: since the goal's A10 the set is the sector's live trades, so
+   no row can be a retired or merged member without a row name of its own. */
 let benchRows = 0;
 for (const ind of INDUSTRIES) {
   const b = buildBenchmark(ind.id);
   for (const r of b?.rows ?? []) {
-    if (!liveIds.has(String(r.key))) continue;
     benchRows++;
     const want = tradeRowName(String(r.key), INDUSTRY_BY_ID[String(r.key)]?.name ?? String(r.name));
     if (r.name !== want) fail(`the benchmark on ${ind.id} prints "${r.name}" for ${r.key}, not its row name "${want}"`, "print the row through tradeRowName (benchmark_rows.ts)");

@@ -30,7 +30,17 @@
  * re-pairs the band, `BENCHMARK_ROWS_CAP` goes back to ten and nothing else
  * moves. Recorded for the controller in the dispatch's queue row.
  *
- * THE SET: every trade sharing the trade's `sector_id` in
+ * THE SET IS THE LIVE TRADES OF THE SECTOR, RULED 2026-09-24 (the goal's A10,
+ * closing QUEUE industry:sector-set). Until then it was every trade sharing the
+ * `sector_id` in `src/lib/taxonomy/industries.json`, the 243 the shards are
+ * filed under, merged and retired members included, and 74 of the 138 live
+ * industry pages printed one of them among "the trades next door" (145 rows);
+ * on 40 the ink-pilled leader was one: /industries/restaurants led with bed
+ * and breakfasts, a trade the 2026-08-21 ruling took off the atlas, and ranked
+ * restaurants beside formats merged into it. A retired activity is not on the
+ * atlas and a merged one is its survivor, so the set is INDUSTRIES (the 138),
+ * filtered by sector. What follows describes the old set, kept for the record:
+ * every trade sharing the trade's `sector_id` in
  * `src/lib/taxonomy/industries.json`, the 243 the shards are filed under
  * (ALL_INDUSTRIES; 25 sectors, 2 to 33 members, counted 2026-09-18). The
  * hardcoded `foodDrinkSiblings()` list in adapt_industry.ts (eight food ids,
@@ -93,7 +103,7 @@ import { countWord } from "@/lib/spine/district_rows";
 import { COPY } from "@/lib/spine/copy";
 import { resolveTradeNet } from "@/lib/spine/trade_net";
 import { sectorPhrase } from "@/lib/spine/industry_hero_facts";
-import { ALL_INDUSTRIES, INDUSTRY_BY_ID, tradeRowName } from "@/lib/taxonomy";
+import { INDUSTRIES, INDUSTRY_BY_ID, tradeRowName } from "@/lib/taxonomy";
 
 /** The rows the card holds at most: the trade and the highest four of its sector (the header says why not 8.7's ten). */
 export const BENCHMARK_ROWS_CAP = 5;
@@ -138,7 +148,8 @@ export function buildBenchmark(industryId: string | null | undefined): Benchmark
 function buildBenchmarkOnce(industryId: string): BenchmarkData | null {
   const ind = INDUSTRY_BY_ID[industryId];
   if (!ind) return null;
-  const sector = ALL_INDUSTRIES.filter((i) => i.sector_id === ind.sector_id);
+  /* The live trades of the sector (the header's ruling of 2026-09-24): never a retired or merged member. */
+  const sector = INDUSTRIES.filter((i) => i.sector_id === ind.sector_id);
   const holding: Array<{ id: string; name: string; pct: number }> = [];
   let withheldCount = 0;
   let selfWithheld = false;

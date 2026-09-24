@@ -193,6 +193,13 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   const hero = industryHeroFacts(industryId);
   const lasts = buildLasts(industryId, "world");
   const benchmark = buildBenchmark(industryId);
+  /* A SECTOR WITH NOTHING TO RANK DRAWS NO BENCHMARK (the goal's A10,
+     2026-09-24): since the set is the sector's live trades, four sectors hold
+     under two figures of their own (game development one of one; bricklaying,
+     tiling and plastering none of three), and the card would stand as a
+     "Not gathered yet" line. Omitted instead, the canonical silent omission
+     for data a card cannot draw; the survival card stands alone in its band. */
+  const benchmarkDrawn = benchmark != null && benchmark.state !== "withheld" ? benchmark : null;
   /* TURN ONE'S THREE, off the same id (plan step 34's second dispatch): the
      split on the trade's builder at the world altitude (the one net builder
      with the engine absent, the hero's own figure), the open card over the
@@ -247,10 +254,14 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
           widths on restaurants, a two-member sector and a fill shard): see the
           split below. `stack="lg"` because at a tablet's equal halves the
           five bars stand past the three-cell grid. */}
-      {lasts && benchmark ? (
+      {lasts && benchmarkDrawn ? (
         <Band split="1-2" stack="lg">
           <LastsCard lasts={lasts} />
-          <BenchmarkCard benchmark={benchmark} />
+          <BenchmarkCard benchmark={benchmarkDrawn} />
+        </Band>
+      ) : lasts ? (
+        <Band split="2-1" stack="lg">
+          <LastsCard lasts={lasts} />
         </Band>
       ) : null}
 

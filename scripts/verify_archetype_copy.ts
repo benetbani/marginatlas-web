@@ -1946,14 +1946,17 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
 
   const bench = countBenchmarkStates(ids);
   let benchCards = 0, tenRows = 0;
+  /* THE SET IS THE SECTOR'S LIVE TRADES (the goal's A10, 2026-09-24, benchmark_rows.ts' header): the counts over INDUSTRIES, every
+     drawn row a live trade, and the self-row laws on a live id only (a retired or merged id has no page and is in no set). */
   const sectors = new Map<string, number>();
-  for (const i of ALL_INDUSTRIES) sectors.set(i.sector_id, (sectors.get(i.sector_id) ?? 0) + 1);
+  const liveIds = new Set(INDUSTRIES.map((i) => i.id));
+  for (const i of INDUSTRIES) sectors.set(i.sector_id, (sectors.get(i.sector_id) ?? 0) + 1);
   for (const id of ids) {
     const b = buildBenchmark(id);
     if (!b) { reds.push(`industry benchmark ${id}: no card for a taxonomy id`); continue; }
     benchCards++;
     const ind = INDUSTRY_BY_ID[id];
-    if (b.members !== sectors.get(ind.sector_id)) reds.push(`industry benchmark ${id}: ${b.members} members against the taxonomy's ${sectors.get(ind.sector_id)} in ${ind.sector_id}`);
+    if (b.members !== (sectors.get(ind.sector_id) ?? 0)) reds.push(`industry benchmark ${id}: ${b.members} members against the ${sectors.get(ind.sector_id) ?? 0} live trades in ${ind.sector_id}`);
     if (b.holding + b.withheldCount !== b.members) reds.push(`industry benchmark ${id}: ${b.holding} holding and ${b.withheldCount} withheld do not sum to ${b.members}`);
     const expected = b.holding >= BENCHMARK_FLOOR ? "ranked" : b.holding >= 2 ? "short" : "withheld";
     if (b.state !== expected) reds.push(`industry benchmark ${id}: the state is ${b.state} with ${b.holding} holding a figure; expected ${expected}`);
@@ -1966,13 +1969,16 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       const n = resolveTradeNet(row.key, { moneyShown: false, netMarginPct: null });
       if (!n || n.branch !== "shard" || n.pct !== row.value) reds.push(`industry benchmark ${id}: ROW NET: the row ${row.key} is not that member's own ladder net through the one builder (${n?.branch ?? "none"})`);
       if (INDUSTRY_BY_ID[row.key]?.sector_id !== ind.sector_id) reds.push(`industry benchmark ${id}: the row ${row.key} is not in the sector`);
+      if (!liveIds.has(row.key)) reds.push(`industry benchmark ${id}: the row ${row.key} is a retired or merged trade, off the atlas since 2026-08-21`);
       /* The row prints the trade's row name, three words at most (the goal's A11, taxonomy.ts `tradeRowName`); gate trade-row-names holds it over the 138. */
     }
     const own = resolveTradeNet(id, { moneyShown: false, netMarginPct: null });
     const ownRanked = b.rows.some((r) => r.key === id);
-    if (own?.branch === "shard" && b.state !== "withheld" && !ownRanked) reds.push(`industry benchmark ${id}: the trade holds a figure and is not among the rows`);
+    const isLive = liveIds.has(id);
+    if (!isLive && (ownRanked || b.selfKey === id)) reds.push(`industry benchmark ${id}: a retired or merged trade ranks itself`);
+    if (isLive && own?.branch === "shard" && b.state !== "withheld" && !ownRanked) reds.push(`industry benchmark ${id}: the trade holds a figure and is not among the rows`);
     if (own?.branch !== "shard" && ownRanked) reds.push(`industry benchmark ${id}: the trade's own row is drawn on a profile figure`);
-    if ((b.selfKey === id) !== (own?.branch === "shard" && b.state !== "withheld")) reds.push(`industry benchmark ${id}: selfKey does not match the trade's branch and the state`);
+    if (isLive && (b.selfKey === id) !== (own?.branch === "shard" && b.state !== "withheld")) reds.push(`industry benchmark ${id}: selfKey does not match the trade's branch and the state`);
     if (b.rows.length && b.top !== Math.max(...b.rows.map((r) => r.value))) reds.push(`industry benchmark ${id}: the ceiling is not the set's highest row`);
     if (wordsOf(b.basis) > 14) reds.push(`industry benchmark ${id}: the basis runs ${wordsOf(b.basis)} words, over fourteen: "${b.basis}"`);
     if (!b.basis.includes(String(b.members))) reds.push(`industry benchmark ${id}: the basis does not name the sector's count ${b.members}`);
@@ -1980,7 +1986,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (b.state === "withheld" && (!b.line || (b.holding === 0 && !b.line.startsWith("Not gathered yet: ")))) reds.push(`industry benchmark ${id}: the withheld state has no line, or no not-gathered line with nothing held`);
     if (b.state === "short" && (!b.line || !/a ranking needs four\.$/.test(b.line))) reds.push(`industry benchmark ${id}: the short state's line does not name the floor ("${b.line}")`);
     if (b.state === "ranked" && (b.withheldCount > 0) !== !!b.line) reds.push(`industry benchmark ${id}: ${b.withheldCount} withheld and ${b.line ? "a" : "no"} line`);
-    if (b.state === "ranked" && b.line && own?.branch !== "shard" && !/this (trade|one)/i.test(b.line)) reds.push(`industry benchmark ${id}: the trade itself is withheld and the line does not say so ("${b.line}")`);
+    if (isLive && b.state === "ranked" && b.line && own?.branch !== "shard" && !/this (trade|one)/i.test(b.line)) reds.push(`industry benchmark ${id}: the trade itself is withheld and the line does not say so ("${b.line}")`);
     ban(`industry benchmark ${id}`, [b.basis, b.line ?? "", ...b.rows.map((r) => r.name)]);
   }
   for (const [sector, n] of sectors) if (n < BENCHMARK_FLOOR) { for (const i of ALL_INDUSTRIES.filter((x) => x.sector_id === sector)) { const b = buildBenchmark(i.id); if (b && b.state === "ranked") reds.push(`industry benchmark ${i.id}: ranked in a sector of ${n}, under the floor`); } }
