@@ -23,9 +23,10 @@
  * thing: the region sub-line, where it holds a row for the city (joined by
  * country and normalised name, the inverse of `cityPageSlug`); a city the
  * draft does not hold prints no sub-line, and the count of each is the
- * archetype copy gate's to print. The figure and the door's promise are
- * unchanged: `avg_gross_salary_usd_year` off the same list through
- * `getCityAveragePayUsd`, and `CITY_CARD_LANDS`.
+ * archetype copy gate's to print. The door's promise is `CITY_CARD_LANDS`; the
+ * figure, since 2026-09-24, is the city page's own answer through its one
+ * builder (`cityTypicalIncome`), never the list's average gross salary, which
+ * printed London $65K a click from the page's $49K.
  *
  * WHY A FIGURE AT ALL (founder, 2026-09-10, on the coloured destination cards:
  * "those coloured beautiful vertical cards of cities should be used by us for
@@ -50,7 +51,7 @@
 import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { cityRouteServes, coveredCities, normalizePlaceName } from "@/lib/cities/city_pages";
 import { cityImageSrc } from "@/lib/cities/city_images";
-import { getCityAveragePayUsd } from "@/lib/cities/city_tier";
+import { cityTypicalIncome } from "@/lib/spine/city_income";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 
 /** WHAT EVERY CITY CARD PROMISES (plan step 39, 2026-09-19): the figure the
@@ -194,7 +195,12 @@ export function buildCityCards(iso2In: string): CityCards | null {
   for (const c of cityCardRows(iso2)) {
     const slug = c.slug;
     const href = `/cities/${slug}`;
-    const pay = getCityAveragePayUsd(slug);
+    /* ONE FIGURE, ONE BUILDER (the goal's NEVER list, "let two pages disagree"; 2026-09-24): the card promises customer pay and
+       opens the city page, whose answer is `cityTypicalIncome` (London $49K); the card printed the city list's average gross salary
+       (London $65K), so the visitor read two figures for one thing a click apart. It reads the page's builder now, the city's own
+       typical only (a country's figure under a city's name is not the city's). */
+    const typical = cityTypicalIncome(slug);
+    const pay = typical && typical.from === "city" ? typical.value : null;
     const name = String(c.name).replace(/\s*\([^)]*\)\s*$/, "");
     const photo = cityCardImage(slug);
     const draft = draftRowFor(iso2, c.name);

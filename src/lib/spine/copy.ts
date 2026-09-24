@@ -966,15 +966,15 @@ export const COPY = {
    *  card does not keep. The three looks add the clause that reads theirs. It
    *  never says what any of it means. */
   cityCards: {
-    plain: { basis: "What an average customer earns in a year." },
+    plain: { basis: "What a typical customer earns in a year." },
     /* THE FIELD LOOK STOPPED DESCRIBING A DRAWING, 2026-09-11. It read "The
        darker the card, the more", which was true while the tint's depth was the
        figure. The photograph now sits under that tint and the tint is one fixed
        wash (CityCards.tsx), so the sentence would be describing a veil. The
        figure is printed on every card instead. */
-    field: { basis: "What an average customer earns in a year." },
-    plate: { basis: "What an average customer earns in a year." },
-    column: { basis: "What an average customer earns in a year. The taller the mark, the more." },
+    field: { basis: "What a typical customer earns in a year." },
+    plate: { basis: "What a typical customer earns in a year." },
+    column: { basis: "What a typical customer earns in a year. The taller the mark, the more." },
   },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
   peers: {

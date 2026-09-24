@@ -1719,9 +1719,13 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (k.lands !== CITY_CARD_LANDS) reds.push(`${where}: the card "${k.name}" promises ${k.lands}, not ${CITY_CARD_LANDS}`);
       if (!k.photo || !k.photo.src) reds.push(`${where}: the card "${k.name}" carries no photograph (the field look needs one on every card)`);
       else if (k.photo.placeholder && k.photo.src !== CITY_CARD_PLACEHOLDER_IMAGE) reds.push(`${where}: the card "${k.name}" marks a placeholder that is not the one placeholder (${k.photo.src})`);
-      const held = typeof row.avg_gross_salary_usd_year === "number" && Number.isFinite(row.avg_gross_salary_usd_year) && row.avg_gross_salary_usd_year > 0;
-      if (held && k.payUsd !== row.avg_gross_salary_usd_year) reds.push(`${where}: the card "${k.name}" prints ${k.payUsd}, not the list's avg_gross_salary_usd_year ${row.avg_gross_salary_usd_year}`);
-      if (!held) { withheldFigure++; if (k.payUsd != null) reds.push(`${where}: the card "${k.name}" prints ${k.payUsd} where the list holds no figure`); }
+      /* TURNED OVER 2026-09-24 (the goal's NEVER list, "let two pages disagree"): the card prints the city page's own answer
+         through that page's builder, the city's own typical only, never the list's average gross salary (London $65K on the
+         card, $49K on the page it opens). */
+      const typical = cityTypicalIncome(row.slug);
+      const want = typical && typical.from === "city" ? typical.value : null;
+      if ((k.payUsd ?? null) !== want) reds.push(`${where}: the card "${k.name}" prints ${k.payUsd}, not the city page's answer ${want}`);
+      if (want == null) withheldFigure++;
       /* the region sub-line, from the gate's own join of the draft */
       const d = draft.find((x) => x.country.toUpperCase() === iso2 && normalizePlaceName(x.name) === normalizePlaceName(row.name));
       const dr = d?.region_name?.trim();
