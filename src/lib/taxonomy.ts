@@ -71,6 +71,8 @@ export type Industry = {
    * Never the slug's source: industryToSlug reads `name`, so no URL moves.
    */
   short_name?: string;
+  /** THE BUSINESS AS A COUNT NOUN, where the name is an activity (2026-09-24, the goal's A23): "law firm" for "Legal services", "shoe repair shop" for "Shoe repair", "tiler" for "Tiling services". Read first by `tradeNounFor`, so "Estimates for a typical {noun}" never says "a typical legal service" or "a typical accounting & tax". */
+  noun?: string;
 };
 
 export const SECTORS = (sectorsJson as { sectors: Sector[] }).sectors;
@@ -1114,8 +1116,10 @@ export function searchIndustries(query: string, sectorFilter?: string): Industry
  * whole name, which is the old behaviour and correct for those.
  *
  * Names with no plural anywhere ("Software development", "Accounting & tax")
- * come back unchanged and still read oddly after "a". That predates this and
- * is a copy question, not a grammar one, so it is left alone.
+ * come back unchanged and still read oddly after "a". That was a copy
+ * question, and since 2026-09-24 it has an answer: a trade whose name is an
+ * activity carries its business as a count noun (`noun` in industries.json,
+ * "accountancy practice"), read before any of this.
  */
 function singularise(s: string): string {
   if (/[^aeiou]ies$/.test(s)) return s.replace(/ies$/, "y");
@@ -1124,7 +1128,14 @@ function singularise(s: string): string {
   return s.replace(/s$/, "");
 }
 
+/** The taxonomy's own count nouns, by the name a caller holds (every id, retired and parent trades included, since a parent's page is served under a live slug). */
+const NOUN_BY_NAME: Map<string, string> = new Map(
+  ALL_INDUSTRIES.filter((i) => i.noun).flatMap((i) => [[String(i.name).trim().toLowerCase(), String(i.noun)] as const, ...(i.short_name ? [[String(i.short_name).trim().toLowerCase(), String(i.noun)] as const] : [])]),
+);
+
 export function tradeNounFor(name: string): string {
+  const own = NOUN_BY_NAME.get(String(name || "").trim().toLowerCase());
+  if (own) return own;
   const whole = String(name || "")
     .replace(/\s*\([^)]*\)\s*/g, " ")
     .replace(/\s+/g, " ")

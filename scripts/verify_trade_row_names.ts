@@ -35,7 +35,7 @@
  */
 import { readFileSync } from "node:fs";
 import { red } from "./lib/red";
-import { INDUSTRIES, ALL_INDUSTRIES, INDUSTRY_BY_ID, SLUG_TO_INDUSTRY, industryToSlug, tradeRowName } from "../src/lib/taxonomy";
+import { INDUSTRIES, ALL_INDUSTRIES, INDUSTRY_BY_ID, SLUG_TO_INDUSTRY, industryToSlug, tradeRowName, tradeNounFor } from "../src/lib/taxonomy";
 import { buildBenchmark } from "../src/lib/spine/benchmark_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "../src/lib/spine/margin_rows";
 
@@ -124,8 +124,26 @@ for (const slug of everyday) {
 const slugOfName = (name: string) => name.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 for (const ind of INDUSTRIES) if (ind.short_name != null && industryToSlug(ind.id) !== slugOfName(ind.name)) fail(`${ind.id}'s slug is "${industryToSlug(ind.id)}", not its full name's "${slugOfName(ind.name)}"`, "never derive a slug from the short name: URLs do not move");
 
+/* 7. THE BUSINESS AS A NOUN (2026-09-24, the goal's A23): "Estimates for a typical {noun}" on every trade and industry page, and
+   the noun is a business a person can picture, never an activity ("a typical legal service", "a typical accounting & tax", "a
+   typical shoe repair" read on 45 live trades until each carried `noun`). The test is the noun's last word; its blind spot is a
+   noun that ends in a business word and still reads oddly, which is the copy's to catch. Every live trade, and the parent trades
+   a live slug renders (residential construction under the four construction trades). */
+const ACTIVITY = /\b(services?|repair|care|training|development|management|making|washing|planning|coordination|production|support|sitting|boarding|install|construction|retail|leasing|recording|transport|moving|amusement|tax|architecture|laundry|alterations?|uniforms?|goods?|hosting|control|lawn|maintenance|preschool)$/i;
+const nounSubjects = new Map<string, string>();
+for (const ind of INDUSTRIES) nounSubjects.set(ind.id, ind.name);
+const parent = INDUSTRY_BY_ID["residential_construction"];
+if (parent) nounSubjects.set(parent.id, parent.name);
+let nouns = 0;
+for (const [id, name] of nounSubjects) {
+  const noun = tradeNounFor(name);
+  nouns++;
+  if (!noun) fail(`${id} ("${name}") has no noun for "a typical ..."`, "give the trade a `noun` in industries.json");
+  else if (ACTIVITY.test(noun)) fail(`${id} ("${name}") reads "a typical ${noun}", an activity and not a business`, "give the trade a `noun` in industries.json: the business as a count noun (\"law firm\", \"tiler\")");
+}
+
 if (reds.length) {
   console.error(`verify_trade_row_names: ${reds.length} red(s) above`);
   process.exit(1);
 }
-console.log(`verify_trade_row_names: ${INDUSTRIES.length} live trades, ${shortened} with a short name, every row name ${CAP} words or fewer with no parenthetical, and its own; ${benchRows} benchmark rows over the ${INDUSTRIES.length} and ${moneyRows} money bars over ${countries.length} countries print it; the city doors print it over their ${everyday.length} slugs; no slug moved.`);
+console.log(`verify_trade_row_names: ${INDUSTRIES.length} live trades, ${shortened} with a short name, every row name ${CAP} words or fewer with no parenthetical, and its own; ${benchRows} benchmark rows over the ${INDUSTRIES.length} and ${moneyRows} money bars over ${countries.length} countries print it; the city doors print it over their ${everyday.length} slugs; no slug moved; ${nouns} trades read \"a typical\" a business, never an activity.`);

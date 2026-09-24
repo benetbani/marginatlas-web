@@ -550,6 +550,7 @@
     {
       "id": "custom_apparel_mfg",
       "name": "Custom apparel & uniforms",
+      "noun": "custom clothing maker",
       "short_name": "Custom apparel",
       "audience": "smb_core",
       "parent_id": "apparel_mfg",
@@ -570,6 +571,7 @@
     {
       "id": "small_leather_goods",
       "name": "Small leather goods",
+      "noun": "leather goods maker",
       "audience": "smb_core",
       "parent_id": "apparel_mfg",
       "examples": [
@@ -892,6 +894,7 @@
     {
       "id": "metal_fab_machine_shops",
       "name": "Metal fabrication & machine shops",
+      "noun": "machine shop",
       "short_name": "Metal fabrication",
       "audience": "smb_core",
       "parent_id": "fabricated_metal_mfg",
@@ -1141,6 +1144,7 @@
     {
       "id": "residential_construction",
       "name": "Residential construction",
+      "noun": "residential builder",
       "audience": "smb_core",
       "examples": [
         "homes",
@@ -1304,6 +1308,7 @@
     {
       "id": "hvac_services",
       "name": "HVAC services",
+      "noun": "heating and cooling firm",
       "audience": "smb_core",
       "parent_id": "specialty_trades",
       "examples": [
@@ -1715,6 +1720,7 @@
     {
       "id": "eyewear_optical",
       "name": "Eyewear & optical retail",
+      "noun": "eyewear shop",
       "short_name": "Eyewear retail",
       "audience": "smb_core",
       "parent_id": "clothing_stores",
@@ -2189,6 +2195,7 @@
     {
       "id": "sporting_goods_specialty",
       "name": "Sporting goods (specialty)",
+      "noun": "sporting goods shop",
       "short_name": "Sporting goods",
       "audience": "smb_core",
       "parent_id": "general_merchandise",
@@ -2255,6 +2262,7 @@
     {
       "id": "stationery_paper",
       "name": "Stationery & paper goods",
+      "noun": "stationery shop",
       "short_name": "Stationery",
       "audience": "smb_core",
       "parent_id": "general_merchandise",
@@ -2324,6 +2332,7 @@
     {
       "id": "junk_removal_moving",
       "name": "Junk removal & small moving",
+      "noun": "junk removal firm",
       "short_name": "Junk removal",
       "audience": "smb_core",
       "parent_id": "trucking_freight",
@@ -2373,6 +2382,7 @@
     {
       "id": "scenic_sightseeing_transport",
       "name": "Scenic & sightseeing transport",
+      "noun": "sightseeing tour operator",
       "short_name": "Scenic transport",
       "audience": "smb_core",
       "examples": [
@@ -2643,6 +2653,7 @@
     {
       "id": "ice_cream_shops",
       "name": "Ice cream & frozen dessert shops",
+      "noun": "ice cream shop",
       "short_name": "Ice cream shops",
       "audience": "smb_core",
       "parent_id": "restaurants",
@@ -2793,6 +2804,7 @@
     {
       "id": "catering",
       "name": "Catering & food service contractors",
+      "noun": "caterer",
       "short_name": "Catering",
       "audience": "smb_core",
       "examples": [
@@ -2903,6 +2915,7 @@
     {
       "id": "str_management",
       "name": "Short-term rental management",
+      "noun": "short-term rental manager",
       "audience": "smb_core",
       "parent_id": "hotels_lodging",
       "examples": [
@@ -2920,6 +2933,7 @@
     {
       "id": "software_development",
       "name": "Software development",
+      "noun": "software studio",
       "audience": "smb_core",
       "examples": [
         "web apps",
@@ -3003,6 +3017,7 @@
     {
       "id": "it_services_hosting",
       "name": "IT services & hosting",
+      "noun": "IT services firm",
       "short_name": "IT services",
       "audience": "smb_friendly",
       "examples": [
@@ -3084,6 +3099,7 @@
     {
       "id": "motion_picture_recording",
       "name": "Motion picture & sound recording",
+      "noun": "film and sound studio",
       "short_name": "Motion pictures",
       "audience": "smb_friendly",
       "examples": [
@@ -3363,6 +3379,7 @@
     {
       "id": "equipment_rental",
       "name": "Equipment rental & leasing",
+      "noun": "equipment rental firm",
       "short_name": "Equipment rental",
       "audience": "smb_core",
       "examples": [
@@ -3392,6 +3409,7 @@
     {
       "id": "legal_services",
       "name": "Legal services",
+      "noun": "law firm",
       "audience": "smb_core",
       "examples": [
         "law firms",
@@ -3439,6 +3457,7 @@
     {
       "id": "accounting_tax",
       "name": "Accounting & tax",
+      "noun": "accountancy practice",
       "audience": "smb_core",
       "examples": [
         "CPAs",
@@ -3515,6 +3534,7 @@
     {
       "id": "engineering_architecture",
       "name": "Engineering & architecture",
+      "noun": "engineering or architecture practice",
       "audience": "smb_core",
       "examples": [
         "architects",
@@ -3613,6 +3633,7 @@
       "id": "wedding_planning",
       "solo_professional": true,
       "name": "Wedding planning & coordination",
+      "noun": "wedding planner",
       "short_name": "Wedding planning",
       "audience": "smb_core",
       "parent_id": "marketing_design",
@@ -3630,6 +3651,7 @@
     {
       "id": "event_production",
       "name": "Event production (small)",
+      "noun": "event production company",
       "short_name": "Event production",
       "audience": "smb_core",
       "parent_id": "marketing_design",
@@ -3648,6 +3670,7 @@
     {
       "id": "employment_services",
       "name": "Employment services",
+      "noun": "recruitment agency",
       "audience": "smb_friendly",
       "examples": [
         "staffing",
@@ -3679,6 +3702,7 @@
     {
       "id": "office_support",
       "name": "Office & business support",
+      "noun": "office support firm",
       "short_name": "Office support",
       "audience": "smb_friendly",
       "examples": [
@@ -3737,6 +3761,7 @@
     {
       "id": "security_services",
       "name": "Security services",
+      "noun": "security firm",
       "audience": "smb_friendly",
       "examples": [
         "guards",
@@ -3765,6 +3790,7 @@
     {
       "id": "cleaning_services",
       "name": "Cleaning services",
+      "noun": "cleaning company",
       "audience": "smb_core",
       "examples": [
         "janitorial",
@@ -3809,6 +3835,7 @@
     {
       "id": "landscaping_lawn",
       "name": "Landscaping & lawn care",
+      "noun": "landscaping firm",
       "short_name": "Landscaping",
       "audience": "smb_core",
       "parent_id": "cleaning_services",
@@ -3829,6 +3856,7 @@
     {
       "id": "pool_service",
       "name": "Pool service & maintenance",
+      "noun": "pool service firm",
       "short_name": "Pool service",
       "audience": "smb_core",
       "parent_id": "cleaning_services",
@@ -3846,6 +3874,7 @@
     {
       "id": "pest_control_local",
       "name": "Pest control (local)",
+      "noun": "pest control firm",
       "short_name": "Pest control",
       "audience": "smb_core",
       "parent_id": "cleaning_services",
@@ -3864,6 +3893,7 @@
     {
       "id": "window_washing",
       "name": "Window washing",
+      "noun": "window cleaning firm",
       "audience": "smb_core",
       "parent_id": "cleaning_services",
       "examples": [
@@ -3951,6 +3981,7 @@
     {
       "id": "vocational_training",
       "name": "Vocational & other training",
+      "noun": "training provider",
       "short_name": "Vocational training",
       "audience": "smb_core",
       "examples": [
@@ -4316,6 +4347,7 @@
     {
       "id": "nursing_elderly",
       "name": "Nursing & elderly care",
+      "noun": "care home",
       "short_name": "Nursing care",
       "audience": "smb_friendly",
       "examples": [
@@ -4372,6 +4404,7 @@
     {
       "id": "daycare_preschool",
       "name": "Daycare & preschool",
+      "noun": "nursery",
       "audience": "smb_core",
       "parent_id": "childcare_social",
       "examples": [
@@ -4390,6 +4423,7 @@
     {
       "id": "veterinary_pet_care",
       "name": "Veterinary & pet care",
+      "noun": "vet practice",
       "short_name": "Veterinary care",
       "audience": "smb_core",
       "examples": [
@@ -4500,6 +4534,7 @@
       "id": "personal_training",
       "solo_professional": true,
       "name": "Personal training",
+      "noun": "personal trainer",
       "audience": "smb_core",
       "parent_id": "sports_fitness",
       "examples": [
@@ -4546,6 +4581,7 @@
     {
       "id": "gambling_amusement",
       "name": "Gambling & amusement",
+      "noun": "amusement venue",
       "audience": "mixed_caution",
       "examples": [
         "casinos",
@@ -4866,6 +4902,7 @@
     {
       "id": "appliance_repair",
       "name": "Appliance repair",
+      "noun": "appliance repair shop",
       "audience": "smb_core",
       "parent_id": "auto_repair_shops",
       "examples": [
@@ -4882,6 +4919,7 @@
     {
       "id": "dry_cleaning_laundry",
       "name": "Dry cleaning & laundry",
+      "noun": "dry cleaner",
       "short_name": "Dry cleaning",
       "audience": "smb_core",
       "examples": [
@@ -4909,6 +4947,7 @@
     {
       "id": "tailoring_alterations",
       "name": "Tailoring & alterations",
+      "noun": "tailor",
       "audience": "smb_core",
       "parent_id": "dry_cleaning_laundry",
       "examples": [
@@ -4926,6 +4965,7 @@
     {
       "id": "shoe_repair",
       "name": "Shoe repair",
+      "noun": "shoe repair shop",
       "audience": "smb_core",
       "parent_id": "dry_cleaning_laundry",
       "examples": [
@@ -4942,6 +4982,7 @@
     {
       "id": "watch_jewelry_repair",
       "name": "Watch & jewelry repair",
+      "noun": "watch and jewellery repairer",
       "short_name": "Watch repair",
       "audience": "smb_core",
       "parent_id": "dry_cleaning_laundry",
@@ -4958,6 +4999,7 @@
     {
       "id": "funeral_services",
       "name": "Funeral services",
+      "noun": "funeral home",
       "audience": "smb_core",
       "examples": [
         "funeral homes",
@@ -4985,6 +5027,7 @@
     {
       "id": "pet_daycare",
       "name": "Pet daycare & boarding",
+      "noun": "pet daycare",
       "short_name": "Pet daycare",
       "audience": "smb_core",
       "examples": [
@@ -5005,6 +5048,7 @@
       "id": "pet_walking_sitting",
       "solo_professional": true,
       "name": "Pet walking & sitting",
+      "noun": "dog walker",
       "short_name": "Pet walking",
       "audience": "smb_core",
       "examples": [
@@ -5024,6 +5068,7 @@
       "id": "pet_training",
       "solo_professional": true,
       "name": "Pet training",
+      "noun": "pet trainer",
       "audience": "smb_core",
       "examples": [
         "dog training",
@@ -5252,6 +5297,7 @@
     {
       "id": "bricklaying_services",
       "name": "Bricklaying services",
+      "noun": "bricklayer",
       "audience": "smb_core",
       "examples": [
         "new-build brickwork",
@@ -5369,6 +5415,7 @@
     {
       "id": "cabinet_making",
       "name": "Cabinet making",
+      "noun": "cabinet maker",
       "audience": "smb_core",
       "examples": [
         "kitchen cabinets",
@@ -5459,6 +5506,7 @@
     {
       "id": "alarm_systems_install",
       "name": "Alarm systems install",
+      "noun": "alarm installer",
       "audience": "smb_core",
       "examples": [
         "intruder alarms",
@@ -5728,6 +5776,7 @@
     {
       "id": "tiling_services",
       "name": "Tiling services",
+      "noun": "tiler",
       "audience": "smb_core",
       "examples": [
         "bathroom tiling",
@@ -5759,6 +5808,7 @@
     {
       "id": "plastering_services",
       "name": "Plastering services",
+      "noun": "plasterer",
       "audience": "smb_core",
       "examples": [
         "wall plastering",
