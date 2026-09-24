@@ -7,7 +7,9 @@
  *      class (the bug was collapsing to the measured parent before query),
  *   2. includes the legacy DB id for the crosswalk class so legacy-tagged
  *      rows are reachable from the taxonomy slug,
- *   3. resolves a legacy slug directly to its DB id,
+ *   3. resolves a legacy slug directly to its DB id WHERE ITS TAXONOMY
+ *      TARGET IS AN ACTIVITY THE ATLAS COVERS, and to no retired activity
+ *      where it is not (the goal's A6, 2026-09-24),
  *   4. produces de-duplicated, non-empty candidate lists.
  *
  * Run: npx tsx tests/cells/industry_resolution.test.ts
@@ -17,7 +19,7 @@ import {
   resolveDisplayIndustry,
   LEGACY_DB_TO_TAXONOMY,
 } from "../../src/lib/cells/industry_resolution";
-import { industryToSlug, slugToIndustry } from "../../src/lib/taxonomy";
+import { industryToSlug, liveIndustryFor, slugToIndustry } from "../../src/lib/taxonomy";
 
 const errors: string[] = [];
 const check = (cond: boolean, msg: string) => {
@@ -87,39 +89,77 @@ const check = (cond: boolean, msg: string) => {
   }
 }
 
-// 3. Crosswalk class via the LEGACY slug: "metal-products-mfg" must resolve
-//    directly to the legacy DB id first, then its taxonomy equivalent.
+// 3. Crosswalk class via the LEGACY slug, REPOINTED 2026-09-24 (the goal's
+//    A6) from "metal-products-mfg displays fabricated_metal_mfg". That target
+//    is a fabricated metal PLANT the 2026-08-21 scope rules retired, and the
+//    assertion kept production printing it: /gb/london/metal-products-mfg read
+//    "How much do fabricated metal manufacturing earn in London?" when fetched.
+//    The slug now names the live trade its alias points at, and its legacy row
+//    is no longer queried first, because that row is the retired activity's.
 {
   const cands = industryQueryCandidates("metal-products-mfg");
   check(
-    cands[0] === "metal_products_mfg",
-    `metal-products-mfg: expected legacy 'metal_products_mfg' first, got [${cands.join(", ")}]`,
+    cands[0] === "metal_fab_machine_shops",
+    `metal-products-mfg: expected the live 'metal_fab_machine_shops' first, got [${cands.join(", ")}]`,
   );
   check(
-    cands.includes("fabricated_metal_mfg"),
-    `metal-products-mfg: should include taxonomy 'fabricated_metal_mfg', got [${cands.join(", ")}]`,
+    !cands.includes("metal_products_mfg"),
+    `metal-products-mfg: the retired activity's legacy row 'metal_products_mfg' must not be queried, got [${cands.join(", ")}]`,
+  );
+  const disp = resolveDisplayIndustry("metal-products-mfg");
+  check(
+    disp?.id === "metal_fab_machine_shops",
+    `metal-products-mfg: display industry should be the live 'metal_fab_machine_shops', got '${disp?.id ?? "null"}'`,
   );
 }
 
-// 4. Every legacy crosswalk entry round-trips: its slug yields its DB id
-//    first, and its taxonomy target is reachable for display.
+// 4. Every legacy crosswalk entry, in two classes (the goal's A6, 2026-09-24;
+//    the block's old form asserted all fifteen round-trips, eleven of them onto
+//    an activity the 2026-08-21 ruling retired, which is the note on block 2
+//    carried to its end):
+//    - where the taxonomy target is an activity the atlas covers (four pairs),
+//      the slug yields its DB id first, includes the target, and displays it;
+//    - where it is retired (eleven), the slug neither queries the legacy row
+//      nor displays the retired target: it resolves like any other word, to a
+//      live trade or to nothing.
+let livePairs = 0;
+let retiredPairs = 0;
 for (const [legacyId, taxId] of Object.entries(LEGACY_DB_TO_TAXONOMY)) {
   const slug = legacyId.replace(/_/g, "-");
   const cands = industryQueryCandidates(slug);
-  check(
-    cands[0] === legacyId,
-    `legacy '${legacyId}': slug '${slug}' should yield '${legacyId}' first, got [${cands.join(", ")}]`,
-  );
-  check(
-    cands.includes(taxId),
-    `legacy '${legacyId}': should include taxonomy target '${taxId}', got [${cands.join(", ")}]`,
-  );
   const disp = resolveDisplayIndustry(slug);
-  check(
-    disp?.id === taxId,
-    `legacy '${legacyId}': display industry should be '${taxId}', got '${disp?.id ?? "null"}'`,
-  );
+  const live = liveIndustryFor(taxId);
+  if (live) {
+    livePairs++;
+    check(
+      cands[0] === legacyId,
+      `legacy '${legacyId}': slug '${slug}' should yield '${legacyId}' first, got [${cands.join(", ")}]`,
+    );
+    check(
+      cands.includes(live.id),
+      `legacy '${legacyId}': should include taxonomy target '${live.id}', got [${cands.join(", ")}]`,
+    );
+    check(
+      disp?.id === live.id,
+      `legacy '${legacyId}': display industry should be '${live.id}', got '${disp?.id ?? "null"}'`,
+    );
+  } else {
+    retiredPairs++;
+    check(
+      !cands.includes(legacyId),
+      `legacy '${legacyId}': its target '${taxId}' is retired, so the legacy row must not be queried, got [${cands.join(", ")}]`,
+    );
+    check(
+      disp === null || liveIndustryFor(disp.id)?.id === disp.id,
+      `legacy '${legacyId}': display must be a live trade or nothing, got '${disp?.id ?? "null"}'`,
+    );
+    check(
+      disp?.id !== taxId,
+      `legacy '${legacyId}': display must never be the retired target '${taxId}'`,
+    );
+  }
 }
+check(livePairs === 4 && retiredPairs === 11, `the crosswalk's classes moved: ${livePairs} live and ${retiredPairs} retired pairs, 4 and 11 when this block was written; re-read the ruling before changing either number`);
 
 // 5. De-dup + non-empty for a common case.
 {
