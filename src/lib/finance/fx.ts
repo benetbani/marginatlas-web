@@ -80,6 +80,17 @@ const RATES: Record<string, FxRate> = {
     last_reviewed_at: "2024-12-31",
     notes: "Locked at parse time for AU primary-data loader (Phase 1d).",
   },
+  GBP: {
+    ccy: "GBP",
+    /* 1 / 1.32: the rate every London figure on the site was converted at
+       in the data drops (DATA-REQUIREMENTS 23 records "the file's fx 1.32 ...
+       kept for consistency"), so a pound read here and a pound read there
+       are the same dollars. */
+    per_usd: 0.7576,
+    source: "The London data drops' conversion, 1.32 US dollars a pound",
+    last_reviewed_at: "2026-09-17",
+    notes: "Locked when the measured district turnover (data/economics/district_turnover_measured_v1.json, pulled 2026-09-17) was parsed for the neighbourhood page, 2026-09-24. The turnover is FY2023/24 and is converted at this one rate, as every London figure is.",
+  },
   // Future entries land here.
 };
 

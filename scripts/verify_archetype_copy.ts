@@ -60,7 +60,7 @@ import { spineHoodCities, spineHoodDistricts, HOOD_BENCHMARK_TRADE } from "@/lib
 import { buildHoodTake, againstCheapest, byRent } from "@/lib/spine/hood_take_rows";
 import { buildHoodRank } from "@/lib/spine/hood_rank_rows";
 import { buildHoodPremium, visitorsFmt } from "@/lib/spine/hood_premium_rows";
-import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
+import { buildHoodCompare, measuredTakings, TURNOVER_TRADES } from "@/lib/spine/hood_compare_rows";
 import { buildHoodCharacter, openingLine, CHARACTER_FACT_CHARS_CAP } from "@/lib/spine/hood_character_rows";
 import { buildHoodCloseDoors } from "@/lib/spine/close_rows";
 import { buildCityEarningsStrip } from "@/lib/spine/range_rows";
@@ -2589,22 +2589,34 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       /* THE TABLE. */
       const compare = buildHoodCompare(city, focus);
       if (!compare) { reds.push(`${where}: the table builds nothing`); continue; }
+      /* THE TABLE SINCE 2026-09-24 (hood_compare_rows.ts): what a shop takes in
+         each district, MEASURED, one column a trade the measured file holds, in
+         dollars, the highest best; every cell exactly the file's figure or a
+         dash where the file is thin; and no rent or visitor column, because
+         `01` and `02` print those figures and a figure prints once a page. */
       const keys = compare.columns.map((c) => c.key);
-      if (keys.length !== 2 || keys[0] !== "rent" || keys[1] !== "visitors") reds.push(`${where}: the table's columns are ${keys.join(", ")}, not rent and visitors`);
+      const want = TURNOVER_TRADES.map((t) => t.key as string);
+      if (JSON.stringify(keys) !== JSON.stringify(want)) reds.push(`${where}: the table's columns are ${keys.join(", ")}, not the measured trades ${want.join(", ")}`);
+      if (keys.some((k) => /rent|visitor|tourism/i.test(k))) reds.push(`${where}: a rent or visitor column prints a figure 01 or 02 already prints`);
       for (const k of keys) if (/character|walk|price|tier/i.test(k)) reds.push(`${where}: a column keyed "${k}", a word where a figure goes (clause 19, item 66)`);
       for (const c of compare.columns) if (/character|walk|price|tier/i.test(c.head)) reds.push(`${where}: a column head "${c.head}", a word where a figure goes`);
-      if (compare.columns[0]?.unit !== "mult" || compare.columns[0]?.best !== "min" || compare.columns[1]?.unit !== "per" || compare.columns[1]?.best !== "max") reds.push(`${where}: the columns' units or directions are off`);
-      if (!compare.columns[0]?.head.includes(cheapest.name)) reds.push(`${where}: the rent head does not name ${cheapest.name}`);
+      for (const c of compare.columns) if (c.unit !== "usd" || c.best !== "max") reds.push(`${where}: the column ${c.key} is not dollars with the highest best`);
       if (compare.rows.length !== districts.length) reds.push(`${where}: ${compare.rows.length} rows against ${districts.length} districts`);
       for (const r of compare.rows) {
         if ((r as { href?: string }).href) reds.push(`${where}: the row ${r.name} carries a door (M23)`);
-        for (const c of compare.columns) { const v = r.values[c.key]; if (v != null && typeof v !== "number") reds.push(`${where}: the cell ${r.name}/${c.key} holds a ${typeof v}`); }
-        if (r.values.rent == null) reds.push(`${where}: the row ${r.name} holds no rent figure`);
+        for (const c of compare.columns) {
+          const v = r.values[c.key];
+          if (v != null && typeof v !== "number") reds.push(`${where}: the cell ${r.name}/${c.key} holds a ${typeof v}`);
+          const trade = TURNOVER_TRADES.find((t) => t.key === c.key);
+          const expect = trade && r.key ? measuredTakings(trade.file, r.key) : null;
+          if ((v ?? null) !== expect) reds.push(`${where}: the cell ${r.name}/${c.key} prints ${v ?? "a dash"} where the measured file gives ${expect ?? "a dash"}`);
+        }
       }
+      for (const c of compare.columns) if (compare.rows.every((r) => r.values[c.key] == null)) reds.push(`${where}: the column ${c.key} is all dashes`);
       const homes = compare.rows.filter((r) => r.home).map((r) => r.key);
       if (JSON.stringify(homes) !== JSON.stringify(focus ? [focus] : [])) reds.push(`${where}: the home rows are [${homes.join(", ")}]`);
       if (wordsOf(compare.caveat) > 14) reds.push(`${where}: the caveat runs ${wordsOf(compare.caveat)} words`);
-      if ((compare.rows.some((r) => r.values.visitors == null)) !== (compare.note != null)) reds.push(`${where}: the dash note and the dashed cells disagree`);
+      if ((compare.rows.some((r) => compare.columns.some((c) => r.values[c.key] == null))) !== (compare.note != null)) reds.push(`${where}: the dash note and the dashed cells disagree`);
       ban(where, [compare.entityHead, compare.caveat, ...compare.columns.map((c) => c.head), ...(compare.note ? [compare.note] : [])]);
       /* THE NOTES. */
       const character = buildHoodCharacter(city, focus);

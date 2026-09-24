@@ -2173,12 +2173,12 @@ export const COPY = {
     withheldOne: "{n} district withheld: no visitor figure is on file.",
     withheldMany: "{n} districts withheld: no visitor figure is on file.",
   },
+  /** `03 compare` since 2026-09-24 (hood_compare_rows.ts says why): what a shop takes in each district, measured, one column a trade; each head names the class the file measured. */
   hoodCompare: {
     kicker: "Districts, side by side",
-    cols: { visitors: "Visitors per resident" },
-    caveat: "Rent against {cheapest}, modelled; visitors a year for every resident.",
-    caveatYear: "Rent against {cheapest}, modelled; visitors a year for every resident, {year} counts.",
-    dash: "A dash: no visitor figure is on file for that district.",
+    cols: { cafes: "Cafes", hair: "Hair and beauty", dental: "Dental practices" },
+    caveat: "Median yearly takings of firms registered in each district, 2023/24; cafes include unlicensed restaurants.",
+    dash: "A dash: fewer than 40 firms there, too few to measure.",
   },
   hoodChapters: {
     rent: "What rent costs, district by district",

@@ -22,10 +22,12 @@
  * table. Ink only, never terracotta: the accent budget is three figures a
  * page and this table can carry a winning tick in every column, so a hue on
  * each would spend the whole page's emphasis on one card. The name column
- * also gives back what it was wasting: a colgroup now holds it to 1.2 of a
- * 1.2-plus-columns share, the same ratio kit-index.tsx's own compare table
- * already draws, and the value columns split what is left evenly instead of
- * however auto layout happened to leave them.
+ * gives back what it was wasting: on the full-width table a colgroup holds
+ * it to PART 5's 22ch (since 2026-09-24; a 1.2 share of 1.2 plus the columns
+ * before, which left a few-column table's figures hundreds of pixels from
+ * their names), a table in a band keeps that share, and the value columns
+ * split what is left evenly instead of however auto layout happened to
+ * leave them.
  *
  * THE TICK'S HEIGHT IS RESERVED ON EVERY CELL, the same day, once the phone
  * width read three row heights instead of one (69, 70 and 72, not the two a
@@ -162,10 +164,27 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
   const wholeOf: Record<string, boolean> = {};
   for (const c of columns) wholeOf[c.key] = rows.map((r) => r.values[c.key]).filter(isNum).every((v) => Number.isInteger(v));
   const print = (c: CompareColumn, v: number) => fmt(c.unit, v, wholeOf[c.key]);
-  /** Desktop colgroup shares only; the phone form stacks the name above its
-   *  own figures and never shares this row, so it needs no share at all. */
-  const nameColPct = (1.2 / (1.2 + columns.length)) * 100;
-  const valueColPct = (1 / (1.2 + columns.length)) * 100;
+  /** THE NAME COLUMN AT PART 5's 22ch (2026-09-24, the goal's B2; QUEUE
+   *  arch:compare-table-name-column). It was a 1.2 share of 1.2 plus the
+   *  columns, so a table with few value columns handed its name column most
+   *  of the width and put the first figure 568 to 601 px from its name on
+   *  the neighbourhood table at 1280 (LABEL GAP, fourteen rows). The name
+   *  now takes what a name needs and the value columns share the rest
+   *  evenly (table-layout fixed gives every column without a width an equal
+   *  part). THE FULL-WIDTH TABLE ONLY: a table in a band keeps the old
+   *  shares exactly (the name 1.2 parts, each value 1, of 1.2 plus the
+   *  columns), because at half the page (the city's peers, 344 wide at 768) a
+   *  fixed 22ch squeezed four value columns until their heads and figures
+   *  overlapped (two TEXT OVERLAP rows, measured the same day). Not a CSS
+   *  `min()` of the two either: the browser reads a width that mixes a
+   *  percentage with a length on a table column as no width at all, and the
+   *  neighbourhood table's name column went back to an equal quarter (seven
+   *  LABEL GAP rows of 370 to 403 px, measured). The phone form stacks the
+   *  name above its own figures and never shares this row, so it needs no
+   *  width at all. */
+  const parts = 1.2 + columns.length;
+  const nameColWidth = inBand ? `${(1.2 / parts) * 100}%` : "22ch";
+  const valueColWidth = inBand ? `${(1 / parts) * 100}%` : undefined;
   /** The winning cell keeps the ink and weight cellClass always gave it, and
    *  now also carries the tick beside the figure, right-aligned as one group
    *  so the group, not just the figure, sits flush with the column above it.
@@ -202,9 +221,9 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
           <Table className="table-fixed text-[length:var(--t-micro)]">
             <caption className="sr-only">{caveat ?? kicker}</caption>
             <colgroup>
-              <col style={{ width: `${nameColPct}%` }} />
+              <col style={{ width: nameColWidth }} />
               {columns.map((c) => (
-                <col key={c.key} style={{ width: `${valueColPct}%` }} />
+                <col key={c.key} style={valueColWidth ? { width: valueColWidth } : undefined} />
               ))}
             </colgroup>
             <TableHeader>
