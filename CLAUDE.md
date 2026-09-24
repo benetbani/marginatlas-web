@@ -129,11 +129,15 @@ code puts on the page>`.
 
 ## Latest handoff
 
-- **`docs/handoff/HANDOFF-marginatlas-2026-09-24.md` IS THE CURRENT HANDOFF, READ IT FIRST**
-  (the goal of 2026-09-24: five batches shipped, the "Not gathered yet" cards off
-  the UK trade and city pages, A5 next; its re-hydration prompt is its section 14).
-  `E:/atlas/design/loop/build/STATE.md` is the state of record and is newer than
-  any handoff: read its `step-in-flight` before acting.
+- **`docs/handoff/HANDOFF-marginatlas-2026-09-24b.md` IS THE CURRENT HANDOFF, READ IT FIRST**
+  (the goal of 2026-09-24, evening: seventeen batches shipped, production at
+  42ae3c87; his copy correction answered on every main page and gated at zero;
+  D7, the answers on a level at one height, next; its re-hydration prompt is its
+  section 14). `E:/atlas/design/loop/build/STATE.md` is the state of record and is
+  newer than any handoff: read its `step-in-flight` before acting.
+- `docs/handoff/HANDOFF-marginatlas-2026-09-24.md` is the PRIOR handoff, the same
+  day's afternoon: batches one to ten, the "Not gathered yet" cards off the UK trade
+  and city pages, and the loop's traps.
 - `docs/handoff/HANDOFF-marginatlas-2026-09-23.md` is the PRIOR handoff: the build
   loop's new sections, measured, and the seating law they cost.
 - `docs/handoff/HANDOFF-marginatlas-2026-09-19.md` is the PRIOR one-page handoff:
