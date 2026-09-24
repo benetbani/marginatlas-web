@@ -102,6 +102,10 @@ export type CityDistrictBars = {
   /** The card's two column heads, composed here so the head that names the
    *  reference district is filled from the data and never typed into COPY. */
   phoneHead: { name: string; value: string };
+  /** The districts whose rent sits on the engine's clip, by name, and the one
+   *  line that says so under the basis; null where no row is clipped. */
+  clipped: string[];
+  clipLine: string | null;
 };
 
 /** The count of districts, in words, for a basis line a person reads rather
@@ -171,6 +175,20 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
     };
   });
   const dear = ascending[ascending.length - 1];
+  /* THE CLIP LINE, ONE PLACE FOR BOTH ALTITUDES (QUEUE city:rent-clipped-line,
+     the goal's B7, 2026-09-24). A district whose composed rent sits on the
+     engine's clip prints the bound, not a reading; the hub said so under its
+     basis since 2026-09-19 and the city card printed the same figure in
+     silence. The row says it is clipped (`rent_clipped`, from the engine on
+     the city, from the scheme on the hub) and the line names it in the hub's
+     words; no clipped row, no line. */
+  const clippedNames = list.filter((r) => r.rent_clipped === true).map((r) => String(r.name));
+  const clipLine =
+    clippedNames.length === 0
+      ? null
+      : clippedNames.length === 1
+        ? COPY.hoodRank.clipOne.replace("{district}", clippedNames[0])
+        : COPY.hoodRank.clipMany.replace("{districts}", clippedNames.join(", "));
   /* The lower middle for an even count, said here rather than left to a
      reader to wonder about: with six districts this is the third cheapest.
      With TWO the same expression returns index 0, the cheapest itself, which
@@ -191,5 +209,7 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
       name: COPY.cityDistricts.phoneHead.name,
       value: COPY.cityDistricts.phoneHead.value.replace("{district}", String(ascending[0].name)),
     },
+    clipped: clippedNames,
+    clipLine,
   };
 }

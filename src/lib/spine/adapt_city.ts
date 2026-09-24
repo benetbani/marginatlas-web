@@ -454,6 +454,11 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
         rev_clipped: mult.clipped,
         // rent_mult: the real rent multiplier from the district's tags.
         rent_mult: +nm.rentMultiplier.toFixed(2),
+        /* rent_clipped: the rent multiplier sits ON the engine's rent clip, so
+           the figure is the bound, not a reading. The districts card names
+           such a district in one line under its basis, the hub's line in the
+           hub's words (QUEUE city:rent-clipped-line, the goal's B7). */
+        rent_clipped: nm.rentClipped,
         // lat / lng DELIBERATELY absent (no coords held); the map self-omits.
       };
     });

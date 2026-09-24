@@ -22,30 +22,20 @@
  * engine, rebased 1.00 to 2.50). One of them sits on a bound: the West End's
  * composed rent is 3.10 and the engine's rent clip prints 3.00, so its
  * figure is the ceiling and not a reading, and the card says so in one line
- * under the basis (`clipLine`), drawn only when a row is clipped. The city
- * card's rows carry no clip flag today, so it draws no such line; the same
- * line is one field away there (adapt_city.ts could pass
- * `nm.rentClipped`), the controller's call.
+ * under the basis (`clipLine`), drawn only when a row is clipped. SINCE
+ * 2026-09-24 THE LINE IS THE DISTRICT BUILDER'S (the goal's B7): this file
+ * hands it the scheme's `rent_clipped` and the city hands it the engine's
+ * `rentClipped`, so the city card and the hub say it in one set of words.
  */
 import { buildCityDistrictBars, type CityDistrictBars } from "@/lib/spine/district_rows";
 import { spineHoodDistricts } from "@/lib/spine/hood_scheme";
-import { COPY } from "@/lib/spine/copy";
 
-export type HoodRankData = CityDistrictBars & {
-  /** The districts whose composed rent sat on the engine's clip, by name; the line under the basis names them. */
-  clipped: string[];
-  clipLine: string | null;
-};
-
-const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
+/** The builder's own shape: the clip names and the line are the district builder's since 2026-09-24, one place for the city card and the hub. */
+export type HoodRankData = CityDistrictBars;
 
 /** Null when the city is not admitted. */
 export function buildHoodRank(citySlug: string): HoodRankData | null {
   const rows = spineHoodDistricts(citySlug);
   if (!rows) return null;
-  const bars = buildCityDistrictBars({ where_to_trade: { list: rows.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult })) } });
-  if (!bars) return null;
-  const clipped = rows.filter((d) => d.rent_clipped).map((d) => d.name);
-  const clipLine = clipped.length === 0 ? null : clipped.length === 1 ? fill(COPY.hoodRank.clipOne, { district: clipped[0] }) : fill(COPY.hoodRank.clipMany, { districts: clipped.join(", ") });
-  return { ...bars, clipped, clipLine };
+  return buildCityDistrictBars({ where_to_trade: { list: rows.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult, rent_clipped: d.rent_clipped })) } });
 }

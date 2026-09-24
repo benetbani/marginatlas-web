@@ -59,6 +59,7 @@ export function WhereToTrade({ d }: { d: any }) {
       icon="best-areas"
       tagged={b.tagged}
       basis={b.basis}
+      withheldLine={b.clipLine ?? undefined}
       rows={b.rows}
       worldMax={b.worldMax}
       ceiling="set"
