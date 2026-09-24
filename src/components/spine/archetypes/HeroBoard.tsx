@@ -49,7 +49,8 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
       <Box id={id} data-archetype="hero-board" data-level="page" data-visual="1" data-answers={answers} data-rows={String(rows.length)}>
         <div className="flex items-center gap-4">
           <CountryFlag iso2={board.iso2} size="board" className="shrink-0" />
-          <h1 id="headline" data-typography="custom" className="text-[length:var(--t-answer)] font-semibold leading-none tracking-tight text-[var(--c-ink)]">
+          {/* THE NAME STEPS DOWN A RUNG ON A PHONE (the goal's A13, 2026-09-24): at a phone's 327 of content, "Afghanistan" at the 40 ran 11 past the card beside the flag (the page laws, TEXT OUT OF BOX, once the renders measured the width production serves), so under sm it takes the focal rung, 30, and the flag and the name keep one line. */}
+          <h1 id="headline" data-typography="custom" className="min-w-0 text-[length:var(--t-focal)] font-semibold leading-none tracking-tight text-[var(--c-ink)] sm:text-[length:var(--t-answer)]">
             {board.name}
           </h1>
         </div>

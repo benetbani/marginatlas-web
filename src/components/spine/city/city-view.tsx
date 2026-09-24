@@ -905,7 +905,11 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const seasonAtFoot = demandBesideSeason ? null : season;
 
   return (
-    <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+    <div className="py-2" data-spine-body>
+      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
+         wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
+         landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
+         375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
       {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
       <Crumbs items={buildCityCrumbs(slug)} />
       {/* `00 masthead`, FULL WIDTH, the page's only 40 (8.3, loud 1). SINCE THE
@@ -1235,6 +1239,6 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
       ) : null}
       {/* `16 close`, FULL WIDTH (8.3, R1): the exit carries no break (PART 1). */}
       <CityClose d={d} />
-    </main>
+    </div>
   );
 }

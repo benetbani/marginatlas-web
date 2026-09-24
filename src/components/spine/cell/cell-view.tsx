@@ -345,7 +345,11 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const turnThree = !!market;
 
   return (
-    <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+    <div className="py-2" data-spine-body>
+      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
+         wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
+         landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
+         375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
       {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): country, place, this
           trade. Above the masthead, outside the levels, no figure. */}
       <Crumbs items={buildCellCrumbs(d.meta)} />
@@ -567,6 +571,6 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           <Band hero><CloseCard doors={doors} /></Band>
         </div>
       ) : null}
-    </main>
+    </div>
   );
 }

@@ -956,7 +956,11 @@ export function SpineCountryBody({ data }: { data?: any }) {
      Three full widths, R1: the take, the peers, the close. */
   return (
     <>
-      <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+      <div className="py-2" data-spine-body>
+        {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
+           wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
+           landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
+           375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
         <Masthead name={name} iso2={iso2} hero={d.hero} />
         {/* `01 glance | 02 world-seat` LEFT THE PAGE on 2026-09-20 by his word
             (rules/FOUNDER-VERDICTS.md, that date; MODEL.md 8.2 row 00's
@@ -1191,7 +1195,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
           <ExitCard exit={buildCountryExit(iso2 ?? "")} />
         </Band>
         <Close meta={d.meta} name={name} />
-      </main>
+      </div>
       <OnThisPage sections={RAIL_SECTIONS} />
     </>
   );

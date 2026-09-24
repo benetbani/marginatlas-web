@@ -118,7 +118,11 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
 
   return (
     <SpineShell>
-      <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+      <div className="py-2" data-spine-body>
+        {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
+           wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
+           landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
+           375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
         {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
         <Crumbs items={buildHoodCrumbs(slug, focus)} />
         {/* `00 take`, FULL WIDTH, the page's only 40 (8.8, loud 1): the archetype's own hero band carries the attribute the full-width gate reads. */}
@@ -172,7 +176,7 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
         {/* `06 close`, FULL WIDTH on the hero band (8.8, R1; the trade's
             precedent): the exit carries no break (PART 1). */}
         <Band hero><HoodClose doors={doors} /></Band>
-      </main>
+      </div>
     </SpineShell>
   );
 }

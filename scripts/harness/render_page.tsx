@@ -103,7 +103,15 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
     : surface === "hood" && slugs[1]
       ? React.createElement(C, { data, focus: slugs[1] })
       : React.createElement(C, { data });
-  const body = renderToStaticMarkup(selfShelled ? inner : React.createElement(SpineShell as any, null, inner));
+  /* SITECHROME'S MAIN AROUND THE SHELL, as production serves it (the goal's
+     A13, 2026-09-24): every route that draws a spine body wraps it in
+     SiteChrome (`<main className="relative max-w-content mx-auto px-6 pt-4">`),
+     and the bodies no longer carry a main or a gutter of their own, so the
+     render measures the widths a visitor gets (1072 of content at 1280, 720 at
+     768, 327 at 375; the renders read 343 at 375 before, production 295). The
+     how-to route draws no SiteChrome and keeps the main its page file writes. */
+  const shelled = selfShelled ? inner : React.createElement(SpineShell as any, null, inner);
+  const body = renderToStaticMarkup(surface === "howto" ? shelled : React.createElement("main", { className: "relative max-w-content mx-auto px-6 pt-4" }, shelled));
   mkdirSync("scratchpad/harness/pages", { recursive: true });
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}.html`;
   writeFileSync(out, mapAssets(page(`${surface} ${slugs.join(" ")}`, body)), "utf8");
