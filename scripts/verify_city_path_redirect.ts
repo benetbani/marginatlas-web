@@ -20,21 +20,27 @@
  * see a middleware or a config rewrite that intercepts the path first.
  */
 import { readFileSync } from "node:fs";
+import { red } from "./lib/red";
 import { cityPathFor, listedCities } from "../src/lib/cities/city_path";
 import { COUNTRIES } from "../src/lib/taxonomy";
 import { getRegionsForCountry } from "../src/lib/regions/regions-by-country";
 
+const RULE = "city-path-redirect";
+const LIST = "data/cities/city_list_v1.json";
+const HELPER = "src/lib/cities/city_path.ts";
 const reds: string[] = [];
+/* Every red through the one formatter (scripts/lib/red): the rule, the file, what was found, what to do. */
+const fail = (file: string, detail: string, remedy: string, line?: number) => reds.push(red({ rule: RULE, file, line, detail, remedy }));
 const cities = listedCities();
 for (const c of cities) {
   const want = `/cities/${c.slug}`;
-  if (cityPathFor(c.iso2, c.slug) !== want) reds.push(`${c.iso2}/${c.slug}: resolves to ${cityPathFor(c.iso2, c.slug)}, not ${want}`);
-  if (cityPathFor(c.iso2.toLowerCase(), c.slug.toUpperCase()) !== want) reds.push(`${c.iso2}/${c.slug}: the lookup is case-sensitive`);
+  if (cityPathFor(c.iso2, c.slug) !== want) fail(LIST, `${c.iso2}/${c.slug} resolves to ${cityPathFor(c.iso2, c.slug)}, not ${want}`, `make ${HELPER} map the listed slug to its own page`);
+  if (cityPathFor(c.iso2.toLowerCase(), c.slug.toUpperCase()) !== want) fail(HELPER, `${c.iso2}/${c.slug}: the lookup is case-sensitive`, "lower-case the slug and upper-case the country before the lookup");
   const other = c.iso2.toUpperCase() === "US" ? "GB" : "US";
-  if (cityPathFor(other, c.slug) !== null) reds.push(`${other}/${c.slug}: another country's path reaches the city ${c.slug}`);
+  if (cityPathFor(other, c.slug) !== null) fail(HELPER, `${other}/${c.slug}: another country's path reaches the city ${c.slug}`, "compare the listed city's country with the path's before returning a page");
 }
-if (cityPathFor("GB", "london") !== "/cities/london") reds.push("GB/london: the case the queue row names does not resolve to /cities/london");
-if (cityPathFor("US", "london") !== null) reds.push("US/london: a city resolves under a country that does not hold it");
+if (cityPathFor("GB", "london") !== "/cities/london") fail(HELPER, "GB/london does not resolve to /cities/london, the case the queue row names", "restore London's entry or the lookup");
+if (cityPathFor("US", "london") !== null) fail(HELPER, "US/london resolves under a country that does not hold it", "compare the countries before returning a page");
 
 const PAGE = "src/app/[country]/[geo]/page.tsx";
 const src = readFileSync(PAGE, "utf8");
@@ -43,9 +49,9 @@ const branch = src.indexOf("if (!regionEntry) {", lookup);
 const ask = src.indexOf("cityPathFor(", branch);
 const redirect = src.indexOf("permanentRedirect(", branch);
 const nf = src.indexOf("notFound();", branch);
-if (lookup < 0 || branch < 0) reds.push(`${PAGE}: the region lookup and its not-found branch are not where this gate reads them`);
-else if (ask < 0 || redirect < 0 || nf < 0 || !(ask < redirect && redirect < nf)) reds.push(`${PAGE}: the not-found branch does not ask cityPathFor and redirect before notFound()`);
-if (src.indexOf("cityPathFor(") < lookup) reds.push(`${PAGE}: cityPathFor is asked before the region lookup, so a city could shadow a region`);
+if (lookup < 0 || branch < 0) fail(PAGE, "the region lookup and its not-found branch are not where this gate reads them", "keep `const regionEntry = ` and `if (!regionEntry) {` in the route, or teach this gate the new shape");
+else if (ask < 0 || redirect < 0 || nf < 0 || !(ask < redirect && redirect < nf)) fail(PAGE, "the not-found branch does not ask cityPathFor and redirect before notFound()", "ask cityPathFor, then permanentRedirect, then notFound, inside `if (!regionEntry) {`");
+if (src.indexOf("cityPathFor(") < lookup) fail(PAGE, "cityPathFor is asked before the region lookup, so a city could shadow a region", "ask it only inside the branch where the region lookup failed");
 
 let shadowed = 0;
 for (const country of COUNTRIES) {
@@ -54,8 +60,7 @@ for (const country of COUNTRIES) {
 }
 
 if (reds.length) {
-  console.error(`verify_city_path_redirect: ${reds.length} red(s)`);
-  for (const r of reds.slice(0, 20)) console.error(`  ${r}`);
+  console.error(`verify_city_path_redirect: ${reds.length} red(s) above`);
   process.exit(1);
 }
 console.log(`verify_city_path_redirect: ${cities.length} listed cities each reach /cities/<slug> under their own country and no other; the region route asks after its own lookup and redirects before notFound(); ${shadowed} city slug(s) share a region value in their country, where the region page serves.`);
