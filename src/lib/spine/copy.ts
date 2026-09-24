@@ -207,7 +207,7 @@ export const COPY = {
     setup: {
       kicker: TIERS_KICKER,
       line: "We don't have this country's legal forms and their costs yet.",
-      foot: "",
+      foot: "What registering costs is beside.",
     },
     peers: {
       kicker: PEERS_KICKER,

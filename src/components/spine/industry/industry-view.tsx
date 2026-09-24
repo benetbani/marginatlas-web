@@ -260,7 +260,8 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
           five bars stand past the three-cell grid. */}
       {lasts && benchmarkDrawn ? (
         <Band split="1-2" stack="lg">
-          <LastsCard lasts={lasts} />
+          {/* The list form beside the benchmark's taller card (his copy correction of 2026-09-24 took the method lines that filled its foot): the two earlier years stand one under the other and the card holds no gathered hole. */}
+          <LastsCard lasts={lasts} list />
           <BenchmarkCard benchmark={benchmarkDrawn} />
         </Band>
       ) : lasts ? (

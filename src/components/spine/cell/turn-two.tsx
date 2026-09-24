@@ -130,7 +130,7 @@ export function ClearsCard({ id = "clears", clears }: { id?: string; clears: Cle
   );
 }
 
-export function LastsCard({ id = "lasts", lasts }: { id?: string; lasts: LastsData | null }) {
+export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; lasts: LastsData | null; list?: boolean }) {
   if (!lasts) return null;
   const W = COPY.tradeLasts;
   return (
@@ -149,10 +149,11 @@ export function LastsCard({ id = "lasts", lasts }: { id?: string; lasts: LastsDa
             { figure: `${lasts.values.yr1}%`, words: W.working.yr1 },
             { figure: `${lasts.values.yr3}%`, words: W.working.yr3 },
           ]}
+          list={list}
         />
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.basis}</p>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.foot}</p>
+      {lasts.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.basis}</p> : null}
+      {lasts.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.foot}</p> : null}
     </Box>
   );
 }
