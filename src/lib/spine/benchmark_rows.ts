@@ -130,6 +130,8 @@ export type BenchmarkData = {
   top: number;
   /** THE TRADE'S PLACE IN THE SET, the card's focal (the goal's B6): one plus the members whose PRINTED figure is higher, so a tie on the card shares the better place and says it is joint; on the ranked state with the trade's own figure only, else null. */
   rank: { place: number; joint: boolean } | null;
+  /** The words under the place: the count it is placed among (the members holding a figure) and the sector; null where no place is drawn. */
+  rankWords: string | null;
   basis: string;
   /** The one line under the basis: the withheld count, the floor, or the not-gathered line; null when every member ranks. */
   line: string | null;
@@ -192,7 +194,8 @@ function buildBenchmarkOnce(industryId: string): BenchmarkData | null {
     withheldCount,
     top: ranked.length ? ranked[0].pct : 0,
     rank: state === "ranked" && self ? placeOf(self, holding) : null,
-    basis: B.basis.replace("{n}", String(sector.length)).replace("{sector}", sectorPhrase(ind.sector_id)),
+    rankWords: state === "ranked" && self ? B.rankWords.replace("{n}", String(holding.length)).replace("{sector}", sectorPhrase(ind.sector_id)) : null,
+    basis: state === "ranked" ? B.basisRanked : B.basis,
     line,
     confidence: "modeled",
   }) as BenchmarkData;

@@ -67,7 +67,7 @@ export function BenchmarkCard({ id = "benchmark", benchmark }: { id?: string; be
       tagged
       basis={benchmark.basis}
       withheldLine={benchmark.line}
-      focal={benchmark.rank != null ? { figure: placeText(benchmark.rank), words: COPY.industryBenchmark.rankWords } : undefined}
+      focal={benchmark.rank != null ? { figure: placeText(benchmark.rank), words: benchmark.rankWords ?? "" } : undefined}
       rows={benchmark.rows}
       worldMax={benchmark.top}
       ceiling="set"

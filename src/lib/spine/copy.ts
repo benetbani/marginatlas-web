@@ -1922,9 +1922,11 @@ export const COPY = {
    *  not-gathered line where the rows would stand (M19). */
   industryBenchmark: {
     kicker: "Similar trades",
-    /* The words under the focal, the trade's place in the set (the goal's B6): "9th", "by what it keeps". */
-    rankWords: "by what it keeps",
-    basis: "The top of {n} {sector} trades, per $100 of sales.",
+    /* The words under the focal, the trade's place and the set it is placed in (the goal's B6; A17, 2026-09-24): "Joint 8th", "of 13 in food and drink". "in {sector}" and not "{sector} trades": "of 9 trades and home services trades" doubled the noun on four sectors. */
+    rankWords: "of {n} in {sector}",
+    /** The one line: what the set is ranked by where it ranks, what the rows are where it does not. */
+    basisRanked: "Ranked by profit on each $100 of sales.",
+    basis: "Profit on each $100 of sales.",
     topLabel: "The highest",
     withheldOne: "1 trade left out: we only have its sector's figure.",
     withheldMany: "{n} trades left out: we only have their sector's figure.",
