@@ -77,12 +77,13 @@ function Dots({ n }: { n: number }) {
   );
 }
 
-type RegisteringProps = { rows: TierRow[]; howTo?: { href: string; label: string } | null; dots?: boolean; panel?: boolean; door?: boolean; heads?: undefined; figures?: undefined };
-type FiguresProps = { heads: TiersHeads; figures: TiersFigureRow[]; rows?: undefined; howTo?: undefined; dots?: false; panel?: false; door?: false };
+type RegisteringProps = { rows: TierRow[]; howTo?: { href: string; label: string } | null; dots?: boolean; panel?: boolean; door?: boolean; heads?: undefined; figures?: undefined; fill?: undefined };
+/** `fill`: the rows share the height a taller card beside this one gives the card (the goal's B12, 2026-09-24), MarkList's one-column rule; the caller's Box is a flex column. */
+type FiguresProps = { heads: TiersHeads; figures: TiersFigureRow[]; rows?: undefined; howTo?: undefined; dots?: false; panel?: false; door?: false; fill?: boolean };
 
 export function TiersTable(props: RegisteringProps | FiguresProps) {
   const [open, setOpen] = React.useState<number | null>(null);
-  if (props.heads) return <FiguresTable heads={props.heads} figures={props.figures} />;
+  if (props.heads) return <FiguresTable heads={props.heads} figures={props.figures} fill={props.fill} />;
   const { rows, howTo, dots = true, panel = true, door = true } = props;
   if (rows.length === 0) return null;
   const anyDots = dots && rows.some((t) => isNum(t.complexity_1_5));
@@ -170,11 +171,22 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
  * `data-tier-row`, so the harness's equal-heights rule reads both shapes
  * with one selector.
  */
-function FiguresTable({ heads, figures }: { heads: TiersHeads; figures: TiersFigureRow[] }) {
+function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; figures: TiersFigureRow[]; fill?: boolean }) {
   if (figures.length === 0) return null;
   const nameHead = heads.name ?? null;
+  /* THE ROWS SHARE A STRETCHED CARD (the goal's B12, 2026-09-24): the trade
+     page's team sits at the narrow side of 3-2 beside the split, and where the
+     split stands taller (a trade of three roles) the card's foot held 120 to
+     144 of nothing (the London sweep: small leather goods, shoe repair, pet
+     training). With `fill` the table takes the card's free height and its rows
+     share it, as MarkList's one-column rows do beside the donut; a row never
+     falls under its content. THE ROWS GROW, THEY ARE NOT EQUAL TRACKS: a grid
+     of 1fr rows sizes every row to the tallest when the card is the band's
+     tallest (measured on auto dealers: the last row 49 to 57, the card 9
+     taller, four split cards beside it pushed over the page filter's floor),
+     so the rows are a flex column that only grows into spare height. */
   return (
-    <div data-archetype="tiers-table" data-shape="figures" data-heads={nameHead ? 3 : 2}>
+    <div data-archetype="tiers-table" data-shape="figures" data-heads={nameHead ? 3 : 2} className={fill ? "flex flex-1 flex-col" : undefined}>
       {/* THE HEADS, ONCE, AT EVERY WIDTH, at the micro rung a reader reads
           (PART 5: never 10px). The name column's head reads on every width
           here: a role is one of a set, not its own head the way a legal
@@ -184,9 +196,9 @@ function FiguresTable({ heads, figures }: { heads: TiersHeads; figures: TiersFig
         <span data-head className={`text-right ${HEAD}`}>{heads.a}</span>
         <span data-head className={`text-right ${HEAD}`}>{heads.b}</span>
       </div>
-      <div data-idea="I5" className="divide-y divide-[var(--c-border)]">
+      <div data-idea="I5" className={fill ? "flex flex-1 flex-col divide-y divide-[var(--c-border)]" : "divide-y divide-[var(--c-border)]"}>
         {figures.map((r, i) => (
-          <div key={r.key} className="py-2 first:pt-2 last:pb-0">
+          <div key={r.key} className={fill ? "flex grow items-center py-2 first:pt-2 last:pb-0" : "py-2 first:pt-2 last:pb-0"}>
             <div className="flex w-full">
               {/* ONE GRID FOR THE ROW at every width, the registering shape's
                   own phone form: the name block spans the row on a phone and

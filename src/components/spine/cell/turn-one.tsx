@@ -248,10 +248,15 @@ export function SplitCard({ id = "split", split }: { id?: string; split: SplitDa
 export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | null }) {
   if (!team) return null;
   return (
-    <Box id={id}>
+    <Box id={id} className="flex flex-col">
       {/* Every figure is modelled (R12): the roles are the shard's and the pay an index times the country's median; the mark is on, behind his switch. */}
       <Rail icon="wages" kicker={COPY.tradeTeam.kicker} sample />
-      <TiersTable heads={team.heads} figures={team.rows} />
+      {/* The rows share the height the split beside gives the card (the goal's B12; TiersTable's `fill`).
+          The -mt-2 hands back the eight the Rail's inner margin adds in a flex column, where it no longer
+          collapses into the Rail's own (measured: 28 plus 8 in the block card, 36 plus 8 here). */}
+      <div className="-mt-2 flex flex-1 flex-col">
+        <TiersTable heads={team.heads} figures={team.rows} fill />
+      </div>
       {team.noMedian ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.noMedian}</p> : null}
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.basis}</p>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.foot}</p>
