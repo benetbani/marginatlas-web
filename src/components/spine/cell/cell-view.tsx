@@ -420,7 +420,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
                widen and shorten, measured on the 41 (the numbers in the
                commit). The bill keeps the wide side (the 2026-09-18 reading). */
             <Band split={openForm(open) === "metric" ? "2-1" : openForm(open) === "list" ? "1-1" : "1-2"} stack="lg">
-              <PermitsCard permits={permits} />
+              <PermitsCard permits={permits} top={openForm(open) === "list"} />
               <OpenCard open={open} />
             </Band>
           ) : null}

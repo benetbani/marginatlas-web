@@ -98,7 +98,8 @@ import type { SplitData } from "@/lib/spine/split_rows";
 import type { TeamData } from "@/lib/spine/team_rows";
 import type { TradePeersData } from "@/lib/spine/trade_peer_rows";
 
-export function PermitsCard({ id = "permits", permits }: { id?: string; permits: PermitsData | null }) {
+/** `top`: the figure at the top of the card, on the level's answer line, where the partner is the cost to open's kinds of shop (the same form, the same line); beside a taller drawing the figure stays centred, the air split round it (the goal's D7: at the top beside the bill's chart it left 294 by 138 on restaurants). */
+export function PermitsCard({ id = "permits", permits, top = false }: { id?: string; permits: PermitsData | null; top?: boolean }) {
   if (!permits) return null;
   const [lead, ...rest] = permits.cells;
   const worked = !!lead && rest.length >= WORKING_MIN;
@@ -112,8 +113,9 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
     <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
       {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
       <Rail icon="licence-specific" kicker={COPY.tradePermits.kicker} sample />
-      {/* THREE LICENCES FILL (2026-09-24, the long-tail sweep): the slowest and two more stood centred in 132 of air beside the cost to open's chart on /gb/london/bakeries-retail once the copy rewrite took the card's lines; at the working's minimum the rows grow into the card (WorkedFigure `fill`), four or more stand centred as before. */}
-      <div className={`flex flex-1 flex-col ${worked && rest.length === WORKING_MIN ? "" : "justify-center"}`}>
+      {/* THREE LICENCES FILL (2026-09-24, the long-tail sweep): the slowest and two more stood centred in 132 of air beside the cost to open's chart on /gb/london/bakeries-retail once the copy rewrite took the card's lines; at the working's minimum the rows grow into the card (WorkedFigure `fill`).
+          THE ANSWER ON THE LEVEL'S LINE (the goal's D7, 2026-09-24): beside the cost to open's kinds of shop (`top`) the figure stands at the top of the card, so it sits at the height of that card's figure (87 and 99 when both were centred); the floor below keeps the foot, and the air the level lends falls between the waits and the floor. Beside the bill's taller chart it stays centred. */}
+      <div className={`flex flex-1 flex-col ${top || (worked && rest.length === WORKING_MIN) ? "" : "justify-center"}`}>
         {worked ? (
           <WorkedFigure list fill={rest.length === WORKING_MIN} label={lead.label} figure={String(lead.value)} working={rest.map((c) => ({ figure: String(c.value), words: c.label }))} />
         ) : (
@@ -162,7 +164,8 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
     return (
       <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
         <Rail icon="startup-cost" kicker={COPY.tradeOpen.kicker} sample={open.sample} />
-        <div className="flex flex-1 flex-col justify-center">
+        {/* THE ANSWER ON THE LEVEL'S LINE (the goal's D7): at the top, as the licences card's beside it; the floor keeps the foot. */}
+        <div className="flex flex-1 flex-col">
           <WorkedFigure list accent={open.accent} label={lead.name} figure={open.figure ?? lead.figure} working={rest.map((f) => ({ figure: f.figure, words: f.name }))} />
         </div>
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
