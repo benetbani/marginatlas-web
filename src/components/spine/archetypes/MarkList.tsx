@@ -245,7 +245,19 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
   const figChars = Math.max(1, ...rows.map((r) => fmt(r.value).length));
   const GEO = geometry(figChars, marks, doors);
   return (
-    <Box id={id} data-archetype="mark-list" data-idea="I11" data-rows={rows.length} data-marks={marks ? "1" : "0"} data-doors={doors ? "1" : "0"} data-withheld={withheld}>
+    /* THE ONE-COLUMN LIST FILLS ITS LEVEL (the goal's B12, 2026-09-24). Every
+       caller of `oneColumn` seats the list beside a taller card (the donut on
+       the trade and industry pages, the texture table on the city), and a
+       band stretches both to one height (founder ruling 7). With fixed rows
+       the slack piled at the foot: a 653 by 120 to 144 blank under the trade
+       page's rivals on 13 London trades at 1280 (E7's sweep), and 87 of
+       nothing under the city's crew card on every city (the page laws'
+       CARD FOOT BLANK). The rows now share the height, RankedBars' rule
+       (`minmax(2.5rem,1fr)` there): each keeps its 2.75rem floor and takes
+       an equal part of the slack, the name and the figure centred in it, so
+       the air reads as the table's own spacing; where the list is the taller
+       card nothing moves. The two-column form keeps its declared rows. */
+    <Box id={id} className={oneColumn ? "flex flex-col" : ""} data-archetype="mark-list" data-idea="I11" data-rows={rows.length} data-marks={marks ? "1" : "0"} data-doors={doors ? "1" : "0"} data-withheld={withheld}>
       <Rail icon={icon} kicker={kicker} sample={tagged} />
       {/* THE HEADLINE: the set's middle, at the focal rung, in ink. Clause 3. */}
       <div data-answer="1">
@@ -327,7 +339,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
               ) : null}
             </>
           );
-          const rowCls = `${ROW} h-11 items-center border-t border-[var(--c-border)]`;
+          const rowCls = `${ROW} ${oneColumn ? "min-h-11" : "h-11"} items-center border-t border-[var(--c-border)]`;
           return r.href ? (
             <a key={r.key} href={r.href} className={`${rowCls} no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value} data-lands={r.lands}>
               {cells}
@@ -339,10 +351,10 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           );
         };
         return (
-          <div className="mt-4 [container-type:inline-size]">
+          <div className={oneColumn ? "mt-4 flex flex-1 flex-col [container-type:inline-size]" : "mt-4 [container-type:inline-size]"}>
             <div
-              className={twoCols ? "grid [@container(min-width:600px)]:grid-flow-col [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6 [@container(min-width:600px)]:grid-rows-[auto_repeat(var(--ml-rows),2.75rem)]" : "grid"}
-              style={twoCols ? ({ "--ml-rows": String(perCol) } as React.CSSProperties) : undefined}
+              className={twoCols ? "grid [@container(min-width:600px)]:grid-flow-col [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6 [@container(min-width:600px)]:grid-rows-[auto_repeat(var(--ml-rows),2.75rem)]" : oneColumn ? "grid flex-1" : "grid"}
+              style={twoCols ? ({ "--ml-rows": String(perCol) } as React.CSSProperties) : oneColumn ? { gridTemplateRows: "auto", gridAutoRows: "minmax(2.75rem,1fr)" } : undefined}
               data-expect-rows={rows.length}
               data-columns={twoCols ? "2" : "1"}
             >
