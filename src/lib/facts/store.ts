@@ -35,9 +35,42 @@ import type { Fact, FactQuery, PlaceholderOption } from "./types";
 
 let FACTS: Fact[] = [];
 
+/* THE ENTITY INDEX (2026-09-24, the goal's E8). `queryFacts` scanned every
+   loaded fact on every query, and a sweep that loads all 243 industry shards
+   asks tens of thousands of queries: profiled, 294 of the archetype copy
+   gate's 364 seconds were this scan (`queryFacts` and its filter), and the
+   gate stood 349 s inside the chain against its 360 s budget. Every hot query
+   names one entity, so the loaded set is indexed by `entityId`, each list in
+   the set's own order, which keeps every answer identical to the full scan's.
+   The shard loaders only ever append (`loadFacts(allFacts().concat(...))`),
+   so a load that keeps the indexed prefix extends the index; any other load
+   rebuilds it on the next query. */
+let BY_ENTITY: Map<string, Fact[]> | null = null;
+let INDEXED = 0;
+
 /** Replace the loaded set. Used by the shard loader and by tests. */
 export function loadFacts(facts: Fact[]): void {
+  const keepsPrefix = BY_ENTITY !== null && INDEXED > 0 && facts.length >= INDEXED && facts[0] === FACTS[0] && facts[INDEXED - 1] === FACTS[INDEXED - 1];
   FACTS = facts;
+  if (!keepsPrefix) {
+    BY_ENTITY = null;
+    INDEXED = 0;
+  }
+}
+
+/** The index, extended over whatever was appended since it was last read. */
+function entityIndex(): Map<string, Fact[]> {
+  if (BY_ENTITY === null) {
+    BY_ENTITY = new Map();
+    INDEXED = 0;
+  }
+  for (; INDEXED < FACTS.length; INDEXED++) {
+    const f = FACTS[INDEXED];
+    const list = BY_ENTITY.get(f.entityId);
+    if (list) list.push(f);
+    else BY_ENTITY.set(f.entityId, [f]);
+  }
+  return BY_ENTITY;
 }
 
 /** Every fact currently loaded. */
@@ -54,7 +87,8 @@ export function allFacts(): readonly Fact[] {
  */
 export function queryFacts(q: FactQuery): Fact[] {
   const withPlaceholders = q.placeholders === "include";
-  return FACTS.filter((f) => {
+  const pool = q.entityId ? (entityIndex().get(q.entityId) ?? []) : FACTS;
+  return pool.filter((f) => {
     if (!withPlaceholders && f.tag === "placeholder") return false;
     if (q.entityType && f.entityType !== q.entityType) return false;
     if (q.entityId && f.entityId !== q.entityId) return false;
