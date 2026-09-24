@@ -1842,7 +1842,7 @@ export const COPY = {
   tradeCustomers: {
     kicker: "What a customer spends",
     yearLabel: "A regular's year",
-    cells: { spend: "a visit", visits: "visits a year" },
+    cells: { spend: "a visit", visits: "visits a year", visitsBetween: "years between visits" },
     basis: "Spend per visit, times visits a year.",
     foot: "",
   },
@@ -1892,7 +1892,7 @@ export const COPY = {
     cells: {
       cost: { label: "Cost to open", note: "" },
       spend: { label: "Spend per visit", note: "one customer, one visit" },
-      visits: { label: "Visits a year", note: "a typical customer" },
+      visits: { label: "Visits a year", labelBetween: "Years between visits", note: "a typical customer" },
     },
     /** The not-gathered line's parts, joined by the builder in the order the cells stand. */
     notGathered: "We don't have {parts} yet.",

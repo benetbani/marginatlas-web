@@ -45,6 +45,7 @@
  * then the coverage sentence over the ones that print.
  */
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
+import { visitsReading } from "@/lib/spine/trade_customers_rows";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { CityColumn } from "@/lib/markets/across_cities";
 import { usd } from "@/components/spine/kit";
@@ -111,7 +112,8 @@ export function industryHeroFacts(industryId: string | null | undefined): Indust
   const C = COPY.industryHero.cells;
   if (isNum(cost) && cost > 0) cells.push({ key: "cost", label: C.cost.label, value: usd(cost), note: C.cost.note, confidence: "modeled" }); else withheld.push("cost");
   if (isNum(spend) && spend > 0) cells.push({ key: "spend", label: C.spend.label, value: usd(spend), note: C.spend.note, confidence: "modeled" }); else withheld.push("spend");
-  if (isNum(visits) && visits > 0) cells.push({ key: "visits", label: C.visits.label, value: String(Math.round(visits)), note: C.visits.note, confidence: "modeled" }); else withheld.push("visits");
+  /* One reading with the trade page's customer card (`visitsReading`, the goal's A22): never a zero, never a second rounding. */
+  if (isNum(visits) && visits > 0) { const r = visitsReading(visits); cells.push({ key: "visits", label: r.unit === "a year" ? C.visits.label : C.visits.labelBetween, value: r.figure, note: C.visits.note, confidence: "modeled" }); } else withheld.push("visits");
   const notGathered = withheld.length ? COPY.industryHero.notGathered.replace("{parts}", joinParts(withheld.map((k) => COPY.industryHero.parts[k]))) : null;
   const printed = INDUSTRY_HERO_CELLS.filter((k) => !withheld.includes(k)).map((k) => COPY.industryHero.names[k]);
   /* THE PAGE'S ONE WORD ON ESTIMATES (his correction of 2026-09-24, evening): one plain sentence at the hero's foot, the trade's noun in it; no card repeats it. */

@@ -56,7 +56,19 @@ const isPos = (v: unknown): v is number => typeof v === "number" && Number.isFin
 
 /** A spend as a person reads it: whole dollars, cents only under ten dollars ("$22", "$5.64"). */
 const spendText = (v: number) => (v >= 10 ? usd(Math.round(v)) : `$${v.toFixed(2)}`);
-const visitsText = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
+/**
+ * HOW OFTEN A CUSTOMER BUYS, ONE READING FOR EVERY PAGE (2026-09-24, the goal's A22). The industry hero rounded
+ * `demand.purchases_per_year` to a whole number and this card printed one decimal, so custom jewellers read "0" visits a year
+ * on the industry page and "0.4" on the trade page, and 19 of the 138 live trades printed a zero, funeral services "0.0" here:
+ * a gap wearing a number, and two pages disagreeing. One or more a year: the figure, one decimal where it is not whole. Under
+ * one: the years between visits, the same fact turned the right way up for a trade a customer uses once in years (roofers
+ * every 20, funeral services every 83), one decimal under ten. Never a zero.
+ */
+export function visitsReading(v: number): { figure: string; unit: "a year" | "between" } {
+  if (v >= 1) return { figure: Number.isInteger(v) ? String(v) : v.toFixed(1), unit: "a year" };
+  const years = 1 / v;
+  return { figure: years >= 10 ? String(Math.round(years)) : Number.isInteger(years) ? String(years) : years.toFixed(1), unit: "between" };
+}
 
 export function buildTradeCustomers(industryId: string | undefined): TradeCustomersData | null {
   if (!industryId) return null;
@@ -73,7 +85,7 @@ export function buildTradeCustomers(industryId: string | undefined): TradeCustom
      them is this card's one figure at 30 (PART 4, the model laws' FOCAL). */
   const cells: KvCell[] = [
     { key: "spend", label: C.cells.spend, value: spendText(spendOk.value), confidence: "modeled" },
-    { key: "visits", label: C.cells.visits, value: visitsText(visitsOk.value), confidence: "modeled" },
+    { key: "visits", label: visitsReading(visitsOk.value).unit === "a year" ? C.cells.visits : C.cells.visitsBetween, value: visitsReading(visitsOk.value).figure, confidence: "modeled" },
   ];
   const year = { figure: usd(Math.round(spendOk.value * visitsOk.value)), value: spendOk.value * visitsOk.value };
   const tag: FactTag = [spendOk, visitsOk].some((f) => f.tag !== "held") ? "modeled" : "held";
