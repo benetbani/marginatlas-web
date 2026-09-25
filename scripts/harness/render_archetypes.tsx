@@ -33,7 +33,7 @@ import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
-const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
+const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|countries|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
 import { StockTiersStories, SurvivalCurveStories, LocalAppsStories, MarketHoldStories, JobMarketStories, ThresholdsStories, AgeMixStories, CustomersComeStories, OriginStories, AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, StepperStories, SegmentBarStories, MonthBarsStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";

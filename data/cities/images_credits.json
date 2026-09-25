@@ -1,0 +1,69 @@
+{
+  "_about": "The photographs on the UK's pages, each a Wikimedia Commons file in the public domain or under CC0 (no credit required; kept here as the record of where each came from). Chosen 2026-09-25 on the founder's word ('you choose, push forward'); no stock libraries (the no-stock-imagery rule).",
+  "photos": {
+    "gb": {
+      "file": "/countries/gb.jpeg",
+      "alt": "Tower Bridge at night, London",
+      "title": "File:Tower Bridge in London at night.jpg",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_in_London_at_night.jpg",
+      "read_on": "2026-09-25"
+    },
+    "london": {
+      "file": "/cities/london.jpeg",
+      "alt": "The City of London skyline from Dulwich",
+      "title": "File:City of London skyline from Dawson Heights, Dulwich (2).jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:City_of_London_skyline_from_Dawson_Heights,_Dulwich_(2).jpg",
+      "read_on": "2026-09-25"
+    },
+    "manchester": {
+      "file": "/cities/manchester.jpeg",
+      "alt": "Manchester city centre from above Deansgate",
+      "title": "File:Looking northwards up Deansgate from Cloud 23 on the 23rd floor of the Beetham Tower, Manchester.jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Looking_northwards_up_Deansgate_from_Cloud_23_on_the_23rd_floor_of_the_Beetham_Tower,_Manchester.jpg",
+      "read_on": "2026-09-25"
+    },
+    "birmingham": {
+      "file": "/cities/birmingham.jpeg",
+      "alt": "The Bullring, Birmingham",
+      "title": "File:The Bullring Birmingham (175816679).jpeg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:The_Bullring_Birmingham_(175816679).jpeg",
+      "read_on": "2026-09-25"
+    },
+    "leeds": {
+      "file": "/cities/leeds.jpeg",
+      "alt": "A shopping street in Leeds city centre",
+      "title": "File:Leeds City Centre.JPG",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leeds_City_Centre.JPG",
+      "read_on": "2026-09-25"
+    },
+    "glasgow": {
+      "file": "/cities/glasgow.jpeg",
+      "alt": "The River Clyde and Glasgow's skyline",
+      "title": "File:River Clyde pontoon pier with dockyard cranes and modern Glasgow skyline.jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:River_Clyde_pontoon_pier_with_dockyard_cranes_and_modern_Glasgow_skyline.jpg",
+      "read_on": "2026-09-25"
+    },
+    "edinburgh": {
+      "file": "/cities/edinburgh.jpeg",
+      "alt": "Grassmarket, Edinburgh's Old Town",
+      "title": "File:Grassmarket Square, Old Town Edinburgh, Scotland.jpg",
+      "license": "cc0",
+      "source": "https://commons.wikimedia.org/wiki/File:Grassmarket_Square,_Old_Town_Edinburgh,_Scotland.jpg",
+      "read_on": "2026-09-25"
+    },
+    "bristol": {
+      "file": "/cities/bristol.jpeg",
+      "alt": "Bristol's harbourside",
+      "title": "File:Bristol Waterfront.jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bristol_Waterfront.jpg",
+      "read_on": "2026-09-25"
+    }
+  }
+}

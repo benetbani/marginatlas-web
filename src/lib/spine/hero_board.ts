@@ -54,6 +54,7 @@
  * the manifest, never the disk.
  */
 import { buildHeroFacts, type HeroFacts } from "@/lib/spine/hero_facts";
+import countryImagesJson from "../../../data/countries/images_manifest.json";
 import { buildPayBars, worldPaySets } from "@/lib/spine/pay_rows";
 import { placementRank } from "@/lib/spine/placement";
 import { getCountryProfile, listCountryProfiles } from "@/lib/economic_profile";
@@ -144,7 +145,11 @@ function sweeps() {
  *  the module never reads the disk, so it renders the same on the build
  *  server and in the harness). */
 export function heroImageFor(iso2: string): HeroBoardData["image"] {
-  void iso2;
+  /* THE COUNTRY'S OWN PHOTOGRAPH WHERE ONE HAS LANDED (2026-09-25: the United Kingdom's, Tower Bridge at night, a public-domain
+     Wikimedia Commons file; data/cities/images_credits.json holds where it came from). Read from the generated manifest, never the
+     disk, so the build server and the harness draw the same page. Every other country keeps the labelled placeholder. */
+  const own = (countryImagesJson as { countries?: Record<string, { file: string; alt?: string }> }).countries?.[String(iso2 ?? "").toLowerCase()];
+  if (own?.file) return { src: own.file, alt: own.alt ?? "", placeholder: false };
   return { src: "/spine/_skyline.jpeg", alt: "", placeholder: true };
 }
 

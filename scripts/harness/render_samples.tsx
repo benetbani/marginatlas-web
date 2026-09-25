@@ -277,7 +277,7 @@ async function main() {
 
   const html = `<!doctype html><html lang="en" style="--font-sans: Geist, ui-sans-serif, system-ui, sans-serif; --font-serif: Space Grotesk, ui-sans-serif, system-ui, sans-serif;"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Four samples, 2026-09-23</title><style>${readFileSync(CSS_PATH, "utf8")}</style><style>body{background:var(--c-ground);margin:0}</style></head><body class="spine-scope">${renderToStaticMarkup(body)}</body></html>`;
   const out = "scratchpad/harness/samples.html";
-  writeFileSync(out, html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`), "utf8");
+  writeFileSync(out, html.replace(/(src|href)="\/(cities|countries|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`), "utf8");
   console.log(`render_samples: wrote ${out}`);
   console.log(`  net here ${netHere}%, typical anywhere ${typicalPct}%; months ${monthPoints ? monthPoints.length : 0}; living ${living?.cells?.length ?? 0} cells; split ${split ? split.segments.length : 0} segments`);
 }

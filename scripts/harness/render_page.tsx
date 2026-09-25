@@ -28,8 +28,8 @@ import { pathToFileURL } from "node:url";
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) =>
   html
-    .replace(/src="\/(cities|spine|flags)\//g, (_m, d) => `src="${PUBLIC_URL}${d}/`)
-    .replace(/href="\/(cities|spine|flags)\/([^"]*\.[a-z0-9]{2,5})"/g, (_m, d, file) => `href="${PUBLIC_URL}${d}/${file}"`);
+    .replace(/src="\/(cities|countries|spine|flags)\//g, (_m, d) => `src="${PUBLIC_URL}${d}/`)
+    .replace(/href="\/(cities|countries|spine|flags)\/([^"]*\.[a-z0-9]{2,5})"/g, (_m, d, file) => `href="${PUBLIC_URL}${d}/${file}"`);
 import { buildSpineCountrySeed } from "../../src/lib/spine/adapt_country";
 import { buildSpineCitySeed } from "../../src/lib/spine/adapt_city";
 import { buildSpineCellSeed } from "../../src/lib/spine/adapt_cell";
