@@ -158,6 +158,10 @@ import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { buildSuits } from "@/lib/spine/suits_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
+import { StockTiers } from "@/components/spine/sections/StockTiers";
+import { Thresholds } from "@/components/spine/sections/Thresholds";
+import { buildStockKit } from "@/lib/spine/sections/stock_kit";
+import { buildThresholds } from "@/lib/spine/sections/thresholds";
 
 const X: any = spineCellSeed;
 
@@ -336,11 +340,18 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const exitCustomers = spreadDrawn ? customers : null;
   const worthDrawn = worth && worth.state === "strip" ? worth : null;
   const doors = buildTradeCloseDoors(d);
+  /* THE KIT AT FOUR BUDGETS BESIDE THE LINES TO CROSS (2026-09-25, two of his page-agnostic sections of that night, seated on his
+     "you choose, push forward"): the trade's own kit where the kit file holds the trade in the country (the United Kingdom's
+     barbershops and cafes today), beside the lines a first year crosses there. Neither card's figures stand anywhere else on a
+     trade page, and the lines read against the page's own sales: a barbershop's year runs across the VAT line. Both or neither,
+     so the level never holds one card. */
+  const kit = typeof d.meta?.iso2 === "string" && typeof d.meta?.industry === "string" ? buildStockKit(d.meta.iso2, d.meta.industry) : null;
+  const lines = kit && typeof d.meta?.iso2 === "string" ? buildThresholds(d.meta.iso2) : null;
   /* The turns, by whether a card stands under each: turn one holds the
      money cards and the peers (the peers only where a peer resolves, the
      band's note), turn two the share, the survival grid and the strip, turn
      three the bento and then the exit's pair. */
-  const turnOne = !!(permits && open) || !!(split && team) || !!(peers && peers.peers > 0);
+  const turnOne = !!(permits && open) || !!(kit && lines) || !!(split && team) || !!(peers && peers.peers > 0);
   const turnTwo = !!(clears && lasts);
   const turnThree = !!market;
 
@@ -422,6 +433,14 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
             <Band split={openForm(open) === "metric" ? "2-1" : openForm(open) === "list" ? "1-1" : "1-2"} stack="lg">
               <PermitsCard permits={permits} top={openForm(open) === "list"} />
               <OpenCard open={open} />
+            </Band>
+          ) : null}
+          {/* `03b kit | 03c lines` (2026-09-25): the kit wide LEFT, its four budgets as a switch under 720px of card (every seat on this
+              page is under it at 1280), the lines narrow RIGHT; one drawing on the level, the kit's bars. */}
+          {kit && lines ? (
+            <Band split="3-2" stack="lg">
+              <StockTiers id="stock" kit={kit} />
+              <Thresholds id="thresholds" data={lines} fill />
             </Band>
           ) : null}
           {/* `05 split | 06 team`, the split wide LEFT (fill-bar two, M10) and the

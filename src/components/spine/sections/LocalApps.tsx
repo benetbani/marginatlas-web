@@ -33,7 +33,7 @@ export function LocalApps({ id = "local-apps", data }: { id?: string; data: Loca
               </div>
               <ol className="m-0 list-none divide-y divide-[var(--c-border)] p-0">
                 {j.apps.map((a) => (
-                  <li key={a.name} data-row={a.name} title={a.note || undefined} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 py-2">
+                  <li key={a.name} data-row={a.name} title={a.note || undefined} className="grid max-w-none grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 py-2">
                     <CountryFlag iso2={a.from} />
                     <span data-label className="min-w-0 truncate text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{a.name}</span>
                     <Fig className="whitespace-nowrap text-right text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{a.fee}</Fig>

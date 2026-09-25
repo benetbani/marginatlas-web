@@ -1,5 +1,5 @@
 {
-  "_about": "The kit to open a trade at four budgets, by country and trade (his message of 2026-09-25: \"The cost to stock the business should be multiple option one, cheap, medium, premium, luxury but with activity based specifics\"). Every line is a named product on a supplier's own page in that country, priced BEFORE VAT on the day read (a price read with VAT is divided by 1.2); a category counts only when all four budgets hold it, so the totals compare like for like; a category bought in two parts is one line with its parts summed; consumables are left out. The research notes, with each page's quote, are in the design repository: design/loop/build/research/2026-09-25-R1-stock-barbershop-GB.md and 2026-09-25-R1b-stock-cafe-GB.md.",
+  "_about": "The kit to open a trade at four budgets, by country and trade (his message of 2026-09-25: \"The cost to stock the business should be multiple option one, cheap, medium, premium, luxury but with activity based specifics\"). Every line is a named product on a supplier's own page in that country, priced BEFORE VAT on the day read (a price read with VAT is divided by 1.2); a category counts only when all four budgets hold it, so the totals compare like for like; a category bought in two parts is one line with its parts summed; consumables are left out. The research notes, with each page's quote, are in the design repository: design/loop/build/research/2026-09-25-R1-stock-barbershop-GB.md and 2026-09-25-R1b-stock-cafe-GB.md. A line's qty counts pieces, never packs: the cafe's chairs are sold in pairs and were first stored as 15 (packs) under \"the kit for 30 seats\"; they are 30 (2026-09-25).",
   "GB": {
     "barbershops": {
       "shop": "3 chairs",
@@ -646,7 +646,7 @@
           },
           {
             "cat": "chairs",
-            "qty": 15,
+            "qty": 30,
             "name": "Bolero Verona",
             "total_gbp": 1424.85,
             "brand": "Bolero",
@@ -781,7 +781,7 @@
           },
           {
             "cat": "chairs",
-            "qty": 15,
+            "qty": 30,
             "name": "Bolero Scandi",
             "total_gbp": 2204.85,
             "brand": "Bolero",
@@ -917,7 +917,7 @@
           },
           {
             "cat": "chairs",
-            "qty": 15,
+            "qty": 30,
             "name": "Fameg bentwood",
             "total_gbp": 4109.85,
             "brand": "Fameg",
@@ -1052,7 +1052,7 @@
           },
           {
             "cat": "chairs",
-            "qty": 15,
+            "qty": 30,
             "name": "Bolero Obi ash",
             "total_gbp": 8009.85,
             "brand": "Bolero",

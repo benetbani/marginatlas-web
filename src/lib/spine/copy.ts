@@ -651,6 +651,7 @@ export const COPY = {
     spanJoin: "to",
     tiers: { budget: "Budget", mid: "Mid-range", premium: "Premium", luxury: "Luxury" },
     pick: "Budget",
+    more: "{n} more items",
     cats: {
       chair: "Chairs", clippers: "Clippers", trimmer: "Trimmers", foil_shaver: "Shavers", station: "Stations", backwash: "Backwash",
       hot_towel_cabinet: "Towel warmer", steriliser: "Steriliser", scissors: "Scissors", cape: "Capes", card_reader: "Card reader",
@@ -728,7 +729,9 @@ export const COPY = {
       rates: { label: "No business rates", note: "rateable value or less" },
       wage: { label: "Minimum wage", note: "from age 21", unit: "/h" },
       allowance: { label: "Employment allowance", note: "off employer's National Insurance" },
-      "small-profits": { label: "Profit taxed at 19%", note: "up to this; {pct} over {upper}" },
+      /* The rates from the file, never written here (a country's figure is the file's to hold), and in the note: "Profit taxed at
+         19%" was a four-word label, the model laws' ROW SENTENCE, on the trade page's first render. */
+      "small-profits": { label: "Lower profit tax", note: "{rate} up to this; {pct} over {upper}" },
     } as Record<string, { label: string; note: string; words?: string; unit?: string }>,
   },
   /** THE COUNTRY PAGE'S NEW SECTIONS (country_depth_rows.ts, 2026-09-25). Labels the same on every country; a note is the one short

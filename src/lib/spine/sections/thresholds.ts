@@ -36,7 +36,7 @@ export function buildThresholds(iso2: string): Thresholds | null {
     if (l.key === "small-profits" && typeof l.upper_gbp === "number" && typeof l.upper_pct === "number") {
       const upper = convertToUsd(c.currency, l.upper_gbp);
       if (upper == null) continue;
-      note = note.replace("{pct}", `${l.upper_pct}%`).replace("{upper}", whole(upper));
+      note = note.replace("{rate}", typeof l.pct === "number" ? `${l.pct}%` : "").replace("{pct}", `${l.upper_pct}%`).replace("{upper}", whole(upper)).trim();
     }
     if (l.key === c.lead && t.words) lead = { figure, words: t.words };
     else rows.push({ key: l.key, icon: ICON[l.key], label: t.label, figure, note });

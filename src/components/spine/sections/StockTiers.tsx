@@ -18,11 +18,15 @@
  *    the model laws read the figures on their row's line.
  */
 import * as React from "react";
-import { Box, Fig, Ico, Rail } from "@/components/spine/kit";
+import { Box, Fig, Ico, InlineDisclosure, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { StockKit, StockTierKey } from "@/lib/spine/sections/stock_kit";
 
 const dollars = (v: number) => `$${Math.round(v).toLocaleString("en-US")}`;
+/* THE SWITCH SHOWS THE FIVE COSTLIEST PIECES AND KEEPS THE REST BEHIND THE PLUS (2026-09-25, the card's first seat): the
+   barbershop's twelve lines stood 852px tall at three fifths of a trade page at 1280, beside a card of 400, a hole of 376 by 450
+   (the page filter's WHITE SPACE). The five carry most of each budget's total; the plus is his (DetailPanel.tsx's header). */
+const SHOWN = 5;
 const MARKS: Record<StockTierKey, number> = { budget: 1, mid: 2, premium: 3, luxury: 4 };
 
 /** The price mark: four dollar signs, the budget's count of them in ink, the rest faint (never the accent: ART-DIRECTION C2, the
@@ -38,12 +42,15 @@ function PriceMark({ tier }: { tier: StockTierKey }) {
   );
 }
 
-function TotalBar({ value, high }: { value: number; high: number }) {
+/* ONE BAR IN THE ACCENT, THE BUDGET BEING READ (2026-09-25, seating the card on a trade page): four accent bars were four things
+   claiming to be the answer (ART-DIRECTION C2, two a card at most), and a menu of budgets has no answer of its own. The table lights
+   the mid-range, the budget the card opens on; the switch lights the budget pressed. The rest in the neutral gradient. */
+function TotalBar({ value, high, lead }: { value: number; high: number; lead: boolean }) {
   const w = high > 0 ? Math.max(3, (value / high) * 100) : 0;
   return (
     <span aria-hidden className="relative mt-2 block h-1.5 rounded-full">
       <span className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
-      <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${w}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" }} />
+      <span className="absolute inset-y-0 left-0 rounded-full" style={lead ? { width: `${w}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" } : { width: `${w}%`, backgroundColor: "var(--c-line-strong)", backgroundImage: "linear-gradient(90deg, var(--c-border), var(--c-line-strong))" }} />
     </span>
   );
 }
@@ -74,7 +81,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                   <PriceMark tier={t.key} />
                 </div>
                 <Fig className="mt-1 block text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{dollars(t.usd)}</Fig>
-                <TotalBar value={t.usd} high={kit.high} />
+                <TotalBar value={t.usd} high={kit.high} lead={t.key === initial} />
               </div>
             ))}
             {rows.map((r, ri) => (
@@ -116,14 +123,17 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                       <PriceMark tier={t.key} />
                     </span>
                     <Fig className="mt-1 block text-[length:var(--t-body)] font-semibold leading-none text-[var(--c-ink)]">{dollars(t.usd)}</Fig>
-                    <TotalBar value={t.usd} high={kit.high} />
+                    <TotalBar value={t.usd} high={kit.high} lead={on} />
                   </button>
                 );
               })}
             </div>
-            <ol className="m-0 mt-3 list-none p-0">
-              {chosen.lines.map((l) => (
-                <li key={l.cat} data-row={l.cat} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-[var(--c-border)] py-2 first:border-t-0">
+            {(() => {
+              const byCost = [...chosen.lines].sort((a, b) => b.usd - a.usd);
+              /* `max-w-none`: a list item carries the prose measure site-wide (BarList's rows say the same), and the prices stood 45px
+                 short of the card's right edge. */
+              const row = (l: (typeof byCost)[number]) => (
+                <li key={l.cat} data-row={l.cat} className="grid max-w-none grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-[var(--c-border)] py-2 first:border-t-0">
                   <Ico id={l.icon} tone="terra" />
                   <span className="min-w-0">
                     <span data-label className="block text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{l.label} <span className="text-[var(--c-muted)]">&times;{l.qty}</span></span>
@@ -131,8 +141,18 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                   </span>
                   <Fig className="text-right text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{dollars(l.usd)}</Fig>
                 </li>
-              ))}
-            </ol>
+              );
+              return (
+                <>
+                  <ol className="m-0 mt-3 list-none p-0">{byCost.slice(0, SHOWN).map(row)}</ol>
+                  {byCost.length > SHOWN ? (
+                    <InlineDisclosure name={`${id}-more`} summary={S.more.replace("{n}", String(byCost.length - SHOWN))} className="group mt-1 border-t border-[var(--c-border)] [&>summary]:py-2.5">
+                      <ol className="m-0 list-none p-0">{byCost.slice(SHOWN).map(row)}</ol>
+                    </InlineDisclosure>
+                  ) : null}
+                </>
+              );
+            })()}
           </div>
         </div>
       </div>

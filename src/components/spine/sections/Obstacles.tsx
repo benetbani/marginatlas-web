@@ -66,7 +66,7 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
         </div>
         <ol className="m-0 list-none p-0 [@container(min-width:480px)]:hidden">
           {items.map((o) => (
-            <li key={o.key} data-row={o.key} className="py-2">
+            <li key={o.key} data-row={o.key} className="max-w-none py-2">
               <div className="flex items-baseline justify-between gap-3">
                 <span data-label className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{o.label}</span>
                 {o === top ? null : <Fig className="text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{o.pct}%</Fig>}
