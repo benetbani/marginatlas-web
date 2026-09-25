@@ -162,6 +162,10 @@ import { StockTiers } from "@/components/spine/sections/StockTiers";
 import { Thresholds } from "@/components/spine/sections/Thresholds";
 import { buildStockKit } from "@/lib/spine/sections/stock_kit";
 import { buildThresholds } from "@/lib/spine/sections/thresholds";
+import { LocalApps } from "@/components/spine/sections/LocalApps";
+import { SpendByIncome } from "@/components/spine/sections/SpendByIncome";
+import { buildLocalApps } from "@/lib/spine/sections/local_apps";
+import { buildSpendByIncome } from "@/lib/spine/sections/spend_by_income";
 
 const X: any = spineCellSeed;
 
@@ -347,6 +351,11 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      so the level never holds one card. */
   const kit = typeof d.meta?.iso2 === "string" && typeof d.meta?.industry === "string" ? buildStockKit(d.meta.iso2, d.meta.industry) : null;
   const lines = kit && typeof d.meta?.iso2 === "string" ? buildThresholds(d.meta.iso2) : null;
+  /* THE APPS THE TRADE RUNS ON BESIDE WHO SPENDS ON IT, BY INCOME (2026-09-25, two more of his sections of that night): the
+     country's apps by job, the booking job only for the trades it serves, beside a household's week on the trade's item by
+     income tenth. Both or neither. */
+  const spendIncome = typeof d.meta?.iso2 === "string" && typeof d.meta?.industry === "string" ? buildSpendByIncome(d.meta.iso2, d.meta.industry) : null;
+  const apps = spendIncome && typeof d.meta?.iso2 === "string" ? buildLocalApps(d.meta.iso2, d.meta.industry) : null;
   /* The turns, by whether a card stands under each: turn one holds the
      money cards and the peers (the peers only where a peer resolves, the
      band's note), turn two the share, the survival grid and the strip, turn
@@ -558,6 +567,15 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           {rivals ? <Band split="2-1" stack="lg"><RivalsCard rivals={rivals} /></Band> : null}
         </>
       )}
+      {/* `17 apps | 18 spend` AT 3-2 (2026-09-25): the apps wide LEFT in their two balanced columns (they need 560px of card for two),
+          who spends on the trade's item by income RIGHT, its columns taking the height the directory lends them; the level's one
+          drawing. Under "What the trade is like": the tools the trade runs on, and who buys from it. */}
+      {apps && spendIncome ? (
+        <Band split="3-2" stack="lg">
+          <LocalApps id="apps" data={apps} />
+          <SpendByIncome id="spend-income" data={spendIncome} />
+        </Band>
+      ) : null}
       {/* `16 customers | 14 worth` AT 1-1 (2026-09-20 night, his "more
           sections" from what the shard holds): what one regular customer is
           worth a year LEFT, the fact card with its computation at 30, and

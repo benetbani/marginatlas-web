@@ -1,10 +1,16 @@
 {
-  "_about": "The apps a small business runs on, by country and by job (his message of 2026-09-25: \"Supporting applications for each country in terms of categories, booking, delivery, marketing, etc. Focus on not worldwide apps, more local ones\"). Each app with the country it was founded in and its fee as its own UK pricing page states it on the day read; an app whose fee was not found is not listed, and a job with fewer than two listed apps is not drawn. Research: design/loop/build/research/2026-09-25-R2-hours-apps-GB.md.",
+  "_about": "The apps a small business runs on, by country and by job (his message of 2026-09-25: \"Supporting applications for each country in terms of categories, booking, delivery, marketing, etc. Focus on not worldwide apps, more local ones\"). Each app with the country it was founded in and its fee as its own UK pricing page states it on the day read; an app whose fee was not found is not listed, and a job with fewer than two listed apps is not drawn. Research: design/loop/build/research/2026-09-25-R2-hours-apps-GB.md. A job that serves some trades only names them in `trades` (the booking apps are salon and barber platforms), and a trade page leaves the job out for any other trade; a page with no trade keeps every job.",
   "GB": {
     "read_on": "2026-09-25",
     "jobs": [
       {
         "key": "bookings",
+        "trades": [
+          "barbershops",
+          "hairdressers-beauty",
+          "hair-salons-full-service",
+          "nail-salons"
+        ],
         "apps": [
           {
             "name": "Fresha",

@@ -4,8 +4,11 @@
  * country (sections/local_apps.ts).
  *
  * THE LAW, inside the component:
- *  - A DIRECTORY, NOT A MEASUREMENT: no figure stands for the card, so none is invented for it; each app's fee is its figure.
- *  - EACH JOB A BLOCK: its glyph and its name, then its apps, the country's own first. Each app a row: the flag of the country it
+ *  - THE CARD'S ONE FIGURE is how many of the apps it lists were founded in the country, of how many (his "not worldwide apps,
+ *    more local ones", counted off the list the reader sees; 2026-09-25, the card's first seat: a directory with no figure is the
+ *    model laws' FOCAL on every page that seats it). Each app's fee is its row's figure. Drawn only where one app is the
+ *    country's own: "0 of 19" says nothing a flag does not.
+ *  - EACH JOB A BLOCK: its glyph and its name (the card's lead, a rung over its rows), then its apps, the country's own first. Each app a row: the flag of the country it
  *    was founded in (the local cue is the flag, never a word), its name, and its fee as one short figure with its unit as a
  *    symbol ("1.69%/sale", "$44/mo", "Free").
  *  - Blocks flow down balanced columns (one under 560px of card, two from 560px, three from 900px), each kept whole, so seven
@@ -23,13 +26,24 @@ export function LocalApps({ id = "local-apps", data }: { id?: string; data: Loca
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="supplier" kicker={COPY.localApps.kicker} />
+      {data.localCount > 0 ? (
+        <div className="mb-5">
+          <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">
+            {data.localCount} <span className="text-[var(--c-muted)]">{COPY.localApps.of}</span> {data.total}
+          </div>
+          <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.localApps.focalWords}</p>
+        </div>
+      ) : null}
       <div className="[container-type:inline-size]">
         <div data-archetype="local-apps" data-visual="1" data-jobs={String(data.jobs.length)} className="gap-x-8 [@container(min-width:560px)]:columns-2 [@container(min-width:900px)]:columns-3">
           {data.jobs.map((j) => (
             <section key={j.key} data-job={j.key} className="mb-5 min-w-0 break-inside-avoid">
-              <div className="mb-2 flex items-center gap-2">
+              {/* THE JOB'S NAME IS THE CARD'S LEAD, a rung over its rows (2026-09-25, the card's first seat): at the micro rung in capitals
+                  every word of a directory with no figure stood at 14px or under, and the page filter's NO LEAD read a card with no
+                  order for the eye. The subject leads, as the spectra table's `lead` scale has its trait names do. */}
+              <div className="mb-1 flex items-center gap-2">
                 <Ico id={j.icon} tone="terra" />
-                <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{j.label}</span>
+                <span className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{j.label}</span>
               </div>
               <ol className="m-0 list-none divide-y divide-[var(--c-border)] p-0">
                 {j.apps.map((a) => (

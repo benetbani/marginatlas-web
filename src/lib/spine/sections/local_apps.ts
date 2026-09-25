@@ -15,7 +15,7 @@ import { COPY } from "@/lib/spine/copy";
 
 type Fee = { kind: "pct" | "month" | "year" | "ad" | "commission" | "free"; pct?: number; gbp?: number };
 type FileApp = { name: string; from: string; fee: Fee; note?: string };
-type FileJob = { key: string; apps: FileApp[] };
+type FileJob = { key: string; trades?: string[]; apps: FileApp[] };
 
 export type LocalApp = { name: string; from: string; local: boolean; fee: string; note: string };
 export type LocalJob = { key: string; label: string; icon: AtlasIconId; apps: LocalApp[] };
@@ -49,7 +49,9 @@ function feeText(f: Fee): string | null {
   }
 }
 
-export function buildLocalApps(iso2: string): LocalApps | null {
+/** `trade` (a trade page's URL slug, 2026-09-25): a job that names its trades is drawn for those trades only (the booking apps are
+ *  salon and barber platforms, never a cafe's); without a trade every job is drawn. */
+export function buildLocalApps(iso2: string, trade?: string): LocalApps | null {
   const code = iso2.toUpperCase();
   const c = (appsJson as unknown as Record<string, { jobs?: FileJob[] } | string>)[code];
   if (!c || typeof c === "string" || !Array.isArray(c.jobs)) return null;
@@ -59,6 +61,7 @@ export function buildLocalApps(iso2: string): LocalApps | null {
     const label = labels[j.key];
     const icon = JOB_ICON[j.key];
     if (!label || !icon) continue;
+    if (trade && Array.isArray(j.trades) && !j.trades.includes(trade)) continue;
     const apps = j.apps
       .map((a) => ({ name: a.name, from: a.from, local: a.from === code, fee: feeText(a.fee), note: a.note ?? "" }))
       .filter((a): a is LocalApp => !!a.fee && !!a.name && /^[A-Z]{2}$/.test(a.from))
