@@ -537,6 +537,7 @@ export const COPY = {
     kicker: "Running costs",
     rows: { electricity: "Business electricity", living: "Cost of living" },
     units: { kwh: "a kilowatt hour", of100: "/100" },
+    medianCity: "Median city",
     cells: { electricity: "Electricity per kilowatt hour", living: "Cost of living" },
     /** The one line explains the cost of living's 1-to-100 scale; the electricity row names its own rate ("Business electricity"), so it adds no clause. */
     basisElectricity: "",

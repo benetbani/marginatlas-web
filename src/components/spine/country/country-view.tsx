@@ -89,6 +89,7 @@ import {
   type InsuranceCard,
 } from "@/lib/spine/country_depth_rows";
 import { buildRunningCosts, type RunningCostsData } from "@/lib/spine/running_costs_rows";
+import { cityScaleSpread } from "@/lib/economics/country_metrics";
 import { FirstYears } from "@/components/spine/sections/FirstYears";
 import { Obstacles } from "@/components/spine/sections/Obstacles";
 import { AgeMix } from "@/components/spine/sections/AgeMix";
@@ -548,12 +549,21 @@ function RunningCostsRanged({ iso2, costs }: { iso2: string; costs: RunningCosts
      countries' figures are older, and the gap to the next country (26%) is the two dates, not the two countries. */
   void dieselRange;
   if (typeof diesel === "number" && diesel > 0) rows.push({ key: "diesel", icon: "transit", label: COPY.ranged.diesel, value: diesel, display: usdCents(diesel), unit: COPY.ranged.perLitre, range: null, fmt: usdCents });
+  const livingSpread = cityScaleSpread();
   return (
     <Box id="running-costs" className="flex flex-col">
       <Rail icon="cost-breakdown" kicker={COPY.runningCosts.kicker} />
       {typeof kwh === "number" && kwh > 0 ? <Focal figure={usdCents(kwh)} words={COPY.ranged.electricityWords} /> : null}
       <WorldRangeRows rows={rows} medianWord={COPY.ranged.median} />
-      {costs.livingOnCityScale != null ? (
+      {/* THE COST OF LIVING ON ITS SCALE'S OWN TRACK (2026-09-25): twenty blocks were the "cubic bars" he called a catastrophe in
+          the hero, and they set a third drawing in one card beside the electricity's track; now the same track, 1 to 100 over the
+          covered cities, the middle half shaded, the median city ticked, the ends never named (his ruling of 2026-09-20). Where the
+          cities' spread cannot be read, the blocks stand as before. */}
+      {costs.livingOnCityScale != null && livingSpread ? (
+        <div className="mt-5 border-t border-[var(--c-border)] pt-4">
+          <WorldRangeRows rows={[{ key: "living", icon: "spending-power", label: COPY.runningCosts.rows.living, value: costs.livingOnCityScale, display: String(costs.livingOnCityScale), unit: COPY.runningCosts.units.of100, range: livingSpread, fmt: (v) => String(Math.round(v)), level: costs.levels.living ? COPY.heroBoard.levels[costs.levels.living] : null }]} medianWord={COPY.runningCosts.medianCity} />
+        </div>
+      ) : costs.livingOnCityScale != null ? (
         <div className="mt-5 border-t border-[var(--c-border)] pt-4">
           <SegmentBar label={COPY.runningCosts.rows.living} value={costs.livingOnCityScale} figure={String(costs.livingOnCityScale)} unit={COPY.runningCosts.units.of100} chip={costs.levels.living ? COPY.heroBoard.levels[costs.levels.living] : undefined} />
         </div>
@@ -572,7 +582,7 @@ function InsuranceBars({ card }: { card: InsuranceCard }) {
       <Rail icon="safety" kicker={COPY.insurance.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
       {/* The cover the law requires is the one bar in the accent (C2: the card's answer). */}
-      <BarList items={items} look="plain" mark={items.find((i) => i.badge)?.key} />
+      <BarList items={items} look="plain" mark={items.find((i) => i.badge)?.key} fill />
     </Box>
   );
 }

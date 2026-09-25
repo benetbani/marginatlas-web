@@ -39,7 +39,8 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
   const h = (pct: number) => Math.max(2, (pct / max) * 100);
   return (
     <Box id={id} className="flex flex-col">
-      <Rail icon="safety" kicker={C.obstaclesKicker} />
+      {/* "watch", not "safety": the insurance card on the same page opens on the shield (2026-09-25). */}
+      <Rail icon="watch" kicker={C.obstaclesKicker} />
       <div className="mb-5">
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{top.pct}%</div>
         <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{C.obstaclesWords.replace("{item}", top.label.toLowerCase())}</p>

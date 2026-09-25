@@ -16,16 +16,21 @@ export type BarItem = { key: string; label: string; value: number; display: stri
 /** `mark` (2026-09-25, the chain's art direction, C2: a card marks its answer, at most two accent marks): the one bar in the
  *  accent's gradient, the item the card is about (the highest margin, the cover the law requires); every other bar in the neutral
  *  gradient, so the list still reads as a ranking at a glance and the answer is the one bar in colour. Defaults to the largest. */
-export function BarList({ items, max, ariaUnit = "", look = "icons", mark }: { items: BarItem[]; max?: number; ariaUnit?: string; look?: "icons" | "plain"; mark?: string }) {
+/** `fill` (2026-09-25): the rows share the height a taller neighbour lends the card (`content-between` on the grid, never a
+ *  justify-between row), so its foot never stands empty; without a lent height the rows keep their own. */
+export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill = false }: { items: BarItem[]; max?: number; ariaUnit?: string; look?: "icons" | "plain"; mark?: string; fill?: boolean }) {
   const live = items.filter((i) => i && Number.isFinite(i.value) && i.value >= 0);
   if (live.length < 2) return null;
   const top = max ?? Math.max(...live.map((i) => i.value));
-  const marked = mark && live.some((i) => i.key === mark) ? mark : live.reduce((a, b) => (b.value > a.value ? b : a), live[0]).key;
+  /* THE LARGEST, AND EVERY ONE TIED WITH IT (2026-09-25): London's barbers and accountants both keep 22%, and one bar in the accent
+     named a single leader the figures do not. A `mark` the caller names is still the one. */
+  const topValue = Math.max(...live.map((i) => i.value));
+  const isMarked = (i: BarItem) => (mark && live.some((x) => x.key === mark) ? i.key === mark : i.value === topValue);
   return (
     /* THE ROW FOLLOWS THE CARD, NOT THE WINDOW: from 420px of card the bar takes the row's last column; under it (a phone, a third
        of a desktop) the name keeps its column and the bar runs the row's full width on a line of its own, never squeezed to zero. */
-    <div className="[container-type:inline-size]">
-    <ol data-archetype="bar-list" data-visual="1" data-look={look} data-rows={String(live.length)} className={`m-0 grid list-none items-center gap-x-3 p-0 ${look === "icons" ? "grid-cols-[auto_minmax(0,1fr)_auto] gap-y-3 [@container(min-width:420px)]:grid-cols-[auto_minmax(0,24ch)_auto_minmax(0,1fr)]" : "grid-cols-[minmax(0,1fr)_auto] gap-y-6 [@container(min-width:420px)]:grid-cols-[minmax(0,24ch)_auto_minmax(0,1fr)]"}`}>
+    <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
+    <ol data-archetype="bar-list" data-visual="1" data-look={look} data-rows={String(live.length)} className={`m-0 grid list-none items-center gap-x-3 p-0 ${fill ? "flex-1 content-between " : ""}${look === "icons" ? "grid-cols-[auto_minmax(0,1fr)_auto] gap-y-3 [@container(min-width:420px)]:grid-cols-[auto_minmax(0,24ch)_auto_minmax(0,1fr)]" : "grid-cols-[minmax(0,1fr)_auto] gap-y-6 [@container(min-width:420px)]:grid-cols-[minmax(0,24ch)_auto_minmax(0,1fr)]"}`}>
       {live.map((i) => {
         const w = top > 0 ? Math.max(2, (i.value / top) * 100) : 0;
         const name = i.href ? (
@@ -44,7 +49,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark }: { i
             <span className={`relative col-span-full block rounded-full [@container(min-width:420px)]:col-span-1 ${look === "icons" ? "h-2.5" : "h-4"}`} role="img" aria-label={`${i.label}: ${i.display}${ariaUnit}`}>
               {/* The track is a painted leaf of its own, so it is ink to anything that measures the card. */}
               <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
-              <span aria-hidden data-bar data-marked={i.key === marked ? "1" : undefined} className="absolute inset-y-0 left-0 rounded-full" style={i.key === marked ? { width: `${w}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" } : { width: `${w}%`, backgroundColor: "var(--c-line-strong)", backgroundImage: "linear-gradient(90deg, var(--c-border), var(--c-line-strong))" }} />
+              <span aria-hidden data-bar data-marked={isMarked(i) ? "1" : undefined} className="absolute inset-y-0 left-0 rounded-full" style={isMarked(i) ? { width: `${w}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" } : { width: `${w}%`, backgroundColor: "var(--c-line-strong)", backgroundImage: "linear-gradient(90deg, var(--c-border), var(--c-line-strong))" }} />
             </span>
           </li>
         );

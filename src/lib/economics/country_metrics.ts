@@ -259,6 +259,22 @@ export function costOfLivingOnCityScale(sourceIndex: number): number | null {
   const share = (sourceIndex - CITY_COL_ENDS.min) / (CITY_COL_ENDS.max - CITY_COL_ENDS.min);
   return Math.round(1 + 99 * Math.max(0, Math.min(1, share)));
 }
+/** THE CITY SCALE'S OWN SPREAD (2026-09-25): every covered city placed on the 1-to-100 scale by the same conversion, the middle
+ *  half and the median city, so a country's figure on the scale is drawn among the cities it is measured against (the running
+ *  costs card's track, beside the electricity's world range). The ends are 1 and 100 by construction and never named. */
+export function cityScaleSpread(): { min: number; p25: number; median: number; p75: number; max: number; count: number } | null {
+  const values: number[] = [];
+  for (const c of CITIES.cities) {
+    const v = (c as { cost_of_living_index?: number }).cost_of_living_index;
+    if (typeof v !== "number" || !Number.isFinite(v) || v <= 0) continue;
+    const s = costOfLivingOnCityScale(v);
+    if (s != null) values.push(s);
+  }
+  if (values.length < 20) return null;
+  values.sort((a, b) => a - b);
+  const q = (p: number) => { const pos = (values.length - 1) * p; const lo = Math.floor(pos), hi = Math.ceil(pos); return lo === hi ? values[lo] : values[lo] + (values[hi] - values[lo]) * (pos - lo); };
+  return { min: 1, p25: q(0.25), median: q(0.5), p75: q(0.75), max: 100, count: values.length };
+}
 /** Every country's cost-of-living index on the source scale, for a placement among the countries. */
 export function allCountryCostOfLivingIndices(): number[] {
   return [...COL_BY_ISO2.values()].filter((v) => Number.isFinite(v));

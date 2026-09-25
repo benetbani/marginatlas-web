@@ -185,8 +185,8 @@ export function buildCountryPaperwork(iso2: string): DepthCard | null {
   if (filings && filings.value > 0) cells.push({ key: "filings", label: P.cells.filings, value: String(Math.round(filings.value)), note: P.notes.filings, confidence: conf(filings.tag) });
   const hours = countryFigure(iso2, "admin_load.hours_per_year");
   if (hours && hours.value > 0) cells.push({ key: "hours", label: P.cells.hours, value: `${Math.round(hours.value)} hours`, note: P.notes.hours, confidence: conf(hours.tag) });
-  const online = countryFigure(iso2, "admin_load.online_pct");
-  if (online && online.value > 0) cells.push({ key: "online", label: P.cells.online, value: trimPct(online.value), note: P.notes.online, confidence: conf(online.tag) });
+  /* THE SHARE OF FILINGS MADE ONLINE LEFT THE CARD (2026-09-25): seven cells drew the first alone on its row with half the row
+     empty, and it was the weakest reading of the seven, how the state's forms are sent rather than what they cost or ask. */
   /* CLOSING THE COMPANY, the last of its legal costs (2026-09-25): striking off a debt-free company, and how long winding up with debts takes. */
   const strike = countryFigure(iso2, "closing.strike_off_usd");
   if (strike) cells.push({ key: "strike", label: COPY.closing.rows.strike, value: usd(strike.value), note: COPY.closing.notes.strike, confidence: conf(strike.tag) });
