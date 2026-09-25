@@ -48,7 +48,6 @@
  * every card holding the same figure), and a look that cannot draw then draws
  * nothing rather than an empty track, which would read as zero.
  */
-import cityRegionsJson from "../../../data/cities/city_regions.json";
 import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { cityRouteServes, coveredCities, normalizePlaceName } from "@/lib/cities/city_pages";
 import { cityImageSrc } from "@/lib/cities/city_images";
@@ -205,18 +204,16 @@ export function buildCityCards(iso2In: string): CityCards | null {
     const name = String(c.name).replace(/\s*\([^)]*\)\s*$/, "");
     const photo = cityCardImage(slug);
     const draft = draftRowFor(iso2, c.name);
-    /* The region from the draft row, else the covered city's own line in data/cities/city_regions.json (2026-09-25). */
-    const regionName = draft?.region_name?.trim() || (cityRegionsJson as { regions: Record<string, string> }).regions[slug] || undefined;
     cards.push({
       id: slug,
       name,
-      sub: regionName,
+      sub: draft?.region_name?.trim() || undefined,
       /* A REGION THAT REPEATS THE CITY IS NOT A SECOND DETAIL. The draft set
          gives Berlin the region "Berlin", Ho Chi Minh City "Ho Chi Minh",
          Lagos "Lagos State" and Tokyo "Tokyo Metropolis", and a card that
          prints the name and then almost the name again has spent one of its
          two details on nothing. Dropped when either name contains the other. */
-      region: keepRegion(name, regionName) ?? undefined,
+      region: keepRegion(name, draft?.region_name) ?? undefined,
       href,
       lands: CITY_CARD_LANDS,
       image: cityImageSrc(slug),

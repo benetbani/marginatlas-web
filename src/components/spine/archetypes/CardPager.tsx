@@ -59,8 +59,12 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
           <button type="button" aria-label={nextLabel} disabled={cur >= pages - 1} onClick={() => setPage((p) => Math.min(pages - 1, p + 1))} className={btn}><span aria-hidden>&#8594;</span></button>
         </div>
       ) : null}
-      {/* 9rem is the measured minimum that keeps two tracks in a 302px tablet card (see the retired city-cards.tsx for the arithmetic). */}
-      <div className="grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]">
+      {/* 9rem is the measured minimum that keeps two tracks in a 302px tablet card (see the retired city-cards.tsx for the arithmetic).
+          A PAGE THAT DRAWS PHOTOGRAPHS TAKES 12rem (2026-09-25): the United Kingdom's seven cities got their own photographs that day,
+          and at 9rem the 48px picture beside a name left 53px for it, "Manchester" and "Birmingham" cut at 1280 and 768 (the
+          harness's BOTCHED MOBILE on the GB story, the same fault the header records for the placeholder). Picture 48, gaps 18,
+          arrow 16 and padding 24 leave a 12rem track 86px for the name, and the longest covered name draws in 78. */}
+      <div className={`grid grid-cols-2 items-stretch gap-2 ${images !== "none" && slice.some((c) => c.image) ? "md:[grid-template-columns:repeat(auto-fill,minmax(12rem,1fr))]" : "md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]"}`}>
         {slice.map((c) => (
           /* THE PHONE STACKS THE PICTURE OVER THE NAME. Measured by the harness
              at 375: a two-up card is 151px wide, and a 48px image beside a name

@@ -1,8 +1,0 @@
-{
-  "_about": "The region a covered city's card names under it, for covered cities the top-cities draft file (src/lib/cities/top100.json) does not hold. Read by city_cards.ts only where that file has no row, so a card never names a region for one city and none for its neighbour (2026-09-25: Leeds, Glasgow and Bristol printed none beside London's, Manchester's and Birmingham's England).",
-  "regions": {
-    "leeds": "England",
-    "bristol": "England",
-    "glasgow": "Scotland"
-  }
-}

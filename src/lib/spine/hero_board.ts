@@ -54,7 +54,7 @@
  * the manifest, never the disk.
  */
 import { buildHeroFacts, type HeroFacts } from "@/lib/spine/hero_facts";
-import countryImagesJson from "../../../data/countries/images_manifest.json";
+import countryImagesJson from "../../../data/cities/country_images_manifest.json";
 import { buildPayBars, worldPaySets } from "@/lib/spine/pay_rows";
 import { placementRank } from "@/lib/spine/placement";
 import { getCountryProfile, listCountryProfiles } from "@/lib/economic_profile";
