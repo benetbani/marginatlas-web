@@ -1,0 +1,47 @@
+{
+  "_about": "The lines a business crosses in its first years, by country (his message of 2026-09-25: \"1st year threshholds that should be met\"): each a figure the law sets and what crossing it changes, in the country's currency as the law states it. Research: design/loop/build/research/2026-09-25-uk-official-figures.md and 2026-09-25-R3-survival-top-GB.md.",
+  "GB": {
+    "currency": "GBP",
+    "lead": "vat",
+    "lines": [
+      {
+        "key": "vat",
+        "gbp": 90000,
+        "basis": "sales",
+        "period": "from 1 April 2024",
+        "url": "https://www.gov.uk/vat-registration/when-to-register"
+      },
+      {
+        "key": "rates",
+        "gbp": 12000,
+        "basis": "rateable-value",
+        "period": "England, 2026-27",
+        "url": "https://www.gov.uk/apply-for-business-rate-relief/small-business-rate-relief"
+      },
+      {
+        "key": "wage",
+        "gbp": 12.71,
+        "basis": "hour",
+        "period": "from 1 April 2026",
+        "url": "https://www.gov.uk/national-minimum-wage-rates"
+      },
+      {
+        "key": "allowance",
+        "gbp": 10500,
+        "basis": "year",
+        "period": "from 6 April 2025",
+        "url": "https://www.gov.uk/claim-employment-allowance"
+      },
+      {
+        "key": "small-profits",
+        "gbp": 50000,
+        "basis": "profit",
+        "pct": 19,
+        "upper_gbp": 250000,
+        "upper_pct": 25,
+        "period": "from 1 April 2023",
+        "url": "https://www.gov.uk/corporation-tax-rates"
+      }
+    ]
+  }
+}

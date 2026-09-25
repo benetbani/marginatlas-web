@@ -693,6 +693,38 @@ export const COPY = {
     vacancies: "vacancies per 100 jobs",
     payroll: "staff on payroll, a year on",
   },
+  /** WHO THE CUSTOMERS ARE (sections/AgeMix.tsx, CustomersCome.tsx, Origin.tsx, 2026-09-25; his "By age ... By origin, native,
+   *  immigrant, tourist ... pedestrians, car or online"). Labels, never sentences. */
+  people: {
+    age: {
+      kicker: "Who lives here, by age",
+      focalWords: "of people in {place} are 25 to 49",
+      bands: { under16: "Under 16", "16to24": "16 to 24", "25to49": "25 to 49", "50to64": "50 to 64", "65plus": "65 and over" } as Record<string, string>,
+    },
+    come: {
+      kicker: "How customers come",
+      focalWords: "of retail sales are made online",
+      trips: "Trips in {place}",
+      modes: { walk: "On foot", car: "By car", public: "Bus and train", other: "Other" } as Record<string, string>,
+    },
+    origin: {
+      kicker: "Born abroad, and visitors",
+      focalWords: "of people in {place} were born abroad",
+      visits: "visits from abroad a year",
+      overnight: "overnight visits from abroad a year",
+    },
+  },
+  /** THE LINES A FIRST YEAR CROSSES (sections/Thresholds.tsx, 2026-09-25). A note is five words or fewer. */
+  thresholds: {
+    kicker: "Lines to cross",
+    lines: {
+      vat: { label: "VAT registration", note: "", words: "of sales in 12 months, and VAT registration begins" },
+      rates: { label: "No business rates", note: "rateable value or less" },
+      wage: { label: "Minimum wage", note: "from age 21", unit: "/h" },
+      allowance: { label: "Employment allowance", note: "off employer's National Insurance" },
+      "small-profits": { label: "Profit taxed at 19%", note: "up to this; {pct} over {upper}" },
+    } as Record<string, { label: string; note: string; words?: string; unit?: string }>,
+  },
   /** THE COUNTRY PAGE'S NEW SECTIONS (country_depth_rows.ts, 2026-09-25). Labels the same on every country; a note is the one short
    *  line that says what the figure is, never a method line. */
   employment: {

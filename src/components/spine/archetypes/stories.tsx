@@ -70,6 +70,12 @@ import { FirstYears } from "@/components/spine/sections/FirstYears";
 import { LocalApps } from "@/components/spine/sections/LocalApps";
 import { MarketHold } from "@/components/spine/sections/MarketHold";
 import { JobMarket } from "@/components/spine/sections/JobMarket";
+import { Thresholds } from "@/components/spine/sections/Thresholds";
+import { AgeMix } from "@/components/spine/sections/AgeMix";
+import { CustomersCome } from "@/components/spine/sections/CustomersCome";
+import { Origin } from "@/components/spine/sections/Origin";
+import { buildAgeMix, buildCustomersCome, buildOrigin, listPeoplePlaces } from "@/lib/spine/sections/people";
+import { buildThresholds, listThresholdCountries } from "@/lib/spine/sections/thresholds";
 import { buildSurvival, buildObstacles, listSurvivalCountries } from "@/lib/spine/sections/first_years";
 import { buildLocalApps, listLocalAppsCountries } from "@/lib/spine/sections/local_apps";
 import { buildMarketHold, buildJobMarket, listMarketCountries, listJobCountries } from "@/lib/spine/sections/market_jobs";
@@ -2462,6 +2468,76 @@ export function JobMarketStories() {
   );
 }
 
+export function pickThresholdsInstances(): Instance[] {
+  return listThresholdCountries().filter((c) => buildThresholds(c)).map((c) => ({ iso2: c, why: "the lines the law sets, the first one leading" }));
+}
+export function ThresholdsStories() {
+  return (
+    <div data-stories="thresholds">
+      {pickThresholdsInstances().map((i) => (
+        <Story kind="thresholds" key={i.iso2} iso2={i.iso2} why={i.why}>
+          <Thresholds id={`thresholds-${i.iso2.toLowerCase()}`} data={buildThresholds(i.iso2)!} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+
+/** WHO THE CUSTOMERS ARE (sections/AgeMix.tsx, CustomersCome.tsx, Origin.tsx): each country the people file holds, with its first
+ *  city where the section compares the two; keyed <iso2> or <iso2>:<city>. */
+const peopleKey = (iso2: string, city?: string) => (city ? `${iso2}:${city}` : iso2);
+export function pickAgeMixInstances(): Instance[] {
+  return listPeoplePlaces().filter((p) => buildAgeMix(p.iso2, p.city)).map((p) => ({ iso2: peopleKey(p.iso2, p.city), why: "the country's bar and its city's, the core in the accent" }));
+}
+export function AgeMixStories() {
+  return (
+    <div data-stories="age-mix">
+      {listPeoplePlaces().map((p) => {
+        const d = buildAgeMix(p.iso2, p.city);
+        return d ? (
+          <Story kind="age-mix" key={peopleKey(p.iso2, p.city)} iso2={peopleKey(p.iso2, p.city)} why="the country's bar and its city's, the core in the accent">
+            <AgeMix id={`age-mix-${p.iso2.toLowerCase()}`} data={d} />
+          </Story>
+        ) : null;
+      })}
+    </div>
+  );
+}
+export function pickCustomersComeInstances(): Instance[] {
+  return listPeoplePlaces().filter((p) => buildCustomersCome(p.iso2)).map((p) => ({ iso2: p.iso2, why: "online as the figure, the trips as one bar" }));
+}
+export function CustomersComeStories() {
+  return (
+    <div data-stories="customers-come">
+      {listPeoplePlaces().map((p) => {
+        const d = buildCustomersCome(p.iso2);
+        return d ? (
+          <Story kind="customers-come" key={p.iso2} iso2={p.iso2} why="online as the figure, the trips as one bar">
+            <CustomersCome id={`customers-come-${p.iso2.toLowerCase()}`} data={d} />
+          </Story>
+        ) : null;
+      })}
+    </div>
+  );
+}
+export function pickOriginInstances(): Instance[] {
+  return listPeoplePlaces().filter((p) => buildOrigin(p.iso2, p.city)).map((p) => ({ iso2: peopleKey(p.iso2, p.city), why: "born abroad, the country against its city, and visitors" }));
+}
+export function OriginStories() {
+  return (
+    <div data-stories="origin">
+      {listPeoplePlaces().map((p) => {
+        const d = buildOrigin(p.iso2, p.city);
+        return d ? (
+          <Story kind="origin" key={peopleKey(p.iso2, p.city)} iso2={peopleKey(p.iso2, p.city)} why="born abroad, the country against its city, and visitors">
+            <Origin id={`origin-${p.iso2.toLowerCase()}`} data={d} />
+          </Story>
+        ) : null;
+      })}
+    </div>
+  );
+}
+
 export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHeroInstance[] = [], industryPlaces: IndustryPlacesInstance[] = []): Record<string, Instance[]> {
   const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
@@ -2498,6 +2574,10 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "local-apps": pickLocalAppsInstances(),
     "market-hold": pickMarketHoldInstances(),
     "job-market": pickJobMarketInstances(),
+    "thresholds": pickThresholdsInstances(),
+    "age-mix": pickAgeMixInstances(),
+    "customers-come": pickCustomersComeInstances(),
+    "origin": pickOriginInstances(),
   };
 }
 

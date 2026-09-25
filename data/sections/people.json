@@ -1,0 +1,101 @@
+{
+  "_about": "Who the customers are, by country and city (his message of 2026-09-25: \"Type of customers by mode of transport pedestrians, car or online ... By age, generation based ... By origin, native, immigrant, tourist\"). Population by age band, how trips are made, the online share of retail sales, and overseas visits, each for one period and place as published; a band marked `computed` is the published total less the published bands. Born abroad is NOT here: it is data/cities/*_signature_v1.json's `foreign_born_pct`, the one figure every page prints. Research: design/loop/build/research/2026-09-25-R4-customers-GB.md.",
+  "GB": {
+    "name": "the UK",
+    "age": {
+      "period": "mid-2024",
+      "bands": [
+        {
+          "key": "under16",
+          "pct": 18.0
+        },
+        {
+          "key": "16to24",
+          "pct": 10.7,
+          "computed": true
+        },
+        {
+          "key": "25to49",
+          "pct": 33.0
+        },
+        {
+          "key": "50to64",
+          "pct": 19.3
+        },
+        {
+          "key": "65plus",
+          "pct": 19.1
+        }
+      ]
+    },
+    "trips": {
+      "place": "England",
+      "period": "2025",
+      "parts": [
+        {
+          "key": "walk",
+          "pct": 29
+        },
+        {
+          "key": "car",
+          "pct": 58
+        },
+        {
+          "key": "public",
+          "pct": 7,
+          "computed": true
+        },
+        {
+          "key": "other",
+          "pct": 6,
+          "computed": true
+        }
+      ]
+    },
+    "online": {
+      "place": "Great Britain",
+      "period": "August 2026",
+      "pct": 28.8
+    },
+    "visits": {
+      "period": "2024",
+      "millions": 42.6
+    },
+    "cities": {
+      "london": {
+        "name": "London",
+        "age": {
+          "period": "mid-2025",
+          "bands": [
+            {
+              "key": "under16",
+              "pct": 17.8
+            },
+            {
+              "key": "16to24",
+              "pct": 11.7,
+              "computed": true
+            },
+            {
+              "key": "25to49",
+              "pct": 40.8
+            },
+            {
+              "key": "50to64",
+              "pct": 17.1
+            },
+            {
+              "key": "65plus",
+              "pct": 12.6
+            }
+          ]
+        },
+        "visits": {
+          "period": "2024",
+          "millions": 20.9,
+          "overnight": true
+        }
+      }
+    }
+  }
+}
