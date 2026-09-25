@@ -130,7 +130,10 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                       stood as a band of texture as heavy as the figure under them, and the note beneath matched the label's size: three
                       lines of one weight. Now the question reads as words (14px, regular, muted), the answer is the one bold line in
                       ink (16 under a card's figure, 20 alone), and the note keeps 12px: three rungs, one order. */}
-                  <div className={`${byRow ? "" : "min-h-[2.6em] lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>{c.label}</div>
+                  {/* THE RESERVE'S AIR ABOVE THE WORDS, NOT UNDER THEM (the same evening, on the phone photograph): a one-line label sat
+                      at the top of its two-line box and stood a line's height away from its own figure, closer to the cell above.
+                      The words sit on the box's floor, so a label touches its figure and the air joins the gap between rows. */}
+                  <div className={`${byRow ? "" : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>{c.label}</div>
                   {/* On the "row" reserve the figure sits on the cell's floor (`mt-auto`), so a row's figures share one top whatever their labels wrap to. */}
                   <div className={`${byRow ? "mt-auto pt-1" : "mt-1"} flex flex-wrap items-baseline gap-x-2 gap-y-1`}>
                     <Fig className={`${under ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-head)]"} leading-none text-[var(--c-ink)]`}>{c.value}</Fig>
