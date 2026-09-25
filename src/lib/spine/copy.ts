@@ -690,7 +690,9 @@ export const COPY = {
   localApps: {
     kicker: "The apps shops use",
     of: "of",
-    focalWords: "of these apps were founded here",
+    /* Read with the figure: "12 of 19" then "listed apps were founded here" (the first words, "of these apps ...", doubled the
+       figure's own "of"). */
+    focalWords: "listed apps were founded here",
     jobs: { bookings: "Bookings", payments: "Card payments", accounts: "Accounts", banking: "Banking", payroll: "Payroll", reviews: "Reviews", hiring: "Hiring" } as Record<string, string>,
     fee: { free: "Free", perSale: "/sale", perNewClient: "/new client", perMonth: "/mo", perYear: "/yr", perAd: "/ad" },
   },
