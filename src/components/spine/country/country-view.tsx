@@ -67,8 +67,6 @@ import { buildHowToSteps, type HowToStepsData } from "@/lib/spine/howto_steps_ro
 import { buildCountryLicences } from "@/lib/spine/country_licences_rows";
 import { Stepper, STEPPER_MIN } from "@/components/spine/archetypes/Stepper";
 import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
-import { Donut } from "@/components/spine/archetypes/Donut";
-import type { AtlasIconId } from "@/components/brand/icons";
 import { WorldRangeRows, type WorldRangeRow } from "@/components/spine/charts/WorldRange";
 import { BarList } from "@/components/spine/charts/BarList";
 import { DonutStat } from "@/components/spine/charts/DonutStat";
@@ -525,23 +523,6 @@ function Focal({ figure, words }: { figure: string; words: string }) {
   );
 }
 
-/**
- * THE NEW SECTIONS' ONE SHAPE (2026-09-25, country_depth_rows.ts): the opener, the card's one figure with its words, the fact grid
- * of labelled cells, and whatever the section draws or holds behind its plus. Employing people, insurance, borrowing and the legal
- * and admin costs are this card; getting paid adds the donut of how customers pay.
- */
-function DepthSection({ id, icon, kicker, card, basis, children }: { id: string; icon: AtlasIconId; kicker: string; card: DepthCard | InsuranceCard | BankingCard; basis?: string; children?: React.ReactNode }) {
-  return (
-    <Box id={id} className="flex flex-col">
-      <Rail icon={icon} kicker={kicker} />
-      <Focal figure={card.focal.figure} words={card.focal.words} />
-      {children}
-      <KvGrid cells={card.cells} under fill />
-      {basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
-    </Box>
-  );
-}
-
 /* ===== THE UNITED KINGDOM'S CARDS ON THE NEW CHARTS (2026-09-25, his message of that day: "the numbers ... with no relation to
    each other", "the gradient is barely used", "the sections look dead"; his shadcn blocks as the pattern: the bullet chart, the
    bar card, the donut with its centre figure). Every figure that the world holds for every country is drawn on the world's
@@ -651,42 +632,6 @@ function SpendBar({ spend }: { spend: CountrySpendData }) {
         <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill />
       </div>
     </Box>
-  );
-}
-
-/** GETTING PAID: the one donut on the page (his B9, "max 1 per page"), how customers pay, beside its figure and over its cells. */
-function Banking({ card }: { card: BankingCard }) {
-  return (
-    <DepthSection id="banking" icon="payments" kicker={COPY.banking.kicker} card={card}>
-      <div data-visual="1" className="mb-4">
-        <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.banking.donut}</div>
-        <Donut parts={card.parts} />
-      </div>
-    </DepthSection>
-  );
-}
-
-/**
- * NET MARGIN BY TRADE, LONDON (2026-09-25): the United Kingdom's own trade figures are London's curated entries, and each row opens
- * that trade's London page, which prints the same margin from the same entry. His ruling 6 of 2026-09-04 ("net profit margin in %");
- * over six trades the archetype draws its rows (his rule 20, columns under six only). Each row carries its trade's glyph.
- */
-function LondonMoney({ margins }: { margins: NonNullable<ReturnType<typeof buildLondonTradeMargins>> }) {
-  const L = COPY.londonMargins;
-  return (
-    <RankedBars
-      id="money"
-      kicker={L.kicker}
-      icon="owner-keeps"
-      basis={L.basis}
-      withheldLine={null}
-      rows={margins.rows}
-      worldMax={margins.worldMax}
-      ceiling="set"
-      feature="none"
-      fmt={(v) => `${Math.round(v * 100)}%`}
-      phoneHead={{ name: L.phoneHead.trade, value: L.phoneHead.value }}
-    />
   );
 }
 
@@ -1283,7 +1228,13 @@ export function SpineCountryBody({ data }: { data?: any }) {
           </Band>
           <Band split="1-1" stack="lg">
             <Hiring hiring={d.hiring} iso2={iso2} foot={false} hireCost />
-            <DepthSection id="employment" icon="staffing-rota" kicker={COPY.employment.kicker} card={employment} />
+            {/* WRITTEN OUT, NOT THROUGH A WRAPPER (the chain's census, 2026-09-25): a Box with a literal id and its KvGrid in its own
+                JSX, so the census and the coverage gate both read the block the page draws. */}
+            <Box id="employment" className="flex flex-col">
+              <Rail icon="staffing-rota" kicker={COPY.employment.kicker} />
+              <Focal figure={employment.focal.figure} words={employment.focal.words} />
+              <KvGrid cells={employment.cells} under fill />
+            </Box>
           </Band>
           <Band split="1-1" stack="lg">
             <RunningCostsRanged iso2={iso2 as string} costs={costs} />
@@ -1295,7 +1246,11 @@ export function SpineCountryBody({ data }: { data?: any }) {
               here) keep a level between them (his clause 64), and the peers table between them is not a level. */}
           <Band split="1-1" stack="lg">
             <CharacterCard iso2={iso2} which="state" />
-            <DepthSection id="paperwork" icon="red-tape" kicker={COPY.paperwork.kicker} card={paperwork} />
+            <Box id="paperwork" className="flex flex-col">
+              <Rail icon="red-tape" kicker={COPY.paperwork.kicker} />
+              <Focal figure={paperwork.focal.figure} words={paperwork.focal.words} />
+              <KvGrid cells={paperwork.cells} under fill />
+            </Box>
           </Band>
           <Band split="1-1" stack="lg">
             <FinancingRanged iso2={iso2 as string} card={financing} />
