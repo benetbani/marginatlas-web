@@ -78,7 +78,6 @@ function listRows(iso2: string, prefix: string): Array<Record<string, string | n
   return order.map((k) => byKey.get(k)!);
 }
 
-/** EMPLOYING PEOPLE: the unemployment rate as the card's figure, the employer's rules and the labour market as its cells. */
 /** EMPLOYING PEOPLE (2026-09-25): the paid holiday a full-time hire takes is the card's figure, since it is what the employer
  *  pays for and does not get worked; the rules and who is looking for work are its cells. Where no holiday figure is held the
  *  unemployment rate stands as the figure, as it did. */
@@ -98,6 +97,10 @@ export function buildCountryEmployment(iso2: string): EmploymentCard | null {
   if (sick && sick.value > 0) cells.push({ key: "sick", label: E.cells.sick, value: usd(sick.value), note: E.notes.sick, confidence: conf(sick.tag) });
   const dismissal = countryFigure(iso2, "employment.dismissal_qualifying_years");
   if (dismissal && dismissal.value > 0) cells.push({ key: "dismissal", label: E.cells.dismissal, value: `${dismissal.value} ${dismissal.value === 1 ? "year" : "years"}`, note: E.notes.dismissal, confidence: conf(dismissal.tag) });
+  /* The weeks of statutory maternity pay (2026-09-25): what the employer pays through payroll while a hire is away, the fourth
+     rule of the card once the job market card carries the unemployment rate beside it. */
+  const maternity = countryFigure(iso2, "employment.maternity_paid_weeks");
+  if (maternity && maternity.value > 0) cells.push({ key: "maternity", label: E.cells.maternity, value: `${Math.round(maternity.value)} weeks`, note: E.notes.maternity, confidence: conf(maternity.tag) });
   /* The share of adults in work and the informal economy were cells here until the working year took the card's picture: two
      facts about the economy, not about employing anyone, and the card keeps to what the employer owes and who is looking. */
   if (cells.length < 2) return null;

@@ -42,21 +42,26 @@ function bandsOf(src: { bands: Band[] } | undefined): AgeBar["bands"] | null {
   return b.length >= 4 && Math.abs(sum - 100) <= 1 ? b : null;
 }
 
+/** Which place a two-place card is about: the city on the city's own pages (the default), the country on the country's page, where
+ *  the city stands beside it as the one comparison (2026-09-25, the United Kingdom's page: its answer is the country's own figure). */
+export type PeopleFocal = "city" | "country";
+
 /** The age mix: the city's bar against its country's where the file holds the city, else the country's alone; the card's figure is
  *  the focal place's share aged 25 to 49. */
-export function buildAgeMix(iso2: string, city?: string): AgeMix | null {
+export function buildAgeMix(iso2: string, city?: string, focus: PeopleFocal = "city"): AgeMix | null {
   const c = countryOf(iso2);
   if (!c) return null;
   const countryBands = bandsOf(c.age);
   if (!countryBands) return null;
   const ci = city ? c.cities?.[city] : undefined;
   const cityBands = ci ? bandsOf(ci.age) : null;
-  const focalBands = cityBands ?? countryBands;
-  const focalName = cityBands && ci ? ci.name : c.name;
+  const cityFocal = !!cityBands && focus === "city";
+  const focalBands = cityFocal && cityBands ? cityBands : countryBands;
+  const focalName = cityFocal && ci ? ci.name : c.name;
   const core = focalBands.find((b) => b.key === "25to49");
   if (!core) return null;
-  const bars: AgeBar[] = [{ name: c.name, bands: countryBands, focal: !cityBands }];
-  if (cityBands && ci) bars.push({ name: ci.name, bands: cityBands, focal: true });
+  const bars: AgeBar[] = [{ name: c.name, bands: countryBands, focal: !cityFocal }];
+  if (cityBands && ci) bars.push({ name: ci.name, bands: cityBands, focal: cityFocal });
   return { figure: pctText(core.pct), words: COPY.people.age.focalWords.replace("{place}", focalName), bars };
 }
 
@@ -82,8 +87,9 @@ const CITY_SIG = (() => {
   return raw;
 })();
 
-/** Born abroad (the signature files' one figure) for the country and, where held, its city; overseas visits from this file. */
-export function buildOrigin(iso2: string, city?: string): Origin | null {
+/** Born abroad (the signature files' one figure) for the country and, where held, its city; overseas visits from this file. The
+ *  focal place as buildAgeMix's. */
+export function buildOrigin(iso2: string, city?: string, focus: PeopleFocal = "city"): Origin | null {
   const c = countryOf(iso2);
   if (!c) return null;
   const countryPct = COUNTRY_SIG[iso2.toUpperCase()]?.foreign_born_pct;
@@ -91,8 +97,9 @@ export function buildOrigin(iso2: string, city?: string): Origin | null {
   const ci = city ? c.cities?.[city] : undefined;
   const cityPct = city ? CITY_SIG[city]?.foreign_born_pct : undefined;
   const hasCity = !!ci && isPct(cityPct);
-  const places = [{ name: c.name, pct: countryPct, focal: !hasCity }];
-  if (hasCity && ci) places.push({ name: ci.name, pct: cityPct as number, focal: true });
+  const cityFocal = hasCity && focus === "city";
+  const places = [{ name: c.name, pct: countryPct, focal: !cityFocal }];
+  if (hasCity && ci) places.push({ name: ci.name, pct: cityPct as number, focal: cityFocal });
   const focal = places.find((p) => p.focal)!;
   const visits: Origin["visits"] = [];
   if (c.visits && c.visits.millions > 0) visits.push({ name: c.name, millions: c.visits.millions, overnight: false });

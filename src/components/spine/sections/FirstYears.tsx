@@ -8,19 +8,22 @@
  *  - THE CURVE is one cohort followed year by year: a line over an area whose accent gradient fades into the card (his "the
  *    gradient is barely used"), a start at the whole and a point a year. The area is SVG stretched to the box; every mark and
  *    label is HTML placed in percentages, so no text stretches, and a point at either end is pinned inside the box.
+ *  - A LINE AND NOT COLUMNS, against the rule MonthBars.tsx states for a series ("a line interpolates"), because this series is
+ *    the case that rule keeps the line for: the share of one cohort still trading is continuous in time (firms close on every day
+ *    of a year, not on its last), the file samples it once a year, and the reader's question is its shape, how fast the cohort
+ *    thins. A month's total has no value between two months; a cohort at two and a half years does.
  *  - THE REGIONS: the best and the worst region on the same last year as a span on a 0 to 100 track, the country's own share as
  *    a tick on it, the two ends named.
- *  - THE OBSTACLES, when the country holds them: what small employers name a major obstacle, as bars ranked by share, the largest
- *    the one bar in the accent (BarList's `mark`).
+ *  - THE PLOT TAKES THE HEIGHT THE LEVEL LENDS THE CARD (`fill`): beside a taller card the curve grows, never a blank under the
+ *    regions. What holds small firms back is its own card since 2026-09-25 (Obstacles.tsx), seated beside this one.
  *  - `data-archetype="survival-curve"`, `data-visual="1"`, `data-points`.
  */
 import * as React from "react";
 import { Box, Fig, Rail } from "@/components/spine/kit";
-import { BarList } from "@/components/spine/charts/BarList";
 import { COPY } from "@/lib/spine/copy";
-import type { Obstacles, Survival } from "@/lib/spine/sections/first_years";
+import type { Survival } from "@/lib/spine/sections/first_years";
 
-export function FirstYears({ id = "first-years", data, obstacles }: { id?: string; data: Survival; obstacles?: Obstacles | null }) {
+export function FirstYears({ id = "first-years", data }: { id?: string; data: Survival }) {
   const C = COPY.firstYears;
   const pts = [{ year: 0, pct: 100 }, ...data.points];
   const maxYear = data.last.year;
@@ -41,8 +44,8 @@ export function FirstYears({ id = "first-years", data, obstacles }: { id?: strin
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{Math.round(data.last.pct)}%</div>
         <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{C.focalWords.replace("{n}", String(maxYear))}</p>
       </div>
-      <div data-archetype="survival-curve" data-visual="1" data-points={String(data.points.length)}>
-        <div className="relative h-44" role="img" aria-label={`${C.kicker}: ${data.points.map((p) => `${C.year.replace("{n}", String(p.year))} ${p.pct}%`).join(", ")}`}>
+      <div data-archetype="survival-curve" data-visual="1" data-points={String(data.points.length)} className="flex flex-1 flex-col">
+        <div className="relative min-h-44 flex-1" role="img" aria-label={`${C.kicker}: ${data.points.map((p) => `${C.year.replace("{n}", String(p.year))} ${p.pct}%`).join(", ")}`}>
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden className="absolute inset-0 h-full w-full overflow-visible">
             <defs>
               <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
@@ -85,12 +88,6 @@ export function FirstYears({ id = "first-years", data, obstacles }: { id?: strin
             <span><Fig className="font-semibold text-[var(--c-ink)]">{Math.round(r.worst.pct)}%</Fig> {r.worst.name}</span>
             <span className="text-right"><Fig className="font-semibold text-[var(--c-ink)]">{Math.round(r.best.pct)}%</Fig> {r.best.name}</span>
           </div>
-        </div>
-      ) : null}
-      {obstacles ? (
-        <div data-obstacles className="mt-5 border-t border-[var(--c-border)] pt-3">
-          <div className="mb-3 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.obstaclesKicker}</div>
-          <BarList items={obstacles.items.map((o) => ({ key: o.key, label: o.label, value: o.pct, display: `${o.pct}%` }))} max={100} look="plain" />
         </div>
       ) : null}
     </Box>

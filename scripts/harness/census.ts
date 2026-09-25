@@ -92,9 +92,16 @@ import { pageRenders, describeRenders, missingLine } from "../lib/page_renders.m
 preflight({ name: "census" });
 
 const ROOT = "src/components/spine";
-const SKIP_DIRS = new Set(["archetypes"]);
+/* THREE FOLDERS HOLD ARCHETYPES, NONE A PAGE (2026-09-25): archetypes/, and since that day charts/ (the four chart forms) and
+   sections/ (the page-agnostic sections he asked for that night, AgeMix, FirstYears and the rest). Walked as pages, a section's own
+   Box counted as a section of a page called "sections", and a view that seated one printed it on the kit ("kit", beside a
+   component that stamps `data-archetype` like any other); read as archetypes, the country's `age-mix` prints as AgeMix. The
+   coverage gate skips the same three (scripts/verify_archetype_coverage.ts, SKIP_DIRS). */
+const ARCHETYPE_FOLDERS = ["archetypes", "charts", "sections"];
+const SKIP_DIRS = new Set(ARCHETYPE_FOLDERS);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx", "motion.tsx"]);
 const ARCHETYPE_DIR = `${ROOT}/archetypes`;
+const ARCHETYPE_DIRS = ARCHETYPE_FOLDERS.map((f) => `${ROOT}/${f}`);
 
 /* THE ARCHETYPES, READ FROM THEIR FOLDER (the header says why): every exported
    component whose body stamps `data-archetype`; card-owning where the body
@@ -102,9 +109,9 @@ const ARCHETYPE_DIR = `${ROOT}/archetypes`;
 function readArchetypes(): { names: Set<string>; cardOwning: Set<string> } {
   const names = new Set<string>();
   const cardOwning = new Set<string>();
-  for (const file of readdirSync(ARCHETYPE_DIR).sort()) {
+  for (const dir of ARCHETYPE_DIRS) for (const file of readdirSync(dir).sort()) {
     if (!file.endsWith(".tsx") || file === "stories.tsx") continue;
-    const src = readFileSync(join(ARCHETYPE_DIR, file), "utf8");
+    const src = readFileSync(join(dir, file), "utf8");
     const starts: Array<{ name: string; at: number }> = [];
     const re = /export function ([A-Z]\w*)\s*\(/g;
     let m: RegExpExecArray | null;
@@ -287,7 +294,7 @@ function sectionsOf(file: string): Section[] {
   const raw = readFileSync(file, "utf8").split(String.fromCharCode(13)).join("");
   const src = stripCommentLines(raw.split(NL)).join(NL);
   const imported = new Set<string>();
-  const importRe = /import\s*\{([^}]*)\}\s*from\s*"(?:@\/components\/spine\/archetypes\/[^"]+|\.\.?\/(?:[^"]*\/)?archetypes\/[^"]+)"/g;
+  const importRe = /import\s*\{([^}]*)\}\s*from\s*"(?:@\/components\/spine\/(?:archetypes|charts|sections)\/[^"]+|\.\.?\/(?:[^"]*\/)?(?:archetypes|charts|sections)\/[^"]+)"/g;
   let im: RegExpExecArray | null;
   while ((im = importRe.exec(src))) for (const name of im[1].split(",")) { const n = name.trim().split(/\s+as\s+/).pop()?.trim(); if (n) imported.add(n); }
   const fns: Array<{ name: string; at: number }> = [];
@@ -395,7 +402,7 @@ function sectionsOf(file: string): Section[] {
 const folderOf = (file: string) => file.split("/")[3];
 const specToFile = (from: string, spec: string): string | null => {
   const base = spec.startsWith("@/") ? `src/${spec.slice(2)}` : spec.startsWith(".") ? join(dirname(from), spec).replace(/\\/g, "/") : null;
-  if (!base || !base.startsWith(`${ROOT}/`) || base.startsWith(`${ARCHETYPE_DIR}/`)) return null;
+  if (!base || !base.startsWith(`${ROOT}/`) || ARCHETYPE_DIRS.some((d) => base.startsWith(`${d}/`))) return null;
   const file = base.endsWith(".tsx") ? base : `${base}.tsx`;
   return existsSync(file) ? file : null;
 };

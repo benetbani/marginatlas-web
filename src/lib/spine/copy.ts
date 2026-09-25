@@ -640,6 +640,8 @@ export const COPY = {
     /** The country page's second and third turns where the country holds the new sections (2026-09-25; the United Kingdom). */
     money: "Red tape, borrowing and getting paid",
     open: "What to open, and where",
+    /** The country page's fourth turn where the country holds a cohort's years and what holds small firms back (2026-09-25). */
+    firstYears: "The first years",
   },
   /** THE KIT TO OPEN, AT FOUR BUDGETS (sections/StockTiers.tsx, 2026-09-25; his "cheap, medium, premium, luxury ... 3 chairs of
    *  different kinds"). Labels, never sentences; the one line under the span names the shop and the VAT, nothing else. */
@@ -664,16 +666,18 @@ export const COPY = {
     start: "Start",
     year: "Year {n}",
     regions: "By region, year {n}",
-    obstaclesKicker: "What holds small firms back",
+    /* Four words at most, the copy gate's TITLE LONG (the UK page's first render of the card, 2026-09-25: "What holds small firms
+       back", five). The line under the figure says whose answer it is. */
+    obstaclesKicker: "What holds firms back",
     obstaclesWords: "of small employers call {item} a major obstacle",
     obstacles: {
-      tax: "Tax", energy: "Energy prices", "red-tape": "Red tape", competition: "Competition", staff: "Finding staff",
+      tax: "Tax", energy: "Energy prices", "red-tape": "Red tape", competition: "Rivals", staff: "Finding staff",
       "late-payment": "Late payment", premises: "Premises", finance: "Getting finance",
     } as Record<string, string>,
   },
   /** THE APPS A SHOP RUNS ON (sections/LocalApps.tsx, 2026-09-25). The fee's unit as a symbol after the figure, never a phrase. */
   localApps: {
-    kicker: "The apps a shop runs on",
+    kicker: "The apps shops use",
     jobs: { bookings: "Bookings", payments: "Card payments", accounts: "Accounts", banking: "Banking", payroll: "Payroll", reviews: "Reviews", hiring: "Hiring" } as Record<string, string>,
     fee: { free: "Free", perSale: "/sale", perNewClient: "/new client", perMonth: "/mo", perYear: "/yr", perAd: "/ad" },
   },
@@ -688,7 +692,9 @@ export const COPY = {
   jobMarket: {
     kicker: "The job market",
     focalWords: "out of work and looking",
-    rates: { all: "Everyone", youth: "Aged 16 to 24" } as Record<string, string>,
+    /* "Under 25", not "Aged 16 to 24" (the model laws' ROW SENTENCE, four words, on the page's first render): the rate counts the
+       16 to 24s, and nobody under 16 is in the count, so the two say the same. */
+    rates: { all: "Everyone", youth: "Under 25" } as Record<string, string>,
     sectors: { hospitality: "Hospitality" } as Record<string, string>,
     vacancies: "vacancies per 100 jobs",
     payroll: "staff on payroll, a year on",
@@ -697,7 +703,7 @@ export const COPY = {
    *  immigrant, tourist ... pedestrians, car or online"). Labels, never sentences. */
   people: {
     age: {
-      kicker: "Who lives here, by age",
+      kicker: "People by age",
       focalWords: "of people in {place} are 25 to 49",
       bands: { under16: "Under 16", "16to24": "16 to 24", "25to49": "25 to 49", "50to64": "50 to 64", "65plus": "65 and over" } as Record<string, string>,
     },
@@ -731,8 +737,8 @@ export const COPY = {
     kicker: "Employing people",
     focalWords: "out of work and looking",
     leaveWords: "paid holiday a year, bank holidays included",
-    cells: { leave: "Paid leave", out: "Unemployed", week: "Longest week", sick: "Sick pay", dismissal: "Unfair dismissal" },
-    notes: { leave: "a year, bank holidays included", out: "", week: "opt-out allowed", sick: "a week, from day one", dismissal: "of service before a claim" },
+    cells: { leave: "Paid leave", out: "Unemployed", week: "Longest week", sick: "Sick pay", dismissal: "Unfair dismissal", maternity: "Maternity pay" },
+    notes: { leave: "a year, bank holidays included", out: "", week: "opt-out allowed", sick: "a week, from day one", dismissal: "of service before a claim", maternity: "at the statutory rate" },
   },
   insurance: {
     kicker: "Insurance",

@@ -89,6 +89,13 @@ import {
   type InsuranceCard,
 } from "@/lib/spine/country_depth_rows";
 import { buildRunningCosts, type RunningCostsData } from "@/lib/spine/running_costs_rows";
+import { FirstYears } from "@/components/spine/sections/FirstYears";
+import { Obstacles } from "@/components/spine/sections/Obstacles";
+import { AgeMix } from "@/components/spine/sections/AgeMix";
+import { JobMarket } from "@/components/spine/sections/JobMarket";
+import { buildSurvival, buildObstacles } from "@/lib/spine/sections/first_years";
+import { buildAgeMix, listPeoplePlaces } from "@/lib/spine/sections/people";
+import { buildJobMarket } from "@/lib/spine/sections/market_jobs";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 /**
@@ -1187,15 +1194,35 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const exitData = buildCountryExit(iso2 ?? "");
   const spendData = buildCountrySpend(iso2 ?? "");
   const rich = !!(employment && insurance && financing && banking && paperwork && londonMargins && costs && hasSetup && locals && cities && exitData && spendData);
+  /* FOUR OF THE PAGE-AGNOSTIC SECTIONS OF 2026-09-25, SEATED (his "you choose, push forward" of that night), each pair only where
+     the country holds both halves, so no card stands alone on a level:
+       - who lives here by age beside the job market: the people a shop sells to and hires from. The job market carries the
+         unemployment rate drawn beside the capital's and the young's, so the employment card gives its cell up while the pair is
+         seated (one figure, printed once), and the pair waits where the employment card's own figure is that rate.
+       - who is still trading beside what holds small firms back, a fourth turn.
+     The age card's comparison city is the people file's own for the country, never a name written here. Not seated, with the
+     reasons in QUEUE sections:seats-2026-09-25: the born-abroad card (its figure is the people table's foot), the thresholds (the
+     hero's VAT line and the hiring card's minimum salary on this page), the apps (a list wants a drawing beside it, and only the
+     peers table stands the full width here), and the trip bar (a second bar cut into parts after what households spend on). */
+  const peopleCity = iso2 ? listPeoplePlaces().find((p) => p.iso2 === iso2.toUpperCase())?.city : undefined;
+  const ageMix = iso2 ? buildAgeMix(iso2, peopleCity, "country") : null;
+  const jobs = iso2 ? buildJobMarket(iso2) : null;
+  const seatPeople = !!(ageMix && jobs && employment?.leaveDays != null);
+  const survival = iso2 ? buildSurvival(iso2) : null;
+  const obstacles = iso2 ? buildObstacles(iso2) : null;
+  const seatFirstYears = !!(survival && obstacles);
   if (rich) {
-    /* THE UNITED KINGDOM'S PAGE (2026-09-25, his goal of that day; the plan goal-2026-09-24/PLAN-2026-09-25-uk-country.md). Three
-       turns and eight levels, each level one or two drawings (his clause 53), the two bar cards and the two character tables each
+    /* THE UNITED KINGDOM'S PAGE (2026-09-25, his goal of that day; the plan goal-2026-09-24/PLAN-2026-09-25-uk-country.md). Four
+       turns and ten levels, each level one or two drawings (his clause 53), the two bar cards and the two character tables each
        two levels apart (clause 64), the one donut, nothing wider than its information:
          01 what it costs to open and to run: registering | the bill; what staff cost | employing people; running costs | insurance;
             the peers table, full width;
          02 borrowing, banking and red tape: borrowing | getting paid; dealing with the state | legal and admin costs;
-         03 what to open, and where: London's margins by trade | time to sell; the cities | what locals know; what households spend
-            on | dealing with people.
+         03 what to open, and where: London's margins by trade | time to sell; who lives here by age | the job market; the cities |
+            what locals know; what households spend on | dealing with people (the age bars and the spending bar, two wholes cut
+            into parts, keep a level between them);
+         04 the first years: who is still trading | what holds small firms back (two fifths and three: eight columns and their names
+            need the wider card).
        What customers earn leaves this page: its three figures were the pay pair printed under a second name (the goal's A12). */
     const sections = [
       { id: "take", label: "The tax burden" },
@@ -1212,10 +1239,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
       { id: "paperwork", label: COPY.paperwork.kicker },
       { id: "money", label: COPY.londonMargins.kicker },
       { id: "exit", label: COPY.countryExit.kicker },
+      ...(seatPeople ? [{ id: "age-mix", label: COPY.people.age.kicker }, { id: "job-market", label: COPY.jobMarket.kicker }] : []),
       { id: "cities", label: "The cities" },
       { id: "locals", label: COPY.locals.kicker },
       { id: "spend", label: "What households spend on" },
       { id: "character-people", label: COPY.character.people.kicker },
+      ...(seatFirstYears ? [{ id: "first-years", label: COPY.firstYears.kicker }, { id: "obstacles", label: COPY.firstYears.obstaclesKicker }] : []),
     ];
     return (
       <>
@@ -1233,7 +1262,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <Box id="employment" className="flex flex-col">
               <Rail icon="staffing-rota" kicker={COPY.employment.kicker} />
               <Focal figure={employment.focal.figure} words={employment.focal.words} />
-              <KvGrid cells={employment.cells} under fill />
+              <KvGrid cells={seatPeople ? employment.cells.filter((c) => c.key !== "out") : employment.cells} under fill />
             </Box>
           </Band>
           <Band split="1-1" stack="lg">
@@ -1261,6 +1290,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <LondonMarginBars margins={londonMargins} />
             <ExitCard exit={exitData} lean />
           </Band>
+          {seatPeople && ageMix && jobs ? (
+            <Band split="1-1" stack="lg">
+              <AgeMix id="age-mix" data={ageMix} />
+              <JobMarket id="job-market" data={jobs} />
+            </Band>
+          ) : null}
           <Band split="2-1" stack="lg">
             <Cities cards={cities} seat={null} />
             <LocalsKnow notes={locals} />
@@ -1269,6 +1304,13 @@ export function SpineCountryBody({ data }: { data?: any }) {
             <SpendBar spend={spendData} />
             <CharacterCard iso2={iso2} which="people" />
           </Band>
+          {seatFirstYears ? <Movement index="04" heading={COPY.chapters.firstYears} /> : null}
+          {seatFirstYears && survival && obstacles ? (
+            <Band split="2-3" stack="lg">
+              <FirstYears id="first-years" data={survival} />
+              <Obstacles id="obstacles" data={obstacles} />
+            </Band>
+          ) : null}
           <Close meta={d.meta} name={name} />
         </div>
         <OnThisPage sections={sections} />

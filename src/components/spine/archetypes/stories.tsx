@@ -67,6 +67,7 @@ import { buildPermits } from "@/lib/spine/permits_rows";
 import { StockTiers } from "@/components/spine/sections/StockTiers";
 import { buildStockKit, listStockKits } from "@/lib/spine/sections/stock_kit";
 import { FirstYears } from "@/components/spine/sections/FirstYears";
+import { Obstacles } from "@/components/spine/sections/Obstacles";
 import { LocalApps } from "@/components/spine/sections/LocalApps";
 import { MarketHold } from "@/components/spine/sections/MarketHold";
 import { JobMarket } from "@/components/spine/sections/JobMarket";
@@ -2412,14 +2413,30 @@ export function StockTiersStories() {
 /** THE OTHER PAGE-AGNOSTIC SECTIONS OF 2026-09-25 (sections/*.tsx), one story a country the section's file holds, each at a full
  *  card's width: who is still trading and what gets in the way, the apps a shop runs on, who holds the market, the job market. */
 export function pickSurvivalInstances(): Instance[] {
-  return listSurvivalCountries().filter((c) => buildSurvival(c)).map((c) => ({ iso2: c, why: "one cohort's years, the regions, the obstacles" }));
+  return listSurvivalCountries().filter((c) => buildSurvival(c)).map((c) => ({ iso2: c, why: "one cohort's years and the regions" }));
 }
 export function SurvivalCurveStories() {
   return (
     <div data-stories="survival-curve">
       {pickSurvivalInstances().map((i) => (
         <Story kind="survival-curve" key={i.iso2} iso2={i.iso2} why={i.why}>
-          <FirstYears id={`first-years-${i.iso2.toLowerCase()}`} data={buildSurvival(i.iso2)!} obstacles={buildObstacles(i.iso2)} />
+          <FirstYears id={`first-years-${i.iso2.toLowerCase()}`} data={buildSurvival(i.iso2)!} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+/** WHAT HOLDS SMALL FIRMS BACK (sections/Obstacles.tsx): the columns from 480px of card, the rows under it; the sheet's three widths
+ *  draw both forms. */
+export function pickObstaclesInstances(): Instance[] {
+  return listSurvivalCountries().filter((c) => buildObstacles(c)).map((c) => ({ iso2: c, why: "the obstacles as columns, the most named as the figure" }));
+}
+export function ObstaclesStories() {
+  return (
+    <div data-stories="obstacles">
+      {pickObstaclesInstances().map((i) => (
+        <Story kind="obstacles" key={i.iso2} iso2={i.iso2} why={i.why}>
+          <Obstacles id={`obstacles-${i.iso2.toLowerCase()}`} data={buildObstacles(i.iso2)!} />
         </Story>
       ))}
     </div>
@@ -2486,19 +2503,24 @@ export function ThresholdsStories() {
 /** WHO THE CUSTOMERS ARE (sections/AgeMix.tsx, CustomersCome.tsx, Origin.tsx): each country the people file holds, with its first
  *  city where the section compares the two; keyed <iso2> or <iso2>:<city>. */
 const peopleKey = (iso2: string, city?: string) => (city ? `${iso2}:${city}` : iso2);
+/** Each place the file holds in both of its focuses where it holds a city: the city's (a city's page, keyed <iso2>:<city>) and the
+ *  country's (the country's page, keyed <iso2>:<city>:country, the city beside it as the one comparison). */
+const peopleFocuses = () => listPeoplePlaces().flatMap((p) => (p.city ? [{ ...p, focus: "city" as const }, { ...p, focus: "country" as const }] : [{ ...p, focus: "country" as const }]));
+const peopleFocusKey = (p: { iso2: string; city?: string; focus: "city" | "country" }) => (p.city && p.focus === "country" ? `${peopleKey(p.iso2, p.city)}:country` : peopleKey(p.iso2, p.city));
 export function pickAgeMixInstances(): Instance[] {
-  return listPeoplePlaces().filter((p) => buildAgeMix(p.iso2, p.city)).map((p) => ({ iso2: peopleKey(p.iso2, p.city), why: "the country's bar and its city's, the core in the accent" }));
+  return peopleFocuses().filter((p) => buildAgeMix(p.iso2, p.city, p.focus)).map((p) => ({ iso2: peopleFocusKey(p), why: p.focus === "city" ? "the country's bar and its city's, the city's core in the accent" : "the country's core in the accent, its city's bar under it" }));
 }
 export function AgeMixStories() {
   return (
     <div data-stories="age-mix">
-      {listPeoplePlaces().map((p) => {
-        const d = buildAgeMix(p.iso2, p.city);
-        return d ? (
-          <Story kind="age-mix" key={peopleKey(p.iso2, p.city)} iso2={peopleKey(p.iso2, p.city)} why="the country's bar and its city's, the core in the accent">
-            <AgeMix id={`age-mix-${p.iso2.toLowerCase()}`} data={d} />
+      {pickAgeMixInstances().map((i) => {
+        const p = peopleFocuses().find((x) => peopleFocusKey(x) === i.iso2)!;
+        const d = buildAgeMix(p.iso2, p.city, p.focus)!;
+        return (
+          <Story kind="age-mix" key={i.iso2} iso2={i.iso2} why={i.why}>
+            <AgeMix id={`age-mix-${i.iso2.toLowerCase().replace(/:/g, "-")}`} data={d} />
           </Story>
-        ) : null;
+        );
       })}
     </div>
   );
@@ -2521,18 +2543,19 @@ export function CustomersComeStories() {
   );
 }
 export function pickOriginInstances(): Instance[] {
-  return listPeoplePlaces().filter((p) => buildOrigin(p.iso2, p.city)).map((p) => ({ iso2: peopleKey(p.iso2, p.city), why: "born abroad, the country against its city, and visitors" }));
+  return peopleFocuses().filter((p) => buildOrigin(p.iso2, p.city, p.focus)).map((p) => ({ iso2: peopleFocusKey(p), why: p.focus === "city" ? "born abroad, the city against its country, and visitors" : "born abroad, the country against its city, and visitors" }));
 }
 export function OriginStories() {
   return (
     <div data-stories="origin">
-      {listPeoplePlaces().map((p) => {
-        const d = buildOrigin(p.iso2, p.city);
-        return d ? (
-          <Story kind="origin" key={peopleKey(p.iso2, p.city)} iso2={peopleKey(p.iso2, p.city)} why="born abroad, the country against its city, and visitors">
-            <Origin id={`origin-${p.iso2.toLowerCase()}`} data={d} />
+      {pickOriginInstances().map((i) => {
+        const p = peopleFocuses().find((x) => peopleFocusKey(x) === i.iso2)!;
+        const d = buildOrigin(p.iso2, p.city, p.focus)!;
+        return (
+          <Story kind="origin" key={i.iso2} iso2={i.iso2} why={i.why}>
+            <Origin id={`origin-${i.iso2.toLowerCase().replace(/:/g, "-")}`} data={d} />
           </Story>
-        ) : null;
+        );
       })}
     </div>
   );
@@ -2571,6 +2594,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
     "stock-tiers": pickStockTiersInstances(),
     "survival-curve": pickSurvivalInstances(),
+    "obstacles": pickObstaclesInstances(),
     "local-apps": pickLocalAppsInstances(),
     "market-hold": pickMarketHoldInstances(),
     "job-market": pickJobMarketInstances(),
