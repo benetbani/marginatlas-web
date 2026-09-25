@@ -6,7 +6,8 @@
     "households": [2870, 2870, 2870, 2870, 2880, 2860, 2880, 2870, 2870, 2870],
     "items": {
       "hairdressing": { "code": "12.1.1", "tenths": [1.9, 2.6, 2.6, 2.5, 3.3, 4.7, 4.5, 4.9, 6.3, 11.0], "all": 4.4 },
-      "eating-out": { "code": "11.1.1", "tenths": [6.2, 9.2, 10.5, 13.2, 15.3, 17.6, 18.4, 24.4, 25.6, 37.8], "all": 17.8 }
+      "eating-out": { "code": "11.1.1", "tenths": [6.2, 9.2, 10.5, 13.2, 15.3, 17.6, 18.4, 24.4, 25.6, 37.8], "all": 17.8 },
+      "groceries": { "code": "1", "tenths": [41.7, 50.6, 58.3, 69.4, 68.1, 77.7, 85.4, 86.7, 94.9, 104.2], "all": 73.7 }
     },
     "trades": {
       "barbershops": "hairdressing",
@@ -17,7 +18,9 @@
       "sit-down-restaurants": "eating-out",
       "fast-casual-restaurants": "eating-out",
       "cafes-coffee-shops": "eating-out",
-      "tea-houses-matcha-bars": "eating-out"
+      "tea-houses-matcha-bars": "eating-out",
+      "grocery-stores": "groceries",
+      "specialty-grocers-delis": "groceries"
     }
   }
 }

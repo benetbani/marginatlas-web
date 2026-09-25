@@ -166,6 +166,8 @@ import { LocalApps } from "@/components/spine/sections/LocalApps";
 import { SpendByIncome } from "@/components/spine/sections/SpendByIncome";
 import { buildLocalApps } from "@/lib/spine/sections/local_apps";
 import { buildSpendByIncome } from "@/lib/spine/sections/spend_by_income";
+import { MarketHold } from "@/components/spine/sections/MarketHold";
+import { buildMarketHold, marketForTrade } from "@/lib/spine/sections/market_jobs";
 
 const X: any = spineCellSeed;
 
@@ -350,7 +352,12 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      trade page, and the lines read against the page's own sales: a barbershop's year runs across the VAT line. Both or neither,
      so the level never holds one card. */
   const kit = typeof d.meta?.iso2 === "string" && typeof d.meta?.industry === "string" ? buildStockKit(d.meta.iso2, d.meta.industry) : null;
-  const lines = kit && typeof d.meta?.iso2 === "string" ? buildThresholds(d.meta.iso2) : null;
+  /* WHO HOLDS THE MARKET (2026-09-25), where the trade sells in a market the file measures (the UK's grocery trades): it takes
+     the kit's seat beside the lines to cross on a trade the kit file does not hold, so the level is the same question asked of
+     a shop that does not fit out chairs: what stands in the way in the first year. */
+  const holdMarket = !kit && typeof d.meta?.iso2 === "string" && typeof d.meta?.industry === "string" ? marketForTrade(d.meta.iso2, d.meta.industry) : null;
+  const hold = holdMarket && typeof d.meta?.iso2 === "string" ? buildMarketHold(d.meta.iso2, holdMarket) : null;
+  const lines = (kit || hold) && typeof d.meta?.iso2 === "string" ? buildThresholds(d.meta.iso2) : null;
   /* THE APPS THE TRADE RUNS ON BESIDE WHO SPENDS ON IT, BY INCOME (2026-09-25, two more of his sections of that night): the
      country's apps by job, the booking job only for the trades it serves, beside a household's week on the trade's item by
      income tenth. Both or neither. */
@@ -360,7 +367,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      money cards and the peers (the peers only where a peer resolves, the
      band's note), turn two the share, the survival grid and the strip, turn
      three the bento and then the exit's pair. */
-  const turnOne = !!(permits && open) || !!(kit && lines) || !!(split && team) || !!(peers && peers.peers > 0);
+  const turnOne = !!(permits && open) || !!((kit || hold) && lines) || !!(split && team) || !!(peers && peers.peers > 0);
   const turnTwo = !!(clears && lasts);
   const turnThree = !!market;
 
@@ -449,6 +456,13 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           {kit && lines ? (
             <Band split="3-2" stack="lg">
               <StockTiers id="stock" kit={kit} />
+              <Thresholds id="thresholds" data={lines} fill />
+            </Band>
+          ) : hold && lines ? (
+            /* THE MARKET NARROW AND THE LINES WIDE, 2-3 (measured on the London grocery page, 2026-09-25): at three fifths the market
+               stood 64px short of the lines beside it; at two fifths its parts take one column and the lines take their two. */
+            <Band split="2-3" stack="lg">
+              <MarketHold id="market-hold" data={hold} />
               <Thresholds id="thresholds" data={lines} fill />
             </Band>
           ) : null}

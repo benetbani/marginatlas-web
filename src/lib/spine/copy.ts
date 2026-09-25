@@ -682,7 +682,7 @@ export const COPY = {
   spendByIncome: {
     kicker: "Spending by income",
     focalWords: "of {item} spending comes from the richest fifth",
-    items: { hairdressing: "hairdressing and beauty", "eating-out": "eating-out" } as Record<string, string>,
+    items: { hairdressing: "hairdressing and beauty", "eating-out": "eating-out", groceries: "food and drink" } as Record<string, string>,
     caption: "A household's week, by income tenth",
     poorest: "Poorest tenth",
     richest: "Richest tenth",

@@ -1,5 +1,5 @@
 {
-  "_about": "Who holds a market, by country and market (his message of 2026-09-25: \"how dominated by big brands a market is\"). Shares as published for one period; the rest is 100 less the named shares, computed and marked so. Research: design/loop/build/research/2026-09-25-R5-accounting-market-jobs-GB.md.",
+  "_about": "Who holds a market, by country and market (his message of 2026-09-25: \"how dominated by big brands a market is\"). Shares as published for one period; the rest is 100 less the named shares, computed and marked so. Research: design/loop/build/research/2026-09-25-R5-accounting-market-jobs-GB.md. A country's `trades` maps a trade page's URL slug to the market its shops sell in.",
   "GB": {
     "grocery": {
       "period": "12 weeks to 6 September 2026",
@@ -46,6 +46,10 @@
         "publisher": "Worldpanel by Numerator (formerly Kantar), grocery market share",
         "url": "https://www.worldpanelbynumerator.com/"
       }
+    },
+    "trades": {
+      "grocery-stores": "grocery",
+      "specialty-grocers-delis": "grocery"
     }
   }
 }

@@ -31,6 +31,15 @@ export function buildMarketHold(iso2: string, market = "grocery"): MarketHold | 
   return { iso2: iso2.toUpperCase(), market, label, parts, bigShare: Math.round(big.reduce((n, p) => n + p.pct, 0) * 10) / 10, bigCount: big.length };
 }
 
+/** The market a trade's shops sell in, where the country's file maps the trade (2026-09-25: the grocery trades to the grocery
+ *  market), else null. */
+export function marketForTrade(iso2: string, trade: string): string | null {
+  const c = (holdJson as unknown as Record<string, Record<string, unknown> | string>)[iso2.toUpperCase()];
+  if (!c || typeof c === "string") return null;
+  const map = c.trades as Record<string, string> | undefined;
+  return map && typeof map[trade] === "string" ? map[trade] : null;
+}
+
 export type JobRate = { key: string; label: string; pct: number };
 export type JobMarket = { iso2: string; rates: JobRate[]; sector: { label: string; vacancies: number; payrollChange: number } | null };
 
