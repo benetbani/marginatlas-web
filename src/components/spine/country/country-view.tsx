@@ -622,6 +622,7 @@ function BankingRing({ card }: { card: BankingCard }) {
 }
 
 /** LONDON'S MARGINS, TRADE BY TRADE, as a bar list with each trade's glyph; each name opens its London page. */
+const SHOWN_MARGINS = 7;
 function LondonMarginBars({ margins }: { margins: NonNullable<ReturnType<typeof buildLondonTradeMargins>> }) {
   const L = COPY.londonMargins;
   /* THE CARD'S ONE FIGURE, THE MIDDLE TRADE (2026-09-25, the model laws' FOCAL on the UK page): the median of every London trade
@@ -635,10 +636,12 @@ function LondonMarginBars({ margins }: { margins: NonNullable<ReturnType<typeof 
     <Box id="money" className="flex flex-col">
       <Rail icon="owner-keeps" kicker={L.kicker} />
       <Focal figure={middleText} words={L.focalWords} />
-      {/* EIGHT DRAWN, THE REST ON THE PLUS (his clause 58, parts behind a click): sixteen rows stood the card 717 tall beside a
-          card of 300. The bars share one scale, the list's highest, so the plus's rows read against the same top. */}
-      <BarList items={margins.rows.slice(0, 8).map((r) => ({ key: r.key, label: r.name, value: r.value, display: `${Math.round(r.value * 100)}%`, href: r.href, icon: r.icon }))} max={margins.worldMax} />
-      {margins.rows.length > 8 ? <DetailPanel name="money-more" summary={L.more.replace("{n}", String(margins.rows.length - 8))} rows={margins.rows.slice(8).map((r) => ({ label: r.name, value: `${Math.round(r.value * 100)}%` }))} /> : null}
+      {/* SEVEN DRAWN, THE REST ON THE PLUS (his clause 58, parts behind a click): sixteen rows stood the card 717 tall beside a
+          card of 300. Eight until the card took its figure (2026-09-25): the figure's 40px stretched the time-to-sell card beside
+          it into a 153 by 120 hole (the chain's gathered-emptiness, E6), and the seventh row keeps the level at its old height.
+          The bars share one scale, the list's highest, so the plus's rows read against the same top. */}
+      <BarList items={margins.rows.slice(0, SHOWN_MARGINS).map((r) => ({ key: r.key, label: r.name, value: r.value, display: `${Math.round(r.value * 100)}%`, href: r.href, icon: r.icon }))} max={margins.worldMax} />
+      {margins.rows.length > SHOWN_MARGINS ? <DetailPanel name="money-more" summary={L.more.replace("{n}", String(margins.rows.length - SHOWN_MARGINS))} rows={margins.rows.slice(SHOWN_MARGINS).map((r) => ({ label: r.name, value: `${Math.round(r.value * 100)}%` }))} /> : null}
     </Box>
   );
 }
