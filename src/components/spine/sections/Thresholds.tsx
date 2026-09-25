@@ -17,7 +17,8 @@ import { COPY } from "@/lib/spine/copy";
 import type { Thresholds as ThresholdsData } from "@/lib/spine/sections/thresholds";
 
 /** `fill` (2026-09-25, its first seat, beside the kit on a trade page): the rows share the height a taller neighbour lends the
- *  card (equal rows, `auto-rows-fr`), so its foot never stands empty.
+ *  card, the spare height shared between the rows (`content-between`; equal rows, `auto-rows-fr`, stood every row at the
+ *  tallest one's height on a phone, where nothing is lent), so its foot never stands empty.
  *  THREE FORMS BY THE CARD'S WIDTH, each measured on the trade page that day: under 600px the figure over one column of rows
  *  (a two-fifths seat at 1280); from 600px the figure over two columns of rows (a lone card at a 768 window, 680 inside: one
  *  column ran a name and its figure 420px apart, the model laws' LABEL GAP, and the figure beside the rows left a 298 by 162
@@ -33,7 +34,7 @@ export function Thresholds({ id = "thresholds", data, fill = false }: { id?: str
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.lead.figure}</div>
         <p className="mt-2 max-w-[32ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.lead.words}</p>
       </div>
-      <ol data-archetype="thresholds" data-rows={String(data.rows.length)} className={`m-0 grid list-none p-0 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-8 [@container(min-width:900px)]:grid-cols-1 ${fill ? "auto-rows-fr" : ""}`}>
+      <ol data-archetype="thresholds" data-rows={String(data.rows.length)} className={`m-0 grid list-none p-0 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-8 [@container(min-width:900px)]:grid-cols-1 ${fill ? "content-between" : ""}`}>
         {/* `max-w-none` on each row: globals.css gives every list item under main the prose measure (360px at a 768 window), and a
             row there stopped 312px short of the card's edge (the page filter's WHITE SPACE on the trade page at 768, 2026-09-25). */}
         {data.rows.map((r) => (
