@@ -51,7 +51,10 @@ export function NoteList({ notes, columns = 1, editorial = true, fill = false }:
       <ol className={`${columns === 2 ? "grid [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6" : "grid"} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
         {live.map((n, i) => (
           <li key={i} data-note={i} className={"border-t border-[var(--c-border)] py-2 first:border-t-0 first:pt-0 last:pb-0" + (columns === 2 ? " [@container(min-width:600px)]:[&:nth-child(2)]:border-t-0 [@container(min-width:600px)]:[&:nth-child(2)]:pt-0 [@container(min-width:600px)]:[&:nth-child(odd):last-child]:col-span-2" : "")}>
-            <div data-note-label className="text-[length:var(--t-micro)] font-semibold leading-tight text-[var(--c-ink)]">{n.label}</div>
+            {/* THE TITLE LEADS ITS FACT (2026-09-26, the capitals ruling's follow-through on "bad hierarchy"): the title stood at
+                12px over a 14px fact, so the eye met the explanation before the claim it explains. Both at the body rung now, the
+                title in bold ink and the fact in regular ink2: one size, two weights, one order. */}
+            <div data-note-label className="text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">{n.label}</div>
             <p data-note-fact className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{n.fact}</p>
           </li>
         ))}
