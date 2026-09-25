@@ -27,7 +27,12 @@
  * it writes its summary to scratchpad/harness/sweep/<iso>-<city>.json so two
  * runs can be compared.
  *
- * usage: npx tsx scripts/sweep_trades.ts [--iso=gb] [--city=london] [--no-render]
+ * THE INDUSTRY PAGES TOO (the goal's E11, 2026-09-25): `--surface=industry` renders the 138 live trades'
+ * industry pages (`/industries/<slug>`, a main page type the harness reads one of) instead of one city's
+ * trade pages; and `--laws` runs the page laws over the same renders beside the filter (a lone card at
+ * two thirds is a page-law fault, LEVEL UNFILLED, that no hole shows), counted by rule.
+ *
+ * usage: npx tsx scripts/sweep_trades.ts [--iso=gb] [--city=london] [--surface=industry] [--laws] [--no-render]
  */
 import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -37,13 +42,19 @@ const arg = (name: string, dflt: string) => process.argv.find((a) => a.startsWit
 const iso = arg("iso", "gb").toLowerCase();
 const city = arg("city", "london").toLowerCase();
 const render = !process.argv.includes("--no-render");
+const surface = arg("surface", "cell") === "industry" ? "industry" : "cell";
+const withLaws = process.argv.includes("--laws");
 const OUT = "scratchpad/harness/sweep";
 mkdirSync(OUT, { recursive: true });
 
-const pages = INDUSTRIES.map((i) => industryToSlug(i.id)).filter((s): s is string => !!s).map((slug) => ({ surface: "cell", slugs: [iso, city, slug], since: "sweep" }));
-const listPath = `${OUT}/${iso}-${city}-list.json`;
-writeFileSync(listPath, JSON.stringify({ why: "sweep_trades.ts: every live trade of one city, by URL slug", pages }, null, 2));
-const files = pages.map((p) => `scratchpad/harness/pages/cell-${p.slugs.join("-")}.html`);
+const slugs = INDUSTRIES.map((i) => industryToSlug(i.id)).filter((s): s is string => !!s);
+const pages = surface === "industry"
+  ? slugs.map((slug) => ({ surface: "industry", slugs: [slug], since: "sweep" }))
+  : slugs.map((slug) => ({ surface: "cell", slugs: [iso, city, slug], since: "sweep" }));
+const stem = surface === "industry" ? "industry" : `${iso}-${city}`;
+const listPath = `${OUT}/${stem}-list.json`;
+writeFileSync(listPath, JSON.stringify({ why: surface === "industry" ? "sweep_trades.ts: every live trade's industry page, by URL slug" : "sweep_trades.ts: every live trade of one city, by URL slug", pages }, null, 2));
+const files = pages.map((p) => `scratchpad/harness/pages/${p.surface}-${p.slugs.join("-")}.html`);
 
 if (render) {
   const r = spawnSync(process.execPath, ["node_modules/tsx/dist/cli.mjs", "--tsconfig", "scripts/tsconfig.harness.json", "--require", "./scripts/harness/env.cjs", "--require", "./scripts/spikes/stub_next_font.cjs", "scripts/harness/render_page.tsx", "--list", listPath], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
@@ -63,7 +74,7 @@ if (!ran || Number(ran.match(/^page holes: (\d+)/)![1]) !== readFiles) {
   console.error(`sweep: the page filter did not read the ${readFiles} render(s) to its summary (exit ${holes.status}${holes.error ? `, ${holes.error.message}` : ""}); nothing is counted. Its last lines:\n${holesOut.split("\n").slice(-8).join("\n")}`);
   process.exit(2);
 }
-const reds = holesOut.split("\n").filter((l) => /^  cell-/.test(l));
+const reds = holesOut.split("\n").filter((l) => l.startsWith(`  ${surface}-`));
 const byCard = new Map<string, number>();
 for (const l of reds) {
   const m = l.match(/@(\d+) #([a-z0-9-]+)/);
@@ -91,18 +102,38 @@ for (const f of files) {
   if (ABSENCE_ANY.test(hero.replace(/<[^>]+>/g, " ").replace(/&#x27;/g, "'").replace(/\s+/g, " "))) heroesWithAbsence++;
 }
 
+/* THE PAGE LAWS, where asked: the same renders, file mode, counted by rule (the law's own ratchet is the harness list's and is not read here). */
+const lawsByRule = new Map<string, number>();
+let lawReds = 0;
+if (withLaws) {
+  const laws = spawnSync(process.execPath, ["scripts/harness/check_page_laws.mjs", ...files.filter((f) => existsSync(f))], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const out = laws.stdout + laws.stderr;
+  if (!out.split("\n").some((l) => /^page laws: \d+ page\(s\)/.test(l))) {
+    console.error(`sweep: the page laws did not read the renders to their summary (exit ${laws.status}); nothing is counted. Their last lines:\n${out.split("\n").slice(-8).join("\n")}`);
+    process.exit(2);
+  }
+  for (const l of out.split("\n").filter((x) => x.startsWith(`  ${surface}-`))) {
+    const m = l.match(/: ([A-Z][A-Z ]+[A-Z]):/);
+    if (!m) continue;
+    lawReds++;
+    lawsByRule.set(m[1], (lawsByRule.get(m[1]) ?? 0) + 1);
+  }
+}
+
 const summary = {
   when: new Date().toISOString(),
-  iso, city, pages: pages.length, rendered: files.length - missing.length,
+  surface, iso, city, pages: pages.length, rendered: files.length - missing.length,
   reds: reds.length,
   redsByCard: Object.fromEntries([...byCard.entries()].sort((a, b) => b[1] - a[1])),
   pagesWithAbsenceOutsideHero: pagesWithAbsence,
   heroesWithAbsence,
   absenceLines: Object.fromEntries([...absence.entries()].sort((a, b) => b[1] - a[1])),
+  ...(withLaws ? { lawReds, lawsByRule: Object.fromEntries([...lawsByRule.entries()].sort((a, b) => b[1] - a[1])) } : {}),
 };
-const summaryPath = `${OUT}/${iso}-${city}.json`;
+const summaryPath = `${OUT}/${stem}.json`;
 writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
-console.log(`sweep ${iso}/${city}: ${summary.rendered} of ${summary.pages} live trade pages; ${summary.reds} page-filter reds; absence lines outside the hero on ${pagesWithAbsence} page(s), the hero's state word on ${heroesWithAbsence}`);
+console.log(`sweep ${surface === "industry" ? "industry pages" : `${iso}/${city}`}: ${summary.rendered} of ${summary.pages} live trade pages; ${summary.reds} page-filter reds; absence lines outside the hero on ${pagesWithAbsence} page(s), the hero's state word on ${heroesWithAbsence}${withLaws ? `; ${lawReds} page-law reds` : ""}`);
+for (const [k, v] of [...lawsByRule.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10)) console.log(`  law ${String(v).padStart(4)}  ${k}`);
 for (const [k, v] of [...byCard.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12)) console.log(`  ${String(v).padStart(4)}  ${k}`);
 for (const [k, v] of [...absence.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8)) console.log(`  ${String(v).padStart(4)}  ${k}`);
 console.log(`sweep: summary written to ${summaryPath}`);
