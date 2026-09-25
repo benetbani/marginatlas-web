@@ -11,9 +11,10 @@
  * rung, in ink, gives the card a heading above them. The resolution landed in the same commit as this gate.
  *
  * THE RULE: no `uppercase` class and no `textTransform: "uppercase"` in the spine's components, except where a count is already
- * held below: a table's column heads (one or two words over a column, the convention that stays), the SVG marks of the kit's
- * small charts, the switched-off sample tag, and the index pages the site does not serve as data cards. A RATCHET, per file: a
- * file's count may fall and may never rise, and a file with no entry must hold none.
+ * held below: the SVG marks of the kit's small charts, the switched-off sample tag, and the index pages the site does not serve
+ * as data cards. A table's column heads went to sentence case in the same evening's second commit (a head of three words read
+ * as texture like any label; shadcn's table heads the same). A RATCHET, per file: a file's count may fall and may never rise,
+ * and a file with no entry must hold none.
  *
  * WHAT IT CANNOT SEE, STATED: capitals typed into the words themselves ("PLENTY OF BUYERS" in a copy table) and a transform set
  * by a stylesheet outside src/components/spine. The copy gate reads the words; the stylesheets carry no such rule today.
@@ -60,7 +61,7 @@ const total = [...uses.values()].reduce((a, b) => a + b, 0);
 if (process.argv.includes("--list")) for (const w of where) console.log(`  ${w}`);
 
 if (process.argv.includes("--write")) {
-  writeFileSync(BASELINE, JSON.stringify({ why: "verify_no_caps_labels: capitals a file may still hold (table column heads, the kit's SVG marks, the sample tag, the index pages); a count may fall and never rise.", files: Object.fromEntries([...uses].sort()) }, null, 1) + "\n", "utf8");
+  writeFileSync(BASELINE, JSON.stringify({ why: "verify_no_caps_labels: capitals a file may still hold (the kit's SVG marks, the sample tag, the index pages); a count may fall and never rise.", files: Object.fromEntries([...uses].sort()) }, null, 1) + "\n", "utf8");
   console.log(`wrote ${BASELINE}: ${total} use(s) in ${uses.size} file(s)`);
   process.exit(0);
 }
@@ -77,7 +78,7 @@ if (rose.length) {
   console.error("\nFAIL , capitals rose where words are read:");
   for (const r of rose) console.error(`     ${r}`);
   console.error("Set the label in sentence case: a label at --t-body, a card title at --t-lead in ink, a chip's words as written.");
-  console.error("Capitals stay only for a table's column heads. Never raise the baseline.");
+  console.error("Column heads too: sentence case. Never raise the baseline.");
   process.exit(1);
 }
 if (fell.length) console.log(`  fell: ${fell.join("; ")}. Lower the baseline with --write in the same commit.`);

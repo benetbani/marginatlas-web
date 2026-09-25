@@ -59,7 +59,9 @@ export function TierPanel({ explainer, paperwork }: { explainer?: string; paperw
   );
 }
 
-const HEAD = "text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]";
+/* Column heads in sentence case too (2026-09-25, his capitals ruling; shadcn's table heads the same): capitals were the one
+   exception left, and a head of three words ("Payroll on staff") read as texture like any label. */
+const HEAD = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
 /* name | fee | time | dots | chevron, from md; the widths are the file's own
    extremes, a $12,000 fee and a 90-day wait, not the exemplar's. */
 const GRID = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem_4.75rem] gap-x-3 md:grid-cols-[minmax(0,1fr)_5.5rem_5rem_4.75rem]";

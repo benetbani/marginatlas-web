@@ -552,9 +552,9 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
               carries neither. Put a figure in this head and the rule fires,
               correctly. */}
           <div className={`${ROW} items-baseline pb-2`} style={GEO}>
-            <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.name}</span>
+            <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
             <div className="col-span-2 flex items-baseline justify-between gap-x-3">
-              <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
+              <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
               {/* THE CEILING, NAMED ONCE, over the column whose far end it is
                   (ruling 13). Not a column head: it is the same micro muted line
                   the bars form prints beside its hairline, in the same words, so
@@ -621,8 +621,8 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
       ) : null}
       <div className={drawBars || drawWide || drawShort ? "mt-3 sm:hidden" : "mt-3"}>
         <div className="flex items-baseline justify-between pb-2">
-          <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.name}</span>
-          <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{phoneHead.value}</span>
+          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
+          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
         </div>
         <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length}>
           {[...sorted].reverse().map((r) => {

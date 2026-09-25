@@ -196,7 +196,8 @@ const MARK_COL = "2.5rem";
    setting it would be decided by the order Tailwind emits them rather than by
    the order they are written (RankedBars.tsx paid for that lesson first). */
 const ROW = "grid gap-x-3";
-const HEAD_CLS = "text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]";
+/* Column heads in sentence case (2026-09-25, his capitals ruling). */
+const HEAD_CLS = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
 /* `py-0.5` on the name and on the figure alike: a name and a figure reserving
    the same vertical padding hold one row whatever either of them says. */
 const NAME_CLS = "min-w-0 py-0.5 text-[length:var(--t-body)] font-medium text-[var(--c-ink)]";

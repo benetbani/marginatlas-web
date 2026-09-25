@@ -199,7 +199,8 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
     );
     return <span className="inline-flex min-h-4 items-center justify-end align-middle">{inner}</span>;
   };
-  const head = "text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]";
+  /* Column heads in sentence case (2026-09-25, his capitals ruling; shadcn's table heads the same). */
+  const head = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
   return (
     <div {...(inBand ? { className: "h-full" } : { "data-wide-table": "", className: "mt-8" })}>
       <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} className={inBand ? "h-full" : undefined}>
