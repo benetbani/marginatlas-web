@@ -110,10 +110,20 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                 countries that hold one companion fact: a two-column grid with one
                 cell left its second column as a 232x144 hole at 768 and 170x132
                 at 375. The column count follows the cells, never the other way. */}
-            <div className={`grid ${g.cells.length > 1 && !stack ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
-              {g.cells.map((c, ci) => (
-                /* COMPLETE ROWS: in an odd group above one, the first cell spans both columns. */
-                <div key={c.key} data-kv-cell={c.key} className={`${!stack && g.cells.length > 1 && g.cells.length % 2 === 1 && ci === 0 ? "col-span-2" : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
+            {(() => {
+              const cols = g.cells.length > 1 && !stack ? 2 : 1;
+              const lead = cols === 2 && g.cells.length % 2 === 1;
+              /* THE ROWS SHARE THE HEIGHT AS ROWS, NOT AS GAPS (2026-09-26, the United Kingdom's legal and admin card beside the
+                 five spectra). A filling grid's rows were stretched with the words pinned to each row's top, so the spare height
+                 stood as a blank under every row, 50px and more. Now a filling grid draws its rows as rows: each row a unit, its
+                 cells sharing one top line, the unit centred in its share of the height, and one hairline across the card between
+                 rows, the spectra card's own rhythm. Centring each CELL instead (the first try, the same day) dropped a figure
+                 with no note 10px under its neighbour that had one. Without spare height (a stacked card on a phone) a row is its
+                 natural height, 12px of air each side of the hairline. */
+              const ruledRows = fill && !byRow;
+              const cellEl = (c: KvCell, ci: number) => (
+                /* COMPLETE ROWS: in an odd group above one, the first cell spans both columns (a ruled row of one is its own row). */
+                <div key={c.key} data-kv-cell={c.key} className={`${lead && ci === 0 && !ruledRows ? "col-span-2" : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
                   {/* THE RESERVE IS EXACTLY TWO LINES BY CONSTRUCTION (plan step 31's
                       second dispatch, 2026-09-17, the first cards whose labels wrap at
                       375 and 768, "Net wealth per adult" and "Shop rent, major cities").
@@ -141,8 +151,32 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                   </div>
                   {c.note ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" style={{ textWrap: "balance" }}>{c.note}</div> : null}
                 </div>
-              ))}
-            </div>
+              );
+              if (!ruledRows) {
+                return (
+                  <div className={`grid ${cols === 2 ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
+                    {g.cells.map((c, ci) => cellEl(c, ci))}
+                  </div>
+                );
+              }
+              const pairs = (a: KvCell[]) => {
+                const out: KvCell[][] = [];
+                a.forEach((c, i) => { if (i % 2 === 0) out.push([c]); else out[out.length - 1].push(c); });
+                return out;
+              };
+              const rows: KvCell[][] = cols === 1 ? g.cells.map((c) => [c]) : lead ? [[g.cells[0]], ...pairs(g.cells.slice(1))] : pairs(g.cells);
+              return (
+                <div className="grid">
+                  {rows.map((r, ri) => (
+                    <div key={r[0].key} data-kv-row={ri} className={`flex flex-col justify-center py-3${ri > 0 ? " border-t border-[var(--c-border)]" : " pt-0"}${ri === rows.length - 1 ? " pb-0" : ""}`}>
+                      <div className={`grid ${r.length === 2 ? "grid-cols-2" : "grid-cols-1"} items-start gap-x-10`}>
+                        {r.map((c) => cellEl(c, g.cells.indexOf(c)))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         ))}
       </div>
