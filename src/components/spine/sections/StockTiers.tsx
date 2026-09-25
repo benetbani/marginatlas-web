@@ -107,6 +107,8 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
           </div>
           {/* THE SWITCH, under 720px of card: the four heads as buttons over the chosen budget's list. */}
           <div data-form="switch" className="[@container(min-width:720px)]:hidden">
+            {/* The buttons are controls, so the small radius (8px, `rounded-sm`): at `rounded-lg`, the site's 16, four of them stood
+                off the one scale (the chain's radius-uniform, 2026-09-25: 12 for a card, 8 or under for a control, or a pill). */}
             <div role="group" aria-label={S.pick} className="grid grid-cols-2 gap-2 [@container(min-width:420px)]:grid-cols-4">
               {kit.tiers.map((t) => {
                 const on = t.key === chosen.key;
@@ -116,7 +118,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                     type="button"
                     aria-pressed={on}
                     onClick={() => setPick(t.key)}
-                    className={`rounded-lg border px-3 py-2 text-left transition-colors ${on ? "border-[var(--c-ink2)] bg-[var(--c-soft)]" : "border-[var(--c-border)] hover:border-[var(--c-ink2)]"}`}
+                    className={`rounded-sm border px-3 py-2 text-left transition-colors ${on ? "border-[var(--c-ink2)] bg-[var(--c-soft)]" : "border-[var(--c-border)] hover:border-[var(--c-ink2)]"}`}
                   >
                     <span className="flex items-baseline gap-2">
                       <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{t.label}</span>
