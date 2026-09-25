@@ -58,9 +58,39 @@ export type Step = {
 
 export const STEPPER_MIN = 2;
 
-export function Stepper({ steps }: { steps: Step[] }) {
+export function Stepper({ steps, compact = false }: { steps: Step[]; compact?: boolean }) {
   const live = steps.filter((s) => s && s.name);
   if (live.length < STEPPER_MIN) return null;
+  /* THE COMPACT FORM (2026-09-25, the country page's bill card at two fifths): a narrow card cannot give the three readings their
+     own columns beside the name (the wide form's container rule sends them to a second line, and four steps stood twice as tall
+     as the registering table beside them), so the name carries how the step is done as a muted line under it and the days and the
+     cost stand in two columns to its right. ONE GRID FOR THE WHOLE LIST, each row a subgrid of it, so the days and the costs keep
+     one right edge down the list (the hero board's alignment law). */
+  if (compact) {
+    return (
+      <ol data-archetype="stepper" data-visual="1" data-steps={String(live.length)} data-form="compact" className="relative m-0 grid w-full list-none grid-cols-[24px_minmax(0,1fr)_auto_auto] gap-x-3 p-0">
+        {live.map((s, i) => {
+          const last = i === live.length - 1;
+          return (
+            <li key={s.key} data-row className="relative col-span-full grid max-w-none grid-cols-subgrid items-baseline pb-3 last:pb-0">
+              {/* The rail is on every row and hidden on the last, so every row holds the same children in the same order and the
+                  days and the costs are one column each to anything that reads the rows by position (the page laws' ALIGNMENT). */}
+              <span aria-hidden className={last ? "hidden" : "absolute left-3 top-6 h-[calc(100%-16px)] w-px bg-[var(--c-border)]"} />
+              <span aria-hidden className="tabular-figures relative z-[1] flex h-6 w-6 items-center justify-center self-start rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">
+                {i + 1}
+              </span>
+              <div className="min-w-0">
+                <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink)]">{s.name}</div>
+                {s.how ? <div data-step-how className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{s.how}</div> : null}
+              </div>
+              <span data-step-days className="text-right">{s.days ? <Fig className="text-[length:var(--t-body)] font-semibold leading-none text-[var(--c-ink)]">{s.days}</Fig> : null}</span>
+              <span data-step-cost className="text-right">{s.cost ? <Fig className="text-[length:var(--t-body)] font-semibold leading-none text-[var(--c-ink)]">{s.cost}</Fig> : null}</span>
+            </li>
+          );
+        })}
+      </ol>
+    );
+  }
   return (
     <ol data-archetype="stepper" data-visual="1" data-steps={String(live.length)} className="relative m-0 w-full list-none p-0 [container-type:inline-size]">
       {live.map((s, i) => {

@@ -15,21 +15,24 @@
  */
 import { COUNTRIES } from "@/lib/taxonomy";
 import { PEER_GROUPS } from "@/lib/countries/country_view";
-import { getCountryRates, getFormationRowByTier } from "@/lib/tax/country_rates";
+import { getCountryRates } from "@/lib/tax/country_rates";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { COPY } from "@/lib/spine/copy";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
+import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
+import { buildPayBars } from "@/lib/spine/pay_rows";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
 export type PeerRow = { iso2: string; key?: string; name: string; home: boolean; values: Record<string, number | null> };
-export type PeerColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "per"; best: "min" | "max" };
+export type PeerColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "per"; best: "min" | "max" | "none" };
 
 export const PEER_COLUMNS: PeerColumn[] = [
   { key: "effective_tax_pct", head: COPY.peers.cols.tax, unit: "pct", best: "min" },
   { key: "payroll_pct", head: COPY.peers.cols.payroll, unit: "pct", best: "min" },
   { key: "llc_cost_usd", head: COPY.peers.cols.llcCost, unit: "usd", best: "min" },
   { key: "llc_days", head: COPY.peers.cols.llcDays, unit: "days", best: "min" },
+  { key: "salary_usd", head: COPY.peers.cols.salary, unit: "usd", best: "none" },
 ];
 
 export type PeerTable = { rows: PeerRow[]; columns: PeerColumn[]; caveat: string };
@@ -50,7 +53,12 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
     if (!name) continue;
     const regime = getSmbRegime(pc);
     const rates = getCountryRates(pc);
-    const llc = getFormationRowByTier(pc, "LLC");
+    /* THE HERO'S TWO FIGURES, BY THE HERO'S BUILDER (2026-09-25): the LLC's all-in bill and the days until the business can trade,
+       each where the bill card's guard prints it (entry_bill_rows.ts), so the home row and the board above can never differ; a
+       peer whose figure the guard withholds shows the dash. The average salary is the pay pair's (pay_rows.ts), the staff card's. */
+    const bill = buildEntryBill(pc);
+    const pay = buildPayBars(pc);
+    const avg = pay && pay.withheld == null ? pay.rows.find((r) => r.key === "average")?.value ?? null : null;
     rows.push({
       iso2: pc,
       name,
@@ -58,8 +66,9 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
       values: {
         effective_tax_pct: regime && isNum(regime.effective_rate) ? Math.round(regime.effective_rate * 1000) / 10 : null,
         payroll_pct: isNum(rates.employerSocial) && rates.employerSocial > 0 ? Math.round(rates.employerSocial * 1000) / 10 : null,
-        llc_cost_usd: llc && isNum(llc.costUsd) ? Math.round(llc.costUsd) : null,
-        llc_days: llc && isNum(llc.days) ? Math.round(llc.days) : null,
+        llc_cost_usd: bill?.verdict.bill.state === "printed" ? Math.round(bill.verdict.bill.value) : null,
+        llc_days: bill?.verdict.days.state === "printed" ? Math.round(bill.verdict.days.value) : null,
+        salary_usd: isNum(avg) && avg > 0 ? Math.round(avg) : null,
       },
     });
   }

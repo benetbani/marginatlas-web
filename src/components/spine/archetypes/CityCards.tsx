@@ -234,7 +234,7 @@ export function CityCards({
           same figure, the arrow at the right edge, and no hole. */}
       {/* `fill`: the grid takes the height the card is lent and its rows share it (`auto-rows-fr`), so the cards grow instead of a blank under the link. */}
       <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]"} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
-        {slice.map((c) => (rows ? <Row key={c.id} card={c} look={look} fmt={fmt} /> : <Card key={c.id} card={c} look={look} fmt={fmt} />))}
+        {slice.map((c, i) => (rows ? <Row key={c.id} card={c} look={look} fmt={fmt} /> : <Card key={c.id} card={c} look={look} fmt={fmt} index={i} />))}
       </div>
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{drawn && basisDrawn ? basisDrawn : basis}</p>
       <div className="mt-2 text-right">
@@ -291,11 +291,22 @@ export function DuotonePhoto({
   );
 }
 
-function Photo({ card }: { card: CityCard }) {
-  return <DuotonePhoto src={card.photo.src} placeholder={card.photo.placeholder} />;
+/* THE ONE PLACEHOLDER, A DIFFERENT PART OF IT ON EACH CARD (2026-09-25): four cards showing one picture four times read as a row
+   copied and pasted, the section "dead" in his word of that day. Each card of a page takes its own region (the sea, the town, the
+   cliff, the harbour), the way the home page's post cards already do. A city's own photograph is drawn whole. */
+const PLACEHOLDER_CROPS: { x: number; y: number; zoom: number }[] = [
+  { x: 100, y: 55, zoom: 1.7 },
+  { x: 0, y: 30, zoom: 1.9 },
+  { x: 70, y: 100, zoom: 2.1 },
+  { x: 35, y: 85, zoom: 1.6 },
+];
+
+function Photo({ card, index = 0 }: { card: CityCard; index?: number }) {
+  const crop = card.photo.placeholder ? PLACEHOLDER_CROPS[index % PLACEHOLDER_CROPS.length] : undefined;
+  return <DuotonePhoto src={card.photo.src} placeholder={card.photo.placeholder} crop={crop} />;
 }
 
-function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v: number) => string }) {
+function Card({ card, look, fmt, index = 0 }: { card: CityCard; look: CityCardsLook; fmt: (v: number) => string; index?: number }) {
   const field = look === "field";
   /* On a terracotta field every line goes to `--c-ink`: `--c-muted` reads about
      3.3 to 1 on the deepest step, under the floor this repo holds, and the
@@ -313,7 +324,7 @@ function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (
       data-lands={card.lands}
       className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
     >
-      {field ? <Photo card={card} /> : null}
+      {field ? <Photo card={card} index={index} /> : null}
       {look === "column" ? <Mark part={card.payOfTop} /> : null}
       <span className="relative flex h-full flex-col">
         {/* THE PLATE PUTS ITS AIR AT THE TOP AND STANDS THE NAME ON THE FOOT
@@ -336,6 +347,7 @@ function Card({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (
         </span>
         {card.region ? <span className={`block truncate text-[length:var(--t-micro)] leading-snug ${quiet}`}>{card.region}</span> : null}
         {look === "plate" ? null : <span className="mt-auto" />}
+        {field ? <PayTrack part={card.payOfTop} /> : null}
         <span className={`flex items-baseline justify-between gap-2 pt-2 ${field ? "" : "border-t border-[var(--c-border)]"}`}>
           {/* `.fig` is the site's figure face and it resolves off a variable the
               spine shell owns; `font-serif` names the same family off the
@@ -369,6 +381,21 @@ function Mark({ part }: { part?: number }) {
   return (
     <span aria-hidden data-mark className="absolute inset-y-0 left-0 w-1.5 overflow-hidden" style={{ background: "var(--c-soft2)" }}>
       <span className="absolute inset-x-0 bottom-0 block" style={{ height: `${pct}%`, background: "var(--c-ink2)" }} />
+    </span>
+  );
+}
+
+/** THE FIELD LOOK'S PAY TRACK (2026-09-25, his "numbers ... with no relation to each other"): a thin bar over the figure, this
+ *  city's pay as a part of the highest pay in the set, zero-based, so the four figures of a row are read against one another
+ *  before they are read at all. The track is the card's white over the photograph, the fill the page's ink. Nothing is drawn
+ *  where there is no set to scale within, for the same reason as the column look's mark. */
+function PayTrack({ part }: { part?: number }) {
+  if (typeof part !== "number" || !Number.isFinite(part) || part <= 0) return null;
+  const pct = Math.max(4, Math.min(100, part * 100));
+  return (
+    <span aria-hidden data-pay-track className="relative mt-2 block h-1.5 overflow-hidden rounded-full">
+      <span className="absolute inset-0 rounded-full" style={{ background: "var(--c-card)", opacity: 0.6 }} />
+      <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${pct}%`, background: "var(--c-ink)" }} />
     </span>
   );
 }

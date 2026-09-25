@@ -77,20 +77,22 @@ function Dots({ n }: { n: number }) {
   );
 }
 
-type RegisteringProps = { rows: TierRow[]; howTo?: { href: string; label: string } | null; dots?: boolean; panel?: boolean; door?: boolean; heads?: undefined; figures?: undefined; fill?: undefined };
+/** `fill` on the registering shape too (2026-09-25, the country page's bill card at 3-2): the legal forms share the height the card
+ *  beside gives this one, each row one equal share, the legend and the door at the foot; the caller's Box is a flex column. */
+type RegisteringProps = { rows: TierRow[]; howTo?: { href: string; label: string } | null; dots?: boolean; panel?: boolean; door?: boolean; heads?: undefined; figures?: undefined; fill?: boolean };
 /** `fill`: the rows share the height a taller card beside this one gives the card (the goal's B12, 2026-09-24), MarkList's one-column rule; the caller's Box is a flex column. */
 type FiguresProps = { heads: TiersHeads; figures: TiersFigureRow[]; rows?: undefined; howTo?: undefined; dots?: false; panel?: false; door?: false; fill?: boolean };
 
 export function TiersTable(props: RegisteringProps | FiguresProps) {
   const [open, setOpen] = React.useState<number | null>(null);
   if (props.heads) return <FiguresTable heads={props.heads} figures={props.figures} fill={props.fill} />;
-  const { rows, howTo, dots = true, panel = true, door = true } = props;
+  const { rows, howTo, dots = true, panel = true, door = true, fill = false } = props;
   if (rows.length === 0) return null;
   const anyDots = dots && rows.some((t) => isNum(t.complexity_1_5));
   const grid = dots ? GRID : GRID_NO_DOTS;
   const span = dots ? "col-span-4" : "col-span-3";
   return (
-    <div data-archetype="tiers-table" data-shape="registering" data-heads={dots ? 3 : 2}>
+    <div data-archetype="tiers-table" data-shape="registering" data-heads={dots ? 3 : 2} className={fill ? "flex flex-1 flex-col" : undefined}>
       {/* THE HEADS, ONCE, AT EVERY WIDTH. On a phone the name column has no
           head (the name is its own head) and the three readings' heads sit
           right-aligned over their column. */}
@@ -100,7 +102,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
         <span data-head className={`text-right ${HEAD}`} style={{ fontSize: "var(--t-mark)" }}>{COPY.tiers.heads.time}</span>
         {dots ? <span data-head className={`text-right ${HEAD}`} style={{ fontSize: "var(--t-mark)" }}>{COPY.tiers.heads.paperwork}</span> : null}
       </div>
-      <div data-idea="I5" className="divide-y divide-[var(--c-border)]">
+      <div data-idea="I5" className={fill ? "flex flex-1 flex-col divide-y divide-[var(--c-border)]" : "divide-y divide-[var(--c-border)]"}>
         {rows.map((t, i) => {
           const isOpen = open === i;
           const explainer = panel ? COPY.tiers.explainers[t.tier as keyof typeof COPY.tiers.explainers] : undefined;
@@ -110,8 +112,12 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
           /* ONE GRID FOR THE ROW at every width: the name block spans the
              readings' columns on a phone and takes its own column from md.
              The name block reserves two lines so every row is one height. */
+          /* THE FIGURES STAND ON THE NAME'S LINE (2026-09-25, his word that night: "the alignment of text in the middle of
+             tables is quite bad"): the name block reserves two lines, and centring the row put the fee and the time between
+             the name and its second line, level with neither. The row aligns on the first baseline, so each figure reads on
+             the line of the name it belongs to; the model laws' ROW LINE clause measures it. */
           const line = (
-            <span className={`${grid} w-full items-center gap-y-1`} data-tier-row={i}>
+            <span className={`${grid} w-full items-baseline gap-y-1`} data-tier-row={i}>
               {/* THE NAME BLOCK spans the row on a phone and takes the first
                   column from md; it reserves two lines so every row is one
                   height; the chevron rides at its right edge. */}
@@ -125,7 +131,8 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
               {/* On a phone the readings sit on their own row under the heads; a spacer keeps them in their columns. */}
               <span aria-hidden className="md:hidden" />
               <span className="text-right" data-col="fee">
-                {t.cost_usd === 0 ? <span className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{COPY.free}</span> : isNum(t.cost_usd) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig> : DASH}
+                {/* A zero fee prints "$0" in this column of figures (COPY.free's note, 2026-09-25). */}
+                {isNum(t.cost_usd) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig> : DASH}
               </span>
               <span className="text-right" data-col="time">
                 {isNum(t.days) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.days} {t.days === 1 ? "day" : "days"}</Fig> : DASH}
@@ -139,7 +146,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
             </span>
           );
           return (
-            <div key={`${t.tier}-${i}`} className="py-2 first:pt-2 last:pb-0">
+            <div key={`${t.tier}-${i}`} className={fill ? "flex flex-1 basis-0 flex-col justify-center py-2 first:pt-2 last:pb-2" : "py-2 first:pt-2 last:pb-0"}>
               {hasPanel ? (
                 <button type="button" onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen} className="flex w-full text-left">{line}</button>
               ) : (
@@ -151,7 +158,14 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
         })}
       </div>
       {/* The legend's text on the prose measure (his clause 51, 2026-09-20); the rule above it keeps the table's width. */}
-      {anyDots ? <div className="mt-2 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]"><span className="block [max-width:var(--measure-prose)]">{COPY.tiers.legend}</span></div> : null}
+      {/* THE LEGEND DRAWN (2026-09-25, his word that night: "symbols ... can be used to replace words"): one dot and five, each
+          with its words, where a sentence said the same ("More dots, more paperwork: one is an online form, five a lawyer"). */}
+      {anyDots ? (
+        <div data-legend="dots" className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+          <span className="inline-flex items-center gap-2"><Dots n={1} />{COPY.tiers.legendEnds.one}</span>
+          <span className="inline-flex items-center gap-2"><Dots n={5} />{COPY.tiers.legendEnds.five}</span>
+        </div>
+      ) : null}
       {door && howTo ? (
         <div className="mt-3 text-right">
           <a href={howTo.href} className="text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{howTo.label} <span aria-hidden>&#8594;</span></a>
@@ -204,7 +218,7 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                   own phone form: the name block spans the row on a phone and
                   takes its own column from md, the figures under their heads
                   on the line below. */}
-              <span className={`${GRID_FIGURES} w-full items-center gap-y-1`} data-tier-row={i}>
+              <span className={`${GRID_FIGURES} w-full items-baseline gap-y-1`} data-tier-row={i}>
                 {/* THE NAME BLOCK: two lines reserved on every row (2.5rem, two
                     lines of the lead rung at its tight leading, measured: the
                     two variants stood 37 and 39 before the reserve was one

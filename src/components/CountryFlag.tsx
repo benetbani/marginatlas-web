@@ -75,9 +75,13 @@
  * layout. `object-fit: contain` keeps every flag's true proportions, scales it
  * to the one box and leaves air: about 5px either side of a square flag at the
  * row rung, about 4px above and below the widest ribbon in common use. The
- * hairline frames the BOX rather than the flag, which is what makes one width
- * visible rather than merely true, so a letterboxed flag reads as deliberately
- * mounted rather than accidentally narrow.
+ * hairline used to frame the BOX rather than the flag, on the reading that it
+ * made one width visible; the founder read it the other way on 2026-09-25 ("even
+ * the visualization of flags is bad ... something very bad is happening
+ * underneath"), and at twice the size it was plain why: a 2:1 flag sat in a
+ * white mat inside a grey frame, and Ireland's white stripe ran into the mat.
+ * The edge is a drop-shadow since then (`--flag-edge`), which follows the
+ * painted flag; the box is still one size, so the column still aligns.
  *
  * NOTHING HERE STRETCHES A FLAG, so the distortion fix of 2026-09-07 is intact:
  * height still comes from its own token, `contain` still never crops, and all
@@ -127,15 +131,25 @@ export function CountryFlag({ iso2, className = "", label, size = "row" }: Props
   const alt = `${label ?? iso2ToName(iso2.toUpperCase()) ?? iso2.toUpperCase()} flag`;
   const height = size === "row" ? "var(--flag-row)" : size === "board" ? "var(--flag-board)" : "var(--flag-hero)";
   const width = size === "row" ? "var(--flag-row-w, 30px)" : size === "board" ? "var(--flag-board-w, 84px)" : "var(--flag-hero-w, 60px)";
-  /* THE BOARD RUNG DRAWS NO OUTLINE (his hero of 2026-09-20: "the flag should
-     have no borders"); the two older rungs keep theirs until he says. A third
-     rung by his word, the country masthead's alone. */
-  const outline = size === "board" ? "" : "outline outline-1 outline-[var(--c-border)]";
+  /* THE BOARD RUNG DRAWS NO EDGE (his hero of 2026-09-20: "the flag should
+     have no borders"), a third rung by his word, the country masthead's alone.
+     THE TWO OLDER RUNGS' EDGE HUGS THE FLAG, NOT ITS BOX (2026-09-25, his "even
+     the visualization of flags is bad"): the outline they carried framed the
+     letterbox, so a 2:1 flag sat in a white mat inside a grey frame. The edge is
+     a drop-shadow now (`--flag-edge`), which follows the painted flag. */
+  const outline = size === "board" ? "" : "[filter:var(--flag-edge)]";
+  /* THE FLAG CARRIES ITS OWN AIR (2026-09-25, his word that night: "The flags usually have no breathing room for some reason").
+     Measured on the five main pages, every caller left 12 to 16px between a flag and the words after it, whatever the flag's
+     size: tight beside a table row's name and cramped beside a 60px masthead flag. Almost every flag leads its words, so the
+     room is a trailing margin the component owns, a quarter of a row flag's width and a third of a masthead's, added to
+     whatever gap the caller already keeps; the model laws' FLAG ROOM clause measures it (16px after a row flag, 20px after
+     a masthead flag). */
+  const room = size === "row" ? "mr-1" : "mr-2";
   return (
     <img
       src={`https://flagcdn.com/${code}.svg`}
       alt={alt}
-      className={`inline-block object-contain rounded-none ${outline} align-middle ${withoutRadius(className)}`}
+      className={`inline-block object-contain rounded-none ${outline} ${room} align-middle ${withoutRadius(className)}`}
       style={{ height, width }}
       loading="lazy"
     />

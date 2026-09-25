@@ -72,7 +72,9 @@ export const COPY = {
     llcTime: { label: "Time", note: "until registered" },
     llcCost: { label: "Cost", note: "government fees only" },
   },
-  /** A zero fee is the word, never $0 (blueprint rule). */
+  /** A zero fee in running prose or a step is the word. IN A COLUMN OF FIGURES IT IS "$0" (2026-09-25): his law "never a word where a
+   *  number goes" is newer than the blueprint's "the word, never $0", and the model laws' UNIT MIX read "Free" in the registering
+   *  table's fee column as a word among figures. The tables and the hero board print `usd(0)` there; this word stays for the rest. */
   free: "Free",
   /** The net-margin card (founder ruling 6, 2026-09-04: "net profit margin in %, vertical bars"). */
   margin: {
@@ -88,6 +90,8 @@ export const COPY = {
     kicker: TIERS_KICKER,
     heads: { fee: "Fee", time: "Time", paperwork: "Paperwork" },
     legend: "More dots, more paperwork: one is an online form, five a lawyer.",
+    /** The legend drawn (2026-09-25): one dot and five, each with its words, in place of the sentence above. */
+    legendEnds: { one: "Online form", five: "Lawyer" },
     /** Founder ruling 8, 2026-09-04: the section leads to this page. */
     door: "How to open a business in {country}",
     explainers: {
@@ -131,16 +135,18 @@ export const COPY = {
         courts: { name: "Courts", left: "Connections decide", right: "Contracts hold" },
         new: { name: "Openness to the new", left: "New ways resisted", right: "New ways welcomed" },
       },
-      foot: "of firms are foreign-owned",
+      foot: "foreign-owned firms",
     },
     people: {
       kicker: "Dealing with people",
       rows: {
-        open: { name: "Openness", left: "Keep to themselves", right: "Quick to include you" },
-        innovation: { name: "Innovation", left: "The old way rules", right: "New ideas land" },
-        direct: { name: "Directness", left: "Read between the lines", right: "Said to your face" },
+        /* THREE WORDS A POLE AT MOST (2026-09-25; the model laws' ROW SENTENCE read five four-word poles on this table): a pole is a
+           label a reader takes in at a glance, the state table's own measure. */
+        open: { name: "Openness", left: "Keep to themselves", right: "Welcome newcomers" },
+        innovation: { name: "Innovation", left: "Old ways rule", right: "New ideas land" },
+        direct: { name: "Directness", left: "Talk around it", right: "Say it plainly" },
         punctual: { name: "Timekeeping", left: "Schedules drift", right: "Clocks are kept" },
-        straight: { name: "Straight dealing", left: "Corners get cut", right: "A word is kept" },
+        straight: { name: "Straight dealing", left: "Corners get cut", right: "Promises are kept" },
         ambition: { name: "Ambition", left: "Kept quiet", right: "Worn openly" },
       },
       foot: "born abroad",
@@ -334,12 +340,21 @@ export const COPY = {
       clean: CLEAN_DEALING,
       admin: "Admin ease",
       llcDays: "Days to trade",
+      hiring: "Hiring staff",
       salaryMonth: "Average salary",
-      llcCost: "Cost to register",
+      llcCost: "Register a company",
     },
-    units: { of100: "of 100", day: "day", days: "days", aMonth: "a month", allIn: "all in" },
+    /** The shard's three words for how easy hiring is, as the board prints them. */
+    hireEase: { easy: "Easy", moderate: "Moderate", hard: "Hard" },
+    /** The plus under the answer: its name, and the notes and fallback labels of its rows. */
+    taxes: { summary: "The other taxes" },
+    taxNotes: { vatFrom: "once sales pass {amount} a year", salesTax: "Sales tax", companyTax: "Tax on company profit" },
+    /* FEWER WORDS, THE SAME MEANING (2026-09-25, his word that night: "symbols ... can be used to replace words in our sections
+       that are soooo verbose"): "/100" and "/mo" for "of 100" and "a month", no "all in" (the row names the company), and the
+       levels drawn as a three-step mark, their key four words. */
+    units: { of100: "/100", day: "day", days: "days", aMonth: "/mo", allIn: "" },
     levels: { high: "High", medium: "Medium", low: "Low" },
-    levelBasis: "Levels compare countries. Costs are for a limited company.",
+    levelBasis: "Marks rank the countries.",
     /** The answer drawn: the two parts under the cells (labels, never a sentence), and the bar's name for a screen reader after the figure ("20% of profit"). */
     share: { part: "Tax", rest: "You keep", of: "of profit" },
     placeholder: "Illustrative photo",
@@ -470,6 +485,9 @@ export const COPY = {
     daysWords: "until you can trade",
     /** HIS PLUS on the bill (correction 5 of 2026-09-20): the LLC's own facts behind a click, the summary line and the four row labels, each under three words. */
     detailSummary: "What the LLC involves",
+    /** The figure's words under the bill (2026-09-25), and the plus of licences by trade (country_licences_rows.ts). */
+    focalWords: "limited company, all in",
+    licences: { summary: "Licences by trade", noWait: "0 days", noLicence: "No licence needed" },
     detailRows: { form: "The form here", fee: "Government fee", filing: "Filing time", paperwork: "Paperwork" },
     /** The one line: the bill's where it prints, the days' otherwise (entry_bill_rows.ts). */
     basisBill: "Fees and a first licence, not share capital.",
@@ -518,7 +536,7 @@ export const COPY = {
      *  stay for the copy gate's sweep and the builder's other readers. */
     kicker: "Running costs",
     rows: { electricity: "Business electricity", living: "Cost of living" },
-    units: { kwh: "a kilowatt hour", of100: "of 100" },
+    units: { kwh: "a kilowatt hour", of100: "/100" },
     cells: { electricity: "Electricity per kilowatt hour", living: "Cost of living" },
     /** The one line explains the cost of living's 1-to-100 scale; the electricity row names its own rate ("Business electricity"), so it adds no clause. */
     basisElectricity: "",
@@ -598,7 +616,7 @@ export const COPY = {
     average: "Average salary",
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
     /** THE ON-COST ON THE BAR (section 9's plan, 2026-09-20): the darker piece at the average bar's end, said under the track; `{pct}` is the employer's payroll on-cost as printed. */
-    employerAdds: "The employer adds {pct} on top.",
+    employerAdds: "Employer adds {pct}.",
   },
   /** THE PLACEMENT SENTENCE (MODEL.md PART 6, decision 2; PART 9 clause 37,
    *  R2): one fixed wording, one direction, on every page of the site, beside
@@ -619,6 +637,67 @@ export const COPY = {
     costs: COSTS_CHAPTER,
     where: "Where to open it, and what to open",
     place: "What the place is like",
+    /** The country page's second and third turns where the country holds the new sections (2026-09-25; the United Kingdom). */
+    money: "Red tape, borrowing and getting paid",
+    open: "What to open, and where",
+  },
+  /** THE COUNTRY PAGE'S NEW SECTIONS (country_depth_rows.ts, 2026-09-25). Labels the same on every country; a note is the one short
+   *  line that says what the figure is, never a method line. */
+  employment: {
+    kicker: "Employing people",
+    focalWords: "out of work and looking",
+    leaveWords: "paid holiday a year, bank holidays included",
+    cells: { leave: "Paid leave", out: "Unemployed", week: "Longest week", sick: "Sick pay", dismissal: "Unfair dismissal" },
+    notes: { leave: "a year, bank holidays included", out: "", week: "opt-out allowed", sick: "a week, from day one", dismissal: "of service before a claim" },
+  },
+  insurance: {
+    kicker: "Insurance",
+    minCoverWords: "{cover} cover, required once you employ",
+    requiredWords: "a year for {cover}, which the law requires",
+    requiredNote: "required by law",
+    required: "Required",
+    aYear: "/yr",
+    typicalNote: "",
+    basis: "What each cover typically costs a year.",
+  },
+  financing: {
+    kicker: "Borrowing",
+    focalWords: "average rate on a new small-business loan",
+    cells: { base: "Central bank rate", startup: "Government start-up loans" },
+    notes: { base: "", startup: "{rate} fixed, 1 to 5 years", grantFor: "for" },
+  },
+  banking: {
+    kicker: "Getting paid",
+    focalWords: "of each card sale",
+    cells: { fee: "Card fees", lands: "Card payouts", foreign: "Foreign owner's account", friction: "Opening an account" },
+    notes: { lands: "", foreign: "", friction: "" },
+    yes: "Yes",
+    no: "No",
+    friction: { low: "Quick", medium: "Some paperwork", high: "Slow" } as Record<string, string>,
+    donut: "How customers pay",
+    centerWords: "pay by {part}",
+  },
+  paperwork: {
+    kicker: "Legal and admin costs",
+    focalWords: "a year to file the company statement",
+    cells: { rename: "Changing the name", filings: "Filings a year", hours: "Admin a year", online: "Filed online" },
+    notes: { rename: "", filings: "", hours: "", online: "" },
+  },
+  closing: {
+    summary: "Closing a company",
+    rows: { strike: "Closing, no debts", windUp: "Closing with debts", liability: "Owner's liability" },
+    notes: { strike: "online", windUp: "via an insolvency practitioner", liability: "unless personally guaranteed" },
+    limited: "Limited",
+  },
+  /** The world's range under a figure (charts/WorldRange.tsx, 2026-09-25): the median's word and the rows' labels and units. */
+  ranged: { median: "World median", electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", perLitre: "/L", lending: "Rate on a small-business loan" },
+  /** What a full-time hire at the average salary costs the employer (the staff card, 2026-09-25). */
+  hireCost: { label: "A full-time hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", rule: "{rate} on pay above {threshold} a year." },
+  londonMargins: {
+    kicker: "What London's trades keep",
+    more: "{n} more trades",
+    basis: "Net profit per $100 of sales.",
+    phoneHead: { trade: "Trade", value: "Keeps" },
   },
   /** The income breakdown (task 11, his most literal instruction, 2026-09-10):
    *  "the income breakdown is used exactly for income breakdown with the main
@@ -966,20 +1045,22 @@ export const COPY = {
    *  card does not keep. The three looks add the clause that reads theirs. It
    *  never says what any of it means. */
   cityCards: {
-    plain: { basis: "What a typical customer earns in a year." },
+    plain: { basis: "A typical customer's pay, a year." },
     /* THE FIELD LOOK STOPPED DESCRIBING A DRAWING, 2026-09-11. It read "The
        darker the card, the more", which was true while the tint's depth was the
        figure. The photograph now sits under that tint and the tint is one fixed
        wash (CityCards.tsx), so the sentence would be describing a veil. The
        figure is printed on every card instead. */
-    field: { basis: "What a typical customer earns in a year." },
-    plate: { basis: "What a typical customer earns in a year." },
-    column: { basis: "What a typical customer earns in a year. The taller the mark, the more." },
+    field: { basis: "A typical customer's pay, a year." },
+    plate: { basis: "A typical customer's pay, a year." },
+    column: { basis: "A typical customer's pay, a year. The taller the mark, the more." },
   },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
   peers: {
     kicker: PEERS_KICKER,
-    cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC fee", llcDays: "LLC time" },
+    /* The LLC's two columns are the hero's concepts since 2026-09-25 (his rulings 3 and 4 of 2026-09-04: the total cost to put an LLC
+       in action, the time until the business opens), and the average salary is his plan's fourth column. */
+    cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC, all in", llcDays: "Days to trade", salary: "Average salary" },
     caveat: "Countries of similar size and market, not neighbours.",
   },
   /** The city's peers table (city:peers, run 22): cities as rows, three measures as columns, every figure read beside the home city; no unit word a reader has to know.
@@ -1734,6 +1815,8 @@ export const COPY = {
     kicker: "The steps, in order",
     totalLabel: "Start to finish",
     units: { day: "day", days: "days" },
+    /** The file's word for how a step is done, as a reader says it (2026-09-25: "Either" said nothing). */
+    how: { either: "Online or in branch", online: "Online", "in person": "In person", paper: "On paper" } as Record<string, string>,
     basis: "Some steps run at the same time, so the total is shorter.",
     foot: "",
   },
@@ -1750,7 +1833,11 @@ export const COPY = {
        the months above stand against, without which they are a number nobody
        can place (VISUAL-CHOICE section 0). Both are worked from the same field
        across the whole bank and the builder says how. */
-    world: { usual: "the usual anywhere", longer: "countries where a sale can take longer" },
+    world: { usual: "the usual anywhere", longer: "countries where a sale can take longer", longerLean: "countries where selling takes longer" },
+    here: "Here",
+    usualAnywhere: "Usual anywhere",
+    /** The buyers as a label on the lean card (2026-09-25): the file's three words, said as a reader says them. */
+    buyers: { active: "Plenty of buyers", steady: "Some buyers", thin: "Few buyers" } as Record<string, string>,
     basis: "From listing to money, for a small business changing hands.",
     foot: "",
   },

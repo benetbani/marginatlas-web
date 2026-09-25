@@ -100,9 +100,11 @@ export function HowToBody({ iso2 }: { iso2: string }) {
             </Box>
           ) : null}
           {d.tiers.length > 0 ? (
-            <Box id="forms">
+            <Box id="forms" className="flex flex-col">
               <Rail icon="register-cost" kicker={COPY.tiers.kicker} gloss={COPY.glossary.legalForm} />
-              <TiersTable rows={d.tiers} />
+              {/* The legal forms share the height the steps beside them lend the card (2026-09-25: the legend drawn as dots is one line
+                  where the sentence was two, and the card's foot stood 76px empty). */}
+              <TiersTable rows={d.tiers} fill />
             </Box>
           ) : null}
         </Band>
@@ -126,9 +128,9 @@ export function HowToBody({ iso2 }: { iso2: string }) {
           ) : null}
           {dots}
           {d.locals ? (
-            <Box id="locals">
+            <Box id="locals" className="flex flex-col">
               <Rail icon="locals-know" kicker={COPY.locals.kicker} sample />
-              <NoteList notes={d.locals} columns={2} />
+              <NoteList notes={d.locals} columns={2} fill />
             </Box>
           ) : null}
         </Band>

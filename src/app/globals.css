@@ -2402,7 +2402,10 @@
      grey. Warm neutral, R>G>B, on the palette ramp. White cards float on it
      by about eleven points of lightness, which is what carries the edge now
      that the photograph is gone. */
-  --c-ground: #e3ded8;
+  /* NEAR-WHITE SINCE 2026-09-25 (his word that day: "this disgusting gray background on the main page types"). The ground
+     stays one step under the white card so a card is still a card (his 2026-06-12 rule: card and ground never one colour), but
+     the step is a whisper now, the way the dashboards he sent keep their canvas: the card's hairline and shadow carry the edge. */
+  --c-ground: #f6f6f5;
   /* THE FLAG, sized by HEIGHT so a true ratio is never cropped (2026-09-07:
      "the flag which is distorted"). Two rungs, and no third. */
   --flag-hero: 40px;
@@ -2429,6 +2432,13 @@
   --flag-hero-w: 60px;
   --flag-row-w: 30px;
   --flag-board-w: 60px;
+  /* THE FLAG'S EDGE FOLLOWS THE FLAG (2026-09-25; his word that day: "even the visualization of flags is bad ... something
+     very bad is happening underneath"). The hairline was an outline, and an outline frames the element's BOX: every flag that
+     is not 3:2 showed its letterbox as a white mat inside a grey frame, the United Kingdom's with bands above and below, and
+     Ireland's white stripe ran out into the mat. A drop-shadow follows the painted pixels instead, so the edge hugs the flag
+     itself, the air beside a square or a ribbon flag is simply air, and one width still holds because the box is one size.
+     The warm ink of the elevation scale, at a strength that shows on a white edge (Japan, Poland) and vanishes on a dark one. */
+  --flag-edge: drop-shadow(0 0 0.6px rgba(33, 24, 16, 0.55));
 }
 
 /* ================== THE WORDS ARE NARROW, THE PICTURES ARE WIDE ==========

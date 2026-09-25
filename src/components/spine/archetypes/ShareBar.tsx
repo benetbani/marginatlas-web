@@ -28,6 +28,16 @@
  *
  * Gated by the archetype harness (stories `share-bar`: the exemplar's three
  * parts, a four-part whole, a two-part whole) and the page laws.
+ *
+ * THE LED FORM (2026-09-25, his word on the treemap that drew a household's
+ * budget: "What households spend on could be a horizontal bar rather than that
+ * monstrosity"). A whole of up to eight parts, where the card's own figure is
+ * worked from two of them (a household's food money, split between groceries
+ * and eating out): `lead` names those two, and they stand first along the bar
+ * and alone carry the colour, the first the accent and the second its tint;
+ * every other part is one neutral, the remainder (`residualKey`, "everything
+ * else") the palest and last. The bar is thicker (`tall`), the rows stand two
+ * a line from 560px of card, and each share is printed once, in its row.
  */
 import * as React from "react";
 
@@ -35,32 +45,44 @@ export type SharePart = { key: string; name: string; share: number };
 
 const PART_COLOURS = ["var(--terra)", "var(--terra-border)", "var(--c-ink2)", "var(--c-muted)"];
 
-export function ShareBar({ parts, unit = "%" }: { parts: SharePart[]; unit?: string }) {
-  const live = parts.filter((p) => p && p.name && Number.isFinite(p.share) && p.share > 0).slice(0, 4);
+/** `fill` (2026-09-25): the rows take the height the level lends the card (a taller neighbour), shared evenly, instead of a
+ *  blank under the last row; a row never falls under its content. */
+export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, fill = false }: { parts: SharePart[]; unit?: string; lead?: string[]; residualKey?: string; tall?: boolean; fill?: boolean }) {
+  const all = parts.filter((p) => p && p.name && Number.isFinite(p.share) && p.share > 0);
+  const leads = (lead ?? []).map((k) => all.find((p) => p.key === k)).filter((p): p is SharePart => !!p);
+  const led = leads.length >= 2;
+  /* Four parts at most, unless the card names its lead pair: then eight, the lead first, the rest by size, the remainder last. */
+  const live = led
+    ? [...leads, ...all.filter((p) => !leads.includes(p)).sort((a, b) => (a.key === residualKey ? 1 : b.key === residualKey ? -1 : b.share - a.share))].slice(0, 8)
+    : all.slice(0, 4);
   if (live.length < 2) return null;
   const total = live.reduce((s, p) => s + p.share, 0);
   const leader = live.reduce((a, b) => (b.share > a.share ? b : a), live[0]);
   const colourOf = (p: SharePart) => {
+    if (led) return p.key === leads[0].key ? "var(--terra)" : p.key === leads[1].key ? "var(--terra-border)" : p.key === residualKey ? "var(--c-soft2)" : "var(--c-line-strong)";
     /* the largest in the accent, the second largest in the tint, the rest ink-greys, whatever their order along the bar */
     const rank = [...live].sort((a, b) => b.share - a.share).findIndex((q) => q.key === p.key);
     return PART_COLOURS[Math.min(rank, PART_COLOURS.length - 1)];
   };
   return (
-    <div data-archetype="share-bar" data-visual="1" data-wedges={String(live.length)} data-leader={leader.key}>
-      <div className="flex h-3 w-full gap-0.5 overflow-hidden rounded-full" aria-hidden="true">
+    <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
+    <div data-archetype="share-bar" data-visual="1" data-form={led ? "led" : "plain"} data-wedges={String(live.length)} data-leader={leader.key} className={fill ? "flex flex-1 flex-col" : undefined}>
+      <div className={`flex w-full gap-0.5 overflow-hidden ${tall ? "h-9 rounded-lg" : "h-3 rounded-full"}`} aria-hidden="true">
         {live.map((p) => (
-          <span key={p.key} data-wedge={p.key} className="block h-full min-w-[3px] first:rounded-l-full last:rounded-r-full" style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
+          <span key={p.key} data-wedge={p.key} className={`block h-full min-w-[3px] ${tall ? "first:rounded-l-lg last:rounded-r-lg" : "first:rounded-l-full last:rounded-r-full"}`} style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
         ))}
       </div>
-      <div className="mt-3 grid gap-2" data-expect-rows={live.length}>
+      <div className={`mt-3 grid gap-2 ${led ? "[@container(min-width:560px)]:grid-cols-2" : ""} ${fill ? "flex-1 auto-rows-fr" : ""}`} data-expect-rows={live.length}>
         {live.map((p) => (
-          <div key={p.key} data-row={p.key} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2">
-            <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px]" style={{ background: colourOf(p) }} />
+          /* In the led form the remainder's row spans the line when the rows are two a line and odd in number, so no row stands alone. */
+          <div key={p.key} data-row={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 ${led ? "py-2.5" : "py-2"} ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
+            <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] border border-[var(--c-border)]" style={{ background: colourOf(p) }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
             <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

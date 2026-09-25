@@ -68,7 +68,12 @@ export type KvCell = {
 export type KvLabelReserve = "two-lines" | "row";
 
 /** `stack` (2026-09-24): the cells one under the other at every width, for a pair beside a taller neighbour (the answer card whose answer draws its share and whose companions are two: the industry hero with its cost withheld stood 480 by 162 of air beside the drawn answer, side by side). */
-export function KvGrid({ cells, className = "", labelReserve = "two-lines", stack = false }: { cells: KvCell[]; className?: string; labelReserve?: KvLabelReserve; stack?: boolean }) {
+/** `under` (2026-09-25): the grid stands under the card's own figure at 30, so its figures take the lead rung, 16, and the ladder
+ *  keeps its one gap between 16 and 30 (PART 4); the grid alone keeps the head rung. */
+/** `fill` (2026-09-25): the grid takes the height the level lends its card (a taller neighbour) and its rows share it evenly, as
+ *  the tables' and the share bar's `fill` do, instead of a blank under the last cell; a row never falls under its content. The
+ *  caller's card is a flex column. */
+export function KvGrid({ cells, className = "", labelReserve = "two-lines", stack = false, under = false, fill = false }: { cells: KvCell[]; className?: string; labelReserve?: KvLabelReserve; stack?: boolean; under?: boolean; fill?: boolean }) {
   const byRow = labelReserve === "row";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   if (live.length === 0) return null;
@@ -88,11 +93,11 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
   const first = groups[0].cells.length;
   const form = stack ? "stack" : first === 1 ? "one" : first % 2 === 1 ? "lead" : "grid";
   return (
-    <div data-idea="I8" data-archetype="kv-grid" data-groups={String(groups.length)} data-form={form} className={`[container-type:inline-size] ${className}`}>
+    <div data-idea="I8" data-archetype="kv-grid" data-groups={String(groups.length)} data-form={form} className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""} ${className}`}>
       {/* THE GROUPS: stacked below 900px, side by side above it, equal widths. */}
-      <div className="grid gap-x-10 gap-y-4 [@container(min-width:900px)]:grid-flow-col [@container(min-width:900px)]:auto-cols-fr">
+      <div className={`grid gap-x-10 gap-y-4 [@container(min-width:900px)]:grid-flow-col [@container(min-width:900px)]:auto-cols-fr ${fill ? "flex-1" : ""}`}>
         {groups.map((g, gi) => (
-          <div key={`${g.group ?? "cells"}-${gi}`} data-kv-group={g.group ?? ""} className="grid content-start gap-y-4">
+          <div key={`${g.group ?? "cells"}-${gi}`} data-kv-group={g.group ?? ""} className={fill ? "grid gap-y-4" : "grid content-start gap-y-4"}>
             {g.group ? (
               <div className="-mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.group}</div>
             ) : anyHeading ? (
@@ -123,7 +128,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                   <div className={`${byRow ? "" : "min-h-[2.6em] lg:min-h-0 "}text-[length:var(--t-micro)] font-semibold uppercase leading-[1.3] tracking-wide text-[var(--c-muted)]`}>{c.label}</div>
                   {/* On the "row" reserve the figure sits on the cell's floor (`mt-auto`), so a row's figures share one top whatever their labels wrap to. */}
                   <div className={`${byRow ? "mt-auto pt-1" : "mt-1"} flex flex-wrap items-baseline gap-x-2 gap-y-1`}>
-                    <Fig className="text-[length:var(--t-head)] leading-none text-[var(--c-ink)]">{c.value}</Fig>
+                    <Fig className={`${under ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-head)]"} leading-none text-[var(--c-ink)]`}>{c.value}</Fig>
                     {c.confidence && c.confidence !== "measured" ? <SampleTag /> : null}
                   </div>
                   {c.note ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" style={{ textWrap: "balance" }}>{c.note}</div> : null}

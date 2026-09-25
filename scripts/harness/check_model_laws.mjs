@@ -505,6 +505,61 @@ function inPage(ctx) {
       if (!okWidth) push(id, "FLAG", `rendered width ${Math.round(b.width)}px is neither --flag-hero-w (${flagHeroW}px) nor --flag-row-w (${flagRowW}px); every flag is one width (his ruling of 2026-09-11)`);
       const fit = getComputedStyle(im).objectFit;
       if (fit !== "contain" && fit !== "scale-down") push(id, "FLAG", `object-fit: ${fit}; a flag in a fixed box is fitted with air, never stretched or cropped to fill it`);
+      /* FLAG ROOM (2026-09-25, his word: "The flags usually have no breathing room"): the words on a flag's line start at
+         least 16px from a row flag's box and 20px from a masthead flag's, on either side. Read from the text itself (a range
+         over each text node near the flag), so a gap that looks right in the markup and is eaten by a negative margin or a
+         wide box still reds. */
+      const need = Math.abs(b.height - flagRow) < 1 ? 16 : 20;
+      const scope = im.parentElement?.parentElement || im.parentElement;
+      if (scope) {
+        const tw = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
+        let nearest = Infinity, word = "";
+        while (tw.nextNode()) {
+          const n = tw.currentNode;
+          if (!(n.textContent || "").trim()) continue;
+          const rg = document.createRange(); rg.selectNodeContents(n);
+          for (const rc of rg.getClientRects()) {
+            if (rc.width <= 0 || rc.height <= 0) continue;
+            if (Math.min(rc.bottom, b.bottom) - Math.max(rc.top, b.top) <= 2) continue;
+            const g = rc.left >= b.right - 1 ? rc.left - b.right : rc.right <= b.left + 1 ? b.left - rc.right : null;
+            if (g != null && g < nearest) { nearest = g; word = (n.textContent || "").trim().slice(0, 24); }
+          }
+        }
+        if (nearest < need - 0.5) push(id, "FLAG ROOM", `"${word}" stands ${Math.round(nearest)}px from a flag; a flag keeps ${need}px of air to its words (his ruling of 2026-09-25)`);
+      }
+    }
+  }
+
+  /* ROW LINE (2026-09-25, his word that night: "the alignment of text in the middle of tables is quite bad and not helpful"):
+     in a table's row, a figure standing BESIDE its row's name reads on the name's own line, never in the middle of a
+     two-line name block. Read as the first line of each: the figure's first line box must overlap the name's first line box
+     by at least 60% of the smaller of the two. A figure set UNDER the name's block (a phone's second line, below the name
+     and its second line) is not beside it and is not read. Measured at every width. */
+  {
+    const firstLine = (el) => {
+      const rg = document.createRange(); rg.selectNodeContents(el);
+      const rs = [...rg.getClientRects()].filter((r) => r.width > 0 && r.height > 0);
+      return rs.length ? rs[0] : null;
+    };
+    for (const row of document.querySelectorAll("main [data-tier-row], main [data-row]")) {
+      if (hiddenFromSight(row) || !row.getClientRects().length) continue;
+      const label = row.querySelector("[data-label]");
+      if (!label) continue;
+      const lr = firstLine(label);
+      if (!lr) continue;
+      /* The name's block: the label with the line under it (a legal form's local name), when the label shares a parent with it. */
+      const block = (label.parentElement && !label.parentElement.matches("[data-tier-row], [data-row]") ? label.parentElement : label).getBoundingClientRect();
+      for (const fig of row.querySelectorAll(".fig")) {
+        if (label.contains(fig) || fig.contains(label)) continue;
+        const fr = firstLine(fig);
+        if (!fr || fr.left < lr.right - 1) continue;
+        if (fr.top >= Math.max(block.bottom, lr.bottom) - 2) continue;
+        const overlap = Math.min(lr.bottom, fr.bottom) - Math.max(lr.top, fr.top);
+        if (overlap < 0.6 * Math.min(lr.height, fr.height)) {
+          push(cardIdOf(row), "ROW LINE", `"${(fig.textContent || "").trim().slice(0, 16)}" stands ${Math.round(fr.top - lr.top)}px off the line of "${(label.textContent || "").trim().slice(0, 24)}"; a figure reads on its row name's first line`);
+          break;
+        }
+      }
     }
   }
 

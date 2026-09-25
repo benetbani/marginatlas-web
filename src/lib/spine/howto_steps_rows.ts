@@ -97,10 +97,11 @@ export function buildHowToSteps(iso2: string): HowToStepsData | null {
   const steps: HowToStep[] = rows.map((r, i) => ({
     key: r.key || String(i),
     name: r.name as string,
-    how: r.how ?? null,
+    how: r.how ? COPY.howToSteps.how[r.how.trim().toLowerCase()] ?? r.how : null,
     days: isNum(r.days) ? daysText(r.days) : null,
-    /* A free step says so in a word: a zero fee printed as "$0" reads as a figure nobody checked (the free rule, COPY.free). */
-    cost: isNum(r.cost) ? (r.cost > 0 ? usd(Math.round(r.cost)) : COPY.free) : null,
+    /* "$0" FOR A FREE STEP (2026-09-25): the steps' costs stand in a column of figures on both pages that draw them, and his law is
+       "never a word where a number goes" (COPY.free's note); the word "Free" among "$133" read as a label in a figure's seat. */
+    cost: isNum(r.cost) ? usd(Math.round(r.cost)) : null,
   }));
   const weakest: FactTag = rows.some((r) => r.tag && r.tag !== "held") ? "modeled" : "held";
   return {

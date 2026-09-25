@@ -40,12 +40,15 @@
 import * as React from "react";
 import { NOTE_CAP, type LocalNote } from "@/lib/spine/locals_rows";
 
-export function NoteList({ notes, columns = 1, editorial = true }: { notes: LocalNote[]; columns?: 1 | 2; editorial?: boolean }) {
+/** `fill` (2026-09-25): the notes share the height the level lends the card (a taller neighbour), each note an equal row, instead
+ *  of a blank under the last one; the caller's card is a flex column. The one-line notes of that night left the how-to page's
+ *  locals card 83px short of the two glossaries beside it. */
+export function NoteList({ notes, columns = 1, editorial = true, fill = false }: { notes: LocalNote[]; columns?: 1 | 2; editorial?: boolean; fill?: boolean }) {
   const live = notes.filter((n) => n.label && n.fact).slice(0, NOTE_CAP);
   if (live.length === 0) return null;
   return (
-    <div data-archetype="note-list" {...(editorial ? { "data-editorial": "1" } : {})} data-notes={String(live.length)} data-columns={String(columns)} className="[container-type:inline-size]">
-      <ol className={columns === 2 ? "grid [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6" : "grid"}>
+    <div data-archetype="note-list" {...(editorial ? { "data-editorial": "1" } : {})} data-notes={String(live.length)} data-columns={String(columns)} className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
+      <ol className={`${columns === 2 ? "grid [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6" : "grid"} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
         {live.map((n, i) => (
           <li key={i} data-note={i} className={"border-t border-[var(--c-border)] py-2 first:border-t-0 first:pt-0 last:pb-0" + (columns === 2 ? " [@container(min-width:600px)]:[&:nth-child(2)]:border-t-0 [@container(min-width:600px)]:[&:nth-child(2)]:pt-0 [@container(min-width:600px)]:[&:nth-child(odd):last-child]:col-span-2" : "")}>
             <div data-note-label className="text-[length:var(--t-micro)] font-semibold leading-tight text-[var(--c-ink)]">{n.label}</div>

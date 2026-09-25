@@ -78,6 +78,10 @@ export type CountryExitData = {
   second: Array<{ figure: string; words: string }>;
   /** The market for buyers as one sentence (never a word in a figure's slot, PART 5), or null. */
   climate: string | null;
+  /** The file's own word for the market for buyers (active, steady or thin), for a label, or null. */
+  climateWord: string | null;
+  /** The usual span anywhere, as numbers (the medians of the quick and the slow ends over every shard), or null. */
+  usual: { lo: number; hi: number } | null;
   basis: string;
   foot: string;
   tag: FactTag;
@@ -156,6 +160,9 @@ export function buildCountryExit(iso2: string): CountryExitData | null {
       { key: "slow", label: C.marks.slow, value: mHi.value },
     ],
     climate: climateWord ? (C.climateLine as Record<string, string>)[climateWord] ?? null : null,
+    /* The file's word itself, for the lean card's label (2026-09-25). */
+    climateWord: climateWord ?? null,
+    usual: w ? { lo: w.usualLow, hi: w.usualHigh } : null,
     basis: C.basis,
     foot: C.foot,
     tag,

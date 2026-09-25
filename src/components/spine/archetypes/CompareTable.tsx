@@ -103,7 +103,9 @@ import { rentMult } from "@/lib/spine/district_rows";
  *  count per one (visitors a year per resident), whole numbers when the
  *  column's values are whole and one decimal otherwise, the column's one
  *  decimal count (PART 5). */
-export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "mult" | "per"; best: "min" | "max" };
+/** `best: "none"` (2026-09-25): a column whose lower and higher values are neither better, a salary (cheaper staff and poorer
+ *  customers at once), draws no tick. */
+export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "mult" | "per"; best: "min" | "max" | "none" };
 /** `iso2` draws the flag; `key` names the row when two rows share a flag (two cities in one country). */
 export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null> };
 export type CompareTableProps = {
@@ -138,7 +140,8 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
  *  other now, not a zero this function used to manufacture. */
 function fmt(unit: CompareColumn["unit"], v: number, whole = true): string {
   if (unit === "pct") return `${v}%`;
-  if (unit === "usd") return v === 0 ? COPY.free : usd(v);
+  /* "$0" in a column of figures, never the word (COPY.free's note, 2026-09-25). */
+  if (unit === "usd") return usd(v);
   if (unit === "m") return `${v.toFixed(1)}M`;
   if (unit === "mult") return rentMult(v);
   if (unit === "per") return whole ? String(Math.round(v)) : v.toFixed(1);
@@ -147,14 +150,17 @@ function fmt(unit: CompareColumn["unit"], v: number, whole = true): string {
 const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
 
 export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false, inBand = false }: CompareTableProps) {
-  const phoneCols = PHONE_COLS[Math.min(4, Math.max(1, columns.length))];
+  /* FIVE COLUMNS TAKE THREE A LINE ON A PHONE (2026-09-25, the country's peers gained the average salary): five figures in 327px
+     ran "12 days" past the card; three a line, the heads and every row's figures wrapping the same way, keep each figure under its
+     head. */
+  const phoneCols = columns.length >= 5 ? "grid-cols-3 gap-y-1" : PHONE_COLS[Math.min(4, Math.max(1, columns.length))];
   /* The two-row floor for every caller that states no line; a seated table
      (a `withheld` line) draws from one row, the home row alone (the header). */
   if (rows.length < (withheld ? 1 : 2)) return null;
   const bestOf: Record<string, number | undefined> = {};
   for (const c of columns) {
     const vs = rows.map((r) => r.values[c.key]).filter(isNum);
-    bestOf[c.key] = vs.length >= 2 ? (c.best === "min" ? Math.min(...vs) : Math.max(...vs)) : undefined;
+    bestOf[c.key] = vs.length >= 2 && c.best !== "none" ? (c.best === "min" ? Math.min(...vs) : Math.max(...vs)) : undefined;
   }
   const isBestVal = (c: CompareColumn, v: number | null): boolean => isNum(v) && bestOf[c.key] != null && v === bestOf[c.key];
   const cellClass = (c: CompareColumn, v: number | null) => (isBestVal(c, v) ? "font-semibold text-[var(--c-ink)]" : "text-[var(--c-ink2)]");

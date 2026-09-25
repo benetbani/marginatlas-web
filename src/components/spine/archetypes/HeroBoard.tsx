@@ -40,6 +40,9 @@ import { Band, Box, Ico } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { HeroBoardData } from "@/lib/spine/hero_board";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
+import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
+import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
+import { Pie } from "@/components/spine/charts/Pie";
 
 export const HERO_BOARD_ROWS_CAP = 6;
 
@@ -65,12 +68,33 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
             three-column form, the page filter's WHITE SPACE). */}
         <div data-state={board.answer ? "answer" : "no-answer"} className={`mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 ${board.answer ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.15fr)]" : "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"}`}>
           {board.answer ? (
-            <div className="flex flex-col">
+            /* THE COLUMN SPLITS ITS SPARE HEIGHT (2026-09-25; his "blank space in the hero is the worst place for it"): the six rows
+               beside it set the card's height, and the drawing used to stand at this column's foot with 100 of nothing above it.
+               The answer, its drawing and the words now read as one block at the top, the plus closes the column, and the air
+               between is shared out, never one lump. */
+            <div className="grid content-between gap-5">
               <div data-answer="1">
                 <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{board.answer.label}</div>
-                <div data-hero-figure className="fig mt-1 text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{board.answer.value}</div>
+                {/* THE ANSWER DRAWN, the figure never printed twice (his law of 2026-09-19, "a share of a whole is drawn").
+                    A SHARE IS A PIE BESIDE ITS FIGURE (2026-09-25, his word that night: "the 20% with cubic bars at the hero is a
+                    catastrophe, no need for that, a pie chart would be enough"): the wedge in the accent the figure is printed in,
+                    so the colour is the key and no legend is needed. A position between two ends (a city's pay among the cities)
+                    keeps the one-row bar with its ends named, under the figure. */}
+                {board.answerBar && board.answerBar.part && board.answerBar.rest && !board.answerBar.ends ? (
+                  <div className="mt-2 flex items-center gap-5">
+                    <div data-hero-figure className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{board.answer.value}</div>
+                    <div data-answer-bar><Pie share={board.answerBar.value / 100} aria={board.answerBar.aria} className="h-28 w-28" /></div>
+                  </div>
+                ) : (
+                  <div data-hero-figure className="fig mt-1 text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{board.answer.value}</div>
+                )}
+                {board.answerBar && board.answerBar.part && board.answerBar.rest && !board.answerBar.ends ? null : board.answerBar ? (
+                  <div data-answer-bar className="mt-4 max-w-[28ch]">
+                    <SegmentBar bare label={board.answerBar.aria} value={board.answerBar.value} figure={board.answer.value} unit="" part={board.answerBar.part} rest={board.answerBar.rest} ends={board.answerBar.ends} />
+                  </div>
+                ) : null}
                 {/* The words under the figure are the board's own where it says them (a city's "Pay, a year."), the country's basis with its regime otherwise: one archetype at two altitudes since 2026-09-20 evening. */}
-                <p data-subtitle className="mt-2 max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
+                <p data-subtitle className="mt-3 max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
                   {board.answerBasis != null ? board.answerBasis : (
                     <>
                       {COPY.answer.basis}
@@ -79,11 +103,10 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                   )}
                 </p>
               </div>
-              {board.subtitle ? <p className="mt-4 max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.subtitle}</p> : null}
-              {/* THE ANSWER DRAWN (2026-09-24), at the column's foot where the promise line stood, the figure never printed twice: the country's tax on profit as the whole filled to the share (his law of 2026-09-19, "a share of a whole is drawn"), a city's pay as its place among the cities. */}
-              {board.answerBar ? (
-                <div data-answer-bar className="mt-auto max-w-[28ch] pt-6">
-                  <SegmentBar bare label={board.answerBar.aria} value={board.answerBar.value} figure={board.answer.value} unit="" part={board.answerBar.part} rest={board.answerBar.rest} ends={board.answerBar.ends} />
+              {board.subtitle ? <p className="max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.subtitle}</p> : null}
+              {board.taxes && board.taxes.length >= 2 ? (
+                <div data-hero-taxes className="max-w-[34ch]">
+                  <DetailPanel name="hero-taxes" summary={COPY.heroBoard.taxes.summary} rows={board.taxes} />
                 </div>
               ) : null}
             </div>
@@ -124,7 +147,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                     <span className="ml-1 text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{r.unit}</span>
                   </span>
                   {r.level ? (
-                    <span data-level={r.level} className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{COPY.heroBoard.levels[r.level]}</span>
+                    <LevelMark level={r.level} />
                   ) : (
                     <span aria-hidden="true" />
                   )}
@@ -139,11 +162,36 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
   );
 }
 
+/** THE LEVEL AS A MARK (2026-09-25, his word that night: "symbols ... can be used to replace words in our sections that are soooo
+ *  verbose"): three rising bars, as many filled as the figure stands high among the countries (one low, two medium, three high),
+ *  in place of the word in a chip. Like the word, it says where the figure stands and nothing about good or bad. The word stays
+ *  for a screen reader and a pointer's title; the column's one-line key says what the marks rank. */
+function LevelMark({ level }: { level: "high" | "medium" | "low" }) {
+  const n = level === "high" ? 3 : level === "medium" ? 2 : 1;
+  const word = COPY.heroBoard.levels[level];
+  return (
+    <span data-level={level} role="img" aria-label={word} title={word} className="inline-flex h-4 items-end gap-0.5 justify-self-end">
+      {[1, 2, 3].map((i) => (
+        <span key={i} aria-hidden className="block w-1.5 rounded-sm" style={{ height: `${35 + i * 20}%`, background: i <= n ? "var(--terra)" : "var(--c-soft2)" }} />
+      ))}
+    </span>
+  );
+}
+
 function ImageCell({ image, grow = false }: { image: HeroBoardData["image"]; grow?: boolean }) {
   return (
     <div className={`relative md:min-h-40 ${grow ? "md:flex-1" : ""}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={image.src} alt={image.alt} data-hero-image data-placeholder={image.placeholder ? "1" : undefined} className="aspect-[4/3] w-full rounded-lg object-cover md:absolute md:inset-0 md:aspect-auto md:h-full" />
+      {/* THE PLACEHOLDER IN THE PAGE'S DUOTONE (2026-09-25): the one photograph the repository holds is not the country, and in full
+          colour it put a blue sky and green cliffs, the two colours the palette bans, at the top of the page; the city cards on the
+          same page already draw it through this recipe. A country's own photograph, when one lands, draws as it is. */}
+      {image.placeholder ? (
+        <div data-hero-image data-placeholder="1" className="relative aspect-[4/3] w-full overflow-hidden rounded-lg md:absolute md:inset-0 md:aspect-auto md:h-full">
+          <DuotonePhoto src={image.src} placeholder />
+        </div>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={image.src} alt={image.alt} data-hero-image className="aspect-[4/3] w-full rounded-lg object-cover md:absolute md:inset-0 md:aspect-auto md:h-full" />
+      )}
       {image.placeholder ? <div data-overlay="1" className="absolute bottom-2 left-2 rounded-md bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.heroBoard.placeholder}</div> : null}
     </div>
   );

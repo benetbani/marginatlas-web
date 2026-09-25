@@ -62,6 +62,9 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { AtlasIconId } from "@/components/brand/icons";
+import { queryFacts } from "@/lib/facts/store";
+import { loadCountryShard, countryEntityId } from "@/lib/facts/country_shard";
+import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
 
 export type HeroLevel = "high" | "medium" | "low";
 
@@ -89,6 +92,10 @@ export type HeroBoardData = {
   /** THE ANSWER DRAWN at the answer column's foot (2026-09-24), the figure never printed a second time: the country's tax on profit as the whole filled to the share (his law of 2026-09-19, "a share of a whole is drawn"), its two parts named; a city's typical pay as its place among the covered cities, the two ends named. `value` is out of 100; `aria` names the drawing for a screen reader. */
   answerBar?: { value: number; part?: string; rest?: string; ends?: readonly [string, string]; aria: string } | null;
   rows: HeroBoardRow[];
+  /** THE TAXES BEHIND THE RATE, behind the answer column's plus (his clause 58, parts behind a click; 2026-09-25): the rates a small
+   *  business meets besides the one on profit, as the country's shard lists them (the UK's four national taxes) or, where it lists none,
+   *  the two every profile holds (sales tax and the rate on company profit). Two rows at least or none. */
+  taxes?: DetailRow[] | null;
   /** The line under the column saying what the chips are among. Absent, the country's (`COPY.heroBoard.levelBasis`). */
   levelBasis?: string;
   image: { src: string; alt: string; placeholder: boolean };
@@ -159,10 +166,15 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
     rows.push({ key: "admin", icon: "ease-of-business", label: COPY.heroBoard.rows.admin, value: String(v), unit: COPY.heroBoard.units.of100, level: levelOf(profile.ease_of_doing_business_index, s.admin), confidence: profileConfidence });
   }
   const bill = buildEntryBill(iso2);
+  const hiring = hireEase(iso2);
   if (bill?.verdict.days.state === "printed" && isPos(bill.verdict.days.value)) {
     const d = bill.verdict.days.value;
     rows.push({ key: "llc-days", icon: "red-tape", label: COPY.heroBoard.rows.llcDays, value: String(d), unit: d === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(d, s.llcDays), confidence: bill.verdict.days.tag === "held" ? "measured" : "modeled" });
   }
+  /* HOW EASY IT IS TO HIRE (his hero list of 2026-09-20: "how easy it is to hire ... definitely an aspect"; 2026-09-25). The shard's
+     word for the country (`people_pay.hiring.hire_ease`: easy on 25, moderate on 168, hard on 4 of 198), printed as the row's value;
+     the word IS the level, so the row draws no chip beside it. */
+  if (hiring) rows.push({ key: "hiring", icon: "hiring", label: COPY.heroBoard.rows.hiring, value: hiring, unit: "", level: null, confidence: "modeled" });
   const pay = buildPayBars(iso2);
   const avg = pay && pay.withheld == null ? pay.rows.find((r) => r.key === "average") ?? null : null;
   if (avg && isPos(avg.value)) {
@@ -172,10 +184,53 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
   }
   if (bill?.verdict.bill.state === "printed" && isNum(bill.verdict.bill.value)) {
     const c = bill.verdict.bill.value;
-    rows.push({ key: "llc-cost", icon: "register-cost", label: COPY.heroBoard.rows.llcCost, value: c === 0 ? COPY.free : usd(c), unit: COPY.heroBoard.units.allIn, level: levelOf(c, s.llcCost), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled" });
+    rows.push({ key: "llc-cost", icon: "register-cost", label: COPY.heroBoard.rows.llcCost, value: usd(c), unit: COPY.heroBoard.units.allIn, level: levelOf(c, s.llcCost), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled" });
   }
 
   const share = facts.answer && isNum(facts.answer.share) && facts.answer.share > 0 && facts.answer.share < 1 ? facts.answer.share : null;
   const answerBar = share != null && facts.answer ? { value: share * 100, part: COPY.heroBoard.share.part, rest: COPY.heroBoard.share.rest, aria: `${facts.answer.value} ${COPY.heroBoard.share.of}` } : null;
-  return { iso2, name: facts.name, answer: facts.answer, subtitle: facts.subtitle, answerBar, rows, image: heroImageFor(iso2) };
+  return { iso2, name: facts.name, answer: facts.answer, subtitle: facts.subtitle, answerBar, rows, taxes: heroTaxes(iso2), image: heroImageFor(iso2) };
+}
+
+/** The shard's word for how easy hiring is, as the board prints it, or null. */
+function hireEase(iso2: string): string | null {
+  const code = countryEntityId(iso2);
+  if (!code || !loadCountryShard(code)) return null;
+  const f = queryFacts({ entityId: code, metrics: ["people_pay.hiring.hire_ease"], rowKey: "" })[0];
+  if (!f || f.tag === "placeholder" || typeof f.value !== "string") return null;
+  return (COPY.heroBoard.hireEase as Record<string, string>)[f.value.trim().toLowerCase()] ?? null;
+}
+
+/** THE TAXES BEHIND THE RATE (see `taxes` on the type): the shard's national taxes where it lists them, else the profile's two rates. */
+function heroTaxes(iso2: string): DetailRow[] | null {
+  const code = countryEntityId(iso2);
+  const rows: DetailRow[] = [];
+  if (code && loadCountryShard(code)) {
+    const items = queryFacts({ entityId: code }).filter((f) => f.metric.startsWith("tax_detail.groups.*.items.*.") && f.tag !== "placeholder");
+    const byKey = new Map<string, { name?: string; value?: string }>();
+    for (const f of items) {
+      const key = String(f.rowKey ?? "");
+      const row = byKey.get(key) ?? {};
+      if (f.metric.endsWith(".name") && typeof f.value === "string") row.name = f.value;
+      if (f.metric.endsWith(".value") && typeof f.value === "string") row.value = f.value;
+      byKey.set(key, row);
+    }
+    /* A percentage only: the list's fixed fees (the company's registration) are the board's own row above, and a rate held as a
+       share of profit "equivalent" is not a rate a reader can check. */
+    const threshold = queryFacts({ entityId: code, metrics: ["setup.vat_threshold_usd"], rowKey: "" })[0];
+    for (const [key, r] of byKey) {
+      if (!r.name || !r.value || !/%$/.test(r.value.trim()) || key === "business_rates") continue;
+      const note = key === "vat" && threshold && isPos(threshold.value) ? COPY.heroBoard.taxNotes.vatFrom.replace("{amount}", usd(threshold.value)) : undefined;
+      rows.push({ label: r.name, value: r.value.trim(), note });
+    }
+  }
+  if (rows.length < 2) {
+    rows.length = 0;
+    const profile = getCountryProfile(iso2);
+    if (profile.iso2.toUpperCase() === iso2.toUpperCase()) {
+      if (isPos(profile.vat_gst_standard_pct)) rows.push({ label: COPY.heroBoard.taxNotes.salesTax, value: `${Math.round(profile.vat_gst_standard_pct * 1000) / 10}%` });
+      if (isPos(profile.corporate_income_tax_combined_pct)) rows.push({ label: COPY.heroBoard.taxNotes.companyTax, value: `${Math.round(profile.corporate_income_tax_combined_pct * 1000) / 10}%` });
+    }
+  }
+  return rows.length >= 2 ? rows : null;
 }
