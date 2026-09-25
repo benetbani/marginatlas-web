@@ -84,7 +84,7 @@
     "FM": { "median_monthly_wage_usd": 300, "source_quality": "C", "notes": "Micronesia; aid-dependent" },
     "FR": { "median_monthly_wage_usd": 3500, "source_quality": "A", "notes": "France INSEE 2024 DADS" },
     "GA": { "median_monthly_wage_usd": 600, "source_quality": "B", "notes": "Gabon DGS; oil sector" },
-    "GB": { "median_monthly_wage_usd": 3200, "source_quality": "A", "notes": "UK ONS ASHE 2024" },
+    "GB": { "median_monthly_wage_usd": 4315, "source_quality": "A", "notes": "UK ONS ASHE 2025, full-time median GBP 39,039 a year, at 1.3265 USD/GBP (Bank of England, 23 Sep 2026)" },
     "GD": { "median_monthly_wage_usd": 950, "source_quality": "B", "notes": "Grenada; small Caribbean" },
     "GE": { "median_monthly_wage_usd": 850, "source_quality": "A", "notes": "Georgia Geostat 2024" },
     "GH": { "median_monthly_wage_usd": 350, "source_quality": "A", "notes": "Ghana GSS 2024" },

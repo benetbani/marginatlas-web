@@ -6,7 +6,7 @@
   "disclaimer": "These rates are planning estimates only — not tax advice. Actual liability depends on business form, deductions, incentives, regional surcharges, and treaty positions.",
   "rates": {
     "US": { "cit": 0.21, "employer_social": 0.0765, "notes": "Federal corporate tax 21%; state varies 0-9.99% (CA 8.84%, NY 7.25%, TX 0%). Employer social = FICA 7.65% (Social Security + Medicare). State unemployment adds ~1-2% typically." },
-    "GB": { "cit": 0.25, "employer_social": 0.138, "notes": "Main rate 25% (small profits rate 19% for profits under £50k). Employer NIC 13.8% on earnings above secondary threshold." },
+    "GB": { "cit": 0.25, "employer_social": 0.15, "notes": "Main rate 25% (small profits rate 19% for profits under £50k). Employer NIC 15% on earnings above GBP 5,000 a year (from 6 April 2025; was 13.8% above GBP 9,100)." },
     "CA": { "cit": 0.265, "employer_social": 0.115, "notes": "Federal CIT 15% + provincial average ~11.5% (Ontario 11.5%, Quebec 11.5%, BC 12%). CPP + EI employer ~11.5% combined." },
     "DE": { "cit": 0.299, "employer_social": 0.197, "notes": "Combined corporate tax: federal CIT 15% + Solidaritätszuschlag 5.5% on CIT + trade tax average 14% = ~30%. Employer social contributions ~20% (pension 9.3%, health 7.3%, unemployment 1.3%, long-term care 1.7%)." },
     "FR": { "cit": 0.255, "employer_social": 0.42, "notes": "CIT 25% (standard rate). Employer social contributions among highest in OECD ~42% (URSSAF + retirement + unemployment + family + accident)." },

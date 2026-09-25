@@ -103,7 +103,11 @@ export const SMB_EFFECTIVE_RATES: Record<string, SmbRegime> = {
   GB: {
     regime: "simplified",
     effective_rate: 0.2,
-    local_name: "Trading Allowance + Self-Assessment",
+    /* The name a British owner uses for it (2026-09-25): the hero's basis prints it, and "Trading Allowance + Self-Assessment" was
+       two terms and a plus sign where one plain name answers. The allowance stays in the notes. The space between the two words
+       is a no-break space, so the name never splits across the basis's two lines (a nowrap on the span pushed Poland's and
+       Mexico's long names out of their column, the archetype harness's BOTCHED MOBILE, 2026-09-25). */
+    local_name: "Self Assessment",
     notes:
       "£1K trading allowance, then income tax on profit. Small profits rate 19-25%.",
   },

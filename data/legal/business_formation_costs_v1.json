@@ -22,8 +22,8 @@
     ],
     "GB": [
       { "tier": "Sole Trader", "local_term": "Sole Trader", "setup_cost_usd": 0, "setup_days": 1, "complexity_score": 1 },
-      { "tier": "LLC", "local_term": "Private Limited Company (Ltd)", "setup_cost_usd": 15, "setup_days": 1, "complexity_score": 1 },
-      { "tier": "Joint-Stock", "local_term": "Public Limited Company (Plc)", "setup_cost_usd": 80, "setup_days": 7, "complexity_score": 3 }
+      { "tier": "LLC", "local_term": "Private Limited Company (Ltd)", "setup_cost_usd": 133, "setup_days": 1, "complexity_score": 1 },
+      { "tier": "Joint-Stock", "local_term": "Public Limited Company (Plc)", "setup_cost_usd": 133, "setup_days": 7, "complexity_score": 3 }
     ],
     "DE": [
       { "tier": "Freelancer", "local_term": "Freiberufler", "setup_cost_usd": 0, "setup_days": 7, "complexity_score": 1 },
