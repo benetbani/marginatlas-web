@@ -806,6 +806,14 @@ export const COPY = {
     more: "{n} more trades",
     basis: "Net profit per $100 of sales.",
     phoneHead: { trade: "Trade", value: "Keeps" },
+    /** A row's label in three words or fewer (the model laws' ROW SENTENCE read three four-word trade names on the UK page,
+     *  2026-09-25): the registry's name where it is short enough, this where it is not. The row still opens the trade's page. */
+    short: {
+      "marketing-design-agencies": "Marketing agencies",
+      "veterinary-pet-care": "Veterinary care",
+      "dry-cleaning-laundry": "Dry cleaners",
+      "cafes-coffee-shops": "Cafés",
+    } as Record<string, string>,
   },
   /** The income breakdown (task 11, his most literal instruction, 2026-09-10):
    *  "the income breakdown is used exactly for income breakdown with the main

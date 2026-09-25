@@ -233,7 +233,7 @@ export function buildLondonTradeMargins(): { rows: BarRow[]; worldMax: number } 
     const ind = (SLUG_TO_INDUSTRY as Record<string, { id: string; name: string } | undefined>)[slug];
     const pct = entry?.economics?.net_margin_pct;
     if (!ind || LONDON_LEFT_OUT.has(slug) || /\(mixed\)/i.test(ind.name) || !isNum(pct) || pct <= 0) continue;
-    rows.push({ key: slug, name: ind.name, href: `/${iso}/${city}/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value: pct / 100 });
+    rows.push({ key: slug, name: COPY.londonMargins.short[slug] ?? ind.name, href: `/${iso}/${city}/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value: pct / 100 });
   }
   if (rows.length < 3) return null;
   rows.sort((a, b) => b.value - a.value);
