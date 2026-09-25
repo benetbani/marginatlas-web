@@ -82,16 +82,19 @@ function Track({ r, range, scale, medianWord, headless }: { r: WorldRangeRow; ra
               <span aria-hidden className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--c-soft2)]" />
               <span aria-hidden data-track-band className="absolute top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--c-border)]" style={{ left: `${a}%`, width: `${Math.max(1, b - a)}%` }} />
               <span aria-hidden data-track-median className="absolute top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-[var(--c-ink2)]" style={{ left: `calc(${m}% - 1px)` }} />
-              <span aria-hidden data-mark="value" className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] shadow-sm" style={{ left: `${at}%`, background: "var(--terra)" }} />
+              {/* THE DOT PINNED INSIDE ITS TRACK (the chain's scale-end clamp, 2026-09-25): centred on its own value, a country at the
+                  world's highest or lowest hung half off the card's edge (the United Kingdom's electricity is the world's dearest). */}
+              <span aria-hidden data-mark="value" className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] shadow-sm" style={{ left: `${Math.max(2, Math.min(98, at))}%`, background: "var(--terra)" }} />
             </div>
-            <div className="relative mt-1.5 h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-              <span className="absolute left-0">{r.fmt(range.min)}</span>
-              <span className="absolute right-0">{r.fmt(range.max)}</span>
+            <div className="relative mt-2 h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+              <span className="absolute left-0 tabular-nums">{r.fmt(range.min)}</span>
+              <span className="absolute right-0 tabular-nums">{r.fmt(range.max)}</span>
             </div>
             {/* THE MEDIAN ON ITS OWN LINE, under its tick, pulled left by its own share of the way along (so at either end it
                 aligns inward): measured at 375, on the ends' line it ran into the lowest figure. */}
             <div className="relative h-4 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-              <span data-mark-label className="absolute whitespace-nowrap" style={{ left: `${m}%`, transform: `translateX(-${m}%)` }}>{medianWord} {r.fmt(range.median)}</span>
+              {/* Bounded to the track as well as pulled inward, so the scale-end gate sees the protection it cannot infer. */}
+              <span data-mark-label className="absolute whitespace-nowrap" style={{ left: `${Math.min(100, Math.max(0, m))}%`, transform: `translateX(-${Math.min(100, Math.max(0, m))}%)` }}>{medianWord} {r.fmt(range.median)}</span>
             </div>
           </>
   );

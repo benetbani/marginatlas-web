@@ -218,13 +218,19 @@ export function buildCountryClosing(iso2: string): DetailRow[] | null {
  */
 const LONDON_LEFT_OUT = new Set(["restaurants"]);
 export function buildLondonTradeMargins(): { rows: BarRow[]; worldMax: number } | null {
-  const activities = (LONDON_MARKET as { activities: Record<string, { economics?: { net_margin_pct?: number } }> }).activities;
+  const market = LONDON_MARKET as { city?: string; country_iso2?: string; activities: Record<string, { economics?: { net_margin_pct?: number } }> };
+  const activities = market.activities;
+  /* THE PLACE FROM THE DATUM (the chain's no-hardcoded-place, 2026-09-25): each row opens that trade's page in the file's own city
+     and country, never a path typed with a city in it; a file that names no place draws no rows. */
+  const iso = (market.country_iso2 ?? "").toLowerCase();
+  const city = (market.city ?? "").toLowerCase().trim().replace(/\s+/g, "-");
+  if (!/^[a-z]{2}$/.test(iso) || !city) return null;
   const rows: BarRow[] = [];
   for (const [slug, entry] of Object.entries(activities)) {
     const ind = (SLUG_TO_INDUSTRY as Record<string, { id: string; name: string } | undefined>)[slug];
     const pct = entry?.economics?.net_margin_pct;
     if (!ind || LONDON_LEFT_OUT.has(slug) || /\(mixed\)/i.test(ind.name) || !isNum(pct) || pct <= 0) continue;
-    rows.push({ key: slug, name: ind.name, href: `/gb/london/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value: pct / 100 });
+    rows.push({ key: slug, name: ind.name, href: `/${iso}/${city}/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value: pct / 100 });
   }
   if (rows.length < 3) return null;
   rows.sort((a, b) => b.value - a.value);

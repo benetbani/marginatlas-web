@@ -520,7 +520,7 @@ function Focal({ figure, words }: { figure: string; words: string }) {
   return (
     <div className="mb-4">
       <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{figure}</div>
-      <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words}</p>
+      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words}</p>
     </div>
   );
 }
@@ -583,7 +583,8 @@ function InsuranceBars({ card }: { card: InsuranceCard }) {
     <Box id="insurance" className="flex flex-col">
       <Rail icon="safety" kicker={COPY.insurance.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
-      <BarList items={items} look="plain" />
+      {/* The cover the law requires is the one bar in the accent (C2: the card's answer). */}
+      <BarList items={items} look="plain" mark={items.find((i) => i.badge)?.key} />
     </Box>
   );
 }
@@ -781,7 +782,7 @@ function EntryBill({ bill, steps, licences }: { bill: EntryBillData | null; step
       <Box id="entry-bill" data-visual="1" className="flex flex-col">
         <Rail icon="startup-cost" kicker={COPY.entryBill.kicker} />
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{bill.figure}</div>
-        <p className="mt-1.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.entryBill.focalWords}</p>
+        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.entryBill.focalWords}</p>
         <div className="mt-5 flex-1">
           <Stepper steps={steps.steps} compact />
         </div>
@@ -980,11 +981,12 @@ function HireCost({ iso2, pay, rate }: { iso2: string; pay: NonNullable<ReturnTy
       </div>
       <div className="mt-3 flex h-3 w-full overflow-hidden rounded-full" role="img" aria-label={`${H.label}: ${usd(total)} ${H.unit}, ${usd(avg)} ${H.pay} and ${usd(onCost)} ${H.onCost}`}>
         <span aria-hidden style={{ width: `${(avg / total) * 100}%`, background: "var(--c-line-strong)" }} />
-        <span aria-hidden style={{ width: `${(onCost / total) * 100}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" }} />
+        {/* The employer's share in ink (ART-DIRECTION C2): the card's answer is the average salary, already in the accent above. */}
+        <span aria-hidden style={{ width: `${(onCost / total) * 100}%`, backgroundColor: "var(--c-ink2)", backgroundImage: "linear-gradient(90deg, var(--c-muted), var(--c-ink2))" }} />
       </div>
       <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-line-strong)" }} />{H.salary}</span>
-        <span className="inline-flex items-center gap-1.5"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--terra)" }} /><Fig className="font-semibold text-[var(--c-ink)]">{usd(onCost)}</Fig> {H.onCost}</span>
+        <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-line-strong)" }} />{H.salary}</span>
+        <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink2)" }} /><Fig className="font-semibold text-[var(--c-ink)]">{usd(onCost)}</Fig> {H.onCost}</span>
       </div>
       {threshold > 0 ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{H.rule.replace("{rate}", `${rate}%`).replace("{threshold}", usd(threshold))}</p> : null}
     </div>

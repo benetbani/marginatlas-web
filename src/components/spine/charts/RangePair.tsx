@@ -32,7 +32,7 @@ export function RangePair({ spans, max, fmt, ticks, unit, aria }: { spans: Span[
         <div aria-hidden className="relative -mt-2 h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">
           {ticks.map((t) => (
             /* The ends align inward, so the axis never runs past its card: a label is pulled left by its own share of the way along. */
-            <span key={t} className="absolute whitespace-nowrap" style={{ left: `${at(t)}%`, transform: `translateX(-${at(t)}%)` }}>{t}</span>
+            <span key={t} className="absolute whitespace-nowrap tabular-nums" style={{ left: `${at(t)}%`, transform: `translateX(-${at(t)}%)` }}>{t}</span>
           ))}
         </div>
       ) : null}

@@ -164,7 +164,8 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
 
 /** THE LEVEL AS A MARK (2026-09-25, his word that night: "symbols ... can be used to replace words in our sections that are soooo
  *  verbose"): three rising bars, as many filled as the figure stands high among the countries (one low, two medium, three high),
- *  in place of the word in a chip. Like the word, it says where the figure stands and nothing about good or bad. The word stays
+ *  in place of the word in a chip. Like the word, it says where the figure stands and nothing about good or bad, so it is drawn in
+ *  ink and never the accent (ART-DIRECTION C2: the accent marks a card's answer, and a level is not one). The word stays
  *  for a screen reader and a pointer's title; the column's one-line key says what the marks rank. */
 function LevelMark({ level }: { level: "high" | "medium" | "low" }) {
   const n = level === "high" ? 3 : level === "medium" ? 2 : 1;
@@ -172,7 +173,7 @@ function LevelMark({ level }: { level: "high" | "medium" | "low" }) {
   return (
     <span data-level={level} role="img" aria-label={word} title={word} className="inline-flex h-4 items-end gap-0.5 justify-self-end">
       {[1, 2, 3].map((i) => (
-        <span key={i} aria-hidden className="block w-1.5 rounded-sm" style={{ height: `${35 + i * 20}%`, background: i <= n ? "var(--terra)" : "var(--c-soft2)" }} />
+        <span key={i} aria-hidden className="block w-1.5 rounded-sm" style={{ height: `${35 + i * 20}%`, background: i <= n ? "var(--c-ink2)" : "var(--c-soft2)" }} />
       ))}
     </span>
   );
@@ -186,7 +187,9 @@ function ImageCell({ image, grow = false }: { image: HeroBoardData["image"]; gro
           same page already draw it through this recipe. A country's own photograph, when one lands, draws as it is. */}
       {image.placeholder ? (
         <div data-hero-image data-placeholder="1" className="relative aspect-[4/3] w-full overflow-hidden rounded-lg md:absolute md:inset-0 md:aspect-auto md:h-full">
-          <DuotonePhoto src={image.src} placeholder />
+          {/* IN GREY (2026-09-25, the art direction's C2): the terracotta wash counted as a third accent mark in the hero beside the
+              answer and its pie, and a placeholder is the last thing that should claim the accent. */}
+          <DuotonePhoto src={image.src} placeholder tint={false} />
         </div>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element

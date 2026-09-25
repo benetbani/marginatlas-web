@@ -37,7 +37,7 @@ export function DonutStat({ parts, center, centerWords, aria }: { parts: DonutSl
       </div>
       <ul className="m-0 min-w-0 flex-1 list-none divide-y divide-[var(--c-border)] p-0">
         {live.map((p, i) => (
-          <li key={p.key} data-row={p.key} className="grid max-w-none grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-3 py-1.5">
+          <li key={p.key} data-row={p.key} className="grid max-w-none grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-3 py-2">
             <span aria-hidden className="h-3 w-3 shrink-0 rounded-full" style={{ background: FILLS[i] }} />
             <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{p.name}</span>
             <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{Math.round(p.share)}%</Fig>

@@ -132,7 +132,7 @@ const P10_BELOW_FLOOR: Record<string, number> = {
   AU: 10.3,
   LV: 8.5,
   CA: 5.7,
-  GB: 0.9,
+  /* GB struck 2026-09-25: its median to ASHE 2025 (the official reading of that day) lifts the bottom tenth above the floor. */
   IL: 0.8,
 };
 

@@ -75,7 +75,7 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
       <div className={`mt-3 grid gap-2 ${led ? "[@container(min-width:560px)]:grid-cols-2" : ""} ${fill ? "flex-1 auto-rows-fr" : ""}`} data-expect-rows={live.length}>
         {live.map((p) => (
           /* In the led form the remainder's row spans the line when the rows are two a line and odd in number, so no row stands alone. */
-          <div key={p.key} data-row={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 ${led ? "py-2.5" : "py-2"} ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
+          <div key={p.key} data-row={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2 ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] border border-[var(--c-border)]" style={{ background: colourOf(p) }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
             <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>

@@ -159,7 +159,9 @@ async function main() {
      ever moves into the panel, the disclosure is hiding a figure, which is the
      one thing the disclosure may not do. */
   const collapsed = container.textContent!;
-  for (const fig of ["Free", "$15", "1 day"]) {
+  /* A zero fee reads "$0" since 2026-09-25 (TiersTable: one grammar for the column of fees, where "Free" was the one word among
+     figures); the law this checks, every figure visible with the card shut, is unchanged. */
+  for (const fig of ["$0", "$15", "1 day"]) {
     if (!collapsed.includes(fig)) fail(`the collapsed card does not show the figure "${fig}"; K6 says every figure is visible shut`);
   }
 

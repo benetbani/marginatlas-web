@@ -511,13 +511,14 @@ export default async function HomePage() {
           The map: "for now, you can archive the map because it's just bad",
           which carries out his ruling of 2026-09-04 (the map is removed from the
           home page; QUEUE home:map, CUT) that the page never received.
-          `WorldMapSection` stays on disk, unmounted, in case it returns
-          elsewhere; nothing linked to its `#pick-a-country` anchor.
+          `WorldMapSection` is in _archive/2026-09-25-home/ (the chain's render
+          graph reds a component nothing reaches); nothing linked to its
+          `#pick-a-country` anchor.
           The state table ("What a typical business brings in, state by state"):
           "catastrophically bad", software firms in California its worst row. It
           compared four US states on a page whose rebuilt pages are the UK's, in
           a trade no one sees from the street. `StateComparison` and its loader
-          stay on disk, unmounted. */}
+          are in _archive/2026-09-25-home/ beside the map. */}
 
       {/* Browse-by-sector retired: the SectorMasterMenu grid (a grid of
          /sectors/[id] tiles) was removed when sector pages were retired. A

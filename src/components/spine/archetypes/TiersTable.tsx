@@ -69,10 +69,12 @@ const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem] gap-x-3 md:gr
 const GRID_FIGURES = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3";
 const DASH = <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>;
 
-function Dots({ n }: { n: number }) {
+/** `tone`: the table's dots are the reading and carry the accent; the legend's dots only say what one and five dots mean, so they
+ *  are drawn in ink (ART-DIRECTION C2: two legend groups in the accent made the card five accent marks). */
+function Dots({ n, tone = "terra" }: { n: number; tone?: "terra" | "ink" }) {
   return (
     <span aria-label={`paperwork ${n} of 5`} role="img" className="flex items-center justify-end gap-1">
-      {[1, 2, 3, 4, 5].map((i) => <span key={i} aria-hidden className="h-2 w-2 rounded-full" style={{ background: i <= n ? "var(--terra)" : "var(--c-soft2)" }} />)}
+      {[1, 2, 3, 4, 5].map((i) => <span key={i} aria-hidden className="h-2 w-2 rounded-full" style={{ background: i <= n ? (tone === "ink" ? "var(--c-ink2)" : "var(--terra)") : "var(--c-soft2)" }} />)}
     </span>
   );
 }
@@ -162,8 +164,8 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
           with its words, where a sentence said the same ("More dots, more paperwork: one is an online form, five a lawyer"). */}
       {anyDots ? (
         <div data-legend="dots" className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
-          <span className="inline-flex items-center gap-2"><Dots n={1} />{COPY.tiers.legendEnds.one}</span>
-          <span className="inline-flex items-center gap-2"><Dots n={5} />{COPY.tiers.legendEnds.five}</span>
+          <span className="inline-flex items-center gap-2"><Dots n={1} tone="ink" />{COPY.tiers.legendEnds.one}</span>
+          <span className="inline-flex items-center gap-2"><Dots n={5} tone="ink" />{COPY.tiers.legendEnds.five}</span>
         </div>
       ) : null}
       {door && howTo ? (
