@@ -676,6 +676,16 @@ export const COPY = {
       "late-payment": "Late payment", premises: "Premises", finance: "Getting finance",
     } as Record<string, string>,
   },
+  /** WHO SPENDS ON IT, BY INCOME (sections/SpendByIncome.tsx, 2026-09-25; his "By purchasing power"). The item named as a reader
+   *  says it; the survey's tenths are named at the two ends only. */
+  spendByIncome: {
+    kicker: "Spending by income",
+    focalWords: "of {item} spending comes from the richest fifth",
+    items: { hairdressing: "hairdressing and beauty", "eating-out": "eating-out" } as Record<string, string>,
+    caption: "A household's week, by income tenth",
+    poorest: "Poorest tenth",
+    richest: "Richest tenth",
+  },
   /** THE APPS A SHOP RUNS ON (sections/LocalApps.tsx, 2026-09-25). The fee's unit as a symbol after the figure, never a phrase. */
   localApps: {
     kicker: "The apps shops use",

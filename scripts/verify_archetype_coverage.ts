@@ -35,7 +35,7 @@ const ROOT = "src/components/spine";
 const SKIP_DIRS = new Set(["archetypes", "charts", "sections"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx"]);
 /* HeroBoard, SegmentBar (2026-09-20): his hero and his gold standard's segmented unit bar, both catalogued by his word (rules/FORM-CATALOG.md VERSION 6 and the reference of that date). */
-const ARCHETYPES = ["BarList", "WorldRangeRows", "DonutStat", "RangePair", "Pie", "StockTiers", "FirstYears", "Obstacles", "LocalApps", "MarketHold", "JobMarket", "Thresholds", "AgeMix", "CustomersCome", "Origin", "AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel", "HeroBoard", "SegmentBar", "BentoMetric", "BlockedSeat", "Donut", "Ring", "MonthBars", "ShareBar", "WorkedFigure", "Stepper"];
+const ARCHETYPES = ["BarList", "WorldRangeRows", "DonutStat", "RangePair", "Pie", "StockTiers", "FirstYears", "Obstacles", "SpendByIncome", "LocalApps", "MarketHold", "JobMarket", "Thresholds", "AgeMix", "CustomersCome", "Origin", "AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel", "HeroBoard", "SegmentBar", "BentoMetric", "BlockedSeat", "Donut", "Ring", "MonthBars", "ShareBar", "WorkedFigure", "Stepper"];
 const EXCEPTIONS_PATH = "data/archetypes/coverage_exceptions.json";
 const INIT = process.argv.includes("--init");
 

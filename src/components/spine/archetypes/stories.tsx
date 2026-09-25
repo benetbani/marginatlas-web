@@ -68,6 +68,8 @@ import { StockTiers } from "@/components/spine/sections/StockTiers";
 import { buildStockKit, listStockKits } from "@/lib/spine/sections/stock_kit";
 import { FirstYears } from "@/components/spine/sections/FirstYears";
 import { Obstacles } from "@/components/spine/sections/Obstacles";
+import { SpendByIncome } from "@/components/spine/sections/SpendByIncome";
+import { buildSpendByIncome, listSpendByIncome } from "@/lib/spine/sections/spend_by_income";
 import { LocalApps } from "@/components/spine/sections/LocalApps";
 import { MarketHold } from "@/components/spine/sections/MarketHold";
 import { JobMarket } from "@/components/spine/sections/JobMarket";
@@ -2485,6 +2487,26 @@ export function JobMarketStories() {
   );
 }
 
+/** WHO SPENDS ON IT, BY INCOME (sections/SpendByIncome.tsx): one story an item the file holds, keyed <iso2>:<trade>, at a full card's
+ *  width, so the sheet's three widths draw the ten values over the columns and the phone's two ends. */
+export function pickSpendByIncomeInstances(): Instance[] {
+  return listSpendByIncome().filter((x) => buildSpendByIncome(x.iso2, x.trade)).map((x) => ({ iso2: `${x.iso2}:${x.trade}`, why: "the ten tenths as columns, the richest fifth's share as the figure" }));
+}
+export function SpendByIncomeStories() {
+  return (
+    <div data-stories="spend-by-income">
+      {listSpendByIncome().map((x) => {
+        const d = buildSpendByIncome(x.iso2, x.trade);
+        return d ? (
+          <Story kind="spend-by-income" key={`${x.iso2}:${x.trade}`} iso2={`${x.iso2}:${x.trade}`} why="the ten tenths as columns, the richest fifth's share as the figure">
+            <SpendByIncome id={`spend-by-income-${x.iso2.toLowerCase()}-${x.trade}`} data={d} />
+          </Story>
+        ) : null;
+      })}
+    </div>
+  );
+}
+
 export function pickThresholdsInstances(): Instance[] {
   return listThresholdCountries().filter((c) => buildThresholds(c)).map((c) => ({ iso2: c, why: "the lines the law sets, the first one leading" }));
 }
@@ -2599,6 +2621,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "market-hold": pickMarketHoldInstances(),
     "job-market": pickJobMarketInstances(),
     "thresholds": pickThresholdsInstances(),
+    "spend-by-income": pickSpendByIncomeInstances(),
     "age-mix": pickAgeMixInstances(),
     "customers-come": pickCustomersComeInstances(),
     "origin": pickOriginInstances(),

@@ -1,0 +1,23 @@
+{
+  "_about": "What households spend on one trade's item each week, by gross income tenth, poorest to richest (his message of 2026-09-25: \"By purchasing power, poor middle class, wealthy, millionaire\"). The published averages per household, in the country's currency; `households` the published weighted count a tenth, in thousands, so a tenth's share of the item's spending is its average times its households over the sum of the ten. `trades` maps a trade's URL slug to the item its customers buy. A tenth the source marks as too few households (\"..\") is not an item's tenth and the item is not drawn. United Kingdom: ONS, Family spending workbook 1, FYE 2025 (released 11 June 2026), Table A6, detailed household expenditure by gross income decile group; read 2026-09-25 (design/loop/build/research/2026-09-25-R4-customers-GB.md, the workbook 1 addendum).",
+  "GB": {
+    "currency": "GBP",
+    "period": "April 2024 to March 2025",
+    "households": [2870, 2870, 2870, 2870, 2880, 2860, 2880, 2870, 2870, 2870],
+    "items": {
+      "hairdressing": { "code": "12.1.1", "tenths": [1.9, 2.6, 2.6, 2.5, 3.3, 4.7, 4.5, 4.9, 6.3, 11.0], "all": 4.4 },
+      "eating-out": { "code": "11.1.1", "tenths": [6.2, 9.2, 10.5, 13.2, 15.3, 17.6, 18.4, 24.4, 25.6, 37.8], "all": 17.8 }
+    },
+    "trades": {
+      "barbershops": "hairdressing",
+      "hairdressers-beauty": "hairdressing",
+      "hair-salons-full-service": "hairdressing",
+      "nail-salons": "hairdressing",
+      "restaurants": "eating-out",
+      "sit-down-restaurants": "eating-out",
+      "fast-casual-restaurants": "eating-out",
+      "cafes-coffee-shops": "eating-out",
+      "tea-houses-matcha-bars": "eating-out"
+    }
+  }
+}
