@@ -806,6 +806,9 @@ export const COPY = {
     kicker: "What London's trades keep",
     more: "{n} more trades",
     basis: "Net profit per $100 of sales.",
+    /* Read with the figure: "10.5% of sales kept as profit by the middle trade" (a percent, never "per $100", which is the basis
+       line's own unit and read as a rate on a rate beside a percent). */
+    focalWords: "of sales kept as profit by the middle trade",
     phoneHead: { trade: "Trade", value: "Keeps" },
     /** A row's label in three words or fewer (the model laws' ROW SENTENCE read three four-word trade names on the UK page,
      *  2026-09-25): the registry's name where it is short enough, this where it is not. The row still opens the trade's page. */

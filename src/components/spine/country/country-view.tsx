@@ -624,14 +624,21 @@ function BankingRing({ card }: { card: BankingCard }) {
 /** LONDON'S MARGINS, TRADE BY TRADE, as a bar list with each trade's glyph; each name opens its London page. */
 function LondonMarginBars({ margins }: { margins: NonNullable<ReturnType<typeof buildLondonTradeMargins>> }) {
   const L = COPY.londonMargins;
+  /* THE CARD'S ONE FIGURE, THE MIDDLE TRADE (2026-09-25, the model laws' FOCAL on the UK page): the median of every London trade
+     the list holds, the eight drawn and the rest behind the plus, so each bar reads against it; a median of whole percents can
+     fall on a half, printed as it falls, never rounded onto a row's own figure. It carries the unit, so the basis line under the
+     list, "Net profit per $100 of sales.", leaves. */
+  const sorted = margins.rows.map((r) => r.value * 100).sort((a, b) => a - b);
+  const middle = sorted.length % 2 ? sorted[(sorted.length - 1) / 2] : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
+  const middleText = `${Number.isInteger(Math.round(middle * 10) / 10) ? Math.round(middle) : (Math.round(middle * 10) / 10).toFixed(1)}%`;
   return (
     <Box id="money" className="flex flex-col">
       <Rail icon="owner-keeps" kicker={L.kicker} />
+      <Focal figure={middleText} words={L.focalWords} />
       {/* EIGHT DRAWN, THE REST ON THE PLUS (his clause 58, parts behind a click): sixteen rows stood the card 717 tall beside a
           card of 300. The bars share one scale, the list's highest, so the plus's rows read against the same top. */}
       <BarList items={margins.rows.slice(0, 8).map((r) => ({ key: r.key, label: r.name, value: r.value, display: `${Math.round(r.value * 100)}%`, href: r.href, icon: r.icon }))} max={margins.worldMax} />
       {margins.rows.length > 8 ? <DetailPanel name="money-more" summary={L.more.replace("{n}", String(margins.rows.length - 8))} rows={margins.rows.slice(8).map((r) => ({ label: r.name, value: `${Math.round(r.value * 100)}%` }))} /> : null}
-      <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{L.basis}</p>
     </Box>
   );
 }
