@@ -1032,8 +1032,9 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
         <Rail icon="sale-tag" kicker={C.kicker} gloss={C.basis} />
         {longer ? <Focal figure={longer.figure} words={C.world.longerLean} /> : null}
         {exit.usual ? (
-          <div className="flex flex-1 flex-col justify-center">
+          <div className="flex flex-1 flex-col">
             <RangePair
+              fill
               spans={[
                 { key: "here", label: C.here, lo: exit.marks[0].value, hi: exit.marks[exit.marks.length - 1].value, accent: true },
                 { key: "usual", label: C.usualAnywhere, lo: exit.usual.lo, hi: exit.usual.hi },
