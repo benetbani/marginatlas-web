@@ -37,7 +37,7 @@ export function SpendByIncome({ id = "spend-by-income", data }: { id?: string; d
       </div>
       <div data-archetype="spend-by-income" data-visual="1" data-cols={String(data.tenths.length)} className="flex flex-1 flex-col [container-type:inline-size]">
         <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.caption}</div>
-        <div className="flex min-h-36 flex-1 items-stretch gap-1.5 pt-5 [@container(min-width:480px)]:gap-2" role="img" aria-label={`${C.caption}: ${data.tenths.map((t) => usdCents(t.usd)).join(", ")}`}>
+        <div className="flex min-h-36 flex-1 items-stretch gap-1 pt-5 [@container(min-width:480px)]:gap-2" role="img" aria-label={`${C.caption}: ${data.tenths.map((t) => usdCents(t.usd)).join(", ")}`}>
           {data.tenths.map((t) => (
             <div key={t.tenth} data-col={t.tenth} className="relative min-w-0 flex-1">
               <span aria-hidden className="absolute inset-0 rounded-t-sm bg-[var(--c-soft2)]" />
