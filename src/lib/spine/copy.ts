@@ -693,6 +693,7 @@ export const COPY = {
     /* Read with the figure: "12 of 19" then "listed apps were founded here" (the first words, "of these apps ...", doubled the
        figure's own "of"). */
     focalWords: "listed apps were founded here",
+    allFree: "All free",
     jobs: { bookings: "Bookings", payments: "Card payments", accounts: "Accounts", banking: "Banking", payroll: "Payroll", reviews: "Reviews", hiring: "Hiring" } as Record<string, string>,
     fee: { free: "Free", perSale: "/sale", perNewClient: "/new client", perMonth: "/mo", perYear: "/yr", perAd: "/ad" },
   },
