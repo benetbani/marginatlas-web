@@ -80,6 +80,16 @@ const RATES: Record<string, FxRate> = {
     last_reviewed_at: "2024-12-31",
     notes: "Locked at parse time for AU primary-data loader (Phase 1d).",
   },
+  /* THE POUND (2026-09-25): the one rate every United Kingdom figure of that day was converted at, USD 1.3265 to the pound
+     (Bank of England spot, 23 September 2026; design/loop/build/research/2026-09-25-uk-official-figures.md). The new sections
+     that read prices in pounds (the kit to open, data/sections/) convert through it rather than a number of their own. */
+  GBP: {
+    ccy: "GBP",
+    per_usd: 1 / 1.3265,
+    source: "Bank of England spot",
+    last_reviewed_at: "2026-09-23",
+    notes: "USD 1.3265 to the pound; locked at the reading of the UK figures of 2026-09-25.",
+  },
   // Future entries land here.
 };
 

@@ -64,6 +64,15 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 import { tradeHeroFacts, cellServes, type CellHeroInstance } from "@/lib/spine/trade_hero_facts";
 import { buildPermits } from "@/lib/spine/permits_rows";
+import { StockTiers } from "@/components/spine/sections/StockTiers";
+import { buildStockKit, listStockKits } from "@/lib/spine/sections/stock_kit";
+import { FirstYears } from "@/components/spine/sections/FirstYears";
+import { LocalApps } from "@/components/spine/sections/LocalApps";
+import { MarketHold } from "@/components/spine/sections/MarketHold";
+import { JobMarket } from "@/components/spine/sections/JobMarket";
+import { buildSurvival, buildObstacles, listSurvivalCountries } from "@/lib/spine/sections/first_years";
+import { buildLocalApps, listLocalAppsCountries } from "@/lib/spine/sections/local_apps";
+import { buildMarketHold, buildJobMarket, listMarketCountries, listJobCountries } from "@/lib/spine/sections/market_jobs";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "@/components/spine/cell/turn-one";
 import { ClearsCard, LastsCard, WatchSeat, MixCard } from "@/components/spine/cell/turn-two";
@@ -2372,6 +2381,87 @@ export function pickHoodCloseInstances(): Instance[] {
   return hoodHandles().filter((h) => hoodServes(h, "close")).map((h) => ({ h, d: buildHoodCloseDoors(HOOD_INSTANCES[h].city, HOOD_INSTANCES[h].focus) })).filter((x) => x.d.length > 0).map(({ h, d }) => ({ iso2: hoodKey(h, "close"), why: `hood block 06${HOOD_INSTANCES[h].focus ? "" : " on the hub"}: ${d.length} doors, ${d.map((x) => x.label).join("; ")}, the pill last` }));
 }
 
+/** THE KIT TO OPEN AT FOUR BUDGETS (sections/StockTiers.tsx, 2026-09-25; his "cheap, medium, premium, luxury ... 3 chairs of
+ *  different kinds"): every country and trade the kit file holds, keyed <iso2>:<trade>, each drawn at its seat's full width, the
+ *  table from 720px of card and the switch under it. Page-agnostic, so no page seats it yet; he decides where. */
+export const stockKey = (iso2: string, trade: string) => `${iso2}:${trade}`;
+export function pickStockTiersInstances(): Instance[] {
+  return listStockKits().filter((k) => buildStockKit(k.iso2, k.trade)).map((k) => ({ iso2: stockKey(k.iso2, k.trade), why: `the ${k.trade} kit, four budgets, named products` }));
+}
+export function StockTiersStories() {
+  return (
+    <div data-stories="stock-tiers">
+      {listStockKits().map((k) => {
+        const kit = buildStockKit(k.iso2, k.trade);
+        return kit ? (
+          <Story kind="stock-tiers" key={stockKey(k.iso2, k.trade)} iso2={stockKey(k.iso2, k.trade)} why={`the ${k.trade} kit, four budgets, named products`}>
+            <StockTiers id={`stock-${k.iso2.toLowerCase()}-${k.trade}`} kit={kit} />
+          </Story>
+        ) : null;
+      })}
+    </div>
+  );
+}
+
+/** THE OTHER PAGE-AGNOSTIC SECTIONS OF 2026-09-25 (sections/*.tsx), one story a country the section's file holds, each at a full
+ *  card's width: who is still trading and what gets in the way, the apps a shop runs on, who holds the market, the job market. */
+export function pickSurvivalInstances(): Instance[] {
+  return listSurvivalCountries().filter((c) => buildSurvival(c)).map((c) => ({ iso2: c, why: "one cohort's years, the regions, the obstacles" }));
+}
+export function SurvivalCurveStories() {
+  return (
+    <div data-stories="survival-curve">
+      {pickSurvivalInstances().map((i) => (
+        <Story kind="survival-curve" key={i.iso2} iso2={i.iso2} why={i.why}>
+          <FirstYears id={`first-years-${i.iso2.toLowerCase()}`} data={buildSurvival(i.iso2)!} obstacles={buildObstacles(i.iso2)} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+export function pickLocalAppsInstances(): Instance[] {
+  return listLocalAppsCountries().filter((c) => buildLocalApps(c)).map((c) => ({ iso2: c, why: "the apps by job, the country's own first" }));
+}
+export function LocalAppsStories() {
+  return (
+    <div data-stories="local-apps">
+      {pickLocalAppsInstances().map((i) => (
+        <Story kind="local-apps" key={i.iso2} iso2={i.iso2} why={i.why}>
+          <LocalApps id={`local-apps-${i.iso2.toLowerCase()}`} data={buildLocalApps(i.iso2)!} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+export function pickMarketHoldInstances(): Instance[] {
+  return listMarketCountries().filter((c) => buildMarketHold(c)).map((c) => ({ iso2: c, why: "the grocery market, the biggest chains' share" }));
+}
+export function MarketHoldStories() {
+  return (
+    <div data-stories="market-hold">
+      {pickMarketHoldInstances().map((i) => (
+        <Story kind="market-hold" key={i.iso2} iso2={i.iso2} why={i.why}>
+          <MarketHold id={`market-hold-${i.iso2.toLowerCase()}`} data={buildMarketHold(i.iso2)!} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+export function pickJobMarketInstances(): Instance[] {
+  return listJobCountries().filter((c) => buildJobMarket(c)).map((c) => ({ iso2: c, why: "the rates on one scale, the trade's sector" }));
+}
+export function JobMarketStories() {
+  return (
+    <div data-stories="job-market">
+      {pickJobMarketInstances().map((i) => (
+        <Story kind="job-market" key={i.iso2} iso2={i.iso2} why={i.why}>
+          <JobMarket id={`job-market-${i.iso2.toLowerCase()}`} data={buildJobMarket(i.iso2)!} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+
 export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHeroInstance[] = [], industryPlaces: IndustryPlacesInstance[] = []): Record<string, Instance[]> {
   const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
@@ -2403,6 +2493,11 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "mark-list": [...pickMarkListInstances(), ...pickCellRivalsInstances(cellHero, "mark-list"), ...pickIndustryFormatsInstances(), ...pickHoodPremiumInstances(), ...pickCityCrewInstances()],
     "blocked-seat": pickBlockedSeatInstances(industryPlaces),
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
+    "stock-tiers": pickStockTiersInstances(),
+    "survival-curve": pickSurvivalInstances(),
+    "local-apps": pickLocalAppsInstances(),
+    "market-hold": pickMarketHoldInstances(),
+    "job-market": pickJobMarketInstances(),
   };
 }
 

@@ -1,0 +1,51 @@
+{
+  "_about": "Who holds a market, by country and market (his message of 2026-09-25: \"how dominated by big brands a market is\"). Shares as published for one period; the rest is 100 less the named shares, computed and marked so. Research: design/loop/build/research/2026-09-25-R5-accounting-market-jobs-GB.md.",
+  "GB": {
+    "grocery": {
+      "period": "12 weeks to 6 September 2026",
+      "parts": [
+        {
+          "key": "tesco",
+          "name": "Tesco",
+          "pct": 27.8,
+          "big": true
+        },
+        {
+          "key": "sainsburys",
+          "name": "Sainsbury's",
+          "pct": 15.2,
+          "big": true
+        },
+        {
+          "key": "asda",
+          "name": "Asda",
+          "pct": 11.5,
+          "big": true
+        },
+        {
+          "key": "morrisons",
+          "name": "Morrisons",
+          "pct": 8.4,
+          "big": true
+        },
+        {
+          "key": "aldi",
+          "name": "Aldi",
+          "pct": 10.6
+        },
+        {
+          "key": "lidl",
+          "name": "Lidl",
+          "pct": 8.7
+        }
+      ],
+      "rest": {
+        "computed": true
+      },
+      "source": {
+        "publisher": "Worldpanel by Numerator (formerly Kantar), grocery market share",
+        "url": "https://www.worldpanelbynumerator.com/"
+      }
+    }
+  }
+}

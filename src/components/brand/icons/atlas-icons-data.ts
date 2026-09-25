@@ -112,7 +112,29 @@ export type AtlasIconId =
   | "trade-nails"
   | "trade-cleaning"
   | "trade-laundry"
-  | "trade-food-truck";
+  | "trade-food-truck"
+  /* THE KIT (2026-09-25, his "3 machines of different kinds or 3 chairs of different kinds"): one glyph a piece of a trade's opening kit, for the stock section's rows. */
+  | "kit-chair"
+  | "kit-clipper"
+  | "kit-trimmer"
+  | "kit-shaver"
+  | "kit-mirror"
+  | "kit-basin"
+  | "kit-towel"
+  | "kit-jar"
+  | "kit-cape"
+  | "kit-desk"
+  | "kit-espresso"
+  | "kit-grinder"
+  | "kit-filter"
+  | "kit-fridge"
+  | "kit-display"
+  | "kit-dishwasher"
+  | "kit-brewer"
+  | "kit-blender"
+  | "kit-seat"
+  | "kit-table"
+  | "kit-cup";
 
 export interface AtlasIconDef {
   id: AtlasIconId;
@@ -817,6 +839,153 @@ export const atlasIcons: AtlasIconDef[] = [
     label: "Food truck",
     blurb: "A food truck or street stall.",
     body: `<path d="M4.5 22V10.5a1 1 0 0 1 1-1h13v12.5"/><path d="M18.5 13.5h4.3l4.2 4.5V22h-1.5"/><path d="M10 22h6.5"/><circle cx="7.5" cy="22.5" r="2.2"/><circle cx="19" cy="22.5" r="2.2"/><path class="a" d="M8 14h7"/>`,
+  },
+  {
+    id: "kit-chair",
+    group: "industry",
+    label: "Barber chair",
+    blurb: "A hydraulic barber chair.",
+    body: `<path d="M9.5 5.5h3a1.5 1.5 0 0 1 1.5 1.5v9.5H8V7a1.5 1.5 0 0 1 1.5-1.5z"/><path d="M8 16.5h13.5a1.5 1.5 0 0 1 0 3H8z"/><path d="M14 12h6.5"/><path d="M21.5 19.5l3 4h2"/><path d="M14.5 19.5v5"/><path class="a" d="M10 26h9"/>`,
+  },
+  {
+    id: "kit-clipper",
+    group: "industry",
+    label: "Clippers",
+    blurb: "Hair clippers.",
+    body: `<rect class="a" x="10.5" y="5.5" width="11" height="4.5" rx="1"/><path d="M11 10h10v11.5a5 5 0 0 1-10 0z"/><path d="M16 14.5v3"/>`,
+  },
+  {
+    id: "kit-trimmer",
+    group: "industry",
+    label: "Trimmer",
+    blurb: "A trimmer for outlines.",
+    body: `<rect class="a" x="12" y="6" width="8" height="4" rx="1"/><path d="M13 10h6v12.5a3 3 0 0 1-6 0z"/><path d="M16 14v2.5"/>`,
+  },
+  {
+    id: "kit-shaver",
+    group: "industry",
+    label: "Foil shaver",
+    blurb: "A foil shaver.",
+    body: `<rect x="10" y="5.5" width="12" height="7.5" rx="3.5"/><path class="a" d="M12.5 9.25h7"/><path d="M11.5 13h9v10.5a3 3 0 0 1-3 3h-3a3 3 0 0 1-3-3z"/><path d="M16 17v3"/>`,
+  },
+  {
+    id: "kit-mirror",
+    group: "industry",
+    label: "Station",
+    blurb: "A mirror and station.",
+    body: `<rect x="9" y="4.5" width="14" height="15" rx="7"/><path class="a" d="M12.5 10l2.5-2"/><path d="M6.5 22h19"/><path d="M9 22v5M23 22v5"/>`,
+  },
+  {
+    id: "kit-basin",
+    group: "industry",
+    label: "Backwash",
+    blurb: "A backwash basin.",
+    body: `<path d="M6 14h20c0 5-4.5 8.5-10 8.5S6 19 6 14z"/><path class="a" d="M13 14a3 3 0 0 0 6 0"/><path d="M20.5 14V8.5H24v2"/><path d="M16 22.5v4M12 26.5h8"/>`,
+  },
+  {
+    id: "kit-towel",
+    group: "industry",
+    label: "Towel warmer",
+    blurb: "A hot towel cabinet.",
+    body: `<rect x="7" y="9" width="18" height="16" rx="2.5"/><rect x="10" y="12" width="12" height="7" rx="1.5"/><path class="a" d="M12.5 15.5h7"/><path d="M13 6.5c0-1 1-1 1-2M18 6.5c0-1 1-1 1-2"/><path d="M16 21.5v1"/>`,
+  },
+  {
+    id: "kit-jar",
+    group: "industry",
+    label: "Steriliser",
+    blurb: "A steriliser.",
+    body: `<path d="M9 9.5h14M11 9.5V7h10v2.5"/><path d="M10 9.5h12v14a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3z"/><path class="a" d="M14 13v9M18 13v9"/>`,
+  },
+  {
+    id: "kit-cape",
+    group: "industry",
+    label: "Cape",
+    blurb: "A cutting cape.",
+    body: `<path d="M12.5 8h7l6 18h-19z"/><path class="a" d="M12.5 8c1 2 6 2 7 0"/>`,
+  },
+  {
+    id: "kit-desk",
+    group: "industry",
+    label: "Reception desk",
+    blurb: "A reception desk.",
+    body: `<path d="M4.5 12.5h23"/><path d="M6.5 12.5v14h19v-14"/><path d="M6.5 18.5h19"/><path class="a" d="M12.5 10.5a3.5 3.5 0 0 1 7 0"/>`,
+  },
+  {
+    id: "kit-espresso",
+    group: "industry",
+    label: "Espresso machine",
+    blurb: "An espresso machine.",
+    body: `<rect x="5.5" y="6" width="21" height="11" rx="2"/><circle cx="16" cy="11.5" r="2.5"/><path d="M11 17v2.5M21 17v2.5"/><path d="M5.5 26h21"/><path class="a" d="M9.5 22h3v2.5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1z"/>`,
+  },
+  {
+    id: "kit-grinder",
+    group: "industry",
+    label: "Grinder",
+    blurb: "A coffee grinder.",
+    body: `<path d="M10 5h12l-3.5 7.5h-5z"/><rect x="11" y="12.5" width="10" height="10.5" rx="2"/><path class="a" d="M16 16.5v3"/><path d="M16 23v3M8.5 26h15"/>`,
+  },
+  {
+    id: "kit-filter",
+    group: "industry",
+    label: "Water filter",
+    blurb: "A water filter.",
+    body: `<rect x="11" y="9" width="10" height="17.5" rx="3"/><path d="M12.5 9V6h7v3"/><path class="af" d="M16 13.5c-1.6 2.2-2.6 3.4-2.6 4.8a2.6 2.6 0 0 0 5.2 0c0-1.4-1-2.6-2.6-4.8z"/>`,
+  },
+  {
+    id: "kit-fridge",
+    group: "industry",
+    label: "Fridge",
+    blurb: "A fridge.",
+    body: `<rect x="9" y="4.5" width="14" height="23" rx="2"/><path d="M9 12h14"/><path class="a" d="M12 7v2.5M12 15v4"/>`,
+  },
+  {
+    id: "kit-display",
+    group: "industry",
+    label: "Display chiller",
+    blurb: "A chilled display case.",
+    body: `<path d="M5.5 13h21v13h-21z"/><path d="M5.5 13c0-4 3.5-7 7.5-7h6c4 0 7.5 3 7.5 7"/><path class="a" d="M8.5 19h15"/>`,
+  },
+  {
+    id: "kit-dishwasher",
+    group: "industry",
+    label: "Dishwasher",
+    blurb: "A dishwasher.",
+    body: `<rect x="7" y="5.5" width="18" height="21" rx="2"/><path d="M7 10.5h18"/><circle cx="16" cy="18.5" r="4.5"/><path class="a" d="M11 8h3"/>`,
+  },
+  {
+    id: "kit-brewer",
+    group: "industry",
+    label: "Batch brewer",
+    blurb: "A batch coffee brewer.",
+    body: `<path d="M8 5.5h16v5H8z"/><path d="M21 10.5V26"/><path d="M10 16h8l-1 8.5h-6z"/><path class="a" d="M11 21h6"/><path d="M7.5 26.5h17"/>`,
+  },
+  {
+    id: "kit-blender",
+    group: "industry",
+    label: "Blender",
+    blurb: "A blender.",
+    body: `<path d="M10.5 5h11L20 17.5h-8z"/><rect x="10" y="17.5" width="12" height="8.5" rx="2"/><path class="a" d="M13.5 14l5-2"/><circle cx="16" cy="22" r="1.5"/>`,
+  },
+  {
+    id: "kit-seat",
+    group: "industry",
+    label: "Chair",
+    blurb: "A cafe chair.",
+    body: `<path d="M10.5 5.5V26"/><path d="M21.5 16.5V26"/><path d="M10.5 9.5h5"/><path class="a" d="M10.5 16.5h11"/>`,
+  },
+  {
+    id: "kit-table",
+    group: "industry",
+    label: "Table",
+    blurb: "A cafe table.",
+    body: `<path class="a" d="M5.5 11.5h21"/><path d="M16 11.5v13.5"/><path d="M11 25h10"/>`,
+  },
+  {
+    id: "kit-cup",
+    group: "industry",
+    label: "Cups",
+    blurb: "A cup and saucer.",
+    body: `<path d="M8 10.5h13V17a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z"/><path d="M21 12.5h1.5a2.5 2.5 0 0 1 0 5H21"/><path class="a" d="M5.5 26h19"/>`,
   },
 ];
 

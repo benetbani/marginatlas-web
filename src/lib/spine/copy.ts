@@ -641,6 +641,58 @@ export const COPY = {
     money: "Red tape, borrowing and getting paid",
     open: "What to open, and where",
   },
+  /** THE KIT TO OPEN, AT FOUR BUDGETS (sections/StockTiers.tsx, 2026-09-25; his "cheap, medium, premium, luxury ... 3 chairs of
+   *  different kinds"). Labels, never sentences; the one line under the span names the shop and the VAT, nothing else. */
+  stock: {
+    kicker: "Kit to open",
+    spanWords: "the kit for {shop}, before VAT",
+    spanJoin: "to",
+    tiers: { budget: "Budget", mid: "Mid-range", premium: "Premium", luxury: "Luxury" },
+    pick: "Budget",
+    cats: {
+      chair: "Chairs", clippers: "Clippers", trimmer: "Trimmers", foil_shaver: "Shavers", station: "Stations", backwash: "Backwash",
+      hot_towel_cabinet: "Towel warmer", steriliser: "Steriliser", scissors: "Scissors", cape: "Capes", card_reader: "Card reader",
+      "card-reader": "Card reader", reception_desk: "Reception desk", "espresso-machine": "Espresso machine", grinder: "Grinders",
+      "water-filter": "Water filter", "undercounter-fridge": "Fridges", "display-chiller": "Display chiller", dishwasher: "Dishwasher",
+      "batch-brewer": "Batch brewer", blender: "Blender", chairs: "Chairs", tables: "Tables", crockery: "Cups and saucers",
+    } as Record<string, string>,
+  },
+  /** WHO MAKES IT PAST THE FIRST YEARS, AND WHAT HOLDS SMALL FIRMS BACK (sections/FirstYears.tsx, Obstacles.tsx, 2026-09-25). */
+  firstYears: {
+    kicker: "Who is still trading",
+    focalWords: "of new firms still trading after {n} years",
+    start: "Start",
+    year: "Year {n}",
+    regions: "By region, year {n}",
+    obstaclesKicker: "What holds small firms back",
+    obstaclesWords: "of small employers call {item} a major obstacle",
+    obstacles: {
+      tax: "Tax", energy: "Energy prices", "red-tape": "Red tape", competition: "Competition", staff: "Finding staff",
+      "late-payment": "Late payment", premises: "Premises", finance: "Getting finance",
+    } as Record<string, string>,
+  },
+  /** THE APPS A SHOP RUNS ON (sections/LocalApps.tsx, 2026-09-25). The fee's unit as a symbol after the figure, never a phrase. */
+  localApps: {
+    kicker: "The apps a shop runs on",
+    jobs: { bookings: "Bookings", payments: "Card payments", accounts: "Accounts", banking: "Banking", payroll: "Payroll", reviews: "Reviews", hiring: "Hiring" } as Record<string, string>,
+    fee: { free: "Free", perSale: "/sale", perNewClient: "/new client", perMonth: "/mo", perYear: "/yr", perAd: "/ad" },
+  },
+  /** WHO HOLDS THE MARKET (sections/MarketHold.tsx, 2026-09-25). */
+  marketHold: {
+    kicker: "Who holds the market",
+    markets: { grocery: "groceries" } as Record<string, string>,
+    focalWords: "of {market} sold by the {n} biggest chains",
+    rest: "Everyone else",
+  },
+  /** THE JOB MARKET (sections/JobMarket.tsx, 2026-09-25). */
+  jobMarket: {
+    kicker: "The job market",
+    focalWords: "out of work and looking",
+    rates: { all: "Everyone", youth: "Aged 16 to 24" } as Record<string, string>,
+    sectors: { hospitality: "Hospitality" } as Record<string, string>,
+    vacancies: "vacancies per 100 jobs",
+    payroll: "staff on payroll, a year on",
+  },
   /** THE COUNTRY PAGE'S NEW SECTIONS (country_depth_rows.ts, 2026-09-25). Labels the same on every country; a note is the one short
    *  line that says what the figure is, never a method line. */
   employment: {

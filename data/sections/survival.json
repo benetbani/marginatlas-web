@@ -1,0 +1,92 @@
+{
+  "_about": "Who makes it past the first years, by country (his message of 2026-09-25: \"Decisive factors that decide whether a business survives the 1st year\"). `curve` is ONE cohort followed year by year, never years of different cohorts stitched together; `regions` the best and worst region on the curve's last year; `obstacles` what small employers name as a major obstacle, one survey, one year. Research: design/loop/build/research/2026-09-25-R3-survival-top-GB.md.",
+  "GB": {
+    "curve": {
+      "cohort": 2019,
+      "points": [
+        {
+          "year": 1,
+          "pct": 94.6
+        },
+        {
+          "year": 2,
+          "pct": 74.7
+        },
+        {
+          "year": 3,
+          "pct": 55.9
+        },
+        {
+          "year": 4,
+          "pct": 45.0
+        },
+        {
+          "year": 5,
+          "pct": 38.4
+        }
+      ],
+      "source": {
+        "publisher": "ONS, Business demography UK 2024 (released 20 Nov 2025); years 1 to 4 as quoted from the same release by whito.co.uk",
+        "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/bulletins/businessdemography/2024",
+        "quote": "The five-year survival rate for UK businesses born in 2019 is 38.4%"
+      }
+    },
+    "regions": {
+      "year": 5,
+      "best": {
+        "name": "South West",
+        "pct": 43.5
+      },
+      "worst": {
+        "name": "West Midlands",
+        "pct": 30.6
+      },
+      "source": {
+        "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/bulletins/businessdemography/2024",
+        "quote": "The region with the highest five-year survival rate was the South West, at 43.5%."
+      }
+    },
+    "obstacles": {
+      "who": "small employers",
+      "year": 2024,
+      "items": [
+        {
+          "key": "tax",
+          "pct": 61
+        },
+        {
+          "key": "energy",
+          "pct": 50
+        },
+        {
+          "key": "red-tape",
+          "pct": 44
+        },
+        {
+          "key": "competition",
+          "pct": 40
+        },
+        {
+          "key": "staff",
+          "pct": 37
+        },
+        {
+          "key": "late-payment",
+          "pct": 26
+        },
+        {
+          "key": "premises",
+          "pct": 17
+        },
+        {
+          "key": "finance",
+          "pct": 16
+        }
+      ],
+      "source": {
+        "publisher": "Department for Business and Trade, Longitudinal Small Business Survey 2024 (published September 2025)",
+        "url": "https://gov.uk/government/statistics/small-business-survey-2024-businesses-with-employees/longitudinal-small-business-survey-2024-sme-employers-businesses-with-1-to-249-employees"
+      }
+    }
+  }
+}

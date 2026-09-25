@@ -34,7 +34,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, StepperStories, SegmentBarStories, MonthBarsStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
+import { StockTiersStories, SurvivalCurveStories, LocalAppsStories, MarketHoldStories, JobMarketStories, AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, StepperStories, SegmentBarStories, MonthBarsStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
 import { CELL_INSTANCES, loadCellHeroInstances, type CellHeroInstance } from "../../src/lib/spine/trade_hero_facts";
@@ -149,6 +149,13 @@ const SHEET: Entry[] = [
   { kind: "mark-list", city: "none", cell: "keyed", render: (c) => <MarkListStories instances={c.instances["mark-list"]} cell={c.cellHero} /> },
   { kind: "blocked-seat", city: "none", industry: "places", render: (c) => <BlockedSeatStories instances={c.instances["blocked-seat"]} industry={c.industryPlaces} /> },
   { kind: "city-hero", city: "keyed", render: (c) => <CityHeroStories instances={c.cityHero} /> },
+  /* THE NEW SECTIONS OF 2026-09-25, page-agnostic (his message that night: "Create all these sections page agnostically, we will
+     decide later where to put them"): each drawn at a full card's width over the data file its builder reads. */
+  { kind: "stock-tiers", city: "none", render: () => <StockTiersStories /> },
+  { kind: "survival-curve", city: "none", render: () => <SurvivalCurveStories /> },
+  { kind: "local-apps", city: "none", render: () => <LocalAppsStories /> },
+  { kind: "market-hold", city: "none", render: () => <MarketHoldStories /> },
+  { kind: "job-market", city: "none", render: () => <JobMarketStories /> },
   /* "city-verdict" left the sheet on plan step 32 (2026-09-18): MODEL.md 8.3 dissolves the rent verdict into the masthead's answer. */
 ];
 function shell(body: string): string {

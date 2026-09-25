@@ -1,0 +1,1103 @@
+{
+  "_about": "The kit to open a trade at four budgets, by country and trade (his message of 2026-09-25: \"The cost to stock the business should be multiple option one, cheap, medium, premium, luxury but with activity based specifics\"). Every line is a named product on a supplier's own page in that country, priced BEFORE VAT on the day read (a price read with VAT is divided by 1.2); a category counts only when all four budgets hold it, so the totals compare like for like; a category bought in two parts is one line with its parts summed; consumables are left out. The research notes, with each page's quote, are in the design repository: design/loop/build/research/2026-09-25-R1-stock-barbershop-GB.md and 2026-09-25-R1b-stock-cafe-GB.md.",
+  "GB": {
+    "barbershops": {
+      "shop": "3 chairs",
+      "read_on": "2026-09-25",
+      "currency": "GBP",
+      "vat": "excluded",
+      "dropped": [
+        "waiting_seating"
+      ],
+      "tiers": {
+        "budget": [
+          {
+            "cat": "chair",
+            "qty": 3,
+            "name": "Lotus Marco Polo",
+            "total_gbp": 1107.0,
+            "brand": "Lotus",
+            "model": "Lotus Marco Polo Barber Chair",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-marco-polo-barber-chair"
+            ]
+          },
+          {
+            "cat": "clippers",
+            "qty": 3,
+            "name": "Wahl Super Taper",
+            "total_gbp": 269.97,
+            "brand": "Wahl",
+            "model": "WAHL Rechargeable Super Taper Cordless Hair Clipper Kit",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/clippers/wahl-rechargeable-super-taper-cordless-hair-clipper-kit/147698.html"
+            ]
+          },
+          {
+            "cat": "trimmer",
+            "qty": 3,
+            "name": "Wahl Hero",
+            "total_gbp": 191.97,
+            "brand": "Wahl",
+            "model": "WAHL Hero T Blade Corded Trimmer Kit",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/trimmers/wahl-hero-t-blade-corded-trimmer-kit/156958.html"
+            ]
+          },
+          {
+            "cat": "foil_shaver",
+            "qty": 3,
+            "name": "Andis Profoil",
+            "total_gbp": 168.0,
+            "brand": "Andis",
+            "model": "Andis Profoil Lithium Titanium Foil Shaver",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/trimmers/andis-profoil-lithium-titanium-foil-shaver/817541.html"
+            ]
+          },
+          {
+            "cat": "station",
+            "qty": 3,
+            "name": "Lotus Degas",
+            "total_gbp": 687.0,
+            "brand": "Lotus",
+            "model": "Lotus Degas Silver Mirror Unit",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-degas-silver-mirror-unit"
+            ]
+          },
+          {
+            "cat": "backwash",
+            "qty": 1,
+            "name": "Lotus Oslo",
+            "total_gbp": 469.0,
+            "brand": "Lotus",
+            "model": "Lotus Oslo Black Backwash Complete",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-rosy-black-backwash"
+            ]
+          },
+          {
+            "cat": "hot_towel_cabinet",
+            "qty": 1,
+            "name": "Lotus UV warmer",
+            "total_gbp": 99.0,
+            "brand": "Lotus",
+            "model": "Lotus UV Towel Warmer Small Black",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-uv-towel-warmer-small-black"
+            ]
+          },
+          {
+            "cat": "steriliser",
+            "qty": 1,
+            "name": "Barbicide jar",
+            "total_gbp": 29.99,
+            "brand": "Barbicide",
+            "model": "Barbicide Large Disinfectant Jar 1 Litre",
+            "urls": [
+              "https://www.salon-services.com/hair/hairdressing-essentials-and-accessories/barbicide-and-salon-hygiene/barbicide-large-disinfectant-jar-1-litre/195570.html"
+            ]
+          },
+          {
+            "cat": "scissors",
+            "qty": 3,
+            "name": "Jaguar Pre Style",
+            "total_gbp": 124.95,
+            "brand": "Jaguar",
+            "model": "Jaguar Pre Style Ergo 6in Satin Scissor",
+            "urls": [
+              "https://www.salonsdirect.com/products/jaguar-pre-style-ergo-6in-satin-scissor"
+            ]
+          },
+          {
+            "cat": "cape",
+            "qty": 6,
+            "name": "Lotus pole cape",
+            "total_gbp": 27.6,
+            "brand": "Lotus",
+            "model": "Lotus Barber Cape With Barber Pole Trim",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-barber-cape-with-barber-pole-trim"
+            ]
+          },
+          {
+            "cat": "card_reader",
+            "qty": 1,
+            "name": "SumUp Solo Lite",
+            "total_gbp": 15.0,
+            "brand": "SumUp",
+            "model": "SumUp Solo Lite card reader",
+            "urls": [
+              "https://www.sumup.com/en-gb/card-readers/"
+            ]
+          },
+          {
+            "cat": "reception_desk",
+            "qty": 1,
+            "name": "REM Keystone",
+            "total_gbp": 345.0,
+            "brand": "REM",
+            "model": "REM Keystone Reception Desk",
+            "urls": [
+              "https://www.salonsdirect.com/products/rem-keystone-reception-desk"
+            ]
+          }
+        ],
+        "mid": [
+          {
+            "cat": "chair",
+            "qty": 3,
+            "name": "REM Emperor",
+            "total_gbp": 3327.0,
+            "brand": "REM",
+            "model": "REM Emperor Barber Chair Black Only",
+            "urls": [
+              "https://www.salonsdirect.com/products/rem-emperor-barber-chair-black-only"
+            ]
+          },
+          {
+            "cat": "clippers",
+            "qty": 3,
+            "name": "Wahl Magic Clip",
+            "total_gbp": 338.97,
+            "brand": "Wahl",
+            "model": "WAHL 5 Star Magic Clip Cordless Hair Clipper Kit",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/clippers/wahl-5-star-magic-clip-cordless-hair-clipper-kit/161790.html"
+            ]
+          },
+          {
+            "cat": "trimmer",
+            "qty": 3,
+            "name": "Wahl Detailer",
+            "total_gbp": 285.72,
+            "brand": "Wahl",
+            "model": "WAHL 5 Star Detailer Cordless Trimmer Kit (Detailer Li)",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/trimmers/wahl-5-star-detailer-cordless-trimmer-kit/547704.html"
+            ]
+          },
+          {
+            "cat": "foil_shaver",
+            "qty": 3,
+            "name": "Wahl Vanish",
+            "total_gbp": 206.97,
+            "brand": "Wahl",
+            "model": "WAHL Vanish Shaver 8173-830",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/clippers/wahl-vanish-shaver-8173-830/818530.html"
+            ]
+          },
+          {
+            "cat": "station",
+            "qty": 3,
+            "name": "Salons Direct Vincent",
+            "total_gbp": 2697.0,
+            "brand": "Salons Direct",
+            "model": "Salons Direct Vincent Barber Unit",
+            "urls": [
+              "https://www.salonsdirect.com/products/vincent-barber-unit"
+            ]
+          },
+          {
+            "cat": "backwash",
+            "qty": 1,
+            "name": "REM Marina",
+            "total_gbp": 1145.0,
+            "brand": "REM",
+            "model": "REM Marina Std Wash Unit Without Leg Rest",
+            "urls": [
+              "https://www.salonsdirect.com/products/rem-marina-std-wash-unit-without-leg-rest"
+            ]
+          },
+          {
+            "cat": "hot_towel_cabinet",
+            "qty": 1,
+            "name": "Lotus UV warmer, large",
+            "total_gbp": 129.0,
+            "brand": "Lotus",
+            "model": "Lotus UV Towel Warmer Large Black",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-uv-towel-warmer-large-black"
+            ]
+          },
+          {
+            "cat": "steriliser",
+            "qty": 1,
+            "name": "Lotus UV cabinet",
+            "total_gbp": 59.0,
+            "brand": "Lotus",
+            "model": "Lotus UV Steriliser",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-uv-steriliser"
+            ]
+          },
+          {
+            "cat": "scissors",
+            "qty": 3,
+            "name": "Yasaka Offset",
+            "total_gbp": 285.0,
+            "brand": "Yasaka",
+            "model": "Yasaka Design Cut Offset 6in Scissor",
+            "urls": [
+              "https://www.salonsdirect.com/products/yasaka-design-cut-offset-6in-scissor"
+            ]
+          },
+          {
+            "cat": "cape",
+            "qty": 6,
+            "name": "Wahl pinstripe cape",
+            "total_gbp": 83.7,
+            "brand": "Wahl",
+            "model": "WAHL Barber Cape Pinstripe Cape",
+            "urls": [
+              "https://www.salonsdirect.com/products/wahl-barber-cape-pinstripe-cape"
+            ]
+          },
+          {
+            "cat": "card_reader",
+            "qty": 1,
+            "name": "PayPal Reader",
+            "total_gbp": 29.0,
+            "brand": "PayPal (Zettle)",
+            "model": "PayPal Reader, formerly Zettle",
+            "urls": [
+              "https://www.zettle.com/gb/card-reader"
+            ]
+          },
+          {
+            "cat": "reception_desk",
+            "qty": 1,
+            "name": "Lotus Aura",
+            "total_gbp": 499.0,
+            "brand": "Lotus",
+            "model": "Lotus Aura Oak Reception Desk",
+            "urls": [
+              "https://www.salonsdirect.com/products/lotus-aura-oak-reception-desk"
+            ]
+          }
+        ],
+        "premium": [
+          {
+            "cat": "chair",
+            "qty": 3,
+            "name": "Takara Belmont Apollo 2",
+            "total_gbp": 6717.0,
+            "brand": "Takara Belmont",
+            "model": "Takara Belmont Apollo 2 Barber Chair",
+            "urls": [
+              "https://www.salonsdirect.com/products/takara-belmont-apollo-2-barber-chair"
+            ]
+          },
+          {
+            "cat": "clippers",
+            "qty": 3,
+            "name": "BaBylissPRO FXONE",
+            "total_gbp": 525.0,
+            "brand": "BaByliss PRO",
+            "model": "BaByliss PRO FXONE All-Metal Gold Clipper",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/clippers/babyliss-pro-fxone-all-metal-gold-clipper/856086.html"
+            ]
+          },
+          {
+            "cat": "trimmer",
+            "qty": 3,
+            "name": "BaBylissPRO FXONE Skeleton",
+            "total_gbp": 495.0,
+            "brand": "BaByliss PRO",
+            "model": "BaByliss PRO FXONE All-Metal Gold Skeleton Trimmer",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/trimmers/babyliss-pro-fxone-all-metal-gold-skeleton-trimmer/856088.html"
+            ]
+          },
+          {
+            "cat": "foil_shaver",
+            "qty": 3,
+            "name": "BaBylissPRO FXONE Shaver",
+            "total_gbp": 420.0,
+            "brand": "BaByliss PRO",
+            "model": "BaByliss PRO FXONE All-Metal Matte Black Shaver",
+            "urls": [
+              "https://www.salon-services.com/hair/hair-electricals/hair-clippers-and-trimmers/clippers/babyliss-pro-fxone-all-metal-matte-black-shaver/856091.html"
+            ]
+          },
+          {
+            "cat": "station",
+            "qty": 3,
+            "name": "REM Montana",
+            "total_gbp": 3177.0,
+            "brand": "REM",
+            "model": "REM Montana Barber Unit without Basin",
+            "urls": [
+              "https://www.salonsdirect.com/products/rem-montana-barber-unit-without-basin"
+            ]
+          },
+          {
+            "cat": "backwash",
+            "qty": 1,
+            "name": "Takara Belmont Adria II",
+            "total_gbp": 2819.0,
+            "brand": "Takara Belmont",
+            "model": "Takara Belmont RS Adria II Wash Unit",
+            "urls": [
+              "https://www.salonsdirect.com/products/takara-belmont-rs-adria-ii-wash-unit"
+            ]
+          },
+          {
+            "cat": "hot_towel_cabinet",
+            "qty": 1,
+            "name": "Crewe Orlando warmer",
+            "total_gbp": 147.2,
+            "brand": "Crewe Orlando",
+            "model": "Crewe Orlando Towel Warmer, Small, in Black",
+            "urls": [
+              "https://www.salon-services.com/furniture-and-equipment/accessories-and-furnishings/salon-accessories/crewe-orlando-towel-warmer%2C-small%2C-in-black/547722.html"
+            ]
+          },
+          {
+            "cat": "steriliser",
+            "qty": 1,
+            "name": "Crewe Orlando Sirius",
+            "total_gbp": 77.0,
+            "brand": "Crewe Orlando",
+            "model": "Crewe Orlando Sirius UV Steriliser, Silver",
+            "urls": [
+              "https://www.salon-services.com/furniture-and-equipment/accessories-and-furnishings/salon-accessories/crewe-orlando-sirius-uv-steriliser%2C-silver/547728.html"
+            ]
+          },
+          {
+            "cat": "scissors",
+            "qty": 3,
+            "name": "Joewell New Era",
+            "total_gbp": 507.0,
+            "brand": "Joewell",
+            "model": "Joewell New Era 6 inch Scissors",
+            "urls": [
+              "https://www.salonsdirect.com/products/joewell-new-era-6-inch-scissors"
+            ]
+          },
+          {
+            "cat": "cape",
+            "qty": 6,
+            "name": "Neocape Unigown",
+            "total_gbp": 189.6,
+            "brand": "Neocape",
+            "model": "Neocape Long Unigown Black Pinstripe",
+            "urls": [
+              "https://www.salonsdirect.com/products/neocape-long-unigown-black-pinstripe"
+            ]
+          },
+          {
+            "cat": "card_reader",
+            "qty": 1,
+            "name": "Square Terminal",
+            "total_gbp": 149.0,
+            "brand": "Square",
+            "model": "Square Terminal",
+            "urls": [
+              "https://squareup.com/gb/en/hardware/terminal"
+            ]
+          },
+          {
+            "cat": "reception_desk",
+            "qty": 1,
+            "name": "REM Saturn",
+            "total_gbp": 799.0,
+            "brand": "REM",
+            "model": "REM Saturn Reception Desk (122 x 92 x 106cm)",
+            "urls": [
+              "https://www.salonsdirect.com/products/rem-saturn-reception-desk-122-x-92-x-106cm"
+            ]
+          }
+        ],
+        "luxury": [
+          {
+            "cat": "chair",
+            "qty": 3,
+            "name": "Takara Belmont Legacy 95",
+            "total_gbp": 9897.0,
+            "brand": "Takara Belmont",
+            "model": "Takara Belmont Legacy 95 Barber Chair",
+            "urls": [
+              "https://www.salonsdirect.com/products/takara-belmont-legacy-95-barber-chair"
+            ]
+          },
+          {
+            "cat": "clippers",
+            "qty": 3,
+            "name": "StyleCraft Saber 2.0",
+            "total_gbp": 669.24,
+            "brand": "StyleCraft (Gamma+)",
+            "model": "Stylecraft Saber 2.0 Clipper Black",
+            "urls": [
+              "https://barbertemple.co.uk/products/stylecraft-saber-2-0-clipper-black"
+            ]
+          },
+          {
+            "cat": "trimmer",
+            "qty": 3,
+            "name": "StyleCraft Saber",
+            "total_gbp": 540.45,
+            "brand": "StyleCraft (Gamma+)",
+            "model": "Stylecraft Saber Cordless Trimmer - Black",
+            "urls": [
+              "https://barbertemple.co.uk/products/gamma-stylecraft-saber-cordless-trimmer-black"
+            ]
+          },
+          {
+            "cat": "foil_shaver",
+            "qty": 3,
+            "name": "Gamma+ XCell",
+            "total_gbp": 527.85,
+            "brand": "Gamma+",
+            "model": "Gamma+ XCell Shaver",
+            "urls": [
+              "https://barbertemple.co.uk/products/gamma-x-cell-vector-shaver"
+            ]
+          },
+          {
+            "cat": "station",
+            "qty": 3,
+            "name": "Takara Belmont Aubrey",
+            "total_gbp": 10950.0,
+            "brand": "Takara Belmont",
+            "model": "Takara Belmont Aubrey Barber Station",
+            "urls": [
+              "https://www.capitalhairandbeauty.co.uk/furniture/barbers/units/takara-belmont-aubrey-barber-station"
+            ]
+          },
+          {
+            "cat": "backwash",
+            "qty": 1,
+            "name": "Takara Belmont Yume Espoir",
+            "total_gbp": 5299.0,
+            "brand": "Takara Belmont",
+            "model": "Takara Belmont Yume Espoir ESL Wash Unit",
+            "urls": [
+              "https://www.salonsdirect.com/products/takara-belmont-yume-espoir-esl-wash-unit"
+            ]
+          },
+          {
+            "cat": "hot_towel_cabinet",
+            "qty": 1,
+            "name": "SkinMate 6012",
+            "total_gbp": 169.17,
+            "brand": "SkinMate",
+            "model": "SkinMate 6012 Hot Towel Cabinet - 18L",
+            "urls": [
+              "https://barbertemple.co.uk/products/skinmate-elite-hot-towel-cabinet"
+            ]
+          },
+          {
+            "cat": "steriliser",
+            "qty": 1,
+            "name": "SkinMate UV cabinet",
+            "total_gbp": 100.0,
+            "brand": "SkinMate",
+            "model": "SkinMate UV Sterilizer",
+            "urls": [
+              "https://barbertemple.co.uk/products/skinmate-uv-disinfector-cabinet"
+            ]
+          },
+          {
+            "cat": "scissors",
+            "qty": 3,
+            "name": "Kasho Silver",
+            "total_gbp": 1350.0,
+            "brand": "Kasho",
+            "model": "Kasho Silver Series 6in Offset Scissor",
+            "urls": [
+              "https://www.salonsdirect.com/products/kasho-silver-series-6in-offset-scissor"
+            ]
+          },
+          {
+            "cat": "cape",
+            "qty": 6,
+            "name": "Hello Bleach leather cape",
+            "total_gbp": 225.0,
+            "brand": "Hello Bleach",
+            "model": "Hello Bleach Vegan Leather Cutting Cape",
+            "urls": [
+              "https://www.salonsdirect.com/products/hello-bleach-vegan-leather-cutting-cape"
+            ]
+          },
+          {
+            "cat": "card_reader",
+            "qty": 1,
+            "name": "Square Register",
+            "total_gbp": 699.0,
+            "brand": "Square",
+            "model": "Square Register, 2nd generation",
+            "urls": [
+              "https://squareup.com/gb/en/hardware"
+            ]
+          },
+          {
+            "cat": "reception_desk",
+            "qty": 1,
+            "name": "Takara Belmont Pandora",
+            "total_gbp": 1360.0,
+            "brand": "Takara Belmont",
+            "model": "Pandora Reception Desk",
+            "urls": [
+              "https://www.salonfurniture.co.uk/pandora-reception-desk"
+            ]
+          }
+        ]
+      }
+    },
+    "cafes-coffee-shops": {
+      "shop": "30 seats",
+      "read_on": "2026-09-25",
+      "currency": "GBP",
+      "vat": "excluded",
+      "dropped": [],
+      "tiers": {
+        "budget": [
+          {
+            "cat": "espresso-machine",
+            "qty": 1,
+            "name": "Fracino Contempo",
+            "total_gbp": 2620.0,
+            "brand": "Fracino",
+            "model": "Fracino Contempo 2 Group Espresso Machine (CON2E)",
+            "urls": [
+              "https://espressokit.co.uk/shop/commercial-espresso-machines/fracino-contempo-2-group-espresso-machine/"
+            ]
+          },
+          {
+            "cat": "grinder",
+            "qty": 2,
+            "name": "Mazzer Super Jolly",
+            "total_gbp": 998.0,
+            "brand": "Mazzer",
+            "model": "Mazzer Super Jolly V Up Timer",
+            "urls": [
+              "https://www.caffesociety.co.uk/mazzer-super-jolly-v-up-timer-coffee-grinder"
+            ]
+          },
+          {
+            "cat": "water-filter",
+            "qty": 1,
+            "name": "Brita Purity C150",
+            "total_gbp": 85.78,
+            "brand": "Brita",
+            "model": "Brita Purity C150 Full System (Quell ST cartridge, 30% head, fittings)",
+            "urls": [
+              "https://www.jurang.co.uk/shop/brita-water-filters/1498-brita-purity-c150-full-system.html"
+            ]
+          },
+          {
+            "cat": "undercounter-fridge",
+            "qty": 2,
+            "name": "Polar C-Series",
+            "total_gbp": 865.98,
+            "brand": "Polar",
+            "model": "Polar C-Series PC002 150 Ltr Undercounter Single Door Stainless Steel Fridge",
+            "urls": [
+              "https://www.catering-appliance.com/polar-pc002-c-series-150-ltr-undercounter-single-door-stainless-steel-fridge"
+            ]
+          },
+          {
+            "cat": "display-chiller",
+            "qty": 1,
+            "name": "Polar patisserie display",
+            "total_gbp": 701.99,
+            "brand": "Polar",
+            "model": "Polar C-Series CX573 235 Ltr Freestanding Patisserie Display Fridge (black)",
+            "urls": [
+              "https://www.catering-appliance.com/polar-cx573-c-series-235-ltr-freestanding-energy-efficient-self-serve-refrigerated-black-cake-display-fridge"
+            ]
+          },
+          {
+            "cat": "dishwasher",
+            "qty": 1,
+            "name": "DC Economy ED50",
+            "total_gbp": 1357.99,
+            "brand": "DC",
+            "model": "DC Economy ED50 18 Plate Undercounter Dishwasher, gravity drain, 13 amp",
+            "urls": [
+              "https://www.catering-appliance.com/dc-ed50-economy-18-plate-undercounter-dishwasher-with-gravity-drain-13-amp-plug-in"
+            ]
+          },
+          {
+            "cat": "batch-brewer",
+            "qty": 1,
+            "name": "Bravilor Novo",
+            "total_gbp": 222.99,
+            "brand": "Bravilor Bonamat",
+            "model": "Bravilor Bonamat Novo 1.7 Ltr Manual Fill Filter Coffee Machine",
+            "urls": [
+              "https://www.catering-appliance.com/bravilor-bonamat-novo-1-7-ltr-manual-fill-filter-coffee-machine"
+            ]
+          },
+          {
+            "cat": "blender",
+            "qty": 1,
+            "name": "Buffalo bar blender",
+            "total_gbp": 148.99,
+            "brand": "Buffalo",
+            "model": "Buffalo CR836 2.5 Ltr Bar Blender",
+            "urls": [
+              "https://www.catering-appliance.com/buffalo-cr836-2-5-ltr-bar-blender"
+            ]
+          },
+          {
+            "cat": "chairs",
+            "qty": 15,
+            "name": "Bolero Verona",
+            "total_gbp": 1424.85,
+            "brand": "Bolero",
+            "model": "Bolero Verona DX976 Set of 2 Cafe Chairs Black (15 packs = 30 chairs)",
+            "urls": [
+              "https://www.catering-appliance.com/bolero-dx976-verona-set-of-2-cafe-chairs-black"
+            ]
+          },
+          {
+            "cat": "tables",
+            "qty": 15,
+            "name": "Bolero ash-top tables",
+            "total_gbp": 1214.85,
+            "brand": "Bolero",
+            "model": "Bolero CG835 Square Aluminium & Ash Wood Top Table 700x700mm",
+            "urls": [
+              "https://www.catering-appliance.com/bolero-cg835-square-aluminium-and-ash-wood-top-table"
+            ]
+          },
+          {
+            "cat": "crockery",
+            "qty": 48,
+            "name": "Olympia Whiteware",
+            "total_gbp": 155.92,
+            "brand": "Olympia",
+            "model": "Olympia Whiteware CB469 Cappuccino Cups White 200ml (Pack of 12) + Olympia Whiteware CB470 Cappuccino Saucers 147mm (Pack of 12)",
+            "urls": [
+              "https://www.catering-appliance.com/olympia-whiteware-cb469-cappuccino-cups-200ml-pack-of-12",
+              "https://www.catering-appliance.com/olympia-cb470-whiteware-cappuccino-saucers-147mm-fits-cup-cb469-pack-of-12"
+            ]
+          },
+          {
+            "cat": "card-reader",
+            "qty": 1,
+            "name": "SumUp Solo Lite",
+            "total_gbp": 25.0,
+            "brand": "SumUp",
+            "model": "SumUp Solo Lite",
+            "urls": [
+              "https://www.sumup.com/en-gb/card-readers/"
+            ]
+          }
+        ],
+        "mid": [
+          {
+            "cat": "espresso-machine",
+            "qty": 1,
+            "name": "Sanremo Zoe",
+            "total_gbp": 3745.0,
+            "brand": "Sanremo",
+            "model": "Sanremo Zoe 2 Group Standard",
+            "urls": [
+              "https://www.caffesociety.co.uk/sanremo-zoe-coffee-machine"
+            ]
+          },
+          {
+            "cat": "grinder",
+            "qty": 2,
+            "name": "Fiorenzato F64 EVO",
+            "total_gbp": 1598.0,
+            "brand": "Fiorenzato",
+            "model": "Fiorenzato F64 EVO On Demand",
+            "urls": [
+              "https://www.caffesociety.co.uk/fiorenzata-f64-evo-on-demand-coffee-grinder"
+            ]
+          },
+          {
+            "cat": "water-filter",
+            "qty": 1,
+            "name": "Brita Purity C300",
+            "total_gbp": 134.95,
+            "brand": "Brita",
+            "model": "Brita Purity C300 Quell ST Full System (filter, head, fittings)",
+            "urls": [
+              "https://www.jurang.co.uk/shop/brita-complete-systems/1501-brita-purity-c300-full-system.html"
+            ]
+          },
+          {
+            "cat": "undercounter-fridge",
+            "qty": 2,
+            "name": "Polar U-Series",
+            "total_gbp": 1593.98,
+            "brand": "Polar",
+            "model": "Polar U-Series UA010 140 Ltr Undercounter Single Door Stainless Steel Fridge",
+            "urls": [
+              "https://www.catering-appliance.com/polar-ua010-u-series-140-ltr-undercounter-single-door-stainless-steel-fridge"
+            ]
+          },
+          {
+            "cat": "display-chiller",
+            "qty": 1,
+            "name": "Polar G-Series self-serve",
+            "total_gbp": 1360.99,
+            "brand": "Polar",
+            "model": "Polar G-Series GD881 400 Ltr Freestanding Self Serve Patisserie Display Fridge",
+            "urls": [
+              "https://www.catering-appliance.com/polar-gd881-g-series-400-ltr-freestanding-self-serve-refrigerated-cake-display-case"
+            ]
+          },
+          {
+            "cat": "dishwasher",
+            "qty": 1,
+            "name": "Classeq C500",
+            "total_gbp": 2408.99,
+            "brand": "Classeq",
+            "model": "Classeq C500D-13A 18 Plate Undercounter Dishwasher, drain pump, break tank, rinse boost, 13 amp",
+            "urls": [
+              "https://www.catering-appliance.com/classeq-c500-500mm-18-plate-undercounter-dishwasher-13-amp-plug-in"
+            ]
+          },
+          {
+            "cat": "batch-brewer",
+            "qty": 1,
+            "name": "Bunn CWTF35",
+            "total_gbp": 1128.39,
+            "brand": "Bunn",
+            "model": "Bunn CWTF35A Automatic Filter Coffee Machine (decanters extra)",
+            "urls": [
+              "https://www.caffesociety.co.uk/bunn-cwtf35a-automatic-filter-coffee-machine"
+            ]
+          },
+          {
+            "cat": "blender",
+            "qty": 1,
+            "name": "Waring Xtreme",
+            "total_gbp": 523.99,
+            "brand": "Waring Commercial",
+            "model": "Waring Commercial MX1000XTXEK 2 Ltr Xtreme Hi-Power Bar Blender (pre-order)",
+            "urls": [
+              "https://www.catering-appliance.com/waring-commercial-mx1000xtxek-2-ltr-xtreme-hi-power-bar-blender"
+            ]
+          },
+          {
+            "cat": "chairs",
+            "qty": 15,
+            "name": "Bolero Scandi",
+            "total_gbp": 2204.85,
+            "brand": "Bolero",
+            "model": "Bolero Scandi FB871 Side Chairs Black, Pack of 2 (15 packs = 30 chairs)",
+            "urls": [
+              "https://www.catering-appliance.com/bolero-scandi-side-chairs-black-pack-of-2"
+            ]
+          },
+          {
+            "cat": "tables",
+            "qty": 15,
+            "name": "Bolero CH992",
+            "total_gbp": 1589.85,
+            "brand": "Bolero",
+            "model": "Bolero CH992 Square Table 700x700mm",
+            "urls": [
+              "https://www.catering-appliance.com/bolero-ch992-square-table"
+            ]
+          },
+          {
+            "cat": "crockery",
+            "qty": 48,
+            "name": "Olympia Kiln",
+            "total_gbp": 279.84,
+            "brand": "Olympia",
+            "model": "Olympia Kiln GP478 Cappuccino Cups Moss 230ml (Pack of 6) + Olympia Kiln GP479 Cappuccino Saucer Moss 140mm (Pack of 6)",
+            "urls": [
+              "https://www.catering-appliance.com/olympia-kiln-gp478-cappuccino-cups-moss-230ml-pack-of-6",
+              "https://www.catering-appliance.com/olympia-kiln-gp479-cappuccino-saucer-moss-140mm-fits-cup-gp478-pack-of-6"
+            ]
+          },
+          {
+            "cat": "card-reader",
+            "qty": 1,
+            "name": "SumUp Solo",
+            "total_gbp": 79.0,
+            "brand": "SumUp",
+            "model": "SumUp Solo",
+            "urls": [
+              "https://www.sumup.com/en-gb/card-readers/"
+            ]
+          }
+        ],
+        "premium": [
+          {
+            "cat": "espresso-machine",
+            "qty": 1,
+            "name": "La Marzocco Linea PB",
+            "total_gbp": 10708.33,
+            "brand": "La Marzocco",
+            "model": "La Marzocco Linea PB S AV 2 group",
+            "urls": [
+              "https://www.primecoffeesuppliers.co.uk/products/la-marzocco-linea-pb-2-3-group-dual-boiler-espresso-machine"
+            ]
+          },
+          {
+            "cat": "grinder",
+            "qty": 2,
+            "name": "Mahlkönig E65S",
+            "total_gbp": 3250.0,
+            "brand": "Mahlkonig",
+            "model": "Mahlkonig E65S On Demand",
+            "urls": [
+              "https://www.caffesociety.co.uk/mahlkonig-e65s-coffee-grinder"
+            ]
+          },
+          {
+            "cat": "water-filter",
+            "qty": 1,
+            "name": "BWT bestmax Premium",
+            "total_gbp": 188.0,
+            "brand": "BWT",
+            "model": "BWT bestmax PREMIUM M filter cartridge + BWT besthead FLEX filter head",
+            "urls": [
+              "https://www.coffeesparesdirect.co.uk/water-filtration/bwt-water-filters/bwt-bestmax-premium-water-filters",
+              "https://www.coffeesparesdirect.co.uk/water-filtration/bwt-water-filters/bwt-bestmax-premium-water-filters"
+            ]
+          },
+          {
+            "cat": "undercounter-fridge",
+            "qty": 2,
+            "name": "Foster HR150",
+            "total_gbp": 2395.98,
+            "brand": "Foster",
+            "model": "Foster HR150 150 Ltr Undercounter Single Door Stainless Steel Fridge",
+            "urls": [
+              "https://www.catering-appliance.com/foster-hr150-150-ltr-undercounter-single-door-stainless-steel-fridge"
+            ]
+          },
+          {
+            "cat": "display-chiller",
+            "qty": 1,
+            "name": "Blizzard CD400L",
+            "total_gbp": 1713.99,
+            "brand": "Blizzard",
+            "model": "Blizzard CD400L 400 Ltr Freestanding Flat Glass Patisserie Display Fridge",
+            "urls": [
+              "https://www.catering-appliance.com/blizzard-cd400l-400-ltr-freestanding-flat-glass-refrigerated-cake-display-fridge"
+            ]
+          },
+          {
+            "cat": "dishwasher",
+            "qty": 1,
+            "name": "Winterhalter UC-M",
+            "total_gbp": 4327.99,
+            "brand": "Winterhalter",
+            "model": "Winterhalter UC-M 18 Plate Undercounter Dishwasher with Drain Pump",
+            "urls": [
+              "https://www.catering-appliance.com/winterhalter-uc-m-dw-500mm-18-plate-undercounter-dishwasher-with-drain-pump-hardwired"
+            ]
+          },
+          {
+            "cat": "batch-brewer",
+            "qty": 1,
+            "name": "Marco JET 6",
+            "total_gbp": 1553.99,
+            "brand": "Marco Beverage Systems",
+            "model": "Marco JET 6 (1000851) 6 Ltr 2.8kW Bulk Coffee Brewer",
+            "urls": [
+              "https://www.catering-appliance.com/marco-beverage-systems-jet-6-1000851-6-ltr-2-8kw-bulk-coffee-brewer"
+            ]
+          },
+          {
+            "cat": "blender",
+            "qty": 1,
+            "name": "Hamilton Beach Eclipse",
+            "total_gbp": 846.99,
+            "brand": "Hamilton Beach",
+            "model": "Hamilton Beach Eclipse HBH755R-UK 2 Ltr High Performance Bar Blender",
+            "urls": [
+              "https://www.catering-appliance.com/hamilton-beach-hbh755r-uk-eclipse-2-ltr-high-performance-bar-blender"
+            ]
+          },
+          {
+            "cat": "chairs",
+            "qty": 15,
+            "name": "Fameg bentwood",
+            "total_gbp": 4109.85,
+            "brand": "Fameg",
+            "model": "Fameg CF139 Bentwood Bistro Side Chairs Walnut, Pack of 2 (15 packs = 30 chairs)",
+            "urls": [
+              "https://www.catering-appliance.com/fameg-cf139-bentwood-bistro-side-chairs-walnut-pack-of-2"
+            ]
+          },
+          {
+            "cat": "tables",
+            "qty": 15,
+            "name": "Cotswold oak tables",
+            "total_gbp": 2669.85,
+            "brand": "Non-branded (Catering Appliance Superstore)",
+            "model": "FT492 Cotswold Soft Oak Square Dining Table 700x700mm (rubber wood)",
+            "urls": [
+              "https://www.catering-appliance.com/non-branded-ft492-cotswold-soft-oak-square-dining-table-700x700mm"
+            ]
+          },
+          {
+            "cat": "crockery",
+            "qty": 48,
+            "name": "Churchill Homespun",
+            "total_gbp": 651.92,
+            "brand": "Churchill",
+            "model": "Churchill Studio Prints Homespun DM424 Stone Grey Cappuccino Cups 227ml (Pack of 12) + Churchill Studio Prints Homespun Stone DM428 Cappuccino Saucers Grey 156mm (Pack of 12)",
+            "urls": [
+              "https://www.catering-appliance.com/churchill-dm424-studio-prints-homespun-stone-grey-cappuccino-cup-227ml-8oz",
+              "https://www.catering-appliance.com/churchill-dm428-studio-prints-homespun-stone-cappuccino-saucers-grey-156mm-pack-of-12"
+            ]
+          },
+          {
+            "cat": "card-reader",
+            "qty": 1,
+            "name": "Square Terminal",
+            "total_gbp": 149.0,
+            "brand": "Square",
+            "model": "Square Terminal",
+            "urls": [
+              "https://squareup.com/gb/en/pricing"
+            ]
+          }
+        ],
+        "luxury": [
+          {
+            "cat": "espresso-machine",
+            "qty": 1,
+            "name": "La Marzocco Strada",
+            "total_gbp": 15391.67,
+            "brand": "La Marzocco",
+            "model": "La Marzocco Strada S AV 2 Group",
+            "urls": [
+              "https://railtowncoffee.co.uk/products/la-marzocco-strada-av-espresso-machine"
+            ]
+          },
+          {
+            "cat": "grinder",
+            "qty": 2,
+            "name": "Mahlkönig E80S",
+            "total_gbp": 4340.0,
+            "brand": "Mahlkonig",
+            "model": "Mahlkonig E80S (E80 Supreme) On Demand",
+            "urls": [
+              "https://www.caffesociety.co.uk/mahlkonig-e80-supreme-coffee-grinder"
+            ]
+          },
+          {
+            "cat": "water-filter",
+            "qty": 1,
+            "name": "BWT reverse osmosis",
+            "total_gbp": 3343.75,
+            "brand": "BWT",
+            "model": "BWT bestaqua 14 ROC Coffee reverse osmosis system",
+            "urls": [
+              "https://machina-coffee.com/products/bwt-bestmax-ro-system-bestaqua-roc-14-coffee"
+            ]
+          },
+          {
+            "cat": "undercounter-fridge",
+            "qty": 2,
+            "name": "Adande drawers",
+            "total_gbp": 4979.98,
+            "brand": "Adande",
+            "model": "Adande VCS1 Standard Depth Single Undercounter Drawer Unit, side engine",
+            "urls": [
+              "https://www.caterkwik.co.uk/cgi-bin/trolleyed_public.cgi?action=showprod_VCS1"
+            ]
+          },
+          {
+            "cat": "display-chiller",
+            "qty": 1,
+            "name": "Victor Optimax",
+            "total_gbp": 5321.01,
+            "brand": "Victor",
+            "model": "Victor Optimax Refrigerated Display Unit 1000mm (GL358)",
+            "urls": [
+              "https://canmac.co.uk/products/gl358"
+            ]
+          },
+          {
+            "cat": "dishwasher",
+            "qty": 1,
+            "name": "Winterhalter UC-L",
+            "total_gbp": 5077.99,
+            "brand": "Winterhalter",
+            "model": "Winterhalter UC-L 18 Plate Undercounter Dishwasher with Drain Pump",
+            "urls": [
+              "https://www.catering-appliance.com/winterhalter-uc-l-dw-500mm-18-plate-undercounter-dishwasher-with-drain-pump-hardwired"
+            ]
+          },
+          {
+            "cat": "batch-brewer",
+            "qty": 1,
+            "name": "Marco SP9",
+            "total_gbp": 2545.99,
+            "brand": "Marco Beverage Systems",
+            "model": "Marco SP9 Twin Head Precision Brewer with Undercounter Boiler Unit",
+            "urls": [
+              "https://www.catering-appliance.com/marco-beverage-systems-sp9-twin-head-6-ltr-2-4kw-precision-brewer-with-undercounter-boiler-unit"
+            ]
+          },
+          {
+            "cat": "blender",
+            "qty": 1,
+            "name": "Hamilton Beach Summit",
+            "total_gbp": 974.99,
+            "brand": "Hamilton Beach",
+            "model": "Hamilton Beach Summit Edge HBH855-UK 1.4 Ltr High Performance Bar Blender",
+            "urls": [
+              "https://www.catering-appliance.com/hamilton-beach-hbh855-uk-summit-edge-1-4-ltr-high-performance-bar-blender"
+            ]
+          },
+          {
+            "cat": "chairs",
+            "qty": 15,
+            "name": "Bolero Obi ash",
+            "total_gbp": 8009.85,
+            "brand": "Bolero",
+            "model": "Bolero Obi FX087 Bespoke Side Chairs Ash Wood, Pack of 2 (15 packs = 30 chairs; out of stock when read)",
+            "urls": [
+              "https://www.catering-appliance.com/bolero-fx087-obi-bespoke-side-chairs-ash-wood-pack-of-2"
+            ]
+          },
+          {
+            "cat": "tables",
+            "qty": 15,
+            "name": "Bolero marble tables",
+            "total_gbp": 4874.7,
+            "brand": "Bolero",
+            "model": "Bolero DC301 Pre-Drilled Square Marble Table Top White 600mm (marble veneer) + Bolero CF157 Stainless Steel Square Table Base",
+            "urls": [
+              "https://www.catering-appliance.com/bolero-square-marble-table-top-white-600mm",
+              "https://www.catering-appliance.com/bolero-cf157-stainless-steel-square-table-base"
+            ]
+          },
+          {
+            "cat": "crockery",
+            "qty": 48,
+            "name": "Steelite Robert Gordon",
+            "total_gbp": 703.92,
+            "brand": "Steelite",
+            "model": "Steelite Robert Gordon Potters Collection Pier VV2755 Cappuccino Cups Brown 327ml (Pack of 12) + Steelite Robert Gordon Potters Collection Pier VV2756 Saucers 154mm (Pack of 12)",
+            "urls": [
+              "https://www.catering-appliance.com/steelite-vv2755-robert-gordon-potters-collection-pier-cappuccino-cups-brown-327ml-pack-of-12",
+              "https://www.catering-appliance.com/steelite-vv2756-robert-gordon-potters-collection-pier-saucers-154mm-pack-of-12"
+            ]
+          },
+          {
+            "cat": "card-reader",
+            "qty": 1,
+            "name": "Square Register",
+            "total_gbp": 699.0,
+            "brand": "Square",
+            "model": "Square Register",
+            "urls": [
+              "https://squareup.com/gb/en/pricing"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

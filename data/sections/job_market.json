@@ -1,0 +1,31 @@
+{
+  "_about": "The local job market, by country (his message of 2026-09-25: \"deeper insights in the local job market, unempl, youth unempl, unempl. In that sector\"). One release, one period. The trade's own unemployment is not published outside a spreadsheet and is not held; its vacancy rate stands for the sector. Research: design/loop/build/research/2026-09-25-R5-accounting-market-jobs-GB.md.",
+  "GB": {
+    "period": "May to July 2026",
+    "rates": [
+      {
+        "key": "all",
+        "pct": 4.9
+      },
+      {
+        "key": "capital",
+        "pct": 6.8,
+        "place": "London"
+      },
+      {
+        "key": "youth",
+        "pct": 16.4
+      }
+    ],
+    "sector": {
+      "key": "hospitality",
+      "vacancies_per_100_jobs": 2.8,
+      "payroll_change_pct": -3.3,
+      "period": "June to August 2026"
+    },
+    "source": {
+      "publisher": "ONS, Labour market overview, UK: September 2026 (released 15 September 2026)",
+      "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/uklabourmarket/september2026"
+    }
+  }
+}

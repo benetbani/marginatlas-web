@@ -1,0 +1,225 @@
+{
+  "_about": "The apps a small business runs on, by country and by job (his message of 2026-09-25: \"Supporting applications for each country in terms of categories, booking, delivery, marketing, etc. Focus on not worldwide apps, more local ones\"). Each app with the country it was founded in and its fee as its own UK pricing page states it on the day read; an app whose fee was not found is not listed, and a job with fewer than two listed apps is not drawn. Research: design/loop/build/research/2026-09-25-R2-hours-apps-GB.md.",
+  "GB": {
+    "read_on": "2026-09-25",
+    "jobs": [
+      {
+        "key": "bookings",
+        "apps": [
+          {
+            "name": "Fresha",
+            "from": "GB",
+            "fee": {
+              "kind": "month",
+              "gbp": 14.95
+            },
+            "note": "solo plan; 20% on new marketplace clients",
+            "url": "https://www.jena.so/articles/what-fresha-actually-costs/ (secondary; it checked Fresha's UK page on 22 Aug 2026)"
+          },
+          {
+            "name": "Treatwell",
+            "from": "GB",
+            "fee": {
+              "kind": "commission",
+              "pct": 35
+            },
+            "note": "of a new marketplace client's first booking; repeat bookings 0%",
+            "url": "https://www.treatwell.co.uk/partners/pricing/"
+          },
+          {
+            "name": "Booksy",
+            "from": "PL",
+            "fee": {
+              "kind": "month",
+              "gbp": 40
+            },
+            "note": "extra staff from GBP 5 a month",
+            "url": "https://biz.booksy.com/en-gb/pricing"
+          }
+        ]
+      },
+      {
+        "key": "payments",
+        "apps": [
+          {
+            "name": "SumUp",
+            "from": "GB",
+            "fee": {
+              "kind": "pct",
+              "pct": 1.69
+            },
+            "note": "in person, pay as you go",
+            "url": "https://www.sumup.com/en-gb/pricing/"
+          },
+          {
+            "name": "Square",
+            "from": "US",
+            "fee": {
+              "kind": "pct",
+              "pct": 1.75
+            },
+            "note": "in person, UK cards",
+            "url": "https://squareup.com/gb/en/pricing"
+          },
+          {
+            "name": "Zettle",
+            "from": "SE",
+            "fee": {
+              "kind": "pct",
+              "pct": 1.75
+            },
+            "note": "in person",
+            "url": "https://www.zettle.com/gb/pricing"
+          }
+        ]
+      },
+      {
+        "key": "accounts",
+        "apps": [
+          {
+            "name": "FreeAgent",
+            "from": "GB",
+            "fee": {
+              "kind": "month",
+              "gbp": 33
+            },
+            "note": "limited company, before VAT",
+            "url": "https://www.freeagent.com/pricing/"
+          },
+          {
+            "name": "Coconut",
+            "from": "GB",
+            "fee": {
+              "kind": "month",
+              "gbp": 12.99
+            },
+            "note": "",
+            "url": "https://www.getcoconut.com/pricing"
+          },
+          {
+            "name": "Xero",
+            "from": "NZ",
+            "fee": {
+              "kind": "month",
+              "gbp": 18
+            },
+            "note": "from, before VAT",
+            "url": "https://www.xero.com/uk/pricing-plans/"
+          }
+        ]
+      },
+      {
+        "key": "banking",
+        "apps": [
+          {
+            "name": "Tide",
+            "from": "GB",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "free plan; paid plans from GBP 12.49 a month",
+            "url": "https://www.tide.co/pricing/"
+          },
+          {
+            "name": "Starling",
+            "from": "GB",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "no monthly fee",
+            "url": "https://www.starlingbank.com/business-account/"
+          },
+          {
+            "name": "Mettle",
+            "from": "GB",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "no account fee",
+            "url": "https://www.mettle.co.uk/fee-information-document/"
+          }
+        ]
+      },
+      {
+        "key": "payroll",
+        "apps": [
+          {
+            "name": "Basic PAYE Tools",
+            "from": "GB",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "the government's own, under 10 staff",
+            "url": "https://www.gov.uk/basic-paye-tools"
+          },
+          {
+            "name": "Moneysoft",
+            "from": "GB",
+            "fee": {
+              "kind": "year",
+              "gbp": 95
+            },
+            "note": "up to 20 staff",
+            "url": "https://moneysoft.co.uk/prices/"
+          }
+        ]
+      },
+      {
+        "key": "reviews",
+        "apps": [
+          {
+            "name": "Google Business Profile",
+            "from": "US",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "",
+            "url": "https://business.google.com/uk/business-profile/"
+          },
+          {
+            "name": "Yell",
+            "from": "GB",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "free listing; paid from GBP 249 a month",
+            "url": "https://business.yell.com/"
+          },
+          {
+            "name": "Trustpilot",
+            "from": "DK",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "free plan; paid from GBP 119 a month",
+            "url": "https://uk.business.trustpilot.com/pricing"
+          }
+        ]
+      },
+      {
+        "key": "hiring",
+        "apps": [
+          {
+            "name": "Reed",
+            "from": "GB",
+            "fee": {
+              "kind": "ad",
+              "gbp": 89
+            },
+            "note": "a job ad, before VAT",
+            "url": "https://www.reed.co.uk/recruiter"
+          },
+          {
+            "name": "Indeed",
+            "from": "US",
+            "fee": {
+              "kind": "free"
+            },
+            "note": "three free posts a month",
+            "url": "https://uk.indeed.com/hire/pricing"
+          }
+        ]
+      }
+    ]
+  }
+}
