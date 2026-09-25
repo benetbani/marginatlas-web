@@ -487,6 +487,8 @@ export const COPY = {
     detailSummary: "What the LLC involves",
     /** The figure's words under the bill (2026-09-25), and the plus of licences by trade (country_licences_rows.ts). */
     focalWords: "limited company, all in",
+    /** Where one step is the only one that costs money (the bill is that fee): the line says the rest are free. */
+    focalWordsOneFee: "limited company, all in: the other {n} steps are free",
     licences: { summary: "Licences by trade", noWait: "0 days", noLicence: "No licence needed" },
     detailRows: { form: "The form here", fee: "Government fee", filing: "Filing time", paperwork: "Paperwork" },
     /** The one line: the bill's where it prints, the days' otherwise (entry_bill_rows.ts). */

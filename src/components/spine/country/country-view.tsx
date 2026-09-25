@@ -750,11 +750,18 @@ function EntryBill({ bill, steps, licences }: { bill: EntryBillData | null; step
      prints the hero's count a second time. The plus holds what some trades need before they open. Elsewhere the card keeps its
      two-figure form below. */
   if (steps && steps.steps.length >= STEPPER_MIN && bill.figure) {
+    /* WHY THE BILL EQUALS ONE FEE, SAID (2026-09-25, QUEUE country:register-fee-three-prints, the loop's ruling on his "idk-go"):
+       where one step is the only one that costs money, the bill's figure is that step's fee, the same figure the hero and the
+       legal-form table print, so its line says what the repetition means: the other steps are free. */
+    const isFree = (c: string | null) => !!c && /^\$0(\.0+)?$/.test(c.trim());
+    const paid = steps.steps.filter((s) => s.cost && !isFree(s.cost));
+    const free = steps.steps.filter((s) => isFree(s.cost));
+    const oneFee = paid.length === 1 && paid[0].cost === bill.figure && free.length > 0;
     return (
       <Box id="entry-bill" data-visual="1" className="flex flex-col">
         <Rail icon="startup-cost" kicker={COPY.entryBill.kicker} />
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{bill.figure}</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.entryBill.focalWords}</p>
+        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{oneFee ? COPY.entryBill.focalWordsOneFee.replace("{n}", String(free.length)) : COPY.entryBill.focalWords}</p>
         <div className="mt-5 flex-1">
           <Stepper steps={steps.steps} compact />
         </div>
