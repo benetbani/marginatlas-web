@@ -155,7 +155,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
           {answer ? (
             <div data-answer="1">
               <div className="flex flex-wrap items-center gap-2">
-                <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{answer.label}</div>
+                <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{answer.label}</div>
                 {tagged ? <SampleTag /> : null}
               </div>
               <div className={`fig text-[length:var(--t-answer)] leading-none ${tone === "ink" ? "text-[var(--c-ink)]" : "text-[var(--terra-text)]"}`}>{answer.value}</div>
@@ -178,7 +178,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
                size, with its label, never an empty slot and never a fabricated
                rate. Ink, not the accent: it is not an answer. */
             <div data-answer-absent="1">
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{absent?.label ?? COPY.answer.label}</div>
+              <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{absent?.label ?? COPY.answer.label}</div>
               <div className="mt-1 text-[length:var(--t-head)] font-medium leading-none text-[var(--c-ink)]">{absent?.word ?? COPY.answer.absent}</div>
               <div className="mt-3 max-w-[40ch] text-[length:var(--t-body)] text-[var(--c-ink2)]">{absent?.note ?? COPY.answer.absentNote}</div>
             </div>

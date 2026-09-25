@@ -651,7 +651,7 @@ export function Texture({ texture }: { texture: CityTextureData | null }) {
           over the drawing and under the opener: a spectrum holds no figure of
           its own, and PART 4 gives every section card exactly one. */}
       <div className="mb-4">
-        <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{texture.visits.label}</div>
+        <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{texture.visits.label}</div>
         <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{texture.visits.figure}</Fig>
       </div>
       <SpectraTable rows={texture.rows} dot="ink" scale="lead" basis={texture.basis} />
@@ -762,7 +762,7 @@ export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCal
           THE CARD'S OWN WIDTH DECIDES, never the window. */}
       <div className="mb-4 gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start">
         <div>
-          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.swingLabel}</div>
+          <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.swingLabel}</div>
           <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
         </div>
         <div className="mt-2 [@container(min-width:560px)]:mt-0">

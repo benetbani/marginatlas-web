@@ -57,7 +57,7 @@ export function HowToBody({ iso2 }: { iso2: string }) {
           {d.lead ? <p className="mt-2 [max-width:var(--measure-prose)] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{d.lead}</p> : null}
           {d.cells.length > 0 ? (
             <div className="mt-5 border-t border-[var(--c-border)] pt-4">
-              <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.howto.cells}</div>
+              <div className="mb-2 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{COPY.howto.cells}</div>
               <KvGrid cells={d.cells} />
             </div>
           ) : null}
@@ -90,7 +90,7 @@ export function HowToBody({ iso2 }: { iso2: string }) {
               <Rail icon="red-tape" kicker={COPY.howToSteps.kicker} />
               {d.steps.totalDays ? (
                 <div className="mb-4">
-                  <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.howToSteps.totalLabel}</div>
+                  <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{COPY.howToSteps.totalLabel}</div>
                   <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{d.steps.totalDays}</Fig>
                 </div>
               ) : null}

@@ -121,7 +121,7 @@ export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?:
         </>) : null}
         <text x={cx} y={118} textAnchor="middle" fill="#1a1a1a" fontSize={24} style={{ fontFamily: "var(--font-num)", fontWeight: 600 }}>{v}</text>
       </svg>
-      {sub ? <div className="-mt-1 text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]">{sub}</div> : null}
+      {sub ? <div className="-mt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</div> : null}
     </div>
   );
 }
@@ -759,7 +759,7 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
       {endLabels ? (
         <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
           <span />
-          <div className="flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
+          <div className="flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
         </div>
       ) : null}
       {rows.map(([label, pos, word, sub]) => (
@@ -786,7 +786,7 @@ export function Meter({ value, left, right }: { value: number; left: string; rig
         <div className="h-full rounded-full" style={{ width: `${value}%`, background: TERRA }} />
         <div className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${value}%`, background: "#1a1a1a" }} />
       </div>
-      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>{left}</span><span>{right}</span></div>
+      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{left}</span><span>{right}</span></div>
     </div>
   );
 }
@@ -993,7 +993,7 @@ export function KVGrid({ children, className = "" }: { children: React.ReactNode
  * facts rather than one. The card's own composition note claims these share a
  * baseline; now they do. */
 export function KV({ k, v }: { k: string; v: React.ReactNode }) {
-  return <div className="flex items-baseline gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</span></div>;
+  return <div className="flex items-baseline gap-3 border-b border-[var(--c-border)] py-2 last:border-0"><span className="w-24 shrink-0 text-[length:var(--t-body)] text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{v}</span></div>;
 }
 /* S6 prevention tripwire (rulebook v2 K6): "Never hide a graphic behind a popup, expand,
  * or disclosure , graphics are always visible. Disclosures exist only to move BULLET TEXT
@@ -1105,7 +1105,7 @@ export function Spectrum({ rows }: { rows: any[] }) {
       <div className="relative h-1.5 rounded-full" role="img" aria-label={`${r.left_label} to ${r.right_label}`} style={{ background: "linear-gradient(90deg,#fb8469,#d4d4d4 52%,#737373)" }}><div className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[var(--c-ink)]" style={{ left: `${Math.round((r.position_0_1 || 0) * 100)}%`, boxShadow: "0 0 0 1px #e3e3e3" }} /></div></div>))}</div>;
 }
 export function CatRows({ rows }: { rows: Array<[string, any]> }) {
-  return <div data-idea="I8" className="divide-y divide-[var(--c-border)]">{rows.map(([k, v]) => v ? <div key={k} className="hov -mx-2 flex gap-3 rounded-md px-2 py-2"><span className="w-28 shrink-0 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{v}</span></div> : null)}</div>;
+  return <div data-idea="I8" className="divide-y divide-[var(--c-border)]">{rows.map(([k, v]) => v ? <div key={k} className="hov -mx-2 flex gap-3 rounded-md px-2 py-2"><span className="w-28 shrink-0 text-[length:var(--t-body)] text-[var(--c-muted)]">{k}</span><span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{v}</span></div> : null)}</div>;
 }
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
@@ -1140,7 +1140,7 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss }: { i
             are the pre-spine serif scale, and a spine heading cannot wear them. */}
         <h3
           data-typography="custom"
-          className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]"
+          className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
         >
           {kicker}
         </h3>
@@ -1166,7 +1166,7 @@ export function Stat({ value, label, sub, size = "support", accent = false }: { 
   const focal = size === "focal";
   return (
     <div data-idea="I9">
-      {label ? <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div> : null}
+      {label ? <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{label}</div> : null}
       {/* THE FOCAL'S TWO SIZES ARE OFF THE LADDER BY DECLARATION, NOT BY DRIFT.
           38 at phone and 42 at md sit between the 30 focal rung and the 48
           answer rung; the city blueprint's constants block records them as fact
@@ -1504,7 +1504,7 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
         {/* BOTH ENDS OF A RULER ARE WRITTEN ALIKE. This one read "0" at the left and
             "WEEK 52" at the right, one bare and one carrying its unit, so a reader
             had to work out that the bare end was also weeks. Notation N6. */}
-        <div className="mt-2 flex justify-between text-[length:var(--t-micro)] uppercase tracking-wide text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
+        <div className="mt-2 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
       </div>
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2">
         {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}

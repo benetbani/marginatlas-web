@@ -44,7 +44,7 @@ export function Origin({ id = "origin", data }: { id?: string; data: OriginData 
             <div data-visits className="grid grid-cols-2 gap-4 [@container(min-width:720px)]:grid-cols-1">
               {data.visits.map((v) => (
                 <div key={v.name}>
-                  <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{v.name}</div>
+                  <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{v.name.charAt(0).toUpperCase() + v.name.slice(1)}</div>
                   <Fig className="mt-1 block text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{v.millions}M</Fig>
                   <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{v.overnight ? O.overnight : O.visits}</div>
                 </div>

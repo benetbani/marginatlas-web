@@ -32,7 +32,7 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
       <div data-archetype="age-mix" data-visual="1" data-bars={String(data.bars.length)} className="flex flex-col gap-4">
         {data.bars.map((bar) => (
           <div key={bar.name} data-row={bar.name}>
-            <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{bar.name}</div>
+            <div className="mb-2 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{bar.name.charAt(0).toUpperCase() + bar.name.slice(1)}</div>
             <div className="flex h-9 w-full gap-0.5 overflow-hidden rounded-lg" role="img" aria-label={`${bar.name}: ${bar.bands.map((b) => `${b.label} ${b.pct}%`).join(", ")}`}>
               {bar.bands.map((b) => {
                 const labelled = !(bar.focal && b.key === "25to49") && b.pct >= 9;

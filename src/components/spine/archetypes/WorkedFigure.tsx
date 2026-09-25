@@ -67,7 +67,7 @@ export function WorkedFigure({ label, figure, working, accent = false, list = fa
           end (the customers card seated full width at 768, 24 London trades). */}
       <div className={`[@container(min-width:560px)]:grid ${list ? "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]" : "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"} [@container(min-width:560px)]:items-center [@container(min-width:560px)]:gap-x-8 ${grow ? "flex flex-1 flex-col" : ""}`}>
         <div>
-          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{label}</div>
+          <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{label}</div>
           <Fig className={`mt-1 block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</Fig>
         </div>
         <div data-second className={`mt-4 border-t border-[var(--c-border)] pt-3 [@container(min-width:560px)]:mt-0 [@container(min-width:560px)]:border-l [@container(min-width:560px)]:border-t-0 [@container(min-width:560px)]:pl-6 [@container(min-width:560px)]:pt-0 ${grow ? "flex flex-1 flex-col" : ""}`}>

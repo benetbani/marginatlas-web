@@ -41,7 +41,7 @@ export function GatesCard({ id = "gates", gates }: { id?: string; gates: CityGat
       <Rail icon="licence-specific" kicker={C.kicker} sample={gates.sample} />
       {gates.totalCost != null ? (
         <div className="mb-3">
-          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.focalLabel}</div>
+          <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.focalLabel}</div>
           <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{usd(gates.totalCost)}</Fig>
         </div>
       ) : null}

@@ -193,7 +193,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-2 [@container(min-width:560px)]:items-start [@container(min-width:560px)]:gap-x-8">
           <div>
             <div data-answer="1">
-              <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
+              <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
               <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
             </div>
             {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
@@ -253,7 +253,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           <div className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
           <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
           <div data-answer="1">
-            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{netLabel}</div>
+            <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
             <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
           </div>
           {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}

@@ -122,7 +122,7 @@ export function SwingCell({ market }: { market: MarketData }) {
     <Box className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric" data-visual={market.months ? "1" : undefined}>
       <div className="mb-2 flex items-center gap-2">
         <Ico id="seasonality" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.swing}</h3>
+        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{K.swing}</h3>
         <SampleTag />
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">
@@ -147,7 +147,7 @@ export function DaypartsCell({ market }: { market: MarketData }) {
     <Box className="flex h-full flex-col" data-archetype="share-bar" data-visual="1">
       <div className="mb-2 flex items-center gap-2">
         <Ico id="daily-takings" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.dayparts}</h3>
+        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{K.dayparts}</h3>
         <SampleTag />
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">

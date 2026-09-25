@@ -60,7 +60,7 @@ export function WorldRangeRows({ rows, medianWord, headless = false }: { rows: W
                 {r.unit ? <span className="ml-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.unit}</span> : null}
               </span>
               {r.level ? (
-                <span data-level={r.level} className="ml-auto rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{r.level}</span>
+                <span data-level={r.level} className="ml-auto rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{r.level}</span>
               ) : null}
             </div>}
             {range ? <Track r={r} range={range} scale={scale} medianWord={medianWord} headless={headless || !!r.headless} /> : null}

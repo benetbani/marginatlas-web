@@ -186,7 +186,7 @@ function OnThisPage({ sections }: { sections: Array<{ id: string; label: string 
   if (sections.length === 0) return null;
   return (
     <nav aria-label="On this page" className="fixed right-6 top-1/2 hidden -translate-y-1/2 2xl:block">
-      <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">On this page</div>
+      <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">On this page</div>
       <ol className="mt-2 space-y-2">
         {sections.map((s) => (
           <li key={s.id}>
@@ -832,7 +832,7 @@ function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
      yet" line. The rent tiers left for the city page. */
   if (!costs) return null;
   const e = costs.cells.find((c) => c.key === "electricity") ?? null;
-  const level = (l: "high" | "medium" | "low" | null) => (l ? <span data-level={l} className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{COPY.heroBoard.levels[l]}</span> : null);
+  const level = (l: "high" | "medium" | "low" | null) => (l ? <span data-level={l} className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{COPY.heroBoard.levels[l]}</span> : null);
   const bare = !e && costs.livingOnCityScale == null;
   return (
     <Box id="running-costs">
@@ -1051,7 +1051,7 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
           </div>
         )}
         <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[var(--c-border)] pt-3">
-          {buyers ? <span data-level="buyers" className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{buyers}</span> : null}
+          {buyers ? <span data-level="buyers" className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{buyers}</span> : null}
         </div>
       </Box>
     );

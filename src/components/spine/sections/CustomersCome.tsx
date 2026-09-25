@@ -29,7 +29,7 @@ export function CustomersCome({ id = "customers-come", data }: { id?: string; da
           </div>
           <Pie share={data.online / 100} tone="ink" aria={`${data.figure} ${data.words}`} className="h-20 w-20" />
         </div>
-        <div className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.trips.replace("{place}", data.tripsPlace)}</div>
+        <div className="mb-2 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.trips.replace("{place}", data.tripsPlace)}</div>
         <ShareBar parts={data.parts} lead={["walk", "car"]} residualKey="other" tall />
       </div>
     </Box>

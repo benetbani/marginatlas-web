@@ -50,12 +50,12 @@ export function JobMarket({ id = "job-market", data }: { id?: string; data: JobM
       {s ? (
         <div data-sector className="mt-5 grid grid-cols-2 gap-4 border-t border-[var(--c-border)] pt-3">
           <div>
-            <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{s.label}</div>
+            <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{s.label}</div>
             <Fig className="mt-1 block text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{s.vacancies}</Fig>
             <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{J.vacancies}</div>
           </div>
           <div>
-            <div aria-hidden className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">&nbsp;</div>
+            <div aria-hidden className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">&nbsp;</div>
             <Fig className="mt-1 block text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">
               <span aria-hidden className="mr-1 text-[var(--c-ink2)]">{s.payrollChange < 0 ? "↓" : "↑"}</span>
               {Math.abs(s.payrollChange)}%

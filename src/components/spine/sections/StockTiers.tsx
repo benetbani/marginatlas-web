@@ -77,7 +77,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
             {kit.tiers.map((t) => (
               <div key={t.key} data-tier={t.key} className="pb-3">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{t.label}</span>
+                  <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{t.label}</span>
                   <PriceMark tier={t.key} />
                 </div>
                 <Fig className="mt-1 block text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{dollars(t.usd)}</Fig>
@@ -121,7 +121,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                     className={`rounded-sm border px-3 py-2 text-left transition-colors ${on ? "border-[var(--c-ink2)] bg-[var(--c-soft)]" : "border-[var(--c-border)] hover:border-[var(--c-ink2)]"}`}
                   >
                     <span className="flex items-baseline gap-2">
-                      <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{t.label}</span>
+                      <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{t.label}</span>
                       <PriceMark tier={t.key} />
                     </span>
                     <Fig className="mt-1 block text-[length:var(--t-body)] font-semibold leading-none text-[var(--c-ink)]">{dollars(t.usd)}</Fig>

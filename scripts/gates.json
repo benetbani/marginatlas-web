@@ -822,6 +822,18 @@
       "claims": []
     },
     {
+      "name": "no-caps-labels",
+      "script": "scripts/verify_no_caps_labels.mjs",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_no_caps_labels , WORDS A READER MUST READ ARE NOT SET IN CAPITALS (2026-09-25, his message of that evening: \"These 2x2 stacks in sections with capital letters etc have terrible legibility, almo",
+      "reads": [
+        "scripts/caps_labels_baseline.json",
+        "src/components/spine"
+      ],
+      "claims": []
+    },
+    {
       "name": "token-contrast",
       "script": "scripts/verify_token_contrast.mjs",
       "args": [],

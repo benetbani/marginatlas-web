@@ -74,7 +74,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                between is shared out, never one lump. */
             <div className="grid content-between gap-5">
               <div data-answer="1">
-                <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{board.answer.label}</div>
+                <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{board.answer.label}</div>
                 {/* THE ANSWER DRAWN, the figure never printed twice (his law of 2026-09-19, "a share of a whole is drawn").
                     A SHARE IS A PIE BESIDE ITS FIGURE (2026-09-25, his word that night: "the 20% with cubic bars at the hero is a
                     catastrophe, no need for that, a pie chart would be enough"): the wedge in the accent the figure is printed in,
@@ -123,7 +123,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
           ) : (
             <div className="flex flex-col gap-4">
               <div data-answer-absent="1">
-                <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.answer.label}</div>
+                <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{COPY.answer.label}</div>
                 <p data-subtitle className="mt-1 max-w-[28ch] text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{COPY.answer.absent}</p>
               </div>
               <ImageCell image={board.image} grow />

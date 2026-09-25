@@ -99,12 +99,12 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
         {groups.map((g, gi) => (
           <div key={`${g.group ?? "cells"}-${gi}`} data-kv-group={g.group ?? ""} className={fill ? "grid gap-y-4" : "grid content-start gap-y-4"}>
             {g.group ? (
-              <div className="-mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{g.group}</div>
+              <div className="-mb-2 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{g.group}</div>
             ) : anyHeading ? (
               /* A GROUP WITHOUT A HEADING RESERVES THE HEADING'S LINE when the
                  groups sit side by side, so every figure in the row shares
                  one baseline; stacked, the reserve is hidden. */
-              <div aria-hidden className="-mb-2 hidden text-[length:var(--t-micro)] font-semibold uppercase [@container(min-width:900px)]:block">&nbsp;</div>
+              <div aria-hidden className="-mb-2 hidden text-[length:var(--t-body)] font-semibold [@container(min-width:900px)]:block">&nbsp;</div>
             ) : null}
             {/* A LONE CELL TAKES THE WIDTH. Measured by the harness on the three
                 countries that hold one companion fact: a two-column grid with one
@@ -125,7 +125,12 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                       reserve itself is unchanged in size on purpose: raising it to
                       2.75em grew every one-line label by 1.8px and tipped a 118px
                       blank on the answer card's Fiji story at 768 over the 120 floor. */}
-                  <div className={`${byRow ? "" : "min-h-[2.6em] lg:min-h-0 "}text-[length:var(--t-micro)] font-semibold uppercase leading-[1.3] tracking-wide text-[var(--c-muted)]`}>{c.label}</div>
+                  {/* THE LABEL IN SENTENCE CASE AT THE BODY RUNG (2026-09-25, his message: "These 2x2 stacks in sections with capital
+                      letters etc have terrible legibility, almost unreadable and bad hierarchy"). Capitals at 12px, tracked and in bold,
+                      stood as a band of texture as heavy as the figure under them, and the note beneath matched the label's size: three
+                      lines of one weight. Now the question reads as words (14px, regular, muted), the answer is the one bold line in
+                      ink (16 under a card's figure, 20 alone), and the note keeps 12px: three rungs, one order. */}
+                  <div className={`${byRow ? "" : "min-h-[2.6em] lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>{c.label}</div>
                   {/* On the "row" reserve the figure sits on the cell's floor (`mt-auto`), so a row's figures share one top whatever their labels wrap to. */}
                   <div className={`${byRow ? "mt-auto pt-1" : "mt-1"} flex flex-wrap items-baseline gap-x-2 gap-y-1`}>
                     <Fig className={`${under ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-head)]"} leading-none text-[var(--c-ink)]`}>{c.value}</Fig>

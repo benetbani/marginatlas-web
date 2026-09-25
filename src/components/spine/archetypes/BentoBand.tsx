@@ -478,7 +478,7 @@ export function BentoMetric({
     <Box id={id} data-lean={lean ? "1" : undefined} className={`flex h-full flex-col${detail ? " [container-type:inline-size]" : ""}`} data-archetype="bento-metric" data-bento-kind="metric">
       <div className="mb-2 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
-        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
+        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{kicker}</h3>
         {/* HIS POP-UP, at the cell's opener (2026-09-22, QUEUE ui:the-gloss). */}
         {gloss ? <InfoTip gloss={gloss} className="ml-0.5" /> : null}
         {sample ? <SampleTag /> : null}
@@ -669,7 +669,7 @@ export function BentoCount({
     <Box className="flex h-full flex-col" data-archetype="bento-count" data-visual="1" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
       <div className="mb-2 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
-        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{kicker}</h3>
+        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{kicker}</h3>
         {sample ? <SampleTag /> : null}
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">

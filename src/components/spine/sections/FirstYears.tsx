@@ -78,7 +78,7 @@ export function FirstYears({ id = "first-years", data }: { id?: string; data: Su
       </div>
       {r ? (
         <div data-regions className="mt-5 border-t border-[var(--c-border)] pt-3">
-          <div className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{C.regions.replace("{n}", String(maxYear))}</div>
+          <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.regions.replace("{n}", String(maxYear))}</div>
           <div className="relative mt-3 h-2 rounded-full" role="img" aria-label={`${r.worst.name} ${r.worst.pct}%, ${r.best.name} ${r.best.pct}%`}>
             <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
             <span aria-hidden className="absolute inset-y-0 rounded-full bg-[var(--c-line-strong)]" style={{ left: `${r.worst.pct}%`, width: `${Math.max(1, r.best.pct - r.worst.pct)}%` }} />

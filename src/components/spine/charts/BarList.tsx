@@ -43,7 +43,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
             {look === "icons" ? (i.icon ? <Ico id={i.icon} tone="terra" /> : <span aria-hidden />) : null}
             <span data-label className="min-w-0 truncate text-[length:var(--t-body)] leading-tight">
               {name}
-              {i.badge ? <span className="ml-2 rounded border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 align-middle text-[length:var(--t-mark)] font-semibold uppercase tracking-wide text-[var(--c-ink2)]">{i.badge}</span> : null}
+              {i.badge ? <span className="ml-2 rounded border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 align-middle text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{i.badge}</span> : null}
             </span>
             <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{i.display}</Fig>
             <span className={`relative col-span-full block rounded-full [@container(min-width:420px)]:col-span-1 ${look === "icons" ? "h-2.5" : "h-4"}`} role="img" aria-label={`${i.label}: ${i.display}${ariaUnit}`}>

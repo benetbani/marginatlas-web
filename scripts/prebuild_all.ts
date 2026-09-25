@@ -352,6 +352,10 @@ const GATES: Gate[] = [
   { name: "no-hardcoded-hex", script: "scripts/verify_hardcoded_hex.ts" },
   /* The distance ladder (2026-09-23, briefs/DISTANCES.md section 1: 0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64). A ratchet seeded at the 152 uses the spine held the day it was written; the count may only fall. */
   { name: "distance-ladder", script: "scripts/verify_distance_ladder.mjs" },
+  /* Words a reader must read are not set in capitals (2026-09-25, his message: "These 2x2 stacks in sections with capital letters
+     etc have terrible legibility, almost unreadable and bad hierarchy"): the key-value labels, the card titles, the captions and the
+     chips went to sentence case the same evening; capitals stay for a table's column heads. A per-file ratchet seeded after the fix. */
+  { name: "no-caps-labels", script: "scripts/verify_no_caps_labels.mjs" },
   /* WCAG AA on every token that carries text. The colour tokens are edited by
      eye in the founder's design file, where a shade nudged lighter still
      compiles and still typechecks. Measured clean before it was written, 247 of

@@ -48,7 +48,7 @@ export function LocalApps({ id = "local-apps", data }: { id?: string; data: Loca
               <div className="mb-1 flex items-center gap-2">
                 <Ico id={j.icon} tone="terra" />
                 <span className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{j.label}</span>
-                {allFree ? <span className="ml-auto text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">{COPY.localApps.allFree}</span> : null}
+                {allFree ? <span className="ml-auto text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{COPY.localApps.allFree}</span> : null}
               </div>
               <ol className="m-0 list-none divide-y divide-[var(--c-border)] p-0">
                 {j.apps.map((a) => (

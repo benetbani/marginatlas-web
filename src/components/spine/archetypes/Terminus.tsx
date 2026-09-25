@@ -51,7 +51,7 @@ export function Terminus({ kicker, doors }: { kicker?: string; doors: Door[] }) 
   const ordered = pillIndex >= 0 ? [...live.filter((d) => d.kind !== "pill"), live[pillIndex]] : live;
   return (
     <div data-archetype="terminus" data-doors={String(ordered.length)}>
-      {kicker ? <h3 data-typography="custom" className="mb-2 text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.14em] text-[var(--c-muted)]">{kicker}</h3> : null}
+      {kicker ? <h3 data-typography="custom" className="mb-2 text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{kicker}</h3> : null}
       <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
         {ordered.map((d) =>
           d.kind === "pill" ? (

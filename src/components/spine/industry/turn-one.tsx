@@ -228,7 +228,7 @@ export function PaysShareCell({ share }: { share: PaysMetric }) {
     <Box className="flex h-full flex-col [container-type:inline-size]" data-archetype="ring" data-visual="1">
       <div className="mb-2 flex items-center gap-2">
         <Ico id="break-even" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{COPY.tradeClears.kicker}</h3>
+        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{COPY.tradeClears.kicker}</h3>
         <SampleTag />
       </div>
       <div className="grid flex-1 grid-cols-1 items-center gap-4 py-2 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
@@ -247,7 +247,7 @@ export function PaysFixedCell({ fixed }: { fixed: PaysCount }) {
     <Box className="flex h-full flex-col" data-archetype="segment-bar" data-visual="1">
       <div className="mb-2 flex items-center gap-2">
         <Ico id="cost-breakdown" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-micro)] font-semibold uppercase tracking-[0.12em] text-[var(--c-muted)]">{K.fixed}</h3>
+        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{K.fixed}</h3>
         <SampleTag />
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">
