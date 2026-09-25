@@ -48,11 +48,26 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 export const CITY_MARKET_MIN_TRADES = 3;
 
 /** The trade's icon by the words the shards use for it; the high-street tile for the rest. */
+/* FIRST MATCH WINS, so the specific words stand first (2026-09-25, with the ten
+   new trade glyphs). Two wrong pictures came out of the old order: "bar"
+   matched "barbershops" (a cocktail glass for a barber) and "car" matched "pet
+   care" (a wrench for a vet); the bar's word is bounded now and the vet is read
+   before the garage. */
 const TRADE_ICONS: Array<[RegExp, AtlasIconId]> = [
+  [/barber/i, "trade-barber"],
+  [/nail/i, "trade-nails"],
+  [/hotel|lodging|guest ?house|b&b/i, "trade-hotel"],
+  [/vet|pet/i, "trade-vet"],
+  [/account|tax adviser|bookkeep/i, "trade-accounting"],
+  [/agenc|marketing|design studio/i, "trade-agency"],
+  [/bakery|bakeries|baker/i, "trade-bakery"],
+  [/laundr|dry clean/i, "trade-laundry"],
+  [/clean/i, "trade-cleaning"],
+  [/food truck|street food/i, "trade-food-truck"],
   [/restaurant/i, "trade-restaurant"],
   [/caf[eé]|coffee/i, "trade-cafe"],
-  [/bar|pub|nightclub/i, "trade-bar"],
-  [/hair|beauty|salon|barber|nail/i, "trade-salon"],
+  [/\bbars?\b|pub|nightclub/i, "trade-bar"],
+  [/hair|beauty|salon/i, "trade-salon"],
   [/grocer|convenience|supermarket/i, "trade-grocery"],
   [/fitness|gym/i, "trade-gym"],
   [/dental|dentist/i, "trade-dental"],

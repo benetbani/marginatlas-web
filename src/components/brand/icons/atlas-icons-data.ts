@@ -102,7 +102,17 @@ export type AtlasIconId =
   | "trade-bar"
   | "trade-childcare"
   | "trade-taxi"
-  | "trade-retail";
+  | "trade-retail"
+  | "trade-hotel"
+  | "trade-vet"
+  | "trade-accounting"
+  | "trade-agency"
+  | "trade-barber"
+  | "trade-bakery"
+  | "trade-nails"
+  | "trade-cleaning"
+  | "trade-laundry"
+  | "trade-food-truck";
 
 export interface AtlasIconDef {
   id: AtlasIconId;
@@ -731,6 +741,82 @@ export const atlasIcons: AtlasIconDef[] = [
     label: "Retail shop",
     blurb: "A shop selling goods over the counter.",
     body: `<path d="M6 12l1.8-4.5a1.5 1.5 0 0 1 1.4-1h13.6a1.5 1.5 0 0 1 1.4 1L26 12"/><path d="M6 12c0 1.5 1.1 2.7 2.5 2.7S11 13.5 11 12c0 1.5 1.1 2.7 2.5 2.7S16 13.5 16 12c0 1.5 1.1 2.7 2.5 2.7S21 13.5 21 12c0 1.5 1.1 2.7 2.5 2.7S26 13.5 26 12"/><path d="M7.5 15.5v10h17v-10"/><path d="M13 25.5v-6.5h6v6.5"/><circle class="af" cx="16" cy="9.2" r="1.6"/>`,
+  },
+  /* TEN MORE TRADES, 2026-09-25 (the founder, on the home page: "no icons,
+     everything is so bad"). Until today a hotel, a vet, an accountant, an
+     agency, a bakery, a nail bar, a cleaner, a laundry and a food truck all
+     drew the one fallback shopfront, and a barbershop drew the hair salon's
+     scissors, so a list of London's trades repeated one picture eight times.
+     Same family rules: the 32 grid, one stroke, round ends, ONE accent. */
+  {
+    id: "trade-hotel",
+    group: "industry",
+    label: "Hotel",
+    blurb: "A hotel, guest house or bed and breakfast.",
+    body: `<path d="M5.5 8.5v16M5.5 20.5h21v4"/><path d="M12.5 20.5v-4.5a2 2 0 0 1 2-2h9.5a2.5 2.5 0 0 1 2.5 2.5v4"/><circle class="af" cx="9.2" cy="17.2" r="2"/>`,
+  },
+  {
+    id: "trade-vet",
+    group: "industry",
+    label: "Vet",
+    blurb: "A veterinary practice or pet care.",
+    body: `<path d="M11.2 22.4c0-3.3 2.2-6 4.8-6s4.8 2.7 4.8 6c0 1.9-1.4 2.9-3 2.4-1.2-.4-2.4-.4-3.6 0-1.6.5-3-.5-3-2.4z"/><circle cx="8.6" cy="14.6" r="2.1"/><circle cx="13.2" cy="9.6" r="2.1"/><circle cx="23.4" cy="14.6" r="2.1"/><circle class="af" cx="18.8" cy="9.6" r="2.1"/>`,
+  },
+  {
+    id: "trade-accounting",
+    group: "industry",
+    label: "Accountant",
+    blurb: "An accountancy or tax practice.",
+    body: `<rect x="8.5" y="5.5" width="15" height="21" rx="2.5"/><path d="M12 9.5h8v3.5h-8z"/><path d="M12.4 17.5h.8M15.6 17.5h.8M18.8 17.5h.8M12.4 21.8h.8M15.6 21.8h.8"/><path class="a" d="M18.8 21.8h.8"/>`,
+  },
+  {
+    id: "trade-agency",
+    group: "industry",
+    label: "Agency",
+    blurb: "A marketing or design agency.",
+    body: `<path d="M6 13.8v4.4a1 1 0 0 0 1 1h3.5l8.5 5V7.8l-8.5 5H7a1 1 0 0 0-1 1z"/><path d="M10.5 19.2l1.4 5.3h2.6"/><path class="a" d="M23 12.4a5 5 0 0 1 0 7.2"/>`,
+  },
+  {
+    id: "trade-barber",
+    group: "industry",
+    label: "Barbershop",
+    blurb: "A barbershop.",
+    body: `<path d="M11 6.5h10M11 25.5h10"/><rect x="12.5" y="6.5" width="7" height="19" rx="1.5"/><path d="M12.5 11l7 3.5M12.5 18.5l7 3.5"/><path class="a" d="M12.5 14.75l7 3.5"/>`,
+  },
+  {
+    id: "trade-bakery",
+    group: "industry",
+    label: "Bakery",
+    blurb: "A bakery selling bread and pastry.",
+    body: `<path d="M5.5 18c0-4.6 4.7-7.5 10.5-7.5s10.5 2.9 10.5 7.5v4a2 2 0 0 1-2 2h-17a2 2 0 0 1-2-2z"/><path d="M9.5 17.5l2.6-3.4M19.9 17.5l2.6-3.4"/><path class="a" d="M14.7 17.5l2.6-3.4"/>`,
+  },
+  {
+    id: "trade-nails",
+    group: "industry",
+    label: "Nail bar",
+    blurb: "A nail salon.",
+    body: `<rect x="10.5" y="15" width="11" height="11" rx="2.5"/><path d="M13.5 15v-2.5h5V15"/><path d="M14.5 12.5v-6.5h3v6.5"/><circle class="af" cx="16" cy="20.5" r="2"/>`,
+  },
+  {
+    id: "trade-cleaning",
+    group: "industry",
+    label: "Cleaner",
+    blurb: "A cleaning business.",
+    body: `<path d="M11.5 14.5h8l1.5 3.5v6.5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V18z"/><path d="M13 14.5v-4h4.5v4"/><path d="M17.5 10.5h3.5l1.5 2"/><circle class="af" cx="25.2" cy="9.2" r="1.4"/>`,
+  },
+  {
+    id: "trade-laundry",
+    group: "industry",
+    label: "Laundry",
+    blurb: "A dry cleaner or laundry.",
+    body: `<path d="M16 13.8L6 20.4a1.2 1.2 0 0 0 .7 2.2h18.6a1.2 1.2 0 0 0 .7-2.2z"/><path class="a" d="M13.6 9.6a2.4 2.4 0 1 1 3.4 2.2c-.6.3-1 .9-1 1.6v.4"/>`,
+  },
+  {
+    id: "trade-food-truck",
+    group: "industry",
+    label: "Food truck",
+    blurb: "A food truck or street stall.",
+    body: `<path d="M4.5 22V10.5a1 1 0 0 1 1-1h13v12.5"/><path d="M18.5 13.5h4.3l4.2 4.5V22h-1.5"/><path d="M10 22h6.5"/><circle cx="7.5" cy="22.5" r="2.2"/><circle cx="19" cy="22.5" r="2.2"/><path class="a" d="M8 14h7"/>`,
   },
 ];
 
