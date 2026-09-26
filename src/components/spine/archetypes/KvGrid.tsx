@@ -169,7 +169,10 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                       took three lines, and their figures dropped under their neighbours'. On a narrow grid the tile stands on its own
                       line INSIDE the reserve, which grows by the tile's 2rem, so the words keep the cell's width and two lines, and a
                       one-line label's spare line falls above its tile, never between the tile and its words. */}
-                  <div className={`${byRow ? "" : c.icon ? (three ? "flex min-h-[calc(2.6em+2rem)] flex-col justify-end [@container(min-width:400px)]:min-h-[2.6em] " : "flex min-h-[calc(2.6em+2rem)] flex-col justify-end [@container(min-width:400px)]:min-h-[2.6em] lg:min-h-0 ") : three ? "flex min-h-[2.6em] flex-col justify-end " : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>
+                  {/* A LEAD CELL ALONE ON ITS ROW RESERVES NOTHING (2026-09-26, the phone photographs of the district and trade heroes):
+                      the reserve lines figures up across a row, and a cell with no neighbour has none to meet; its empty line stood
+                      between the answer card's sentence and the cells under it, about 18px of the 50 a reader saw. */}
+                  <div className={`${byRow ? "" : lead && ci === 0 && !three ? "flex flex-col justify-end " : c.icon ? (three ? "flex min-h-[calc(2.6em+2rem)] flex-col justify-end [@container(min-width:400px)]:min-h-[2.6em] " : "flex min-h-[calc(2.6em+2rem)] flex-col justify-end [@container(min-width:400px)]:min-h-[2.6em] lg:min-h-0 ") : three ? "flex min-h-[2.6em] flex-col justify-end " : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>
                     {c.icon ? <span aria-hidden className="mb-1 inline-flex [@container(min-width:400px)]:hidden"><Ico id={c.icon} tone="terra" /></span> : null}
                     {c.icon ? (
                       <span className="flex items-center gap-2">

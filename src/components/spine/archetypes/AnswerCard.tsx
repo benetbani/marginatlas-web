@@ -153,7 +153,10 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
             notes stop wrapping, and the columns finish within the quarter;
             from lg the halves are equal. With no cells the answer stands
             alone. */}
-        <div className={`mt-6 grid grid-cols-1 gap-8 ${live.length > 0 ? "md:grid-cols-[1fr_2fr] md:gap-10 lg:grid-cols-2 lg:gap-12" : ""}`} data-state={answer ? (live.length ? "answer-and-cells" : "answer-only") : "no-answer"}>
+        {/* 24 BETWEEN THE ANSWER AND ITS CELLS ON A PHONE (2026-09-26, the phone photographs of the district and trade heroes): the
+            grid's 32 and the first label's reserved line stood about 50px of air between the answer's sentence and the cells that
+            belong to it; 24 keeps the break and loses the gulf. From md the columns stand side by side and keep their gaps. */}
+        <div className={`mt-6 grid grid-cols-1 gap-6 ${live.length > 0 ? "md:grid-cols-[1fr_2fr] md:gap-10 lg:grid-cols-2 lg:gap-12" : ""}`} data-state={answer ? (live.length ? "answer-and-cells" : "answer-only") : "no-answer"}>
           {answer ? (
             <div data-answer="1">
               <div className="flex flex-wrap items-center gap-2">
