@@ -336,6 +336,8 @@ export const COPY = {
    *  under the image says what the image is until a real photograph lands
    *  (his word: "put a placeholder at this moment"). Every string read aloud. */
   heroBoard: {
+    /** The readout wrapper's name for a screen reader (goal 2026-09-26, M1). */
+    marksLabel: "The six figures, among the countries",
     rows: {
       clean: CLEAN_DEALING,
       admin: "Admin ease",
@@ -366,7 +368,10 @@ export const COPY = {
   /** THE MONTH COLUMNS (MonthBars.tsx; his gold standard's B30 drawn as columns since his ruling of 2026-09-23): the twelve initials along the foot, the aria sentence. */
   monthLine: {
     initials: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
-    aria: "The year month by month, busiest in {peak}, quietest in {trough}",
+    /** Full names for the drawing's spoken label and each month's readout (2026-09-26): "busiest in D" read as a letter. */
+    names: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    aria: "The year month by month, busiest in {peak}, quietest in {trough}: {months}",
+    readout: "{month}, of the busiest month",
   },
   cityHeroBoard: {
     rows: { visitors: "Visitors", permits: "City permits", density: "Per 10,000 residents", gdp: "Metro GDP", living: "Cost of living" },
@@ -665,6 +670,10 @@ export const COPY = {
   },
   /** WHO MAKES IT PAST THE FIRST YEARS, AND WHAT HOLDS SMALL FIRMS BACK (sections/FirstYears.tsx, Obstacles.tsx, 2026-09-25). */
   firstYears: {
+    /** The region lever (goal 2026-09-26): its label, the words with a region, and the default option where the file names no place. */
+    choose: "Region",
+    focalWordsIn: "of new firms still trading after {n} years in {region}",
+    countryFallback: "The whole country",
     kicker: "Who is still trading",
     focalWords: "of new firms still trading after {n} years",
     start: "Start",
@@ -686,6 +695,8 @@ export const COPY = {
     focalWords: "of {item} spending comes from the richest fifth",
     items: { hairdressing: "hairdressing and beauty", "eating-out": "eating-out", groceries: "food and drink" } as Record<string, string>,
     caption: "A household's week, by income tenth",
+    /** A column's readout (2026-09-26): its tenth, poorest the first. */
+    readout: "a week, income tenth {n} of 10",
     poorest: "Poorest tenth",
     richest: "Richest tenth",
   },
@@ -790,7 +801,11 @@ export const COPY = {
     kicker: "Borrowing",
     focalWords: "average rate on a new small-business loan",
     cells: { base: "Central bank rate", startup: "Government start-up loans" },
-    notes: { base: "", startup: "{rate} fixed, 1 to 5 years", grantFor: "for" },
+    notes: { base: "", startup: "{rate} fixed, {min} to {max} years", grantFor: "for" },
+    /** The start-up loan's term, read by the note and the loan lever alike, so the two never disagree. */
+    startupTerm: { min: 1, max: 5 },
+    /** The loan lever (goal 2026-09-26, M3). */
+    loan: { label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "{total} repaid over {n} years" },
   },
   banking: {
     kicker: "Getting paid",
