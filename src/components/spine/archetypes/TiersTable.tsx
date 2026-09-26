@@ -93,6 +93,11 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
   const { rows, howTo, dots = true, panel = true, door = true, fill = false } = props;
   if (rows.length === 0) return null;
   const anyDots = dots && rows.some((t) => isNum(t.complexity_1_5));
+  /* A LOCAL NAME LONGER THAN ITS LINE WRAPS, NEVER CUT (2026-09-26): Mexico's "Sociedad de Responsabilidad Limitada (S. de R.L. de
+     C.V.)" ran 7 to 20px past its line at every width and was cut to an ellipsis. Where any row's local name passes 36 characters
+     (about the narrowest line's 190px at 12px) every row reserves two lines for it, so the rows stay one height (the harness's
+     UNEQUAL) and the long name has its second line. */
+  const longTerm = rows.some((t) => (t.local_term && t.local_term !== t.tier ? t.local_term.length : 0) > 36);
   const grid = dots ? GRID : GRID_NO_DOTS;
   const span = dots ? "col-span-4" : "col-span-3";
   return (
@@ -132,7 +137,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
               <span className={`${span} flex min-w-0 items-center gap-2 [@container(min-width:480px)]:col-span-1`}>
                 <span className="min-w-0 flex-1">
                   <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{t.tier}</span>
-                  <span className="block min-h-[1.3em] truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{localTerm ?? " "}</span>
+                  <span className={`block text-[length:var(--t-micro)] text-[var(--c-muted)] ${longTerm ? "line-clamp-2 min-h-[2.6em] leading-[1.3]" : "min-h-[1.3em] truncate leading-snug"}`}>{localTerm ?? " "}</span>
                 </span>
                 <span aria-hidden className={`shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform [@container(min-width:480px)]:hidden ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
               </span>
