@@ -61,16 +61,9 @@ export const TRACK = "#e6e6e6";
  * billions print whole, as thousands do ($230B for Frankfurt's 230). No
  * caller passed a figure at or above a billion before this, so no printed
  * figure changed. One grammar, still (C29). */
-export const usd = (v: number) =>
-  v >= 1e12
-    ? "$" + (v / 1e12).toFixed(1) + "T"
-    : v >= 1e9
-      ? "$" + Math.round(v / 1e9) + "B"
-      : v >= 1e6
-        ? "$" + (v / 1e6).toFixed(1) + "M"
-        : v >= 1e4
-          ? "$" + Math.round(v / 1000) + "K"
-          : "$" + Math.round(v).toLocaleString("en-US");
+/* The grammar itself lives in src/lib/spine/money.ts since 2026-09-26, so a lever in the browser prints money as the page does. */
+export { usd } from "@/lib/spine/money";
+import { usd } from "@/lib/spine/money";
 /* A MONTHLY FIGURE IS STILL A FIGURE, so the ruling reaches this one too: it
  * divides and then prints in the one grammar rather than carrying a second.
  * Before, it printed "K" at every magnitude, so $200 a month read "$0.2K". */
