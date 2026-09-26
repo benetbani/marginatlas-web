@@ -28,6 +28,12 @@
  *   52 HERO SIDE BLANK    the hero's rightmost ink ends before three quarters
  *                         of the card's width (1280 and 768)
  *   56 TEXT OUT OF BOX    a text leaf past its card's padding box
+ *   56 TEXT CUT           a text cut to an ellipsis or a line clamp: an element
+ *                         whose text-overflow is ellipsis and whose text is
+ *                         wider than its box, or whose line clamp hides lines
+ *                         (2026-09-26: the UK page's legal forms "S...", "L...",
+ *                         "J..." and "United Kin..." at 768, London's peer
+ *                         cities cut to four letters, all passing every rule)
  *   56 TEXT OVERLAP       two text leaves of one card intersecting; an element
  *                         under `[data-overlay]` is exempt
  *   58 PARTS NOT REVEALED a card declaring `data-parts` over 1 with no
@@ -196,6 +202,15 @@ function inPage(width) {
     if (width >= 768) for (const t of texts) { if (t.inTable || t.txt.length < 60) continue; if (t.rect.width > contentW / 2 + 1) red(id, "TEXT WIDE", `a run of text measures ${Math.round(t.rect.width)}px, over half the page's ${Math.round(contentW)}px: "${t.txt.slice(0, 48)}..." (clause 51)`); }
     /* 56 TEXT OUT OF BOX and TEXT OVERLAP */
     for (const t of texts) { if (t.rect.right > x1 + 1 || t.rect.left < x0 - 1) red(id, "TEXT OUT OF BOX", `"${t.txt.slice(0, 40)}" runs ${Math.round(Math.max(t.rect.right - x1, x0 - t.rect.left))}px past the card's box (clause 56)`); }
+    /* 56 TEXT CUT: text the reader cannot read because its box cut it, to an ellipsis or at a clamp. Blind spot: text clipped by an
+       overflow-hidden box with no ellipsis and no clamp (it reads as TEXT OUT OF BOX only when it passes the card's own box). */
+    for (const el of card.querySelectorAll("*")) {
+      if (!el.getClientRects().length || hiddenLeaf(el)) continue;
+      const cs = getComputedStyle(el);
+      const ellipsis = cs.textOverflow === "ellipsis" && cs.overflowX !== "visible" && el.scrollWidth > el.clientWidth + 1;
+      const clamped = cs.webkitLineClamp && cs.webkitLineClamp !== "none" && el.scrollHeight > el.clientHeight + 1;
+      if (ellipsis || clamped) red(id, "TEXT CUT", `"${(el.textContent || "").trim().slice(0, 40)}" is cut ${ellipsis ? `to ${el.clientWidth} of its ${el.scrollWidth}px` : "at its line clamp"}; a label wraps or its column grows, it is never cut (clause 56)`);
+    }
     const seen = new Set();
     for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) {
       const a = texts[i], b = texts[j];

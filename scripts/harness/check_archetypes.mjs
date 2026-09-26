@@ -5,6 +5,8 @@
  *
  * Checks (HARNESS-SPEC 5, 6, 7, 8 as far as a static render can carry them):
  *  UNIVERSALITY: no element overflows its box, no page scroll sideways.
+ *  TEXT CUT (2026-09-26): no text cut to an ellipsis or at a line clamp; the
+ *    overflow rule skips a hidden overflow, which is how an ellipsis cuts.
  *  LONE STAT / HOLE: no blank rectangle inside a card over a quarter of the
  *    card each way (E6), floored at 120px.
  *  UNEQUAL ROWS: in every key-value grid, cells in one row share their
@@ -167,12 +169,16 @@ function inPage(storySelector) {
   for (const story of stories) {
     const inst = story.closest("[data-stories]")?.getAttribute("data-stories") + ":" + story.getAttribute("data-story");
     const card = story.querySelector("[data-archetype]");
-    const r = { inst, kind: card?.getAttribute("data-archetype") || "", overflow: [], sizes: [], accents: 0, focalAccents: 0, answerSizes: [], rows: [], labels: [], hole: null, subtitle: "", cells: [], state: "", bars: [], tableRows: [], selfOmit: !!story.querySelector("[data-self-omit]") };
+    const r = { inst, kind: card?.getAttribute("data-archetype") || "", overflow: [], cut: [], sizes: [], accents: 0, focalAccents: 0, answerSizes: [], rows: [], labels: [], hole: null, subtitle: "", cells: [], state: "", bars: [], tableRows: [], selfOmit: !!story.querySelector("[data-self-omit]") };
     if (!card) { out.push(r); continue; }
     for (const el of card.querySelectorAll("*")) {
       if (el.getClientRects().length === 0) continue; // display:none at this width
       const cs = getComputedStyle(el);
       if (el.scrollWidth > el.clientWidth + 1 && cs.overflowX !== "hidden" && cs.display !== "inline") r.overflow.push(el.className.toString().slice(0, 40));
+      /* TEXT CUT (2026-09-26): the overflow above skips a hidden overflow, which is how an ellipsis cuts a label, so a legal form
+         cut to "S..." and a country to "United Kin..." passed; a box that cuts its text to an ellipsis or at a clamp is read here. */
+      if (cs.textOverflow === "ellipsis" && cs.overflowX !== "visible" && el.scrollWidth > el.clientWidth + 1) r.cut.push(`"${(el.textContent || "").trim().slice(0, 32)}" ${el.clientWidth} of ${el.scrollWidth}px`);
+      else if (cs.webkitLineClamp && cs.webkitLineClamp !== "none" && el.scrollHeight > el.clientHeight + 1) r.cut.push(`"${(el.textContent || "").trim().slice(0, 32)}" at its clamp`);
       const txt = (el.textContent || "").trim();
       if (txt && el.children.length === 0) {
         const fs = parseFloat(cs.fontSize); r.sizes.push(fs);
@@ -695,6 +701,7 @@ for (const w of WIDTHS) {
   if (pageScroll) red("page", w, "BOTCHED MOBILE", "the page scrolls sideways");
   for (const r of out) {
     if (r.overflow.length) red(r.inst, w, "BOTCHED MOBILE", `overflowing: ${r.overflow.join(" | ")}`);
+    if (r.cut && r.cut.length) red(r.inst, w, "TEXT CUT", `${r.cut.length} text(s) cut: ${r.cut.join(" | ")}; a label wraps or its column grows, never an ellipsis`);
     for (const s of new Set(r.sizes)) if (!LADDER.has(Math.round(s))) red(r.inst, w, "LADDER", `font size ${s}px is not on the ladder`);
     if (r.kind === "answer-card") {
       if (r.level === "section" && r.h1 > 0) red(r.inst, w, "HEADLINE", `a section-level answer card draws ${r.h1} h1`);
