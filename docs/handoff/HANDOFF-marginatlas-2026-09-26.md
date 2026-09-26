@@ -31,8 +31,7 @@ the phone review of the other pages: the chain-owned count's hundred drawn at 2p
 a new page law ROW TOPS (figures in one key-value row within 2px, every page, every width, proven by a plant), and the headers'
 50px of air between the answer and its cells on a phone.
 
-**Waiting on him (QUEUE HIS rows, unchanged):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
-`trade:uk-survival-official`. **Next for the loop:** milestone 1 of the launch plan his interview of 2026-09-26 evening made (`design/loop/build/INTERVIEW-2026-09-26.md`).
+**Waiting on him (QUEUE):** `country:seats-awaiting-click`, `copy:spectra-poles`, `launch:ruling-30-or-the-seat`, `launch:publish-the-form-catalogue`; the four rows of the afternoon (hiring word, kept forms, Clarity, UK survival) were decided in his interview. **Next for the loop:** milestone 1 of the launch plan his interview of 2026-09-26 evening made (`design/loop/build/INTERVIEW-2026-09-26.md`).
 
 ## 2. Mission & success criteria
 
@@ -145,9 +144,7 @@ Stripe as built, checkout first, the second half of every chapter on UK pages be
 milestone 2 Pro, milestone 3 the home page; he reviews at each milestone and before launch day only. The loop's next work is
 milestone 1, listed at the foot of that file.
 
-**Waiting on him (QUEUE, HIS):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
-`trade:uk-survival-official`; older ones unchanged (`arch:city-cards`, `country:seats-awaiting-click`,
-`country:character-pair-vs-clause-64`).
+**Waiting on him (QUEUE):** `country:seats-awaiting-click`, `copy:spectra-poles`, `launch:ruling-30-or-the-seat`, `launch:publish-the-form-catalogue`; the rest were decided in the interview.
 
 **How to verify a batch:** re-render (`render_page.tsx --list`), the page checks on the renders, the archetype harness for any
 touched kind, `verify_interact.mjs`, `tsc`, the census and the counts with `--write`, then the chain (or, for a fix after a chain,
