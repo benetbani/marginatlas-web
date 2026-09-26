@@ -1,5 +1,5 @@
 # HANDOFF: marginatlas.com, 2026-09-26 (the goal of that afternoon: sections a reader can understand and digest)
-The goal of 2026-09-26 afternoon (make every section understandable and digestible: interactions, sense, tables, icons) taken through ten batches, 41 to 50, every one pushed and proven on production (driven live or fetched). Production is `ee9e114a`, nothing ahead of origin. Written 2026-09-26 evening, updated after batch 50.
+The goal of 2026-09-26 afternoon (make every section understandable and digestible: interactions, sense, tables, icons) taken through eleven batches, 41 to 51, every one pushed and proven on production (driven live or fetched). Production is `f85728c3`, nothing ahead of origin. Written 2026-09-26 evening, updated after batch 51.
 
 > **How to use this document.** Read top to bottom once, then the files in section 7 in order. Do not start work until you can
 > answer the checklist in section 13; the re-hydration prompt is section 14. `E:/atlas/design/loop/build/STATE.md`
@@ -24,7 +24,9 @@ a real browser and reads every rendered page's markup; each of its checks was pr
 Batches 46 to 50 took the review beyond the UK page (`design/loop/build/goal-2026-09-26/PLAN.md` section 8): the cost split's
 withheld state titled "Costs and margin" without its apology; London's empty shops drawn as 1.5 of 100, not "2" over a line saying
 1.5; the living costs' icons; the phone tile inside the label's reserve so long labels keep two lines; the answer card's fallback
-"Country level" glyph and orphan foot mark gone; the how-to page's dots drawn where "One dot ... Five dots" stood.
+"Country level" glyph and orphan foot mark gone; the how-to page's dots drawn where "One dot ... Five dots" stood. Batch 51:
+the cost split's segments and legend rows as linked parts with readouts, the industry chart's own column marked (RankedBars
+`selfKey`), a glyph a note on "Who this suits" and "Lessons from owners", the district's price tier as a pill.
 
 **Waiting on him (QUEUE HIS rows, unchanged):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
 `trade:uk-survival-official`. **Next for the loop:** the two trade-page rows the review queued (`trade:split-withheld-sense`, `trade:peers-left-out-line`: each is a stated-line law of the model meeting his no-disclaimers correction, so a law change with its harness, not a copy edit), then the rest of the plan's audit on the city and district pages.
@@ -49,10 +51,10 @@ withheld state titled "Costs and margin" without its apology; London's empty sho
 
 | Component | Status | Notes |
 |---|---|---|
-| Production | `ee9e114a` (batch 50) | batches 41 to 44 driven live with photos (`website/scratchpad/b41*`, `b42live/`, `b44live/`), 0 page errors; 45 to 50 fetched (their markers in the live HTML) |
+| Production | `f85728c3` (batch 51) | batches 41 to 44 driven live with photos (`website/scratchpad/b41*`, `b42live/`, `b44live/`), 0 page errors; 45 to 50 fetched (their markers in the live HTML) |
 | Website `main` | 0 ahead | remote benetbani/marginatlas-web |
 | Design repo `p4-seam` | `758c850` and this handoff's record | `E:/atlas`, no remote |
-| Chain | 168 of 168 at `ee9e114a` (and at `bf834f45`, `cf734737`, `54444a5d`); 167 of 168 at `e9134dde`, fixed by the copy gate's new contract `27a0a0a5` | `scratchpad/deploy/chain.txt` |
+| Chain | 168 of 168 at `f85728c3` (and at `ee9e114a`, `bf834f45`, `cf734737`, `54444a5d`); 167 of 168 at `e9134dde`, fixed by the copy gate's new contract `27a0a0a5` | `scratchpad/deploy/chain.txt` |
 | UK page laws / model laws / holes / copy | 0 / 3 / 0 / 0 | the 3 are his kept forms (`#character`, `#character-people`, `#cities`), HIS row `country:focal-kept-forms` |
 | The interact gate | 15 listening drawings, 105 readings, 8 sortable heads on the 9 harness pages | every fixture check proven by a plant |
 
@@ -136,11 +138,9 @@ What each mechanism is now, and where it sits:
 
 **Committed next steps (the loop's, no word needed):**
 
-1. The small findings the review left (PLAN.md section 8 and its notes): the industry page's "Similar trades" accents the leader
-   while the headline is the page's own trade's rank; the job market's sector block and "Lessons from owners" carry no glyphs;
-   "What it is like" leaves "Price tier" alone on its row. Each is a judgement, none misleads.
-2. `trade:peers-left-out-line` is DECIDED kept (MarkList's law 2); `trade:split-withheld-sense` is DONE.
-3. Any new section built for his list goes through the four checks the goal added: a readout or lever where the card holds the
+1. The review's last small finding: the job market's sector block (vacancies, payroll change) carries no glyph; its arrow is
+   already a symbol. A judgement, not a fault.
+2. Any new section built for his list goes through the four checks the goal added: a readout or lever where the card holds the
    rule, a key for every tick or dot, an icon a cell where a grid of facts stands, and the interact gate's markup read.
 
 **Waiting on him (QUEUE, HIS):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,

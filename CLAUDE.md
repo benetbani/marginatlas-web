@@ -131,7 +131,7 @@ code puts on the page>`.
 
 - **`docs/handoff/HANDOFF-marginatlas-2026-09-26.md` IS THE CURRENT HANDOFF, READ IT FIRST**
   (the goal of 2026-09-26 afternoon: every section understandable and digestible; batches
-  41 to 50 shipped and proven live, production at ee9e114a: readouts and linked parts on
+  41 to 51 shipped and proven live, production at f85728c3: readouts and linked parts on
   the drawings, four levers, a switch, the tables' sort, his plus on the legal forms, an
   icon a cell; the `interact` gate; two trade-page rows queued; its re-hydration prompt is
   its section 14). `E:/atlas/design/loop/build/STATE.md` is the state of record and is
