@@ -1396,6 +1396,19 @@
       "claims": []
     },
     {
+      "name": "interact",
+      "script": "scripts/verify_interact.mjs",
+      "args": [],
+      "browser": true,
+      "asserts": "verify_interact: A DRAWING'S PARTS ANSWER THE READER, AND ONLY WITH THE DRAWING'S OWN DATA (goal 2026-09-26, his message of that afternoon: \"study the potential dynamism of all sections ...",
+      "reads": [
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scripts/harness/pages.json",
+        "src/components/spine/interact/Marks.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "browser-gates-skip",
       "script": "scripts/verify_browser_gates_skip.ts",
       "args": [],

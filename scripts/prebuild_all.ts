@@ -551,6 +551,12 @@ const GATES: Gate[] = [
      it at 375, hover at 1280, focus and Escape from the keyboard. Planted twice
      (the old component, and the fix without preventDefault), each watched red. */
   { name: "gloss-tap", script: "scripts/verify_gloss_tap.mjs", browser: true },
+  /* A drawing's parts answer the reader (the goal of 2026-09-26, M1 and M2): bundles the Marks wrapper on a two-bar fixture and
+     drives a browser (a band's reading on a mouse, the keyboard and a tap; closing on leaving, Escape and a tap elsewhere; the
+     panel inside its drawing; a band or legend entry lighting its part in every bar), then reads every rendered page for a
+     reading outside a listening drawing, a listening drawing with no name or tab stop, and a reading its drawing does not hold.
+     Planted (a copy with the tap handler removed), watched red. */
+  { name: "interact", script: "scripts/verify_interact.mjs", browser: true },
   /* A browser gate that forgets requireBrowser dies on Vercel's build machine,
      which has no browser, and fails the deploy after a local chain passed
      every gate: three did on 2026-08-27, gloss-tap did on 2026-09-24 (batch

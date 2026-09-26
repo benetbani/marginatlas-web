@@ -2469,3 +2469,20 @@ main :where(p, li, blockquote, dd) {
   }
 }
 
+
+/* THE DRAWINGS' PARTS ANSWER THE READER (goal 2026-09-26, M2 of E:/atlas/design/loop/build/goal-2026-09-26/PLAN.md; the
+   component is src/components/spine/interact/Marks.tsx). While one part of a whole is active, every element of another part
+   fades to a third, so the part the reader touched is the one left at full strength (his donut of 2026-07-05: "hover highlights
+   the segment"). No colour changes and no card or row decoration (his 2026-07-11 ruling). The fade is quick and eases out;
+   under reduced motion it is instant. */
+[data-interactive="marks"] [data-part-key] {
+  transition: opacity 120ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-interactive="marks"] [data-dim] {
+  opacity: 0.35;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-interactive="marks"] [data-part-key] {
+    transition: none;
+  }
+}
