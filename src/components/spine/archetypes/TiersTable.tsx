@@ -19,6 +19,7 @@
  *    every country, and what the paperwork level means.
  *  - The dots are one idea declared on the set (I5), terracotta by his word.
  *  - The door renders only when the page exists; never a dead link.
+ *  - A row that opens carries his plus at its end (Plus, below), turned to a cross while open.
  *
  * COLUMN HEADS AS PROPS, THE KIT WORK OF MODEL.md 8.6 `06 team` (plan step
  * 33's third dispatch, 2026-09-18; the trade composition's 1.2): the same
@@ -62,9 +63,9 @@ export function TierPanel({ explainer, paperwork }: { explainer?: string; paperw
 /* Column heads in sentence case too (2026-09-25, his capitals ruling; shadcn's table heads the same): capitals were the one
    exception left, and a head of three words ("Payroll on staff") read as texture like any label. */
 const HEAD = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
-/* name | fee | time | dots | chevron, from md; the widths are the file's own
-   extremes, a $12,000 fee and a 90-day wait, not the exemplar's. */
-const GRID = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem_4.75rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem_4.75rem]";
+/* name | fee | time | dots and the plus, from 480px of table; the widths are the file's own extremes, a $12,000 fee and a
+   90-day wait, not the exemplar's. From 480px the last column holds five dots (56px), a gap and the plus (20px): 5.25rem. */
+const GRID = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem_4.75rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem_5.25rem]";
 /* name | fee | time, the registering shape with the dots off. */
 const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem]";
 /* name | a | b, the figures shape: a count and a year's pay ("$44K", "$8,500"). */
@@ -78,6 +79,17 @@ function Dots({ n, tone = "terra" }: { n: number; tone?: "terra" | "ink" }) {
     <span aria-label={`paperwork ${n} of 5`} role="img" className="flex items-center justify-end gap-1">
       {[1, 2, 3, 4, 5].map((i) => <span key={i} aria-hidden className="h-2 w-2 rounded-full" style={{ background: i <= n ? (tone === "ink" ? "var(--c-ink2)" : "var(--terra)") : "var(--c-soft2)" }} />)}
     </span>
+  );
+}
+
+/** THE FOUNDER'S PLUS ON A ROW THAT OPENS (the goal of 2026-09-26, the tables' study). The row's only sign was a chevron at 12px
+ *  in the muted grey, which read as decoration, not as "this opens". The plus is his (DetailPanel.tsx's header, 2026-09-08: "the
+ *  person clicks a plus and some more info appears"), the kit's InlineDisclosure glyph at the lead rung, in ink2 here because a
+ *  sign a reader must find cannot be the faintest thing on the row; turned to a cross while the row is open. A row with nothing
+ *  to open keeps the plus's room, invisible, so every row's dots end on one line. */
+function Plus({ open, shown, className = "" }: { open: boolean; shown: boolean; className?: string }) {
+  return (
+    <span aria-hidden data-plus={shown ? "1" : undefined} className={`h-5 w-5 shrink-0 items-center justify-center text-[length:var(--t-lead)] leading-none text-[var(--c-ink2)] transition-transform motion-reduce:transition-none ${open ? "rotate-45" : ""} ${shown ? "" : "invisible"} ${className}`}>+</span>
   );
 }
 
@@ -139,7 +151,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
                   <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{t.tier}</span>
                   <span className={`block text-[length:var(--t-micro)] text-[var(--c-muted)] ${longTerm ? "line-clamp-2 min-h-[2.6em] leading-[1.3]" : "min-h-[1.3em] truncate leading-snug"}`}>{localTerm ?? " "}</span>
                 </span>
-                <span aria-hidden className={`shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform [@container(min-width:480px)]:hidden ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
+                <Plus open={isOpen} shown={hasPanel} className="inline-flex [@container(min-width:480px)]:hidden" />
               </span>
               {/* On a phone the readings sit on their own row under the heads; a spacer keeps them in their columns. */}
               <span aria-hidden className="[@container(min-width:480px)]:hidden" />
@@ -153,7 +165,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
               {dots ? (
                 <span className="flex items-center justify-end gap-2">
                   {isNum(t.complexity_1_5) ? <Dots n={t.complexity_1_5} /> : null}
-                  <span aria-hidden className={`hidden text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform [@container(min-width:480px)]:inline ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
+                  <Plus open={isOpen} shown={hasPanel} className="hidden [@container(min-width:480px)]:inline-flex" />
                 </span>
               ) : null}
             </span>
@@ -161,7 +173,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
           return (
             <div key={`${t.tier}-${i}`} className={fill ? "flex flex-1 basis-0 flex-col justify-center py-2 first:pt-2 last:pb-2" : "py-2 first:pt-2 last:pb-0"}>
               {hasPanel ? (
-                <button type="button" onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen} className="flex w-full text-left">{line}</button>
+                <button type="button" onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen} className="flex w-full rounded-sm text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)]">{line}</button>
               ) : (
                 <div className="flex w-full">{line}</div>
               )}
