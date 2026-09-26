@@ -167,20 +167,20 @@ export function buildCityLiving(slug: string): CityLivingData | null {
   };
 
   const rent = figure(iso2, slug, "owner_col.rent_1bed_usd_mo");
-  if (rent) cells.push({ key: "rent", label: C.cells.rent, value: usd(rent.value), note: C.units.month, confidence: mark("rent", rent.tag) });
+  if (rent) cells.push({ key: "rent", icon: "neighborhood", label: C.cells.rent, value: usd(rent.value), note: C.units.month, confidence: mark("rent", rent.tag) });
   else missing.push(C.reasons.rent);
 
   const groceries = figure(iso2, slug, "owner_col.groceries_usd_mo");
-  if (groceries) cells.push({ key: "groceries", label: C.cells.groceries, value: usd(groceries.value), note: C.units.month, confidence: mark("groceries", groceries.tag) });
+  if (groceries) cells.push({ key: "groceries", icon: "trade-grocery", label: C.cells.groceries, value: usd(groceries.value), note: C.units.month, confidence: mark("groceries", groceries.tag) });
   else missing.push(C.reasons.groceries);
 
   /* A FARE-FREE CITY PRINTS THE WORD (COPY.free: a zero fee is the word, never $0). */
   const transit = figure(iso2, slug, "owner_col.transit_pass_usd_mo", true);
-  if (transit) cells.push({ key: "transit", label: C.cells.transit, value: transit.value > 0 ? usd(transit.value) : COPY.free, note: C.units.month, confidence: mark("transit", transit.tag) });
+  if (transit) cells.push({ key: "transit", icon: "transit", label: C.cells.transit, value: transit.value > 0 ? usd(transit.value) : COPY.free, note: C.units.month, confidence: mark("transit", transit.tag) });
   else missing.push(C.reasons.transit);
 
   const coffee = figure(iso2, slug, "owner_col.coffee_usd");
-  if (coffee) cells.push({ key: "coffee", label: C.cells.coffee, value: usdCents(coffee.value), note: C.units.cup, confidence: mark("coffee", coffee.tag) });
+  if (coffee) cells.push({ key: "coffee", icon: "trade-cafe", label: C.cells.coffee, value: usdCents(coffee.value), note: C.units.cup, confidence: mark("coffee", coffee.tag) });
   else missing.push(C.reasons.coffee);
 
   if (cells.length === 0) return null;
