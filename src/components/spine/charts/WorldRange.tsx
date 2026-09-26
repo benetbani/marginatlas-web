@@ -42,7 +42,11 @@ function pos(v: number, r: WorldRange, scale: "linear" | "log"): number {
   return Math.max(0, Math.min(100, ((x - lo) / (hi - lo)) * 100));
 }
 
-export function WorldRangeRows({ rows, medianWord, headless = false }: { rows: WorldRangeRow[]; medianWord: string; headless?: boolean }) {
+/** `ends` (2026-09-26, the United Kingdom's electricity, the dearest on file): the words an end prints when the row's own figure
+ *  prints the same, so the card's figure is never printed twice (the figure at 30 above, again at the track's end). */
+export type RangeEnds = { lowest: string; highest: string };
+
+export function WorldRangeRows({ rows, medianWord, headless = false, ends }: { rows: WorldRangeRow[]; medianWord: string; headless?: boolean; ends?: RangeEnds }) {
   const live = rows.filter((r) => r && Number.isFinite(r.value));
   if (live.length === 0) return null;
   return (
@@ -63,7 +67,7 @@ export function WorldRangeRows({ rows, medianWord, headless = false }: { rows: W
                 <span data-level={r.level} className="ml-auto rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{r.level}</span>
               ) : null}
             </div>}
-            {range ? <Track r={r} range={range} scale={scale} medianWord={medianWord} headless={headless || !!r.headless} /> : null}
+            {range ? <Track r={r} range={range} scale={scale} medianWord={medianWord} headless={headless || !!r.headless} ends={ends} /> : null}
           </div>
         );
       })}
@@ -71,11 +75,14 @@ export function WorldRangeRows({ rows, medianWord, headless = false }: { rows: W
   );
 }
 
-function Track({ r, range, scale, medianWord, headless }: { r: WorldRangeRow; range: WorldRange; scale: "linear" | "log"; medianWord: string; headless: boolean }) {
+function Track({ r, range, scale, medianWord, headless, ends }: { r: WorldRangeRow; range: WorldRange; scale: "linear" | "log"; medianWord: string; headless: boolean; ends?: RangeEnds }) {
   const at = pos(r.value, range, scale);
   const a = pos(range.p25, range, scale);
   const b = pos(range.p75, range, scale);
   const m = pos(range.median, range, scale);
+  const own = r.fmt(r.value);
+  const low = ends && own === r.fmt(range.min) ? ends.lowest : r.fmt(range.min);
+  const high = ends && own === r.fmt(range.max) ? ends.highest : r.fmt(range.max);
   return (
           <>
             <div className={`relative ${headless ? "mt-1" : "mt-3"} h-3`} role="img" aria-label={`${r.label}: ${r.display}${r.unit ? ` ${r.unit}` : ""}; the world's median ${r.fmt(range.median)}, from ${r.fmt(range.min)} to ${r.fmt(range.max)}`}>
@@ -87,8 +94,8 @@ function Track({ r, range, scale, medianWord, headless }: { r: WorldRangeRow; ra
               <span aria-hidden data-mark="value" className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] shadow-sm" style={{ left: `${Math.max(2, Math.min(98, at))}%`, background: "var(--terra)" }} />
             </div>
             <div className="relative mt-2 h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-              <span className="absolute left-0 tabular-nums">{r.fmt(range.min)}</span>
-              <span className="absolute right-0 tabular-nums">{r.fmt(range.max)}</span>
+              <span data-end="low" className="absolute left-0 tabular-nums">{low}</span>
+              <span data-end="high" className="absolute right-0 tabular-nums">{high}</span>
             </div>
             {/* THE MEDIAN ON ITS OWN LINE, under its tick, pulled left by its own share of the way along (so at either end it
                 aligns inward): measured at 375, on the ends' line it ran into the lowest figure. */}

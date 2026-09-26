@@ -554,14 +554,14 @@ function RunningCostsRanged({ iso2, costs }: { iso2: string; costs: RunningCosts
     <Box id="running-costs" className="flex flex-col">
       <Rail icon="cost-breakdown" kicker={COPY.runningCosts.kicker} />
       {typeof kwh === "number" && kwh > 0 ? <Focal figure={usdCents(kwh)} words={COPY.ranged.electricityWords} /> : null}
-      <WorldRangeRows rows={rows} medianWord={COPY.ranged.median} />
+      <WorldRangeRows rows={rows} medianWord={COPY.ranged.median} ends={COPY.ranged.ends} />
       {/* THE COST OF LIVING ON ITS SCALE'S OWN TRACK (2026-09-25): twenty blocks were the "cubic bars" he called a catastrophe in
           the hero, and they set a third drawing in one card beside the electricity's track; now the same track, 1 to 100 over the
           covered cities, the middle half shaded, the median city ticked, the ends never named (his ruling of 2026-09-20). Where the
           cities' spread cannot be read, the blocks stand as before. */}
       {costs.livingOnCityScale != null && livingSpread ? (
         <div className="mt-5 border-t border-[var(--c-border)] pt-4">
-          <WorldRangeRows rows={[{ key: "living", icon: "spending-power", label: COPY.runningCosts.rows.living, value: costs.livingOnCityScale, display: String(costs.livingOnCityScale), unit: COPY.runningCosts.units.of100, range: livingSpread, fmt: (v) => String(Math.round(v)), level: costs.levels.living ? COPY.heroBoard.levels[costs.levels.living] : null }]} medianWord={COPY.runningCosts.medianCity} />
+          <WorldRangeRows rows={[{ key: "living", icon: "spending-power", label: COPY.runningCosts.rows.living, value: costs.livingOnCityScale, display: String(costs.livingOnCityScale), unit: COPY.runningCosts.units.of100, range: livingSpread, fmt: (v) => String(Math.round(v)), level: costs.levels.living ? COPY.heroBoard.levels[costs.levels.living] : null }]} medianWord={COPY.runningCosts.medianCity} ends={COPY.ranged.ends} />
         </div>
       ) : costs.livingOnCityScale != null ? (
         <div className="mt-5 border-t border-[var(--c-border)] pt-4">
@@ -598,7 +598,7 @@ function FinancingRanged({ iso2, card }: { iso2: string; card: DepthCard }) {
     <Box id="financing" className="flex flex-col">
       <Rail icon="raise-money" kicker={COPY.financing.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
-      {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} medianWord={COPY.ranged.median} headless /></div> : null}
+      {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} medianWord={COPY.ranged.median} headless ends={COPY.ranged.ends} /></div> : null}
       <KvGrid cells={card.cells} under />
     </Box>
   );

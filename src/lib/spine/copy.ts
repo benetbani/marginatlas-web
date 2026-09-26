@@ -801,7 +801,7 @@ export const COPY = {
     limited: "Limited",
   },
   /** The world's range under a figure (charts/WorldRange.tsx, 2026-09-25): the median's word and the rows' labels and units. */
-  ranged: { median: "World median", electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", perLitre: "/L", lending: "Rate on a small-business loan" },
+  ranged: { median: "World median", ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", perLitre: "/L", lending: "Rate on a small-business loan" },
   /** What a full-time hire at the average salary costs the employer (the staff card, 2026-09-25). */
   hireCost: { label: "A full-time hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", rule: "{rate} on pay above {threshold} a year." },
   londonMargins: {
