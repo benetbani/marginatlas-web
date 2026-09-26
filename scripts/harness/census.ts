@@ -109,6 +109,7 @@ const ARCHETYPE_DIRS = ARCHETYPE_FOLDERS.map((f) => `${ROOT}/${f}`);
 function readArchetypes(): { names: Set<string>; cardOwning: Set<string> } {
   const names = new Set<string>();
   const cardOwning = new Set<string>();
+  const bodies: Array<{ name: string; body: string }> = [];
   for (const dir of ARCHETYPE_DIRS) for (const file of readdirSync(dir).sort()) {
     if (!file.endsWith(".tsx") || file === "stories.tsx") continue;
     const src = readFileSync(join(dir, file), "utf8");
@@ -118,10 +119,19 @@ function readArchetypes(): { names: Set<string>; cardOwning: Set<string> } {
     while ((m = re.exec(src))) starts.push({ name: m[1], at: m.index });
     starts.forEach((s, i) => {
       const body = src.slice(s.at, i + 1 < starts.length ? starts[i + 1].at : src.length);
+      bodies.push({ name: s.name, body });
       if (!/data-archetype=["{]/.test(body)) return;
       names.add(s.name);
       if (/<Box\b/.test(body) || /data-block/.test(body)) cardOwning.add(s.name);
     });
+  }
+  /* A CARD WHOSE DRAWING IS ANOTHER ARCHETYPE'S (2026-09-26): FirstYears draws its card's Box and hands the curve, the figure and
+     the region's choice to the region lever (interact/SurvivalCurve.tsx), which stamps `survival-curve`; read only for its own
+     stamp, the card stopped being an archetype and the census lost the United Kingdom's first-years block. A component of these
+     folders that renders a Box and draws an archetype of these folders is a card-owning archetype too. */
+  for (const { name, body } of bodies) {
+    if (names.has(name) || !/<Box\b/.test(body)) continue;
+    if ([...names].some((a) => new RegExp(`<${a}\\b`).test(body))) { names.add(name); cardOwning.add(name); }
   }
   return { names, cardOwning };
 }
