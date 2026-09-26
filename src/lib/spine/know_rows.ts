@@ -83,7 +83,7 @@ export function failureRows(industryId: string): KnowRow[] {
   const modes = getFailureModes(industryId) ?? [];
   return modes
     .slice(0, KNOW_FAILURE_MODES_CAP)
-    .map((m) => ({ key: "failure" as const, label: m.label.trim(), fact: m.explanation.trim() }))
+    .map((m) => ({ key: "failure" as const, label: m.label.trim(), fact: m.explanation.trim(), icon: "flag" as const }))
     .filter((r) => r.label && r.fact);
 }
 

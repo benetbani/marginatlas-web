@@ -56,16 +56,22 @@ export function NoteList({ notes, columns = 1, editorial = true, fill = false }:
             {/* THE TITLE LEADS ITS FACT (2026-09-26, the capitals ruling's follow-through on "bad hierarchy"): the title stood at
                 12px over a 14px fact, so the eye met the explanation before the claim it explains. Both at the body rung now, the
                 title in bold ink and the fact in regular ink2: one size, two weights, one order. */}
-            {/* A GLYPH A NOTE (the goal of 2026-09-26, M6): where the note carries one, the terracotta tile leads the title and
-                the fact, a column of its own, so four notes read as four subjects before a word is read. */}
-            <div className={n.icon ? "grid grid-cols-[auto_minmax(0,1fr)] gap-x-3" : undefined}>
-              {n.icon ? <span className="row-span-2 pt-0.5"><Ico id={n.icon} tone="terra" /></span> : null}
+            {/* A GLYPH A NOTE (the goal of 2026-09-26, M6): where the note carries one, the terracotta tile stands before the title,
+                on its line, so four notes read as four subjects before a word is read and the fact keeps the note's full width (a
+                column of its own narrowed every fact by 40px, and the trade page's suits card grew until the card beside it held a
+                50px foot). */}
+            <div>
               {/* SYMBOLS OVER WORDS (his message of 2026-09-25): a paperwork level is drawn as the legal forms table draws it, the
                   table's own dots in ink, so "Three dots" is read off the mark it names; the words stay for a screen reader. */}
               {n.dots ? (
                 <div data-note-label className="flex h-[1.375em] items-center text-[length:var(--t-body)] leading-snug">
                   <span className="inline-flex"><Dots n={n.dots} tone="ink" /></span>
                   <span className="sr-only">{n.label}</span>
+                </div>
+              ) : n.icon ? (
+                <div data-note-label className="flex items-center gap-2 text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">
+                  <Ico id={n.icon} tone="terra" />
+                  <span className="min-w-0">{n.label}</span>
                 </div>
               ) : (
                 <div data-note-label className="text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">{n.label}</div>

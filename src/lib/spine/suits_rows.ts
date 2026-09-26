@@ -55,9 +55,14 @@ import { getActivityCharacter } from "@/lib/content/activity_character";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { checkRow, type CheckRow } from "@/lib/spine/checks_rows";
 import type { LocalNote } from "@/lib/spine/locals_rows";
+import type { AtlasIconId } from "@/components/brand/icons/atlas-icons-data";
 import { COPY } from "@/lib/spine/copy";
 
 export type SuitsRow = LocalNote & { key: "suits" | "thinkTwice" | "notGathered" | "price" | "margin" };
+
+/** A GLYPH A NOTE (the goal of 2026-09-26, M6): the note's kind, drawn in the tile before it, so four notes read as four subjects
+ *  before a word is read; the not-gathered row carries none. */
+export const NOTE_ICON: Partial<Record<SuitsRow["key"], AtlasIconId>> = { suits: "verdict", thinkTwice: "watch", price: "sale-tag", margin: "margin" };
 
 export type SuitsData = {
   industryId: string;
@@ -76,8 +81,8 @@ export function characterRows(industryId: string): { rows: SuitsRow[]; hasCharac
   const rows: SuitsRow[] = [];
   const edge = typeof c?.edge === "string" ? c.edge.trim() : "";
   const watch = typeof c?.watchOut === "string" ? c.watchOut.trim() : "";
-  if (edge) rows.push({ key: "suits", label: COPY.tradeSuits.labels.suits, fact: edge });
-  if (watch) rows.push({ key: "thinkTwice", label: COPY.tradeSuits.labels.thinkTwice, fact: watch });
+  if (edge) rows.push({ key: "suits", label: COPY.tradeSuits.labels.suits, fact: edge, icon: NOTE_ICON.suits });
+  if (watch) rows.push({ key: "thinkTwice", label: COPY.tradeSuits.labels.thinkTwice, fact: watch, icon: NOTE_ICON.thinkTwice });
   if (rows.length === 0) rows.push({ key: "notGathered", label: COPY.tradeSuits.labels.notGathered, fact: COPY.tradeSuits.notGathered });
   return { rows, hasCharacter: rows[0].key !== "notGathered" };
 }
@@ -96,6 +101,6 @@ export function buildSuits(industryId: string, iso2In: string): SuitsData {
   const iso2 = iso2In.toUpperCase();
   const character = characterRows(industryId);
   const checks = suitsChecks(iso2);
-  const rows: SuitsRow[] = [...character.rows, ...checks.map((c) => ({ key: c.key as "price" | "margin", label: c.label, fact: c.fact }))];
+  const rows: SuitsRow[] = [...character.rows, ...checks.map((c) => ({ key: c.key as "price" | "margin", label: c.label, fact: c.fact, icon: NOTE_ICON[c.key as "price" | "margin"] }))];
   return { industryId, iso2, rows, hasCharacter: character.hasCharacter, checks, basis: COPY.tradeSuits.basis };
 }
