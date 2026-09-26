@@ -38,6 +38,13 @@
  *                         under `[data-overlay]` is exempt
  *   58 PARTS NOT REVEALED a card declaring `data-parts` over 1 with no
  *                         disclosure inside it (details, a tab list, a popup)
+ *   8  ROW TOPS           two figures in one row of a key-value grid more than
+ *                         2px apart (his ruling 8 of 2026-09-04, equal rows in
+ *                         every case; 2026-09-26: the phone photograph found
+ *                         the UK's "Getting paid" figures 18px apart once the
+ *                         icons squeezed a label to three lines, and no rule
+ *                         read a page's grids at every width; planted by
+ *                         putting the tile back on the label's line at 375)
  * THE PAGE RULES read the page once at 1280:
  *   55 KIND REPEATED      one VISUAL archetype on more than two cards (his
  *                         words: "one kind of visual"; a figure card or a
@@ -193,6 +200,20 @@ function inPage(width) {
         rect.width = Math.max(0, rect.right - rect.left); rect.height = Math.max(0, rect.bottom - rect.top);
         texts.push({ el, txt, rect, overlay: !!el.closest("[data-overlay]"), inTable: !!el.closest("table, [role='table']") });
       }
+    }
+    /* 8 ROW TOPS: in every key-value grid of the card, the cells standing in one row (their tops within 4px) put their figures
+       within 2px of one another. */
+    for (const grid of card.querySelectorAll("[data-archetype='kv-grid']")) {
+      if (!grid.getClientRects().length) continue;
+      const rowsByTop = new Map();
+      for (const cell of grid.querySelectorAll("[data-kv-cell]")) {
+        const fig = cell.querySelector(".fig");
+        if (!fig || !cell.getClientRects().length) continue;
+        const k = Math.round(cell.getBoundingClientRect().top / 4);
+        if (!rowsByTop.has(k)) rowsByTop.set(k, []);
+        rowsByTop.get(k).push(Math.round(fig.getBoundingClientRect().top));
+      }
+      for (const tops of rowsByTop.values()) if (tops.length > 1 && Math.max(...tops) - Math.min(...tops) > 2) red(id, "ROW TOPS", `figures in one grid row at tops ${tops.join(", ")}, ${Math.max(...tops) - Math.min(...tops)}px apart (ruling 8)`);
     }
     /* 52 CARD FOOT BLANK */
     if (lastInk > -Infinity && y1 - lastInk > 48) red(id, "CARD FOOT BLANK", `${Math.round(y1 - lastInk)}px of nothing between the card's last ink and its bottom edge (clause 52)`);
