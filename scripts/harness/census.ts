@@ -183,6 +183,13 @@ function copyAliases(scope: string): Map<string, string> {
 
 function resolveCopy(expr: string, aliases: Map<string, string> = new Map()): string | null {
   let e = expr.trim();
+  /* A KICKER THAT DEPENDS ON THE CARD'S STATE (2026-09-26, the cost split titled "Costs and margin" where it draws the costs
+     alone): `cond ? COPY.a : COPY.b` prints both titles, the usual one first, rather than the expression. */
+  const tern = /^[^?]+\?\s*(COPY(?:\.\w+)+)\s*:\s*(COPY(?:\.\w+)+)$/.exec(e);
+  if (tern) {
+    const a = resolveCopy(tern[1], aliases), b = resolveCopy(tern[2], aliases);
+    if (a && b) return `${b} / ${a}`;
+  }
   /* A LOCAL ALIAS (`C.kicker` with `const C = COPY.countryExit`) resolves
      through the component's own text; the exit card printed "C.kicker". */
   const head = /^([A-Za-z_$][\w$]*)((?:\.\w+)*)$/.exec(e);
