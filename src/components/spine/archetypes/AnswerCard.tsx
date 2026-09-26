@@ -109,7 +109,9 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
           <Rail icon={icon} kicker={name} />
         ) : (
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          {tile ? <span data-identity-tile={tile} className="inline-flex"><Ico id={tile} /></span> : <AtlasMark id="alt-country" size={13} className="opacity-55" />}
+          {/* NO TILE, NO MARK (2026-09-26, the district page's review): the fallback was a 13px "Country level" glyph at 55% opacity
+              before the flag, on the district and trade heroes too, a mark nobody could read and a wrong one there. */}
+          {tile ? <span data-identity-tile={tile} className="inline-flex"><Ico id={tile} /></span> : null}
           {image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={image.src} alt={image.alt} width={80} height={60} className="h-[60px] w-20 shrink-0 rounded-lg object-cover" data-hero-image />
@@ -186,7 +188,9 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
           {/* Two companions beside a drawn answer stand one under the other, so the column reaches the answer's height (KvGrid `stack`). */}
           {live.length > 0 ? <KvGrid cells={live} stack={!!answerBar && live.length === 2} /> : null}
         </div>
-        {foot ? (
+        {/* A FOOT IS ITS WORDS (2026-09-26): with its words emptied by the plain-copy correction of 2026-09-24, the district hero
+            still drew the half-filled mark alone at its foot, a glyph with nothing to say. */}
+        {foot && foot.text ? (
           <div data-foot className="mt-4 flex items-start gap-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
             {foot.modeled ? <AtlasMark id="modeled" size={14} className="mt-0.5 shrink-0" /> : null}
             {/* A block, on the prose measure (his clause 51, 2026-09-20): the old `max-w-[56ch]` sat on an inline span, where a max-width does nothing, so the foot ran 434px at 768 on the city's masthead; the measure is the site's one token, 68ch or half the page, whichever is smaller. */}
