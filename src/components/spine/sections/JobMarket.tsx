@@ -4,7 +4,8 @@
  *
  * THE LAW, inside the component:
  *  - THE CARD'S ONE FIGURE is the whole country's unemployment rate; each other rate (the capital, the young) is a row on one
- *    common scale, the country's rate a tick on every track, so each reads against it without a word.
+ *    common scale, the country's rate a tick on every track, so each reads against it without a word; the tick is keyed once
+ *    under the scale by the rate's own label (M6, 2026-09-26).
  *  - THE SCALE runs from zero to the next five above the highest rate, the same for every row.
  *  - THE TRADE'S SECTOR under it: its vacancies per hundred jobs and its payroll's change on the year, the direction as an arrow.
  *  - `data-archetype="job-market"`, `data-visual="1"`, `data-rows`; `data-row` and `data-label` on each rate.
@@ -45,6 +46,13 @@ export function JobMarket({ id = "job-market", data }: { id?: string; data: JobM
         <div aria-hidden className="flex justify-between text-[length:var(--t-micro)] tabular-nums text-[var(--c-muted)]">
           <span>0%</span>
           <span>{top}%</span>
+        </div>
+        {/* THE TICK NAMED (the goal of 2026-09-26, M6): every track carries the whole country's rate as a tick, and nothing said so;
+            the key says it once, in the margins card's form (BarList's reference key), with the rate's own label, never its figure
+            again (the figure is the card's). */}
+        <div data-ref-key className="flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+          <span aria-hidden className="h-3 w-0.5 rounded-full bg-[var(--c-ink)]" />
+          {all.label}
         </div>
       </div>
       {s ? (
