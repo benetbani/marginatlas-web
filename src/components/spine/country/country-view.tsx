@@ -70,6 +70,9 @@ import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
 import { WorldRangeRows, type WorldRangeRow } from "@/components/spine/charts/WorldRange";
 import { BarList } from "@/components/spine/charts/BarList";
 import { DonutStat } from "@/components/spine/charts/DonutStat";
+import { HireLever } from "@/components/spine/interact/HireLever";
+import { Switch } from "@/components/spine/interact/Switch";
+import { CoverPicker } from "@/components/spine/interact/CoverPicker";
 import { ShareBar } from "@/components/spine/archetypes/ShareBar";
 import { RangePair } from "@/components/spine/charts/RangePair";
 import { countryFigure } from "@/lib/facts/country_shard";
@@ -596,15 +599,24 @@ function RunningCostsRanged({ iso2, costs }: { iso2: string; costs: RunningCosts
 
 /** INSURANCE: the covers as a bar list of what each typically costs a year, the one the law requires marked, the law's minimum cover as the figure. */
 function InsuranceBars({ card }: { card: InsuranceCard }) {
-  const items = card.cells
-    .map((c) => ({ key: c.key, label: c.label, value: Number(String(c.value).replace(/[^0-9.]/g, "")), display: `${String(c.value)} ${COPY.insurance.aYear}`, badge: c.note === COPY.insurance.requiredNote ? COPY.insurance.required : null }))
-    .sort((a, b) => b.value - a.value);
+  const I = COPY.insurance;
+  /* THE COVERS TICK (goal 2026-09-26, M3; src/components/spine/interact/CoverPicker.tsx): the figure is what the ticked covers cost
+     a year, where it was the law's minimum cover ($6.6M), which read as a cost; the minimum is the required row's words now. */
+  const required = card.covers.find((c) => c.required);
   return (
     <Box id="insurance" className="flex flex-col">
-      <Rail icon="safety" kicker={COPY.insurance.kicker} />
-      <Focal figure={card.focal.figure} words={card.focal.words} />
-      {/* The cover the law requires is the one bar in the accent (C2: the card's answer). */}
-      <BarList items={items} look="plain" mark={items.find((i) => i.badge)?.key} fill />
+      <Rail icon="safety" kicker={I.kicker} />
+      <CoverPicker
+        covers={card.covers}
+        fill
+        words={{
+          focal: I.tickedWords,
+          required: I.required,
+          minimum: required && card.minCover ? I.minimumWords.replace("{cover}", usd(card.minCover)) : null,
+          aYear: I.aYear,
+          tick: I.tick,
+        }}
+      />
     </Box>
   );
 }
@@ -662,7 +674,9 @@ function LondonMarginBars({ margins }: { margins: NonNullable<ReturnType<typeof 
           card of 300. Eight until the card took its figure (2026-09-25): the figure's 40px stretched the time-to-sell card beside
           it into a 153 by 120 hole (the chain's gathered-emptiness, E6), and the seventh row keeps the level at its old height.
           The bars share one scale, the list's highest, so the plus's rows read against the same top. */}
-      <BarList items={margins.rows.slice(0, SHOWN_MARGINS).map((r) => ({ key: r.key, label: r.name, value: r.value, display: `${Math.round(r.value * 100)}%`, href: r.href, icon: r.icon }))} max={margins.worldMax} />
+      {/* THE MIDDLE DRAWN (goal 2026-09-26, M6): the figure is the middle trade's, so every track carries a tick at it and the key
+          under the list names it; a reader sees which trades keep more than the middle without reading a percent. */}
+      <BarList items={margins.rows.slice(0, SHOWN_MARGINS).map((r) => ({ key: r.key, label: r.name, value: r.value, display: `${Math.round(r.value * 100)}%`, href: r.href, icon: r.icon }))} max={margins.worldMax} reference={{ value: middle / 100, label: L.middleKey }} />
       {margins.rows.length > SHOWN_MARGINS ? <DetailPanel name="money-more" summary={L.more.replace("{n}", String(margins.rows.length - SHOWN_MARGINS))} rows={margins.rows.slice(SHOWN_MARGINS).map((r) => ({ label: r.name, value: `${Math.round(r.value * 100)}%` }))} /> : null}
     </Box>
   );
@@ -678,7 +692,9 @@ function SpendBar({ spend }: { spend: CountrySpendData }) {
           monstrosity", the treemap): the seven parts of a household's spending along one bar, eating out and groceries first and
           alone in colour, so the 39% is read off the bar as eating out's share of the coloured food block. */}
       <div className="mt-1 flex flex-1 flex-col">
-        <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill />
+        {/* THE FOOD MONEY BRACKETED (goal 2026-09-26, M6): the figure is eating out's share of the food money, so the two parts
+            that make the food money carry a bracket named "Food". */}
+        <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill bracket={COPY.countrySpend.bracket} />
       </div>
     </Box>
   );
@@ -965,6 +981,64 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false }: { hiring: any; 
 }
 
 /**
+ * LEGAL AND ADMIN COSTS, TWO SUBJECTS ONE AT A TIME (goal 2026-09-26, M4). The card read as one grid of six: three costs of
+ * running the company beside closing it and the owner's liability, which is not a cost at all, so a reader scanning "what does
+ * it cost me to run" met "6 to 12 months" and "Limited" in the same rows. "To run" keeps the yearly statement as its figure over
+ * the admin hours, the filings and the one-off name change; "To close" leads with striking off a company with no debts, over
+ * winding one up with debts and what the owner answers for. The cells are the builder's own, split by their keys.
+ */
+const CLOSING_KEYS = new Set(["strike", "wind-up", "liability"]);
+function PaperworkCard({ paperwork }: { paperwork: DepthCard }) {
+  /* The heaviest burden first: on an odd count the first cell takes the grid's width (KvGrid's complete rows). */
+  const RUN_ORDER = ["hours", "filings", "rename"];
+  const rank = (key: string) => { const i = RUN_ORDER.indexOf(key); return i < 0 ? RUN_ORDER.length : i; };
+  const yearly = paperwork.cells.filter((c) => !CLOSING_KEYS.has(c.key)).sort((a, b) => rank(a.key) - rank(b.key));
+  const closing = paperwork.cells.filter((c) => CLOSING_KEYS.has(c.key));
+  const strike = closing.find((c) => c.key === "strike");
+  const closingRest = closing.filter((c) => c.key !== "strike");
+  const twoViews = yearly.length >= 2 && !!strike && closingRest.length >= 1;
+  return (
+    <Box id="paperwork" className="flex flex-col">
+      <Rail icon="red-tape" kicker={COPY.paperwork.kicker} />
+      {twoViews ? (
+        <Switch
+          id="paperwork-views"
+          label={COPY.paperwork.kicker}
+          className="flex-1"
+          views={[
+            {
+              key: "year",
+              label: COPY.paperwork.views.year,
+              panel: (
+                <>
+                  <Focal figure={paperwork.focal.figure} words={paperwork.focal.words} />
+                  <KvGrid cells={yearly} under fill />
+                </>
+              ),
+            },
+            {
+              key: "close",
+              label: COPY.paperwork.views.close,
+              panel: (
+                <>
+                  <Focal figure={String(strike!.value)} words={COPY.closing.focalWords} />
+                  <KvGrid cells={closingRest} under fill />
+                </>
+              ),
+            },
+          ]}
+        />
+      ) : (
+        <>
+          <Focal figure={paperwork.focal.figure} words={paperwork.focal.words} />
+          <KvGrid cells={paperwork.cells} under fill />
+        </>
+      )}
+    </Box>
+  );
+}
+
+/**
  * WHAT A HIRE COSTS YOU (2026-09-25, his "numbers with no relation to each other"): the average salary and what the employer pays
  * on top of it, as one bar of its two parts and their sum. The employer's part is the rate on wages above the threshold where the
  * country's file holds one (the United Kingdom's National Insurance: 15% above the first $6.6K), the rate on the whole salary
@@ -972,29 +1046,20 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false }: { hiring: any; 
  */
 function HireCost({ iso2, pay, rate }: { iso2: string; pay: NonNullable<ReturnType<typeof buildPayBars>>; rate: number | null }) {
   const avg = pay.rows.find((r) => r.key === "average")?.value;
+  const min = pay.rows.find((r) => r.key === "minimum")?.value;
   if (!isNum(avg) || avg <= 0 || rate == null || rate <= 0) return null;
   const threshold = countryFigure(iso2, "employment.employer_ni_threshold_usd")?.value ?? 0;
-  const onCost = Math.round((rate / 100) * Math.max(0, avg - threshold));
-  const total = avg + onCost;
   const H = COPY.hireCost;
+  /* THE PAY IS THE READER'S (goal 2026-09-26, M3): the block the card drew at the average salary is a lever from the minimum
+     salary up, its default the average the card prints above; the rule is unchanged (src/components/spine/interact/HireLever.tsx). */
   return (
-    <div data-hire-cost className="mt-5 border-t border-[var(--c-border)] pt-4">
-      <div className="flex items-baseline gap-3">
-        <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{H.label}</span>
-        <Fig className="text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">{usd(total)}</Fig>
-        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{H.unit}</span>
-      </div>
-      <div className="mt-3 flex h-3 w-full overflow-hidden rounded-full" role="img" aria-label={`${H.label}: ${usd(total)} ${H.unit}, ${usd(avg)} ${H.pay} and ${usd(onCost)} ${H.onCost}`}>
-        <span aria-hidden style={{ width: `${(avg / total) * 100}%`, background: "var(--c-line-strong)" }} />
-        {/* The employer's share in ink (ART-DIRECTION C2): the card's answer is the average salary, already in the accent above. */}
-        <span aria-hidden style={{ width: `${(onCost / total) * 100}%`, backgroundColor: "var(--c-ink2)", backgroundImage: "linear-gradient(90deg, var(--c-muted), var(--c-ink2))" }} />
-      </div>
-      <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-        <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-line-strong)" }} />{H.salary}</span>
-        <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink2)" }} /><Fig className="font-semibold text-[var(--c-ink)]">{usd(onCost)}</Fig> {H.onCost}</span>
-      </div>
-      {threshold > 0 ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{H.rule.replace("{rate}", `${rate}%`).replace("{threshold}", usd(threshold))}</p> : null}
-    </div>
+    <HireLever
+      pay={avg}
+      min={isNum(min) && min > 0 ? min : Math.round(avg / 2)}
+      rate={rate}
+      threshold={threshold}
+      words={{ label: H.label, unit: H.unit, salary: H.salary, onCost: H.onCost, rule: H.rule, lever: H.lever }}
+    />
   );
 }
 
@@ -1056,13 +1121,16 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
     return (
       <Box id="exit" className="flex flex-col [container-type:inline-size]">
         <Rail icon="sale-tag" kicker={C.kicker} gloss={C.basis} />
-        {longer ? <Focal figure={longer.figure} words={C.world.longerLean} /> : null}
+        {/* THE ANSWER IS THE MONTHS (goal 2026-09-26, the sense fix): the figure was the count of countries where selling takes
+            longer ("182 of 198"), which a reader had to turn round to read; the months to sell are the answer, the count their
+            words, and the plot's own row for here draws its span without printing the months again. */}
+        <Focal figure={`${exitMonthsText(exit.marks[0].value).replace(/ months?$/, "")} to ${exitMonthsText(exit.marks[exit.marks.length - 1].value)}`} words={longer ? C.monthsLean.replace("{rank}", longer.figure) : C.monthsLeanAlone} />
         {exit.usual ? (
           <div className="flex flex-1 flex-col">
             <RangePair
               fill
               spans={[
-                { key: "here", label: C.here, lo: exit.marks[0].value, hi: exit.marks[exit.marks.length - 1].value, accent: true },
+                { key: "here", label: C.here, lo: exit.marks[0].value, hi: exit.marks[exit.marks.length - 1].value, accent: true, quiet: true },
                 { key: "usual", label: C.usualAnywhere, lo: exit.usual.lo, hi: exit.usual.hi },
               ]}
               max={Math.max(24, exit.usual.hi, exit.marks[exit.marks.length - 1].value)}
@@ -1336,11 +1404,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
               here) keep a level between them (his clause 64), and the peers table between them is not a level. */}
           <Band split="1-1" stack="lg">
             <CharacterCard iso2={iso2} which="state" />
-            <Box id="paperwork" className="flex flex-col">
-              <Rail icon="red-tape" kicker={COPY.paperwork.kicker} />
-              <Focal figure={paperwork.focal.figure} words={paperwork.focal.words} />
-              <KvGrid cells={paperwork.cells} under fill />
-            </Box>
+            <PaperworkCard paperwork={paperwork} />
           </Band>
           <Band split="1-1" stack="lg">
             <FinancingRanged iso2={iso2 as string} card={financing} />

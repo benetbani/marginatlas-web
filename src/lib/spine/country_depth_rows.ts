@@ -109,7 +109,8 @@ export function buildCountryEmployment(iso2: string): EmploymentCard | null {
 }
 
 /** INSURANCE: the cover the law requires as the figure (its minimum), the typical yearly cost of each cover as the cells. */
-export type InsuranceCard = { focal: Focal; cells: KvCell[] };
+/** `covers` and `minCover` (2026-09-26, the cover picker): the same covers as numbers, and the law's minimum cover, for the lever. */
+export type InsuranceCard = { focal: Focal; cells: KvCell[]; covers: Array<{ key: string; label: string; usd: number; required: boolean }>; minCover: number | null };
 export function buildCountryInsurance(iso2: string): InsuranceCard | null {
   const I = COPY.insurance;
   const covers = listRows(iso2, "insurance.covers").filter((r) => typeof r.name === "string" && isNum(r.typical_usd) && (r.typical_usd as number) > 0);
@@ -130,7 +131,12 @@ export function buildCountryInsurance(iso2: string): InsuranceCard | null {
       ? { figure: usd(required.typical_usd as number), words: I.requiredWords.replace("{cover}", String(required.name).toLowerCase()) }
       : null;
   if (!focal) return null;
-  return { focal, cells };
+  return {
+    focal,
+    cells,
+    covers: covers.map((r) => ({ key: String(r.name), label: String(r.name), usd: r.typical_usd as number, required: isYes(r.required) })),
+    minCover: minCover && minCover.value > 0 ? minCover.value : null,
+  };
 }
 
 /** BORROWING: what a small business pays for a new loan as the figure; the rate lenders start from, the government's start-up loans and the innovation grants as the cells. */

@@ -779,6 +779,10 @@ export const COPY = {
     requiredNote: "required by law",
     required: "Required",
     aYear: "/yr",
+    /** The cover picker (goal 2026-09-26): the figure's words, the required row's minimum, the list's name for a screen reader. */
+    tickedWords: "a year for the covers ticked",
+    minimumWords: "at least {cover} of cover once you employ",
+    tick: "The covers to count",
     typicalNote: "",
     basis: "What each cover typically costs a year.",
   },
@@ -804,20 +808,27 @@ export const COPY = {
     focalWords: "a year to file the company statement",
     cells: { rename: "Changing the name", filings: "Filings a year", hours: "Admin a year", online: "Filed online" },
     notes: { rename: "", filings: "", hours: "", online: "" },
+    /** The card's two views (goal 2026-09-26, M4): running the company (the yearly statement, the filings, the admin hours and
+     *  the one-off name change), and closing it. "Each year" would have been wrong for the name change. */
+    views: { year: "To run", close: "To close" },
   },
   closing: {
     summary: "Closing a company",
     rows: { strike: "Closing, no debts", windUp: "Closing with debts", liability: "Owner's liability" },
     notes: { strike: "online", windUp: "via an insolvency practitioner", liability: "unless personally guaranteed" },
     limited: "Limited",
+    /** Read with the strike-off's figure at the head of the "To close" view: "$17 to close a company with no debts, online". */
+    focalWords: "to close a company with no debts, online",
   },
   /** The world's range under a figure (charts/WorldRange.tsx, 2026-09-25): the median's word and the rows' labels and units. */
   ranged: { median: "World median", ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", perLitre: "/L", lending: "Rate on a small-business loan" },
   /** What a full-time hire at the average salary costs the employer (the staff card, 2026-09-25). */
-  hireCost: { label: "A full-time hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", rule: "{rate} on pay above {threshold} a year." },
+  hireCost: { label: "A full-time hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", rule: "{rate} on pay above {threshold} a year.", lever: "Pay" },
   londonMargins: {
     kicker: "What London's trades keep",
     more: "{n} more trades",
+    /** The key under the bars for the tick at the middle trade (goal 2026-09-26, M6). */
+    middleKey: "Middle trade",
     basis: "Net profit per $100 of sales.",
     /* Read with the figure: "10.5% of sales kept as profit by the middle trade" (a percent, never "per $100", which is the basis
        line's own unit and read as a rate on a rate beside a percent). */
@@ -1969,6 +1980,9 @@ export const COPY = {
     world: { usual: "the usual anywhere", longer: "countries where a sale can take longer", longerLean: "countries where selling takes longer" },
     here: "Here",
     usualAnywhere: "Usual anywhere",
+    /** Read with the months at the head of the lean card (goal 2026-09-26): "6 to 12 months" then these words. */
+    monthsLean: "to sell a business, quicker than in {rank} countries",
+    monthsLeanAlone: "to sell a business here",
     /** The buyers as a label on the lean card (2026-09-25): the file's three words, said as a reader says them. */
     buyers: { active: "Plenty of buyers", steady: "Some buyers", thin: "Few buyers" } as Record<string, string>,
     basis: "From listing to money, for a small business changing hands.",
@@ -1983,6 +1997,8 @@ export const COPY = {
    *  the whole budget, so the same line names it at the head of the track. */
   countrySpend: {
     kicker: "What households spend on",
+    /** The bracket over eating out and groceries, the two parts the card's figure is worked from (goal 2026-09-26, M6). */
+    bracket: "Food",
     categories: {
       housing_utilities: "Housing and bills",
       transport: "Getting around",

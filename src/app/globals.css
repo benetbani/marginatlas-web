@@ -2486,3 +2486,56 @@ main :where(p, li, blockquote, dd) {
     transition: none;
   }
 }
+
+/* THE READER'S LEVER (goal 2026-09-26, M3; src/components/spine/interact/Range.tsx). A track eight thick like every track on the
+   page (DISTANCES.md 3.2), filled in the accent up to the reader's value (`--fill`, set by the component), a white thumb ringed
+   in the accent; the keyboard's focus rings the thumb in ink. The browser's own slider drew a black track heavier than the
+   card's drawing. */
+.atlas-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 24px;
+  background: transparent;
+}
+.atlas-range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--terra) 0 var(--fill, 0%), var(--c-soft2) var(--fill, 0%) 100%);
+}
+.atlas-range::-moz-range-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--c-soft2);
+}
+.atlas-range::-moz-range-progress {
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--terra);
+}
+.atlas-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -6px;
+  border-radius: 9999px;
+  background: var(--c-card);
+  border: 2px solid var(--terra);
+  box-shadow: 0 0 0 1px var(--c-line-strong);
+}
+.atlas-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--c-card);
+  border: 2px solid var(--terra);
+}
+.atlas-range:focus-visible {
+  outline: none;
+}
+.atlas-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 2px var(--c-card), 0 0 0 4px var(--c-ink);
+}
+.atlas-range:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 2px var(--c-card), 0 0 0 4px var(--c-ink);
+}
