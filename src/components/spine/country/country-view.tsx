@@ -205,7 +205,8 @@ function OnThisPage({ sections, chapters }: { sections: RailSection[]; chapters?
     </li>
   );
   return (
-    <nav aria-label="On this page" className="fixed right-6 top-1/2 hidden -translate-y-1/2 2xl:block">
+    /* Never taller than the window: grouped, the UK's rail is 777px, inside a 1536 by 864 screen; a shorter window scrolls it. */
+    <nav aria-label="On this page" className="fixed right-6 top-1/2 hidden max-h-[calc(100vh-2rem)] -translate-y-1/2 overflow-y-auto 2xl:block">
       <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">On this page</div>
       {groups.map((g, gi) =>
         g.chapter && chapters ? (
@@ -214,10 +215,10 @@ function OnThisPage({ sections, chapters }: { sections: RailSection[]; chapters?
               <span className="tabular-nums text-[var(--c-muted)]">{chapters[g.chapter].index}</span>
               <span>{chapters[g.chapter].heading}</span>
             </div>
-            <ol className="mt-1.5 space-y-1.5">{g.items.map(link)}</ol>
+            <ol className="mt-2 space-y-2">{g.items.map(link)}</ol>
           </div>
         ) : (
-          <ol key={`flat-${gi}`} className={chapters ? "mt-3 space-y-1.5" : "mt-2 space-y-2"}>{g.items.map(link)}</ol>
+          <ol key={`flat-${gi}`} className={chapters ? "mt-3 space-y-2" : "mt-2 space-y-2"}>{g.items.map(link)}</ol>
         ),
       )}
     </nav>
