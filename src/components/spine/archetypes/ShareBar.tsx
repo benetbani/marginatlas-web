@@ -49,7 +49,10 @@ export type SharePart = { key: string; name: string; share: number };
 
 /** `fill` (2026-09-25): the rows take the height the level lends the card (a taller neighbour), shared evenly, instead of a
  *  blank under the last row; a row never falls under its content. */
-export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, fill = false }: { parts: SharePart[]; unit?: string; lead?: string[]; residualKey?: string; tall?: boolean; fill?: boolean }) {
+/** `bracket` (2026-09-26, the goal's M6 guide marks): in the led form, a bracket over the lead pair named in one word, where the
+ *  card's figure is worked from those two parts (a household's food money: eating out and groceries), so the reader sees which
+ *  parts make the figure before reading a number. */
+export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, fill = false, bracket }: { parts: SharePart[]; unit?: string; lead?: string[]; residualKey?: string; tall?: boolean; fill?: boolean; bracket?: string }) {
   const all = parts.filter((p) => p && p.name && Number.isFinite(p.share) && p.share > 0);
   const leads = (lead ?? []).map((k) => all.find((p) => p.key === k)).filter((p): p is SharePart => !!p);
   const led = leads.length >= 2;
@@ -69,6 +72,12 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
   return (
     <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
     <div data-archetype="share-bar" data-visual="1" data-form={led ? "led" : "plain"} data-wedges={String(live.length)} data-leader={leader.key} className={fill ? "flex flex-1 flex-col" : undefined}>
+      {led && bracket ? (
+        <div aria-hidden data-bracket className="relative mb-1 h-6">
+          <span className="absolute bottom-0 h-2 rounded-t-[2px] border-x-2 border-t-2 border-[var(--c-ink2)]" style={{ left: 0, width: `${((leads[0].share + leads[1].share) / total) * 100}%` }} />
+          <span className="absolute bottom-3 whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]" style={{ left: `${((leads[0].share + leads[1].share) / total) * 50}%`, transform: "translateX(-50%)" }}>{bracket}</span>
+        </div>
+      ) : null}
       <div className={`flex w-full gap-0.5 overflow-hidden ${tall ? "h-9 rounded-lg" : "h-3 rounded-full"}`} aria-hidden="true">
         {live.map((p) => (
           <span key={p.key} data-wedge={p.key} className={`block h-full min-w-[3px] ${tall ? "first:rounded-l-lg last:rounded-r-lg" : "first:rounded-l-full last:rounded-r-full"}`} style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />

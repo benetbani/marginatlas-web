@@ -6,7 +6,8 @@
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
 
-export type Span = { key: string; label: string; lo: number; hi: number; accent?: boolean };
+/** `quiet` (2026-09-26): the span draws with its label alone, where the card's figure above already prints its two ends. */
+export type Span = { key: string; label: string; lo: number; hi: number; accent?: boolean; quiet?: boolean };
 
 /** `fill` (2026-09-26, the United Kingdom's time-to-sell card beside the seven trades): the pair takes the height its card is lent
  *  as a plot, a hairline at each tick from the top of the plot to the axis and the two spans spread evenly inside it, so the spare
@@ -26,8 +27,8 @@ export function RangePair({ spans, max, fmt, ticks, unit, aria, fill = false }: 
           {/* On the plot the words sit on the card's white, so a hairline never runs through a label. */}
           <div className={`mb-2 flex items-baseline gap-3 ${fill ? "relative w-fit bg-[var(--c-card)] pr-2" : ""}`}>
             <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{s.label}</span>
-            <Fig className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{`${fmt(s.lo)} to ${fmt(s.hi)}`}</Fig>
-            {unit ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{unit}</span> : null}
+            {s.quiet ? null : <Fig className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{`${fmt(s.lo)} to ${fmt(s.hi)}`}</Fig>}
+            {unit && !s.quiet ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{unit}</span> : null}
           </div>
           <div className="relative h-4 rounded-full">
             <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
