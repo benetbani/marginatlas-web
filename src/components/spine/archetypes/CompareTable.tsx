@@ -148,6 +148,17 @@ function fmt(unit: CompareColumn["unit"], v: number, whole = true): string {
   return `${v} ${v === 1 ? "day" : "days"}`;
 }
 const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
+/* THE TABLE FOLLOWS ITS CARD, NOT THE WINDOW (2026-09-26). Switched at the window's md, the wide form stood in a card half a 768
+   window wide and cut every city on London's page to four letters ("Lon...", "Muni...", "Mad..."); a full-width card at 768 still
+   gave the name 19% of the width and cut "United Kingdom". The table is its own container now, and the wide form draws from the
+   width its columns need: the name's 10rem (a flag and "United Kingdom") and about 88px a figure column. The classes are written
+   out in full, never assembled, so the stylesheet compiler sees them. */
+const WIDE_FROM: Record<number, { wide: string; phone: string }> = {
+  3: { wide: "hidden [@container(min-width:420px)]:block", phone: "[@container(min-width:420px)]:hidden" },
+  4: { wide: "hidden [@container(min-width:500px)]:block", phone: "[@container(min-width:500px)]:hidden" },
+  5: { wide: "hidden [@container(min-width:600px)]:block", phone: "[@container(min-width:600px)]:hidden" },
+  6: { wide: "hidden [@container(min-width:690px)]:block", phone: "[@container(min-width:690px)]:hidden" },
+};
 
 export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false, inBand = false }: CompareTableProps) {
   /* FIVE COLUMNS TAKE THREE A LINE ON A PHONE (2026-09-25, the country's peers gained the average salary): five figures in 327px
@@ -170,8 +181,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
   const print = (c: CompareColumn, v: number) => fmt(c.unit, v, wholeOf[c.key]);
   /** Desktop colgroup shares only; the phone form stacks the name above its
    *  own figures and never shares this row, so it needs no share at all. */
-  const nameColPct = (1.2 / (1.2 + columns.length)) * 100;
-  const valueColPct = (1 / (1.2 + columns.length)) * 100;
+  const forms = WIDE_FROM[Math.min(6, Math.max(3, columns.length))];
   /** The winning cell keeps the ink and weight cellClass always gave it, and
    *  now also carries the tick beside the figure, right-aligned as one group
    *  so the group, not just the figure, sits flush with the column above it.
@@ -205,13 +215,17 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
     <div {...(inBand ? { className: "h-full" } : { "data-wide-table": "", className: "mt-8" })}>
       <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} className={inBand ? "h-full" : undefined}>
         <Rail icon={icon} kicker={kicker} sample={sample} />
-        <div className="hidden md:block">
+        <div className="[container-type:inline-size]">
+        <div className={forms.wide}>
           <Table className="table-fixed text-[length:var(--t-micro)]">
             <caption className="sr-only">{caveat ?? kicker}</caption>
+            {/* THE NAME'S COLUMN IS 10rem; the figure columns share what is left equally (a fixed table's rule for columns with no
+                width). A share with a floor, max(9.5rem, 19%), is not a width a table column takes: a column mixing a length and a
+                percentage lays out as auto, and "United Kingdom" fell to 67px. */}
             <colgroup>
-              <col style={{ width: `${nameColPct}%` }} />
+              <col style={{ width: "10rem" }} />
               {columns.map((c) => (
-                <col key={c.key} style={{ width: `${valueColPct}%` }} />
+                <col key={c.key} />
               ))}
             </colgroup>
             <TableHeader>
@@ -228,7 +242,8 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
                   <TableCell className="px-0 py-0 align-middle">
                     <span className="flex min-w-0 items-center gap-3">
                       {flags ? <CountryFlag iso2={r.iso2} className="w-7 shrink-0" /> : null}
-                      <span data-label className={`truncate text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+                      {/* A name longer than its column wraps to a second line, never cut to an ellipsis. */}
+                      <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
                     </span>
                   </TableCell>
                   {columns.map((c) => {
@@ -244,7 +259,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
             </TableBody>
           </Table>
         </div>
-        <div className="md:hidden" data-phone-table="1">
+        <div className={forms.phone} data-phone-table="1">
           <div className={`grid ${phoneCols} gap-x-2 border-b border-[var(--c-border)] pb-2`}>
             {columns.map((c) => (
               <span key={c.key} className={`text-right ${head}`} style={{ fontSize: "var(--t-mark)" }}>{c.head}</span>
@@ -270,6 +285,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
               </div>
             ))}
           </div>
+        </div>
         </div>
         {/* The stated line for the rows the table does not hold, at the lead rung where those rows would stand (the header's SEATED TABLE). */}
         {withheld ? <p data-withheld-line="rows" className="mt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p> : null}
