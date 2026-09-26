@@ -634,7 +634,7 @@ function FinancingRanged({ iso2, card }: { iso2: string; card: DepthCard }) {
       <Rail icon="raise-money" kicker={COPY.financing.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
       {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} medianWord={COPY.ranged.median} headless ends={COPY.ranged.ends} /></div> : null}
-      <KvGrid cells={card.cells} under />
+      <KvGrid cells={card.cells} under across />
       {/* THE LOAN'S MONTHLY COST (goal 2026-09-26, M3): the start-up loan's own amounts, rate and term, the repayment a month. */}
       {card.loan ? <LoanLever min={card.loan.min} max={card.loan.max} rate={card.loan.rate} termMin={COPY.financing.startupTerm.min} termMax={COPY.financing.startupTerm.max} words={COPY.financing.loan} /> : null}
     </Box>

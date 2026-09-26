@@ -84,7 +84,10 @@ export type KvLabelReserve = "two-lines" | "row";
 /** `fill` (2026-09-25): the grid takes the height the level lends its card (a taller neighbour) and its rows share it evenly, as
  *  the tables' and the share bar's `fill` do, instead of a blank under the last cell; a row never falls under its content. The
  *  caller's card is a flex column. */
-export function KvGrid({ cells, className = "", labelReserve = "two-lines", stack = false, under = false, fill = false }: { cells: KvCell[]; className?: string; labelReserve?: KvLabelReserve; stack?: boolean; under?: boolean; fill?: boolean }) {
+/** `across` (2026-09-26): a group of exactly three cells stands three across from 440px of grid, its labels keeping their two-line
+ *  reserve at every width so the three figures share one top; the caller asks for it where a lone lead cell would stand beside a
+ *  blank (the borrowing card). */
+export function KvGrid({ cells, className = "", labelReserve = "two-lines", stack = false, under = false, fill = false, across = false }: { cells: KvCell[]; className?: string; labelReserve?: KvLabelReserve; stack?: boolean; under?: boolean; fill?: boolean; across?: boolean }) {
   const byRow = labelReserve === "row";
   const live = cells.filter((c) => c.value != null && c.value !== "");
   if (live.length === 0) return null;
@@ -124,10 +127,13 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
             {(() => {
               const cols = g.cells.length > 1 && !stack ? 2 : 1;
               const lead = cols === 2 && g.cells.length % 2 === 1;
-              /* THREE CELLS STAND THREE ACROSS FROM 560px OF GRID (2026-09-26, the page filter's WHITE SPACE on the United
-                 Kingdom's borrowing card at 768: the lead cell alone on its row left a 439 by 138 blank beside it once the icons
-                 grew its label line). Narrower, the lead takes the width and the pair sits under it, as before. */
-              const three = cols === 2 && g.cells.length === 3 && !byRow;
+              /* THREE CELLS STAND THREE ACROSS FROM 440px OF GRID where the caller asks (`across`, 2026-09-26: the page filter's
+                 WHITE SPACE on the United Kingdom's borrowing card at 768, a 439 by 138 blank beside the lead cell alone on its row
+                 once the icons grew its label line, and the chain's gathered-emptiness at 1280 and 1440, 160 by 126 beside the
+                 same cell). Asked, not assumed: applied to every group of three it opened a 602 by 126 hole in the industry page's
+                 answer card and dropped a district card's figure 18px under its neighbours. Three across the gap is 24px, so a
+                 cell keeps 143px of a 478px grid. */
+              const three = across && cols === 2 && g.cells.length === 3 && !byRow;
               /* THE ROWS SHARE THE HEIGHT AS ROWS, NOT AS GAPS (2026-09-26, the United Kingdom's legal and admin card beside the
                  five spectra). A filling grid's rows were stretched with the words pinned to each row's top, so the spare height
                  stood as a blank under every row, 50px and more. Now a filling grid draws its rows as rows: each row a unit, its
@@ -138,7 +144,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
               const ruledRows = fill && !byRow;
               const cellEl = (c: KvCell, ci: number) => (
                 /* COMPLETE ROWS: in an odd group above one, the first cell spans both columns (a ruled row of one is its own row). */
-                <div key={c.key} data-kv-cell={c.key} className={`${lead && ci === 0 && !ruledRows ? (three ? "col-span-2 [@container(min-width:560px)]:col-span-1" : "col-span-2") : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
+                <div key={c.key} data-kv-cell={c.key} className={`${lead && ci === 0 && !ruledRows ? (three ? "col-span-2 [@container(min-width:440px)]:col-span-1" : "col-span-2") : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
                   {/* THE RESERVE IS EXACTLY TWO LINES BY CONSTRUCTION (plan step 31's
                       second dispatch, 2026-09-17, the first cards whose labels wrap at
                       375 and 768, "Net wealth per adult" and "Shop rent, major cities").
@@ -158,7 +164,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                   {/* THE RESERVE'S AIR ABOVE THE WORDS, NOT UNDER THEM (the same evening, on the phone photograph): a one-line label sat
                       at the top of its two-line box and stood a line's height away from its own figure, closer to the cell above.
                       The words sit on the box's floor, so a label touches its figure and the air joins the gap between rows. */}
-                  <div className={`${byRow ? "" : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>
+                  <div className={`${byRow ? "" : three ? "flex min-h-[2.6em] flex-col justify-end " : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>
                     {c.icon ? (
                       <span className="flex items-center gap-2">
                         <Ico id={c.icon} tone="terra" />
@@ -178,7 +184,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
               );
               if (!ruledRows) {
                 return (
-                  <div className={`grid ${three ? "grid-cols-2 [@container(min-width:560px)]:grid-cols-3" : cols === 2 ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
+                  <div className={`grid ${three ? "grid-cols-2 gap-x-10 [@container(min-width:440px)]:grid-cols-3 [@container(min-width:440px)]:gap-x-6" : cols === 2 ? "grid-cols-2 gap-x-10" : "grid-cols-1 gap-x-10"} gap-y-4`}>
                     {g.cells.map((c, ci) => cellEl(c, ci))}
                   </div>
                 );
