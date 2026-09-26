@@ -52,7 +52,7 @@ export function buildHowTo(iso2: string): HowToData | null {
   const forms: LocalNote[] = tiers
     .map((t) => ({ label: t.tier, fact: COPY.tiers.explainers[t.tier as keyof typeof COPY.tiers.explainers] ?? "" }))
     .filter((n) => n.fact.length > 0);
-  const dots: LocalNote[] = ([1, 2, 3, 4, 5] as const).map((n) => ({ label: COPY.howto.dotLabels[n - 1], fact: COPY.tiers.paperwork[n] }));
+  const dots: LocalNote[] = ([1, 2, 3, 4, 5] as const).map((n) => ({ label: COPY.howto.dotLabels[n - 1], fact: COPY.tiers.paperwork[n], dots: n }));
   const localsBuilt = buildLocalsNotes(code);
   /* THE COUNTRY ADDRESS COMES FROM THE RESOLVER, never assembled here: the
      geo-link gate's rule, and Greece's dead /el links are why. */

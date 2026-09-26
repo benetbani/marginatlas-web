@@ -13,7 +13,8 @@ import notesJson from "../../../data/archetypes/locals_notes.json";
 import { ATLAS_ICONS_BY_ID, type AtlasIconId } from "@/components/brand/icons/atlas-icons-data";
 
 /** `icon`: the note's glyph, chosen by hand with the note (2026-09-26, M6); a name the atlas set does not hold is dropped. */
-export type LocalNote = { label: string; fact: string; icon?: AtlasIconId };
+/** `dots` (2026-09-26): a paperwork level, one to five, drawn as the legal forms table draws it in place of the label's words. */
+export type LocalNote = { label: string; fact: string; icon?: AtlasIconId; dots?: 1 | 2 | 3 | 4 | 5 };
 export type LocalsNotes = { notes: LocalNote[]; confidence: "placeholder"; source: string };
 
 /** At most five notes; a label of at most seven words; a fact of at most 140 characters (H7, one fact each). */

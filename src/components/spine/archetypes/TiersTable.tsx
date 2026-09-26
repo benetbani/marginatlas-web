@@ -74,7 +74,7 @@ const DASH = <span className="text-[length:var(--t-body)] text-[var(--c-muted)]"
 
 /** `tone`: the table's dots are the reading and carry the accent; the legend's dots only say what one and five dots mean, so they
  *  are drawn in ink (ART-DIRECTION C2: two legend groups in the accent made the card five accent marks). */
-function Dots({ n, tone = "terra" }: { n: number; tone?: "terra" | "ink" }) {
+export function Dots({ n, tone = "terra" }: { n: number; tone?: "terra" | "ink" }) {
   return (
     <span aria-label={`paperwork ${n} of 5`} role="img" className="flex items-center justify-end gap-1">
       {[1, 2, 3, 4, 5].map((i) => <span key={i} aria-hidden className="h-2 w-2 rounded-full" style={{ background: i <= n ? (tone === "ink" ? "var(--c-ink2)" : "var(--terra)") : "var(--c-soft2)" }} />)}

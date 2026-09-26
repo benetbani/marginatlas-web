@@ -40,6 +40,7 @@
 import * as React from "react";
 import { NOTE_CAP, type LocalNote } from "@/lib/spine/locals_rows";
 import { Ico } from "@/components/spine/kit";
+import { Dots } from "@/components/spine/archetypes/TiersTable";
 
 /** `fill` (2026-09-25): the notes share the height the level lends the card (a taller neighbour), each note an equal row, instead
  *  of a blank under the last one; the caller's card is a flex column. The one-line notes of that night left the how-to page's
@@ -59,7 +60,16 @@ export function NoteList({ notes, columns = 1, editorial = true, fill = false }:
                 the fact, a column of its own, so four notes read as four subjects before a word is read. */}
             <div className={n.icon ? "grid grid-cols-[auto_minmax(0,1fr)] gap-x-3" : undefined}>
               {n.icon ? <span className="row-span-2 pt-0.5"><Ico id={n.icon} tone="terra" /></span> : null}
-              <div data-note-label className="text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">{n.label}</div>
+              {/* SYMBOLS OVER WORDS (his message of 2026-09-25): a paperwork level is drawn as the legal forms table draws it, the
+                  table's own dots in ink, so "Three dots" is read off the mark it names; the words stay for a screen reader. */}
+              {n.dots ? (
+                <div data-note-label className="flex h-[1.375em] items-center text-[length:var(--t-body)] leading-snug">
+                  <span className="inline-flex"><Dots n={n.dots} tone="ink" /></span>
+                  <span className="sr-only">{n.label}</span>
+                </div>
+              ) : (
+                <div data-note-label className="text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">{n.label}</div>
+              )}
               <p data-note-fact className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{n.fact}</p>
             </div>
           </li>
