@@ -662,9 +662,9 @@ export function Texture({ texture }: { texture: CityTextureData | null }) {
 function CharacterPeople({ people }: { people: CityPeopleTable | null }) {
   if (!people) return null;
   return (
-    <Box id="character-people">
+    <Box id="character-people" className="flex flex-col">
       <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
-      <SpectraTable rows={people.rows} dot={people.dot} foot={people.foot} basis={people.basis} />
+      <SpectraTable rows={people.rows} dot={people.dot} foot={people.foot} basis={people.basis} fill />
     </Box>
   );
 }

@@ -47,11 +47,15 @@ export type SpectraTableProps = {
    *  mark is off site-wide). At most fourteen words, `--t-micro`, muted; the
    *  country's tables pass none and draw as before. */
   basis?: string | null;
+  /** `fill` (2026-09-26, London's people card beside the peers table at 768): the rows share the height the card is lent, each
+   *  row's name, track and poles centred between its hairlines, instead of a blank under the foot (91px there); the caller's Box
+   *  is a flex column. Without a lent height the rows keep their own. */
+  fill?: boolean;
 };
 
 const DOT = 11; // px, the dot's diameter; the track keeps half of it clear at each end
 
-export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }: SpectraTableProps) {
+export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis, fill = false }: SpectraTableProps) {
   const live = rows.filter((r) => Number.isFinite(r.position));
   if (live.length < 2) return null;
   const dotBg = dot === "terra" ? "var(--terra)" : "var(--c-ink)";
@@ -61,14 +65,14 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis }
        attribute the page filter's ACCENT BUDGET reads to leave a ruled mark
        uncounted. The dots are fills, not text, so the count never reached
        them; the stamp says in the markup what the ruling says in the model. */
-    <div data-archetype="spectra-table" data-idea="I1" data-dot={dot} data-scale={scale} data-rows={String(live.length)} {...(dot === "terra" ? { "data-founder-accent": "1" } : {})}>
-      <div className="grid auto-rows-fr divide-y divide-[var(--c-border)]">
+    <div data-archetype="spectra-table" data-idea="I1" data-dot={dot} data-scale={scale} data-rows={String(live.length)} {...(dot === "terra" ? { "data-founder-accent": "1" } : {})} className={fill ? "flex flex-1 flex-col" : undefined}>
+      <div className={`grid auto-rows-fr divide-y divide-[var(--c-border)] ${fill ? "flex-1" : ""}`}>
         {live.map((r) => {
           const pos = Math.max(0, Math.min(1, r.position));
           const pct = Math.round(pos * 1000) / 10;
           const lean = pct < 50 ? r.left : pct > 50 ? r.right : null;
           return (
-            <div key={r.key} data-spectrum-row={r.key} className="py-2">
+            <div key={r.key} data-spectrum-row={r.key} className={fill ? "flex flex-col justify-center py-2" : "py-2"}>
               <div data-label className={scale === "lead" ? "truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]" : scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
               {/* THE TRACK DECLARES WHAT ITS FAR END IS (plan step 12, 2026-09-17).
                   A spectrum runs between two poles; neither end is a maximum,
