@@ -1404,7 +1404,11 @@
       "reads": [
         "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/pages.json",
-        "src/components/spine/interact/Marks.tsx"
+        "src/components/spine/interact/CoverPicker.tsx",
+        "src/components/spine/interact/HireLever.tsx",
+        "src/components/spine/interact/Marks.tsx",
+        "src/components/spine/interact/Range.tsx",
+        "src/components/spine/interact/Switch.tsx"
       ],
       "claims": []
     },

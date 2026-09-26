@@ -32,10 +32,11 @@ const ROOT = "src/components/spine";
    world's range, the gradient bar list, the ring with its centre figure, a span against the usual one, the pie) and the
    page-agnostic sections of his message of the same night, each a component with its law in its header. They are what a page's
    Box holds, never pages themselves. */
-const SKIP_DIRS = new Set(["archetypes", "charts", "sections"]);
+/* interact/ (2026-09-26, the goal of that afternoon): the levers, the switch and the readouts, forms a Box holds like the charts. */
+const SKIP_DIRS = new Set(["archetypes", "charts", "sections", "interact"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx"]);
 /* HeroBoard, SegmentBar (2026-09-20): his hero and his gold standard's segmented unit bar, both catalogued by his word (rules/FORM-CATALOG.md VERSION 6 and the reference of that date). */
-const ARCHETYPES = ["BarList", "WorldRangeRows", "DonutStat", "RangePair", "Pie", "StockTiers", "FirstYears", "Obstacles", "SpendByIncome", "SpendByAge", "LocalApps", "MarketHold", "JobMarket", "Thresholds", "AgeMix", "CustomersCome", "Origin", "AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel", "HeroBoard", "SegmentBar", "BentoMetric", "BlockedSeat", "Donut", "Ring", "MonthBars", "ShareBar", "WorkedFigure", "Stepper"];
+const ARCHETYPES = ["BarList", "WorldRangeRows", "DonutStat", "RangePair", "Pie", "StockTiers", "FirstYears", "Obstacles", "SpendByIncome", "SpendByAge", "LocalApps", "MarketHold", "JobMarket", "Thresholds", "AgeMix", "CustomersCome", "Origin", "AnswerCard", "KvGrid", "RankedBars", "CompareTable", "CardPager", "CityCards", "TiersTable", "RangeStrip", "SpectraTable", "NoteList", "Terminus", "PayBars", "IncomeBreakdown", "BentoBand", "MarkList", "DetailPanel", "HeroBoard", "SegmentBar", "BentoMetric", "BlockedSeat", "Donut", "Ring", "MonthBars", "ShareBar", "WorkedFigure", "Stepper", "CoverPicker"];
 const EXCEPTIONS_PATH = "data/archetypes/coverage_exceptions.json";
 const INIT = process.argv.includes("--init");
 
@@ -61,7 +62,7 @@ function sectionsOf(file: string): Section[] {
      older kit exports a SpectraTable of its own, and the city's quick reads
      were read as covered by the name alone on the gate's first run. */
   const imported = new Set<string>();
-  const importRe = /import\s*\{([^}]*)\}\s*from\s*"(?:@\/components\/spine\/(?:archetypes|charts|sections)\/[^"]+|\.\.?\/(?:[^"]*\/)?(?:archetypes|charts|sections)\/[^"]+)"/g;
+  const importRe = /import\s*\{([^}]*)\}\s*from\s*"(?:@\/components\/spine\/(?:archetypes|charts|sections|interact)\/[^"]+|\.\.?\/(?:[^"]*\/)?(?:archetypes|charts|sections|interact)\/[^"]+)"/g;
   let im: RegExpExecArray | null;
   while ((im = importRe.exec(src))) for (const name of im[1].split(",")) { const n = name.trim().split(/\s+as\s+/).pop()?.trim(); if (n) imported.add(n); }
   const out: Section[] = [];

@@ -49,7 +49,7 @@ export function CoverPicker({ covers, words, fill = false }: { covers: Cover[]; 
                   aria-disabled={c.required || undefined}
                   onChange={() => { if (!c.required) toggle(c.key); }}
                   onClick={(e) => { if (c.required) e.preventDefault(); }}
-                  className={`mt-px h-4 w-4 accent-[var(--c-ink2)] ${c.required ? "cursor-default" : "cursor-pointer"}`}
+                  className={`mt-0.5 h-4 w-4 accent-[var(--c-ink2)] ${c.required ? "cursor-default" : "cursor-pointer"}`}
                 />
                 <div className="min-w-0">
                   <label htmlFor={`cover-${i}`} data-label className={`block text-[length:var(--t-body)] leading-tight ${c.required ? "cursor-default" : "cursor-pointer"} ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}>
@@ -59,7 +59,7 @@ export function CoverPicker({ covers, words, fill = false }: { covers: Cover[]; 
                   {c.required && words.minimum ? <span className="mt-1 block text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words.minimum}</span> : null}
                 </div>
                 <span className={`fig text-right text-[length:var(--t-body)] font-semibold ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] line-through decoration-[var(--c-line-strong)]"}`}>{usd(c.usd)} {words.aYear}</span>
-                <span className="relative col-span-full mt-px block h-4 rounded-full [@container(min-width:420px)]:col-span-1" role="img" aria-label={`${c.label}: ${usd(c.usd)} ${words.aYear}`} style={{ opacity: on ? 1 : 0.35 }}>
+                <span className="relative col-span-full mt-0.5 block h-4 rounded-full [@container(min-width:420px)]:col-span-1" role="img" aria-label={`${c.label}: ${usd(c.usd)} ${words.aYear}`} style={{ opacity: on ? 1 : 0.35 }}>
                   <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
                   <span aria-hidden data-bar data-marked={c.required ? "1" : undefined} className="absolute inset-y-0 left-0 rounded-full" style={c.required ? { width: `${w}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" } : { width: `${w}%`, backgroundColor: "var(--c-line-strong)", backgroundImage: "linear-gradient(90deg, var(--c-border), var(--c-line-strong))" }} />
                 </span>

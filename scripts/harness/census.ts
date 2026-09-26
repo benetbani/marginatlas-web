@@ -97,7 +97,7 @@ const ROOT = "src/components/spine";
    Box counted as a section of a page called "sections", and a view that seated one printed it on the kit ("kit", beside a
    component that stamps `data-archetype` like any other); read as archetypes, the country's `age-mix` prints as AgeMix. The
    coverage gate skips the same three (scripts/verify_archetype_coverage.ts, SKIP_DIRS). */
-const ARCHETYPE_FOLDERS = ["archetypes", "charts", "sections"];
+const ARCHETYPE_FOLDERS = ["archetypes", "charts", "sections", "interact"];
 const SKIP_DIRS = new Set(ARCHETYPE_FOLDERS);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx", "motion.tsx"]);
 const ARCHETYPE_DIR = `${ROOT}/archetypes`;
