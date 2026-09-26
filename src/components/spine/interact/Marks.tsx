@@ -137,7 +137,9 @@ export function Marks({ label, children, className = "", ...rest }: { label: str
         className="max-w-[28ch] rounded-[8px] bg-[var(--c-ink)] px-3 py-2 text-left leading-snug text-[var(--c-card)] shadow-md"
         /* Position and the closed state inline, so the panel behaves wherever the component renders, stylesheet or none. */
         style={open
-          ? { position: "absolute", zIndex: 20, pointerEvents: "none", left: active!.left + place.shift, top: place.below ? active!.bottom + GAP : active!.top - GAP, transform: place.below ? "translateX(-50%)" : "translate(-50%, -100%)" }
+          /* width: max-content, so a mark near the drawing's edge does not squeeze the panel into the space left of it (seen at 375:
+             "The UK, 65 and over" in five lines); the clamp above then keeps the whole panel inside the drawing. */
+          ? { position: "absolute", zIndex: 20, pointerEvents: "none", width: "max-content", left: active!.left + place.shift, top: place.below ? active!.bottom + GAP : active!.top - GAP, transform: place.below ? "translateX(-50%)" : "translate(-50%, -100%)" }
           : { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap", border: 0 }}
       >
         {open ? (
