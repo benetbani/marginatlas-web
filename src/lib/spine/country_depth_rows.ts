@@ -89,18 +89,18 @@ export function buildCountryEmployment(iso2: string): EmploymentCard | null {
   const cells: KvCell[] = [];
   const leave = countryFigure(iso2, "employment.holiday_days");
   const leaveDays = leave && leave.value > 0 && leave.value < 260 ? Math.round(leave.value) : null;
-  if (leaveDays == null && leave && leave.value > 0) cells.push({ key: "leave", label: E.cells.leave, value: `${Math.round(leave.value)} days`, note: E.notes.leave, confidence: conf(leave.tag) });
-  if (leaveDays != null) cells.push({ key: "out", label: E.cells.out, value: trimPct(out.value), note: E.notes.out, confidence: conf(out.tag) });
+  if (leaveDays == null && leave && leave.value > 0) cells.push({ key: "leave", icon: "first-year", label: E.cells.leave, value: `${Math.round(leave.value)} days`, note: E.notes.leave, confidence: conf(leave.tag) });
+  if (leaveDays != null) cells.push({ key: "out", icon: "hiring", label: E.cells.out, value: trimPct(out.value), note: E.notes.out, confidence: conf(out.tag) });
   const week = countryFigure(iso2, "employment.max_week_hours");
-  if (week && week.value > 0) cells.push({ key: "week", label: E.cells.week, value: `${Math.round(week.value)} hours`, note: E.notes.week, confidence: conf(week.tag) });
+  if (week && week.value > 0) cells.push({ key: "week", icon: "freshness", label: E.cells.week, value: `${Math.round(week.value)} hours`, note: E.notes.week, confidence: conf(week.tag) });
   const sick = countryFigure(iso2, "employment.sick_pay_usd_week");
-  if (sick && sick.value > 0) cells.push({ key: "sick", label: E.cells.sick, value: usd(sick.value), note: E.notes.sick, confidence: conf(sick.tag) });
+  if (sick && sick.value > 0) cells.push({ key: "sick", icon: "sick-pay", label: E.cells.sick, value: usd(sick.value), note: E.notes.sick, confidence: conf(sick.tag) });
   const dismissal = countryFigure(iso2, "employment.dismissal_qualifying_years");
-  if (dismissal && dismissal.value > 0) cells.push({ key: "dismissal", label: E.cells.dismissal, value: `${dismissal.value} ${dismissal.value === 1 ? "year" : "years"}`, note: E.notes.dismissal, confidence: conf(dismissal.tag) });
+  if (dismissal && dismissal.value > 0) cells.push({ key: "dismissal", icon: "leaving", label: E.cells.dismissal, value: `${dismissal.value} ${dismissal.value === 1 ? "year" : "years"}`, note: E.notes.dismissal, confidence: conf(dismissal.tag) });
   /* The weeks of statutory maternity pay (2026-09-25): what the employer pays through payroll while a hire is away, the fourth
      rule of the card once the job market card carries the unemployment rate beside it. */
   const maternity = countryFigure(iso2, "employment.maternity_paid_weeks");
-  if (maternity && maternity.value > 0) cells.push({ key: "maternity", label: E.cells.maternity, value: `${Math.round(maternity.value)} weeks`, note: E.notes.maternity, confidence: conf(maternity.tag) });
+  if (maternity && maternity.value > 0) cells.push({ key: "maternity", icon: "parental-leave", label: E.cells.maternity, value: `${Math.round(maternity.value)} weeks`, note: E.notes.maternity, confidence: conf(maternity.tag) });
   /* The share of adults in work and the informal economy were cells here until the working year took the card's picture: two
      facts about the economy, not about employing anyone, and the card keeps to what the employer owes and who is looking. */
   if (cells.length < 2) return null;
@@ -146,16 +146,16 @@ export function buildCountryFinancing(iso2: string): DepthCard | null {
   if (!sme) return null;
   const cells: KvCell[] = [];
   const base = countryFigure(iso2, "financing.base_rate_pct");
-  if (base) cells.push({ key: "base", label: F.cells.base, value: trimPct(base.value), note: F.notes.base, confidence: conf(base.tag) });
+  if (base) cells.push({ key: "base", icon: "bank", label: F.cells.base, value: trimPct(base.value), note: F.notes.base, confidence: conf(base.tag) });
   const lo = countryFigure(iso2, "financing.startup_loan_min_usd");
   const hi = countryFigure(iso2, "financing.startup_loan_max_usd");
   const rate = countryFigure(iso2, "financing.startup_loan_rate_pct");
-  if (lo && hi && hi.value > lo.value) cells.push({ key: "startup", label: F.cells.startup, value: `${usd(lo.value)} to ${usd(hi.value)}`, note: rate ? F.notes.startup.replace("{rate}", trimPct(rate.value)).replace("{min}", String(F.startupTerm.min)).replace("{max}", String(F.startupTerm.max)) : undefined, confidence: conf(lo.tag) });
+  if (lo && hi && hi.value > lo.value) cells.push({ key: "startup", icon: "currency-stability", label: F.cells.startup, value: `${usd(lo.value)} to ${usd(hi.value)}`, note: rate ? F.notes.startup.replace("{rate}", trimPct(rate.value)).replace("{min}", String(F.startupTerm.min)).replace("{max}", String(F.startupTerm.max)) : undefined, confidence: conf(lo.tag) });
   const loan = lo && hi && rate && hi.value > lo.value && rate.value > 0 ? { min: lo.value, max: hi.value, rate: rate.value } : undefined;
   /* The shard's grants list: a grant with a money range prints (the innovation grants); a loan is the row above and a relief is not a sum a reader can bank. */
   for (const g of listRows(iso2, "grants.list")) {
     if (g.kind !== "Grant" || typeof g.value !== "string" || !/^\$[\d.]+[KM]? to \$[\d.]+[KM]?$/.test(g.value)) continue;
-    cells.push({ key: `grant-${String(g.name)}`, label: String(g.name), value: g.value, note: typeof g.who === "string" ? `${F.notes.grantFor} ${g.who.toLowerCase()}` : undefined, confidence: conf(g._tag) });
+    cells.push({ key: `grant-${String(g.name)}`, icon: "grant", label: String(g.name), value: g.value, note: typeof g.who === "string" ? `${F.notes.grantFor} ${g.who.toLowerCase()}` : undefined, confidence: conf(g._tag) });
   }
   if (cells.length < 2) return null;
   return { focal: { figure: trimPct(sme.value), words: F.focalWords }, cells, loan };
@@ -172,11 +172,11 @@ export function buildCountryBanking(iso2: string): BankingCard | null {
   if (parts.length < 2 || !fee) return null;
   const cells: KvCell[] = [];
   const lands = word(iso2, "payments.settlement_days");
-  if (lands) cells.push({ key: "lands", label: B.cells.lands, value: lands.value.replace(/\s+days?$/i, " days"), note: B.notes.lands, confidence: conf(lands.tag) });
+  if (lands) cells.push({ key: "lands", icon: "first-year", label: B.cells.lands, value: lands.value.replace(/\s+days?$/i, " days"), note: B.notes.lands, confidence: conf(lands.tag) });
   const foreign = queryFacts({ entityId: countryEntityId(iso2), metrics: ["setup.banking.can_foreigner"], rowKey: "" })[0];
-  if (foreign && isYesNo(foreign.value)) cells.push({ key: "foreign", label: B.cells.foreign, value: isYes(foreign.value) ? B.yes : B.no, note: B.notes.foreign, confidence: conf(foreign.tag) });
+  if (foreign && isYesNo(foreign.value)) cells.push({ key: "foreign", icon: "visa-permit", label: B.cells.foreign, value: isYes(foreign.value) ? B.yes : B.no, note: B.notes.foreign, confidence: conf(foreign.tag) });
   const friction = word(iso2, "setup.banking.friction");
-  if (friction) cells.push({ key: "friction", label: B.cells.friction, value: (B.friction as Record<string, string>)[friction.value.toLowerCase()] ?? friction.value, note: B.notes.friction, confidence: conf(friction.tag) });
+  if (friction) cells.push({ key: "friction", icon: "red-tape", label: B.cells.friction, value: (B.friction as Record<string, string>)[friction.value.toLowerCase()] ?? friction.value, note: B.notes.friction, confidence: conf(friction.tag) });
   return { focal: { figure: trimPct(fee.value), words: B.focalWords }, parts, cells };
 }
 
@@ -187,20 +187,20 @@ export function buildCountryPaperwork(iso2: string): DepthCard | null {
   if (!yearly) return null;
   const cells: KvCell[] = [];
   const rename = countryFigure(iso2, "admin.name_change_usd");
-  if (rename) cells.push({ key: "rename", label: P.cells.rename, value: usd(rename.value), note: P.notes.rename, confidence: conf(rename.tag) });
+  if (rename) cells.push({ key: "rename", icon: "change", label: P.cells.rename, value: usd(rename.value), note: P.notes.rename, confidence: conf(rename.tag) });
   const filings = countryFigure(iso2, "admin_load.filings_per_year");
-  if (filings && filings.value > 0) cells.push({ key: "filings", label: P.cells.filings, value: String(Math.round(filings.value)), note: P.notes.filings, confidence: conf(filings.tag) });
+  if (filings && filings.value > 0) cells.push({ key: "filings", icon: "filings", label: P.cells.filings, value: String(Math.round(filings.value)), note: P.notes.filings, confidence: conf(filings.tag) });
   const hours = countryFigure(iso2, "admin_load.hours_per_year");
-  if (hours && hours.value > 0) cells.push({ key: "hours", label: P.cells.hours, value: `${Math.round(hours.value)} hours`, note: P.notes.hours, confidence: conf(hours.tag) });
+  if (hours && hours.value > 0) cells.push({ key: "hours", icon: "freshness", label: P.cells.hours, value: `${Math.round(hours.value)} hours`, note: P.notes.hours, confidence: conf(hours.tag) });
   /* THE SHARE OF FILINGS MADE ONLINE LEFT THE CARD (2026-09-25): seven cells drew the first alone on its row with half the row
      empty, and it was the weakest reading of the seven, how the state's forms are sent rather than what they cost or ask. */
   /* CLOSING THE COMPANY, the last of its legal costs (2026-09-25): striking off a debt-free company, and how long winding up with debts takes. */
   const strike = countryFigure(iso2, "closing.strike_off_usd");
-  if (strike) cells.push({ key: "strike", label: COPY.closing.rows.strike, value: usd(strike.value), note: COPY.closing.notes.strike, confidence: conf(strike.tag) });
+  if (strike) cells.push({ key: "strike", icon: "closing", label: COPY.closing.rows.strike, value: usd(strike.value), note: COPY.closing.notes.strike, confidence: conf(strike.tag) });
   const windUp = word(iso2, "closing.time_months");
-  if (windUp) cells.push({ key: "wind-up", label: COPY.closing.rows.windUp, value: `${windUp.value} months`, note: COPY.closing.notes.windUp, confidence: conf(windUp.tag) });
+  if (windUp) cells.push({ key: "wind-up", icon: "closing", label: COPY.closing.rows.windUp, value: `${windUp.value} months`, note: COPY.closing.notes.windUp, confidence: conf(windUp.tag) });
   const liability = word(iso2, "closing.liability");
-  if (liability && /^limited/i.test(liability.value)) cells.push({ key: "liability", label: COPY.closing.rows.liability, value: COPY.closing.limited, note: COPY.closing.notes.liability, confidence: conf(liability.tag) });
+  if (liability && /^limited/i.test(liability.value)) cells.push({ key: "liability", icon: "safety", label: COPY.closing.rows.liability, value: COPY.closing.limited, note: COPY.closing.notes.liability, confidence: conf(liability.tag) });
   if (cells.length < 2) return null;
   return { focal: { figure: usd(yearly.value), words: P.focalWords }, cells };
 }

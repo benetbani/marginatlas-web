@@ -654,7 +654,7 @@ function BankingRing({ card }: { card: BankingCard }) {
           taller than its content; in one column the cells' row takes what is left and draws ruled rows (KvGrid fill). */}
       <div className="grid flex-1 grid-cols-1 grid-rows-[auto_1fr] gap-5 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:grid-rows-none [@container(min-width:600px)]:items-center">
         <DonutStat parts={card.parts} center={`${Math.round(lead.share)}%`} centerWords={COPY.banking.centerWords.replace("{part}", lead.name.toLowerCase())} aria={`${COPY.banking.donut}: ${card.parts.map((p) => `${p.name} ${p.share}%`).join(", ")}`} />
-        <KvGrid cells={[{ key: "fee", label: COPY.banking.cells.fee, value: card.focal.figure, note: card.focal.words, confidence: "modeled" }, ...card.cells]} under fill />
+        <KvGrid cells={[{ key: "fee", icon: "sale-tag", label: COPY.banking.cells.fee, value: card.focal.figure, note: card.focal.words, confidence: "modeled" }, ...card.cells]} under fill />
       </div>
     </Box>
   );
@@ -1017,7 +1017,10 @@ function PaperworkCard({ paperwork }: { paperwork: DepthCard }) {
               panel: (
                 <>
                   <Focal figure={paperwork.focal.figure} words={paperwork.focal.words} />
-                  <KvGrid cells={yearly} under fill />
+                  {/* THE YEAR'S FACTS STACKED, AS THE CLOSING VIEW'S ARE (2026-09-26): beside the five spectra the card stands 124px
+                      taller than its words, and a lone first cell over a pair left that air beside it (a 350 by 132 blank) or at the
+                      card's foot; three ruled rows share it in three even pieces. */}
+                  <KvGrid cells={yearly} under fill stack />
                 </>
               ),
             },
