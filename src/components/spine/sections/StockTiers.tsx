@@ -60,6 +60,34 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
   const [pick, setPick] = React.useState<StockTierKey>(initial);
   const chosen = kit.tiers.find((t) => t.key === pick) ?? kit.tiers[0];
   const rows = kit.tiers[0].lines;
+  /* THE TABLE READS IN THE SWITCH'S ORDER (the goal of 2026-09-26, the tables' study): the table listed the kit in the catalogue's
+     order and the switch by cost, so one card read two ways by width. Both now lead with the costliest pieces of the budget the
+     card opens on, five shown and the rest behind the plus, since the five carry most of every budget's total. */
+  const lead = kit.tiers.find((t) => t.key === initial) ?? kit.tiers[0];
+  const order = lead.lines.map((l, i) => ({ i, usd: l.usd })).sort((x, y) => y.usd - x.usd).map((x) => x.i);
+  const tableRow = (ri: number) => {
+    const r = rows[ri];
+    return (
+      <div key={r.cat} data-row={r.cat} className="col-span-full grid grid-cols-subgrid items-start border-t border-[var(--c-border)] py-2">
+        <span className="flex min-w-0 items-center gap-3">
+          <Ico id={r.icon} tone="terra" />
+          <span className="min-w-0">
+            <span data-label className="block truncate text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
+            <span className="block text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">&times;{r.qty}</span>
+          </span>
+        </span>
+        {kit.tiers.map((t) => {
+          const l = t.lines[ri];
+          return (
+            <span key={t.key} className="min-w-0">
+              <Fig className="block text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{dollars(l.usd)}</Fig>
+              <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" title={l.name}>{l.name}</span>
+            </span>
+          );
+        })}
+      </div>
+    );
+  };
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="startup-cost" kicker={S.kicker} />
@@ -84,26 +112,12 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                 <TotalBar value={t.usd} high={kit.high} lead={t.key === initial} />
               </div>
             ))}
-            {rows.map((r, ri) => (
-              <div key={r.cat} data-row={r.cat} className="col-span-full grid grid-cols-subgrid items-start border-t border-[var(--c-border)] py-2">
-                <span className="flex min-w-0 items-center gap-3">
-                  <Ico id={r.icon} tone="terra" />
-                  <span className="min-w-0">
-                    <span data-label className="block truncate text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
-                    <span className="block text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">&times;{r.qty}</span>
-                  </span>
-                </span>
-                {kit.tiers.map((t) => {
-                  const l = t.lines[ri];
-                  return (
-                    <span key={t.key} className="min-w-0">
-                      <Fig className="block text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{dollars(l.usd)}</Fig>
-                      <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" title={l.name}>{l.name}</span>
-                    </span>
-                  );
-                })}
-              </div>
-            ))}
+            {order.slice(0, SHOWN).map(tableRow)}
+            {order.length > SHOWN ? (
+              <InlineDisclosure name={`${id}-table-more`} summary={S.more.replace("{n}", String(order.length - SHOWN))} className="group col-span-full border-t border-[var(--c-border)] [&>summary]:py-2.5">
+                <div className="grid grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] gap-x-4">{order.slice(SHOWN).map(tableRow)}</div>
+              </InlineDisclosure>
+            ) : null}
           </div>
           {/* THE SWITCH, under 720px of card: the four heads as buttons over the chosen budget's list. */}
           <div data-form="switch" className="[@container(min-width:720px)]:hidden">
