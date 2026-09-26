@@ -650,6 +650,7 @@ export function BentoCount({
   sample = false,
   accent = true,
   columns,
+  columnsWide,
   fraction = false,
 }: {
   kicker: string;
@@ -665,6 +666,10 @@ export function BentoCount({
   accent?: boolean;
   /** The units in a row, each sized to the cell's width, for a cell that stands tall (the note above). Left out: 10px units wrapping to the width. */
   columns?: number;
+  /** THE COLUMNS OF A WIDE CELL (2026-09-26, the phone photograph of the trade page): where the cell is 560 or wider the units run
+   *  this many to a row and `columns` holds under it, CountUnits' own pair (the survival card's 20 and 50). Fifty columns sized for
+   *  the wide seat drew the chain-owned count's hundred at 2px a unit on a phone, "12 of 100" unreadable from its own drawing. */
+  columnsWide?: number;
   /** THE PART AS IT IS (2026-09-26, London's empty shops): the figure prints a part that is not whole with its one decimal and the
    *  units draw it, the last one partly filled. Rounded to a whole unit, 1.5 printed "2 of 100" over a line saying 1.5: two figures
    *  for one thing. Left out, the part is rounded to a whole unit as before. */
@@ -679,7 +684,7 @@ export function BentoCount({
   /* The count is the whole: the figure says it once (the note above). */
   const isWhole = filled === Math.round(whole);
   return (
-    <Box className="flex h-full flex-col" data-archetype="bento-count" data-visual="1" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
+    <Box className={`flex h-full flex-col${columnsWide ? " [container-type:inline-size]" : ""}`} data-archetype="bento-count" data-visual="1" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
       <div className="mb-2 flex items-center gap-2">
         {icon ? <Ico id={icon} tone="terra" /> : null}
         <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{kicker}</h3>
@@ -693,7 +698,7 @@ export function BentoCount({
               Unless the count IS the whole, when the figure has already said it. */}
           {isWhole ? null : <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of {Math.round(whole)}</span>}
         </div>
-        <CountUnits className="mt-3" whole={units.length} filled={filled} accent={accent} columns={columns} aria={isWhole ? `${printed}, ${label ?? kicker}` : `${printed} out of ${Math.round(whole)}, ${label ?? kicker}`} />
+        <CountUnits className="mt-3" whole={units.length} filled={filled} accent={accent} columns={columns} columnsWide={columnsWide} aria={isWhole ? `${printed}, ${label ?? kicker}` : `${printed} out of ${Math.round(whole)}, ${label ?? kicker}`} />
         {label ? <div className="mt-3 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
       {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}

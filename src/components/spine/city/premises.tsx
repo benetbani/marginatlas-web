@@ -93,7 +93,7 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
       rows: 1,
       node:
         "part" in empty ? (
-          <BentoCount icon="vacancy" kicker={K.empty} part={empty.part} whole={empty.whole} basis={empty.basis} sample={empty.sample} accent={false} columns={PREMISES_COUNT_COLUMNS} fraction />
+          <BentoCount icon="vacancy" kicker={K.empty} part={empty.part} whole={empty.whole} basis={empty.basis} sample={empty.sample} accent={false} columns={20} columnsWide={PREMISES_COUNT_COLUMNS} fraction />
         ) : (
           /* The count withheld stands as the same opener over its stated line,
              the drawn withheld seat in the metric cell's withheld form: no

@@ -63,7 +63,7 @@ export function marketCells(market: MarketData): BentoCell[] {
   const K = COPY.tradeMarket.kickers;
   const count = (cell: MarketCount, icon: AtlasIconId, kicker: string) =>
     "part" in cell ? (
-      <BentoCount icon={icon} kicker={kicker} part={cell.part} whole={cell.whole} basis={cell.basis} sample accent={false} columns={MARKET_COUNT_COLUMNS} />
+      <BentoCount icon={icon} kicker={kicker} part={cell.part} whole={cell.whole} basis={cell.basis} sample accent={false} columns={20} columnsWide={MARKET_COUNT_COLUMNS} />
     ) : (
       /* The count withheld stands as the same opener over its stated line: no figure, no grid, one line saying what is missing. */
       <BentoMetric icon={icon} kicker={kicker} withheld={cell.withheld} />
