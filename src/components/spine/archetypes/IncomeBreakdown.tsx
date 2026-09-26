@@ -55,6 +55,7 @@
  */
 import * as React from "react";
 import { Box, Fig, GREY_RAMP, Rail } from "@/components/spine/kit";
+import { Marks } from "@/components/spine/interact/Marks";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "@/lib/spine/copy";
 import type { IncomeSegment } from "@/lib/spine/income_rows";
@@ -220,8 +221,10 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
         </>
       ) : costsOnly ? (
         /* THE COSTS IN THE DRAWN STATE'S LAYOUT (the header's COSTS DRAWN): the same halves, tones, hatches and legend rows; the
-           bar's segments are `data-mix-*`, never `data-seg-*`, so "a withheld breakdown draws no segment of sales" still holds. */
-        <div className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
+           bar's segments are `data-mix-*`, never `data-seg-*`, so "a withheld breakdown draws no segment of sales" still holds.
+           A SEGMENT AND ITS LEGEND ROW ARE ONE PART (the goal of 2026-09-26, M1 and M2): greys told apart by their hatch alone are
+           the hardest match on the page, so touching either lights both and the segment reads its share. */
+        <Marks label={`${kicker}: ${ariaLabel}`} className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
           <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
             <div data-answer="1">
               <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
@@ -230,7 +233,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
             {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
             <div className="mt-4 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={ariaLabel}>
               {mixLive.map((s, i) => (
-                <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
+                <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} data-part-key={s.key} data-readout-figure={`${mixRounded[s.key]}%`} data-readout-words={`${s.label}, ${COPY.incomeBreakdown.ofCosts}`} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
               ))}
             </div>
           </div>
@@ -239,7 +242,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
             <div data-mix-head className="mb-2 text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{COPY.incomeBreakdown.costsHead}</div>
             <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
               {mixLive.map((s, i) => (
-                <span key={s.key} data-mix-legend-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+                <span key={s.key} data-mix-legend-key={s.key} data-part-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
                   <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
                   <span data-label className="truncate">{s.label}</span>
                   <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{mixRounded[s.key]}%</Fig>
@@ -253,7 +256,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               {detail}
             </div>
           ) : null}
-        </div>
+        </Marks>
       ) : (
         <>
           {/* THE DRAWN CARD TWO ABREAST FROM 640 OF IT (the goal's B12, first
@@ -269,7 +272,8 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               50 taller than the net and its bar and the foot below both halves
               left that as air under the bar. The 1280 and 1024 seats are about
               580 inside and keep the column; the phone keeps it too. */}
-          <div className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
+          {/* A SEGMENT AND ITS LEGEND ROW ARE ONE PART (the goal of 2026-09-26, M1 and M2), as in the costs' own layout above. */}
+          <Marks label={`${kicker}: ${ariaLabel}`} className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
           <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
           <div data-answer="1">
             <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
@@ -293,6 +297,9 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
                 data-row={s.key}
                 data-seg-key={s.key}
                 data-seg-share={String(s.share)}
+                data-part-key={s.key}
+                data-readout-figure={`${rounded[s.key]}%`}
+                data-readout-words={s.label}
                 className="h-full border-r border-[var(--c-card)]"
                 style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }}
               />
@@ -301,6 +308,9 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               data-row={NET_KEY}
               data-seg-key={NET_KEY}
               data-seg-share={String(netPct)}
+              data-part-key={NET_KEY}
+              data-readout-figure={`${rounded[NET_KEY]}%`}
+              data-readout-words={netLabel}
               className="h-full"
               style={{ width: `${netPct}%`, background: "var(--c-ink)" }}
             />
@@ -325,13 +335,13 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               measured). */}
           <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
             {live.map((s, i) => (
-              <span key={s.key} data-legend-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+              <span key={s.key} data-legend-key={s.key} data-part-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
                 <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
                 <span data-label className="truncate">{s.label}</span>
                 <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
               </span>
             ))}
-            <span data-legend-key={NET_KEY} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+            <span data-legend-key={NET_KEY} data-part-key={NET_KEY} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
               <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
               <span data-label className="truncate">{netLabel}</span>
               <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>
@@ -344,7 +354,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               {detail}
             </div>
           ) : null}
-          </div>
+          </Marks>
         </>
       )}
     </Box>
