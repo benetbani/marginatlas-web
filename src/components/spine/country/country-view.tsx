@@ -73,6 +73,7 @@ import { DonutStat } from "@/components/spine/charts/DonutStat";
 import { HireLever } from "@/components/spine/interact/HireLever";
 import { Switch } from "@/components/spine/interact/Switch";
 import { CoverPicker } from "@/components/spine/interact/CoverPicker";
+import { LoanLever } from "@/components/spine/interact/LoanLever";
 import { ShareBar } from "@/components/spine/archetypes/ShareBar";
 import { RangePair } from "@/components/spine/charts/RangePair";
 import { countryFigure } from "@/lib/facts/country_shard";
@@ -634,6 +635,8 @@ function FinancingRanged({ iso2, card }: { iso2: string; card: DepthCard }) {
       <Focal figure={card.focal.figure} words={card.focal.words} />
       {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} medianWord={COPY.ranged.median} headless ends={COPY.ranged.ends} /></div> : null}
       <KvGrid cells={card.cells} under />
+      {/* THE LOAN'S MONTHLY COST (goal 2026-09-26, M3): the start-up loan's own amounts, rate and term, the repayment a month. */}
+      {card.loan ? <LoanLever min={card.loan.min} max={card.loan.max} rate={card.loan.rate} termMin={COPY.financing.startupTerm.min} termMax={COPY.financing.startupTerm.max} words={COPY.financing.loan} /> : null}
     </Box>
   );
 }
@@ -647,9 +650,11 @@ function BankingRing({ card }: { card: BankingCard }) {
       {/* THE RING'S CENTRE IS THE CARD'S ONE FIGURE (PART 4: one figure at 30 a card), and the card fee a cell beside it. */}
       {/* FROM 600px OF CARD (a tablet, where the card runs the row) the ring and the cells stand side by side, so neither leaves
           the other half of the card empty; narrower, the cells follow the ring. */}
-      <div className="grid grid-cols-1 gap-5 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:items-center">
+      {/* THE CELLS TAKE THE SPARE HEIGHT (2026-09-26): beside the borrowing card and its loan lever the ring's card stood 144px
+          taller than its content; in one column the cells' row takes what is left and draws ruled rows (KvGrid fill). */}
+      <div className="grid flex-1 grid-cols-1 grid-rows-[auto_1fr] gap-5 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:grid-rows-none [@container(min-width:600px)]:items-center">
         <DonutStat parts={card.parts} center={`${Math.round(lead.share)}%`} centerWords={COPY.banking.centerWords.replace("{part}", lead.name.toLowerCase())} aria={`${COPY.banking.donut}: ${card.parts.map((p) => `${p.name} ${p.share}%`).join(", ")}`} />
-        <KvGrid cells={[{ key: "fee", label: COPY.banking.cells.fee, value: card.focal.figure, note: card.focal.words, confidence: "modeled" }, ...card.cells]} under />
+        <KvGrid cells={[{ key: "fee", label: COPY.banking.cells.fee, value: card.focal.figure, note: card.focal.words, confidence: "modeled" }, ...card.cells]} under fill />
       </div>
     </Box>
   );
@@ -1022,7 +1027,8 @@ function PaperworkCard({ paperwork }: { paperwork: DepthCard }) {
               panel: (
                 <>
                   <Focal figure={String(strike!.value)} words={COPY.closing.focalWords} />
-                  <KvGrid cells={closingRest} under fill />
+                  {/* Stacked: two ruled rows share the card's height where one row of two stood in the middle of 300px of air. */}
+                  <KvGrid cells={closingRest} under fill stack />
                 </>
               ),
             },
