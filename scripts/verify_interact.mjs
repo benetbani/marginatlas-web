@@ -19,11 +19,15 @@
  *     unticking one takes its premium off; a click on the required cover changes nothing.
  *     The survival lever opens on the country's 38%; the South West gives 44% and its words, the country's curve kept behind.
  *     The loan lever opens at the largest amount over five years and moves by the fixed-rate repayment when three are chosen.
+ *   M5 THE SORT: a table of four rows opens in its builder's order; a press on a head where the lowest wins orders the rows lowest
+ *     first in both forms, marks the head ascending and says so politely; a second press turns it over with the row holding no
+ *     figure still last; a head where neither end wins orders highest first; the home row keeps its mark wherever it lands.
  * PART 2, THE MARKUP ON EVERY PAGE THE HARNESS RENDERS (scripts/harness/pages.json): a mark carrying a reading or a part outside a
  * drawing that listens (`[data-interactive="marks"]`) is a reading nobody can reach; a listening drawing with no role, no tab stop or no name
  * is one a keyboard or a screen reader cannot use; a reading whose figure appears nowhere in its drawing's words or labels says
  * something the drawing does not hold (the panel may only say what is already there); a tab without its state or its panel, a
- * slider without a label, a lever whose answer is not announced, and a drawing inside a hidden panel (his ruling of 2026-07-09).
+ * slider without a label, a lever whose answer is not announced, a drawing inside a hidden panel (his ruling of 2026-07-09), and a
+ * sortable head without its named button or over a table of under three rows.
  *
  * BLIND SPOT: part 1 tests the component on a fixture, not each page's placement; part 2 reads the markup, not the motion. A
  * build server has no browser, so the gate skips loudly there through requireBrowser, as every browser gate does.
@@ -57,6 +61,13 @@ import { HireLever } from ${JSON.stringify(resolve("src/components/spine/interac
 import { CoverPicker } from ${JSON.stringify(resolve("src/components/spine/interact/CoverPicker.tsx").replace(/\\/g, "/"))};
 import { SurvivalCurve } from ${JSON.stringify(resolve("src/components/spine/interact/SurvivalCurve.tsx").replace(/\\/g, "/"))};
 import { LoanLever } from ${JSON.stringify(resolve("src/components/spine/interact/LoanLever.tsx").replace(/\\/g, "/"))};
+import { SortTable } from ${JSON.stringify(resolve("src/components/spine/interact/SortTable.tsx").replace(/\\/g, "/"))};
+const PEERS = [["uk", "United Kingdom", 20, 52000, true], ["ie", "Ireland", 12.5, 59000, false], ["fr", "France", 22, 42000, false], ["xx", "Nowhere", null, 50000, false]];
+const sortRows = PEERS.map(([key, name, tax, pay, home]) => ({
+  key, home, values: { tax, pay },
+  cells: <><td>{name}</td><td>{tax == null ? "-" : tax + "%"}</td><td>{"$" + pay}</td></>,
+  phone: <span>{name}</span>,
+}));
 const BANDS = [["a", "Under 16", 18, 18], ["b", "16 to 24", 11, 12], ["c", "25 to 49", 33, 41], ["d", "50 to 64", 19, 17], ["e", "65 and over", 19, 12]];
 function Bar({ name, i }) {
   return (
@@ -92,6 +103,9 @@ function Page() {
       </div>
       <div id="loan" style={{ marginTop: 60, maxWidth: 480 }}>
         <LoanLever min={663} max={33152} rate={7.5} termMin={1} termMax={5} words={{ label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "repaid in all" }} />
+      </div>
+      <div id="peers" style={{ marginTop: 60, maxWidth: 560 }}>
+        <SortTable label="Against the peers" words={{ said: "Sorted by {head}, {dir}", low: "lowest first", high: "highest first" }} columns={[{ key: "tax", head: "Effective tax", best: "min" }, { key: "pay", head: "Average salary", best: "none" }]} rows={sortRows} entityHead="Country" wideClass="" phoneClass="" phoneCols="grid-cols-2" />
       </div>
       <p id="away" style={{ marginTop: 300, position: "relative", zIndex: 30 }}>Elsewhere on the page.</p>
     </div>
@@ -273,6 +287,32 @@ try {
     await p3.locator('#loan [role="radio"]', { hasText: "3" }).click();
     await settle(p3);
     if ((await loanPay()) !== expect(33000, 3)) fail(`three years gave "${await loanPay()}", not ${expect(33000, 3)}`, "the monthly repayment of a fixed-rate loan, and nothing else", LL);
+
+    const ST = "src/components/spine/interact/SortTable.tsx";
+    const orderOf = () => p3.evaluate(() => ({
+      wide: [...document.querySelectorAll("#peers tbody tr")].map((r) => r.getAttribute("data-row")).join(","),
+      phone: [...document.querySelectorAll("#peers [data-phone-table] [data-row]")].map((r) => r.getAttribute("data-row")).join(","),
+      tax: document.querySelector('#peers th:has(button[data-sort-head="tax"])')?.getAttribute("aria-sort") ?? "",
+      pay: document.querySelector('#peers th:has(button[data-sort-head="pay"])')?.getAttribute("aria-sort") ?? "",
+      said: document.querySelector('#peers [aria-live="polite"]')?.textContent.trim() ?? "",
+      home: [...document.querySelectorAll('#peers [data-row="uk"]')].every((r) => r.getAttribute("data-home") === "1" && r.className.includes("bg-[var(--c-soft)]")),
+    }));
+    let o = await orderOf();
+    if (o.wide !== "uk,ie,fr,xx" || o.tax !== "none") fail(`the table opened in the order "${o.wide}" with the tax head "${o.tax}"`, "open in the builder's order, every head unsorted (M5)", ST);
+    await p3.locator('#peers th button[data-sort-head="tax"]').click();
+    await settle(p3);
+    o = await orderOf();
+    if (o.wide !== "ie,uk,fr,xx" || o.phone !== o.wide) fail(`a press on the tax head gave "${o.wide}" (the phone form "${o.phone}"), not ie,uk,fr,xx in both`, "a head where the lowest wins orders lowest first, in both forms", ST);
+    if (o.tax !== "ascending" || o.said !== "Sorted by Effective tax, lowest first") fail(`the sorted head reads aria-sort "${o.tax}" and the polite line "${o.said}"`, "mark the sorted head's direction and say the order", ST);
+    if (!o.home) fail("the home row lost its mark once sorted", "the home row keeps its tint wherever it lands", ST);
+    await p3.locator('#peers th button[data-sort-head="tax"]').click();
+    await settle(p3);
+    o = await orderOf();
+    if (o.wide !== "fr,uk,ie,xx" || o.tax !== "descending") fail(`a second press gave "${o.wide}" with aria-sort "${o.tax}", not fr,uk,ie,xx descending`, "a second press turns the order over, a row holding no figure still last", ST);
+    await p3.locator('#peers [data-phone-table] button[data-sort-head="pay"]').click();
+    await settle(p3);
+    o = await orderOf();
+    if (o.wide !== "ie,uk,xx,fr" || o.pay !== "descending" || o.tax !== "none") fail(`a press on the salary head gave "${o.wide}" (salary "${o.pay}", tax "${o.tax}")`, "a head where neither end wins orders highest first, and the other heads fall back to unsorted", ST);
     const loanTotal = await p3.evaluate(() => document.querySelector("#loan [data-loan-total]")?.textContent.trim() ?? "");
     const whole = (P, years) => { const r = 0.075 / 12, n = years * 12; const t = ((P * r) / (1 - Math.pow(1 + r, -n))) * n; return "$" + Math.round(t / 1000) + "K"; };
     if (loanTotal !== whole(33000, 3)) fail(`three years' total read "${loanTotal}", not ${whole(33000, 3)} (the month's repayment times thirty-six)`, "the total is the monthly repayment over the months, a figure beside the month's", LL);
@@ -284,7 +324,7 @@ try {
   const pages = JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) => `scratchpad/harness/pages/${p.surface}-${p.slugs.join("-")}.html`).filter((f) => existsSync(f));
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const pg = await ctx.newPage();
-  let drawings = 0, readings = 0;
+  let drawings = 0, readings = 0, sortHeads = 0;
   for (const f of pages) {
     await pg.goto(pathToFileURL(resolve(f)).href, { waitUntil: "load" });
     const r = await pg.evaluate(() => {
@@ -299,6 +339,13 @@ try {
         }
       }
       out.hiddenDrawings = document.querySelectorAll('main [role=tabpanel][hidden] [data-visual="1"]').length;
+      for (const th of document.querySelectorAll("main th[aria-sort]")) {
+        const b = th.querySelector("button[data-sort-head]");
+        if (!b || !(b.textContent || "").trim()) out.unnamed.push("a sortable column head without its named button");
+        const table = th.closest("table");
+        if (table && table.querySelectorAll("tbody tr").length < 3) out.unnamed.push("a sortable table of under three rows");
+      }
+      out.sortHeads = document.querySelectorAll("main th[aria-sort]").length;
       for (const r of document.querySelectorAll("main input[type=range]")) {
         const named = (r.id && document.querySelector(`label[for="${r.id}"]`)) || r.getAttribute("aria-label");
         if (!named) out.unnamed.push("a slider without a label");
@@ -308,7 +355,7 @@ try {
       }
       for (const root of document.querySelectorAll('main [data-interactive="marks"]')) {
         out.drawings++;
-        if (root.getAttribute("role") !== "group" || root.getAttribute("tabindex") !== "0" || !(root.getAttribute("aria-label") || "").trim()) out.unnamed.push((root.closest("[id]") || {}).id || "?");
+        if (root.getAttribute("role") !== "group" || root.getAttribute("tabindex") !== "0" || !(root.getAttribute("aria-label") || "").trim()) out.unnamed.push(`#${(root.closest("[id]") || {}).id || "?"}: a listening drawing without role group, a tab stop or a name`);
         const held = [root.textContent || "", ...[...root.querySelectorAll("[aria-label]")].map((e) => e.getAttribute("aria-label")), root.getAttribute("aria-label") || ""].join(" | ");
         for (const m of root.querySelectorAll("[data-readout-figure]")) {
           out.readings++;
@@ -318,15 +365,15 @@ try {
       }
       return out;
     });
-    drawings += r.drawings; readings += r.readings;
+    drawings += r.drawings; readings += r.readings; sortHeads += r.sortHeads;
     const name = f.replace(/^.*\//, "");
     for (const o of r.orphans) fail(`${name}: a reading or part ("${o}") outside any drawing that listens`, "wrap the drawing in Marks (src/components/spine/interact/Marks.tsx) or drop the attribute", f);
-    for (const u of r.unnamed) fail(`${name} #${u}: a listening drawing without role group, a tab stop or a name`, "keep Marks' role, tabIndex and aria-label", f);
+    for (const u of r.unnamed) fail(`${name}: ${u}`, "keep each control's role, name and state: Marks' role, tabIndex and aria-label; a tab's aria-selected and panel; a slider's label; a lever's polite answer; a sortable head's button", f);
     for (const u of r.unheld) fail(`${name} ${u}: a reading whose figure is in none of the drawing's words or labels`, "the panel may only say what the drawing holds: put the figure in the drawing's label", f);
     if (r.hiddenDrawings) fail(`${name}: ${r.hiddenDrawings} drawing(s) inside a hidden panel of a switch`, "never hide a drawing behind a switch (his ruling of 2026-07-09): keep the drawing outside and change its data", f);
   }
   await ctx.close();
-  console.log(`verify_interact: the markup of ${pages.length} rendered page(s): ${drawings} listening drawing(s), ${readings} reading(s)`);
+  console.log(`verify_interact: the markup of ${pages.length} rendered page(s): ${drawings} listening drawing(s), ${readings} reading(s), ${sortHeads} sortable head(s)`);
 } finally {
   await browser.close();
   rmSync(dir, { recursive: true, force: true });
