@@ -134,7 +134,16 @@ export type AtlasIconId =
   | "kit-blender"
   | "kit-seat"
   | "kit-table"
-  | "kit-cup";
+  | "kit-cup"
+  /* THE CELLS (the goal of 2026-09-26, M6: an icon a cell on the key-value grids, his 2026-09-19 "the big missed chance is to put it
+     at the icons"): one glyph a row of what a business owes, files and closes, where the set had none. */
+  | "sick-pay"
+  | "leaving"
+  | "parental-leave"
+  | "filings"
+  | "change"
+  | "closing"
+  | "grant";
 
 export interface AtlasIconDef {
   id: AtlasIconId;
@@ -986,6 +995,56 @@ export const atlasIcons: AtlasIconDef[] = [
     label: "Cups",
     blurb: "A cup and saucer.",
     body: `<path d="M8 10.5h13V17a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z"/><path d="M21 12.5h1.5a2.5 2.5 0 0 1 0 5H21"/><path class="a" d="M5.5 26h19"/>`,
+  },
+  /* The cells' glyphs (2026-09-26): what a business owes, files and closes. */
+  {
+    id: "sick-pay",
+    group: "labor",
+    label: "Sick pay",
+    blurb: "Pay while an employee is ill.",
+    body: `<rect x="5.5" y="10" width="21" height="15.5" rx="2.5"/><path d="M12.5 10V8a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 19.5 8v2"/><path class="a" d="M16 13.8v8M12 17.8h8"/>`,
+  },
+  {
+    id: "leaving",
+    group: "labor",
+    label: "Leaving",
+    blurb: "An employee leaving, or being let go.",
+    body: `<path d="M17 7H9.5A1.5 1.5 0 0 0 8 8.5v15A1.5 1.5 0 0 0 9.5 25H17"/><path class="a" d="M13.5 16H25.5M21.5 12l4 4-4 4"/>`,
+  },
+  {
+    id: "parental-leave",
+    group: "labor",
+    label: "Parental leave",
+    blurb: "Time off and pay around a birth.",
+    body: `<path class="af" d="M14 13.5V4.5a9 9 0 0 1 9 9z"/><path d="M5 13.5h18c0 4.4-4 8-9 8s-9-3.6-9-8z"/><path d="M23 13.5l2.5-4.5H28"/><circle cx="9.5" cy="25.5" r="2"/><circle cx="18.5" cy="25.5" r="2"/>`,
+  },
+  {
+    id: "filings",
+    group: "cost-economics",
+    label: "Filings",
+    blurb: "Returns and forms sent to the state.",
+    body: `<path d="M11.5 9V7.5A1.5 1.5 0 0 1 13 6h10.5A1.5 1.5 0 0 1 25 7.5V20a1.5 1.5 0 0 1-1.5 1.5H21"/><rect x="7" y="9.5" width="14" height="16.5" rx="1.5"/><path class="a" d="M10.5 15h7M10.5 19.5h5"/>`,
+  },
+  {
+    id: "change",
+    group: "cost-economics",
+    label: "A change",
+    blurb: "Changing a detail on the record.",
+    body: `<path d="M20 7.5l4.5 4.5L12 24.5H7.5V20z"/><path class="a" d="M17.5 10l4.5 4.5"/>`,
+  },
+  {
+    id: "closing",
+    group: "cost-economics",
+    label: "Closing",
+    blurb: "Closing the business down: locked up.",
+    body: `<path d="M11 14.5v-3a5 5 0 0 1 10 0v3"/><rect x="8" y="14.5" width="16" height="11.5" rx="2.5"/><path class="a" d="M16 18.8v3"/>`,
+  },
+  {
+    id: "grant",
+    group: "cost-economics",
+    label: "Grant",
+    blurb: "Money for a new idea that is not repaid.",
+    body: `<path d="M12.5 21.5c0-2-1-3-2.2-4.3A7.5 7.5 0 1 1 21.7 17.2c-1.2 1.3-2.2 2.3-2.2 4.3"/><path d="M12.5 21.5h7M13.5 25.5h5"/><path class="a" d="M16 12v5.5"/>`,
   },
 ];
 
