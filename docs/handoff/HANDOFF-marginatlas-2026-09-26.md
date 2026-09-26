@@ -1,5 +1,5 @@
 # HANDOFF: marginatlas.com, 2026-09-26 (the goal of that afternoon: sections a reader can understand and digest)
-The goal of 2026-09-26 afternoon (make every section understandable and digestible: interactions, sense, tables, icons) taken through five batches, 41 to 45, every one pushed and driven live. Production is `bb4c086e` (see section 3 for its deployment), nothing ahead of origin. Written 2026-09-26 evening.
+The goal of 2026-09-26 afternoon (make every section understandable and digestible: interactions, sense, tables, icons) taken through ten batches, 41 to 50, every one pushed and proven on production (driven live or fetched). Production is `ee9e114a`, nothing ahead of origin. Written 2026-09-26 evening, updated after batch 50.
 
 > **How to use this document.** Read top to bottom once, then the files in section 7 in order. Do not start work until you can
 > answer the checklist in section 13; the re-hydration prompt is section 14. `E:/atlas/design/loop/build/STATE.md`
@@ -20,6 +20,11 @@ and its legend light together), four levers put the reader's own number in (a hi
 curve, a start-up loan), a switch splits legal and admin costs, the comparison tables sort, the legal forms' rows carry his plus,
 the kit table reads by cost, and every key-value cell and local note carries a glyph. A gate, `interact`, drives every control in
 a real browser and reads every rendered page's markup; each of its checks was proven by a plant.
+
+Batches 46 to 50 took the review beyond the UK page (`design/loop/build/goal-2026-09-26/PLAN.md` section 8): the cost split's
+withheld state titled "Costs and margin" without its apology; London's empty shops drawn as 1.5 of 100, not "2" over a line saying
+1.5; the living costs' icons; the phone tile inside the label's reserve so long labels keep two lines; the answer card's fallback
+"Country level" glyph and orphan foot mark gone; the how-to page's dots drawn where "One dot ... Five dots" stood.
 
 **Waiting on him (QUEUE HIS rows, unchanged):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
 `trade:uk-survival-official`. **Next for the loop:** the two trade-page rows the review queued (`trade:split-withheld-sense`, `trade:peers-left-out-line`: each is a stated-line law of the model meeting his no-disclaimers correction, so a law change with its harness, not a copy edit), then the rest of the plan's audit on the city and district pages.
@@ -44,10 +49,10 @@ a real browser and reads every rendered page's markup; each of its checks was pr
 
 | Component | Status | Notes |
 |---|---|---|
-| Production | `bb4c086e` (batch 45) | batches 41 to 44 driven live with photos (`website/scratchpad/b41*`, `b42live/`, `b44live/`), 0 page errors |
+| Production | `ee9e114a` (batch 50) | batches 41 to 44 driven live with photos (`website/scratchpad/b41*`, `b42live/`, `b44live/`), 0 page errors; 45 to 50 fetched (their markers in the live HTML) |
 | Website `main` | 0 ahead | remote benetbani/marginatlas-web |
 | Design repo `p4-seam` | `758c850` and this handoff's record | `E:/atlas`, no remote |
-| Chain | 167 of 168 at `742edec4`; the red (gathered-emptiness) fixed by `61c0431c`, then the 21 render-reading gates and 9 source gates green at `61c0431c` and again at `bb4c086e` | `scratchpad/deploy/chain.txt`, `scratchpad/b45_subset.txt`, `scratchpad/b46_subset.txt` |
+| Chain | 168 of 168 at `ee9e114a` (and at `bf834f45`, `cf734737`, `54444a5d`); 167 of 168 at `e9134dde`, fixed by the copy gate's new contract `27a0a0a5` | `scratchpad/deploy/chain.txt` |
 | UK page laws / model laws / holes / copy | 0 / 3 / 0 / 0 | the 3 are his kept forms (`#character`, `#character-people`, `#cities`), HIS row `country:focal-kept-forms` |
 | The interact gate | 15 listening drawings, 105 readings, 8 sortable heads on the 9 harness pages | every fixture check proven by a plant |
 
@@ -131,16 +136,12 @@ What each mechanism is now, and where it sits:
 
 **Committed next steps (the loop's, no word needed):**
 
-1. `trade:split-withheld-sense` (QUEUE): the cost split's withheld state on the trade pages (London barbershops is one) keeps
-   "Where each $100 goes" and "Out of every $100 in sales." over a bar of the costs' own split, and the sentence "Our cost figures
-   add up to more than $100, so only costs are shown." Where: `src/components/spine/archetypes/IncomeBreakdown.tsx` (the withheld
-   head, the stated line placed to fill a 312 by 120 blank at 768, the goal of 2026-09-24's B8), `src/components/spine/cell/turn-one.tsx`
-   (`SplitCard`), `COPY.tradeSplit`. Done: the card names what it draws, no sentence about its own arithmetic, the head's right half
-   filled by something the card holds, the page filter and laws green at three widths on every trade that draws it.
-2. `trade:peers-left-out-line` (QUEUE): "2 trades left out: no cost figures yet." under "Other trades to open" (MarkList's stated
-   line, both directions checked by the harness). Done: the line decided against his 2026-09-24 correction, the harness taught.
-3. The audit's remaining pages: the city page (London) and the district pages have not had the card-by-card pass the UK page
-   had (PLAN.md section 4 covers the UK page and the trade sections only).
+1. The small findings the review left (PLAN.md section 8 and its notes): the industry page's "Similar trades" accents the leader
+   while the headline is the page's own trade's rank; the job market's sector block and "Lessons from owners" carry no glyphs;
+   "What it is like" leaves "Price tier" alone on its row. Each is a judgement, none misleads.
+2. `trade:peers-left-out-line` is DECIDED kept (MarkList's law 2); `trade:split-withheld-sense` is DONE.
+3. Any new section built for his list goes through the four checks the goal added: a readout or lever where the card holds the
+   rule, a key for every tick or dot, an icon a cell where a grid of facts stands, and the interact gate's markup read.
 
 **Waiting on him (QUEUE, HIS):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
 `trade:uk-survival-official`; older ones unchanged (`arch:city-cards`, `country:seats-awaiting-click`,
