@@ -31,10 +31,17 @@ export function LoanLever({ min, max, rate, termMin, termMax, words }: { min: nu
       <div>
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{W.label}</span>
-        <span aria-live="polite" className="fig text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">{usd(monthly)}</span>
+        {/* The lead rung, 16, under the card's figure at 30 (PART 4: nothing between 16 and 30 in a card that holds a 30). */}
+        <span aria-live="polite" className="fig text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{usd(monthly)}</span>
         <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{W.perMonth}</span>
       </div>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{W.total.replace("{total}", usd(monthly * n)).replace("{n}", String(years))}</p>
+      {/* THE TOTAL IS A FIGURE, NOT A SENTENCE (2026-09-26, the plain-copy law of one supporting line a card, which the sentence
+          "$40K repaid over 5 years" broke): what the years cost in all, under the month's figure, so a longer term reads at once as a
+          smaller month and a larger total, the trade the lever exists to show. */}
+      <div className="mt-1 flex items-baseline gap-2">
+        <span data-loan-total className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{usd(monthly * n)}</span>
+        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{W.total}</span>
+      </div>
       </div>
       <div className="flex flex-col gap-3">
         <Range id="loan-amount" label={W.amount} min={floor} max={ceiling} step={step} value={amount} onChange={setAmount} format={usd} />

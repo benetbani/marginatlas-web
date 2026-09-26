@@ -72,7 +72,7 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
   };
   return (
     <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
-    /* A PART ON THE BAR AND ITS TILE ARE ONE (goal 2026-09-26, M1 and M2): touching either lights both and reads the share. */
+    {/* A PART ON THE BAR AND ITS TILE ARE ONE (goal 2026-09-26, M1 and M2): touching either lights both and reads the share. */}
     <Marks label={live.map((p) => `${p.name} ${Math.round(p.share)}${unit}`).join(", ")} data-archetype="share-bar" data-visual="1" data-form={led ? "led" : "plain"} data-wedges={String(live.length)} data-leader={leader.key} className={fill ? "flex flex-1 flex-col" : undefined}>
       {led && bracket ? (
         <div aria-hidden data-bracket className="relative mb-1 h-6">

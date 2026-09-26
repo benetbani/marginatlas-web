@@ -91,7 +91,7 @@ function Page() {
         <SurvivalCurve id="sv" country={[{ year: 1, pct: 94.6 }, { year: 2, pct: 74.7 }, { year: 3, pct: 55.9 }, { year: 4, pct: 45 }, { year: 5, pct: 38.4 }]} regions={[{ key: "south-west", name: "South West", inName: "the South West", points: [{ year: 1, pct: 95 }, { year: 2, pct: 77.7 }, { year: 3, pct: 61 }, { year: 4, pct: 50.1 }, { year: 5, pct: 43.5 }] }]} best={{ name: "South West", pct: 43.5 }} worst={{ name: "West Midlands", pct: 30.6 }} words={{ focal: "of new firms still trading after {n} years", focalIn: "of new firms still trading after {n} years in {region}", start: "Start", year: "Year {n}", regions: "By region, year {n}", choose: "Region", country: "The UK", kicker: "Who is still trading" }} />
       </div>
       <div id="loan" style={{ marginTop: 60, maxWidth: 480 }}>
-        <LoanLever min={663} max={33152} rate={7.5} termMin={1} termMax={5} words={{ label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "{total} repaid over {n} years" }} />
+        <LoanLever min={663} max={33152} rate={7.5} termMin={1} termMax={5} words={{ label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "repaid in all" }} />
       </div>
       <p id="away" style={{ marginTop: 300, position: "relative", zIndex: 30 }}>Elsewhere on the page.</p>
     </div>
@@ -273,6 +273,9 @@ try {
     await p3.locator('#loan [role="radio"]', { hasText: "3" }).click();
     await settle(p3);
     if ((await loanPay()) !== expect(33000, 3)) fail(`three years gave "${await loanPay()}", not ${expect(33000, 3)}`, "the monthly repayment of a fixed-rate loan, and nothing else", LL);
+    const loanTotal = await p3.evaluate(() => document.querySelector("#loan [data-loan-total]")?.textContent.trim() ?? "");
+    const whole = (P, years) => { const r = 0.075 / 12, n = years * 12; const t = ((P * r) / (1 - Math.pow(1 + r, -n))) * n; return "$" + Math.round(t / 1000) + "K"; };
+    if (loanTotal !== whole(33000, 3)) fail(`three years' total read "${loanTotal}", not ${whole(33000, 3)} (the month's repayment times thirty-six)`, "the total is the monthly repayment over the months, a figure beside the month's", LL);
     await d2.close();
   }
 

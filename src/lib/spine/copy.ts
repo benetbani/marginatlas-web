@@ -805,7 +805,7 @@ export const COPY = {
     /** The start-up loan's term, read by the note and the loan lever alike, so the two never disagree. */
     startupTerm: { min: 1, max: 5 },
     /** The loan lever (goal 2026-09-26, M3). */
-    loan: { label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "{total} repaid over {n} years" },
+    loan: { label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "repaid in all" },
   },
   banking: {
     kicker: "Getting paid",

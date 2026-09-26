@@ -22,7 +22,7 @@ export function DonutStat({ parts, center, centerWords, aria }: { parts: DonutSl
   let acc = 0;
   return (
     <div className="[container-type:inline-size]">
-    /* A WEDGE AND ITS ROW ARE ONE PART (goal 2026-09-26, M2; his donut of 2026-07-05: "hover highlights the segment"). */
+    {/* A WEDGE AND ITS ROW ARE ONE PART (goal 2026-09-26, M2; his donut of 2026-07-05: "hover highlights the segment"). */}
     <Marks label={aria} data-archetype="donut-stat" data-visual="1" className="flex items-center gap-5 [@container(min-width:420px)]:gap-8">
       <div className="relative h-32 w-32 shrink-0 [@container(min-width:420px)]:h-40 [@container(min-width:420px)]:w-40">
         <svg viewBox="0 0 160 160" className="h-full w-full -rotate-90" role="img" aria-label={aria}>
