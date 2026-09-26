@@ -40,10 +40,12 @@
  * a line from 560px of card, and each share is printed once, in its row.
  */
 import * as React from "react";
+import { partTones } from "@/components/spine/charts/part_tones";
 
 export type SharePart = { key: string; name: string; share: number };
 
-const PART_COLOURS = ["var(--terra)", "var(--terra-border)", "var(--c-ink2)", "var(--c-muted)"];
+/* The plain form's tones are the shared ramp by rank (charts/part_tones.ts, 2026-09-26); four parts at most, so no tone needs its
+   opacity here. */
 
 /** `fill` (2026-09-25): the rows take the height the level lends the card (a taller neighbour), shared evenly, instead of a
  *  blank under the last row; a row never falls under its content. */
@@ -62,7 +64,7 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
     if (led) return p.key === leads[0].key ? "var(--terra)" : p.key === leads[1].key ? "var(--terra-border)" : p.key === residualKey ? "var(--c-soft2)" : "var(--c-line-strong)";
     /* the largest in the accent, the second largest in the tint, the rest ink-greys, whatever their order along the bar */
     const rank = [...live].sort((a, b) => b.share - a.share).findIndex((q) => q.key === p.key);
-    return PART_COLOURS[Math.min(rank, PART_COLOURS.length - 1)];
+    return partTones(live.length)[rank].c;
   };
   return (
     <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>

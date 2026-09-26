@@ -6,22 +6,17 @@
  */
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
+import { partTones } from "@/components/spine/charts/part_tones";
 
 export type DonutSlice = { key: string; name: string; share: number };
 
-/* THE NEUTRALS STEP FROM DARK TO LIGHT BY HOW MANY THERE ARE (2026-09-26, the United Kingdom's payments ring). The third and fourth
-   fills were ink2 and muted, about four points of lightness apart: cash and digital wallet read as one grey, on the ring and on the
-   legend. Now one neutral is ink2; two are ink2 and line-strong, the ends of the ramp; three put ink2 at half strength between them. */
-type Tone = { c: string; o?: number };
-const LEADS: Tone[] = [{ c: "var(--terra)" }, { c: "var(--terra-border)" }];
-const NEUTRALS: Tone[][] = [[], [{ c: "var(--c-ink2)" }], [{ c: "var(--c-ink2)" }, { c: "var(--c-line-strong)" }], [{ c: "var(--c-ink2)" }, { c: "var(--c-ink2)", o: 0.45 }, { c: "var(--c-line-strong)" }]];
-const tonesFor = (n: number): Tone[] => [...LEADS, ...NEUTRALS[Math.max(0, n - LEADS.length)]].slice(0, n);
+/* The parts' tones are the shared ramp (part_tones.ts, 2026-09-26): the neutrals step dark to light by how many there are. */
 
 export function DonutStat({ parts, center, centerWords, aria }: { parts: DonutSlice[]; center: string; centerWords: string; aria: string }) {
   const live = parts.filter((p) => p && Number.isFinite(p.share) && p.share > 0).sort((a, b) => b.share - a.share).slice(0, 5);
   if (live.length < 2) return null;
   const total = live.reduce((s, p) => s + p.share, 0);
-  const tones = tonesFor(live.length);
+  const tones = partTones(live.length);
   const R = 62, C = 2 * Math.PI * R, GAP = 3;
   let acc = 0;
   return (

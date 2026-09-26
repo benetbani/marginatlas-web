@@ -34,22 +34,24 @@
  * parts, a five-part shard, a two-part shard) and the page laws.
  */
 import * as React from "react";
+import { partTones } from "@/components/spine/charts/part_tones";
 
 export type DonutPart = { key: string; name: string; share: number };
 
-const RING_COLOURS = ["var(--terra)", "var(--terra-border)", "var(--c-ink2)", "var(--c-muted)", "var(--c-border)"];
+/* The parts' tones are the shared ramp (charts/part_tones.ts, 2026-09-26): ink2 and muted, this ring's third and fourth, read as one grey. */
 
 export function Donut({ parts, unit = "%" }: { parts: DonutPart[]; unit?: string }) {
   const live = parts.filter((p) => p && p.name && Number.isFinite(p.share) && p.share > 0).slice(0, 5);
   if (live.length < 2) return null;
   const total = live.reduce((s, p) => s + p.share, 0);
+  const tones = partTones(live.length);
   const r = 44, c = 2 * Math.PI * r;
   let offset = 0;
   const arcs = live.map((p, i) => {
     const frac = p.share / total;
     const len = Math.max(0, frac * c - 2);
     const dash = `${len} ${c - len}`;
-    const el = <circle key={p.key} r={r} cx="60" cy="60" fill="none" stroke={RING_COLOURS[i] ?? RING_COLOURS[RING_COLOURS.length - 1]} strokeWidth="14" strokeDasharray={dash} strokeDashoffset={-offset * c + c / 4} data-wedge={p.key} />;
+    const el = <circle key={p.key} r={r} cx="60" cy="60" fill="none" stroke={tones[i].c} strokeOpacity={tones[i].o} strokeWidth="14" strokeDasharray={dash} strokeDashoffset={-offset * c + c / 4} data-wedge={p.key} />;
     offset += frac;
     return el;
   });
@@ -69,7 +71,7 @@ export function Donut({ parts, unit = "%" }: { parts: DonutPart[]; unit?: string
       <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={live.length}>
         {live.map((p, i) => (
           <div key={p.key} data-row={p.key} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 py-2">
-            <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px]" style={{ background: RING_COLOURS[i] ?? RING_COLOURS[RING_COLOURS.length - 1] }} />
+            <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px]" style={{ background: tones[i].c, opacity: tones[i].o }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
             <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>
           </div>
