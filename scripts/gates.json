@@ -1409,6 +1409,7 @@
         "src/components/spine/interact/LoanLever.tsx",
         "src/components/spine/interact/Marks.tsx",
         "src/components/spine/interact/Range.tsx",
+        "src/components/spine/interact/SortTable.tsx",
         "src/components/spine/interact/SurvivalCurve.tsx",
         "src/components/spine/interact/Switch.tsx"
       ],
