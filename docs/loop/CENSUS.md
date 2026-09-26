@@ -133,7 +133,7 @@ Loud today: 1 of 3, as `LOUD_SEATS` in hood-view.tsx declares (a LIT seat is unl
 | take | Masthead |  | AnswerCard |  |
 | permits | PermitsCard | Licences you need | WorkedFigure |  |
 | open | OpenCard | The cost to open | WorkedFigure or BentoMetric or RankedBars |  |
-| split | SplitCard | Where each $100 goes | IncomeBreakdown |  |
+| split | SplitCard | split.state === "withheld" && split.mix.length >= 2 ? COPY.tradeSplit.kickerCosts : COPY.tradeSplit.kicker | IncomeBreakdown |  |
 | team | TeamCard | What staff cost | TiersTable |  |
 | peers | PeersCard | Against other places | CompareTable |  |
 | clears | ClearsCard | Covering the costs | Ring |  |
@@ -154,7 +154,7 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 | section id | component | kicker | archetype | builder |
 |---|---|---|---|---|
 | lasts | LastsCard | How many survive | WorkedFigure |  |
-| split | SplitCard | Where each $100 goes | IncomeBreakdown |  |
+| split | SplitCard | split.state === "withheld" && split.mix.length >= 2 ? COPY.tradeSplit.kickerCosts : COPY.tradeSplit.kicker | IncomeBreakdown |  |
 | channels | ChannelsCard (MixCard) | Where sales come from | Donut |  |
 | close | CloseCard |  | Terminus |  |
 | take | Masthead |  | AnswerCard |  |

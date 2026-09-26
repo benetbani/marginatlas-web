@@ -916,7 +916,10 @@ for (const w of WIDTHS) {
       // states none. Planted once (the line withheld in IncomeBreakdown.tsx)
       // and seen red before this was trusted.
       if (r.incomeWithheld && segs.length) red(r.inst, w, "PROMISE", "a withheld breakdown draws segments");
-      if (r.incomeWithheld && !r.incomeLine) red(r.inst, w, "PROMISE", "a withheld breakdown with no stated line where the bar would stand");
+      /* The stated line is owed where NOTHING is drawn (2026-09-26, QUEUE trade:split-withheld-sense): with the costs drawn on their
+         own base a bar stands, and a line apologising for its absence contradicted it. */
+      if (r.incomeWithheld && !r.incomeLine && !(r.incomeMix || []).length) red(r.inst, w, "PROMISE", "a withheld breakdown with no stated line and no bar");
+      if (r.incomeWithheld && r.incomeLine && (r.incomeMix || []).length) red(r.inst, w, "PROMISE", "a stated line apologising for a bar the card draws");
       if (!r.incomeWithheld && !segs.length) red(r.inst, w, "PROMISE", "a breakdown with no segments and no withheld line");
       if (!r.incomeWithheld && r.incomeLine) red(r.inst, w, "PROMISE", "a stated withheld line on a breakdown that draws its bar");
       /* THE COST MIX, withheld only (the goal's B8): a hundred of cost, no sliver, the legend the bar's own keys. */

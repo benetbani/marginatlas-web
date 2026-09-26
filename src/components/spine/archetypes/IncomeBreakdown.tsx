@@ -171,10 +171,19 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
   /* The net's printed form is the one builder's (a plain round); the cost shares take what is left of the hundred. */
   const netShown = Math.round(netPct);
   const rounded: Record<string, number> = { ...roundToTotal(live.map((s) => ({ key: s.key, value: s.share })), 100 - netShown), [NET_KEY]: netShown };
-  const ariaLabel = `${netLabel} ${netShown} percent. ${withheld ? withheld : live.map((s) => `${s.label} ${rounded[s.key]} percent`).join(", ") + "."}`;
   /* The withheld state's mix: its shares are of the costs, so they round to a hundred of their own. */
   const mixLive = withheld && mix ? mix.segments.filter((s) => Number.isFinite(s.share) && s.share > 0) : [];
   const mixRounded: Record<string, number> = mixLive.length ? roundToTotal(mixLive.map((s) => ({ key: s.key, value: s.share })), 100) : {};
+  /* THE COSTS DRAWN, NO APOLOGY (2026-09-26, QUEUE trade:split-withheld-sense). Since the goal of 2026-09-24's B8 a withheld card
+     draws the costs split among themselves, so the stated line ("Our cost figures add up to more than $100, so only costs are
+     shown") no longer told the reader why a bar was missing: a bar stood under it, and the card's title, the net's basis and the
+     bar described three different wholes. With the costs drawn the card takes the drawn state's own layout (the net, its basis and
+     the bar in the left half, the legend in the right from 640px), the bar holds no net, the legend says nothing of sales, and the
+     caller titles the card for what it draws; the stated line stands only where nothing is drawn. */
+  const costsOnly = !!withheld && mixLive.length >= 2;
+  const ariaLabel = costsOnly
+    ? `${netLabel} ${netShown} percent. ${mixLive.map((s) => `${s.label} ${mixRounded[s.key]} percent`).join(", ")} ${COPY.incomeBreakdown.ofCosts}.`
+    : `${netLabel} ${netShown} percent. ${withheld ? withheld : live.map((s) => `${s.label} ${rounded[s.key]} percent`).join(", ") + "."}`;
 
   return (
     <Box id={id} data-archetype="income-breakdown" data-withheld={withheld ? "1" : undefined} className="[container-type:inline-size]">
@@ -183,7 +192,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           country (income_rows.ts explains why), so there is no "measured"
           variant of this card for the tag to distinguish it from. */}
       <Rail icon={icon} kicker={kicker} gloss={gloss} sample />
-      {withheld ? (
+      {withheld && !costsOnly ? (
         /* THE WITHHELD HEAD TWO ABREAST FROM 640 OF THE CARD (the goal's B8,
            2026-09-24): stacked at 768 the card is 680 inside, and the net and
            its basis in the left half left 312 by 120 of nothing beside them
@@ -204,37 +213,47 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           <p data-withheld-line={id} className="mt-4 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)] [@container(min-width:560px)]:mt-0">{withheld}</p>
         </div>
       ) : null}
-      {withheld ? (
+      {withheld && !costsOnly ? (
         <>
-          {mixLive.length >= 2 ? (
-            <>
-              {/* THE COSTS ON THEIR OWN BASE (the goal's B8): the same bar and
-                  legend as the drawn state, the same tones and hatches in the
-                  same order, with no net in it and a hundred of cost as its
-                  whole; its basis line says so before the bar is read. */}
-              {mix!.basis ? <p data-mix-basis className="mt-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">{mix!.basis}</p> : null}
-              <div className="mt-2 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={`${mix!.basis} ${mixLive.map((s) => `${s.label} ${mixRounded[s.key]} percent`).join(", ")}.`}>
-                {mixLive.map((s, i) => (
-                  <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
-                ))}
-              </div>
-              <div className="mt-3 [container-type:inline-size]">
-                {/* THREE COLUMNS FROM 560 (the goal's B8): a five-line mix stood three rows tall in two, one row more than the short team tables beside it could meet at 1280, and left its last row half empty at 768. */}
-                <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0 [@container(min-width:560px)]:grid-cols-3">
-                  {mixLive.map((s, i) => (
-                    <span key={s.key} data-mix-legend-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
-                      <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
-                      <span data-label className="truncate">{s.label}</span>
-                      <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{mixRounded[s.key]}%</Fig>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : null}
           {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           {detail}
         </>
+      ) : costsOnly ? (
+        /* THE COSTS IN THE DRAWN STATE'S LAYOUT (the header's COSTS DRAWN): the same halves, tones, hatches and legend rows; the
+           bar's segments are `data-mix-*`, never `data-seg-*`, so "a withheld breakdown draws no segment of sales" still holds. */
+        <div className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
+          <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
+            <div data-answer="1">
+              <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
+              <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
+            </div>
+            {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+            <div className="mt-4 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={ariaLabel}>
+              {mixLive.map((s, i) => (
+                <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
+              ))}
+            </div>
+          </div>
+          <div className="mt-3 [container-type:inline-size] [@container(min-width:640px)]:col-start-2 [@container(min-width:640px)]:row-span-2 [@container(min-width:640px)]:row-start-1 [@container(min-width:640px)]:mt-0">
+            {/* The legend's head says whose shares these are (a label, the tables' head style): of the costs, never of sales. */}
+            <div data-mix-head className="mb-2 text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{COPY.incomeBreakdown.costsHead}</div>
+            <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
+              {mixLive.map((s, i) => (
+                <span key={s.key} data-mix-legend-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+                  <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
+                  <span data-label className="truncate">{s.label}</span>
+                  <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{mixRounded[s.key]}%</Fig>
+                </span>
+              ))}
+            </div>
+          </div>
+          {foot || detail ? (
+            <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-2">
+              {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+              {detail}
+            </div>
+          ) : null}
+        </div>
       ) : (
         <>
           {/* THE DRAWN CARD TWO ABREAST FROM 640 OF IT (the goal's B12, first

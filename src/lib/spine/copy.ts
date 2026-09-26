@@ -872,6 +872,10 @@ export const COPY = {
   incomeBreakdown: {
     kicker: "Income breakdown",
     netLabel: "Net income",
+    /** The costs-only bar's words for a screen reader (2026-09-26): its shares are of the costs, not of sales. */
+    ofCosts: "of the costs",
+    /** The costs-only legend's head, a label (2026-09-26). */
+    costsHead: "Share of costs",
     basis: "A typical split of revenue for this trade, modelled worldwide rather than measured for this place.",
     otherLabel: "Smaller costs",
     residualLabel: "Unallocated",
@@ -1609,6 +1613,9 @@ export const COPY = {
    *  foot says so, because the sample mark is behind his switch. */
   tradeSplit: {
     kicker: "Where each $100 goes",
+    /** THE TITLE WHEN THE COSTS ARE DRAWN ON THEIR OWN BASE (2026-09-26, QUEUE trade:split-withheld-sense): the bar is no longer
+     *  each $100 of sales, so the card is named for the two things it holds. */
+    kickerCosts: "Costs and margin",
     basisShard: "Out of every $100 in sales.",
     basisProfile: "Out of every $100 in sales.",
     /** The withheld state draws no shares, so its basis names the net alone and the foot is not printed. */
