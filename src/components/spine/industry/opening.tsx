@@ -73,6 +73,7 @@ export function BenchmarkCard({ id = "benchmark", benchmark }: { id?: string; be
       ceiling="set"
       best="max"
       feature="leader"
+      selfKey={benchmark.selfKey}
       topLabel={COPY.industryBenchmark.topLabel}
       fmt={netText}
       phoneHead={{ name: COPY.margin.phoneHead.trade, value: COPY.margin.phoneHead.value }}

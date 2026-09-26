@@ -245,6 +245,11 @@ export type RankedBarsProps = {
    *  an answer worth sending anyone to; see the header. Defaults to "leader",
    *  so a caller who says nothing keeps the mark. */
   feature?: "leader" | "none";
+  /** THE PAGE'S OWN MEMBER (2026-09-26, the industry page's review): where the card ranks the set the page belongs to, the page's
+   *  own row, a "you are here": its name in semibold and its bar in solid ink2 wherever it stands, never the accent, which stays
+   *  with the leader. The industry page's "Similar trades" headlined the trade's rank ("Joint 7th") while nothing on the chart
+   *  said which column was the trade. */
+  selfKey?: string | null;
   /** THE CARD'S OWN FOCAL OVER THE BARS (MODEL.md 8.6 `04 open`, plan step 33's
    *  second dispatch, 2026-09-18): one figure at 30 between the opener and the
    *  basis, `--terra-text` when the card is one of the page's loud moments and
@@ -362,12 +367,15 @@ const NAME_CLS = "min-w-0 py-0.5 text-[length:var(--t-body)] font-medium text-[v
    The hatch exists to separate the rest FROM a leader; with no leader it is a
    texture saying nothing, and seven pale hatched bars are the grey-ghost card
    this project has already been corrected for. */
+/** The page's own member's bar: solid ink2, the "you are here" (never the accent, which is the leader's). */
+const SELF_FILL: React.CSSProperties = { background: "var(--c-ink2)" };
+const selfName = (cls: string) => cls.replace("font-medium", "font-semibold");
 const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
   marks
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey, selfKey = null }: RankedBarsProps) {
   if (rows.length < 2) return null;
   /* THE RESIDUAL IS LIFTED OUT OF THE RANKING BEFORE ANYTHING IS SORTED (see
      the prop): it takes no part in the order and cannot be the leader. A key
@@ -511,12 +519,12 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                       <Fig className="font-medium">{fmt(r.value)}</Fig>
                     </span>
                   </div>
-                  <div aria-hidden="true" style={{ width: 28, height: h, borderRadius: "2px 2px 0 0", ...barFill(isLeader, marks) }} />
+                  <div aria-hidden="true" style={{ width: 28, height: h, borderRadius: "2px 2px 0 0", ...(r.key === selfKey && !(isLeader && marks) ? SELF_FILL : barFill(isLeader, marks)) }} />
                 </div>
                 {/* THE UNDERLINE IS A LINK'S, so a name with no door wears none (the
                     district photograph of run 25 showed seven underlined names and
                     no destination, a promise the card could not keep). */}
-                <div data-label data-mark-label className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
+                <div data-label data-mark-label data-self={r.key === selfKey ? "1" : undefined} className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.key === selfKey ? "font-semibold" : ""} ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
               </>
             );
             return (
@@ -578,7 +586,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                       the name: the model laws' DISTRICT ADJECTIVE reads any
                       span nested in a district's name as free text about the
                       district, and a glyph is not a word. */}
-                  <span data-label className={`${NAME_CLS}${r.icon ? " flex items-center gap-2" : ""}${r.href ? " after:ml-1.5 after:text-[length:var(--t-micro)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.icon ? <Ico id={r.icon} tone="terra" /> : null}{r.name}</span>
+                  <span data-label data-self={r.key === selfKey ? "1" : undefined} className={`${r.key === selfKey ? selfName(NAME_CLS) : NAME_CLS}${r.icon ? " flex items-center gap-2" : ""}${r.href ? " after:ml-1.5 after:text-[length:var(--t-micro)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.icon ? <Ico id={r.icon} tone="terra" /> : null}{r.name}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share
@@ -600,7 +608,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                       whether the far end is the world's or this set's own. */}
                   {drawShort ? null : (
                     <span aria-hidden="true" data-track={ceiling} className="relative block h-3 overflow-hidden rounded-full bg-[var(--c-soft)]">
-                      <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(Math.max(0, Math.min(1, r.value / top)) * 100).toFixed(1)}%`, ...barFill(isLeader, marks) }} />
+                      <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(Math.max(0, Math.min(1, r.value / top)) * 100).toFixed(1)}%`, ...(r.key === selfKey && !(isLeader && marks) ? SELF_FILL : barFill(isLeader, marks)) }} />
                     </span>
                   )}
                 </>
@@ -630,7 +638,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
             const figPill = isLeader && marks;
             const row = (
               <>
-                <span data-label className={NAME_CLS}>{r.name}</span>
+                <span data-label data-self={r.key === selfKey ? "1" : undefined} className={r.key === selfKey ? selfName(NAME_CLS) : NAME_CLS}>{r.name}</span>
                 <Fig className="text-right text-[length:var(--t-body)] font-semibold" >
                   {/* THE SAME RESERVED SLOT AS THE BAR FIGURE, above: every
                       row gets the rounded, padded span, only the leader's
