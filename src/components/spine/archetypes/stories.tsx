@@ -70,6 +70,8 @@ import { FirstYears } from "@/components/spine/sections/FirstYears";
 import { Obstacles } from "@/components/spine/sections/Obstacles";
 import { SpendByIncome } from "@/components/spine/sections/SpendByIncome";
 import { buildSpendByIncome, listSpendByIncome } from "@/lib/spine/sections/spend_by_income";
+import { SpendByAge } from "@/components/spine/sections/SpendByAge";
+import { buildSpendByAge, listSpendByAge } from "@/lib/spine/sections/spend_by_age";
 import { LocalApps } from "@/components/spine/sections/LocalApps";
 import { MarketHold } from "@/components/spine/sections/MarketHold";
 import { JobMarket } from "@/components/spine/sections/JobMarket";
@@ -2529,6 +2531,27 @@ const peopleKey = (iso2: string, city?: string) => (city ? `${iso2}:${city}` : i
  *  country's (the country's page, keyed <iso2>:<city>:country, the city beside it as the one comparison). */
 const peopleFocuses = () => listPeoplePlaces().flatMap((p) => (p.city ? [{ ...p, focus: "city" as const }, { ...p, focus: "country" as const }] : [{ ...p, focus: "country" as const }]));
 const peopleFocusKey = (p: { iso2: string; city?: string; focus: "city" | "country" }) => (p.city && p.focus === "country" ? `${peopleKey(p.iso2, p.city)}:country` : peopleKey(p.iso2, p.city));
+/** WHO SPENDS ON IT, BY AGE (sections/SpendByAge.tsx, 2026-09-26): one story a category the file holds, keyed <iso2>:<trade>. */
+export function pickSpendByAgeInstances(): Instance[] {
+  return listSpendByAge().filter((x) => buildSpendByAge(x.iso2, x.trade)).map((x) => ({ iso2: `${x.iso2}:${x.trade}`, why: "the households and the money by age, the largest band's share of the money as the figure" }));
+}
+export function SpendByAgeStories() {
+  return (
+    <div data-stories="spend-by-age">
+      {pickSpendByAgeInstances().map((i) => {
+        const [iso2, trade] = i.iso2.split(":");
+        const d = buildSpendByAge(iso2, trade)!;
+        return (
+          <Story kind="spend-by-age" key={i.iso2} iso2={i.iso2} why={i.why}>
+            <div style={{ maxWidth: 520 }}>
+              <SpendByAge id={`spend-by-age-${iso2.toLowerCase()}-${trade}`} data={d} />
+            </div>
+          </Story>
+        );
+      })}
+    </div>
+  );
+}
 export function pickAgeMixInstances(): Instance[] {
   return peopleFocuses().filter((p) => buildAgeMix(p.iso2, p.city, p.focus)).map((p) => ({ iso2: peopleFocusKey(p), why: p.focus === "city" ? "the country's bar and its city's, the city's core in the accent" : "the country's core in the accent, its city's bar under it" }));
 }
@@ -2623,6 +2646,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "thresholds": pickThresholdsInstances(),
     "spend-by-income": pickSpendByIncomeInstances(),
     "age-mix": pickAgeMixInstances(),
+    "spend-by-age": pickSpendByAgeInstances(),
     "customers-come": pickCustomersComeInstances(),
     "origin": pickOriginInstances(),
   };

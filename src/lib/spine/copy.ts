@@ -689,6 +689,17 @@ export const COPY = {
     poorest: "Poorest tenth",
     richest: "Richest tenth",
   },
+  /** WHO SPENDS ON IT, BY AGE (sections/SpendByAge.tsx, 2026-09-26). The survey's "age of the household reference person" said as
+   *  who leads the household; the category as the survey names it, so "restaurants and hotels" and never "eating out", which it is
+   *  not (it holds hotel stays). */
+  spendByAge: {
+    kicker: "Spending by age",
+    focalWords: "of spending on {item} comes from households led by {who}",
+    items: { "restaurants-hotels": "restaurants and hotels", food: "food and soft drinks", clothing: "clothes and shoes", recreation: "leisure" } as Record<string, string>,
+    bands: { under30: "Under 30", "30to49": "30 to 49", "50to64": "50 to 64", "65to74": "65 to 74", "75plus": "75 and over" } as Record<string, string>,
+    who: { under30: "under-30s", "30to49": "30 to 49 year olds", "50to64": "50 to 64 year olds", "65to74": "65 to 74 year olds", "75plus": "people 75 and over" } as Record<string, string>,
+    bars: { households: "Households", money: "The money" },
+  },
   /** THE APPS A SHOP RUNS ON (sections/LocalApps.tsx, 2026-09-25). The fee's unit as a symbol after the figure, never a phrase. */
   localApps: {
     kicker: "The apps shops use",

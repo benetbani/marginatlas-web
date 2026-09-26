@@ -1,0 +1,74 @@
+{
+ "_about": "What households spend each week on one trade's category, by the age of the household reference person (his list of 2026-09-25: customer types). The published averages per household, in the country's currency, from the 'All households' column of each age band's table; `households` the published average weighted number of households a band, in thousands, so a band's share of the category's money is its average times its households over the five. The survey publishes age at the twelve main categories only (ONS, freedom of information response FOI-2024-2222: spending at lower categories by age of household reference person is not published), so hairdressing, one line inside 'Miscellaneous goods & services' with insurance and banking, is not an item here, and 'Restaurants & hotels' holds hotel stays with the meals. United Kingdom: ONS, Family spending in the UK, workbook 2 (financial year ending 2025, released 11 June 2026), Tables A12 to A16, the financial years ending 2023 to 2025 pooled; read 2026-09-26.",
+ "GB": {
+  "currency": "GBP",
+  "period": "April 2022 to March 2025",
+  "bands": [
+   "under30",
+   "30to49",
+   "50to64",
+   "65to74",
+   "75plus"
+  ],
+  "households": [
+   2330.0,
+   9810.0,
+   8240.0,
+   4280.0,
+   4170.0
+  ],
+  "items": {
+   "food": {
+    "code": "1",
+    "weekly": [
+     53.1,
+     75.2,
+     75.1,
+     63.7,
+     58.2
+    ]
+   },
+   "clothing": {
+    "code": "3",
+    "weekly": [
+     13.7,
+     20.9,
+     20.1,
+     13.7,
+     9.7
+    ]
+   },
+   "recreation": {
+    "code": "9",
+    "weekly": [
+     47.4,
+     72.6,
+     87.2,
+     80.8,
+     55.1
+    ]
+   },
+   "restaurants-hotels": {
+    "code": "11",
+    "weekly": [
+     43.4,
+     47.5,
+     51.3,
+     42.5,
+     28.0
+    ]
+   }
+  },
+  "trades": {
+   "restaurants": "restaurants-hotels",
+   "sit-down-restaurants": "restaurants-hotels",
+   "fast-casual-restaurants": "restaurants-hotels",
+   "cafes-coffee-shops": "restaurants-hotels",
+   "tea-houses-matcha-bars": "restaurants-hotels",
+   "grocery-stores": "food",
+   "specialty-grocers-delis": "food",
+   "clothing-shoe-stores": "clothing",
+   "designer-fashion": "clothing"
+  }
+ }
+}

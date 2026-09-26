@@ -109,7 +109,7 @@ function inPage(width) {
   /* The page-agnostic sections of the same night (src/components/spine/sections/) that draw: a cohort's curve, columns, a scale of
      rates, age bars, pies, a trip bar, a market bar, a price table with its bars. The apps directory and the thresholds are rows
      and a list, text-only, and are not here. */
-  const VISUAL = new Set(["world-range", "bar-list", "donut-stat", "range-pair", "ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board", "donut", "ring", "month-bars", "share-bar", "bento-count", "survival-curve", "obstacles", "spend-by-income", "job-market", "age-mix", "origin", "customers-come", "market-hold", "stock-tiers"]);
+  const VISUAL = new Set(["world-range", "bar-list", "donut-stat", "range-pair", "ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board", "donut", "ring", "month-bars", "share-bar", "bento-count", "survival-curve", "obstacles", "spend-by-income", "spend-by-age", "job-market", "age-mix", "origin", "customers-come", "market-hold", "stock-tiers"]);
   const VARIANT_KEYS = ["data-variant", "data-form", "data-marks", "data-columns", "data-look", "data-feature", "data-dot", "data-shape", "data-orientation"];
   const CARD = 'main [data-card]';
   const main = document.querySelector("main");
