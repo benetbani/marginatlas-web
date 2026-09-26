@@ -121,7 +121,16 @@ export function CharacterCard({ id = "character", character }: { id?: string; ch
   if (!character) return null;
   return (
     <Box id={id}>
-      <Rail icon="district-mix" kicker={character.kicker} sample={character.sample} />
+      {/* The price tier beside the opener, the site's level pill (hood_character_rows.ts says why it left the notes). */}
+      <div className="flex items-start justify-between gap-3">
+        <Rail icon="district-mix" kicker={character.kicker} sample={character.sample} />
+        {character.tier ? (
+          <span data-tier className="mt-1 shrink-0 rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">
+            <span className="sr-only">{COPY.hoodCharacter.rows.price}: </span>
+            {character.tier}
+          </span>
+        ) : null}
+      </div>
       {/* Two columns from 600 of container (his clause 51, 2026-09-20): a note is a block of text and lives in one half; one column at the wide seat (693 at 1280, 720 stacked at 768) put every note in the left half with the right half blank (312 by 234 by the page filter). */}
       <NoteList notes={character.rows} columns={2} />
       {/* The foot at the ladder's slot rung (8, PART 2) under the last hairline: measured 2026-09-19 at 1440, the seat beside this card reads 130 of 217 inked at a 12px foot, 59.9 percent against the art-direction gate's 60, and 130 of 213 at 8, 61; the card's own height is the pair's. */}

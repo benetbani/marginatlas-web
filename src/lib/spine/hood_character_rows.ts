@@ -67,6 +67,10 @@ export type HoodCharacterData = {
   cut: "sentence" | "clause" | "withheld";
   /** The notes are authored, not measured: the opener's mark is on, behind his switch. */
   sample: true;
+  /** THE PRICE TIER AS THE CARD'S PILL (2026-09-26, the district page's review): a note of one word ("Luxury") stood alone on the
+   *  last row of a two-column list, its right half blank; the tier is a level, drawn as the site's level pill beside the opener.
+   *  Null where the file holds none, or where it is the card's only note (then it stays a note). */
+  tier: string | null;
 };
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
@@ -102,8 +106,9 @@ export function buildHoodCharacter(citySlug: string, focus: string | null = null
     if (line) notes.push({ key: "sentence", label: COPY.hoodCharacter.rows.sentence, fact: line.text });
   }
   if (district.skew) notes.push({ key: "who", label: COPY.hoodCharacter.rows.who, fact: closed(capFirst(district.skew)) });
-  if (district.priceTier) notes.push({ key: "price", label: COPY.hoodCharacter.rows.price, fact: capFirst(district.priceTier) });
   if (!district.paragraph && district.description) notes.push({ key: "description", label: COPY.hoodCharacter.rows.description, fact: district.description });
+  const tierAlone = notes.length === 0 && !!district.priceTier;
+  if (tierAlone) notes.push({ key: "price", label: COPY.hoodCharacter.rows.price, fact: capFirst(district.priceTier!) });
   if (notes.length === 0) return null;
   return {
     citySlug: city.slug,
@@ -113,5 +118,6 @@ export function buildHoodCharacter(citySlug: string, focus: string | null = null
     foot: fill(COPY.hoodCharacter.foot, { n: countWord(rows.length - 1) }),
     cut,
     sample: true,
+    tier: district.priceTier && !tierAlone ? capFirst(district.priceTier) : null,
   };
 }
