@@ -10,8 +10,10 @@
  * country without notes returns null and the section self-omits.
  */
 import notesJson from "../../../data/archetypes/locals_notes.json";
+import { ATLAS_ICONS_BY_ID, type AtlasIconId } from "@/components/brand/icons/atlas-icons-data";
 
-export type LocalNote = { label: string; fact: string };
+/** `icon`: the note's glyph, chosen by hand with the note (2026-09-26, M6); a name the atlas set does not hold is dropped. */
+export type LocalNote = { label: string; fact: string; icon?: AtlasIconId };
 export type LocalsNotes = { notes: LocalNote[]; confidence: "placeholder"; source: string };
 
 /** At most five notes; a label of at most seven words; a fact of at most 140 characters (H7, one fact each). */
@@ -27,7 +29,7 @@ export function buildLocalsNotes(iso2: string): LocalsNotes | null {
   if (!Array.isArray(raw)) return null;
   const notes: LocalNote[] = raw
     .filter((n): n is LocalNote => !!n && typeof n === "object" && typeof (n as LocalNote).label === "string" && typeof (n as LocalNote).fact === "string")
-    .map((n) => ({ label: n.label.trim(), fact: n.fact.trim() }))
+    .map((n) => ({ label: n.label.trim(), fact: n.fact.trim(), ...(typeof n.icon === "string" && n.icon in ATLAS_ICONS_BY_ID ? { icon: n.icon } : {}) }))
     .filter((n) => n.label.length > 0 && n.fact.length > 0)
     .slice(0, NOTE_CAP);
   if (notes.length === 0) return null;

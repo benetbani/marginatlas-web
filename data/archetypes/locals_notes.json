@@ -3,19 +3,23 @@
   "GB": [
     {
       "label": "Registering is fast, payroll is not",
-      "fact": "Registering online takes an afternoon; setting up payroll takes longer."
+      "fact": "Registering online takes an afternoon; setting up payroll takes longer.",
+      "icon": "register-cost"
     },
     {
       "label": "The headline rent is not the rent",
-      "fact": "On a strong high street, rates and service charge can add a third to it."
+      "fact": "On a strong high street, rates and service charge can add a third to it.",
+      "icon": "commercial-rent"
     },
     {
       "label": "Small premises often pay less",
-      "fact": "Each of the four nations runs its own rate relief for small premises."
+      "fact": "Each of the four nations runs its own rate relief for small premises.",
+      "icon": "taxes"
     },
     {
       "label": "The first hire triggers a pension",
-      "fact": "A first employee means pension auto-enrolment: budget for it from the first payslip."
+      "fact": "A first employee means pension auto-enrolment: budget for it from the first payslip.",
+      "icon": "hiring"
     }
   ]
 }

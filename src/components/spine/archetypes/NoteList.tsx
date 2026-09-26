@@ -39,6 +39,7 @@
  */
 import * as React from "react";
 import { NOTE_CAP, type LocalNote } from "@/lib/spine/locals_rows";
+import { Ico } from "@/components/spine/kit";
 
 /** `fill` (2026-09-25): the notes share the height the level lends the card (a taller neighbour), each note an equal row, instead
  *  of a blank under the last one; the caller's card is a flex column. The one-line notes of that night left the how-to page's
@@ -54,8 +55,13 @@ export function NoteList({ notes, columns = 1, editorial = true, fill = false }:
             {/* THE TITLE LEADS ITS FACT (2026-09-26, the capitals ruling's follow-through on "bad hierarchy"): the title stood at
                 12px over a 14px fact, so the eye met the explanation before the claim it explains. Both at the body rung now, the
                 title in bold ink and the fact in regular ink2: one size, two weights, one order. */}
-            <div data-note-label className="text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">{n.label}</div>
-            <p data-note-fact className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{n.fact}</p>
+            {/* A GLYPH A NOTE (the goal of 2026-09-26, M6): where the note carries one, the terracotta tile leads the title and
+                the fact, a column of its own, so four notes read as four subjects before a word is read. */}
+            <div className={n.icon ? "grid grid-cols-[auto_minmax(0,1fr)] gap-x-3" : undefined}>
+              {n.icon ? <span className="row-span-2 pt-0.5"><Ico id={n.icon} tone="terra" /></span> : null}
+              <div data-note-label className="text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">{n.label}</div>
+              <p data-note-fact className="mt-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{n.fact}</p>
+            </div>
           </li>
         ))}
       </ol>
