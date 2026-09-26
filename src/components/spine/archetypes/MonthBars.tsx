@@ -44,6 +44,7 @@
  * model laws on every page that seats it.
  */
 import * as React from "react";
+import { Marks } from "@/components/spine/interact/Marks";
 import { COPY } from "@/lib/spine/copy";
 
 export const MONTH_BAR_POINTS = 12;
@@ -61,9 +62,14 @@ export function MonthBars({ points, unit = "" }: { points: MonthPoint[]; unit?: 
   if (!(max > 0)) return null;
   const peak = values.indexOf(max), trough = values.indexOf(min);
   const months = COPY.monthLine.initials;
-  const peakLabel = `${Number.isInteger(max) ? max : max.toFixed(1)}${unit}`;
+  /* EVERY MONTH READS (goal 2026-09-26, M1; queue ui:reading-on-every-point): the drawing named the busiest month alone, so a
+     reader who wanted March could not have it. Each column reads its share of the busiest month, and the drawing's label now
+     says all twelve by name, so the readings are the drawing's own. */
+  const shares = live.map((p) => Math.round((p.value / max) * 100));
+  const names = COPY.monthLine.names;
   return (
-    <div
+    <Marks
+      label={COPY.monthLine.aria.replace("{peak}", names[peak]).replace("{trough}", names[trough]).replace("{months}", names.map((m, i) => `${m} ${shares[i]}%`).join(", "))}
       data-archetype="month-bars"
       data-visual="1"
       data-points={String(live.length)}
@@ -71,11 +77,13 @@ export function MonthBars({ points, unit = "" }: { points: MonthPoint[]; unit?: 
       data-trough={String(trough)}
       className="w-full"
     >
-      <div className="flex w-full items-end gap-1" style={{ height: H }} role="img" aria-label={COPY.monthLine.aria.replace("{peak}", months[peak]).replace("{trough}", months[trough]).replace("{figure}", peakLabel)}>
+      <div className="flex w-full items-end gap-1" style={{ height: H }} role="img" aria-label={COPY.monthLine.aria.replace("{peak}", names[peak]).replace("{trough}", names[trough]).replace("{months}", names.map((m, i) => `${m} ${shares[i]}%`).join(", "))}>
         {live.map((p, i) => (
           <span
             key={p.month}
             data-month-bar={String(i)}
+            data-readout-figure={`${shares[i]}%`}
+            data-readout-words={COPY.monthLine.readout.replace("{month}", names[i])}
             data-share={String(Math.round((p.value / max) * 100))}
             className="min-w-0 flex-1 rounded-t-[2px]"
             style={{
@@ -93,6 +101,6 @@ export function MonthBars({ points, unit = "" }: { points: MonthPoint[]; unit?: 
           </span>
         ))}
       </div>
-    </div>
+    </Marks>
   );
 }

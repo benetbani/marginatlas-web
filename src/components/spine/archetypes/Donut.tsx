@@ -34,6 +34,7 @@
  * parts, a five-part shard, a two-part shard) and the page laws.
  */
 import * as React from "react";
+import { Marks } from "@/components/spine/interact/Marks";
 import { partTones } from "@/components/spine/charts/part_tones";
 
 export type DonutPart = { key: string; name: string; share: number };
@@ -51,13 +52,14 @@ export function Donut({ parts, unit = "%" }: { parts: DonutPart[]; unit?: string
     const frac = p.share / total;
     const len = Math.max(0, frac * c - 2);
     const dash = `${len} ${c - len}`;
-    const el = <circle key={p.key} r={r} cx="60" cy="60" fill="none" stroke={tones[i].c} strokeOpacity={tones[i].o} strokeWidth="14" strokeDasharray={dash} strokeDashoffset={-offset * c + c / 4} data-wedge={p.key} />;
+    const el = <circle key={p.key} r={r} cx="60" cy="60" fill="none" stroke={tones[i].c} strokeOpacity={tones[i].o} strokeWidth="14" strokeDasharray={dash} strokeDashoffset={-offset * c + c / 4} data-wedge={p.key} data-part-key={p.key} data-readout-figure={`${Math.round(p.share)}${unit}`} data-readout-words={p.name} />;
     offset += frac;
     return el;
   });
   const leader = live[0];
   return (
-    <div data-archetype="donut" data-visual="1" data-wedges={String(live.length)} className="[container-type:inline-size]">
+    /* A WEDGE AND ITS ROW ARE ONE PART (goal 2026-09-26, M1 and M2). */
+    <Marks label={`${leader.name} ${Math.round(leader.share)}${unit} of the whole`} data-archetype="donut" data-visual="1" data-wedges={String(live.length)} className="[container-type:inline-size]">
     {/* THE RING BESIDE ITS ROWS FROM 440px OF CONTAINER, ABOVE THEM UNDER IT: the industry's narrow seat (347 at 1280) and every phone put the ring first and the rows under, so no name is squeezed beside the ring (the archetype harness's BOTCHED MOBILE on the first render, 2026-09-20). The container query is written out in full, the kit's rule. */}
     <div className="grid grid-cols-1 items-center gap-4 [@container(min-width:440px)]:grid-cols-[auto_minmax(0,1fr)]">
       <div className="relative mx-auto h-36 w-36 [@container(min-width:440px)]:mx-0">
@@ -70,7 +72,7 @@ export function Donut({ parts, unit = "%" }: { parts: DonutPart[]; unit?: string
       </div>
       <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={live.length}>
         {live.map((p, i) => (
-          <div key={p.key} data-row={p.key} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 py-2">
+          <div key={p.key} data-row={p.key} data-part-key={p.key} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 py-2">
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px]" style={{ background: tones[i].c, opacity: tones[i].o }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
             <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>
@@ -78,6 +80,6 @@ export function Donut({ parts, unit = "%" }: { parts: DonutPart[]; unit?: string
         ))}
       </div>
     </div>
-    </div>
+    </Marks>
   );
 }

@@ -18,6 +18,7 @@
  *    `data-col` on each column, `data-mark-label` on a column's share and its name (a mark's own label, the one thing centred).
  */
 import * as React from "react";
+import { Marks } from "@/components/spine/interact/Marks";
 import { Box, Fig, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { Obstacles as ObstaclesData } from "@/lib/spine/sections/first_years";
@@ -45,11 +46,12 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{top.pct}%</div>
         <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{C.obstaclesWords.replace("{item}", top.label.toLowerCase())}</p>
       </div>
-      <div data-archetype="obstacles" data-visual="1" data-cols={String(items.length)} className="flex flex-1 flex-col [container-type:inline-size]">
+      {/* EACH OBSTACLE READS ITS SHARE (goal 2026-09-26, M1), the leading column too, which prints none (the figure says it). */}
+      <Marks label={C.obstaclesKicker} data-archetype="obstacles" data-visual="1" data-cols={String(items.length)} className="flex flex-1 flex-col [container-type:inline-size]">
         <div className="hidden flex-1 flex-col [@container(min-width:480px)]:flex">
           <div className="flex min-h-40 flex-1 items-stretch gap-2" role="img" aria-label={`${C.obstaclesKicker}: ${items.map((o) => `${o.label} ${o.pct}%`).join(", ")}`}>
             {items.map((o) => (
-              <div key={o.key} data-col={o.key} className="relative min-w-0 flex-1">
+              <div key={o.key} data-col={o.key} data-readout-figure={`${o.pct}%`} data-readout-words={o.label} className="relative min-w-0 flex-1">
                 <span aria-hidden className="absolute inset-0 rounded-t-sm bg-[var(--c-soft2)]" />
                 <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-sm" style={{ height: `${h(o.pct)}%`, ...fill(o === top, 0) }}>
                   {o === top ? null : (
@@ -67,7 +69,7 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
         </div>
         <ol className="m-0 list-none p-0 [@container(min-width:480px)]:hidden">
           {items.map((o) => (
-            <li key={o.key} data-row={o.key} className="max-w-none py-2">
+            <li key={o.key} data-row={o.key} data-readout-figure={`${o.pct}%`} data-readout-words={o.label} className="max-w-none py-2">
               <div className="flex items-baseline justify-between gap-3">
                 <span data-label className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{o.label}</span>
                 {o === top ? null : <Fig className="text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{o.pct}%</Fig>}
@@ -79,7 +81,7 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
             </li>
           ))}
         </ol>
-      </div>
+      </Marks>
     </Box>
   );
 }

@@ -40,6 +40,7 @@
  * a line from 560px of card, and each share is printed once, in its row.
  */
 import * as React from "react";
+import { Marks } from "@/components/spine/interact/Marks";
 import { partTones } from "@/components/spine/charts/part_tones";
 
 export type SharePart = { key: string; name: string; share: number };
@@ -71,7 +72,8 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
   };
   return (
     <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
-    <div data-archetype="share-bar" data-visual="1" data-form={led ? "led" : "plain"} data-wedges={String(live.length)} data-leader={leader.key} className={fill ? "flex flex-1 flex-col" : undefined}>
+    /* A PART ON THE BAR AND ITS TILE ARE ONE (goal 2026-09-26, M1 and M2): touching either lights both and reads the share. */
+    <Marks label={live.map((p) => `${p.name} ${Math.round(p.share)}${unit}`).join(", ")} data-archetype="share-bar" data-visual="1" data-form={led ? "led" : "plain"} data-wedges={String(live.length)} data-leader={leader.key} className={fill ? "flex flex-1 flex-col" : undefined}>
       {led && bracket ? (
         <div aria-hidden data-bracket className="relative mb-1 h-6">
           <span className="absolute bottom-0 h-2 rounded-t-[2px] border-x-2 border-t-2 border-[var(--c-ink2)]" style={{ left: 0, width: `${((leads[0].share + leads[1].share) / total) * 100}%` }} />
@@ -80,20 +82,20 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
       ) : null}
       <div className={`flex w-full gap-0.5 overflow-hidden ${tall ? "h-9 rounded-lg" : "h-3 rounded-full"}`} aria-hidden="true">
         {live.map((p) => (
-          <span key={p.key} data-wedge={p.key} className={`block h-full min-w-[3px] ${tall ? "first:rounded-l-lg last:rounded-r-lg" : "first:rounded-l-full last:rounded-r-full"}`} style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
+          <span key={p.key} data-wedge={p.key} data-part-key={p.key} data-readout-figure={`${Math.round(p.share)}${unit}`} data-readout-words={p.name} className={`block h-full min-w-[3px] ${tall ? "first:rounded-l-lg last:rounded-r-lg" : "first:rounded-l-full last:rounded-r-full"}`} style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
         ))}
       </div>
       <div className={`mt-3 grid gap-2 ${led ? "[@container(min-width:560px)]:grid-cols-2" : ""} ${fill ? "flex-1 auto-rows-fr" : ""}`} data-expect-rows={live.length}>
         {live.map((p) => (
           /* In the led form the remainder's row spans the line when the rows are two a line and odd in number, so no row stands alone. */
-          <div key={p.key} data-row={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2 ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
+          <div key={p.key} data-row={p.key} data-part-key={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2 ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] border border-[var(--c-border)]" style={{ background: colourOf(p) }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
             <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>
           </div>
         ))}
       </div>
-    </div>
+    </Marks>
     </div>
   );
 }
