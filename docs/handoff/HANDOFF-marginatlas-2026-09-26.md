@@ -1,5 +1,5 @@
 # HANDOFF: marginatlas.com, 2026-09-26 (the goal of that afternoon: sections a reader can understand and digest)
-The goal of 2026-09-26 afternoon (make every section understandable and digestible: interactions, sense, tables, icons) taken through eleven batches, 41 to 51, every one pushed and proven on production (driven live or fetched). Production is `f85728c3`, nothing ahead of origin. Written 2026-09-26 evening, updated after batch 51.
+The goal of 2026-09-26 afternoon (make every section understandable and digestible: interactions, sense, tables, icons) taken through thirteen batches, 41 to 53, every one pushed and proven on production (driven live or fetched). Production is `ee48a5bc`, nothing ahead of origin. Written 2026-09-26 evening, updated after batch 53.
 
 > **How to use this document.** Read top to bottom once, then the files in section 7 in order. Do not start work until you can
 > answer the checklist in section 13; the re-hydration prompt is section 14. `E:/atlas/design/loop/build/STATE.md`
@@ -26,7 +26,10 @@ withheld state titled "Costs and margin" without its apology; London's empty sho
 1.5; the living costs' icons; the phone tile inside the label's reserve so long labels keep two lines; the answer card's fallback
 "Country level" glyph and orphan foot mark gone; the how-to page's dots drawn where "One dot ... Five dots" stood. Batch 51:
 the cost split's segments and legend rows as linked parts with readouts, the industry chart's own column marked (RankedBars
-`selfKey`), a glyph a note on "Who this suits" and "Lessons from owners", the district's price tier as a pill.
+`selfKey`), a glyph a note on "Who this suits" and "Lessons from owners", the district's price tier as a pill. Batches 52 and 53,
+the phone review of the other pages: the chain-owned count's hundred drawn at 2px a unit on a phone (BentoCount `columnsWide`),
+a new page law ROW TOPS (figures in one key-value row within 2px, every page, every width, proven by a plant), and the headers'
+50px of air between the answer and its cells on a phone.
 
 **Waiting on him (QUEUE HIS rows, unchanged):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
 `trade:uk-survival-official`. **Next for the loop:** the two trade-page rows the review queued (`trade:split-withheld-sense`, `trade:peers-left-out-line`: each is a stated-line law of the model meeting his no-disclaimers correction, so a law change with its harness, not a copy edit), then the rest of the plan's audit on the city and district pages.
@@ -51,10 +54,10 @@ the cost split's segments and legend rows as linked parts with readouts, the ind
 
 | Component | Status | Notes |
 |---|---|---|
-| Production | `f85728c3` (batch 51) | batches 41 to 44 driven live with photos (`website/scratchpad/b41*`, `b42live/`, `b44live/`), 0 page errors; 45 to 50 fetched (their markers in the live HTML) |
+| Production | `ee48a5bc` (batch 53) | batches 41 to 44 driven live with photos (`website/scratchpad/b41*`, `b42live/`, `b44live/`), 0 page errors; 45 to 50 fetched (their markers in the live HTML) |
 | Website `main` | 0 ahead | remote benetbani/marginatlas-web |
 | Design repo `p4-seam` | `758c850` and this handoff's record | `E:/atlas`, no remote |
-| Chain | 168 of 168 at `f85728c3` (and at `ee9e114a`, `bf834f45`, `cf734737`, `54444a5d`); 167 of 168 at `e9134dde`, fixed by the copy gate's new contract `27a0a0a5` | `scratchpad/deploy/chain.txt` |
+| Chain | 168 of 168 at `ee48a5bc` (and at `87fa3621` with one gate refused on memory and green alone, `f85728c3`, `ee9e114a`, `bf834f45`, `cf734737`, `54444a5d`); 167 of 168 at `e9134dde`, fixed by the copy gate's new contract `27a0a0a5` | `scratchpad/deploy/chain.txt` |
 | UK page laws / model laws / holes / copy | 0 / 3 / 0 / 0 | the 3 are his kept forms (`#character`, `#character-people`, `#cities`), HIS row `country:focal-kept-forms` |
 | The interact gate | 15 listening drawings, 105 readings, 8 sortable heads on the 9 harness pages | every fixture check proven by a plant |
 
