@@ -17,6 +17,8 @@
  *   M3 THE LEVERS: the hire lever opens at the card's own $59K; a typed pay of $40,000 gives $45K and a share of $5,005 (15% above
  *     $6,632, the rule and nothing else); the slider's arrow key moves it. The cover picker opens at the four covers' $2,200;
  *     unticking one takes its premium off; a click on the required cover changes nothing.
+ *     The survival lever opens on the country's 38%; the South West gives 44% and its words, the country's curve kept behind.
+ *     The loan lever opens at the largest amount over five years and moves by the fixed-rate repayment when three are chosen.
  * PART 2, THE MARKUP ON EVERY PAGE THE HARNESS RENDERS (scripts/harness/pages.json): a mark carrying a reading or a part outside a
  * drawing that listens (`[data-interactive="marks"]`) is a reading nobody can reach; a listening drawing with no role, no tab stop or no name
  * is one a keyboard or a screen reader cannot use; a reading whose figure appears nowhere in its drawing's words or labels says
@@ -53,6 +55,8 @@ import { Marks } from ${JSON.stringify(COMPONENT.replace(/\\/g, "/"))};
 import { Switch } from ${JSON.stringify(resolve("src/components/spine/interact/Switch.tsx").replace(/\\/g, "/"))};
 import { HireLever } from ${JSON.stringify(resolve("src/components/spine/interact/HireLever.tsx").replace(/\\/g, "/"))};
 import { CoverPicker } from ${JSON.stringify(resolve("src/components/spine/interact/CoverPicker.tsx").replace(/\\/g, "/"))};
+import { SurvivalCurve } from ${JSON.stringify(resolve("src/components/spine/interact/SurvivalCurve.tsx").replace(/\\/g, "/"))};
+import { LoanLever } from ${JSON.stringify(resolve("src/components/spine/interact/LoanLever.tsx").replace(/\\/g, "/"))};
 const BANDS = [["a", "Under 16", 18, 18], ["b", "16 to 24", 11, 12], ["c", "25 to 49", 33, 41], ["d", "50 to 64", 19, 17], ["e", "65 and over", 19, 12]];
 function Bar({ name, i }) {
   return (
@@ -82,6 +86,12 @@ function Page() {
       </div>
       <div id="covers" style={{ marginTop: 60, maxWidth: 480 }}>
         <CoverPicker covers={[{ key: "p", label: "Property and contents", usd: 700, required: false }, { key: "e", label: "Employers liability", usd: 600, required: true }, { key: "i", label: "Professional indemnity", usd: 550, required: false }, { key: "l", label: "Public liability", usd: 350, required: false }]} words={{ focal: "a year for the covers ticked", required: "Required", minimum: "at least $6.6M of cover once you employ", aYear: "/yr", tick: "The covers to count" }} />
+      </div>
+      <div id="survival" style={{ marginTop: 60, maxWidth: 480 }}>
+        <SurvivalCurve id="sv" country={[{ year: 1, pct: 94.6 }, { year: 2, pct: 74.7 }, { year: 3, pct: 55.9 }, { year: 4, pct: 45 }, { year: 5, pct: 38.4 }]} regions={[{ key: "south-west", name: "South West", inName: "the South West", points: [{ year: 1, pct: 95 }, { year: 2, pct: 77.7 }, { year: 3, pct: 61 }, { year: 4, pct: 50.1 }, { year: 5, pct: 43.5 }] }]} best={{ name: "South West", pct: 43.5 }} worst={{ name: "West Midlands", pct: 30.6 }} words={{ focal: "of new firms still trading after {n} years", focalIn: "of new firms still trading after {n} years in {region}", start: "Start", year: "Year {n}", regions: "By region, year {n}", choose: "Region", country: "The UK", kicker: "Who is still trading" }} />
+      </div>
+      <div id="loan" style={{ marginTop: 60, maxWidth: 480 }}>
+        <LoanLever min={663} max={33152} rate={7.5} termMin={1} termMax={5} words={{ label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "{total} repaid over {n} years" }} />
       </div>
       <p id="away" style={{ marginTop: 300, position: "relative", zIndex: 30 }}>Elsewhere on the page.</p>
     </div>
@@ -245,6 +255,24 @@ try {
     c0 = await coverTotal();
     const req = await p3.evaluate(() => { const b = [...document.querySelectorAll('#covers input[type="checkbox"]')].find((x) => x.getAttribute("aria-disabled") === "true"); return b ? b.checked : null; });
     if (c0 !== "$1,850" || req !== true) fail(`a click on the required cover changed the figure to "${c0}" or unticked it (${req})`, "the cover the law requires stays ticked", CP);
+
+    const SV = "src/components/spine/interact/SurvivalCurve.tsx", LL = "src/components/spine/interact/LoanLever.tsx";
+    const svFigure = () => p3.evaluate(() => document.querySelector("#survival [data-focal]")?.textContent.trim() ?? "");
+    const svWords = () => p3.evaluate(() => document.querySelector("#survival [data-focal] + p")?.textContent.trim() ?? "");
+    if ((await svFigure()) !== "38%") fail(`the survival lever opened at "${await svFigure()}", not the country's 38%`, "the default is the curve the card printed (M3)", SV);
+    await p3.selectOption("#sv-region", "south-west");
+    await settle(p3);
+    const w2 = await svWords();
+    if ((await svFigure()) !== "44%" || !w2.includes("in the South West")) fail(`choosing the South West gave "${await svFigure()}" and "${w2}"`, "the figure and its words follow the region, from the region's own curve", SV);
+    const ref = await p3.evaluate(() => !!document.querySelector("#survival [data-reference]"));
+    if (!ref) fail("with a region chosen, the country's curve is not drawn behind it", "keep the country's curve as the reference line", SV);
+
+    const loanPay = () => p3.evaluate(() => document.querySelector('#loan [aria-live="polite"]')?.textContent.trim() ?? "");
+    const expect = (P, years) => { const r = 0.075 / 12, n = years * 12; const m = (P * r) / (1 - Math.pow(1 + r, -n)); return "$" + Math.round(m).toLocaleString("en-US"); };
+    if ((await loanPay()) !== expect(33000, 5)) fail(`the loan lever opened at "${await loanPay()}", not ${expect(33000, 5)} (the largest amount over the longest term)`, "the default is the card's own largest amount and longest term", LL);
+    await p3.locator('#loan [role="radio"]', { hasText: "3" }).click();
+    await settle(p3);
+    if ((await loanPay()) !== expect(33000, 3)) fail(`three years gave "${await loanPay()}", not ${expect(33000, 3)}`, "the monthly repayment of a fixed-rate loan, and nothing else", LL);
     await d2.close();
   }
 
