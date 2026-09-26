@@ -638,10 +638,12 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
    words, within PART 7's four; every basis within its fourteen words, saying
    "modelled" exactly when its figure's tag is not held (the sample mark is
    behind the switch, so the basis is the only line that can) and never on a
-   held figure; the count cell's basis prints the shard's rate and says
-   "rounded" exactly when the drawn part is not the rate; the count's part a
-   whole number in 0 to 100; no banned word or unfilled placeholder in any
-   string. The counts by tag are printed so the numbers 8.3 quotes (133 held,
+   held figure; the count's part is the shard's rate to one decimal, in 0 to
+   100, printed by the figure and drawn with its last unit partly filled
+   (TURNED OVER 2026-09-26, the London review: a part rounded to a whole unit
+   printed "2 of 100" over a basis saying 1.5, two figures for one thing), so
+   the basis frames the count and never prints the rate again; no banned word
+   or unfilled placeholder in any string. The counts by tag are printed so the numbers 8.3 quotes (133 held,
    119 modelled) are measured here rather than remembered. */
 {
   const cities = (cityListJson as { cities: Array<{ slug: string }> }).cities;
@@ -666,12 +668,12 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
 /* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the basis says the unit, never how the figure was made. */
       if (/\bmodell?ed\b/i.test(cell.basis)) reds.push(`premises ${c.slug}: a method word in the basis: "${cell.basis}"`);
       if ("part" in cell) {
-        if (!Number.isInteger(cell.part) || cell.part < 0 || cell.part > 100) reds.push(`premises ${c.slug}: the count's part is ${cell.part}, not a whole number in 0 to 100`);
-        const didRound = cell.part !== cell.rate;
-        if (didRound) rounded++;
-/* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the drawing is a picture of the rate, and the basis prints the rate as read (the law below); it no longer says "rounded". */
+        if (cell.part < 0 || cell.part > 100 || Math.round(cell.part * 10) / 10 !== cell.part) reds.push(`premises ${c.slug}: the count's part is ${cell.part}, not a figure in 0 to 100 to one decimal`);
+        if (Math.round(cell.rate * 10) / 10 !== cell.part) reds.push(`premises ${c.slug}: the count's part ${cell.part} is not the rate ${cell.rate} to one decimal`);
+        if (!Number.isInteger(cell.part)) rounded++;
         if (/\brounded\b/i.test(cell.basis)) reds.push(`premises ${c.slug}: the basis says how the drawing was made: "${cell.basis}"`);
-        if (!cell.basis.includes(String(cell.rate))) reds.push(`premises ${c.slug}: the basis does not print the rate ${cell.rate}: "${cell.basis}"`);
+        /* The figure prints the rate once; the basis never again (2026-09-26). */
+        if (new RegExp(`(^|[^\\d.])${String(cell.part).replace(".", "\\.")}(?!\\d|\\.\\d)`).test(cell.basis)) reds.push(`premises ${c.slug}: the basis prints the count's figure a second time: "${cell.basis}"`);
       }
     }
     withheldCells += withheld;
@@ -681,7 +683,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (/[{}]/.test(t)) reds.push(`premises ${c.slug}: a placeholder was never filled ("${t}")`);
     }
   }
-  console.log(`premises bento: ${built} clusters build over ${cities.length} cities, ${held} every figure held, ${modelled} modelled and saying so, ${withheldCells} withheld cell(s), ${rounded} counts rounded and saying so; openers and basis lines within their caps, no banned word`);
+  console.log(`premises bento: ${built} clusters build over ${cities.length} cities, ${held} every figure held, ${modelled} modelled and saying so, ${withheldCells} withheld cell(s), ${rounded} counts drawn with a part unit; openers and basis lines within their caps, no banned word`);
 }
 
 /* THE ONE INCOME BUILDER, THE SPEND CARD AND THE EARNINGS STRIP (MODEL.md 8.3
