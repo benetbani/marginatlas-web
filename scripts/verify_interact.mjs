@@ -12,10 +12,16 @@
  *     inside the drawing's width at the first band and the last.
  *   M2 THE LINKED PARTS: while a band is active every element of another part carries `data-dim` and none of its own part does;
  *     a mouse over a legend entry lights that part in both bars; nothing is dimmed once the drawing is left.
+ *   M4 THE SWITCH: the first view shows alone; a click on the second tab shows its panel alone and marks it selected; the left
+ *     arrow moves back.
+ *   M3 THE LEVERS: the hire lever opens at the card's own $59K; a typed pay of $40,000 gives $45K and a share of $5,005 (15% above
+ *     $6,632, the rule and nothing else); the slider's arrow key moves it. The cover picker opens at the four covers' $2,200;
+ *     unticking one takes its premium off; a click on the required cover changes nothing.
  * PART 2, THE MARKUP ON EVERY PAGE THE HARNESS RENDERS (scripts/harness/pages.json): a mark carrying a reading or a part outside a
  * drawing that listens (`[data-interactive="marks"]`) is a reading nobody can reach; a listening drawing with no role, no tab stop or no name
- * is one a keyboard or a screen reader cannot use; and a reading whose figure appears nowhere in its drawing's words or labels
- * says something the drawing does not hold (the panel may only say what is already there).
+ * is one a keyboard or a screen reader cannot use; a reading whose figure appears nowhere in its drawing's words or labels says
+ * something the drawing does not hold (the panel may only say what is already there); a tab without its state or its panel, a
+ * slider without a label, a lever whose answer is not announced, and a drawing inside a hidden panel (his ruling of 2026-07-09).
  *
  * BLIND SPOT: part 1 tests the component on a fixture, not each page's placement; part 2 reads the markup, not the motion. A
  * build server has no browser, so the gate skips loudly there through requireBrowser, as every browser gate does.
@@ -44,6 +50,9 @@ writeFileSync(entry, `
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { Marks } from ${JSON.stringify(COMPONENT.replace(/\\/g, "/"))};
+import { Switch } from ${JSON.stringify(resolve("src/components/spine/interact/Switch.tsx").replace(/\\/g, "/"))};
+import { HireLever } from ${JSON.stringify(resolve("src/components/spine/interact/HireLever.tsx").replace(/\\/g, "/"))};
+import { CoverPicker } from ${JSON.stringify(resolve("src/components/spine/interact/CoverPicker.tsx").replace(/\\/g, "/"))};
 const BANDS = [["a", "Under 16", 18, 18], ["b", "16 to 24", 11, 12], ["c", "25 to 49", 33, 41], ["d", "50 to 64", 19, 17], ["e", "65 and over", 19, 12]];
 function Bar({ name, i }) {
   return (
@@ -65,7 +74,16 @@ function Page() {
           {BANDS.map((b) => <span key={b[0]} id={"leg-" + b[0]} data-part-key={b[0]}>{b[1]}</span>)}
         </div>
       </Marks>
-      <p id="away" style={{ marginTop: 300 }}>Elsewhere on the page.</p>
+      <div id="switch" style={{ marginTop: 60 }}>
+        <Switch id="sw" label="Legal and admin costs" views={[{ key: "run", label: "To run", panel: <p id="panel-run">Sixty-six a year</p> }, { key: "close", label: "To close", panel: <p id="panel-close">Seventeen to close</p> }]} />
+      </div>
+      <div id="hire" style={{ marginTop: 60, maxWidth: 480 }}>
+        <HireLever pay={51785} min={33000} rate={15} threshold={6632} words={{ label: "A full-time hire", unit: "a year", salary: "Salary", onCost: "employer's share", rule: "{rate} on pay above {threshold} a year.", lever: "Pay" }} />
+      </div>
+      <div id="covers" style={{ marginTop: 60, maxWidth: 480 }}>
+        <CoverPicker covers={[{ key: "p", label: "Property and contents", usd: 700, required: false }, { key: "e", label: "Employers liability", usd: 600, required: true }, { key: "i", label: "Professional indemnity", usd: 550, required: false }, { key: "l", label: "Public liability", usd: 350, required: false }]} words={{ focal: "a year for the covers ticked", required: "Required", minimum: "at least $6.6M of cover once you employ", aYear: "/yr", tick: "The covers to count" }} />
+      </div>
+      <p id="away" style={{ marginTop: 300, position: "relative", zIndex: 30 }}>Elsewhere on the page.</p>
     </div>
   );
 }
@@ -180,6 +198,54 @@ try {
     if (s.open) fail("a tap elsewhere on the page left the panel open", "close on a press outside the drawing");
     if (s.dimmed.length) fail(`${s.dimmed.length} element(s) stayed dimmed after a tap elsewhere`, "clear every data-dim when the panel closes");
     await phone.close();
+
+    /* M4 THE SWITCH, M3 THE LEVERS. */
+    const d2 = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const p3 = await d2.newPage();
+    await p3.goto(url);
+    await p3.waitForSelector("#sw-tab-close");
+    const SW = "src/components/spine/interact/Switch.tsx", HL = "src/components/spine/interact/HireLever.tsx", CP = "src/components/spine/interact/CoverPicker.tsx";
+    const vis = (sel) => p3.evaluate((sel) => { const el = document.querySelector(sel); return !!el && el.getClientRects().length > 0; }, sel);
+    if (!(await vis("#panel-run")) || (await vis("#panel-close"))) fail("the switch did not open on its first view alone", "show the first panel and hide the others (M4)", SW);
+    await p3.locator("#sw-tab-close").click();
+    await settle(p3);
+    if (!(await vis("#panel-close")) || (await vis("#panel-run"))) fail("a click on the second tab did not show its panel alone", "the clicked tab's panel shows and the others hide", SW);
+    const sel2 = await p3.getAttribute("#sw-tab-close", "aria-selected");
+    if (sel2 !== "true") fail(`the clicked tab reads aria-selected="${sel2}"`, "the active tab carries aria-selected true", SW);
+    await p3.keyboard.press("ArrowLeft");
+    await settle(p3);
+    if (!(await vis("#panel-run"))) fail("the left arrow on the second tab did not move to the first", "the arrows move and select (the WAI tabs pattern)", SW);
+
+    const hireTotal = () => p3.evaluate(() => document.querySelector('#hire [aria-live="polite"]')?.textContent.trim() ?? "");
+    let t0 = await hireTotal();
+    if (t0 !== "$59K") fail(`the hire lever opened at "${t0}", not the card's $59K at the average salary`, "the lever's default is the figure the card prints (M3)", HL);
+    const typed = p3.locator('#hire input[type="text"]');
+    await typed.fill("40000");
+    await typed.press("Enter");
+    await settle(p3);
+    t0 = await hireTotal();
+    const share = await p3.evaluate(() => [...document.querySelectorAll("#hire .fig")].map((e) => e.textContent.trim()).find((t) => t.startsWith("$5,")) ?? "");
+    if (t0 !== "$45K" || share !== "$5,005") fail(`a pay of $40,000 gave "${t0}" with a share of "${share}", not $45K and $5,005 (15% of pay above $6,632)`, "recompute by the card's own rule and nothing else", HL);
+    const before = await p3.inputValue("#hire-pay-range");
+    await p3.locator("#hire-pay-range").focus();
+    await p3.keyboard.press("ArrowRight");
+    await settle(p3);
+    const after = await p3.inputValue("#hire-pay-range");
+    if (after === before) fail("the right arrow on the pay slider moved nothing", "keep the native range's keyboard", "src/components/spine/interact/Range.tsx");
+
+    const coverTotal = () => p3.evaluate(() => document.querySelector("#covers [data-focal]")?.textContent.trim() ?? "");
+    let c0 = await coverTotal();
+    if (c0 !== "$2,200") fail(`the cover picker opened at "${c0}", not the four covers' $2,200`, "all covers ticked at first", CP);
+    await p3.locator("#covers label", { hasText: "Public liability" }).click();
+    await settle(p3);
+    c0 = await coverTotal();
+    if (c0 !== "$1,850") fail(`unticking public liability left "${c0}", not $1,850`, "the figure is the sum of the ticked covers", CP);
+    await p3.locator("#covers label", { hasText: "Employers liability" }).click({ force: true });
+    await settle(p3);
+    c0 = await coverTotal();
+    const req = await p3.evaluate(() => { const b = [...document.querySelectorAll('#covers input[type="checkbox"]')].find((x) => x.getAttribute("aria-disabled") === "true"); return b ? b.checked : null; });
+    if (c0 !== "$1,850" || req !== true) fail(`a click on the required cover changed the figure to "${c0}" or unticked it (${req})`, "the cover the law requires stays ticked", CP);
+    await d2.close();
   }
 
   /* PART 2: the markup on the rendered pages. */
@@ -194,6 +260,20 @@ try {
       const out = { orphans: [], unnamed: [], unheld: [], drawings: 0, readings: 0 };
       for (const el of document.querySelectorAll("main [data-readout-figure], main [data-part-key]")) {
         if (!el.closest('[data-interactive="marks"]')) out.orphans.push((el.getAttribute("data-readout-figure") || el.getAttribute("data-part-key") || "").slice(0, 30));
+      }
+      for (const list of document.querySelectorAll("main [role=tablist]")) {
+        for (const tab of list.querySelectorAll("[role=tab]")) {
+          const panel = document.getElementById(tab.getAttribute("aria-controls") || "");
+          if (!tab.hasAttribute("aria-selected") || !panel || panel.getAttribute("role") !== "tabpanel") out.unnamed.push(`a tab (${(tab.textContent || "").trim()}) without aria-selected or its panel`);
+        }
+      }
+      out.hiddenDrawings = document.querySelectorAll('main [role=tabpanel][hidden] [data-visual="1"]').length;
+      for (const r of document.querySelectorAll("main input[type=range]")) {
+        const named = (r.id && document.querySelector(`label[for="${r.id}"]`)) || r.getAttribute("aria-label");
+        if (!named) out.unnamed.push("a slider without a label");
+      }
+      for (const lv of document.querySelectorAll("main [data-lever-card]")) {
+        if (!lv.querySelector('[aria-live="polite"]')) out.unnamed.push(`a lever (${lv.getAttribute("data-lever-card")}) whose answer is not announced`);
       }
       for (const root of document.querySelectorAll('main [data-interactive="marks"]')) {
         out.drawings++;
@@ -212,6 +292,7 @@ try {
     for (const o of r.orphans) fail(`${name}: a reading or part ("${o}") outside any drawing that listens`, "wrap the drawing in Marks (src/components/spine/interact/Marks.tsx) or drop the attribute", f);
     for (const u of r.unnamed) fail(`${name} #${u}: a listening drawing without role group, a tab stop or a name`, "keep Marks' role, tabIndex and aria-label", f);
     for (const u of r.unheld) fail(`${name} ${u}: a reading whose figure is in none of the drawing's words or labels`, "the panel may only say what the drawing holds: put the figure in the drawing's label", f);
+    if (r.hiddenDrawings) fail(`${name}: ${r.hiddenDrawings} drawing(s) inside a hidden panel of a switch`, "never hide a drawing behind a switch (his ruling of 2026-07-09): keep the drawing outside and change its data", f);
   }
   await ctx.close();
   console.log(`verify_interact: the markup of ${pages.length} rendered page(s): ${drawings} listening drawing(s), ${readings} reading(s)`);
