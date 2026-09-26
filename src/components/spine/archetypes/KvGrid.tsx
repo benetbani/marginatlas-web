@@ -22,6 +22,14 @@
  *    day he clicks it, so only the rung would change then.
  *  - ONE ACCENT, NEVER HERE: cells are ink; the accent belongs to the answer.
  *  - A MODELLED CELL CARRIES ITS OWN TAG (rule 4A), beside its label.
+ *  - AN ICON A CELL (the goal of 2026-09-26, M6; his message that afternoon:
+ *    "The sections that lack icons, guiding elements and helping typography
+ *    and hierarchy should be studied"): a cell may carry one glyph of the
+ *    atlas set, drawn in the terracotta tile before its label (his
+ *    2026-09-19 "the big missed chance is to put it at the icons"), so four
+ *    cells read as four things at a glance before a word is read. The tile
+ *    and the label are one line on the label's floor, so the label still
+ *    touches its figure; the figure keeps the cell's full width.
  *  - THE COLUMNS FOLLOW THE GRID'S OWN WIDTH (build loop run 7, 2026-09-05):
  *    cells sit in GROUPS, a run of cells under one heading or none; inside a
  *    group two columns (one for a lone cell); when the grid is at least 900
@@ -35,7 +43,8 @@
  * every country, the how-to hero, and any other label-over-figure set.
  */
 import * as React from "react";
-import { Fig, SampleTag } from "@/components/spine/kit";
+import { Fig, Ico, SampleTag } from "@/components/spine/kit";
+import type { AtlasIconId } from "@/components/brand/icons";
 
 export type KvCell = {
   key: string;
@@ -44,6 +53,8 @@ export type KvCell = {
   note?: string;
   group?: string;
   confidence?: "measured" | "modeled" | "placeholder";
+  /** The cell's glyph, before its label (the header's AN ICON A CELL). */
+  icon?: AtlasIconId;
 };
 
 /* The container-query classes are written out in full below, never assembled from a constant: the stylesheet compiler scans source for literal class strings and generates nothing for a template. */
@@ -113,6 +124,10 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
             {(() => {
               const cols = g.cells.length > 1 && !stack ? 2 : 1;
               const lead = cols === 2 && g.cells.length % 2 === 1;
+              /* THREE CELLS STAND THREE ACROSS FROM 560px OF GRID (2026-09-26, the page filter's WHITE SPACE on the United
+                 Kingdom's borrowing card at 768: the lead cell alone on its row left a 439 by 138 blank beside it once the icons
+                 grew its label line). Narrower, the lead takes the width and the pair sits under it, as before. */
+              const three = cols === 2 && g.cells.length === 3 && !byRow;
               /* THE ROWS SHARE THE HEIGHT AS ROWS, NOT AS GAPS (2026-09-26, the United Kingdom's legal and admin card beside the
                  five spectra). A filling grid's rows were stretched with the words pinned to each row's top, so the spare height
                  stood as a blank under every row, 50px and more. Now a filling grid draws its rows as rows: each row a unit, its
@@ -123,7 +138,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
               const ruledRows = fill && !byRow;
               const cellEl = (c: KvCell, ci: number) => (
                 /* COMPLETE ROWS: in an odd group above one, the first cell spans both columns (a ruled row of one is its own row). */
-                <div key={c.key} data-kv-cell={c.key} className={`${lead && ci === 0 && !ruledRows ? "col-span-2" : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
+                <div key={c.key} data-kv-cell={c.key} className={`${lead && ci === 0 && !ruledRows ? (three ? "col-span-2 [@container(min-width:560px)]:col-span-1" : "col-span-2") : ""} ${byRow ? "flex flex-col" : ""}`.trim() || undefined}>
                   {/* THE RESERVE IS EXACTLY TWO LINES BY CONSTRUCTION (plan step 31's
                       second dispatch, 2026-09-17, the first cards whose labels wrap at
                       375 and 768, "Net wealth per adult" and "Shop rent, major cities").
@@ -143,7 +158,16 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                   {/* THE RESERVE'S AIR ABOVE THE WORDS, NOT UNDER THEM (the same evening, on the phone photograph): a one-line label sat
                       at the top of its two-line box and stood a line's height away from its own figure, closer to the cell above.
                       The words sit on the box's floor, so a label touches its figure and the air joins the gap between rows. */}
-                  <div className={`${byRow ? "" : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>{c.label}</div>
+                  <div className={`${byRow ? "" : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>
+                    {c.icon ? (
+                      <span className="flex items-center gap-2">
+                        <Ico id={c.icon} tone="terra" />
+                        <span className="min-w-0">{c.label}</span>
+                      </span>
+                    ) : (
+                      c.label
+                    )}
+                  </div>
                   {/* On the "row" reserve the figure sits on the cell's floor (`mt-auto`), so a row's figures share one top whatever their labels wrap to. */}
                   <div className={`${byRow ? "mt-auto pt-1" : "mt-1"} flex flex-wrap items-baseline gap-x-2 gap-y-1`}>
                     <Fig className={`${under ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-head)]"} leading-none text-[var(--c-ink)]`}>{c.value}</Fig>
@@ -154,7 +178,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
               );
               if (!ruledRows) {
                 return (
-                  <div className={`grid ${cols === 2 ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
+                  <div className={`grid ${three ? "grid-cols-2 [@container(min-width:560px)]:grid-cols-3" : cols === 2 ? "grid-cols-2" : "grid-cols-1"} gap-x-10 gap-y-4`}>
                     {g.cells.map((c, ci) => cellEl(c, ci))}
                   </div>
                 );
