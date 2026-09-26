@@ -37,7 +37,7 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
       {/* THE BARS AND THE LEGEND SHARE A LENT HEIGHT (2026-09-26, beside the job market on the United Kingdom's page): the legend
           stood 55px above the card's floor; now the first bar keeps its place under the figure, the legend sits on the floor and
           the air is shared between them. Without a lent height the gap is 16px, as before. */}
-      <div data-archetype="age-mix" data-visual="1" data-bars={String(data.bars.length)} className="flex flex-1 flex-col justify-between gap-4">
+      <div data-archetype="age-mix" data-visual="1" data-bars={String(data.bars.length)} className="grid flex-1 content-between gap-4">
         {data.bars.map((bar) => (
           <div key={bar.name} data-row={bar.name}>
             <div className="mb-2 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{bar.name.charAt(0).toUpperCase() + bar.name.slice(1)}</div>
