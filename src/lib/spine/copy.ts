@@ -1014,9 +1014,8 @@ export const COPY = {
     kickers: { rent: "Prime shop rent", empty: "Shops standing empty", fitOut: "Fit-out cost", deposit: "Deposit up front" },
     basis: {
       rent: "A square metre of prime shop space, a year",
-      /** `{rate}` is the shard's rate as read. The count draws it to a whole shop; the second line says so, and only where the rate had to be rounded. */
-      empty: "{rate} in every 100 shops",
-      emptyRounded: "{rate} in every 100 shops",
+      /** The count prints the shard's rate as read and draws it, a part unit and all (2026-09-26); the line frames it and prints no figure. */
+      empty: "Out of every 100 shops",
       fitOut: "To fit out a square metre of shop space",
       deposit: "Months of rent held as the deposit on a shop",
     },

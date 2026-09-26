@@ -175,9 +175,10 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
   if (!vacancy) empty = { withheld: W.empty };
   else if (vacancy.value > 100) empty = { withheld: W.emptyNotAShare };
   else {
-    const part = Math.round(vacancy.value);
-    const clause = (part === vacancy.value ? B.empty : B.emptyRounded).replace("{rate}", rateText(vacancy.value));
-    empty = { part, whole: 100, rate: vacancy.value, basis: basisOf(clause, vacancy.tag), tag: vacancy.tag, sample: notHeld(vacancy.tag) };
+    /* THE RATE AS IT IS (2026-09-26, the London review): the card prints 1.5 over one unit and half of the next, where a rounded
+       "2 of 100" stood over a line saying "1.5 in every 100 shops"; the line now frames the count and prints no figure. */
+    const part = Math.round(vacancy.value * 10) / 10;
+    empty = { part, whole: 100, rate: vacancy.value, basis: basisOf(B.empty, vacancy.tag), tag: vacancy.tag, sample: notHeld(vacancy.tag) };
   }
 
   const printed: FactTag[] = [];

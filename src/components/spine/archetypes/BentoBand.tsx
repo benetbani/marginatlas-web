@@ -615,20 +615,27 @@ export function CountUnits({ whole, filled, accent = true, columns, columnsWide,
       role="img"
       aria-label={aria}
     >
-      {units.map((_, i) => (
-        <span
-          key={i}
-          aria-hidden
-          className={columns ? "aspect-square w-full rounded-[2px] border" : "h-[10px] w-[10px] rounded-[2px] border"}
-          style={
-            i < filled
-              ? accent
-                ? { background: "var(--terra)", borderColor: "var(--terra)" }
-                : { background: "var(--c-ink2)", borderColor: "var(--c-ink2)" }
-              : { background: "var(--c-soft2)", borderColor: "var(--c-border)" }
-          }
-        />
-      ))}
+      {units.map((_, i) => {
+        /* A PART THAT IS NOT WHOLE (2026-09-26): the unit after the last full one is filled to the part's fraction, left to right, so
+           1.5 draws one unit and half of the next; a whole part draws as it always did. */
+        const ink = accent ? "var(--terra)" : "var(--c-ink2)";
+        const share = Math.max(0, Math.min(1, filled - i));
+        return (
+          <span
+            key={i}
+            aria-hidden
+            data-unit-part={share > 0 && share < 1 ? "1" : undefined}
+            className={columns ? "aspect-square w-full rounded-[2px] border" : "h-[10px] w-[10px] rounded-[2px] border"}
+            style={
+              share >= 1
+                ? { background: ink, borderColor: ink }
+                : share > 0
+                  ? { background: `linear-gradient(90deg, ${ink} ${Math.round(share * 100)}%, var(--c-soft2) ${Math.round(share * 100)}%)`, borderColor: ink }
+                  : { background: "var(--c-soft2)", borderColor: "var(--c-border)" }
+            }
+          />
+        );
+      })}
     </div>
   );
 }
@@ -643,6 +650,7 @@ export function BentoCount({
   sample = false,
   accent = true,
   columns,
+  fraction = false,
 }: {
   kicker: string;
   icon?: AtlasIconId;
@@ -657,12 +665,17 @@ export function BentoCount({
   accent?: boolean;
   /** The units in a row, each sized to the cell's width, for a cell that stands tall (the note above). Left out: 10px units wrapping to the width. */
   columns?: number;
+  /** THE PART AS IT IS (2026-09-26, London's empty shops): the figure prints a part that is not whole with its one decimal and the
+   *  units draw it, the last one partly filled. Rounded to a whole unit, 1.5 printed "2 of 100" over a line saying 1.5: two figures
+   *  for one thing. Left out, the part is rounded to a whole unit as before. */
+  fraction?: boolean;
 }) {
   /* A count that is not a count self-omits rather than drawing a wrong whole:
      a part over its whole, a negative part, or a whole of nothing. */
   if (!Number.isFinite(part) || !Number.isFinite(whole) || whole < 1 || part < 0 || part > whole) return null;
   const units = Array.from({ length: Math.round(whole) });
-  const filled = Math.round(part);
+  const filled = fraction ? Math.round(part * 10) / 10 : Math.round(part);
+  const printed = Number.isInteger(filled) ? String(filled) : filled.toFixed(1);
   /* The count is the whole: the figure says it once (the note above). */
   const isWhole = filled === Math.round(whole);
   return (
@@ -674,13 +687,13 @@ export function BentoCount({
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">
         <div className="flex items-baseline gap-2">
-          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{filled}</Fig>
+          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{printed}</Fig>
           {/* THE WHOLE IS SAID AS WELL AS DRAWN. The grid below carries it for
               the eye; a reader who counts nothing still reads "of 8" here.
               Unless the count IS the whole, when the figure has already said it. */}
           {isWhole ? null : <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">of {Math.round(whole)}</span>}
         </div>
-        <CountUnits className="mt-3" whole={units.length} filled={filled} accent={accent} columns={columns} aria={isWhole ? `${filled}, ${label ?? kicker}` : `${filled} out of ${Math.round(whole)}, ${label ?? kicker}`} />
+        <CountUnits className="mt-3" whole={units.length} filled={filled} accent={accent} columns={columns} aria={isWhole ? `${printed}, ${label ?? kicker}` : `${printed} out of ${Math.round(whole)}, ${label ?? kicker}`} />
         {label ? <div className="mt-3 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
       {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
