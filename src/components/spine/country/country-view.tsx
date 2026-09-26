@@ -182,23 +182,44 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
  * the column's edge with room to spare. There is no width at which it overlaps
  * a figure.
  */
-function OnThisPage({ sections }: { sections: Array<{ id: string; label: string }> }) {
+/* THE RAIL GROUPED BY CHAPTER, IN THE PAGE'S ORDER (2026-09-26, the United Kingdom's page at 1600): twenty-three names in one
+   list at 12px read as a column of texture, with nothing to say where a chapter began, and four of them stood out of the page's
+   order (borrowing and getting paid before the state and the paperwork, which the page draws first). A section may name its
+   chapter; the rail then heads each run of sections with the chapter's number and heading, the page's own four turns, and the
+   links keep their size. A list with no chapters draws flat, as before. */
+type RailSection = { id: string; label: string; chapter?: string };
+function OnThisPage({ sections, chapters }: { sections: RailSection[]; chapters?: Record<string, { index: string; heading: string }> }) {
   if (sections.length === 0) return null;
+  const groups: Array<{ chapter?: string; items: RailSection[] }> = [];
+  for (const s of sections) {
+    const key = chapters && s.chapter && chapters[s.chapter] ? s.chapter : undefined;
+    const last = groups[groups.length - 1];
+    if (last && last.chapter === key) last.items.push(s);
+    else groups.push({ chapter: key, items: [s] });
+  }
+  const link = (s: RailSection) => (
+    <li key={s.id}>
+      <a href={`#${s.id}`} className="block max-w-[18ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]">
+        {s.label}
+      </a>
+    </li>
+  );
   return (
     <nav aria-label="On this page" className="fixed right-6 top-1/2 hidden -translate-y-1/2 2xl:block">
       <div className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">On this page</div>
-      <ol className="mt-2 space-y-2">
-        {sections.map((s) => (
-          <li key={s.id}>
-            <a
-              href={`#${s.id}`}
-              className="block max-w-[18ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]"
-            >
-              {s.label}
-            </a>
-          </li>
-        ))}
-      </ol>
+      {groups.map((g, gi) =>
+        g.chapter && chapters ? (
+          <div key={`${g.chapter}-${gi}`} className="mt-4">
+            <div className="flex max-w-[20ch] gap-2 text-[length:var(--t-micro)] font-semibold leading-snug text-[var(--c-ink)]">
+              <span className="tabular-nums text-[var(--c-muted)]">{chapters[g.chapter].index}</span>
+              <span>{chapters[g.chapter].heading}</span>
+            </div>
+            <ol className="mt-1.5 space-y-1.5">{g.items.map(link)}</ol>
+          </div>
+        ) : (
+          <ol key={`flat-${gi}`} className={chapters ? "mt-3 space-y-1.5" : "mt-2 space-y-2"}>{g.items.map(link)}</ol>
+        ),
+      )}
     </nav>
   );
 }
@@ -1256,28 +1277,35 @@ export function SpineCountryBody({ data }: { data?: any }) {
          04 the first years: who is still trading | what holds small firms back (two fifths and three: eight columns and their names
             need the wider card).
        What customers earn leaves this page: its three figures were the pay pair printed under a second name (the goal's A12). */
-    const sections = [
+    /* In the order the body draws them, each under the chapter it stands in (the rail heads each run with its chapter). */
+    const sections: RailSection[] = [
       { id: "take", label: "The tax burden" },
-      { id: "setup", label: COPY.tiers.kicker },
-      { id: "entry-bill", label: COPY.entryBill.kicker },
-      { id: "hiring", label: COPY.pay.kicker },
-      { id: "employment", label: COPY.employment.kicker },
-      { id: "running-costs", label: "Running costs" },
-      { id: "insurance", label: COPY.insurance.kicker },
-      { id: "peers", label: "Against the peers" },
-      { id: "financing", label: COPY.financing.kicker },
-      { id: "banking", label: COPY.banking.kicker },
-      { id: "character", label: COPY.character.state.kicker },
-      { id: "paperwork", label: COPY.paperwork.kicker },
-      { id: "money", label: COPY.londonMargins.kicker },
-      { id: "exit", label: COPY.countryExit.kicker },
-      ...(seatPeople ? [{ id: "age-mix", label: COPY.people.age.kicker }, { id: "job-market", label: COPY.jobMarket.kicker }] : []),
-      { id: "cities", label: "The cities" },
-      { id: "locals", label: COPY.locals.kicker },
-      { id: "spend", label: "What households spend on" },
-      { id: "character-people", label: COPY.character.people.kicker },
-      ...(seatFirstYears ? [{ id: "first-years", label: COPY.firstYears.kicker }, { id: "obstacles", label: COPY.firstYears.obstaclesKicker }] : []),
+      { id: "setup", label: COPY.tiers.kicker, chapter: "01" },
+      { id: "entry-bill", label: COPY.entryBill.kicker, chapter: "01" },
+      { id: "hiring", label: COPY.pay.kicker, chapter: "01" },
+      { id: "employment", label: COPY.employment.kicker, chapter: "01" },
+      { id: "running-costs", label: "Running costs", chapter: "01" },
+      { id: "insurance", label: COPY.insurance.kicker, chapter: "01" },
+      { id: "peers", label: "Against the peers", chapter: "01" },
+      { id: "character", label: COPY.character.state.kicker, chapter: "02" },
+      { id: "paperwork", label: COPY.paperwork.kicker, chapter: "02" },
+      { id: "financing", label: COPY.financing.kicker, chapter: "02" },
+      { id: "banking", label: COPY.banking.kicker, chapter: "02" },
+      { id: "money", label: COPY.londonMargins.kicker, chapter: "03" },
+      { id: "exit", label: COPY.countryExit.kicker, chapter: "03" },
+      ...(seatPeople ? [{ id: "age-mix", label: COPY.people.age.kicker, chapter: "03" }, { id: "job-market", label: COPY.jobMarket.kicker, chapter: "03" }] : []),
+      { id: "cities", label: "The cities", chapter: "03" },
+      { id: "locals", label: COPY.locals.kicker, chapter: "03" },
+      { id: "spend", label: "What households spend on", chapter: "03" },
+      { id: "character-people", label: COPY.character.people.kicker, chapter: "03" },
+      ...(seatFirstYears ? [{ id: "first-years", label: COPY.firstYears.kicker, chapter: "04" }, { id: "obstacles", label: COPY.firstYears.obstaclesKicker, chapter: "04" }] : []),
     ];
+    const railChapters = {
+      "01": { index: "01", heading: COPY.chapters.costs },
+      "02": { index: "02", heading: COPY.chapters.money },
+      "03": { index: "03", heading: COPY.chapters.open },
+      "04": { index: "04", heading: COPY.chapters.firstYears },
+    };
     return (
       <>
         <div className="py-2" data-spine-body data-composition="depth">
@@ -1345,7 +1373,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
           ) : null}
           <Close meta={d.meta} name={name} />
         </div>
-        <OnThisPage sections={sections} />
+        <OnThisPage sections={sections} chapters={railChapters} />
       </>
     );
   }
