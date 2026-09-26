@@ -16,11 +16,16 @@ import { Box, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { AgeMix as AgeMixData } from "@/lib/spine/sections/people";
 
-const NEUTRALS: Record<string, string> = { under16: "var(--c-soft2)", "16to24": "var(--c-border)", "50to64": "var(--c-line-strong)", "65plus": "var(--c-border)" };
+/* THE BANDS STEP FROM LIGHT TO DARK WITH AGE (2026-09-26): under 16, 16 to 24 and 65 and over were soft2, border and border, one
+   pale grey three times, so the legend could not be matched to a single segment. Now ink2 at four strengths about ten points of
+   lightness apart, youngest palest; the core band keeps the accent. A band's tone is a layer under its label, so the label keeps
+   its full ink. */
+const TONES: Record<string, number> = { under16: 0.12, "16to24": 0.26, "50to64": 0.4, "65plus": 0.54 };
 
 export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData }) {
   const A = COPY.people.age;
-  const fill = (key: string, focal: boolean) => (key === "25to49" ? (focal ? "var(--terra)" : "var(--terra-border)") : NEUTRALS[key] ?? "var(--c-border)");
+  const tone = (key: string, focal: boolean): { background: string; opacity?: number } =>
+    key === "25to49" ? { background: focal ? "var(--terra)" : "var(--terra-border)" } : { background: "var(--c-ink2)", opacity: TONES[key] ?? 0.24 };
   const legend = data.bars[0].bands;
   return (
     <Box id={id} className="flex flex-col">
@@ -37,8 +42,9 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
               {bar.bands.map((b) => {
                 const labelled = !(bar.focal && b.key === "25to49") && b.pct >= 9;
                 return (
-                  <span key={b.key} data-wedge={b.key} className="flex h-full min-w-0.5 items-center justify-center first:rounded-l-lg last:rounded-r-lg" style={{ width: `${b.pct}%`, background: fill(b.key, bar.focal) }}>
-                    {labelled ? <span className="text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]">{Math.round(b.pct)}%</span> : null}
+                  <span key={b.key} data-wedge={b.key} className="relative flex h-full min-w-0.5 items-center justify-center overflow-hidden first:rounded-l-lg last:rounded-r-lg" style={{ width: `${b.pct}%` }}>
+                    <span aria-hidden className="absolute inset-0" style={tone(b.key, bar.focal)} />
+                    {labelled ? <span className="relative text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]">{Math.round(b.pct)}%</span> : null}
                   </span>
                 );
               })}
@@ -48,7 +54,8 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
           {legend.map((b) => (
             <span key={b.key} className="inline-flex items-center gap-2">
-              <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-sm border border-[var(--c-border)]" style={{ background: b.key === "25to49" ? "var(--terra-border)" : NEUTRALS[b.key] }} />
+              {/* The swatch keeps a hairline edge, so the palest band still reads as a mark on the card's white. */}
+              <span aria-hidden className="relative inline-block h-2.5 w-2.5 overflow-hidden rounded-sm border border-[var(--c-border)]"><span className="absolute inset-0" style={tone(b.key, false)} /></span>
               {b.label}
             </span>
           ))}
