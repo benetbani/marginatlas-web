@@ -17,6 +17,9 @@ export type Survival = {
   points: SurvivalPoint[];
   last: SurvivalPoint;
   regions: { best: { name: string; pct: number }; worst: { name: string; pct: number } } | null;
+  /** The place the country's curve is ("the UK"), and each region's own curve for the same cohort (2026-09-26, the region lever). */
+  place: string | null;
+  regionCurves: Array<{ key: string; name: string; inName: string; points: SurvivalPoint[] }>;
 };
 export type Obstacle = { key: string; label: string; pct: number };
 export type Obstacles = { iso2: string; year: number; items: Obstacle[] };
@@ -24,6 +27,8 @@ export type Obstacles = { iso2: string; year: number; items: Obstacle[] };
 type FileCountry = {
   curve?: { cohort: number; points: SurvivalPoint[] };
   regions?: { year: number; best: { name: string; pct: number }; worst: { name: string; pct: number } };
+  place?: string;
+  regionCurves?: { cohort: number; regions: Array<{ key: string; name: string; inName: string; points: SurvivalPoint[] }> };
   obstacles?: { year: number; items: Array<{ key: string; pct: number }> };
 };
 const file = survivalJson as unknown as Record<string, FileCountry | string>;
@@ -42,7 +47,11 @@ export function buildSurvival(iso2: string): Survival | null {
   const last = pts[pts.length - 1];
   const r = c.regions;
   const regions = r && r.year === last.year && isPct(r.best?.pct) && isPct(r.worst?.pct) && r.best.pct > r.worst.pct ? { best: r.best, worst: r.worst } : null;
-  return { iso2: iso2.toUpperCase(), cohort: c.curve.cohort, points: pts, last, regions };
+  /* A region's curve is drawn only as the country's is: the same cohort, the same years, and falling year on year. */
+  const regionCurves = c.regionCurves && c.regionCurves.cohort === c.curve.cohort
+    ? c.regionCurves.regions.filter((r) => r.points.length === pts.length && r.points.every((p, i) => p.year === pts[i].year && isPct(p.pct) && (i === 0 || p.pct <= r.points[i - 1].pct)))
+    : [];
+  return { iso2: iso2.toUpperCase(), cohort: c.curve.cohort, points: pts, last, regions, place: typeof c.place === "string" ? c.place : null, regionCurves };
 }
 
 export function buildObstacles(iso2: string): Obstacles | null {

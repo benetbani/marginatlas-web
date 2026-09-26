@@ -1,92 +1,426 @@
 {
-  "_about": "Who makes it past the first years, by country (his message of 2026-09-25: \"Decisive factors that decide whether a business survives the 1st year\"). `curve` is ONE cohort followed year by year, never years of different cohorts stitched together; `regions` the best and worst region on the curve's last year; `obstacles` what small employers name as a major obstacle, one survey, one year. Research: design/loop/build/research/2026-09-25-R3-survival-top-GB.md.",
-  "GB": {
-    "curve": {
-      "cohort": 2019,
-      "points": [
-        {
-          "year": 1,
-          "pct": 94.6
-        },
-        {
-          "year": 2,
-          "pct": 74.7
-        },
-        {
-          "year": 3,
-          "pct": 55.9
-        },
-        {
-          "year": 4,
-          "pct": 45.0
-        },
-        {
-          "year": 5,
-          "pct": 38.4
-        }
-      ],
-      "source": {
-        "publisher": "ONS, Business demography UK 2024 reference table (released 20 Nov 2025), Table 4.1, the 2019 births and their survival, the UK total row: 94.59, 74.74, 55.93, 45.00 and 38.44 per cent (read 2026-09-26; the years one to four were first taken from a secondary quote of the same release, and the table confirms them)",
-        "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/bulletins/businessdemography/2024",
-        "quote": "The five-year survival rate for UK businesses born in 2019 is 38.4%"
-      }
+ "_about": "Who makes it past the first years, by country (his message of 2026-09-25: \"Decisive factors that decide whether a business survives the 1st year\"). `curve` is ONE cohort followed year by year, never years of different cohorts stitched together; `regions` the best and worst region on the curve's last year; `obstacles` what small employers name as a major obstacle, one survey, one year. Research: design/loop/build/research/2026-09-25-R3-survival-top-GB.md.",
+ "GB": {
+  "curve": {
+   "cohort": 2019,
+   "points": [
+    {
+     "year": 1,
+     "pct": 94.6
     },
-    "regions": {
-      "year": 5,
-      "best": {
-        "name": "South West",
-        "pct": 43.5
-      },
-      "worst": {
-        "name": "West Midlands",
-        "pct": 30.6
-      },
-      "source": {
-        "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/bulletins/businessdemography/2024",
-        "quote": "The region with the highest five-year survival rate was the South West, at 43.5%."
-      }
+    {
+     "year": 2,
+     "pct": 74.7
     },
-    "obstacles": {
-      "who": "small employers",
-      "year": 2024,
-      "items": [
-        {
-          "key": "tax",
-          "pct": 61
-        },
-        {
-          "key": "energy",
-          "pct": 50
-        },
-        {
-          "key": "red-tape",
-          "pct": 44
-        },
-        {
-          "key": "competition",
-          "pct": 40
-        },
-        {
-          "key": "staff",
-          "pct": 37
-        },
-        {
-          "key": "late-payment",
-          "pct": 26
-        },
-        {
-          "key": "premises",
-          "pct": 17
-        },
-        {
-          "key": "finance",
-          "pct": 16
-        }
-      ],
-      "source": {
-        "publisher": "Department for Business and Trade, Longitudinal Small Business Survey 2024 (published September 2025)",
-        "url": "https://gov.uk/government/statistics/small-business-survey-2024-businesses-with-employees/longitudinal-small-business-survey-2024-sme-employers-businesses-with-1-to-249-employees"
-      }
+    {
+     "year": 3,
+     "pct": 55.9
+    },
+    {
+     "year": 4,
+     "pct": 45.0
+    },
+    {
+     "year": 5,
+     "pct": 38.4
     }
+   ],
+   "source": {
+    "publisher": "ONS, Business demography UK 2024 reference table (released 20 Nov 2025), Table 4.1, the 2019 births and their survival, the UK total row: 94.59, 74.74, 55.93, 45.00 and 38.44 per cent (read 2026-09-26; the years one to four were first taken from a secondary quote of the same release, and the table confirms them)",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/bulletins/businessdemography/2024",
+    "quote": "The five-year survival rate for UK businesses born in 2019 is 38.4%"
+   }
+  },
+  "regions": {
+   "year": 5,
+   "best": {
+    "name": "South West",
+    "pct": 43.5
+   },
+   "worst": {
+    "name": "West Midlands",
+    "pct": 30.6
+   },
+   "source": {
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/bulletins/businessdemography/2024",
+    "quote": "The region with the highest five-year survival rate was the South West, at 43.5%."
+   }
+  },
+  "obstacles": {
+   "who": "small employers",
+   "year": 2024,
+   "items": [
+    {
+     "key": "tax",
+     "pct": 61
+    },
+    {
+     "key": "energy",
+     "pct": 50
+    },
+    {
+     "key": "red-tape",
+     "pct": 44
+    },
+    {
+     "key": "competition",
+     "pct": 40
+    },
+    {
+     "key": "staff",
+     "pct": 37
+    },
+    {
+     "key": "late-payment",
+     "pct": 26
+    },
+    {
+     "key": "premises",
+     "pct": 17
+    },
+    {
+     "key": "finance",
+     "pct": 16
+    }
+   ],
+   "source": {
+    "publisher": "Department for Business and Trade, Longitudinal Small Business Survey 2024 (published September 2025)",
+    "url": "https://gov.uk/government/statistics/small-business-survey-2024-businesses-with-employees/longitudinal-small-business-survey-2024-sme-employers-businesses-with-1-to-249-employees"
+   }
+  },
+  "place": "the UK",
+  "regionCurves": {
+   "cohort": 2019,
+   "regions": [
+    {
+     "key": "north-east",
+     "name": "North East",
+     "inName": "the North East",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.2
+      },
+      {
+       "year": 2,
+       "pct": 75.1
+      },
+      {
+       "year": 3,
+       "pct": 57.5
+      },
+      {
+       "year": 4,
+       "pct": 46.1
+      },
+      {
+       "year": 5,
+       "pct": 38.9
+      }
+     ]
+    },
+    {
+     "key": "north-west",
+     "name": "North West",
+     "inName": "the North West",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.2
+      },
+      {
+       "year": 2,
+       "pct": 74.5
+      },
+      {
+       "year": 3,
+       "pct": 54.8
+      },
+      {
+       "year": 4,
+       "pct": 43.3
+      },
+      {
+       "year": 5,
+       "pct": 36.6
+      }
+     ]
+    },
+    {
+     "key": "yorkshire-and-the-humber",
+     "name": "Yorkshire and the Humber",
+     "inName": "Yorkshire and the Humber",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.6
+      },
+      {
+       "year": 2,
+       "pct": 76.3
+      },
+      {
+       "year": 3,
+       "pct": 58.1
+      },
+      {
+       "year": 4,
+       "pct": 46.9
+      },
+      {
+       "year": 5,
+       "pct": 40.1
+      }
+     ]
+    },
+    {
+     "key": "east-midlands",
+     "name": "East Midlands",
+     "inName": "the East Midlands",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.9
+      },
+      {
+       "year": 2,
+       "pct": 75.9
+      },
+      {
+       "year": 3,
+       "pct": 58.6
+      },
+      {
+       "year": 4,
+       "pct": 45.3
+      },
+      {
+       "year": 5,
+       "pct": 38.5
+      }
+     ]
+    },
+    {
+     "key": "west-midlands",
+     "name": "West Midlands",
+     "inName": "the West Midlands",
+     "points": [
+      {
+       "year": 1,
+       "pct": 95.3
+      },
+      {
+       "year": 2,
+       "pct": 70.4
+      },
+      {
+       "year": 3,
+       "pct": 45.0
+      },
+      {
+       "year": 4,
+       "pct": 36.2
+      },
+      {
+       "year": 5,
+       "pct": 30.6
+      }
+     ]
+    },
+    {
+     "key": "east-of-england",
+     "name": "East of England",
+     "inName": "the East of England",
+     "points": [
+      {
+       "year": 1,
+       "pct": 95.2
+      },
+      {
+       "year": 2,
+       "pct": 76.9
+      },
+      {
+       "year": 3,
+       "pct": 57.7
+      },
+      {
+       "year": 4,
+       "pct": 47.0
+      },
+      {
+       "year": 5,
+       "pct": 40.4
+      }
+     ]
+    },
+    {
+     "key": "london",
+     "name": "London",
+     "inName": "London",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.3
+      },
+      {
+       "year": 2,
+       "pct": 73.3
+      },
+      {
+       "year": 3,
+       "pct": 55.5
+      },
+      {
+       "year": 4,
+       "pct": 44.8
+      },
+      {
+       "year": 5,
+       "pct": 38.2
+      }
+     ]
+    },
+    {
+     "key": "south-east",
+     "name": "South East",
+     "inName": "the South East",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.9
+      },
+      {
+       "year": 2,
+       "pct": 76.0
+      },
+      {
+       "year": 3,
+       "pct": 58.4
+      },
+      {
+       "year": 4,
+       "pct": 46.8
+      },
+      {
+       "year": 5,
+       "pct": 40.2
+      }
+     ]
+    },
+    {
+     "key": "south-west",
+     "name": "South West",
+     "inName": "the South West",
+     "points": [
+      {
+       "year": 1,
+       "pct": 95.0
+      },
+      {
+       "year": 2,
+       "pct": 77.7
+      },
+      {
+       "year": 3,
+       "pct": 61.0
+      },
+      {
+       "year": 4,
+       "pct": 50.1
+      },
+      {
+       "year": 5,
+       "pct": 43.5
+      }
+     ]
+    },
+    {
+     "key": "wales",
+     "name": "Wales",
+     "inName": "Wales",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.7
+      },
+      {
+       "year": 2,
+       "pct": 74.5
+      },
+      {
+       "year": 3,
+       "pct": 54.6
+      },
+      {
+       "year": 4,
+       "pct": 44.3
+      },
+      {
+       "year": 5,
+       "pct": 38.1
+      }
+     ]
+    },
+    {
+     "key": "scotland",
+     "name": "Scotland",
+     "inName": "Scotland",
+     "points": [
+      {
+       "year": 1,
+       "pct": 94.7
+      },
+      {
+       "year": 2,
+       "pct": 75.9
+      },
+      {
+       "year": 3,
+       "pct": 57.4
+      },
+      {
+       "year": 4,
+       "pct": 46.4
+      },
+      {
+       "year": 5,
+       "pct": 39.3
+      }
+     ]
+    },
+    {
+     "key": "northern-ireland",
+     "name": "Northern Ireland",
+     "inName": "Northern Ireland",
+     "points": [
+      {
+       "year": 1,
+       "pct": 88.1
+      },
+      {
+       "year": 2,
+       "pct": 72.5
+      },
+      {
+       "year": 3,
+       "pct": 55.6
+      },
+      {
+       "year": 4,
+       "pct": 47.8
+      },
+      {
+       "year": 5,
+       "pct": 42.8
+      }
+     ]
+    }
+   ],
+   "source": {
+    "publisher": "ONS, Business demography UK 2024 reference table (released 20 Nov 2025), Table 4.1, the 2019 births and their survival by region, the per cent columns rounded to one place (read 2026-09-26)",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable"
+   }
   }
+ }
 }
