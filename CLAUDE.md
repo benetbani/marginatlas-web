@@ -129,13 +129,16 @@ code puts on the page>`.
 
 ## Latest handoff
 
-- **`docs/handoff/HANDOFF-marginatlas-2026-09-25.md` IS THE CURRENT HANDOFF, READ IT FIRST**
-  (the UK page goal of 2026-09-25 and his page-agnostic sections: batches 20 to 32
-  shipped, production at 7eb744b4; every section of his list built or ruled out,
-  most seated on the UK page and the UK trade pages; two HIS rulings waiting; its
-  re-hydration prompt is its section 14). `E:/atlas/design/loop/build/STATE.md` is
-  the state of record and is newer than any handoff: read its `step-in-flight`
-  before acting.
+- **`docs/handoff/HANDOFF-marginatlas-2026-09-26.md` IS THE CURRENT HANDOFF, READ IT FIRST**
+  (the goal of 2026-09-26 afternoon: every section understandable and digestible; batches
+  41 to 45 shipped and driven live, production at bb4c086e: readouts and linked parts on
+  the drawings, four levers, a switch, the tables' sort, his plus on the legal forms, an
+  icon a cell; the `interact` gate; two trade-page rows queued; its re-hydration prompt is
+  its section 14). `E:/atlas/design/loop/build/STATE.md` is the state of record and is
+  newer than any handoff: read its `step-in-flight` before acting.
+- `docs/handoff/HANDOFF-marginatlas-2026-09-25.md` is the PRIOR handoff (the UK page goal
+  of 2026-09-25 and his page-agnostic sections: batches 20 to 32, production then at
+  7eb744b4; every section of his list built or ruled out).
 - `docs/handoff/HANDOFF-marginatlas-2026-09-24b.md` is the PRIOR handoff (the goal
   of 2026-09-24, evening: seventeen batches shipped, production at 42ae3c87; his
   copy correction answered on every main page and gated at zero).
