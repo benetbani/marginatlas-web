@@ -892,6 +892,8 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false }: { hiring: any; 
   const informal = hiring?.informal_share_pct;
   if (!pay && !isNum(addPct) && !isNum(labour) && !isNum(informal)) return null;
   const tagged = (pay && pay.confidence !== "measured") || (typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured");
+  /* The hire's cost draws where HireCost itself draws: an average salary and an employer's rate above zero. */
+  const hireDrawn = hireCost && !!pay && isNum(addPct) && addPct > 0 && (pay.rows.find((r) => r.key === "average")?.value ?? 0) > 0;
   /* LEAN WHILE IT STANDS ALONE (plan step 31, 2026-09-17; kept by the sixth
      dispatch, 2026-09-18): the kit seats a lone card at two thirds, and at 693
      this card's world track ran on empty past its two short fills, the void
@@ -915,8 +917,10 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false }: { hiring: any; 
           corrections owed): what the employer adds on top of wages is a darker
           piece at the average bar's end, its words under the track, in place
           of the sentence that stood here. */}
-      {pay ? <PayBars rows={pay.rows.map((r) => (r.key === "average" && isNum(addPct) ? { ...r, extra: { pct: addPct, label: COPY.pay.employerAdds.replace("{pct}", `${addPct}%`) } } : r))} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
-      {hireCost && pay ? <HireCost iso2={iso2 as string} pay={pay} rate={isNum(addPct) ? addPct : null} /> : null}
+      {/* THE EMPLOYER'S SHARE SAID ONCE (2026-09-26, the United Kingdom's staff card): where the hire's cost is drawn below, the
+          average bar carries no on-cost piece and no "Employer adds 15%" line, which the hire's own rule line said again. */}
+      {pay ? <PayBars rows={pay.rows.map((r) => (r.key === "average" && isNum(addPct) && !hireDrawn ? { ...r, extra: { pct: addPct, label: COPY.pay.employerAdds.replace("{pct}", `${addPct}%`) } } : r))} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
+      {hireDrawn && pay ? <HireCost iso2={iso2 as string} pay={pay} rate={isNum(addPct) ? addPct : null} /> : null}
       {/* The labour force and the informal share move to the employment card where the page draws it (2026-09-25). */}
       {foot && (isNum(labour) || isNum(informal)) ? (
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--c-border)] pt-4">
