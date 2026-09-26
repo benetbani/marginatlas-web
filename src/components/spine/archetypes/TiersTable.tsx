@@ -64,9 +64,9 @@ export function TierPanel({ explainer, paperwork }: { explainer?: string; paperw
 const HEAD = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
 /* name | fee | time | dots | chevron, from md; the widths are the file's own
    extremes, a $12,000 fee and a 90-day wait, not the exemplar's. */
-const GRID = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem_4.75rem] gap-x-3 md:grid-cols-[minmax(0,1fr)_5.5rem_5rem_4.75rem]";
+const GRID = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem_4.75rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem_4.75rem]";
 /* name | fee | time, the registering shape with the dots off. */
-const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem] gap-x-3 md:grid-cols-[minmax(0,1fr)_5.5rem_5rem]";
+const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem]";
 /* name | a | b, the figures shape: a count and a year's pay ("$44K", "$8,500"). */
 const GRID_FIGURES = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3";
 const DASH = <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>;
@@ -96,7 +96,11 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
   const grid = dots ? GRID : GRID_NO_DOTS;
   const span = dots ? "col-span-4" : "col-span-3";
   return (
-    <div data-archetype="tiers-table" data-shape="registering" data-heads={dots ? 3 : 2} className={fill ? "flex flex-1 flex-col" : undefined}>
+    /* THE ROW FOLLOWS THE CARD, NOT THE WINDOW (2026-09-26): switched at the window's md, a legal form's name took its own column
+       in a card half a 768 window wide and was cut to one letter ("S...", "L...", "J..." on the United Kingdom's page). The table
+       is its own container now: from 480px of it the name has its column (the three readings take 244px and 36px of gaps, and a
+       name with its local term needs about 170), under that the name spans the row and the readings sit under it. */
+    <div data-archetype="tiers-table" data-shape="registering" data-heads={dots ? 3 : 2} className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
       {/* THE HEADS, ONCE, AT EVERY WIDTH. On a phone the name column has no
           head (the name is its own head) and the three readings' heads sit
           right-aligned over their column. */}
@@ -125,15 +129,15 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
               {/* THE NAME BLOCK spans the row on a phone and takes the first
                   column from md; it reserves two lines so every row is one
                   height; the chevron rides at its right edge. */}
-              <span className={`${span} flex min-w-0 items-center gap-2 md:col-span-1`}>
+              <span className={`${span} flex min-w-0 items-center gap-2 [@container(min-width:480px)]:col-span-1`}>
                 <span className="min-w-0 flex-1">
                   <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{t.tier}</span>
                   <span className="block min-h-[1.3em] truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{localTerm ?? " "}</span>
                 </span>
-                <span aria-hidden className={`shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform md:hidden ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
+                <span aria-hidden className={`shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform [@container(min-width:480px)]:hidden ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
               </span>
               {/* On a phone the readings sit on their own row under the heads; a spacer keeps them in their columns. */}
-              <span aria-hidden className="md:hidden" />
+              <span aria-hidden className="[@container(min-width:480px)]:hidden" />
               <span className="text-right" data-col="fee">
                 {/* A zero fee prints "$0" in this column of figures (COPY.free's note, 2026-09-25). */}
                 {isNum(t.cost_usd) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig> : DASH}
@@ -144,7 +148,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
               {dots ? (
                 <span className="flex items-center justify-end gap-2">
                   {isNum(t.complexity_1_5) ? <Dots n={t.complexity_1_5} /> : null}
-                  <span aria-hidden className={`hidden text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform md:inline ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
+                  <span aria-hidden className={`hidden text-[length:var(--t-micro)] text-[var(--c-muted)] transition-transform [@container(min-width:480px)]:inline ${isOpen ? "rotate-90" : ""}`}>{hasPanel ? "›" : ""}</span>
                 </span>
               ) : null}
             </span>
@@ -204,7 +208,8 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
      taller, four split cards beside it pushed over the page filter's floor),
      so the rows are a flex column that only grows into spare height. */
   return (
-    <div data-archetype="tiers-table" data-shape="figures" data-heads={nameHead ? 3 : 2} className={fill ? "flex flex-1 flex-col" : undefined}>
+    /* The figures shape follows its card too (2026-09-26), from 360px of it: two readings take 160px and 24px of gaps. */
+    <div data-archetype="tiers-table" data-shape="figures" data-heads={nameHead ? 3 : 2} className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
       {/* THE HEADS, ONCE, AT EVERY WIDTH, at the micro rung a reader reads
           (PART 5: never 10px). The name column's head reads on every width
           here: a role is one of a set, not its own head the way a legal
@@ -229,7 +234,7 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                     number), the name wrapping into the second when it must
                     (clamped there, so two lines is the block's ceiling and its
                     floor) and the second name standing there otherwise. */}
-                <span className="col-span-3 min-h-[2.5rem] min-w-0 md:col-span-1">
+                <span className="col-span-3 min-h-[2.5rem] min-w-0 [@container(min-width:360px)]:col-span-1">
                   {r.sub ? (
                     <>
                       <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{r.name}</span>
@@ -240,7 +245,7 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                   )}
                 </span>
                 {/* On a phone the figures sit on their own row under the heads; a spacer keeps them in their columns. */}
-                <span aria-hidden className="md:hidden" />
+                <span aria-hidden className="[@container(min-width:360px)]:hidden" />
                 <span className="text-right" data-col="a">
                   {r.a != null ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.a}</Fig> : DASH}
                 </span>
