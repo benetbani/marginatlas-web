@@ -144,7 +144,8 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                   <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
                   <span className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
                     {r.value}
-                    <span className="ml-1 text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{r.unit}</span>
+                    {/* A real space before the unit, not a margin (2026-09-26): read aloud or copied, "21days" was one word. */}
+                    {r.unit ? <>{" "}<span className="text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{r.unit}</span></> : null}
                   </span>
                   {r.level ? (
                     <LevelMark level={r.level} />
