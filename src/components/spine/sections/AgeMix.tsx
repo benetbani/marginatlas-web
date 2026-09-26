@@ -13,6 +13,7 @@
  */
 import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
+import { Marks } from "@/components/spine/interact/Marks";
 import { COPY } from "@/lib/spine/copy";
 import type { AgeMix as AgeMixData } from "@/lib/spine/sections/people";
 
@@ -37,15 +38,17 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
       {/* THE BARS AND THE LEGEND SHARE A LENT HEIGHT (2026-09-26, beside the job market on the United Kingdom's page): the legend
           stood 55px above the card's floor; now the first bar keeps its place under the figure, the legend sits on the floor and
           the air is shared between them. Without a lent height the gap is 16px, as before. */}
-      <div data-archetype="age-mix" data-visual="1" data-bars={String(data.bars.length)} className="grid flex-1 content-between gap-4">
+      {/* THE BANDS ANSWER THE READER (goal 2026-09-26, M1 and M2): each band reads its share on hover, focus or tap, and a band or
+          its legend entry lights the same age in both bars. */}
+      <Marks label={`${A.kicker}: ${data.bars.map((bar) => bar.name).join(" and ")}`} data-archetype="age-mix" data-visual="1" data-bars={String(data.bars.length)} className="grid flex-1 content-between gap-4">
         {data.bars.map((bar) => (
           <div key={bar.name} data-row={bar.name}>
             <div className="mb-2 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{bar.name.charAt(0).toUpperCase() + bar.name.slice(1)}</div>
-            <div className="flex h-9 w-full gap-0.5 overflow-hidden rounded-lg" role="img" aria-label={`${bar.name}: ${bar.bands.map((b) => `${b.label} ${b.pct}%`).join(", ")}`}>
+            <div className="flex h-9 w-full gap-0.5 overflow-hidden rounded-lg" role="img" aria-label={`${bar.name}: ${bar.bands.map((b) => `${b.label} ${Math.round(b.pct)}%`).join(", ")}`}>
               {bar.bands.map((b) => {
                 const labelled = !(bar.focal && b.key === "25to49") && b.pct >= 9;
                 return (
-                  <span key={b.key} data-wedge={b.key} className="relative flex h-full min-w-0.5 items-center justify-center overflow-hidden first:rounded-l-lg last:rounded-r-lg" style={{ width: `${b.pct}%` }}>
+                  <span key={b.key} data-wedge={b.key} data-part-key={b.key} data-readout-figure={`${Math.round(b.pct)}%`} data-readout-words={`${bar.name.charAt(0).toUpperCase() + bar.name.slice(1)}, ${b.label}`} className="relative flex h-full min-w-0.5 items-center justify-center overflow-hidden first:rounded-l-lg last:rounded-r-lg" style={{ width: `${b.pct}%` }}>
                     <span aria-hidden className="absolute inset-0" style={tone(b.key, bar.focal)} />
                     {labelled ? <span className="relative text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]">{Math.round(b.pct)}%</span> : null}
                   </span>
@@ -56,14 +59,14 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
         ))}
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
           {legend.map((b) => (
-            <span key={b.key} className="inline-flex items-center gap-2">
+            <span key={b.key} data-part-key={b.key} className="inline-flex items-center gap-2">
               {/* The swatch keeps a hairline edge, so the palest band still reads as a mark on the card's white. */}
               <span aria-hidden className="relative inline-block h-2.5 w-2.5 overflow-hidden rounded-sm border border-[var(--c-border)]"><span className="absolute inset-0" style={tone(b.key, false)} /></span>
               {b.label}
             </span>
           ))}
         </div>
-      </div>
+      </Marks>
     </Box>
   );
 }
