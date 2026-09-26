@@ -35,6 +35,7 @@
  * country, a country whose pay pair is withheld) and the page laws.
  */
 import * as React from "react";
+import { Marks } from "@/components/spine/interact/Marks";
 import { CountryFlag } from "@/components/CountryFlag";
 import { Band, Box, Ico } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
@@ -137,9 +138,12 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                 1094, 1074 and 1098: three right edges in a column that exists to
                 be read down. The rows are subgrids of this one now, so the four
                 columns are the same four columns on every row. */}
-            <div className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+            {/* THE MARKS SAY WHAT THEY MEAN (goal 2026-09-26, M1): a row read by the pointer, the keyboard or a tap shows its figure
+                and where it stands among the countries in the site's one placement sentence; the key under the column stays for a
+                reader who never touches the board. The whole row is the target, not the small mark. */}
+            <RowsFrame readable={rows.some((r) => r.placement)} className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
               {rows.map((r) => (
-                <div key={r.key} data-row={r.key} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
+                <div key={r.key} data-row={r.key} {...(r.placement ? { "data-readout-figure": r.unit ? `${r.value} ${r.unit}` : r.value, "data-readout-words": r.placement } : {})} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
                   <Ico id={r.icon} tone="terra" />
                   <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
                   <span className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
@@ -154,13 +158,19 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                   )}
                 </div>
               ))}
-            </div>
+            </RowsFrame>
             <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.levelBasis ?? COPY.heroBoard.levelBasis}</p>
           </div>
         </div>
       </Box>
     </Band>
   );
+}
+
+/** The rows listen only where one of them has a reading (a city's board may place none): a wrapper with nothing to walk would be a
+ *  tab stop that leads nowhere. */
+function RowsFrame({ readable, className, children }: { readable: boolean; className: string; children: React.ReactNode }) {
+  return readable ? <Marks label={COPY.heroBoard.marksLabel} className={className}>{children}</Marks> : <div className={className}>{children}</div>;
 }
 
 /** THE LEVEL AS A MARK (2026-09-25, his word that night: "symbols ... can be used to replace words in our sections that are soooo

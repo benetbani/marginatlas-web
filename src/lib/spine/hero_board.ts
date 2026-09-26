@@ -56,7 +56,7 @@
 import { buildHeroFacts, type HeroFacts } from "@/lib/spine/hero_facts";
 import countryImagesJson from "../../../data/cities/country_images_manifest.json";
 import { buildPayBars, worldPaySets } from "@/lib/spine/pay_rows";
-import { placementRank } from "@/lib/spine/placement";
+import { placementRank, placementOf } from "@/lib/spine/placement";
 import { getCountryProfile, listCountryProfiles } from "@/lib/economic_profile";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { COUNTRIES } from "@/lib/taxonomy";
@@ -80,6 +80,9 @@ export type HeroBoardRow = {
   unit: string;
   level: HeroLevel | null;
   confidence: "measured" | "modeled";
+  /** Where the figure stands among the countries, in the site's one placement sentence (placement.ts), for the row's readout
+   *  (goal 2026-09-26, M1): the words behind the marks the footnote only names. Null where the row draws no mark. */
+  placement?: string | null;
 };
 
 export type HeroBoardData = {
@@ -164,17 +167,17 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
 
   if (profileHeld && isNum(profile.corruption_perception_index)) {
     const v = Math.round(profile.corruption_perception_index);
-    rows.push({ key: "clean", icon: "corruption", label: COPY.heroBoard.rows.clean, value: String(v), unit: COPY.heroBoard.units.of100, level: levelOf(profile.corruption_perception_index, s.clean), confidence: profileConfidence });
+    rows.push({ key: "clean", icon: "corruption", label: COPY.heroBoard.rows.clean, value: String(v), unit: COPY.heroBoard.units.of100, level: levelOf(profile.corruption_perception_index, s.clean), confidence: profileConfidence, placement: placementOf(profile.corruption_perception_index, s.clean, "countries") });
   }
   if (profileHeld && isNum(profile.ease_of_doing_business_index)) {
     const v = Math.round(profile.ease_of_doing_business_index);
-    rows.push({ key: "admin", icon: "ease-of-business", label: COPY.heroBoard.rows.admin, value: String(v), unit: COPY.heroBoard.units.of100, level: levelOf(profile.ease_of_doing_business_index, s.admin), confidence: profileConfidence });
+    rows.push({ key: "admin", icon: "ease-of-business", label: COPY.heroBoard.rows.admin, value: String(v), unit: COPY.heroBoard.units.of100, level: levelOf(profile.ease_of_doing_business_index, s.admin), confidence: profileConfidence, placement: placementOf(profile.ease_of_doing_business_index, s.admin, "countries") });
   }
   const bill = buildEntryBill(iso2);
   const hiring = hireEase(iso2);
   if (bill?.verdict.days.state === "printed" && isPos(bill.verdict.days.value)) {
     const d = bill.verdict.days.value;
-    rows.push({ key: "llc-days", icon: "red-tape", label: COPY.heroBoard.rows.llcDays, value: String(d), unit: d === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(d, s.llcDays), confidence: bill.verdict.days.tag === "held" ? "measured" : "modeled" });
+    rows.push({ key: "llc-days", icon: "red-tape", label: COPY.heroBoard.rows.llcDays, value: String(d), unit: d === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(d, s.llcDays), confidence: bill.verdict.days.tag === "held" ? "measured" : "modeled", placement: placementOf(d, s.llcDays, "countries") });
   }
   /* HOW EASY IT IS TO HIRE (his hero list of 2026-09-20: "how easy it is to hire ... definitely an aspect"; 2026-09-25). The shard's
      word for the country (`people_pay.hiring.hire_ease`: easy on 25, moderate on 168, hard on 4 of 198), printed as the row's value;
@@ -185,11 +188,11 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
   if (avg && isPos(avg.value)) {
     const month = Math.round(avg.value / 12);
     const set = worldPaySets().averages.map((a) => a / 12);
-    rows.push({ key: "salary-month", icon: "wages", label: COPY.heroBoard.rows.salaryMonth, value: usd(month), unit: COPY.heroBoard.units.aMonth, level: levelOf(month, set), confidence: pay!.confidence === "measured" ? "measured" : "modeled" });
+    rows.push({ key: "salary-month", icon: "wages", label: COPY.heroBoard.rows.salaryMonth, value: usd(month), unit: COPY.heroBoard.units.aMonth, level: levelOf(month, set), confidence: pay!.confidence === "measured" ? "measured" : "modeled", placement: placementOf(month, set, "countries") });
   }
   if (bill?.verdict.bill.state === "printed" && isNum(bill.verdict.bill.value)) {
     const c = bill.verdict.bill.value;
-    rows.push({ key: "llc-cost", icon: "register-cost", label: COPY.heroBoard.rows.llcCost, value: usd(c), unit: COPY.heroBoard.units.allIn, level: levelOf(c, s.llcCost), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled" });
+    rows.push({ key: "llc-cost", icon: "register-cost", label: COPY.heroBoard.rows.llcCost, value: usd(c), unit: COPY.heroBoard.units.allIn, level: levelOf(c, s.llcCost), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled", placement: placementOf(c, s.llcCost, "countries") });
   }
 
   const share = facts.answer && isNum(facts.answer.share) && facts.answer.share > 0 && facts.answer.share < 1 ? facts.answer.share : null;
