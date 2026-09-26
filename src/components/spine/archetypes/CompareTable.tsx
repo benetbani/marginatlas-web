@@ -69,11 +69,23 @@
  *    places in ONE country, so a flag would be the same flag on every row,
  *    saying nothing five times; the country's and the city's rows are in
  *    different countries and keep theirs (`flags` defaults on).
+ *
+ * THE ORDER IN THE READER'S HANDS (the goal of 2026-09-26, M5; his message
+ * that afternoon: "the already built tables should be studied for ease of
+ * use, being understandable"). Read top to bottom the table answered one
+ * question, its builder's order; "where does my country stand on tax" had to
+ * be worked out cell by cell. Every figure head is now a button (SortTable,
+ * src/components/spine/interact/SortTable.tsx): a press brings the column's
+ * best figure to the top, the tick's own direction, a second press turns it
+ * over, and the home row keeps its tint wherever it lands. The rows are drawn
+ * here, as before, and handed to the sort drawn; the opening order is the
+ * builder's. Under three rows nothing listens.
  */
 import * as React from "react";
 import { Box, Rail, Fig, usd } from "@/components/spine/kit";
 import { StateMark } from "@/components/spine/forms-v2";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { TableCell } from "@/components/ui/table";
+import { SortTable, type SortRow } from "@/components/spine/interact/SortTable";
 import { CountryFlag } from "@/components/CountryFlag";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "./copy";
@@ -209,83 +221,59 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
     );
     return <span className="inline-flex min-h-4 items-center justify-end align-middle">{inner}</span>;
   };
-  /* Column heads in sentence case (2026-09-25, his capitals ruling; shadcn's table heads the same). */
-  const head = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
+  /* THE ROWS, DRAWN ONCE FOR EACH FORM and handed to the sort with the figures it orders by (the header's ORDER IN THE READER'S
+     HANDS). A name longer than its column wraps to a second line, never cut to an ellipsis. The column heads are the sort's, in
+     sentence case (2026-09-25, his capitals ruling; shadcn's table heads the same). */
+  const sortRows: SortRow[] = rows.map((r) => ({
+    key: r.key ?? r.iso2,
+    home: r.home,
+    values: r.values,
+    cells: (
+      <>
+        <TableCell className="px-0 py-0 align-middle">
+          <span className="flex min-w-0 items-center gap-3">
+            {flags ? <CountryFlag iso2={r.iso2} className="w-7 shrink-0" /> : null}
+            <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+          </span>
+        </TableCell>
+        {columns.map((c) => (
+          <TableCell key={c.key} data-col={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
+            {renderCell(c, r.values[c.key])}
+          </TableCell>
+        ))}
+      </>
+    ),
+    phone: (
+      <>
+        <span className="flex items-center gap-3">
+          {flags ? <CountryFlag iso2={r.iso2} className="w-6 shrink-0" /> : null}
+          <span data-label className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+        </span>
+        <div className={`mt-1 grid ${phoneCols} gap-x-2`}>
+          {columns.map((c) => (
+            <span key={c.key} data-col={c.key} className="text-right whitespace-nowrap">
+              {renderCell(c, r.values[c.key])}
+            </span>
+          ))}
+        </div>
+      </>
+    ),
+  }));
   return (
     <div {...(inBand ? { className: "h-full" } : { "data-wide-table": "", className: "mt-8" })}>
       <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} className={inBand ? "h-full" : undefined}>
         <Rail icon={icon} kicker={kicker} sample={sample} />
         <div className="[container-type:inline-size]">
-        <div className={forms.wide}>
-          <Table className="table-fixed text-[length:var(--t-micro)]">
-            <caption className="sr-only">{caveat ?? kicker}</caption>
-            {/* THE NAME'S COLUMN IS 10rem; the figure columns share what is left equally (a fixed table's rule for columns with no
-                width). A share with a floor, max(9.5rem, 19%), is not a width a table column takes: a column mixing a length and a
-                percentage lays out as auto, and "United Kingdom" fell to 67px. */}
-            <colgroup>
-              <col style={{ width: "10rem" }} />
-              {columns.map((c) => (
-                <col key={c.key} />
-              ))}
-            </colgroup>
-            <TableHeader>
-              <TableRow className="border-[var(--c-border)] hover:bg-transparent">
-                <TableHead scope="col" className={`h-auto px-0 pb-2 text-left ${head}`}>{entityHead ?? COPY.peers.cols.country}</TableHead>
-                {columns.map((c) => (
-                  <TableHead key={c.key} scope="col" className={`h-auto px-2 pb-2 text-right ${head}`}>{c.head}</TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rows.map((r) => (
-                <TableRow key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`h-12 border-[var(--c-border)] hover:bg-transparent ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
-                  <TableCell className="px-0 py-0 align-middle">
-                    <span className="flex min-w-0 items-center gap-3">
-                      {flags ? <CountryFlag iso2={r.iso2} className="w-7 shrink-0" /> : null}
-                      {/* A name longer than its column wraps to a second line, never cut to an ellipsis. */}
-                      <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
-                    </span>
-                  </TableCell>
-                  {columns.map((c) => {
-                    const v = r.values[c.key];
-                    return (
-                      <TableCell key={c.key} data-col={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
-                        {renderCell(c, v)}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-        <div className={forms.phone} data-phone-table="1">
-          <div className={`grid ${phoneCols} gap-x-2 border-b border-[var(--c-border)] pb-2`}>
-            {columns.map((c) => (
-              <span key={c.key} className={`text-right ${head}`} style={{ fontSize: "var(--t-mark)" }}>{c.head}</span>
-            ))}
-          </div>
-          <div className="divide-y divide-[var(--c-border)]">
-            {rows.map((r) => (
-              <div key={r.key ?? r.iso2} data-row={r.key ?? r.iso2} className={`py-2 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
-                <span className="flex items-center gap-3">
-                  {flags ? <CountryFlag iso2={r.iso2} className="w-6 shrink-0" /> : null}
-                  <span data-label className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
-                </span>
-                <div className={`mt-1 grid ${phoneCols} gap-x-2`}>
-                  {columns.map((c) => {
-                    const v = r.values[c.key];
-                    return (
-                      <span key={c.key} data-col={c.key} className="text-right whitespace-nowrap">
-                        {renderCell(c, v)}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+          <SortTable
+            label={caveat ?? kicker}
+            words={COPY.sort}
+            columns={columns.map((c) => ({ key: c.key, head: c.head, best: c.best }))}
+            rows={sortRows}
+            entityHead={entityHead ?? COPY.peers.cols.country}
+            wideClass={forms.wide}
+            phoneClass={forms.phone}
+            phoneCols={phoneCols}
+          />
         </div>
         {/* The stated line for the rows the table does not hold, at the lead rung where those rows would stand (the header's SEATED TABLE). */}
         {withheld ? <p data-withheld-line="rows" className="mt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p> : null}

@@ -1222,6 +1222,9 @@ export const COPY = {
     cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC, all in", llcDays: "Days to trade", salary: "Average salary" },
     caveat: "Countries of similar size and market, not neighbours.",
   },
+  /** A table's heads order its rows (the goal of 2026-09-26, M5; interact/SortTable.tsx): the polite line a screen reader hears
+   *  after a press. */
+  sort: { said: "Sorted by {head}, {dir}", low: "lowest first", high: "highest first" },
   /** The city's peers table (city:peers, run 22): cities as rows, three measures as columns, every figure read beside the home city; no unit word a reader has to know.
    *  CAVEAT TRIMMED 2026-09-08 (E1, found once the card-detection repoint could finally see this
    *  card at all): the sentence carried the same facts in 255 characters, over the page's 220-char
