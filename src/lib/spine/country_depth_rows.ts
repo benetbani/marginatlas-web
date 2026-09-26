@@ -44,7 +44,7 @@ import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
 import { tradeIconFor } from "@/lib/spine/trade_icon";
 
 export type Focal = { figure: string; words: string };
-export type DepthCard = { focal: Focal; cells: KvCell[] };
+export type DepthCard = { focal: Focal; cells: KvCell[] ; /** The government's start-up loan as numbers, for the loan lever (2026-09-26). */ loan?: { min: number; max: number; rate: number } };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 const conf = (tag: string) => (tag === "held" ? ("measured" as const) : ("modeled" as const));
@@ -150,14 +150,15 @@ export function buildCountryFinancing(iso2: string): DepthCard | null {
   const lo = countryFigure(iso2, "financing.startup_loan_min_usd");
   const hi = countryFigure(iso2, "financing.startup_loan_max_usd");
   const rate = countryFigure(iso2, "financing.startup_loan_rate_pct");
-  if (lo && hi && hi.value > lo.value) cells.push({ key: "startup", label: F.cells.startup, value: `${usd(lo.value)} to ${usd(hi.value)}`, note: rate ? F.notes.startup.replace("{rate}", trimPct(rate.value)) : undefined, confidence: conf(lo.tag) });
+  if (lo && hi && hi.value > lo.value) cells.push({ key: "startup", label: F.cells.startup, value: `${usd(lo.value)} to ${usd(hi.value)}`, note: rate ? F.notes.startup.replace("{rate}", trimPct(rate.value)).replace("{min}", String(F.startupTerm.min)).replace("{max}", String(F.startupTerm.max)) : undefined, confidence: conf(lo.tag) });
+  const loan = lo && hi && rate && hi.value > lo.value && rate.value > 0 ? { min: lo.value, max: hi.value, rate: rate.value } : undefined;
   /* The shard's grants list: a grant with a money range prints (the innovation grants); a loan is the row above and a relief is not a sum a reader can bank. */
   for (const g of listRows(iso2, "grants.list")) {
     if (g.kind !== "Grant" || typeof g.value !== "string" || !/^\$[\d.]+[KM]? to \$[\d.]+[KM]?$/.test(g.value)) continue;
     cells.push({ key: `grant-${String(g.name)}`, label: String(g.name), value: g.value, note: typeof g.who === "string" ? `${F.notes.grantFor} ${g.who.toLowerCase()}` : undefined, confidence: conf(g._tag) });
   }
   if (cells.length < 2) return null;
-  return { focal: { figure: trimPct(sme.value), words: F.focalWords }, cells };
+  return { focal: { figure: trimPct(sme.value), words: F.focalWords }, cells, loan };
 }
 
 /** GETTING PAID: how customers pay, drawn as a whole; what a card sale costs as the figure; how fast money lands and the account as the cells. */
