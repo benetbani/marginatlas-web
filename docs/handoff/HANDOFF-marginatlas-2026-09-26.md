@@ -32,7 +32,7 @@ a new page law ROW TOPS (figures in one key-value row within 2px, every page, ev
 50px of air between the answer and its cells on a phone.
 
 **Waiting on him (QUEUE HIS rows, unchanged):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
-`trade:uk-survival-official`. **Next for the loop:** the two trade-page rows the review queued (`trade:split-withheld-sense`, `trade:peers-left-out-line`: each is a stated-line law of the model meeting his no-disclaimers correction, so a law change with its harness, not a copy edit), then the rest of the plan's audit on the city and district pages.
+`trade:uk-survival-official`. **Next for the loop:** milestone 1 of the launch plan his interview of 2026-09-26 evening made (`design/loop/build/INTERVIEW-2026-09-26.md`).
 
 ## 2. Mission & success criteria
 
@@ -139,12 +139,11 @@ What each mechanism is now, and where it sits:
 
 ## 8. Open threads & next steps
 
-**Committed next steps (the loop's, no word needed):**
-
-1. The review's last small finding: the job market's sector block (vacancies, payroll change) carries no glyph; its arrow is
-   already a symbol. A judgement, not a fault.
-2. Any new section built for his list goes through the four checks the goal added: a readout or lever where the card holds the
-   rule, a key for every tick or dot, an icon a cell where a grid of facts stands, and the interact gate's markup read.
+**THE LAUNCH PLAN (his interview of 2026-09-26 evening, forty rulings, supersedes the list that stood here):**
+`E:/atlas/design/loop/build/INTERVIEW-2026-09-26.md`. One launch day in about six weeks; Pro on ($38 a month or $238 a year,
+Stripe as built, checkout first, the second half of every chapter on UK pages behind it); order: milestone 1 the launch fixes,
+milestone 2 Pro, milestone 3 the home page; he reviews at each milestone and before launch day only. The loop's next work is
+milestone 1, listed at the foot of that file.
 
 **Waiting on him (QUEUE, HIS):** `country:hero-hiring-word`, `country:focal-kept-forms`, `site:clarity-never-runs`,
 `trade:uk-survival-official`; older ones unchanged (`arch:city-cards`, `country:seats-awaiting-click`,
