@@ -800,7 +800,7 @@ export const COPY = {
   financing: {
     kicker: "Borrowing",
     focalWords: "average rate on a new small-business loan",
-    cells: { base: "Central bank rate", startup: "Government start-up loans" },
+    cells: { base: "Central bank rate", startup: "Start-up loans" },
     notes: { base: "", startup: "{rate} fixed, {min} to {max} years", grantFor: "for" },
     /** The start-up loan's term, read by the note and the loan lever alike, so the two never disagree. */
     startupTerm: { min: 1, max: 5 },

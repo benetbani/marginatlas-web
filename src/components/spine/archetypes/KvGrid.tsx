@@ -164,10 +164,16 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                   {/* THE RESERVE'S AIR ABOVE THE WORDS, NOT UNDER THEM (the same evening, on the phone photograph): a one-line label sat
                       at the top of its two-line box and stood a line's height away from its own figure, closer to the cell above.
                       The words sit on the box's floor, so a label touches its figure and the air joins the gap between rows. */}
-                  <div className={`${byRow ? "" : three ? "flex min-h-[2.6em] flex-col justify-end " : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>
+                  {/* THE TILE ABOVE THE LABEL UNDER 400px OF GRID (2026-09-26, the phone photograph of the United Kingdom's page): beside
+                      the label in a 127px cell the tile left the words 91px, "Government start-up loans" and "Foreign owner's account"
+                      took three lines, and their figures dropped under their neighbours'. On a narrow grid the tile stands on its own
+                      line INSIDE the reserve, which grows by the tile's 2rem, so the words keep the cell's width and two lines, and a
+                      one-line label's spare line falls above its tile, never between the tile and its words. */}
+                  <div className={`${byRow ? "" : c.icon ? (three ? "flex min-h-[calc(2.6em+2rem)] flex-col justify-end [@container(min-width:400px)]:min-h-[2.6em] " : "flex min-h-[calc(2.6em+2rem)] flex-col justify-end [@container(min-width:400px)]:min-h-[2.6em] lg:min-h-0 ") : three ? "flex min-h-[2.6em] flex-col justify-end " : "flex min-h-[2.6em] flex-col justify-end lg:min-h-0 "}text-[length:var(--t-body)] leading-[1.3] text-[var(--c-muted)]`}>
+                    {c.icon ? <span aria-hidden className="mb-1 inline-flex [@container(min-width:400px)]:hidden"><Ico id={c.icon} tone="terra" /></span> : null}
                     {c.icon ? (
                       <span className="flex items-center gap-2">
-                        <Ico id={c.icon} tone="terra" />
+                        <span aria-hidden className="hidden [@container(min-width:400px)]:inline-flex"><Ico id={c.icon} tone="terra" /></span>
                         <span className="min-w-0">{c.label}</span>
                       </span>
                     ) : (
