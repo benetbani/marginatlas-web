@@ -111,6 +111,12 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
             <span><span className="fig font-semibold text-[var(--c-ink)]">{Math.round(worst.pct)}%</span> {worst.name}</span>
             <span className="text-right"><span className="fig font-semibold text-[var(--c-ink)]">{Math.round(best.pct)}%</span> {best.name}</span>
           </div>
+          {/* THE MARKS NAMED (the goal of 2026-09-26, M6): the tick is the country's year and the dot the chosen region's, and
+              nothing said so; the key names them once, in the job market's and the margins card's form. */}
+          <div data-ref-key className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-3 w-0.5 rounded-full bg-[var(--c-ink)]" />{W.country}</span>
+            {region ? <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[var(--terra)]" />{region.name}</span> : null}
+          </div>
         </div>
       ) : null}
     </>
