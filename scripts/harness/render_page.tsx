@@ -71,7 +71,7 @@ function page(title: string, body: string) {
 <style>${css}</style>
 ${skyline ? `<style>.spine-frame-layer[style*="_skyline"]{background-image:url("${skyline}") !important}</style>` : ""}
 </head>
-<body class="[--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]" style="font-family: var(--font-body);">
+<body class="[--atlas-header-h:85px] md:[--atlas-header-h:93px] xl:[--atlas-header-h:89px]" style="font-family: var(--font-body);">
 ${body}
 </body>
 </html>`;

@@ -159,7 +159,14 @@ export const metadata: Metadata = {
    breakpoints: the hamburger is a 44px control and makes 768-1023 the tallest
    band, while 1024+ is shorter because the inline nav is not as tall as the
    button it replaces. Each value is rounded UP to the next whole pixel, so a
-   sticky may sit a fraction low but never underneath the bar. */
+   sticky may sit a fraction low but never underneath the bar.
+
+   2026-10-01 (T5): the third value moved from lg to xl with the nav. Measured
+   that day on production, the lockup at 40 had wrapped to two lines at every
+   phone width (the bar 117 against a token of 85) and at 1024 (125 against
+   89); with the phone lockup at 28 on one line and the hamburger to 1279, the
+   bar is 84 on a phone and 92 from 768 to 1279, which the 85 and 93 already
+   said. */
 export default function RootLayout({
   children,
 }: {
@@ -175,7 +182,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${displayFace.variable} ${bodyFace.variable} [--atlas-header-h:85px] md:[--atlas-header-h:93px] lg:[--atlas-header-h:89px]`}
+      className={`${displayFace.variable} ${bodyFace.variable} [--atlas-header-h:85px] md:[--atlas-header-h:93px] xl:[--atlas-header-h:89px]`}
     >
       {/* SaaS reformation 2026-06-12 — the body is the app ground, a cool
           neutral (via the `body` rule in globals.css). The .atlas-paper

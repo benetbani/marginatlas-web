@@ -29,6 +29,14 @@ export type LogoWordmarkProps = {
    * graphite atlas-paper-dark surface.
    */
   tone?: "light" | "dark";
+  /**
+   * THE PAGE'S OWN NAME, traded for the words (2026-10-01, the goal of that day, T5; the critics' "the title transitions into
+   * the top navigation... they never lose context"): the phone masthead passes the page's h1 here and `placeShown` once that
+   * h1 has scrolled under the bar; the mark stays, the two words fade out and the name fades in where they stood. Absent, the
+   * lockup is the lockup.
+   */
+  place?: string | null;
+  placeShown?: boolean;
 };
 
 export function LogoWordmark({
@@ -36,6 +44,8 @@ export function LogoWordmark({
   className,
   labeled = true,
   tone = "light",
+  place = null,
+  placeShown = false,
 }: LogoWordmarkProps) {
   const textSize = Math.round(size * 0.95);
   const isDark = tone === "dark";
@@ -57,13 +67,26 @@ export function LogoWordmark({
         <span className="block w-px flex-1 bg-current opacity-40" />
         <span className="block w-px flex-1 bg-current opacity-40" />
       </span>
+      {/* A LOCKUP NEVER WRAPS (2026-10-01, T5): beside the search and the menu the two words broke onto two lines at every phone
+          width and at 1024, and the sticky bar stood 117px tall on a 375 screen (125 at 1024). */}
       <span
         aria-hidden={labeled ? "true" : undefined}
-        className="font-display font-medium leading-none tracking-tight"
+        className="relative whitespace-nowrap font-display font-medium leading-none tracking-tight"
         style={{ fontSize: textSize }}
       >
-        <span className={isDark ? "text-white" : "text-ink-900"}>Margin</span>{" "}
-        <span className="text-atlas-500">Atlas</span>
+        <span className={`transition-opacity motion-reduce:transition-none ${place && placeShown ? "opacity-0" : ""}`}>
+          <span className={isDark ? "text-white" : "text-ink-900"}>Margin</span>{" "}
+          <span className="text-atlas-500">Atlas</span>
+        </span>
+        {place ? (
+          <span
+            aria-hidden="true"
+            data-place
+            className={`absolute left-0 top-1/2 w-max max-w-[40vw] -translate-y-1/2 truncate text-[length:var(--t-lead)] font-semibold text-ink-900 transition-opacity motion-reduce:transition-none ${placeShown ? "" : "pointer-events-none opacity-0"}`}
+          >
+            {place}
+          </span>
+        ) : null}
       </span>
     </span>
   );

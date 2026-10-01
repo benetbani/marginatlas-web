@@ -39,6 +39,7 @@ import { HeaderAuth } from "@/components/HeaderAuth";
 import { HeaderSearch } from "@/components/HeaderSearch";
 import { AtlasFrame } from "@/components/AtlasFrame";
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
+import { PhoneLockup } from "@/components/brand/PhoneLockup";
 import { MobileNav } from "@/components/MobileNav";
 import { WatchTray } from "@/components/kit";
 import { isWarmFrameEnabled } from "@/lib/feature_flags";
@@ -70,8 +71,12 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         <header className={headerClass}>
           <div className="max-w-content mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
-              {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. */}
-              <LogoWordmark size={40} labeled={false} />
+              {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. ON A PHONE, 28 AND ONE LINE (2026-10-01, T5):
+                  at 40 everywhere the two words wrapped beside the search and the menu at every phone width (the bar 117px tall
+                  at 375) and the founder's 36 cannot stand on one line there (251px of lockup in 223); 28 is the size that does
+                  at 360. The phone lockup also takes the page's own name once its title has scrolled away (PhoneLockup.tsx). */}
+              <span className="inline-flex md:hidden"><PhoneLockup /></span>
+              <span className="hidden md:inline-flex"><LogoWordmark size={40} labeled={false} /></span>
             </a>
             <div className="flex items-center gap-5 md:gap-6">
               {/* lg, NOT md, and this was a measured defect rather than a
@@ -90,8 +95,15 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                   Raising both this and MobileNav's own breakpoint to lg gives
                   the masthead TWO heights instead of four, which is what the
                   token was always describing. The hamburger covers 768 to 1023
-                  now, which is what it is for. */}
-              <nav className="text-base text-ink-800 hidden lg:flex items-center gap-5">
+                  now, which is what it is for.
+
+                  AND THEN XL, NOT LG (2026-10-01, T5), for the same
+                  measured reason one size up: once the lockup grew to
+                  40, the seven links, the search and the lockup did not
+                  fit at 1024 either, and the two words wrapped (the bar
+                  125px tall at 1024). The full nav needs 1280; the
+                  hamburger covers 768 to 1279. */}
+              <nav className="text-base text-ink-800 hidden xl:flex items-center gap-5">
                 <a href="/countries" className="hover:text-atlas-600 transition-colors">Countries</a>
                 <a href="/industries" className="hover:text-atlas-600 transition-colors">Activities</a>
                 <a href="/cities" className="hover:text-atlas-600 transition-colors">Cities</a>
