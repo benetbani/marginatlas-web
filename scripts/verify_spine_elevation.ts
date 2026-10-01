@@ -27,6 +27,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
+import { red, redSummary } from "./lib/red";
 import { newCommentState, stripComments } from "./lib/strip_comments";
 
 const ROOT = "src/components/spine";
@@ -46,23 +47,21 @@ if (files.length === 0) {
   console.error(`[spine-elevation] no source under ${ROOT}. Refusing to pass vacuously.`);
   process.exit(1);
 }
-const hits: string[] = [];
+const hits: { file: string; line: number; cls: string }[] = [];
 for (const file of files) {
   const state = newCommentState();
   readFileSync(file, "utf-8")
     .split(/\r?\n/)
     .map((l) => stripComments(l, state))
     .forEach((line, i) => {
-      for (const m of line.matchAll(STOCK)) hits.push(`${file}:${i + 1}  ${m[0]}`);
+      for (const m of line.matchAll(STOCK)) hits.push({ file, line: i + 1, cls: m[0] });
     });
 }
 if (hits.length > 0) {
-  console.error(`[spine-elevation] FAIL: ${hits.length} stock Tailwind shadow(s) in the spine:\n`);
-  for (const h of hits) console.error(`  ${h}`);
-  console.error(
-    `\n  Stock shadows are black; the spine's are the warm elevation scale.` +
-      `\n  A popover or panel takes shadow-lift, a resting mark shadow-subtle, a card shadow-card.`,
-  );
+  /* Every red names its file, its line, its rule and its remedy (scripts/lib/red, plan step 16). */
+  const remedy = "replace it with the elevation scale: shadow-lift on a popover or panel, shadow-subtle on a resting mark, shadow-card on a card";
+  for (const h of hits) red({ rule: "spine-elevation", file: h.file, line: h.line, detail: `${h.cls}, a stock Tailwind shadow, black where the spine's are warm`, remedy });
+  redSummary("spine-elevation", `${hits.length} stock shadow${hits.length === 1 ? "" : "s"}`, remedy);
   process.exit(1);
 }
 console.log(`[spine-elevation] PASS: every shadow in ${files.length} spine files is on the elevation scale.`);

@@ -136,6 +136,7 @@ import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
+import { red, redSummary } from "../lib/red.mjs";
 
 /* IN THE CHAIN SINCE 2026-10-01 (the goal of that day, T1): READ SIZE found the legal-form table's heads and the peers table's
    phone heads at 10px on three pages, against PART 5's "never 10px", while this file sat outside the chain. Wired at zero reds. */
@@ -294,9 +295,11 @@ function inPage() {
 }
 
 const reds = [];
+const fileOf = {};
 const browser = await chromium.launch();
 for (const file of files) {
   const name = basename(file).replace(/\.html$/, "");
+  fileOf[name] = file;
   if (!existsSync(file)) { reds.push({ name, w: "all", id: "-", rule: "NO RENDER", detail: "the list names this page and no render exists" }); continue; }
   for (const w of WIDTHS) {
     // reducedMotion: this repo fades an entrance animation on every h1 and
@@ -321,4 +324,14 @@ for (const file of files) {
 await browser.close();
 console.log(`readability: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r.name}@${r.w} #${r.id}: ${r.rule}: ${r.detail}`);
+/* EVERY RED NAMES ITS FILE, ITS RULE AND ITS REMEDY (scripts/lib/red, plan step 16), since the file joined the chain on 2026-10-01. */
+const REMEDY = {
+  "MEASURE": "narrow the text to the reading measure (68ch) or split it into two lines of its own",
+  "CONTRAST": "set the text in a darker token (var(--c-ink2), or var(--c-muted) on a light card)",
+  "LEADING": "give the text a leading of 1.35 or more (leading-snug)",
+  "READ SIZE": "set words a reader must read at var(--t-micro) or larger; var(--t-mark) is for marks only",
+  "NO RENDER": "render the page first with npm run harness:page",
+};
+for (const r of reds) red({ rule: "harness-readability", file: fileOf[r.name] ?? r.name, detail: `${r.rule} at ${r.w} in #${r.id}: ${r.detail}`, remedy: REMEDY[r.rule] ?? "fix the card named here and rerun npm run harness:readability" });
+if (reds.length) redSummary("harness-readability", reds.length, "fix each card named above and rerun npm run harness:readability; never lower a rule to pass");
 process.exit(reds.length ? 1 : 0);
