@@ -38,7 +38,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
       {live.map((i, idx) => {
         const w = top > 0 ? Math.max(2, (i.value / top) * 100) : 0;
         const name = i.href ? (
-          <a href={i.href} className="text-[var(--c-ink)] underline-offset-2 transition-colors hover:text-[var(--terra-text)] hover:underline">{i.label}</a>
+          <a href={i.href} className="tap-y inline-block text-[var(--c-ink)] underline-offset-2 transition-colors hover:text-[var(--terra-text)] hover:underline">{i.label}</a>
         ) : (
           <span className="text-[var(--c-ink)]">{i.label}</span>
         );

@@ -108,7 +108,7 @@ export function InfoTip({
                and none of it visible to a typecheck. place-items-center is the
                grid spelling of centring, so it goes with the grid and the flex
                spelling takes its place. */
-            className={`group/tip inline-flex align-middle ${className} h-3.5 w-3.5 cursor-help items-center justify-center rounded-full border border-[var(--c-line-strong)] text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]`}
+            className={`tap group/tip inline-flex align-middle ${className} h-3.5 w-3.5 cursor-help items-center justify-center rounded-full border border-[var(--c-line-strong)] text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]`}
           >
             ?
           </button>

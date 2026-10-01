@@ -40,7 +40,7 @@ export function Switch({ id, label, views, className = "", panelClassName = "" }
               else if (e.key === "Home") { e.preventDefault(); go(0); }
               else if (e.key === "End") { e.preventDefault(); go(views.length - 1); }
             }}
-            className={`min-h-6 rounded-sm px-3 py-1 text-[length:var(--t-micro)] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${i === active ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-subtle" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
+            className={`tap-y min-h-6 rounded-sm px-3 py-1 text-[length:var(--t-micro)] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${i === active ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-subtle" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
           >
             {v.label}
           </button>

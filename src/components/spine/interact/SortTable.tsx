@@ -80,7 +80,7 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
         type="button"
         onClick={() => press(c)}
         data-sort-head={c.key}
-        className={`inline-flex min-h-6 items-center justify-end gap-1 rounded-sm text-right ${HEAD} ${dir ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"} ${phone ? "w-full" : ""}`}
+        className={`tap-y inline-flex min-h-6 items-center justify-end gap-1 rounded-sm text-right focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${HEAD} ${dir ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"} ${phone ? "w-full" : ""}`}
       >
         <span>{c.head}</span>
         <Arrows dir={dir} />

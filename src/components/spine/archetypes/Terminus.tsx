@@ -55,11 +55,11 @@ export function Terminus({ kicker, doors }: { kicker?: string; doors: Door[] }) 
       <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
         {ordered.map((d) =>
           d.kind === "pill" ? (
-            <a key={d.key} data-door={d.key} data-door-kind="pill" data-lands={d.lands} href={d.href} className="w-full rounded-full bg-[var(--c-ink)] px-5 py-2 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--c-ink2)] sm:w-auto">
+            <a key={d.key} data-door={d.key} data-door-kind="pill" data-lands={d.lands} href={d.href} className="tap-y w-full rounded-full bg-[var(--c-ink)] px-5 py-2 text-center text-[length:var(--t-body)] font-semibold text-white transition-colors hover:bg-[var(--c-ink2)] sm:w-auto">
               {d.label} <span aria-hidden>&#8594;</span>
             </a>
           ) : (
-            <a key={d.key} data-door={d.key} data-door-kind="link" data-lands={d.lands} href={d.href} className="flex w-full items-center justify-between gap-3 border-b border-[var(--c-border)] pb-3 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)] sm:w-auto sm:border-0 sm:pb-0">
+            <a key={d.key} data-door={d.key} data-door-kind="link" data-lands={d.lands} href={d.href} className="tap-y flex w-full items-center justify-between gap-3 border-b border-[var(--c-border)] pb-3 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)] sm:w-auto sm:border-0 sm:pb-0">
               <span>{d.label}</span> <span aria-hidden>&#8594;</span>
             </a>
           ),

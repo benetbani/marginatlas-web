@@ -529,7 +529,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
             );
             return (
               <li key={r.key} style={{ minWidth: 0 }} data-bar={r.key} data-row={r.key} data-value={r.value}>
-                {r.href ? <a href={r.href} data-lands={r.lands} className="block no-underline">{inner}</a> : inner}
+                {r.href ? <a href={r.href} data-lands={r.lands} className="tap-y block no-underline">{inner}</a> : inner}
               </li>
             );
           })}
@@ -621,7 +621,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                  The attribute is the component's own declaration, which is the
                  rule's blind spot and is stated where the rule is written. */
               return r.href
-                ? <a key={r.key} href={r.href} data-lands={r.lands} className={`${cls} no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value}>{row}</a>
+                ? <a key={r.key} href={r.href} data-lands={r.lands} className={`${cls} tap-y no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value}>{row}</a>
                 : <div key={r.key} className={cls} style={GEO} data-row={r.key} data-value={r.value}>{row}</div>;
             })}
           </div>
@@ -662,7 +662,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                rule that reads drawn length against value keeps working the day
                this form grows one. */
             return r.href
-              ? <a key={r.key} href={r.href} data-lands={r.lands} className={cls} data-row={r.key} data-value={r.value}>{row}</a>
+              ? <a key={r.key} href={r.href} data-lands={r.lands} className={`${cls} tap-y`} data-row={r.key} data-value={r.value}>{row}</a>
               : <div key={r.key} className={cls} data-row={r.key} data-value={r.value}>{row}</div>;
           })}
         </div>

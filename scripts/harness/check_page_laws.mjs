@@ -53,6 +53,13 @@
  *                         at 8px because `rounded-t-sm` is 8px in this
  *                         config, the month bars at 2px; proven on the renders
  *                         that carried the 8px tops)
+ *   -- TAP SIZE           at 375, a control or a link in a card whose tap
+ *                         (its box, its absolute `::before` or `::after`, a
+ *                         box's labels) is under 44 tall or 24 wide
+ *                         (2026-10-01: the "?" took 14 by 14, the cover boxes
+ *                         16, the sort heads 24, the switch 26, the pager 32;
+ *                         a text field, a select and a link inside a sentence
+ *                         are exempt and said)
  * THE PAGE RULES read the page once at 1280:
  *   55 KIND REPEATED      one VISUAL archetype on more than two cards (his
  *                         words: "one kind of visual"; a figure card or a
@@ -235,6 +242,27 @@ function inPage(width) {
       const filled = !/rgba\(0, 0, 0, 0\)|transparent/.test(es.backgroundColor) || es.backgroundImage !== "none";
       const corner = Math.max(parseFloat(es.borderTopLeftRadius) || 0, parseFloat(es.borderTopRightRadius) || 0);
       if (filled && corner > 2) red(id, "COLUMN ENDS", `a column ${Math.round(b.width)} by ${Math.round(b.height)} ends in a ${Math.round(corner)}px round; a column ends square, 2px at most, so the reader sees where it ends`);
+    }
+    /* -- TAP SIZE (2026-10-01, the critics' "interactive feedback"; Apple's 44 and WCAG's 24): at 375, every control and every
+       link in a card takes a tap 44 tall and 24 wide, counting its tap area (a `::before` or `::after` drawn absolute, the
+       `.tap` and `.tap-y` utilities) and, for a box, every label of it. Exempt and said: a text field and a select (a typed
+       field and the native picker; their boxes are the look), and a link inside a sentence (WCAG's inline exception). */
+    if (width === 375) {
+      const hit = (el) => {
+        const r = el.getBoundingClientRect(); let w = r.width, h = r.height;
+        for (const pseudo of ["::before", "::after"]) {
+          const ps = getComputedStyle(el, pseudo);
+          if (ps.content && ps.content !== "none" && ps.position === "absolute") { w = Math.max(w, parseFloat(ps.width) || 0); h = Math.max(h, parseFloat(ps.height) || 0); }
+        }
+        return { w, h };
+      };
+      for (const el of card.querySelectorAll("button, summary, [role='button'], a[href], input[type='checkbox'], input[type='radio'], input[type='range']")) {
+        if (!el.getClientRects().length || hiddenLeaf(el) || el.getBoundingClientRect().width < 2) continue;
+        if (el.matches("a[href]") && el.parentElement && el.parentElement.matches("p, li") && [...el.parentElement.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) continue;
+        let { w, h } = hit(el);
+        if (el.matches("input[type='checkbox'], input[type='radio']")) for (const lab of [...(el.labels || [])]) { const l = hit(lab); w = Math.max(w, l.w); h = Math.max(h, l.h); }
+        if (h < 43.5 || w < 23.5) red(id, "TAP SIZE", `${el.tagName.toLowerCase()} "${(el.getAttribute("aria-label") || el.textContent || "").trim().slice(0, 28)}" takes a tap ${Math.round(w)} by ${Math.round(h)}; 44 tall and 24 wide at the least`);
+      }
     }
     /* 52 CARD FOOT BLANK */
     if (lastInk > -Infinity && y1 - lastInk > 48) red(id, "CARD FOOT BLANK", `${Math.round(y1 - lastInk)}px of nothing between the card's last ink and its bottom edge (clause 52)`);

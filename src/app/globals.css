@@ -2494,7 +2494,10 @@ main :where(p, li, blockquote, dd) {
 .atlas-range {
   -webkit-appearance: none;
   appearance: none;
-  height: 24px;
+  /* 44 tall for a thumb on a phone (2026-10-01, T2; the critics' "interactive feedback", Apple's 44), laid out as the 24 it
+     was: the track and the thumb centre in the taller box, and the margins give the 20 back so no card moves. */
+  height: var(--tap);
+  margin-block: calc((24px - var(--tap)) / 2);
   background: transparent;
 }
 .atlas-range::-webkit-slider-runnable-track {
@@ -2538,4 +2541,40 @@ main :where(p, li, blockquote, dd) {
 }
 .atlas-range:focus-visible::-moz-range-thumb {
   box-shadow: 0 0 0 2px var(--c-card), 0 0 0 4px var(--c-ink);
+}
+/* THE PRESS ANSWERS, AND THE TAP IS A THUMB (2026-10-01, the goal of that day, T2). The three critics his message of 2026-09-27
+   sent agree on one thing a static page forgets: "if we make it grayed out when we click on it... it shows the user that the
+   next screen is coming." Every control and every link in a card had a hover and no press, and a phone has no hover; the "?"
+   took a tap 14 by 14, the cover boxes 16, the sort heads 24, the switch and the loan years 26, the pager 32.
+   - THE PRESS: anything a card offers to press dims while it is held, one rule for every control and every door, so no
+     component can forget it. Opacity only: no fill, no row highlight (his ruling of 2026-07-11 on decorative highlights).
+   - THE TAP: `.tap` grows a small control's target to 44 by 44 and `.tap-y` grows a row, a segment or a link to 44 tall at its
+     own width, with an invisible box over it; nothing drawn moves. Neighbouring segments take `.tap-y`, so no target grows
+     into the next one sideways. The page law TAP SIZE holds both at 375. */
+:root {
+  --tap: 44px;
+}
+.tap,
+.tap-y {
+  position: relative;
+}
+.tap::before,
+.tap-y::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: max(100%, var(--tap));
+}
+.tap::before {
+  left: 50%;
+  width: max(100%, var(--tap));
+  transform: translate(-50%, -50%);
+}
+.tap-y::before {
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+[data-card] :is(a[href], button:not(:disabled), summary, label[for]):active {
+  opacity: 0.7;
 }

@@ -42,15 +42,19 @@ export function CoverPicker({ covers, words, fill = false }: { covers: Cover[]; 
               <li key={c.key} data-row={c.key} className={`col-span-full grid max-w-none grid-cols-subgrid items-start gap-y-1 ${fill ? `self-stretch content-center py-3${i > 0 ? " border-t border-[var(--c-border)]" : " pt-0"}${i === sorted.length - 1 ? " pb-0" : ""}` : ""}`}>
                 {/* The boxes in ink2, not the accent: the accent marks the card's answer, never its controls. The required cover's box
                     stands ticked and does not move (a disabled box greys out and reads as unticked, the opposite of its meaning). */}
-                <input
-                  id={`cover-${i}`}
-                  type="checkbox"
-                  checked={on}
-                  aria-disabled={c.required || undefined}
-                  onChange={() => { if (!c.required) toggle(c.key); }}
-                  onClick={(e) => { if (c.required) e.preventDefault(); }}
-                  className={`mt-0.5 h-4 w-4 accent-[var(--c-ink2)] ${c.required ? "cursor-default" : "cursor-pointer"}`}
-                />
+                {/* THE BOX TAKES A THUMB (2026-10-01, T2): a 16px box was a 16px tap. Its own label, wrapped round it, carries the
+                    44 by 44 tap area; the name's label still ticks it too. */}
+                <label className="tap mt-0.5 inline-flex">
+                  <input
+                    id={`cover-${i}`}
+                    type="checkbox"
+                    checked={on}
+                    aria-disabled={c.required || undefined}
+                    onChange={() => { if (!c.required) toggle(c.key); }}
+                    onClick={(e) => { if (c.required) e.preventDefault(); }}
+                    className={`h-4 w-4 accent-[var(--c-ink2)] ${c.required ? "cursor-default" : "cursor-pointer"}`}
+                  />
+                </label>
                 <div className="min-w-0">
                   <label htmlFor={`cover-${i}`} data-label className={`block text-[length:var(--t-body)] leading-tight ${c.required ? "cursor-default" : "cursor-pointer"} ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}>
                     {c.label}

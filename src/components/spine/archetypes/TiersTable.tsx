@@ -193,7 +193,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
       ) : null}
       {door && howTo ? (
         <div className="mt-3 text-right">
-          <a href={howTo.href} className="text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{howTo.label} <span aria-hidden>&#8594;</span></a>
+          <a href={howTo.href} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{howTo.label} <span aria-hidden>&#8594;</span></a>
         </div>
       ) : null}
     </div>

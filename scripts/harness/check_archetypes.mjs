@@ -682,6 +682,11 @@ for (const w of WIDTHS) {
   const page = await ctx.newPage();
   await page.goto(pathToFileURL(file).href, { waitUntil: "load" });
   await page.evaluate(() => document.fonts && document.fonts.ready);
+  /* A TAP AREA IS NOT INK (2026-10-01, T2): `.tap` and `.tap-y` draw an invisible box over a small control so a thumb can take
+     it (globals.css, "THE PRESS ANSWERS"), and that box reaches past the control by design, which `scrollWidth` reads as the
+     control and its row overflowing. The overflow rule is about what a reader sees run out of its box, so the tap boxes are
+     taken out of the layout for the measurement; the page law TAP SIZE measures them where they matter. */
+  await page.addStyleTag({ content: ".tap::before, .tap-y::before { display: none !important; }" });
   /* Lazy images never enter a headless viewport; force them so a broken path
      is a red and a slow one is not. */
   await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* reported by the check */ } } });

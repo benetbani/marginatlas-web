@@ -210,7 +210,7 @@ export function CityCards({
   const cur = Math.min(page, pages - 1);
   const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
   const btn =
-    "flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
+    "tap flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
     <div data-archetype="city-cards" data-look={look} data-form={rows ? "rows" : "grid"} data-count={cards.length} data-fill={fill ? "1" : undefined} className={fill ? "flex flex-1 flex-col" : undefined}>
       {pages > 1 ? (
@@ -238,7 +238,7 @@ export function CityCards({
       </div>
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{drawn && basisDrawn ? basisDrawn : basis}</p>
       <div className="mt-2 text-right">
-        <a href={allHref} className="text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
+        <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
       </div>
     </div>
   );
