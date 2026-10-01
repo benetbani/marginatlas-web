@@ -125,8 +125,12 @@ export function SwingCell({ market }: { market: MarketData }) {
         <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{K.swing}</h3>
         <SampleTag />
       </div>
+      {/* THE FIGURE'S MEANING STANDS UNDER THE FIGURE (2026-10-01, T3; the critics' "the key insight next to the chart"): "25%"
+          was read before its line, which stood at the card's foot under the twelve columns; every other card on the page, and the
+          city's own calendar card, says what its figure is before the drawing. */}
       <div className="flex flex-1 flex-col justify-center py-2">
         <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{cell.figure}</Fig>
+        {cell.basis ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cell.basis}</p> : null}
         {market.months ? (
           <div className="mt-3">
             <MonthBars points={market.months} />
@@ -134,7 +138,6 @@ export function SwingCell({ market }: { market: MarketData }) {
           </div>
         ) : null}
       </div>
-      {cell.basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cell.basis}</p> : null}
     </Box>
   );
 }
