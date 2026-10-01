@@ -135,7 +135,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
+import { requireBrowser } from "../lib/local_only.mjs";
 
+/* IN THE CHAIN SINCE 2026-10-01 (the goal of that day, T1): READ SIZE found the legal-form table's heads and the peers table's
+   phone heads at 10px on three pages, against PART 5's "never 10px", while this file sat outside the chain. Wired at zero reds. */
+await requireBrowser("harness-readability", "the four readability faults (measure, contrast, leading, read size) on every page in scripts/harness/pages.json");
 preflight({ browser: true, name: "check_readability" });
 
 const WIDTHS = [1280, 768, 375];

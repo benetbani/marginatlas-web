@@ -45,6 +45,14 @@
  *                         icons squeezed a label to three lines, and no rule
  *                         read a page's grids at every width; planted by
  *                         putting the tile back on the label's line at 375)
+ *   -- COLUMN ENDS        a drawn column (a filled box 4 wide or more, 24 tall
+ *                         or more, twice as tall as wide) whose top corners
+ *                         round past 2px (2026-10-01, the three critics his
+ *                         message of 2026-09-27 sent: a rounded top hides
+ *                         where a bar ends; Obstacles and SpendByIncome ended
+ *                         at 8px because `rounded-t-sm` is 8px in this
+ *                         config, the month bars at 2px; proven on the renders
+ *                         that carried the 8px tops)
  * THE PAGE RULES read the page once at 1280:
  *   55 KIND REPEATED      one VISUAL archetype on more than two cards (his
  *                         words: "one kind of visual"; a figure card or a
@@ -214,6 +222,19 @@ function inPage(width) {
         rowsByTop.get(k).push(Math.round(fig.getBoundingClientRect().top));
       }
       for (const tops of rowsByTop.values()) if (tops.length > 1 && Math.max(...tops) - Math.min(...tops) > 2) red(id, "ROW TOPS", `figures in one grid row at tops ${tops.join(", ")}, ${Math.max(...tops) - Math.min(...tops)}px apart (ruling 8)`);
+    }
+    /* -- COLUMN ENDS (2026-10-01, the critics' chart lesson: "it's hard to tell where the bar ends with a rounded top"): a drawn
+       column, a filled box at least 4 wide, 24 tall and twice as tall as wide, ends square, its top corners 2px at most, the
+       month bars' corner. Ticks (under 4 wide), dots and the hero's rank marks (under 24 tall) are not columns. Blind spot: a
+       column drawn in SVG, or one whose rounding is a clip-path, is not read. */
+    for (const el of card.querySelectorAll("[data-visual] *")) {
+      if (el.closest("svg, img, button, a, input") || el.matches("[data-card]") || el.querySelector("[data-card]") || !el.getClientRects().length || hiddenLeaf(el)) continue;
+      const b = el.getBoundingClientRect();
+      if (b.width < 4 || b.height < 24 || b.height < b.width * 2) continue;
+      const es = getComputedStyle(el);
+      const filled = !/rgba\(0, 0, 0, 0\)|transparent/.test(es.backgroundColor) || es.backgroundImage !== "none";
+      const corner = Math.max(parseFloat(es.borderTopLeftRadius) || 0, parseFloat(es.borderTopRightRadius) || 0);
+      if (filled && corner > 2) red(id, "COLUMN ENDS", `a column ${Math.round(b.width)} by ${Math.round(b.height)} ends in a ${Math.round(corner)}px round; a column ends square, 2px at most, so the reader sees where it ends`);
     }
     /* 52 CARD FOOT BLANK */
     if (lastInk > -Infinity && y1 - lastInk > 48) red(id, "CARD FOOT BLANK", `${Math.round(y1 - lastInk)}px of nothing between the card's last ink and its bottom edge (clause 52)`);

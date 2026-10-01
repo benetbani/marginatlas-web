@@ -81,7 +81,6 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
         onClick={() => press(c)}
         data-sort-head={c.key}
         className={`inline-flex min-h-6 items-center justify-end gap-1 rounded-sm text-right ${HEAD} ${dir ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"} ${phone ? "w-full" : ""}`}
-        style={phone ? { fontSize: "var(--t-mark)" } : undefined}
       >
         <span>{c.head}</span>
         <Arrows dir={dir} />
@@ -125,8 +124,8 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
         </Table>
       </div>
       <div className={phoneClass} data-phone-table="1">
-        <div className={`grid ${phoneCols} gap-x-2 border-b border-[var(--c-border)] pb-2`}>
-          {columns.map((c) => (sortable ? <span key={c.key} className="flex justify-end">{headButton(c, true)}</span> : <span key={c.key} className={`text-right ${HEAD} text-[var(--c-muted)]`} style={{ fontSize: "var(--t-mark)" }}>{c.head}</span>))}
+        <div className={`grid ${phoneCols} items-end gap-x-2 border-b border-[var(--c-border)] pb-2`}>
+          {columns.map((c) => (sortable ? <span key={c.key} className="flex justify-end">{headButton(c, true)}</span> : <span key={c.key} className={`text-right ${HEAD} text-[var(--c-muted)]`}>{c.head}</span>))}
         </div>
         <div className="divide-y divide-[var(--c-border)]">
           {shown.map((r) => (

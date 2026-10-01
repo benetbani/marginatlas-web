@@ -99,6 +99,20 @@
       "claims": []
     },
     {
+      "name": "harness-readability",
+      "script": "scripts/harness/check_readability.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": true,
+      "asserts": "READABILITY, MEASURED (the founder, 2026-09-08: \"the page still has problems in readability\").",
+      "reads": [
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-laws",
       "script": "scripts/harness/check_model_laws.mjs",
       "args": [
@@ -1068,6 +1082,17 @@
       "asserts": "verify_token_steps_exist , a colour class that resolves to nothing.",
       "reads": [
         "scripts/verify_token_steps_exist.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "spine-elevation",
+      "script": "scripts/verify_spine_elevation.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_spine_elevation , the spine's shadows come from the elevation scale only.",
+      "reads": [
+        "src/components/spine"
       ],
       "claims": []
     },

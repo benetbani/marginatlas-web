@@ -123,9 +123,9 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
           right-aligned over their column. */}
       <div className={`${grid} items-end border-b border-[var(--c-border)] pb-2`}>
         <span aria-hidden />
-        <span data-head className={`text-right ${HEAD}`} style={{ fontSize: "var(--t-mark)" }}>{COPY.tiers.heads.fee}</span>
-        <span data-head className={`text-right ${HEAD}`} style={{ fontSize: "var(--t-mark)" }}>{COPY.tiers.heads.time}</span>
-        {dots ? <span data-head className={`text-right ${HEAD}`} style={{ fontSize: "var(--t-mark)" }}>{COPY.tiers.heads.paperwork}</span> : null}
+        <span data-head className={`text-right ${HEAD}`}>{COPY.tiers.heads.fee}</span>
+        <span data-head className={`text-right ${HEAD}`}>{COPY.tiers.heads.time}</span>
+        {dots ? <span data-head className={`text-right ${HEAD}`}>{COPY.tiers.heads.paperwork}</span> : null}
       </div>
       <div data-idea="I5" className={fill ? "flex flex-1 flex-col divide-y divide-[var(--c-border)]" : "divide-y divide-[var(--c-border)]"}>
         {rows.map((t, i) => {

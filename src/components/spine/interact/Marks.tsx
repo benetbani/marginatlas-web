@@ -134,7 +134,7 @@ export function Marks({ label, children, className = "", ...rest }: { label: str
         aria-live="polite"
         data-overlay=""
         data-readout-panel=""
-        className="max-w-[28ch] rounded-[8px] bg-[var(--c-ink)] px-3 py-2 text-left leading-snug text-[var(--c-card)] shadow-md"
+        className="max-w-[28ch] rounded-sm bg-[var(--c-ink)] px-3 py-2 text-left leading-snug text-[var(--c-card)] shadow-lift"
         /* Position and the closed state inline, so the panel behaves wherever the component renders, stylesheet or none. */
         style={open
           /* width: max-content, so a mark near the drawing's edge does not squeeze the panel into the space left of it (seen at 375:

@@ -141,6 +141,9 @@ const GATES: Gate[] = [
      to design/loop/build/goal-2026-09-24/COPY-STYLE.md. Reads the renders
      pages-fresh wrote. */
   { name: "harness-copy-plain", script: "scripts/harness/check_copy_plain.mjs", args: ["--list"], browser: true },
+  /* READABILITY (2026-09-08, wired 2026-10-01): measure, contrast, leading and read size on the same renders, at zero reds. It sat
+     outside the chain for three weeks while the legal-form heads and the peers table's phone heads drew at 10px on three pages. */
+  { name: "harness-readability", script: "scripts/harness/check_readability.mjs", args: ["--list"], browser: true },
   { name: "harness-laws", script: "scripts/harness/check_model_laws.mjs", args: ["--list", "--ratchet"], browser: true },
   /* The walk over the links the rendered pages offer (2026-09-22, QUEUE ui:links-and-the-dead-link-walk): the shape of every internal href against src/app, the hygiene, and the floor of ways out per page type. No browser: it reads the same renders `pages-fresh` writes. `dead-links` beside it reads SOURCE literals and cannot see a link composed from data, which is every link on a spine page. */
   { name: "harness-links", script: "scripts/harness/check_page_links.mjs", args: ["--list"] },
@@ -434,6 +437,8 @@ const GATES: Gate[] = [
      what both defects actually were. */
   { name: "take-home-identity", script: "scripts/verify_take_home_identity.ts" },
   { name: "token-steps", script: "scripts/verify_token_steps_exist.ts" },
+  /* The spine's shadows on the elevation scale only (2026-10-01, T1): the readout panel and three small marks drew Tailwind's black stock shadows beside the cards' warm pair. Planted (shadow-md back on the panel) and watched red. */
+  { name: "spine-elevation", script: "scripts/verify_spine_elevation.ts" },
   /* A CUSTOM PROPERTY THAT REFERENCES ITSELF. Added 2026-08-18 after
      globals.css was found declaring `--font-display: var(--font-display), ...`
      on :root, the same element next/font's class lands on. Measured in a

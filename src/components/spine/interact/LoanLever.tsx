@@ -62,7 +62,7 @@ export function LoanLever({ min, max, rate, termMin, termMax, words }: { min: nu
                   if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); setYears(terms[Math.min(terms.length - 1, i + 1)]); }
                   else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); setYears(terms[Math.max(0, i - 1)]); }
                 }}
-                className={`min-h-6 min-w-8 rounded-sm px-2 py-1 text-[length:var(--t-micro)] font-semibold tabular-nums focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${t === years ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-sm" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
+                className={`min-h-6 min-w-8 rounded-sm px-2 py-1 text-[length:var(--t-micro)] font-semibold tabular-nums focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${t === years ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-subtle" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
               >
                 {t}
               </button>

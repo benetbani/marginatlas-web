@@ -52,8 +52,8 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
           <div className="flex min-h-40 flex-1 items-stretch gap-2" role="img" aria-label={`${C.obstaclesKicker}: ${items.map((o) => `${o.label} ${o.pct}%`).join(", ")}`}>
             {items.map((o) => (
               <div key={o.key} data-col={o.key} data-readout-figure={`${o.pct}%`} data-readout-words={o.label} className="relative min-w-0 flex-1">
-                <span aria-hidden className="absolute inset-0 rounded-t-sm bg-[var(--c-soft2)]" />
-                <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-sm" style={{ height: `${h(o.pct)}%`, ...fill(o === top, 0) }}>
+                <span aria-hidden className="absolute inset-0 rounded-t-[2px] bg-[var(--c-soft2)]" />
+                <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-[2px]" style={{ height: `${h(o.pct)}%`, ...fill(o === top, 0) }}>
                   {o === top ? null : (
                     <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 text-center text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{o.pct}%</span>
                   )}

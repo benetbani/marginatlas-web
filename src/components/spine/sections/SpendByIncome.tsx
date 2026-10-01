@@ -42,8 +42,8 @@ export function SpendByIncome({ id = "spend-by-income", data }: { id?: string; d
         <div className="flex min-h-36 flex-1 items-stretch gap-1 pt-5 [@container(min-width:480px)]:gap-2" role="img" aria-label={`${C.caption}: ${data.tenths.map((t) => usdCents(t.usd)).join(", ")}`}>
           {data.tenths.map((t) => (
             <div key={t.tenth} data-col={t.tenth} data-readout-figure={usdCents(t.usd)} data-readout-words={C.readout.replace("{n}", String(t.tenth))} className="relative min-w-0 flex-1">
-              <span aria-hidden className="absolute inset-0 rounded-t-sm bg-[var(--c-soft2)]" />
-              <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-sm" style={{ height: `${h(t.usd)}%`, ...fill(t.rich) }}>
+              <span aria-hidden className="absolute inset-0 rounded-t-[2px] bg-[var(--c-soft2)]" />
+              <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-[2px]" style={{ height: `${h(t.usd)}%`, ...fill(t.rich) }}>
                 <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 hidden text-center text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)] [@container(min-width:480px)]:block">{usdCents(t.usd)}</span>
               </span>
             </div>

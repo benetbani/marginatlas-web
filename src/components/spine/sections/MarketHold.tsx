@@ -41,7 +41,7 @@ export function MarketHold({ id = "market-hold", data }: { id?: string; data: Ma
         <Marks label={M.kicker} data-archetype="market-hold" data-visual="1" data-wedges={String(ordered.length)}>
           {/* The bracket over the biggest chains, the figure's own length. */}
           <div aria-hidden className="relative mb-1 h-2">
-            <span className="absolute inset-y-0 left-0 rounded-t-sm border-x-2 border-t-2 border-[var(--c-ink2)]" style={{ width: `${bigWidth}%` }} />
+            <span className="absolute inset-y-0 left-0 rounded-t-[2px] border-x-2 border-t-2 border-[var(--c-ink2)]" style={{ width: `${bigWidth}%` }} />
           </div>
           <div className="flex h-9 w-full gap-0.5 overflow-hidden rounded-lg" role="img" aria-label={ordered.map((p) => `${p.name} ${p.pct}%`).join(", ")}>
             {ordered.map((p) => (

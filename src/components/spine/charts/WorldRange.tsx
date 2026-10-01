@@ -91,7 +91,7 @@ function Track({ r, range, scale, medianWord, headless, ends }: { r: WorldRangeR
               <span aria-hidden data-track-median className="absolute top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-[var(--c-ink2)]" style={{ left: `calc(${m}% - 1px)` }} />
               {/* THE DOT PINNED INSIDE ITS TRACK (the chain's scale-end clamp, 2026-09-25): centred on its own value, a country at the
                   world's highest or lowest hung half off the card's edge (the United Kingdom's electricity is the world's dearest). */}
-              <span aria-hidden data-mark="value" className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] shadow-sm" style={{ left: `${Math.max(2, Math.min(98, at))}%`, background: "var(--terra)" }} />
+              <span aria-hidden data-mark="value" className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] shadow-subtle" style={{ left: `${Math.max(2, Math.min(98, at))}%`, background: "var(--terra)" }} />
             </div>
             <div className="relative mt-2 h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">
               <span data-end="low" className="absolute left-0 tabular-nums">{low}</span>
