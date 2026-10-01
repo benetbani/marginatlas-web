@@ -1067,7 +1067,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const fs = tradeHeroFacts(shown), fh = tradeHeroFacts(hidden);
   if (!fs || !fs.answer || fs.answer.value !== usd(36000) || fs.cells.length !== 3 || fs.withheld) reds.push(`trade take (money shown): the answer and three companions do not print as expected`);
   if (!fh || fh.answer || fh.cells.length !== 1 || fh.cells[0].key !== "net" || !fh.withheld || !fh.foot?.text.startsWith(COPY.tradeHero.honest.split("{noun}")[0])) reds.push(`trade take (money not shown): the state word, the net alone and the foot's one line on estimates do not print as expected`);
-  for (const f of [fs, fh]) if (f) { for (const c of f.cells) { if (c.label.split(/\s+/).length > 4) reds.push(`trade take: label over four words: "${c.label}"`); if (c.note && c.note.length > 48) reds.push(`trade take: note over 48 characters: "${c.note}"`); } if (f.crumb.length !== 2) reds.push(`trade take: the crumb holds ${f.crumb.length} segments, not the city and the country`); ban("trade take", [f.absent.label, f.absent.word, f.absent.note, f.answer?.label ?? "", f.answer?.basis ?? "", f.foot?.text ?? "", ...f.cells.flatMap((c) => [c.label, c.note ?? ""])]); }
+  for (const f of [fs, fh]) if (f) { for (const c of f.cells) { if (c.label.split(/\s+/).length > 4) reds.push(`trade take: label over four words: "${c.label}"`); if (c.note && c.note.length > 48) reds.push(`trade take: note over 48 characters: "${c.note}"`); } ban("trade take", [f.absent.label, f.absent.word, f.absent.note, f.answer?.label ?? "", f.answer?.basis ?? "", f.foot?.text ?? "", ...f.cells.flatMap((c) => [c.label, c.note ?? ""])]); }
   const ss = buildTradeSpread(shown), sh = buildTradeSpread(hidden);
   if (!ss || ss.marks.length !== 3 || !ss.marks.find((m) => m.key === "typical")?.lead || ss.basis !== COPY.tradeSpread.basisModelled || ss.withheld) reds.push(`trade spread (money shown, modelled): three marks with the typical as the lead under the modelled basis do not build`);
   if (!sh || sh.marks.length !== 0 || sh.basis || sh.withheld !== COPY.tradeSpread.withheld) reds.push(`trade spread (money not shown): the withheld line without a basis does not build`);
@@ -2654,7 +2654,6 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
         const own = c.label.replace(cheapest.name, "").replace(dearest.name, "");
         if (wordsOf(own) > 4) reds.push(`${where}: the cell label "${c.label}" runs over four words past the district's name`);
       }
-      if (focus ? take.crumb.length !== 2 || take.crumb[0] !== hoodCityName(city) : take.crumb.length !== 0) reds.push(`${where}: the crumb is [${take.crumb.join(", ")}]`);
       if (focus && take.name === hoodCityName(city)) reds.push(`${where}: a district page's h1 is the city`);
       const year = districts.map((d) => d.tourism?.year).find((y) => y != null);
 /* TURNED OVER 2026-09-24 (his correction of that evening, COPY-STYLE.md): the take has no foot; the visitor figures' year is said where they print (the premium card's basis). */

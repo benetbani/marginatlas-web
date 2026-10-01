@@ -4,9 +4,10 @@
  * THE TRADE MASTHEAD'S FACTS, `00 take` (MODEL.md 8.6; plan step 33's first
  * dispatch, 2026-09-18), mapped from the cell seed the adapter builds, for
  * the AnswerCard archetype and its stories, the way city_hero_facts.ts maps
- * the city's. The h1 is the trade's name; the identity crumb under it is the
- * city and the country, so the header holds trade, city and country and the
- * place is named once on the page (clause 11); the answer is what a typical
+ * the city's. The h1 is the trade's name; the trail above the card names the
+ * country and the city, and the header no longer repeats them under the h1
+ * (his ruling 40 of 2026-09-26: the trail stays, the header drops its crumb
+ * line; 2026-10-01, T4); the answer is what a typical
  * owner keeps a year, the page's only 40 (8.6, loud one); the companions are
  * 8.6's three, net margin, firms trading here and a typical year's takings,
  * and no ease score (a coined index, clause 17; the old masthead's "to break
@@ -18,7 +19,7 @@
  *    (cell_view.ts `ownerKeeps.takeHome`: resolveOwnerTakeHome() through the
  *    credibility screen, gated `moneyShown`). Real where money is shown
  *    (London, trusted local cells); WITHHELD with the state word where it is
- *    not, and the crumb and the companions still draw (8.6's row), so the
+ *    not, and the companions still draw (8.6's row), so the
  *    page carries two loud moments there.
  *  - THE NET: the seed's `net` block, THE ONE BUILDER'S figure (trade_net.ts,
  *    R7, item 58), with the builder's own note under it. Never the adapter's
@@ -53,8 +54,6 @@ export type TradeHeroFacts = {
   /** The trade's name, the h1. */
   name: string;
   iso2?: string;
-  /** The identity crumb under the h1: the city, then the country. */
-  crumb: string[];
   /** The take-home, or null where money is not shown for the cell. */
   answer: { label: string; value: string; basis: string; confidence: Conf } | null;
   /** The state word's strings, drawn where `answer` is null. */
@@ -99,7 +98,6 @@ export function tradeHeroFacts(seed: any): TradeHeroFacts | null {
   return {
     name: meta.trade,
     iso2: typeof meta.iso2 === "string" ? meta.iso2.toLowerCase() : undefined,
-    crumb: [meta.city, typeof meta.country_name === "string" ? meta.country_name : ""].filter((s) => s.length > 0),
     answer,
     absent: { label: COPY.tradeHero.answerLabel, word: COPY.tradeHero.absent, note: COPY.tradeHero.absentNote },
     cells,

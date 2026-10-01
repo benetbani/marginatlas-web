@@ -49,8 +49,9 @@
  *
  * THE IDENTITY: the hub's h1 is the city, the flag beside it, the country
  * nowhere in words (clause 11: the place named once); a district page's h1
- * is the district and the crumb under it names the city once and the country
- * once, the trade page's own precedent (PART 3). The subtitle says what the
+ * is the district, and the trail above the card names the city and the
+ * country (his ruling 40 of 2026-09-26: the header drops its crumb line where
+ * the trail stands; 2026-10-01, T4). The subtitle says what the
  * figure is about, one line, no conclusion.
  *
  * THE FOOT is the provenance line the old masthead printed under itself,
@@ -70,8 +71,6 @@ export type HoodTakeData = {
   /** The h1: the city on the hub, the district on its page. */
   name: string;
   iso2: string;
-  /** The identity crumb under a district's h1 (the city, the country); none on the hub. */
-  crumb: string[];
   subtitle: string;
   answer: { label: string; value: string; basis: string; confidence: "modeled" };
   cells: KvCell[];
@@ -134,7 +133,6 @@ export function buildHoodTake(citySlug: string, focus: string | null = null): Ho
     focus: district?.slug ?? null,
     name: district ? district.name : city.name,
     iso2: city.iso2.toLowerCase(),
-    crumb: district ? [city.name, city.countryName] : [],
     subtitle: COPY.hoodTake.subtitle,
     answer: { label, value: rentMult(value), basis: fill(COPY.hoodTake.basis, { count: countWord(rows.length) }), confidence: "modeled" },
     cells,

@@ -37,15 +37,15 @@ void SampleTag;
 /**
  * `00 take`, FULL WIDTH, the page's only 40 (8.8, loud 1): the answer card
  * at page level, the flag and the h1 (the city on the hub, the district on
- * its page with the crumb naming the city and the country once under it,
- * PART 3), the spread or the district's own rent against the cheapest at 40
+ * its page; the trail above the card names the city and the country, so no
+ * crumb line repeats them under the h1, his ruling 40 of 2026-09-26), the spread or the district's own rent against the cheapest at 40
  * in `--terra-text`, the companions docked as the KvGrid, the provenance
  * line as the foot. hood_take_rows.ts says what the figure is and why.
  */
 export function HoodTake({ id = "take", take }: { id?: string; take: HoodTakeData | null }) {
   if (!take) return null;
   /* The hub and the district page are two surfaces with one answer (the rent spread, or the district's own rent: `rent-lightest`); each declares its own. */
-  return <AnswerCard id={id} name={take.name} iso2={take.iso2} crumb={take.crumb.length ? take.crumb : undefined} subtitle={take.subtitle} answer={take.answer} cells={take.cells} tone="accent" foot={take.foot} answers={take.focus ? SURFACE_ANSWERS.district : SURFACE_ANSWERS.hood} />;
+  return <AnswerCard id={id} name={take.name} iso2={take.iso2} subtitle={take.subtitle} answer={take.answer} cells={take.cells} tone="accent" foot={take.foot} answers={take.focus ? SURFACE_ANSWERS.district : SURFACE_ANSWERS.hood} />;
 }
 
 /**

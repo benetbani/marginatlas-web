@@ -361,7 +361,7 @@ export function AnswerCardStories({ instances = pickAnswerCardInstances(), cell 
       {instances.filter((i) => !i.iso2.startsWith("cell:") && !i.iso2.startsWith("industry:") && !i.iso2.startsWith("hood:")).map((i) => <AnswerCardStory key={i.iso2} facts={buildHeroFacts(i.iso2)} why={i.why} />)}
       {cell.filter((c) => cellServes(c.key, "take")).map((c) => {
         const f = tradeHeroFacts(c.seed);
-        const el = f ? <AnswerCard id={`take-cell-${c.key}`} name={f.name} iso2={f.iso2} crumb={f.crumb} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} /> : null;
+        const el = f ? <AnswerCard id={`take-cell-${c.key}`} name={f.name} iso2={f.iso2} subtitle={null} answer={f.answer} absent={f.absent} cells={f.cells} tone="accent" foot={f.foot} /> : null;
         return <Story kind="answer-card" key={cellTakeKey(c)} iso2={cellTakeKey(c)} why={c.why}>{el}</Story>;
       })}
       {pickHoodTakeInstances().map((i) => {
