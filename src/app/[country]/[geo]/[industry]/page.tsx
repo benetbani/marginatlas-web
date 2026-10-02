@@ -112,9 +112,7 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineCellBody as SpineCell } from "@/components/spine/cell/cell-view";
 import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
-import { loadSpine2Cell } from "@/lib/cells/spine2_loader";
-import { buildCellPage } from "@/lib/cells/spine2_adapter";
-import { CellPage as Spine2CellPage } from "@/components/spine2/page/CellPage";
+import { buildCellCrumbs } from "@/lib/spine/crumb_rows";
 import { SiteChrome } from "@/components/SiteChrome";
 /**
  * MEASURED COST OF THE IMPORT ABOVE (2026-07-26, Loop 2 I-8). Do not "optimise" it
@@ -306,96 +304,26 @@ async function CellPageBody({
   // no cell it returns undefined; we notFound() to match the non-spine page.
   if (isSpineReformEnabledFor("cell")) {
     const { country, geo, industry } = await params;
-    // Spine 2 (the rebuilt trade page) serves only the slugs that have a
-    // hand-filled, reconciled cell file. Everything else falls through to the
-    // render below, unchanged.
-    const spine2Cell = loadSpine2Cell(country, geo, industry);
-    if (spine2Cell) {
-      /* STRUCTURED DATA. This branch returns early, ~500 lines before the
-         legacy page's <CellDataset>, <FAQSchema> and <Breadcrumbs>, so until
-         2026-07-27 the v2 page emitted none of them , only the root layout's
-         Organization. The legacy cell page emits all three. That was a live
-         SEO regression on the one page the redesign exists to prove.
-
-         Everything below comes from the reconciled cell file. Two fields the
-         legacy branch passes are DELIBERATELY OMITTED rather than approximated:
-
-         - revP10 / revP90. The component renders these as "Bottom 10% ... top
-           10%". The spine-2 file carries QUARTILES (p25 / p75), not deciles.
-           Passing quartiles here would state that the 25th percentile is the
-           bottom tenth, which is a fabricated claim in machine-readable form ,
-           the worst place to put one. Both are optional and the sentence
-           self-omits.
-         - qualityScore. Spine 2 grades provenance per figure (measured / built
-           / thin), not as one page-level score. There is no honest number to
-           put here.
-
-         nEmployees, wagePerEmployee and csvExportUrl are omitted for the same
-         reason: the file does not carry a trade-wide employee count or wage,
-         and a CSV export is not proven to exist for a spine-2 slug. */
-      const m = spine2Cell.meta;
-      const pop = spine2Cell.population;
-      /* The wider place and the country are resolved ONCE, here, and the same
-         two answers feed the BreadcrumbList below and the page's own onward
-         doors. That is the point of resolving them before the model is built
-         rather than beside it: the trail and the door cannot come to different
-         conclusions about which pages exist, because there is only one
-         conclusion. Either may be null, and null means no destination is
-         offered anywhere on the page. */
-      const spine2GeoPage = resolveGeoPage(m.country.slug, m.city.slug);
-      const spine2CountryPage = countryPagePath(m.country.slug);
-      const model = buildCellPage(spine2Cell, {
-        geoPage: spine2GeoPage,
-        countryPage: spine2CountryPage,
-      });
-      const origin = "https://www.marginatlas.com";
-      const url = `${origin}${m.urlPath}`;
-      return (
-        <>
-          <CellDataset
-            url={url}
-            industryName={m.trade.name}
-            geoName={m.city.name}
-            country={m.country.slug.toUpperCase()}
-            year={Number(m.freshness.slice(0, 4))}
-            medianRevenue={pop.medianRevenue?.value ?? null}
-            nEnterprises={pop.enterprises?.value ?? null}
-          />
-          <FAQSchema
-            faqs={(model.questions ?? []).map((x) => ({
-              question: x.q,
-              answer: x.a,
-            }))}
-          />
-          {/* The country and place steps are resolved, not assembled, for the
-             reasons spelled out at the legacy branch's breadcrumb below: the
-             two-segment form of a trade URL serves regions, so a city segment
-             there is a 404, and a first segment carrying a statistical code the
-             country route does not serve is a 404 too. Each item is omitted
-             outright when nothing resolves, and BreadcrumbList positions
-             renumber because the component numbers what it is handed. */}
-          <Breadcrumbs
-            items={[
-              { name: "Home", url: `${origin}/` },
-              ...(spine2CountryPage
-                ? [{ name: m.country.name, url: `${origin}${spine2CountryPage.href}` }]
-                : []),
-              ...(spine2GeoPage
-                ? [{ name: m.city.name, url: `${origin}${spine2GeoPage.href}` }]
-                : []),
-              { name: m.trade.name, url },
-            ]}
-          />
-          <Spine2CellPage model={model} />
-        </>
-      );
-    }
+    /* THE JULY PAGE IS RETIRED (his ruling 4 of 2026-09-26, milestone 1; 2026-10-02). Until this day a reconciled cell file
+       (gb/london/restaurants, the one slug that had one) sent this URL to the spine-2 page of July, so the trade the rebuilt page
+       was proven on served the page it replaced. Every trade now takes the rebuilt page. The spine-2 modules stay: the city
+       adapter and the dev routes read them. */
     const spineData = await buildSpineCellSeed(country, geo, industry);
     if (!spineData) notFound();
+    /* THE TRAIL, MACHINE-READABLE (2026-10-02): the July page emitted a BreadcrumbList and the rebuilt page emitted none, so
+       retiring the one would have taken the breadcrumbs off London restaurants and left every rebuilt trade without them. One
+       source for the trail the reader sees and the one a search engine reads (crumb_rows.ts); a step that resolves to no page
+       is left out, as the July page left it out, and the last step is this URL. */
+    const origin = "https://www.marginatlas.com";
+    const trail = buildCellCrumbs(spineData.meta);
+    const crumbItems = trail.flatMap((c, i) => (i === trail.length - 1 ? [{ name: c.label, url: `${origin}/${country}/${geo}/${industry}` }] : c.href ? [{ name: c.label, url: `${origin}${c.href}` }] : []));
     return (
-      <SpineShell>
-        <SpineCell data={spineData} />
-      </SpineShell>
+      <>
+        {crumbItems.length > 1 ? <Breadcrumbs items={[{ name: "Home", url: `${origin}/` }, ...crumbItems]} /> : null}
+        <SpineShell>
+          <SpineCell data={spineData} />
+        </SpineShell>
+      </>
     );
   }
 
@@ -1458,7 +1386,8 @@ function formatMoney(v: number | null | undefined): string {
   return `$${v.toFixed(0)}`;
 }
 
-/* THE ONE ROUTE THAT SOMETIMES RENDERS WITHOUT CHROME.
+/* THE ONE ROUTE THAT SOMETIMES RENDERED WITHOUT CHROME, until 2026-10-02: the spine-2 branch below is retired (his ruling 4),
+   so every render here takes the site chrome. The history:
 
    This URL serves three renders chosen at REQUEST TIME by data: the spine-2
    page when a reconciled cell file exists, a neighborhood overview when the
@@ -1476,10 +1405,5 @@ function formatMoney(v: number | null | undefined): string {
 export default async function CellPage(
   props: Parameters<typeof CellPageBody>[0],
 ) {
-  const { country, geo, industry } = await props.params;
-  const bare =
-    isSpineReformEnabledFor("cell") &&
-    loadSpine2Cell(country, geo, industry) != null;
-  const body = <CellPageBody {...props} />;
-  return bare ? body : <SiteChrome>{body}</SiteChrome>;
+  return <SiteChrome><CellPageBody {...props} /></SiteChrome>;
 }
