@@ -1,7 +1,14 @@
 "use client";
 /**
- * CityCards , THE CITY CARD, IN THREE LOOKS, AND THE LOOK IS THE ONLY THING
- * THAT DIFFERS.
+ * CityCards , THE CITY CARD, IN THE ONE LOOK HE KEPT: THE FIELD, THE CITY'S
+ * PHOTOGRAPH UNDER A TERRACOTTA WASH.
+ *
+ * ONE LOOK SINCE 2026-10-02. Three were built on 2026-09-10 for him to choose
+ * between (the field, the plate, the column); the field went live with the
+ * cities' own photographs, and his ruling 39 of 2026-09-26 closed the choice
+ * ("the live cards are the field look with the city photo"). The plate and the
+ * column, their stories, their copy and their mark were deleted, so the card
+ * no longer carries a look switch nothing calls.
  *
  * Founder, 2026-09-10, on reference B11: "those coloured beautiful vertical
  * cards of cities should be used by us for cities too." The cards he was
@@ -31,27 +38,15 @@
  * figure could look deeper. A drawing that becomes a lie when the data improves
  * is worse than no drawing. So the tint STOPPED encoding the figure and became a
  * fixed veil with one job, legibility, and the figure is carried by the number
- * every card already prints in its own column. `payShare` is still built and
- * still drawn by the "column" look, where the mark sits on the card's own edge
- * and no photograph touches it.
+ * every card already prints in its own column, with a thin pay track over it
+ * (PayTrack, 2026-09-25).
  *
- * HIS REFERENCE WAS ALSO BLUE, TEAL AND PURPLE, and this palette is terracotta
- * and warm neutrals with green banned outright. So three looks were built to
- * differ in KIND rather than in degree, and he chooses:
+ * THE LOOK: A DUOTONE. The photograph full-bleed and desaturated, a white veil
+ * to lift it, a fixed terracotta wash over that. No card is crowned and no card
+ * carries a pill. (His reference was blue, teal and purple; this palette is
+ * terracotta and warm neutrals with green banned outright.)
  *
- *   "field"   A DUOTONE. The stand-in photograph full-bleed and desaturated, a
- *             white veil to lift it, a fixed terracotta wash over that. No card
- *             is crowned and no card carries a pill.
- *   "plate"   TYPE, and nothing else. No colour, no mark: white, a hairline,
- *             and the name set large in the display face over a quiet foot.
- *             Proportion and scale do the whole job, the way a book cover does.
- *   "column"  A GENERATED MARK, deterministic from the city's own figure, so
- *             252 cities cost nothing to draw. A slim track down the card's
- *             left edge fills from the bottom to that city's pay as a part of
- *             the highest-earning city on the card. The row reads as a skyline
- *             and every mark is a real measurement, not an ornament.
- *
- * THE LAW, WHICH ALL THREE OBEY, AND IT IS WRITTEN HERE ONCE.
+ * THE LAW, WRITTEN HERE ONCE.
  *  - TALL. A card is at least 12.5rem tall at every width, which at the 155px
  *    track a 693px band gives it is a 1.29 ratio, so the proportion of his
  *    reference survives the phone, where cards die more than anywhere. The
@@ -78,22 +73,18 @@
  *    card is `h-full`, and the name block RESERVES its second line on every
  *    card, so a one-word city and a two-line city are the same object. Never by
  *    content luck.
- *  - ONE PHOTOGRAPH FOR ALL OF THEM, never per-city art that would have to be
- *    found 252 times. The "field" look paints it; "plate" and "column" do not,
- *    because each of those finds its beauty in the absence of a picture and
- *    putting one behind them would make all three looks the same question.
+ *  - A PHOTOGRAPH ON EVERY CARD: the city's own where the repository holds
+ *    one (data/cities/images_credits.json), the one stand-in otherwise, each
+ *    card showing a different part of it.
  *
- * WHAT THE SHARE MAY CLAIM. `payOfTop` is zero-based, and the column look uses
- * it for a mark whose length reads as a proportion, which is the one thing a bar
- * may not lie about. `payShare` is ordinal and is no longer drawn by any look
- * (see the photograph note above). Where there is no set to scale within (one
- * city, or every city on the same figure), the column look draws nothing: an
- * empty track reads as zero, and zero is not what "not held" means.
+ * WHAT THE SHARE MAY CLAIM. `payOfTop` is zero-based, and the pay track uses it
+ * for a length that reads as a proportion, which is the one thing a bar may not
+ * lie about. `payShare` is ordinal and is not drawn. Where there is no set to
+ * scale within (one city, or every city on the same figure), the track draws
+ * nothing: an empty track reads as zero, and zero is not what "not held" means.
  */
 import * as React from "react";
 import type { CityCard } from "@/lib/spine/city_cards";
-
-export type CityCardsLook = "field" | "plate" | "column";
 
 /* FOUR A PAGE, the card pager's own arithmetic, kept: the cities card is the
    two-thirds band, 693px at 1280, whose inner 653px holds four tracks and not
@@ -160,8 +151,6 @@ export function CityCards({
   allHref,
   allLabel,
   basis,
-  basisDrawn,
-  look = "field",
   prevLabel = "Previous",
   nextLabel = "More",
   fill = false,
@@ -169,15 +158,8 @@ export function CityCards({
   cards: CityCard[];
   allHref: string;
   allLabel: string;
-  /** One line, said once for the whole row: what the figure is, and nothing
-   *  else. Printed on its own whenever the look draws no tint and no mark. */
+  /** One line, said once for the whole row: what the figure is, and nothing else. */
   basis: string;
-  /** The same line plus the clause that reads the drawing ("the darker the
-   *  card, the more"). Printed only when a drawing is actually on the page: a
-   *  set of one has nothing to scale within, draws nothing, and must not carry
-   *  a sentence describing a drawing that is not there. */
-  basisDrawn?: string;
-  look?: CityCardsLook;
   prevLabel?: string;
   nextLabel?: string;
   /** The cards grow into the height the level lends the card that holds them (2026-09-24), instead of a blank under the link. */
@@ -201,18 +183,13 @@ export function CityCards({
   const rows = cards.length < PER_PAGE;
   const pays = cards.map((c) => c.payUsd).filter((v): v is number => typeof v === "number");
   const fmt = moneyFor(pays);
-  /* ONLY THE COLUMN LOOK DRAWS THE FIGURE NOW. The field look's tint stopped
-     being a reading of anything when the photograph went under it, so it must
-     not print the sentence that describes a drawing ("the darker the card, the
-     more"): that sentence would be describing a veil. */
-  const drawn = look === "column" && cards.some((c) => typeof c.payOfTop === "number");
   const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
   const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
   const btn =
     "tap flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
-    <div data-archetype="city-cards" data-look={look} data-form={rows ? "rows" : "grid"} data-count={cards.length} data-fill={fill ? "1" : undefined} className={fill ? "flex flex-1 flex-col" : undefined}>
+    <div data-archetype="city-cards" data-look="field" data-form={rows ? "rows" : "grid"} data-count={cards.length} data-fill={fill ? "1" : undefined} className={fill ? "flex flex-1 flex-col" : undefined}>
       {pages > 1 ? (
         <div className="mb-2 flex items-center justify-end gap-2">
           <span className="mr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
@@ -234,9 +211,9 @@ export function CityCards({
           same figure, the arrow at the right edge, and no hole. */}
       {/* `fill`: the grid takes the height the card is lent and its rows share it (`auto-rows-fr`), so the cards grow instead of a blank under the link. */}
       <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]"} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
-        {slice.map((c, i) => (rows ? <Row key={c.id} card={c} look={look} fmt={fmt} /> : <Card key={c.id} card={c} look={look} fmt={fmt} index={i} />))}
+        {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{drawn && basisDrawn ? basisDrawn : basis}</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p>
       <div className="mt-2 text-right">
         <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
       </div>
@@ -306,49 +283,32 @@ function Photo({ card, index = 0 }: { card: CityCard; index?: number }) {
   return <DuotonePhoto src={card.photo.src} placeholder={card.photo.placeholder} crop={crop} />;
 }
 
-function Card({ card, look, fmt, index = 0 }: { card: CityCard; look: CityCardsLook; fmt: (v: number) => string; index?: number }) {
-  const field = look === "field";
-  /* On a terracotta field every line goes to `--c-ink`: `--c-muted` reads about
-     3.3 to 1 on the deepest step, under the floor this repo holds, and the
-     hierarchy is carried by size (20 over 12), never by greying a line out. */
-  const quiet = field ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]";
-  /* The field look wears a TRANSPARENT border rather than none, so the box
-     model is identical in all three looks (a photograph of one against another
-     is then a photograph of the design and not of a one-pixel difference) and
-     so the hover has an edge to colour without moving anything. */
-  const edge = field ? "border border-transparent" : "border border-[var(--c-border)]";
+/* On a terracotta field every line goes to `--c-ink`: `--c-muted` reads about 3.3 to 1 on the deepest step, under the floor this
+   repo holds, and the hierarchy is carried by size (20 over 12), never by greying a line out. The card wears a TRANSPARENT
+   border rather than none, so the hover has an edge to colour without moving anything. */
+function Card({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => string; index?: number }) {
   return (
     <a
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] ${edge}`}
+      className="group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)]"
     >
-      {field ? <Photo card={card} index={index} /> : null}
-      {look === "column" ? <Mark part={card.payOfTop} /> : null}
+      <Photo card={card} index={index} />
       <span className="relative flex h-full flex-col">
-        {/* THE PLATE PUTS ITS AIR AT THE TOP AND STANDS THE NAME ON THE FOOT
-            RULE, and that is the whole difference between a composition and a
-            hollow box. Photographed with the name at the top (2026-09-10,
-            scratchpad/photos), the card read as four empty white rectangles
-            with a word in the corner: air BELOW type reads as a card that ran
-            out of content, air ABOVE it reads as a margin. The other two looks
-            keep the name at the top, because a colour field and a mark already
-            fill what the plate has to fill with proportion. */}
-        {look === "plate" ? <span className="mt-auto" /> : null}
         {/* THE NAME, AND ITS SECOND LINE IS RESERVED ON EVERY CARD, whether it
             wraps or not, so the row is one object and not four accidents. */}
         <span
           data-city-name
-          className={`block text-[length:var(--t-head)] leading-[1.15] tracking-tight text-[var(--c-ink)] ${field ? "font-semibold" : "font-serif font-semibold"}`}
+          className="block text-[length:var(--t-head)] font-semibold leading-[1.15] tracking-tight text-[var(--c-ink)]"
           style={{ minHeight: "calc(2 * 1.15 * var(--t-head))", overflowWrap: "normal" }}
         >
           {card.name}
         </span>
-        {card.region ? <span className={`block truncate text-[length:var(--t-micro)] leading-snug ${quiet}`}>{card.region}</span> : null}
-        {look === "plate" ? null : <span className="mt-auto" />}
-        {field ? <PayTrack part={card.payOfTop} /> : null}
-        <span className={`flex items-baseline justify-between gap-2 pt-2 ${field ? "" : "border-t border-[var(--c-border)]"}`}>
+        {card.region ? <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}
+        <span className="mt-auto" />
+        <PayTrack part={card.payOfTop} />
+        <span className="flex items-baseline justify-between gap-2 pt-2">
           {/* `.fig` is the site's figure face and it resolves off a variable the
               spine shell owns; `font-serif` names the same family off the
               variable the root layout owns, so the figure reads in one face on
@@ -356,39 +316,17 @@ function Card({ card, look, fmt, index = 0 }: { card: CityCard; look: CityCardsL
           <span className="fig font-serif tabular-figures text-[length:var(--t-body)] leading-none text-[var(--c-ink)]">
             {typeof card.payUsd === "number" ? fmt(card.payUsd) : ""}
           </span>
-          <span aria-hidden className={`shrink-0 text-[length:var(--t-body)] leading-none transition-transform group-hover:translate-x-0.5 ${field ? "text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>&#8594;</span>
+          <span aria-hidden className="shrink-0 text-[length:var(--t-body)] leading-none text-[var(--c-ink)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
         </span>
       </span>
     </a>
   );
 }
 
-/** THE COLUMN LOOK'S MARK: the card's whole left edge, filled from the bottom
- *  to this city's pay as a part of the highest pay on the card.
- *
- *  IT IS FULL-BLEED AT THE EDGE, AND THAT IS A MEASUREMENT, NOT A STYLE. An
- *  inset track costs the name its horizontal room: at 375 a two-up card is
- *  147px wide, its content 123px, and "Birmingham" at 20px needs about 118, so
- *  a 16px inset clipped two names of four in the harness's own photograph. At
- *  the edge the mark costs the name nothing, because the card's own 12px
- *  padding already clears it.
- *
- *  Nothing is drawn when there is no set to scale within: an empty track reads
- *  as zero, and zero is not what "not held" means. */
-function Mark({ part }: { part?: number }) {
-  if (typeof part !== "number" || !Number.isFinite(part) || part <= 0) return null;
-  const pct = Math.max(4, Math.min(100, part * 100));
-  return (
-    <span aria-hidden data-mark className="absolute inset-y-0 left-0 w-1.5 overflow-hidden" style={{ background: "var(--c-soft2)" }}>
-      <span className="absolute inset-x-0 bottom-0 block" style={{ height: `${pct}%`, background: "var(--c-ink2)" }} />
-    </span>
-  );
-}
-
-/** THE FIELD LOOK'S PAY TRACK (2026-09-25, his "numbers ... with no relation to each other"): a thin bar over the figure, this
- *  city's pay as a part of the highest pay in the set, zero-based, so the four figures of a row are read against one another
- *  before they are read at all. The track is the card's white over the photograph, the fill the page's ink. Nothing is drawn
- *  where there is no set to scale within, for the same reason as the column look's mark. */
+/** THE PAY TRACK (2026-09-25, his "numbers ... with no relation to each other"): a thin bar over the figure, this city's pay as
+ *  a part of the highest pay in the set, zero-based, so the four figures of a row are read against one another before they are
+ *  read at all. The track is the card's white over the photograph, the fill the page's ink. Nothing is drawn where there is no
+ *  set to scale within: an empty track reads as zero. */
 function PayTrack({ part }: { part?: number }) {
   if (typeof part !== "number" || !Number.isFinite(part) || part <= 0) return null;
   const pct = Math.max(4, Math.min(100, part * 100));
@@ -405,27 +343,24 @@ function PayTrack({ part }: { part?: number }) {
  *  column, a third column absorbing every pixel of leftover width, and the
  *  arrow at the right edge. Never `justify-between` across a wide card, which
  *  is the fault that puts a label at one end and its figure at the other. */
-function Row({ card, look, fmt }: { card: CityCard; look: CityCardsLook; fmt: (v: number) => string }) {
-  const field = look === "field";
-  const quiet = field ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]";
+function Row({ card, fmt }: { card: CityCard; fmt: (v: number) => string }) {
   return (
     <a
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative grid h-full items-center gap-3 overflow-hidden rounded-[12px] px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto] ${field ? "border border-transparent" : "border border-[var(--c-border)]"}`}
+      className="group relative grid h-full items-center gap-3 overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto]"
     >
-      {field ? <Photo card={card} /> : null}
-      {look === "column" ? <Mark part={card.payOfTop} /> : null}
+      <Photo card={card} />
       <span className="relative min-w-0">
-        <span data-city-name className={`block text-[length:var(--t-head)] leading-[1.15] tracking-tight text-[var(--c-ink)] ${field ? "font-semibold" : "font-serif font-semibold"}`} style={{ overflowWrap: "normal" }}>{card.name}</span>
-        {card.region ? <span className={`block truncate text-[length:var(--t-micro)] leading-snug ${quiet}`}>{card.region}</span> : null}
+        <span data-city-name className="block text-[length:var(--t-head)] font-semibold leading-[1.15] tracking-tight text-[var(--c-ink)]" style={{ overflowWrap: "normal" }}>{card.name}</span>
+        {card.region ? <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}
       </span>
       <span className="fig font-serif tabular-figures relative text-[length:var(--t-body)] leading-none text-[var(--c-ink)]">
         {typeof card.payUsd === "number" ? fmt(card.payUsd) : ""}
       </span>
       <span aria-hidden />
-      <span aria-hidden className={`relative shrink-0 text-[length:var(--t-body)] leading-none transition-transform group-hover:translate-x-0.5 ${field ? "text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>&#8594;</span>
+      <span aria-hidden className="relative shrink-0 text-[length:var(--t-body)] leading-none text-[var(--c-ink)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
     </a>
   );
 }

@@ -831,15 +831,14 @@ for (const w of WIDTHS) {
          ruling of 2026-09-08. He reversed it for this card and this card only
          ("the cities should have their placeholder image ... blast the London in
          all of them"), so the rule now checks the same fact from the other side:
-         the look he chose must carry one on EVERY card, and the two looks he did
-         not choose must carry none, because a photograph behind the plate and
-         the column would collapse three different questions into one. */
+         the look he chose must carry one on EVERY card. The two looks he did not
+         choose (the plate and the column) were deleted on 2026-10-02 after his
+         ruling 39, so the field is the only look and its rule is the only rule. */
       const look = r.cityLook || "";
       const photos = r.cityPhotos || [];
       /* Against the cards DRAWN on this page of the pager (r.cityDrawn), never
          against the declared set: the pager draws four of a seven-card set. */
       if (look === "field" && photos.length !== r.cityDrawn) red(r.inst, w, "IMAGE", `${photos.length} of ${r.cityDrawn} city card(s) drawn carry a photograph (${r.cityCount} in the set); the field look carries one on every card (his ruling of 2026-09-11)`);
-      if (look !== "field" && photos.length) red(r.inst, w, "IMAGE", `${photos.length} city card(s) carry a photograph in the "${look}" look; the photograph belongs to the field look alone`);
       if (r.cityStrayImages && r.cityStrayImages.length) red(r.inst, w, "IMAGE", `${r.cityStrayImages.length} city card(s) carry an image that is not the declared photograph: ${r.cityStrayImages.join(", ")}`);
       if (r.cityNameRatio != null && r.cityNameRatio < 4.5) red(r.inst, w, "CONTRAST", `the city name reads ${r.cityNameRatio} to 1 over the photograph's darkest region (backdrop rgb(${(r.cityBackdrop || []).join(", ")})), under the 4.5 floor; the veil and the wash over the picture are what set this`);
       /* FOR THE DATA TRACK, NOT THE DRAWING: the placeholder closes the hole on

@@ -400,8 +400,6 @@ function Cities({ cards, seat }: { cards: CityCardsData | null; seat: CitiesSeat
           allHref={cards.allHref}
           allLabel={COPY.cities.allLabel}
           basis={COPY.cityCards.plain.basis}
-          basisDrawn={COPY.cityCards.field.basis}
-          look="field"
           prevLabel={COPY.cities.prev}
           nextLabel={COPY.cities.next}
         />

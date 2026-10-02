@@ -22,7 +22,7 @@ import { buildCityDistrictBars, rentMult } from "@/lib/spine/district_rows";
 import { RankedBars } from "./RankedBars";
 import { CompareTable } from "./CompareTable";
 import { CardPager } from "./CardPager";
-import { CityCards, type CityCardsLook } from "./CityCards";
+import { CityCards } from "./CityCards";
 import { buildCityCards } from "@/lib/spine/city_cards";
 import { TiersTable } from "./TiersTable";
 import { buildSetupRows, howToOpenDoor } from "@/lib/spine/setup_rows";
@@ -211,9 +211,11 @@ export function pickCardPagerInstances(): Instance[] {
   return out;
 }
 
-/* THE CITY CARDS, B11, 2026-09-10. Three looks of one card, built as
-   ALTERNATIVES for the founder to choose between, so the instance key is
-   "<iso2>:<look>" and the same countries are drawn in each look: the exemplar
+/* THE CITY CARDS, B11, 2026-09-10. Three looks of one card were built as
+   alternatives for the founder to choose between; his ruling 39 of 2026-09-26
+   kept the field and the other two were deleted on 2026-10-02. The instance
+   key stays "<iso2>:field", the look the card draws, so the standing data reds
+   keep their names. The countries drawn: the exemplar
    (seven cards on two pages since the builder walks the covered list, QUEUE
    country:cities-covered-list, 2026-09-19), the longest city name in the
    whole set, a country holding exactly one covered city (where neither the
@@ -221,7 +223,6 @@ export function pickCardPagerInstances(): Instance[] {
    rather than an empty track), the three-city country (the last set under
    the row's four tracks, drawn as rows: the threshold measured on New
    Zealand) and the four-city country (the row filled, no pager). */
-export const CITY_CARD_LOOKS: CityCardsLook[] = ["field", "plate", "column"];
 export function pickCityCardsInstances(): Instance[] {
   const all = codes().map((c) => ({ c, cards: buildCityCards(c) })).filter((x) => x.cards);
   const seeds: Instance[] = [{ iso2: "GB", why: `the exemplar: ${buildCityCards("GB")?.cards.length ?? 0} cards, the pager paging four` }];
@@ -235,19 +236,19 @@ export function pickCityCardsInstances(): Instance[] {
   if (three) take(three.c, "three cities, the last set under the row's four tracks, drawn as rows");
   const four = all.find((x) => x.cards!.cards.length === 4);
   if (four) take(four.c, "four cities, the row filled, no pager");
-  return CITY_CARD_LOOKS.flatMap((look) => seeds.map((s) => ({ iso2: `${s.iso2}:${look}`, why: `${look}, ${s.why}` })));
+  return seeds.map((s) => ({ iso2: `${s.iso2}:field`, why: `field, ${s.why}` }));
 }
 
 export function CityCardsStories({ instances = pickCityCardsInstances() }: { instances?: Instance[] }) {
   return (
     <div data-stories="city-cards">
       {instances.map((i) => {
-        const [iso2, look] = i.iso2.split(":") as [string, CityCardsLook];
+        const [iso2] = i.iso2.split(":");
         const c = buildCityCards(iso2);
         const el = c ? (
           <div className="rounded-[12px] border border-[var(--c-line-strong)] p-5" style={{ maxWidth: 693, ...CARD_SURFACE }}>
             <Rail icon="best-areas" kicker={COPY.cities.kicker} />
-            <CityCards cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} basis={COPY.cityCards.plain.basis} basisDrawn={COPY.cityCards[look].basis} look={look} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
+            <CityCards cards={c.cards} allHref={c.allHref} allLabel={COPY.cities.allLabel} basis={COPY.cityCards.plain.basis} prevLabel={COPY.cities.prev} nextLabel={COPY.cities.next} />
           </div>
         ) : null;
         return <Story kind="city-cards" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
