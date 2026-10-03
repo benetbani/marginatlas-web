@@ -1,16 +1,21 @@
 /**
  * src/lib/uk/law/redundancy.ts
  *
- * Statutory redundancy pay and statutory notice (Employment Rights Act 1996, ss 86, 162), from 6 April 2026.
+ * Statutory redundancy pay and statutory notice (Employment Rights Act 1996, ss 86, 145, 155, 162, 210 and 227), from
+ * 6 April 2026.
  *
- * REDUNDANCY. Two whole years of service needed. Counting back from the dismissal, each of the last (up to) 20 whole years
- * earns weeks of pay by the age held throughout that year: 0.5 below 22, 1 from 22 to 40, 1.5 from 41. With integer ages,
- * the k-th most recent year (k = 0, 1, ...) is held at age (ageAtDismissal - 1 - k) throughout. A week's pay is capped at
- * 751, so the most anyone can get is 30 x 751 = 22,530. Years and age are taken at the relevant date, which a dismissal
- * without the statutory notice moves to the day that notice would have ended (s 145(5)).
+ * REDUNDANCY. Two whole years of service needed (s 155). Counting back from the relevant date (the last day of employment,
+ * which a dismissal without the statutory notice moves to the day that notice would have ended, s 145(5)), each of the
+ * last (up to) 20 whole years earns weeks of pay by the age held throughout that year: 0.5 below 22, 1 from 22 to 40, 1.5
+ * from 41 (s 162); there is no upper age. The years run between anniversaries of the day after the relevant date (years of
+ * twelve months, s 210(3)), so the age held throughout the k-th most recent year (k = 0, 1, ...) is the age on its first
+ * day, which is exactly ageAtDismissal - 1 - k when ageAtDismissal is the age on the day after the relevant date. (The age
+ * on the last day itself is one too low on the eve of a birthday: someone whose last day is 31 December and who turns 42
+ * on 1 January was 41 all that year, worth 1.5 weeks, not 1.) A week's pay is capped at 751 (s 227), so the most anyone
+ * can get is 30 x 751 = 22,530.
  *
- * NOTICE (the employer's minimum): none under a month; one week from a month to two years; then a week per whole year, up
- * to twelve.
+ * NOTICE (the employer's minimum, s 86): none under a month; one week from a month to two years; then a week per whole
+ * year, up to twelve.
  */
 import { UK_2026_27 as L } from "./params_2026_27";
 import { pennies } from "./money";

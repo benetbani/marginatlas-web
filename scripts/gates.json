@@ -1459,7 +1459,7 @@
       "script": "tests/uk/law/redundancy.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "Statutory redundancy pay and notice (Employment Rights Act 1996 ss.",
+      "asserts": "Statutory redundancy pay and notice (Employment Rights Act 1996 sections 86, 155 and 162; the weekly cap of 2026-27).",
       "reads": [
         "src/lib/uk/law/redundancy.ts"
       ],
