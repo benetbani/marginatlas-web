@@ -1887,8 +1887,9 @@ python registers/uk/draft_stories.py
 ```
 
 Expected: one `draft: <id>` line per feed item. `git diff --stat design/loop/build/goal-2026-10-02/drafts/blog` lists six
-files: fail-most, last-longest, last-where, open-close, restaurants-year-one and takings (its source table gained three
-caveats); the other six drafts are unchanged.
+files whose figures or words change: fail-most, last-longest, last-where, open-close, restaurants-year-one and takings (its
+source table gained three caveats). The other six change only their `generated:` date line when the drafts are remade on a
+later day than they were last made, and not at all on the same day.
 
 - [ ] **Step 3: Read the restaurant sentence**
 
