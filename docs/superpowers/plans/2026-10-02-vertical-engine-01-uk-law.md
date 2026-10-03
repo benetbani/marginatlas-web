@@ -1582,7 +1582,10 @@ Expected: one commit; `git status --short` lists none of the files above.
 refuses rather than guesses). `m` is 38.2p (retail, hospitality and leisure) or 43.2p below 51,000, and 43p or 48p from
 51,000. Small business relief `f` is 1 up to 12,000, `(15,000 - RV) / 3,000` between, 0 from 15,000: continuous, so the
 bill at 12,001 is 1.53. The multiplier is not continuous: one pound of value at 51,000 adds about 2,448 a year
-(51,000 x 4.8p). That step is the law's and the profit model in plan 03 prints it as it is.
+(51,000 x 4.8p). That step is the law's and the profit model in plan 03 prints it as it is. Relief is a share of the printed
+gross, so the bill's lines add up (rateable value 13,001, retail: 4,966.38 less 3,309.26 = 1,657.12; relief on the unrounded
+gross would give 1,657.11). The test pins the 48p standard multiplier above 51,000, the taper exactly at 14,999, and the
+high-value edge on both sides (500,000 refused, 499,999 charged), each found unpinned by a fault sweep before this task ran.
 
 **Files:**
 - Create: `src/lib/uk/law/business_rates.ts`
@@ -1621,14 +1624,16 @@ check("RV 14,000, not retail: 6,048.00 less a third, 4,032.00", businessRates({ 
 check("RV 15,000, not retail: no relief, 6,480.00", businessRates({ rateableValue: 15_000, retailHospitalityLeisure: false }).bill === 6480);
 check("RV 25,000 retail: 9,550.00", businessRates({ rateableValue: 25_000, retailHospitalityLeisure: true }).bill === 9550);
 check("RV 60,000 retail: 43p, 25,800.00", businessRates({ rateableValue: 60_000, retailHospitalityLeisure: true }).bill === 25_800);
-check("relief taper continuous at 12,000 and 15,000 (1.53 at 12,001)", businessRates({ rateableValue: 12_001, retailHospitalityLeisure: true }).bill === 1.53 && businessRates({ rateableValue: 14_999, retailHospitalityLeisure: true }).bill > 5_725);
+check("relief taper continuous at 12,000 and 15,000 (1.53 at 12,001; 5,727.71 at 14,999)", businessRates({ rateableValue: 12_001, retailHospitalityLeisure: true }).bill === 1.53 && businessRates({ rateableValue: 14_999, retailHospitalityLeisure: true }).bill === 5727.71);
+check("relief is a share of the printed gross: RV 13,001 retail, 4,966.38 less 3,309.26 = 1,657.12", businessRates({ rateableValue: 13_001, retailHospitalityLeisure: true }).bill === 1657.12);
+check("RV 60,000 not retail: the 48p standard multiplier, 28,800.00", businessRates({ rateableValue: 60_000, retailHospitalityLeisure: false }).bill === 28_800);
 const below = businessRates({ rateableValue: 50_999, retailHospitalityLeisure: true }).bill;
 const at = businessRates({ rateableValue: 51_000, retailHospitalityLeisure: true }).bill;
 check("the cliff at 51,000 is the law's: about 2,448 more for one pound of value", Math.abs(at - below - 2448.38) < 0.02);
 check("no relief when not eligible (a second property)", businessRates({ rateableValue: 10_000, retailHospitalityLeisure: true, smallBusinessReliefEligible: false }).bill === 3820);
-let threw = false;
-try { businessRates({ rateableValue: 600_000, retailHospitalityLeisure: false }); } catch { threw = true; }
-check("a value above 500,000 is refused, not guessed", threw);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("500,000 and above is high-value and refused, not guessed; 499,999 is charged 239,999.52", refuses(() => businessRates({ rateableValue: 500_000, retailHospitalityLeisure: false })) && businessRates({ rateableValue: 499_999, retailHospitalityLeisure: false }).bill === 239_999.52);
+check("a value that is not a number, or negative, is refused", refuses(() => businessRates({ rateableValue: Number.NaN, retailHospitalityLeisure: true })) && refuses(() => businessRates({ rateableValue: -1, retailHospitalityLeisure: true })));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/business_rates: all pass");
@@ -1688,7 +1693,7 @@ export function businessRates(input: { rateableValue: number; retailHospitalityL
 npx tsx tests/uk/law/business_rates.test.ts
 ```
 
-Expected: 10 lines starting `PASS`, the last line `uk/law/business_rates: all pass`, exit code 0.
+Expected: 13 lines starting `PASS`, the last line `uk/law/business_rates: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
