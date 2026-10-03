@@ -1466,6 +1466,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-loan",
+      "script": "tests/uk/law/loan.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The repayment of a fixed-rate loan (the annuity formula), to the penny.",
+      "reads": [
+        "src/lib/uk/law/loan.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
