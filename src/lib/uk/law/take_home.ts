@@ -15,16 +15,19 @@
  *   income tax           it(s) = incomeTax(s, d(s))
  *   keep(s) = s - ee(s) + d(s) - it(s)
  * Outside the allowance taper keep(s) is continuous and piecewise linear in s (a composition of continuous piecewise-linear
- * schedules), so its maximum on [0, sMax] sits at a breakpoint of one of the schedules or at an end. The search evaluates every breakpoint it can name
- * (0, the secondary threshold, the primary threshold, the upper limits, the taper points, the salaries that put the company
- * profit exactly on a corporation-tax limit, sMax), plus a 250-pound grid, then refines the best to the pound. Ties go to
- * the lower salary. Measured on four profits (tests): 12,570 is best at 30k, 60k and 100k; about 5,000 at 150k.
+ * schedules), so its maximum on [0, sMax] sits at a breakpoint of one of the schedules or at an end. The search evaluates
+ * the salary breakpoints it can name (0, the secondary and primary thresholds, the upper earnings limit, the two income
+ * tax thresholds in case a salary meets them, the salaries that put the company profit exactly on a corporation-tax limit,
+ * sMax) and a 250-pound grid, then refines to the pound around the best four regions at least 1,000 pounds apart, not only
+ * the best one: near a switch between regions (the 5,000 region and the 12,570 one, at about 163,281 of profit) the region
+ * that wins after refining is not the one that won before. Ties go to the lower salary. The kinks that depend on salary
+ * plus dividends (the taper's) have no name; the grid and the refine find them.
  *
  * INSIDE THE TAPER (adjusted net income 100,000 to 125,140) keep(s) is not continuous: each time adjusted net income
  * crosses an even pound, a whole pound of allowance goes at once and keep drops by up to 40p (the rate on the income that
- * pound now taxes), so keep(s) is a sawtooth there. The 250-pound grid and the refine to the pound find the best tooth:
- * at 150,000 of profit the best salary is 4,996, 14p better than 5,000. A page prints the salary rounded to the nearest
- * 100 pounds; the engine keeps the exact one.
+ * pound now taxes), so keep(s) is a sawtooth there and the search is to the pound, not the penny: at 150,000 of profit the
+ * best whole-pound salary is 4,996, 14p better than 5,000. A page prints the salary rounded to the nearest 100 pounds;
+ * the engine keeps the exact one.
  */
 import { UK_2026_27 as L } from "./params_2026_27";
 import { incomeTax } from "./income_tax";
@@ -44,7 +47,7 @@ export function soleTraderTakeHome(profit: number): SoleTraderTakeHome {
   const p = Math.max(0, profit);
   const it = incomeTax(p).total;
   const c4 = class4(p);
-  return { profit: p, incomeTax: it, class4: c4, takeHome: sumPennies([p, -it, -c4]) };
+  return { profit, incomeTax: it, class4: c4, takeHome: sumPennies([p, -it, -c4]) };
 }
 
 export type CompanyTakeHome = {
@@ -64,7 +67,7 @@ export type CompanyTakeHome = {
 export function companyTakeHome(companyProfit: number, salary: number): CompanyTakeHome | null {
   finite(companyProfit, "companyTakeHome");
   finite(salary, "companyTakeHome");
-  const s = pennies(Math.max(0, salary));
+  const s = pennies(salary); // a negative salary is refused below, by incomeTax
   const er = employerClass1(s);
   const pi = pennies(companyProfit - s - er);
   if (pi < 0) return null;
@@ -85,6 +88,10 @@ export function companyTakeHome(companyProfit: number, salary: number): CompanyT
   };
 }
 
+/** How many regions the refine visits, and how far apart their centres must be (pounds of salary). */
+const REFINE_REGIONS = 4;
+const REGION_GAP = 1_000;
+
 /** The largest salary the profit can pay with its employer NI (bisection on a decreasing function). */
 function maxSalary(companyProfit: number): number {
   let lo = 0;
@@ -94,7 +101,9 @@ function maxSalary(companyProfit: number): number {
     if (companyTakeHome(companyProfit, mid)) lo = mid;
     else hi = mid;
   }
-  return Math.floor(lo * 100) / 100; // to the penny: the best salary can be the whole profit less its NI, e.g. 11,041.65
+  // to the penny (the best salary can be the whole profit less its NI, e.g. 11,041.65); the 1e-6 keeps a float a hair
+  // under a whole penny (61,716.99999 for 617.17) from losing that penny
+  return Math.floor(lo * 100 + 1e-6) / 100;
 }
 
 /** The salary at which the company's profit after salary equals `target`, or null when no salary gets there. */
@@ -131,17 +140,24 @@ export function bestCompanyTakeHome(companyProfit: number): CompanyTakeHome {
   for (let s = 0; s <= sMax; s += 250) candidates.add(s);
   const better = (a: CompanyTakeHome | null, b: CompanyTakeHome | null) =>
     !!a && (!b || a.takeHome > b.takeHome || (a.takeHome === b.takeHome && a.salary < b.salary));
-  let best: CompanyTakeHome | null = null;
-  for (const s of [...candidates].sort((a, b) => a - b)) {
+  const evaluated: CompanyTakeHome[] = [];
+  for (const s of candidates) {
     const r = companyTakeHome(companyProfit, s);
-    if (better(r, best)) best = r;
+    if (r) evaluated.push(r);
   }
-  if (!best) throw new Error(`bestCompanyTakeHome: no feasible salary for profit ${companyProfit}`);
-  let winner: CompanyTakeHome = best;
-  const centre = winner.salary;
-  for (let s = Math.max(0, centre - 250); s <= Math.min(sMax, centre + 250); s++) {
-    const r = companyTakeHome(companyProfit, s);
-    if (r && better(r, winner)) winner = r;
+  if (evaluated.length === 0) throw new Error(`bestCompanyTakeHome: no feasible salary for profit ${companyProfit}`);
+  const ranked = evaluated.sort((a, b) => b.takeHome - a.takeHome || a.salary - b.salary);
+  const centres: number[] = [];
+  for (const r of ranked) {
+    if (centres.every((c) => Math.abs(c - r.salary) >= REGION_GAP)) centres.push(r.salary);
+    if (centres.length === REFINE_REGIONS) break;
+  }
+  let winner: CompanyTakeHome = ranked[0];
+  for (const centre of centres) {
+    for (let s = Math.max(0, centre - 250); s <= Math.min(sMax, centre + 250); s++) {
+      const r = companyTakeHome(companyProfit, s);
+      if (r && better(r, winner)) winner = r;
+    }
   }
   return winner;
 }
