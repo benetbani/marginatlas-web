@@ -1926,7 +1926,10 @@ product gives 300.28), only the last 20 years counting (45 with 25 years: 22 wee
 upper age, the capped week's pay it reports, the notice edges and the zeros that mean something, and refuses a part year
 and an age, a week's pay or a number of months that is not finite or is negative. Six of thirteen deliberate faults passed
 the first version of this test; the review of 2026-10-03 found five more gaps (a cap by weeks, plain rounding, the
-reported fields, Infinity, the age's day); all 35 faults now fail it.
+reported fields, Infinity, the age's day), and its re-review the fields and the age guard of the under-two-years return
+and a pay rounded up. 40 of 41 deliberate faults now fail it; the one that passes refuses an age of 0, which no employee
+has. GOV.UK's calculator takes the age on the date of redundancy, so on the eve of a birthday that crosses 22 or 41 it is a
+band below this module, which follows the Act; the header says so, so nobody "fixes" the module to match it.
 
 **Files:**
 - Create: `src/lib/uk/law/redundancy.ts`
@@ -1963,9 +1966,9 @@ check("same on 800 a week: the cap of 751 gives 3,004.00 (four weeks of 751)", (
 check("62, 25 years, 900 a week: the most anyone gets, 30 weeks of 751 = 22,530.00", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 62, wholeYears: 25, weeklyPay: 900 }); return x.pay === 22_530 && x.weeks === 30 && x.weeklyPayUsed === 751; })());
 check("23, three years, 400: two weeks (one year at 22, two under 22) = 800.00", statutoryRedundancyPay({ ageAtDismissal: 23, wholeYears: 3, weeklyPay: 400 }).pay === 800);
 check("45, ten years, 600: twelve weeks = 7,200.00", statutoryRedundancyPay({ ageAtDismissal: 45, wholeYears: 10, weeklyPay: 600 }).pay === 7200);
-check("under two years: nothing", statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 1, weeklyPay: 500 }).pay === 0);
+check("under two years: nothing and no weeks, with the capped week's pay still reported (500; 751 for 800)", (() => { const a = statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 1, weeklyPay: 500 }); const b = statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 1, weeklyPay: 800 }); return a.pay === 0 && a.weeks === 0 && a.weeklyPayUsed === 500 && b.pay === 0 && b.weeks === 0 && b.weeklyPayUsed === 751; })());
 check("notice: none under a month, one week to two years, a week a year to twelve", [0.5, 12, 24, 60, 200].map(statutoryNoticeWeeks).join(",") === "0,1,2,5,12");
-check("23, exactly two years, 200.19 a week: 22 throughout the last year (1 week), 21 the one before (0.5): 1.5 weeks = 300.29, the half penny rounded up (rounding the binary product gives 300.28)", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 23, wholeYears: 2, weeklyPay: 200.19 }); return x.weeks === 1.5 && x.pay === 300.29; })());
+check("23, exactly two years, 200.19 a week: 22 throughout the last year (1 week), 21 the one before (0.5): 1.5 weeks = 300.29, the half penny rounded up (rounding the binary product gives 300.28); 200.181 gives 300.27 (not up to 300.28) and 200.186 gives 300.28 (the week's pay unrounded: rounding it first gives 300.29)", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 23, wholeYears: 2, weeklyPay: 200.19 }); return x.weeks === 1.5 && x.pay === 300.29 && statutoryRedundancyPay({ ageAtDismissal: 23, wholeYears: 2, weeklyPay: 200.181 }).pay === 300.27 && statutoryRedundancyPay({ ageAtDismissal: 23, wholeYears: 2, weeklyPay: 200.186 }).pay === 300.28; })());
 check("notice edges: a month gives a week; 35 months is two whole years (2); 143 months is 11, 144 is 12", [1, 35, 143, 144].map(statutoryNoticeWeeks).join(",") === "1,2,11,12");
 check("45, 25 years, 900 a week: only the last 20 years count (4 at 1.5, 16 at 1): 22 weeks = 16,522.00 (all 25 would be 26)", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 45, wholeYears: 25, weeklyPay: 900 }); return x.pay === 16_522 && x.weeks === 22; })());
 check("the age is the one on the day after the last day of employment: born 1 January, last day 31 December, so 42 the next day and 41 all the last year: two years at 600 a week are 2.5 weeks = 1,500.00", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 42, wholeYears: 2, weeklyPay: 600 }); return x.weeks === 2.5 && x.pay === 1500; })());
@@ -1974,7 +1977,7 @@ check("zero is allowed where it means something: no whole years, no week's pay a
 /** The guards throw a RangeError; pennies throws a plain Error on a NaN, which would hide a missing guard. */
 const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { return e instanceof RangeError; } };
 check("years must be whole and not negative: 2.5 (which would count three) and -1 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 2.5, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: -1, weeklyPay: 500 })));
-check("an age must be a finite number and not negative: NaN and Infinity (which would pay every year at 1.5 weeks) and -1 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: Number.NaN, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: Infinity, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: -1, wholeYears: 4, weeklyPay: 500 })));
+check("an age must be a finite number and not negative: NaN and Infinity (which would pay every year at 1.5 weeks) and -1 are refused, and under two years too", refuses(() => statutoryRedundancyPay({ ageAtDismissal: Number.NaN, wholeYears: 1, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: Number.NaN, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: Infinity, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: -1, wholeYears: 4, weeklyPay: 500 })));
 check("a week's pay must be a finite number and not negative: NaN, Infinity (which the cap would hide) and -500 are refused, and under two years too", refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: Number.NaN })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: Infinity })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: -500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 1, weeklyPay: Number.NaN })));
 check("notice months must be a finite number and not negative: NaN, Infinity and -1 are refused", refuses(() => statutoryNoticeWeeks(Number.NaN)) && refuses(() => statutoryNoticeWeeks(Infinity)) && refuses(() => statutoryNoticeWeeks(-1)));
 
@@ -2008,7 +2011,9 @@ Create `src/lib/uk/law/redundancy.ts`:
  * twelve months, s 210(3)), so the age held throughout the k-th most recent year (k = 0, 1, ...) is the age on its first
  * day, which is exactly ageAtDismissal - 1 - k when ageAtDismissal is the age on the day after the relevant date. (The age
  * on the last day itself is one too low on the eve of a birthday: someone whose last day is 31 December and who turns 42
- * on 1 January was 41 all that year, worth 1.5 weeks, not 1.) A week's pay is capped at 751 (s 227), so the most anyone
+ * on 1 January was 41 all that year, worth 1.5 weeks, not 1. GOV.UK's calculator takes the age on the date of redundancy,
+ * so on that one day a year, where the years cross 22 or 41, it is a band below this module; the module follows the Act.)
+ * A week's pay is capped at 751 (s 227) and used as given, unrounded; the pay is rounded once, at the end. The most anyone
  * can get is 30 x 751 = 22,530.
  *
  * NOTICE (the employer's minimum, s 86): none under a month; one week from a month to two years; then a week per whole
@@ -2017,7 +2022,12 @@ Create `src/lib/uk/law/redundancy.ts`:
 import { UK_2026_27 as L } from "./params_2026_27";
 import { pennies } from "./money";
 
-export function statutoryRedundancyPay(input: { ageAtDismissal: number; wholeYears: number; weeklyPay: number }): { weeks: number; weeklyPayUsed: number; pay: number } {
+export function statutoryRedundancyPay(input: {
+  /** the age on the day after the relevant date (the last day of employment), not on the last day itself: see the header */
+  ageAtDismissal: number;
+  wholeYears: number;
+  weeklyPay: number;
+}): { weeks: number; weeklyPayUsed: number; pay: number } {
   // a part year would count as a whole one in the loop below, and an age that is not a number would pay every year at 1.5
   if (!Number.isFinite(input.ageAtDismissal) || input.ageAtDismissal < 0) throw new RangeError(`statutoryRedundancyPay: not an age (${input.ageAtDismissal})`);
   if (!Number.isInteger(input.wholeYears) || input.wholeYears < 0) throw new RangeError(`statutoryRedundancyPay: not a whole number of years (${input.wholeYears})`);
@@ -2104,7 +2114,12 @@ tiny (the plain form divides by zero once 1 + r rounds to 1); the two forms agre
 months, 0.1% to 30%, five principals), and 5,000 random loans agree with 60-digit decimal arithmetic. The test also pins
 one month (1,000 at 12%: 1,010.00), nothing borrowed and a rate of 1e-13 %, and refuses a principal or a rate that is not
 a finite number or is negative, and months that are not a whole number of at least one; three of nine deliberate faults
-passed the first version of this test.
+passed the first version of this test. The review of 2026-10-03 showed the plain form wrong by pounds long before it
+divides by zero (417.00 a month for 416.67 at 1e-10 %, so a guard at `1 + r === 1` repairs nothing), and the rounding rule
+unpinned: the test now checks 1e-10 %, a payment that rounds down and a total that rounds up (5,000 at 8% over five years:
+101.38, 6,082.92), a half penny (1,021.50 at 12% for a month is 1,031.715: 1,031.72, where rounding the binary figure gives
+1,031.71) and refuses -1 and Infinity months; all 23 deliberate faults fail it. The printed total, n times the exact
+payment, is the one total not the sum of its rounded lines (60 x 500.95 is 30,057.00); the header says so.
 
 **Files:**
 - Create: `src/lib/uk/law/loan.ts`
@@ -2143,11 +2158,14 @@ check("no interest: the principal over the months", annuity({ principal: 12_000,
 check("one month: the principal and a month's interest (1,000 at 12%: 1,010.00, 10.00 of interest)", (() => { const x = annuity({ principal: 1000, annualRatePct: 12, months: 1 }); return x.monthly === 1010 && x.totalRepaid === 1010 && x.interest === 10; })());
 check("nothing borrowed: nothing to repay", (() => { const x = annuity({ principal: 0, annualRatePct: 7.5, months: 60 }); return x.monthly === 0 && x.totalRepaid === 0 && x.interest === 0; })());
 check("a rate of 1e-13 %, where 1 + r is exactly 1 in floating point: still the principal over the months (416.67 a month, 25,000.00 in all), not a division by zero", (() => { const x = annuity({ principal: 25_000, annualRatePct: 1e-13, months: 60 }); return x.monthly === 416.67 && x.totalRepaid === 25_000 && x.interest === 0; })());
+check("a rate of 1e-10 %, where 1 + r keeps only a few digits of r: 416.67 a month and 25,000.00 in all (the plain form gives 417.00)", (() => { const x = annuity({ principal: 25_000, annualRatePct: 1e-10, months: 60 }); return x.monthly === 416.67 && x.totalRepaid === 25_000 && x.interest === 0; })());
+check("rounding is to the nearest penny: 5,000 at 8% over five years is 101.38 a month (101.382 exact), 6,082.92 in all (6,082.918), 1,082.92 of interest", (() => { const x = annuity({ principal: 5000, annualRatePct: 8, months: 60 }); return x.monthly === 101.38 && x.totalRepaid === 6082.92 && x.interest === 1082.92; })());
+check("a half penny rounds up: 1,021.50 at 12% for a month is 1,031.715, so 1,031.72 and 10.22 of interest (rounding the binary figure gives 1,031.71); 1,001.10 at no interest over 60 months is 16.685, so 16.69", (() => { const x = annuity({ principal: 1021.5, annualRatePct: 12, months: 1 }); return x.monthly === 1031.72 && x.totalRepaid === 1031.72 && x.interest === 10.22 && annuity({ principal: 1001.1, annualRatePct: 0, months: 60 }).monthly === 16.69; })());
 /** The guards throw a RangeError; pennies throws a plain Error on a NaN or an infinity, which would hide a missing guard. */
 const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { return e instanceof RangeError; } };
 check("a principal must be a finite number and not negative: NaN, Infinity and -1 are refused", [Number.NaN, Infinity, -1].every((principal) => refuses(() => annuity({ principal, annualRatePct: 7.5, months: 60 }))));
 check("a rate must be a finite number and not negative: NaN, Infinity and -1 are refused", [Number.NaN, Infinity, -1].every((annualRatePct) => refuses(() => annuity({ principal: 25_000, annualRatePct, months: 60 }))));
-check("months must be a whole number, at least one: 0, 1.5 and NaN are refused", [0, 1.5, Number.NaN].every((months) => refuses(() => annuity({ principal: 25_000, annualRatePct: 7.5, months }))));
+check("months must be a whole number, at least one: 0, -1, 1.5, NaN and Infinity are refused", [0, -1, 1.5, Number.NaN, Infinity].every((months) => refuses(() => annuity({ principal: 25_000, annualRatePct: 7.5, months }))));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/loan: all pass");
@@ -2170,13 +2188,15 @@ Create `src/lib/uk/law/loan.ts`:
  * src/lib/uk/law/loan.ts
  *
  * The repayment of a fixed-rate loan repaid monthly over n months (an annuity):
- *   payment = A x r / (1 - (1 + r)^-n),   r = annual rate / 12;   payment = A / n when r = 0.
+ *   payment = A x r / (1 - (1 + r)^-n),   r = annualRatePct / 100 / 12;   payment = A / n when r = 0.
  * Derivation: the present value of n payments of size x at rate r is x (1 - (1 + r)^-n) / r; set it equal to A.
  * The denominator is computed as -expm1(-n log1p(r)), since (1 + r)^-n = exp(-n ln(1 + r)): the same number, but it keeps
- * its digits when r is tiny, where 1 + r rounds to exactly 1 and the plain form divides by zero. (The two forms agree to
- * the penny on 540,000 loans of 1 to 360 months at 0.1% to 30%.)
- * The total repaid is n x the exact payment, rounded once. A lender's schedule pays the rounded payment and settles the
- * pennies in the last one: on the worked example, each month's interest rounded to the penny, 59 x 500.95 and a last
+ * its digits when r is tiny. The plain form keeps only the digits of r that survive in 1 + r: it is wrong by pounds long
+ * before it divides by zero (417.00 a month for 416.67 at 1e-10 %, on 25,000 over five years), so guarding 1 + r === 1
+ * would not repair it. (The two forms agree to the penny on 540,000 loans of 1 to 360 months at 0.1% to 30%.)
+ * The total repaid is n x the exact payment, rounded once: the one printed total here that is not the sum of its rounded
+ * lines (60 x 500.95 is 30,057.00, 8p over the 30,056.92 printed). A lender's schedule pays the rounded payment and settles
+ * the pennies in the last one: on the worked example, each month's interest rounded to the penny, 59 x 500.95 and a last
  * 500.91, 4p more in all.
  */
 import { pennies } from "./money";
@@ -2199,7 +2219,7 @@ export function annuity(input: { principal: number; annualRatePct: number; month
 npx tsx tests/uk/law/loan.test.ts
 ```
 
-Expected: 9 lines starting `PASS`, the last line `uk/law/loan: all pass`, exit code 0.
+Expected: 12 lines starting `PASS`, the last line `uk/law/loan: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
