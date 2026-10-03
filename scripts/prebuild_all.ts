@@ -529,6 +529,7 @@ const GATES: Gate[] = [
   /* The UK law engine (docs/superpowers/plans/2026-10-02-vertical-engine-01-uk-law.md): every rate and threshold
      of 2026-27 in one dated file, each module proved on official worked examples to the penny. */
   { name: "uk-law-money", script: "tests/uk/law/money.test.ts" },
+  { name: "uk-law-income-tax", script: "tests/uk/law/income_tax.test.ts" },
   /* A placeholder is not a figure (2026-09-23 night): two new builders read one
      each as "modelled" the same evening (London's calendar, printed on
      production; North Korea's household budget, unserved only because /kp is a

@@ -1378,6 +1378,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-income-tax",
+      "script": "tests/uk/law/income_tax.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Income tax 2026-27 (rUK): allowance, taper, bands, dividends on top, and the shape of the schedule.",
+      "reads": [
+        "src/lib/uk/law/income_tax.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
