@@ -1160,7 +1160,7 @@ Seven trades pass. London, sole trader, the business at the median, on the slice
 | restaurants | 203 m2, RV 73,375 | 556,017 | 32 of 100 | 5.0% | 13,756 |
 | bakeries-retail | 90 m2, RV 27,956 (valued as cafes) | 351,741 | 36 of 100 | 16.8% | 30,399 |
 | sports-fitness | 305 m2, RV 55,732 | 275,028 | 34 of 100 | 23.3% | 30,960 |
-| auto-repair-shops | 261 m2, RV 26,342 | 215,386 | 38 of 100 | 21.3% | 28,858 |
+| auto-repair-shops | 261 m2, RV 26,342 | 213,360 | 39 of 100 | 21.6% | 29,164 |
 | dental-practices | 144 m2, RV 45,605 | 198,711 | 47 of 100 | 26.5% | 39,216 |
 
 Grocery stores fail both screens (17 of 100 above break-even, a margin of -12.9%): the valuation's 540 convenience stores
@@ -1403,7 +1403,7 @@ export const RECIPES: Readonly<Record<string, Recipe>> = {
   "auto-repair-shops": {
     trade: "auto-repair-shops",
     research: "data/facts/industry/auto_repair_shops.json",
-    retailHospitalityLeisure: false,
+    retailHospitalityLeisure: true,
     utilitiesCarried: false,
     variable: [{ key: "parts and materials", driver: "Parts and materials", shareOfSales: 0.35, kind: "estimate", basis: "parts and materials 35% of sales" }],
     sized: [

@@ -98,7 +98,7 @@ Each value in `src/lib/uk/law/params_2026_27.ts`, the page it was read on, the s
 | restaurants | restaurant | yes | |
 | bakeries-retail | bakery shop or cafe | yes | |
 | sports-fitness | gym | yes | |
-| auto-repair-shops | vehicle repair workshop | no | |
+| auto-repair-shops | vehicle repair workshop (a garage) | yes (garages are a named qualifying use, read 2026-10-03) | |
 | dental-practices | surgery | no | |
 ```
 
@@ -195,7 +195,8 @@ Create `src/lib/uk/law/params_2026_27.ts`:
  * A formula never types a rate or a threshold of its own: it reads it here, so a Budget change is one edit and one test run.
  *
  * Sources were read on 2026-10-02 (design/loop/build/research/2026-10-02-pro-sections-uk-law.md and
- * 2026-10-02-guides-hub-and-sources.md). Scottish income tax bands are NOT here: a Scottish taxpayer's figures are out of
+ * 2026-10-02-guides-hub-and-sources.md) and confirmed on 2026-10-03, every value with its quoted sentence and page, in
+ * docs/uk-law/2026-27-readings.md. Scottish income tax bands are NOT here: a Scottish taxpayer's figures are out of
  * scope until a scottish block is added, and the functions say so by name (rUK).
  */
 export const UK_2026_27 = {
@@ -205,6 +206,7 @@ export const UK_2026_27 = {
     personalAllowance: 12_570,
     /** The allowance falls by 1 pound for every 2 pounds of adjusted net income above this. */
     taperThreshold: 100_000,
+    /** https://www.gov.uk/government/publications/rates-and-allowances-income-tax/income-tax-rates-and-allowances-current-and-past (the rates page prints the band only as 12,571 to 50,270) */
     basicRateBand: 37_700,
     additionalRateThreshold: 125_140,
     basic: 0.2,
@@ -241,7 +243,7 @@ export const UK_2026_27 = {
     employmentAllowance: 10_500,
   },
   pension: {
-    /** https://www.thepensionsregulator.gov.uk/en/employers/new-employers/im-an-employer-who-has-to-provide-a-pension/declare-your-compliance/ongoing-duties-for-employers/earnings-thresholds (2026-27, unchanged) */
+    /** thresholds for 2026-27: https://www.thepensionsregulator.gov.uk/en/employers/new-employers/im-an-employer-who-has-to-provide-a-pension/declare-your-compliance/ongoing-duties-for-employers/earnings-thresholds ; the 3% employer minimum: https://www.gov.uk/workplace-pensions/what-you-your-employer-and-the-government-pay */
     trigger: 10_000,
     qualifyingLower: 6_240,
     qualifyingUpper: 50_270,
@@ -251,7 +253,7 @@ export const UK_2026_27 = {
     statePensionAge: 66,
   },
   corporationTax: {
-    /** https://www.gov.uk/corporation-tax-rates ; the marginal relief fraction 3/200 is read on the Marginal Relief guidance that page links (plan 2026-10-02-vertical-engine-01, task 1) */
+    /** rates and limits: https://www.gov.uk/corporation-tax-rates ; the standard fraction 3/200 for the year from 1 April 2026: https://www.gov.uk/government/publications/rates-and-allowances-corporation-tax/rates-and-allowances-corporation-tax (the Marginal Relief guidance prints no fraction) */
     lowerLimit: 50_000,
     upperLimit: 250_000,
     smallProfitsRate: 0.19,
@@ -259,21 +261,21 @@ export const UK_2026_27 = {
     marginalReliefFraction: 3 / 200,
   },
   businessRates: {
-    /** England 2026-27. https://www.gov.uk/guidance/business-rates-multipliers-qualifying-retail-hospitality-or-leisure */
+    /** England 2026-27. Multipliers: https://www.gov.uk/estimate-your-business-rates and the multipliers notification 2/2026; which uses qualify: https://www.gov.uk/guidance/business-rates-multipliers-qualifying-retail-hospitality-or-leisure */
     smallMultiplier: 0.432,
     standardMultiplier: 0.48,
     rhlSmallMultiplier: 0.382,
     rhlStandardMultiplier: 0.43,
     /** the small multipliers apply below this rateable value */
     smallThreshold: 51_000,
-    /** above this a higher multiplier applies; out of scope for street businesses, the function refuses it */
+    /** at and above this the high-value multiplier applies (500,000 itself is high-value); out of scope for street businesses, the function refuses it */
     highValueThreshold: 500_000,
     /** https://www.gov.uk/business-rates-relief/small-business-rate-relief */
     sbrrFullUpTo: 12_000,
     sbrrNoneFrom: 15_000,
   },
   leaseRentTax: {
-    /** SDLT, non-residential lease rent, Finance Act 2003 Sch 5; https://www.gov.uk/stamp-duty-land-tax */
+    /** SDLT, non-residential lease rent: the 3.5% discount rate from Finance Act 2003 Sch 5 para 8(1); the bands from https://www.gov.uk/stamp-duty-land-tax/nonresidential-and-mixed-rates */
     discountRate: 0.035,
     sdlt: [
       { upTo: 150_000, rate: 0 },

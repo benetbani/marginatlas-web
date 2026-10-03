@@ -34,6 +34,7 @@ Validation also corrected two things in the first draft of this plan, recorded s
 
 - **The profit model held one business's fixed costs constant across the whole sales distribution.** The register's quartiles are different businesses of different sizes, so that printed a London restaurant at the lower quartile losing about 140,000, an artifact. Section 3.14 replaces it with the size rule. A finding that came from the same mistake is withdrawn: "London salon premises cost 29% of sales against the research's 15%" divided the average salon's rent and rates by the median business's sales, two different businesses. On one footing, the average salon's premises cost 16.5% of its occupier's sales.
 - **The precision rule rounded to the first power of ten at least the range's whole width**, which printed a take-home of 13,756 (known to 11,534 to 15,558) as 10,000. Section 3.17 uses the measurement convention instead: 14,000.
+- **Vehicle repair was given the national rates multipliers.** The official qualifying-uses page names garages (MOT and repair for visiting members of the public) as retail, hospitality or leisure (read 2026-10-03), so the auto-repair recipe takes the 38.2p and 43p multipliers.
 
 The figures the validation produced are findings in their own right:
 
@@ -163,7 +164,7 @@ f(RV) = 1 (RV <= 12,000);  (15,000 - RV) / 3,000 (12,000 < RV < 15,000);  0 (RV 
 bill  = RV x m(RV) x (1 - f(RV))
 ```
 
-`f` is continuous; `m` steps: at 51,000 a bill rises by about 2,448 for one pound of value (51,000 x 4.8p). Plan 01 task 1 reads whether small business relief applies at the 38.2p multiplier and which trades qualify as retail, hospitality or leisure, before any page prints a rate.
+`f` is continuous; `m` steps: at 51,000 a bill rises by about 2,448 for one pound of value (51,000 x 4.8p). Read on 2026-10-03 (`docs/uk-law/2026-27-readings.md`): relief applies at the 38.2p multiplier (the official pages support it and a billing council states it); hair and beauty salons, restaurants, bakers and cafes, gyms and garages qualify as retail, hospitality or leisure, and dentistry is excluded. Garages were the plan's one wrong expectation; the auto-repair recipe now takes the 38.2p and 43p multipliers.
 
 ### 3.8 Tax on a lease's rent
 
@@ -276,7 +277,7 @@ Seven trades pass (London, sole trader, slices of 2026-10-02):
 | restaurants | 203 m2, RV 73,375 | 556,017 | 32 of 100 | 5.0% | 13,756 (11,534 to 15,558) | yes |
 | bakeries-retail | 90 m2, RV 27,956 (cafes) | 351,741 | 36 of 100 | 16.8% | 30,399 | no |
 | sports-fitness | 305 m2, RV 55,732 | 275,028 | 34 of 100 | 23.3% | 30,960 | yes |
-| auto-repair-shops | 261 m2, RV 26,342 | 215,386 | 38 of 100 | 21.3% | 28,858 | no |
+| auto-repair-shops | 261 m2, RV 26,342 | 213,360 | 39 of 100 | 21.6% | 29,164 | no |
 | dental-practices | 144 m2, RV 45,605 | 198,711 | 47 of 100 | 26.5% | 39,216 | no |
 
 Margins exceed the research files' net margins for a reason that is the point: the owner's own labour is in the profit (the research pays a wage to every chair), and research "net" is after tax and depreciation. Where utilities are not carried (the research lumps them with rent), the margin is overstated by them, a few per cent of sales, until plan 07's energy line; until then a page prints no money for those four trades. The London loader withholds with a reason, data first: no bands for the trade's code; no kind of premises (hotels, bars, cleaners); premises valued as shops or offices (dry cleaners, accountants: an average over unlike occupiers); under 100 premises of the kind (veterinary clinics: the valuation's rounding moves the average area by more than a tenth); or no recipe (grocers, food trucks).
@@ -357,7 +358,7 @@ Plans 01, 02 and 04 can run in parallel; 03 needs 01 (the law) and 02 (the expor
 | ASHE by occupation and region (OGL) | wages where a recipe needs them | a new download: needs his OK |
 | Valuation statistics for the 2026 list (April 2024 values), when published | the rent proxy's date | watch |
 | His free Companies House API key | survival by detailed trade and district | asked before |
-| The readings of plan 01, task 1 | the corporation-tax fraction, rates multipliers and relief, which trades qualify as retail, hospitality or leisure | in plan 01 |
+| The readings of plan 01, task 1 | the corporation-tax fraction, rates multipliers and relief, which trades qualify as retail, hospitality or leisure | done 2026-10-03: every value matches; garages qualify (the plan expected not) |
 
 ## 7. Decisions that are his
 
