@@ -328,10 +328,13 @@ tie went to whichever came first, and the leader decides who joins; on rates fro
 about one set in twenty-five): members with the same figure are now taken lowest-reaching interval first, then
 highest-reaching, so a group that starts among them is led by the one that can be told apart from the fewest members below.
 It also found the sort key, later groups, the leader's own fields and both sides of the guard unpinned; an interval's
-ends must now be finite, and a member must say whether it is a fill. The header no longer claims more than the rule gives:
-no member is ranked below a leader it cannot be told apart from, but one that overlaps another member, not that member's
-leader, still starts a lower group (11, 9.5 and 8 with intervals 10 to 12, 8.5 to 10.5 and 7 to 9 rank 1, 1, 3). All 25
-deliberate faults now fail it.
+ends must now be finite, and a member must say whether it is a fill. Its re-review found the tie-break's two keys
+unpinned (nine variants passed) and a null figure ranked as 0 once the finite-figure clause was dropped as redundant (it is
+redundant only for numbers): the clause is back, and each tie-break key and their order are pinned in both row orders,
+with two zero rates (0 of 100 and 0 of 400 under 0.02) among them. The header states only what the rule gives: every
+member overlaps its own group's leader, no leader overlaps the leader above, ranks never rise down the list; a member can
+still overlap a higher member, even a leader, and rank lower (28.9, 12 and 11 with intervals 27.3 to 30.5, 11 to 13 and 2
+to 29 rank 1, 2, 2), so a page marks the top group by rank. All 38 deliberate faults now fail it.
 
 **Files:**
 - Create: `src/lib/uk/present/compare.ts`
@@ -414,6 +417,23 @@ check("a set of fills reports every one left out and none used; a fill that is n
 const none = medianExcludingFills([]);
 check("an empty set has no median; one own figure is its own median", none.median === null && none.used === 0 && none.leftOut === 0 && medianExcludingFills([{ value: 7, isFill: false }]).median === 7);
 
+// the tie-break, both keys and their order, each set in both row orders (figures from the rule by hand)
+const P: Row = { id: "P", value: 20, lo: 15, hi: 25 }, T1: Row = { id: "T1", value: 10, lo: 5, hi: 12 }, T2: Row = { id: "T2", value: 10, lo: 5, hi: 20 };
+check("same figure, same low end, different high ends: the one that reaches the leader is level with it, in either row order (P 1, T2 1, T1 3)", show(rankWithTies([P, T1, T2])) === "P:1 T2:1= T1:3" && show(rankWithTies([P, T2, T1])) === "P:1 T2:1= T1:3");
+const Pz: Row = { id: "P", value: 0.02, lo: 0.012, hi: 0.03 }, Z1: Row = { id: "Z1", value: 0, lo: 0, hi: 0.0369 }, Z2: Row = { id: "Z2", value: 0, lo: 0, hi: 0.0092 };
+check("two zero rates, 0 of 100 (0 to 0.0369) and 0 of 400 (0 to 0.0092), under 0.02: the wider one is level with the leader, in either row order", show(rankWithTies([Pz, Z1, Z2])) === "P:1 Z1:1= Z2:3" && show(rankWithTies([Pz, Z2, Z1])) === "P:1 Z1:1= Z2:3");
+check("lowest-reaching first: 10 (8 to 12) with 5 (1 to 9) and 5 (4.9 to 5.1) rank 1, 1, 3, in either row order", show(rankWithTies([H, X, Y])) === "H:1 Y:1= X:3" && show(rankWithTies([H, Y, X])) === "H:1 Y:1= X:3");
+check("two 10s and a 6: the 10 reaching lowest leads, so the 6 is level with it, in either row order", show(rankWithTies([A, B, C])) === "B:1 A:1= C:1=" && show(rankWithTies([B, A, C])) === "B:1 A:1= C:1=");
+const Pq: Row = { id: "P", value: 16, lo: 15, hi: 17 }, TF: Row = { id: "TF", value: 10, lo: 1, hi: 10.5 }, TS: Row = { id: "TS", value: 10, lo: 5, hi: 20 };
+check("the low end decides before the high end: 16 (15 to 17), 10 (1 to 10.5) and 10 (5 to 20) rank 1, 2, 2, in either row order", show(rankWithTies([Pq, TF, TS])) === "P:1 TF:2 TS:2=" && show(rankWithTies([Pq, TS, TF])) === "P:1 TF:2 TS:2=");
+const bad = (value: unknown, lo = 0, hi = 5) => [{ value: value as number, lo, hi }];
+check("a figure that is null, a string, a boolean or an array is refused (a null would compare as 0), and so is an interval open at the bottom", refuses(() => rankWithTies(bad(null))) && refuses(() => rankWithTies(bad(null, -1, 1))) && refuses(() => rankWithTies(bad("3", 2, 5))) && refuses(() => rankWithTies(bad(""))) && refuses(() => rankWithTies(bad(true))) && refuses(() => rankWithTies(bad([]))) && refuses(() => rankWithTies([{ value: 5, lo: -Infinity, hi: 6 }])));
+const ra: Row = { id: "a", value: 30, lo: 29, hi: 31 }, rb: Row = { id: "b", value: 20, lo: 19, hi: 21 }, rc: Row = { id: "c", value: 10, lo: 9, hi: 11 };
+const firstRanking = rankWithTies([ra, rb, rc]);
+rankWithTies([rb, rc]);
+check("rows are copied, not written to: a ranking keeps its ranks after the same rows are ranked in another set", show(firstRanking) === "a:1 b:2 c:3" && !("rank" in ra) && !("levelWithAbove" in rb));
+const flag = (isFill: unknown) => ({ value: 1, isFill: isFill as boolean });
+check("a fill flag of null, 0 or a string is refused, and so is a missing one after good ones", refuses(() => medianExcludingFills([flag(null)])) && refuses(() => medianExcludingFills([flag(0)])) && refuses(() => medianExcludingFills([flag("no")])) && refuses(() => medianExcludingFills([{ value: 1, isFill: false }, { value: 100, isFill: undefined as unknown as boolean }, { value: 3, isFill: false }])));
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/compare: all pass");
 ```
@@ -438,15 +458,18 @@ Create `src/lib/uk/present/compare.ts`:
  *
  * LEVEL WITH. Members are sorted by value, highest first. A member is "level with" the group above it when its interval
  * overlaps the interval of that group's first member, its leader; otherwise it starts a new group. Members of one group
- * share a rank (1, 1, 1, 4). So no member is ranked below a leader the data cannot tell it apart from, and a page that
- * marks "the highest" marks a group, not a member, when the leader is level with the next. It is not a promise about every
- * pair: a member that overlaps another member, but not that member's leader, still starts a lower group (11 (10 to 12),
- * 9.5 (8.5 to 10.5) and 8 (7 to 9) rank 1, 1, 3: the 8 is apart from the 11, not from the 9.5), so levelWithAbove means
- * "level with its group's leader", never "level with the row above". Intervals are closed: two that touch at one point
- * overlap. Members with the same figure are taken lowest-reaching interval first (then highest-reaching), so a group that
- * starts among them is led by the one that can be told apart from the fewest members below, and no rank depends on the
- * order of the rows. Every interval must hold a finite figure between two finite ends: anything else is refused, since the
- * overlap test means nothing for it.
+ * share a rank (1, 1, 1, 4), and a page that marks "the highest" marks a group, not a member, when the leader is level with
+ * the next. What holds by construction: every member overlaps its own group's leader; no leader overlaps the leader of the
+ * group above; ranks never rise down the list. It is a rule about leaders, not about every pair: a member can sit in a lower
+ * group while overlapping a member, even a leader, of a higher one (28.9 (27.3 to 30.5), 12 (11 to 13) and 11 (2 to 29)
+ * rank 1, 2, 2: the 11 overlaps the 28.9 but comes after the 12, which starts the second group). So levelWithAbove means
+ * "level with its group's leader", and a page marks the top group by rank, never by levelWithAbove (two identical rows are
+ * level in either order, but which of them carries the flag follows the rows). Intervals are closed: two that touch at one
+ * point overlap. Members with the same figure are taken lowest-reaching interval first, then highest-reaching: that pools
+ * the most (the fewest groups, in every one of 23,030 random tied sets), at the price of leaving a member below a leader it
+ * overlaps a little more often than highest-reaching first would; either way no rank depends on the order of the rows. A
+ * figure and both ends must be finite numbers, the figure between the ends: anything else is refused (a null would
+ * otherwise compare as 0, and the overlap test means nothing for it).
  *
  * SET STATISTICS WITHOUT FILLS. A set's median is taken over members whose figure is their own: a member carrying a fill
  * value (a default written in for a missing figure) is left out, and the count left out is returned, so a "world median"
@@ -457,8 +480,8 @@ export type Ranked<T> = T & { rank: number; levelWithAbove: boolean };
 
 export function rankWithTies<T extends { value: number; lo: number; hi: number }>(rows: readonly T[]): Ranked<T>[] {
   for (const r of rows) {
-    // two finite ends with the figure between them, so the figure is finite too (a NaN fails both comparisons)
-    if (!(Number.isFinite(r.lo) && Number.isFinite(r.hi) && r.lo <= r.value && r.value <= r.hi)) throw new RangeError(`rankWithTies: ${r.value} is not a figure inside its interval ${r.lo} to ${r.hi}`);
+    // all three finite numbers (a null figure would compare as 0), the figure between the ends
+    if (!(Number.isFinite(r.value) && Number.isFinite(r.lo) && Number.isFinite(r.hi) && r.lo <= r.value && r.value <= r.hi)) throw new RangeError(`rankWithTies: ${r.value} is not a figure inside its interval ${r.lo} to ${r.hi}`);
   }
   const sorted = [...rows].sort((a, b) => b.value - a.value || a.lo - b.lo || b.hi - a.hi);
   const out: Ranked<T>[] = [];
@@ -494,7 +517,7 @@ export function medianExcludingFills(values: readonly { value: number; isFill: b
 npx tsx tests/uk/present/compare.test.ts
 ```
 
-Expected: 22 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
+Expected: 30 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
