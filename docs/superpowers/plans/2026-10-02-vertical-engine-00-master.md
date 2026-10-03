@@ -74,7 +74,7 @@ Arithmetic never launders an estimate (`src/lib/uk/pnl/kinds.ts`).
 
 **P6. No clamp manufactures a number.** No margin floor, no fill value, no cap that becomes a figure. A figure that cannot be computed honestly is withheld with its reason.
 
-**P7. Every formula states its invariants and the tests prove them:** continuity where the law is continuous (income tax, corporation tax, the relief taper), the steps where the law steps (the rates multiplier at 51,000), monotonicity, marginal rates in [0, 1), identities (sales = bill + profit; the two readings of the profit model agree at the anchor).
+**P7. Every formula states its invariants and the tests prove them:** continuity where the law is continuous (corporation tax, the relief taper, income tax outside the allowance taper), the steps where the law steps (the rates multiplier at 51,000, the allowance's 40p steps), monotonicity, marginal rates in [0, 1), identities (sales = bill + profit; the two readings of the profit model agree at the anchor).
 
 **P8. Precision follows knowledge.** A figure prints at the place of the leading digit of its uncertainty's half-width, and never past three significant figures (3.17).
 
@@ -102,7 +102,7 @@ tax_n = 20% x min(T_n, 37,700) + 40% x clamp(T_n, 37,700, 125,140) + 45% x max(0
 dividends: the first 500 at 0% (using band), then 10.75% / 35.75% / 39.35% from position T_n + 500
 ```
 
-The marginal rate of non-savings income is 0, 20%, 40%, then **60% between 100,000 and 125,140** (each pound of income costs 40p and withdraws 50p of allowance taxed at 40p in the pound), then 45%. The schedule is continuous and non-decreasing; the tests sweep 0 to 200,000 and assert both. The whole-pound taper makes a sawtooth of a few pence inside the 60% band, which matters for the company optimiser (3.5).
+The marginal rate of non-savings income is 0, 20%, 40%, then **60% between 100,000 and 125,140** (each pound of income costs 40p and withdraws 50p of allowance taxed at 40p in the pound), then 45%. The schedule never falls, and inside the taper it is not continuous: each even pound of excess takes a whole pound of allowance at once, a 40p step of tax (12,570 steps from 100,002 to 125,140; over each 2 pounds the tax rises 1.20, the 60%). Everywhere else the last penny before a pound moves the tax by a penny at most; the tests assert both, the steps exactly. The steps matter for the company optimiser (3.5).
 
 ### 3.3 National Insurance (2026-27, annual basis)
 
@@ -135,7 +135,7 @@ ct(s) = CT(pi(s))                          d(s)  = pi(s) - ct(s)
 K_co(Pi) = max over s in [0, s_max] of  s - ee(s) + d(s) - IT(s, d(s))
 ```
 
-Every schedule is continuous and piecewise linear in s, so `K_co` is too, and its maximum is at a breakpoint or an end: 5,000, 12,570, 50,270, the taper points, the two salaries that put `pi(s)` on a corporation-tax limit, and `s_max` (kept to the penny). The search evaluates those, a 250-pound grid, then refines to the pound; a brute-force 10-pound grid never beats it (tested). The taper's sawtooth moves the optimum a few pounds off its kink (150,000: 4,996, 14p better than 5,000), so pages print the salary to the nearest 100.
+Outside the allowance taper every schedule is continuous and piecewise linear in s, so `K_co` is too, and its maximum is at a breakpoint or an end: 5,000, 12,570, 50,270, the taper points, the two salaries that put `pi(s)` on a corporation-tax limit, and `s_max` (kept to the penny). The search evaluates those, a 250-pound grid, then refines to the pound; a brute-force 10-pound grid never beats it (tested). Inside the taper `K_co` drops by up to 40p at each even pound of adjusted net income (a sawtooth), which the refine to the pound handles (150,000: 4,996, 14p better than 5,000), so pages print the salary to the nearest 100.
 
 | Profit | Sole trader keeps | Company keeps | Company's best salary |
 |---|---|---|---|

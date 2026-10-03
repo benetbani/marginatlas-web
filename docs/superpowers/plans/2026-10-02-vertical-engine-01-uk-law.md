@@ -210,6 +210,8 @@ export const UK_2026_27 = {
     personalAllowance: 12_570,
     /** The allowance falls by 1 pound for every 2 pounds of adjusted net income above this. */
     taperThreshold: 100_000,
+    /** ...by 1 pound for every this many complete pounds above the threshold. */
+    taperDivisor: 2,
     /** https://www.gov.uk/government/publications/rates-and-allowances-income-tax/income-tax-rates-and-allowances-current-and-past (the rates page prints the band only as 12,571 to 50,270) */
     basicRateBand: 37_700,
     additionalRateThreshold: 125_140,
@@ -428,9 +430,12 @@ The personal allowance is 12,570, reduced by 1 pound for every complete 2 pounds
 non-savings income fills the bands in order (20% to 37,700, 40% to 125,140, 45% above), then dividends sit on top: the first
 500 at 0% but still using band, then 10.75%, 35.75% and 39.35% from wherever the non-savings income stopped. The marginal
 rate of non-savings income is 0, 20%, 40%, then 60% from 100,000 to 125,140 (each pound of income costs 40p and withdraws
-50p of allowance taxed at 40p in the pound, 20p more), then 45%. The schedule is continuous and never falls; the test sweeps
-0 to 200,000 and asserts both, and that a penny of income never moves the tax by more than a penny. The whole-pound taper
-makes a sawtooth of a few pence inside the 60% band, which task 5 has to respect.
+50p of allowance taxed at 40p in the pound, 20p more), then 45%. The schedule never falls, and inside the taper it is not
+continuous: each even pound of excess (100,002, 100,004, ... 125,140) takes a whole pound of allowance at once, a 40p step
+of tax, 12,570 steps in all; over each 2 pounds the tax rises 1.20, the 60%. Everywhere else the last penny before a pound
+moves the tax by a penny at most. The test asserts both, the steps exactly (the review of 2026-10-03 found the first draft's
+check could not see them), pins the dividend rules on four independently computed cases, and refuses an income that is not
+a finite number rather than taxing it at zero. Task 5's optimiser has to respect the steps.
 
 **Files:**
 - Create: `src/lib/uk/law/income_tax.ts`
@@ -477,27 +482,41 @@ check("nothing below the allowance", incomeTax(12_570).total === 0);
 check("salary 12,570 and 40,000 of dividends: 4,821.25", incomeTax(12_570, 40_000).total === 4821.25);
 check("the first 500 of dividends are free", incomeTax(12_570, 500).total === 0);
 check("1,000 of dividends: 500 free, 500 at 10.75% = 53.75", incomeTax(12_570, 1000).total === 53.75);
+// Dividends on top of taxable non-savings income (each figure computed independently in Python, 2026-10-03).
+check("50,000 and 10,000 of dividends: the free 500 straddles the basic band's edge, 10,882.25", incomeTax(50_000, 10_000).total === 10_882.25);
+check("5,000 and 20,000 of dividends: the allowance left after salary covers dividends, 1,282.48", incomeTax(5_000, 20_000).total === 1_282.48);
+check("124,000 and 5,000 of dividends: dividends cross 125,140 into the 39.35% rate, 43,807.71", incomeTax(124_000, 5_000).total === 43_807.71);
+check("100,000 and 10,000 of dividends: the taper counts dividends, 32,828.25", incomeTax(100_000, 10_000).total === 32_828.25);
 
 // The 60% band: between 100,000 and 125,140 a pound of income costs 40p plus 20p of lost allowance.
 const m = (incomeTax(110_002).total - incomeTax(110_000).total) / 2;
 check("marginal rate 60% inside the taper", Math.abs(m - 0.6) < 1e-9);
 
-// Shape: never decreasing, never a step (a penny of income moves the tax by at most a penny, plus rounding).
+// Shape: never decreasing (sampled every 37 pounds).
 let monotone = true;
-let continuous = true;
 let prev = incomeTax(0).total;
 for (let x = 1; x <= 200_000; x += 37) {
   const t = incomeTax(x).total;
   if (t < prev) monotone = false;
   prev = t;
-  const step = incomeTax(x + 0.01).total - t;
-  if (step < -0.011 || step > 0.011) continuous = false;
 }
 check("income tax never falls as income rises (0 to 200,000)", monotone);
-check("no step anywhere: a penny of income moves the tax by a penny at most", continuous);
-let threw = false;
-try { incomeTax(-1); } catch { threw = true; }
-check("negative income is refused", threw);
+// Shape: the last penny before every whole pound moves the tax by a penny at most, except the taper's steps, where a
+// whole pound of allowance goes at once: exactly 40p at each even pound from 100,002 to 125,140.
+let steps = 0;
+let firstBreak: number | null = null;
+for (let x = 1; x <= 200_000; x++) {
+  const s = incomeTax(x).total - incomeTax(x - 0.01).total;
+  const allowanceStep = x > 100_000 && x <= 125_140 && (x - 100_000) % 2 === 0;
+  if (allowanceStep) steps++;
+  const ok = allowanceStep ? Math.abs(s - 0.4) < 1e-9 : Math.abs(s) <= 0.011;
+  if (!ok && firstBreak === null) firstBreak = x;
+}
+check(`a penny moves the tax by a penny at most, except ${steps.toLocaleString("en-GB")} taper steps of 40p${firstBreak === null ? "" : ` (first break at ${firstBreak})`}`, firstBreak === null && steps === 12_570);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("negative income is refused", refuses(() => incomeTax(-1)));
+check("negative dividends are refused", refuses(() => incomeTax(50_000, -1)));
+check("an income that is not a number is refused, never taxed at zero", refuses(() => incomeTax(Number.NaN)) && refuses(() => incomeTax(50_000, Number.NaN)) && refuses(() => personalAllowance(Number.NaN)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/income_tax: all pass");
@@ -527,7 +546,10 @@ Create `src/lib/uk/law/income_tax.ts`:
  * taxed at 0% but still use up band.
  *
  * THE TAPER: the allowance falls by 1 pound for every 2 pounds of adjusted net income above 100,000, so it is zero from
- * 125,140. Read as "1 pound for every complete 2 pounds", the reduction is floor(excess / 2).
+ * 125,140. Read as "1 pound for every complete 2 pounds", the reduction is floor(excess / 2), so the allowance is a
+ * staircase: at each even pound of excess (100,002, 100,004, ... 125,140, 12,570 steps) a whole pound of allowance goes at
+ * once and the tax steps up by 40p (the higher rate on that pound). Between the steps the marginal rate is 40%; over each 2
+ * pounds the tax rises 1.20, the 60% the band is known for. The schedule never falls.
  *
  * Every band's tax is rounded to the penny and the lines summed, so the breakdown adds up to the total.
  */
@@ -538,8 +560,9 @@ const IT = L.incomeTax;
 const DV = L.dividends;
 
 export function personalAllowance(adjustedNetIncome: number): number {
+  if (!Number.isFinite(adjustedNetIncome)) throw new Error(`personalAllowance: not a finite income (${adjustedNetIncome})`);
   if (adjustedNetIncome <= IT.taperThreshold) return IT.personalAllowance;
-  const reduction = Math.floor((adjustedNetIncome - IT.taperThreshold) / 2);
+  const reduction = Math.floor((adjustedNetIncome - IT.taperThreshold) / IT.taperDivisor);
   return Math.max(0, IT.personalAllowance - reduction);
 }
 
@@ -559,9 +582,13 @@ function fill(start: number, amount: number, rates: readonly [number, number, nu
   return lines;
 }
 
+/** A year's income tax, in pounds; every amount annual and gross. */
 export type IncomeTaxBreakdown = {
+  /** the personal allowance after the taper */
   allowance: number;
+  /** non-savings income above the allowance */
   taxableNonSavings: number;
+  /** dividends above what is left of the allowance, the 500 taxed at 0% included */
   taxableDividends: number;
   nonSavingsTax: number;
   dividendTax: number;
@@ -570,6 +597,7 @@ export type IncomeTaxBreakdown = {
 
 export function incomeTax(nonSavings: number, dividends = 0): IncomeTaxBreakdown {
   if (nonSavings < 0 || dividends < 0) throw new Error("incomeTax: income cannot be negative");
+  // personalAllowance refuses a sum that is not finite, so NaN or Infinity in either input is refused there
   const allowance = personalAllowance(nonSavings + dividends);
   const paNonSavings = Math.min(allowance, nonSavings);
   const paDividends = Math.min(allowance - paNonSavings, dividends);
@@ -595,7 +623,7 @@ export function incomeTax(nonSavings: number, dividends = 0): IncomeTaxBreakdown
 npx tsx tests/uk/law/income_tax.test.ts
 ```
 
-Expected: 18 lines starting `PASS`, the last line `uk/law/income_tax: all pass`, exit code 0.
+Expected: 24 lines starting `PASS`, the last line `uk/law/income_tax: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -970,13 +998,14 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 Sole trader: `K = P - IT(P) - Class4(P)`. One-director company extracting everything in the year with salary s:
 `er(s) = 15% max(0, s - 5,000)`, retained profit `pi(s) = Pi - s - er(s) >= 0`, `CT(pi)`, dividends `d = pi - CT(pi)`, and
-`K(s) = s - ee(s) + d - IT(s, d)`. Every schedule in that chain is continuous and piecewise linear in s, so K is too, and its
-maximum is at a breakpoint of some schedule or at an end: the secondary threshold 5,000, the primary threshold 12,570, 50,270,
+`K(s) = s - ee(s) + d - IT(s, d)`. Outside the allowance taper every schedule in that chain is continuous and piecewise linear
+in s, so K is too, and its maximum is at a breakpoint of some schedule or at an end: the secondary threshold 5,000, the primary threshold 12,570, 50,270,
 the taper points, the two salaries that land `pi(s)` exactly on a corporation-tax limit, and the largest payable salary
 `s_max`. The search evaluates those (unrounded), a 250-pound grid, then refines to the pound around the best; `s_max` is
-kept to the penny because the best salary can be the whole profit less its NI. Inside the taper the whole-pound sawtooth
-moves the optimum a few pounds off its kink: at 150,000 the best salary is 4,996, 14p better than 5,000, so pages print the
-salary to the nearest 100. The test proves the search against a brute-force 10-pound grid at three profits. At 100,000 of
+kept to the penny because the best salary can be the whole profit less its NI. Inside the taper each even pound of adjusted
+net income takes a whole pound of allowance, so K drops by up to 40p there (a sawtooth); the grid and the refine to the pound
+find the best tooth: at 150,000 the best salary is 4,996, 14p better than 5,000, so pages print the salary to the nearest
+100. The test proves the search against a brute-force 10-pound grid at three profits. At 100,000 of
 profit a sole trader keeps 69,311.40 and the company 65,209.63: the 2026-27 dividend rates reversed the old advice.
 
 **Files:**
@@ -1082,14 +1111,15 @@ Create `src/lib/uk/law/take_home.ts`:
  *   employee NI          ee(s) = class1Primary(s)
  *   income tax           it(s) = incomeTax(s, d(s))
  *   keep(s) = s - ee(s) + d(s) - it(s)
- * keep(s) is continuous and piecewise linear in s (a composition of continuous piecewise-linear schedules), so its maximum
- * on [0, sMax] sits at a breakpoint of one of the schedules or at an end. The search evaluates every breakpoint it can name
+ * Outside the allowance taper keep(s) is continuous and piecewise linear in s (a composition of continuous piecewise-linear
+ * schedules), so its maximum on [0, sMax] sits at a breakpoint of one of the schedules or at an end. The search evaluates every breakpoint it can name
  * (0, the secondary threshold, the primary threshold, the upper limits, the taper points, the salaries that put the company
  * profit exactly on a corporation-tax limit, sMax), plus a 250-pound grid, then refines the best to the pound. Ties go to
  * the lower salary. Measured on four profits (tests): 12,570 is best at 30k, 60k and 100k; about 5,000 at 150k.
  *
- * ONE EXCEPTION TO "PIECEWISE LINEAR": inside the allowance taper (adjusted net income 100,000 to 125,140) the allowance
- * moves in whole pounds (1 pound per complete 2), so keep(s) carries a sawtooth worth pennies. The refine step finds it:
+ * INSIDE THE TAPER (adjusted net income 100,000 to 125,140) keep(s) is not continuous: each time adjusted net income
+ * crosses an even pound, a whole pound of allowance goes at once and keep drops by up to 40p (the rate on the income that
+ * pound now taxes), so keep(s) is a sawtooth there. The 250-pound grid and the refine to the pound find the best tooth:
  * at 150,000 of profit the best salary is 4,996, 14p better than 5,000. A page prints the salary rounded to the nearest
  * 100 pounds; the engine keeps the exact one.
  */
