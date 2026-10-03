@@ -1399,6 +1399,11 @@ Expected: one commit; `git status --short` lists none of the files above.
 paternity pay are contingent and employers' liability insurance has no official price; both stay outside the yearly
 figure and the module says so. Worked: the National Living Wage at 37.5 hours for 52 weeks is 24,784.50; employer NI
 2,967.68; pension 556.34; all in 28,308.52, or 25,340.84 where the allowance is claimable (it covers about 3.54 such staff).
+Auto-enrolment follows the Act itself (Pensions Act 2008 s.3(1): "aged at least 22", "has not reached pensionable age",
+"earnings of more than 10,000"), and the test pins every boundary on both sides: the under-21 relief at 20 and 21, the
+apprentice relief at 24 and 25, enrolment at 21 and 22, at 65 and 66, at 10,000.00 and 10,000.01, and the pension's cap at
+50,270 (60,000 of pay: 1,320.90). An age that is not a number and a negative pay are refused (a fault sweep before this task
+ran found six of seven boundary faults passing the first draft's checks).
 
 **Files:**
 - Create: `src/lib/uk/law/employer_cost.ts`
@@ -1446,6 +1451,16 @@ const e = hireAllIn({ gross: annualGross(8, 30), age: 23, apprentice: true });
 check("an apprentice of 23: no employer NI below 50,270", e.employerNi === 0);
 check("a part-timer on 9,000 is not auto-enrolled", hireAllIn({ gross: 9_000, age: 30 }).pension === 0);
 check("the allowance never makes the bill smaller than the pay", hireAllIn({ gross: 6_000, age: 30, allowanceRemaining: 10_500 }).allIn === 6_000);
+// Every boundary, on 30,000 of pay unless stated (figures computed independently in Python, 2026-10-03).
+check("the under-21 relief ends at 21: 20 pays no employer NI, 21 pays 3,750.00", hireAllIn({ gross: 30_000, age: 20 }).employerNi === 0 && hireAllIn({ gross: 30_000, age: 21 }).employerNi === 3750);
+check("an apprentice's relief ends at 25: 24 pays no employer NI, 25 pays 3,750.00", hireAllIn({ gross: 30_000, age: 24, apprentice: true }).employerNi === 0 && hireAllIn({ gross: 30_000, age: 25, apprentice: true }).employerNi === 3750);
+check("auto-enrolment starts at 22: 21 has no pension, 22 has 712.80", hireAllIn({ gross: 30_000, age: 21 }).pension === 0 && hireAllIn({ gross: 30_000, age: 22 }).pension === 712.8);
+check("auto-enrolment ends at State Pension age: 65 has 712.80, 66 has none", hireAllIn({ gross: 30_000, age: 65 }).pension === 712.8 && hireAllIn({ gross: 30_000, age: 66 }).pension === 0);
+check("auto-enrolment needs more than 10,000: none at 10,000.00, 112.80 at 10,000.01", hireAllIn({ gross: 10_000, age: 30 }).pension === 0 && hireAllIn({ gross: 10_000.01, age: 30 }).pension === 112.8);
+const top = hireAllIn({ gross: 60_000, age: 40 });
+check("the pension stops at 50,270: on 60,000 it is 3% of 44,030 = 1,320.90; NI 8,250.00; all in 69,570.90", top.pension === 1320.9 && top.employerNi === 8250 && top.allIn === 69_570.9);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("an age that is not a number, and a negative pay, are refused", refuses(() => hireAllIn({ gross: 30_000, age: Number.NaN })) && refuses(() => hireAllIn({ gross: -100, age: 30 })));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/employer_cost: all pass");
@@ -1490,7 +1505,13 @@ export function annualGross(hourly: number, hoursPerWeek: number, weeks = 52): n
 
 export type HireCost = { gross: number; employerNi: number; allowanceUsed: number; pension: number; allIn: number };
 
+/**
+ * One hire's yearly cost to the employer. Auto-enrolment follows Pensions Act 2008 s.3(1): aged at least 22, below State
+ * Pension age, earnings of more than 10,000. An age that is not a number and a negative pay are refused.
+ */
 export function hireAllIn(input: { gross: number; age: number; apprentice?: boolean; allowanceRemaining?: number }): HireCost {
+  if (!Number.isFinite(input.age) || input.age < 0) throw new RangeError(`hireAllIn: not an age (${input.age})`);
+  if (input.gross < 0) throw new RangeError(`hireAllIn: pay cannot be negative (${input.gross})`);
   const gross = pennies(input.gross);
   const relief = input.age < 21 || (!!input.apprentice && input.age < 25);
   const employerNi = employerClass1(gross, { reliefToUpperSecondary: relief });
@@ -1508,7 +1529,7 @@ export function hireAllIn(input: { gross: number; age: number; apprentice?: bool
 npx tsx tests/uk/law/employer_cost.test.ts
 ```
 
-Expected: 10 lines starting `PASS`, the last line `uk/law/employer_cost: all pass`, exit code 0.
+Expected: 17 lines starting `PASS`, the last line `uk/law/employer_cost: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
