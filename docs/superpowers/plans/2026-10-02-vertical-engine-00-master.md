@@ -28,7 +28,7 @@ The registers now hold what nobody else publishes in this cut (`E:/atlas/registe
 
 ## 1. What the validation of 2026-10-02 established
 
-Every code block in plans 01 to 04 was written to a scratch copy of the repo layout and run: 258 TypeScript checks pass (law 102, profit and loss 139, presentation 17), `tsc --strict` is clean, and every new test's red names a file, a rule and a remedy by the gate-reds census's own classifier (20 of 20 scripts). The builder edits were applied in order to fresh copies of the real builders, every table rebuilt, and 23 Python tests pass on the rebuilt tables; the four slices exported from them are byte-identical to the validated ones. An independent Python implementation (decimal arithmetic, half-up at the penny) agreed with the TypeScript to the penny on every money figure below.
+Every code block in plans 01 to 04 was written to a scratch copy of the repo layout and run: 335 TypeScript checks pass (law 163, profit and loss 139, presentation 33; counted again on 2026-10-03, after every law and presentation test was hardened against deliberate faults before its run), `tsc --strict` is clean, and every new test's red names a file, a rule and a remedy by the gate-reds census's own classifier (20 of 20 scripts). The builder edits were applied in order to fresh copies of the real builders, every table rebuilt, and 23 Python tests pass on the rebuilt tables; the four slices exported from them are byte-identical to the validated ones. An independent Python implementation (decimal arithmetic, half-up at the penny) agreed with the TypeScript to the penny on every money figure below.
 
 Validation also corrected two things in the first draft of this plan, recorded so they are not re-made:
 
@@ -336,10 +336,10 @@ Groups publish at 10 reports or more, with no report above half the group's tota
 
 | Plan | File | Builds | Depends on | Done when |
 |---|---|---|---|---|
-| 01 | `2026-10-02-vertical-engine-01-uk-law.md` | the readings; `src/lib/uk/law/*`; ten gates | nothing | 102 law checks pass in the chain; the readings recorded and matching |
+| 01 | `2026-10-02-vertical-engine-01-uk-law.md` | the readings; `src/lib/uk/law/*`; ten gates | nothing | 163 law checks pass in the chain; the readings recorded and matching |
 | 02 | `2026-10-02-vertical-engine-02-register-statistics.md` | `registers/uk/estimators/*`, builder edits, rates, the feed, drafts, the export | nothing | 23 pytest tests pass on rebuilt tables; 4,795 medians unchanged |
 | 03 | `2026-10-02-vertical-engine-03-profit-and-loss.md` | the slices and their gate; `src/lib/uk/pnl/*` | 01, 02 | 139 checks across 7 test files and the `uk-registers` gate, each planted and green |
-| 04 | `2026-10-02-vertical-engine-04-presentation.md` | `src/lib/uk/present/*` | nothing | 17 presentation checks pass |
+| 04 | `2026-10-02-vertical-engine-04-presentation.md` | `src/lib/uk/present/*` | nothing | 33 presentation checks pass |
 | 05 | owners' numbers statistics (outline below) | `src/lib/uk/owners/*`, the aggregate view | the owner-numbers schema (SPEC-2026-10-02) | written after 03 |
 | 06 | the vertical wired (outline below) | the truth rows on the pages, through builders | 01 to 04 | written after 03; verified on renders when the browser tools return |
 | 07 | the energy line (outline below) | a measured utilities line for the trades whose research lumps it with rent | 03, a reading or download (section 6) | written after 03 |

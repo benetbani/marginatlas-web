@@ -1913,15 +1913,20 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 ### Task 10: Redundancy pay and notice
 
-Two whole years of service are needed. Counting back from the dismissal, each of the last (up to) 20 whole years earns half a
-week's pay if the employee was under 22 throughout it, one week from 22 to 40, one and a half from 41; the k-th most recent
-year is held at age `ageAtDismissal - 1 - k`. A week's pay is capped at 751, so the most anyone receives is 30 x 751 =
-22,530. Statutory notice: none under a month of service, one week up to two years, then a week per whole year up to twelve.
-Every figure was recomputed from real dates (the age held on each day of each year counted back). The test also pins exactly
-two years (which qualifies), a half penny of pay (rounded up: 2.5 weeks of 333.33 is 833.33), the notice edges (a month, 35,
-143 and 144 months), and refuses a part year (which the loop would count as a whole one) and an age, a week's pay or a
-number of months that is not a number or is negative; six of thirteen deliberate faults passed the first version of this
-test.
+Two whole years of service are needed. Counting back from the relevant date (the last day of employment), each of the last
+(up to) 20 whole years earns half a week's pay if the employee was under 22 throughout it, one week from 22 to 40, one and
+a half from 41, with no upper age. The years run between anniversaries of the day after the relevant date, so the k-th most
+recent year is held at age `ageAtDismissal - 1 - k` exactly when `ageAtDismissal` is the age on that day after: on every
+relevant date of 2026-27 with birthdays up to two days either side of its anniversary and ages 18 to 70 (386,900 cases),
+and on 200,000 random histories, it matches the calendar every time, while the age on the last day itself misses on the eve
+of a birthday. A week's pay is capped at 751, so the most anyone receives is 30 x 751 = 22,530. Statutory notice: none under
+a month of service, one week up to two years, then a week per whole year up to twelve. Every figure was recomputed from
+real dates. The test also pins exactly two years, a half penny (1.5 weeks of 200.19 is 300.29, where rounding the binary
+product gives 300.28), only the last 20 years counting (45 with 25 years: 22 weeks, not 26), the eve of a birthday, no
+upper age, the capped week's pay it reports, the notice edges and the zeros that mean something, and refuses a part year
+and an age, a week's pay or a number of months that is not finite or is negative. Six of thirteen deliberate faults passed
+the first version of this test; the review of 2026-10-03 found five more gaps (a cap by weeks, plain rounding, the
+reported fields, Infinity, the age's day); all 35 faults now fail it.
 
 **Files:**
 - Create: `src/lib/uk/law/redundancy.ts`
@@ -1935,7 +1940,7 @@ Create `tests/uk/law/redundancy.test.ts`:
 
 ```ts
 /**
- * Statutory redundancy pay and notice (Employment Rights Act 1996 ss. 86 and 162; the weekly cap of 2026-27).
+ * Statutory redundancy pay and notice (Employment Rights Act 1996 sections 86, 155 and 162; the weekly cap of 2026-27).
  *
  * Run: npx tsx tests/uk/law/redundancy.test.ts
  */
@@ -1953,21 +1958,25 @@ const check = (label: string, ok: boolean) => {
   red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
 };
 
-check("barber, 30, four years, 500 a week: 2,000.00", statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: 500 }).pay === 2000);
-check("same on 800 a week: the cap of 751 gives 3,004.00", statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: 800 }).pay === 3004);
-check("62, 25 years, 900 a week: the most anyone gets, 22,530.00", statutoryRedundancyPay({ ageAtDismissal: 62, wholeYears: 25, weeklyPay: 900 }).pay === 22_530);
+check("barber, 30, four years, 500 a week: 2,000.00, at the full 500", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: 500 }); return x.pay === 2000 && x.weeklyPayUsed === 500; })());
+check("same on 800 a week: the cap of 751 gives 3,004.00 (four weeks of 751)", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: 800 }); return x.pay === 3004 && x.weeklyPayUsed === 751 && x.weeks === 4; })());
+check("62, 25 years, 900 a week: the most anyone gets, 30 weeks of 751 = 22,530.00", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 62, wholeYears: 25, weeklyPay: 900 }); return x.pay === 22_530 && x.weeks === 30 && x.weeklyPayUsed === 751; })());
 check("23, three years, 400: two weeks (one year at 22, two under 22) = 800.00", statutoryRedundancyPay({ ageAtDismissal: 23, wholeYears: 3, weeklyPay: 400 }).pay === 800);
 check("45, ten years, 600: twelve weeks = 7,200.00", statutoryRedundancyPay({ ageAtDismissal: 45, wholeYears: 10, weeklyPay: 600 }).pay === 7200);
 check("under two years: nothing", statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 1, weeklyPay: 500 }).pay === 0);
 check("notice: none under a month, one week to two years, a week a year to twelve", [0.5, 12, 24, 60, 200].map(statutoryNoticeWeeks).join(",") === "0,1,2,5,12");
-check("42, exactly two years, 333.33 a week: 41 throughout the last year (1.5 weeks), 40 the one before (1): 2.5 weeks = 833.33, the half penny rounded up", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 42, wholeYears: 2, weeklyPay: 333.33 }); return x.weeks === 2.5 && x.pay === 833.33; })());
+check("23, exactly two years, 200.19 a week: 22 throughout the last year (1 week), 21 the one before (0.5): 1.5 weeks = 300.29, the half penny rounded up (rounding the binary product gives 300.28)", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 23, wholeYears: 2, weeklyPay: 200.19 }); return x.weeks === 1.5 && x.pay === 300.29; })());
 check("notice edges: a month gives a week; 35 months is two whole years (2); 143 months is 11, 144 is 12", [1, 35, 143, 144].map(statutoryNoticeWeeks).join(",") === "1,2,11,12");
+check("45, 25 years, 900 a week: only the last 20 years count (4 at 1.5, 16 at 1): 22 weeks = 16,522.00 (all 25 would be 26)", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 45, wholeYears: 25, weeklyPay: 900 }); return x.pay === 16_522 && x.weeks === 22; })());
+check("the age is the one on the day after the last day of employment: born 1 January, last day 31 December, so 42 the next day and 41 all the last year: two years at 600 a week are 2.5 weeks = 1,500.00", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 42, wholeYears: 2, weeklyPay: 600 }); return x.weeks === 2.5 && x.pay === 1500; })());
+check("no upper age: 66, twenty years, 400 a week: 30 weeks = 12,000.00 (the cuts from 64 and the bar at 65 were repealed on 1 October 2006)", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 66, wholeYears: 20, weeklyPay: 400 }); return x.pay === 12_000 && x.weeks === 30; })());
+check("zero is allowed where it means something: no whole years, no week's pay and no months of service give nothing", statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 0, weeklyPay: 500 }).pay === 0 && statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: 0 }).pay === 0 && statutoryNoticeWeeks(0) === 0);
 /** The guards throw a RangeError; pennies throws a plain Error on a NaN, which would hide a missing guard. */
 const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { return e instanceof RangeError; } };
 check("years must be whole and not negative: 2.5 (which would count three) and -1 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 2.5, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: -1, weeklyPay: 500 })));
-check("an age must be a number and not negative: NaN (which would pay every year at 1.5 weeks) and -1 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: Number.NaN, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: -1, wholeYears: 4, weeklyPay: 500 })));
-check("a week's pay must be a number and not negative: NaN and -500 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: Number.NaN })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: -500 })));
-check("notice months must be a number and not negative: NaN and -1 are refused", refuses(() => statutoryNoticeWeeks(Number.NaN)) && refuses(() => statutoryNoticeWeeks(-1)));
+check("an age must be a finite number and not negative: NaN and Infinity (which would pay every year at 1.5 weeks) and -1 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: Number.NaN, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: Infinity, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: -1, wholeYears: 4, weeklyPay: 500 })));
+check("a week's pay must be a finite number and not negative: NaN, Infinity (which the cap would hide) and -500 are refused, and under two years too", refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: Number.NaN })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: Infinity })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: -500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 1, weeklyPay: Number.NaN })));
+check("notice months must be a finite number and not negative: NaN, Infinity and -1 are refused", refuses(() => statutoryNoticeWeeks(Number.NaN)) && refuses(() => statutoryNoticeWeeks(Infinity)) && refuses(() => statutoryNoticeWeeks(-1)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/redundancy: all pass");
@@ -1989,16 +1998,21 @@ Create `src/lib/uk/law/redundancy.ts`:
 /**
  * src/lib/uk/law/redundancy.ts
  *
- * Statutory redundancy pay and statutory notice (Employment Rights Act 1996, ss 86, 162), from 6 April 2026.
+ * Statutory redundancy pay and statutory notice (Employment Rights Act 1996, ss 86, 145, 155, 162, 210 and 227), from
+ * 6 April 2026.
  *
- * REDUNDANCY. Two whole years of service needed. Counting back from the dismissal, each of the last (up to) 20 whole years
- * earns weeks of pay by the age held throughout that year: 0.5 below 22, 1 from 22 to 40, 1.5 from 41. With integer ages,
- * the k-th most recent year (k = 0, 1, ...) is held at age (ageAtDismissal - 1 - k) throughout. A week's pay is capped at
- * 751, so the most anyone can get is 30 x 751 = 22,530. Years and age are taken at the relevant date, which a dismissal
- * without the statutory notice moves to the day that notice would have ended (s 145(5)).
+ * REDUNDANCY. Two whole years of service needed (s 155). Counting back from the relevant date (the last day of employment,
+ * which a dismissal without the statutory notice moves to the day that notice would have ended, s 145(5)), each of the
+ * last (up to) 20 whole years earns weeks of pay by the age held throughout that year: 0.5 below 22, 1 from 22 to 40, 1.5
+ * from 41 (s 162); there is no upper age. The years run between anniversaries of the day after the relevant date (years of
+ * twelve months, s 210(3)), so the age held throughout the k-th most recent year (k = 0, 1, ...) is the age on its first
+ * day, which is exactly ageAtDismissal - 1 - k when ageAtDismissal is the age on the day after the relevant date. (The age
+ * on the last day itself is one too low on the eve of a birthday: someone whose last day is 31 December and who turns 42
+ * on 1 January was 41 all that year, worth 1.5 weeks, not 1.) A week's pay is capped at 751 (s 227), so the most anyone
+ * can get is 30 x 751 = 22,530.
  *
- * NOTICE (the employer's minimum): none under a month; one week from a month to two years; then a week per whole year, up
- * to twelve.
+ * NOTICE (the employer's minimum, s 86): none under a month; one week from a month to two years; then a week per whole
+ * year, up to twelve.
  */
 import { UK_2026_27 as L } from "./params_2026_27";
 import { pennies } from "./money";
@@ -2033,7 +2047,7 @@ export function statutoryNoticeWeeks(monthsOfService: number): number {
 npx tsx tests/uk/law/redundancy.test.ts
 ```
 
-Expected: 13 lines starting `PASS`, the last line `uk/law/redundancy: all pass`, exit code 0.
+Expected: 17 lines starting `PASS`, the last line `uk/law/redundancy: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
