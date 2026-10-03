@@ -1382,7 +1382,7 @@
       "script": "tests/uk/present/compare.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "Comparison: members ranked apart only when their intervals separate (ties share a rank); set medians over members' own figures, fill values counted and left out.",
+      "asserts": "Comparison: members share a rank only when the lower overlaps its group's leader (overlapping intervals tie); set medians over members' own figures, fill values counted and left out.",
       "reads": [
         "src/lib/uk/present/compare.ts"
       ],

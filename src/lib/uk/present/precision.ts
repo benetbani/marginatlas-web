@@ -31,7 +31,9 @@
  * SHARES THAT ADD UP: largest remainder. Floor every share, then hand the missing units to the largest remainders (ties to
  * the earlier row), so a split of 100 prints as integers that sum to 100. Remainders are compared on a grid of 1e-9, so
  * two that are equal in decimal tie even when floating point leaves them a few ulps apart (4, 1, 1 of 100: each has two
- * thirds over, and the first two rows get the units); the grid is exact for totals up to a million.
+ * thirds over, and the first two rows get the units); the grid is exact for totals up to 100,000 (at a million, three
+ * splits in 1.5 million random ones part from the exact rule by a unit). The two 1e-9 allowances can show only at units of
+ * ten million and above.
  */
 export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs = 3): number {
   if (!Number.isFinite(value)) throw new RangeError(`honestUnit: not a finite figure (${value})`);

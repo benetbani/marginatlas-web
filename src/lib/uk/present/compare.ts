@@ -7,16 +7,17 @@
  * overlaps the interval of that group's first member, its leader; otherwise it starts a new group. Members of one group
  * share a rank (1, 1, 1, 4), and a page that marks "the highest" marks a group, not a member, when the leader is level with
  * the next. What holds by construction: every member overlaps its own group's leader; no leader overlaps the leader of the
- * group above; ranks never rise down the list. It is a rule about leaders, not about every pair: a member can sit in a lower
+ * group above; a rank never improves down the list. It is a rule about leaders, not about every pair: a member can sit in a lower
  * group while overlapping a member, even a leader, of a higher one (28.9 (27.3 to 30.5), 12 (11 to 13) and 11 (2 to 29)
  * rank 1, 2, 2: the 11 overlaps the 28.9 but comes after the 12, which starts the second group). So levelWithAbove means
  * "level with its group's leader", and a page marks the top group by rank, never by levelWithAbove (two identical rows are
  * level in either order, but which of them carries the flag follows the rows). Intervals are closed: two that touch at one
- * point overlap. Members with the same figure are taken lowest-reaching interval first, then highest-reaching: that pools
- * the most (the fewest groups, in every one of 23,030 random tied sets), at the price of leaving a member below a leader it
- * overlaps a little more often than highest-reaching first would; either way no rank depends on the order of the rows. A
- * figure and both ends must be finite numbers, the figure between the ends: anything else is refused (a null would
- * otherwise compare as 0, and the overlap test means nothing for it).
+ * point overlap. Members with the same figure are taken lowest-reaching interval first, then highest-reaching, so a group
+ * that starts among them is led by the one that can be told apart from the fewest members below it, and no rank depends on
+ * the order of the rows (highest-reaching first would leave a member below a leader it overlaps less often, at the price of
+ * more groups). Every row's figure and both ends must be finite numbers, the figure between the ends, wherever the row
+ * sits in the list: anything else is refused (a null would otherwise compare as 0, and the overlap test means nothing for
+ * it).
  *
  * SET STATISTICS WITHOUT FILLS. A set's median is taken over members whose figure is their own: a member carrying a fill
  * value (a default written in for a missing figure) is left out, and the count left out is returned, so a "world median"

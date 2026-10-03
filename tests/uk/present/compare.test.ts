@@ -1,6 +1,6 @@
 /**
- * Comparison: members ranked apart only when their intervals separate (ties share a rank); set medians over members'
- * own figures, fill values counted and left out.
+ * Comparison: members share a rank only when the lower overlaps its group's leader (overlapping intervals tie); set
+ * medians over members' own figures, fill values counted and left out.
  *
  * Run: npx tsx tests/uk/present/compare.test.ts
  */
@@ -85,5 +85,10 @@ rankWithTies([rb, rc]);
 check("rows are copied, not written to: a ranking keeps its ranks after the same rows are ranked in another set", show(firstRanking) === "a:1 b:2 c:3" && !("rank" in ra) && !("levelWithAbove" in rb));
 const flag = (isFill: unknown) => ({ value: 1, isFill: isFill as boolean });
 check("a fill flag of null, 0 or a string is refused, and so is a missing one after good ones", refuses(() => medianExcludingFills([flag(null)])) && refuses(() => medianExcludingFills([flag(0)])) && refuses(() => medianExcludingFills([flag("no")])) && refuses(() => medianExcludingFills([{ value: 1, isFill: false }, { value: 100, isFill: undefined as unknown as boolean }, { value: 3, isFill: false }])));
+const okA: Row = { id: "a", value: 9, lo: 8, hi: 10 }, okB: Row = { id: "b", value: 5, lo: 4, hi: 6 };
+const badRows: Row[] = [{ id: "x", value: null as unknown as number, lo: 0, hi: 5 }, { id: "x", value: Number.NaN, lo: 0, hi: 1 }, { id: "x", value: "3" as unknown as number, lo: 2, hi: 5 }, { id: "x", value: 5, lo: -Infinity, hi: 6 }, { id: "x", value: -3, lo: -5, hi: null as unknown as number }];
+check("a bad row is refused wherever it sits: first, between good rows and last (a null, a NaN, a string, a low end of minus infinity, a missing high end)", badRows.every((x) => refuses(() => rankWithTies([x, okA, okB])) && refuses(() => rankWithTies([okA, x, okB])) && refuses(() => rankWithTies([okA, okB, x]))));
+check("the rule is about leaders: 28.9 (27.3 to 30.5), 12 (11 to 13) and 11 (2 to 29) rank 1, 2, 2, though the 11 overlaps the 28.9", show(rankWithTies([{ id: "p", value: 28.9, lo: 27.3, hi: 30.5 }, { id: "q", value: 12, lo: 11, hi: 13 }, { id: "r", value: 11, lo: 2, hi: 29 }])) === "p:1 q:2 r:2=");
+check("an own figure equal to a fill's value is kept, and a bad own figure in the middle of a set is refused", (() => { const m = medianExcludingFills([{ value: 6, isFill: false }, { value: 6, isFill: true }, { value: 8, isFill: false }]); return m.median === 7 && m.used === 2 && m.leftOut === 1; })() && refuses(() => medianExcludingFills([{ value: 1, isFill: false }, { value: Number.NaN, isFill: false }, { value: 3, isFill: false }])));
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/compare: all pass");
