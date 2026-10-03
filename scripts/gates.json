@@ -1400,6 +1400,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-corporation-tax",
+      "script": "tests/uk/law/corporation_tax.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Corporation Tax FY2026: the two rates, marginal relief between them, continuity at both limits.",
+      "reads": [
+        "src/lib/uk/law/corporation_tax.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
