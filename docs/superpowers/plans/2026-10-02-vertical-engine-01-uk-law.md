@@ -1917,6 +1917,11 @@ Two whole years of service are needed. Counting back from the dismissal, each of
 week's pay if the employee was under 22 throughout it, one week from 22 to 40, one and a half from 41; the k-th most recent
 year is held at age `ageAtDismissal - 1 - k`. A week's pay is capped at 751, so the most anyone receives is 30 x 751 =
 22,530. Statutory notice: none under a month of service, one week up to two years, then a week per whole year up to twelve.
+Every figure was recomputed from real dates (the age held on each day of each year counted back). The test also pins exactly
+two years (which qualifies), a half penny of pay (rounded up: 2.5 weeks of 333.33 is 833.33), the notice edges (a month, 35,
+143 and 144 months), and refuses a part year (which the loop would count as a whole one) and an age, a week's pay or a
+number of months that is not a number or is negative; six of thirteen deliberate faults passed the first version of this
+test.
 
 **Files:**
 - Create: `src/lib/uk/law/redundancy.ts`
@@ -1955,6 +1960,14 @@ check("23, three years, 400: two weeks (one year at 22, two under 22) = 800.00",
 check("45, ten years, 600: twelve weeks = 7,200.00", statutoryRedundancyPay({ ageAtDismissal: 45, wholeYears: 10, weeklyPay: 600 }).pay === 7200);
 check("under two years: nothing", statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 1, weeklyPay: 500 }).pay === 0);
 check("notice: none under a month, one week to two years, a week a year to twelve", [0.5, 12, 24, 60, 200].map(statutoryNoticeWeeks).join(",") === "0,1,2,5,12");
+check("42, exactly two years, 333.33 a week: 41 throughout the last year (1.5 weeks), 40 the one before (1): 2.5 weeks = 833.33, the half penny rounded up", (() => { const x = statutoryRedundancyPay({ ageAtDismissal: 42, wholeYears: 2, weeklyPay: 333.33 }); return x.weeks === 2.5 && x.pay === 833.33; })());
+check("notice edges: a month gives a week; 35 months is two whole years (2); 143 months is 11, 144 is 12", [1, 35, 143, 144].map(statutoryNoticeWeeks).join(",") === "1,2,11,12");
+/** The guards throw a RangeError; pennies throws a plain Error on a NaN, which would hide a missing guard. */
+const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { return e instanceof RangeError; } };
+check("years must be whole and not negative: 2.5 (which would count three) and -1 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 2.5, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: -1, weeklyPay: 500 })));
+check("an age must be a number and not negative: NaN (which would pay every year at 1.5 weeks) and -1 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: Number.NaN, wholeYears: 4, weeklyPay: 500 })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: -1, wholeYears: 4, weeklyPay: 500 })));
+check("a week's pay must be a number and not negative: NaN and -500 are refused", refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: Number.NaN })) && refuses(() => statutoryRedundancyPay({ ageAtDismissal: 30, wholeYears: 4, weeklyPay: -500 })));
+check("notice months must be a number and not negative: NaN and -1 are refused", refuses(() => statutoryNoticeWeeks(Number.NaN)) && refuses(() => statutoryNoticeWeeks(-1)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/redundancy: all pass");
@@ -1981,7 +1994,8 @@ Create `src/lib/uk/law/redundancy.ts`:
  * REDUNDANCY. Two whole years of service needed. Counting back from the dismissal, each of the last (up to) 20 whole years
  * earns weeks of pay by the age held throughout that year: 0.5 below 22, 1 from 22 to 40, 1.5 from 41. With integer ages,
  * the k-th most recent year (k = 0, 1, ...) is held at age (ageAtDismissal - 1 - k) throughout. A week's pay is capped at
- * 751, so the most anyone can get is 30 x 751 = 22,530.
+ * 751, so the most anyone can get is 30 x 751 = 22,530. Years and age are taken at the relevant date, which a dismissal
+ * without the statutory notice moves to the day that notice would have ended (s 145(5)).
  *
  * NOTICE (the employer's minimum): none under a month; one week from a month to two years; then a week per whole year, up
  * to twelve.
@@ -1990,6 +2004,10 @@ import { UK_2026_27 as L } from "./params_2026_27";
 import { pennies } from "./money";
 
 export function statutoryRedundancyPay(input: { ageAtDismissal: number; wholeYears: number; weeklyPay: number }): { weeks: number; weeklyPayUsed: number; pay: number } {
+  // a part year would count as a whole one in the loop below, and an age that is not a number would pay every year at 1.5
+  if (!Number.isFinite(input.ageAtDismissal) || input.ageAtDismissal < 0) throw new RangeError(`statutoryRedundancyPay: not an age (${input.ageAtDismissal})`);
+  if (!Number.isInteger(input.wholeYears) || input.wholeYears < 0) throw new RangeError(`statutoryRedundancyPay: not a whole number of years (${input.wholeYears})`);
+  if (!Number.isFinite(input.weeklyPay) || input.weeklyPay < 0) throw new RangeError(`statutoryRedundancyPay: not a week's pay (${input.weeklyPay})`);
   const r = L.redundancy;
   const weeklyPayUsed = Math.min(input.weeklyPay, r.weeklyPayCap);
   if (input.wholeYears < r.minYears) return { weeks: 0, weeklyPayUsed, pay: 0 };
@@ -2002,6 +2020,7 @@ export function statutoryRedundancyPay(input: { ageAtDismissal: number; wholeYea
 }
 
 export function statutoryNoticeWeeks(monthsOfService: number): number {
+  if (!Number.isFinite(monthsOfService) || monthsOfService < 0) throw new RangeError(`statutoryNoticeWeeks: not a number of months (${monthsOfService})`);
   if (monthsOfService < 1) return 0;
   if (monthsOfService < 24) return 1;
   return Math.min(12, Math.floor(monthsOfService / 12));
@@ -2014,7 +2033,7 @@ export function statutoryNoticeWeeks(monthsOfService: number): number {
 npx tsx tests/uk/law/redundancy.test.ts
 ```
 
-Expected: 7 lines starting `PASS`, the last line `uk/law/redundancy: all pass`, exit code 0.
+Expected: 13 lines starting `PASS`, the last line `uk/law/redundancy: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
