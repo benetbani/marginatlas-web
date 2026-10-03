@@ -46,7 +46,7 @@ The figures the validation produced are findings in their own right:
 | Rounding is the register's only error: small in London, not in a borough | London restaurants' median 280.3k to 283.5k; Camden's hair and beauty median 73.9k to 81.1k |
 | Survival on today's closure rates is lower than the 2019 cohort's | restaurants and food stalls 29.3 of 100 after five years (2019 cohort: 39.1); personal services 43.4 (51.4); London all trades 38.3 (38.2) |
 | The City of London is a registration artefact | on 2024's rates it would top London's five-year survival (47.8) while its 2019 cohort sat in the bottom three (32.5) |
-| A sole trader keeps more than a one-director company that pays everything out in the year, at every profit from 1,000 to 400,000 | closest at 60,000 (20.20 apart); 100k: 69,311.40 against 65,209.63; the company's best salary is 12,570 up to 100k, about 5,000 at 150k, and from about 200k the salary that leaves exactly 50,000 in the company (131,086.96 on 200k) |
+| A sole trader keeps at least as much as a one-director company that pays everything out in the year, at every profit from 1,000 to 400,000 except 60,142 to 60,506 | there the company keeps up to 15.33 more (at 60,249); up to 5,000 the two keep the same; 100k: 69,311.40 against 65,209.63; the company's best salary is 12,570 up to 100k, about 5,000 at 150k, and from about 200k the salary that leaves exactly 50,000 in the company (131,086.96 on 200k) |
 | One living-wage hire, all in | 28,308.52 a year; 25,340.84 where the Employment Allowance is claimable |
 | Failure rates that can be printed | 117 of 137 trades have 10 or more insolvencies; dental practices' 1.3 rests on 25 cases ("few cases"); indie bookshops' 1.4 on 3 (not printable) |
 | The money of seven London trades (3.14, the table in 3.15) | the business at the median keeps 13,756 (restaurants) to 39,216 (dental practices) after tax; 32 to 61 of 100 registered businesses reach the break-even of the average premises' business |
@@ -146,7 +146,7 @@ Outside the allowance taper every schedule is continuous and piecewise linear in
 | 200,000 | 118,540.40 | 106,022.49 | 131,086.96 (leaves 50,000 in the company) |
 | 250,000 | 145,040.40 | 129,065.97 | 174,565.22 (leaves 50,000 in the company) |
 
-Across every profit from 1,000 to 400,000 (steps of 1,000) the sole trader keeps more; the closest is 60,000, 20.20 apart.
+Across every profit from 1,000 to 400,000 the sole trader keeps at least as much except in one window, 60,142 to 60,506, where the company keeps up to 15.33 more (at 60,249); up to 5,000 the two keep the same. A first sweep in steps of 1,000 missed the window and said "always"; the task review's step-10 scan found it, and an independent check confirmed it.
 
 Retaining profit in the company, pension contributions and a spouse's salary are out of scope and stated: they are the questions a Pro reader asks next.
 
@@ -368,7 +368,7 @@ Plans 01, 02 and 04 can run in parallel; 03 needs 01 (the law) and 02 (the expor
 
 1. **The headline figure on a trade page.** Recommendation: "a business needs X a year to carry the average London [premises]; Y of 100 registered businesses take that" as the headline, with the business at the median's take-home beside it and the quartiles under the plus. The break-even pair holds up best across the band shapes and says the most a would-be owner needs.
 2. **Which legal form the take-home uses.** Recommendation: the sole trader's (the commonest form for these trades), the company's under the plus.
-3. **Printing "a company that pays everything out keeps less than a sole trader".** True at every profit from 1,000 to 400,000 on the 2026-27 law (3.5), and against common advice (which assumes profit left in the company); recommendation: two figures, never advice.
+3. **Printing "a company that pays everything out keeps less than a sole trader".** True at every profit from 1,000 to 400,000 on the 2026-27 law except a window of 365 pounds of profit around 60,000 where the company leads by at most 15.33 (3.5), and against common advice (which assumes profit left in the company); recommendation: two figures, never a sentence that says always.
 4. **Survival, period or cohort first.** Recommendation: period (what a new owner faces), the 2019 cohort's once beside it.
 5. **Currency on UK pages.** The engine works in pounds; recommendation: pounds on UK pages, the dollar under the plus at one dated rate.
 6. **The downloads in section 6.** Recommendation: the Annual Business Survey first (it replaces the research shares with UK ones for every trade at once), then the borough population.

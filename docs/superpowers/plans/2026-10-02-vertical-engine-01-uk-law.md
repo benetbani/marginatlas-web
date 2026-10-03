@@ -1040,8 +1040,8 @@ Sole trader: `K = P - IT(P) - Class4(P)`. One-director company extracting everyt
 `er(s) = 15% max(0, s - 5,000)`, retained profit `pi(s) = Pi - s - er(s) >= 0`, `CT(pi)`, dividends `d = pi - CT(pi)`, and
 `K(s) = s - ee(s) + d - IT(s, d)`. Outside the allowance taper every schedule in that chain is continuous and piecewise linear
 in s, so K is too, and its maximum is at a breakpoint of some schedule or at an end: the secondary threshold 5,000, the primary threshold 12,570, 50,270,
-the taper points, the two salaries that land `pi(s)` exactly on a corporation-tax limit, and the largest payable salary
-`s_max`. The search evaluates those (unrounded) and a 250-pound grid, then refines to the pound around the best four regions
+the two salaries that land `pi(s)` exactly on a corporation-tax limit, and the largest payable salary `s_max` (the taper's
+kinks depend on salary plus dividends and have no name: the grid and the refine find them). The search evaluates those (unrounded) and a 250-pound grid, then refines to the pound around the best four regions
 at least 1,000 pounds apart, not only the best one: near a switch between regions the region that wins after refining is not
 the one that won before (at 163,281 of profit, refining only the first winner kept 89,396.54 at a 12,569 salary where 4,997
 keeps 89,396.72; found by the review of 2026-10-03). `s_max` is kept to the penny because the best salary can be the whole
@@ -1055,9 +1055,11 @@ after 1,394.40), proves the search against a brute-force 10-pound grid at three 
 whole-pound search over every payable salary at four more (135,000, 163,281, 200,000, 250,000). In the marginal relief band a
 pound of salary costs less than a pound of dividends for an additional-rate owner, so from about 200,000 the best salary
 leaves exactly 50,000 in the company (on 200,000: 131,086.96, keeping 106,022.49, 257 more than a 12,570 salary). An amount
-that is not finite is refused, and a company with a loss has no feasible salary. Across every profit from 1,000 to 400,000
-a sole trader keeps more than a company that pays everything out in the year (closest at 60,000, 20.20 apart; at 100,000,
-69,311.40 against 65,209.63): the 2026-27 dividend rates reversed the old advice.
+that is not finite is refused, and a company with a loss has no feasible salary. A sole trader keeps at least as much as a
+company that pays everything out in the year at every profit from 1,000 to 400,000 except one window, 60,142 to 60,506,
+where the company keeps up to 15.33 more (at 60,249); up to 5,000 the two keep the same (found by the review of 2026-10-03;
+a step of 1,000 had missed the window). At 100,000 the sole trader keeps 69,311.40 against 65,209.63: the 2026-27 dividend
+rates reversed the old advice.
 
 **Files:**
 - Create: `src/lib/uk/law/take_home.ts`
