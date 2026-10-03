@@ -1389,6 +1389,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-national-insurance",
+      "script": "tests/uk/law/national_insurance.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "National Insurance 2026-27: Class 4, Class 1 primary and secondary, the Employment Allowance as one budget.",
+      "reads": [
+        "src/lib/uk/law/national_insurance.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
