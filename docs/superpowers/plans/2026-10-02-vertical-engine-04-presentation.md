@@ -295,7 +295,15 @@ Intervals are closed (two that touch at one point are level); a member is compar
 above it (8, 7 to 9, under 9.5, 8.5 to 10.5, under 11, 10 to 12, ranks 3); every interval must hold its figure. An even
 count's median is the mean of the middle two, figures sort as numbers (9, 10 and 100 give 10, where a sort by text gives
 100), and an own figure that is not a finite number is refused. Five of seven deliberate faults passed the first version of
-this test; all ten now fail it.
+this test. Its review of 2026-10-03 found the ranks of members with the same figure depending on the order of the rows (a
+tie went to whichever came first, and the leader decides who joins; on rates from small counts that changed a rank in
+about one set in twenty-five): members with the same figure are now taken lowest-reaching interval first, then
+highest-reaching, so a group that starts among them is led by the one that can be told apart from the fewest members below.
+It also found the sort key, later groups, the leader's own fields and both sides of the guard unpinned; an interval's
+ends must now be finite, and a member must say whether it is a fill. The header no longer claims more than the rule gives:
+no member is ranked below a leader it cannot be told apart from, but one that overlaps another member, not that member's
+leader, still starts a lower group (11, 9.5 and 8 with intervals 10 to 12, 8.5 to 10.5 and 7 to 9 rank 1, 1, 3). All 25
+deliberate faults now fail it.
 
 **Files:**
 - Create: `src/lib/uk/present/compare.ts`
@@ -353,6 +361,31 @@ const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { r
 check("an interval must hold its figure: NaN, an interval the wrong way round and a figure outside are refused", refuses(() => rankWithTies([{ value: Number.NaN, lo: 0, hi: 1 }])) && refuses(() => rankWithTies([{ value: 5, lo: 6, hi: 4 }])) && refuses(() => rankWithTies([{ value: 9, lo: 6, hi: 8 }])));
 check("an own figure that is not a number is refused; a fill that is not one is left out like any fill", refuses(() => medianExcludingFills([{ value: Number.NaN, isFill: false }])) && medianExcludingFills([{ value: Number.NaN, isFill: true }, { value: 0.2, isFill: false }]).median === 0.2);
 
+type Row = { id: string; value: number; lo: number; hi: number };
+const show = (xs: readonly (Row & { rank: number; levelWithAbove: boolean })[]) => xs.map((x) => `${x.id}:${x.rank}${x.levelWithAbove ? "=" : ""}`).join(" ");
+const ranksById = (xs: readonly { id: string; rank: number }[]) => JSON.stringify(xs.map((x) => [x.id, x.rank]).sort());
+const restaurants: Row = { id: "restaurants", value: 28.9, lo: 27.3, hi: 30.5 }, pubs: Row = { id: "pubs", value: 26.0, lo: 24.3, hi: 27.8 };
+const bars: Row = { id: "bars", value: 25.7, lo: 23.0, hi: 28.6 }, dental: Row = { id: "dental", value: 1.3, lo: 0.8, hi: 1.9 };
+check("listed lowest first, the result is highest first with the same ranks: restaurants 1, pubs 1, bars 1, dental 4", show(rankWithTies([dental, bars, pubs, restaurants])) === "restaurants:1 pubs:1= bars:1= dental:4");
+check("the sort key is the figure, not an end or the middle of its interval: 10 (9.9 to 10.1), 9 (8 to 20), 8.5 (8.4 to 8.6) rank 1, 1, 3", show(rankWithTies([{ id: "X", value: 10, lo: 9.9, hi: 10.1 }, { id: "Y", value: 9, lo: 8, hi: 20 }, { id: "Z", value: 8.5, lo: 8.4, hi: 8.6 }])) === "X:1 Y:1= Z:3");
+check("a second group of two keeps its own leader: 21, 15, 14.5 and 5 rank 1, 2, 2, 4", show(rankWithTies([{ id: "A", value: 21, lo: 20, hi: 22 }, { id: "B", value: 15, lo: 14, hi: 16 }, { id: "C", value: 14.5, lo: 13.5, hi: 15.5 }, { id: "D", value: 5, lo: 4.5, hi: 5.5 }])) === "A:1 B:2 C:2= D:4");
+check("two identical exact figures (each a point interval) are level", show(rankWithTies([{ id: "a", value: 10, lo: 10, hi: 10 }, { id: "b", value: 10, lo: 10, hi: 10 }])) === "a:1 b:1=");
+const leader = rankWithTies([restaurants, pubs])[0];
+check("the leader ranks 1 and is level with nothing; no members give no ranks", leader.rank === 1 && leader.levelWithAbove === false && rankWithTies([]).length === 0);
+const H: Row = { id: "H", value: 10, lo: 8, hi: 12 }, X: Row = { id: "X", value: 5, lo: 4.9, hi: 5.1 }, Y: Row = { id: "Y", value: 5, lo: 1, hi: 9 };
+const A: Row = { id: "A", value: 10, lo: 9.5, hi: 10.5 }, B: Row = { id: "B", value: 10, lo: 5, hi: 15 }, C: Row = { id: "C", value: 6, lo: 5.5, hi: 6.5 };
+check("members with the same figure rank the same whichever order the rows come in (10, 8 to 12 with two 5s; two 10s with a 6)", ranksById(rankWithTies([H, X, Y])) === ranksById(rankWithTies([H, Y, X])) && ranksById(rankWithTies([A, B, C])) === ranksById(rankWithTies([B, A, C])));
+const callers: Row[] = [{ id: "lo", value: 1, lo: 0, hi: 2 }, { id: "hi", value: 9, lo: 8, hi: 10 }];
+rankWithTies(callers);
+check("the caller's list keeps its order, and a row that already carries a rank gets the computed one", callers.map((r) => r.id).join(",") === "lo,hi" && rankWithTies([{ id: "a", rank: 99, value: 5, lo: 4, hi: 6 }])[0].rank === 1);
+check("a figure below its interval, an infinite figure, and an interval with an infinite or a missing end are refused", refuses(() => rankWithTies([{ value: 5, lo: 6, hi: 8 }])) && refuses(() => rankWithTies([{ value: Infinity, lo: 0, hi: Infinity }])) && refuses(() => rankWithTies([{ value: 5, lo: 4, hi: Infinity }])) && refuses(() => rankWithTies([{ value: 5, lo: null as unknown as number, hi: 6 }])));
+check("an infinite own figure or a missing one is refused, and so is a member that does not say whether it is a fill", refuses(() => medianExcludingFills([1, 2, Infinity].map((value) => ({ value, isFill: false })))) && refuses(() => medianExcludingFills([{ value: null as unknown as number, isFill: false }, { value: 4, isFill: false }])) && refuses(() => medianExcludingFills([{ value: 1, isFill: undefined as unknown as boolean }])));
+const allFills = medianExcludingFills([0.13, 0.13, 0.13].map((value) => ({ value, isFill: true })));
+const nanFill = medianExcludingFills([{ value: Number.NaN, isFill: true }, { value: 0.2, isFill: false }]);
+check("a set of fills reports every one left out and none used; a fill that is not a number is still counted as left out", allFills.median === null && allFills.used === 0 && allFills.leftOut === 3 && nanFill.median === 0.2 && nanFill.used === 1 && nanFill.leftOut === 1);
+const none = medianExcludingFills([]);
+check("an empty set has no median; one own figure is its own median", none.median === null && none.used === 0 && none.leftOut === 0 && medianExcludingFills([{ value: 7, isFill: false }]).median === 7);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/compare: all pass");
 ```
@@ -376,27 +409,35 @@ Create `src/lib/uk/present/compare.ts`:
  * Ranking members of a like-for-like set when each figure has an interval.
  *
  * LEVEL WITH. Members are sorted by value, highest first. A member is "level with" the group above it when its interval
- * overlaps the interval of that group's first member; otherwise it starts a new group. Members of one group share a rank.
- * So the ranking never orders two figures the data cannot tell apart, and a page that marks "the highest" marks a group,
- * not a member, when the leader is level with the next. Intervals are closed, so two that touch at one point overlap.
- * Every interval must hold its figure: a figure that is not a finite number, an interval the wrong way round or a figure
- * outside its interval is refused, since the overlap test means nothing for it.
+ * overlaps the interval of that group's first member, its leader; otherwise it starts a new group. Members of one group
+ * share a rank (1, 1, 1, 4). So no member is ranked below a leader the data cannot tell it apart from, and a page that
+ * marks "the highest" marks a group, not a member, when the leader is level with the next. It is not a promise about every
+ * pair: a member that overlaps another member, but not that member's leader, still starts a lower group (11 (10 to 12),
+ * 9.5 (8.5 to 10.5) and 8 (7 to 9) rank 1, 1, 3: the 8 is apart from the 11, not from the 9.5), so levelWithAbove means
+ * "level with its group's leader", never "level with the row above". Intervals are closed: two that touch at one point
+ * overlap. Members with the same figure are taken lowest-reaching interval first (then highest-reaching), so a group that
+ * starts among them is led by the one that can be told apart from the fewest members below, and no rank depends on the
+ * order of the rows. Every interval must hold a finite figure between two finite ends: anything else is refused, since the
+ * overlap test means nothing for it.
  *
  * SET STATISTICS WITHOUT FILLS. A set's median is taken over members whose figure is their own: a member carrying a fill
  * value (a default written in for a missing figure) is left out, and the count left out is returned, so a "world median"
- * can never be the fill value itself (PART 9 clause 46). An own figure that is not a finite number is refused.
+ * can never be the fill value itself (PART 9 clause 46). An own figure that is not a finite number is refused, and so is a
+ * member that does not say whether it is a fill.
  */
 export type Ranked<T> = T & { rank: number; levelWithAbove: boolean };
 
 export function rankWithTies<T extends { value: number; lo: number; hi: number }>(rows: readonly T[]): Ranked<T>[] {
   for (const r of rows) {
-    if (!Number.isFinite(r.value) || !(r.lo <= r.value && r.value <= r.hi)) throw new RangeError(`rankWithTies: ${r.value} is not a figure inside its interval ${r.lo} to ${r.hi}`);
+    // two finite ends with the figure between them, so the figure is finite too (a NaN fails both comparisons)
+    if (!(Number.isFinite(r.lo) && Number.isFinite(r.hi) && r.lo <= r.value && r.value <= r.hi)) throw new RangeError(`rankWithTies: ${r.value} is not a figure inside its interval ${r.lo} to ${r.hi}`);
   }
-  const sorted = [...rows].sort((a, b) => b.value - a.value);
+  const sorted = [...rows].sort((a, b) => b.value - a.value || a.lo - b.lo || b.hi - a.hi);
   const out: Ranked<T>[] = [];
   let groupHead: T | null = null;
   let rank = 0;
   sorted.forEach((r, i) => {
+    // r.lo <= groupHead.hi always holds once sorted (r.lo <= r.value <= head.value <= head.hi); it is kept for the reader
     const overlaps = groupHead !== null && r.hi >= groupHead.lo && r.lo <= groupHead.hi;
     if (!overlaps) {
       groupHead = r;
@@ -408,6 +449,7 @@ export function rankWithTies<T extends { value: number; lo: number; hi: number }
 }
 
 export function medianExcludingFills(values: readonly { value: number; isFill: boolean }[]): { median: number | null; used: number; leftOut: number } {
+  if (values.some((v) => typeof v.isFill !== "boolean")) throw new RangeError("medianExcludingFills: every member must say whether its figure is a fill");
   const own = values.filter((v) => !v.isFill).map((v) => v.value);
   if (own.some((x) => !Number.isFinite(x))) throw new RangeError(`medianExcludingFills: an own figure is not a finite number (${own.find((x) => !Number.isFinite(x))})`);
   own.sort((a, b) => a - b);
@@ -424,7 +466,7 @@ export function medianExcludingFills(values: readonly { value: number; isFill: b
 npx tsx tests/uk/present/compare.test.ts
 ```
 
-Expected: 11 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
+Expected: 22 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
