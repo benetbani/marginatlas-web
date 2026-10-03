@@ -53,6 +53,13 @@ ten at least the range's whole width; it printed that take-home as 10,000, a qua
 A column prints one count of decimals for every row (the most any member needs, capped at one). Shares of a whole print as
 integers that sum to the whole by the largest-remainder method: floor every share, then give one to each of the largest
 remainders until the total is reached (18.4, 14.2, 11.3, 10.9, 7.1, 6.8, 31.3 print as 19, 14, 11, 11, 7, 7, 31).
+Rounding is half away from zero, as pennies rounds, so a loss prints as the same profit does (-4,500 to the 1,000 is -5,000,
+where Math.round gives -4,000) and nothing prints as -0. A half-width that is a power of ten in decimal can land a hair below
+it in floating point (3,234.14 - 1,234.14 is 1,999.9999999999998), so the unit allows a relative 1e-9. A range must hold its
+figure between two finite ends: an infinite end would hang the loop that widens the unit. A column's decimals allow
+floating-point noise in proportion to the figure (100 x 299,264.78 is 29,926,478.000000004), and remainders are compared on
+a grid of 1e-9, so 4, 1, 1 of 100 prints 67, 17, 16 as the tie rule says (raw floating point gave 66, 17, 17). Four of nine
+deliberate faults passed the first version of this test; all 25 now fail it (one by hanging it).
 
 **Files:**
 - Create: `src/lib/uk/present/precision.ts`
@@ -71,7 +78,7 @@ Create `tests/uk/present/precision.test.ts`:
  *
  * Run: npx tsx tests/uk/present/precision.test.ts
  */
-import { decimalsForColumn, honestRound, honestUnit, largestRemainder } from "../../../src/lib/uk/present/precision";
+import { decimalsForColumn, honestRound, honestUnit, largestRemainder, roundToUnit } from "../../../src/lib/uk/present/precision";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-present-precision";
@@ -98,6 +105,18 @@ check("whole numbers stay whole", decimalsForColumn([12, 40, 7]) === 0);
 const split = largestRemainder([18.4, 14.2, 11.3, 10.9, 7.1, 6.8, 31.3]);
 check("a spending split prints as integers that sum to 100", split.reduce((a, b) => a + b, 0) === 100);
 check("largest remainder: floors 18,14,11,10,7,6,31 (97), the three largest remainders (.9, .8, .4) get one each", split.join(",") === "19,14,11,11,7,7,31");
+check("the unit is the leading digit of the half-width: 13,756 known to 13,156 to 14,356 (half-width 600) prints 13,800, not 14,000", honestRound(13_756, 13_156, 14_356) === 13_800);
+check("a half-width of 1,000 in decimal gives a unit of 1,000 when floating point puts it a hair below: 2,234.14 (1,234.14 to 3,234.14, 1,999.9999999999998 apart) prints 2,000", honestRound(2_234.14, 1_234.14, 3_234.14) === 2_000);
+check("a loss rounds as the same profit does, half away from zero: -4,500 (-6,000 to -3,000) prints -5,000 as 4,500 prints 5,000; -300 at a unit of 1,000 is 0, never -0", honestRound(-4_500, -6_000, -3_000) === -5_000 && honestRound(4_500, 3_000, 6_000) === 5_000 && Object.is(roundToUnit(-300, 1_000), 0));
+check("ties go to the earlier row in decimal, not in floating point: 4, 1, 1 of 100 (66.67, 16.67, 16.67, two thirds over each) prints 67, 17, 16", largestRemainder([4, 1, 1]).join(",") === "67,17,16");
+check("nothing to split prints zeros", largestRemainder([0, 0, 0]).join(",") === "0,0,0");
+check("a two-decimal figure above 100,000 reads as two decimals under a cap of 3 (100 x 299,264.78 is 29,926,478.000000004)", decimalsForColumn([299_264.78], 3) === 2);
+/** The guards throw a RangeError; a missing guard shows as a hang, a plain Error, or a figure printed as if exact. */
+const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { return e instanceof RangeError; } };
+check("a range needs two finite ends around its figure: one end, an end that is not a number, an infinite end (which would widen the unit forever), ends the wrong way round and a figure outside them are refused", refuses(() => honestUnit(76_400, 73_900)) && refuses(() => honestUnit(76_400, Number.NaN, 81_100)) && refuses(() => honestUnit(5, -Infinity, 10)) && refuses(() => honestUnit(76_400, 81_100, 73_900)) && refuses(() => honestUnit(90_000, 73_900, 81_100)));
+check("a figure must be finite and the significant figures a whole count of at least one, and a unit a positive finite number: honestUnit of NaN, 0 or 2.5 significant figures, and roundToUnit at a unit of 0, -10 or NaN or of a NaN figure are refused", refuses(() => honestUnit(Number.NaN)) && refuses(() => honestUnit(740, undefined, undefined, 0)) && refuses(() => honestUnit(740, undefined, undefined, 2.5)) && refuses(() => roundToUnit(740, 0)) && refuses(() => roundToUnit(740, -10)) && refuses(() => roundToUnit(740, Number.NaN)) && refuses(() => roundToUnit(Number.NaN, 10)));
+check("a column must hold finite figures and a whole cap of at least 0: NaN in a column, a cap of -1 or 1.5 are refused", refuses(() => decimalsForColumn([26, Number.NaN])) && refuses(() => decimalsForColumn([26], -1)) && refuses(() => decimalsForColumn([26], 1.5)));
+check("shares must be finite and not negative, and the total whole: -1, NaN, a hole and a total of 99.5 are refused", refuses(() => largestRemainder([50, -1, 51])) && refuses(() => largestRemainder([50, Number.NaN])) && refuses(() => largestRemainder(new Array<number>(3))) && refuses(() => largestRemainder([50, 50], 99.5)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/precision: all pass");
@@ -130,24 +149,42 @@ Create `src/lib/uk/present/precision.ts`:
  *   Camden's hair and beauty median 76.4k, range 73.9k to 81.1k (h = 3.6k): u = 1,000, prints 76,000.
  *   A London restaurant at the median keeps 13,756, 11,534 to 15,558 across the band shapes (h = 2,012): prints 14,000.
  *   A living-wage hire, exact law, no range: three significant figures, 28,300.
+ * A half-width that is a power of ten in decimal can land a hair below it in floating point (3,234.14 - 1,234.14 is
+ * 1,999.9999999999998), so the comparison allows a relative 1e-9. A range must hold its figure between two finite ends:
+ * one end, an end that is not a finite number (an infinite one would widen the unit forever) or a figure outside its
+ * range is refused, never printed as if exact.
+ *
+ * ROUNDING is half away from zero, as pennies rounds, so a loss rounds as the same profit does (-4,500 to the 1,000 is
+ * -5,000, not -4,000), and a figure that rounds to nothing is 0, never -0 (which a formatter prints as "-0").
  *
  * ONE COLUMN, ONE DECIMAL COUNT (MODEL PART 5): a column prints every value with the decimals its most precise member
- * needs, up to a cap, so 26 and 28.9 print as 26.0 and 28.9.
+ * needs, up to a cap, so 26 and 28.9 print as 26.0 and 28.9. A value has k decimals when 10^k times it is a whole number
+ * to within floating-point noise, which grows with the number: 1e-13 of it, at least 1e-9 (100 x 299,264.78 is
+ * 29,926,478.000000004).
  *
  * SHARES THAT ADD UP: largest remainder. Floor every share, then hand the missing units to the largest remainders (ties to
- * the earlier row), so a split of 100 prints as integers that sum to 100.
+ * the earlier row), so a split of 100 prints as integers that sum to 100. Remainders are compared on a grid of 1e-9, so
+ * two that are equal in decimal tie even when floating point leaves them a few ulps apart (4, 1, 1 of 100: each has two
+ * thirds over, and the first two rows get the units).
  */
 export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs = 3): number {
-  const half = lo !== undefined && hi !== undefined ? Math.max(0, hi - lo) / 2 : 0;
+  if (!Number.isFinite(value)) throw new RangeError(`honestUnit: not a finite figure (${value})`);
+  const ranged = lo !== undefined || hi !== undefined;
+  const l = lo ?? Number.NaN, h = hi ?? Number.NaN;
+  if (ranged && !(Number.isFinite(l) && Number.isFinite(h) && l <= value && value <= h)) throw new RangeError(`honestUnit: a range needs two finite ends around its figure (${lo} to ${hi}, figure ${value})`);
+  if (!Number.isInteger(maxSigFigs) || maxSigFigs < 1) throw new RangeError(`honestUnit: not a count of significant figures (${maxSigFigs})`);
+  const half = ranged ? (h - l) / 2 : 0;
   let u = 1;
-  while (u * 10 <= half) u *= 10;
+  while (u * 10 <= half * (1 + 1e-9)) u *= 10;
   const magnitude = Math.abs(value) > 0 ? Math.floor(Math.log10(Math.abs(value))) : 0;
   const sigUnit = Math.pow(10, Math.max(0, magnitude - maxSigFigs + 1));
   return Math.max(u, sigUnit);
 }
 
 export function roundToUnit(value: number, unit: number): number {
-  return Math.round(value / unit) * unit;
+  if (!Number.isFinite(value) || !Number.isFinite(unit) || unit <= 0) throw new RangeError(`roundToUnit: not a figure and a unit (${value}, ${unit})`);
+  const q = Math.round(Math.abs(value) / unit) * unit;
+  return q === 0 ? 0 : Math.sign(value) * q;
 }
 
 export function honestRound(value: number, lo?: number, hi?: number): number {
@@ -155,10 +192,13 @@ export function honestRound(value: number, lo?: number, hi?: number): number {
 }
 
 export function decimalsForColumn(values: readonly number[], cap = 1): number {
+  if (!Number.isInteger(cap) || cap < 0) throw new RangeError(`decimalsForColumn: not a cap (${cap})`);
   let d = 0;
   for (const v of values) {
+    if (!Number.isFinite(v)) throw new RangeError(`decimalsForColumn: not a finite figure (${v})`);
     for (let k = 0; k <= cap; k++) {
-      if (Math.abs(v * Math.pow(10, k) - Math.round(v * Math.pow(10, k))) < 1e-9) {
+      const x = v * Math.pow(10, k);
+      if (Math.abs(x - Math.round(x)) <= Math.max(1e-9, Math.abs(x) * 1e-13)) {
         d = Math.max(d, k);
         break;
       }
@@ -169,12 +209,17 @@ export function decimalsForColumn(values: readonly number[], cap = 1): number {
 }
 
 export function largestRemainder(shares: readonly number[], total = 100): number[] {
+  if (!Number.isInteger(total) || total < 0) throw new RangeError(`largestRemainder: not a whole total (${total})`);
+  for (let i = 0; i < shares.length; i++) {
+    const s = shares[i];
+    if (!Number.isFinite(s) || s < 0) throw new RangeError(`largestRemainder: share ${i + 1} is not a share (${s})`);
+  }
   const sum = shares.reduce((a, b) => a + b, 0);
   if (sum <= 0) return shares.map(() => 0);
   const exact = shares.map((s) => (s / sum) * total);
   const floors = exact.map(Math.floor);
   let missing = total - floors.reduce((a, b) => a + b, 0);
-  const order = exact.map((e, i) => ({ i, r: e - Math.floor(e) })).sort((a, b) => b.r - a.r || a.i - b.i);
+  const order = exact.map((e, i) => ({ i, r: Math.round((e - Math.floor(e)) * 1e9) })).sort((a, b) => b.r - a.r || a.i - b.i);
   for (const { i } of order) {
     if (missing <= 0) break;
     floors[i] += 1;
@@ -190,7 +235,7 @@ export function largestRemainder(shares: readonly number[], total = 100): number
 npx tsx tests/uk/present/precision.test.ts
 ```
 
-Expected: 12 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
+Expected: 22 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -246,6 +291,11 @@ shares its rank. Overlap is the conservative test (two 95% intervals that do not
 standard errors), so the site never orders what the data cannot: pubs (24.3 to 27.8 per 1,000) and bars (23.0 to 28.6) share
 restaurants' rank, dental practices (0.8 to 1.9) stand alone at the bottom. A set's median uses only members whose figure is
 their own; fill values are counted and left out, and a set of fills only has no median (MODEL PART 9, clause 46).
+Intervals are closed (two that touch at one point are level); a member is compared with its group's head, not the member
+above it (8, 7 to 9, under 9.5, 8.5 to 10.5, under 11, 10 to 12, ranks 3); every interval must hold its figure. An even
+count's median is the mean of the middle two, figures sort as numbers (9, 10 and 100 give 10, where a sort by text gives
+100), and an own figure that is not a finite number is refused. Five of seven deliberate faults passed the first version of
+this test; all ten now fail it.
 
 **Files:**
 - Create: `src/lib/uk/present/compare.ts`
@@ -292,6 +342,16 @@ const med = medianExcludingFills([
 ]);
 check("the median of own figures is 0.21, the two fills left out and counted", med.median === 0.21 && med.leftOut === 2 && med.used === 3);
 check("a set of fills only has no median", medianExcludingFills([{ value: 0.13, isFill: true }]).median === null);
+const touching = rankWithTies([{ id: "a", value: 28.9, lo: 27.3, hi: 30.5 }, { id: "b", value: 26.0, lo: 25.0, hi: 27.3 }]);
+check("intervals that touch at one point are level (25.0 to 27.3 against 27.3 to 30.5)", touching[1].levelWithAbove === true && touching[1].rank === 1);
+const chain = rankWithTies([{ id: "a", value: 11, lo: 10, hi: 12 }, { id: "b", value: 9.5, lo: 8.5, hi: 10.5 }, { id: "c", value: 8, lo: 7, hi: 9 }]);
+check("level with the member above but not with the group's head starts a new group: 8 (7 to 9) under 9.5 (8.5 to 10.5) under 11 (10 to 12) ranks 3", chain[1].rank === 1 && chain[2].rank === 3 && chain[2].levelWithAbove === false);
+check("an even count takes the mean of the middle two: 0.07, 0.21, 0.32 and 0.40 give 0.265", medianExcludingFills([0.4, 0.07, 0.32, 0.21].map((value) => ({ value, isFill: false }))).median === 0.265);
+check("figures sort as numbers: 9, 10 and 100 give 10 (a sort by text puts 100 before 9 and gives 100)", medianExcludingFills([100, 9, 10].map((value) => ({ value, isFill: false }))).median === 10);
+/** The guards throw a RangeError; a missing guard shows as a rank or a median of a figure that is not one. */
+const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { return e instanceof RangeError; } };
+check("an interval must hold its figure: NaN, an interval the wrong way round and a figure outside are refused", refuses(() => rankWithTies([{ value: Number.NaN, lo: 0, hi: 1 }])) && refuses(() => rankWithTies([{ value: 5, lo: 6, hi: 4 }])) && refuses(() => rankWithTies([{ value: 9, lo: 6, hi: 8 }])));
+check("an own figure that is not a number is refused; a fill that is not one is left out like any fill", refuses(() => medianExcludingFills([{ value: Number.NaN, isFill: false }])) && medianExcludingFills([{ value: Number.NaN, isFill: true }, { value: 0.2, isFill: false }]).median === 0.2);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/compare: all pass");
@@ -318,15 +378,20 @@ Create `src/lib/uk/present/compare.ts`:
  * LEVEL WITH. Members are sorted by value, highest first. A member is "level with" the group above it when its interval
  * overlaps the interval of that group's first member; otherwise it starts a new group. Members of one group share a rank.
  * So the ranking never orders two figures the data cannot tell apart, and a page that marks "the highest" marks a group,
- * not a member, when the leader is level with the next.
+ * not a member, when the leader is level with the next. Intervals are closed, so two that touch at one point overlap.
+ * Every interval must hold its figure: a figure that is not a finite number, an interval the wrong way round or a figure
+ * outside its interval is refused, since the overlap test means nothing for it.
  *
  * SET STATISTICS WITHOUT FILLS. A set's median is taken over members whose figure is their own: a member carrying a fill
  * value (a default written in for a missing figure) is left out, and the count left out is returned, so a "world median"
- * can never be the fill value itself (PART 9 clause 46).
+ * can never be the fill value itself (PART 9 clause 46). An own figure that is not a finite number is refused.
  */
 export type Ranked<T> = T & { rank: number; levelWithAbove: boolean };
 
 export function rankWithTies<T extends { value: number; lo: number; hi: number }>(rows: readonly T[]): Ranked<T>[] {
+  for (const r of rows) {
+    if (!Number.isFinite(r.value) || !(r.lo <= r.value && r.value <= r.hi)) throw new RangeError(`rankWithTies: ${r.value} is not a figure inside its interval ${r.lo} to ${r.hi}`);
+  }
   const sorted = [...rows].sort((a, b) => b.value - a.value);
   const out: Ranked<T>[] = [];
   let groupHead: T | null = null;
@@ -343,7 +408,9 @@ export function rankWithTies<T extends { value: number; lo: number; hi: number }
 }
 
 export function medianExcludingFills(values: readonly { value: number; isFill: boolean }[]): { median: number | null; used: number; leftOut: number } {
-  const own = values.filter((v) => !v.isFill).map((v) => v.value).sort((a, b) => a - b);
+  const own = values.filter((v) => !v.isFill).map((v) => v.value);
+  if (own.some((x) => !Number.isFinite(x))) throw new RangeError(`medianExcludingFills: an own figure is not a finite number (${own.find((x) => !Number.isFinite(x))})`);
+  own.sort((a, b) => a - b);
   const leftOut = values.length - own.length;
   if (own.length === 0) return { median: null, used: 0, leftOut };
   const m = own.length % 2 ? own[(own.length - 1) / 2] : (own[own.length / 2 - 1] + own[own.length / 2]) / 2;
@@ -357,7 +424,7 @@ export function medianExcludingFills(values: readonly { value: number; isFill: b
 npx tsx tests/uk/present/compare.test.ts
 ```
 
-Expected: 5 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
+Expected: 11 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
