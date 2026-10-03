@@ -22,8 +22,8 @@
 - The tree holds many untracked files that are not this plan's. Every commit names its files; never `git add -A` or `.`.
 - The edits to existing builders are given as exact Replace / With pairs. Apply them in the order given: each "Replace"
   block then occurs exactly once (checked on 2026-10-02 by applying them in order to fresh copies of the real builders and
-  rebuilding every table, and again on 2026-10-03 with the hardened estimators: every table rebuilt, the 36 tests passing,
-  and plan 03's 139 checks and its registers gate passing on the slices exported from them).
+  rebuilding every table, and again on 2026-10-03 after the reviews of tasks 1 to 3: every table rebuilt, the 60 tests
+  passing, and plan 03's 139 checks and its registers gate passing on the slices exported from them).
 - Rebuild order, because each step reads the one before: `build_nomis.py` -> `build_demography.py` ->
   `enrich_failure_rates.py` -> `build_editorial.py` -> `draft_stories.py`; `export_for_site.py` last (plan 03 runs it into
   the website).
@@ -71,6 +71,14 @@ shapes (Pareto <= geometric mean <= log-flat <= flat in every band), with hard b
 `sum_k n_k ln(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))` and runs the G-test with 10 - 1 - 2 = 7 degrees of
 freedom (an empty band is still a cell of the fit; the first version counted only the non-empty ones): it recovers a true
 lognormal from rounded counts and rejects London restaurants at p about 1e-64, which is why pages never print a fitted curve.
+The review of 2026-10-03 found every figure right and the test too loose: nothing pinned the 5k floor, the 100,000k cap or
+band 9's edges in the quantile (a 1k floor would move 1,404 stored quantiles), the rule for a quantile landing exactly on a
+count (the smallest x: with `>` for `>=`, 26 stored quantiles move), the range at other quantiles and margins or far from
+the quantile's band, or the fit's own figures. The test now pins them all from independent computation, and three changes
+went in: a quantile on an edge is the edge exactly (`L (U / L)^frac`, not exp of the logs, which gave 50.000000000000014);
+the normal CDF goes through erfc, with a band wholly above the centre as a difference of upper tails, so a lopsided fit
+stays the maximum-likelihood one (one band far above the rest stalled at twice its G); and a sales figure that is not a
+number is refused, with the counts checked as numbers with a finite total. All 46 deliberate faults on the module fail.
 
 **Files:**
 - Create: `registers/uk/estimators/__init__.py`
@@ -111,7 +119,8 @@ RESTAURANTS_LONDON = [625, 800, 2250, 1470, 1245, 725, 500, 140, 75, 30]
 HAIR_BEAUTY_LONDON = [2405, 3740, 2655, 525, 245, 70, 40, 10, 5, 0]
 # Camden, the same code: a borough-sized count
 HAIR_BEAUTY_CAMDEN = [140, 135, 100, 35, 30, 5, 0, 0, 0, 0]
-# Drawn from a lognormal (median 280k, sigma 1) for 7,865 businesses and rounded to 5: a case where the model is true
+# A lognormal's expected counts (median 280k, sigma 1) for 7,865 businesses, rounded to 5: a case where the model is
+# true, so recovering it measures the rounding to 5 only (a real sample of that size would add about 1% of sampling error)
 SYNTHETIC = [335, 860, 2385, 2075, 1410, 605, 180, 15, 0, 0]
 
 
@@ -209,6 +218,74 @@ def test_counts_must_be_ten_finite_and_not_negative():
         for read in readers:
             with pytest.raises(ValueError):
                 read(counts)
+
+
+def test_floor_cap_and_top_band_edges():
+    assert round(empirical_quantile(HAIR_BEAUTY_LONDON, 0.1), 4) == 12.6499  # 5 x 10^(969.5 / 2405): the first band floored at 5k
+    assert empirical_cdf(HAIR_BEAUTY_LONDON, 4) == 0.0
+    assert round(empirical_cdf(HAIR_BEAUTY_LONDON, 25), 6) == 0.173391
+    assert math.isclose(empirical_quantile([0] * 9 + [10], 0.5), math.sqrt(50000 * 100000))  # the open top band capped at 100,000k
+    assert math.isclose(empirical_quantile([0] * 8 + [10, 0], 0.5), math.sqrt(10000 * 50000))  # band 9 is 10,000 to 50,000
+    assert empirical_cdf([0] * 9 + [10], 1e9) == 1.0
+
+
+def test_a_quantile_on_a_count_takes_the_smallest_x_and_an_edge_is_exact():
+    tie = [5, 0, 5] + [0] * 7  # the share below is 0.5 from 50k to 100k: the median is the smallest x, 50k
+    assert empirical_quantile(tie, 0.5) == 50.0
+    assert math.isclose(empirical_cdf(tie, 75), 0.5)
+
+
+def test_rounding_range_at_other_quantiles_other_margins_and_far_thresholds():
+    lo, hi = rounding_range(RESTAURANTS_LONDON, 0.9)
+    assert (round(lo, 2), round(hi, 2)) == (1904.23, 1942.33)
+    lo, hi = rounding_range(RESTAURANTS_LONDON, 0.1)
+    assert (round(lo, 2), round(hi, 2)) == (57.26, 57.71)
+    lo, hi = rounding_range(HAIR_BEAUTY_CAMDEN, 0.5, half=2.0)
+    assert (round(lo, 2), round(hi, 2)) == (74.38, 80.13)
+    lo, hi = rounding_range([0, 0, 0, 0, 0, 0, 0, 5, 5, 5], 0.5)  # seven empty bands below can each hide 2.5
+    assert (round(lo, 1), round(hi, 1)) == (250.0, 56123.1)
+    lo, hi = rounding_range([5, 5, 5, 0, 5, 0, 5, 5, 0, 0], 0.5)  # nursing and elderly care, City of London
+    assert (round(lo, 1), round(hi, 1)) == (79.4, 5000.0)
+    for bad in (math.nan, -1.0, math.inf):
+        with pytest.raises(ValueError):
+            rounding_range(HAIR_BEAUTY_CAMDEN, 0.5, half=bad)
+
+
+def test_lognormal_figures_are_pinned():
+    fit = lognormal_fit(RESTAURANTS_LONDON)
+    assert round(fit["mu"], 4) == 5.7509 and round(fit["sigma"], 4) == 1.3962
+    assert round(fit["g"], 1) == 316.6 and math.isclose(fit["p"], 1.695e-64, rel_tol=2e-3)
+    fit = lognormal_fit(SYNTHETIC)
+    assert abs(fit["median_k"] / 280 - 1) < 1e-3 and abs(fit["sigma"] - 1) < 1e-3  # the plan's 0.1%
+    assert round(fit["g"], 2) == 2.82 and round(fit["p"], 3) == 0.901
+    assert lognormal_fit([10, 5] + [0] * 8) is None  # two bands cannot fit two parameters
+    far = lognormal_fit([100, 0, 5, 0, 0, 0, 0, 0, 0, 5000])  # nearly everyone in the open top band: the fit's centre runs off
+    assert far is not None and far["mu"] > 0  # and its median is not an OverflowError
+
+
+def test_trimmed_mean_with_an_explicit_band_count():
+    assert round(trimmed_mean(HAIR_BEAUTY_LONDON, upto_band=3)[0], 5) == 85.38844
+    with pytest.raises(ValueError):
+        trimmed_mean(HAIR_BEAUTY_LONDON, upto_band=0)
+
+
+def test_q_must_be_strictly_inside_zero_one():
+    for q in (0.0, 1.0, -0.1, math.nan):
+        with pytest.raises(ValueError):
+            empirical_quantile(HAIR_BEAUTY_LONDON, q)
+
+
+def test_a_sales_figure_or_a_count_that_is_not_a_number_is_refused():
+    with pytest.raises(ValueError):
+        empirical_cdf(HAIR_BEAUTY_LONDON, math.nan)
+    for bad in (["5"] + [0] * 9, [1e308] * 10):  # a string; counts whose total is not finite
+        with pytest.raises(ValueError):
+            empirical_quantile(bad, 0.5)
+
+
+def test_a_lopsided_fit_stays_the_maximum_likelihood_one():
+    fit = lognormal_fit([5, 5000, 0, 0, 0, 5, 0, 0, 0, 0])  # one band far above the rest: the 1 + erf form stalled at twice this G
+    assert round(fit["mu"], 4) == 4.2682 and round(fit["sigma"], 4) == 0.1749 and round(fit["g"], 1) == 1546.2
 ```
 
 - [ ] **Step 3: Run it and watch it fail**
@@ -242,9 +319,12 @@ above any sales figure comes from the same assumption as the quantiles.
 LOGNORMAL (the model check). A lognormal fitted by maximum likelihood to the band counts:
     log L(mu, sigma) = sum_k n_k * log(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))
 with the G-test of fit, df = 10 - 1 - 2 = 7: the fit is the multinomial's over all ten bands, so an empty band is still a
-cell (its observed 0 adds nothing to G, its expected count is in the fit). When the fit holds (p >= 0.01) and its median sits within 10% of the
-empirical one, the two agree and the empirical figure prints; when they disagree the figure still prints (it assumes less)
-and the disagreement is recorded for review.
+cell (its observed 0 adds nothing to G, its expected count is in the fit). The p-value is stored with each cell as a model
+check (lognormal_fit_p, to three significant figures, so threshold the unrounded p, not the stored one: a cell at
+p = 0.0099953 stores 0.01); nothing prints it, and the empirical figure prints whatever it says (it assumes less). The
+normal CDF is computed through erfc, which keeps its digits in the lower tail, and a band lying wholly above the centre
+as a difference of two upper tails, so the fit stays the maximum-likelihood one on lopsided counts (the 1 + erf form
+cancelled there, and the clamp it needed put a false barrier in the likelihood).
 
 ROUNDING, not sampling. The register is a census: there is no sampling error. Its error is that every count is rounded to
 the nearest 5. rounding_range() gives the smallest and largest quantile the true counts could produce, each count being off
@@ -257,12 +337,16 @@ Trying only the corners split at the band that holds the printed quantile misses
 to another band: on the London table of 2026-10-02 it did in 288 of 2,597 cells (five businesses a band with an empty band
 between: 136k to 1,587k where the counts allow 100k to 5,612k).
 
-COUNTS are the ten band counts, finite and not negative; anything else is refused (a NaN total compared false with every
-bound and the quantile came back None as if the area were empty).
+COUNTS are the ten band counts, numbers, finite and not negative, with a finite total; anything else is refused (a NaN
+total compared false with every bound and the quantile came back None as if the area were empty). A sales figure that is
+not a number is refused too (it read as nobody below it). A quantile is the smallest x at which the share below reaches q,
+so where a band ends exactly on the target with empty bands above, it is that band's upper edge; a quantile on an edge is
+the edge itself, exactly (L (U / L)^frac, not exp of the logs, which left 50.000000000000014).
 """
 from __future__ import annotations
 
 import math
+import numbers
 from typing import Sequence
 
 from scipy import optimize, stats
@@ -278,9 +362,12 @@ TOP_CAP_K = 100000.0
 def _counts(counts: Sequence[float]) -> list[float]:
     if len(counts) != len(BANDS_K):
         raise ValueError("ten band counts expected")
+    if not all(isinstance(c, numbers.Real) and not isinstance(c, bool) for c in counts):
+        raise ValueError(f"band counts must be numbers: {list(counts)}")
     out = [float(c) for c in counts]
-    if any(not math.isfinite(c) or c < 0 for c in out):
-        raise ValueError(f"band counts must be finite and not negative: {list(counts)}")
+    # a NaN or an infinite count makes the total so, and so does a sum that overflows
+    if any(c < 0 for c in out) or not math.isfinite(sum(out)):
+        raise ValueError(f"band counts must be finite and not negative, with a finite total: {list(counts)}")
     return out
 
 
@@ -302,8 +389,8 @@ def empirical_quantile(counts: Sequence[float], q: float) -> float | None:
     for k, c in enumerate(counts):
         if c > 0 and cum + c >= target:
             frac = (target - cum) / c
-            a, b = _log_edges(k)
-            return math.exp(a + frac * (b - a))
+            low, high = max(BANDS_K[k][0], FLOOR_K), min(BANDS_K[k][1], TOP_CAP_K)
+            return low * (high / low) ** frac  # the header's formula: at frac 0 or 1, the edge itself
         cum += c
     return None
 
@@ -325,7 +412,7 @@ def trimmed_mean(counts: Sequence[float], upto_band: int = 7, shape: str = "log-
     L U ln(U / L) / (U - L). The default stops below 5m: an enterprise above it is mostly a chain, whose turnover is every
     site's, not one site's. Returns (mean, lo, hi), lo and hi bounding the mean whatever the shape inside each band (every
     business on its band's lower or upper edge, the first band from 0); None when those bands hold nobody. Equal to the
-    website's bandMeanK (src/lib/uk/pnl/banded.ts), which anchors the profit-and-loss model's size rule."""
+    website's bandMeanK (src/lib/uk/pnl/banded.ts, built in plan 03), which anchors the profit-and-loss model's size rule."""
     counts = _counts(counts)
     if not 1 <= upto_band < len(BANDS_K):
         raise ValueError("upto_band must be 1 to 9 (the top band is open)")
@@ -341,6 +428,8 @@ def trimmed_mean(counts: Sequence[float], upto_band: int = 7, shape: str = "log-
 
 def empirical_cdf(counts: Sequence[float], x_k: float) -> float | None:
     """The share of businesses with sales below x_k (thousands of pounds)."""
+    if math.isnan(x_k):
+        raise ValueError("empirical_cdf: the sales figure is not a number")
     counts = _counts(counts)
     n = sum(counts)
     if n <= 0:
@@ -360,13 +449,15 @@ def empirical_cdf(counts: Sequence[float], x_k: float) -> float | None:
 
 def rounding_range(counts: Sequence[float], q: float, half: float = 2.5) -> tuple[float, float] | None:
     """The smallest and largest q-quantile that counts each within +-half of these could give (exact: see the header)."""
+    if not (math.isfinite(half) and half >= 0):
+        raise ValueError(f"rounding_range: half must be a number of businesses, 0 or more ({half})")
     if empirical_quantile(counts, q) is None:
         return None
     counts = _counts(counts)
     out = []
     for m in range(len(counts) + 1):  # the bands below m move one way, the bands from m the other
         for below in (half, -half):
-            # a printed 0 can hide up to 2 businesses, so an empty band moves like any other (but never below 0)
+            # a printed 0 can hide businesses (2 of a whole count; the plans allow 2.5, decision 7), so an empty band moves like any other, never below 0
             adj = [max(0.0, c + below) if k < m else max(0.0, c - below) for k, c in enumerate(counts)]
             v = empirical_quantile(adj, q)
             if v is not None:
@@ -374,10 +465,14 @@ def rounding_range(counts: Sequence[float], q: float, half: float = 2.5) -> tupl
     return (min(out), max(out)) if out else None
 
 
+SQRT2 = math.sqrt(2.0)
+
+
 def _phi(z: float) -> float:
-    """The standard normal CDF through math.erf: about fifty times faster than scipy.stats.norm.cdf on one number, which
-    matters because the model check runs once for every trade in every place (some 4,800 fits)."""
-    return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
+    """The standard normal CDF through math.erfc, which keeps its digits in the lower tail where 1 + erf(z) cancels; far
+    faster than scipy.stats.norm.cdf on one number, which matters because the model check runs once for every trade in
+    every place (some 2,600 fits)."""
+    return 0.5 * math.erfc(-z / SQRT2)
 
 
 def lognormal_fit(counts: Sequence[float]) -> dict | None:
@@ -388,16 +483,13 @@ def lognormal_fit(counts: Sequence[float]) -> dict | None:
         return None
     log_edges = [(math.log(lo) if lo > 0 else -math.inf, math.log(hi) if math.isfinite(hi) else math.inf) for lo, hi in BANDS_K]
 
-    def cdf_log(le: float, m: float, s: float) -> float:
-        if le == -math.inf:
-            return 0.0
-        if le == math.inf:
-            return 1.0
-        return _phi((le - m) / s)
-
     def band_p(k: int, m: float, s: float) -> float:
         a, b = log_edges[k]
-        return cdf_log(b, m, s) - cdf_log(a, m, s)
+        za = -math.inf if a == -math.inf else (a - m) / s
+        zb = math.inf if b == math.inf else (b - m) / s
+        if za > 0:  # the band lies wholly above the centre: a difference of two upper tails keeps its digits
+            return 0.5 * (math.erfc(za / SQRT2) - math.erfc(zb / SQRT2))
+        return _phi(zb) - _phi(za)
 
     def nll(theta: Sequence[float]) -> float:
         m, ls = theta
@@ -414,7 +506,7 @@ def lognormal_fit(counts: Sequence[float]) -> dict | None:
         g += 2 * counts[k] * math.log(counts[k] / max(e, 1e-300))
     df = len(BANDS_K) - 3
     p = float(stats.chi2.sf(g, df)) if df > 0 else None
-    return {"mu": m, "sigma": s, "median_k": math.exp(m), "g": g, "df": df, "p": p}
+    return {"mu": m, "sigma": s, "median_k": math.exp(m) if m < 700 else math.inf, "g": g, "df": df, "p": p}
 ```
 
 - [ ] **Step 5: Run it and watch it pass**
@@ -423,7 +515,7 @@ def lognormal_fit(counts: Sequence[float]) -> dict | None:
 python -m pytest registers/uk/tests/test_banded.py -q
 ```
 
-Expected: `13 passed`.
+Expected: `21 passed`.
 
 - [ ] **Step 6: Commit**
 
@@ -447,7 +539,11 @@ places, half away from zero after 1e-7 of the last unit (Python's `round` sends 
 41 insolvencies among 4,000 companies is exactly 10.25 per 1,000, which it prints 10.2 where the website prints 10.3; on
 100,000 numbers `half_up` and the website's pennies agree to the digit). Counts are whole and within their totals, or
 refused. The test pins both edges of the publication rule, the exact top edge of Wilson's interval, a duel with no events
-on either side and Holm's cap.
+on either side and Holm's cap. Its review of 2026-10-03 added what still passed: a one-sided or a 1 - cdf p-value (the
+duel's p is two-sided, and in the tail it is 2.0539e-109, not 0.0), Holm returning values in sorted order instead of the
+caller's, Garwood at another level, the rse rounded by Python, and half_up at scale (12,345,678.125 to 12,345,678.13). Holm
+now refuses a p-value that is not a number from 0 to 1 (a NaN turned the smallest p into 1.0), and an interval's z and
+alpha are checked.
 
 **Files:**
 - Create: `registers/uk/estimators/rounding.py`
@@ -532,6 +628,53 @@ def test_counts_must_be_whole_and_within_their_totals():
 
 def test_holm_caps_at_one():
     assert holm([0.6, 0.7]) == [1.0, 1.0]
+
+
+def test_two_proportions_p_is_two_sided_and_exact_in_the_tail():
+    z, p = two_proportions(30, 1000, 20, 1000)
+    assert round(z, 4) == 1.4322 and round(p, 4) == 0.1521  # two-sided (one-sided: 0.0760)
+    assert two_proportions(20, 1000, 30, 1000) == (-z, p)    # swapping the sides flips z, never p
+    assert 2.053e-109 < two_proportions(1259, 43634, 25, 18790)[1] < 2.054e-109  # the tail itself, not 1 - cdf (0.0)
+
+
+def test_holm_returns_the_callers_order():
+    assert [round(v, 4) for v in holm([0.04, 0.01, 0.03])] == [0.06, 0.03, 0.06]
+    assert [round(v, 4) for v in holm([0.5, 0.001])] == [0.5, 0.002]
+
+
+def test_holm_refuses_what_is_not_a_p_value():
+    for bad in ([0.01, float("nan")], [0.04, float("nan"), 0.01], [-0.1], [1.5]):
+        with pytest.raises(ValueError):
+            holm(bad)
+
+
+def test_garwood_at_one_and_at_another_level():
+    assert [round(v, 4) for v in garwood(1)] == [0.0253, 5.5716]
+    assert [round(v, 4) for v in garwood(3, 0.10)] == [0.8177, 7.7537]
+
+
+def test_an_interval_needs_a_positive_z_and_an_alpha_between_0_and_1():
+    for bad in (lambda: wilson(3, 100, float("nan")), lambda: wilson(3, 100, 0), lambda: garwood(3, 1.5), lambda: garwood(3, 0.0), lambda: garwood(3, float("nan"))):
+        with pytest.raises(ValueError):
+            bad()
+
+
+def test_rate_fields_below_the_rule_and_at_a_binary_tie():
+    assert rate_per_1000(9, 5000)["few_cases"] is False
+    assert rate_per_1000(0, 500)["rse"] is None
+    assert rate_per_1000(256, 10000)["rse"] == 0.063  # 1/16 = 0.0625 exactly: the website gives 0.063, Python's round 0.062
+
+
+def test_half_up_where_the_allowance_vanishes_and_at_a_knife_edge():
+    assert half_up(12_345_678.125, 2) == 12345678.13 and half_up(2_000_000_000.5, 0) == 2000000001.0
+    assert half_up(39059.254999999, 2) == 39059.26  # the allowance added after scaling, as the website does
+    assert half_up(4503599627370497.0, 0) == 4503599627370497.0
+
+
+def test_the_second_side_and_empty_totals_are_refused():
+    for bad in (lambda: two_proportions(1, 10, 11, 10), lambda: two_proportions(1, 10, 1, 0), lambda: wilson(0, 0)):
+        with pytest.raises(ValueError):
+            bad()
 ```
 
 - [ ] **Step 2: Run it and watch it fail**
@@ -585,15 +728,18 @@ company is to fail in a year"), and a risk estimated from x events has the uncer
   WILSON (the proportion x / N):  centre (p + z^2/2N) / (1 + z^2/N), half-width z sqrt(p(1-p)/N + z^2/4N^2) / (1 + z^2/N).
       Good at small x and never outside [0, 1]; used for every rate per 1,000.
   GARWOOD (an exact Poisson interval for the count x): [chi2(alpha/2; 2x) / 2, chi2(1 - alpha/2; 2x + 2) / 2].
-      Used where only the count matters (x insolvencies in a month).
+      For a count alone, with no total to divide by (x insolvencies in a month); nothing in the registers calls it yet.
   RELATIVE STANDARD ERROR of a Poisson count: 1 / sqrt(x). A rate prints only from x >= 10 (RSE <= 32%); between 10 and 30
       it prints with "few cases".
   TWO RATES (a duel): the pooled two-proportion z-test; when one page compares many pairs, the p-values are Holm-adjusted
-      (sort ascending, multiply the i-th smallest by (m - i + 1), keep them non-decreasing, cap at 1), and a difference is
-      "real" at an adjusted p below 0.01.
+      (sort ascending, multiply the i-th smallest by (m - i + 1), keep them non-decreasing, cap at 1), returned in the
+      caller's order. A reader may call a difference real at an adjusted p below 0.01; the feed stores the largest adjusted
+      p of the pairs it shows and leaves the call to the reader. A p-value under about 1e-300 underflows to 0.0.
 
 Counts are whole numbers: a part count, a negative one or one that is not a number is refused (a NaN slipped through every
-comparison and came back as the interval [0, 1]). Printed figures round as the website rounds (estimators/rounding.py).
+comparison and came back as the interval [0, 1]); so is a z or an alpha that cannot make an interval, and a p-value
+outside 0 to 1 (a NaN among Holm's inputs sorted to the wrong place and turned the smallest p into 1.0). Printed figures
+round as the website rounds (estimators/rounding.py).
 """
 from __future__ import annotations
 
@@ -616,13 +762,16 @@ def _count(v: float, what: str) -> int:
 
 def wilson(x: int, n: int, z: float = Z95) -> tuple[float, float]:
     x, n = _count(x, "wilson"), _count(n, "wilson")
+    if not (math.isfinite(z) and z > 0):
+        raise ValueError(f"wilson: z must be a positive number ({z})")
     if n <= 0 or x > n:
         raise ValueError("wilson: need 0 <= x <= n and n > 0")
     p = x / n
     den = 1 + z * z / n
     centre = (p + z * z / (2 * n)) / den
     half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / den
-    # at x = 0 (or x = n) the bound is exactly 0 (or 1); floating point leaves a 1e-19 residue that would print as a figure
+    # at x = 0 (or x = n) the bound is exactly 0 (or 1); floating point leaves a residue (up to 1e-16, and negative at x = 0
+    # for some n) that a caller printing wilson() unrounded would show as a figure
     lo = 0.0 if x == 0 else max(0.0, centre - half)
     hi = 1.0 if x == n else min(1.0, centre + half)
     return lo, hi
@@ -630,6 +779,8 @@ def wilson(x: int, n: int, z: float = Z95) -> tuple[float, float]:
 
 def garwood(x: int, alpha: float = 0.05) -> tuple[float, float]:
     x = _count(x, "garwood")
+    if not 0 < alpha < 1:
+        raise ValueError(f"garwood: alpha must be between 0 and 1 ({alpha})")
     lo = 0.0 if x == 0 else float(stats.chi2.ppf(alpha / 2, 2 * x)) / 2
     hi = float(stats.chi2.ppf(1 - alpha / 2, 2 * (x + 1))) / 2
     return lo, hi
@@ -662,6 +813,8 @@ def two_proportions(x1: int, n1: int, x2: int, n2: int) -> tuple[float, float]:
 
 
 def holm(pvalues: Sequence[float]) -> list[float]:
+    if not all(0.0 <= float(p) <= 1.0 for p in pvalues):  # a NaN fails both comparisons
+        raise ValueError("holm: every p-value must be a number from 0 to 1")
     m = len(pvalues)
     order = sorted(range(m), key=lambda i: pvalues[i])
     adjusted = [0.0] * m
@@ -678,7 +831,7 @@ def holm(pvalues: Sequence[float]) -> list[float]:
 python -m pytest registers/uk/tests/test_rates.py -q
 ```
 
-Expected: `12 passed`.
+Expected: `20 passed`.
 
 - [ ] **Step 5: Commit**
 
@@ -697,7 +850,15 @@ and chain them, `S(t) = prod_{j<=t} (1 - h_j)`, with Greenwood's variance `S(t)^
 2024 tables every hazard is calendar 2024's. Printing each horizon from its own latest cohort instead mixes cohorts and can
 rise from one year to the next, which survival cannot do; the test builds exactly that case. It also pins the Greenwood
 bounds (computed independently with exact fractions), stops the curve at a year no cohort has, never uses a cohort without
-the year before, and refuses survivors that rise or fall below zero; figures round the website's way.
+the year before, and refuses survivors that rise or fall below zero; figures round the website's way. Its review of
+2026-10-03 found the arithmetic exact and four things to change. Greenwood's variance is 0 where nothing has closed or
+everyone has, which printed "100%, from 100% to 100%": there the interval is now the exact one (with no closure so far,
+the lower limit is 0.025^(1 / n), n the fewest at risk in any year so far; once a year closes everyone, the upper limit is
+1 - 0.025^(1 / n) for the n at risk then). The counts are checked from the cohort's births through every year read, before
+the curve can stop on nobody at risk (a rise from 0 and a rise behind the year read went through). Shares are stored to six
+decimals: printed as percentages to one decimal, four decimals rounded again got about one figure in twenty a tenth off.
+And eight tests pin the clip, half-up ties, the hazards, the horizon, the order of the cohorts, year one's births, a
+cohort without year one, and the zero-width cases. All 17 deliberate faults on the module fail.
 
 **Files:**
 - Create: `registers/uk/estimators/survival.py`
@@ -708,7 +869,10 @@ the year before, and refuses survivors that rise or fall below zero; figures rou
 Create `registers/uk/tests/test_survival.py`:
 
 ```python
-"""Tests for estimators/survival.py. Run: python -m pytest registers/uk/tests -q"""
+"""Tests for estimators/survival.py. Run: python -m pytest registers/uk/tests -q
+
+Every expected figure was computed apart from the module, with exact fractions for S and Greenwood's sum, 60-digit
+decimals for the square roots and the exact limits, and half-up rounding of the exact value to six decimals."""
 import pytest
 
 from estimators.survival import synthetic_cohort
@@ -724,7 +888,7 @@ SURVIVORS = {
 def test_synthetic_cohort_uses_the_newest_cohort_for_each_year():
     rows = synthetic_cohort(BIRTHS, SURVIVORS)
     assert [r["cohort"] for r in rows] == [2023, 2020, 2020, 2020, 2019]
-    assert [r["survival"] for r in rows] == [0.95, 0.7516, 0.6368, 0.5429, 0.4343]
+    assert [r["survival"] for r in rows] == [0.95, 0.751648, 0.636813, 0.542857, 0.434286]
 
 
 def test_synthetic_cohort_never_rises():
@@ -740,12 +904,51 @@ def test_mixing_cohorts_rises_where_the_synthetic_curve_cannot():
     mixed = [survivors[2023][1] / 1000, survivors[2022][2] / 1000, survivors[2021][3] / 1000]  # each horizon's newest cohort
     assert mixed == [0.95, 0.6, 0.82] and mixed[2] > mixed[1]  # a curve that rises: survival cannot do that
     s = [r["survival"] for r in synthetic_cohort(births, survivors, horizon=3)]
-    assert s == [0.95, 0.7125, 0.6874]
+    assert s == [0.95, 0.7125, 0.687353]
 
 
 def test_greenwood_interval():
     rows = synthetic_cohort(BIRTHS, SURVIVORS)
-    assert [(r["lo"], r["hi"]) for r in rows] == [(0.9365, 0.9635), (0.7244, 0.7789), (0.6064, 0.6672), (0.5114, 0.5744), (0.4027, 0.4659)]
+    assert [(r["lo"], r["hi"]) for r in rows] == [(0.936492, 0.963508), (0.724379, 0.778918), (0.606417, 0.66721), (0.511351, 0.574363), (0.402702, 0.46587)]
+
+
+def test_the_hazard_is_each_years_chance_of_closing():
+    rows = synthetic_cohort(BIRTHS, SURVIVORS)
+    assert [r["hazard"] for r in rows] == [0.05, 0.208791, 0.152778, 0.147541, 0.2]  # 1/20, 19/91, 11/72, 9/61, 1/5
+
+
+def test_the_interval_is_clipped_to_zero_and_one():
+    top = synthetic_cohort({2023: 20}, {2023: {1: 19}})[0]      # 19 of 20: Greenwood's hi is 1.045519
+    assert (top["survival"], top["lo"], top["hi"]) == (0.95, 0.854481, 1.0)
+    bottom = synthetic_cohort({2023: 20}, {2023: {1: 1}})[0]    # 1 of 20: Greenwood's lo is -0.045519
+    assert (bottom["survival"], bottom["lo"], bottom["hi"]) == (0.05, 0.0, 0.145519)
+
+
+def test_figures_round_half_up_not_half_even():
+    row = synthetic_cohort({2019: 128}, {2019: {1: 127}})[0]  # a hazard of 1/128 = 0.0078125 exactly: Python's round gives 0.007812
+    assert (row["hazard"], row["survival"]) == (0.007813, 0.992188)
+
+
+def test_where_nothing_closed_the_interval_is_the_exact_one():
+    # Greenwood's variance is 0 here and would print 100%, from 100% to 100%; the exact lower limit is 0.025^(1/n),
+    # n the fewest at risk in any year so far
+    assert [(r["survival"], r["lo"], r["hi"]) for r in synthetic_cohort({2019: 1000}, {2019: {1: 1000}})] == [(1.0, 0.996318, 1.0)]
+    rows = synthetic_cohort({2019: 400, 2020: 1000}, {2019: {1: 400, 2: 400}, 2020: {1: 1000}})
+    assert [(r["cohort"], r["survival"], r["lo"]) for r in rows] == [(2020, 1.0, 0.996318), (2019, 1.0, 0.99082)]
+    rows = synthetic_cohort({2019: 1000, 2020: 400}, {2019: {1: 1000, 2: 1000}, 2020: {1: 400}})  # the fewest at risk came first
+    assert [(r["cohort"], r["survival"], r["lo"]) for r in rows] == [(2020, 1.0, 0.99082), (2019, 1.0, 0.99082)]
+
+
+def test_where_everyone_closed_the_interval_is_the_exact_one_and_the_curve_ends():
+    rows = synthetic_cohort({2019: 1000}, {2019: {1: 900, 2: 0}})
+    assert [(r["hazard"], r["survival"], r["lo"], r["hi"]) for r in rows] == [(0.1, 0.9, 0.881406, 0.918594), (1.0, 0.0, 0.0, 0.00409)]
+    rows = synthetic_cohort({2019: 1000}, {2019: {1: 0, 2: 0}})  # nobody left to observe a second year
+    assert [(r["year"], r["survival"], r["hi"]) for r in rows] == [(1, 0.0, 0.003682)]
+
+
+def test_the_horizon_cuts_the_curve():
+    rows = synthetic_cohort({2019: 1000}, {2019: {1: 900, 2: 800, 3: 700}}, horizon=2)
+    assert [r["year"] for r in rows] == [1, 2]
 
 
 def test_a_missing_year_ends_the_curve():
@@ -753,16 +956,35 @@ def test_a_missing_year_ends_the_curve():
     assert [r["year"] for r in rows] == [1, 2]
 
 
+def test_the_order_of_the_cohorts_does_not_matter():
+    rows = synthetic_cohort({2023: 1000, 2020: 1000, 2019: 1000}, SURVIVORS)  # newest first
+    assert [r["cohort"] for r in rows] == [2023, 2020, 2020, 2020, 2019]
+    assert [r["survival"] for r in rows] == [0.95, 0.751648, 0.636813, 0.542857, 0.434286]
+
+
+def test_year_one_starts_from_the_births_of_the_cohort_it_uses():
+    births = {2021: 1100, 2022: 1200, 2023: 900}  # every cohort differs; 2023 has no survivors yet
+    rows = synthetic_cohort(births, {2021: {1: 990}, 2022: {1: 1020}})
+    assert [(r["cohort"], r["survival"]) for r in rows] == [(2022, 0.85)]  # 1020 / 1200
+
+
 def test_a_cohort_without_the_year_before_is_not_used():
     rows = synthetic_cohort({2019: 1000, 2021: 1000}, {2019: {1: 900, 2: 800, 3: 700}, 2021: {1: 950, 3: 850}})
     assert [r["cohort"] for r in rows] == [2021, 2019, 2019]
+    rows = synthetic_cohort({2019: 1000, 2022: 1000}, {2019: {1: 900, 2: 800}, 2022: {2: 700}})
+    assert [(r["cohort"], r["survival"]) for r in rows] == [(2019, 0.9), (2019, 0.8)]
 
 
-def test_survivors_cannot_rise_or_fall_below_zero():
-    with pytest.raises(ValueError):
-        synthetic_cohort({2019: 1000}, {2019: {1: 900, 2: 950}})
-    with pytest.raises(ValueError):
-        synthetic_cohort({2019: 1000}, {2019: {1: -5}})
+def test_counts_that_rise_or_fall_below_zero_are_refused():
+    for births, survivors in (
+        ({2019: 1000}, {2019: {1: 900, 2: 950}}),                                      # a rise between the years read
+        ({2019: 1000}, {2019: {1: -5}}),                                                # below zero
+        ({2019: 1000}, {2019: {1: 0, 2: 10}}),                                          # a rise from nobody
+        ({2020: 1000, 2021: 1000}, {2020: {1: 900, 2: -5, 3: 100}, 2021: {1: 920, 2: 800}}),  # below zero, in a year not read
+        ({2020: 1000, 2021: 1000}, {2020: {1: 900, 2: 950, 3: 700}, 2021: {1: 920, 2: 800}}),  # a rise behind the year read
+    ):
+        with pytest.raises(ValueError, match="synthetic_cohort"):
+            synthetic_cohort(births, survivors)
 ```
 
 - [ ] **Step 2: Run it and watch it fail**
@@ -790,16 +1012,28 @@ taken from the latest cohort that has both points:
     h_t = 1 - s_c(t) / s_c(t - 1)          (s_c(0) = the cohort's births)
 and the curve is the product of the year-by-year chances of staying open:
     S(t) = prod_{j <= t} (1 - h_j)
-It cannot rise, it uses the newest evidence for every year, and S(1) equals the latest one-year figure exactly.
+It cannot rise, it uses the newest evidence for every year, and S(1) equals the latest one-year figure exactly. A year no
+usable cohort has ends the curve there (the years after a gap are not chained across it), and so does a year whose newest
+cohort has nobody left at risk.
 
 GREENWOOD'S VARIANCE gives each S(t) an interval: Var S(t) ~ S(t)^2 * sum_{j <= t} h_j / (n_j (1 - h_j)), n_j being the
-businesses at risk at the start of year j in the cohort used for that year. With counts rounded to 5, the interval is a
-floor on the uncertainty, not all of it.
+businesses at risk at the start of year j in the cohort used for that year, and the 95% interval S +- 1.96 sd, clipped to
+[0, 1]. With counts rounded to 5, the interval is a floor on the uncertainty, not all of it. Greenwood's variance is 0
+where nothing has closed (S = 1) or everyone has (S = 0), which would print a certainty the counts do not have ("100%,
+from 100% to 100%"); there the interval is the exact one. With no closure in any year so far, the likeliest way for S to
+be as low as L is one year carrying all of it, so the lower limit is L = 0.025^(1 / n_min), n_min the fewest at risk in
+any year so far (for one year this is Clopper-Pearson's exact limit); once a year closes everyone, S can be no more than
+that year's own upper limit, 1 - 0.025^(1 / n) for the n at risk then.
 
-A cohort's survivors cannot rise from one year to the next, nor fall below zero (true counts never rise, and rounding to 5
-keeps their order), so either in the data is refused: a rise would make S climb, a negative count would make it negative.
-A year missing from every usable cohort ends the curve there; the years after a gap are not chained across it. Printed
-figures round as the website rounds (estimators/rounding.py).
+THE COUNTS a curve reads are checked: from a cohort's births through every year the curve uses, its counts must not rise
+or fall below zero, or the cohort is refused (ValueError). True counts never rise and rounding to 5 keeps their order,
+but published counts can (a revision or a reclassification: one small group rose from 5 to 10 between two years in the
+2024 tables), so the builder decides what to do with a refused group.
+
+Each row: year, cohort, hazard (that year's chance of closing), survival, and lo and hi (its 95% interval), shares stored
+to six decimals the website's way (estimators/rounding.py). A page prints a share as a percentage to one decimal; a share
+stored to four decimals and rounded again would print about one figure in twenty a tenth off (0.41449 stored as 0.4145
+prints 41.5 for 41.4), six leave about one in two thousand.
 """
 from __future__ import annotations
 
@@ -807,28 +1041,42 @@ import math
 
 from .rounding import half_up
 
+Z = 1.96
+TAIL = 0.025  # each side of a 95% interval
+
 
 def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]], horizon: int = 5) -> list[dict]:
     """births[c] = the cohort's births; survivors[c][t] = still trading t years on. Returns one row per year t."""
     rows = []
     s = 1.0
     var_sum = 0.0
+    n_min = math.inf  # the fewest at risk in any year so far
+    n_zero = None     # those at risk in the year that closed everyone
     for t in range(1, horizon + 1):
         usable = [c for c in births if t in survivors.get(c, {}) and (t == 1 or (t - 1) in survivors.get(c, {}))]
         if not usable:
             break
         c = max(usable)
+        seq = [births[c]] + [survivors[c][j] for j in range(1, t + 1) if j in survivors[c]]
+        if seq[0] < 0 or any(not 0 <= b <= a for a, b in zip(seq, seq[1:])):
+            raise ValueError(f"synthetic_cohort: cohort {c} rises or falls below zero from its births to year {t}: {seq}")
         at_risk = births[c] if t == 1 else survivors[c][t - 1]
         if at_risk <= 0:
             break
-        if not 0 <= survivors[c][t] <= at_risk:
-            raise ValueError(f"synthetic_cohort: cohort {c} has {survivors[c][t]} at year {t} against {at_risk} the year before")
         h = 1 - survivors[c][t] / at_risk
         s *= 1 - h
+        n_min = min(n_min, at_risk)
         if 0 < h < 1:
             var_sum += h / (at_risk * (1 - h))
+        if h == 1 and n_zero is None:
+            n_zero = at_risk
         se = s * math.sqrt(var_sum)
-        rows.append({"year": t, "cohort": c, "hazard": half_up(h, 4), "survival": half_up(s, 4), "lo": half_up(max(0.0, s - 1.96 * se), 4), "hi": half_up(min(1.0, s + 1.96 * se), 4)})
+        lo, hi = max(0.0, s - Z * se), min(1.0, s + Z * se)
+        if s == 1.0:
+            lo = TAIL ** (1 / n_min)
+        elif s == 0.0:
+            hi = 1 - TAIL ** (1 / n_zero)
+        rows.append({"year": t, "cohort": c, "hazard": half_up(h, 6), "survival": half_up(s, 6), "lo": half_up(lo, 6), "hi": half_up(hi, 6)})
     return rows
 ```
 
@@ -838,7 +1086,7 @@ def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]
 python -m pytest registers/uk/tests/test_survival.py -q
 ```
 
-Expected: `7 passed`.
+Expected: `15 passed`.
 
 - [ ] **Step 5: Commit**
 
@@ -1142,7 +1390,10 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 Each borough and each trade group gets `survival_period`: years 1 to 5 from `synthetic_cohort`, each row naming the cohort
 its hazard came from. The old `survival` field (each horizon from its own latest cohort) stays for comparison, and the
-`horizons` note says which is which and why the period curve prints by default.
+`horizons` note says which is which and why the period curve prints by default. A group whose published counts rise from
+one year to the next (a revision; two small groups do in the 2024 workbook, none of the 114 curves built today) is refused
+by the estimator: its curve is left empty, so nothing prints it, and the run prints which group and why, instead of
+stopping the whole build.
 
 **Files:**
 - Modify: `registers/uk/build_demography.py`
@@ -1178,14 +1429,20 @@ with:
 def period_curve(per_cohort: dict, key: str) -> list[dict]:
     """Survival on the latest year's closure rates (a synthetic cohort, estimators/survival.py): each year's chance of
     closing from the newest cohort that has both ends of that year, chained. Cannot rise; S(1) equals the latest one-year
-    figure. Each row names the cohort it used."""
+    figure. Each row names the cohort it used. A group whose published counts rise from one year to the next (a revision:
+    true counts cannot) is refused by the estimator: its curve is left empty, so nothing prints it, and the run says
+    which group and why."""
     births, survivors = {}, {}
     for c in per_cohort:
         row = per_cohort[c].get(key)
         if row and row.get("births"):
             births[int(c)] = row["births"]
             survivors[int(c)] = {t: row[t] for t in range(1, 6) if t in row}
-    return synthetic_cohort(births, survivors)
+    try:
+        return synthetic_cohort(births, survivors)
+    except ValueError as e:
+        print(f"survival_period withheld for {key}: {e}")
+        return []
 
 
 def main() -> int:
@@ -1354,6 +1611,8 @@ interval and "few cases" flag, and records the duel (the top against the bottom,
 Holm-adjusted p). "Which trades last longest", "Where firms last" and the restaurant answer use survival on the 2024 closure
 rates, with the 2019 cohort's figure beside it. The City of London leaves every ranking built on business demography: its
 register is head offices and formation addresses, and on the 2024 rates it would jump from the bottom three to the top.
+Survival percentages round once, the website's way (`half_up` on the six-decimal shares): Python's `round` on a four-decimal
+share put three of the feed's figures a tenth off.
 
 **Files:**
 - Modify: `registers/uk/build_editorial.py`
@@ -1373,6 +1632,7 @@ with:
 from pathlib import Path
 
 from estimators.rates import holm, two_proportions
+from estimators.rounding import half_up
 ```
 
 - [ ] **Step 2: Edit build_editorial.py**
@@ -1439,9 +1699,9 @@ with:
             if not births or births < 1000:
                 continue
             rows.append({"member": gr["group_name"], "group": gr["group"], "trades": sorted(x["slug"] for x in trades if any(gg["group"] == gr["group"] for gg in (s["by_trade"].get(x["slug"]) or {}).get("groups", []))),
-                         "value": round(per[4]["survival"] * 100, 1), "lo": round(per[4]["lo"] * 100, 1), "hi": round(per[4]["hi"] * 100, 1),
-                         "one_year": round(per[0]["survival"] * 100, 1),
-                         "cohort_2019_five_years": round(gr["survival"]["5y"] * 100, 1) if gr["survival"].get("5y") is not None else None, "units": births})
+                         "value": half_up(per[4]["survival"] * 100, 1), "lo": half_up(per[4]["lo"] * 100, 1), "hi": half_up(per[4]["hi"] * 100, 1),
+                         "one_year": half_up(per[0]["survival"] * 100, 1),
+                         "cohort_2019_five_years": half_up(gr["survival"]["5y"] * 100, 1) if gr["survival"].get("5y") is not None else None, "units": births})
     rows.sort(key=lambda x: -x["value"])
     items.append(item(id="last-longest", title="Which trades last longest", unit="of 100 new firms still trading after five years",
                       line="On the closure rates of 2024, still trading after five years.", dimension="trade group", held="place: United Kingdom",
@@ -1477,8 +1737,8 @@ In `registers/uk/build_editorial.py`, replace:
 with:
 
 ```python
-    rows = [{"member": b["name"], "code": code, "value": round(b["survival_period"][4]["survival"] * 100, 1), "lo": round(b["survival_period"][4]["lo"] * 100, 1),
-             "hi": round(b["survival_period"][4]["hi"] * 100, 1), "units": b["births_by_cohort"].get("2019")}
+    rows = [{"member": b["name"], "code": code, "value": half_up(b["survival_period"][4]["survival"] * 100, 1), "lo": half_up(b["survival_period"][4]["lo"] * 100, 1),
+             "hi": half_up(b["survival_period"][4]["hi"] * 100, 1), "units": b["births_by_cohort"].get("2019")}
             for code, b in s["by_borough"].items() if code.startswith("E09") and len(b.get("survival_period") or []) == 5 and (b["births_by_cohort"].get("2019") or 0) >= 500]
 ```
 
@@ -1561,7 +1821,7 @@ Expected: exit code 0 and one line per feed item.
 python -m pytest registers/uk/tests -q
 ```
 
-Expected: `36 passed`.
+Expected: `60 passed`.
 
 - [ ] **Step 12: Read the four changed items**
 
@@ -1759,7 +2019,7 @@ Expected, on the tables of 2026-10-02 (hashes change when a table is refreshed):
 ```
 turnover.json: 4795 rows, 6b696df64d05
 premises.json: 42 rows, 4bdd8332330c
-survival.json: 114 rows, d41a03c3d50f
+survival.json: 114 rows, 497a930180f0
 failures.json: 137 rows, 12ceff334174
 ```
 
@@ -1809,7 +2069,7 @@ figure rounded the website's way). Their formulas are in each module's docstring
 python -m pytest registers/uk/tests -q
 ```
 
-Expected: `36 passed`.
+Expected: `60 passed`.
 
 - [ ] **Step 3: Commit**
 

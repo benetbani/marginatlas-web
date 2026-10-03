@@ -152,7 +152,7 @@ python registers/uk/export_for_site.py
 ```
 
 Expected: four lines, on the tables of 2026-10-02 `turnover.json: 4795 rows, 6b696df64d05`, `premises.json: 42 rows,
-4bdd8332330c`, `survival.json: 114 rows, d41a03c3d50f`, `failures.json: 137 rows, 12ceff334174` (hashes differ if a table
+4bdd8332330c`, `survival.json: 114 rows, 497a930180f0`, `failures.json: 137 rows, 12ceff334174` (hashes differ if a table
 was refreshed since).
 
 - [ ] **Step 4: Run the gate and watch it pass**

@@ -28,7 +28,7 @@ The registers now hold what nobody else publishes in this cut (`E:/atlas/registe
 
 ## 1. What the validation of 2026-10-02 established
 
-Every code block in plans 01 to 04 was written to a scratch copy of the repo layout and run: 335 TypeScript checks pass (law 163, profit and loss 139, presentation 33; counted again on 2026-10-03, after every law and presentation test was hardened against deliberate faults before its run), `tsc --strict` is clean, and every new test's red names a file, a rule and a remedy by the gate-reds census's own classifier (20 of 20 scripts). The builder edits were applied in order to fresh copies of the real builders, every table rebuilt, and the Python tests pass on the rebuilt tables (36 since 2026-10-03, when every table was rebuilt again with the hardened estimators: the exported slices changed only where the hardening meant them to, 288 rounding ranges widened to their true extremes and three survival figures rounded the website's way at the fourth decimal, and plan 03's 139 checks and its registers gate pass on them). An independent Python implementation (decimal arithmetic, half-up at the penny) agreed with the TypeScript to the penny on every money figure below.
+Every code block in plans 01 to 04 was written to a scratch copy of the repo layout and run: 335 TypeScript checks pass (law 163, profit and loss 139, presentation 33; counted again on 2026-10-03, after every law and presentation test was hardened against deliberate faults before its run), `tsc --strict` is clean, and every new test's red names a file, a rule and a remedy by the gate-reds census's own classifier (20 of 20 scripts). The builder edits were applied in order to fresh copies of the real builders, every table rebuilt, and the Python tests pass on the rebuilt tables (60 since 2026-10-03, when every table was rebuilt again after the reviews of plan 02's estimators: the exported slices changed only where the fixes meant them to, 288 rounding ranges widened to their true extremes and the survival shares stored to six decimals, three feed figures moving a tenth to their correctly rounded digit, and plan 03's 139 checks and its registers gate pass on them). An independent Python implementation (decimal arithmetic, half-up at the penny) agreed with the TypeScript to the penny on every money figure below.
 
 Validation also corrected two things in the first draft of this plan, recorded so they are not re-made:
 
@@ -206,7 +206,7 @@ Pareto   (density ~ 1/x^2, a right-skewed tail):    L U ln(U / L) / (U - L)   = 
 
 Since G <= Lm <= (L + U)/2 (the classic mean inequality), Pareto <= G <= log-flat <= flat in every band: the three bracket the plausible shapes. Hard bounds (every business on its band's lower or upper edge) hold whatever the shape. London hair and beauty: 130.83k, 139.41k, 148.44k (hard bounds 88.46k to 207.18k); restaurants 566.21k, 597.44k, 629.47k.
 
-**Why not a fitted curve.** A lognormal fitted by maximum likelihood to the interval-censored counts, `ln L = sum_k n_k ln(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))`, recovers a true lognormal from rounded counts to within 0.1% (tested), and the G-test (10 - 1 - 2 = 7 degrees of freedom: an empty band is still a cell of the fit) rejects it in 1,379 of 2,587 real cells: chains make the top far heavier. The fit stays in the tables as a model check (`lognormal_fit_p`), never on a page.
+**Why not a fitted curve.** A lognormal fitted by maximum likelihood to the interval-censored counts, `ln L = sum_k n_k ln(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))`, recovers a true lognormal from rounded counts to within 0.1% (tested), and the G-test (10 - 1 - 2 = 7 degrees of freedom: an empty band is still a cell of the fit) rejects it in 1,382 of 2,587 real cells (on the unrounded p; the stored three-figure p reads 0.01 for three of them): chains make the top far heavier. The fit stays in the tables as a model check (`lognormal_fit_p`), never on a page.
 
 ### 3.11 Rates and their intervals
 
@@ -337,7 +337,7 @@ Groups publish at 10 reports or more, with no report above half the group's tota
 | Plan | File | Builds | Depends on | Done when |
 |---|---|---|---|---|
 | 01 | `2026-10-02-vertical-engine-01-uk-law.md` | the readings; `src/lib/uk/law/*`; ten gates | nothing | 163 law checks pass in the chain; the readings recorded and matching |
-| 02 | `2026-10-02-vertical-engine-02-register-statistics.md` | `registers/uk/estimators/*`, builder edits, rates, the feed, drafts, the export | nothing | 36 pytest tests pass on rebuilt tables; 4,795 medians unchanged |
+| 02 | `2026-10-02-vertical-engine-02-register-statistics.md` | `registers/uk/estimators/*`, builder edits, rates, the feed, drafts, the export | nothing | 60 pytest tests pass on rebuilt tables; 4,795 medians unchanged |
 | 03 | `2026-10-02-vertical-engine-03-profit-and-loss.md` | the slices and their gate; `src/lib/uk/pnl/*` | 01, 02 | 139 checks across 7 test files and the `uk-registers` gate, each planted and green |
 | 04 | `2026-10-02-vertical-engine-04-presentation.md` | `src/lib/uk/present/*` | nothing | 33 presentation checks pass |
 | 05 | owners' numbers statistics (outline below) | `src/lib/uk/owners/*`, the aggregate view | the owner-numbers schema (SPEC-2026-10-02) | written after 03 |
