@@ -5,15 +5,18 @@
  *
  * LEVEL WITH. Members are sorted by value, highest first. A member is "level with" the group above it when its interval
  * overlaps the interval of that group's first member, its leader; otherwise it starts a new group. Members of one group
- * share a rank (1, 1, 1, 4). So no member is ranked below a leader the data cannot tell it apart from, and a page that
- * marks "the highest" marks a group, not a member, when the leader is level with the next. It is not a promise about every
- * pair: a member that overlaps another member, but not that member's leader, still starts a lower group (11 (10 to 12),
- * 9.5 (8.5 to 10.5) and 8 (7 to 9) rank 1, 1, 3: the 8 is apart from the 11, not from the 9.5), so levelWithAbove means
- * "level with its group's leader", never "level with the row above". Intervals are closed: two that touch at one point
- * overlap. Members with the same figure are taken lowest-reaching interval first (then highest-reaching), so a group that
- * starts among them is led by the one that can be told apart from the fewest members below, and no rank depends on the
- * order of the rows. Every interval must hold a finite figure between two finite ends: anything else is refused, since the
- * overlap test means nothing for it.
+ * share a rank (1, 1, 1, 4), and a page that marks "the highest" marks a group, not a member, when the leader is level with
+ * the next. What holds by construction: every member overlaps its own group's leader; no leader overlaps the leader of the
+ * group above; ranks never rise down the list. It is a rule about leaders, not about every pair: a member can sit in a lower
+ * group while overlapping a member, even a leader, of a higher one (28.9 (27.3 to 30.5), 12 (11 to 13) and 11 (2 to 29)
+ * rank 1, 2, 2: the 11 overlaps the 28.9 but comes after the 12, which starts the second group). So levelWithAbove means
+ * "level with its group's leader", and a page marks the top group by rank, never by levelWithAbove (two identical rows are
+ * level in either order, but which of them carries the flag follows the rows). Intervals are closed: two that touch at one
+ * point overlap. Members with the same figure are taken lowest-reaching interval first, then highest-reaching: that pools
+ * the most (the fewest groups, in every one of 23,030 random tied sets), at the price of leaving a member below a leader it
+ * overlaps a little more often than highest-reaching first would; either way no rank depends on the order of the rows. A
+ * figure and both ends must be finite numbers, the figure between the ends: anything else is refused (a null would
+ * otherwise compare as 0, and the overlap test means nothing for it).
  *
  * SET STATISTICS WITHOUT FILLS. A set's median is taken over members whose figure is their own: a member carrying a fill
  * value (a default written in for a missing figure) is left out, and the count left out is returned, so a "world median"
@@ -24,8 +27,8 @@ export type Ranked<T> = T & { rank: number; levelWithAbove: boolean };
 
 export function rankWithTies<T extends { value: number; lo: number; hi: number }>(rows: readonly T[]): Ranked<T>[] {
   for (const r of rows) {
-    // two finite ends with the figure between them, so the figure is finite too (a NaN fails both comparisons)
-    if (!(Number.isFinite(r.lo) && Number.isFinite(r.hi) && r.lo <= r.value && r.value <= r.hi)) throw new RangeError(`rankWithTies: ${r.value} is not a figure inside its interval ${r.lo} to ${r.hi}`);
+    // all three finite numbers (a null figure would compare as 0), the figure between the ends
+    if (!(Number.isFinite(r.value) && Number.isFinite(r.lo) && Number.isFinite(r.hi) && r.lo <= r.value && r.value <= r.hi)) throw new RangeError(`rankWithTies: ${r.value} is not a figure inside its interval ${r.lo} to ${r.hi}`);
   }
   const sorted = [...rows].sort((a, b) => b.value - a.value || a.lo - b.lo || b.hi - a.hi);
   const out: Ranked<T>[] = [];

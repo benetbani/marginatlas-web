@@ -68,5 +68,22 @@ check("a set of fills reports every one left out and none used; a fill that is n
 const none = medianExcludingFills([]);
 check("an empty set has no median; one own figure is its own median", none.median === null && none.used === 0 && none.leftOut === 0 && medianExcludingFills([{ value: 7, isFill: false }]).median === 7);
 
+// the tie-break, both keys and their order, each set in both row orders (figures from the rule by hand)
+const P: Row = { id: "P", value: 20, lo: 15, hi: 25 }, T1: Row = { id: "T1", value: 10, lo: 5, hi: 12 }, T2: Row = { id: "T2", value: 10, lo: 5, hi: 20 };
+check("same figure, same low end, different high ends: the one that reaches the leader is level with it, in either row order (P 1, T2 1, T1 3)", show(rankWithTies([P, T1, T2])) === "P:1 T2:1= T1:3" && show(rankWithTies([P, T2, T1])) === "P:1 T2:1= T1:3");
+const Pz: Row = { id: "P", value: 0.02, lo: 0.012, hi: 0.03 }, Z1: Row = { id: "Z1", value: 0, lo: 0, hi: 0.0369 }, Z2: Row = { id: "Z2", value: 0, lo: 0, hi: 0.0092 };
+check("two zero rates, 0 of 100 (0 to 0.0369) and 0 of 400 (0 to 0.0092), under 0.02: the wider one is level with the leader, in either row order", show(rankWithTies([Pz, Z1, Z2])) === "P:1 Z1:1= Z2:3" && show(rankWithTies([Pz, Z2, Z1])) === "P:1 Z1:1= Z2:3");
+check("lowest-reaching first: 10 (8 to 12) with 5 (1 to 9) and 5 (4.9 to 5.1) rank 1, 1, 3, in either row order", show(rankWithTies([H, X, Y])) === "H:1 Y:1= X:3" && show(rankWithTies([H, Y, X])) === "H:1 Y:1= X:3");
+check("two 10s and a 6: the 10 reaching lowest leads, so the 6 is level with it, in either row order", show(rankWithTies([A, B, C])) === "B:1 A:1= C:1=" && show(rankWithTies([B, A, C])) === "B:1 A:1= C:1=");
+const Pq: Row = { id: "P", value: 16, lo: 15, hi: 17 }, TF: Row = { id: "TF", value: 10, lo: 1, hi: 10.5 }, TS: Row = { id: "TS", value: 10, lo: 5, hi: 20 };
+check("the low end decides before the high end: 16 (15 to 17), 10 (1 to 10.5) and 10 (5 to 20) rank 1, 2, 2, in either row order", show(rankWithTies([Pq, TF, TS])) === "P:1 TF:2 TS:2=" && show(rankWithTies([Pq, TS, TF])) === "P:1 TF:2 TS:2=");
+const bad = (value: unknown, lo = 0, hi = 5) => [{ value: value as number, lo, hi }];
+check("a figure that is null, a string, a boolean or an array is refused (a null would compare as 0), and so is an interval open at the bottom", refuses(() => rankWithTies(bad(null))) && refuses(() => rankWithTies(bad(null, -1, 1))) && refuses(() => rankWithTies(bad("3", 2, 5))) && refuses(() => rankWithTies(bad(""))) && refuses(() => rankWithTies(bad(true))) && refuses(() => rankWithTies(bad([]))) && refuses(() => rankWithTies([{ value: 5, lo: -Infinity, hi: 6 }])));
+const ra: Row = { id: "a", value: 30, lo: 29, hi: 31 }, rb: Row = { id: "b", value: 20, lo: 19, hi: 21 }, rc: Row = { id: "c", value: 10, lo: 9, hi: 11 };
+const firstRanking = rankWithTies([ra, rb, rc]);
+rankWithTies([rb, rc]);
+check("rows are copied, not written to: a ranking keeps its ranks after the same rows are ranked in another set", show(firstRanking) === "a:1 b:2 c:3" && !("rank" in ra) && !("levelWithAbove" in rb));
+const flag = (isFill: unknown) => ({ value: 1, isFill: isFill as boolean });
+check("a fill flag of null, 0 or a string is refused, and so is a missing one after good ones", refuses(() => medianExcludingFills([flag(null)])) && refuses(() => medianExcludingFills([flag(0)])) && refuses(() => medianExcludingFills([flag("no")])) && refuses(() => medianExcludingFills([{ value: 1, isFill: false }, { value: 100, isFill: undefined as unknown as boolean }, { value: 3, isFill: false }])));
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/compare: all pass");
